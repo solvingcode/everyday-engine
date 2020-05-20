@@ -1,0 +1,15 @@
+body{
+    margin: 0;
+    padding: 0;
+}
+canvas{
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+#object{
+    z-index: 3;
+}
+#root{
+    z-index: 2;
+}
