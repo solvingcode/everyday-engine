@@ -8,6 +8,9 @@ define(function (require) {
                 name: 'Line'
             })
         }
+        run() {
+            console.log("Running Live")
+        }
     }
 
     return LineMenuItem

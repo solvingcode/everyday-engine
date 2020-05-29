@@ -8,6 +8,9 @@ define(function (require) {
                 name: 'Circle'
             })
         }
+        run(){
+            console.log("Running Circle")
+        }
     }
 
     return CircleMenuItem

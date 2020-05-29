@@ -8,6 +8,9 @@ define(function (require) {
                 name: 'Poly'
             })
         }
+        run() {
+            console.log("Running Poly")
+        }
     }
 
     return PolyMenuItem

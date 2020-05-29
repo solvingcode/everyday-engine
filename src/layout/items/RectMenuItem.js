@@ -8,6 +8,9 @@ define(function (require) {
                 name: 'Rect'
             })
         }
+        run() {
+            console.log("Running Rect")
+        }
     }
 
     return RectMenuItem

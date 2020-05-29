@@ -4,11 +4,14 @@ define(function () {
         constructor(props) {
             this.props = props
         }
-        setSelected() {
-            this.props.selected = true
+        setSelected(value) {
+            this.props.selected = value
         }
         isSelected() {
             return this.props.selected
+        }
+        run(){
+            throw 'run must be override'
         }
     }
 
