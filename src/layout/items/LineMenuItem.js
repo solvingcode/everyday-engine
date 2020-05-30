@@ -3,13 +3,13 @@ define(function (require) {
     const MenuItem = require('../MenuItem.js')
 
     class LineMenuItem extends MenuItem {
-        constructor(){
+        constructor() {
             super({
                 name: 'Line'
             })
         }
         run() {
-            console.log("Running Live")
+            this.appState.addState('TO_DRAW_LINE')
         }
     }
 

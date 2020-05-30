@@ -36,13 +36,6 @@ define(function (require) {
             }
         }
 
-        static get() {
-            if (!Menu.instance) {
-                Menu.instance = new Menu()
-            }
-            return Menu.instance
-        }
-
         /**
          * Select item in the menu.
          * @param {MenuItem} menuItem 
@@ -62,18 +55,44 @@ define(function (require) {
         }
 
         /**
-         * Get selected item
+         * Get selected item.
          * @return {MenuItem}
          */
         getSelected() {
             return this.items.find((item) => item.element.isSelected())
         }
 
+        /**
+         * Apply action for the menu.
+         * @param {Object} position 
+         * @return {Boolean}
+         */
+        execute(position) {
+            const menuItem = this.getItemAt(position.x, position.y)
+            if (menuItem) {
+                this.selectItem(menuItem)
+                return true
+            }
+            return false
+        }
+
+        /**
+         * Get MenuItem at a specific position.
+         * @param {float} x 
+         * @param {float} y 
+         */
         getItemAt(x, y) {
             return this.items.find((item) =>
                 x > item.position.x && x < item.position.x + Button.props.width &&
                 y > item.position.y && y < item.position.y + Button.props.height
             )
+        }
+
+        static get() {
+            if (!Menu.instance) {
+                Menu.instance = new Menu()
+            }
+            return Menu.instance
         }
     }
 

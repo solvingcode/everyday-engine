@@ -1,35 +1,38 @@
-define(function (require) {
-
-    const { MouseButton } = require('./Mouse.js')
-    const Menu = require('../layout/Menu.js')
+define(function () {
 
     class AppState {
+
+        constructor() {
+            this.state = []
+        }
 
         /**
          * Get the state of the application (drawing circle, 
          * starting/pausing simulation, moving object, ...).
          */
         getState() {
-            const menu = Menu.get()
-            const selectedItem = menu.getSelected()
-            if (selectedItem) {
-                return AppState.states.TO_DRAW
+            return this.state
+        }
+
+        /**
+         * Add a state to the states list.
+         * @param {AppState.States} state 
+         */
+        addState(state) {
+            if (this.state.indexOf(state) === -1) {
+                if (AppState.States.indexOf(state) >= 0) {
+                    this.state.push(state)
+                } else {
+                    throw `${state} is not recognized as Application State`
+                }
             }
         }
 
         /**
-         * Apply actions when event is triggered onto the window (Mouse and Keyboard events, ...)
-         * @param {Window} window 
+         * Reset the state of the application
          */
-        applyActions(window) {
-            const mouse = window.mouse
-            const menu = Menu.get()
-            if (mouse.isButtonPressed(MouseButton.LEFT)) {
-                const menuItem = menu.getItemAt(mouse.position.x, mouse.position.y)
-                if (menuItem) {
-                    menu.selectItem(menuItem)
-                }
-            }
+        reset() {
+            this.state = []
         }
 
         static get() {
@@ -41,9 +44,9 @@ define(function (require) {
     }
 
     AppState.instance = null
-    AppState.states = {
-        TO_DRAW: 0
-    }
+    AppState.States = [
+        'TO_DRAW_CIRCLE'
+    ]
 
     return AppState
 })
