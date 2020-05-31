@@ -1,7 +1,7 @@
-define(function (require) {
+define(function () {
     class EntityGenerator {
         static make(entity) {
-            throw `make function must be override for ${entity.constructor.name}`
+            
         }
     }
 

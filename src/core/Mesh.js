@@ -13,8 +13,7 @@ define(function (require) {
         add(pixels) {
             const l = this.data.length
             for (var i = 0; i < l; i += 4) {
-                var pixel = pixels[i / 4]
-                var rgb = pixel.rgb
+                var rgb = pixels[i / 4]
                 if (rgb) {
                     this.data[i] = rgb[0]
                     this.data[i + 1] = rgb[1]

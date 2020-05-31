@@ -3,6 +3,7 @@ define(function (require) {
     const Menu = require('../layout/Menu.js')
     const AppState = require('./AppState.js')
     const EventHandler = require('./EventHandler.js')
+    const World = require('../world/World.js')
 
     class Application {
         constructor(renderer, camera) {
@@ -10,6 +11,7 @@ define(function (require) {
             this.renderer = renderer
             this.camera = camera
             this.window = new Window()
+            this.world = new World()
             this.menu = Menu.get()
             this.appState = AppState.get()
             this.event = EventHandler.get()
@@ -31,6 +33,8 @@ define(function (require) {
         runLoop() {
             this.updateFPS()
             this.event.handle(this.window)
+            this.world.update()
+            this.world.draw(this.renderer)
             this.renderer.clear()
             this.renderer.render(this.camera, this.menu)
             requestAnimationFrame(this.runLoop)

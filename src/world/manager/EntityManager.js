@@ -4,26 +4,28 @@ define(function (require) {
     const Entity = require('../../core/Entity.js')
 
     class EntityManager {
-        constructor(world) {
+        constructor() {
             this.entities = []
-            this.world = world
         }
 
-        static get(world) {
-            if (!EntityGenerator.instance) {
-                EntityGenerator.instance = new EntityGenerator(world)
+        static get() {
+            if (!EntityManager.instance) {
+                EntityManager.instance = new EntityManager()
             }
-            return EntityGenerator.instance
+            return EntityManager.instance
         }
 
         getAt(x, y) {
-            return this.entities.find((element) => element.position.x === x && element.position.y === y)
+            return this.entities.find((element) =>
+                element.position.x === x &&
+                element.position.y === y
+            )
         }
 
         get(x, y) {
             const entity = this.getAt(x, y)
             if (!entity) {
-                const element = new Entity({ x, y })
+                const element = new Entity({ position: { x, y }, size: 400 })
                 this.entities.push(element)
             }
             return this.getAt(x, y)
@@ -34,9 +36,9 @@ define(function (require) {
             EntityGenerator.make(entity)
         }
 
-        update(world) {
+        update() {
             for (const iEntity in this.entities) {
-                this.entities[iEntity].update(world)
+                this.entities[iEntity].update()
             }
         }
 

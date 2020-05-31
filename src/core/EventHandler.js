@@ -3,6 +3,7 @@ define(function (require) {
     const { MouseButton } = require('./Mouse.js')
     const Menu = require('../layout/Menu.js')
     const Action = require('./Action.js')
+    const Drawer = require('../drawer/Drawer.js')
 
     class EventHandler {
 
@@ -14,8 +15,10 @@ define(function (require) {
             const mouse = window.mouse
             const action = Action.get()
             const menu = Menu.get()
+            const drawer = Drawer.get()
             if (mouse.isButtonPressed(MouseButton.LEFT)) {
                 action.add(menu, mouse.position)
+                action.add(drawer, mouse.position)
             }
             action.run()
         }

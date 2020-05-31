@@ -15,6 +15,14 @@ define(function () {
         }
 
         /**
+         * Verify if Application has a state.
+         * @param {AppState.States} state 
+         */
+        hasState(state) {
+            return this.state.indexOf(state) >= 0
+        }
+
+        /**
          * Add a state to the states list.
          * @param {AppState.States} state 
          */
