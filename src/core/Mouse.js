@@ -3,17 +3,18 @@ define(function () {
         constructor() {
             this.keys = []
             this.position = { x: 0, y: 0 }
+            this.currentPosition = { x: 0, y: 0 }
         }
 
-        updatePosition(event) {
-            this.position = { x: event.clientX, y: event.clientY }
+        getPosition(event) {
+            return { x: event.clientX, y: event.clientY }
         }
 
         setButtonPressed(key) {
             if (!this.isButtonPressed(key)) {
                 this.keys.push(key)
             }
-            this.updatePosition(event)
+            this.position = this.getPosition(event)
         }
 
         setButtonReleased(key) {
@@ -26,6 +27,10 @@ define(function () {
         isButtonPressed(key) {
             var index = this.keys.indexOf(key)
             return index !== -1
+        }
+
+        setMouseMove() {
+            this.currentPosition = this.getPosition(event)
         }
     }
 

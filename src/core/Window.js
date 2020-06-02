@@ -25,8 +25,20 @@ define(function (require) {
                 const key = event.button
                 this.mouse.setButtonReleased(key)
             })
+            document.addEventListener('mousemove', () => {
+                this.mouse.setMouseMove()
+            })
+        }
+
+        static get() {
+            if (!Window.instance) {
+                Window.instance = new Window()
+            }
+            return Window.instance
         }
     }
+
+    Window.instance = null
 
     return Window
 })

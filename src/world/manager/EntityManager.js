@@ -15,27 +15,52 @@ define(function (require) {
             return EntityManager.instance
         }
 
-        getAt(x, y) {
+        /**
+         * Get an entity at (x,y)
+         * @param {int} x 
+         * @param {int} y 
+         * @param {Entity} type 
+         */
+        getAt(x, y, type) {
             return this.entities.find((element) =>
+                element instanceof type &&
                 element.position.x === x &&
                 element.position.y === y
             )
         }
 
-        get(x, y) {
-            const entity = this.getAt(x, y)
+        /**
+         * Get an entity if founded, else create it
+         * @param {int} x 
+         * @param {int} y 
+         * @param {Entity} type 
+         */
+        get(x, y, type) {
+            if (!(type.prototype instanceof Entity)) {
+                throw new TypeError(`type must be child of Entity class (${type} given)`)
+            }
+            const entity = this.getAt(x, y, type)
             if (!entity) {
-                const element = new Entity({ position: { x, y }, size: 400 })
+                const element = new type({ position: { x, y } })
                 this.entities.push(element)
             }
-            return this.getAt(x, y)
+            return this.getAt(x, y, type)
         }
 
-        load(x, y) {
-            const entity = this.get(x, y)
+        /**
+         * Load and generate an entity
+         * @param {int} x 
+         * @param {int} y 
+         * @param {Entity} type 
+         */
+        load(x, y, type) {
+            const entity = this.get(x, y, type)
             EntityGenerator.make(entity)
         }
 
+        /**
+         * Update the Mesh for all entities
+         */
         update() {
             for (const iEntity in this.entities) {
                 this.entities[iEntity].update()

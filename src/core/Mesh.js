@@ -4,12 +4,31 @@ define(function (require) {
         constructor(position, size) {
             this.size = size
             this.position = position
+            this.initCanvas()
+        }
+
+        /**
+         * Initalize the canvas and the context for the current Mesh
+         */
+        initCanvas() {
             this.canvas = new OffscreenCanvas(this.size, this.size)
             this.context = this.canvas.getContext('2d')
             this.imgData = this.context.createImageData(this.size, this.size)
             this.data = this.imgData.data
         }
 
+        /**
+         * Clear the Mesh
+         */
+        clear(size) {
+            this.size = size
+            this.initCanvas()
+        }
+
+        /**
+         * Add pixels to the Mesh data
+         * @param {Array} pixels 
+         */
         add(pixels) {
             const l = this.data.length
             for (var i = 0; i < l; i += 4) {

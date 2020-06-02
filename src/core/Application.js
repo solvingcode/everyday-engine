@@ -10,7 +10,7 @@ define(function (require) {
             this.title = 'Combat Simulation'
             this.renderer = renderer
             this.camera = camera
-            this.window = new Window()
+            this.window = Window.get()
             this.world = new World()
             this.menu = Menu.get()
             this.appState = AppState.get()

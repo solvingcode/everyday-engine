@@ -14,7 +14,7 @@ define(function (require) {
             return this.props.selected
         }
         run(){
-            throw 'run must be override'
+            throw new TypeError('Abstract "run" method must be implemented')
         }
     }
 

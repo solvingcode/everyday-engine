@@ -5,6 +5,10 @@ define(function (require) {
 
     class Drawer {
 
+        /**
+         * Execute draw action for each type of item (Circle, Rect, ...)
+         * @param {position} position 
+         */
         execute(position) {
             const appState = AppState.get()
             if (appState.hasState('TO_DRAW_CIRCLE')) {

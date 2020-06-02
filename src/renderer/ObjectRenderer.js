@@ -9,12 +9,19 @@ define(function () {
             this.data.fill(0)
         }
 
-        clear(){
+        /**
+         * Clear the context
+         */
+        clear() {
             this.context.globalAlpha = 0
             this.context.putImageData(this.imgData, 0, 0)
             this.context.globalAlpha = 1
         }
 
+        /**
+         * Render the meshes to the screen
+         * @param {Camera} camera 
+         */
         render(camera) {
             this.clear()
             for (var iMesh in this.meshes) {
@@ -26,6 +33,10 @@ define(function () {
             this.meshes = []
         }
 
+        /**
+         * Add a mesh
+         * @param {Mesh} mesh 
+         */
         add(mesh) {
             this.meshes.push(mesh)
         }
