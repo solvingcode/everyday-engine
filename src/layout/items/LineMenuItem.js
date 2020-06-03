@@ -9,7 +9,7 @@ define(function (require) {
             })
         }
         run() {
-            this.appState.addState('TO_DRAW_LINE')
+            this.setDrawState('LINE')
         }
     }
 

@@ -9,7 +9,7 @@ define(function (require) {
             })
         }
         run() {
-            this.appState.addState('TO_DRAW_RECT')
+            this.setDrawState('RECT')
         }
     }
 

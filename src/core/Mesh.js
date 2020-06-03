@@ -1,8 +1,9 @@
 define(function (require) {
 
     class Mesh {
+
         constructor(position, size) {
-            this.size = size
+            this.size = this.getSize(size)
             this.position = position
             this.initCanvas()
         }
@@ -11,17 +12,21 @@ define(function (require) {
          * Initalize the canvas and the context for the current Mesh
          */
         initCanvas() {
-            this.canvas = new OffscreenCanvas(this.size, this.size)
+            this.canvas = new OffscreenCanvas(this.size.width, this.size.height)
             this.context = this.canvas.getContext('2d')
-            this.imgData = this.context.createImageData(this.size, this.size)
+            this.imgData = this.context.createImageData(this.size.width, this.size.height)
             this.data = this.imgData.data
+        }
+
+        getSize(size) {
+            return typeof size === 'number' ? { width: size, height: size } : size
         }
 
         /**
          * Clear the Mesh
          */
         clear(size) {
-            this.size = size
+            this.size = this.getSize(size)
             this.initCanvas()
         }
 

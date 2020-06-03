@@ -24,6 +24,12 @@ define(function () {
             }
         }
 
+        getDragDistance() {
+            const x = this.currentPosition.x - this.position.x
+            const y = this.currentPosition.y - this.position.y
+            return { x, y }
+        }
+
         isButtonPressed(key) {
             var index = this.keys.indexOf(key)
             return index !== -1

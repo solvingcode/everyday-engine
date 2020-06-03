@@ -13,24 +13,30 @@ define(function (require) {
          * @inheritdoc
          */
         build() {
-            //Recalcul the new size of the Circle
             const window = Window.get()
-            const currentPositionMouse = window.mouse.currentPosition
-            this.size = currentPositionMouse.x - this.position.x
+            const dragDistance = window.mouse.getDragDistance()
+            this.size = dragDistance.x
             if (this.size > 0) {
-                //Clear the buffer to regenerate the Mesh using the new size
                 this.clearBuffer()
-                //Generate the circle
                 const radius = this.size / 2
-                var center = parseInt(this.size / 2)
-                for (var x = -center; x < this.size - center; x++) {
-                    for (var y = -center; y < this.size - center; y++) {
-                        var index = (x + center) + (y + center) * this.size
-                        if (x * x + y * y <= radius * radius) {
-                            this.pixels[index] = [0, 0, 0, 255]
-                        } else {
-                            this.pixels[index] = [255, 255, 255, 255]
-                        }
+                const center = parseInt(this.size / 2)
+                this.generateCircle(center, radius)
+            }
+        }
+
+        /**
+         * Generate pixels for a circle
+         * @param {int} center 
+         * @param {int} radius 
+         */
+        generateCircle(center, radius){
+            for (var x = -center; x < this.size - center; x++) {
+                for (var y = -center; y < this.size - center; y++) {
+                    var index = (x + center) + (y + center) * this.size
+                    if (x * x + y * y <= radius * radius) {
+                        this.pixels[index] = [0, 0, 0, 255]
+                    } else {
+                        this.pixels[index] = [255, 255, 255, 0]
                     }
                 }
             }
