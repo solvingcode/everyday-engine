@@ -2,17 +2,17 @@ define(function (require) {
 
     const MenuItem = require('../MenuItem.js')
 
-    class CircleMenuItem extends MenuItem {
+    class EllipseMenuItem extends MenuItem {
         constructor() {
             super({
-                name: 'Circle'
+                name: 'Ellipse'
             })
         }
         run() {
-            this.setDrawState('CIRCLE')
+            this.setDrawState('ELLIPSE')
         }
     }
 
-    return CircleMenuItem
+    return EllipseMenuItem
 
 })

@@ -3,7 +3,7 @@ define(function (require) {
     const Entity = require('../../core/Entity.js')
     const Window = require('../../core/Window.js')
 
-    class LineEntity extends Entity {
+    class EllipseEntity extends Entity {
 
         constructor(props) {
             super(props)
@@ -27,35 +27,29 @@ define(function (require) {
             this.size = { width: Math.abs(dragDistance.x), height: Math.abs(dragDistance.y) }
             if (this.size.width > 0 && this.size.height > 0) {
                 this.clearBuffer()
-                if (dragDistance.x * dragDistance.y < 0) {
-                    this.generateLine(this.size.width, 0, 0, this.size.height)
-                } else {
-                    this.generateLine(0, 0, this.size.width, this.size.height)
-                }
+                this.generateEllipse(this.size.width, this.size.height)
             }
         }
 
         /**
-         * Generate pixels for the line
-         * @param {int} x0 
-         * @param {int} y0 
-         * @param {int} x1 
-         * @param {int} y1 
+         * Generate pixels for a ellipse
+         * @param {int} sw 
+         * @param {int} sh 
          */
-        generateLine(x0, y0, x1, y1) {
-            const sizeX = Math.abs(x1 - x0)
-            const sizeY = Math.abs(y1 - y0)
-            this.pixels = new Array(sizeX * sizeY)
-            const canvas = new OffscreenCanvas(this.size.width, this.size.height)
+        generateEllipse(sw, sh) {
+            const canvas = new OffscreenCanvas(sw, sh)
             const context = canvas.getContext('2d')
+            const centerX = sw / 2
+            const centerY = sh / 2
+            const radiusX = sw / 2 > 2 ? sw / 2 - 2 : 0
+            const radiusY = sh / 2 > 2 ? sh / 2 - 2 : 0
             context.beginPath()
-            context.moveTo(x0, y0)
-            context.lineTo(x1, y1)
+            context.ellipse(centerX, centerY, radiusX, radiusY, 0, 0, 2 * Math.PI)
             context.stroke()
-            this.setPixelsByContext(context, sizeX, sizeY)
+            this.setPixelsByContext(context, sw, sh)
         }
 
     }
 
-    return LineEntity
+    return EllipseEntity
 })

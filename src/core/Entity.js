@@ -43,6 +43,27 @@ define(function (require) {
         }
 
         /**
+         * Set new position for the Mesh
+         * @param {Object} position 
+         */
+        setMeshPosition(position) {
+            this.mesh.position = position
+        }
+
+        /**
+         * Update pixels using information in a specific context
+         * @param {CanvasRenderingContext2D} data 
+         * @param {int} sw
+         * @param {int} sh
+         */
+        setPixelsByContext(context, sw, sh) {
+            const data = context.getImageData(0, 0, sw, sh).data
+            for (var iData = 0; iData < data.length; iData += 4) {
+                this.pixels[iData / 4] = [data[iData], data[iData + 1], data[iData + 2], data[iData + 3]]
+            }
+        }
+
+        /**
          * Clear the buffer and the Mesh
          */
         clearBuffer() {

@@ -2,20 +2,20 @@ define(function (require) {
 
     const AppState = require('../core/AppState.js')
     const EntityManager = require('../world/manager/EntityManager.js')
-    const CircleEntity = require('../world/entity/CircleEntity.js')
+    const EllipseEntity = require('../world/entity/EllipseEntity.js')
     const RectEntity = require('../world/entity/RectEntity.js')
     const LineEntity = require('../world/entity/LineEntity.js')
 
     class Drawer {
 
         /**
-         * Execute draw action for each type of item (Circle, Rect, ...)
+         * Execute draw action for each type of item (Ellipse, Rect, ...)
          * @param {position} position 
          */
         execute(position) {
             const appState = AppState.get()
             const typeEntity = {
-                CIRCLE: CircleEntity,
+                ELLIPSE: EllipseEntity,
                 RECT: RectEntity,
                 LINE: LineEntity
             }

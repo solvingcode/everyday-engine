@@ -7,7 +7,7 @@ define(function () {
         }
 
         /**
-         * Get the state of the application (drawing circle, 
+         * Get the state of the application (drawing ellipse, 
          * starting/pausing simulation, moving object, ...).
          */
         getState() {
@@ -86,7 +86,7 @@ define(function () {
 
     AppState.instance = null
     AppState.States = [
-        'TO_DRAW_CIRCLE',
+        'TO_DRAW_ELLIPSE',
         'TO_DRAW_RECT',
         'TO_DRAW_LINE',
         'TO_DRAW_POLY'
