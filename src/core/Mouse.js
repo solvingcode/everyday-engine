@@ -1,9 +1,11 @@
 define(function () {
     class Mouse {
         constructor() {
-            this.keys = []
+            this.keydowns = []
+            this.keyclicks = []
             this.position = { x: 0, y: 0 }
             this.currentPosition = { x: 0, y: 0 }
+            this.lastPosition = this.currentPosition
         }
 
         getPosition(event) {
@@ -12,15 +14,21 @@ define(function () {
 
         setButtonPressed(key) {
             if (!this.isButtonPressed(key)) {
-                this.keys.push(key)
+                this.keydowns.push(key)
             }
             this.position = this.getPosition(event)
         }
 
+        setButtonClicked(key) {
+            if (!this.isButtonClicked(key)) {
+                this.keyclicks.push(key)
+            }
+        }
+
         setButtonReleased(key) {
             if (this.isButtonPressed(key)) {
-                var index = this.keys.indexOf(key)
-                this.keys.splice(index, 1)
+                var index = this.keydowns.indexOf(key)
+                this.keydowns.splice(index, 1)
             }
         }
 
@@ -31,12 +39,27 @@ define(function () {
         }
 
         isButtonPressed(key) {
-            var index = this.keys.indexOf(key)
+            var index = this.keydowns.indexOf(key)
             return index !== -1
         }
 
+        isButtonClicked(key) {
+            var index = this.keyclicks.indexOf(key)
+            return index !== -1
+        }
+
+        isMouseMove() {
+            return this.lastPosition.x !== this.currentPosition.x ||
+                this.lastPosition.y !== this.currentPosition.y
+        }
+
         setMouseMove() {
+            this.lastPosition = this.currentPosition
             this.currentPosition = this.getPosition(event)
+        }
+
+        clearKeyClicked() {
+            this.keyclicks = []
         }
     }
 

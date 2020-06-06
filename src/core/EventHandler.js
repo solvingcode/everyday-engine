@@ -16,11 +16,14 @@ define(function (require) {
             const action = Action.get()
             const menu = Menu.get()
             const drawer = Drawer.get()
-            if (mouse.isButtonPressed(MouseButton.LEFT)) {
+            if (mouse.isButtonClicked(MouseButton.LEFT)) {
                 action.add(menu, mouse.position)
-                action.add(drawer, mouse.position)
+            }
+            if (mouse.isMouseMove()) {
+                action.add(drawer, mouse)
             }
             action.run()
+            mouse.clearKeyClicked()
         }
 
         static get() {

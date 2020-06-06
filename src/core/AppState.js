@@ -70,6 +70,18 @@ define(function () {
         }
 
         /**
+         * Set an uniq state for a specific group (
+         * Remove all state which contains the same prefix
+         * value and add the new state to the same group.
+         * @param {String} stateGroup 
+         * @param {String} type 
+         */
+        setUniqStateByGroup(stateGroup, type) {
+            this.removeState(stateGroup, false)
+            this.addState(`${stateGroup}_${type}`)
+        }
+
+        /**
          * Reset the state of the application
          */
         reset() {
@@ -89,7 +101,11 @@ define(function () {
         'TO_DRAW_ELLIPSE',
         'TO_DRAW_RECT',
         'TO_DRAW_LINE',
-        'TO_DRAW_POLY'
+        'TO_DRAW_POLY',
+        'DRAWING_ELLIPSE',
+        'DRAWING_RECT',
+        'DRAWING_LINE',
+        'DRAWING_POLY'
     ]
 
     return AppState

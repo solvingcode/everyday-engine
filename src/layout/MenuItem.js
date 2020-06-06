@@ -28,9 +28,8 @@ define(function (require) {
          * @param {String} itemToDraw 
          */
         setDrawState(itemToDraw) {
-            const stateGroup = 'TO_DRAW'
-            this.appState.removeState(stateGroup, false)
-            this.appState.addState(`${stateGroup}_${itemToDraw}`)
+            this.appState.removeState('DRAWING', false)
+            this.appState.setUniqStateByGroup('TO_DRAW', itemToDraw)
         }
     }
 

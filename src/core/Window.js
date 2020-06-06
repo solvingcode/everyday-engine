@@ -17,6 +17,10 @@ define(function (require) {
                 const key = event.keyCode
                 this.keyboard.setKeyReleased(key)
             })
+            document.addEventListener('click', (event) => {
+                const key = event.button
+                this.mouse.setButtonClicked(key)
+            })
             document.addEventListener('mousedown', (event) => {
                 const key = event.button
                 this.mouse.setButtonPressed(key)
