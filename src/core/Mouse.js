@@ -3,6 +3,7 @@ define(function () {
         constructor() {
             this.keydowns = []
             this.keyclicks = []
+            this.keydbclicks = []
             this.position = { x: 0, y: 0 }
             this.currentPosition = { x: 0, y: 0 }
             this.lastPosition = this.currentPosition
@@ -22,6 +23,12 @@ define(function () {
         setButtonClicked(key) {
             if (!this.isButtonClicked(key)) {
                 this.keyclicks.push(key)
+            }
+        }
+
+        setButtonDoubleClicked(key) {
+            if (!this.isButtonDoubleClicked(key)) {
+                this.keydbclicks.push(key)
             }
         }
 
@@ -48,6 +55,11 @@ define(function () {
             return index !== -1
         }
 
+        isButtonDoubleClicked(key) {
+            var index = this.keydbclicks.indexOf(key)
+            return index !== -1
+        }
+
         isMouseMove() {
             return this.lastPosition.x !== this.currentPosition.x ||
                 this.lastPosition.y !== this.currentPosition.y
@@ -60,6 +72,7 @@ define(function () {
 
         clearKeyClicked() {
             this.keyclicks = []
+            this.keydbclicks = []
         }
     }
 

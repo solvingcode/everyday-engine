@@ -6,8 +6,13 @@ define(function (require) {
     const EllipseEntity = require('../world/entity/EllipseEntity.js')
     const RectEntity = require('../world/entity/RectEntity.js')
     const LineEntity = require('../world/entity/LineEntity.js')
+    const PolyEntity = require('../world/entity/PolyEntity.js')
 
     class Drawer {
+
+        constructor() {
+            this.currentEntity = null
+        }
 
         /**
          * Execute draw action for each type of item (Ellipse, Rect, ...)
@@ -15,24 +20,37 @@ define(function (require) {
          */
         execute(mouse) {
             const appState = AppState.get()
+            const defaultStartEvent = (mouse) => mouse.isButtonPressed(MouseButton.LEFT)
+            const defaultEndEvent = (mouse) => mouse.isButtonClicked(MouseButton.LEFT)
             const typeEntity = {
-                ELLIPSE: EllipseEntity,
-                RECT: RectEntity,
-                LINE: LineEntity
+                ELLIPSE: {
+                    entity: EllipseEntity
+                },
+                RECT: {
+                    entity: RectEntity
+                },
+                LINE: {
+                    entity: LineEntity
+                },
+                POLY: {
+                    entity: PolyEntity,
+                    startEvent: (mouse) => mouse.isButtonClicked(MouseButton.LEFT),
+                    endEvent: (mouse) => mouse.isButtonDoubleClicked(MouseButton.LEFT)
+                }
             }
             Object.entries(typeEntity).map(entry => {
-                if (mouse.isButtonPressed(MouseButton.LEFT)) {
-                    if (appState.hasState(`TO_DRAW_${entry[0]}`)) {
-                        this.startDraw(entry[0])
-                    }
+                const type = entry[0]
+                const props = entry[1]
+                const startEvent = props.startEvent || defaultStartEvent
+                const endEvent = props.endEvent || defaultEndEvent
+                if (startEvent(mouse) && appState.hasState(`TO_DRAW_${type}`)) {
+                    this.startDraw(type)
                 }
-                if (mouse.isButtonClicked(MouseButton.LEFT)) {
-                    if (appState.hasState(`DRAWING_${entry[0]}`)) {
-                        this.endDraw(entry[0])
-                    }
+                if (endEvent(mouse) && appState.hasState(`DRAWING_${type}`)) {
+                    this.endDraw(type)
                 }
-                if (appState.hasState(`DRAWING_${entry[0]}`)) {
-                    this.draw(mouse.position, entry[1])
+                if (appState.hasState(`DRAWING_${type}`)) {
+                    this.draw(mouse.position, props.entity)
                 }
             }
             )
@@ -46,6 +64,7 @@ define(function (require) {
             const appState = AppState.get()
             appState.removeState('TO_DRAW', false)
             appState.setUniqStateByGroup('DRAWING', type)
+            this.currentEntity = null
         }
 
         /**
@@ -56,6 +75,7 @@ define(function (require) {
             const appState = AppState.get()
             appState.removeState('DRAWING', false)
             appState.setUniqStateByGroup('TO_DRAW', type)
+            this.currentEntity.close()
         }
 
         /**
@@ -65,7 +85,10 @@ define(function (require) {
          */
         draw(position, type) {
             const entityManager = EntityManager.get()
-            entityManager.load(position.x, position.y, type)
+            if (!this.currentEntity) {
+                this.currentEntity = entityManager.load(position.x, position.y, type)
+            }
+            entityManager.make(this.currentEntity)
         }
 
         static get() {

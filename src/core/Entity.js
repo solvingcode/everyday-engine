@@ -1,6 +1,7 @@
 define(function (require) {
 
     const Mesh = require('./Mesh.js')
+    const Window = require('./Window.js')
 
     /**
      * Abstract Entity class
@@ -26,6 +27,13 @@ define(function (require) {
         }
 
         /**
+         * Close the build of the Entity
+         */
+        close() {
+            //defined by the child class
+        }
+
+        /**
          * Update the mesh
          */
         update() {
@@ -48,6 +56,27 @@ define(function (require) {
          */
         setMeshPosition(position) {
             this.mesh.position = position
+        }
+
+        /**
+         * Update the Mesh position related to the distance
+         * between the click mouse position and the actual
+         * position of the mouse, and return the drag distance
+         * @return {Object}
+         */
+        setMeshPositionByDragDistance() {
+            const window = Window.get()
+            const dragDistance = window.mouse.getDragDistance()
+            var newX = window.mouse.position.x
+            var newY = window.mouse.position.y
+            if (dragDistance.x <= 0) {
+                newX = window.mouse.currentPosition.x
+            }
+            if (dragDistance.y <= 0) {
+                newY = window.mouse.currentPosition.y
+            }
+            this.setMeshPosition({ x: newX, y: newY })
+            return dragDistance
         }
 
         /**

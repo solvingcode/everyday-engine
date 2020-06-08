@@ -1,7 +1,6 @@
 define(function (require) {
 
     const Entity = require('../../core/Entity.js')
-    const Window = require('../../core/Window.js')
 
     class LineEntity extends Entity {
 
@@ -13,17 +12,7 @@ define(function (require) {
          * @inheritdoc
          */
         build() {
-            const window = Window.get()
-            const dragDistance = window.mouse.getDragDistance()
-            var newX = this.position.x
-            var newY = this.position.y
-            if (dragDistance.x < 0) {
-                newX = window.mouse.currentPosition.x
-            }
-            if (dragDistance.y < 0) {
-                newY = window.mouse.currentPosition.y
-            }
-            this.setMeshPosition({ x: newX, y: newY })
+            const dragDistance = this.setMeshPositionByDragDistance()
             this.size = { width: Math.abs(dragDistance.x), height: Math.abs(dragDistance.y) }
             if (this.size.width > 0 && this.size.height > 0) {
                 this.clearBuffer()

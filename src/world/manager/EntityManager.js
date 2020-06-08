@@ -55,6 +55,15 @@ define(function (require) {
          */
         load(x, y, type) {
             const entity = this.get(x, y, type)
+            this.make(entity)
+            return entity
+        }
+
+        /**
+         * Make an entity.
+         * @param {Entity} entity 
+         */
+        make(entity) {
             EntityGenerator.make(entity)
         }
 

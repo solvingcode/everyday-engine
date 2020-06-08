@@ -21,6 +21,10 @@ define(function (require) {
                 const key = event.button
                 this.mouse.setButtonClicked(key)
             })
+            document.addEventListener('dblclick', (event) => {
+                const key = event.button
+                this.mouse.setButtonDoubleClicked(key)
+            })
             document.addEventListener('mousedown', (event) => {
                 const key = event.button
                 this.mouse.setButtonPressed(key)
