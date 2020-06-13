@@ -44,8 +44,8 @@ define(function (require) {
          * @param {Menu} menu 
          */
         render(camera, menu) {
-            this.setupRenderer.render(menu)
             this.objectRenderer.render(camera)
+            this.setupRenderer.render(menu)
         }
     }
 

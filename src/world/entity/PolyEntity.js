@@ -1,12 +1,13 @@
 define(function (require) {
 
-    const Entity = require('../../core/Entity.js')
+    const EntityMotion = require('../../entity/EntityMotion.js')
     const Window = require('../../core/Window.js')
 
-    class PolyEntity extends Entity {
+    class PolyEntity extends EntityMotion {
 
         constructor(props) {
             super(props)
+            this.shape = 'Polygon'
             this.points = []
             this.nbPoints = 0
             this.canvas = new OffscreenCanvas(1, 1)
@@ -91,11 +92,21 @@ define(function (require) {
         }
 
         /**
+         * Convert points to relative position of the Entity
+         */
+        convertPointToRelPosition() {
+            const minPoint = this.getMinPoint()
+            this.points = this.points.map(point => ({ x: point.x - minPoint.x, y: point.y - minPoint.y }))
+        }
+
+        /**
          * Trigger other drawing instruction when the drawing is ended
          */
         close() {
             this.points.push(this.points[0])
             this.build()
+            this.convertPointToRelPosition()
+            super.close()
         }
 
     }

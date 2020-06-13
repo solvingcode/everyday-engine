@@ -1,8 +1,8 @@
 define(function (require) {
 
-    const EntityMotion = require('../../entity/EntityMotion.js')
+    const Entity = require('../../entity/Entity.js')
 
-    class RectEntity extends EntityMotion {
+    class PlatformEntity extends Entity {
 
         constructor(props) {
             super(props)
@@ -13,12 +13,9 @@ define(function (require) {
          * @inheritdoc
          */
         build() {
-            const dragDistance = this.setMeshPositionByDragDistance()
-            this.size = { width: Math.abs(dragDistance.x), height: Math.abs(dragDistance.y) }
-            if (this.size.width > 0 && this.size.height > 0) {
-                this.clearBuffer()
-                this.generateRect(this.size.width, this.size.height)
-            }
+            this.size = { width: WINDOW_WIDTH, height: 20 }
+            this.clearBuffer()
+            this.generateRect(this.size.width, this.size.height)
         }
 
         /**
@@ -37,5 +34,5 @@ define(function (require) {
 
     }
 
-    return RectEntity
+    return PlatformEntity
 })

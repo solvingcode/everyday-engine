@@ -1,7 +1,7 @@
 define(function (require) {
 
-    const Mesh = require('./Mesh.js')
-    const Window = require('./Window.js')
+    const Mesh = require('../core/Mesh.js')
+    const Window = require('../core/Window.js')
 
     /**
      * Abstract Entity class
@@ -30,14 +30,36 @@ define(function (require) {
          * Close the build of the Entity
          */
         close() {
-            //defined by the child class
+            this.position = this.mesh.position
         }
 
         /**
-         * Update the mesh
+         * Update the entity props and the Mesh
          */
         update() {
             this.addToBuffer()
+        }
+
+        /**
+         * Check if a collision is happened with the entity
+         * in argument
+         * @param {Entity} entity 
+         */
+        isCollide(entity) {
+            if (
+                this.position.x + this.size.width >= entity.position.x &&
+                this.position.y + this.size.height >= entity.position.y &&
+                entity.position.y + entity.size.height >= this.position.y &&
+                entity.position.x + entity.size.width >= this.position.x
+            ) {
+                const isCollideFunction = `isCollide${entity.shape}`
+                try {
+                    return this[isCollideFunction](entity)
+                } catch (e) {
+                    throw `${isCollideFunction} is undefined for ${this.constructor.name}`
+                }
+            }
+            return false
         }
 
         /**
@@ -48,6 +70,15 @@ define(function (require) {
             if (this.isBuffered) {
                 renderer.draw(this)
             }
+        }
+
+        /**
+         * Set the entity's position
+         * @param {Object} position 
+         */
+        setPosition(position) {
+            this.position = position
+            this.mesh.position = position
         }
 
         /**

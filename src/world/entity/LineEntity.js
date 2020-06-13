@@ -1,11 +1,13 @@
 define(function (require) {
 
-    const Entity = require('../../core/Entity.js')
+    const EntityMotion = require('../../entity/EntityMotion.js')
 
-    class LineEntity extends Entity {
+    class LineEntity extends EntityMotion {
 
         constructor(props) {
             super(props)
+            this.shape = 'Line'
+            this.points = []
         }
 
         /**
@@ -34,6 +36,7 @@ define(function (require) {
         generateLine(x0, y0, x1, y1) {
             const sizeX = Math.abs(x1 - x0)
             const sizeY = Math.abs(y1 - y0)
+            this.points = [{ x: x0, y: y0 }, { x: x1, y: y1 }]
             this.pixels = new Array(sizeX * sizeY)
             const canvas = new OffscreenCanvas(this.size.width, this.size.height)
             const context = canvas.getContext('2d')

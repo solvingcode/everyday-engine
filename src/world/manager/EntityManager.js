@@ -1,7 +1,7 @@
 define(function (require) {
 
     const EntityGenerator = require('../generator/EntityGenerator.js')
-    const Entity = require('../../core/Entity.js')
+    const Entity = require('../../entity/Entity.js')
 
     class EntityManager {
         constructor() {
@@ -55,7 +55,9 @@ define(function (require) {
          */
         load(x, y, type) {
             const entity = this.get(x, y, type)
-            this.make(entity)
+            if (!entity.isBuffered) {
+                this.make(entity)
+            }
             return entity
         }
 

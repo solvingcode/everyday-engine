@@ -1,11 +1,14 @@
 define(function (require) {
 
-    const Entity = require('../../core/Entity.js')
+    const EntityMotion = require('../../entity/EntityMotion.js')
 
-    class EllipseEntity extends Entity {
+    class EllipseEntity extends EntityMotion {
 
         constructor(props) {
             super(props)
+            this.shape = 'Ellipse'
+            this.center = null
+            this.radius = 0
         }
 
         /**
@@ -32,10 +35,20 @@ define(function (require) {
             const centerY = sh / 2
             const radiusX = sw / 2 > 2 ? sw / 2 - 2 : 0
             const radiusY = sh / 2 > 2 ? sh / 2 - 2 : 0
+            this.center = { x: centerX, y: centerY }
+            this.radius = { x: radiusX, y: radiusY }
             context.beginPath()
             context.ellipse(centerX, centerY, radiusX, radiusY, 0, 0, 2 * Math.PI)
             context.stroke()
             this.setPixelsByContext(context, sw, sh)
+        }
+
+        /**
+         * Check if the ellipse collide with a rect
+         * @param {Entity} entity 
+         */
+        isCollideRect(entity) {
+            return true
         }
 
     }

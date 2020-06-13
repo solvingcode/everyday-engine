@@ -4,6 +4,7 @@ define(function (require) {
     const AppState = require('./AppState.js')
     const EventHandler = require('./EventHandler.js')
     const World = require('../world/World.js')
+    const Physics = require('../physics/Physics.js')
 
     class Application {
         constructor(renderer, camera) {
@@ -12,6 +13,7 @@ define(function (require) {
             this.camera = camera
             this.window = Window.get()
             this.world = new World()
+            this.physics = new Physics()
             this.menu = Menu.get()
             this.appState = AppState.get()
             this.event = EventHandler.get()
@@ -20,19 +22,30 @@ define(function (require) {
             this.runLoop = this.runLoop.bind(this)
         }
 
+        /**
+         * Start the application
+         */
         start() {
             this.renderer.init()
             this.init()
             this.runLoop()
         }
 
+        /**
+         * Load event listeners
+         */
         loadEvents() {
             this.window.initEvents()
         }
 
+        /**
+         * Start the loop animation frame
+         */
         runLoop() {
             this.updateFPS()
             this.event.handle(this.window)
+            this.physics.update()
+            this.world.load()
             this.world.update()
             this.world.draw(this.renderer)
             this.renderer.clear()
@@ -40,10 +53,16 @@ define(function (require) {
             requestAnimationFrame(this.runLoop)
         }
 
+        /**
+         * Initialize the application
+         */
         init() {
             this.loadEvents()
         }
 
+        /**
+         * Update the FPS and show it in the title
+         */
         updateFPS() {
             const deltaTime = (Date.now() - this.startTimeFPS) / 1000
             if (deltaTime > 1) {

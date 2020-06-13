@@ -8,6 +8,9 @@ define(function (require) {
             this.mouse = new Mouse()
         }
 
+        /**
+         * Inialize the event listeners
+         */
         initEvents() {
             document.addEventListener('keydown', (event) => {
                 const key = event.keyCode
