@@ -6,7 +6,7 @@ define(function (require) {
 
         constructor(props) {
             super(props)
-            this.shape = 'Ellipse'
+            this.shape = EntityMotion.shapes.ELLIPSE
             this.center = null
             this.radius = 0
         }
@@ -45,7 +45,7 @@ define(function (require) {
 
         /**
          * Check if the ellipse collide with a rect
-         * @param {Entity} entity 
+         * @param {RectEntity} entity 
          */
         isCollideRect(entity) {
             return true

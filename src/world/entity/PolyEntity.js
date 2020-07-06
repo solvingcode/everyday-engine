@@ -7,7 +7,7 @@ define(function (require) {
 
         constructor(props) {
             super(props)
-            this.shape = 'Polygon'
+            this.shape = EntityMotion.shapes.POLY
             this.points = []
             this.nbPoints = 0
             this.canvas = new OffscreenCanvas(1, 1)

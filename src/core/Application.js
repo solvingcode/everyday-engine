@@ -4,7 +4,6 @@ define(function (require) {
     const AppState = require('./AppState.js')
     const EventHandler = require('./EventHandler.js')
     const World = require('../world/World.js')
-    const Physics = require('../physics/Physics.js')
 
     class Application {
         constructor(renderer, camera) {
@@ -13,7 +12,6 @@ define(function (require) {
             this.camera = camera
             this.window = Window.get()
             this.world = new World()
-            this.physics = new Physics()
             this.menu = Menu.get()
             this.appState = AppState.get()
             this.event = EventHandler.get()
@@ -44,7 +42,6 @@ define(function (require) {
         runLoop() {
             this.updateFPS()
             this.event.handle(this.window)
-            this.physics.update()
             this.world.load()
             this.world.update()
             this.world.draw(this.renderer)

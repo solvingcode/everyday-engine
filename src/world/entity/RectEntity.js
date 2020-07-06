@@ -6,7 +6,7 @@ define(function (require) {
 
         constructor(props) {
             super(props)
-            this.shape = 'Rect'
+            this.shape = EntityMotion.shapes.RECT
         }
 
         /**

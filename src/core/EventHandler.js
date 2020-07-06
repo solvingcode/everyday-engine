@@ -3,7 +3,8 @@ define(function (require) {
     const { MouseButton } = require('./Mouse.js')
     const Menu = require('../layout/Menu.js')
     const Action = require('./Action.js')
-    const Drawer = require('../drawer/Drawer.js')
+    const DrawerRunner = require('../runner/DrawerRunner.js')
+    const SimulateRunner = require('../runner/SimulateRunner.js')
 
     class EventHandler {
 
@@ -15,13 +16,15 @@ define(function (require) {
             const mouse = window.mouse
             const action = Action.get()
             const menu = Menu.get()
-            const drawer = Drawer.get()
+            const drawer = DrawerRunner.get()
+            const simulate = SimulateRunner.get()
             if (mouse.isButtonClicked(MouseButton.LEFT)) {
                 action.add(menu, mouse.position)
             }
             if (mouse.isMouseMove()) {
                 action.add(drawer, mouse)
             }
+            action.add(simulate, mouse)
             action.run()
             mouse.clearKeyClicked()
         }

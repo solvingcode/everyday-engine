@@ -70,6 +70,13 @@ define(function () {
         }
 
         /**
+         * Remove all states from the application
+         */
+        removeAllState(){
+            this.state = []
+        }
+
+        /**
          * Set an uniq state for a specific group (
          * Remove all state which contains the same prefix
          * value and add the new state to the same group.
@@ -105,7 +112,9 @@ define(function () {
         'DRAWING_ELLIPSE',
         'DRAWING_RECT',
         'DRAWING_LINE',
-        'DRAWING_POLY'
+        'DRAWING_POLY',
+        'SIMULATE_START',
+        'SIMULATE_STOP'
     ]
 
     return AppState

@@ -6,7 +6,7 @@ define(function (require) {
 
         constructor(props) {
             super(props)
-            this.shape = 'Line'
+            this.shape = EntityMotion.shapes.LINE
             this.points = []
         }
 

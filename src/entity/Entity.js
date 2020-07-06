@@ -14,6 +14,7 @@ define(function (require) {
             this.props = props
             this.position = props.position
             this.isBuffered = false
+            this.isPhyiscsLoaded = false
             this.size = props.size || 1
             this.pixels = []
             this.mesh = new Mesh(this.position, this.size)
@@ -38,28 +39,6 @@ define(function (require) {
          */
         update() {
             this.addToBuffer()
-        }
-
-        /**
-         * Check if a collision is happened with the entity
-         * in argument
-         * @param {Entity} entity 
-         */
-        isCollide(entity) {
-            if (
-                this.position.x + this.size.width >= entity.position.x &&
-                this.position.y + this.size.height >= entity.position.y &&
-                entity.position.y + entity.size.height >= this.position.y &&
-                entity.position.x + entity.size.width >= this.position.x
-            ) {
-                const isCollideFunction = `isCollide${entity.shape}`
-                try {
-                    return this[isCollideFunction](entity)
-                } catch (e) {
-                    throw `${isCollideFunction} is undefined for ${this.constructor.name}`
-                }
-            }
-            return false
         }
 
         /**
@@ -142,6 +121,24 @@ define(function (require) {
             }
             return false
         }
+
+        /**
+         * Add entity to physics Engine
+         * @param {PhysicsEngine} physicsEngine 
+         */
+        addToPhyiscs(physicsEngine) {
+            if (!this.isPhyiscsLoaded) {
+                physicsEngine.add(this)
+                this.isPhyiscsLoaded = true
+            }
+        }
+    }
+
+    Entity.shapes = {
+        ELLIPSE: 'Ellipse',
+        RECT: 'Rect',
+        LINE: 'Line',
+        POLY: 'Poly'
     }
 
     return Entity

@@ -1,6 +1,7 @@
 define(function (require) {
 
     const AppState = require('../core/AppState.js')
+    const Runner = require('./Runner.js')
     const { MouseButton } = require('../core/Mouse.js')
     const EntityManager = require('../world/manager/EntityManager.js')
     const EllipseEntity = require('../world/entity/EllipseEntity.js')
@@ -8,9 +9,10 @@ define(function (require) {
     const LineEntity = require('../world/entity/LineEntity.js')
     const PolyEntity = require('../world/entity/PolyEntity.js')
 
-    class Drawer {
+    class DrawerRunner extends Runner {
 
         constructor() {
+            super()
             this.currentEntity = null
         }
 
@@ -92,14 +94,14 @@ define(function (require) {
         }
 
         static get() {
-            if (!Drawer.instance) {
-                Drawer.instance = new Drawer()
+            if (!DrawerRunner.instance) {
+                DrawerRunner.instance = new DrawerRunner()
             }
-            return Drawer.instance
+            return DrawerRunner.instance
         }
     }
 
-    Drawer.instance = null
+    DrawerRunner.instance = null
 
-    return Drawer
+    return DrawerRunner
 })

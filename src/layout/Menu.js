@@ -4,6 +4,7 @@ define(function (require) {
     const RectMenuItem = require('./items/RectMenuItem.js')
     const LineMenuItem = require('./items/LineMenuItem.js')
     const PolyMenuItem = require('./items/PolyMenuItem.js')
+    const SimulateMenuItem = require('./items/SimulateMenuItem.js')
     const Button = require('../renderer/ui/Button.js')
 
     class Menu {
@@ -12,7 +13,8 @@ define(function (require) {
                 new EllipseMenuItem(),
                 new RectMenuItem(),
                 new LineMenuItem(),
-                new PolyMenuItem()
+                new PolyMenuItem(),
+                new SimulateMenuItem()
             ]
             this.setup()
         }
@@ -45,7 +47,7 @@ define(function (require) {
                 for (var iItem in this.items) {
                     const item = this.items[iItem]
                     if (item.element.props.name === menuItem.element.props.name) {
-                        item.element.setSelected(true)
+                        item.element.setSelected(!item.element.isSelected())
                         item.element.run()
                     } else {
                         item.element.setSelected(false)

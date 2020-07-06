@@ -28,9 +28,19 @@ define(function (require) {
          * @param {String} itemToDraw 
          */
         setDrawState(itemToDraw) {
-            this.appState.removeState('DRAWING', false)
+            this.appState.removeAllState()
             this.appState.setUniqStateByGroup('TO_DRAW', itemToDraw)
         }
+
+        /**
+         * Add simulate state
+         * @param {String} action 
+         */
+        setSimulateState(action) {
+            this.appState.removeAllState()
+            this.appState.setUniqStateByGroup('SIMULATE', action)
+        }
+        
     }
 
     return MenuItem
