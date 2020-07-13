@@ -15,31 +15,42 @@ define(function (require) {
          */
         update() {
             this.physicsEngine.getBodies().map((body, index) => {
-                const { x, y } = body.position
-                this.entityManager.entities[index].setPosition({ x, y })
+                const entity = this.entityManager.entities[index]
+                const { x, y } = entity.fromCenterPosition(body.position)
+                entity.setPosition({ x, y })
+                entity.setRotation(body.angle)
             })
+        }
+
+        /**
+         * Stop the engine
+         */
+        stop() {
+            this.physicsEngine.stop()
+        }
+
+        /**
+         * Unload the physics for entities
+         */
+        unload() {
+            this.entityManager.entities.map(entity => entity.unloadPhysics())
+        }
+
+        /**
+         * Load the physics for entites
+         */
+        load() {
+            this.entityManager.entities.map(entity => entity.loadPhysics(this.physicsEngine))
         }
 
         /**
          * Run the physics
          */
         run() {
-            this.platform = this.entityManager.entities[0]
-            this.entityManager.entities.map(entity => entity.addToPhyiscs(this.physicsEngine))
+            this.unload()
+            this.physicsEngine.init()
+            this.load()
             this.physicsEngine.run()
-        }
-
-        /**
-         * Apply physics to the entity
-         */
-        add(entity) {
-            if (entity instanceof EntityMotion) {
-                entity.move(DIRECTION.BOTTOM)
-            }
-            if (entity != this.platform &&
-                entity.isCollide(this.platform)) {
-                console.log('Collision with the Platform')
-            }
         }
 
     }

@@ -71,7 +71,7 @@ define(function (require) {
             context.beginPath()
             this.drawPoints(context)
             context.stroke()
-            this.setPixelsByContext(context, this.size.width, this.size.height)
+            this.setPixelsByContext(context)
         }
 
         /**

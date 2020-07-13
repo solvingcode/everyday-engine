@@ -9,6 +9,13 @@ define(function () {
         }
 
         /**
+         * Initialize the engine.
+         */
+        init() {
+            throw new TypeError('"init" method must be implemented')
+        }
+
+        /**
          * Add physics to the entity.
          * @param {Entity} entity 
          */
@@ -17,10 +24,17 @@ define(function () {
         }
 
         /**
-         * Run the physics engine
+         * Run the physics engine.
          */
         run() {
             throw new TypeError('"run" method must be implemented')
+        }
+
+        /**
+         * Stop the physics engine.
+         */
+        stop() {
+            throw new TypeError('"stop" method must be implemented')
         }
 
         /**

@@ -1,5 +1,6 @@
 define(function (require) {
 
+    const { MouseButton } = require('../core/Mouse.js')
     const Runner = require('./Runner.js')
     const AppState = require('../core/AppState.js')
     const Physics = require('../physics/Physics.js')
@@ -26,6 +27,14 @@ define(function (require) {
                     this.isPhysicsLoaded = true
                 }
                 this.physics.update()
+            } else if (appState.hasState('SIMULATE_STOP')) {
+                this.isPhysicsLoaded = false
+                this.physics.stop()
+                appState.removeState('SIMULATE_STOP')
+            }
+            //debug
+            if(mouse.isButtonPressed(MouseButton.MIDDLE)){
+                console.log(this.physics.physicsEngine.getBodies())
             }
         }
 

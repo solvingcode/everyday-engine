@@ -18,13 +18,13 @@ define(function (require) {
             const menu = Menu.get()
             const drawer = DrawerRunner.get()
             const simulate = SimulateRunner.get()
-            if (mouse.isButtonClicked(MouseButton.LEFT)) {
+            action.add(simulate, mouse)
+            if (mouse.isButtonPressed(MouseButton.LEFT)) {
                 action.add(menu, mouse.position)
             }
             if (mouse.isMouseMove()) {
                 action.add(drawer, mouse)
             }
-            action.add(simulate, mouse)
             action.run()
             mouse.clearKeyClicked()
         }

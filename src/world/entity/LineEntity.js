@@ -19,24 +19,22 @@ define(function (require) {
             if (this.size.width > 0 && this.size.height > 0) {
                 this.clearBuffer()
                 if (dragDistance.x * dragDistance.y < 0) {
-                    this.generateLine(this.size.width, 0, 0, this.size.height)
+                    this.points = [{ x: this.size.width, y: 0 }, { x: 0, y: this.size.height }]
                 } else {
-                    this.generateLine(0, 0, this.size.width, this.size.height)
+                    this.points = [{ x: 0, y: 0 }, { x: this.size.width, y: this.size.height }]
                 }
+                this.generate()
             }
         }
 
         /**
          * Generate pixels for the line
-         * @param {int} x0 
-         * @param {int} y0 
-         * @param {int} x1 
-         * @param {int} y1 
          */
-        generateLine(x0, y0, x1, y1) {
+        generate() {
+            const x0 = this.points[0].x, y0 = this.points[0].y
+            const x1 = this.points[1].x, y1 = this.points[1].y
             const sizeX = Math.abs(x1 - x0)
             const sizeY = Math.abs(y1 - y0)
-            this.points = [{ x: x0, y: y0 }, { x: x1, y: y1 }]
             this.pixels = new Array(sizeX * sizeY)
             const canvas = new OffscreenCanvas(this.size.width, this.size.height)
             const context = canvas.getContext('2d')
@@ -44,7 +42,7 @@ define(function (require) {
             context.moveTo(x0, y0)
             context.lineTo(x1, y1)
             context.stroke()
-            this.setPixelsByContext(context, sizeX, sizeY)
+            this.setPixelsByContext(context)
         }
 
     }

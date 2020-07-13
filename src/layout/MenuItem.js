@@ -24,6 +24,11 @@ define(function (require) {
         }
 
         /**
+         * Stop the action when the item is unselected
+         */
+        stop() { }
+
+        /**
          * Add draw state
          * @param {String} itemToDraw 
          */
@@ -37,10 +42,9 @@ define(function (require) {
          * @param {String} action 
          */
         setSimulateState(action) {
-            this.appState.removeAllState()
             this.appState.setUniqStateByGroup('SIMULATE', action)
         }
-        
+
     }
 
     return MenuItem

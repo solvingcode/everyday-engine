@@ -44,15 +44,16 @@ define(function (require) {
          */
         selectItem(menuItem) {
             if (menuItem) {
-                for (var iItem in this.items) {
-                    const item = this.items[iItem]
-                    if (item.element.props.name === menuItem.element.props.name) {
-                        item.element.setSelected(!item.element.isSelected())
-                        item.element.run()
-                    } else {
+                this.items.map(item => {
+                    if (item.element.isSelected()) {
                         item.element.setSelected(false)
+                        item.element.stop()
                     }
-                }
+                    if (item.element.props.name === menuItem.element.props.name) {
+                        item.element.setSelected(true)
+                        item.element.run()
+                    }
+                })
             }
         }
 

@@ -9,11 +9,11 @@ define(function (require) {
             })
         }
         run() {
-            if(this.isSelected()){
-                this.setSimulateState('START')
-            }else{
-                this.setSimulateState('STOP')
-            }
+            this.appState.removeAllState()
+            this.setSimulateState('START')
+        }
+        stop() {
+            this.setSimulateState('STOP')
         }
     }
 

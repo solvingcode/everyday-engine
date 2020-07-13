@@ -8,6 +8,9 @@ define(function (require) {
 
         constructor() {
             super()
+        }
+
+        init() {
             this.engine = Matter.Engine.create()
         }
 
@@ -16,13 +19,20 @@ define(function (require) {
          */
         add(entity) {
             var entityEngine = null
+            const centerPosition = entity.toCenterPosition()
             if (entity.shape === Entity.shapes.RECT) {
                 entityEngine = Matter.Bodies.rectangle(
-                    entity.position.x,
-                    entity.position.y,
+                    centerPosition.x,
+                    centerPosition.y,
                     entity.size.width,
                     entity.size.height,
                     { isStatic: entity instanceof PlatformEntity }
+                )
+            } else if (entity.shape === Entity.shapes.ELLIPSE) {
+                entityEngine = Matter.Bodies.circle(
+                    entity.position.x,
+                    entity.position.y,
+                    entity.radius.x,
                 )
             }
             if (entityEngine) {
@@ -35,6 +45,15 @@ define(function (require) {
          */
         run() {
             Matter.Engine.run(this.engine)
+        }
+
+        /**
+         * Stop the physics engine
+         */
+        stop() {
+            Matter.World.clear(this.engine.world)
+            Matter.Engine.clear(this.engine)
+            this.engine = null
         }
 
         /**

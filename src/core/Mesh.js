@@ -27,7 +27,11 @@ define(function (require) {
          */
         clear(size) {
             this.size = this.getSize(size)
-            this.initCanvas()
+            if (this.size.width > 0 && this.size.height > 0) {
+                this.initCanvas()
+                return true
+            }
+            return false
         }
 
         /**

@@ -17,18 +17,16 @@ define(function (require) {
         build() {
             const dragDistance = this.setMeshPositionByDragDistance()
             this.size = { width: Math.abs(dragDistance.x), height: Math.abs(dragDistance.y) }
-            if (this.size.width > 0 && this.size.height > 0) {
-                this.clearBuffer()
-                this.generateEllipse(this.size.width, this.size.height)
+            if (this.clearBuffer()) {
+                this.generate()
             }
         }
 
         /**
          * Generate pixels for a ellipse
-         * @param {int} sw 
-         * @param {int} sh 
          */
-        generateEllipse(sw, sh) {
+        generate() {
+            const sw = this.size.width, sh = this.size.height
             const canvas = new OffscreenCanvas(sw, sh)
             const context = canvas.getContext('2d')
             const centerX = sw / 2
@@ -40,15 +38,7 @@ define(function (require) {
             context.beginPath()
             context.ellipse(centerX, centerY, radiusX, radiusY, 0, 0, 2 * Math.PI)
             context.stroke()
-            this.setPixelsByContext(context, sw, sh)
-        }
-
-        /**
-         * Check if the ellipse collide with a rect
-         * @param {RectEntity} entity 
-         */
-        isCollideRect(entity) {
-            return true
+            this.setPixelsByContext(context)
         }
 
     }
