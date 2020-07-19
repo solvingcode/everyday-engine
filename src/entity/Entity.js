@@ -17,12 +17,11 @@ define(function (require) {
             this.isBuffered = false
             this.isPhyiscsLoaded = false
             this.size = props.size || 1
-            this.pixels = []
             this.mesh = new Mesh(this.position, this.size)
         }
 
         /**
-         * Build the Entity (define pixels, set properties ...)
+         * Build the Entity (generate pixels, set properties ...)
          */
         build() {
             throw new TypeError('"build" method must be implemented')
@@ -75,8 +74,9 @@ define(function (require) {
         setRotation(angle) {
             if (this.rotation !== angle) {
                 this.rotation = angle
-                this.isBuffered = false
-                this.generate()
+                if (this.clearBuffer()) {
+                    this.generate()
+                }
             }
         }
 
@@ -125,15 +125,16 @@ define(function (require) {
 
         /**
          * Update pixels using information in a specific context
-         * @param {CanvasRenderingContext2D} data 
-         * @param {int} sw
-         * @param {int} sh
+         * @param {CanvasRenderingContext2D} data
          */
         setPixelsByContext(context) {
             const sw = context.canvas.width, sh = context.canvas.height
-            const data = context.getImageData(0, 0, sw, sh).data
-            for (var iData = 0; iData < data.length; iData += 4) {
-                this.pixels[iData / 4] = [data[iData], data[iData + 1], data[iData + 2], data[iData + 3]]
+            if (sw && sh) {
+                this.mesh.clear({ width: sw, height: sh })
+                const data = context.getImageData(0, 0, sw, sh).data
+                for (var iData = 0; iData < data.length; iData += 4) {
+                    this.mesh.setPixel(iData / 4, [data[iData], data[iData + 1], data[iData + 2], data[iData + 3]])
+                }
             }
         }
 
@@ -142,7 +143,7 @@ define(function (require) {
          */
         clearBuffer() {
             this.isBuffered = false
-            return this.mesh.clear(this.size)
+            return this.mesh.clear()
         }
 
         /**
@@ -150,8 +151,7 @@ define(function (require) {
          */
         addToBuffer() {
             if (!this.isBuffered) {
-                this.mesh.clear(this.size)
-                this.mesh.add(this.pixels)
+                this.mesh.load()
                 this.isBuffered = true
                 return true
             }
