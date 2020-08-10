@@ -17,8 +17,8 @@ define(function (require) {
             this.physicsEngine.getBodies().map((body, index) => {
                 const entity = this.entityManager.entities[index]
                 const { x, y } = entity.fromCenterPosition(body.position)
-                entity.setPosition({ x, y })
-                entity.setRotation(body.angle)
+                entity.setPosition({ x: parseInt(x), y: parseInt(y) })
+                entity.setRotation(Math.round(body.angle * 100) / 100)
             })
         }
 

@@ -1,6 +1,6 @@
 define(function (require) {
 
-    const EllipseMenuItem = require('./items/EllipseMenuItem.js')
+    const CircleMenuItem = require('./items/CircleMenuItem.js')
     const RectMenuItem = require('./items/RectMenuItem.js')
     const LineMenuItem = require('./items/LineMenuItem.js')
     const PolyMenuItem = require('./items/PolyMenuItem.js')
@@ -10,7 +10,7 @@ define(function (require) {
     class Menu {
         constructor() {
             this.types = [
-                new EllipseMenuItem(),
+                new CircleMenuItem(),
                 new RectMenuItem(),
                 new LineMenuItem(),
                 new PolyMenuItem(),

@@ -4,7 +4,7 @@ define(function (require) {
     const Runner = require('./Runner.js')
     const AppState = require('../core/AppState.js')
     const Physics = require('../physics/Physics.js')
-    const MatterEngine = require('../physics/engine/MatterEngine.js')
+    const MatterEngine = require('../physics/engine/matter/Engine.js')
 
     class SimulateRunner extends Runner {
 

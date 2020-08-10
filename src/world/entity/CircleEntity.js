@@ -2,13 +2,13 @@ define(function (require) {
 
     const EntityMotion = require('../../entity/EntityMotion.js')
 
-    class EllipseEntity extends EntityMotion {
+    class CircleEntity extends EntityMotion {
 
         constructor(props) {
             super(props)
-            this.shape = EntityMotion.shapes.ELLIPSE
+            this.shape = EntityMotion.shapes.CIRCLE
             this.center = null
-            this.radius = {x: 0, y: 0}
+            this.radius = 0
         }
 
         /**
@@ -16,14 +16,14 @@ define(function (require) {
          */
         build() {
             const dragDistance = this.setMeshPositionByDragDistance()
-            this.size = { width: Math.abs(dragDistance.x), height: Math.abs(dragDistance.y) }
+            this.size = { width: Math.abs(dragDistance.x), height: Math.abs(dragDistance.x) }
             if (this.clearBuffer()) {
                 this.generate()
             }
         }
 
         /**
-         * Generate pixels for a ellipse
+         * Generate pixels for a circle
          */
         generate() {
             const { width, height } = this.getLargestRectangle(this.rotation, this.size)
@@ -32,15 +32,13 @@ define(function (require) {
             const context = canvas.getContext('2d')
             const centerX = sw / 2
             const centerY = sh / 2
-            const radiusX = sw / 2
-            const radiusY = sh / 2
             this.center = { x: centerX, y: centerY }
-            this.radius = { x: radiusX, y: radiusY }
+            this.radius = Math.abs(sw / 2 - 1)
             context.beginPath()
             context.translate(width / 2, height / 2)
             context.rotate(this.rotation)
             context.translate(-centerX, -centerY)
-            context.ellipse(centerX, centerY, radiusX, radiusY, 0, 0, 2 * Math.PI)
+            context.ellipse(centerX, centerY, this.radius, this.radius, 0, 0, 2 * Math.PI)
             context.stroke()
             this.setPixelsByContext(context)
         }
@@ -51,26 +49,7 @@ define(function (require) {
          * @param {Object} size 
          */
         getLargestRectangle(angleRadian, size) {
-            const cosA = Math.cos(angleRadian)
-            const sinA = Math.sin(angleRadian)
-            const points = [
-                { x: 0, y: 0 },
-                { x: size.width, y: 0 },
-                { x: 0, y: size.height },
-                { x: size.width, y: size.height }
-            ]
-            const rotatedPoints = points.map(({ x, y }) => ({
-                x: x * cosA - y * sinA,
-                y: x * sinA + y * cosA
-            }))
-            const minX = rotatedPoints.reduce((minX, current) => ((minX > current.x && current.x) || minX), rotatedPoints[0].x)
-            const maxX = rotatedPoints.reduce((maxX, current) => ((maxX < current.x && current.x) || maxX), rotatedPoints[0].x)
-            const minY = rotatedPoints.reduce((minY, current) => ((minY > current.y && current.y) || minY), rotatedPoints[0].y)
-            const maxY = rotatedPoints.reduce((maxY, current) => ((maxY < current.y && current.y) || maxY), rotatedPoints[0].y)
-            return {
-                width: Math.ceil(maxX - minX),
-                height: Math.ceil(maxY - minY)
-            }
+            return size
         }
 
         /**
@@ -95,5 +74,5 @@ define(function (require) {
 
     }
 
-    return EllipseEntity
+    return CircleEntity
 })

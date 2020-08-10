@@ -5,6 +5,7 @@ define(function (require) {
     const { MouseButton } = require('../core/Mouse.js')
     const EntityManager = require('../world/manager/EntityManager.js')
     const EllipseEntity = require('../world/entity/EllipseEntity.js')
+    const CircleEntity = require('../world/entity/CircleEntity.js')
     const RectEntity = require('../world/entity/RectEntity.js')
     const LineEntity = require('../world/entity/LineEntity.js')
     const PolyEntity = require('../world/entity/PolyEntity.js')
@@ -25,6 +26,9 @@ define(function (require) {
             const defaultStartEvent = (mouse) => mouse.isButtonPressed(MouseButton.LEFT)
             const defaultEndEvent = (mouse) => mouse.isButtonClicked(MouseButton.LEFT)
             const typeEntity = {
+                CIRCLE: {
+                    entity: CircleEntity
+                },
                 ELLIPSE: {
                     entity: EllipseEntity
                 },

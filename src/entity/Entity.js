@@ -181,7 +181,8 @@ define(function (require) {
         ELLIPSE: 'Ellipse',
         RECT: 'Rect',
         LINE: 'Line',
-        POLY: 'Poly'
+        POLY: 'Poly',
+        CIRCLE: 'Circle'
     }
 
     return Entity
