@@ -62,13 +62,12 @@ define(function (require) {
         }
 
         /**
-         * Generate pixels for the poly
+         * Generate mesh for the poly
          */
         generate() {
             const { width, height } = this.getLargestRectangle(this.rotation)
             const center = { x: this.size.width / 2, y: this.size.height / 2 }
             this.canvas = new OffscreenCanvas(width, height)
-            this.pixels = new Array(this.size.width * this.size.height)
             const context = this.canvas.getContext('2d')
             context.beginPath()
             context.translate(width / 2, height / 2)
@@ -76,7 +75,7 @@ define(function (require) {
             context.translate(-center.x, -center.y)
             this.drawPoints(context)
             context.stroke()
-            this.setPixelsByContext(context)
+            this.updateMeshFromContext(context)
         }
 
         /**

@@ -19,7 +19,7 @@ define(function (require) {
         }
 
         /**
-         * Generate pixels for the rect
+         * Generate mesh for the rect
          */
         generate() {
             const sw = this.size.width, sh = this.size.height
@@ -28,7 +28,7 @@ define(function (require) {
             context.beginPath()
             context.rect(0, 0, sw, sh)
             context.stroke()
-            this.setPixelsByContext(context)
+            this.updateMeshFromContext(context)
         }
 
         /**

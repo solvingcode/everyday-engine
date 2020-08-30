@@ -21,7 +21,7 @@ define(function (require) {
         }
 
         /**
-         * Generate pixels for the rect
+         * Generate mesh for the rect
          */
         generate() {
             const { width, height } = this.getLargestRectangle(this.rotation, this.size)
@@ -34,7 +34,7 @@ define(function (require) {
             context.translate(-center.x, -center.y)
             context.rect(0, 0, this.size.width, this.size.height)
             context.stroke()
-            this.setPixelsByContext(context)
+            this.updateMeshFromContext(context)
         }
 
         /**

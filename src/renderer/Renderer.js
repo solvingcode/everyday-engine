@@ -30,12 +30,8 @@ define(function (require) {
          * Clear the context
          */
         clear() {
-            rootContext.globalAlpha = 0
-            rootContext.putImageData(this.imgData, 0, 0)
-            rootContext.globalAlpha = 1
-            objectContext.globalAlpha = 0
-            objectContext.putImageData(this.imgData, 0, 0)
-            objectContext.globalAlpha = 1
+            rootContext.canvas.width = WINDOW_WIDTH
+            objectContext.canvas.width = WINDOW_WIDTH
         }
 
         /**

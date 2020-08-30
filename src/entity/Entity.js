@@ -21,14 +21,14 @@ define(function (require) {
         }
 
         /**
-         * Build the Entity (generate pixels, set properties ...)
+         * Build the Entity (generate mesh, set properties ...)
          */
         build() {
             throw new TypeError('"build" method must be implemented')
         }
 
         /**
-         * Generate pixels
+         * Generate mesh
          */
         generate(...params) {
             throw new TypeError('"generate" method must be implemented')
@@ -124,17 +124,14 @@ define(function (require) {
         }
 
         /**
-         * Update pixels using information in a specific context
-         * @param {CanvasRenderingContext2D} data
+         * Update the mesh from a given context
+         * @param {CanvasRenderingContext2D} context 
          */
-        setPixelsByContext(context) {
+        updateMeshFromContext(context){
             const sw = context.canvas.width, sh = context.canvas.height
             if (sw && sh) {
                 this.mesh.clear({ width: sw, height: sh })
-                const data = context.getImageData(0, 0, sw, sh).data
-                for (var iData = 0; iData < data.length; iData += 4) {
-                    this.mesh.setPixel(iData / 4, [data[iData], data[iData + 1], data[iData + 2], data[iData + 3]])
-                }
+                this.mesh.copy(context.canvas, 0, 0, sw, sh)
             }
         }
 
@@ -147,11 +144,10 @@ define(function (require) {
         }
 
         /**
-         * Add pixels built to the Mesh
+         * Set the buffer flag
          */
         addToBuffer() {
             if (!this.isBuffered) {
-                this.mesh.load()
                 this.isBuffered = true
                 return true
             }

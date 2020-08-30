@@ -13,7 +13,8 @@ define(function (require) {
                 [Entity.shapes.RECT]: RectangleShape,
                 [Entity.shapes.ELLIPSE]: EllipseShape,
                 [Entity.shapes.POLY]: PolyShape,
-                [Entity.shapes.CIRCLE]: CircleShape
+                [Entity.shapes.CIRCLE]: CircleShape,
+                [Entity.shapes.LINE]: PolyShape
             }
         }
 

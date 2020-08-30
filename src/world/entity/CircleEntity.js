@@ -23,7 +23,7 @@ define(function (require) {
         }
 
         /**
-         * Generate pixels for a circle
+         * Generate mesh for a circle
          */
         generate() {
             const { width, height } = this.getLargestRectangle(this.rotation, this.size)
@@ -40,7 +40,7 @@ define(function (require) {
             context.translate(-centerX, -centerY)
             context.ellipse(centerX, centerY, this.radius, this.radius, 0, 0, 2 * Math.PI)
             context.stroke()
-            this.setPixelsByContext(context)
+            this.updateMeshFromContext(context)
         }
 
         /**

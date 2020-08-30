@@ -5,17 +5,13 @@ define(function () {
             this.canvas = new OffscreenCanvas(WINDOW_WIDTH, WINDOW_HEIGHT)
             this.context = this.canvas.getContext('2d')
             this.imgData = this.context.createImageData(WINDOW_WIDTH, WINDOW_HEIGHT)
-            this.data = this.imgData.data
-            this.data.fill(0)
         }
 
         /**
          * Clear the context
          */
         clear() {
-            this.context.globalAlpha = 0
-            this.context.putImageData(this.imgData, 0, 0)
-            this.context.globalAlpha = 1
+            this.context.canvas.width = WINDOW_WIDTH
         }
 
         /**
@@ -27,7 +23,7 @@ define(function () {
             for (var iMesh in this.meshes) {
                 const mesh = this.meshes[iMesh]
                 const { x, y } = mesh.position
-                this.context.putImageData(mesh.imgData, x, y)
+                this.context.drawImage(mesh.context.canvas, x, y)
                 objectContext.drawImage(this.canvas, 0, 0)
             }
             this.meshes = []

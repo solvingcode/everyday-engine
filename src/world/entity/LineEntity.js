@@ -28,21 +28,40 @@ define(function (require) {
         }
 
         /**
-         * Generate pixels for the line
+         * Generate mesh for the line
          */
         generate() {
             const x0 = this.points[0].x, y0 = this.points[0].y
             const x1 = this.points[1].x, y1 = this.points[1].y
             const sizeX = Math.abs(x1 - x0)
             const sizeY = Math.abs(y1 - y0)
-            this.pixels = new Array(sizeX * sizeY)
             const canvas = new OffscreenCanvas(this.size.width, this.size.height)
             const context = canvas.getContext('2d')
             context.beginPath()
             context.moveTo(x0, y0)
             context.lineTo(x1, y1)
             context.stroke()
-            this.setPixelsByContext(context)
+            this.updateMeshFromContext(context)
+        }
+
+        /**
+         * @inherit
+         */
+        toCenterPosition() {
+            return {
+                x: this.position.x + this.mesh.size.width / 2,
+                y: this.position.y + this.mesh.size.height / 2
+            }
+        }
+
+        /**
+         * @inherit
+         */
+        fromCenterPosition(position) {
+            return {
+                x: position.x - this.mesh.size.width / 2,
+                y: position.y - this.mesh.size.height / 2
+            }
         }
 
     }
