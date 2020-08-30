@@ -19,7 +19,7 @@ define(function (require) {
             const drawer = DrawerRunner.get()
             const simulate = SimulateRunner.get()
             action.add(simulate, mouse)
-            if (mouse.isButtonPressed(MouseButton.LEFT)) {
+            if (mouse.isButtonClicked(MouseButton.LEFT)) {
                 action.add(menu, mouse.position)
             }
             if (mouse.isMouseMove()) {

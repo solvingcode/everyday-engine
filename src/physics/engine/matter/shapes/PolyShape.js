@@ -6,7 +6,7 @@ define(function (require) {
 
         get(entity, bodies){
             const centerPosition = entity.toCenterPosition()
-            bodies.fromVertices(centerPosition.x, centerPosition.y, entity.points)
+            return bodies.fromVertices(centerPosition.x, centerPosition.y, entity.points)
         }
 
     }
