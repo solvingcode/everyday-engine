@@ -30,6 +30,18 @@ define(function (require) {
         }
 
         /**
+         * Get the index of entity
+         * @param {Entity} entity
+         */
+        getIndexOf(entity) {
+            return this.entities.findIndex((element) =>
+                element instanceof entity.constructor &&
+                element.position.x === entity.position.x &&
+                element.position.y === entity.position.y
+            )
+        }
+
+        /**
          * Get an entity if founded, else create it
          * @param {int} x 
          * @param {int} y 
@@ -62,11 +74,19 @@ define(function (require) {
         }
 
         /**
+         * Delete entity from the entities list
+         * @param {Entity} entity 
+         */
+        delete(entity){
+            return this.entities.splice(this.getIndexOf(entity), 1)
+        }
+
+        /**
          * Make an entity.
          * @param {Entity} entity 
          */
         make(entity) {
-            EntityGenerator.make(entity)
+            return EntityGenerator.make(entity)
         }
 
         /**

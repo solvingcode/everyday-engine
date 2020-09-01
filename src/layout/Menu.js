@@ -12,8 +12,6 @@ define(function (require) {
             this.types = [
                 new CircleMenuItem(),
                 new RectMenuItem(),
-                new LineMenuItem(),
-                new PolyMenuItem(),
                 new SimulateMenuItem()
             ]
             this.setup()

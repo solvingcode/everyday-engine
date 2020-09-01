@@ -132,7 +132,9 @@ define(function (require) {
             if (sw && sh) {
                 this.mesh.clear({ width: sw, height: sh })
                 this.mesh.copy(context.canvas, 0, 0, sw, sh)
+                return true
             }
+            return false
         }
 
         /**

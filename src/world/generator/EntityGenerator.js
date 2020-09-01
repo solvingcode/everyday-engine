@@ -5,7 +5,7 @@ define(function () {
          * @param {Entity} entity 
          */
         static make(entity) {
-            entity.build()
+            return entity.build()
         }
     }
 

@@ -74,6 +74,10 @@ define(function () {
             this.keyclicks = []
             this.keydbclicks = []
         }
+
+        clearKeyPressed(){
+            this.keydowns = []
+        }
     }
 
     Mouse.MouseButton = {

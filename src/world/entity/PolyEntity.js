@@ -24,8 +24,9 @@ define(function (require) {
             this.size = { width: maxPoint.x - minPoint.x, height: maxPoint.y - minPoint.y }
             if (this.size.width > 0 && this.size.height > 0) {
                 this.clearBuffer()
-                this.generate()
+                return this.generate()
             }
+            return false
         }
 
         /**
@@ -66,16 +67,12 @@ define(function (require) {
          */
         generate() {
             const { width, height } = this.getLargestRectangle(this.rotation)
-            const center = { x: this.size.width / 2, y: this.size.height / 2 }
             this.canvas = new OffscreenCanvas(width, height)
             const context = this.canvas.getContext('2d')
             context.beginPath()
-            context.translate(width / 2, height / 2)
-            context.rotate(this.rotation)
-            context.translate(-center.x, -center.y)
             this.drawPoints(context)
             context.stroke()
-            this.updateMeshFromContext(context)
+            return this.updateMeshFromContext(context)
         }
 
         /**
@@ -101,16 +98,10 @@ define(function (require) {
          * @param {Object} size 
          */
         getLargestRectangle(angleRadian) {
-            const cosA = Math.cos(angleRadian)
-            const sinA = Math.sin(angleRadian)
-            const rotatedPoints = this.points.map(({ x, y }) => ({
-                x: x * cosA - y * sinA,
-                y: x * sinA + y * cosA
-            }))
-            const minX = rotatedPoints.reduce((minX, current) => ((minX > current.x && current.x) || minX), rotatedPoints[0].x)
-            const maxX = rotatedPoints.reduce((maxX, current) => ((maxX < current.x && current.x) || maxX), rotatedPoints[0].x)
-            const minY = rotatedPoints.reduce((minY, current) => ((minY > current.y && current.y) || minY), rotatedPoints[0].y)
-            const maxY = rotatedPoints.reduce((maxY, current) => ((maxY < current.y && current.y) || maxY), rotatedPoints[0].y)
+            const minX = this.points.reduce((minX, current) => ((minX > current.x && current.x) || minX), this.points[0].x)
+            const maxX = this.points.reduce((maxX, current) => ((maxX < current.x && current.x) || maxX), this.points[0].x)
+            const minY = this.points.reduce((minY, current) => ((minY > current.y && current.y) || minY), this.points[0].y)
+            const maxY = this.points.reduce((maxY, current) => ((maxY < current.y && current.y) || maxY), this.points[0].y)
             return {
                 width: Math.ceil(maxX - minX),
                 height: Math.ceil(maxY - minY)

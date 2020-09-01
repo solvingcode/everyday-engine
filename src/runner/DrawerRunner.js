@@ -1,6 +1,7 @@
 define(function (require) {
 
     const AppState = require('../core/AppState.js')
+    const Menu = require('../layout/Menu.js')
     const Runner = require('./Runner.js')
     const { MouseButton } = require('../core/Mouse.js')
     const EntityManager = require('../world/manager/EntityManager.js')
@@ -15,6 +16,7 @@ define(function (require) {
         constructor() {
             super()
             this.currentEntity = null
+            this.isCurrentDrawValid = false
         }
 
         /**
@@ -49,7 +51,7 @@ define(function (require) {
                 const props = entry[1]
                 const startEvent = props.startEvent || defaultStartEvent
                 const endEvent = props.endEvent || defaultEndEvent
-                if (startEvent(mouse) && appState.hasState(`TO_DRAW_${type}`)) {
+                if (startEvent(mouse) && appState.hasState(`TO_DRAW_${type}`) && this.isPositionValid(mouse)) {
                     this.startDraw(type)
                 }
                 if (endEvent(mouse) && appState.hasState(`DRAWING_${type}`)) {
@@ -58,8 +60,7 @@ define(function (require) {
                 if (appState.hasState(`DRAWING_${type}`)) {
                     this.draw(mouse.position, props.entity)
                 }
-            }
-            )
+            })
         }
 
         /**
@@ -79,9 +80,14 @@ define(function (require) {
          */
         endDraw(type) {
             const appState = AppState.get()
+            const entityManager = EntityManager.get()
             appState.removeState('DRAWING', false)
             appState.setUniqStateByGroup('TO_DRAW', type)
-            this.currentEntity.close()
+            if (this.isCurrentDrawValid) {
+                this.currentEntity.close()
+            } else {
+                entityManager.delete(this.currentEntity)
+            }
         }
 
         /**
@@ -94,7 +100,16 @@ define(function (require) {
             if (!this.currentEntity) {
                 this.currentEntity = entityManager.load(position.x, position.y, type)
             }
-            entityManager.make(this.currentEntity)
+            this.isCurrentDrawValid = entityManager.make(this.currentEntity)
+        }
+
+        /**
+         * Is position of the given mouse is valid (inside draw area)
+         * @param {Mouse} mouse 
+         */
+        isPositionValid(mouse) {
+            const menu = Menu.get()
+            return !menu.getItemAt(mouse.position.x, mouse.position.y)
         }
 
         static get() {

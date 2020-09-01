@@ -19,6 +19,9 @@ define(function (require) {
                 const { x, y } = entity.fromCenterPosition(body.position)
                 entity.setPosition({ x: parseInt(x), y: parseInt(y) })
                 entity.setRotation(Math.round(body.angle * 100) / 100)
+                if(typeof entity.setPoints === 'function'){
+                    entity.points = body.vertices.map(vertex => ({x: vertex.x, y: vertex.y}))
+                }
             })
         }
 

@@ -16,8 +16,9 @@ define(function (require) {
             const dragDistance = this.setMeshPositionByDragDistance()
             this.size = { width: Math.abs(dragDistance.x), height: Math.abs(dragDistance.y) }
             if (this.clearBuffer()) {
-                this.generate()
+                return this.generate()
             }
+            return false
         }
 
         /**
@@ -25,16 +26,19 @@ define(function (require) {
          */
         generate() {
             const { width, height } = this.getLargestRectangle(this.rotation, this.size)
-            const center = { x: this.size.width / 2, y: this.size.height / 2 }
-            const canvas = new OffscreenCanvas(width, height)
-            const context = canvas.getContext('2d')
-            context.beginPath()
-            context.translate(width / 2, height / 2)
-            context.rotate(this.rotation)
-            context.translate(-center.x, -center.y)
-            context.rect(0, 0, this.size.width, this.size.height)
-            context.stroke()
-            this.updateMeshFromContext(context)
+            if (width && height) {
+                const center = { x: this.size.width / 2, y: this.size.height / 2 }
+                const canvas = new OffscreenCanvas(width, height)
+                const context = canvas.getContext('2d')
+                context.beginPath()
+                context.translate(width / 2, height / 2)
+                context.rotate(this.rotation)
+                context.translate(-center.x, -center.y)
+                context.rect(0, 0, this.size.width, this.size.height)
+                context.stroke()
+                return this.updateMeshFromContext(context)
+            }
+            return false
         }
 
         /**

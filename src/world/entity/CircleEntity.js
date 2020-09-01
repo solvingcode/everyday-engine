@@ -18,8 +18,9 @@ define(function (require) {
             const dragDistance = this.setMeshPositionByDragDistance()
             this.size = { width: Math.abs(dragDistance.x), height: Math.abs(dragDistance.x) }
             if (this.clearBuffer()) {
-                this.generate()
+                return this.generate()
             }
+            return false
         }
 
         /**
@@ -40,7 +41,7 @@ define(function (require) {
             context.translate(-centerX, -centerY)
             context.ellipse(centerX, centerY, this.radius, this.radius, 0, 0, 2 * Math.PI)
             context.stroke()
-            this.updateMeshFromContext(context)
+            return this.updateMeshFromContext(context)
         }
 
         /**

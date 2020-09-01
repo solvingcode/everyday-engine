@@ -15,7 +15,7 @@ define(function (require) {
         build() {
             this.size = { width: WINDOW_WIDTH, height: 20 }
             this.clearBuffer()
-            this.generate()
+            return this.generate()
         }
 
         /**
@@ -28,7 +28,7 @@ define(function (require) {
             context.beginPath()
             context.rect(0, 0, sw, sh)
             context.stroke()
-            this.updateMeshFromContext(context)
+            return this.updateMeshFromContext(context)
         }
 
         /**
