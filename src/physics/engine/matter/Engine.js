@@ -11,14 +11,14 @@ define(function (require) {
 
         init() {
             this.engine = Matter.Engine.create()
-            this.shapeLoader = new ShapeLoader()
+            this.shapeLoader = new ShapeLoader(this)
         }
 
         /**
          * Add physics to the entity
          */
         add(entity) {
-            const shape = this.shapeLoader.load(entity, Matter.Bodies)
+            const shape = this.shapeLoader.load(entity, Matter.Bodies, Matter.Constraint)
             Matter.World.add(this.engine.world, shape)
         }
 

@@ -9,6 +9,7 @@ define(function (require) {
     const CircleEntity = require('../world/entity/CircleEntity.js')
     const RectEntity = require('../world/entity/RectEntity.js')
     const LineEntity = require('../world/entity/LineEntity.js')
+    const JointEntity = require('../world/entity/JointEntity.js')
     const PolyEntity = require('../world/entity/PolyEntity.js')
 
     class DrawerRunner extends Runner {
@@ -39,6 +40,9 @@ define(function (require) {
                 },
                 LINE: {
                     entity: LineEntity
+                },
+                JOINT: {
+                    entity: JointEntity
                 },
                 POLY: {
                     entity: PolyEntity,

@@ -103,6 +103,30 @@ define(function (require) {
         }
 
         /**
+         * Convert relative coordinate to absolute coordinate
+         * @param {Object} point Relative coordinate
+         */
+        toAbsolutePosition(point) {
+            return {
+                x: point.x + this.position.x,
+                y: point.y + this.position.y
+            }
+        }
+
+        /**
+         * Convert absolute coordinate to relative coordinate
+         * taking into consideration the center of the object
+         * @param {Object} point Absolute coordinate
+         */
+        toRelativeCenterPosition(point) {
+            const { x, y } = this.toCenterPosition()
+            return {
+                x: point.x - x,
+                y: point.y - y
+            }
+        }
+
+        /**
          * Update the Mesh position related to the distance
          * between the click mouse position and the actual
          * position of the mouse, and return the drag distance
@@ -127,7 +151,7 @@ define(function (require) {
          * Update the mesh from a given context
          * @param {CanvasRenderingContext2D} context 
          */
-        updateMeshFromContext(context){
+        updateMeshFromContext(context) {
             const sw = context.canvas.width, sh = context.canvas.height
             if (sw && sh) {
                 this.mesh.clear({ width: sw, height: sh })
@@ -172,6 +196,18 @@ define(function (require) {
                 physicsEngine.add(this)
                 this.isPhyiscsLoaded = true
             }
+        }
+
+        /**
+         * Check if point is inside the entity (using size)
+         * Method can be overwride by the subentities for more precision
+         * @param {Object} point absolute coordinate
+         */
+        includes(point) {
+            return point.x >= this.position.x &&
+                point.x <= this.position.x + this.size.width &&
+                point.y >= this.position.y &&
+                point.y <= this.position.y + this.size.height
         }
     }
 

@@ -1,13 +1,15 @@
 define(function (require) {
 
     const EntityMotion = require('../../entity/EntityMotion.js')
+    const EntitySelector = require('../manager/EntitySelector.js')
 
     class JointEntity extends EntityMotion {
 
         constructor(props) {
             super(props)
             this.shape = EntityMotion.shapes.LINE
-            this.points = []
+            this.points = { a: null, b: null }
+            this.entities = { a: null, b: null }
         }
 
         /**
@@ -19,10 +21,11 @@ define(function (require) {
             if (this.size.width > 0 && this.size.height > 0) {
                 this.clearBuffer()
                 if (dragDistance.x * dragDistance.y < 0) {
-                    this.points = [{ x: this.size.width, y: 0 }, { x: 0, y: this.size.height }]
+                    this.points = { a: { x: this.size.width, y: 0 }, b: { x: 0, y: this.size.height } }
                 } else {
-                    this.points = [{ x: 0, y: 0 }, { x: this.size.width, y: this.size.height }]
+                    this.points = { a: { x: 0, y: 0 }, b: { x: this.size.width, y: this.size.height } }
                 }
+                this.setConstraintEntites()
                 return this.generate()
             }
         }
@@ -31,8 +34,8 @@ define(function (require) {
          * Generate mesh for the line
          */
         generate() {
-            const x0 = this.points[0].x, y0 = this.points[0].y
-            const x1 = this.points[1].x, y1 = this.points[1].y
+            const x0 = this.points.a.x, y0 = this.points.a.y
+            const x1 = this.points.b.x, y1 = this.points.b.y
             const canvas = new OffscreenCanvas(this.size.width, this.size.height)
             const context = canvas.getContext('2d')
             context.beginPath()
@@ -40,6 +43,21 @@ define(function (require) {
             context.lineTo(x1, y1)
             context.stroke()
             return this.updateMeshFromContext(context)
+        }
+
+        /**
+         * Find related entities using point a and b, and attach them to the joint
+         */
+        setConstraintEntites(){
+            const entitySelector = EntitySelector.get()
+            this.entities.a = entitySelector.get(this.toAbsolutePosition(this.points.a))
+            this.entities.b = entitySelector.get(this.toAbsolutePosition(this.points.b))
+            if(this.entities.a instanceof JointEntity){
+                this.entities.a = null
+            }
+            if(this.entities.b instanceof JointEntity){
+                this.entities.b = null
+            }
         }
 
         /**

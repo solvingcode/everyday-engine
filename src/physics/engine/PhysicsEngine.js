@@ -44,6 +44,22 @@ define(function () {
             throw new TypeError('"getBodies" method must be implemented')
         }
 
+        /**
+         * Set the physics manager that loaded the phyiscs engine
+         * @param {Physics} physicsManager 
+         */
+        setPhysicsManager(physicsManager){
+            this.physicsManager = physicsManager
+        }
+
+        /**
+         * Get body physics from the entity
+         * @param {Entity} entity 
+         */
+        getBodyFromEntity(entity){
+            return this.physicsManager.getBodyFromEntity(entity)
+        }
+
     }
 
     return PhysicsEngine

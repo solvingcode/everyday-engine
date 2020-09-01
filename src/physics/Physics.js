@@ -8,6 +8,7 @@ define(function (require) {
         constructor(physicsEngine) {
             this.entityManager = EntityManager.get()
             this.physicsEngine = physicsEngine
+            this.physicsEngine.setPhysicsManager(this)
         }
 
         /**
@@ -19,9 +20,22 @@ define(function (require) {
                 const { x, y } = entity.fromCenterPosition(body.position)
                 entity.setPosition({ x: parseInt(x), y: parseInt(y) })
                 entity.setRotation(Math.round(body.angle * 100) / 100)
-                if(typeof entity.setPoints === 'function'){
-                    entity.points = body.vertices.map(vertex => ({x: vertex.x, y: vertex.y}))
+                if (typeof entity.setPoints === 'function') {
+                    entity.points = body.vertices.map(vertex => ({ x: vertex.x, y: vertex.y }))
                 }
+            })
+        }
+
+        /**
+         * Get the body phyiscs from the given entity
+         * @param {Entity} entity 
+         */
+        getBodyFromEntity(entity) {
+            return this.physicsEngine.getBodies().find((body, index) => {
+                const attachedEntity = this.entityManager.entities[index]
+                return attachedEntity.position.x === entity.position.x &&
+                    attachedEntity.position.y === entity.position.y &&
+                    attachedEntity.constructor === entity.constructor
             })
         }
 
