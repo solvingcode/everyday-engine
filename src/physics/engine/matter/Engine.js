@@ -45,6 +45,13 @@ define(function (require) {
             return Matter.Composite.allBodies(this.engine.world)
         }
 
+        /**
+         * @Inherit
+         */
+        getJoints(){
+            return Matter.Composite.allConstraints(this.engine.world)
+        }
+
     }
 
     return MatterEngine

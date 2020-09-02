@@ -115,7 +115,7 @@ define(function (require) {
 
         /**
          * Convert absolute coordinate to relative coordinate
-         * taking into consideration the center of the object
+         * based to the center of the object
          * @param {Object} point Absolute coordinate
          */
         toRelativeCenterPosition(point) {
@@ -123,6 +123,18 @@ define(function (require) {
             return {
                 x: point.x - x,
                 y: point.y - y
+            }
+        }
+
+        /**
+         * Convert relative coordinate (based to the center) to absolute coordinate
+         * @param {Object} point Absolute coordinate
+         */
+        fromRelativeCenterPosition(point) {
+            const { x, y } = this.toCenterPosition()
+            return {
+                x: x + point.x,
+                y: y + point.y
             }
         }
 

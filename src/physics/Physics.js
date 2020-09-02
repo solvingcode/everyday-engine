@@ -1,7 +1,7 @@
 define(function (require) {
 
     const EntityManager = require('../world/manager/EntityManager.js')
-    const EntityMotion = require('../entity/EntityMotion.js')
+    const JointEntity = require('../world/entity/JointEntity.js')
 
     class Physics {
 
@@ -15,14 +15,20 @@ define(function (require) {
          * Update all entities.
          */
         update() {
+            const allEntities = this.entityManager.entities
+            const jointEntites = this.entityManager.entities.filter(entity => entity.constructor === JointEntity)
             this.physicsEngine.getBodies().map((body, index) => {
-                const entity = this.entityManager.entities[index]
+                const entity = allEntities[index]
                 const { x, y } = entity.fromCenterPosition(body.position)
                 entity.setPosition({ x: parseInt(x), y: parseInt(y) })
                 entity.setRotation(Math.round(body.angle * 100) / 100)
-                if (typeof entity.setPoints === 'function') {
-                    entity.points = body.vertices.map(vertex => ({ x: vertex.x, y: vertex.y }))
-                }
+            })
+            this.physicsEngine.getJoints().map((joint, index) => {
+                const entity = jointEntites[index]
+                const pointA = entity.entities.a.fromRelativeCenterPosition(joint.pointA)
+                const pointB = entity.entities.b.fromRelativeCenterPosition(joint.pointB)
+                entity.setPosition({ x: parseInt(pointA.x), y: parseInt(pointA.y) })
+                entity.updatePoints(pointA, pointB)
             })
         }
 

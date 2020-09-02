@@ -17,6 +17,17 @@ define(function (require) {
          */
         build() {
             const dragDistance = this.setMeshPositionByDragDistance()
+            if (this.generatePoints(dragDistance)) {
+                this.setConstraintEntites()
+                return this.generate()
+            }
+            return false
+        }
+
+        /**
+         * Generate points from drag distance
+         */
+        generatePoints(dragDistance) {
             this.size = { width: Math.abs(dragDistance.x), height: Math.abs(dragDistance.y) }
             if (this.size.width > 0 && this.size.height > 0) {
                 this.clearBuffer()
@@ -25,9 +36,9 @@ define(function (require) {
                 } else {
                     this.points = { a: { x: 0, y: 0 }, b: { x: this.size.width, y: this.size.height } }
                 }
-                this.setConstraintEntites()
-                return this.generate()
+                return true
             }
+            return false
         }
 
         /**
@@ -48,15 +59,26 @@ define(function (require) {
         /**
          * Find related entities using point a and b, and attach them to the joint
          */
-        setConstraintEntites(){
+        setConstraintEntites() {
             const entitySelector = EntitySelector.get()
             this.entities.a = entitySelector.get(this.toAbsolutePosition(this.points.a))
             this.entities.b = entitySelector.get(this.toAbsolutePosition(this.points.b))
-            if(this.entities.a instanceof JointEntity){
+            if (this.entities.a instanceof JointEntity) {
                 this.entities.a = null
             }
-            if(this.entities.b instanceof JointEntity){
+            if (this.entities.b instanceof JointEntity) {
                 this.entities.b = null
+            }
+        }
+
+        /**
+         * Update points (A, B) from an absolute positions
+         * @param {Object} point 
+         */
+        updatePoints(pointA, pointB) {
+            const dragDistance = { x: parseInt(pointB.x - pointA.x), y: parseInt(pointB.y - pointA.y) }
+            if (this.generatePoints(dragDistance) && this.clearBuffer()) {
+                this.generate()
             }
         }
 

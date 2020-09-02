@@ -45,6 +45,13 @@ define(function () {
         }
 
         /**
+         * Get joints informations (position, ...)
+         */
+        getJoints() {
+            throw new TypeError('"getJoints" method must be implemented')
+        }
+
+        /**
          * Set the physics manager that loaded the phyiscs engine
          * @param {Physics} physicsManager 
          */

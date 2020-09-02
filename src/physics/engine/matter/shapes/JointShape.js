@@ -11,8 +11,7 @@ define(function (require) {
             const bodyB = this.getBodyFromEntity(entities.b)
             const pointA = entities.a.toRelativeCenterPosition(entity.toAbsolutePosition(points.a))
             const pointB = entities.b.toRelativeCenterPosition(entity.toAbsolutePosition(points.b))
-            console.log(bodyA, bodyB, pointA, pointB)
-            return constraint.create(bodyA, pointA, bodyB, pointB)
+            return constraint.create({bodyA, pointA, bodyB, pointB})
         }
 
     }
