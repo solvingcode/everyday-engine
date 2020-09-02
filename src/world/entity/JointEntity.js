@@ -18,8 +18,7 @@ define(function (require) {
         build() {
             const dragDistance = this.setMeshPositionByDragDistance()
             if (this.generatePoints(dragDistance)) {
-                this.setConstraintEntites()
-                return this.generate()
+                return this.setConstraintEntites() && this.generate()
             }
             return false
         }
@@ -69,6 +68,7 @@ define(function (require) {
             if (this.entities.b instanceof JointEntity) {
                 this.entities.b = null
             }
+            return this.entities.a && this.entities.b
         }
 
         /**
@@ -78,6 +78,14 @@ define(function (require) {
         updatePoints(pointA, pointB) {
             const dragDistance = { x: parseInt(pointB.x - pointA.x), y: parseInt(pointB.y - pointA.y) }
             if (this.generatePoints(dragDistance) && this.clearBuffer()) {
+                let newX = pointA.x, newY = pointA.y
+                if(dragDistance.x <= 0){
+                    newX = pointB.x
+                }
+                if(dragDistance.y <= 0){
+                    newY = pointB.y
+                }
+                this.setPosition({ x: parseInt(newX), y: parseInt(newY) })
                 this.generate()
             }
         }
@@ -87,8 +95,8 @@ define(function (require) {
          */
         toCenterPosition() {
             return {
-                x: this.position.x + this.mesh.size.width / 2,
-                y: this.position.y + this.mesh.size.height / 2
+                x: this.mesh.position.x + this.mesh.size.width / 2,
+                y: this.mesh.position.y + this.mesh.size.height / 2
             }
         }
 

@@ -108,8 +108,8 @@ define(function (require) {
          */
         toAbsolutePosition(point) {
             return {
-                x: point.x + this.position.x,
-                y: point.y + this.position.y
+                x: point.x + this.mesh.position.x,
+                y: point.y + this.mesh.position.y
             }
         }
 

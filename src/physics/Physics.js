@@ -27,7 +27,6 @@ define(function (require) {
                 const entity = jointEntites[index]
                 const pointA = entity.entities.a.fromRelativeCenterPosition(joint.pointA)
                 const pointB = entity.entities.b.fromRelativeCenterPosition(joint.pointB)
-                entity.setPosition({ x: parseInt(pointA.x), y: parseInt(pointA.y) })
                 entity.updatePoints(pointA, pointB)
             })
         }
