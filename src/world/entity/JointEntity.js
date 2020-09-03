@@ -68,6 +68,9 @@ define(function (require) {
             if (this.entities.b instanceof JointEntity) {
                 this.entities.b = null
             }
+            if(this.entities.a === this.entities.b){
+                this.entities.b = null
+            }
             return this.entities.a && this.entities.b
         }
 

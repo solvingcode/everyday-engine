@@ -98,6 +98,22 @@ define(function (require) {
             }
         }
 
+        /**
+         * Get all entities of specific type
+         * @param {Entity} type 
+         */
+        getEntitiesAs(type){
+            return this.entities.filter(entity => entity.constructor === type)
+        }
+
+        /**
+         * Get all entities does not of specific type
+         * @param {Entity} type 
+         */
+        getEntitiesNotAs(type){
+            return this.entities.filter(entity => entity.constructor !== type)
+        }
+
     }
 
     EntityManager.instance = null

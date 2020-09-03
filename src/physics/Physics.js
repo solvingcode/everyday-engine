@@ -15,10 +15,10 @@ define(function (require) {
          * Update all entities.
          */
         update() {
-            const allEntities = this.entityManager.entities
-            const jointEntites = this.entityManager.entities.filter(entity => entity.constructor === JointEntity)
+            const bodyEntities = this.entityManager.getEntitiesNotAs(JointEntity)
+            const jointEntites = this.entityManager.getEntitiesAs(JointEntity)
             this.physicsEngine.getBodies().map((body, index) => {
-                const entity = allEntities[index]
+                const entity = bodyEntities[index]
                 const { x, y } = entity.fromCenterPosition(body.position)
                 entity.setPosition({ x: parseInt(x), y: parseInt(y) })
                 entity.setRotation(Math.round(body.angle * 100) / 100)
@@ -36,8 +36,9 @@ define(function (require) {
          * @param {Entity} entity 
          */
         getBodyFromEntity(entity) {
+            const bodyEntities = this.entityManager.getEntitiesNotAs(JointEntity)
             return this.physicsEngine.getBodies().find((body, index) => {
-                const attachedEntity = this.entityManager.entities[index]
+                const attachedEntity = bodyEntities[index]
                 return attachedEntity.position.x === entity.position.x &&
                     attachedEntity.position.y === entity.position.y &&
                     attachedEntity.constructor === entity.constructor
