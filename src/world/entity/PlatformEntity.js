@@ -1,12 +1,12 @@
 define(function (require) {
 
-    const Entity = require('../../entity/Entity.js')
+    const EntityMotion = require('../../entity/EntityMotion.js')
 
-    class PlatformEntity extends Entity {
+    class PlatformEntity extends EntityMotion {
 
         constructor(props) {
             super(props)
-            this.shape = Entity.shapes.RECT
+            this.shape = EntityMotion.shapes.RECT
         }
 
         /**

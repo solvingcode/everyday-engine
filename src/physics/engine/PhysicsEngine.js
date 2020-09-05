@@ -52,6 +52,21 @@ define(function () {
         }
 
         /**
+         * Create new group of collision
+         */
+        newGroup() {
+            throw new TypeError('"newGroup" method must be implemented')
+        }
+
+        /**
+         * Update collision filters for the entity.
+         * @param {Entity} entity 
+         */
+        updateCollisionFilters(entity) {
+            throw new TypeError('"updateCollisionFilters" method must be implemented')
+        }
+
+        /**
          * Set the physics manager that loaded the phyiscs engine
          * @param {Physics} physicsManager 
          */

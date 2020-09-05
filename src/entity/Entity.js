@@ -211,6 +211,16 @@ define(function (require) {
         }
 
         /**
+         * Update collision filters for the physic engine
+         * @param {PhysicsEngine} physicsEngine 
+         */
+        updateCollisionFilters(physicsEngine) {
+            if (this.isPhyiscsLoaded) {
+                physicsEngine.updateCollisionFilters(this)
+            }
+        }
+
+        /**
          * Check if point is inside the entity (using size)
          * Method can be overwride by the subentities for more precision
          * @param {Object} point absolute coordinate

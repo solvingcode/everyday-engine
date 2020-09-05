@@ -48,8 +48,24 @@ define(function (require) {
         /**
          * @Inherit
          */
-        getJoints(){
+        getJoints() {
             return Matter.Composite.allConstraints(this.engine.world)
+        }
+
+        /**
+         * @Inherit
+         */
+        newGroup() {
+            return Matter.Body.nextGroup(true)
+        }
+
+        /**
+         * @Inherit
+         */
+        updateCollisionFilters(entity) {
+            const body = this.getBodyFromEntity(entity)
+            body.collisionFilter = entity.collision
+            return true
         }
 
     }

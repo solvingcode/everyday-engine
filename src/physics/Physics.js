@@ -64,6 +64,8 @@ define(function (require) {
          */
         load() {
             this.entityManager.entities.map(entity => entity.loadPhysics(this.physicsEngine))
+            const bodyEntities = this.entityManager.getEntitiesNotAs(JointEntity)
+            bodyEntities.map(entity => entity.updateCollisionFilters(this.physicsEngine))
         }
 
         /**

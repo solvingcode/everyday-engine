@@ -17,6 +17,7 @@ define(function (require) {
                 speed: 0.7,
                 gravity: 20
             }
+            this.collision = { group: 0, category: 1, mask: 1 }
         }
 
         /**

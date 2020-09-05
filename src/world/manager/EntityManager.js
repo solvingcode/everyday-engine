@@ -77,7 +77,7 @@ define(function (require) {
          * Delete entity from the entities list
          * @param {Entity} entity 
          */
-        delete(entity){
+        delete(entity) {
             return this.entities.splice(this.getIndexOf(entity), 1)
         }
 
@@ -102,16 +102,16 @@ define(function (require) {
          * Get all entities of specific type
          * @param {Entity} type 
          */
-        getEntitiesAs(type){
-            return this.entities.filter(entity => entity.constructor === type)
+        getEntitiesAs(type) {
+            return this.entities.filter(entity => entity instanceof type)
         }
 
         /**
          * Get all entities does not of specific type
          * @param {Entity} type 
          */
-        getEntitiesNotAs(type){
-            return this.entities.filter(entity => entity.constructor !== type)
+        getEntitiesNotAs(type) {
+            return this.entities.filter(entity => !(entity instanceof type))
         }
 
     }

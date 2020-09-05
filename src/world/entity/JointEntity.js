@@ -10,6 +10,7 @@ define(function (require) {
             this.shape = EntityMotion.shapes.LINE
             this.points = { a: null, b: null }
             this.entities = { a: null, b: null }
+            this.attached = false
         }
 
         /**

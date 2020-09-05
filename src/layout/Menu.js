@@ -3,6 +3,7 @@ define(function (require) {
     const CircleMenuItem = require('./items/CircleMenuItem.js')
     const RectMenuItem = require('./items/RectMenuItem.js')
     const JointMenuItem = require('./items/JointMenuItem.js')
+    const AttachJointMenuItem = require('./items/AttachJointMenuItem.js')
     const SimulateMenuItem = require('./items/SimulateMenuItem.js')
     const Button = require('../renderer/ui/Button.js')
 
@@ -12,6 +13,7 @@ define(function (require) {
                 new CircleMenuItem(),
                 new RectMenuItem(),
                 new JointMenuItem(),
+                new AttachJointMenuItem(),
                 new SimulateMenuItem()
             ]
             this.setup()
