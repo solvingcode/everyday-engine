@@ -8,7 +8,7 @@ define(function (require) {
             super({
                 ...props,
                 style: {
-                    color: '00FF00'
+                    color: '#00FF00'
                 }
             })
             this.attached = true
@@ -53,11 +53,14 @@ define(function (require) {
         /**
          * @inheritdoc
          */
-        generate() {
-            this.points.a.y += this.getArrowProps().height / 2
-            this.points.b.y += this.getArrowProps().height / 2
-            this.entities.a.attachedTo = this.entities.b
-            return super.generate()
+        setConstraintEntites() {
+            if (super.setConstraintEntites()) {
+                this.points.a.y += this.getArrowProps().height / 2
+                this.points.b.y += this.getArrowProps().height / 2
+                this.entities.a.attachedTo = this.entities.b
+                return true
+            }
+            return false
         }
 
         /**

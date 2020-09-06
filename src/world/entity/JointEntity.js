@@ -6,7 +6,7 @@ define(function (require) {
     class JointEntity extends EntityMotion {
 
         constructor(props) {
-            props.style = props.style || { color: '0000FF' }
+            props.style = props.style || { color: '#0000FF' }
             super(props)
             this.shape = EntityMotion.shapes.LINE
             this.points = { a: null, b: null }
@@ -76,7 +76,7 @@ define(function (require) {
          * @param {Object} pointTo 
          */
         drawLine(context, pointFrom, pointTo) {
-            context.strokeStyle = `#${this.style.color}`
+            context.strokeStyle = this.style.color
             context.beginPath()
             context.moveTo(pointFrom.x, pointFrom.y)
             context.lineTo(pointTo.x, pointTo.y)

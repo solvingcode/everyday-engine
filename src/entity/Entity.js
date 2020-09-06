@@ -11,6 +11,7 @@ define(function (require) {
             if (this.constructor === Entity) {
                 throw new TypeError('Abstract class Entity cannot be instantiated directly')
             }
+            props.style = props.style || { color: '#000000' }
             this.props = props
             this.position = props.position
             this.rotation = props.rotation || 0
@@ -21,7 +22,7 @@ define(function (require) {
             this.selectable = true
             this.selected = false
             this.focused = false
-            this.style = props.style || { color: '000000' }
+            this.style = props.style
         }
 
         /**
@@ -89,7 +90,7 @@ define(function (require) {
          * @param {Integer} angle 
          */
         setStyle(style) {
-            this.style = { ...style }
+            this.style = style
             if (this.clearBuffer()) {
                 this.generate()
             }
@@ -99,13 +100,15 @@ define(function (require) {
          * Select the current entity (apply styles, ...)
          */
         select() {
-            this.setStyle({ color: 'FF00FF' })
+            this.selected = true
+            this.setStyle({ color: '#FF00FF', fillColor: 'rgba(255, 0, 255, 0.2)' })
         }
 
         /**
          * Unselect the current entity (apply styles, ...)
          */
         unselect() {
+            this.selected = false
             this.setStyle(this.props.style)
         }
 

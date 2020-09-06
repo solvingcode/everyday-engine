@@ -25,7 +25,7 @@ define(function (require) {
             const sw = this.size.width, sh = this.size.height
             const canvas = new OffscreenCanvas(sw, sh)
             const context = canvas.getContext('2d')
-            context.strokeStyle = `#${this.style.color}`
+            context.strokeStyle = this.style.color
             context.beginPath()
             context.rect(0, 0, sw, sh)
             context.stroke()

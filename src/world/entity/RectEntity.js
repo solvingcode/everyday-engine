@@ -30,13 +30,19 @@ define(function (require) {
                 const center = { x: this.size.width / 2, y: this.size.height / 2 }
                 const canvas = new OffscreenCanvas(width, height)
                 const context = canvas.getContext('2d')
-                context.strokeStyle = `#${this.style.color}`
+                context.strokeStyle = this.style.color
+                if (this.style.fillColor) {
+                    context.fillStyle = this.style.fillColor
+                }
                 context.beginPath()
                 context.translate(width / 2, height / 2)
                 context.rotate(this.rotation)
                 context.translate(-center.x, -center.y)
                 context.rect(0, 0, this.size.width, this.size.height)
                 context.stroke()
+                if (this.style.fillColor) {
+                    context.fill()
+                }
                 return this.updateMeshFromContext(context)
             }
             return false
