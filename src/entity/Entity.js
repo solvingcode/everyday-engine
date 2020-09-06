@@ -103,6 +103,17 @@ define(function (require) {
         }
 
         /**
+         * Move current entity from point A to B
+         * @param {Object} pointA absolute position
+         * @param {Object} pointB absolute position
+         */
+        movePointTo(pointA, pointB) {
+            const x = this.position.x + pointB.x - pointA.x
+            const y = this.position.y + pointB.y - pointA.y
+            this.setPosition({ x, y })
+        }
+
+        /**
          * Convert relative coordinate to absolute coordinate
          * @param {Object} point Relative coordinate
          */
@@ -207,16 +218,6 @@ define(function (require) {
             if (!this.isPhyiscsLoaded) {
                 physicsEngine.add(this)
                 this.isPhyiscsLoaded = true
-            }
-        }
-
-        /**
-         * Update collision filters for the physic engine
-         * @param {PhysicsEngine} physicsEngine 
-         */
-        updateCollisionFilters(physicsEngine) {
-            if (this.isPhyiscsLoaded) {
-                physicsEngine.updateCollisionFilters(this)
             }
         }
 

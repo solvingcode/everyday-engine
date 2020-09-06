@@ -9,8 +9,8 @@ define(function (require) {
             const entities = entity.entities
             const bodyA = this.getBodyFromEntity(entities.a)
             const bodyB = this.getBodyFromEntity(entities.b)
-            const pointA = entities.a.toRelativeCenterPosition(entity.toAbsolutePosition(points.a))
-            const pointB = entities.b.toRelativeCenterPosition(entity.toAbsolutePosition(points.b))
+            const pointA = entities.a.getRelativeCenterPosition(entity, points.a)
+            const pointB = entities.b.getRelativeCenterPosition(entity, points.b)
             const stiffness = 1
             if (!bodyA || !bodyB) {
                 throw new ReferenceError('Body not yet created or entity not founded')

@@ -30,6 +30,7 @@ define(function (require) {
                 const center = { x: this.size.width / 2, y: this.size.height / 2 }
                 const canvas = new OffscreenCanvas(width, height)
                 const context = canvas.getContext('2d')
+                context.strokeStyle = `#${this.style.color}`
                 context.beginPath()
                 context.translate(width / 2, height / 2)
                 context.rotate(this.rotation)

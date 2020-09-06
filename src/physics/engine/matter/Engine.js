@@ -68,6 +68,23 @@ define(function (require) {
             return true
         }
 
+        /**
+         * @Inherit
+         */
+        updateJointPosition(entity) {
+            const points = entity.points
+            const entities = entity.entities
+            const pointA = entity.toAbsolutePosition(points.a)
+            const pointB = entity.toAbsolutePosition(points.b)
+            if (entity.attached) {
+                entities.a.movePointTo(pointA, pointB)
+                entity.movePointTo(pointA, pointB)
+                entity.updatePoints(pointB, { x: pointB.x + 1, y: pointB.y + 1 })
+                return true
+            }
+            return false
+        }
+
     }
 
     return MatterEngine

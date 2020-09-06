@@ -18,6 +18,7 @@ define(function (require) {
                 gravity: 20
             }
             this.collision = { group: 0, category: 1, mask: 1 }
+            this.style = { color: '000000' }
         }
 
         /**
@@ -54,6 +55,37 @@ define(function (require) {
             this.physics.acceleration.x = dx * this.physics.speed
             this.physics.acceleration.y = dy * this.physics.speed / 10
         }
+
+        /**
+         * Update collision filters for the physic engine
+         * @param {PhysicsEngine} physicsEngine 
+         */
+        updateCollisionFilters(physicsEngine) {
+            if (this.isPhyiscsLoaded) {
+                physicsEngine.updateCollisionFilters(this)
+            }
+        }
+
+        /**
+         * Update position for entities attached
+         * @param {PhysicsEngine} physicsEngine 
+         */
+        updateJointPosition(physicsEngine) {
+            if (!this.isPhyiscsLoaded) {
+                physicsEngine.updateJointPosition(this)
+            }
+        }
+        
+        /**
+         * Get the relative position of a point inside the current entity
+         * from a relative point inside a given entity
+         * @param {Entity} entity 
+         * @param {Object} point 
+         */
+        getRelativeCenterPosition(entity, point){
+            return this.toRelativeCenterPosition(entity.toAbsolutePosition(point))
+        }
+
     }
 
     return EntityMotion

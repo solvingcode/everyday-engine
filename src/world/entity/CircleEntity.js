@@ -35,6 +35,7 @@ define(function (require) {
             const centerY = sh / 2
             this.center = { x: centerX, y: centerY }
             this.radius = Math.abs(sw / 2 - 1)
+            context.strokeStyle = `#${this.style.color}`
             context.beginPath()
             context.translate(width / 2, height / 2)
             context.rotate(this.rotation)

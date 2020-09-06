@@ -7,6 +7,7 @@ define(function (require) {
         constructor(props) {
             super(props)
             this.attached = true
+            this.style.color = '00FF00'
         }
 
     }

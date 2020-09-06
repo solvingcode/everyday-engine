@@ -11,6 +11,7 @@ define(function (require) {
             this.points = { a: null, b: null }
             this.entities = { a: null, b: null }
             this.attached = false
+            this.style.color = 'FF0000'
         }
 
         /**
@@ -49,6 +50,7 @@ define(function (require) {
             const x1 = this.points.b.x, y1 = this.points.b.y
             const canvas = new OffscreenCanvas(this.size.width, this.size.height)
             const context = canvas.getContext('2d')
+            context.strokeStyle = `#${this.style.color}`
             context.beginPath()
             context.moveTo(x0, y0)
             context.lineTo(x1, y1)

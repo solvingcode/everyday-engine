@@ -63,9 +63,33 @@ define(function (require) {
          * Load the physics for entites
          */
         load() {
+            return this.before() && this.setup() && this.after()
+        }
+
+        /**
+         * Init the phyiscs for entities before loading
+         */
+        before() {
+            const jointEntities = this.entityManager.getEntitiesAs(JointEntity)
+            jointEntities.map(entity => entity.updateJointPosition(this.physicsEngine))
+            return true
+        }
+
+        /**
+         * Setup the physics for entities
+         */
+        setup() {
             this.entityManager.entities.map(entity => entity.loadPhysics(this.physicsEngine))
+            return true
+        }
+
+        /**
+         * Complete the physics after setup
+         */
+        after() {
             const bodyEntities = this.entityManager.getEntitiesNotAs(JointEntity)
             bodyEntities.map(entity => entity.updateCollisionFilters(this.physicsEngine))
+            return true
         }
 
         /**
