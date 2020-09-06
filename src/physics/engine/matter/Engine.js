@@ -39,28 +39,28 @@ define(function (require) {
         }
 
         /**
-         * @Inherit
+         * @inheritdoc
          */
         getBodies() {
             return Matter.Composite.allBodies(this.engine.world)
         }
 
         /**
-         * @Inherit
+         * @inheritdoc
          */
         getJoints() {
             return Matter.Composite.allConstraints(this.engine.world)
         }
 
         /**
-         * @Inherit
+         * @inheritdoc
          */
         newGroup() {
             return Matter.Body.nextGroup(true)
         }
 
         /**
-         * @Inherit
+         * @inheritdoc
          */
         updateCollisionFilters(entity) {
             const body = this.getBodyFromEntity(entity)
@@ -69,7 +69,7 @@ define(function (require) {
         }
 
         /**
-         * @Inherit
+         * @inheritdoc
          */
         updateJointPosition(entity) {
             const points = entity.points
