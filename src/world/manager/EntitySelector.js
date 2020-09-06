@@ -7,8 +7,23 @@ define(function (require) {
             this.entities = []
         }
 
-        get(point){
+        get(point) {
             return EntityManager.get().entities.find((entity) => entity.includes(point))
+        }
+
+        focus(point) {
+            this.get(point).focused = true
+        }
+
+        select(point) {
+            const selectedEntity = this.get(point)
+            if (selectedEntity && selectedEntity.selectable) {
+                selectedEntity.select()
+            }
+        }
+
+        unselectAll(){
+            EntityManager.get().entities.map((entity) => entity.unselect())
         }
 
         static get() {

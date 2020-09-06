@@ -18,7 +18,7 @@ define(function (require) {
                 gravity: 20
             }
             this.collision = { group: 0, category: 1, mask: 1 }
-            this.style = { color: '000000' }
+            this.attachedTo = null
         }
 
         /**
@@ -75,14 +75,14 @@ define(function (require) {
                 physicsEngine.updateJointPosition(this)
             }
         }
-        
+
         /**
          * Get the relative position of a point inside the current entity
          * from a relative point inside a given entity
          * @param {Entity} entity 
          * @param {Object} point 
          */
-        getRelativeCenterPosition(entity, point){
+        getRelativeCenterPosition(entity, point) {
             return this.toRelativeCenterPosition(entity.toAbsolutePosition(point))
         }
 

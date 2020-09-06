@@ -5,9 +5,13 @@ define(function (require) {
     class AttachJointEntity extends JointEntity {
 
         constructor(props) {
-            super(props)
+            super({
+                ...props,
+                style: {
+                    color: '00FF00'
+                }
+            })
             this.attached = true
-            this.style.color = '00FF00'
         }
 
         /**
@@ -24,7 +28,8 @@ define(function (require) {
         getArrowProps() {
             return {
                 headLength: 20,
-                angle: Math.PI / 12
+                angle: Math.PI / 12,
+                height: 20
             }
         }
 
@@ -34,7 +39,7 @@ define(function (require) {
         calculateSize(dragDistance) {
             return {
                 width: Math.abs(dragDistance.x),
-                height: Math.abs(dragDistance.y) + 20
+                height: Math.abs(dragDistance.y) + this.getArrowProps().height
             }
         }
 
@@ -42,15 +47,16 @@ define(function (require) {
          * @inheritdoc
          */
         setMeshPosition(position) {
-            super.setMeshPosition({ x: position.x, y: position.y - 10 })
+            super.setMeshPosition({ x: position.x, y: position.y - this.getArrowProps().height / 2 })
         }
 
         /**
          * @inheritdoc
          */
-        generate(){
-            this.points.a.y += 10
-            this.points.b.y += 10
+        generate() {
+            this.points.a.y += this.getArrowProps().height / 2
+            this.points.b.y += this.getArrowProps().height / 2
+            this.entities.a.attachedTo = this.entities.b
             return super.generate()
         }
 

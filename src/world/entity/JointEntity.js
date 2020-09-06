@@ -6,12 +6,12 @@ define(function (require) {
     class JointEntity extends EntityMotion {
 
         constructor(props) {
+            props.style = props.style || { color: '0000FF' }
             super(props)
             this.shape = EntityMotion.shapes.LINE
             this.points = { a: null, b: null }
             this.entities = { a: null, b: null }
             this.attached = false
-            this.style.color = '0000FF'
         }
 
         /**

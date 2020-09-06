@@ -110,6 +110,7 @@ define(function () {
         'TO_DRAW_LINE',
         'TO_DRAW_JOINT',
         'TO_DRAW_ATTACH_JOINT',
+        'TO_DRAW_SELECT',
         'TO_DRAW_POLY',
         'TO_DRAW_CIRCLE',
         'DRAWING_ELLIPSE',
@@ -119,6 +120,7 @@ define(function () {
         'DRAWING_JOINT',
         'DRAWING_ATTACH_JOINT',
         'DRAWING_POLY',
+        'DRAWING_SELECT',
         'SIMULATE_START',
         'SIMULATE_STOP'
     ]

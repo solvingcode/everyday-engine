@@ -18,6 +18,10 @@ define(function (require) {
             this.isPhyiscsLoaded = false
             this.size = props.size || 1
             this.mesh = new Mesh(this.position, this.size)
+            this.selectable = true
+            this.selected = false
+            this.focused = false
+            this.style = props.style || { color: '000000' }
         }
 
         /**
@@ -78,6 +82,31 @@ define(function (require) {
                     this.generate()
                 }
             }
+        }
+
+        /**
+         * Set the entity's style
+         * @param {Integer} angle 
+         */
+        setStyle(style) {
+            this.style = { ...style }
+            if (this.clearBuffer()) {
+                this.generate()
+            }
+        }
+
+        /**
+         * Select the current entity (apply styles, ...)
+         */
+        select() {
+            this.setStyle({ color: 'FF00FF' })
+        }
+
+        /**
+         * Unselect the current entity (apply styles, ...)
+         */
+        unselect() {
+            this.setStyle(this.props.style)
         }
 
         /**

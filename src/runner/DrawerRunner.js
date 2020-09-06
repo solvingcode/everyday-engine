@@ -12,6 +12,7 @@ define(function (require) {
     const JointEntity = require('../world/entity/JointEntity.js')
     const AttachJointEntity = require('../world/entity/AttachJointEntity.js')
     const PolyEntity = require('../world/entity/PolyEntity.js')
+    const SelectorEntity = require('../world/entity/SelectorEntity.js')
 
     class DrawerRunner extends Runner {
 
@@ -47,6 +48,9 @@ define(function (require) {
                 },
                 ATTACH_JOINT: {
                     entity: AttachJointEntity
+                },
+                SELECT: {
+                    entity: SelectorEntity
                 },
                 POLY: {
                     entity: PolyEntity,

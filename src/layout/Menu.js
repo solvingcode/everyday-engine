@@ -5,11 +5,13 @@ define(function (require) {
     const JointMenuItem = require('./items/JointMenuItem.js')
     const AttachJointMenuItem = require('./items/AttachJointMenuItem.js')
     const SimulateMenuItem = require('./items/SimulateMenuItem.js')
+    const SelectorMenuItem = require('./items/SelectorMenuItem.js')
     const Button = require('../renderer/ui/Button.js')
 
     class Menu {
         constructor() {
             this.types = [
+                new SelectorMenuItem(),
                 new CircleMenuItem(),
                 new RectMenuItem(),
                 new JointMenuItem(),
