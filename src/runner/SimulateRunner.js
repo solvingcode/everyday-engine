@@ -5,6 +5,7 @@ define(function (require) {
     const AppState = require('../core/AppState.js')
     const Physics = require('../physics/Physics.js')
     const MatterEngine = require('../physics/engine/matter/Engine.js')
+    const EntitySelector = require('../world/manager/EntitySelector.js')
 
     class SimulateRunner extends Runner {
 
@@ -22,6 +23,7 @@ define(function (require) {
         execute(mouse) {
             const appState = AppState.get()
             if (appState.hasState('SIMULATE_START')) {
+                EntitySelector.get().unselectAll()
                 if (!this.isPhysicsLoaded) {
                     this.physics.run()
                     this.isPhysicsLoaded = true

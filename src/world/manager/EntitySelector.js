@@ -26,11 +26,35 @@ define(function (require) {
             this.get(point).focused = true
         }
 
-        select(point) {
-            const selectedEntity = this.get(point)
-            if (selectedEntity) {
-                selectedEntity.select()
+        /**
+         * Get all entities inside a selected area
+         * @param {Object} point 
+         * @param {Object} size 
+         */
+        getInsideArea(point, size) {
+            return EntityManager.get().entities.filter((entity) => {
+                return entity.selectable &&
+                    entity.position.x >= point.x && 
+                    entity.position.x + entity.size.width <= point.x + size.width &&
+                    entity.position.y >= point.y && 
+                    entity.position.y + entity.size.height <= point.y + size.height
+            })
+        }
+
+        /**
+         * Select all entities inside the area of selection
+         * @param {Object} point 
+         * @param {Object} size 
+         */
+        select(point, size) {
+            let selectedEntities = []
+            if (!size || (!size.width && !size.height)) {
+                const selectedEntity = this.get(point)
+                selectedEntity && selectedEntities.push(selectedEntity)
+            } else {
+                selectedEntities = this.getInsideArea(point, size)
             }
+            return selectedEntities.map(selectedEntity => selectedEntity.select())
         }
 
         unselectAll() {

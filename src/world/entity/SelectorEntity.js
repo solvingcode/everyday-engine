@@ -55,7 +55,7 @@ define(function (require) {
          */
         selectEntities() {
             this.entitySelector.unselectAll()
-            this.entitySelector.select(this.position)
+            this.entitySelector.select(this.mesh.position, this.size)
         }
 
         /**
@@ -97,10 +97,10 @@ define(function (require) {
                 x: x * cosA - y * sinA,
                 y: x * sinA + y * cosA
             }))
-            const minX = rotatedPoints.reduce((minX, current) => ((minX > current.x && current.x) || minX), rotatedPoints[0].x)
-            const maxX = rotatedPoints.reduce((maxX, current) => ((maxX < current.x && current.x) || maxX), rotatedPoints[0].x)
-            const minY = rotatedPoints.reduce((minY, current) => ((minY > current.y && current.y) || minY), rotatedPoints[0].y)
-            const maxY = rotatedPoints.reduce((maxY, current) => ((maxY < current.y && current.y) || maxY), rotatedPoints[0].y)
+            const minX = rotatedPoints.reduce((mnX, current) => ((mnX > current.x && current.x) || mnX), rotatedPoints[0].x)
+            const maxX = rotatedPoints.reduce((mxX, current) => ((mxX < current.x && current.x) || mxX), rotatedPoints[0].x)
+            const minY = rotatedPoints.reduce((mnY, current) => ((mnY > current.y && current.y) || mnY), rotatedPoints[0].y)
+            const maxY = rotatedPoints.reduce((mxY, current) => ((mxY < current.y && current.y) || mxY), rotatedPoints[0].y)
             return {
                 width: Math.ceil(maxX - minX),
                 height: Math.ceil(maxY - minY)
