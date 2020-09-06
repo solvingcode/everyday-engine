@@ -158,6 +158,17 @@ define(function (require) {
 
         /**
          * Convert absolute coordinate to relative coordinate
+         * @param {Object} point Absolute coordinate
+         */
+        fromAbsolutePosition(point) {
+            return {
+                x: point.x - this.mesh.position.x,
+                y: point.y - this.mesh.position.y
+            }
+        }
+
+        /**
+         * Convert absolute coordinate to relative coordinate
          * based to the center of the object
          * @param {Object} point Absolute coordinate
          */
@@ -200,6 +211,13 @@ define(function (require) {
             }
             this.setMeshPosition({ x: newX, y: newY })
             return dragDistance
+        }
+
+        /**
+         * Get the current position of the mouse
+         */
+        getCurrentMousePosition(){
+            return Window.get().mouse.currentPosition
         }
 
         /**

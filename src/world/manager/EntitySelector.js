@@ -7,8 +7,19 @@ define(function (require) {
             this.entities = []
         }
 
+        /**
+         * Get all entities selected
+         */
+        getSelected() {
+            return EntityManager.get().entities.filter((entity) => entity.selected)
+        }
+
+        /**
+         * Get the entity in a specific point (absolute position)
+         * @param {Object} point 
+         */
         get(point) {
-            return EntityManager.get().entities.find((entity) => entity.includes(point))
+            return EntityManager.get().entities.find((entity) => entity.includes(point) && entity.selectable)
         }
 
         focus(point) {
@@ -17,12 +28,12 @@ define(function (require) {
 
         select(point) {
             const selectedEntity = this.get(point)
-            if (selectedEntity && selectedEntity.selectable) {
+            if (selectedEntity) {
                 selectedEntity.select()
             }
         }
 
-        unselectAll(){
+        unselectAll() {
             EntityManager.get().entities.map((entity) => entity.unselect())
         }
 

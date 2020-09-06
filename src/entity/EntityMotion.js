@@ -57,6 +57,24 @@ define(function (require) {
         }
 
         /**
+         * Move the entity by distance
+         * @param {Object} distance 
+         */
+        moveDistance(distance) {
+            this.setPosition({ x: this.position.x + distance.x, y: this.position.y + distance.y })
+        }
+
+        /**
+         * Move the entity by distance related to a given point
+         * @param {Object} point relative position
+         * @param {Object} target absolute position
+         */
+        moveRelativePointTo(point, target) {
+            const diffDistance = { x: target.x - this.position.x - point.x, y: target.y - this.position.y - point.y }
+            this.setPosition({ x: this.position.x + diffDistance.x, y: this.position.y + diffDistance.y })
+        }
+
+        /**
          * Update collision filters for the physic engine
          * @param {PhysicsEngine} physicsEngine 
          */

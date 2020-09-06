@@ -18,9 +18,34 @@ define(function (require) {
         build() {
             const dragDistance = this.setMeshPositionByDragDistance()
             this.size = { width: Math.abs(dragDistance.x), height: Math.abs(dragDistance.y) }
-            if (this.clearBuffer()) {
+            if (this.clearBuffer() && !this.moveSelectedEntities(dragDistance)) {
                 this.generate()
                 this.selectEntities()
+            }
+            return false
+        }
+
+        /**
+         * Move selected entities (not select new entities)
+         * @param {Object} dragDistance
+         */
+        moveSelectedEntities(dragDistance) {
+            const selectedEntities = this.entitySelector.getSelected()
+            if (selectedEntities.length) {
+                const triggerEntity = this.entitySelector.get(this.getCurrentMousePosition())
+                const isEntityMove = triggerEntity && (
+                    selectedEntities.includes(triggerEntity) || this.isMoving
+                )
+                if (isEntityMove) {
+                    this.relativeEntityPositions = this.relativeEntityPositions ||
+                        selectedEntities.map(entity => entity.fromAbsolutePosition(this.position))
+                    this.isMoving = true
+                    const targetPoint = { x: this.position.x + dragDistance.x, y: this.position.y + dragDistance.y }
+                    selectedEntities.map((entity, index) => {
+                        entity.moveRelativePointTo(this.relativeEntityPositions[index], targetPoint)
+                    })
+                    return true
+                }
             }
             return false
         }
