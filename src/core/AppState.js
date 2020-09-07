@@ -123,7 +123,8 @@ define(function () {
         'DRAWING_SELECT',
         'SIMULATE_START',
         'SIMULATE_STOP',
-        'ACTION_DELETE'
+        'ACTION_DELETE',
+        'ACTION_DUPLICATE'
     ]
 
     return AppState

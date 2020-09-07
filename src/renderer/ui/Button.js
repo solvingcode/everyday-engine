@@ -23,24 +23,24 @@ define(function (require) {
             context.font = `${Button.props.textSize}px Arial`
             context.fillText(
                 element.props.name,
-                item.position.x + Button.props.padding,
-                item.position.y + Button.props.textSize + Button.props.padding
+                item.position.x + Button.props.padding.x,
+                item.position.y + Button.props.textSize + Button.props.padding.y
             )
         }
 
         static style(item) {
             const { x0, y0, isVertical } = Button.props.zone[item.element.zone]
             item.position = {
-                x: x0 + (!isVertical && item.index * (Button.props.width + Button.props.padding)),
-                y: y0 + (isVertical && item.index * (Button.props.height + Button.props.padding))
+                x: x0 + (!isVertical && item.index * (Button.props.width + Button.props.padding.x)),
+                y: y0 + (isVertical && item.index * (Button.props.height + Button.props.padding.y))
             }
         }
     }
 
     Button.props = {
-        width: 80,
+        width: 85,
         height: 40,
-        padding: 10,
+        padding: {x: 10, y: 10},
         textSize: 16,
         colorButton: '#CCCCCC',
         colorButtonSelected: '#3333DD',

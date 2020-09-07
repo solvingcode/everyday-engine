@@ -22,7 +22,7 @@ define(function (require) {
             const actionRunner = ActionRunner.get()
             action.add(simulateRunner, mouse)
             action.add(actionRunner, mouse)
-            if (mouse.isButtonPressed(MouseButton.LEFT)) {
+            if (mouse.isButtonClicked(MouseButton.LEFT)) {
                 action.add(menu, mouse.position)
             }
             if (mouse.isMouseMove()) {

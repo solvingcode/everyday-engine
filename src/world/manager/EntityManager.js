@@ -2,6 +2,7 @@ define(function (require) {
 
     const EntityGenerator = require('../generator/EntityGenerator.js')
     const Entity = require('../../entity/Entity.js')
+    const _ = require('lib/lodash.min')
 
     class EntityManager {
         constructor() {
@@ -79,6 +80,15 @@ define(function (require) {
          */
         delete(entity) {
             return this.entities.splice(this.getIndexOf(entity), 1)
+        }
+
+        /**
+         * Clone entity to the entities list
+         * @param {Entity} entity 
+         */
+        clone(entity) {
+            const cloneEntity = _.cloneDeep(entity)
+            return this.entities.push(cloneEntity) && cloneEntity
         }
 
         /**

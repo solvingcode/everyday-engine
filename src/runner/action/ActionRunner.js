@@ -4,6 +4,7 @@ define(function (require) {
     const AppState = require('../../core/AppState.js')
     const EntitySelector = require('../../world/manager/EntitySelector.js')
     const DeleteAction = require('./DeleteAction.js')
+    const DuplicateAction = require('./DuplicateAction.js')
 
     class ActionRunner extends Runner {
 
@@ -19,7 +20,8 @@ define(function (require) {
         execute(mouse) {
             const appState = AppState.get()
             const typeActions = {
-                DELETE: DeleteAction
+                DELETE: DeleteAction,
+                DUPLICATE: DuplicateAction
             }
             const selectedEntities = this.entitySelector.getSelected()
             Object.entries(typeActions).forEach(typeAction => {
@@ -38,7 +40,7 @@ define(function (require) {
          * @param {Array} selectedEntities 
          */
         runAction(action, selectedEntities) {
-            action.run(selectedEntities)
+            action.run(selectedEntities, this.entitySelector)
         }
 
         static get() {
