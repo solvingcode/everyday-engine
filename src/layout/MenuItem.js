@@ -35,7 +35,6 @@ define(function (require) {
          * @param {String} itemToDraw 
          */
         setDrawState(itemToDraw) {
-            this.appState.removeAllState()
             this.appState.setUniqStateByGroup('TO_DRAW', itemToDraw)
         }
 
@@ -77,7 +76,8 @@ define(function (require) {
          * @param {String} event
          */
         hasSimulateState() {
-            return this.appState.hasState(`SIMULATE_START`)
+            return this.appState.hasState(`SIMULATE_START`) ||
+                this.appState.hasState(`SIMULATE_PROGRESS`)
         }
 
     }

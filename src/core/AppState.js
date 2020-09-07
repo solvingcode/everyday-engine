@@ -123,6 +123,7 @@ define(function () {
         'DRAWING_SELECT',
         'SIMULATE_START',
         'SIMULATE_STOP',
+        'SIMULATE_PROGRESS',
         'ACTION_DELETE',
         'ACTION_DUPLICATE'
     ]
