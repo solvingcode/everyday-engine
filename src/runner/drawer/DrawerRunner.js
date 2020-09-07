@@ -1,18 +1,18 @@
 define(function (require) {
 
-    const AppState = require('../core/AppState.js')
-    const Menu = require('../layout/Menu.js')
-    const Runner = require('./Runner.js')
-    const { MouseButton } = require('../core/Mouse.js')
-    const EntityManager = require('../world/manager/EntityManager.js')
-    const EllipseEntity = require('../world/entity/EllipseEntity.js')
-    const CircleEntity = require('../world/entity/CircleEntity.js')
-    const RectEntity = require('../world/entity/RectEntity.js')
-    const LineEntity = require('../world/entity/LineEntity.js')
-    const JointEntity = require('../world/entity/JointEntity.js')
-    const AttachJointEntity = require('../world/entity/AttachJointEntity.js')
-    const PolyEntity = require('../world/entity/PolyEntity.js')
-    const SelectorEntity = require('../world/entity/SelectorEntity.js')
+    const AppState = require('../../core/AppState.js')
+    const Menu = require('../../layout/Menu.js')
+    const Runner = require('../Runner.js')
+    const { MouseButton } = require('../../core/Mouse.js')
+    const EntityManager = require('../../world/manager/EntityManager.js')
+    const EllipseEntity = require('../../world/entity/EllipseEntity.js')
+    const CircleEntity = require('../../world/entity/CircleEntity.js')
+    const RectEntity = require('../../world/entity/RectEntity.js')
+    const LineEntity = require('../../world/entity/LineEntity.js')
+    const JointEntity = require('../../world/entity/JointEntity.js')
+    const AttachJointEntity = require('../../world/entity/AttachJointEntity.js')
+    const PolyEntity = require('../../world/entity/PolyEntity.js')
+    const SelectorEntity = require('../../world/entity/SelectorEntity.js')
 
     class DrawerRunner extends Runner {
 
@@ -28,8 +28,8 @@ define(function (require) {
          */
         execute(mouse) {
             const appState = AppState.get()
-            const defaultStartEvent = (mouse) => mouse.isButtonPressed(MouseButton.LEFT)
-            const defaultEndEvent = (mouse) => mouse.isButtonClicked(MouseButton.LEFT)
+            const defaultStartEvent = (pMouse) => pMouse.isButtonPressed(MouseButton.LEFT)
+            const defaultEndEvent = (pMouse) => pMouse.isButtonClicked(MouseButton.LEFT)
             const typeEntity = {
                 CIRCLE: {
                     entity: CircleEntity
@@ -54,11 +54,11 @@ define(function (require) {
                 },
                 POLY: {
                     entity: PolyEntity,
-                    startEvent: (mouse) => mouse.isButtonClicked(MouseButton.LEFT),
-                    endEvent: (mouse) => mouse.isButtonDoubleClicked(MouseButton.LEFT)
+                    startEvent: (pMouse) => pMouse.isButtonClicked(MouseButton.LEFT),
+                    endEvent: (pMouse) => pMouse.isButtonDoubleClicked(MouseButton.LEFT)
                 }
             }
-            Object.entries(typeEntity).map(entry => {
+            Object.entries(typeEntity).forEach(entry => {
                 const type = entry[0]
                 const props = entry[1]
                 const startEvent = props.startEvent || defaultStartEvent

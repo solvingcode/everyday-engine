@@ -122,7 +122,8 @@ define(function () {
         'DRAWING_POLY',
         'DRAWING_SELECT',
         'SIMULATE_START',
-        'SIMULATE_STOP'
+        'SIMULATE_STOP',
+        'ACTION_DELETE'
     ]
 
     return AppState

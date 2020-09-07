@@ -11,6 +11,9 @@ define(function (require) {
         run() {
             this.setDrawState('POLY')
         }
+        isSelected(){
+            return this.hasDrawState('POLY')
+        }
     }
 
     return PolyMenuItem

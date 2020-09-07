@@ -1,11 +1,11 @@
 define(function (require) {
 
-    const { MouseButton } = require('../core/Mouse.js')
-    const Runner = require('./Runner.js')
-    const AppState = require('../core/AppState.js')
-    const Physics = require('../physics/Physics.js')
-    const MatterEngine = require('../physics/engine/matter/Engine.js')
-    const EntitySelector = require('../world/manager/EntitySelector.js')
+    const { MouseButton } = require('../../core/Mouse.js')
+    const Runner = require('../Runner.js')
+    const AppState = require('../../core/AppState.js')
+    const Physics = require('../../physics/Physics.js')
+    const MatterEngine = require('../../physics/engine/matter/Engine.js')
+    const EntitySelector = require('../../world/manager/EntitySelector.js')
 
     class SimulateRunner extends Runner {
 

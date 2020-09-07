@@ -6,6 +6,7 @@ define(function (require) {
     const AttachJointMenuItem = require('./items/AttachJointMenuItem.js')
     const SimulateMenuItem = require('./items/SimulateMenuItem.js')
     const SelectorMenuItem = require('./items/SelectorMenuItem.js')
+    const DeleteMenuItem = require('./items/DeleteMenuItem.js')
     const Button = require('../renderer/ui/Button.js')
 
     class Menu {
@@ -16,7 +17,8 @@ define(function (require) {
                 new RectMenuItem(),
                 new JointMenuItem(),
                 new AttachJointMenuItem(),
-                new SimulateMenuItem()
+                new SimulateMenuItem(),
+                new DeleteMenuItem()
             ]
             this.setup()
         }
@@ -26,16 +28,13 @@ define(function (require) {
          * in the screen.
          */
         setup() {
-            const x0 = 20, y0 = 20
             this.items = []
             for (var iType in this.types) {
                 const type = this.types[iType]
+                const index = this.items.filter(item => item.element.zone === type.zone).length
                 this.items.push({
                     element: type,
-                    position: {
-                        x: x0,
-                        y: y0 + iType * (Button.props.height + Button.props.padding)
-                    }
+                    index
                 })
             }
         }
@@ -48,11 +47,9 @@ define(function (require) {
             if (menuItem) {
                 this.items.map(item => {
                     if (item.element.isSelected()) {
-                        item.element.setSelected(false)
                         item.element.stop()
                     }
                     if (item.element.props.name === menuItem.element.props.name) {
-                        item.element.setSelected(true)
                         item.element.run()
                     }
                 })

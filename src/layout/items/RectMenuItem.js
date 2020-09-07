@@ -11,6 +11,9 @@ define(function (require) {
         run() {
             this.setDrawState('RECT')
         }
+        isSelected(){
+            return this.hasDrawState('RECT')
+        }
     }
 
     return RectMenuItem

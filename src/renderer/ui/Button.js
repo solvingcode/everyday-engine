@@ -1,4 +1,7 @@
-define(function () {
+define(function (require) {
+
+    const Layout = require('../../layout/Layout.js')
+
     class Button {
         /**
          * Draw a button.
@@ -6,10 +9,11 @@ define(function () {
          * @param {CanvasRenderingContext2D} context
          */
         static draw(item, context) {
+            this.style(item)
             const element = item.element
             var colorButton = Button.props.colorButton
             var colorText = Button.props.colorText
-            if(element.isSelected()){
+            if (element.isSelected()) {
                 colorButton = Button.props.colorButtonSelected
                 colorText = Button.props.colorTextSelected
             }
@@ -18,10 +22,18 @@ define(function () {
             context.fillStyle = colorText
             context.font = `${Button.props.textSize}px Arial`
             context.fillText(
-                element.props.name, 
-                item.position.x + Button.props.padding, 
+                element.props.name,
+                item.position.x + Button.props.padding,
                 item.position.y + Button.props.textSize + Button.props.padding
             )
+        }
+
+        static style(item) {
+            const { x0, y0, isVertical } = Button.props.zone[item.element.zone]
+            item.position = {
+                x: x0 + (!isVertical && item.index * (Button.props.width + Button.props.padding)),
+                y: y0 + (isVertical && item.index * (Button.props.height + Button.props.padding))
+            }
         }
     }
 
@@ -33,7 +45,19 @@ define(function () {
         colorButton: '#CCCCCC',
         colorButtonSelected: '#3333DD',
         colorText: '#000000',
-        colorTextSelected: '#DDDDDD'
+        colorTextSelected: '#DDDDDD',
+        zone: {
+            [Layout.zone.LEFT]: {
+                x0: 20,
+                y0: 20,
+                isVertical: true
+            },
+            [Layout.zone.TOP]: {
+                x0: 160,
+                y0: 20,
+                isVertical: false
+            }
+        }
     }
 
     return Button

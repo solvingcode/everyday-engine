@@ -11,6 +11,9 @@ define(function (require) {
         run() {
             this.setDrawState('LINE')
         }
+        isSelected(){
+            return this.hasDrawState('LINE')
+        }
     }
 
     return LineMenuItem

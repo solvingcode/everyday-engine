@@ -11,6 +11,9 @@ define(function (require) {
         run() {
             this.setDrawState('SELECT')
         }
+        isSelected(){
+            return this.hasDrawState('SELECT')
+        }
     }
 
     return SelectorMenuItem

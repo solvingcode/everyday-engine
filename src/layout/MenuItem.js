@@ -1,19 +1,21 @@
 define(function (require) {
 
     const AppState = require('../core/AppState.js')
+    const Layout = require('./Layout.js')
 
     class MenuItem {
         constructor(props) {
             this.props = props
             this.appState = AppState.get()
+            this.zone = Layout.zone.LEFT
+            this.type = Layout.type.DRAW
         }
 
-        setSelected(value) {
-            this.props.selected = value
-        }
-
-        isSelected() {
-            return this.props.selected
+        /**
+         * Define if the menu is selected
+         */
+        isSelected(){
+            throw new TypeError('Abstract "isSelected" method must be implemented')
         }
 
         /**
@@ -39,10 +41,43 @@ define(function (require) {
 
         /**
          * Add simulate state
-         * @param {String} action 
+         * @param {String} event 
          */
-        setSimulateState(action) {
-            this.appState.setUniqStateByGroup('SIMULATE', action)
+        setSimulateState(event) {
+            this.appState.setUniqStateByGroup('SIMULATE', event)
+        }
+
+        /**
+         * Add action state
+         * @param {String} typeAction
+         */
+        setActionState(type) {
+            this.appState.setUniqStateByGroup('ACTION', type)
+        }
+
+        /**
+         * Has action state
+         * @param {String} typeAction
+         */
+        hasActionState(type) {
+            return this.appState.hasState(`ACTION_${type}`)
+        }
+
+        /**
+         * Has action state
+         * @param {String} itemToDraw
+         */
+        hasDrawState(itemToDraw) {
+            return this.appState.hasState(`TO_DRAW_${itemToDraw}`) ||
+            this.appState.hasState(`DRAWING_${itemToDraw}`)
+        }
+
+        /**
+         * Has action state
+         * @param {String} event
+         */
+        hasSimulateState() {
+            return this.appState.hasState(`SIMULATE_START`)
         }
 
     }

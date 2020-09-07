@@ -11,6 +11,9 @@ define(function (require) {
         run() {
             this.setDrawState('JOINT')
         }
+        isSelected(){
+            return this.hasDrawState('JOINT')
+        }
     }
 
     return JointMenuItem

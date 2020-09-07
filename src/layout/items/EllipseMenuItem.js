@@ -11,6 +11,9 @@ define(function (require) {
         run() {
             this.setDrawState('ELLIPSE')
         }
+        isSelected(){
+            return this.hasDrawState('ELLIPSE')
+        }
     }
 
     return EllipseMenuItem

@@ -15,6 +15,9 @@ define(function (require) {
         stop() {
             this.setSimulateState('STOP')
         }
+        isSelected(){
+            return this.hasSimulateState()
+        }
     }
 
     return SimulateMenuItem

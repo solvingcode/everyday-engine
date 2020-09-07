@@ -11,6 +11,9 @@ define(function (require) {
         run() {
             this.setDrawState('CIRCLE')
         }
+        isSelected(){
+            return this.hasDrawState('CIRCLE')
+        }
     }
 
     return CircleMenuItem
