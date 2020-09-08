@@ -52,10 +52,14 @@ define(function (require) {
          * Generate mesh for the line
          */
         generate() {
-            const canvas = new OffscreenCanvas(this.size.width, this.size.height)
-            const context = canvas.getContext('2d')
-            this.drawCircle(context)
-            return this.updateMeshFromContext(context)
+            if (!this.isGenerateDisabled()) {
+                const canvas = new OffscreenCanvas(this.size.width, this.size.height)
+                const context = canvas.getContext('2d')
+                this.drawCircle(context)
+                return this.updateMeshFromContext(context)
+            } else {
+                return false
+            }
         }
 
         /**
