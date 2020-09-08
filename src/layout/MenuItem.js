@@ -14,7 +14,7 @@ define(function (require) {
         /**
          * Define if the menu is selected
          */
-        isSelected(){
+        isSelected() {
             throw new TypeError('Abstract "isSelected" method must be implemented')
         }
 
@@ -49,9 +49,10 @@ define(function (require) {
         /**
          * Add action state
          * @param {String} typeAction
+         * @param {String} event
          */
-        setActionState(type) {
-            this.appState.setUniqStateByGroup('ACTION', type)
+        setActionState(type, event) {
+            this.appState.setUniqStateByGroup('ACTION', `${type}_${event}`)
         }
 
         /**
@@ -68,7 +69,7 @@ define(function (require) {
          */
         hasDrawState(itemToDraw) {
             return this.appState.hasState(`TO_DRAW_${itemToDraw}`) ||
-            this.appState.hasState(`DRAWING_${itemToDraw}`)
+                this.appState.hasState(`DRAWING_${itemToDraw}`)
         }
 
         /**

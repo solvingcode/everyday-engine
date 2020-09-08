@@ -1,4 +1,6 @@
-define(function () {
+define(function (require) {
+
+    const History = require('./History.js')
 
     class AppState {
 
@@ -25,11 +27,15 @@ define(function () {
         /**
          * Add a state to the states list.
          * @param {AppState.States} state 
+         * @param {Boolean} isHistory
          */
-        addState(state) {
+        addState(state, isHistory = true) {
             if (this.state.indexOf(state) === -1) {
-                if (AppState.States.indexOf(state) >= 0) {
+                if (Object.keys(AppState.States).indexOf(state) >= 0) {
                     this.state.push(state)
+                    if (AppState.States[state].history && isHistory) {
+                        History.get().push()
+                    }
                 } else {
                     throw `${state} is not recognized as Application State`
                 }
@@ -72,7 +78,7 @@ define(function () {
         /**
          * Remove all states from the application
          */
-        removeAllState(){
+        removeAllState() {
             this.state = []
         }
 
@@ -84,8 +90,10 @@ define(function () {
          * @param {String} type 
          */
         setUniqStateByGroup(stateGroup, type) {
+            const state = `${stateGroup}_${type}`
+            const isHistory = !(this.findStateIndex(state, true).length)
             this.removeState(stateGroup, false)
-            this.addState(`${stateGroup}_${type}`)
+            this.addState(state, isHistory)
         }
 
         /**
@@ -104,29 +112,35 @@ define(function () {
     }
 
     AppState.instance = null
-    AppState.States = [
-        'TO_DRAW_ELLIPSE',
-        'TO_DRAW_RECT',
-        'TO_DRAW_LINE',
-        'TO_DRAW_JOINT',
-        'TO_DRAW_ATTACH_JOINT',
-        'TO_DRAW_SELECT',
-        'TO_DRAW_POLY',
-        'TO_DRAW_CIRCLE',
-        'DRAWING_ELLIPSE',
-        'DRAWING_CIRCLE',
-        'DRAWING_RECT',
-        'DRAWING_LINE',
-        'DRAWING_JOINT',
-        'DRAWING_ATTACH_JOINT',
-        'DRAWING_POLY',
-        'DRAWING_SELECT',
-        'SIMULATE_START',
-        'SIMULATE_STOP',
-        'SIMULATE_PROGRESS',
-        'ACTION_DELETE',
-        'ACTION_DUPLICATE'
-    ]
+    AppState.States = {
+        'TO_DRAW_ELLIPSE': { history: false },
+        'TO_DRAW_RECT': { history: false },
+        'TO_DRAW_LINE': { history: false },
+        'TO_DRAW_JOINT': { history: false },
+        'TO_DRAW_ATTACH_JOINT': { history: false },
+        'TO_DRAW_SELECT': { history: false },
+        'TO_DRAW_POLY': { history: false },
+        'TO_DRAW_CIRCLE': { history: false },
+        'DRAWING_ELLIPSE': { history: true },
+        'DRAWING_CIRCLE': { history: true },
+        'DRAWING_RECT': { history: true },
+        'DRAWING_LINE': { history: true },
+        'DRAWING_JOINT': { history: true },
+        'DRAWING_ATTACH_JOINT': { history: true },
+        'DRAWING_POLY': { history: true },
+        'DRAWING_SELECT': { history: false },
+        'SIMULATE_START': { history: false },
+        'SIMULATE_STOP': { history: false },
+        'SIMULATE_PROGRESS': { history: false },
+        'ACTION_DELETE_START': { history: true },
+        'ACTION_DELETE_STOP': { history: false },
+        'ACTION_DUPLICATE_START': { history: true },
+        'ACTION_DUPLICATE_STOP': { history: false },
+        'ACTION_UNDO_START': { history: false },
+        'ACTION_UNDO_STOP': { history: false },
+        'ACTION_MOVE_START': { history: true },
+        'ACTION_MOVE_STOP': { history: false }
+    }
 
     return AppState
 })

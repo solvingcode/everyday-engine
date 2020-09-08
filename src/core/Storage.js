@@ -22,6 +22,7 @@ define(function (require) {
          */
         update(type, data) {
             this.data[type] = _.cloneDeep(data)
+            return this
         }
 
         /**

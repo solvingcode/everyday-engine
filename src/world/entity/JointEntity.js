@@ -130,7 +130,7 @@ define(function (require) {
         }
 
         /**
-         * @inherit
+         * @inheritdoc
          */
         toCenterPosition() {
             return {
@@ -140,7 +140,7 @@ define(function (require) {
         }
 
         /**
-         * @inherit
+         * @inheritdoc
          */
         fromCenterPosition(position) {
             return {

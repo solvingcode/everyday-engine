@@ -33,6 +33,11 @@ define(function (require) {
         }
 
         /**
+         * End the build the Entity
+         */
+        end() { }
+
+        /**
          * Generate mesh
          */
         generate(...params) {
@@ -216,7 +221,7 @@ define(function (require) {
         /**
          * Get the current position of the mouse
          */
-        getCurrentMousePosition(){
+        getCurrentMousePosition() {
             return Window.get().mouse.currentPosition
         }
 

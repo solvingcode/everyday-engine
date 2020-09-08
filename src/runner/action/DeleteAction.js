@@ -9,9 +9,10 @@ define(function (require) {
          * Delete selected entities
          * @param {Array} selectedEntities
          */
-        static run(selectedEntities) {
+        static run(mouse, selectedEntities) {
             const entityManager = EntityManager.get()
             selectedEntities.forEach(entity => entityManager.delete((entity)))
+            return true
         }
 
     }

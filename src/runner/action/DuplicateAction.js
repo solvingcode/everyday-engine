@@ -9,10 +9,11 @@ define(function (require) {
          * Delete selected entities
          * @param {Array} selectedEntities
          */
-        static run(selectedEntities, entitySelector) {
+        static run(mouse, selectedEntities, entitySelector) {
             const entityManager = EntityManager.get()
             entitySelector.unselectAll()
             selectedEntities.forEach(entity => entityManager.clone(entity).select())
+            return true
         }
 
     }

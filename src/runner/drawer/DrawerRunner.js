@@ -95,6 +95,7 @@ define(function (require) {
             const entityManager = EntityManager.get()
             appState.removeState('DRAWING', false)
             appState.setUniqStateByGroup('TO_DRAW', type)
+            this.currentEntity.end()
             if (this.isCurrentDrawValid) {
                 this.currentEntity.close()
             } else {

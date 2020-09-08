@@ -33,8 +33,6 @@ define(function (require) {
         generate() {
             const x0 = this.points[0].x, y0 = this.points[0].y
             const x1 = this.points[1].x, y1 = this.points[1].y
-            const sizeX = Math.abs(x1 - x0)
-            const sizeY = Math.abs(y1 - y0)
             const canvas = new OffscreenCanvas(this.size.width, this.size.height)
             const context = canvas.getContext('2d')
             context.beginPath()
@@ -45,7 +43,7 @@ define(function (require) {
         }
 
         /**
-         * @inherit
+         * @inheritdoc
          */
         toCenterPosition() {
             return {
@@ -55,7 +53,7 @@ define(function (require) {
         }
 
         /**
-         * @inherit
+         * @inheritdoc
          */
         fromCenterPosition(position) {
             return {

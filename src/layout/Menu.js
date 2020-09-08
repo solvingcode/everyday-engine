@@ -8,6 +8,7 @@ define(function (require) {
     const SelectorMenuItem = require('./items/SelectorMenuItem.js')
     const DeleteMenuItem = require('./items/DeleteMenuItem.js')
     const DuplicateMenuItem = require('./items/DuplicateMenuItem.js')
+    const UndoMenuItem = require('./items/UndoMenuItem.js')
     const Button = require('../renderer/ui/Button.js')
 
     class Menu {
@@ -20,7 +21,8 @@ define(function (require) {
                 new AttachJointMenuItem(),
                 new SimulateMenuItem(),
                 new DeleteMenuItem(),
-                new DuplicateMenuItem()
+                new DuplicateMenuItem(),
+                new UndoMenuItem()
             ]
             this.setup()
         }

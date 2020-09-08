@@ -3,22 +3,22 @@ define(function (require) {
     const MenuItem = require('../MenuItem.js')
     const Layout = require('../Layout.js')
 
-    class DeleteMenuItem extends MenuItem {
+    class UndoMenuItem extends MenuItem {
         constructor() {
             super({
-                name: 'Delete'
+                name: 'Undo'
             })
             this.zone = Layout.zone.TOP
             this.type = Layout.type.ACTION
         }
         run() {
-            this.setActionState('DELETE', 'START')
+            this.setActionState('UNDO', 'START')
         }
         isSelected(){
-            return this.hasActionState('DELETE')
+            return this.hasActionState('UNDO')
         }
     }
 
-    return DeleteMenuItem
+    return UndoMenuItem
 
 })

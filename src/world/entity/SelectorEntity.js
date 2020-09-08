@@ -2,6 +2,7 @@ define(function (require) {
 
     const EntityMotion = require('../../entity/EntityMotion.js')
     const EntitySelector = require('../manager/EntitySelector.js')
+    const AppState = require('../../core/AppState.js')
 
     class SelectorEntity extends EntityMotion {
 
@@ -10,6 +11,7 @@ define(function (require) {
             this.shape = EntityMotion.shapes.RECT
             this.selectable = false
             this.entitySelector = EntitySelector.get()
+            this.appState = AppState.get()
         }
 
         /**
@@ -18,7 +20,7 @@ define(function (require) {
         build() {
             const dragDistance = this.setMeshPositionByDragDistance()
             this.size = { width: Math.abs(dragDistance.x), height: Math.abs(dragDistance.y) }
-            if (this.clearBuffer() && !this.moveSelectedEntities(dragDistance)) {
+            if (this.clearBuffer() && !this.moveSelectedEntities()) {
                 this.generate()
                 this.selectEntities()
             }
@@ -27,24 +29,19 @@ define(function (require) {
 
         /**
          * Move selected entities (not select new entities)
-         * @param {Object} dragDistance
          */
-        moveSelectedEntities(dragDistance) {
+        moveSelectedEntities() {
             const selectedEntities = this.entitySelector.getSelected()
             if (selectedEntities.length) {
                 const triggerEntity = this.entitySelector.get(this.getCurrentMousePosition())
                 const isEntityMove = triggerEntity && (
-                    selectedEntities.includes(triggerEntity) || this.isMoving
+                    selectedEntities.includes(triggerEntity)
                 )
                 if (isEntityMove) {
-                    this.relativeEntityPositions = this.relativeEntityPositions ||
-                        selectedEntities.map(entity => entity.fromAbsolutePosition(this.position))
-                    this.isMoving = true
-                    const targetPoint = { x: this.position.x + dragDistance.x, y: this.position.y + dragDistance.y }
-                    selectedEntities.map((entity, index) => {
-                        entity.moveRelativePointTo(this.relativeEntityPositions[index], targetPoint)
-                    })
+                    this.appState.setUniqStateByGroup('ACTION', 'MOVE_START')
                     return true
+                } else {
+                    this.appState.setUniqStateByGroup('ACTION', 'MOVE_STOP')
                 }
             }
             return false
@@ -108,7 +105,7 @@ define(function (require) {
         }
 
         /**
-         * @inherit
+         * @inheritdoc
          */
         toCenterPosition() {
             return {
@@ -118,12 +115,21 @@ define(function (require) {
         }
 
         /**
-         * @inherit
+         * @inheritdoc
          */
         fromCenterPosition(position) {
             return {
                 x: position.x - this.mesh.size.width / 2,
                 y: position.y - this.mesh.size.height / 2
+            }
+        }
+
+        /**
+         * @inheritdoc
+         */
+        end() {
+            if (this.appState.hasState('ACTION_MOVE_START')) {
+                this.appState.setUniqStateByGroup('ACTION', 'MOVE_STOP')
             }
         }
 

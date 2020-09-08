@@ -15,6 +15,11 @@ define(function () {
             throw new TypeError('"run" method must be implemented')
         }
 
+        /**
+         * Stop actions.
+         */
+        static stop(...params) { }
+
     }
 
     return Action

@@ -98,10 +98,10 @@ define(function (require) {
          * @param {Object} size 
          */
         getLargestRectangle(angleRadian) {
-            const minX = this.points.reduce((minX, current) => ((minX > current.x && current.x) || minX), this.points[0].x)
-            const maxX = this.points.reduce((maxX, current) => ((maxX < current.x && current.x) || maxX), this.points[0].x)
-            const minY = this.points.reduce((minY, current) => ((minY > current.y && current.y) || minY), this.points[0].y)
-            const maxY = this.points.reduce((maxY, current) => ((maxY < current.y && current.y) || maxY), this.points[0].y)
+            const minX = this.points.reduce((mnX, current) => ((mnX > current.x && current.x) || mnX), this.points[0].x)
+            const maxX = this.points.reduce((mxX, current) => ((mxX < current.x && current.x) || mxX), this.points[0].x)
+            const minY = this.points.reduce((mnY, current) => ((mnY > current.y && current.y) || mnY), this.points[0].y)
+            const maxY = this.points.reduce((mxY, current) => ((mxY < current.y && current.y) || mxY), this.points[0].y)
             return {
                 width: Math.ceil(maxX - minX),
                 height: Math.ceil(maxY - minY)
@@ -117,7 +117,7 @@ define(function (require) {
         }
 
         /**
-         * @inherit
+         * @inheritdoc
          */
         toCenterPosition() {
             return {
@@ -127,7 +127,7 @@ define(function (require) {
         }
 
         /**
-         * @inherit
+         * @inheritdoc
          */
         fromCenterPosition(position) {
             return {

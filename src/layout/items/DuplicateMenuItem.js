@@ -12,7 +12,7 @@ define(function (require) {
             this.type = Layout.type.ACTION
         }
         run() {
-            this.setActionState('DUPLICATE')
+            this.setActionState('DUPLICATE', 'START')
         }
         isSelected(){
             return this.hasActionState('DUPLICATE')
