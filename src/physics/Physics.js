@@ -1,7 +1,7 @@
 define(function (require) {
 
     const EntityManager = require('../world/manager/EntityManager.js')
-    const JointEntity = require('../world/entity/JointEntity.js')
+    const AttachEntity = require('../world/entity/AttachEntity.js')
 
     class Physics {
 
@@ -15,8 +15,8 @@ define(function (require) {
          * Update all entities.
          */
         update() {
-            const bodyEntities = this.entityManager.getEntitiesNotAs(JointEntity)
-            const jointEntites = this.entityManager.getEntitiesAs(JointEntity)
+            const bodyEntities = this.entityManager.getEntitiesNotAs(AttachEntity)
+            const jointEntites = this.entityManager.getEntitiesAs(AttachEntity)
             this.physicsEngine.getBodies().map((body, index) => {
                 const entity = bodyEntities[index]
                 const { x, y } = entity.fromCenterPosition(body.position)
@@ -36,7 +36,7 @@ define(function (require) {
          * @param {Entity} entity 
          */
         getBodyFromEntity(entity) {
-            const bodyEntities = this.entityManager.getEntitiesNotAs(JointEntity)
+            const bodyEntities = this.entityManager.getEntitiesNotAs(AttachEntity)
             return this.physicsEngine.getBodies().find((body, index) => {
                 const attachedEntity = bodyEntities[index]
                 return attachedEntity.position.x === entity.position.x &&
@@ -70,7 +70,7 @@ define(function (require) {
          * Init the phyiscs for entities before loading
          */
         before() {
-            const jointEntities = this.entityManager.getEntitiesAs(JointEntity)
+            const jointEntities = this.entityManager.getEntitiesAs(AttachEntity)
             jointEntities.map(entity => entity.updateJointPosition(this.physicsEngine))
             return true
         }
@@ -87,7 +87,7 @@ define(function (require) {
          * Complete the physics after setup
          */
         after() {
-            const bodyEntities = this.entityManager.getEntitiesNotAs(JointEntity)
+            const bodyEntities = this.entityManager.getEntitiesNotAs(AttachEntity)
             bodyEntities.map(entity => entity.updateCollisionFilters(this.physicsEngine))
             return true
         }

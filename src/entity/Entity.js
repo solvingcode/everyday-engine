@@ -294,7 +294,8 @@ define(function (require) {
         RECT: 'Rect',
         LINE: 'Line',
         POLY: 'Poly',
-        CIRCLE: 'Circle'
+        CIRCLE: 'Circle',
+        ATTACH: 'Attach'
     }
 
     return Entity

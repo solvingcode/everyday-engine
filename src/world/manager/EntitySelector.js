@@ -19,11 +19,16 @@ define(function (require) {
          * @param {Object} point 
          */
         get(point) {
-            return EntityManager.get().entities.find((entity) => entity.includes(point) && entity.selectable)
+            const entities = this.getAll(point)
+            return entities.length && entities[0]
         }
 
-        focus(point) {
-            this.get(point).focused = true
+        /**
+         * Get all entities in a specific point (absolute position)
+         * @param {Object} point 
+         */
+        getAll(point) {
+            return EntityManager.get().entities.filter((entity) => entity.includes(point) && entity.selectable)
         }
 
         /**
@@ -34,9 +39,9 @@ define(function (require) {
         getInsideArea(point, size) {
             return EntityManager.get().entities.filter((entity) => {
                 return entity.selectable &&
-                    entity.position.x >= point.x && 
+                    entity.position.x >= point.x &&
                     entity.position.x + entity.size.width <= point.x + size.width &&
-                    entity.position.y >= point.y && 
+                    entity.position.y >= point.y &&
                     entity.position.y + entity.size.height <= point.y + size.height
             })
         }
@@ -59,6 +64,10 @@ define(function (require) {
 
         unselectAll() {
             EntityManager.get().entities.map((entity) => entity.unselect())
+        }
+
+        focus(point) {
+            this.get(point).focused = true
         }
 
         static get() {

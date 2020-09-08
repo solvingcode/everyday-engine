@@ -4,6 +4,7 @@ define(function (require) {
     const RectMenuItem = require('./items/RectMenuItem.js')
     const JointMenuItem = require('./items/JointMenuItem.js')
     const AttachJointMenuItem = require('./items/AttachJointMenuItem.js')
+    const AttachPointMenuItem = require('./items/AttachPointMenuItem.js')
     const SimulateMenuItem = require('./items/SimulateMenuItem.js')
     const SelectorMenuItem = require('./items/SelectorMenuItem.js')
     const DeleteMenuItem = require('./items/DeleteMenuItem.js')
@@ -19,6 +20,7 @@ define(function (require) {
                 new RectMenuItem(),
                 new JointMenuItem(),
                 new AttachJointMenuItem(),
+                new AttachPointMenuItem(),
                 new SimulateMenuItem(),
                 new DeleteMenuItem(),
                 new DuplicateMenuItem(),

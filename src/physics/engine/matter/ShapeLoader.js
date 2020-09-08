@@ -15,7 +15,7 @@ define(function (require) {
                 [Entity.shapes.ELLIPSE]: EllipseShape,
                 [Entity.shapes.POLY]: PolyShape,
                 [Entity.shapes.CIRCLE]: CircleShape,
-                [Entity.shapes.LINE]: JointShape
+                [Entity.shapes.ATTACH]: JointShape
             }
             this.physicEngine = physicEngine
         }

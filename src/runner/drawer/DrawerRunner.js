@@ -11,6 +11,7 @@ define(function (require) {
     const LineEntity = require('../../world/entity/LineEntity.js')
     const JointEntity = require('../../world/entity/JointEntity.js')
     const AttachJointEntity = require('../../world/entity/AttachJointEntity.js')
+    const AttachPointEntity = require('../../world/entity/AttachPointEntity.js')
     const PolyEntity = require('../../world/entity/PolyEntity.js')
     const SelectorEntity = require('../../world/entity/SelectorEntity.js')
 
@@ -48,6 +49,9 @@ define(function (require) {
                 },
                 ATTACH_JOINT: {
                     entity: AttachJointEntity
+                },
+                ATTACH_POINT: {
+                    entity: AttachPointEntity
                 },
                 SELECT: {
                     entity: SelectorEntity
