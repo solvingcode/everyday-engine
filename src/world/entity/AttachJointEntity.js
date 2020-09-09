@@ -57,7 +57,6 @@ define(function (require) {
             if (super.setConstraintEntites()) {
                 this.points.a.y += this.getArrowProps().height / 2
                 this.points.b.y += this.getArrowProps().height / 2
-                this.entities.a.attachedTo = this.entities.b
                 return true
             }
             return false

@@ -124,6 +124,17 @@ define(function (require) {
             return this.entities.filter(entity => !(entity instanceof type))
         }
 
+        /**
+         * Get attached entities (bidirectional)
+         * @param {Entity} entity 
+         */
+        getAttachedEntities(entity){
+            const attachedEntities = []
+            if (entity.attachedTo) {
+                attachedEntities.push(attachedEntities)
+            }
+        }
+
     }
 
     EntityManager.instance = null

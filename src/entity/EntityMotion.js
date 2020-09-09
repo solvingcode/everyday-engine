@@ -65,13 +65,22 @@ define(function (require) {
         }
 
         /**
-         * Move the entity by distance related to a given point
+         * Move the entity by distance related to a given point.
+         * Move also attached entities
+         * @param {EntityManager} entityManager
          * @param {Object} point relative position
          * @param {Object} target absolute position
          */
-        moveRelativePointTo(point, target) {
+        moveRelativePointTo(entityManager, point, target) {
             const diffDistance = { x: target.x - this.position.x - point.x, y: target.y - this.position.y - point.y }
             this.setPosition({ x: this.position.x + diffDistance.x, y: this.position.y + diffDistance.y })
+        }
+
+        /**
+         * Get attached entities
+         */
+        getAttachedEntities(entityManager) {
+            return entityManager.getAttachedEntities(this)
         }
 
         /**

@@ -1,6 +1,7 @@
 define(function (require) {
 
     const Action = require('./Action.js')
+    const EntityManager = require('../../world/manager/EntityManager.js')
 
     class MoveAction extends Action {
 
@@ -9,6 +10,7 @@ define(function (require) {
          * @param {Array} selectedEntities
          */
         static run(mouse, selectedEntities) {
+            const entityManager = EntityManager.get()
             const instance = MoveAction.get()
             const dragDistance = mouse.getDragDistance()
             instance.position = mouse.position
@@ -16,7 +18,7 @@ define(function (require) {
                 selectedEntities.map(entity => entity.fromAbsolutePosition(instance.position))
             const targetPoint = { x: instance.position.x + dragDistance.x, y: instance.position.y + dragDistance.y }
             selectedEntities.map((entity, index) => {
-                entity.moveRelativePointTo(instance.relativeEntityPositions[index], targetPoint)
+                entity.moveRelativePointTo(entityManager, instance.relativeEntityPositions[index], targetPoint)
             })
             return false
         }

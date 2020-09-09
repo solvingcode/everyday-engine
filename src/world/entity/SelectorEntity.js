@@ -34,9 +34,7 @@ define(function (require) {
             const selectedEntities = this.entitySelector.getSelected()
             if (selectedEntities.length) {
                 const triggerEntity = this.entitySelector.get(this.getCurrentMousePosition())
-                const isEntityMove = triggerEntity && (
-                    selectedEntities.includes(triggerEntity)
-                )
+                const isEntityMove = triggerEntity && selectedEntities.includes(triggerEntity)
                 if (isEntityMove) {
                     this.appState.setUniqStateByGroup('ACTION', 'MOVE_START')
                     return true

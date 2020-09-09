@@ -17,18 +17,23 @@ define(function (require) {
         /**
          * Get the entity in a specific point (absolute position)
          * @param {Object} point 
+         * @param {Entity} exceptType 
          */
-        get(point) {
-            const entities = this.getAll(point)
-            return entities.length && entities[0]
+        get(point, exceptType = null) {
+            const entities = this.getAll(point, exceptType)
+            return entities.length && entities[entities.length - 1]
         }
 
         /**
          * Get all entities in a specific point (absolute position)
          * @param {Object} point 
+         * @param {Entity} exceptType 
          */
-        getAll(point) {
-            return EntityManager.get().entities.filter((entity) => entity.includes(point) && entity.selectable)
+        getAll(point, exceptType = null) {
+            return EntityManager.get().entities.filter((entity) =>
+                entity.includes(point) && entity.selectable &&
+                (!exceptType || !(entity instanceof exceptType))
+            )
         }
 
         /**

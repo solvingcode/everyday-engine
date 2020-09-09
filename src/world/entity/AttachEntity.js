@@ -5,8 +5,17 @@ define(function (require) {
 
     class AttachEntity extends EntityMotion {
 
-        isGenerateDisabled(){
+        isGenerateDisabled() {
             return AppState.get().hasState('SIMULATE_PROGRESS')
+        }
+
+        /**
+         * @inheritdoc
+         */
+        end() {
+            if (this.entities.a && this.entities.b && this.attached) {
+                this.entities.a.attachedTo = this.entities.b
+            }
         }
 
     }

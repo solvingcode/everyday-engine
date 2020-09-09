@@ -10,6 +10,7 @@ define(function (require) {
             this.list = []
             this.entityManager = EntityManager.get()
             this.storage = Storage.get()
+            this.maxList = 10
         }
 
         static get() {
@@ -34,6 +35,9 @@ define(function (require) {
          * Push all data into the history
          */
         push() {
+            if (this.list.length > this.maxList) {
+                this.list.shift()
+            }
             this.list.push(
                 _.cloneDeep(this.storage.update(Storage.type.ENTITY, this.entityManager.entities))
             )
