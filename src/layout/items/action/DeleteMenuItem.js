@@ -1,7 +1,7 @@
 define(function (require) {
 
-    const MenuItem = require('../MenuItem.js')
-    const Layout = require('../Layout.js')
+    const MenuItem = require('../../MenuItem.js')
+    const Layout = require('../../Layout.js')
 
     class DeleteMenuItem extends MenuItem {
         constructor() {

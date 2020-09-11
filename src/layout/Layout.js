@@ -1,15 +1,17 @@
 define(function () {
 
-    class Layout {}
+    class Layout { }
 
     Layout.zone = {
         LEFT: 'left',
-        TOP: 'top'
+        TOP: 'top',
+        RIGHT: 'right'
     }
 
     Layout.type = {
         DRAW: 'draw',
-        ACTION: 'action'
+        ACTION: 'action',
+        STYLE: 'style'
     }
 
     return Layout

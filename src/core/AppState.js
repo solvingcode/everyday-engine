@@ -6,6 +6,7 @@ define(function (require) {
 
         constructor() {
             this.state = []
+            this.data = {}
         }
 
         /**
@@ -14,6 +15,25 @@ define(function (require) {
          */
         getState() {
             return this.state
+        }
+
+        /**
+         * Get all data associated to a topic.
+         * Used to access data related to a state
+         * @param {String} topic 
+         */
+        getData(topic) {
+            return this.data && this.data[topic]
+        }
+
+        /**
+         * Set data associated to a topic.
+         * Used to set data for a given state
+         * @param {String} topic 
+         */
+        setData(topic, data) {
+            this.data[topic] = data
+            return this
         }
 
         /**
@@ -142,6 +162,10 @@ define(function (require) {
         'ACTION_UNDO_STOP': { history: false },
         'ACTION_MOVE_START': { history: true },
         'ACTION_MOVE_STOP': { history: false }
+    }
+
+    AppState.Topics = {
+        COLOR: 'color'
     }
 
     return AppState

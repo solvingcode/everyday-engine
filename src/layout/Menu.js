@@ -1,16 +1,17 @@
 define(function (require) {
 
-    const CircleMenuItem = require('./items/CircleMenuItem.js')
-    const RectMenuItem = require('./items/RectMenuItem.js')
-    const JointMenuItem = require('./items/JointMenuItem.js')
-    const AttachJointMenuItem = require('./items/AttachJointMenuItem.js')
-    const AttachPointMenuItem = require('./items/AttachPointMenuItem.js')
-    const SimulateMenuItem = require('./items/SimulateMenuItem.js')
-    const SelectorMenuItem = require('./items/SelectorMenuItem.js')
-    const DeleteMenuItem = require('./items/DeleteMenuItem.js')
-    const DuplicateMenuItem = require('./items/DuplicateMenuItem.js')
-    const UndoMenuItem = require('./items/UndoMenuItem.js')
-    const Button = require('../renderer/ui/Button.js')
+    const CircleMenuItem = require('./items/draw/CircleMenuItem.js')
+    const RectMenuItem = require('./items/draw/RectMenuItem.js')
+    const JointMenuItem = require('./items/draw/JointMenuItem.js')
+    const AttachJointMenuItem = require('./items/draw/AttachJointMenuItem.js')
+    const AttachPointMenuItem = require('./items/draw/AttachPointMenuItem.js')
+    const SelectorMenuItem = require('./items/draw/SelectorMenuItem.js')
+    const SimulateMenuItem = require('./items/action/SimulateMenuItem.js')
+    const DeleteMenuItem = require('./items/action/DeleteMenuItem.js')
+    const DuplicateMenuItem = require('./items/action/DuplicateMenuItem.js')
+    const UndoMenuItem = require('./items/action/UndoMenuItem.js')
+    const StyleMenuItem = require('./items/style/StyleMenuItem.js')
+    const DefaultButtonUI = require('../renderer/ui/buttons/DefaultButtonUI.js')
 
     class Menu {
         constructor() {
@@ -24,7 +25,8 @@ define(function (require) {
                 new SimulateMenuItem(),
                 new DeleteMenuItem(),
                 new DuplicateMenuItem(),
-                new UndoMenuItem()
+                new UndoMenuItem(),
+                new StyleMenuItem()
             ]
             this.setup()
         }
@@ -37,11 +39,27 @@ define(function (require) {
             this.items = []
             for (var iType in this.types) {
                 const type = this.types[iType]
-                const index = this.items.filter(item => item.element.zone === type.zone).length
-                this.items.push({
-                    element: type,
-                    index
-                })
+                this.prepare(type)
+            }
+        }
+
+        /**
+         * Prepare the Menu and sub menu for rendering
+         * @param {MenuItem | Menu} item 
+         * @param {Object} parent 
+         * @param {Number} parentIndex 
+         */
+        prepare(item, parentIndex = -1, parent = null) {
+            const index = this.items.filter(pItem => pItem.element.zone === item.zone).length
+            const resultItem = {
+                element: item,
+                index,
+                parentIndex,
+                parent
+            }
+            this.items.push(resultItem)
+            if (item.items) {
+                item.items.forEach(pItem => this.prepare(pItem, index, resultItem))
             }
         }
 
@@ -91,8 +109,8 @@ define(function (require) {
          */
         getItemAt(x, y) {
             return this.items.find((item) =>
-                x > item.position.x && x < item.position.x + Button.props.width &&
-                y > item.position.y && y < item.position.y + Button.props.height
+                x > item.position.x && x < item.position.x + DefaultButtonUI.props.width &&
+                y > item.position.y && y < item.position.y + DefaultButtonUI.props.height
             )
         }
 

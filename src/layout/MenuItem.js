@@ -56,6 +56,14 @@ define(function (require) {
         }
 
         /**
+         * Set data state for color topic
+         * @param {String} color
+         */
+        setColorDataState(color) {
+            this.appState.setData(AppState.Topics.COLOR, color)
+        }
+
+        /**
          * Has action state
          * @param {String} typeAction
          */
