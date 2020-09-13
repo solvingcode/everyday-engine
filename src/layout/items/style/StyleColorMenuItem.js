@@ -1,23 +1,24 @@
 define(function (require) {
 
     const MenuItem = require('../../MenuItem.js')
+    const Layout = require('../../Layout.js')
 
     class StyleColorMenuItem extends MenuItem {
-        constructor(parent, color) {
+        constructor(parent, data) {
             super({
                 name: 'Color'
             })
             this.parent = parent
-            this.color = color
+            this.data = data
             this.zone = parent.zone
-            this.type = parent.type
+            this.type = Layout.type.STYLE_COLOR
         }
         run() {
             this.setActionState('STYLE_COLOR', 'START')
-            this.setColorDataState(this.color)
+            this.setDataState(this.data)
         }
         isSelected() {
-            return this.hasActionState('STYLE_COLOR')
+            return this.hasDataState(this.data)
         }
     }
 

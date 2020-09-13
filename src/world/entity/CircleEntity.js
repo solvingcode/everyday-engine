@@ -35,17 +35,19 @@ define(function (require) {
             const centerY = sh / 2
             this.center = { x: centerX, y: centerY }
             this.radius = Math.abs(sw / 2 - 1)
-            context.strokeStyle = this.style.color
-            if (this.style.fillColor) {
-                context.fillStyle = this.style.fillColor
+            const fillColor = this.getFillColor()
+            const color = this.getColor()
+            context.strokeStyle = color
+            if (fillColor) {
+                context.fillStyle = fillColor
             }
-            context.beginPath()
+            context.lineWidth = 1
             context.translate(width / 2, height / 2)
             context.rotate(this.rotation)
             context.translate(-centerX, -centerY)
             context.ellipse(centerX, centerY, this.radius, this.radius, 0, 0, 2 * Math.PI)
             context.stroke()
-            if (this.style.fillColor) {
+            if (fillColor) {
                 context.fill()
             }
             return this.updateMeshFromContext(context)

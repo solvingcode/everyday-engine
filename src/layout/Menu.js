@@ -11,7 +11,8 @@ define(function (require) {
     const DuplicateMenuItem = require('./items/action/DuplicateMenuItem.js')
     const UndoMenuItem = require('./items/action/UndoMenuItem.js')
     const StyleMenuItem = require('./items/style/StyleMenuItem.js')
-    const DefaultButtonUI = require('../renderer/ui/buttons/DefaultButtonUI.js')
+    const ButtonUI = require('../renderer/ui/buttons/ButtonUI.js')
+    const MenuItemUI = require('../renderer/ui/MenuItemUI.js')
 
     class Menu {
         constructor() {
@@ -49,17 +50,12 @@ define(function (require) {
          * @param {Object} parent 
          * @param {Number} parentIndex 
          */
-        prepare(item, parentIndex = -1, parent = null) {
+        prepare(item, parent = null) {
             const index = this.items.filter(pItem => pItem.element.zone === item.zone).length
-            const resultItem = {
-                element: item,
-                index,
-                parentIndex,
-                parent
-            }
+            const resultItem = new MenuItemUI(item, index, parent)
             this.items.push(resultItem)
             if (item.items) {
-                item.items.forEach(pItem => this.prepare(pItem, index, resultItem))
+                item.items.forEach(pItem => this.prepare(pItem, resultItem))
             }
         }
 
@@ -73,7 +69,7 @@ define(function (require) {
                     if (item.element.isSelected()) {
                         item.element.stop()
                     }
-                    if (item.element.props.name === menuItem.element.props.name) {
+                    if (item.element === menuItem.element) {
                         item.element.run()
                     }
                 })
@@ -109,8 +105,8 @@ define(function (require) {
          */
         getItemAt(x, y) {
             return this.items.find((item) =>
-                x > item.position.x && x < item.position.x + DefaultButtonUI.props.width &&
-                y > item.position.y && y < item.position.y + DefaultButtonUI.props.height
+                x > item.position.x && x < item.position.x + ButtonUI.getProps(item.element).width &&
+                y > item.position.y && y < item.position.y + ButtonUI.getProps(item.element).height
             )
         }
 

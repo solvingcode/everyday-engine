@@ -18,8 +18,8 @@ define(function (require) {
             return false
         }
         loadItems() {
-            const colors = ['#FF0000', '#00FF00', '#0000FF', '#FFFF00', '#00FFFF']
-            this.items = colors.map(color => new StyleColorMenuItem(this, color))
+            const colors = ['', '#FF0000', '#00FF00', '#0000FF', '#FFFFFF']
+            this.items = colors.map(color => new StyleColorMenuItem(this, { color }))
         }
     }
 

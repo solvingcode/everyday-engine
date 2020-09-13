@@ -71,8 +71,12 @@ define(function (require) {
             EntityManager.get().entities.map((entity) => entity.unselect())
         }
 
+        unfocusAll(){
+            EntityManager.get().entities.map((entity) => !entity.loading && entity.unfocus())
+        }
+
         focus(point) {
-            this.get(point).focused = true
+            this.getAll(point).map((entity) => !entity.loading && entity.focus())
         }
 
         static get() {

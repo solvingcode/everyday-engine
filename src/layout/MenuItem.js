@@ -9,6 +9,7 @@ define(function (require) {
             this.appState = AppState.get()
             this.zone = Layout.zone.LEFT
             this.type = Layout.type.DRAW
+            this.data = {}
         }
 
         /**
@@ -56,11 +57,11 @@ define(function (require) {
         }
 
         /**
-         * Set data state for color topic
-         * @param {String} color
+         * Set data state
+         * @param {Object} data
          */
-        setColorDataState(color) {
-            this.appState.setData(AppState.Topics.COLOR, color)
+        setDataState(data) {
+            this.appState.setData(data)
         }
 
         /**
@@ -69,6 +70,14 @@ define(function (require) {
          */
         hasActionState(type) {
             return this.appState.hasState(`ACTION_${type}`)
+        }
+
+        /**
+         * Has data state
+         * @param {Object} data
+         */
+        hasDataState(data) {
+            return this.appState.hasData(data)
         }
 
         /**

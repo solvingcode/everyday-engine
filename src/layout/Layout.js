@@ -11,7 +11,8 @@ define(function () {
     Layout.type = {
         DRAW: 'draw',
         ACTION: 'action',
-        STYLE: 'style'
+        STYLE: 'style',
+        STYLE_COLOR: 'style_color'
     }
 
     return Layout

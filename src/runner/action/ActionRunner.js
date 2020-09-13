@@ -7,6 +7,7 @@ define(function (require) {
     const DuplicateAction = require('./DuplicateAction.js')
     const UndoAction = require('./UndoAction.js')
     const MoveAction = require('./MoveAction.js')
+    const StyleColorAction = require('./StyleColorAction.js')
 
     class ActionRunner extends Runner {
 
@@ -25,7 +26,8 @@ define(function (require) {
                 DELETE: DeleteAction,
                 DUPLICATE: DuplicateAction,
                 UNDO: UndoAction,
-                MOVE: MoveAction
+                MOVE: MoveAction,
+                STYLE_COLOR: StyleColorAction
             }
             const selectedEntities = this.entitySelector.getSelected()
             Object.entries(typeActions).forEach(typeAction => {

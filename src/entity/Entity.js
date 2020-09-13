@@ -49,6 +49,7 @@ define(function (require) {
          */
         close() {
             this.position = this.mesh.position
+            this.loading = false
         }
 
         /**
@@ -94,7 +95,7 @@ define(function (require) {
          * Set the entity's style
          * @param {Integer} angle 
          */
-        setStyle(style) {
+        setStyleAndGenerate(style) {
             this.style = style
             if (this.clearBuffer()) {
                 this.generate()
@@ -106,7 +107,21 @@ define(function (require) {
          */
         select() {
             this.selected = true
-            this.setStyle({ color: '#FF00FF', fillColor: 'rgba(255, 0, 255, 0.2)' })
+            this.setStyleAndGenerate({ color: '#FF00FF', fillColor: 'rgba(255, 0, 255, 0.2)' })
+        }
+
+        /**
+         * Focus the current entity (apply styles, ...)
+         */
+        focus() {
+            !this.selected && this.setStyleAndGenerate({ color: '#000000', fillColor: 'rgba(0, 0, 0, 0.2)' })
+        }
+
+        /**
+         * Unfocus the current entity (apply styles, ...)
+         */
+        unfocus() {
+            !this.selected && this.setStyleAndGenerate(this.props.style)
         }
 
         /**
@@ -114,7 +129,7 @@ define(function (require) {
          */
         unselect() {
             this.selected = false
-            this.setStyle(this.props.style)
+            this.setStyleAndGenerate(this.props.style)
         }
 
         /**

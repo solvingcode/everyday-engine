@@ -5,7 +5,8 @@ define(function () {
          * @param {Entity} entity 
          */
         static make(entity) {
-            return entity.build()
+            entity.loading = true
+            return entity.updateStyle().build()
         }
     }
 

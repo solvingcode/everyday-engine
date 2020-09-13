@@ -29,10 +29,9 @@ define(function (require) {
         /**
          * Set data associated to a topic.
          * Used to set data for a given state
-         * @param {String} topic 
          */
-        setData(topic, data) {
-            this.data[topic] = data
+        setData(data) {
+            this.data = { ...data }
             return this
         }
 
@@ -42,6 +41,19 @@ define(function (require) {
          */
         hasState(state) {
             return this.state.indexOf(state) >= 0
+        }
+
+        /**
+         * Verify if Application has a data state.
+         * @param {Object} data 
+         */
+        hasData(data) {
+            for (const pindex in data) {
+                if (data[pindex] !== this.data[pindex]) {
+                    return false
+                }
+            }
+            return true
         }
 
         /**
@@ -161,11 +173,9 @@ define(function (require) {
         'ACTION_UNDO_START': { history: false },
         'ACTION_UNDO_STOP': { history: false },
         'ACTION_MOVE_START': { history: true },
-        'ACTION_MOVE_STOP': { history: false }
-    }
-
-    AppState.Topics = {
-        COLOR: 'color'
+        'ACTION_MOVE_STOP': { history: false },
+        'ACTION_STYLE_COLOR_START': { history: true },
+        'ACTION_STYLE_COLOR_STOP': { history: false }
     }
 
     return AppState

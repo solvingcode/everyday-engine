@@ -53,7 +53,7 @@ define(function (require) {
                     this.points.a = this.points.b
                     this.points.b = pointPermut
                 }
-                return true
+                return this.points.a && this.points.b
             }
             return false
         }

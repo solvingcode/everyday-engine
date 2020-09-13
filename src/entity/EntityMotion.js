@@ -1,6 +1,7 @@
 define(function (require) {
 
     const Entity = require('./Entity.js')
+    const AppState = require('../core/AppState.js')
 
     /**
      * Abstract EntityMotion class
@@ -111,6 +112,23 @@ define(function (require) {
          */
         getRelativeCenterPosition(entity, point) {
             return this.toRelativeCenterPosition(entity.toAbsolutePosition(point))
+        }
+
+        /**
+         * Update the style of the entity using data available on
+         * tha application state (color, ...)
+         */
+        updateStyle(){
+            this.props.style.fillColor = AppState.get().data.color
+            return this
+        }
+
+        getFillColor(){
+            return this.style.fillColor || this.props.style.fillColor
+        }
+
+        getColor(){
+            return this.style.color || this.props.style.color
         }
 
     }
