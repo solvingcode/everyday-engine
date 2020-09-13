@@ -17,11 +17,11 @@ define(function (require) {
             if (!color) {
                 context.lineWidth = 2
                 context.moveTo(
-                    item.position.x + context.lineWidth, 
+                    item.position.x + context.lineWidth,
                     item.position.y + this.props.height - context.lineWidth
                 )
                 context.lineTo(
-                    item.position.x + this.props.width - context.lineWidth, 
+                    item.position.x + this.props.width - context.lineWidth,
                     item.position.y + context.lineWidth
                 )
                 context.stroke()
@@ -37,9 +37,11 @@ define(function (require) {
 
         static getPosition(item) {
             const { x: x0, y: y0 } = PanelUI.getPosition(item.parent)
+            const numLine = Math.ceil((item.index - item.parent.index) / this.props.numberPerLine)
+            const numCol = (item.index - (item.parent.index + 1)) % this.props.numberPerLine
             return {
-                x: x0 + (item.index - (item.parent.index + 1)) * (this.props.width + this.props.padding.x),
-                y: y0 + PanelUI.props.heightTitle + PanelUI.props.padding.y
+                x: x0 + (this.props.width + this.props.padding.x) * numCol,
+                y: y0 + PanelUI.props.heightTitle * numLine + PanelUI.props.padding.y
             }
         }
     }
@@ -48,7 +50,8 @@ define(function (require) {
         width: 30,
         height: 30,
         padding: { x: 10, y: 10 },
-        strokeColor: '#000000'
+        strokeColor: '#000000',
+        numberPerLine: 5
     }
 
     return ColorButtonUI

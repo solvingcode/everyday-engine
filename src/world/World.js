@@ -11,6 +11,7 @@ define(function (require) {
 
         /**
          * Draw the entities.
+         * @TODO: To optimize (rerender just entities updated)
          * @param {Renderer} renderer 
          */
         draw(renderer) {

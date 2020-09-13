@@ -21,7 +21,7 @@ define(function (require) {
                 const entity = bodyEntities[index]
                 const { x, y } = entity.fromCenterPosition(body.position)
                 entity.setPosition({ x: parseInt(x), y: parseInt(y) })
-                entity.setRotation(Math.round(body.angle * 100) / 100)
+                entity.setRotationAndGenerate(Math.round(body.angle * 100) / 100)
             })
             this.physicsEngine.getJoints().map((joint, index) => {
                 const entity = jointEntites[index]

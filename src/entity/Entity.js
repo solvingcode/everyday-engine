@@ -18,7 +18,7 @@ define(function (require) {
             this.isBuffered = false
             this.isPhyiscsLoaded = false
             this.size = props.size || 1
-            this.mesh = new Mesh(this.position, this.size)
+            this.mesh = new Mesh(this.position, this.size) //@TODO: think to use a MeshManager for performance
             this.selectable = true
             this.selected = false
             this.focused = false
@@ -82,7 +82,7 @@ define(function (require) {
          * Set the entity's rotation
          * @param {Integer} angle 
          */
-        setRotation(angle) {
+        setRotationAndGenerate(angle) {
             if (this.rotation !== angle) {
                 this.rotation = angle
                 if (this.clearBuffer()) {
@@ -114,14 +114,16 @@ define(function (require) {
          * Focus the current entity (apply styles, ...)
          */
         focus() {
-            !this.selected && this.setStyleAndGenerate({ color: '#000000', fillColor: 'rgba(0, 0, 0, 0.2)' })
+            this.focused = true
+            !this.selected && this.setStyleAndGenerate({ color: '#000000', fillColor: 'rgba(0, 0, 0, 0.1)' })
         }
 
         /**
          * Unfocus the current entity (apply styles, ...)
          */
         unfocus() {
-            !this.selected && this.setStyleAndGenerate(this.props.style)
+            !this.selected && this.focused && this.setStyleAndGenerate(this.props.style)
+            this.focused = false
         }
 
         /**

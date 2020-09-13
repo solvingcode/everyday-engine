@@ -71,7 +71,7 @@ define(function (require) {
             EntityManager.get().entities.map((entity) => entity.unselect())
         }
 
-        unfocusAll(){
+        unfocusAll() {
             EntityManager.get().entities.map((entity) => !entity.loading && entity.unfocus())
         }
 

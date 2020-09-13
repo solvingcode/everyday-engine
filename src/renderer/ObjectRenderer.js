@@ -23,9 +23,9 @@ define(function () {
             for (var iMesh in this.meshes) {
                 const mesh = this.meshes[iMesh]
                 const { x, y } = mesh.position
-                this.context.drawImage(mesh.context.canvas, x, y)
-                objectContext.drawImage(this.canvas, 0, 0)
+                objectContext.drawImage(mesh.context.canvas, x, y)
             }
+            //@TODO: optimize this to not delete all meshes (rerender just entities updates)
             this.meshes = []
         }
 

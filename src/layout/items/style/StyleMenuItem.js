@@ -13,12 +13,15 @@ define(function (require) {
             this.type = Layout.type.STYLE
             this.loadItems()
         }
-        run() { }
+        run() {
+            return false
+        }
         isSelected() {
             return false
         }
         loadItems() {
-            const colors = ['', '#FF0000', '#00FF00', '#0000FF', '#FFFFFF']
+            const colors = ['', '#FF0000', '#00FF00', '#0000FF', '#FFFFFF',
+                '#FF00FF', '#FFFF00', '#00FFFF', '#FFF000', '#F0F0FF']
             this.items = colors.map(color => new StyleColorMenuItem(this, { color }))
         }
     }
