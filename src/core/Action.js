@@ -1,5 +1,8 @@
 define(function () {
 
+    /**
+     * Define the action to be executed when an event is triggered
+     */
     class Action {
 
         constructor() {
@@ -16,7 +19,7 @@ define(function () {
         /**
          * Add action to the queue.
          * @param {Object} object the object must define the method "execute"
-         * @param  {...any} args 
+         * @param {...any} args 
          */
         add(object, ...args) {
             this.queue.push({ object, args })

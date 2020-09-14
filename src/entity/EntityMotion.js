@@ -19,7 +19,6 @@ define(function (require) {
                 gravity: 20
             }
             this.collision = { group: 0, category: 1, mask: 1 }
-            this.attachedTo = null
         }
 
         /**

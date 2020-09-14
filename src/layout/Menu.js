@@ -3,7 +3,6 @@ define(function (require) {
     const CircleMenuItem = require('./items/draw/CircleMenuItem.js')
     const RectMenuItem = require('./items/draw/RectMenuItem.js')
     const JointMenuItem = require('./items/draw/JointMenuItem.js')
-    const AttachJointMenuItem = require('./items/draw/AttachJointMenuItem.js')
     const AttachPointMenuItem = require('./items/draw/AttachPointMenuItem.js')
     const SelectorMenuItem = require('./items/draw/SelectorMenuItem.js')
     const SimulateMenuItem = require('./items/action/SimulateMenuItem.js')
@@ -21,7 +20,6 @@ define(function (require) {
                 new CircleMenuItem(),
                 new RectMenuItem(),
                 new JointMenuItem(),
-                new AttachJointMenuItem(),
                 new AttachPointMenuItem(),
                 new SimulateMenuItem(),
                 new DeleteMenuItem(),

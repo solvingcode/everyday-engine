@@ -1,7 +1,9 @@
-define(function (require) {
+define(function () {
 
-    const _ = require('lib/lodash.min')
-
+    /**
+     * Utils to manage the storage of data over time.
+     * Handle clones and manage conflicts
+     */
     class Storage {
 
         constructor() {
@@ -21,7 +23,7 @@ define(function (require) {
          * @param {Object} data 
          */
         update(type, data) {
-            this.data[type] = _.cloneDeep(data)
+            this.data[type] = data.clone()
             return this
         }
 
@@ -31,7 +33,7 @@ define(function (require) {
          */
         fetch(type) {
             const data = this.data[type]
-            return data && _.cloneDeep(data)
+            return data && data.clone()
         }
 
     }

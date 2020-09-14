@@ -1,5 +1,9 @@
 define(function (require) {
 
+    /**
+     * Define a block of pixels loaded to the VRAM.
+     * Attached to an entity, and used to draw pixels by the GPU
+     */
     class Mesh {
 
         constructor(position, size) {

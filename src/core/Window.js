@@ -2,6 +2,9 @@ define(function (require) {
     const Keyboard = require('./Keyboard.js')
     const Mouse = require('./Mouse.js')
 
+    /**
+     * Handle the window event listeners (keyboard, mouse, ...)
+     */
     class Window {
         constructor() {
             this.keyboard = new Keyboard()

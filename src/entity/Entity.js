@@ -33,7 +33,7 @@ define(function (require) {
         }
 
         /**
-         * End the build the Entity
+         * End the build of the Entity
          */
         end() { }
 
@@ -42,6 +42,13 @@ define(function (require) {
          */
         generate(...params) {
             throw new TypeError('"generate" method must be implemented')
+        }
+
+        /**
+         * Clone the entity (can be redefined for each type)
+         */
+        clone() {
+            return _.cloneDeep(this)
         }
 
         /**

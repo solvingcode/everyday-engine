@@ -2,8 +2,12 @@ define(function (require) {
 
     const EntityManager = require('../world/manager/EntityManager.js')
     const Storage = require('../core/Storage.js')
-    const _ = require('lib/lodash.min')
 
+    /**
+     * Handle the history of action executed.
+     * Use the storage to push/pop data.
+     * This class is used to manage the Undo action
+     */
     class History {
 
         constructor() {

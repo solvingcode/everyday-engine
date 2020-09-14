@@ -8,6 +8,10 @@ define(function (require) {
     const ActionRunner = require('../runner/action/ActionRunner.js')
     const WindowRunner = require('../runner/window/WindowRunner.js')
 
+    /**
+     * Handle global events triggered by the user (click , mouse move)
+     * and define related action (Runner) to be executed
+     */
     class EventHandler {
 
         /**

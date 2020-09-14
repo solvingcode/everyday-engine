@@ -1,4 +1,7 @@
 define(function () {
+    /**
+     * Define the keyboard inputs (key pressed, released)
+     */
     class Keyboard {
         constructor() {
             this.keys = []

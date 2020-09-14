@@ -1,4 +1,7 @@
 define(function () {
+    /**
+     * Define the mouse inputs (pressed, clicked, mouse position, ...)
+     */
     class Mouse {
         constructor() {
             this.keydowns = []
@@ -75,7 +78,7 @@ define(function () {
             this.keydbclicks = []
         }
 
-        clearKeyPressed(){
+        clearKeyPressed() {
             this.keydowns = []
         }
     }

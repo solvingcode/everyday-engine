@@ -5,6 +5,9 @@ define(function (require) {
     const EventHandler = require('./EventHandler.js')
     const World = require('../world/World.js')
 
+    /**
+     * Define the application main
+     */
     class Application {
         constructor(renderer, camera) {
             this.title = 'Combat Simulation'

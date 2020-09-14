@@ -2,7 +2,6 @@ define(function (require) {
 
     const EntityGenerator = require('../generator/EntityGenerator.js')
     const Entity = require('../../entity/Entity.js')
-    const _ = require('lib/lodash.min')
 
     class EntityManager {
         constructor() {
@@ -87,7 +86,7 @@ define(function (require) {
          * @param {Entity} entity 
          */
         clone(entity) {
-            const cloneEntity = _.cloneDeep(entity)
+            const cloneEntity = entity.clone()
             return this.entities.push(cloneEntity) && cloneEntity
         }
 
@@ -126,9 +125,10 @@ define(function (require) {
 
         /**
          * Get attached entities (bidirectional)
+         * @TODO This function is deprecated, must be revisited
          * @param {Entity} entity 
          */
-        getAttachedEntities(entity){
+        getAttachedEntities(entity) {
             const attachedEntities = []
             if (entity.attachedTo) {
                 attachedEntities.push(attachedEntities)

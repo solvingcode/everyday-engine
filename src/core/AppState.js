@@ -2,6 +2,9 @@ define(function (require) {
 
     const History = require('./History.js')
 
+    /**
+     * Manage the state of the application over time
+     */
     class AppState {
 
         constructor() {
