@@ -3,6 +3,10 @@ define(function (require) {
     const ObjectRenderer = require('./ObjectRenderer.js')
     const SetupRenderer = require('./SetupRenderer.js')
 
+    /**
+     * Renderer class
+     * Render elements (entities, menus, ...) to the screen
+     */
     class Renderer {
         constructor() {
             this.objectRenderer = new ObjectRenderer()

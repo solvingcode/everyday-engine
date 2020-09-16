@@ -3,6 +3,10 @@ define(function (require) {
     const EntityGenerator = require('../generator/EntityGenerator.js')
     const Entity = require('../../entity/Entity.js')
 
+    /**
+     * Entity Manager class
+     * Manage the entities list, used to manipulate the entities (get, add, load, ...)
+     */
     class EntityManager {
         constructor() {
             this.entities = []
@@ -87,7 +91,10 @@ define(function (require) {
          */
         clone(entity) {
             const cloneEntity = entity.clone()
-            return this.entities.push(cloneEntity) && cloneEntity
+            if (cloneEntity) {
+                this.entities.push(cloneEntity)
+            }
+            return cloneEntity
         }
 
         /**

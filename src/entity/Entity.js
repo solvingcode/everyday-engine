@@ -5,6 +5,7 @@ define(function (require) {
 
     /**
      * Abstract Entity class
+     * @abstract
      */
     class Entity {
         constructor(props) {

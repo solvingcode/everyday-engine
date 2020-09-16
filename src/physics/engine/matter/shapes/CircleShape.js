@@ -2,11 +2,16 @@ define(function (require) {
 
     const Shape = require('./Shape.js')
 
+    /**
+     * Circle Shape class
+     * Define the shape for circles (CircleEntity)
+     */
     class CircleShape extends Shape {
 
-        get(entity, bodies){
+        get(entity) {
             const centerPosition = entity.toCenterPosition()
-            return bodies.circle(
+            const engine = this.getEngine()
+            return engine.Bodies.circle(
                 centerPosition.x,
                 centerPosition.y,
                 entity.radius,

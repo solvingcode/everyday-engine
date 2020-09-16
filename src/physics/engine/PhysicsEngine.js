@@ -1,5 +1,10 @@
 define(function () {
 
+    /**
+     * Physics Engine class
+     * Used as interface between the application and engine (third party Engine)
+     * @abstract
+     */
     class PhysicsEngine {
 
         constructor() {
@@ -21,6 +26,13 @@ define(function () {
          */
         add(entity) {
             throw new TypeError('"add" method must be implemented')
+        }
+
+        /**
+         * Get the Engine (third party)
+         */
+        getEngine() {
+            throw new TypeError('"getEngine" method must be implemented')
         }
 
         /**
@@ -70,7 +82,7 @@ define(function () {
          * Set the physics manager that loaded the phyiscs engine
          * @param {Physics} physicsManager 
          */
-        setPhysicsManager(physicsManager){
+        setPhysicsManager(physicsManager) {
             this.physicsManager = physicsManager
         }
 
@@ -78,7 +90,7 @@ define(function () {
          * Get body physics from the entity
          * @param {Entity} entity 
          */
-        getBodyFromEntity(entity){
+        getBodyFromEntity(entity) {
             return this.physicsManager.getBodyFromEntity(entity)
         }
 

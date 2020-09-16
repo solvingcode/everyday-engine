@@ -3,6 +3,9 @@ define(function (require) {
     const PhysicsEngine = require('../PhysicsEngine.js')
     const ShapeLoader = require('./ShapeLoader.js')
 
+    /**
+     * Matter Physics Engine class
+     */
     class MatterEngine extends PhysicsEngine {
 
         constructor() {
@@ -16,9 +19,10 @@ define(function (require) {
 
         /**
          * Add physics to the entity
+         * @param {Entity} entity
          */
         add(entity) {
-            const shape = this.shapeLoader.load(entity, Matter.Bodies, Matter.Constraint)
+            const shape = this.shapeLoader.load(entity)
             Matter.World.add(this.engine.world, shape)
         }
 
@@ -36,6 +40,13 @@ define(function (require) {
             Matter.World.clear(this.engine.world)
             Matter.Engine.clear(this.engine)
             this.engine = null
+        }
+
+        /**
+         * @inheritdoc
+         */
+        getEngine() {
+            return Matter
         }
 
         /**

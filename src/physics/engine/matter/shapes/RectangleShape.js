@@ -3,11 +3,19 @@ define(function (require) {
     const PlatformEntity = require('../../../../world/entity/PlatformEntity.js')
     const Shape = require('./Shape.js')
 
+    /**
+     * Rectangle Shape class
+     * Define the shape for rectangles (RectEntity)
+     */
     class RectangleShape extends Shape {
 
-        get(entity, bodies){
+        /**
+         * @inheritdoc 
+         */
+        get(entity) {
             const centerPosition = entity.toCenterPosition()
-            return bodies.rectangle(
+            const engine = this.getEngine()
+            return engine.Bodies.rectangle(
                 centerPosition.x,
                 centerPosition.y,
                 entity.size.width,

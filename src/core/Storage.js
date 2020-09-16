@@ -23,7 +23,7 @@ define(function () {
          * @param {Object} data 
          */
         update(type, data) {
-            this.data[type] = data.clone()
+            this.data[type] = _.cloneDeep(data)
             return this
         }
 
@@ -33,7 +33,7 @@ define(function () {
          */
         fetch(type) {
             const data = this.data[type]
-            return data && data.clone()
+            return data && _.cloneDeep(data)
         }
 
     }

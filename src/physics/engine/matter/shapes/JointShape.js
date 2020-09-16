@@ -2,9 +2,17 @@ define(function (require) {
 
     const Shape = require('./Shape.js')
 
+    /**
+     * Joint Shape class
+     * Define a Shape for AttachEntity type
+     */
     class JointShape extends Shape {
 
-        get(entity, bodies, constraint) {
+        /**
+         * @inheritdoc
+         */
+        get(entity) {
+            const engine = this.getEngine()
             const points = entity.points
             const entities = entity.entities
             const bodyA = this.getBodyFromEntity(entities.a)
@@ -16,7 +24,7 @@ define(function (require) {
                 throw new ReferenceError('Body not yet created or entity not founded')
             }
             entity.attached && this.addGroup(entity)
-            return constraint.create({ bodyA, pointA, bodyB, pointB, stiffness })
+            return engine.Constraint.create({ bodyA, pointA, bodyB, pointB, stiffness })
         }
 
         addGroup(entity) {

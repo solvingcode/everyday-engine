@@ -7,6 +7,10 @@ define(function (require) {
     const CircleShape = require('./shapes/CircleShape.js')
     const JointShape = require('./shapes/JointShape.js')
 
+    /**
+     * Shape Loader class
+     * Manage and load shapes
+     */
     class ShapeLoader {
 
         constructor(physicEngine){
@@ -27,7 +31,7 @@ define(function (require) {
          * @param {Contraint} constraint
          */
         load(entity, bodies, constraint){
-            return new (this.mapShapes[entity.shape])(this.physicEngine).get(entity, bodies, constraint)
+            return new (this.mapShapes[entity.shape])(this.physicEngine).load(entity, bodies, constraint)
         }
 
     }

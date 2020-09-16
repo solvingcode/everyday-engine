@@ -2,9 +2,12 @@ define(function (require) {
 
     const Entity = require('./Entity.js')
     const AppState = require('../core/AppState.js')
+    const Vector = require('../core/Vector.js')
 
     /**
      * Abstract EntityMotion class
+     * @abstract
+     * @todo Refactor collision properties
      */
     class EntityMotion extends Entity {
         constructor(props) {
@@ -13,8 +16,7 @@ define(function (require) {
                 throw new TypeError('Abstract class EntityMotion cannot be instantiated directly')
             }
             this.physics = {
-                acceleration: { x: 0, y: 0 },
-                velocity: { x: 0, y: 0 },
+                velocity: new Vector({ x: 0, y: 0 }),
                 speed: 0.7,
                 gravity: 20
             }
@@ -26,34 +28,15 @@ define(function (require) {
          */
         update() {
             super.update()
-            this.physics.velocity.x += this.physics.acceleration.x
-            this.physics.velocity.y += this.physics.acceleration.y
-            this.physics.acceleration = { x: 0, y: 0 }
-            this.position.x += this.physics.velocity.x
-            this.position.y += this.physics.velocity.y
-            this.physics.velocity.x *= 0.95
         }
 
         /**
-         * Move the entity by direction
-         * @param {int} direction 
+         * Move the entity by velocity
+         * @param {Physics} physics 
+         * @param {Vector} velocity 
          */
-        move(direction) {
-            var dx = 0, dy = 0
-            if (direction & Math.pow(2, DIRECTION.UP)) {
-                dy = 1
-            }
-            if (direction & Math.pow(2, DIRECTION.BOTTOM)) {
-                dy = -1
-            }
-            if (direction & Math.pow(2, DIRECTION.LEFT)) {
-                dx = -1
-            }
-            if (direction & Math.pow(2, DIRECTION.RIGHT)) {
-                dx = 1
-            }
-            this.physics.acceleration.x = dx * this.physics.speed
-            this.physics.acceleration.y = dy * this.physics.speed / 10
+        move(physics, velocity) {
+            physics.move(this, velocity)
         }
 
         /**
@@ -117,16 +100,16 @@ define(function (require) {
          * Update the style of the entity using data available on
          * tha application state (color, ...)
          */
-        updateStyle(){
+        updateStyle() {
             this.props.style.fillColor = AppState.get().data.color
             return this
         }
 
-        getFillColor(){
+        getFillColor() {
             return this.style.fillColor || this.props.style.fillColor
         }
 
-        getColor(){
+        getColor() {
             return this.style.color || this.props.style.color
         }
 

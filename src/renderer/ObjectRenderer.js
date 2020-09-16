@@ -1,4 +1,9 @@
 define(function () {
+
+    /**
+     * ObjectRenderer class
+     * Manager the renderer for entities
+     */
     class ObjectRenderer {
         constructor() {
             this.meshes = []
@@ -17,6 +22,7 @@ define(function () {
         /**
          * Render the meshes to the screen
          * @param {Camera} camera 
+         * @todo Optimize this to not delete all meshes (rerender just entities updates)
          */
         render(camera) {
             this.clear()
@@ -25,7 +31,6 @@ define(function () {
                 const { x, y } = mesh.position
                 objectContext.drawImage(mesh.context.canvas, x, y)
             }
-            //@TODO: optimize this to not delete all meshes (rerender just entities updates)
             this.meshes = []
         }
 
