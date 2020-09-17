@@ -50,7 +50,7 @@ define(function (require) {
          */
         selectEntities() {
             this.entitySelector.unselectAll()
-            this.entitySelector.select(this.mesh.position, this.size)
+            this.entitySelector.select(this.mesh.position, this.size, this.isCtrlKeyPressed())
         }
 
         /**

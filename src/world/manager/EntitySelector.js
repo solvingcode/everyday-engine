@@ -1,6 +1,7 @@
 define(function (require) {
 
     const EntityManager = require('./EntityManager.js')
+    const AttachEntity = require('../entity/AttachEntity.js')
 
     class EntitySelector {
         constructor() {
@@ -55,12 +56,22 @@ define(function (require) {
          * Select all entities inside the area of selection
          * @param {Object} point 
          * @param {Object} size 
+         * @param {Boolean} includeAttach 
          */
-        select(point, size) {
+        select(point, size, includeAttach = false) {
             let selectedEntities = []
             if (!size || (!size.width && !size.height)) {
                 const selectedEntity = this.get(point)
-                selectedEntity && selectedEntities.push(selectedEntity)
+                if (selectedEntity) {
+                    if (includeAttach) {
+                        selectedEntities = selectedEntities.concat(
+                            selectedEntity.getAttachedEntities(EntityManager.get(), AttachEntity)
+                        )
+                    } else {
+                        selectedEntities.push(selectedEntity)
+                    }
+                }
+
             } else {
                 selectedEntities = this.getInsideArea(point, size)
             }

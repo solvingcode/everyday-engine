@@ -61,9 +61,11 @@ define(function (require) {
 
         /**
          * Get attached entities
+         * @param {EntityManager} entityManager
+         * @param {Class} attachType
          */
-        getAttachedEntities(entityManager) {
-            return entityManager.getAttachedEntities(this)
+        getAttachedEntities(entityManager, attachType) {
+            return entityManager.getAttachedEntities(this, attachType)
         }
 
         /**

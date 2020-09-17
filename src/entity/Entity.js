@@ -2,6 +2,7 @@ define(function (require) {
 
     const Mesh = require('../core/Mesh.js')
     const Window = require('../core/Window.js')
+    const Keyboard = require('../core/Keyboard.js')
 
     /**
      * Abstract Entity class
@@ -248,6 +249,13 @@ define(function (require) {
          */
         getCurrentMousePosition() {
             return Window.get().mouse.currentPosition
+        }
+
+        /**
+         * Verify if CTRL key is pressed
+         */
+        isCtrlKeyPressed() {
+            return Window.get().keyboard.isKeyPressed(Keyboard.Keys.CTRL)
         }
 
         /**

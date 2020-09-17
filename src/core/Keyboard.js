@@ -26,5 +26,9 @@ define(function () {
         }
     }
 
+    Keyboard.Keys = {
+        CTRL: 17
+    }
+
     return Keyboard
 })

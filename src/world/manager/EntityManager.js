@@ -134,12 +134,35 @@ define(function (require) {
          * Get attached entities (bidirectional)
          * @TODO This function is deprecated, must be revisited
          * @param {Entity} entity 
+         * @param {Class} attachType
+         * @param {Entity[]} exculdeEntities
          */
-        getAttachedEntities(entity) {
-            const attachedEntities = []
-            if (entity.attachedTo) {
-                attachedEntities.push(attachedEntities)
-            }
+        getAttachedEntities(entity, attachType, exculdeEntities = []) {
+            let attachedEntities = [entity]
+            this.getAttachEntityForEntity(entity, attachType).forEach(attachEntities => {
+                attachedEntities.push(attachEntities)
+                for (const kEntity in attachEntities.entities) {
+                    const attachEntity = attachEntities.entities[kEntity]
+                    if (attachEntity !== entity && !exculdeEntities.includes(attachEntity)) {
+                        attachedEntities = attachedEntities.concat(
+                            this.getAttachedEntities(attachEntity, attachType, attachedEntities)
+                        )
+                    }
+                }
+            })
+            return attachedEntities
+        }
+
+        /**
+         * Get the Attach entity which attach the given entity
+         * @param {Entity} entity 
+         * @param {Class} attachType
+         */
+        getAttachEntityForEntity(entity, attachType) {
+            return this.getEntitiesAs(attachType).filter(pEntity =>
+                pEntity.entities.a === entity ||
+                pEntity.entities.b === entity
+            )
         }
 
     }
