@@ -4,7 +4,7 @@ define(function (require) {
 
     class RectangleShape extends Shape {
 
-        get(entity, bodies){
+        generate(entity, bodies){
             const centerPosition = entity.toCenterPosition()
             const maxRadiusSqr = Math.pow(Math.max(entity.radius.x, entity.radius.y), 2)
             const minRadiusSqr = Math.pow(Math.min(entity.radius.x, entity.radius.y), 2)

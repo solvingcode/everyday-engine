@@ -8,7 +8,7 @@ define(function (require) {
      */
     class CircleShape extends Shape {
 
-        get(entity) {
+        generate(entity) {
             const centerPosition = entity.toCenterPosition()
             const engine = this.getEngine()
             return engine.Bodies.circle(

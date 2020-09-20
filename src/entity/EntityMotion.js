@@ -24,19 +24,28 @@ define(function (require) {
         }
 
         /**
-         * Update the entity props and the Mesh
+         * Set velocity for physics props
+         * @param {x: Number, y: Number} velocity
          */
-        update() {
-            super.update()
+        setVelocity({ x, y }) {
+            this.physics.velocity = new Vector({ x, y })
         }
 
         /**
          * Move the entity by velocity
-         * @param {Physics} physics 
-         * @param {Vector} velocity 
+         * @param {Object} velocity 
          */
-        move(physics, velocity) {
-            physics.move(this, velocity)
+        move(velocity) {
+            const x = this.physics.velocity.x + velocity.x
+            const y = this.physics.velocity.y + velocity.y
+            this.physics.velocity = new Vector({ x, y })
+        }
+
+        /**
+         * Update the entity props and the Mesh
+         */
+        update() {
+            super.update()
         }
 
         /**

@@ -12,7 +12,7 @@ define(function (require) {
         /**
          * @inheritdoc 
          */
-        get(entity) {
+        generate(entity) {
             const centerPosition = entity.toCenterPosition()
             const engine = this.getEngine()
             return engine.Bodies.rectangle(

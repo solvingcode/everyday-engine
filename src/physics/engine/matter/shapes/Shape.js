@@ -19,11 +19,11 @@ define(function (require) {
         }
 
         /**
-         * Get the body for the given entity
+         * Generate the body for the given entity
          * @param {Entity} entity
          */
-        get(entity) {
-            throw new TypeError('"Shape.get" method must be implemented')
+        generate(entity) {
+            throw new TypeError('"Shape.generate" method must be implemented')
         }
 
         /**
@@ -31,7 +31,7 @@ define(function (require) {
          * @param {Entity} entity 
          */
         load(entity) {
-            const body = this.get(entity)
+            const body = this.generate(entity)
             this.update(entity, body)
             return body
         }
@@ -61,6 +61,18 @@ define(function (require) {
             if (!(entity instanceof AttachEntity)) {
                 this.getEngine().Body.setVelocity(body, entity.physics.velocity)
             }
+        }
+
+        /**
+         * Get the instance of type using the given physics engine
+         * @param {Shape} type 
+         * @param {PhysicsEngine} physicEngine 
+         */
+        static get(type, physicEngine) {
+            if (physicEngine && !type.instance) {
+                type.instance = new type(physicEngine)
+            }
+            return type.instance
         }
 
     }

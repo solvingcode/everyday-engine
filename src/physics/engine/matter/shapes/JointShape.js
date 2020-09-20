@@ -11,7 +11,7 @@ define(function (require) {
         /**
          * @inheritdoc
          */
-        get(entity) {
+        generate(entity) {
             const engine = this.getEngine()
             const points = entity.points
             const entities = entity.entities

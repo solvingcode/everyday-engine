@@ -139,13 +139,13 @@ define(function (require) {
          */
         getAttachedEntities(entity, attachType, exculdeEntities = []) {
             let attachedEntities = [entity]
-            this.getAttachEntityForEntity(entity, attachType).forEach(attachEntities => {
-                attachedEntities.push(attachEntities)
-                for (const kEntity in attachEntities.entities) {
-                    const attachEntity = attachEntities.entities[kEntity]
-                    if (attachEntity !== entity && !exculdeEntities.includes(attachEntity)) {
+            this.getAllAttachTypeEntity(entity, attachType).forEach(attachEntity => {
+                attachedEntities.push(attachEntity)
+                for (const kEntity in attachEntity.entities) {
+                    const entityAB = attachEntity.entities[kEntity]
+                    if (entityAB !== entity && !exculdeEntities.includes(entityAB)) {
                         attachedEntities = attachedEntities.concat(
-                            this.getAttachedEntities(attachEntity, attachType, attachedEntities)
+                            this.getAttachedEntities(entityAB, attachType, attachedEntities)
                         )
                     }
                 }
@@ -154,11 +154,11 @@ define(function (require) {
         }
 
         /**
-         * Get the Attach entity which attach the given entity
+         * Get all Attach entities for the given entity and type
          * @param {Entity} entity 
          * @param {Class} attachType
          */
-        getAttachEntityForEntity(entity, attachType) {
+        getAllAttachTypeEntity(entity, attachType) {
             return this.getEntitiesAs(attachType).filter(pEntity =>
                 pEntity.entities.a === entity ||
                 pEntity.entities.b === entity

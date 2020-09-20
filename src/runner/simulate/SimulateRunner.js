@@ -8,6 +8,7 @@ define(function (require) {
     const EntitySelector = require('../../world/manager/EntitySelector.js')
     const EntityManager = require('../../world/manager/EntityManager.js')
     const Storage = require('../../core/Storage.js')
+    const GeneticEngine = require('../../ai/genetic/GeneticEngine.js')
 
     class SimulateRunner extends Runner {
 
@@ -15,6 +16,7 @@ define(function (require) {
             super()
             this.currentEntity = null
             this.physics = new Physics(new MatterEngine())
+            this.aiEngine = new GeneticEngine()
             this.isPhysicsLoaded = false
         }
 
@@ -35,7 +37,7 @@ define(function (require) {
                 }
                 appState.setUniqStateByGroup('SIMULATE', 'PROGRESS')
             } else if (appState.hasState('SIMULATE_PROGRESS')) {
-                this.physics.update()
+                this.physics.update(this.aiEngine)
             } else if (appState.hasState('SIMULATE_STOP')) {
                 entityManager.entities = storage.fetch(Storage.type.ENTITY)
                 this.isPhysicsLoaded = false

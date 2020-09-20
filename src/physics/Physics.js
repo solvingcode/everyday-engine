@@ -12,9 +12,18 @@ define(function (require) {
         }
 
         /**
-         * Update all entities.
+         * Update physics, and train AI
+         * @param {AIEngine} aiEngine
          */
-        update() {
+        update(aiEngine) {
+            this.updateEntities()
+            this.updateEngine(aiEngine)
+        }
+
+        /**
+         * Update entities props from Physics engine results
+         */
+        updateEntities() {
             const bodyEntities = this.entityManager.getEntitiesNotAs(AttachEntity)
             const jointEntites = this.entityManager.getEntitiesAs(AttachEntity)
             this.physicsEngine.getBodies().map((body, index) => {
@@ -22,12 +31,25 @@ define(function (require) {
                 const { x, y } = entity.fromCenterPosition(body.position)
                 entity.setPosition({ x: parseInt(x), y: parseInt(y) })
                 entity.setRotationAndGenerate(Math.round(body.angle * 100) / 100)
+                entity.setVelocity(body.velocity)
             })
             this.physicsEngine.getJoints().map((joint, index) => {
                 const entity = jointEntites[index]
                 const pointA = entity.entities.a.fromRelativeCenterPosition(joint.pointA)
                 const pointB = entity.entities.b.fromRelativeCenterPosition(joint.pointB)
                 entity.updatePoints(pointA, pointB)
+            })
+        }
+
+        /**
+         * Update the World using AI and physics Engine
+         * @param {AiEngine} aiEngine 
+         */
+        updateEngine(aiEngine) {
+            this.entityManager.getEntitiesNotAs(AttachEntity).forEach(entity => {
+                if (aiEngine.update(entity)) {
+                    this.physicsEngine.update(entity)
+                }
             })
         }
 

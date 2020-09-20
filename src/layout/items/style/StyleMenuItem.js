@@ -21,7 +21,7 @@ define(function (require) {
         }
         loadItems() {
             const colors = ['', '#FF0000', '#00FF00', '#0000FF', '#FFFFFF',
-                '#FF00FF', '#FFFF00', '#00FFFF', '#FFF000', '#F0F0FF']
+                '#FF00FF', '#FFFF00', '#00FFFF', '#000000', '#F0F0FF']
             this.items = colors.map(color => new StyleColorMenuItem(this, { color }))
         }
     }

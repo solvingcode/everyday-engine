@@ -4,7 +4,7 @@ define(function (require) {
 
     class PolyShape extends Shape {
 
-        get(entity, bodies){
+        generate(entity, bodies){
             const centerPosition = entity.toCenterPosition()
             return bodies.fromVertices(centerPosition.x, centerPosition.y, entity.points)
         }

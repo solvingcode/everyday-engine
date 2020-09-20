@@ -71,21 +71,31 @@ define(function (require) {
                         selectedEntities.push(selectedEntity)
                     }
                 }
-
             } else {
                 selectedEntities = this.getInsideArea(point, size)
             }
             return selectedEntities.map(selectedEntity => selectedEntity.select())
         }
 
+        /**
+         * Unselect all entities
+         */
         unselectAll() {
             EntityManager.get().entities.map((entity) => entity.unselect())
         }
 
+        /**
+         * Unfocus all entities.
+         * Do not unfocus entity in loading mode
+         */
         unfocusAll() {
             EntityManager.get().entities.map((entity) => !entity.loading && entity.unfocus())
         }
 
+        /**
+         * focus all entities in a given point.
+         * Do not focus entity in loading mode
+         */
         focus(point) {
             this.getAll(point).map((entity) => !entity.loading && entity.focus())
         }

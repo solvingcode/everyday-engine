@@ -6,6 +6,7 @@ define(function (require) {
     const PolyShape = require('./shapes/PolyShape.js')
     const CircleShape = require('./shapes/CircleShape.js')
     const JointShape = require('./shapes/JointShape.js')
+    const Shape = require('./shapes/Shape.js')
 
     /**
      * Shape Loader class
@@ -13,7 +14,7 @@ define(function (require) {
      */
     class ShapeLoader {
 
-        constructor(physicEngine){
+        constructor(physicEngine) {
             this.mapShapes = {
                 [Entity.shapes.RECT]: RectangleShape,
                 [Entity.shapes.ELLIPSE]: EllipseShape,
@@ -27,11 +28,20 @@ define(function (require) {
         /**
          * Load entity shape to the Engine world
          * @param {Entity} entity 
-         * @param {Bodies} bodies
-         * @param {Contraint} constraint
          */
-        load(entity, bodies, constraint){
-            return new (this.mapShapes[entity.shape])(this.physicEngine).load(entity, bodies, constraint)
+        load(entity) {
+            const type = this.mapShapes[entity.shape]
+            return Shape.get(type, this.physicEngine).load(entity)
+        }
+
+        /**
+         * Update the body props from entity
+         * @param {Entity} entity 
+         */
+        update(entity) {
+            const type = this.mapShapes[entity.shape]
+            const body = this.physicEngine.getBodyFromEntity(entity)
+            return Shape.get(type).update(entity, body)
         }
 
     }

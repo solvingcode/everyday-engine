@@ -29,6 +29,14 @@ define(function () {
         }
 
         /**
+         * Update physics of the body from the entity.
+         * @param {Entity} entity 
+         */
+        update(entity) {
+            throw new TypeError('"update" method must be implemented')
+        }
+
+        /**
          * Get the Engine (third party)
          */
         getEngine() {

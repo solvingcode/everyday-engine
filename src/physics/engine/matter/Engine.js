@@ -18,12 +18,18 @@ define(function (require) {
         }
 
         /**
-         * Add physics to the entity
-         * @param {Entity} entity
+         * @inheritdoc
          */
         add(entity) {
             const shape = this.shapeLoader.load(entity)
             Matter.World.add(this.engine.world, shape)
+        }
+
+        /**
+         * @inheritdoc
+         */
+        update(entity) {
+            this.shapeLoader.update(entity)
         }
 
         /**
