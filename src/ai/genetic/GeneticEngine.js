@@ -11,13 +11,13 @@ define(function (require) {
          * @inheritdoc
          */
         update(entity) {
-            const move = Math.random() * 100 < 2
+            const move = Math.random() * 1000 < 2
             if (move) {
-                const { x, y } = entity.physics.velocity
+                const { y } = entity.physics.velocity
                 entity.move({ x: !y ? 2 : 0, y: !y ? -5 : 0 })
             }
             return move
-        }
+        } 
     }
 
     return GeneticEngine

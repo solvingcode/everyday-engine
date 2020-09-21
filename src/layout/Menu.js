@@ -12,6 +12,7 @@ define(function (require) {
     const StyleMenuItem = require('./items/style/StyleMenuItem.js')
     const ButtonUI = require('../renderer/ui/buttons/ButtonUI.js')
     const MenuItemUI = require('../renderer/ui/MenuItemUI.js')
+    const LayerMenuItem = require('./items/layer/LayerMenuItem.js')
 
     class Menu {
         constructor() {
@@ -25,7 +26,8 @@ define(function (require) {
                 new DeleteMenuItem(),
                 new DuplicateMenuItem(),
                 new UndoMenuItem(),
-                new StyleMenuItem()
+                new StyleMenuItem(),
+                new LayerMenuItem()
             ]
             this.setup()
         }
@@ -38,6 +40,7 @@ define(function (require) {
             this.items = []
             for (var iType in this.types) {
                 const type = this.types[iType]
+                type.menu = this
                 this.prepare(type)
             }
         }
@@ -106,6 +109,16 @@ define(function (require) {
                 x > item.position.x && x < item.position.x + ButtonUI.getProps(item.element).width &&
                 y > item.position.y && y < item.position.y + ButtonUI.getProps(item.element).height
             )
+        }
+
+        /**
+         * Get Previous menu item
+         * @param {MenuItem} type 
+         */
+        getPrevItem(type) {
+            const index = this.types.findIndex(ptype => ptype === type)
+            const element = this.types[index - 1]
+            return this.items.find(pitem => pitem.element === element)
         }
 
         static get() {

@@ -9,25 +9,28 @@ define(function (require) {
          * @param {CanvasRenderingContext2D} context
          */
         static draw(item, context) {
-            item.position = this.getPosition(item)
+            this.config(item)
             const element = item.element
-            const { colorPanel, colorText, heightTitle } = this.props
+            const { width, textSize, padding, colorPanel, colorText, heightTitle } = this.props
             context.fillStyle = colorPanel
-            context.fillRect(item.position.x, item.position.y, this.props.width, heightTitle)
+            context.fillRect(item.position.x, item.position.y, width, heightTitle)
+            context.strokeRect(item.position.x, item.position.y, width, item.height)
             context.fillStyle = colorText
-            context.font = `${this.props.textSize}px Arial`
+            context.font = `${textSize}px Arial`
             context.fillText(
                 element.props.name,
-                item.position.x + this.props.padding.x,
-                item.position.y + this.props.textSize + this.props.padding.y
+                item.position.x + padding.x,
+                item.position.y + textSize + padding.y
             )
         }
 
-        static getPosition(item) {
+        static config(item) {
             const { x0, y0, isVertical } = DefaultButtonUI.props.zone[item.element.zone]
-            return {
-                x: x0 + (!isVertical && item.index * (this.props.width + this.props.padding.x)),
-                y: y0 + (isVertical && item.index * (this.props.heightTitle + this.props.padding.y))
+            const { width, padding } = this.props
+            const {position: posPrevItem, height: prevItemHeight} = item.element.getPrevItem()
+            item.position = {
+                x: x0 + (!isVertical && item.index * (width + padding.x)),
+                y: y0 + (isVertical && ((posPrevItem.y + prevItemHeight) || 0))
             }
         }
     }

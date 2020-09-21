@@ -10,6 +10,7 @@ define(function (require) {
             this.zone = Layout.zone.LEFT
             this.type = Layout.type.DRAW
             this.data = {}
+            this.menu = null
         }
 
         /**
@@ -25,6 +26,11 @@ define(function (require) {
         run() {
             throw new TypeError('Abstract "run" method must be implemented')
         }
+
+        /**
+         * Update the items for the menu
+         */
+        update() { }
 
         /**
          * Stop the action when the item is unselected
@@ -96,6 +102,13 @@ define(function (require) {
         hasSimulateState() {
             return this.appState.hasState(`SIMULATE_START`) ||
                 this.appState.hasState(`SIMULATE_PROGRESS`)
+        }
+
+        /**
+         * Get previous item
+         */
+        getPrevItem() {
+            return this.menu.getPrevItem(this)
         }
 
     }

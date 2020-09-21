@@ -9,7 +9,7 @@ define(function (require) {
          * @param {CanvasRenderingContext2D} context
          */
         static draw(item, context) {
-            item.position = this.getPosition(item)
+            this.config(item)
             const { color } = item.element.data
             context.fillStyle = color
             context.lineWidth = 1
@@ -35,20 +35,23 @@ define(function (require) {
             }
         }
 
-        static getPosition(item) {
-            const { x: x0, y: y0 } = PanelUI.getPosition(item.parent)
-            const numLine = Math.ceil((item.index - item.parent.index) / this.props.numberPerLine)
-            const numCol = (item.index - (item.parent.index + 1)) % this.props.numberPerLine
-            return {
-                x: x0 + (this.props.width + this.props.padding.x) * numCol,
-                y: y0 + PanelUI.props.heightTitle * numLine + PanelUI.props.padding.y
+        static config(item) {
+            const { x: x0, y: y0 } = item.parent.position
+            const { numberPerLine, padding, height, width } = this.props
+            const numLine = Math.ceil((item.index - item.parent.index) / numberPerLine)
+            const numCol = (item.index - (item.parent.index + 1)) % numberPerLine
+            const { heightTitle } = PanelUI.props
+            item.position = {
+                x: x0 + (width + padding.x) * numCol + padding.x,
+                y: y0 + heightTitle * numLine + PanelUI.props.padding.y
             }
+            item.parent.height = heightTitle + numLine * (height + padding.y * 2)
         }
     }
 
     ColorButtonUI.props = {
-        width: 30,
-        height: 30,
+        width: 26,
+        height: 26,
         padding: { x: 10, y: 10 },
         strokeColor: '#000000',
         numberPerLine: 5
