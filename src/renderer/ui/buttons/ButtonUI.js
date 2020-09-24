@@ -2,6 +2,7 @@ define(function (require) {
 
     const ColorButtonUI = require('./ColorButtonUI.js')
     const DefaultButtonUI = require('./DefaultButtonUI.js')
+    const LayerEntityButtonUI = require('./LayerEntityButtonUI.js')
     const Layout = require('../../../layout/Layout.js')
 
     class ButtonUI {
@@ -29,6 +30,8 @@ define(function (require) {
         static getType(item) {
             if (item.type === Layout.type.STYLE_COLOR) {
                 return ColorButtonUI
+            } else if (item.type === Layout.type.LAYER_ENTITY) {
+                return LayerEntityButtonUI
             }
             return DefaultButtonUI
         }

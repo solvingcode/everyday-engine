@@ -25,8 +25,11 @@ define(function (require) {
             return false
         }
         update() {
-            const { entities } = EntityManager.get()
-            this.items = entities.map(entity => new LayerEntityMenuItem(this, { entity }))
+            const entities = EntityManager.get().getValidEntities()
+            this.items = entities.map(entity => {
+                const layerEntity = this.items.find(item => item.data.entity === entity)
+                return layerEntity || new LayerEntityMenuItem(this, { entity })
+            })
         }
     }
 

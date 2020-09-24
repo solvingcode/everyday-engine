@@ -12,7 +12,9 @@ define(function () {
         DRAW: 'draw',
         ACTION: 'action',
         STYLE: 'style',
-        STYLE_COLOR: 'style_color'
+        LAYER: 'layer',
+        STYLE_COLOR: 'style_color',
+        LAYER_ENTITY: 'layer_entity'
     }
 
     return Layout

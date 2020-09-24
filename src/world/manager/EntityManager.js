@@ -115,6 +115,13 @@ define(function (require) {
         }
 
         /**
+         * Get valid entities (not in loading mode, ...)
+         */
+        getValidEntities(){
+            return this.entities.filter(entity => !entity.loading)
+        }
+
+        /**
          * Get all entities of specific type
          * @param {Entity} type 
          */

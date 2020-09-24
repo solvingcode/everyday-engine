@@ -33,6 +33,13 @@ define(function (require) {
         update() { }
 
         /**
+         * Is menu item valid
+         */
+        isValid() {
+            return true
+        }
+
+        /**
          * Stop the action when the item is unselected
          */
         stop() { }

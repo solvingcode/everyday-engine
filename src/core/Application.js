@@ -44,6 +44,7 @@ define(function (require) {
          */
         runLoop() {
             this.updateFPS()
+            this.menu.update()
             this.event.handle(this.window)
             this.world.load()
             this.world.update()

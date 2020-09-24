@@ -29,6 +29,7 @@ define(function (require) {
                 new StyleMenuItem(),
                 new LayerMenuItem()
             ]
+            this.items = []
             this.setup()
         }
 
@@ -37,7 +38,7 @@ define(function (require) {
          * in the screen.
          */
         setup() {
-            this.items = []
+            this.clean()
             for (var iType in this.types) {
                 const type = this.types[iType]
                 type.menu = this
@@ -52,12 +53,25 @@ define(function (require) {
          * @param {Number} parentIndex 
          */
         prepare(item, parent = null) {
-            const index = this.items.filter(pItem => pItem.element.zone === item.zone).length
-            const resultItem = new MenuItemUI(item, index, parent)
-            this.items.push(resultItem)
+            const itemsZone = this.items.filter(pItem => pItem.element.zone === item.zone)
+            const existItem = this.items.find(pItem => pItem.element === item)
+            const lastIndex = itemsZone.length
+            if (existItem) {
+                const indexItem = itemsZone.findIndex(pItem => pItem.element === item)
+                existItem.index = indexItem
+            }
+            const resultItem = existItem || new MenuItemUI(item, lastIndex, parent)
+            !existItem && this.items.push(resultItem)
             if (item.items) {
                 item.items.forEach(pItem => this.prepare(pItem, resultItem))
             }
+        }
+
+        /**
+         * Clean all menu items that is not valid anymore.
+         */
+        clean() {
+            this.items = this.items.filter(item => item.element.isValid())
         }
 
         /**
@@ -100,12 +114,21 @@ define(function (require) {
         }
 
         /**
+         * Update menu items
+         */
+        update() {
+            this.types.forEach(type => type.update())
+            this.setup()
+        }
+
+        /**
          * Get MenuItem at a specific position.
          * @param {float} x 
          * @param {float} y 
+         * @todo See if we can use isValid instead of checking position exists
          */
         getItemAt(x, y) {
-            return this.items.find((item) =>
+            return this.items.find((item) => item.position &&
                 x > item.position.x && x < item.position.x + ButtonUI.getProps(item.element).width &&
                 y > item.position.y && y < item.position.y + ButtonUI.getProps(item.element).height
             )

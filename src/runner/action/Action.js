@@ -18,7 +18,9 @@ define(function () {
         /**
          * Stop actions.
          */
-        static stop(...params) { }
+        static stop(...params) {
+            return true
+        }
 
     }
 

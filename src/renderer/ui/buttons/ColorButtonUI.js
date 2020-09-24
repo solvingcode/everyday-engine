@@ -1,8 +1,8 @@
 define(function (require) {
 
-    const PanelUI = require('../PanelUI.js')
+    const PanelButtonUI = require('./PanelButtonUI.js')
 
-    class ColorButtonUI {
+    class ColorButtonUI extends PanelButtonUI {
         /**
          * Draw a button.
          * @param {MenuItem} item 
@@ -33,19 +33,6 @@ define(function (require) {
                 context.lineWidth = 3
                 context.strokeRect(item.position.x, item.position.y, this.props.width, this.props.height)
             }
-        }
-
-        static config(item) {
-            const { x: x0, y: y0 } = item.parent.position
-            const { numberPerLine, padding, height, width } = this.props
-            const numLine = Math.ceil((item.index - item.parent.index) / numberPerLine)
-            const numCol = (item.index - (item.parent.index + 1)) % numberPerLine
-            const { heightTitle } = PanelUI.props
-            item.position = {
-                x: x0 + (width + padding.x) * numCol + padding.x,
-                y: y0 + heightTitle * numLine + PanelUI.props.padding.y
-            }
-            item.parent.height = heightTitle + numLine * (height + padding.y * 2)
         }
     }
 
