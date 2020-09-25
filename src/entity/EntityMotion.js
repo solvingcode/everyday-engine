@@ -25,7 +25,7 @@ define(function (require) {
 
         /**
          * Set velocity for physics props
-         * @param {x: Number, y: Number} velocity
+         * @param {Object} velocity
          */
         setVelocity({ x, y }) {
             this.physics.velocity = new Vector({ x, y })

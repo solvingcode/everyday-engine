@@ -320,6 +320,13 @@ define(function (require) {
                 point.y >= this.position.y &&
                 point.y <= this.position.y + this.size.height
         }
+
+        /**
+         * Is entity valid (not in loading mode, ...)
+         */
+        isValid() {
+            return !this.loading
+        }
     }
 
     Entity.shapes = {

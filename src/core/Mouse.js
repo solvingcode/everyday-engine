@@ -89,5 +89,12 @@ define(function () {
         RIGHT: 2
     }
 
+    Mouse.CURSOR = {
+        CROSSHAIR: 'crosshair',
+        POINTER: 'pointer',
+        MOVE: 'move',
+        MOVE_ENTITY: 'moveentity'
+    }
+
     return Mouse
 })

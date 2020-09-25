@@ -4,6 +4,7 @@ define(function (require) {
     const LayerEntityMenuItem = require('./LayerEntityMenuItem.js')
     const Layout = require('../../Layout.js')
     const EntityManager = require('../../../world/manager/EntityManager.js')
+    const AttachEntity = require('../../../world/entity/AttachEntity.js')
 
     /**
      * Layer Menu Item
@@ -37,7 +38,9 @@ define(function (require) {
          * @inheritdoc
          */
         update() {
-            const entities = EntityManager.get().getValidEntities()
+            const entities = EntityManager.get()
+                .getEntitiesNotAs(AttachEntity)
+                .filter(entity => entity.isValid())
             this.items = entities.map((entity, index) => {
                 const layerEntity = this.items[index]
                 if (layerEntity && layerEntity.data.entity !== entity) {

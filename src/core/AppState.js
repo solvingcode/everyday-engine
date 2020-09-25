@@ -1,6 +1,7 @@
 define(function (require) {
 
     const History = require('./History.js')
+    const { CURSOR } = require('./Mouse.js')
 
     /**
      * Manage the state of the application over time
@@ -68,9 +69,11 @@ define(function (require) {
             if (this.state.indexOf(state) === -1) {
                 if (Object.keys(AppState.States).indexOf(state) >= 0) {
                     this.state.push(state)
-                    if (AppState.States[state].history && isHistory) {
+                    const { history, cursor } = AppState.States[state]
+                    if (history && isHistory) {
                         History.get().push()
                     }
+                    cursor && this.setData({ cursor })
                 } else {
                     throw `${state} is not recognized as Application State`
                 }
@@ -147,22 +150,26 @@ define(function (require) {
     }
 
     AppState.instance = null
+
+    /**
+     * @todo: Think to externalize the states configuration
+     */
     AppState.States = {
         TO_DRAW_ELLIPSE: { history: false },
-        TO_DRAW_RECT: { history: false },
+        TO_DRAW_RECT: { history: false, cursor: CURSOR.CROSSHAIR },
         TO_DRAW_LINE: { history: false },
-        TO_DRAW_JOINT: { history: false },
+        TO_DRAW_JOINT: { history: false, cursor: CURSOR.CROSSHAIR },
         TO_DRAW_ATTACH_JOINT: { history: false },
-        TO_DRAW_ATTACH_POINT: { history: false },
-        TO_DRAW_SELECT: { history: false },
+        TO_DRAW_ATTACH_POINT: { history: false, cursor: CURSOR.POINTER },
+        TO_DRAW_SELECT: { history: false, cursor: CURSOR.MOVE_ENTITY },
         TO_DRAW_POLY: { history: false },
-        TO_DRAW_CIRCLE: { history: false },
+        TO_DRAW_CIRCLE: { history: false, cursor: CURSOR.CROSSHAIR },
         DRAWING_ELLIPSE: { history: true },
-        DRAWING_CIRCLE: { history: true },
-        DRAWING_RECT: { history: true },
+        DRAWING_CIRCLE: { history: true, cursor: CURSOR.CROSSHAIR },
+        DRAWING_RECT: { history: true, cursor: CURSOR.CROSSHAIR },
         DRAWING_LINE: { history: true },
-        DRAWING_JOINT: { history: true },
-        DRAWING_ATTACH_JOINT: { history: true },
+        DRAWING_JOINT: { history: true, cursor: CURSOR.CROSSHAIR },
+        DRAWING_ATTACH_JOINT: { history: true, cursor: CURSOR.POINTER },
         DRAWING_ATTACH_POINT: { history: true },
         DRAWING_POLY: { history: true },
         DRAWING_SELECT: { history: false },
@@ -175,7 +182,7 @@ define(function (require) {
         ACTION_DUPLICATE_STOP: { history: false },
         ACTION_UNDO_START: { history: false },
         ACTION_UNDO_STOP: { history: false },
-        ACTION_MOVE_START: { history: true },
+        ACTION_MOVE_START: { history: true, cursor: CURSOR.MOVE },
         ACTION_MOVE_STOP: { history: false },
         ACTION_MOVE_UP_START: { history: true },
         ACTION_MOVE_UP_STOP: { history: false },

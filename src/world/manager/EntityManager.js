@@ -131,13 +131,14 @@ define(function (require) {
         }
 
         /**
-         * Move the index of an entity up/down
+         * Move the index of an entity up/down.
+         * NB: The first element in the list is always the Platform Entity.
          * @param {Entity} entity 
          * @param {Boolean} up (1 = UP, 0 = DOWN) 
          */
         moveIndex(entity, up) {
             const index = this.entities.findIndex((pEntity => pEntity === entity))
-            if ((index > 0 && up) || index < this.entities.length - 1) {
+            if ((index > 1 && up) || index < this.entities.length - 2) {
                 const newIndex = up ? index - 1 : index + 1
                 const sideEntity = this.entities[newIndex]
                 if (sideEntity && !sideEntity.selected) {
@@ -151,7 +152,7 @@ define(function (require) {
          * Get valid entities (not in loading mode, ...)
          */
         getValidEntities() {
-            return this.entities.filter(entity => !entity.loading)
+            return this.entities.filter(entity => entity.isValid())
         }
 
         /**
