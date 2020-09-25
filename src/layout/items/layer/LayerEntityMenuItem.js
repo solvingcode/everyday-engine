@@ -14,17 +14,26 @@ define(function (require) {
             this.zone = parent.zone
             this.type = Layout.type.LAYER_ENTITY
         }
+
+        /**
+         * @inheritdoc
+         */
         run() {
             this.setActionState('SELECT_ENTITY', 'START')
             this.setDataState(this.data)
         }
-        isSelected() {
-            return this.data.entity.selected
-        }
+
         /**
          * @inheritdoc
          */
-        isValid(){
+        isSelected() {
+            return this.data.entity.selected
+        }
+        
+        /**
+         * @inheritdoc
+         */
+        isValid() {
             return EntityManager.get().entities.includes(this.data.entity)
         }
     }

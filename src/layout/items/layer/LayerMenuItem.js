@@ -18,16 +18,31 @@ define(function (require) {
             this.type = Layout.type.LAYER
             this.items = []
         }
+
+        /**
+         * @inheritdoc
+         */
         run() {
             return false
         }
+
+        /**
+         * @inheritdoc
+         */
         isSelected() {
             return false
         }
+
+        /**
+         * @inheritdoc
+         */
         update() {
             const entities = EntityManager.get().getValidEntities()
-            this.items = entities.map(entity => {
-                const layerEntity = this.items.find(item => item.data.entity === entity)
+            this.items = entities.map((entity, index) => {
+                const layerEntity = this.items[index]
+                if (layerEntity && layerEntity.data.entity !== entity) {
+                    layerEntity.data.entity = entity
+                }
                 return layerEntity || new LayerEntityMenuItem(this, { entity })
             })
         }

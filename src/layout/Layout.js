@@ -14,7 +14,8 @@ define(function () {
         STYLE: 'style',
         LAYER: 'layer',
         STYLE_COLOR: 'style_color',
-        LAYER_ENTITY: 'layer_entity'
+        LAYER_ENTITY: 'layer_entity',
+        LAYER_ACTION: 'layer_action'
     }
 
     return Layout

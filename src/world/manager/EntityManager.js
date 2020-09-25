@@ -115,9 +115,42 @@ define(function (require) {
         }
 
         /**
+         * Move an entity up (z-index)
+         * @param {Entity} entity 
+         */
+        moveUp(entity) {
+            this.moveIndex(entity, 1)
+        }
+
+        /**
+         * Move an entity down (z-index)
+         * @param {Entity} entity 
+         */
+        moveDown(entity) {
+            this.moveIndex(entity, 0)
+        }
+
+        /**
+         * Move the index of an entity up/down
+         * @param {Entity} entity 
+         * @param {Boolean} up (1 = UP, 0 = DOWN) 
+         */
+        moveIndex(entity, up) {
+            const index = this.entities.findIndex((pEntity => pEntity === entity))
+            if ((index > 0 && up) || index < this.entities.length - 1) {
+                const newIndex = up ? index - 1 : index + 1
+                const sideEntity = this.entities[newIndex]
+                if (sideEntity && !sideEntity.selected) {
+                    this.entities[index] = this.entities[newIndex]
+                    this.entities[newIndex] = entity
+                }
+            }
+        }
+
+        /**
          * Get valid entities (not in loading mode, ...)
          */
-        getValidEntities(){
+        getValidEntities() {
             return this.entities.filter(entity => !entity.loading)
         }
 

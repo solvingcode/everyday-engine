@@ -2,6 +2,10 @@ define(function (require) {
 
     const PanelButtonUI = require('./PanelButtonUI.js')
 
+    /**
+     * LayerEntityButtonUI class
+     * Define a button for entity element inside a panel
+     */
     class LayerEntityButtonUI extends PanelButtonUI {
         /**
          * Draw a button.

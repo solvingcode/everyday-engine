@@ -9,6 +9,8 @@ define(function (require) {
     const DeleteMenuItem = require('./items/action/DeleteMenuItem.js')
     const DuplicateMenuItem = require('./items/action/DuplicateMenuItem.js')
     const UndoMenuItem = require('./items/action/UndoMenuItem.js')
+    const MoveUpMenuItem = require('./items/action/MoveUpMenuItem.js')
+    const MoveDownMenuItem = require('./items/action/MoveDownMenuItem.js')
     const StyleMenuItem = require('./items/style/StyleMenuItem.js')
     const ButtonUI = require('../renderer/ui/buttons/ButtonUI.js')
     const MenuItemUI = require('../renderer/ui/MenuItemUI.js')
@@ -26,6 +28,8 @@ define(function (require) {
                 new DeleteMenuItem(),
                 new DuplicateMenuItem(),
                 new UndoMenuItem(),
+                new MoveUpMenuItem(),
+                new MoveDownMenuItem(),
                 new StyleMenuItem(),
                 new LayerMenuItem()
             ]

@@ -27,7 +27,7 @@ define(function (require) {
         static config(item) {
             const { x0, y0, isVertical } = DefaultButtonUI.props.zone[item.element.zone]
             const { width, padding } = this.props
-            const {position: posPrevItem, height: prevItemHeight} = item.element.getPrevItem()
+            const { position: posPrevItem, height: prevItemHeight } = item.element.getPrevItem()
             item.position = {
                 x: x0 + (!isVertical && item.index * (width + padding.x)),
                 y: y0 + (isVertical && ((posPrevItem.y + prevItemHeight) || 0))

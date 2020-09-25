@@ -4,20 +4,24 @@ define(function (require) {
     const Layout = require('../../Layout.js')
 
     class LayerActionMenuItem extends MenuItem {
-        constructor(parent, action, data) {
-            super({
-                name: 'Layer'
-            })
+        constructor(parent, action, name) {
+            super({ name })
             this.parent = parent
-            this.data = data
             this.zone = parent.zone
             this.type = Layout.type.LAYER_ACTION
             this.action = action
         }
+
+        /**
+         * @inheritdoc
+         */
         run() {
-            this.setActionState(`ACTION_${this.action}`, 'START')
-            this.setDataState(this.data)
+            this.setActionState(`${this.action}_ENTITY`, 'START')
         }
+
+        /**
+         * @inheritdoc
+         */
         isSelected() {
             return false
         }

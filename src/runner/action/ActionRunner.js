@@ -7,6 +7,8 @@ define(function (require) {
     const DuplicateAction = require('./DuplicateAction.js')
     const UndoAction = require('./UndoAction.js')
     const MoveAction = require('./MoveAction.js')
+    const MoveUpAction = require('./MoveUpAction.js')
+    const MoveDownAction = require('./MoveDownAction.js')
     const StyleColorAction = require('./StyleColorAction.js')
     const SelectEntityAction = require('./SelectEntityAction.js')
 
@@ -28,6 +30,8 @@ define(function (require) {
                 DUPLICATE: DuplicateAction,
                 UNDO: UndoAction,
                 MOVE: MoveAction,
+                MOVE_UP: MoveUpAction,
+                MOVE_DOWN: MoveDownAction,
                 STYLE_COLOR: StyleColorAction,
                 SELECT_ENTITY: SelectEntityAction
             }
