@@ -4,21 +4,21 @@ define(function (require) {
     const EntityManager = require('../../world/manager/EntityManager.js')
     const AttachEntity = require('../../world/entity/AttachEntity.js')
 
-    class LockAction extends Action {
+    class HideAction extends Action {
 
         /**
-         * Lock selected entities for modification
+         * Hide selected entities
          * @param {Array} selectedEntities
          */
         static run(mouse, selectedEntities) {
             const entityManager = EntityManager.get()
             selectedEntities.forEach(entity => 
-                !(entity instanceof AttachEntity) && entityManager.lock(entity))
+                !(entity instanceof AttachEntity) && entityManager.hide(entity))
             return true
         }
 
     }
 
-    return LockAction
+    return HideAction
 
 })

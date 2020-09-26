@@ -19,16 +19,21 @@ define(function (require) {
                 width, height,
                 fillColor, fillColorSelected,
                 colorText, textSize,
-                padding, fillColorLocked, colorTextLocked
+                padding, fillColorLocked, colorTextLocked,
+                fillColorHidden, colorTextHidden
             } = this.props
             context.fillStyle = (item.element.isSelected() && fillColorSelected) ||
-                (entity.locked && fillColorLocked) || fillColor
+                (entity.locked && fillColorLocked) ||
+                (!entity.visible && fillColorHidden) ||
+                fillColor
             context.lineWidth = 1
             context.fillRect(item.position.x, item.position.y, width, height)
-            context.fillStyle = (entity.locked && colorTextLocked) || colorText
+            context.fillStyle = (entity.locked && colorTextLocked) ||
+                (!entity.visible && colorTextHidden) ||
+                colorText
             context.font = `${textSize}px Arial`
             context.fillText(
-                entity.shape,
+                entity.name,
                 item.position.x + padding.x,
                 item.position.y + textSize + padding.y
             )
@@ -40,10 +45,12 @@ define(function (require) {
         height: 40,
         padding: { x: 10, y: 10 },
         colorText: '#000000',
-        colorTextLocked: '#999999',
+        colorTextLocked: '#D8B7A2',
+        colorTextHidden: '#AAAAAA',
         fillColor: '#EEEEEE',
         fillColorSelected: '#C6EDFF',
-        fillColorLocked: '#F4F4F4',
+        fillColorLocked: '#F5EDE8',
+        fillColorHidden: '#F4F4F4',
         numberPerLine: 1,
         textSize: 16
     }

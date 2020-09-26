@@ -31,7 +31,7 @@ define(function (require) {
          * @param {Entity} exceptType 
          */
         getAll(point, exceptType = null) {
-            return EntityManager.get().entities.filter((entity) =>
+            return EntityManager.get().getActiveEntities().filter((entity) =>
                 entity.includes(point) && entity.selectable &&
                 (!exceptType || !(entity instanceof exceptType))
             )
@@ -43,7 +43,7 @@ define(function (require) {
          * @param {Object} size 
          */
         getInsideArea(point, size) {
-            return EntityManager.get().entities.filter((entity) => {
+            return EntityManager.get().getActiveEntities().filter((entity) => {
                 return entity.selectable &&
                     entity.position.x >= point.x &&
                     entity.position.x + entity.size.width <= point.x + size.width &&
@@ -74,7 +74,7 @@ define(function (require) {
             } else {
                 selectedEntities = this.getInsideArea(point, size)
             }
-            return selectedEntities.map(selectedEntity => selectedEntity.isActif() && selectedEntity.select())
+            return selectedEntities.map(selectedEntity => selectedEntity.isActive() && selectedEntity.select())
         }
 
         /**
@@ -89,7 +89,7 @@ define(function (require) {
          * Do not unfocus entity in loading mode
          */
         unfocusAll() {
-            EntityManager.get().entities.map((entity) => entity.isActif() && entity.unfocus())
+            EntityManager.get().getActiveEntities().map((entity) => entity.unfocus())
         }
 
         /**
@@ -97,7 +97,7 @@ define(function (require) {
          * Do not focus entity in loading mode
          */
         focus(point) {
-            this.getAll(point).map((entity) => entity.isActif() && entity.focus())
+            this.getAll(point).map((entity) => entity.focus())
         }
 
         static get() {

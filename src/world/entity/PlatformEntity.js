@@ -21,7 +21,7 @@ define(function (require) {
         /**
          * Generate mesh for the rect
          */
-        generate() {
+        generateMesh() {
             const sw = this.size.width, sh = this.size.height
             const canvas = new OffscreenCanvas(sw, sh)
             const context = canvas.getContext('2d')

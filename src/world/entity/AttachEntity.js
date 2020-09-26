@@ -11,10 +11,10 @@ define(function (require) {
     class AttachEntity extends EntityMotion {
 
         /**
-         * is the generate hook must be disabled
+         * @inheritdoc
          */
-        isGenerateDisabled() {
-            return AppState.get().hasState('SIMULATE_PROGRESS')
+        isCanGenerate() {
+            return super.isCanGenerate() && !AppState.get().hasState('SIMULATE_PROGRESS')
         }
 
         /**

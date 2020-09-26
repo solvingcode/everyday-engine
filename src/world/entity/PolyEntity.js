@@ -65,7 +65,7 @@ define(function (require) {
         /**
          * Generate mesh for the poly
          */
-        generate() {
+        generateMesh() {
             const { width, height } = this.getLargestRectangle(this.rotation)
             this.canvas = new OffscreenCanvas(width, height)
             const context = this.canvas.getContext('2d')

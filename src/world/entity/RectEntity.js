@@ -24,7 +24,7 @@ define(function (require) {
         /**
          * Generate mesh for the rect
          */
-        generate() {
+        generateMesh() {
             const { width, height } = this.getLargestRectangle(this.rotation, this.size)
             if (width && height) {
                 const center = { x: this.size.width / 2, y: this.size.height / 2 }

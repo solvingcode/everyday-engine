@@ -15,6 +15,7 @@ define(function (require) {
             }
             props.style = props.style || { color: '#000000' }
             this.props = props
+            this.name = props.name
             this.position = props.position
             this.rotation = props.rotation || 0
             this.isBuffered = false
@@ -25,6 +26,7 @@ define(function (require) {
             this.selected = false
             this.focused = false
             this.locked = false
+            this.visible = true
             this.style = props.style
         }
 
@@ -43,8 +45,15 @@ define(function (require) {
         /**
          * Generate mesh
          */
-        generate(...params) {
-            throw new TypeError('"generate" method must be implemented')
+        generateMesh() {
+            throw new TypeError('"generateMesh" method must be implemented')
+        }
+
+        /**
+         * Generate the entity
+         */
+        generate() {
+            return this.isCanGenerate() && this.generateMesh()
         }
 
         /**
@@ -153,9 +162,17 @@ define(function (require) {
          * Lock/Unlock the entity for modification
          * @param {Boolean} lock
          */
-        lockOrNot(lock) {
+        lock(lock) {
             this.locked = lock
             this.setStyleAndGenerate(this.getStyle())
+        }
+
+        /**
+         * Show the entity
+         * @param {Boolean} visible
+         */
+        show(visible) {
+            this.visible = visible
         }
 
         /**
@@ -352,10 +369,17 @@ define(function (require) {
         }
 
         /**
-         * Is entity actif (valid, unlocked, ...)
+         * Is entity active (valid, unlocked, ...)
          */
-        isActif() {
-            return this.isValid() && !this.locked
+        isActive() {
+            return this.isValid() && !this.locked && this.visible
+        }
+
+        /**
+         * is the generate hook must be disabled
+         */
+        isCanGenerate() {
+            return this.visible
         }
     }
 

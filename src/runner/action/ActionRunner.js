@@ -11,9 +11,17 @@ define(function (require) {
     const MoveDownAction = require('./MoveDownAction.js')
     const LockAction = require('./LockAction.js')
     const UnlockAction = require('./UnlockAction.js')
+    const HideAction = require('./HideAction.js')
+    const ShowAction = require('./ShowAction.js')
     const StyleColorAction = require('./StyleColorAction.js')
     const SelectEntityAction = require('./SelectEntityAction.js')
 
+    /**
+     * Action Runner class.
+     * Manage all action runner related to the app state.
+     * @todo Refactor all actions that need to just do a 
+     *       simple call to EntityManager
+     */
     class ActionRunner extends Runner {
 
         constructor() {
@@ -36,6 +44,8 @@ define(function (require) {
                 MOVE_DOWN: MoveDownAction,
                 LOCK: LockAction,
                 UNLOCK: UnlockAction,
+                HIDE: HideAction,
+                SHOW: ShowAction,
                 STYLE_COLOR: StyleColorAction,
                 SELECT_ENTITY: SelectEntityAction
             }

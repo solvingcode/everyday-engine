@@ -30,7 +30,7 @@ define(function (require) {
         /**
          * Generate mesh for the line
          */
-        generate() {
+        generateMesh() {
             const x0 = this.points[0].x, y0 = this.points[0].y
             const x1 = this.points[1].x, y1 = this.points[1].y
             const canvas = new OffscreenCanvas(this.size.width, this.size.height)

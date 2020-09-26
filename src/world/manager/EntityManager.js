@@ -57,7 +57,8 @@ define(function (require) {
             }
             const entity = this.getAt(x, y, type)
             if (!entity) {
-                const element = new type({ position: { x, y } })
+                const name = `Layer ${this.entities.length}`
+                const element = new type({ position: { x, y }, name })
                 this.entities.push(element)
             }
             return this.getAt(x, y, type)
@@ -135,7 +136,7 @@ define(function (require) {
          * @param {Entity} entity 
          */
         lock(entity) {
-            entity.lockOrNot(true)
+            entity.lock(true)
         }
 
         /**
@@ -143,7 +144,23 @@ define(function (require) {
          * @param {Entity} entity 
          */
         unlock(entity) {
-            entity.lockOrNot(false)
+            entity.lock(false)
+        }
+
+        /**
+         * Hide the given entity
+         * @param {Entity} entity 
+         */
+        hide(entity) {
+            entity.show(false)
+        }
+
+        /**
+         * Show the given entity
+         * @param {Entity} entity 
+         */
+        show(entity) {
+            entity.show(true)
         }
 
         /**
@@ -154,7 +171,7 @@ define(function (require) {
          */
         moveIndex(entity, up) {
             const index = this.entities.findIndex((pEntity => pEntity === entity))
-            if ((index > 1 && up) || index < this.entities.length - 2) {
+            if ((index < this.entities.length - 2 && up) || index > 1) {
                 const newIndex = up ? index + 1 : index - 1
                 const sideEntity = this.entities[newIndex]
                 if (sideEntity && !sideEntity.selected) {
@@ -220,6 +237,13 @@ define(function (require) {
                 pEntity.entities.a === entity ||
                 pEntity.entities.b === entity
             )
+        }
+
+        /**
+         * Get active entities
+         */
+        getActiveEntities() {
+            return this.entities.filter(entity => entity.isActive())
         }
 
     }

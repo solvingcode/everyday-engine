@@ -26,7 +26,7 @@ define(function (require) {
         /**
          * Generate mesh for a circle
          */
-        generate() {
+        generateMesh() {
             const { width, height } = this.getLargestRectangle(this.rotation, this.size)
             const sw = this.size.width, sh = this.size.height
             const canvas = new OffscreenCanvas(width, height)
