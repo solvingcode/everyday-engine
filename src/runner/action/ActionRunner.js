@@ -9,6 +9,8 @@ define(function (require) {
     const MoveAction = require('./MoveAction.js')
     const MoveUpAction = require('./MoveUpAction.js')
     const MoveDownAction = require('./MoveDownAction.js')
+    const LockAction = require('./LockAction.js')
+    const UnlockAction = require('./UnlockAction.js')
     const StyleColorAction = require('./StyleColorAction.js')
     const SelectEntityAction = require('./SelectEntityAction.js')
 
@@ -32,6 +34,8 @@ define(function (require) {
                 MOVE: MoveAction,
                 MOVE_UP: MoveUpAction,
                 MOVE_DOWN: MoveDownAction,
+                LOCK: LockAction,
+                UNLOCK: UnlockAction,
                 STYLE_COLOR: StyleColorAction,
                 SELECT_ENTITY: SelectEntityAction
             }

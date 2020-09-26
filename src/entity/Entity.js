@@ -24,6 +24,7 @@ define(function (require) {
             this.selectable = true
             this.selected = false
             this.focused = false
+            this.locked = false
             this.style = props.style
         }
 
@@ -44,6 +45,15 @@ define(function (require) {
          */
         generate(...params) {
             throw new TypeError('"generate" method must be implemented')
+        }
+
+        /**
+         * Regenerate the mesh
+         */
+        regenerate() {
+            if (this.clearBuffer()) {
+                this.generate()
+            }
         }
 
         /**
@@ -94,9 +104,7 @@ define(function (require) {
         setRotationAndGenerate(angle) {
             if (this.rotation !== angle) {
                 this.rotation = angle
-                if (this.clearBuffer()) {
-                    this.generate()
-                }
+                this.regenerate()
             }
         }
 
@@ -106,9 +114,7 @@ define(function (require) {
          */
         setStyleAndGenerate(style) {
             this.style = style
-            if (this.clearBuffer()) {
-                this.generate()
-            }
+            this.regenerate()
         }
 
         /**
@@ -131,7 +137,7 @@ define(function (require) {
          * Unfocus the current entity (apply styles, ...)
          */
         unfocus() {
-            !this.selected && this.focused && this.setStyleAndGenerate(this.props.style)
+            !this.selected && this.focused && this.setStyleAndGenerate(this.getStyle())
             this.focused = false
         }
 
@@ -140,7 +146,24 @@ define(function (require) {
          */
         unselect() {
             this.selected = false
-            this.setStyleAndGenerate(this.props.style)
+            this.setStyleAndGenerate(this.getStyle())
+        }
+
+        /**
+         * Lock/Unlock the entity for modification
+         * @param {Boolean} lock
+         */
+        lockOrNot(lock) {
+            this.locked = lock
+            this.setStyleAndGenerate(this.getStyle())
+        }
+
+        /**
+         * Get the base style (use as default)
+         */
+        getStyle() {
+            const styleLocked = { color: '#AAAAAA', fillColor: 'rgba(0, 0, 0, 0.02)' }
+            return (this.locked && styleLocked) || this.props.style
         }
 
         /**
@@ -326,6 +349,13 @@ define(function (require) {
          */
         isValid() {
             return !this.loading
+        }
+
+        /**
+         * Is entity actif (valid, unlocked, ...)
+         */
+        isActif() {
+            return this.isValid() && !this.locked
         }
     }
 

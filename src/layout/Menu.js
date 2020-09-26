@@ -11,6 +11,8 @@ define(function (require) {
     const UndoMenuItem = require('./items/action/UndoMenuItem.js')
     const MoveUpMenuItem = require('./items/action/MoveUpMenuItem.js')
     const MoveDownMenuItem = require('./items/action/MoveDownMenuItem.js')
+    const LockMenuItem = require('./items/action/LockMenuItem.js')
+    const UnlockMenuItem = require('./items/action/UnlockMenuItem.js')
     const StyleMenuItem = require('./items/style/StyleMenuItem.js')
     const ButtonUI = require('../renderer/ui/buttons/ButtonUI.js')
     const MenuItemUI = require('../renderer/ui/MenuItemUI.js')
@@ -30,6 +32,8 @@ define(function (require) {
                 new UndoMenuItem(),
                 new MoveUpMenuItem(),
                 new MoveDownMenuItem(),
+                new LockMenuItem(),
+                new UnlockMenuItem(),
                 new StyleMenuItem(),
                 new LayerMenuItem()
             ]

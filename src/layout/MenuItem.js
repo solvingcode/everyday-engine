@@ -82,7 +82,8 @@ define(function (require) {
          * @param {String} typeAction
          */
         hasActionState(type) {
-            return this.appState.hasState(`ACTION_${type}`)
+            return this.appState.hasState(`ACTION_${type}_START`) ||
+            this.appState.hasState(`ACTION_${type}_STOP`)
         }
 
         /**

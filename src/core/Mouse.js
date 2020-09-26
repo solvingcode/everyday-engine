@@ -90,6 +90,7 @@ define(function () {
     }
 
     Mouse.CURSOR = {
+        DEFAULT: 'default',
         CROSSHAIR: 'crosshair',
         POINTER: 'pointer',
         MOVE: 'move',

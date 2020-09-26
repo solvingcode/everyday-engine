@@ -131,6 +131,22 @@ define(function (require) {
         }
 
         /**
+         * Lock entity for modification
+         * @param {Entity} entity 
+         */
+        lock(entity) {
+            entity.lockOrNot(true)
+        }
+
+        /**
+         * Unlock entity for modification
+         * @param {Entity} entity 
+         */
+        unlock(entity) {
+            entity.lockOrNot(false)
+        }
+
+        /**
          * Move the index of an entity up/down.
          * NB: The first element in the list is always the Platform Entity.
          * @param {Entity} entity 
@@ -139,7 +155,7 @@ define(function (require) {
         moveIndex(entity, up) {
             const index = this.entities.findIndex((pEntity => pEntity === entity))
             if ((index > 1 && up) || index < this.entities.length - 2) {
-                const newIndex = up ? index - 1 : index + 1
+                const newIndex = up ? index + 1 : index - 1
                 const sideEntity = this.entities[newIndex]
                 if (sideEntity && !sideEntity.selected) {
                     this.entities[index] = this.entities[newIndex]

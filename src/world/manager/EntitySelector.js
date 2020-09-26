@@ -74,7 +74,7 @@ define(function (require) {
             } else {
                 selectedEntities = this.getInsideArea(point, size)
             }
-            return selectedEntities.map(selectedEntity => selectedEntity.select())
+            return selectedEntities.map(selectedEntity => selectedEntity.isActif() && selectedEntity.select())
         }
 
         /**
@@ -89,7 +89,7 @@ define(function (require) {
          * Do not unfocus entity in loading mode
          */
         unfocusAll() {
-            EntityManager.get().entities.map((entity) => !entity.loading && entity.unfocus())
+            EntityManager.get().entities.map((entity) => entity.isActif() && entity.unfocus())
         }
 
         /**
@@ -97,7 +97,7 @@ define(function (require) {
          * Do not focus entity in loading mode
          */
         focus(point) {
-            this.getAll(point).map((entity) => !entity.loading && entity.focus())
+            this.getAll(point).map((entity) => entity.isActif() && entity.focus())
         }
 
         static get() {

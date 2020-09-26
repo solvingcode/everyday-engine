@@ -35,6 +35,13 @@ define(function (require) {
         }
 
         /**
+         * @inheritdoc
+         */
+        isGenerateDisabled() {
+            return false
+        }
+
+        /**
          * Generate points from drag distance
          */
         generatePoints(dragDistance) {

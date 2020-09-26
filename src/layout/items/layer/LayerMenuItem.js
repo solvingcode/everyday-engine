@@ -38,10 +38,8 @@ define(function (require) {
          * @inheritdoc
          */
         update() {
-            const entities = EntityManager.get()
-                .getEntitiesNotAs(AttachEntity)
-                .filter(entity => entity.isValid())
-            this.items = entities.map((entity, index) => {
+            const entities = EntityManager.get().getEntitiesNotAs(AttachEntity).reverse()
+            this.items = entities.filter(entity => entity.isValid()).map((entity, index) => {
                 const layerEntity = this.items[index]
                 if (layerEntity && layerEntity.data.entity !== entity) {
                     layerEntity.data.entity = entity

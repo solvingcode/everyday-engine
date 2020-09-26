@@ -15,11 +15,17 @@ define(function (require) {
         static draw(item, context) {
             this.config(item)
             const { entity } = item.element.data
-            const { width, height, fillColor, fillColorSelected, colorText, textSize, padding } = this.props
-            context.fillStyle = item.element.isSelected() ? fillColorSelected : fillColor
+            const {
+                width, height,
+                fillColor, fillColorSelected,
+                colorText, textSize,
+                padding, fillColorLocked, colorTextLocked
+            } = this.props
+            context.fillStyle = (item.element.isSelected() && fillColorSelected) ||
+                (entity.locked && fillColorLocked) || fillColor
             context.lineWidth = 1
             context.fillRect(item.position.x, item.position.y, width, height)
-            context.fillStyle = colorText
+            context.fillStyle = (entity.locked && colorTextLocked) || colorText
             context.font = `${textSize}px Arial`
             context.fillText(
                 entity.shape,
@@ -34,8 +40,10 @@ define(function (require) {
         height: 40,
         padding: { x: 10, y: 10 },
         colorText: '#000000',
+        colorTextLocked: '#999999',
         fillColor: '#EEEEEE',
         fillColorSelected: '#C6EDFF',
+        fillColorLocked: '#F4F4F4',
         numberPerLine: 1,
         textSize: 16
     }
