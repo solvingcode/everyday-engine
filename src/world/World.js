@@ -2,6 +2,7 @@ define(function (require) {
 
     const EntityManager = require('./manager/EntityManager.js')
     const PlatformEntity = require('./entity/PlatformEntity.js')
+    const AttachEntity = require('./entity/AttachEntity.js')
 
     class World {
 
@@ -15,17 +16,25 @@ define(function (require) {
          * @param {Renderer} renderer 
          */
         draw(renderer) {
-            const entities = this.entityManager.entities
-            for (var iEntity in entities) {
-                const entity = entities[iEntity]
-                const minX = 0
-                const maxX = WINDOW_WIDTH
-                const minY = 0
-                const maxY = WINDOW_HEIGHT
-                if (minX <= entity.position.x && maxX >= entity.position.x &&
-                    minY <= entity.position.y && maxY >= entity.position.y) {
-                    entity.draw(renderer)
-                }
+            const bodyEntities = this.entityManager.getEntitiesNotAs(AttachEntity)
+            const attachEntities = this.entityManager.getEntitiesAs(AttachEntity)
+            bodyEntities.forEach((entity) => this.drawEntity(entity, renderer))
+            attachEntities.forEach((entity) => this.drawEntity(entity, renderer))
+        }
+
+        /**
+         * Set the given entity to the renderer for drawing
+         * @param {Entity} entity 
+         * @param {Renderer} renderer 
+         */
+        drawEntity(entity, renderer) {
+            const minX = 0
+            const maxX = WINDOW_WIDTH
+            const minY = 0
+            const maxY = WINDOW_HEIGHT
+            if (minX <= entity.position.x && maxX >= entity.position.x &&
+                minY <= entity.position.y && maxY >= entity.position.y) {
+                entity.draw(renderer)
             }
         }
 

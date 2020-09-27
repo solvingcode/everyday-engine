@@ -82,8 +82,18 @@ define(function (require) {
          * Delete entity from the entities list
          * @param {Entity} entity 
          */
-        delete(entity) {
+        deleteEntity(entity) {
             return this.entities.splice(this.getIndexOf(entity), 1)
+        }
+
+        /**
+         * Delete the given entity and all related AttachEntity
+         * @param {Entity} entity 
+         * @param {Entity} attachType 
+         */
+        delete(entity, attachType) {
+            attachType && this.getAllAttachTypeEntity(entity, attachType).map(pEntity => this.deleteEntity(pEntity))
+            this.deleteEntity(entity)
         }
 
         /**
@@ -171,7 +181,7 @@ define(function (require) {
          */
         moveIndex(entity, up) {
             const index = this.entities.findIndex((pEntity => pEntity === entity))
-            if ((index < this.entities.length - 2 && up) || index > 1) {
+            if ((index < this.entities.length - 1 && up) || index > 1) {
                 const newIndex = up ? index + 1 : index - 1
                 const sideEntity = this.entities[newIndex]
                 if (sideEntity && !sideEntity.selected) {

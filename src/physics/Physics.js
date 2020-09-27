@@ -101,7 +101,10 @@ define(function (require) {
          * Setup the physics for entities
          */
         setup() {
-            this.entityManager.entities.map(entity => entity.loadPhysics(this.physicsEngine))
+            const bodyEntities = this.entityManager.getEntitiesNotAs(AttachEntity)
+            const attachEntities = this.entityManager.getEntitiesAs(AttachEntity)
+            bodyEntities.map(entity => entity.loadPhysics(this.physicsEngine))
+            attachEntities.map(entity => entity.loadPhysics(this.physicsEngine))
             return true
         }
 

@@ -7,6 +7,7 @@ define(function (require) {
     /**
      * Abstract Entity class
      * @abstract
+     * @todo Think to use a MeshManager for performance
      */
     class Entity {
         constructor(props) {
@@ -21,7 +22,7 @@ define(function (require) {
             this.isBuffered = false
             this.isPhyiscsLoaded = false
             this.size = props.size || 1
-            this.mesh = new Mesh(this.position, this.size) //@TODO: think to use a MeshManager for performance
+            this.mesh = new Mesh(this.position, this.size)
             this.selectable = true
             this.selected = false
             this.focused = false

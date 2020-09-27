@@ -21,7 +21,7 @@ define(function (require) {
         build() {
             this.setMeshPositionByDragDistance()
             if (this.generatePoints()) {
-                return this.setConstraintEntites() && this.generate()
+                return this.setConstraintEntities() && this.generate()
             }
             return false
         }
@@ -52,10 +52,13 @@ define(function (require) {
          * Generate mesh for the line
          */
         generateMesh() {
-            const canvas = new OffscreenCanvas(this.size.width, this.size.height)
-            const context = canvas.getContext('2d')
-            this.drawCircle(context)
-            return this.updateMeshFromContext(context)
+            if (this.checkConstraintEntities()) {
+                const canvas = new OffscreenCanvas(this.size.width, this.size.height)
+                const context = canvas.getContext('2d')
+                this.drawCircle(context)
+                return this.updateMeshFromContext(context)
+            }
+            return false
         }
 
         /**
@@ -82,11 +85,18 @@ define(function (require) {
         /**
          * Find related entities using point a and b, and attach them to the joint
          */
-        setConstraintEntites() {
+        setConstraintEntities() {
             const entitySelector = EntitySelector.get()
             const entities = entitySelector.getAll(this.toAbsolutePosition(this.points.a), AttachEntity)
             this.entities.a = entities && entities[0]
             this.entities.b = entities && entities[1]
+            return this.entities.a && this.entities.b
+        }
+
+        /**
+         * Check if attached entities are valides
+         */
+        checkConstraintEntities() {
             if (this.entities.a instanceof AttachEntity) {
                 this.entities.a = null
             }
