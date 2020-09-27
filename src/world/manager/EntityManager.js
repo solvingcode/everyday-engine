@@ -188,14 +188,25 @@ define(function (require) {
          * @param {Boolean} up (1 = UP, 0 = DOWN) 
          */
         moveIndex(entity, up) {
-            const index = this.entities.findIndex((pEntity => pEntity === entity))
-            if ((index < this.entities.length - 1 && up) || index > 1) {
+            const entities = this.getBodyEntities()
+            const index = entities.findIndex((pEntity => pEntity === entity))
+            if ((index < entities.length - 1 && up) || index > 1) {
                 const newIndex = up ? index + 1 : index - 1
-                const sideEntity = this.entities[newIndex]
-                if (sideEntity && !sideEntity.selected) {
-                    this.entities[index] = this.entities[newIndex]
-                    this.entities[newIndex] = entity
-                }
+                this.permutEntity(entity, entities[newIndex])
+            }
+        }
+
+        /**
+         * Permute two entities
+         * @param {Entity} entityA 
+         * @param {Entity} entityB 
+         */
+        permutEntity(entityA, entityB) {
+            const indexA = this.entities.findIndex((pEntity => pEntity === entityA))
+            const indexB = this.entities.findIndex((pEntity => pEntity === entityB))
+            if (indexA >= 0 && indexB >= 0 && !entityB.selected) {
+                this.entities[indexA] = entityB
+                this.entities[indexB] = entityA
             }
         }
 
