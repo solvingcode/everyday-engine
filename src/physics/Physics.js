@@ -1,8 +1,6 @@
 define(function (require) {
 
     const EntityManager = require('../world/manager/EntityManager.js')
-    const AttachEntity = require('../world/entity/AttachEntity.js')
-
     class Physics {
 
         constructor(physicsEngine) {
@@ -24,8 +22,8 @@ define(function (require) {
          * Update entities props from Physics engine results
          */
         updateEntities() {
-            const bodyEntities = this.entityManager.getEntitiesNotAs(AttachEntity)
-            const jointEntites = this.entityManager.getEntitiesAs(AttachEntity)
+            const bodyEntities = this.entityManager.getBodyEntities()
+            const jointEntites = this.entityManager.getAttachEntities()
             this.physicsEngine.getBodies().map((body, index) => {
                 const entity = bodyEntities[index]
                 const { x, y } = entity.fromCenterPosition(body.position)
@@ -46,7 +44,7 @@ define(function (require) {
          * @param {AiEngine} aiEngine 
          */
         updateEngine(aiEngine) {
-            this.entityManager.getEntitiesNotAs(AttachEntity).forEach(entity => {
+            this.entityManager.getBodyEntities().forEach(entity => {
                 if (aiEngine.update(entity)) {
                     this.physicsEngine.update(entity)
                 }
@@ -58,7 +56,7 @@ define(function (require) {
          * @param {Entity} entity 
          */
         getBodyFromEntity(entity) {
-            const bodyEntities = this.entityManager.getEntitiesNotAs(AttachEntity)
+            const bodyEntities = this.entityManager.getBodyEntities()
             return this.physicsEngine.getBodies().find((body, index) => {
                 const attachedEntity = bodyEntities[index]
                 return attachedEntity.position.x === entity.position.x &&
@@ -92,7 +90,7 @@ define(function (require) {
          * Init the phyiscs for entities before loading
          */
         before() {
-            const jointEntities = this.entityManager.getEntitiesAs(AttachEntity)
+            const jointEntities = this.entityManager.getAttachEntities()
             jointEntities.map(entity => entity.updateJointPosition(this.physicsEngine))
             return true
         }
@@ -101,8 +99,8 @@ define(function (require) {
          * Setup the physics for entities
          */
         setup() {
-            const bodyEntities = this.entityManager.getEntitiesNotAs(AttachEntity)
-            const attachEntities = this.entityManager.getEntitiesAs(AttachEntity)
+            const bodyEntities = this.entityManager.getBodyEntities()
+            const attachEntities = this.entityManager.getAttachEntities()
             bodyEntities.map(entity => entity.loadPhysics(this.physicsEngine))
             attachEntities.map(entity => entity.loadPhysics(this.physicsEngine))
             return true
@@ -112,7 +110,7 @@ define(function (require) {
          * Complete the physics after setup
          */
         after() {
-            const bodyEntities = this.entityManager.getEntitiesNotAs(AttachEntity)
+            const bodyEntities = this.entityManager.getBodyEntities()
             bodyEntities.map(entity => entity.updateCollisionFilters(this.physicsEngine))
             return true
         }

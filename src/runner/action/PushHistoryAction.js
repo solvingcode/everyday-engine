@@ -5,19 +5,18 @@ define(function (require) {
     const EntityManager = require('../../world/manager/EntityManager.js')
     const Storage = require('../../core/Storage.js')
 
-    class UndoAction extends Action {
+    class PushHistoryAction extends Action {
 
         /**
          * Undo actions
          */
         static run() {
-            const data = History.get().pop()
-            data && EntityManager.get().replace(data.fetch(Storage.type.ENTITY))
+            History.get().push(Storage.type.ENTITY, EntityManager.get().entities)
             return true
         }
 
     }
 
-    return UndoAction
+    return PushHistoryAction
 
 })

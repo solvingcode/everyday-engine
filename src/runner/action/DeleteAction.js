@@ -2,7 +2,6 @@ define(function (require) {
 
     const Action = require('./Action.js')
     const EntityManager = require('../../world/manager/EntityManager.js')
-    const AttachEntity = require('../../world/entity/AttachEntity.js')
 
     class DeleteAction extends Action {
 
@@ -12,7 +11,7 @@ define(function (require) {
          */
         static run(mouse, selectedEntities) {
             const entityManager = EntityManager.get()
-            selectedEntities.forEach(entity => entityManager.delete(entity, AttachEntity))
+            selectedEntities.forEach(entity => entityManager.delete(entity))
             return true
         }
 

@@ -1,6 +1,5 @@
 define(function (require) {
 
-    const EntityManager = require('../world/manager/EntityManager.js')
     const Storage = require('../core/Storage.js')
 
     /**
@@ -12,7 +11,6 @@ define(function (require) {
 
         constructor() {
             this.list = []
-            this.entityManager = EntityManager.get()
             this.storage = Storage.get()
             this.maxList = 10
         }
@@ -28,23 +26,17 @@ define(function (require) {
          * Get the last element in the list
          */
         pop() {
-            const data = this.list.length && this.list.pop()
-            if (data) {
-                this.entityManager.entities = data.fetch(Storage.type.ENTITY)
-            }
-            return data
+            return this.list.length && this.list.pop()
         }
 
         /**
-         * Push all data into the history
+         * Push data into the history
          */
-        push() {
+        push(type, data) {
             if (this.list.length > this.maxList) {
                 this.list.shift()
             }
-            this.list.push(
-                _.cloneDeep(this.storage.update(Storage.type.ENTITY, this.entityManager.entities))
-            )
+            this.list.push(_.cloneDeep(this.storage.update(type, data)))
         }
 
     }

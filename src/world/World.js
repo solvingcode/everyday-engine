@@ -2,7 +2,6 @@ define(function (require) {
 
     const EntityManager = require('./manager/EntityManager.js')
     const PlatformEntity = require('./entity/PlatformEntity.js')
-    const AttachEntity = require('./entity/AttachEntity.js')
 
     class World {
 
@@ -16,8 +15,8 @@ define(function (require) {
          * @param {Renderer} renderer 
          */
         draw(renderer) {
-            const bodyEntities = this.entityManager.getEntitiesNotAs(AttachEntity)
-            const attachEntities = this.entityManager.getEntitiesAs(AttachEntity)
+            const bodyEntities = this.entityManager.getBodyEntities()
+            const attachEntities = this.entityManager.getAttachEntities()
             bodyEntities.forEach((entity) => this.drawEntity(entity, renderer))
             attachEntities.forEach((entity) => this.drawEntity(entity, renderer))
         }

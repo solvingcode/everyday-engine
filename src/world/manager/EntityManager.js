@@ -2,6 +2,7 @@ define(function (require) {
 
     const EntityGenerator = require('../generator/EntityGenerator.js')
     const Entity = require('../../entity/Entity.js')
+    const AttachEntity = require('../entity/AttachEntity.js')
 
     /**
      * Entity Manager class
@@ -88,11 +89,10 @@ define(function (require) {
 
         /**
          * Delete the given entity and all related AttachEntity
-         * @param {Entity} entity 
-         * @param {Entity} attachType 
+         * @param {Entity} entity
          */
-        delete(entity, attachType) {
-            attachType && this.getAllAttachTypeEntity(entity, attachType).map(pEntity => this.deleteEntity(pEntity))
+        delete(entity) {
+            this.getAllAttachTypeEntity(entity).map(pEntity => this.deleteEntity(pEntity))
             this.deleteEntity(entity)
         }
 
@@ -146,7 +146,7 @@ define(function (require) {
          * @param {Entity} entity 
          */
         lock(entity) {
-            entity.lock(true)
+            this.lockEntity(entity, true)
         }
 
         /**
@@ -154,7 +154,7 @@ define(function (require) {
          * @param {Entity} entity 
          */
         unlock(entity) {
-            entity.lock(false)
+            this.lockEntity(entity, false)
         }
 
         /**
@@ -174,6 +174,14 @@ define(function (require) {
         }
 
         /**
+         * Replace entities by the given list
+         * @param {Entity[]} entities 
+         */
+        replace(entities) {
+            this.entities = entities
+        }
+
+        /**
          * Move the index of an entity up/down.
          * NB: The first element in the list is always the Platform Entity.
          * @param {Entity} entity 
@@ -189,6 +197,16 @@ define(function (require) {
                     this.entities[newIndex] = entity
                 }
             }
+        }
+
+        /**
+         * Lock/Unlock the given entity and all attached type entities
+         * @param {Entity} entity 
+         * @param {Boolean} lock 
+         */
+        lockEntity(entity, lock) {
+            this.getAllAttachTypeEntity(entity).map(pEntity => this.lockEntity(pEntity, lock))
+            entity.lock(lock)
         }
 
         /**
@@ -221,15 +239,15 @@ define(function (require) {
          * @param {Class} attachType
          * @param {Entity[]} exculdeEntities
          */
-        getAttachedEntities(entity, attachType, exculdeEntities = []) {
+        getAttachedEntities(entity, exculdeEntities = []) {
             let attachedEntities = [entity]
-            this.getAllAttachTypeEntity(entity, attachType).forEach(attachEntity => {
+            this.getAllAttachTypeEntity(entity).forEach(attachEntity => {
                 attachedEntities.push(attachEntity)
                 for (const kEntity in attachEntity.entities) {
                     const entityAB = attachEntity.entities[kEntity]
                     if (entityAB !== entity && !exculdeEntities.includes(entityAB)) {
                         attachedEntities = attachedEntities.concat(
-                            this.getAttachedEntities(entityAB, attachType, attachedEntities)
+                            this.getAttachedEntities(entityAB, attachedEntities)
                         )
                     }
                 }
@@ -242,8 +260,8 @@ define(function (require) {
          * @param {Entity} entity 
          * @param {Class} attachType
          */
-        getAllAttachTypeEntity(entity, attachType) {
-            return this.getEntitiesAs(attachType).filter(pEntity =>
+        getAllAttachTypeEntity(entity) {
+            return this.getAttachEntities().filter(pEntity =>
                 pEntity.entities.a === entity ||
                 pEntity.entities.b === entity
             )
@@ -254,6 +272,20 @@ define(function (require) {
          */
         getActiveEntities() {
             return this.entities.filter(entity => entity.isActive())
+        }
+
+        /**
+         * Get entities of type body
+         */
+        getBodyEntities() {
+            return this.getEntitiesNotAs(AttachEntity)
+        }
+
+        /**
+         * Get entities of type attach
+         */
+        getAttachEntities() {
+            return this.getEntitiesAs(AttachEntity)
         }
 
     }

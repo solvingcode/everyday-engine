@@ -1,7 +1,6 @@
 define(function (require) {
 
     const EntityManager = require('./EntityManager.js')
-    const AttachEntity = require('../entity/AttachEntity.js')
 
     class EntitySelector {
         constructor() {
@@ -65,7 +64,7 @@ define(function (require) {
                 if (selectedEntity) {
                     if (includeAttach) {
                         selectedEntities = selectedEntities.concat(
-                            selectedEntity.getAttachedEntities(EntityManager.get(), AttachEntity)
+                            selectedEntity.getAttachedEntities(EntityManager.get())
                         )
                     } else {
                         selectedEntities.push(selectedEntity)

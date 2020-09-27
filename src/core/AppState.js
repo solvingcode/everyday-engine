@@ -1,6 +1,5 @@
 define(function (require) {
 
-    const History = require('./History.js')
     const { CURSOR } = require('./Mouse.js')
 
     /**
@@ -71,7 +70,7 @@ define(function (require) {
                     this.state.push(state)
                     const { history, cursor } = AppState.States[state]
                     if (history && isHistory) {
-                        History.get().push()
+                        this.addState('ACTION_HISTORY_PUSH_START')
                     }
                     cursor && this.setData({ cursor })
                 } else {
@@ -198,6 +197,8 @@ define(function (require) {
         ACTION_SHOW_STOP: { history: false },
         ACTION_SELECT_ENTITY_START: { history: true },
         ACTION_SELECT_ENTITY_STOP: { history: false },
+        ACTION_HISTORY_PUSH_START: { history: false },
+        ACTION_HISTORY_PUSH_STOP: { history: false },
         ACTION_STYLE_COLOR_START: { history: true },
         ACTION_STYLE_COLOR_STOP: { history: false }
     }

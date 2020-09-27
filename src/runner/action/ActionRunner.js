@@ -15,6 +15,7 @@ define(function (require) {
     const ShowAction = require('./ShowAction.js')
     const StyleColorAction = require('./StyleColorAction.js')
     const SelectEntityAction = require('./SelectEntityAction.js')
+    const PushHistoryAction = require('./PushHistoryAction.js')
 
     /**
      * Action Runner class.
@@ -47,7 +48,8 @@ define(function (require) {
                 HIDE: HideAction,
                 SHOW: ShowAction,
                 STYLE_COLOR: StyleColorAction,
-                SELECT_ENTITY: SelectEntityAction
+                SELECT_ENTITY: SelectEntityAction,
+                HISTORY_PUSH: PushHistoryAction
             }
             const selectedEntities = this.entitySelector.getSelected()
             Object.entries(typeActions).forEach(typeAction => {
