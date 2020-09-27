@@ -61,9 +61,7 @@ define(function (require) {
          * Regenerate the mesh
          */
         regenerate() {
-            if (this.clearBuffer()) {
-                this.generate()
-            }
+            return this.clearBuffer() && this.generate()
         }
 
         /**

@@ -20,10 +20,7 @@ define(function (require) {
          */
         build() {
             this.setMeshPositionByDragDistance()
-            if (this.generatePoints()) {
-                return this.setConstraintEntities() && this.generate()
-            }
-            return false
+            return this.generatePoints() && this.generate()
         }
 
         /**
@@ -52,7 +49,7 @@ define(function (require) {
          * Generate mesh for the line
          */
         generateMesh() {
-            if (this.checkConstraintEntities()) {
+            if (this.setConstraintEntities() && this.checkConstraintEntities()) {
                 const canvas = new OffscreenCanvas(this.size.width, this.size.height)
                 const context = canvas.getContext('2d')
                 this.drawCircle(context)

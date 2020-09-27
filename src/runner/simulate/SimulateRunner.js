@@ -32,8 +32,13 @@ define(function (require) {
                 storage.update(Storage.type.ENTITY, entityManager.entities)
                 EntitySelector.get().unselectAll()
                 if (!this.isPhysicsLoaded) {
-                    this.physics.run()
-                    this.isPhysicsLoaded = true
+                    try {
+                        this.physics.run()
+                        this.isPhysicsLoaded = true
+                    } catch (error) {
+                        console.warn(error)
+                        appState.removeState('SIMULATE_START')
+                    }
                 }
                 appState.setUniqStateByGroup('SIMULATE', 'PROGRESS')
             } else if (appState.hasState('SIMULATE_PROGRESS')) {

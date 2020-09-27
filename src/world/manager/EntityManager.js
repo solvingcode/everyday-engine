@@ -117,6 +117,14 @@ define(function (require) {
         }
 
         /**
+         * Regenerate the given entity and delete if not valid
+         * @param {Entity} entity 
+         */
+        regenerate(entity) {
+            !entity.regenerate() && this.delete(entity)
+        }
+
+        /**
          * Update the Mesh for all entities
          */
         update() {

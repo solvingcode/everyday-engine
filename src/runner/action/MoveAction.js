@@ -19,6 +19,7 @@ define(function (require) {
             const targetPoint = { x: instance.position.x + dragDistance.x, y: instance.position.y + dragDistance.y }
             selectedEntities.map((entity, index) => {
                 entity.moveRelativePointTo(entityManager, instance.relativeEntityPositions[index], targetPoint)
+                entityManager.regenerate(entity)
             })
             return false
         }

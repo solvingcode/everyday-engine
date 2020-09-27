@@ -34,7 +34,7 @@ define(function (require) {
          * Used to set data for a given state
          */
         setData(data) {
-            this.data = { ...data }
+            this.data = Object.assign(this.data, data)
             return this
         }
 
