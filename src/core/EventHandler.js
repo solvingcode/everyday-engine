@@ -2,6 +2,7 @@ define(function (require) {
 
     const { MouseButton } = require('./Mouse.js')
     const Menu = require('../layout/Menu.js')
+    const MenuRunner = require('../runner/menu/MenuRunner.js')
     const Action = require('./Action.js')
     const DrawerRunner = require('../runner/drawer/DrawerRunner.js')
     const SimulateRunner = require('../runner/simulate/SimulateRunner.js')
@@ -21,7 +22,7 @@ define(function (require) {
         handle(window) {
             const mouse = window.mouse
             const action = Action.get()
-            const menu = Menu.get()
+            const menuRunner = MenuRunner.get(Menu.get())
             const drawerRunner = DrawerRunner.get()
             const simulateRunner = SimulateRunner.get()
             const actionRunner = ActionRunner.get()
@@ -29,11 +30,11 @@ define(function (require) {
             action.add(simulateRunner, mouse)
             action.add(actionRunner, mouse)
             if (mouse.isButtonClicked(MouseButton.LEFT)) {
-                action.add(menu, mouse.position)
+                action.add(menuRunner, mouse.position)
             }
             if (mouse.isMouseMove()) {
                 action.add(windowRunner, mouse)
-                action.add(drawerRunner, mouse)
+                action.add(drawerRunner, mouse, menuRunner)
             }
             action.run()
             mouse.clearKeyClicked()

@@ -1,7 +1,6 @@
 define(function (require) {
 
     const AppState = require('../../core/AppState.js')
-    const Menu = require('../../layout/Menu.js')
     const Runner = require('../Runner.js')
     const { MouseButton } = require('../../core/Mouse.js')
     const EntityManager = require('../../world/manager/EntityManager.js')
@@ -27,7 +26,7 @@ define(function (require) {
          * Execute draw action for each type of item (Ellipse, Rect, ...)
          * @param {Mouse} mouse 
          */
-        execute(mouse) {
+        execute(mouse, menuRunner) {
             const appState = AppState.get()
             const defaultStartEvent = (pMouse) => pMouse.isButtonPressed(MouseButton.LEFT)
             const defaultEndEvent = (pMouse) => pMouse.isButtonClicked(MouseButton.LEFT)
@@ -67,7 +66,7 @@ define(function (require) {
                 const props = entry[1]
                 const startEvent = props.startEvent || defaultStartEvent
                 const endEvent = props.endEvent || defaultEndEvent
-                if (startEvent(mouse) && appState.hasState(`TO_DRAW_${type}`) && this.isPositionValid(mouse)) {
+                if (startEvent(mouse) && appState.hasState(`TO_DRAW_${type}`) && this.isPositionValid(mouse, menuRunner)) {
                     this.startDraw(type)
                 }
                 if (endEvent(mouse) && appState.hasState(`DRAWING_${type}`)) {
@@ -122,11 +121,11 @@ define(function (require) {
 
         /**
          * Is position of the given mouse is valid (inside draw area)
-         * @param {Mouse} mouse 
+         * @param {Mouse} mouse
+         * @param {MouseRunner} menuRunner  
          */
-        isPositionValid(mouse) {
-            const menu = Menu.get()
-            return !menu.getItemAt(mouse.position.x, mouse.position.y)
+        isPositionValid(mouse, menuRunner) {
+            return !menuRunner.getItemAt(mouse.position.x, mouse.position.y)
         }
 
         static get() {

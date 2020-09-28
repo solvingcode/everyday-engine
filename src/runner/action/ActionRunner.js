@@ -58,7 +58,7 @@ define(function (require) {
                 if (appState.hasState(`ACTION_${type}_START`)) {
                     this.runAction(action, mouse, selectedEntities) && appState.setUniqStateByGroup('ACTION', `${type}_STOP`)
                 } else if (appState.hasState(`ACTION_${type}_STOP`)) {
-                    this.stopAction(action) && appState.removeState(`ACTION_${type}_STOP`)
+                    this.stopAction(action, mouse, selectedEntities) && appState.removeState(`ACTION_${type}_STOP`)
                 }
             })
         }
@@ -77,8 +77,8 @@ define(function (require) {
          * Stop action
          * @param {Action} action
          */
-        stopAction(action) {
-            return action.stop()
+        stopAction(action, mouse, selectedEntities) {
+            return action.stop(mouse, selectedEntities)
         }
 
         static get() {

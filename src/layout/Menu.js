@@ -16,7 +16,6 @@ define(function (require) {
     const HideMenuItem = require('./items/action/HideMenuItem.js')
     const ShowMenuItem = require('./items/action/ShowMenuItem.js')
     const StyleMenuItem = require('./items/style/StyleMenuItem.js')
-    const ButtonUI = require('../renderer/ui/buttons/ButtonUI.js')
     const MenuItemUI = require('../renderer/ui/MenuItemUI.js')
     const LayerMenuItem = require('./items/layer/LayerMenuItem.js')
 
@@ -112,38 +111,11 @@ define(function (require) {
         }
 
         /**
-         * Apply action for the menu.
-         * @param {Object} position 
-         * @return {Boolean}
-         */
-        execute(position) {
-            const menuItem = this.getItemAt(position.x, position.y)
-            if (menuItem) {
-                this.selectItem(menuItem)
-                return true
-            }
-            return false
-        }
-
-        /**
          * Update menu items
          */
         update() {
             this.types.forEach(type => type.update())
             this.setup()
-        }
-
-        /**
-         * Get MenuItem at a specific position.
-         * @param {float} x 
-         * @param {float} y 
-         * @todo See if we can use isValid instead of checking position exists
-         */
-        getItemAt(x, y) {
-            return this.items.find((item) => item.position &&
-                x > item.position.x && x < item.position.x + ButtonUI.getProps(item.element).width &&
-                y > item.position.y && y < item.position.y + ButtonUI.getProps(item.element).height
-            )
         }
 
         /**

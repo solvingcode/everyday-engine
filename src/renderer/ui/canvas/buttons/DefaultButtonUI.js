@@ -1,6 +1,6 @@
 define(function (require) {
 
-    const Layout = require('../../../layout/Layout.js')
+    const Layout = require('../../../../layout/Layout.js')
 
     class DefaultButtonUI {
         /**

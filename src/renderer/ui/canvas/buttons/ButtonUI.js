@@ -3,7 +3,7 @@ define(function (require) {
     const ColorButtonUI = require('./ColorButtonUI.js')
     const DefaultButtonUI = require('./DefaultButtonUI.js')
     const LayerEntityButtonUI = require('./LayerEntityButtonUI.js')
-    const Layout = require('../../../layout/Layout.js')
+    const Layout = require('../../../../layout/Layout.js')
 
     class ButtonUI {
         /**

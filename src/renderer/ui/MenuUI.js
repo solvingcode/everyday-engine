@@ -1,22 +1,18 @@
 define(function (require) {
 
-    const ButtonUI = require('./buttons/ButtonUI.js')
-    const PanelUI = require('./PanelUI.js')
-
+    /**
+     * Menu UI class
+     * Used to draw the menu
+     */
     class MenuUI {
         /**
          * Draw a button.
-         * @param {Menu} item 
-         * @param {CanvasRenderingContext2D} context
+         * @param {Menu} item
+         * @param {UIRenderer} uiRenderer
          */
-        static draw(menu, context) {
+        static draw(menu, uiRenderer) {
             for (var iItem in menu.items) {
-                const item = menu.items[iItem]
-                if (item.element.items) {
-                    PanelUI.draw(item, context)
-                } else {
-                    ButtonUI.draw(item, context)
-                }
+                menu.items[iItem].draw(uiRenderer)
             }
         }
     }
