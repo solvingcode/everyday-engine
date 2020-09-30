@@ -1,15 +1,14 @@
-define(function (require) {
+define(function () {
 
-    const DefaultButtonUI = require('./buttons/DefaultButtonUI.js')
-
-    class PanelUI {
+    class CanvasPanelUI {
         /**
          * Draw a button.
          * @param {MenuItem} item 
-         * @param {CanvasRenderingContext2D} context
+         * @param {UIRenderer} uiRenderer
          */
-        static draw(item, context) {
-            this.config(item)
+        static draw(item, uiRenderer) {
+            this.config(item, uiRenderer)
+            const { context } = uiRenderer
             const element = item.element
             const { width, textSize, padding, colorPanel, colorText, heightTitle } = this.props
             context.fillStyle = colorPanel
@@ -24,8 +23,8 @@ define(function (require) {
             )
         }
 
-        static config(item) {
-            const { x0, y0, isVertical } = DefaultButtonUI.props.zone[item.element.zone]
+        static config(item, uiRenderer) {
+            const { x0, y0, isVertical } = uiRenderer.getZoneProps(item.element.zone)
             const { width, padding } = this.props
             const { position: posPrevItem, height: prevItemHeight } = item.element.getPrevItem()
             item.position = {
@@ -35,7 +34,7 @@ define(function (require) {
         }
     }
 
-    PanelUI.props = {
+    CanvasPanelUI.props = {
         width: 190,
         heightTitle: 40,
         padding: { x: 10, y: 10 },
@@ -44,5 +43,5 @@ define(function (require) {
         colorText: '#000000'
     }
 
-    return PanelUI
+    return CanvasPanelUI
 })

@@ -14,6 +14,10 @@ define(function (require) {
     const PolyEntity = require('../../world/entity/PolyEntity.js')
     const SelectorEntity = require('../../world/entity/SelectorEntity.js')
 
+    /**
+     * Draw Runner class
+     * Run actions for drawing
+     */
     class DrawerRunner extends Runner {
 
         constructor() {
@@ -25,8 +29,10 @@ define(function (require) {
         /**
          * Execute draw action for each type of item (Ellipse, Rect, ...)
          * @param {Mouse} mouse 
+         * @param {Menu} menu 
+         * @todo Think to not use the MenuRunner to valid position
          */
-        execute(mouse, menuRunner) {
+        execute(mouse, menu) {
             const appState = AppState.get()
             const defaultStartEvent = (pMouse) => pMouse.isButtonPressed(MouseButton.LEFT)
             const defaultEndEvent = (pMouse) => pMouse.isButtonClicked(MouseButton.LEFT)
@@ -66,7 +72,7 @@ define(function (require) {
                 const props = entry[1]
                 const startEvent = props.startEvent || defaultStartEvent
                 const endEvent = props.endEvent || defaultEndEvent
-                if (startEvent(mouse) && appState.hasState(`TO_DRAW_${type}`) && this.isPositionValid(mouse, menuRunner)) {
+                if (startEvent(mouse) && appState.hasState(`TO_DRAW_${type}`) && this.isPositionValid(mouse, menu)) {
                     this.startDraw(type)
                 }
                 if (endEvent(mouse) && appState.hasState(`DRAWING_${type}`)) {
@@ -124,8 +130,8 @@ define(function (require) {
          * @param {Mouse} mouse
          * @param {MouseRunner} menuRunner  
          */
-        isPositionValid(mouse, menuRunner) {
-            return !menuRunner.getItemAt(mouse.position.x, mouse.position.y)
+        isPositionValid(mouse, menu) {
+            return !menu.getItemAt(mouse.position.x, mouse.position.y)
         }
 
         static get() {

@@ -1,6 +1,6 @@
 define(function (require) {
 
-    const PanelUI = require('../PanelUI.js')
+    const CanvasPanelUI = require('../CanvasPanelUI.js')
 
     /**
      * Panel ButtonUI.
@@ -16,11 +16,13 @@ define(function (require) {
             const { numberPerLine, padding, height, width } = this.props
             const numLine = Math.ceil((item.index - item.parent.index) / numberPerLine)
             const numCol = (item.index - (item.parent.index + 1)) % numberPerLine
-            const { heightTitle } = PanelUI.props
+            const { heightTitle } = CanvasPanelUI.props
             item.position = {
                 x: x0 + (width + padding.x) * numCol + padding.x,
                 y: y0 + heightTitle + height * (numLine - 1) + (padding.y * numLine)
             }
+            item.width = width
+            item.height = height
             item.parent.height = heightTitle + numLine * (height + padding.y) + padding.y
         }
     }

@@ -1,8 +1,10 @@
 define(function (require) {
 
     const UIRenderer = require('../UIRenderer.js')
-    const ButtonUI = require('./buttons/ButtonUI.js')
-    const PanelUI = require('./PanelUI.js')
+    const ColorButtonUI = require('./buttons/ColorButtonUI.js')
+    const DefaultButtonUI = require('./buttons/DefaultButtonUI.js')
+    const LayerEntityButtonUI = require('./buttons/LayerEntityButtonUI.js')
+    const CanvasPanelUI = require('./CanvasPanelUI.js')
 
     /**
      * Canvas UI Renderer class
@@ -22,16 +24,31 @@ define(function (require) {
         /**
          * @inheritdoc
          */
-        drawPanel(item) {
-            PanelUI.draw(item, this.context)
+        getColorButtonUI() {
+            return ColorButtonUI
         }
 
         /**
          * @inheritdoc
          */
-        drawButton(item) {
-            ButtonUI.draw(item, this.context)
+        getLayerEntityButtonUI() {
+            return LayerEntityButtonUI
         }
+
+        /**
+         * @inheritdoc
+         */
+        getDefaultButtonUI() {
+            return DefaultButtonUI
+        }
+
+        /**
+         * @inheritdoc
+         */
+        getPanelUI() {
+            return CanvasPanelUI
+        }
+
     }
 
     return CanvasUIRenderer

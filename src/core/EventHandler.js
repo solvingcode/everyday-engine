@@ -22,6 +22,7 @@ define(function (require) {
         handle(window) {
             const mouse = window.mouse
             const action = Action.get()
+            const menu = Menu.get()
             const menuRunner = MenuRunner.get(Menu.get())
             const drawerRunner = DrawerRunner.get()
             const simulateRunner = SimulateRunner.get()
@@ -34,7 +35,7 @@ define(function (require) {
             }
             if (mouse.isMouseMove()) {
                 action.add(windowRunner, mouse)
-                action.add(drawerRunner, mouse, menuRunner)
+                action.add(drawerRunner, mouse, menu)
             }
             action.run()
             mouse.clearKeyClicked()

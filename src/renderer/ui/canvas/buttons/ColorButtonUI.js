@@ -6,10 +6,11 @@ define(function (require) {
         /**
          * Draw a button.
          * @param {MenuItem} item 
-         * @param {CanvasRenderingContext2D} context
+         * @param {UIRenderer} uiRenderer
          */
-        static draw(item, context) {
+        static draw(item, uiRenderer) {
             this.config(item)
+            const { context } = uiRenderer
             const { color } = item.element.data
             context.fillStyle = color
             context.lineWidth = 1

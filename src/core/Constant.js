@@ -7,3 +7,5 @@ const DIRECTION = {
     LEFT: 2,
     RIGHT: 3
 }
+
+const HTML_ID_PREFIX = 'app-el-'

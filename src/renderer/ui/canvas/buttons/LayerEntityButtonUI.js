@@ -10,10 +10,11 @@ define(function (require) {
         /**
          * Draw a button.
          * @param {MenuItem} item 
-         * @param {CanvasRenderingContext2D} context
+         * @param {uiRenderer} uiRenderer
          */
-        static draw(item, context) {
+        static draw(item, uiRenderer) {
             this.config(item)
+            const { context } = uiRenderer
             const { entity } = item.element.data
             const {
                 width, height,

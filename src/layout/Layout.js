@@ -1,5 +1,8 @@
 define(function () {
 
+    /**
+     * Define the layout of the screen
+     */
     class Layout { }
 
     Layout.zone = {

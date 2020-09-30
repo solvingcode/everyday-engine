@@ -6,10 +6,11 @@ define(function (require) {
         /**
          * Draw a button.
          * @param {MenuItem} item 
-         * @param {CanvasRenderingContext2D} context
+         * @param {uiRenderer} uiRenderer
          */
-        static draw(item, context) {
-            this.config(item)
+        static draw(item, uiRenderer) {
+            this.config(item, uiRenderer)
+            const { context } = uiRenderer
             const element = item.element
             var colorButton = this.props.colorButton
             var colorText = this.props.colorText
@@ -28,12 +29,20 @@ define(function (require) {
             )
         }
 
-        static config(item) {
-            const { x0, y0, isVertical } = this.props.zone[item.element.zone]
+        /**
+         * Configure menu items props
+         * @param {MenuItemUI} item 
+         * @param {UIRenderer} uiRenderer 
+         */
+        static config(item, uiRenderer) {
+            const { x0, y0, isVertical } = uiRenderer.getZoneProps(item.element.zone)
+            const { width, height } = this.props
             item.position = {
                 x: x0 + (!isVertical && item.index * (this.props.width + this.props.padding.x)),
                 y: y0 + (isVertical && item.index * (this.props.height + this.props.padding.y))
             }
+            item.width = width
+            item.height = height
         }
     }
 
