@@ -13,3 +13,23 @@ canvas{
 #root{
     z-index: 2;
 }
+
+/* Button style */
+
+button{
+    border: 1px solid #cccccc;
+    background-color: #f4f4f4;
+}
+
+button:hover{
+    background-color: #caddf0;
+}
+
+button:focus{
+    border: 2px solid #9bbadd;
+    outline: none;
+}
+
+button.selected{
+    background-color: #89c4ff;
+}

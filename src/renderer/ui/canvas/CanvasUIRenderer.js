@@ -5,6 +5,7 @@ define(function (require) {
     const DefaultButtonUI = require('./buttons/DefaultButtonUI.js')
     const LayerEntityButtonUI = require('./buttons/LayerEntityButtonUI.js')
     const CanvasPanelUI = require('./CanvasPanelUI.js')
+    const Menu = require('../../../layout/Menu.js')
 
     /**
      * Canvas UI Renderer class
@@ -19,6 +20,8 @@ define(function (require) {
         constructor(context) {
             super()
             this.context = context
+            this.menu = Menu.get()
+            this.menu.setUIRenderer(this)
         }
 
         /**
@@ -47,6 +50,17 @@ define(function (require) {
          */
         getPanelUI() {
             return CanvasPanelUI
+        }
+
+        /**
+         * @inheritdoc
+         */
+        getItemAt(mouse) {
+            const { x, y } = mouse.position
+            return this.menu.items.find((item) => item.position &&
+                x > item.position.x && x < item.position.x + item.width &&
+                y > item.position.y && y < item.position.y + item.height
+            )
         }
 
     }

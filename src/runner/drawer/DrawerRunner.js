@@ -131,7 +131,7 @@ define(function (require) {
          * @param {MouseRunner} menuRunner  
          */
         isPositionValid(mouse, menu) {
-            return !menu.getItemAt(mouse.position.x, mouse.position.y)
+            return !menu.getUIRenderer().getItemAt(mouse)
         }
 
         static get() {

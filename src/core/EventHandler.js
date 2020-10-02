@@ -31,7 +31,7 @@ define(function (require) {
             action.add(simulateRunner, mouse)
             action.add(actionRunner, mouse)
             if (mouse.isButtonClicked(MouseButton.LEFT)) {
-                action.add(menuRunner, mouse.position)
+                action.add(menuRunner, mouse)
             }
             if (mouse.isMouseMove()) {
                 action.add(windowRunner, mouse)

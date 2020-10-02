@@ -119,19 +119,6 @@ define(function (require) {
         }
 
         /**
-         * Get MenuItem at a specific position.
-         * @param {float} x 
-         * @param {float} y 
-         * @todo See if we can use isValid instead of checking position exists
-         */
-        getItemAt(x, y) {
-            return this.items.find((item) => item.position &&
-                x > item.position.x && x < item.position.x + item.width &&
-                y > item.position.y && y < item.position.y + item.height
-            )
-        }
-
-        /**
          * Get Previous menu item
          * @param {MenuItem} type 
          */
@@ -139,6 +126,21 @@ define(function (require) {
             const index = this.types.findIndex(ptype => ptype === type)
             const element = this.types[index - 1]
             return this.items.find(pitem => pitem.element === element)
+        }
+
+        /**
+         * Set the UI Renderer (used to locate items in the layout)
+         * @param {UIRenderer} uiRenderer 
+         */
+        setUIRenderer(uiRenderer) {
+            this.uiRenderer = uiRenderer
+        }
+
+        /**
+         * Get the UI Renderer
+         */
+        getUIRenderer() {
+            return this.uiRenderer
         }
 
         static get() {

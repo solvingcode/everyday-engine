@@ -1,8 +1,8 @@
 define(function () {
 
-    class DefaultButtonUI {
+    class ColorButtonUI {
         /**
-         * Draw a default button.
+         * Draw a color button.
          * @param {MenuItem} item
          * @param {UIRenderer} uiRenderer
          */
@@ -11,12 +11,12 @@ define(function () {
         }
     }
 
-    DefaultButtonUI.props = {
+    ColorButtonUI.props = {
         tag: 'button',
-        prefix: 'default-button-',
         width: 85,
-        height: 40
+        height: 40,
+        padding: { x: 10, y: 10 }
     }
 
-    return DefaultButtonUI
+    return ColorButtonUI
 })

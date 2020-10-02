@@ -8,6 +8,7 @@ define(function () {
             this.keyclicks = []
             this.keydbclicks = []
             this.position = { x: 0, y: 0 }
+            this.target = null
             this.currentPosition = { x: 0, y: 0 }
             this.lastPosition = this.currentPosition
         }
@@ -16,11 +17,16 @@ define(function () {
             return { x: event.clientX, y: event.clientY }
         }
 
+        getTarget(event) {
+            return event.target
+        }
+
         setButtonPressed(key) {
             if (!this.isButtonPressed(key)) {
                 this.keydowns.push(key)
             }
             this.position = this.getPosition(event)
+            this.target = this.getTarget(event)
         }
 
         setButtonClicked(key) {

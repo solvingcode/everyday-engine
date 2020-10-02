@@ -11,11 +11,11 @@ define(function (require) {
 
         /**
          * Apply action for the menu.
-         * @param {Object} position 
+         * @param {Mouse} mouse 
          * @return {Boolean}
          */
-        execute(position) {
-            const menuItem = this.menu.getItemAt(position.x, position.y)
+        execute(mouse) {
+            const menuItem = this.menu.getUIRenderer().getItemAt(mouse)
             if (menuItem) {
                 this.menu.selectItem(menuItem)
                 return true

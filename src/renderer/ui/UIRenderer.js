@@ -16,17 +16,20 @@ define(function (require) {
                 [Layout.zone.LEFT]: {
                     x0: 20,
                     y0: 20,
-                    isVertical: true
+                    isVertical: true,
+                    width: 50
                 },
                 [Layout.zone.TOP]: {
                     x0: 160,
                     y0: 20,
-                    isVertical: false
+                    isVertical: false,
+                    height: 30
                 },
                 [Layout.zone.RIGHT]: {
                     x0: WINDOW_WIDTH - 250,
                     y0: 20,
-                    isVertical: true
+                    isVertical: true,
+                    width: 200
                 }
             }
         }
@@ -50,8 +53,16 @@ define(function (require) {
         /**
          * Get zone UI properties
          */
-        getZoneProps() {
+        getZoneProps(zone) {
             return this.zones[zone]
+        }
+
+        /**
+         * Get MenuItem at a specific position.
+         * @param {Mouse} mouse
+         */
+        getItemAt(mouse) {
+            throw new TypeError('"UIRenderer.getItemAt" method must be implemented')
         }
 
         /**
