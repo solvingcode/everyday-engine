@@ -21,12 +21,17 @@ define(function () {
             return event.target
         }
 
+        getPath(event) {
+            return event.path
+        }
+
         setButtonPressed(key) {
             if (!this.isButtonPressed(key)) {
                 this.keydowns.push(key)
             }
             this.position = this.getPosition(event)
             this.target = this.getTarget(event)
+            this.path = this.getPath(event)
         }
 
         setButtonClicked(key) {

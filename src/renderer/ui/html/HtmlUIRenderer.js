@@ -194,7 +194,8 @@ define(function (require) {
          * @inheritdoc
          */
         getItemAt(mouse) {
-            const { target } = mouse
+            const { path } = mouse
+            const target = path && path.find(el => el.getAttribute && el.getAttribute('data-index'))
             const index = target && parseInt(target.getAttribute('data-index'))
             const zone = target && target.getAttribute('data-zone')
             if (index !== null && zone) {
