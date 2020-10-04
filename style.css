@@ -21,7 +21,7 @@ button{
     background-color: #f4f4f4;
 }
 
-button:hover{
+button:hover, button.locked:hover, button.hidden:hover{
     background-color: #caddf0;
 }
 
@@ -29,8 +29,17 @@ button:focus{
     outline: none;
 }
 
-button.selected{
+button.selected, button.hidden.selected, button.locked.selected{
     background-color: #89c4ff;
+}
+
+button.hidden{
+    background-color: #dddddd;
+    color: #999999;
+}
+
+button.locked{
+    background-color: #ffe7ff;
 }
 
 /* -- button */

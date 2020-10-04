@@ -38,6 +38,17 @@ define(function (require) {
                 this.postCreate(item, el, uiRenderer)
             }
         }
+
+        /**
+         * @inheritdoc 
+         */
+        static getClassName(item) {
+            const entity = item.element.getEntity()
+            let classNames = []
+            entity.locked && classNames.push('locked')
+            !entity.visible && classNames.push('hidden')
+            return classNames.join(' ')
+        }
     }
 
     LayerEntityButtonUI.props = {
