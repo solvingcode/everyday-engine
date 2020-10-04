@@ -124,11 +124,10 @@ h4{
 
 [data-attach-entity]{
     display: block;
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    width: 20px;
-    height: 20px;
+    float: right;
+    margin-left: 5px;
+    width: 10px;
+    height: 10px;
 }
 
 /* -- attach entity indicator */
