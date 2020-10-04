@@ -1,7 +1,5 @@
 define(function (require) {
 
-    const ButtonUI = require('./ButtonUI.js')
-    const PanelUI = require('./PanelUI.js')
     const Layout = require('../../layout/Layout.js')
 
     /**
@@ -16,38 +14,19 @@ define(function (require) {
                 [Layout.zone.LEFT]: {
                     x0: 20,
                     y0: 20,
-                    isVertical: true,
-                    width: 50
+                    isVertical: true
                 },
                 [Layout.zone.TOP]: {
                     x0: 160,
                     y0: 20,
-                    isVertical: false,
-                    height: 30
+                    isVertical: false
                 },
                 [Layout.zone.RIGHT]: {
                     x0: WINDOW_WIDTH - 250,
                     y0: 20,
-                    isVertical: true,
-                    width: 200
+                    isVertical: true
                 }
             }
-        }
-
-        /**
-         * Draw a panel
-         * @param {MenuItem} item
-         */
-        drawPanel(item) {
-            PanelUI.draw(item, this)
-        }
-
-        /**
-         * Draw a button
-         * @param {MenuItem} item
-         */
-        drawButton(item) {
-            ButtonUI.draw(item, this)
         }
 
         /**
@@ -91,6 +70,23 @@ define(function (require) {
          */
         getPanelUI() {
             throw new TypeError('"UIRenderer.getPanelUI" method must be implemented')
+        }
+
+        /**
+         * Get the UI type of the given menu item
+         * @param {MenuItemUI} item 
+         * @param {UIRenderer} uiRenderer
+         */
+        getType(item) {
+            const { element } = item
+            if (element.items) {
+                return this.getPanelUI()
+            } else if (element.type === Layout.type.STYLE_COLOR) {
+                return this.getColorButtonUI()
+            } else if (element.type === Layout.type.LAYER_ENTITY) {
+                return this.getLayerEntityButtonUI()
+            }
+            return this.getDefaultButtonUI()
         }
     }
 

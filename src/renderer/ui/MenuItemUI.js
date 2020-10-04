@@ -12,11 +12,7 @@ define(function () {
          * @param {UIRenderer} uiRenderer 
          */
         draw(uiRenderer) {
-            if (this.element.items) {
-                uiRenderer.drawPanel(this)
-            } else {
-                uiRenderer.drawButton(this)
-            }
+            uiRenderer.getType(this).draw(this, uiRenderer)
         }
 
         /**

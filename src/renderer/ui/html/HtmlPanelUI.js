@@ -1,22 +1,33 @@
-define(function () {
+define(function (require) {
 
-    class HtmlPanelUI {
+    const ItemUI = require('./ItemUI.js')
+
+    class HtmlPanelUI extends ItemUI {
         /**
          * Draw a panel.
          * @param {MenuItem} item
          * @param {UIRenderer} uiRenderer
          */
         static draw(item, uiRenderer) {
-            const panel = uiRenderer.getElement(item, this)
+            uiRenderer.getElement(item)
+        }
+
+        /**
+         * @inheritdoc
+         */
+        static postCreate(item, el) {
             const title = item.element.props.name
-            panel.textContent = title
+            const titleEl = document.createElement('h4')
+            titleEl.textContent = title
+            el.appendChild(titleEl)
         }
     }
 
     HtmlPanelUI.props = {
         tag: 'div',
-        width: 200,
-        padding: { x: 10, y: 10 }
+        width: '200px',
+        margin: { x: 10, y: 10 },
+        className: 'panel'
     }
 
     return HtmlPanelUI

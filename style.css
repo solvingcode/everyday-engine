@@ -14,22 +14,103 @@ canvas{
     z-index: 2;
 }
 
-/* Button style */
+/* button -- */
 
 button{
-    border: 1px solid #cccccc;
+    border: none;
     background-color: #f4f4f4;
 }
 
 button:hover{
     background-color: #caddf0;
+    border: 1px solid #333333;
 }
 
 button:focus{
-    border: 2px solid #9bbadd;
+    border: 1px solid #9bbadd;
     outline: none;
 }
 
 button.selected{
     background-color: #89c4ff;
+    border: 2px solid #333333;
 }
+
+/* -- button */
+
+/* title -- */
+
+h4{
+    margin: 0;
+    padding: 10px;
+    background-color: #cccccc;
+}
+
+/* -- title */
+
+/* panel -- */
+
+.panel{
+    border: 1px solid #777777;
+}
+
+#app-el-left, #app-el-top, #app-el-right{
+    position: absolute;
+    z-index: 9999;
+}
+
+#app-el-left{
+    width: 80px;
+    top: 20px;
+    left: 20px;
+}
+
+#app-el-top{
+    height: 50px;
+    top: 20px;
+    left: 160px;
+}
+
+#app-el-right{
+    width: 200px;
+    top: 20px;
+    left: calc(100% - 250px);
+}
+
+/* -- panel */
+
+/* components -- */
+
+/*  cross -- */
+
+.cross{
+    position: relative;
+    background: none !important;
+}
+
+.cross:before, .cross:after {
+    content: "";
+    position: absolute;
+    z-index: -1;
+    background: #000;
+    transform:rotate(45deg);
+}
+
+.cross:before {
+    top: 0;
+    left: 50%;
+    width: 1px;
+    height: 100%;
+}
+
+.cross:after {
+    top: 50%;
+    left: 0;
+    height: 1px;
+    margin-top: 0;
+    width: 100%;
+}
+
+/*  -- cross */
+
+/* -- components */

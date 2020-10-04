@@ -3,6 +3,7 @@ define(function (require) {
     const UIRenderer = require('../UIRenderer.js')
     const DefaultButtonUI = require('./buttons/DefaultButtonUI.js')
     const ColorButtonUI = require('./buttons/ColorButtonUI.js')
+    const LayerEntityButtonUI = require('./buttons/LayerEntityButtonUI.js')
     const HtmlPanelUI = require('./HtmlPanelUI.js')
     const Menu = require('../../../layout/Menu.js')
 
@@ -45,18 +46,22 @@ define(function (require) {
         }
 
         /**
+         * @inheritdoc
+         */
+        getLayerEntityButtonUI() {
+            return LayerEntityButtonUI
+        }
+
+        /**
          * Get/Create zone DIV
          * @param {String} zone 
          */
         getZoneDiv(zone) {
             const id = `${HTML_ID_PREFIX}${zone}`
-            const props = this.getZoneProps(zone)
             const existDiv = document.getElementById(id)
             const div = existDiv || document.createElement('div')
-            const style = this.getStyle(props)
             if (!existDiv) {
                 div.setAttribute('id', id)
-                div.style = style
                 document.body.appendChild(div)
             }
             return div
@@ -65,17 +70,18 @@ define(function (require) {
         /**
          * Get HTML element for the given menu item
          * @param {MenuItemUI} item 
-         * @param {Class} type 
+         * @param {HTMLElement} parentHTML 
          */
-        getElement(item, type) {
-            const { element, index } = item
+        getElement(item, parentHTML) {
+            const { element } = item
+            const type = this.getType(item)
             const tag = type.props.tag
-            const zoneDiv = this.getZoneDiv(element.zone)
+            const zoneDiv = parentHTML || this.getZoneDiv(element.zone)
             const id = item.getId()
             const existEl = document.getElementById(id)
             const el = existEl || document.createElement(tag)
-            const style = this.getStyle(type.props)
-            const className = item.element.isSelected() ? 'selected' : ''
+            const style = this.getStyle(item)
+            const className = this.getClassName(item)
             if (el.style !== style) {
                 el.style = style
             }
@@ -83,21 +89,53 @@ define(function (require) {
                 el.className = className
             }
             if (!existEl) {
-                el.setAttribute('id', id)
-                el.setAttribute('data-index', index)
-                el.setAttribute('data-zone', element.zone)
-                tag !== 'div' && (el.textContent = element.props.name)
+                this.postCreate(item, el)
                 zoneDiv.appendChild(el)
             }
             return el
         }
 
         /**
-         * Get style from props
-         * @param {Object} props
+         * What to do after create HTML Element
+         * @param {MenuItemUI} item 
+         * @param {HTMLElement} el 
          */
-        getStyle(props) {
-            const { x0, y0, width, height, margin, padding } = props
+        postCreate(item, el) {
+            const { element, index } = item
+            const type = this.getType(item)
+            el.setAttribute('id', item.getId())
+            el.setAttribute('data-index', index)
+            el.setAttribute('data-zone', element.zone)
+            type.postCreate(item, el, this)
+        }
+
+
+        /**
+         * Get class names for the given menu item
+         * @param {MenuItemUI} item 
+         */
+        getClassName(item) {
+            const classNames = []
+            const type = this.getType(item)
+            item.element.isSelected() && classNames.push('selected')
+            classNames.push(type.props.className)
+            classNames.push(type.getClassName(item))
+            return classNames.join(' ')
+        }
+
+        /**
+         * Get style from props
+         * @param {MenuItemUI} item
+         */
+        getStyle(item) {
+            const type = this.getType(item)
+            const itemStyle = type.getStyle(item)
+            const {
+                x0, y0,
+                width, height,
+                margin, padding,
+                backgroundColor
+            } = { ...type.props, ...itemStyle }
             let style = []
             if (x0 || y0) {
                 style.push('position: absolute')
@@ -105,20 +143,17 @@ define(function (require) {
             }
             x0 && style.push(`left: ${x0}px`)
             y0 && style.push(`top: ${y0}px`)
-            width && style.push(`width: ${width}px`)
-            height && style.push(`height: ${height}px`)
-            margin && margin.x
-                && style.push(`margin-left: ${margin.x}px`)
-                && style.push(`margin-right: ${margin.x}px`)
-            margin && margin.y
-                && style.push(`margin-top: ${margin.y}px`)
-                && style.push(`margin-bottom: ${margin.y}px`)
-            padding && padding.x
-                && style.push(`padding-left: ${padding.x}px`)
-                && style.push(`padding-right: ${padding.x}px`)
-            padding && padding.y
-                && style.push(`padding-top: ${padding.y}px`)
-                && style.push(`padding-bottom: ${padding.y}px`)
+            width && style.push(`width: ${width}`)
+            height && style.push(`height: ${height}`)
+            backgroundColor && style.push(`background-color: ${backgroundColor}`)
+            margin && (margin.x || margin.xl) && style.push(`margin-left: ${margin.x}px`)
+            margin && (margin.x || margin.xr) && style.push(`margin-right: ${margin.x}px`)
+            margin && (margin.y || margin.yt) && style.push(`margin-top: ${margin.y}px`)
+            margin && (margin.y || margin.yb) && style.push(`margin-bottom: ${margin.y}px`)
+            padding && (padding.x || padding.xl) && style.push(`padding-left: ${padding.x}px`)
+            padding && (padding.x || padding.xr) && style.push(`padding-right: ${padding.x}px`)
+            padding && (padding.y || padding.yt) && style.push(`padding-top: ${padding.y}px`)
+            padding && (padding.y || padding.yb) && style.push(`padding-bottom: ${padding.y}px`)
             return style.join(';')
         }
 
