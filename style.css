@@ -23,17 +23,14 @@ button{
 
 button:hover{
     background-color: #caddf0;
-    border: 1px solid #333333;
 }
 
 button:focus{
-    border: 1px solid #9bbadd;
     outline: none;
 }
 
 button.selected{
     background-color: #89c4ff;
-    border: 2px solid #333333;
 }
 
 /* -- button */
@@ -52,6 +49,7 @@ h4{
 
 .panel{
     border: 1px solid #777777;
+    margin: 10px;
 }
 
 #app-el-left, #app-el-top, #app-el-right{
@@ -78,6 +76,39 @@ h4{
 }
 
 /* -- panel */
+
+/* layer entity -- */
+
+.layer-entity{
+    background-color: #ffffff;
+    padding: 5px;
+    border-bottom: 1px solid #eeeeee;
+}
+
+.layer-entity img{
+   float: left;
+}
+
+.layer-entity span{
+   float: left;
+   display: block;
+   margin: 6px;
+}
+
+/* -- layer entity */
+
+/* color -- */
+
+.color{
+    padding: 10px;
+    border: 2px solid #ffffff;
+}
+
+.color.selected{
+    border: 2px solid #555555;
+}
+
+/* -- color */
 
 /* components -- */
 

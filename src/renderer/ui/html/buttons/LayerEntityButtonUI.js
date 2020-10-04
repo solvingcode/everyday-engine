@@ -12,13 +12,28 @@ define(function (require) {
             const parentEl = uiRenderer.getElement(item.parent)
             uiRenderer.getElement(item, parentEl)
         }
+
+        /**
+         * @inheritdoc
+         */
+        static postCreate(item, el, uiRenderer) {
+            const { entity } = item.element.data
+            const image = uiRenderer.getEntityImage(item)
+            const title = document.createElement('span')
+            title.textContent = entity.name
+            el.appendChild(image)
+            el.appendChild(title)
+        }
     }
 
     LayerEntityButtonUI.props = {
         tag: 'button',
+        className: 'layer-entity',
         prefix: 'layer-entity-',
         width: '100%',
-        height: '40px'
+        height: '40px',
+        entityWidth: 30,
+        entityHeight: 30
     }
 
     return LayerEntityButtonUI

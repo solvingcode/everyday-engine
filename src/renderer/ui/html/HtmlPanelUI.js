@@ -26,7 +26,6 @@ define(function (require) {
     HtmlPanelUI.props = {
         tag: 'div',
         width: '200px',
-        margin: { x: 10, y: 10 },
         className: 'panel'
     }
 

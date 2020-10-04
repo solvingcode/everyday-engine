@@ -11,6 +11,7 @@ define(function (require) {
             this.type = Layout.type.DRAW
             this.data = {}
             this.menu = null
+            this.id = Date.now() + parseInt(Math.random() * 100000)
         }
 
         /**
@@ -83,7 +84,7 @@ define(function (require) {
          */
         hasActionState(type) {
             return this.appState.hasState(`ACTION_${type}_START`) ||
-            this.appState.hasState(`ACTION_${type}_STOP`)
+                this.appState.hasState(`ACTION_${type}_STOP`)
         }
 
         /**

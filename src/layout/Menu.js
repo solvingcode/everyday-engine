@@ -65,7 +65,7 @@ define(function (require) {
          */
         prepare(item, parent = null) {
             const itemsZone = this.items.filter(pItem => pItem.element.zone === item.zone)
-            const existItem = this.items.find(pItem => pItem.element === item)
+            const existItem = this.items.find(pItem => pItem.element.id === item.id)
             const lastIndex = itemsZone.length
             if (existItem) {
                 const indexItem = itemsZone.findIndex(pItem => pItem.element === item)

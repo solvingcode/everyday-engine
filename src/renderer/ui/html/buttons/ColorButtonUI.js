@@ -35,9 +35,9 @@ define(function (require) {
 
     ColorButtonUI.props = {
         tag: 'button',
+        className: 'color',
         width: '40px',
-        height: '40px',
-        padding: { x: 10, y: 10 }
+        height: '40px'
     }
 
     return ColorButtonUI

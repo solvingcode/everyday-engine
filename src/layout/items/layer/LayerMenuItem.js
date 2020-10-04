@@ -37,7 +37,7 @@ define(function (require) {
          * @inheritdoc
          */
         update() {
-            const entities = EntityManager.get().getBodyEntities().reverse()
+            const entities = EntityManager.get().getBodyEntities()
             this.items = entities.filter(entity => entity.isValid()).map((entity, index) => {
                 const layerEntity = this.items[index]
                 if (layerEntity && layerEntity.data.entity !== entity) {

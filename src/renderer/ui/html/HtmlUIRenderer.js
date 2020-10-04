@@ -124,6 +124,35 @@ define(function (require) {
         }
 
         /**
+         * Get screen shot of the entity as image
+         * @param {MenuItemUI} item 
+         */
+        getEntityImage(item) {
+            const { entity } = item.element.data
+            const { entityWidth, entityHeight } = this.getType(item).props
+            const { canvas } = entity.mesh
+
+            const isWidthGtHeight = canvas.width > canvas.height
+            const coefResize = isWidthGtHeight ? entityWidth / canvas.width : entityHeight / canvas.height
+            const width = isWidthGtHeight ? entityWidth : canvas.width * coefResize
+            const height = isWidthGtHeight ? canvas.height * coefResize : entityHeight
+
+            const canvasEl = document.createElement('canvas')
+            canvasEl.width = entityWidth
+            canvasEl.height = entityHeight
+
+            const contextEl = canvasEl.getContext('2d')
+            contextEl.drawImage(canvas, 0, 0, width, height)
+
+            const image = new Image()
+            image.src = canvasEl.toDataURL('image/png')
+
+            canvasEl.remove()
+
+            return image
+        }
+
+        /**
          * Get style from props
          * @param {MenuItemUI} item
          */
@@ -133,7 +162,6 @@ define(function (require) {
             const {
                 x0, y0,
                 width, height,
-                margin, padding,
                 backgroundColor
             } = { ...type.props, ...itemStyle }
             let style = []
@@ -146,14 +174,6 @@ define(function (require) {
             width && style.push(`width: ${width}`)
             height && style.push(`height: ${height}`)
             backgroundColor && style.push(`background-color: ${backgroundColor}`)
-            margin && (margin.x || margin.xl) && style.push(`margin-left: ${margin.x}px`)
-            margin && (margin.x || margin.xr) && style.push(`margin-right: ${margin.x}px`)
-            margin && (margin.y || margin.yt) && style.push(`margin-top: ${margin.y}px`)
-            margin && (margin.y || margin.yb) && style.push(`margin-bottom: ${margin.y}px`)
-            padding && (padding.x || padding.xl) && style.push(`padding-left: ${padding.x}px`)
-            padding && (padding.x || padding.xr) && style.push(`padding-right: ${padding.x}px`)
-            padding && (padding.y || padding.yt) && style.push(`padding-top: ${padding.y}px`)
-            padding && (padding.y || padding.yb) && style.push(`padding-bottom: ${padding.y}px`)
             return style.join(';')
         }
 
