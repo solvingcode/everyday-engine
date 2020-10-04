@@ -272,7 +272,7 @@ define(function (require) {
                     }
                 }
             })
-            return attachedEntities
+            return _.uniq(attachedEntities)
         }
 
         /**

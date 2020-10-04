@@ -2,6 +2,10 @@ define(function (require) {
 
     const ItemUI = require('../ItemUI.js')
 
+    /**
+     * Color Button UI class
+     * Manage the rendering of color button for HTML
+     */
     class ColorButtonUI extends ItemUI {
         /**
          * Draw a color button.

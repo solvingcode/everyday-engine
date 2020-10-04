@@ -1,6 +1,8 @@
 define(function (require) {
 
     const ItemUI = require('../ItemUI.js')
+    const EntityManager = require('../../../../world/manager/EntityManager.js')
+    const Color = require('../../../../utils/Color.js')
 
     class LayerEntityButtonUI extends ItemUI {
         /**
@@ -33,9 +35,33 @@ define(function (require) {
         static postUpdate(item, el, uiRenderer) {
             const entity = item.element.getEntity()
             const entityId = el.getAttribute('data-entity-id')
-            if(entityId != entity.id){
+            if (entityId != entity.id) {
                 el.innerHTML = ''
                 this.postCreate(item, el, uiRenderer)
+            }
+            this.getAttachElementIndicator(item, el)
+        }
+
+        /**
+         * Get/Create HTML element which indicate attached items 
+         * @param {MenuItemUI} item
+         * @param {HTMLElement} el
+         */
+        static getAttachElementIndicator(item, el) {
+            const entity = item.element.getEntity()
+            const attachedEntities = entity.getAttachedEntities(EntityManager.get())
+            const existIcon = Array.from(el.getElementsByTagName('i'))
+                .find(node => node.getAttribute('data-attach-entity'))
+            if (attachedEntities.length > 1) {
+                const attachIds = attachedEntities.map(pEntity => pEntity && pEntity.id).join(',')
+                const attachIcon = existIcon || document.createElement('i')
+                if (attachIcon.getAttribute('data-attach-entity') !== attachIds) {
+                    attachIcon.setAttribute('data-attach-entity', attachIds)
+                    attachIcon.style.backgroundColor = Color.fromArrayInt(attachIds.split(','))
+                    el.appendChild(attachIcon)
+                }
+            } else if (existIcon) {
+                existIcon.remove()
             }
         }
 

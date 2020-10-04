@@ -92,6 +92,7 @@ h4{
     background-color: #ffffff;
     padding: 5px;
     border-bottom: 1px solid #eeeeee;
+    position: relative;
 }
 
 .layer-entity img{
@@ -118,6 +119,19 @@ h4{
 }
 
 /* -- color */
+
+/* attach entity indicator -- */
+
+[data-attach-entity]{
+    display: block;
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    width: 20px;
+    height: 20px;
+}
+
+/* -- attach entity indicator */
 
 /* components -- */
 
