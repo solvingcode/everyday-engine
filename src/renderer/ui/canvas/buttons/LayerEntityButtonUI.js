@@ -15,7 +15,7 @@ define(function (require) {
         static draw(item, uiRenderer) {
             this.config(item)
             const { context } = uiRenderer
-            const { entity } = item.element.data
+            const entity = item.element.getEntity()
             const {
                 width, height,
                 fillColor, fillColorSelected,

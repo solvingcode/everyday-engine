@@ -3,6 +3,7 @@ define(function (require) {
     const Mesh = require('../core/Mesh.js')
     const Window = require('../core/Window.js')
     const Keyboard = require('../core/Keyboard.js')
+    const Maths = require('../utils/Maths.js')
 
     /**
      * Abstract Entity class
@@ -15,6 +16,7 @@ define(function (require) {
                 throw new TypeError('Abstract class Entity cannot be instantiated directly')
             }
             props.style = props.style || { color: '#000000' }
+            this.id = Maths.generateId()
             this.props = props
             this.name = props.name
             this.position = props.position

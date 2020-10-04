@@ -11,7 +11,6 @@ define(function (require) {
             this.type = Layout.type.DRAW
             this.data = {}
             this.menu = null
-            this.id = Date.now() + parseInt(Math.random() * 100000)
         }
 
         /**

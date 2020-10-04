@@ -17,12 +17,26 @@ define(function (require) {
          * @inheritdoc
          */
         static postCreate(item, el, uiRenderer) {
-            const { entity } = item.element.data
+            const entity = item.element.getEntity()
             const image = uiRenderer.getEntityImage(item)
             const title = document.createElement('span')
             title.textContent = entity.name
+            el.setAttribute('data-entity-id', entity.id)
+            el.setAttribute('id', item.getId())
             el.appendChild(image)
             el.appendChild(title)
+        }
+
+        /**
+         * @inheritdoc
+         */
+        static postUpdate(item, el, uiRenderer) {
+            const entity = item.element.getEntity()
+            const entityId = el.getAttribute('data-entity-id')
+            if(entityId != entity.id){
+                el.innerHTML = ''
+                this.postCreate(item, el, uiRenderer)
+            }
         }
     }
 

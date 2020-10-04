@@ -80,18 +80,13 @@ define(function (require) {
             const id = item.getId()
             const existEl = document.getElementById(id)
             const el = existEl || document.createElement(tag)
-            const style = this.getStyle(item)
-            const className = this.getClassName(item)
-            if (el.style !== style) {
-                el.style = style
-            }
-            if (el.className !== className) {
-                el.className = className
-            }
             if (!existEl) {
                 this.postCreate(item, el)
                 zoneDiv.appendChild(el)
+            } else {
+                this.postUpdate(item, el)
             }
+            type.clean(item, el)
             return el
         }
 
@@ -107,6 +102,24 @@ define(function (require) {
             el.setAttribute('data-index', index)
             el.setAttribute('data-zone', element.zone)
             type.postCreate(item, el, this)
+        }
+
+        /**
+         * What to do after update HTML Element
+         * @param {MenuItemUI} item 
+         * @param {HTMLElement} el 
+         */
+        postUpdate(item, el) {
+            const style = this.getStyle(item)
+            const className = this.getClassName(item)
+            const type = this.getType(item)
+            if (el.style !== style) {
+                el.style = style
+            }
+            if (el.className !== className) {
+                el.className = className
+            }
+            type.postUpdate(item, el, this)
         }
 
 
@@ -128,7 +141,7 @@ define(function (require) {
          * @param {MenuItemUI} item 
          */
         getEntityImage(item) {
-            const { entity } = item.element.data
+            const entity = item.element.getEntity()
             const { entityWidth, entityHeight } = this.getType(item).props
             const { canvas } = entity.mesh
 

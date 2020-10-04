@@ -65,7 +65,7 @@ define(function (require) {
          */
         prepare(item, parent = null) {
             const itemsZone = this.items.filter(pItem => pItem.element.zone === item.zone)
-            const existItem = this.items.find(pItem => pItem.element.id === item.id)
+            const existItem = this.items.find(pItem => pItem.element === item)
             const lastIndex = itemsZone.length
             if (existItem) {
                 const indexItem = itemsZone.findIndex(pItem => pItem.element === item)
@@ -76,6 +76,16 @@ define(function (require) {
             if (item.items) {
                 item.items.forEach(pItem => this.prepare(pItem, resultItem))
             }
+        }
+
+        /**
+         * Find menu item by index and zone
+         * @param {Integer} index (must start from 0)
+         * @param {String} zone 
+         */
+        findItemByZone(index, zone) {
+            const itemsZone = this.items.filter(pItem => pItem.element.zone === zone)
+            return itemsZone[index]
         }
 
         /**

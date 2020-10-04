@@ -102,6 +102,7 @@ define(function (require) {
          */
         clone(entity) {
             const cloneEntity = entity.clone()
+            cloneEntity.name = `Clone of ${entity.name}`
             if (cloneEntity) {
                 this.entities.push(cloneEntity)
             }
@@ -298,6 +299,13 @@ define(function (require) {
          */
         getBodyEntities() {
             return this.getEntitiesNotAs(AttachEntity)
+        }
+
+        /**
+         * Get valid entities of type body
+         */
+        getValidBodyEntities() {
+            return this.getBodyEntities().filter(entity => entity.isValid())
         }
 
         /**

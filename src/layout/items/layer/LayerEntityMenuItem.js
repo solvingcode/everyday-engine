@@ -27,14 +27,22 @@ define(function (require) {
          * @inheritdoc
          */
         isSelected() {
-            return this.data.entity.selected
+            return this.getEntity().selected
         }
         
         /**
          * @inheritdoc
          */
         isValid() {
-            return EntityManager.get().entities.includes(this.data.entity)
+            return EntityManager.get().entities.includes(this.getEntity()) &&
+                this.parent.items.includes(this)
+        }
+
+        /**
+         * Get entity attached to the layer
+         */
+        getEntity(){
+            return this.data.entity
         }
     }
 

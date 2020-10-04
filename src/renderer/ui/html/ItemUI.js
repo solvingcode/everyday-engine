@@ -14,6 +14,14 @@ define(function () {
         static postCreate(item, el, uiRenderer) { }
 
         /**
+         * What to do after update HTML Element
+         * @param {MenuItemUI} item 
+         * @param {HTMLElement} el 
+         * @param {UIRenderer} uiRenderer 
+         */
+        static postUpdate(item, el, uiRenderer) { }
+
+        /**
          * Get Style for the given menu item
          * @param {MenuItemUI} item
          */
@@ -24,6 +32,13 @@ define(function () {
          * @param {MenuItemUI} item
          */
         static getClassName(item) { }
+
+        /**
+         * Clean HTML element and all childs
+         * @param {MenuItemUI} item
+         * @param {HTMLElement} el 
+         */
+        static clean(item, el) { }
     }
 
     return ItemUI
