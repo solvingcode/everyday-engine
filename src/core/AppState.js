@@ -200,7 +200,11 @@ define(function (require) {
         ACTION_HISTORY_PUSH_START: { history: false },
         ACTION_HISTORY_PUSH_STOP: { history: false },
         ACTION_STYLE_COLOR_START: { history: true },
-        ACTION_STYLE_COLOR_STOP: { history: false }
+        ACTION_STYLE_COLOR_STOP: { history: false },
+        ACTION_ATTACH_CAMERA_START: { history: false },
+        ACTION_ATTACH_CAMERA_STOP: { history: false },
+        ACTION_DETACH_CAMERA_START: { history: false },
+        ACTION_DETACH_CAMERA_STOP: { history: false }
     }
 
     return AppState

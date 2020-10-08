@@ -18,6 +18,7 @@ define(function (require) {
     const StyleMenuItem = require('./items/style/StyleMenuItem.js')
     const MenuItemUI = require('../renderer/ui/MenuItemUI.js')
     const LayerMenuItem = require('./items/layer/LayerMenuItem.js')
+    const CameraMenuItem = require('./items/camera/CameraMenuItem.js')
 
     class Menu {
         constructor() {
@@ -38,7 +39,8 @@ define(function (require) {
                 new HideMenuItem(),
                 new ShowMenuItem(),
                 new StyleMenuItem(),
-                new LayerMenuItem()
+                new LayerMenuItem(),
+                new CameraMenuItem()
             ]
             this.items = []
             this.setup()

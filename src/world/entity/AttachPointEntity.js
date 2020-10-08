@@ -3,12 +3,13 @@ define(function (require) {
     const EntityMotion = require('../../entity/EntityMotion.js')
     const EntitySelector = require('../manager/EntitySelector.js')
     const AttachEntity = require('./AttachEntity.js')
+    const Color = require('../../utils/Color.js')
 
     class AttachPointEntity extends AttachEntity {
 
         constructor(props) {
-            props.style = props.style || { color: '#0000FF' }
             super(props)
+            this.props.style = { color: `#${Color.fromArrayInt([this.id])}` }
             this.shape = EntityMotion.shapes.ATTACH
             this.points = { a: null, b: null }
             this.entities = { a: null, b: null }
@@ -20,7 +21,7 @@ define(function (require) {
          */
         build() {
             this.setMeshPositionByDragDistance()
-            return this.generatePoints() && this.generate()
+            return this.generatePoints() && this.setConstraintEntities() && this.generate()
         }
 
         /**
@@ -49,7 +50,7 @@ define(function (require) {
          * Generate mesh for the line
          */
         generateMesh() {
-            if (this.setConstraintEntities() && this.checkConstraintEntities()) {
+            if (this.checkConstraintEntities()) {
                 const canvas = new OffscreenCanvas(this.size.width, this.size.height)
                 const context = canvas.getContext('2d')
                 this.drawCircle(context)

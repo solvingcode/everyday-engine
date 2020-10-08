@@ -4,17 +4,17 @@ define(function (require) {
     const AppState = require('./AppState.js')
     const EventHandler = require('./EventHandler.js')
     const World = require('../world/World.js')
+    const Renderer = require('../renderer/Renderer.js')
 
     /**
      * Define the application main
      */
     class Application {
-        constructor(renderer, camera) {
+        constructor() {
             this.title = 'Combat Simulation'
-            this.renderer = renderer
-            this.camera = camera
+            this.renderer = new Renderer()
             this.window = Window.get()
-            this.world = new World()
+            this.world = World.get()
             this.menu = Menu.get()
             this.appState = AppState.get()
             this.event = EventHandler.get()
@@ -50,7 +50,7 @@ define(function (require) {
             this.world.update()
             this.world.draw(this.renderer)
             this.renderer.clear()
-            this.renderer.render(this.camera, this.menu)
+            this.renderer.render(this.world.getCamera(), this.menu)
             requestAnimationFrame(this.runLoop)
         }
 

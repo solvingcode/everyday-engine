@@ -19,13 +19,15 @@ define(function (require) {
          */
         static postCreate(item, el, uiRenderer) {
             const entity = item.element.getEntity()
-            const image = uiRenderer.getEntityImage(item)
-            const title = document.createElement('span')
-            title.textContent = entity.name
-            el.setAttribute('data-entity-id', entity.id)
-            el.setAttribute('id', item.getId())
-            el.appendChild(image)
-            el.appendChild(title)
+            if (entity) {
+                const image = uiRenderer.getEntityImage(item)
+                const title = document.createElement('span')
+                title.textContent = entity.name
+                el.setAttribute('data-entity-id', entity.id)
+                el.setAttribute('id', item.getId())
+                el.appendChild(image)
+                el.appendChild(title)
+            }
         }
 
         /**
@@ -33,12 +35,14 @@ define(function (require) {
          */
         static postUpdate(item, el, uiRenderer) {
             const entity = item.element.getEntity()
-            const entityId = el.getAttribute('data-entity-id')
-            if (entityId != entity.id) {
-                el.innerHTML = ''
-                this.postCreate(item, el, uiRenderer)
+            if (entity) {
+                const entityId = el.getAttribute('data-entity-id')
+                if (entityId != entity.id) {
+                    el.innerHTML = ''
+                    this.postCreate(item, el, uiRenderer)
+                }
+                AttachEntityUI.draw(item, el, uiRenderer)
             }
-            AttachEntityUI.draw(item, el, uiRenderer)
         }
 
         /**
@@ -46,10 +50,12 @@ define(function (require) {
          */
         static getClassName(item) {
             const entity = item.element.getEntity()
-            let classNames = []
-            entity.locked && classNames.push('locked')
-            !entity.visible && classNames.push('hidden')
-            return classNames.join(' ')
+            if (entity) {
+                let classNames = []
+                entity.locked && classNames.push('locked')
+                !entity.visible && classNames.push('hidden')
+                return classNames.join(' ')
+            }
         }
     }
 

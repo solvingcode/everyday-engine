@@ -47,6 +47,16 @@ define(function (require) {
         }
 
         /**
+         * Find an entity by Id
+         * @param {Entity} entity 
+         */
+        findById(entityId){
+            return this.entities.find((element) =>
+                element.id === entityId
+            )
+        }
+
+        /**
          * Get an entity if founded, else create it
          * @param {int} x 
          * @param {int} y 

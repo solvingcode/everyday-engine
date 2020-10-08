@@ -28,7 +28,7 @@ define(function () {
             this.clear()
             for (var iMesh in this.meshes) {
                 const mesh = this.meshes[iMesh]
-                const { x, y } = mesh.position
+                const { x, y } = camera.toCanvasCoord(mesh.position)
                 objectContext.drawImage(mesh.context.canvas, x, y)
             }
             this.meshes = []

@@ -155,8 +155,8 @@ define(function (require) {
          * Unselect the current entity (apply styles, ...)
          */
         unselect() {
+            this.selected && this.setStyleAndGenerate(this.getStyle())
             this.selected = false
-            this.setStyleAndGenerate(this.getStyle())
         }
 
         /**
@@ -180,7 +180,7 @@ define(function (require) {
          * Get the base style (use as default)
          */
         getStyle() {
-            const styleLocked = { color: '#AAAAAA', fillColor: 'rgba(0, 0, 0, 0.02)' }
+            const styleLocked = { color: '#AAAAAA', fillColor: 'rgba(0, 0, 0, 0.01)' }
             return (this.locked && styleLocked) || this.props.style
         }
 

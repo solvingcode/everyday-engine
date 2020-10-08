@@ -16,6 +16,8 @@ define(function (require) {
     const StyleColorAction = require('./StyleColorAction.js')
     const SelectEntityAction = require('./SelectEntityAction.js')
     const PushHistoryAction = require('./PushHistoryAction.js')
+    const AttachCameraAction = require('./AttachCameraAction.js')
+    const DetachCameraAction = require('./DetachCameraAction.js')
 
     /**
      * Action Runner class.
@@ -49,7 +51,9 @@ define(function (require) {
                 SHOW: ShowAction,
                 STYLE_COLOR: StyleColorAction,
                 SELECT_ENTITY: SelectEntityAction,
-                HISTORY_PUSH: PushHistoryAction
+                HISTORY_PUSH: PushHistoryAction,
+                ATTACH_CAMERA: AttachCameraAction,
+                DETACH_CAMERA: DetachCameraAction
             }
             const selectedEntities = this.entitySelector.getSelected()
             Object.entries(typeActions).forEach(typeAction => {
