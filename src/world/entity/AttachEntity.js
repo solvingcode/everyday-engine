@@ -17,13 +17,6 @@ define(function (require) {
             return super.isCanGenerate() && !AppState.get().hasState('SIMULATE_PROGRESS')
         }
 
-        /**
-         * @inheritdoc
-         */
-        clone() {
-            return null
-        }
-
     }
 
     return AttachEntity

@@ -18,7 +18,7 @@ define(function (require) {
             this.currentEntity = null
             this.physicsEngine = new MatterEngine()
             this.physics = new Physics(this.physicsEngine)
-            this.aiEngine = new GeneticEngine(this.physicsEngine)
+            this.aiEngine = new GeneticEngine(this.physicsEngine, EntityManager.get())
             this.isPhysicsLoaded = false
         }
 
@@ -58,6 +58,7 @@ define(function (require) {
                     appState.removeState('SIMULATE_START')
                 }
             }
+            this.aiEngine.init()
             appState.setUniqStateByGroup('SIMULATE', 'PROGRESS')
         }
 

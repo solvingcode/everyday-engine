@@ -9,9 +9,11 @@ define(function () {
     class AiEngine {
         /**
          * @param {PhysicsEngine} physicsEngine 
+         * @param {EntityManager} entityManager 
          */
-        constructor(physicsEngine) {
+        constructor(physicsEngine, entityManager) {
             this.physicsEngine = physicsEngine
+            this.entityManager = entityManager
         }
         /**
          * Update the entities properties
@@ -19,6 +21,12 @@ define(function () {
          */
         update(entities) {
             throw new TypeError('"AiEngine.update" method must be implemented')
+        }
+        /**
+         * Initialize data
+         */
+        init(){
+            throw new TypeError('"AiEngine.init" method must be implemented')
         }
     }
 

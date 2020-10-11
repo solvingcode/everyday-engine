@@ -3,6 +3,7 @@ define(function (require) {
     const EntityGenerator = require('../generator/EntityGenerator.js')
     const Entity = require('../../entity/Entity.js')
     const AttachEntity = require('../entity/AttachEntity.js')
+    const Maths = require('../../utils/Maths.js')
 
     /**
      * Entity Manager class
@@ -50,7 +51,7 @@ define(function (require) {
          * Find an entity by Id
          * @param {Entity} entity 
          */
-        findById(entityId){
+        findById(entityId) {
             return this.entities.find((element) =>
                 element.id === entityId
             )
@@ -113,10 +114,42 @@ define(function (require) {
         clone(entity) {
             const cloneEntity = entity.clone()
             cloneEntity.name = `Clone of ${entity.name}`
-            if (cloneEntity) {
-                this.entities.push(cloneEntity)
-            }
+            cloneEntity.id = Maths.generateId()
             return cloneEntity
+        }
+
+        /**
+         * Clone given entities.
+         * Manage cloning attach and body entities
+         * @todo think to optimize the clone process
+         */
+        cloneEntities(entities) {
+            const bodyEntities = this.getBodyEntities(entities)
+            const attachEntities = this.getAttachEntities(entities)
+            const cloneBodyEntities = bodyEntities.map(entity => this.clone(entity))
+            const cloneAttachEntities = attachEntities.map(entity => this.clone(entity))
+            attachEntities.forEach((attachEntity, attachIndex) => {
+                const cloneAttachEntity = cloneAttachEntities[attachIndex]
+                const bodyEntityA = attachEntity.entities.a
+                const bodyEntityB = attachEntity.entities.b
+                const bodyIndexA = bodyEntities.findIndex(body => bodyEntityA === body)
+                const bodyIndexB = bodyEntities.findIndex(body => bodyEntityB === body)
+                let cloneEntityA = (bodyIndexA >= 0 && cloneBodyEntities[bodyIndexA])
+                let cloneEntityB = (bodyIndexB >= 0 && cloneBodyEntities[bodyIndexB])
+                if(!cloneEntityA){
+                    cloneEntityA = this.clone(bodyEntityA)
+                    cloneBodyEntities.push(cloneEntityA)
+                }
+                if(!cloneEntityB){
+                    cloneEntityB = this.clone(bodyEntityB)
+                    cloneBodyEntities.push(cloneEntityB)
+                }
+                cloneAttachEntity.entities.a = cloneEntityA
+                cloneAttachEntity.entities.b = cloneEntityB
+            })
+            const cloneEntities = cloneBodyEntities.concat(cloneAttachEntities)
+            this.entities = this.entities.concat(cloneEntities)
+            return cloneEntities
         }
 
         /**
@@ -247,6 +280,22 @@ define(function (require) {
         }
 
         /**
+         * Is the given entity is a body type
+         * @param {Entity} entity 
+         */
+        isBodyEntity(entity) {
+            return !(entity instanceof AttachEntity)
+        }
+
+        /**
+         * Is the given entity is an attach type
+         * @param {Entity} entity 
+         */
+        isAttachEntity(entity) {
+            return entity instanceof AttachEntity
+        }
+
+        /**
          * Get all entities of specific type
          * @param {Entity} type 
          */
@@ -306,9 +355,18 @@ define(function (require) {
 
         /**
          * Get entities of type body
+         * @param {Entity[]} entities
          */
-        getBodyEntities() {
-            return this.getEntitiesNotAs(AttachEntity)
+        getBodyEntities(entities) {
+            return (entities || this.entities).filter(entity => this.isBodyEntity(entity))
+        }
+
+        /**
+         * Get entities of type attach
+         * @param {Entity[]} entities
+         */
+        getAttachEntities(entities) {
+            return (entities || this.entities).filter(entity => this.isAttachEntity(entity))
         }
 
         /**
@@ -316,13 +374,6 @@ define(function (require) {
          */
         getValidBodyEntities() {
             return this.getBodyEntities().filter(entity => entity.isValid())
-        }
-
-        /**
-         * Get entities of type attach
-         */
-        getAttachEntities() {
-            return this.getEntitiesAs(AttachEntity)
         }
 
     }

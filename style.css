@@ -103,6 +103,9 @@ h4{
    float: left;
    display: block;
    margin: 6px;
+   width: 100px;
+   text-align: left;
+   white-space: nowrap;
 }
 
 /* -- layer entity */

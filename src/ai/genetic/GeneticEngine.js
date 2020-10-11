@@ -9,9 +9,16 @@ define(function (require) {
      */
     class GeneticEngine extends AiEngine {
 
-        constructor(physicsEngine) {
-            super(physicsEngine)
+        constructor(physicsEngine, entityManager) {
+            super(physicsEngine, entityManager)
             this.genomes = []
+            this.nbPerGeneration = 10
+        }
+        /**
+         * @inheritdoc
+         */
+        init(){
+            this.initGeneration()
         }
         /**
          * @inheritdoc
@@ -45,6 +52,12 @@ define(function (require) {
             const force = genome.getForce()
             force && entity.applyForce(this.physicsEngine, force)
             return force
+        }
+        /**
+         * Init the first generation
+         */
+        initGeneration(){
+            // this.entityManager.cloneEntities()
         }
     }
 
