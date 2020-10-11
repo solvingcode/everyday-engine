@@ -88,6 +88,15 @@ define(function (require) {
         /**
          * @inheritdoc
          */
+        applyForce(entity, force) {
+            const body = this.getBodyFromEntity(entity)
+            Matter.Body.applyForce(body, entity.getForcePosition(), force)
+            return true
+        }
+
+        /**
+         * @inheritdoc
+         */
         updateJointPosition(entity) {
             const points = entity.points
             const entities = entity.entities

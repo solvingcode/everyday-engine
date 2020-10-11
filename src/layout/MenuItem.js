@@ -36,7 +36,7 @@ define(function (require) {
          * Is menu item valid
          */
         isValid() {
-            return true
+            return !this.parent || this.parent.items.includes(this)
         }
 
         /**

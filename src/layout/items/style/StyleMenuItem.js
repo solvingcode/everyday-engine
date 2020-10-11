@@ -4,6 +4,10 @@ define(function (require) {
     const StyleColorMenuItem = require('./StyleColorMenuItem.js')
     const Layout = require('../../Layout.js')
 
+    /**
+     * Style menu item
+     * Style panel for entities styling (color, ...)
+     */
     class StyleMenuItem extends MenuItem {
         constructor() {
             super({
@@ -13,12 +17,24 @@ define(function (require) {
             this.type = Layout.type.STYLE
             this.loadItems()
         }
+        
+        /**
+         * @inheritdoc
+         */
         run() {
             return false
         }
+
+        /**
+         * @inheritdoc
+         */
         isSelected() {
             return false
         }
+
+        /**
+         * Load sub items for the menu item
+         */
         loadItems() {
             const colors = ['', '#FF0000', '#00FF00', '#0000FF', '#FFFFFF',
                 '#FF00FF', '#FFFF00', '#00FFFF', '#000000', '#F0F0FF']

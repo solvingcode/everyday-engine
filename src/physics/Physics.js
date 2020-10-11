@@ -30,6 +30,7 @@ define(function (require) {
                 entity.setPosition({ x: parseInt(x), y: parseInt(y) })
                 entity.setRotationAndGenerate(Math.round(body.angle * 100) / 100)
                 entity.setVelocity(body.velocity)
+                entity.setAngularVelocity(body.angularVelocity)
             })
             this.physicsEngine.getJoints().map((joint, index) => {
                 const entity = jointEntites[index]

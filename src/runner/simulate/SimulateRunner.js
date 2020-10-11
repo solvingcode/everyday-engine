@@ -16,8 +16,9 @@ define(function (require) {
         constructor() {
             super()
             this.currentEntity = null
-            this.physics = new Physics(new MatterEngine())
-            this.aiEngine = new GeneticEngine()
+            this.physicsEngine = new MatterEngine()
+            this.physics = new Physics(this.physicsEngine)
+            this.aiEngine = new GeneticEngine(this.physicsEngine)
             this.isPhysicsLoaded = false
         }
 
@@ -38,14 +39,14 @@ define(function (require) {
             }
             //debug
             if (mouse.isButtonPressed(MouseButton.MIDDLE)) {
-                console.log(appState)
+                console.log(appState, this.physics.physicsEngine.getBodies())
             }
         }
 
         /**
          * Start the simulation
          */
-        start(storage, entityManager, appState){
+        start(storage, entityManager, appState) {
             storage.update(Storage.type.ENTITY, entityManager.entities)
             EntitySelector.get().unselectAll()
             if (!this.isPhysicsLoaded) {
@@ -63,15 +64,16 @@ define(function (require) {
         /**
          * Progress the simulation
          */
-        progress(){
+        progress() {
+            const world = World.get()
             this.physics.update(this.aiEngine)
-            World.get().updateCamera()
+            world.updateCamera()
         }
-        
+
         /**
          * Stop the simulation
          */
-        stop(storage, entityManager, appState){
+        stop(storage, entityManager, appState) {
             entityManager.entities = storage.fetch(Storage.type.ENTITY)
             this.isPhysicsLoaded = false
             this.physics.stop()

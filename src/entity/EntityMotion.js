@@ -17,8 +17,9 @@ define(function (require) {
             }
             this.physics = {
                 velocity: new Vector({ x: 0, y: 0 }),
+                angularVelocity: 0,
                 speed: 0.7,
-                gravity: 20
+                density: 0.001
             }
             this.collision = { group: 0, category: 1, mask: 1 }
         }
@@ -32,6 +33,14 @@ define(function (require) {
         }
 
         /**
+         * Set angular velocity for physics props
+         * @param {Object} velocity
+         */
+        setAngularVelocity(velocity) {
+            this.physics.angularVelocity = velocity
+        }
+
+        /**
          * Move the entity by velocity
          * @param {Object} velocity 
          */
@@ -39,6 +48,21 @@ define(function (require) {
             const x = this.physics.velocity.x + velocity.x
             const y = this.physics.velocity.y + velocity.y
             this.physics.velocity = new Vector({ x, y })
+        }
+
+        /**
+         * Move the entity by angular velocity
+         * @param {Number} angularVelocity 
+         */
+        moveAngular(angularVelocity) {
+            this.physics.angularVelocity += angularVelocity
+        }
+
+        /**
+         * Get the force position (center of the entity by default)
+         */
+        getForcePosition() {
+            return new Vector({ x: 0, y: 0 })
         }
 
         /**
@@ -93,6 +117,17 @@ define(function (require) {
         updateJointPosition(physicsEngine) {
             if (!this.isPhyiscsLoaded) {
                 physicsEngine.updateJointPosition(this)
+            }
+        }
+
+        /**
+         * Apply force to the entity using the given physics engine
+         * @param {PhysicsEngine} physicsEngine 
+         * @param {Vector} force 
+         */
+        applyForce(physicsEngine, force) {
+            if (this.isPhyiscsLoaded) {
+                physicsEngine.applyForce(this, force)
             }
         }
 

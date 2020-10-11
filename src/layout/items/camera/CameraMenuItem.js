@@ -9,8 +9,8 @@ define(function (require) {
     const EntityManager = require('../../../world/manager/EntityManager.js')
 
     /**
-     * Layer Menu Item
-     * Menu responsible for managing entiies (z-index, ...)
+     * Camera Menu Item
+     * Menu responsible for managing cameras (attach, detach, ...)
      */
     class CameraMenuItem extends MenuItem {
         constructor() {

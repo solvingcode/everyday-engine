@@ -13,7 +13,7 @@ define(function (require) {
          * @inheritdoc
          */
         build() {
-            this.size = { width: WINDOW_WIDTH, height: 20 }
+            this.size = { width: 20000, height: 50 }
             this.clearBuffer()
             return this.generate()
         }

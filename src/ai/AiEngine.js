@@ -8,6 +8,12 @@ define(function () {
      */
     class AiEngine {
         /**
+         * @param {PhysicsEngine} physicsEngine 
+         */
+        constructor(physicsEngine) {
+            this.physicsEngine = physicsEngine
+        }
+        /**
          * Update the entities properties
          * @param {Entity[]} entities 
          */

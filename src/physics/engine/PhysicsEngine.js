@@ -87,6 +87,15 @@ define(function () {
         }
 
         /**
+         * Apply force to the entity
+         * @param {Entity} entity 
+         * @param {Vector} force 
+         */
+        applyForce(entity, force) {
+            throw new TypeError('"applyForce" method must be implemented')
+        }
+
+        /**
          * Set the physics manager that loaded the phyiscs engine
          * @param {Physics} physicsManager 
          */
