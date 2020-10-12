@@ -34,7 +34,7 @@ define(function (require) {
          * @inheritdoc
          */
         isValid() {
-            return EntityManager.get().entities.includes(this.getEntity()) &&
+            return super.isValid() && EntityManager.get().entities.includes(this.getEntity()) &&
                 this.parent.items.includes(this)
         }
 

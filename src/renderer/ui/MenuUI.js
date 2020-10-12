@@ -11,6 +11,7 @@ define(function (require) {
          * @param {UIRenderer} uiRenderer
          */
         static draw(menu, uiRenderer) {
+            uiRenderer.clean()
             for (var iItem in menu.items) {
                 menu.items[iItem].draw(uiRenderer)
             }

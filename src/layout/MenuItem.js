@@ -36,7 +36,9 @@ define(function (require) {
          * Is menu item valid
          */
         isValid() {
-            return !this.parent || this.parent.items.includes(this)
+            return (!this.parent || this.parent.items.includes(this))
+                && !this.appState.hasState('SIMULATE_PROGRESS')
+                && !this.appState.hasState('SIMULATE_STOP')
         }
 
         /**

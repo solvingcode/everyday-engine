@@ -86,7 +86,6 @@ define(function (require) {
             } else {
                 this.postUpdate(item, el)
             }
-            type.clean(item, el)
             return el
         }
 
@@ -203,6 +202,19 @@ define(function (require) {
                     item.index === index && item.element.zone === zone
                 )
             }
+        }
+
+        /**
+         * Clean HTML element and all childs
+         */
+        clean() {
+            const childs = document.querySelectorAll('[data-index]')
+            childs.forEach(node => {
+                const index = parseInt(node.getAttribute('data-index'))
+                if (!Menu.get().findItemByZone(index, node.getAttribute('data-zone'))) {
+                    node.remove()
+                }
+            })
         }
 
     }

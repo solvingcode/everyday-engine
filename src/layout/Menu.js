@@ -5,7 +5,8 @@ define(function (require) {
     const JointMenuItem = require('./items/draw/JointMenuItem.js')
     const AttachPointMenuItem = require('./items/draw/AttachPointMenuItem.js')
     const SelectorMenuItem = require('./items/draw/SelectorMenuItem.js')
-    const SimulateMenuItem = require('./items/action/SimulateMenuItem.js')
+    const SimulateStartMenuItem = require('./items/action/SimulateStartMenuItem.js')
+    const SimulateStopMenuItem = require('./items/action/SimulateStopMenuItem.js')
     const DeleteMenuItem = require('./items/action/DeleteMenuItem.js')
     const DuplicateMenuItem = require('./items/action/DuplicateMenuItem.js')
     const UndoMenuItem = require('./items/action/UndoMenuItem.js')
@@ -28,7 +29,8 @@ define(function (require) {
                 new RectMenuItem(),
                 new JointMenuItem(),
                 new AttachPointMenuItem(),
-                new SimulateMenuItem(),
+                new SimulateStartMenuItem(),
+                new SimulateStopMenuItem(),
                 new DeleteMenuItem(),
                 new DuplicateMenuItem(),
                 new UndoMenuItem(),
@@ -66,17 +68,19 @@ define(function (require) {
          * @param {Number} parentIndex 
          */
         prepare(item, parent = null) {
-            const itemsZone = this.items.filter(pItem => pItem.element.zone === item.zone)
-            const existItem = this.items.find(pItem => pItem.element === item)
-            const lastIndex = itemsZone.length
-            if (existItem) {
-                const indexItem = itemsZone.findIndex(pItem => pItem.element === item)
-                existItem.index = indexItem
-            }
-            const resultItem = existItem || new MenuItemUI(item, lastIndex, parent)
-            !existItem && this.items.push(resultItem)
-            if (item.items) {
-                item.items.forEach(pItem => this.prepare(pItem, resultItem))
+            if (item.isValid()) {
+                const itemsZone = this.items.filter(pItem => pItem.element.zone === item.zone)
+                const existItem = this.items.find(pItem => pItem.element === item)
+                const lastIndex = itemsZone.length
+                if (existItem) {
+                    const indexItem = itemsZone.findIndex(pItem => pItem.element === item)
+                    existItem.index = indexItem
+                }
+                const resultItem = existItem || new MenuItemUI(item, lastIndex, parent)
+                !existItem && this.items.push(resultItem)
+                if (item.items) {
+                    item.items.forEach(pItem => this.prepare(pItem, resultItem))
+                }
             }
         }
 
@@ -126,7 +130,7 @@ define(function (require) {
          * Update menu items
          */
         update() {
-            this.types.forEach(type => type.update())
+            this.types.forEach(type => type.isValid() && type.update())
             this.setup()
         }
 

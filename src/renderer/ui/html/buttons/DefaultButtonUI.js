@@ -19,6 +19,16 @@ define(function (require) {
         static postCreate(item, el) {
             el.textContent = item.element.props.name
         }
+
+        /**
+         * @inheritdoc
+         */
+        static postUpdate(item, el) {
+            const { name } = item.element.props
+            if (el.textContent !== name) {
+                el.textContent = name
+            }
+        }
     }
 
     DefaultButtonUI.props = {

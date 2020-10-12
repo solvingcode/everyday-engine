@@ -1,7 +1,6 @@
 define(function (require) {
 
     const ItemUI = require('./ItemUI.js')
-    const Menu = require('../../../layout/Menu.js')
 
     class HtmlPanelUI extends ItemUI {
         /**
@@ -23,19 +22,6 @@ define(function (require) {
             titleEl.textContent = title
             el.appendChild(titleEl)
             el.appendChild(body)
-        }
-
-        /**
-         * @inheritdoc 
-         */
-        static clean(item, el) {
-            const childs = Array.from(el.childNodes).filter(node => node.getAttribute('data-index'))
-            childs.forEach(node => {
-                const index = parseInt(node.getAttribute('data-index'))
-                if (!Menu.get().findItemByZone(index, item.element.zone)) {
-                    node.remove()
-                }
-            })
         }
     }
 
