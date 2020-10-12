@@ -61,6 +61,11 @@ h4{
     margin: 10px;
 }
 
+.panel > div{
+    max-height: 300px;
+    overflow: auto;
+}
+
 #app-el-left, #app-el-top, #app-el-right{
     position: absolute;
     z-index: 9999;

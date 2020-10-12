@@ -10,7 +10,7 @@ define(function (require) {
     class DuplicateAction extends Action {
 
         /**
-         * Delete selected entities
+         * Duplicate selected entities
          * @param {Array} selectedEntities
          */
         static run(mouse, selectedEntities, entitySelector) {

@@ -12,12 +12,12 @@ define(function (require) {
         constructor(physicsEngine, entityManager) {
             super(physicsEngine, entityManager)
             this.genomes = []
-            this.nbPerGeneration = 10
+            this.nbPerGeneration = 20
         }
         /**
          * @inheritdoc
          */
-        init(){
+        init() {
             this.initGeneration()
         }
         /**
@@ -56,8 +56,11 @@ define(function (require) {
         /**
          * Init the first generation
          */
-        initGeneration(){
-            // this.entityManager.cloneEntities()
+        initGeneration() {
+            const entities = this.entityManager.getDynamicEntities()
+            Array.from({ length: this.nbPerGeneration })
+                .forEach(() => this.entityManager.cloneEntities(entities))
+            this.entityManager.disableCollision()
         }
     }
 

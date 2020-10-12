@@ -59,10 +59,8 @@ define(function (require) {
         getBodyFromEntity(entity) {
             const bodyEntities = this.entityManager.getBodyEntities()
             return this.physicsEngine.getBodies().find((body, index) => {
-                const attachedEntity = bodyEntities[index]
-                return attachedEntity.position.x === entity.position.x &&
-                    attachedEntity.position.y === entity.position.y &&
-                    attachedEntity.constructor === entity.constructor
+                const bodyEntity = bodyEntities[index]
+                return bodyEntity === entity
             })
         }
 

@@ -11,7 +11,7 @@ define(function (require) {
          */
         static draw(item, uiRenderer) {
             const parentEl = uiRenderer.getElement(item.parent)
-            uiRenderer.getElement(item, parentEl)
+            uiRenderer.getElement(item, parentEl.getElementsByTagName('div')[0])
         }
 
         /**

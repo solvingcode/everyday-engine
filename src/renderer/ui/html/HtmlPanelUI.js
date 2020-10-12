@@ -19,8 +19,10 @@ define(function (require) {
         static postCreate(item, el) {
             const title = item.element.props.name
             const titleEl = document.createElement('h4')
+            const body = document.createElement('div')
             titleEl.textContent = title
             el.appendChild(titleEl)
+            el.appendChild(body)
         }
 
         /**

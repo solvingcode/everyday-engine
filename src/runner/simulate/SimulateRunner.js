@@ -49,6 +49,7 @@ define(function (require) {
         start(storage, entityManager, appState) {
             storage.update(Storage.type.ENTITY, entityManager.entities)
             EntitySelector.get().unselectAll()
+            this.aiEngine.init()
             if (!this.isPhysicsLoaded) {
                 try {
                     this.physics.run()
@@ -58,7 +59,6 @@ define(function (require) {
                     appState.removeState('SIMULATE_START')
                 }
             }
-            this.aiEngine.init()
             appState.setUniqStateByGroup('SIMULATE', 'PROGRESS')
         }
 

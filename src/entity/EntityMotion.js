@@ -111,6 +111,14 @@ define(function (require) {
         }
 
         /**
+         * Set the collision group
+         * @param {Number} collisionGroup 
+         */
+        setCollisionGroup(collisionGroup){
+            this.collision.group = collisionGroup
+        }
+
+        /**
          * Update position for entities attached
          * @param {PhysicsEngine} physicsEngine 
          */

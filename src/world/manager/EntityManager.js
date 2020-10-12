@@ -3,6 +3,7 @@ define(function (require) {
     const EntityGenerator = require('../generator/EntityGenerator.js')
     const Entity = require('../../entity/Entity.js')
     const AttachEntity = require('../entity/AttachEntity.js')
+    const PlatformEntity = require('../entity/PlatformEntity.js')
     const Maths = require('../../utils/Maths.js')
 
     /**
@@ -136,11 +137,11 @@ define(function (require) {
                 const bodyIndexB = bodyEntities.findIndex(body => bodyEntityB === body)
                 let cloneEntityA = (bodyIndexA >= 0 && cloneBodyEntities[bodyIndexA])
                 let cloneEntityB = (bodyIndexB >= 0 && cloneBodyEntities[bodyIndexB])
-                if(!cloneEntityA){
+                if (!cloneEntityA) {
                     cloneEntityA = this.clone(bodyEntityA)
                     cloneBodyEntities.push(cloneEntityA)
                 }
-                if(!cloneEntityB){
+                if (!cloneEntityB) {
                     cloneEntityB = this.clone(bodyEntityB)
                     cloneBodyEntities.push(cloneEntityB)
                 }
@@ -370,10 +371,25 @@ define(function (require) {
         }
 
         /**
+         * Get dynamic entities (not static, like platform, ...)
+         * @param {Entity[]} entities
+         */
+        getDynamicEntities(entities) {
+            return (entities || this.entities).filter(entity => !(entity instanceof PlatformEntity))
+        }
+
+        /**
          * Get valid entities of type body
          */
         getValidBodyEntities() {
             return this.getBodyEntities().filter(entity => entity.isValid())
+        }
+
+        /**
+         * Disable collision for not static entities
+         */
+        disableCollision(){
+            this.getDynamicEntities().map(entity => entity.setCollisionGroup(-1))
         }
 
     }
