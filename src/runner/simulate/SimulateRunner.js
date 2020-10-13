@@ -18,7 +18,6 @@ define(function (require) {
             this.currentEntity = null
             this.physicsEngine = new MatterEngine()
             this.physics = new Physics(this.physicsEngine)
-            this.aiEngine = new GeneticEngine(this.physicsEngine, EntityManager.get())
             this.isPhysicsLoaded = false
         }
 
@@ -47,8 +46,9 @@ define(function (require) {
          * Start the simulation
          */
         start(storage, entityManager, appState) {
-            storage.update(Storage.type.ENTITY, entityManager.entities)
+            this.aiEngine = new GeneticEngine(this.physics, EntityManager.get())
             EntitySelector.get().unselectAll()
+            storage.update(Storage.type.ENTITY, entityManager.entities)
             this.aiEngine.init()
             if (!this.isPhysicsLoaded) {
                 try {

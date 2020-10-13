@@ -23,6 +23,17 @@ define(function (require) {
             el.appendChild(titleEl)
             el.appendChild(body)
         }
+
+        /**
+         * @inheritdoc
+         */
+        static postUpdate(item, el) {
+            const { name } = item.element.props
+            const titleEl = el.getElementsByTagName('h4')[0]
+            if (titleEl.textContent !== name) {
+                titleEl.textContent = name
+            }
+        }
     }
 
     HtmlPanelUI.props = {

@@ -46,10 +46,9 @@ define(function (require) {
          */
         updateEngine(aiEngine) {
             this.entityManager.getBodyEntities().forEach(entity => {
-                if (aiEngine.update(entity)) {
-                    this.physicsEngine.update(entity)
-                }
+                this.physicsEngine.update(entity)
             })
+            aiEngine.update()
         }
 
         /**
@@ -122,6 +121,14 @@ define(function (require) {
             this.physicsEngine.init()
             this.load()
             this.physicsEngine.run()
+        }
+
+        /**
+         * Restart the engine
+         */
+        restart() {
+            this.stop()
+            this.run()
         }
 
     }

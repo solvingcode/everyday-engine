@@ -8,24 +8,23 @@ define(function () {
      */
     class AiEngine {
         /**
-         * @param {PhysicsEngine} physicsEngine 
+         * @param {Physics} physics 
          * @param {EntityManager} entityManager 
          */
-        constructor(physicsEngine, entityManager) {
-            this.physicsEngine = physicsEngine
+        constructor(physics, entityManager) {
+            this.physics = physics
             this.entityManager = entityManager
         }
         /**
-         * Update the entities properties
-         * @param {Entity[]} entities 
+         * Update the AI
          */
-        update(entities) {
+        update() {
             throw new TypeError('"AiEngine.update" method must be implemented')
         }
         /**
          * Initialize data
          */
-        init(){
+        init() {
             throw new TypeError('"AiEngine.init" method must be implemented')
         }
     }

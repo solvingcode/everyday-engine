@@ -128,6 +128,20 @@ h4{
 
 /* -- color */
 
+/* text -- */
+
+.text{
+    margin: 0;
+    padding: 5px;
+}
+
+.text p{
+    margin: 0;
+    padding: 5px 10px;
+}
+
+/* -- text */
+
 /* attach entity indicator -- */
 
 [data-attach-entity]{

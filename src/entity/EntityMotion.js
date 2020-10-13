@@ -19,7 +19,8 @@ define(function (require) {
                 velocity: new Vector({ x: 0, y: 0 }),
                 angularVelocity: 0,
                 speed: 0.7,
-                density: 0.001
+                density: 0.001,
+                force: { x: 0, y: 0 }
             }
             this.collision = { group: 0, category: 1, mask: 1 }
         }
@@ -30,6 +31,14 @@ define(function (require) {
          */
         setVelocity({ x, y }) {
             this.physics.velocity = new Vector({ x, y })
+        }
+
+        /**
+         * Set the force for physics props
+         * @param {Vector} force
+         */
+        setForce(force) {
+            this.physics.force = force
         }
 
         /**
@@ -114,7 +123,7 @@ define(function (require) {
          * Set the collision group
          * @param {Number} collisionGroup 
          */
-        setCollisionGroup(collisionGroup){
+        setCollisionGroup(collisionGroup) {
             this.collision.group = collisionGroup
         }
 
@@ -125,17 +134,6 @@ define(function (require) {
         updateJointPosition(physicsEngine) {
             if (!this.isPhyiscsLoaded) {
                 physicsEngine.updateJointPosition(this)
-            }
-        }
-
-        /**
-         * Apply force to the entity using the given physics engine
-         * @param {PhysicsEngine} physicsEngine 
-         * @param {Vector} force 
-         */
-        applyForce(physicsEngine, force) {
-            if (this.isPhyiscsLoaded) {
-                physicsEngine.applyForce(this, force)
             }
         }
 

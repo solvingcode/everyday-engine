@@ -297,6 +297,14 @@ define(function (require) {
         }
 
         /**
+         * Is the given entity is not static
+         * @param {Entity} entity 
+         */
+        isNotStaticEntity(entity) {
+            return !(entity instanceof PlatformEntity)
+        }
+
+        /**
          * Get all entities of specific type
          * @param {Entity} type 
          */
@@ -375,7 +383,7 @@ define(function (require) {
          * @param {Entity[]} entities
          */
         getDynamicEntities(entities) {
-            return (entities || this.entities).filter(entity => !(entity instanceof PlatformEntity))
+            return (entities || this.entities).filter(entity => this.isNotStaticEntity(entity))
         }
 
         /**
@@ -388,7 +396,7 @@ define(function (require) {
         /**
          * Disable collision for not static entities
          */
-        disableCollision(){
+        disableCollision() {
             this.getDynamicEntities().map(entity => entity.setCollisionGroup(-1))
         }
 

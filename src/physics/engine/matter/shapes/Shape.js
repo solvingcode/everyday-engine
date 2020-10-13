@@ -59,10 +59,11 @@ define(function (require) {
          */
         update(entity, body) {
             if (!(entity instanceof AttachEntity)) {
-                const { velocity, angularVelocity } = entity.physics
+                const { velocity, angularVelocity, force } = entity.physics
                 this.getEngine().Body.setVelocity(body, velocity)
                 this.getEngine().Body.setAngularVelocity(body, angularVelocity)
                 this.getEngine().Body.setPosition(body, entity.toCenterPosition())
+                this.getEngine().Body.applyForce(body, entity.getForcePosition(), force)
             }
         }
 

@@ -73,6 +73,13 @@ define(function (require) {
         }
 
         /**
+         * Get the text UI
+         */
+        getTextUI() {
+            throw new TypeError('"UIRenderer.getTextUI" method must be implemented')
+        }
+
+        /**
          * Get the UI type of the given menu item
          * @param {MenuItemUI} item 
          * @param {UIRenderer} uiRenderer
@@ -85,6 +92,8 @@ define(function (require) {
                 return this.getColorButtonUI()
             } else if (element.type === Layout.type.LAYER_ENTITY) {
                 return this.getLayerEntityButtonUI()
+            } else if (element.type === Layout.type.TEXT) {
+                return this.getTextUI()
             }
             return this.getDefaultButtonUI()
         }

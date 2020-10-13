@@ -2,6 +2,8 @@ define(function (require) {
 
     const AiEngine = require('../AiEngine.js')
     const Genome = require('./Genome.js')
+    const Storage = require('../../core/Storage.js')
+    const NaturalSelection = require('./NaturalSelection.js')
 
     /**
      * GeneticEngine class
@@ -9,60 +11,99 @@ define(function (require) {
      */
     class GeneticEngine extends AiEngine {
 
-        constructor(physicsEngine, entityManager) {
-            super(physicsEngine, entityManager)
+        constructor(physics, entityManager) {
+            super(physics, entityManager)
+            this.naturalSelection = new NaturalSelection(this)
             this.genomes = []
             this.nbPerGeneration = 20
+            this.entities = []
+            this.population = []
+            this.numGeneration = 0
+            this.totalFitness = 0
+            GeneticEngine.instance = this
         }
         /**
          * @inheritdoc
          */
         init() {
-            this.initGeneration()
+            this.entities = this.entityManager.getBodyEntities()
+            this.initGenomes()
+            this.newGeneration()
         }
         /**
          * @inheritdoc
          */
-        update(entity) {
-            return this.behave(entity)
+        update() {
+            if (this.isPopulationDead()) {
+                this.genomes = this.naturalSelection.run()
+                this.newGeneration()
+            } else {
+                this.population.map(entity => this.behave(entity))
+            }
+        }
+        /**
+         * Update population
+         */
+        updatePopulation() {
+            this.population = this.entityManager
+                .getDynamicEntities()
+                .filter(entity => this.entityManager.isBodyEntity(entity))
+        }
+        /**
+         * Setup the genomes (link to an entity)
+         */
+        setupGenomes() {
+            this.genomes.forEach((genome, index) => genome.setEntity(this.population[index]))
         }
         /**
          * Get the brain of the given entity
          * @param {Entity} entity 
          */
         getGenome(entity) {
-            const actualGenome = this.hasGenome(entity)
-            const genome = actualGenome || new Genome(entity.id)
-            !actualGenome && this.genomes.push(genome)
-            return genome
+            return this.genomes.find(genome => genome.entityId === entity.id)
         }
         /**
-         * Check if entity has already a genome
-         * @param {Entity} entity 
+         * Init genomes
          */
-        hasGenome(entity) {
-            return this.genomes.find(genome => genome.entityId === entity.id)
+        initGenomes() {
+            this.genomes = Array.from({ length: this.nbPerGeneration }).map(() => new Genome())
         }
         /**
          * Decide which behavior to do for the given entity
          * @param {Entity} entity 
          */
         behave(entity) {
-            const genome = this.getGenome(entity)
-            const force = genome.getForce()
-            force && entity.applyForce(this.physicsEngine, force)
-            return force
+            return this.getGenome(entity).behave(entity)
         }
         /**
-         * Init the first generation
+         * Make a new generation
          */
-        initGeneration() {
+        newGeneration() {
+            this.entityManager.entities = Storage.get().fetch(Storage.type.ENTITY)
             const entities = this.entityManager.getDynamicEntities()
-            Array.from({ length: this.nbPerGeneration })
+            Array.from({ length: this.nbPerGeneration - 1 })
                 .forEach(() => this.entityManager.cloneEntities(entities))
             this.entityManager.disableCollision()
+            this.updatePopulation()
+            this.setupGenomes()
+            this.numGeneration++
+            if (this.numGeneration > 1) {
+                this.physics.restart()
+            }
+        }
+        /**
+         * Check if the population is dead
+         */
+        isPopulationDead() {
+            return !this.population.find(entity => this.getGenome(entity).isAlive())
+        }
+
+        static get() {
+            return GeneticEngine.instance
         }
     }
+
+    GeneticEngine.instance = null
 
     return GeneticEngine
 

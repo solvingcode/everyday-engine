@@ -5,6 +5,7 @@ define(function (require) {
     const ColorButtonUI = require('./buttons/ColorButtonUI.js')
     const LayerEntityButtonUI = require('./buttons/LayerEntityButtonUI.js')
     const HtmlPanelUI = require('./HtmlPanelUI.js')
+    const HtmlTextUI = require('./HtmlTextUI.js')
     const Menu = require('../../../layout/Menu.js')
 
     /**
@@ -36,6 +37,13 @@ define(function (require) {
          */
         getPanelUI() {
             return HtmlPanelUI
+        }
+
+        /**
+         * @inheritdoc
+         */
+        getTextUI() {
+            return HtmlTextUI
         }
 
         /**
@@ -211,8 +219,12 @@ define(function (require) {
             const childs = document.querySelectorAll('[data-index]')
             childs.forEach(node => {
                 const index = parseInt(node.getAttribute('data-index'))
-                if (!Menu.get().findItemByZone(index, node.getAttribute('data-zone'))) {
+                const item = Menu.get().findItemByZone(index, node.getAttribute('data-zone'))
+                if (!item) {
                     node.remove()
+                } else {
+                    const { tag } = this.getType(item).props
+                    tag !== node.tagName.toLowerCase() && node.remove()
                 }
             })
         }
