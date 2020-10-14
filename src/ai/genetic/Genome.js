@@ -106,7 +106,7 @@ define(function () {
          * Generate random force
          */
         generateRandomForce() {
-            return { x: Math.round(Math.random() * 0.03 * 1000) / 1000, y: 0 }
+            return { x: Math.round(Math.random() * 0.05 * 1000) / 1000, y: 0 }
         }
         /**
          * Clone the genome

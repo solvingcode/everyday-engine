@@ -107,6 +107,7 @@ define(function (require) {
             const type = this.getType(item)
             el.setAttribute('id', item.getId())
             el.setAttribute('data-index', index)
+            el.setAttribute('data-name', element.props.name)
             el.setAttribute('data-zone', element.zone)
             type.postCreate(item, el, this)
         }
@@ -224,7 +225,10 @@ define(function (require) {
                     node.remove()
                 } else {
                     const { tag } = this.getType(item).props
-                    tag !== node.tagName.toLowerCase() && node.remove()
+                    if (tag !== node.tagName.toLowerCase() ||
+                        item.element.props.name !== node.getAttribute('data-name')) {
+                        node.remove()
+                    }
                 }
             })
         }

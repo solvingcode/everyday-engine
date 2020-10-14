@@ -24,11 +24,12 @@ define(function (require) {
          */
         update() {
             const aiEngine = GeneticEngine.get()
-            const { numGeneration, nbPerGeneration, bestGenomes } = aiEngine
+            const { numGeneration, nbPerGeneration, bestGenomes, maxLifeInSec } = aiEngine
             this.text = [
                 `Generation : ${numGeneration}`,
+                `Max life (sec) : ${maxLifeInSec}`,
                 `Population : ${nbPerGeneration}`,
-                `Best distance : ${bestGenomes && bestGenomes[0].distance || 0}`
+                `Best distance : ${bestGenomes && bestGenomes.length && bestGenomes[0].distance || 0}`
             ]
         }
 

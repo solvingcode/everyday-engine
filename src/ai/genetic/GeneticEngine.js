@@ -4,6 +4,7 @@ define(function (require) {
     const Genome = require('./Genome.js')
     const Storage = require('../../core/Storage.js')
     const NaturalSelection = require('./NaturalSelection.js')
+    const World = require('../../world/World.js')
 
     /**
      * GeneticEngine class
@@ -21,6 +22,7 @@ define(function (require) {
             this.nbGroups = 0
             this.population = []
             this.numGeneration = 0
+            this.bestGenomes = []
             GeneticEngine.instance = this
         }
         /**
@@ -38,6 +40,7 @@ define(function (require) {
             if (this.isPopulationDead()) {
                 this.genomes = this.naturalSelection.run()
                 this.newGeneration()
+                this.updateCamera()
             } else {
                 this.population.map(entity => this.behave(entity))
             }
@@ -105,6 +108,12 @@ define(function (require) {
          */
         isPopulationDead() {
             return !this.population.find(entity => this.getGenome(entity).isAlive())
+        }
+        /**
+         * Update the camera position
+         */
+        updateCamera() {
+            World.get().getCamera().attach(this.population[0])
         }
 
         static get() {

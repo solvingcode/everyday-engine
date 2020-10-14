@@ -63,12 +63,11 @@ define(function () {
         detach() {
             this.entityId = null
         }
-
         /**
          * Get the entity using the id
          * @param {EntityManager} entityManager 
          */
-        getEntity(entityManager){
+        getEntity(entityManager) {
             return entityManager.findById(this.entityId)
         }
     }
