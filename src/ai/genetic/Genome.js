@@ -5,10 +5,9 @@ define(function () {
      * Define the Genome of the given entity (behaviors)
      */
     class Genome {
-        constructor() {
-            this.maxLifeInSec = 10
-            this.timeToReactInSec = 1
+        constructor({ timeToReactInSec, maxLifeInSec }) {
             this.mutationProb = 0.01
+            this.props = { timeToReactInSec, maxLifeInSec }
             this.forces = []
             this.reset()
             this.init()
@@ -17,7 +16,7 @@ define(function () {
          * Init the genome (forces)
          */
         init() {
-            this.forces = Array.from({ length: this.maxLifeInSec / this.timeToReactInSec },
+            this.forces = Array.from({ length: this.props.maxLifeInSec / this.props.timeToReactInSec },
                 () => this.generateRandomForce()
             )
         }
@@ -29,6 +28,7 @@ define(function () {
             this.stepBehavior = 0
             this.alive = true
             this.fitness = 0
+            this.distance = 0
         }
         /**
          * Set the entity and store initial data
@@ -51,7 +51,7 @@ define(function () {
          * Decide if the gonme have to behave
          */
         haveToBehave() {
-            if (this.timeCounter >= 60 * this.timeToReactInSec) {
+            if (this.timeCounter >= 60 * this.props.timeToReactInSec) {
                 this.timeCounter = 0
                 this.stepBehavior++
                 return true
@@ -78,6 +78,7 @@ define(function () {
         calculateFitness(entity) {
             const distance = entity.position.x - this.startPosition.x
             this.fitness = distance < 0 ? 0 : distance * distance
+            this.distance = distance
         }
         /**
          * Decide what to do 

@@ -12,7 +12,8 @@ define(function () {
          * Start the natural selection
          */
         run() {
-            const parents = this.doSelection()
+            this.doSnapshotData()
+            const parents = this.doParentsSelection()
             const nextGenomes = this.doCrossover(parents)
             const genomes = this.doMutation(nextGenomes)
             return genomes
@@ -20,20 +21,34 @@ define(function () {
         /**
          * Select parents
          */
-        doSelection() {
-            const { genomes, population } = this.aiEngine
-            const totalFitness = genomes.reduce((total, genome) => total + genome.fitness, 0)
-            this.aiEngine.totalFitness = totalFitness
-            return population.map(() => {
+        doParentsSelection() {
+            const { genomes, nbGroups } = this.aiEngine
+            const groupGenomes = this.getGroupGenomes(genomes)
+            return genomes.map((p, index) => {
+                const groupId = index % nbGroups
+                const groupGenome = groupGenomes[groupId]
+                const totalFitness = this.getTotalFitness(groupGenome)
                 const randomFitness = Math.random() * totalFitness
                 let randomBias = 0
-                return genomes
+                return groupGenome
                     .sort((genA, genB) => genA.fitness < genB.fitness)
                     .find(genome => {
                         randomBias += genome.fitness
                         return randomBias >= randomFitness
                     })
             })
+        }
+        /**
+         * Group genomes by entity type
+         */
+        getGroupGenomes(genomes) {
+            const { nbGroups } = this.aiEngine
+            let groupGenomes = Array.from({ length: nbGroups }, () => [])
+            genomes.map((genome, index) => {
+                const groupId = index % nbGroups
+                groupGenomes[groupId].push(genome)
+            })
+            return groupGenomes
         }
         /**
          * Crossover the genome
@@ -51,10 +66,10 @@ define(function () {
          * @param {Genome[]} genomes 
          */
         doMutation(genomes) {
-            const bestGenome = this.getBestGenome(genomes)
+            const { nbGroup, bestGenomes } = this.aiEngine
             return genomes.map((genome, index) => {
-                if (index === 0) {
-                    genome = bestGenome
+                if (index < nbGroup) {
+                    genome = bestGenomes[index]
                 } else {
                     genome.mutate()
                 }
@@ -63,10 +78,31 @@ define(function () {
         }
         /**
          * Get the best genome in the population
+         * @param {Genome[]} genomes
          */
-        getBestGenome(genomes) {
-            return genomes
-                .sort((genA, genB) => genA.fitness > genB.fitness)[0]
+        getBestGenomes(genomes) {
+            const groupGenomes = this.getGroupGenomes(genomes)
+            return groupGenomes.map(groupGenome => {
+                return groupGenome
+                    .reduce((best, current) =>
+                        best && best.fitness > current.fitness ? best : current,
+                        null)
+            })
+        }
+        /**
+         * Get the best genome in the population
+         * @param {Genome[]} genomes
+         */
+        getTotalFitness(genomes) {
+            return genomes.reduce((total, genome) => total + genome.fitness, 0)
+        }
+        /**
+         * Do a snapshot of last generation's data
+         */
+        doSnapshotData() {
+            const { genomes } = this.aiEngine
+            this.aiEngine.totalFitness = this.getTotalFitness(genomes)
+            this.aiEngine.bestGenomes = this.getBestGenomes(genomes)
         }
     }
 

@@ -14,19 +14,20 @@ define(function (require) {
         constructor(physics, entityManager) {
             super(physics, entityManager)
             this.naturalSelection = new NaturalSelection(this)
-            this.genomes = []
             this.nbPerGeneration = 20
-            this.entities = []
+            this.maxLifeInSec = 10
+            this.timeToReactInSec = 1
+            this.genomes = []
+            this.nbGroups = 0
             this.population = []
             this.numGeneration = 0
-            this.totalFitness = 0
             GeneticEngine.instance = this
         }
         /**
          * @inheritdoc
          */
         init() {
-            this.entities = this.entityManager.getBodyEntities()
+            this.nbGroups = this.getPopulation().length
             this.initGenomes()
             this.newGeneration()
         }
@@ -45,7 +46,13 @@ define(function (require) {
          * Update population
          */
         updatePopulation() {
-            this.population = this.entityManager
+            this.population = this.getPopulation()
+        }
+        /**
+         * Get the population using the entity manager
+         */
+        getPopulation() {
+            return this.entityManager
                 .getDynamicEntities()
                 .filter(entity => this.entityManager.isBodyEntity(entity))
         }
@@ -66,14 +73,16 @@ define(function (require) {
          * Init genomes
          */
         initGenomes() {
-            this.genomes = Array.from({ length: this.nbPerGeneration }).map(() => new Genome())
+            this.genomes = Array.from({ length: this.nbPerGeneration * this.nbGroups })
+                .map(() => new Genome(this))
         }
         /**
          * Decide which behavior to do for the given entity
          * @param {Entity} entity 
          */
         behave(entity) {
-            return this.getGenome(entity).behave(entity)
+            const genome = this.getGenome(entity)
+            return genome.behave(entity)
         }
         /**
          * Make a new generation

@@ -23,11 +23,12 @@ define(function (require) {
          * @inheritdoc
          */
         update() {
-            const { numGeneration, nbPerGeneration, totalFitness } = GeneticEngine.get()
+            const aiEngine = GeneticEngine.get()
+            const { numGeneration, nbPerGeneration, bestGenomes } = aiEngine
             this.text = [
                 `Generation : ${numGeneration}`,
                 `Population : ${nbPerGeneration}`,
-                `Fitness : ${totalFitness}`
+                `Best distance : ${bestGenomes && bestGenomes[0].distance || 0}`
             ]
         }
 
