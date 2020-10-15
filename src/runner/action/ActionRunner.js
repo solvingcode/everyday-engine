@@ -18,6 +18,8 @@ define(function (require) {
     const PushHistoryAction = require('./PushHistoryAction.js')
     const AttachCameraAction = require('./AttachCameraAction.js')
     const DetachCameraAction = require('./DetachCameraAction.js')
+    const PhysicsStaticAction = require('./physics/PhysicsStaticAction.js')
+    const PhysicsNotStaticAction = require('./physics/PhysicsNotStaticAction.js')
 
     /**
      * Action Runner class.
@@ -51,9 +53,13 @@ define(function (require) {
                 SHOW: ShowAction,
                 STYLE_COLOR: StyleColorAction,
                 SELECT_ENTITY: SelectEntityAction,
-                HISTORY_PUSH: PushHistoryAction,
                 ATTACH_CAMERA: AttachCameraAction,
-                DETACH_CAMERA: DetachCameraAction
+                DETACH_CAMERA: DetachCameraAction,
+                PHYSICS_STATIC: PhysicsStaticAction,
+                PHYSICS_NOT_STATIC: PhysicsNotStaticAction,
+                
+                //must be the last action
+                HISTORY_PUSH: PushHistoryAction
             }
             const selectedEntities = this.entitySelector.getSelected()
             Object.entries(typeActions).forEach(typeAction => {

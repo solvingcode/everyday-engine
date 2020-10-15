@@ -21,6 +21,7 @@ define(function (require) {
     const LayerMenuItem = require('./items/layer/LayerMenuItem.js')
     const CameraMenuItem = require('./items/camera/CameraMenuItem.js')
     const AiGeneticMenuItem = require('./items/genetic/AiGeneticMenuItem.js')
+    const PhysicsMenuItem = require('./items/physics/PhysicsMenuItem.js')
 
     class Menu {
         constructor() {
@@ -44,6 +45,7 @@ define(function (require) {
                 new StyleMenuItem(),
                 new LayerMenuItem(),
                 new CameraMenuItem(),
+                new PhysicsMenuItem(),
                 new AiGeneticMenuItem()
             ]
             this.items = []

@@ -28,8 +28,25 @@ define(function (require) {
             context.strokeStyle = this.style.color
             context.beginPath()
             context.rect(0, 0, sw, sh)
+            this.drawRuler(context, sw)
             context.stroke()
             return this.updateMeshFromContext(context)
+        }
+
+        /**
+         * Draw a ruler
+         * @param {CanvasRenderingContext2D} context 
+         * @param {Number} sw 
+         */
+        drawRuler(context, sw) {
+            const stepRule = 40
+            for (let xRule = stepRule; xRule < sw; xRule += stepRule) {
+                context.fillText(
+                    xRule,
+                    xRule,
+                    20
+                )
+            }
         }
 
         /**

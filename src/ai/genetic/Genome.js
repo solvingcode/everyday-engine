@@ -6,7 +6,7 @@ define(function () {
      */
     class Genome {
         constructor({ timeToReactInSec, maxLifeInSec }) {
-            this.mutationProb = 0.01
+            this.mutationProb = 0.05
             this.props = { timeToReactInSec, maxLifeInSec }
             this.forces = []
             this.reset()
@@ -85,8 +85,10 @@ define(function () {
          */
         behave(entity) {
             if (this.isAlive()) {
-                const force = this.getForce()
-                entity.setForce(force)
+                if (!entity.isStatic()) {
+                    const force = this.getForce()
+                    entity.setForce(force)
+                }
                 this.haveToDie()
                 this.calculateFitness(entity)
             }

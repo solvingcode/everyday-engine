@@ -113,6 +113,7 @@ define(function (require) {
          * Update the camera position
          */
         updateCamera() {
+            this.population[0].setStyleAndGenerate({ fillColor: 'rgba(0, 255, 0, 1)' })
             World.get().getCamera().attach(this.population[0])
         }
 

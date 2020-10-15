@@ -80,6 +80,13 @@ define(function (require) {
         }
 
         /**
+         * Get data state
+         */
+        getDataState() {
+            return this.appState.data
+        }
+
+        /**
          * Has action state
          * @param {String} typeAction
          */

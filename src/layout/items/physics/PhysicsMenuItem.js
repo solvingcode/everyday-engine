@@ -1,22 +1,24 @@
 define(function (require) {
 
     const MenuItem = require('../../MenuItem.js')
-    const AiGeneticInfosMenuItem = require('./AiGeneticInfosMenuItem.js')
+    const PhysicsStaticMenuItem = require('./PhysicsStaticMenuItem.js')
+    const PhysicsNotStaticMenuItem = require('./PhysicsNotStaticMenuItem.js')
     const Layout = require('../../Layout.js')
 
     /**
-     * AI Genetic Menu Item
-     * Menu responsible for managing Ai Genetic
+     * Physics Menu Item
+     * Menu responsible for managing Physics
      */
-    class AiGeneticMenuItem extends MenuItem {
+    class PhysicsMenuItem extends MenuItem {
         constructor() {
             super({
-                name: 'AI Genetic'
+                name: 'Physics'
             })
             this.zone = Layout.zone.RIGHT
             this.type = Layout.type.LAYER
             this.items = [
-                new AiGeneticInfosMenuItem(this)
+                new PhysicsStaticMenuItem(this),
+                new PhysicsNotStaticMenuItem(this)
             ]
         }
 
@@ -37,18 +39,11 @@ define(function (require) {
         /**
          * @inheritdoc
          */
-        isValid() {
-            return super.isValid() || this.appState.hasState('SIMULATE_PROGRESS')
-        }
-
-        /**
-         * @inheritdoc
-         */
         update() {
             this.items.forEach(item => item.isValid() && item.update())
         }
     }
 
-    return AiGeneticMenuItem
+    return PhysicsMenuItem
 
 })

@@ -31,7 +31,6 @@ define(function () {
                 const randomFitness = Math.random() * totalFitness
                 let randomBias = 0
                 return groupGenome
-                    .sort((genA, genB) => genA.fitness < genB.fitness)
                     .find(genome => {
                         randomBias += genome.fitness
                         return randomBias >= randomFitness

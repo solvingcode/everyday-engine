@@ -20,9 +20,24 @@ define(function (require) {
                 angularVelocity: 0,
                 speed: 0.7,
                 density: 0.001,
-                force: { x: 0, y: 0 }
+                force: { x: 0, y: 0 },
+                static: false
             }
             this.collision = { group: 0, category: 1, mask: 1 }
+        }
+
+        /**
+         * Is the entity is static
+         */
+        isStatic() {
+            return this.physics.static
+        }
+
+        /**
+         * Set the static flag
+         */
+        setStatic(isStatic) {
+            this.physics.static = isStatic
         }
 
         /**

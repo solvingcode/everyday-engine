@@ -204,7 +204,11 @@ define(function (require) {
         ACTION_ATTACH_CAMERA_START: { history: false },
         ACTION_ATTACH_CAMERA_STOP: { history: false },
         ACTION_DETACH_CAMERA_START: { history: false },
-        ACTION_DETACH_CAMERA_STOP: { history: false }
+        ACTION_DETACH_CAMERA_STOP: { history: false },
+        ACTION_PHYSICS_STATIC_START: { history: true },
+        ACTION_PHYSICS_STATIC_STOP: { history: false },
+        ACTION_PHYSICS_NOT_STATIC_START: { history: true },
+        ACTION_PHYSICS_NOT_STATIC_STOP: { history: false }
     }
 
     return AppState
