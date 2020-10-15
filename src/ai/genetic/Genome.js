@@ -5,10 +5,12 @@ define(function () {
      * Define the Genome of the given entity (behaviors)
      */
     class Genome {
-        constructor({ timeToReactInSec, maxLifeInSec }) {
-            this.mutationProb = 0.05
-            this.props = { timeToReactInSec, maxLifeInSec }
+        constructor({ timeToReactInSec, maxLifeInSec }, props) {
+            this.mutationProb = 0.01
+            this.props = { ...props, timeToReactInSec, maxLifeInSec }
+            this.maxForce = 0.03
             this.forces = []
+            this.fitness = 0
             this.reset()
             this.init()
         }
@@ -29,6 +31,7 @@ define(function () {
             this.alive = true
             this.fitness = 0
             this.distance = 0
+            this.isBest = false
         }
         /**
          * Set the entity and store initial data
@@ -37,6 +40,12 @@ define(function () {
         setEntity(entity) {
             this.entityId = entity.id
             this.startPosition = entity.position
+        }
+        /**
+         * flag the genome as best
+         */
+        setIsBest() {
+            this.isBest = true
         }
         /**
          * Get the actual force to apply
@@ -72,25 +81,31 @@ define(function () {
             return this.alive
         }
         /**
-         * Calculate the fitness
+         * Calculate the distance
          * @param {Entity} entity 
          */
-        calculateFitness(entity) {
+        calculateDistance(entity) {
             const distance = entity.position.x - this.startPosition.x
-            this.fitness = distance < 0 ? 0 : distance * distance
             this.distance = distance
+        }
+        /**
+         * Calculate the fitness
+         */
+        calculateFitness() {
+            this.fitness = (this.distance < 0 ? 0 : 1 - 1 / Math.pow(this.distance, 1)) + 
+                (this.isBest ? 2 : 0)
         }
         /**
          * Decide what to do 
          */
         behave(entity) {
             if (this.isAlive()) {
+                const force = this.getForce()
                 if (!entity.isStatic()) {
-                    const force = this.getForce()
                     entity.setForce(force)
                 }
                 this.haveToDie()
-                this.calculateFitness(entity)
+                this.calculateDistance(entity)
             }
         }
         /**
@@ -103,12 +118,13 @@ define(function () {
                     this.forces[index] = this.generateRandomForce()
                 }
             })
+            return this
         }
         /**
          * Generate random force
          */
         generateRandomForce() {
-            return { x: Math.round(Math.random() * 0.05 * 1000) / 1000, y: 0 }
+            return { x: Math.round(Math.random() * this.maxForce * 1000) / 1000, y: 0 }
         }
         /**
          * Clone the genome

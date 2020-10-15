@@ -5,6 +5,8 @@ define(function (require) {
     const Storage = require('../../core/Storage.js')
     const NaturalSelection = require('./NaturalSelection.js')
     const World = require('../../world/World.js')
+    const Color = require('../../utils/Color.js')
+    const Maths = require('../../utils/Maths.js')
 
     /**
      * GeneticEngine class
@@ -16,8 +18,8 @@ define(function (require) {
             super(physics, entityManager)
             this.naturalSelection = new NaturalSelection(this)
             this.nbPerGeneration = 20
-            this.maxLifeInSec = 10
-            this.timeToReactInSec = 1
+            this.maxLifeInSec = 20
+            this.timeToReactInSec = 0.5
             this.genomes = []
             this.nbGroups = 0
             this.population = []
@@ -63,7 +65,10 @@ define(function (require) {
          * Setup the genomes (link to an entity)
          */
         setupGenomes() {
-            this.genomes.forEach((genome, index) => genome.setEntity(this.population[index]))
+            this.genomes.forEach((genome, index) => {
+                genome.setEntity(this.population[index])
+                this.updateColor(genome)
+            })
         }
         /**
          * Get the brain of the given entity
@@ -76,8 +81,13 @@ define(function (require) {
          * Init genomes
          */
         initGenomes() {
+            const colors = Array.from({ length: this.nbPerGeneration })
+                .map(() => Color.fromArrayInt([Maths.generateId()]))
             this.genomes = Array.from({ length: this.nbPerGeneration * this.nbGroups })
-                .map(() => new Genome(this))
+                .map((v, index) => {
+                    const color = colors[parseInt(index / this.nbGroups)]
+                    return new Genome(this, { color })
+                })
         }
         /**
          * Decide which behavior to do for the given entity
@@ -113,8 +123,14 @@ define(function (require) {
          * Update the camera position
          */
         updateCamera() {
-            this.population[0].setStyleAndGenerate({ fillColor: 'rgba(0, 255, 0, 1)' })
             World.get().getCamera().attach(this.population[0])
+        }
+        /**
+         * Update the color genome
+         */
+        updateColor(genome) {
+            this.entityManager.findById(genome.entityId)
+                .setStyleAndGenerate({ fillColor: '#' + genome.props.color })
         }
 
         static get() {

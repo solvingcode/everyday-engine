@@ -65,15 +65,13 @@ define(function () {
          * @param {Genome[]} genomes 
          */
         doMutation(genomes) {
-            const { nbGroup, bestGenomes } = this.aiEngine
-            return genomes.map((genome, index) => {
-                if (index < nbGroup) {
-                    genome = bestGenomes[index]
-                } else {
-                    genome.mutate()
-                }
-                return genome
+            const { nbGroups, bestGenomes } = this.aiEngine
+            const mutatedGenome = genomes.map(genome => genome.mutate())
+            Array.from({ length: nbGroups }).forEach((v, index) => {
+                mutatedGenome[index] = bestGenomes[index].clone()
+                mutatedGenome[index].reset()
             })
+            return mutatedGenome
         }
         /**
          * Get the best genome in the population
@@ -82,17 +80,26 @@ define(function () {
         getBestGenomes(genomes) {
             const groupGenomes = this.getGroupGenomes(genomes)
             return groupGenomes.map(groupGenome => {
-                return groupGenome
+                const bestGenome = groupGenome
                     .reduce((best, current) =>
                         best && best.fitness > current.fitness ? best : current,
                         null)
+                bestGenome.setIsBest()
+                return bestGenome
             })
+        }
+        /**
+         * Calculate the fitness
+         */
+        calculateFitness(genomes) {
+            genomes.forEach(genome => genome.calculateFitness())
         }
         /**
          * Get the best genome in the population
          * @param {Genome[]} genomes
          */
         getTotalFitness(genomes) {
+            this.calculateFitness(genomes)
             return genomes.reduce((total, genome) => total + genome.fitness, 0)
         }
         /**

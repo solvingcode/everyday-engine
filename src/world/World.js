@@ -59,7 +59,7 @@ define(function (require) {
          */
         updateCamera() {
             const entity = this.camera.getEntity(this.entityManager)
-            entity && this.camera.update(entity.position)
+            entity && this.camera.update({x: entity.position.x, y: this.camera.position.y})
         }
 
         /**
