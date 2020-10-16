@@ -10,10 +10,12 @@ define(function () {
         /**
          * @param {Physics} physics 
          * @param {EntityManager} entityManager 
+         * @param {Camera} camera 
          */
-        constructor(physics, entityManager) {
+        constructor(physics, entityManager, camera) {
             this.physics = physics
             this.entityManager = entityManager
+            this.camera = camera
         }
         /**
          * Update the AI

@@ -3,12 +3,31 @@ define(function (require) {
     const EntityManager = require('./manager/EntityManager.js')
     const PlatformEntity = require('./entity/PlatformEntity.js')
     const Camera = require('../core/Camera.js')
+    const GeneticEngine = require('../ai/genetic/GeneticEngine.js')
+    const Physics = require('../physics/Physics.js')
+    const MatterEngine = require('../physics/engine/matter/Engine.js')
 
     class World {
 
         constructor() {
             this.entityManager = EntityManager.get()
             this.camera = new Camera({ x: WINDOW_WIDTH / 2, y: WINDOW_HEIGHT / 2 })
+            this.physics = new Physics(new MatterEngine())
+            this.aiEngine = new GeneticEngine(this.physics, this.entityManager, this.camera)
+        }
+
+        /**
+         * Get the physics manager
+         */
+        getPhysics() {
+            return this.physics
+        }
+
+        /**
+         * Get the Ai engine
+         */
+        getAiEngine() {
+            return this.aiEngine
         }
 
         /**
@@ -59,7 +78,7 @@ define(function (require) {
          */
         updateCamera() {
             const entity = this.camera.getEntity(this.entityManager)
-            entity && this.camera.update({x: entity.position.x, y: this.camera.position.y})
+            entity && this.camera.update({ x: entity.position.x, y: this.camera.position.y })
         }
 
         /**

@@ -3,21 +3,16 @@ define(function (require) {
     const { MouseButton } = require('../../core/Mouse.js')
     const Runner = require('../Runner.js')
     const AppState = require('../../core/AppState.js')
-    const Physics = require('../../physics/Physics.js')
     const World = require('../../world/World.js')
-    const MatterEngine = require('../../physics/engine/matter/Engine.js')
     const EntitySelector = require('../../world/manager/EntitySelector.js')
     const EntityManager = require('../../world/manager/EntityManager.js')
     const Storage = require('../../core/Storage.js')
-    const GeneticEngine = require('../../ai/genetic/GeneticEngine.js')
 
     class SimulateRunner extends Runner {
 
         constructor() {
             super()
             this.currentEntity = null
-            this.physicsEngine = new MatterEngine()
-            this.physics = new Physics(this.physicsEngine)
             this.isPhysicsLoaded = false
         }
 
@@ -46,13 +41,13 @@ define(function (require) {
          * Start the simulation
          */
         start(storage, entityManager, appState) {
-            this.aiEngine = new GeneticEngine(this.physics, EntityManager.get())
+            const world = World.get()
             EntitySelector.get().unselectAll()
             storage.update(Storage.type.ENTITY, entityManager.entities)
-            this.aiEngine.init()
+            world.getAiEngine().init()
             if (!this.isPhysicsLoaded) {
                 try {
-                    this.physics.run()
+                    world.getPhysics().run()
                     this.isPhysicsLoaded = true
                 } catch (error) {
                     console.warn(error)
@@ -67,7 +62,7 @@ define(function (require) {
          */
         progress() {
             const world = World.get()
-            this.physics.update(this.aiEngine)
+            world.getPhysics().update(world.getAiEngine())
             world.updateCamera()
         }
 
@@ -75,11 +70,12 @@ define(function (require) {
          * Stop the simulation
          */
         stop(storage, entityManager, appState) {
+            const world = World.get()
             entityManager.entities = storage.fetch(Storage.type.ENTITY)
             entityManager.entities.map(entity => entity.regenerate())
             this.isPhysicsLoaded = false
-            this.physics.stop()
-            World.get().resetCamera()
+            world.getPhysics().stop()
+            world.resetCamera()
             appState.removeState('SIMULATE_STOP')
         }
 

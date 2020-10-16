@@ -7,6 +7,7 @@ define(function (require) {
             this.entityManager = EntityManager.get()
             this.physicsEngine = physicsEngine
             this.physicsEngine.setPhysicsManager(this)
+            this.isRunning = false
         }
 
         /**
@@ -68,6 +69,7 @@ define(function (require) {
          */
         stop() {
             this.physicsEngine.stop()
+            this.isRunning = false
         }
 
         /**
@@ -121,13 +123,14 @@ define(function (require) {
             this.physicsEngine.init()
             this.load()
             this.physicsEngine.run()
+            this.isRunning = true
         }
 
         /**
          * Restart the engine
          */
         restart() {
-            this.stop()
+            this.isRunning && this.stop()
             this.run()
         }
 

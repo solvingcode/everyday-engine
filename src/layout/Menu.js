@@ -19,7 +19,6 @@ define(function (require) {
     const StyleMenuItem = require('./items/style/StyleMenuItem.js')
     const MenuItemUI = require('../renderer/ui/MenuItemUI.js')
     const LayerMenuItem = require('./items/layer/LayerMenuItem.js')
-    const CameraMenuItem = require('./items/camera/CameraMenuItem.js')
     const AiGeneticMenuItem = require('./items/genetic/AiGeneticMenuItem.js')
     const PhysicsMenuItem = require('./items/physics/PhysicsMenuItem.js')
 
@@ -43,9 +42,8 @@ define(function (require) {
                 new HideMenuItem(),
                 new ShowMenuItem(),
                 new StyleMenuItem(),
-                new LayerMenuItem(),
-                new CameraMenuItem(),
                 new PhysicsMenuItem(),
+                new LayerMenuItem(),
                 new AiGeneticMenuItem()
             ]
             this.items = []

@@ -19,6 +19,7 @@ canvas{
 button{
     border: none;
     background-color: #f4f4f4;
+    position: relative;
 }
 
 button:hover, button.locked:hover, button.hidden:hover{
@@ -142,9 +143,9 @@ h4{
 
 /* -- text */
 
-/* attach entity indicator -- */
+/* entity indicator -- */
 
-[data-attach-entity]{
+i.attach-entity{
     display: block;
     float: right;
     margin-left: 5px;
@@ -152,7 +153,19 @@ h4{
     height: 10px;
 }
 
-/* -- attach entity indicator */
+i.static-entity{
+    width: 10px;
+    height: 10px;
+    position: absolute;
+    right: 5px;
+    bottom: 10px;
+}
+i.static-entity::before{
+    content: "S";
+    display: block;
+}
+
+/* -- entity indicator */
 
 /* components -- */
 

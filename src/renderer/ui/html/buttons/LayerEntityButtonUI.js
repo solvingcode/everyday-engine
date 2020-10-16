@@ -1,7 +1,7 @@
 define(function (require) {
 
     const ItemUI = require('../ItemUI.js')
-    const AttachEntityUI = require('../components/AttachEntityUI.js')
+    const EntityUI = require('../components/EntityUI.js')
 
     class LayerEntityButtonUI extends ItemUI {
         /**
@@ -41,7 +41,7 @@ define(function (require) {
                     el.innerHTML = ''
                     this.postCreate(item, el, uiRenderer)
                 }
-                AttachEntityUI.draw(item, el, uiRenderer)
+                EntityUI.draw(item, el, uiRenderer)
             }
         }
 

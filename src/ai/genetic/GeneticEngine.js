@@ -4,7 +4,6 @@ define(function (require) {
     const Genome = require('./Genome.js')
     const Storage = require('../../core/Storage.js')
     const NaturalSelection = require('./NaturalSelection.js')
-    const World = require('../../world/World.js')
     const Color = require('../../utils/Color.js')
     const Maths = require('../../utils/Maths.js')
 
@@ -14,8 +13,8 @@ define(function (require) {
      */
     class GeneticEngine extends AiEngine {
 
-        constructor(physics, entityManager) {
-            super(physics, entityManager)
+        constructor(physics, entityManager, camera) {
+            super(physics, entityManager, camera)
             this.naturalSelection = new NaturalSelection(this)
             this.nbPerGeneration = 20
             this.maxLifeInSec = 20
@@ -124,7 +123,7 @@ define(function (require) {
          * Update the camera position
          */
         updateCamera() {
-            World.get().getCamera().attach(this.population[0])
+            this.camera.attach(this.population[0])
         }
         /**
          * Update the color genome
