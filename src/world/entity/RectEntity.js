@@ -29,7 +29,7 @@ define(function (require) {
             if (width && height) {
                 const center = { x: this.size.width / 2, y: this.size.height / 2 }
                 const canvas = new OffscreenCanvas(width, height)
-                const context = canvas.getContext('2d')
+                const context = canvas.getContext(CANVAS_CONTEXT_TYPE)
                 const fillColor = this.getFillColor()
                 const color = this.getColor()
                 context.strokeStyle = color

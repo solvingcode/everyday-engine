@@ -76,6 +76,7 @@ define(function (require) {
          */
         stop(storage, entityManager, appState) {
             entityManager.entities = storage.fetch(Storage.type.ENTITY)
+            entityManager.entities.map(entity => entity.regenerate())
             this.isPhysicsLoaded = false
             this.physics.stop()
             World.get().resetCamera()

@@ -19,7 +19,7 @@ define(function (require) {
             this.naturalSelection = new NaturalSelection(this)
             this.nbPerGeneration = 20
             this.maxLifeInSec = 20
-            this.timeToReactInSec = 0.5
+            this.timeToReactInSec = 0.2
             this.genomes = []
             this.nbGroups = 0
             this.population = []
@@ -34,6 +34,7 @@ define(function (require) {
             this.nbGroups = this.getPopulation().length
             this.initGenomes()
             this.newGeneration()
+            this.updateCamera()
         }
         /**
          * @inheritdoc

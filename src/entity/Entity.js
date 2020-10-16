@@ -307,7 +307,7 @@ define(function (require) {
             const sw = context.canvas.width, sh = context.canvas.height
             if (sw && sh) {
                 this.mesh.clear({ width: sw, height: sh })
-                this.mesh.copy(context.canvas, 0, 0, sw, sh)
+                this.mesh.context = context
                 return true
             }
             return false

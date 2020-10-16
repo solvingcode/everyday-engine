@@ -34,7 +34,7 @@ define(function (require) {
             const x0 = this.points[0].x, y0 = this.points[0].y
             const x1 = this.points[1].x, y1 = this.points[1].y
             const canvas = new OffscreenCanvas(this.size.width, this.size.height)
-            const context = canvas.getContext('2d')
+            const context = canvas.getContext(CANVAS_CONTEXT_TYPE)
             context.beginPath()
             context.moveTo(x0, y0)
             context.lineTo(x1, y1)

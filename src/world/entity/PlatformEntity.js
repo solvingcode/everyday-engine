@@ -24,7 +24,7 @@ define(function (require) {
         generateMesh() {
             const sw = this.size.width, sh = this.size.height
             const canvas = new OffscreenCanvas(sw, sh)
-            const context = canvas.getContext('2d')
+            const context = canvas.getContext(CANVAS_CONTEXT_TYPE)
             context.strokeStyle = this.style.color
             context.beginPath()
             context.rect(0, 0, sw, sh)

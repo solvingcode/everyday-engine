@@ -52,7 +52,7 @@ define(function (require) {
         generateMesh() {
             if (this.checkConstraintEntities()) {
                 const canvas = new OffscreenCanvas(this.size.width, this.size.height)
-                const context = canvas.getContext('2d')
+                const context = canvas.getContext(CANVAS_CONTEXT_TYPE)
                 this.drawCircle(context)
                 return this.updateMeshFromContext(context)
             }

@@ -20,9 +20,8 @@ define(function (require) {
          * Initalize the canvas and the context for the current Mesh
          */
         initCanvas() {
-            this.canvas = new OffscreenCanvas(this.size.width, this.size.height)
-            this.context = this.canvas.getContext('2d')
-            this.imgData = this.context.createImageData(this.size.width, this.size.height)
+            const canvas = new OffscreenCanvas(this.size.width, this.size.height)
+            this.context = canvas.getContext(CANVAS_CONTEXT_TYPE)
         }
         
         /**
@@ -35,7 +34,6 @@ define(function (require) {
          */
         copy(canvas, x, y, sw, sh){
             this.context.drawImage(canvas, x, y, sw, sh)
-            this.imgData = this.context.createImageData(this.size.width, this.size.height)
         }
 
         /**
@@ -44,7 +42,8 @@ define(function (require) {
         clear(size = 0) {
             this.size = this.getSize(size || this.size)
             if (this.size.width > 0 && this.size.height > 0) {
-                this.initCanvas()
+                this.context.canvas.width = this.size.width
+                this.context.canvas.height = this.size.height
                 return true
             }
             return false

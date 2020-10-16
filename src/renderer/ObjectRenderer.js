@@ -8,7 +8,7 @@ define(function () {
         constructor() {
             this.meshes = []
             this.canvas = new OffscreenCanvas(WINDOW_WIDTH, WINDOW_HEIGHT)
-            this.context = this.canvas.getContext('2d')
+            this.context = this.canvas.getContext(CANVAS_CONTEXT_TYPE)
             this.imgData = this.context.createImageData(WINDOW_WIDTH, WINDOW_HEIGHT)
         }
 

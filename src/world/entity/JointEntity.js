@@ -65,7 +65,7 @@ define(function (require) {
             const x0 = this.points.a.x, y0 = this.points.a.y
             const x1 = this.points.b.x, y1 = this.points.b.y
             const canvas = new OffscreenCanvas(this.size.width, this.size.height)
-            const context = canvas.getContext('2d')
+            const context = canvas.getContext(CANVAS_CONTEXT_TYPE)
             this.drawLine(context, { x: x0, y: y0 }, { x: x1, y: y1 })
             return this.updateMeshFromContext(context)
         }

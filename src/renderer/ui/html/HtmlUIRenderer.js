@@ -151,7 +151,8 @@ define(function (require) {
         getEntityImage(item) {
             const entity = item.element.getEntity()
             const { entityWidth, entityHeight } = this.getType(item).props
-            const { canvas } = entity.mesh
+            const { context } = entity.mesh
+            const canvas = context.canvas
 
             const isWidthGtHeight = canvas.width > canvas.height
             const coefResize = isWidthGtHeight ? entityWidth / canvas.width : entityHeight / canvas.height
@@ -162,7 +163,7 @@ define(function (require) {
             canvasEl.width = entityWidth
             canvasEl.height = entityHeight
 
-            const contextEl = canvasEl.getContext('2d')
+            const contextEl = canvasEl.getContext(CANVAS_CONTEXT_TYPE)
             contextEl.drawImage(canvas, 0, 0, width, height)
 
             const image = new Image()

@@ -29,7 +29,7 @@ define(function (require) {
             const { width, height } = this.getLargestRectangle(this.rotation, this.size)
             const sw = this.size.width, sh = this.size.height
             const canvas = new OffscreenCanvas(width, height)
-            const context = canvas.getContext('2d')
+            const context = canvas.getContext(CANVAS_CONTEXT_TYPE)
             const centerX = sw / 2
             const centerY = sh / 2
             const radiusX = sw / 2

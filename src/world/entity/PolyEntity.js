@@ -68,7 +68,7 @@ define(function (require) {
         generateMesh() {
             const { width, height } = this.getLargestRectangle(this.rotation)
             this.canvas = new OffscreenCanvas(width, height)
-            const context = this.canvas.getContext('2d')
+            const context = this.canvas.getContext(CANVAS_CONTEXT_TYPE)
             context.beginPath()
             this.drawPoints(context)
             context.stroke()

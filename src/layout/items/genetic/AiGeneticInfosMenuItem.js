@@ -24,11 +24,18 @@ define(function (require) {
          */
         update() {
             const aiEngine = GeneticEngine.get()
-            const { numGeneration, nbPerGeneration, bestGenomes, maxLifeInSec } = aiEngine
+            const {
+                numGeneration,
+                nbPerGeneration,
+                bestGenomes,
+                maxLifeInSec,
+                timeToReactInSec,
+                genomes
+            } = aiEngine
             const scoreForce = this.getScoreForce(bestGenomes)
             this.text = [
                 `Generation : ${numGeneration}`,
-                `Max life (sec) : ${maxLifeInSec}`,
+                `Life (sec) : ${Math.round(maxLifeInSec - timeToReactInSec * genomes[0].stepBehavior)}`,
                 `Population : ${nbPerGeneration}`,
                 `Best distance : ${bestGenomes.length && bestGenomes[0].distance || 0}`,
                 `Score force : ${scoreForce || 0} %`
