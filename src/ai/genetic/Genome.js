@@ -5,9 +5,8 @@ define(function () {
      * Define the Genome of the given entity (behaviors)
      */
     class Genome {
-        constructor({ timeToReactInSec, maxLifeInSec }, props) {
-            this.mutationProb = 0.01
-            this.props = { ...props, timeToReactInSec, maxLifeInSec }
+        constructor({ timeToReactInSec, maxLifeInSec, mutationProb }, props) {
+            this.props = { ...props, timeToReactInSec, maxLifeInSec, mutationProb }
             this.maxForce = 0.03
             this.forces = []
             this.fitness = 0
@@ -92,7 +91,7 @@ define(function () {
          * Calculate the fitness
          */
         calculateFitness() {
-            this.fitness = (this.distance < 0 ? 0 : 1 - 1 / Math.pow(this.distance, 1)) + 
+            this.fitness = (this.distance < 0 ? 0 : 1 - 1 / Math.pow(this.distance, 2)) + 
                 (this.isBest ? 2 : 0)
         }
         /**
@@ -114,7 +113,7 @@ define(function () {
         mutate() {
             this.forces.forEach((force, index) => {
                 const randMutate = Math.random()
-                if (randMutate < this.mutationProb) {
+                if (randMutate < this.props.mutationProb) {
                     this.forces[index] = this.generateRandomForce()
                 }
             })

@@ -1,4 +1,6 @@
-define(function () {
+define(function (require) {
+
+    const Maths = require('../utils/Maths.js')
 
     /**
      * AIEngine class
@@ -16,6 +18,7 @@ define(function () {
             this.physics = physics
             this.entityManager = entityManager
             this.camera = camera
+            this.version = Maths.generateId()
         }
         /**
          * Update the AI
@@ -28,6 +31,12 @@ define(function () {
          */
         init() {
             throw new TypeError('"AiEngine.init" method must be implemented')
+        }
+        /**
+         * Get the version of the engine
+         */
+        getVersion() {
+            return this.version
         }
     }
 

@@ -6,6 +6,7 @@ define(function (require) {
     const LayerEntityButtonUI = require('./buttons/LayerEntityButtonUI.js')
     const HtmlPanelUI = require('./HtmlPanelUI.js')
     const HtmlTextUI = require('./HtmlTextUI.js')
+    const HtmlGraphUI = require('./HtmlGraphUI.js')
     const Menu = require('../../../layout/Menu.js')
 
     /**
@@ -44,6 +45,13 @@ define(function (require) {
          */
         getTextUI() {
             return HtmlTextUI
+        }
+
+        /**
+         * @inheritdoc
+         */
+        getGraphUI() {
+            return HtmlGraphUI
         }
 
         /**
@@ -142,36 +150,6 @@ define(function (require) {
             classNames.push(type.props.className)
             classNames.push(type.getClassName(item))
             return classNames.join(' ')
-        }
-
-        /**
-         * Get screen shot of the entity as image
-         * @param {MenuItemUI} item 
-         */
-        getEntityImage(item) {
-            const entity = item.element.getEntity()
-            const { entityWidth, entityHeight } = this.getType(item).props
-            const { context } = entity.mesh
-            const canvas = context.canvas
-
-            const isWidthGtHeight = canvas.width > canvas.height
-            const coefResize = isWidthGtHeight ? entityWidth / canvas.width : entityHeight / canvas.height
-            const width = isWidthGtHeight ? entityWidth : canvas.width * coefResize
-            const height = isWidthGtHeight ? canvas.height * coefResize : entityHeight
-
-            const canvasEl = document.createElement('canvas')
-            canvasEl.width = entityWidth
-            canvasEl.height = entityHeight
-
-            const contextEl = canvasEl.getContext(CANVAS_CONTEXT_TYPE)
-            contextEl.drawImage(canvas, 0, 0, width, height)
-
-            const image = new Image()
-            image.src = canvasEl.toDataURL('image/png')
-
-            canvasEl.remove()
-
-            return image
         }
 
         /**

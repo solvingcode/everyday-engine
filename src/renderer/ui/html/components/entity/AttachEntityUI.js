@@ -1,7 +1,7 @@
 define(function (require) {
 
-    const EntityManager = require('../../../../world/manager/EntityManager.js')
-    const Color = require('../../../../utils/Color.js')
+    const EntityManager = require('../../../../../world/manager/EntityManager.js')
+    const Color = require('../../../../../utils/Color.js')
 
     /**
      * AttachEntityUI class

@@ -18,7 +18,8 @@ define(function (require) {
             this.naturalSelection = new NaturalSelection(this)
             this.nbPerGeneration = 20
             this.maxLifeInSec = 20
-            this.timeToReactInSec = 0.2
+            this.timeToReactInSec = 0.1
+            this.mutationProb = 0.1
             this.genomes = []
             this.nbGroups = 0
             this.population = []

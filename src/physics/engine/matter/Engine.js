@@ -12,6 +12,9 @@ define(function (require) {
             super()
         }
 
+        /**
+         * @inheritdoc
+         */
         init() {
             this.engine = Matter.Engine.create()
             this.shapeLoader = new ShapeLoader(this)

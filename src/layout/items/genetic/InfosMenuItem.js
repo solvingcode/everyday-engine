@@ -5,10 +5,10 @@ define(function (require) {
     const GeneticEngine = require('../../../ai/genetic/GeneticEngine.js')
 
     /**
-     * AiGeneticInfosMenuItem class
+     * InfosMenuItem class
      * Show/Manage all informations for AI Genetic
      */
-    class AiGeneticInfosMenuItem extends MenuItem {
+    class InfosMenuItem extends MenuItem {
         constructor(parent, data) {
             super({
                 name: 'AI Genetic'
@@ -72,6 +72,6 @@ define(function (require) {
         }
     }
 
-    return AiGeneticInfosMenuItem
+    return InfosMenuItem
 
 })

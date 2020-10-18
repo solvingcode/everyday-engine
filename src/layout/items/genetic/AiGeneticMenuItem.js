@@ -1,7 +1,8 @@
 define(function (require) {
 
     const MenuItem = require('../../MenuItem.js')
-    const AiGeneticInfosMenuItem = require('./AiGeneticInfosMenuItem.js')
+    const InfosMenuItem = require('./InfosMenuItem.js')
+    const FitnessGraphMenuItem = require('./FitnessGraphMenuItem.js')
     const Layout = require('../../Layout.js')
 
     /**
@@ -16,7 +17,8 @@ define(function (require) {
             this.zone = Layout.zone.RIGHT
             this.type = Layout.type.LAYER
             this.items = [
-                new AiGeneticInfosMenuItem(this)
+                new InfosMenuItem(this),
+                new FitnessGraphMenuItem(this)
             ]
         }
 

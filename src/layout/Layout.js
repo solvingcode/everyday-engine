@@ -19,7 +19,9 @@ define(function () {
         STYLE_COLOR: 'style_color',
         LAYER_ENTITY: 'layer_entity',
         LAYER_ACTION: 'layer_action',
-        TEXT: 'text'
+        TEXT: 'text',
+        FORM: 'form',
+        FORM_CHECKBOX: 'form_checkbox'
     }
 
     return Layout

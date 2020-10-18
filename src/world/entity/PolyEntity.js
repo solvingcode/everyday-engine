@@ -17,7 +17,7 @@ define(function (require) {
          * @inheritdoc
          */
         build() {
-            this.setPoints()
+            this.makePoints()
             const minPoint = this.getMinPoint()
             this.setMeshPosition({ x: minPoint.x, y: minPoint.y })
             const maxPoint = this.getMaxPoint()
@@ -50,7 +50,7 @@ define(function (require) {
         /**
          * Add points to the poly based on the click position
          */
-        setPoints() {
+        makePoints() {
             const window = Window.get()
             const position = window.mouse.position
             const currentPosition = window.mouse.currentPosition
@@ -90,6 +90,14 @@ define(function (require) {
                 }
             }
             context.closePath()
+        }
+
+        /**
+         * Set points
+         * @param {Vector[]} points 
+         */
+        setPoints(points) {
+            this.points = points
         }
 
         /**

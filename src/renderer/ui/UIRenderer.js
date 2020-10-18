@@ -80,6 +80,13 @@ define(function (require) {
         }
 
         /**
+         * Get the text UI
+         */
+        getGraphUI() {
+            throw new TypeError('"UIRenderer.getGraphUI" method must be implemented')
+        }
+
+        /**
          * Get the UI type of the given menu item
          * @param {MenuItemUI} item 
          * @param {UIRenderer} uiRenderer
@@ -94,6 +101,8 @@ define(function (require) {
                 return this.getLayerEntityButtonUI()
             } else if (element.type === Layout.type.TEXT) {
                 return this.getTextUI()
+            } else if (element.type === Layout.type.GRAPH) {
+                return this.getGraphUI()
             }
             return this.getDefaultButtonUI()
         }

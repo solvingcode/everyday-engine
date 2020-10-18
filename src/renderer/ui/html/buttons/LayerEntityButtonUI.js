@@ -1,7 +1,7 @@
 define(function (require) {
 
     const ItemUI = require('../ItemUI.js')
-    const EntityUI = require('../components/EntityUI.js')
+    const EntityUI = require('../components/entity/EntityUI.js')
 
     class LayerEntityButtonUI extends ItemUI {
         /**
@@ -20,7 +20,7 @@ define(function (require) {
         static postCreate(item, el, uiRenderer) {
             const entity = item.element.getEntity()
             if (entity) {
-                const image = uiRenderer.getEntityImage(item)
+                const image = EntityUI.getImage(entity, this.props)
                 const title = document.createElement('span')
                 title.textContent = entity.name
                 el.setAttribute('data-entity-id', entity.id)
