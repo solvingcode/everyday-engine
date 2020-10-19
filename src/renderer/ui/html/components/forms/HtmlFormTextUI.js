@@ -2,7 +2,7 @@ define(function (require) {
 
     const ItemUI = require('../../ItemUI.js')
 
-    class HtmlFormCheckboxUI extends ItemUI {
+    class HtmlFormTextUI extends ItemUI {
         /**
          * Draw a checkbox.
          * @param {MenuItemUI} item
@@ -22,12 +22,12 @@ define(function (require) {
             const input = document.createElement(inputProps.tag)
             input.type = inputProps.type
             input.id = `${el.id}-${inputProps.suffix}`
-            input.checked = value()
+            input.value = value()
             const labelEl = document.createElement('label')
             labelEl.textContent = props.name
             labelEl.htmlFor = input.id
-            el.appendChild(input)
             el.appendChild(labelEl)
+            el.appendChild(input)
         }
 
         /**
@@ -45,23 +45,23 @@ define(function (require) {
 
         /**
          * Get HTML value form element
-         * @param {HTMLElement} formElement
+         * @param {HTMLInputElement} formElement
          */
         static getValue(formElement) {
-            return formElement.checked
+            return formElement.value
         }
     }
 
-    HtmlFormCheckboxUI.props = {
+    HtmlFormTextUI.props = {
         tag: 'div',
-        prefix: 'form-checkbox-',
+        prefix: 'form-text-',
         className: 'form-input',
         inputProps: {
             tag: 'input',
-            type: 'checkbox',
+            type: 'text',
             suffix: '-field'
         }
     }
 
-    return HtmlFormCheckboxUI
+    return HtmlFormTextUI
 })

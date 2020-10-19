@@ -1,26 +1,22 @@
 define(function (require) {
 
     const MenuItem = require('../../MenuItem.js')
-    const InfosMenuItem = require('./InfosMenuItem.js')
-    const FitnessGraphMenuItem = require('./FitnessGraphMenuItem.js')
-    const FormMenuItem = require('./FormMenuItem.js')
+    const PhysicsFormMenuItem = require('./PhysicsFormMenuItem.js')
     const Layout = require('../../Layout.js')
 
     /**
-     * AI Genetic Menu Item
-     * Menu responsible for managing Ai Genetic
+     * Entity Menu Item
+     * Menu responsible for managing entity's props
      */
-    class AiGeneticMenuItem extends MenuItem {
+    class EntityMenuItem extends MenuItem {
         constructor() {
             super({
-                name: 'AI Genetic'
+                name: 'Properties'
             })
             this.zone = Layout.zone.RIGHT
             this.type = Layout.type.PANEL
             this.items = [
-                new InfosMenuItem(this),
-                new FitnessGraphMenuItem(this),
-                new FormMenuItem(this)
+                new PhysicsFormMenuItem(this)
             ]
         }
 
@@ -41,18 +37,11 @@ define(function (require) {
         /**
          * @inheritdoc
          */
-        isValid() {
-            return super.isValid() || this.appState.hasState('SIMULATE_PROGRESS')
-        }
-
-        /**
-         * @inheritdoc
-         */
         update() {
             this.items.forEach(item => item.isValid() && item.update())
         }
     }
 
-    return AiGeneticMenuItem
+    return EntityMenuItem
 
 })

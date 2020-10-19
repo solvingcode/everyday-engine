@@ -57,7 +57,11 @@ define(function (require) {
          */
         updateForm() {
             this.items = [
-                new CheckboxMenuItem(this, this.object.isStatic(), (value) => this.object.setStatic(value))
+                new CheckboxMenuItem(this,
+                    { name: 'Static' },
+                    () => this.object.isStatic(),
+                    (value) => this.object.setStatic(value)
+                )
             ]
             this.version = Maths.generateId()
         }
