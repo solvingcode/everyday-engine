@@ -20,6 +20,7 @@ define(function (require) {
     const DetachCameraAction = require('./DetachCameraAction.js')
     const PhysicsStaticAction = require('./physics/PhysicsStaticAction.js')
     const PhysicsNotStaticAction = require('./physics/PhysicsNotStaticAction.js')
+    const FormUpdateAction = require('./forms/FormUpdateAction.js')
 
     /**
      * Action Runner class.
@@ -57,7 +58,8 @@ define(function (require) {
                 DETACH_CAMERA: DetachCameraAction,
                 PHYSICS_STATIC: PhysicsStaticAction,
                 PHYSICS_NOT_STATIC: PhysicsNotStaticAction,
-                
+                FORM_UPDATE: FormUpdateAction,
+
                 //must be the last action
                 HISTORY_PUSH: PushHistoryAction
             }

@@ -80,10 +80,24 @@ define(function (require) {
         }
 
         /**
-         * Get the text UI
+         * Get the graph UI
          */
         getGraphUI() {
             throw new TypeError('"UIRenderer.getGraphUI" method must be implemented')
+        }
+
+        /**
+         * Get the form UI
+         */
+        getFormUI() {
+            throw new TypeError('"UIRenderer.getFormUI" method must be implemented')
+        }
+
+        /**
+         * Get the form input UI
+         */
+        getFormElementUI() {
+            throw new TypeError('"UIRenderer.getFormElementUI" method must be implemented')
         }
 
         /**
@@ -93,7 +107,7 @@ define(function (require) {
          */
         getType(item) {
             const { element } = item
-            if (element.items) {
+            if (element.type === Layout.type.PANEL) {
                 return this.getPanelUI()
             } else if (element.type === Layout.type.STYLE_COLOR) {
                 return this.getColorButtonUI()
@@ -103,6 +117,10 @@ define(function (require) {
                 return this.getTextUI()
             } else if (element.type === Layout.type.GRAPH) {
                 return this.getGraphUI()
+            } else if (element.type === Layout.type.FORM) {
+                return this.getFormUI()
+            } else if (element.type === Layout.type.FORM_ELEMENT) {
+                return this.getFormElementUI().getType(item)
             }
             return this.getDefaultButtonUI()
         }

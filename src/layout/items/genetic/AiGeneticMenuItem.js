@@ -15,7 +15,7 @@ define(function (require) {
                 name: 'AI Genetic'
             })
             this.zone = Layout.zone.RIGHT
-            this.type = Layout.type.LAYER
+            this.type = Layout.type.PANEL
             this.items = [
                 new InfosMenuItem(this),
                 new FitnessGraphMenuItem(this)

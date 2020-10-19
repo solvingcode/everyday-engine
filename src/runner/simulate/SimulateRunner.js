@@ -33,7 +33,7 @@ define(function (require) {
             }
             //debug
             if (mouse.isButtonPressed(MouseButton.MIDDLE)) {
-                console.log(appState, this.physics.physicsEngine.getBodies())
+                console.log(appState)
             }
         }
 

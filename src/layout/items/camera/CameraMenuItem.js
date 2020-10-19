@@ -18,7 +18,7 @@ define(function (require) {
                 name: 'Camera'
             })
             this.zone = Layout.zone.RIGHT
-            this.type = Layout.type.LAYER
+            this.type = Layout.type.PANEL
             this.items = [
                 new CameraAttachMenuItem(this),
                 new CameraDetachMenuItem(this)

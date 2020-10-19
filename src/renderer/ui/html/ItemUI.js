@@ -39,6 +39,13 @@ define(function () {
          * @param {HTMLElement} el 
          */
         static clean(item, el) { }
+
+        /**
+         * Get HTML element propertis
+         */
+        static getProps(){
+            return this.props
+        }
     }
 
     return ItemUI

@@ -7,6 +7,8 @@ define(function (require) {
     const HtmlPanelUI = require('./HtmlPanelUI.js')
     const HtmlTextUI = require('./HtmlTextUI.js')
     const HtmlGraphUI = require('./HtmlGraphUI.js')
+    const HtmlFormUI = require('./forms/HtmlFormUI.js')
+    const HtmlFormElementUI = require('./forms/HtmlFormElementUI.js')
     const Menu = require('../../../layout/Menu.js')
 
     /**
@@ -57,6 +59,20 @@ define(function (require) {
         /**
          * @inheritdoc
          */
+        getFormUI() {
+            return HtmlFormUI
+        }
+
+        /**
+         * @inheritdoc
+         */
+        getFormElementUI() {
+            return HtmlFormElementUI
+        }
+
+        /**
+         * @inheritdoc
+         */
         getColorButtonUI() {
             return ColorButtonUI
         }
@@ -91,7 +107,7 @@ define(function (require) {
         getElement(item, parentHTML) {
             const { element } = item
             const type = this.getType(item)
-            const tag = type.props.tag
+            const tag = type.getProps().tag
             const zoneDiv = parentHTML || this.getZoneDiv(element.zone)
             const id = item.getId()
             const existEl = document.getElementById(id)
@@ -147,7 +163,7 @@ define(function (require) {
             const classNames = []
             const type = this.getType(item)
             item.element.isSelected() && classNames.push('selected')
-            classNames.push(type.props.className)
+            classNames.push(type.getProps().className)
             classNames.push(type.getClassName(item))
             return classNames.join(' ')
         }
@@ -163,7 +179,7 @@ define(function (require) {
                 x0, y0,
                 width, height,
                 backgroundColor
-            } = { ...type.props, ...itemStyle }
+            } = { ...type.getProps(), ...itemStyle }
             let style = []
             if (x0 || y0) {
                 style.push('position: absolute')
@@ -203,7 +219,7 @@ define(function (require) {
                 if (!item) {
                     node.remove()
                 } else {
-                    const { tag } = this.getType(item).props
+                    const { tag } = this.getType(item).getProps()
                     if (tag !== node.tagName.toLowerCase() ||
                         item.element.props.name !== node.getAttribute('data-name')) {
                         node.remove()

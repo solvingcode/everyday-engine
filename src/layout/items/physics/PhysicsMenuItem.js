@@ -3,6 +3,7 @@ define(function (require) {
     const MenuItem = require('../../MenuItem.js')
     const PhysicsStaticMenuItem = require('./PhysicsStaticMenuItem.js')
     const PhysicsNotStaticMenuItem = require('./PhysicsNotStaticMenuItem.js')
+    const PhysicsFormMenuItem = require('./PhysicsFormMenuItem.js')
     const Layout = require('../../Layout.js')
 
     /**
@@ -15,10 +16,11 @@ define(function (require) {
                 name: 'Physics'
             })
             this.zone = Layout.zone.RIGHT
-            this.type = Layout.type.LAYER
+            this.type = Layout.type.PANEL
             this.items = [
                 new PhysicsStaticMenuItem(this),
-                new PhysicsNotStaticMenuItem(this)
+                new PhysicsNotStaticMenuItem(this),
+                new PhysicsFormMenuItem(this)
             ]
         }
 

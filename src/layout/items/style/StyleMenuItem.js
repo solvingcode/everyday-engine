@@ -14,7 +14,7 @@ define(function (require) {
                 name: 'Style'
             })
             this.zone = Layout.zone.RIGHT
-            this.type = Layout.type.STYLE
+            this.type = Layout.type.PANEL
             this.loadItems()
         }
         

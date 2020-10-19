@@ -15,13 +15,17 @@ define(function () {
         DRAW: 'draw',
         ACTION: 'action',
         STYLE: 'style',
-        LAYER: 'layer',
+        PANEL: 'panel',
         STYLE_COLOR: 'style_color',
         LAYER_ENTITY: 'layer_entity',
         LAYER_ACTION: 'layer_action',
         TEXT: 'text',
         FORM: 'form',
-        FORM_CHECKBOX: 'form_checkbox'
+        FORM_ELEMENT: 'form_element'
+    }
+
+    Layout.form = {
+        CHECKBOX: 'checkbox'
     }
 
     return Layout
