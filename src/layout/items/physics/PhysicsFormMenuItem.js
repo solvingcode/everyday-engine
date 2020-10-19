@@ -44,8 +44,8 @@ define(function (require) {
             const selectedEntities = EntitySelector.get().getSelected()
             if (selectedEntities.length) {
                 const selectedEntity = selectedEntities[0]
-                if (selectedEntity.physics !== this.object) {
-                    this.object = selectedEntity.physics
+                if (selectedEntity !== this.object) {
+                    this.object = selectedEntity
                     this.updateForm()
                 }
             } else {
@@ -57,7 +57,7 @@ define(function (require) {
          */
         updateForm() {
             this.items = [
-                new CheckboxMenuItem(this, this.object.static)
+                new CheckboxMenuItem(this, this.object.isStatic(), (value) => this.object.setStatic(value))
             ]
             this.version = Maths.generateId()
         }

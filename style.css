@@ -167,6 +167,28 @@ i.static-entity::before{
 
 /* -- entity indicator */
 
+/* form -- */
+
+.form{
+    margin: 0;
+    padding: 0;
+}
+
+.form .form-input{
+    margin: 0;
+    padding: 5px;
+}
+
+.form .form-input input[type=checkbox]{
+    float: left;
+}
+.form .form-input label{
+    display: block;
+    width: 100%;
+}
+
+/* -- form */
+
 /* components -- */
 
 /*  cross -- */

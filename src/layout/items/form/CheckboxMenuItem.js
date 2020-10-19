@@ -7,22 +7,29 @@ define(function (require) {
      * Checkbox Menu Item
      */
     class CheckboxMenuItem extends MenuItem {
-        constructor(parent, form) {
+        /**
+         * @param {MenuItem} parent 
+         * @param {any} value The default value
+         * @param {Function} event The event binded to the field
+         */
+        constructor(parent, value, event) {
             super({
                 name: 'Static'
             })
             this.parent = parent
-            this.form = form
             this.zone = parent.zone
             this.type = Layout.type.FORM_ELEMENT
             this.field = Layout.form.CHECKBOX
+            this.event = event
+            this.value = value
         }
         /**
          * @inheritdoc
          */
         run() {
+            const { event } = this
             this.setActionState('FORM_UPDATE', 'START')
-            this.setDataState({ form: this.form })
+            this.setDataState({ form: { event, item: this } })
         }
         /**
          * @inheritdoc

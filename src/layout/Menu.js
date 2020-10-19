@@ -97,6 +97,14 @@ define(function (require) {
         }
 
         /**
+         * Find menu item by index and zone
+         * @param {MznuItem} element 
+         */
+        findItemByElement(element) {
+            return this.items.find(pItem => pItem.element === element)
+        }
+
+        /**
          * Clean all menu items that is not valid anymore.
          */
         clean() {
