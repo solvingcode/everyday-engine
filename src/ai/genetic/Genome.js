@@ -1,4 +1,6 @@
-define(function () {
+define(function (require) {
+
+    const Maths = require('../../utils/Maths.js')
 
     /**
      * Genome class
@@ -91,7 +93,7 @@ define(function () {
          * Calculate the fitness
          */
         calculateFitness() {
-            this.fitness = (this.distance < 0 ? 0 : 1 - 1 / Math.pow(this.distance, 2)) + 
+            this.fitness = (this.distance < 0 ? 0 : 1 - 1 / Math.pow(this.distance, 2)) +
                 (this.isBest ? 2 : 0)
         }
         /**
@@ -123,7 +125,8 @@ define(function () {
          * Generate random force
          */
         generateRandomForce() {
-            return { x: Math.round(Math.random() * this.maxForce * 1000) / 1000, y: 0 }
+            const force = Maths.randomInterval(this.maxForce * -1, this.maxForce)
+            return { x: Math.round(force * 1000) / 1000, y: 0 }
         }
         /**
          * Clone the genome

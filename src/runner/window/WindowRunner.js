@@ -13,7 +13,10 @@ define(function (require) {
          */
         execute(mouse) {
             const entitySelector = EntitySelector.get()
-            this.focus(entitySelector, mouse)
+            const appState = AppState.get()
+            if (!appState.hasState('SIMULATE_PROGRESS')) {
+                this.focus(entitySelector, mouse)
+            }
             this.cursor(entitySelector, mouse)
         }
 

@@ -21,7 +21,11 @@ define(function (require) {
                 speed: 0.7,
                 density: 0.001,
                 force: { x: 0, y: 0 },
-                static: false
+                static: false,
+                rotationConstraint: {
+                    min: -Math.PI * 2,
+                    max: Math.PI * 2
+                }
             }
             this.collision = { group: 0, category: 1, mask: 1 }
         }
@@ -62,6 +66,23 @@ define(function (require) {
          */
         setAngularVelocity(velocity) {
             this.physics.angularVelocity = velocity
+        }
+
+        /**
+         * Is the entity is static
+         */
+        getRotationConstraint() {
+            return this.physics.rotationConstraint
+        }
+
+        /**
+         * Set the static flag
+         */
+        setRotationConstraint({ min, max }) {
+            const constraint = this.getRotationConstraint()
+            min && (constraint.min = min)
+            max && (constraint.max = max)
+            this.physics.rotationConstraint = constraint
         }
 
         /**

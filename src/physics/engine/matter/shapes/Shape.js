@@ -59,8 +59,7 @@ define(function (require) {
          */
         update(entity, body) {
             if (!(entity instanceof AttachEntity)) {
-                const { force } = entity.physics
-                this.getEngine().Body.applyForce(body, entity.getForcePosition(), force)
+                this.physicEngine.applyForce(body, entity)
             }
         }
 

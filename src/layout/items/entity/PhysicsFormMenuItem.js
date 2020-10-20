@@ -4,6 +4,7 @@ define(function (require) {
     const Layout = require('../../Layout.js')
     const EntitySelector = require('../../../world/manager/EntitySelector.js')
     const CheckboxMenuItem = require('../form/CheckboxMenuItem.js')
+    const TextMenuItem = require('../form/TextMenuItem.js')
     const Maths = require('../../../utils/Maths.js')
 
     /**
@@ -61,6 +62,16 @@ define(function (require) {
                     { name: 'Static' },
                     () => this.object.isStatic(),
                     (value) => this.object.setStatic(value)
+                ),
+                new TextMenuItem(this,
+                    { name: 'Min rotation (°)' },
+                    () => Maths.toDegree(this.object.getRotationConstraint().min),
+                    (value) => this.object.setRotationConstraint({ min: Maths.fromDegree(value) })
+                ),
+                new TextMenuItem(this,
+                    { name: 'Max rotation (°)' },
+                    () => Maths.toDegree(this.object.getRotationConstraint().max),
+                    (value) => this.object.setRotationConstraint({ max: Maths.fromDegree(value) })
                 )
             ]
             this.version = Maths.generateId()

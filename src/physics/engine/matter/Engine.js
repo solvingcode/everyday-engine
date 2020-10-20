@@ -105,6 +105,21 @@ define(function (require) {
             return false
         }
 
+        /**
+         * @inheritdoc
+         */
+        applyForce(body, entity) {
+            const { force, rotationConstraint } = entity.physics
+            const { min: minRotation, max: maxRotation } = rotationConstraint
+            if (maxRotation && entity.rotation > maxRotation) {
+                this.getEngine().Body.setAngle(body, maxRotation)
+            }else if (minRotation && entity.rotation < minRotation) {
+                this.getEngine().Body.setAngle(body, minRotation)
+            } else {
+                this.getEngine().Body.applyForce(body, entity.getForcePosition(), force)
+            }
+        }
+
     }
 
     return MatterEngine

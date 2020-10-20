@@ -88,10 +88,10 @@ define(function () {
 
         /**
          * Apply force to the entity
-         * @param {Entity} entity 
-         * @param {Vector} force 
+         * @param {Object} body 
+         * @param {Entity} force 
          */
-        applyForce(entity, force) {
+        applyForce(body, entity) {
             throw new TypeError('"applyForce" method must be implemented')
         }
 
