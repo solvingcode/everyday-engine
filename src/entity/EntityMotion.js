@@ -25,7 +25,8 @@ define(function (require) {
                 rotationConstraint: {
                     min: -Math.PI * 2,
                     max: Math.PI * 2
-                }
+                },
+                ...props.physics
             }
             this.collision = { group: 0, category: 1, mask: 1 }
         }

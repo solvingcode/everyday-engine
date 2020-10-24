@@ -10,6 +10,18 @@ define(function (require) {
      */
     class AttachEntity extends EntityMotion {
 
+        constructor(props) {
+            const physics = { 
+                stiffness: 1, 
+                angleAStiffness: 1, 
+                angleBStiffness: 1, 
+                angleAMin: - Math.PI * 2, 
+                angleAMax: Math.PI * 2, 
+                angleBMin: - Math.PI * 2, 
+                angleBMax: Math.PI * 2 }
+            super({...props, physics})
+        }
+
         /**
          * @inheritdoc
          */

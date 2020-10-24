@@ -53,7 +53,7 @@ define(function (require) {
 
         /**
          * Synchronize informations from entity to body
-         * Do not applied to Attach entities
+         * Do not apply force to Attach entities
          * @param {Entity} entity 
          * @param {Body} body 
          */

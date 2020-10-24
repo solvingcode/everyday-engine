@@ -90,7 +90,8 @@ define(function (require) {
         setConstraintEntites() {
             const entitySelector = EntitySelector.get()
             this.entities.a = entitySelector.get(this.toAbsolutePosition(this.points.a), AttachEntity)
-            this.entities.b = entitySelector.get(this.toAbsolutePosition(this.points.b), AttachEntity)
+            this.entities.b = entitySelector.getAll(this.toAbsolutePosition(this.points.b), AttachEntity)
+                .find(entity => entity !== this.entities.a)
             if (this.entities.a instanceof AttachEntity) {
                 this.entities.a = null
             }

@@ -113,7 +113,7 @@ define(function (require) {
             const { min: minRotation, max: maxRotation } = rotationConstraint
             if (maxRotation && entity.rotation > maxRotation) {
                 this.getEngine().Body.setAngle(body, maxRotation)
-            }else if (minRotation && entity.rotation < minRotation) {
+            } else if (minRotation && entity.rotation < minRotation) {
                 this.getEngine().Body.setAngle(body, minRotation)
             } else {
                 this.getEngine().Body.applyForce(body, entity.getForcePosition(), force)

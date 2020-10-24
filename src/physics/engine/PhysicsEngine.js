@@ -104,6 +104,13 @@ define(function () {
         }
 
         /**
+         * Get the physics manager that loaded the phyiscs engine
+         */
+        getPhysicsManager() {
+            return this.physicsManager
+        }
+
+        /**
          * Get body physics from the entity
          * @param {Entity} entity 
          */

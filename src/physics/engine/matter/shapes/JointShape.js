@@ -19,12 +19,21 @@ define(function (require) {
             const bodyB = this.getBodyFromEntity(entities.b)
             const pointA = entities.a.getRelativeCenterPosition(entity, points.a)
             const pointB = entities.b.getRelativeCenterPosition(entity, points.b)
-            const stiffness = 1
+            const { stiffness,
+                angleAStiffness,
+                angleBStiffness,
+                angleAMin, angleAMax,
+                angleBMin,
+                angleBMax } = entity.physics
             if (!bodyA || !bodyB) {
                 throw new ReferenceError('Body not yet created or entity not founded')
             }
             entity.attached && this.addGroup(entity)
-            return engine.Constraint.create({ bodyA, pointA, bodyB, pointB, stiffness })
+            return engine.Constraint.create({
+                bodyA, pointA, bodyB, pointB,
+                stiffness, angleAStiffness, angleBStiffness, 
+                angleAMin, angleAMax, angleBMin, angleBMax
+            })
         }
 
         addGroup(entity) {
