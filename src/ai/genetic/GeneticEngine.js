@@ -148,6 +148,18 @@ define(function (require) {
                 .setStyleAndGenerate({ fillColor: '#' + genome.props.color })
         }
 
+        /**
+         * Get all attached genomes
+         * @param {Genome} genome 
+         */
+        getAttachedGenomes(genome) {
+            const entity = this.entityManager.findById(genome.entityId)
+            const attachedEntities = this.entityManager.getAttachedEntities(entity)
+            return attachedEntities
+                .map(aEntity => this.getGenome(aEntity))
+                .filter(aGenome => aGenome && aGenome !== genome)
+        }
+
         static get() {
             return GeneticEngine.instance
         }

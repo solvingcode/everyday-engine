@@ -61,12 +61,14 @@ define(function (require) {
          * Decide if the gonme have to behave
          */
         haveToBehave() {
-            if (this.timeCounter >= 60 * this.props.timeToReactInSec) {
-                this.timeCounter = 0
-                this.stepBehavior++
-                return true
+            if (this.alive) {
+                if (this.timeCounter >= 60 * this.props.timeToReactInSec) {
+                    this.timeCounter = 0
+                    this.stepBehavior++
+                    return true
+                }
+                this.timeCounter++
             }
-            this.timeCounter++
             return false
         }
         /**
@@ -95,7 +97,7 @@ define(function (require) {
          * Calculate the fitness
          */
         calculateFitness() {
-            this.fitness = (this.distance < 0 ? 0 : 1 - 1 / Math.pow(this.distance, 2)) +
+            this.fitness = (this.distance < 0 ? 0 : 1 - 1 / Math.pow(this.distance, 3)) +
                 (this.isBest ? 2 : 0)
         }
         /**
@@ -103,7 +105,7 @@ define(function (require) {
          */
         behave(entity) {
             const force = this.getForce()
-            if (!entity.isStatic() && this.isAlive()) {
+            if (!entity.isStatic()) {
                 entity.setForce(force)
             }
             this.haveToDie(entity)
@@ -125,7 +127,7 @@ define(function (require) {
          * Generate random force
          */
         generateRandomForce() {
-            const force = Maths.randomInterval(this.maxForce * -1, this.maxForce)
+            const force = Maths.randomInterval(0, this.maxForce)
             return { x: Math.round(force * 1000) / 1000, y: 0 }
         }
         /**

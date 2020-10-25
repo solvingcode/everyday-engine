@@ -19,22 +19,45 @@ define(function () {
             return genomes
         }
         /**
-         * Select parents
+         * Select parents.
+         * 1. Select parent for the first group using random fitness
+         * 2. For the other group, use the parent from the first group for the selection 
+         * @todo Simplfy this function
          */
         doParentsSelection() {
             const { genomes, nbGroups } = this.aiEngine
             const groupGenomes = this.getGroupGenomes(genomes)
-            return genomes.map((p, index) => {
-                const groupId = index % nbGroups
-                const groupGenome = groupGenomes[groupId]
-                const totalFitness = this.getTotalFitness(groupGenome)
-                const randomFitness = Math.random() * totalFitness
-                let randomBias = 0
-                return groupGenome
-                    .find(genome => {
-                        randomBias += genome.fitness
-                        return randomBias >= randomFitness
-                    })
+            let parents = []
+            for (let iGenome = 0; iGenome < genomes.length; iGenome += nbGroups) {
+                const parentGroup = []
+                let parentIndexFirstGroup = null
+                Array.from({ length: nbGroups }).forEach((p, index) => {
+                    const groupId = index % nbGroups
+                    const groupGenome = groupGenomes[groupId]
+                    let parent = null
+                    if (!groupId) {
+                        parent = this.selectParent(groupGenome)
+                        parentIndexFirstGroup = groupGenome.findIndex(gGenome => gGenome === parent)
+                    } else {
+                        parent = groupGenome[parentIndexFirstGroup]
+                    }
+                    parentGroup.push(parent)
+                })
+                parents = parents.concat(parentGroup)
+            }
+            return parents
+        }
+        /**
+         * Select a parent
+         * @param {Genome[]} genomes
+         */
+        selectParent(genomes) {
+            const totalFitness = this.getTotalFitness(genomes)
+            const randomFitness = Math.random() * totalFitness
+            let randomBias = 0
+            return genomes.find(genome => {
+                randomBias += genome.fitness
+                return randomBias >= randomFitness
             })
         }
         /**
