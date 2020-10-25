@@ -23,9 +23,10 @@ define(function (require) {
         /**
          * @inheritdoc
          */
-        add(entity) {
+        loadShape(entity) {
             const shape = this.shapeLoader.load(entity)
             Matter.World.add(this.engine.world, shape)
+            return shape
         }
 
         /**
@@ -45,7 +46,7 @@ define(function (require) {
         /**
          * Stop the physics engine
          */
-        stop() {
+        stopEngine() {
             Matter.World.clear(this.engine.world)
             Matter.Engine.clear(this.engine)
             this.engine = null
@@ -118,6 +119,25 @@ define(function (require) {
             } else {
                 this.getEngine().Body.applyForce(body, entity.getForcePosition(), force)
             }
+        }
+
+        /**
+         * @inheritdoc 
+         */
+        isCollide(entityAId, entityBId) {
+            const physicsManager = this.getPhysicsManager()
+            const entityA = physicsManager.getEntityById(entityAId)
+            const entityB = physicsManager.getEntityById(entityBId)
+            if (!entityA || !entityB) {
+                throw new TypeError(`Cannot check collision - entity not founded (A: ${!!entityA}, B: ${!!entityB})`)
+            }
+            const bodyA = this.getBodyFromEntity(entityA)
+            const bodyB = this.getBodyFromEntity(entityB)
+            if (!bodyA || !bodyB) {
+                throw new TypeError(`Cannot check collision - body not founded (A: ${!!bodyA}, B: ${!!bodyB})`)
+            }
+            const collision = Matter.SAT.collides(bodyA, bodyB)
+            return collision.collided
         }
 
     }

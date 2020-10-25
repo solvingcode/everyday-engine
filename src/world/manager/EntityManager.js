@@ -54,7 +54,7 @@ define(function (require) {
          */
         findById(entityId) {
             return this.entities.find((element) =>
-                element.id === entityId
+                element.id === parseInt(entityId)
             )
         }
 
@@ -110,21 +110,38 @@ define(function (require) {
 
         /**
          * Clone entity to the entities list
-         * @param {Entity} entity 
+         * @param {Entity} entity
+         * @param {Object} options 
          */
-        clone(entity) {
+        clone(entity, options = {}) {
             const cloneEntity = entity.clone()
             cloneEntity.name = `Clone of ${entity.name}`
             cloneEntity.id = Maths.generateId()
+            options.sameWorld && (cloneEntity.worldId = entity.id)
             return cloneEntity
+        }
+
+        /**
+         * check if the entity and all attached entities must dies
+         * @param {Entity} entity 
+         * @param {PhysicsEngine} physicsEngine 
+         */
+        haveToDie(entity, physicsEngine) {
+            const attachedEntities = this.getAttachedEntities(entity)
+            entity.haveToDie(physicsEngine)
+            if (entity.isDead()) {
+                attachedEntities.forEach(aEntity => this.isBodyEntity(aEntity) && aEntity.setDie(true))
+            }
         }
 
         /**
          * Clone given entities.
          * Manage cloning attach and body entities
+         * @param {Entity[]} entities
+         * @param {Object} options
          * @todo think to optimize the clone process
          */
-        cloneEntities(entities) {
+        cloneEntities(entities, options = {}) {
             const bodyEntities = this.getBodyEntities(entities)
             const attachEntities = this.getAttachEntities(entities)
             const cloneBodyEntities = bodyEntities.map(entity => this.clone(entity))
@@ -138,7 +155,7 @@ define(function (require) {
                 let cloneEntityA = (bodyIndexA >= 0 && cloneBodyEntities[bodyIndexA])
                 let cloneEntityB = (bodyIndexB >= 0 && cloneBodyEntities[bodyIndexB])
                 if (!cloneEntityA) {
-                    cloneEntityA = this.clone(bodyEntityA)
+                    cloneEntityA = this.clone(bodyEntityA, options)
                     cloneBodyEntities.push(cloneEntityA)
                 }
                 if (!cloneEntityB) {
@@ -149,8 +166,23 @@ define(function (require) {
                 cloneAttachEntity.entities.b = cloneEntityB
             })
             const cloneEntities = cloneBodyEntities.concat(cloneAttachEntities)
-            this.entities = this.entities.concat(cloneEntities)
             return cloneEntities
+        }
+
+        /**
+         * Concat entities
+         * @param {Entity[]} entities 
+         */
+        concatEntities(entities) {
+            this.entities = this.entities.concat(entities)
+        }
+
+        /**
+         * Replace entities
+         * @param {Entity[]} entities 
+         */
+        replaceEntities(entities) {
+            this.entities = entities
         }
 
         /**

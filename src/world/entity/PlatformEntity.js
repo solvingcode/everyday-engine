@@ -5,7 +5,7 @@ define(function (require) {
     class PlatformEntity extends EntityMotion {
 
         constructor(props) {
-            super(props)
+            super({...props, name: 'Platform'})
             this.shape = EntityMotion.shapes.RECT
         }
 

@@ -28,7 +28,13 @@ define(function (require) {
                 },
                 ...props.physics
             }
+            this.condition = {
+                die: {
+                    collisionWith: null
+                }
+            }
             this.collision = { group: 0, category: 1, mask: 1 }
+            this.die = false
         }
 
         /**
@@ -74,6 +80,52 @@ define(function (require) {
          */
         getRotationConstraint() {
             return this.physics.rotationConstraint
+        }
+
+        /**
+         * Get condition for dying (collision with another entity)
+         */
+        getDieCondition() {
+            return this.condition.die.collisionWith
+        }
+
+        /**
+         * Set condition for dying (collision with another entity)
+         */
+        setDieCondition(entityId) {
+            this.condition.die.collisionWith = entityId
+        }
+
+        /**
+         * Decide if the entity have to die
+         * @param {PhysicsEngine} physicsEngine 
+         */
+        haveToDie(physicsEngine) {
+            const entityId = this.getDieCondition()
+            this.die |= entityId && physicsEngine.isCollide(this.getWorldId(), entityId)
+        }
+
+        /**
+         * Is the entity dead
+         */
+        isDead() {
+            return this.die
+        }
+
+        /**
+         * Set the die flag
+         * @param {Boolean} die 
+         */
+        setDie(die) {
+            this.die = die
+        }
+
+        /**
+         * Get the WorldId (can be used by Engines to apply same 
+         * conditions for entities with th same worldId)
+         */
+        getWorldId() {
+            return this.worldId || this.id
         }
 
         /**

@@ -71,9 +71,11 @@ define(function (require) {
         }
         /**
          * Decide if the genome have to die
+         * @param {Entity} entity
          */
-        haveToDie() {
-            this.alive = this.stepBehavior < this.forces.length - 1
+        haveToDie(entity) {
+            this.alive = this.stepBehavior < this.forces.length - 1 &&
+                !entity.isDead()
         }
         /**
          * Is the genome alive
@@ -100,14 +102,12 @@ define(function (require) {
          * Decide what to do 
          */
         behave(entity) {
-            if (this.isAlive()) {
-                const force = this.getForce()
-                if (!entity.isStatic()) {
-                    entity.setForce(force)
-                }
-                this.haveToDie()
-                this.calculateDistance(entity)
+            const force = this.getForce()
+            if (!entity.isStatic() && this.isAlive()) {
+                entity.setForce(force)
             }
+            this.haveToDie(entity)
+            this.calculateDistance(entity)
         }
         /**
          * Mutate the genome

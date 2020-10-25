@@ -16,8 +16,9 @@ define(function (require) {
         static run(mouse, selectedEntities, entitySelector) {
             const entityManager = EntityManager.get()
             entitySelector.unselectAll()
-            entityManager.cloneEntities(selectedEntities)
-                .forEach(entity => entity.select())
+            const clones = entityManager.cloneEntities(selectedEntities)
+            clones.forEach(entity => entity.select())
+            entityManager.concatEntities(clones)
             return true
         }
 

@@ -102,17 +102,31 @@ define(function (require) {
          * Make a new generation
          */
         newGeneration() {
-            this.entityManager.entities = Storage.get().fetch(Storage.type.ENTITY)
-            const entities = this.entityManager.getDynamicEntities()
-            Array.from({ length: this.nbPerGeneration - 1 })
-                .forEach(() => this.entityManager.cloneEntities(entities))
+            this.resetPopulation()
+            this.newPopulation()
             this.entityManager.disableCollision()
             this.updatePopulation()
             this.setupGenomes()
             this.numGeneration++
             if (this.numGeneration > 1) {
-                this.physics.restart()
+                this.physics.setToRestart(true)
             }
+        }
+        /**
+         * Reset the population
+         */
+        resetPopulation() {
+            this.entityManager.entities = Storage.get().fetch(Storage.type.ENTITY)
+        }
+        /**
+         * Create a new population
+         */
+        newPopulation() {
+            const entities = this.entityManager.getDynamicEntities()
+            const clones = Array.from({ length: this.nbPerGeneration - 1 })
+                .map(() => this.entityManager.cloneEntities(entities, { sameWorld: true }))
+                .reduce((list, currentList) => currentList.concat(list), [])
+            this.entityManager.concatEntities(clones)
         }
         /**
          * Check if the population is dead

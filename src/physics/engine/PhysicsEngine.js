@@ -11,6 +11,7 @@ define(function () {
             if (this.constructor === PhysicsEngine) {
                 throw new TypeError('Abstract class PhysicsEngine cannot be instantiated directly')
             }
+            this.mapShapeToEntity = []
         }
 
         /**
@@ -25,7 +26,18 @@ define(function () {
          * @param {Entity} entity 
          */
         add(entity) {
-            throw new TypeError('"add" method must be implemented')
+            this.mapShapeToEntity.push({
+                entityId: entity.id,
+                shape: this.loadShape(entity)
+            })
+        }
+
+        /**
+         * Get the shape for entity.
+         * @param {Entity} entity 
+         */
+        loadShape(entity) {
+            throw new TypeError('"loadShape" method must be implemented')
         }
 
         /**
@@ -51,10 +63,18 @@ define(function () {
         }
 
         /**
-         * Stop the physics engine.
+         * Stop the physics engine and reset the mapping.
          */
         stop() {
-            throw new TypeError('"stop" method must be implemented')
+            this.stopEngine()
+            this.mapShapeToEntity = []
+        }
+
+        /**
+         * Stop the physics engine.
+         */
+        stopEngine() {
+            throw new TypeError('"stopEngine" method must be implemented')
         }
 
         /**
@@ -96,6 +116,15 @@ define(function () {
         }
 
         /**
+         * Check if two entity collide
+         * @param {Number} entityAId 
+         * @param {Number} entityBId 
+         */
+        isCollide(entityAId, entityBId) {
+            throw new TypeError('"isCollide" method must be implemented')
+        }
+
+        /**
          * Set the physics manager that loaded the phyiscs engine
          * @param {Physics} physicsManager 
          */
@@ -116,6 +145,16 @@ define(function () {
          */
         getBodyFromEntity(entity) {
             return this.physicsManager.getBodyFromEntity(entity)
+        }
+
+        /**
+         * Find the shape from the entity
+         * @param {Entity} entity 
+         */
+        findShapeFromEntity(entity){
+            return this.mapShapeToEntity
+                .find(mShape => mShape.entityId === parseInt(entity.id))
+                .shape
         }
 
     }

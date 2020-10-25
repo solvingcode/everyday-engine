@@ -21,6 +21,7 @@ define(function (require) {
     const LayerMenuItem = require('./items/layer/LayerMenuItem.js')
     const AiGeneticMenuItem = require('./items/genetic/AiGeneticMenuItem.js')
     const EntityMenuItem = require('./items/entity/EntityMenuItem.js')
+    const ConditionMenuItem = require('./items/condition/ConditionMenuItem.js')
 
     class Menu {
         constructor() {
@@ -43,6 +44,7 @@ define(function (require) {
                 new ShowMenuItem(),
                 new StyleMenuItem(),
                 new EntityMenuItem(),
+                new ConditionMenuItem(),
                 new LayerMenuItem(),
                 new AiGeneticMenuItem()
             ]

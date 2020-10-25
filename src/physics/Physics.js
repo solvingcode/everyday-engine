@@ -7,7 +7,7 @@ define(function (require) {
             this.entityManager = EntityManager.get()
             this.physicsEngine = physicsEngine
             this.physicsEngine.setPhysicsManager(this)
-            this.isRunning = false
+            this.toRestart = false
         }
 
         /**
@@ -15,8 +15,12 @@ define(function (require) {
          * @param {AIEngine} aiEngine
          */
         update(aiEngine) {
-            this.updateEntities()
-            this.updateEngine(aiEngine)
+            if (this.toRestart) {
+                this.restart()
+            } else {
+                this.updateEntities()
+                this.updateEngine(aiEngine)
+            }
         }
 
         /**
@@ -33,6 +37,7 @@ define(function (require) {
                 entity.setRotationAndGenerate(Math.round(rotation * 100) / 100)
                 entity.setVelocity(body.velocity)
                 entity.setAngularVelocity(body.angularVelocity)
+                this.entityManager.haveToDie(entity, this.physicsEngine)
             })
             this.physicsEngine.getJoints().map((joint, index) => {
                 const entity = jointEntites[index]
@@ -58,11 +63,19 @@ define(function (require) {
          * @param {Entity} entity 
          */
         getBodyFromEntity(entity) {
-            const bodyEntities = this.entityManager.getBodyEntities()
-            return this.physicsEngine.getBodies().find((body, index) => {
-                const bodyEntity = bodyEntities[index]
-                return bodyEntity === entity
-            })
+            const shape = this.physicsEngine.findShapeFromEntity(entity)
+            const bodies = this.physicsEngine.getBodies()
+            if (!shape || !bodies.includes(shape)) {
+                throw TypeError(`Shape not founded for the entity ${entity.id}`)
+            }
+            return shape
+        }
+
+        /**
+         * Get an entity from an ID
+         */
+        getEntityById(entityId) {
+            return this.entityManager.findById(entityId)
         }
 
         /**
@@ -70,7 +83,6 @@ define(function (require) {
          */
         stop() {
             this.physicsEngine.stop()
-            this.isRunning = false
         }
 
         /**
@@ -124,15 +136,23 @@ define(function (require) {
             this.physicsEngine.init()
             this.load()
             this.physicsEngine.run()
-            this.isRunning = true
+        }
+
+        /**
+         * Flag the physics to restart
+         * @param {Boolean} toRestart 
+         */
+        setToRestart(toRestart) {
+            this.toRestart = toRestart
         }
 
         /**
          * Restart the engine
          */
         restart() {
-            this.isRunning && this.stop()
+            this.stop()
             this.run()
+            this.setToRestart(false)
         }
 
     }
