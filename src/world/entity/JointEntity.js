@@ -21,7 +21,7 @@ define(function (require) {
         build() {
             const dragDistance = this.setMeshPositionByDragDistance()
             if (this.generatePoints(dragDistance)) {
-                return this.setConstraintEntites() && this.generate()
+                return this.setConstraintEntities() && this.generate()
             }
             return false
         }
@@ -87,7 +87,7 @@ define(function (require) {
         /**
          * Find related entities using point a and b, and attach them to the joint
          */
-        setConstraintEntites() {
+        setConstraintEntities() {
             const entitySelector = EntitySelector.get()
             this.entities.a = entitySelector.get(this.toAbsolutePosition(this.points.a), AttachEntity)
             this.entities.b = entitySelector.getAll(this.toAbsolutePosition(this.points.b), AttachEntity)
@@ -101,6 +101,10 @@ define(function (require) {
             if (this.entities.a === this.entities.b) {
                 this.entities.b = null
             }
+            
+            this.entities.a && (this.entities.a.attachedEntities = null)
+            this.entities.b && (this.entities.b.attachedEntities = null)
+
             return this.entities.a && this.entities.b
         }
 

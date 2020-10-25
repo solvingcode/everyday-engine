@@ -195,7 +195,10 @@ define(function (require) {
          * @param {EntityManager} entityManager
          */
         getAttachedEntities(entityManager) {
-            return entityManager.getAttachedEntities(this)
+            if (this.attachedEntities === null) {
+                this.attachedEntities = entityManager.getAttachedEntities(this)
+            }
+            return this.attachedEntities
         }
 
         /**

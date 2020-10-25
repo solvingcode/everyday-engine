@@ -88,6 +88,10 @@ define(function (require) {
             const entities = entitySelector.getAll(this.toAbsolutePosition(this.points.a), AttachEntity)
             this.entities.a = entities && entities[0]
             this.entities.b = entities && entities[1]
+
+            this.entities.a && (this.entities.a.attachedEntities = null)
+            this.entities.b && (this.entities.b.attachedEntities = null)
+
             return this.entities.a && this.entities.b
         }
 

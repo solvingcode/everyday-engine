@@ -127,7 +127,7 @@ define(function (require) {
          * @param {PhysicsEngine} physicsEngine 
          */
         haveToDie(entity, physicsEngine) {
-            const attachedEntities = this.getAttachedEntities(entity)
+            const attachedEntities = entity.getAttachedEntities(this)
             entity.haveToDie(physicsEngine)
             if (entity.isDead()) {
                 attachedEntities.forEach(aEntity => this.isBodyEntity(aEntity) && aEntity.setDie(true))

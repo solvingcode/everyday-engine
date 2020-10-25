@@ -53,8 +53,8 @@ define(function (require) {
         /**
          * @inheritdoc
          */
-        setConstraintEntites() {
-            if (super.setConstraintEntites()) {
+        setConstraintEntities() {
+            if (super.setConstraintEntities()) {
                 this.points.a.y += this.getArrowProps().height / 2
                 this.points.b.y += this.getArrowProps().height / 2
                 return true

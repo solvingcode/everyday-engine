@@ -31,6 +31,7 @@ define(function (require) {
             this.locked = false
             this.visible = true
             this.style = props.style
+            this.attachedEntities = null
         }
 
         /**
@@ -70,7 +71,9 @@ define(function (require) {
          * Clone the entity (can be redefined for each type)
          */
         clone() {
-            return _.cloneDeep(this)
+            const cloned = _.cloneDeep(this)
+            cloned.attachedEntities = null
+            return cloned
         }
 
         /**
