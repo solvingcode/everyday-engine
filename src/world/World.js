@@ -35,11 +35,11 @@ define(function (require) {
          * @TODO: To optimize (rerender just entities updated)
          * @param {Renderer} renderer 
          */
-        draw(renderer, camera) {
+        draw(renderer) {
             const bodyEntities = this.entityManager.getBodyEntities()
             const attachEntities = this.entityManager.getAttachEntities()
-            bodyEntities.forEach((entity) => this.drawEntity(entity, renderer, camera))
-            attachEntities.forEach((entity) => this.drawEntity(entity, renderer, camera))
+            bodyEntities.forEach((entity) => this.drawEntity(entity, renderer))
+            attachEntities.forEach((entity) => this.drawEntity(entity, renderer))
         }
 
         /**

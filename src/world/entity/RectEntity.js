@@ -10,7 +10,7 @@ define(function (require) {
         }
 
         /**
-         * @inheritdoc
+         * @inherit
          */
         build() {
             const dragDistance = this.setMeshPositionByDragDistance()
@@ -79,7 +79,7 @@ define(function (require) {
         }
 
         /**
-         * @inheritdoc
+         * @inherit
          */
         toCenterPosition() {
             return {
@@ -89,7 +89,7 @@ define(function (require) {
         }
 
         /**
-         * @inheritdoc
+         * @inherit
          */
         fromCenterPosition(position) {
             return {

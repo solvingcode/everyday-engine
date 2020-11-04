@@ -23,7 +23,7 @@ define(function (require) {
         }
 
         /**
-         * @inheritdoc
+         * @inherit
          */
         isCanGenerate() {
             return super.isCanGenerate() && !AppState.get().hasState('SIMULATE_PROGRESS')

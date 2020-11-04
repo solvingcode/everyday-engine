@@ -13,14 +13,14 @@ define(function (require) {
         }
 
         /**
-         * @inheritdoc
+         * @inherit
          */
         run() {
             this.setActionState(`${this.action}_ENTITY`, 'START')
         }
 
         /**
-         * @inheritdoc
+         * @inherit
          */
         isSelected() {
             return false

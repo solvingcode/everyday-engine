@@ -5,7 +5,7 @@ define(function (require) {
     class AttachPointMenuItem extends MenuItem {
         constructor() {
             super({
-                name: 'Attach'
+                name: 'Pin joint'
             })
         }
         run() {

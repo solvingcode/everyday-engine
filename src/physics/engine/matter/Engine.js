@@ -13,7 +13,7 @@ define(function (require) {
         }
 
         /**
-         * @inheritdoc
+         * @inherit
          */
         init() {
             this.engine = Matter.Engine.create()
@@ -21,7 +21,7 @@ define(function (require) {
         }
 
         /**
-         * @inheritdoc
+         * @inherit
          */
         loadShape(entity) {
             const shape = this.shapeLoader.load(entity)
@@ -30,7 +30,7 @@ define(function (require) {
         }
 
         /**
-         * @inheritdoc
+         * @inherit
          */
         update(entity) {
             this.shapeLoader.update(entity)
@@ -53,35 +53,35 @@ define(function (require) {
         }
 
         /**
-         * @inheritdoc
+         * @inherit
          */
         getEngine() {
             return Matter
         }
 
         /**
-         * @inheritdoc
+         * @inherit
          */
         getBodies() {
             return Matter.Composite.allBodies(this.engine.world)
         }
 
         /**
-         * @inheritdoc
+         * @inherit
          */
         getJoints() {
             return Matter.Composite.allConstraints(this.engine.world)
         }
 
         /**
-         * @inheritdoc
+         * @inherit
          */
         newGroup() {
             return Matter.Body.nextGroup(true)
         }
 
         /**
-         * @inheritdoc
+         * @inherit
          */
         updateCollisionFilters(entity) {
             const body = this.getBodyFromEntity(entity)
@@ -90,7 +90,7 @@ define(function (require) {
         }
 
         /**
-         * @inheritdoc
+         * @inherit
          */
         updateJointPosition(entity) {
             const points = entity.points
@@ -107,7 +107,7 @@ define(function (require) {
         }
 
         /**
-         * @inheritdoc
+         * @inherit
          */
         applyForce(body, entity) {
             const { force, rotationConstraint } = entity.physics
@@ -122,7 +122,7 @@ define(function (require) {
         }
 
         /**
-         * @inheritdoc 
+         * @inherit
          */
         isCollide(entityAId, entityBId) {
             const physicsManager = this.getPhysicsManager()

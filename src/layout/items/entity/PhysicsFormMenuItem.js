@@ -30,17 +30,17 @@ define(function (require) {
             this.version = 0
         }
         /**
-         * @inheritdoc
+         * @inherit
          */
         run() { }
         /**
-         * @inheritdoc
+         * @inherit
          */
         isSelected() {
             return false
         }
         /**
-         * @inheritdoc
+         * @inherit
          */
         update() {
             const selectedEntities = EntitySelector.get().getSelected()

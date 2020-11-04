@@ -13,7 +13,7 @@ define(function (require) {
         }
 
         /**
-         * @inheritdoc
+         * @inherit
          */
         static postCreate(item, el) {
             const title = item.element.props.name
@@ -25,7 +25,7 @@ define(function (require) {
         }
 
         /**
-         * @inheritdoc
+         * @inherit
          */
         static postUpdate(item, el) {
             const { name } = item.element.props

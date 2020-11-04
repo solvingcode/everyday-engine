@@ -25,35 +25,35 @@ define(function (require) {
         }
 
         /**
-         * @inheritdoc
+         * @inherit
          */
         getColorButtonUI() {
             return ColorButtonUI
         }
 
         /**
-         * @inheritdoc
+         * @inherit
          */
         getLayerEntityButtonUI() {
             return LayerEntityButtonUI
         }
 
         /**
-         * @inheritdoc
+         * @inherit
          */
         getDefaultButtonUI() {
             return DefaultButtonUI
         }
 
         /**
-         * @inheritdoc
+         * @inherit
          */
         getPanelUI() {
             return CanvasPanelUI
         }
 
         /**
-         * @inheritdoc
+         * @inherit
          */
         getItemAt(mouse) {
             const { x, y } = mouse.position

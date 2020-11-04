@@ -17,7 +17,7 @@ define(function (require) {
         }
 
         /**
-         * @inheritdoc
+         * @inherit
          */
         build() {
             this.setMeshPositionByDragDistance()
@@ -74,7 +74,7 @@ define(function (require) {
         }
 
         /**
-         * @inheritdoc
+         * @inherit
          */
         setMeshPosition(position) {
             super.setMeshPosition({ x: position.x - this.size.width / 2, y: position.y - this.size.height / 2 })
@@ -123,7 +123,7 @@ define(function (require) {
         }
 
         /**
-         * @inheritdoc
+         * @inherit
          */
         toCenterPosition() {
             return {
@@ -133,7 +133,7 @@ define(function (require) {
         }
 
         /**
-         * @inheritdoc
+         * @inherit
          */
         fromCenterPosition(position) {
             return {

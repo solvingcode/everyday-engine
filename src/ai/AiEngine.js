@@ -18,6 +18,11 @@ define(function (require) {
             this.physics = physics
             this.entityManager = entityManager
             this.camera = camera
+        }
+        /**
+         * Generate new version
+         */
+        newVersion(){
             this.version = Maths.generateId()
         }
         /**

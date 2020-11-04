@@ -26,21 +26,21 @@ define(function (require) {
         }
 
         /**
-         * @inheritdoc
+         * @inherit
          */
         run() {
             return false
         }
 
         /**
-         * @inheritdoc
+         * @inherit
          */
         isSelected() {
             return false
         }
 
         /**
-         * @inheritdoc
+         * @inherit
          */
         update() {
             const camera = World.get().getCamera()

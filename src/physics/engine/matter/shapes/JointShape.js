@@ -9,7 +9,7 @@ define(function (require) {
     class JointShape extends Shape {
 
         /**
-         * @inheritdoc
+         * @inherit
          */
         generate(entity) {
             const engine = this.getEngine()

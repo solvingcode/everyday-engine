@@ -21,21 +21,21 @@ define(function (require) {
         }
 
         /**
-         * @inheritdoc
+         * @inherit
          */
         run() {
             return false
         }
 
         /**
-         * @inheritdoc
+         * @inherit
          */
         isSelected() {
             return false
         }
 
         /**
-         * @inheritdoc
+         * @inherit
          */
         update() {
             this.items.forEach(item => item.isValid() && item.update())

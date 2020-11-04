@@ -29,56 +29,56 @@ define(function (require) {
         }
 
         /**
-         * @inheritdoc
+         * @inherit
          */
         getDefaultButtonUI() {
             return DefaultButtonUI
         }
 
         /**
-         * @inheritdoc
+         * @inherit
          */
         getPanelUI() {
             return HtmlPanelUI
         }
 
         /**
-         * @inheritdoc
+         * @inherit
          */
         getTextUI() {
             return HtmlTextUI
         }
 
         /**
-         * @inheritdoc
+         * @inherit
          */
         getGraphUI() {
             return HtmlGraphUI
         }
 
         /**
-         * @inheritdoc
+         * @inherit
          */
         getFormUI() {
             return HtmlFormUI
         }
 
         /**
-         * @inheritdoc
+         * @inherit
          */
         getFormElementUI() {
             return HtmlFormElementUI
         }
 
         /**
-         * @inheritdoc
+         * @inherit
          */
         getColorButtonUI() {
             return ColorButtonUI
         }
 
         /**
-         * @inheritdoc
+         * @inherit
          */
         getLayerEntityButtonUI() {
             return LayerEntityButtonUI
@@ -194,7 +194,7 @@ define(function (require) {
         }
 
         /**
-         * @inheritdoc
+         * @inherit
          */
         getItemAt(mouse) {
             const { path } = mouse

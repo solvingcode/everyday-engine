@@ -19,25 +19,27 @@ define(function (require) {
             this.nbPerGeneration = 20
             this.maxLifeInSec = 20
             this.timeToReactInSec = 0.1
-            this.mutationProb = 0.1
+            this.mutationProb = 0.01
             this.genomes = []
             this.nbGroups = 0
             this.population = []
-            this.numGeneration = 0
-            this.bestGenomes = []
             GeneticEngine.instance = this
         }
         /**
-         * @inheritdoc
+         * @inherit
          */
         init() {
+            this.newVersion()
+            this.numGeneration = 0
+            this.totalFitness = 0
+            this.bestGenomes = []
             this.nbGroups = this.getPopulation().length
             this.initGenomes()
             this.newGeneration()
             this.updateCamera()
         }
         /**
-         * @inheritdoc
+         * @inherit
          */
         update() {
             if (this.isPopulationDead()) {
@@ -72,7 +74,7 @@ define(function (require) {
             })
         }
         /**
-         * Get the brain of the given entity
+         * Get the genome of the given entity
          * @param {Entity} entity 
          */
         getGenome(entity) {
@@ -104,7 +106,6 @@ define(function (require) {
         newGeneration() {
             this.resetPopulation()
             this.newPopulation()
-            this.entityManager.disableCollision()
             this.updatePopulation()
             this.setupGenomes()
             this.numGeneration++
@@ -124,7 +125,11 @@ define(function (require) {
         newPopulation() {
             const entities = this.entityManager.getDynamicEntities()
             const clones = Array.from({ length: this.nbPerGeneration - 1 })
-                .map(() => this.entityManager.cloneEntities(entities, { sameWorld: true }))
+                .map((c, index) => {
+                    const cloneEntities = this.entityManager.cloneEntities(entities, { sameWorld: true })
+                    cloneEntities.forEach(entity => entity.setCollisionMask(index + 2))
+                    return cloneEntities
+                })
                 .reduce((list, currentList) => currentList.concat(list), [])
             this.entityManager.concatEntities(clones)
         }
@@ -141,7 +146,7 @@ define(function (require) {
             this.camera.attach(this.population[0])
         }
         /**
-         * Update the color genome
+         * Update the color of the genome
          */
         updateColor(genome) {
             this.entityManager.findById(genome.entityId)

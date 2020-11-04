@@ -20,7 +20,7 @@ define(function (require) {
         }
 
         /**
-         * @inheritdoc
+         * @inherit
          */
         update() {
             const aiEngine = GeneticEngine.get()
@@ -41,19 +41,19 @@ define(function (require) {
         }
 
         /**
-         * @inheritdoc
+         * @inherit
          */
         isValid() {
             return this.appState.hasState('SIMULATE_PROGRESS')
         }
 
         /**
-         * @inheritdoc
+         * @inherit
          */
         run() { }
 
         /**
-         * @inheritdoc
+         * @inherit
          */
         isSelected() {
             return false

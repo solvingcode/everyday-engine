@@ -14,14 +14,14 @@ define(function (require) {
         }
 
         /**
-         * @inheritdoc
+         * @inherit
          */
         static postCreate(item, el) {
             el.textContent = item.element.props.name
         }
 
         /**
-         * @inheritdoc
+         * @inherit
          */
         static postUpdate(item, el) {
             const { name } = item.element.props

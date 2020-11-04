@@ -15,7 +15,7 @@ define(function (require) {
         }
 
         /**
-         * @inheritdoc
+         * @inherit
          */
         static postCreate(item, el, uiRenderer) {
             const entity = item.element.getEntity()
@@ -31,7 +31,7 @@ define(function (require) {
         }
 
         /**
-         * @inheritdoc
+         * @inherit
          */
         static postUpdate(item, el, uiRenderer) {
             const entity = item.element.getEntity()
@@ -46,7 +46,7 @@ define(function (require) {
         }
 
         /**
-         * @inheritdoc 
+         * @inherit
          */
         static getClassName(item) {
             const entity = item.element.getEntity()

@@ -15,7 +15,7 @@ define(function (require) {
         }
 
         /**
-         * @inheritdoc
+         * @inherit
          */
         static postCreate(item, el) {
             const { graph } = item.element
@@ -29,7 +29,7 @@ define(function (require) {
         }
 
         /**
-         * @inheritdoc
+         * @inherit
          */
         static postUpdate(item, el) {
             const { graph } = item.element

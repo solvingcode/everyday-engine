@@ -25,28 +25,28 @@ define(function (require) {
         }
 
         /**
-         * @inheritdoc
+         * @inherit
          */
         run() {
             return false
         }
 
         /**
-         * @inheritdoc
+         * @inherit
          */
         isSelected() {
             return false
         }
 
         /**
-         * @inheritdoc
+         * @inherit
          */
         isValid() {
             return super.isValid() || this.appState.hasState('SIMULATE_PROGRESS')
         }
 
         /**
-         * @inheritdoc
+         * @inherit
          */
         update() {
             this.items.forEach(item => item.isValid() && item.update())

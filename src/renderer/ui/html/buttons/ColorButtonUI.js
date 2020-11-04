@@ -18,7 +18,7 @@ define(function (require) {
         }
 
         /**
-         * @inheritdoc 
+         * @inherit
          */
         static getStyle(item) {
             const { color } = item.element.data
@@ -29,7 +29,7 @@ define(function (require) {
         }
 
         /**
-         * @inheritdoc 
+         * @inherit
          */
         static getClassName(item) {
             const { color } = item.element.data

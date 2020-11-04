@@ -22,7 +22,7 @@ define(function (require) {
             this.value = value
         }
         /**
-         * @inheritdoc
+         * @inherit
          */
         run() {
             const { event } = this
@@ -30,7 +30,7 @@ define(function (require) {
             this.setDataState({ form: { event, item: this } })
         }
         /**
-         * @inheritdoc
+         * @inherit
          */
         isSelected() {
             return false

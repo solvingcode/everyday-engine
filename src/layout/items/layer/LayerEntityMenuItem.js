@@ -16,7 +16,7 @@ define(function (require) {
         }
 
         /**
-         * @inheritdoc
+         * @inherit
          */
         run() {
             this.setActionState('SELECT_ENTITY', 'START')
@@ -24,14 +24,14 @@ define(function (require) {
         }
 
         /**
-         * @inheritdoc
+         * @inherit
          */
         isSelected() {
             return this.getEntity().selected
         }
         
         /**
-         * @inheritdoc
+         * @inherit
          */
         isValid() {
             return super.isValid() && EntityManager.get().entities.includes(this.getEntity()) &&

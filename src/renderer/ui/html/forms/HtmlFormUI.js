@@ -14,7 +14,7 @@ define(function (require) {
         }
 
         /**
-         * @inheritdoc
+         * @inherit
          */
         static postCreate(item, el) {
             const { version } = item.element
@@ -22,7 +22,7 @@ define(function (require) {
         }
 
         /**
-         * @inheritdoc
+         * @inherit
          */
         static postUpdate(item, el) {
             const { version } = item.element

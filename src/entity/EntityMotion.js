@@ -139,24 +139,6 @@ define(function (require) {
         }
 
         /**
-         * Move the entity by velocity
-         * @param {Object} velocity 
-         */
-        move(velocity) {
-            const x = this.physics.velocity.x + velocity.x
-            const y = this.physics.velocity.y + velocity.y
-            this.physics.velocity = new Vector({ x, y })
-        }
-
-        /**
-         * Move the entity by angular velocity
-         * @param {Number} angularVelocity 
-         */
-        moveAngular(angularVelocity) {
-            this.physics.angularVelocity += angularVelocity
-        }
-
-        /**
          * Get the force position (center of the entity by default)
          */
         getForcePosition() {
@@ -168,14 +150,6 @@ define(function (require) {
          */
         update() {
             super.update()
-        }
-
-        /**
-         * Move the entity by distance
-         * @param {Object} distance 
-         */
-        moveDistance(distance) {
-            this.setPosition({ x: this.position.x + distance.x, y: this.position.y + distance.y })
         }
 
         /**
@@ -217,6 +191,14 @@ define(function (require) {
          */
         setCollisionGroup(collisionGroup) {
             this.collision.group = collisionGroup
+        }
+
+        /**
+         * Set the collision mask
+         * @param {Number} collisionMask 
+         */
+        setCollisionMask(collisionMask) {
+            this.collision.mask = collisionMask
         }
 
         /**

@@ -127,7 +127,7 @@ define(function (require) {
          * Generate random force
          */
         generateRandomForce() {
-            const force = Maths.randomInterval(0, this.maxForce)
+            const force = Maths.randomInterval(this.maxForce * -1, this.maxForce)
             return { x: Math.round(force * 1000) / 1000, y: 0 }
         }
         /**

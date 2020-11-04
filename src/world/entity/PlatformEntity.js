@@ -10,7 +10,7 @@ define(function (require) {
         }
 
         /**
-         * @inheritdoc
+         * @inherit
          */
         build() {
             this.size = { width: 20000, height: 50 }
@@ -50,7 +50,7 @@ define(function (require) {
         }
 
         /**
-         * @inheritdoc
+         * @inherit
          */
         toCenterPosition() {
             return {
@@ -60,7 +60,7 @@ define(function (require) {
         }
 
         /**
-         * @inheritdoc
+         * @inherit
          */
         fromCenterPosition(position) {
             return {

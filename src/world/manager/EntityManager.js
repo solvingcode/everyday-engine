@@ -353,8 +353,8 @@ define(function (require) {
         }
 
         /**
-         * Get attached entities (bidirectional)
-         * @TODO This function is deprecated, must be revisited
+         * Get attached entities (bidirectional).
+         * PS: The list include the given entity
          * @param {Entity} entity 
          * @param {Class} attachType
          * @param {Entity[]} exculdeEntities
@@ -398,7 +398,7 @@ define(function (require) {
          * Get entities of type body
          * @param {Entity[]} entities
          */
-        getBodyEntities(entities) {
+        getBodyEntities(entities = null) {
             return (entities || this.entities).filter(entity => this.isBodyEntity(entity))
         }
 
@@ -406,7 +406,7 @@ define(function (require) {
          * Get entities of type attach
          * @param {Entity[]} entities
          */
-        getAttachEntities(entities) {
+        getAttachEntities(entities = null) {
             return (entities || this.entities).filter(entity => this.isAttachEntity(entity))
         }
 
