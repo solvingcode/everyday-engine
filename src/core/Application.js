@@ -67,7 +67,7 @@ define(function (require) {
         updateFPS() {
             const deltaTime = (Date.now() - this.startTimeFPS) / 1000
             if (deltaTime > 1) {
-                document.title = `${this.title} - (${parseInt(this.nbFrame / deltaTime)} FPS)`
+                document.title = `${this.title} - (${Math.floor(this.nbFrame / deltaTime)} FPS)`
                 this.nbFrame = 0
                 this.startTimeFPS = Date.now()
             } else {

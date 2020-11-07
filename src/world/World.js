@@ -7,6 +7,11 @@ define(function (require) {
     const Physics = require('../physics/Physics.js')
     const MatterEngine = require('../physics/engine/matter/Engine.js')
 
+    /**
+     * Define the World
+     * @property {AiEngine} aiEngine
+     * @property {Camera} camera
+     */
     class World {
 
         constructor() {

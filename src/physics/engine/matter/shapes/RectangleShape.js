@@ -1,7 +1,7 @@
 define(function (require) {
 
     const PlatformEntity = require('../../../../world/entity/PlatformEntity.js')
-    const Shape = require('./Shape.js')
+    const Shape = require('../../Shape.js')
 
     /**
      * Rectangle Shape class

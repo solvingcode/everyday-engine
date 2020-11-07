@@ -90,7 +90,7 @@ define(function (require) {
 
         /**
          * Find menu item by index and zone
-         * @param {Integer} index (must start from 0)
+         * @param {Number} index (must start from 0)
          * @param {String} zone 
          */
         findItemByZone(index, zone) {

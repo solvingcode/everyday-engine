@@ -1,8 +1,10 @@
-define(function (require) {
+define(function () {
 
     /**
      * Define a block of pixels loaded to the VRAM.
      * Attached to an entity, and used to draw pixels by the GPU
+     * @property {{x: number, y: number}} position
+     * @property {{width: number, height: number}} size
      */
     class Mesh {
 
@@ -17,7 +19,7 @@ define(function (require) {
         }
 
         /**
-         * Initalize the canvas and the context for the current Mesh
+         * Initialize the canvas and the context for the current Mesh
          */
         initCanvas() {
             const canvas = new OffscreenCanvas(this.size.width, this.size.height)
@@ -38,6 +40,7 @@ define(function (require) {
 
         /**
          * Clear the Mesh
+         * @param {number|{ width: number, height: number }} size
          */
         clear(size = 0) {
             this.size = this.getSize(size || this.size)

@@ -78,6 +78,13 @@ define(function () {
         }
 
         /**
+         * Update the physics engine.
+         */
+        updateEngine() {
+            throw new TypeError('"updatEngine" method must be implemented')
+        }
+
+        /**
          * Get bodies informations (position, ...)
          */
         getBodies() {
@@ -85,7 +92,7 @@ define(function () {
         }
 
         /**
-         * Get joints informations (position, ...)
+         * Get joints information (position, ...)
          */
         getJoints() {
             throw new TypeError('"getJoints" method must be implemented')
@@ -117,8 +124,9 @@ define(function () {
 
         /**
          * Check if two entity collide
+         * @abstract
          * @param {Number} entityAId 
-         * @param {Number} entityBId 
+         * @param {Number} entityBId
          */
         isCollide(entityAId, entityBId) {
             throw new TypeError('"isCollide" method must be implemented')
@@ -155,6 +163,15 @@ define(function () {
             return this.mapShapeToEntity
                 .find(mShape => mShape.entityId === parseInt(entity.id))
                 .shape
+        }
+
+        /**
+         * Update joint position
+         * @abstract
+         * @param {Entity} entity
+         */
+        updateJointPosition(entity){
+            throw new TypeError('"updateJointPosition" method must be implemented')
         }
 
     }

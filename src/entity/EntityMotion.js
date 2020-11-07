@@ -123,6 +123,7 @@ define(function (require) {
         /**
          * Get the WorldId (can be used by Engines to apply same 
          * conditions for entities with th same worldId)
+         * @return {number}
          */
         getWorldId() {
             return this.worldId || this.id
@@ -130,6 +131,8 @@ define(function (require) {
 
         /**
          * Set the static flag
+         * @param {number} min
+         * @param {number} max
          */
         setRotationConstraint({ min, max }) {
             const constraint = this.getRotationConstraint()
@@ -215,7 +218,7 @@ define(function (require) {
          * Get the relative position of a point inside the current entity
          * from a relative point inside a given entity
          * @param {Entity} entity 
-         * @param {Object} point 
+         * @param {{x: number, y: number}} point
          */
         getRelativeCenterPosition(entity, point) {
             return this.toRelativeCenterPosition(entity.toAbsolutePosition(point))

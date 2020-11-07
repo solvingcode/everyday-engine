@@ -10,6 +10,7 @@ define(function (require) {
     /**
      * GeneticEngine class
      * Define the AI engine which use Genetic algorithms to train AI
+     * @property {Genome[]} genomes
      */
     class GeneticEngine extends AiEngine {
 
@@ -88,7 +89,7 @@ define(function (require) {
                 .map(() => Color.fromArrayInt([Maths.generateId()]))
             this.genomes = Array.from({ length: this.nbPerGeneration * this.nbGroups })
                 .map((v, index) => {
-                    const color = colors[parseInt(index / this.nbGroups)]
+                    const color = colors[Math.floor(index / this.nbGroups)]
                     return new Genome(this, { color })
                 })
         }
@@ -126,9 +127,7 @@ define(function (require) {
             const entities = this.entityManager.getDynamicEntities()
             const clones = Array.from({ length: this.nbPerGeneration - 1 })
                 .map((c, index) => {
-                    const cloneEntities = this.entityManager.cloneEntities(entities, { sameWorld: true })
-                    cloneEntities.forEach(entity => entity.setCollisionMask(index + 2))
-                    return cloneEntities
+                    return this.entityManager.cloneEntities(entities, { sameWorld: true })
                 })
                 .reduce((list, currentList) => currentList.concat(list), [])
             this.entityManager.concatEntities(clones)

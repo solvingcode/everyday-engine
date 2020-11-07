@@ -19,20 +19,22 @@ define(function () {
         /**
          * Add action to the queue.
          * @param {Object} object the object must define the method "execute"
-         * @param {...any} args 
+         * @param {...any} args
          */
         add(object, ...args) {
-            this.queue.push({ object, args })
+            this.queue.push({object, args})
         }
 
         /**
-         * Run all actions. stop the exectution if the "execute" return true.
+         * Run all actions. stop the execution if the "execute" return true.
          */
         run() {
             for (const iQueue in this.queue) {
-                const action = this.queue[iQueue]
-                if (action.object.execute.apply(action.object, action.args)) {
-                    break;
+                if (this.queue.hasOwnProperty(iQueue)) {
+                    const action = this.queue[iQueue]
+                    if (action.object.execute.apply(action.object, action.args)) {
+                        break;
+                    }
                 }
             }
             this.queue = []

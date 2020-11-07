@@ -13,18 +13,33 @@ define(function () {
             this.lastPosition = this.currentPosition
         }
 
+        /**
+         * @param {MouseEvent} event
+         * @return {{x: number, y: number}}
+         */
         getPosition(event) {
             return { x: event.clientX, y: event.clientY }
         }
 
+        /**
+         * @param {MouseEvent} event
+         * @return {EventTarget}
+         */
         getTarget(event) {
             return event.target
         }
 
+        /**
+         * @param {MouseEvent} event
+         * @return {EventTarget[]}
+         */
         getPath(event) {
-            return event.path
+            return event.composedPath()
         }
 
+        /**
+         * @param {number} key
+         */
         setButtonPressed(key) {
             if (!this.isButtonPressed(key)) {
                 this.keydowns.push(key)
@@ -34,46 +49,75 @@ define(function () {
             this.path = this.getPath(event)
         }
 
+        /**
+         * @param {number} key
+         */
         setButtonClicked(key) {
             if (!this.isButtonClicked(key)) {
                 this.keyclicks.push(key)
             }
         }
 
+        /**
+         * @param {number} key
+         */
         setButtonDoubleClicked(key) {
             if (!this.isButtonDoubleClicked(key)) {
                 this.keydbclicks.push(key)
             }
         }
 
+        /**
+         * @param {number} key
+         */
         setButtonReleased(key) {
             if (this.isButtonPressed(key)) {
-                var index = this.keydowns.indexOf(key)
+                let index = this.keydowns.indexOf(key)
                 this.keydowns.splice(index, 1)
             }
         }
 
+        /**
+         * Return the distance between the currentPosition and the position
+         * of the mouse on the click
+         * @returns {{x: number, y: number}}
+         */
         getDragDistance() {
             const x = this.currentPosition.x - this.position.x
             const y = this.currentPosition.y - this.position.y
             return { x, y }
         }
 
+        /**
+         * @param {number} key
+         * @return {Boolean}
+         */
         isButtonPressed(key) {
-            var index = this.keydowns.indexOf(key)
+            let index = this.keydowns.indexOf(key)
             return index !== -1
         }
 
+        /**
+         * @param {number} key
+         * @return {Boolean}
+         */
         isButtonClicked(key) {
-            var index = this.keyclicks.indexOf(key)
+            let index = this.keyclicks.indexOf(key)
             return index !== -1
         }
 
+        /**
+         * @param {number} key
+         * @return {Boolean}
+         */
         isButtonDoubleClicked(key) {
-            var index = this.keydbclicks.indexOf(key)
+            let index = this.keydbclicks.indexOf(key)
             return index !== -1
         }
 
+        /**
+         * @return {Boolean}
+         */
         isMouseMove() {
             return this.lastPosition.x !== this.currentPosition.x ||
                 this.lastPosition.y !== this.currentPosition.y

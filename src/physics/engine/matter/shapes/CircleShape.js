@@ -1,6 +1,6 @@
 define(function (require) {
 
-    const Shape = require('./Shape.js')
+    const Shape = require('../../Shape.js')
 
     /**
      * Circle Shape class

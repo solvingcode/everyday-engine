@@ -6,6 +6,7 @@ define(function () {
     class Maths {
         /**
          * Generate an uniqu ID
+         * @return {number}
          */
         static generateId() {
             return Date.now() + parseInt(Math.random() * 100000)

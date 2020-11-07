@@ -4,8 +4,16 @@ define(function (require) {
 
     /**
      * Handle the window event listeners (keyboard, mouse, ...)
+     * @property {Keyboard} keyboard
+     * @property {Mouse} mouse
      */
     class Window {
+
+        /**
+         * @type {Window}
+         */
+        static instance = null
+
         constructor() {
             this.keyboard = new Keyboard()
             this.mouse = new Mouse()
@@ -44,6 +52,9 @@ define(function (require) {
             })
         }
 
+        /**
+         * @return {Window}
+         */
         static get() {
             if (!Window.instance) {
                 Window.instance = new Window()
@@ -51,8 +62,6 @@ define(function (require) {
             return Window.instance
         }
     }
-
-    Window.instance = null
 
     return Window
 })

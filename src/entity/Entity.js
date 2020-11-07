@@ -9,8 +9,21 @@ define(function (require) {
      * Abstract Entity class
      * @abstract
      * @todo Think to use a MeshManager for performance
+     *
+     * @property {Mesh} mesh
+     * @property {number} id
+     *
+     * @typedef {{color: string, fillColor: string}} Style
+     * @typedef {{style: Style, name: string,
+     *      position: {x: number, y: number},
+     *      rotation: number,
+     *      size: {width: number, height: number} | number
+     *      }} EntityProps
      */
     class Entity {
+        /**
+         * @param {EntityProps} props
+         */
         constructor(props) {
             if (this.constructor === Entity) {
                 throw new TypeError('Abstract class Entity cannot be instantiated directly')
@@ -112,7 +125,7 @@ define(function (require) {
 
         /**
          * Set the entity's rotation
-         * @param {Integer} angle 
+         * @param {Number} angle
          */
         setRotationAndGenerate(angle) {
             if (this.rotation !== angle) {
@@ -123,7 +136,7 @@ define(function (require) {
 
         /**
          * Set the entity's style
-         * @param {Integer} angle 
+         * @param {Style} style
          */
         setStyleAndGenerate(style) {
             this.style = style
@@ -197,6 +210,7 @@ define(function (require) {
 
         /**
          * Convert current position to center position
+         * @abstract
          */
         toCenterPosition() {
             throw new TypeError('"toCenterPosition" method must be implemented')
@@ -204,6 +218,8 @@ define(function (require) {
 
         /**
          * Get current position from center position
+         * @param {Vector} position
+         * @abstract
          */
         fromCenterPosition(position) {
             throw new TypeError('"fromCenterPosition" method must be implemented')
@@ -211,8 +227,8 @@ define(function (require) {
 
         /**
          * Move current entity from point A to B
-         * @param {Object} pointA absolute position
-         * @param {Object} pointB absolute position
+         * @param {Vector} pointA absolute position
+         * @param {Vector} pointB absolute position
          */
         movePointTo(pointA, pointB) {
             const x = this.position.x + pointB.x - pointA.x
@@ -222,7 +238,8 @@ define(function (require) {
 
         /**
          * Convert relative coordinate to absolute coordinate
-         * @param {Object} point Relative coordinate
+         * @param {{x: number, y: number}} point Relative coordinate
+         * @return {{x: number, y: number}}
          */
         toAbsolutePosition(point) {
             return {
@@ -233,7 +250,7 @@ define(function (require) {
 
         /**
          * Convert absolute coordinate to relative coordinate
-         * @param {Object} point Absolute coordinate
+         * @param {Vector} point Absolute coordinate
          */
         fromAbsolutePosition(point) {
             return {
@@ -245,7 +262,8 @@ define(function (require) {
         /**
          * Convert absolute coordinate to relative coordinate
          * based to the center of the object
-         * @param {Object} point Absolute coordinate
+         * @param {{x: number, y: number}} point Absolute coordinate
+         * @return {{x: number, y: number}}
          */
         toRelativeCenterPosition(point) {
             const { x, y } = this.toCenterPosition()
@@ -257,7 +275,7 @@ define(function (require) {
 
         /**
          * Convert relative coordinate (based to the center) to absolute coordinate
-         * @param {Object} point Absolute coordinate
+         * @param {Vector} point Absolute coordinate
          */
         fromRelativeCenterPosition(point) {
             const { x, y } = this.toCenterPosition()
@@ -271,13 +289,13 @@ define(function (require) {
          * Update the Mesh position related to the distance
          * between the click mouse position and the actual
          * position of the mouse, and return the drag distance
-         * @return {Object}
+         * @return {{x: number, y: number}}
          */
         setMeshPositionByDragDistance() {
             const window = Window.get()
             const dragDistance = window.mouse.getDragDistance()
-            var newX = window.mouse.position.x
-            var newY = window.mouse.position.y
+            let newX = window.mouse.position.x
+            let newY = window.mouse.position.y
             if (dragDistance.x <= 0) {
                 newX = window.mouse.currentPosition.x
             }
@@ -304,7 +322,7 @@ define(function (require) {
 
         /**
          * Update the mesh from a given context
-         * @param {CanvasRenderingContext2D} context 
+         * @param {OffscreenCanvasRenderingContext2D} context
          */
         updateMeshFromContext(context) {
             const sw = context.canvas.width, sh = context.canvas.height
@@ -355,7 +373,7 @@ define(function (require) {
 
         /**
          * Check if point is inside the entity (using size)
-         * Method can be overwride by the subentities for more precision
+         * Method can be overwrite by the sub-entities for more precision
          * @param {Object} point absolute coordinate
          */
         includes(point) {

@@ -1,27 +1,38 @@
 define(function () {
     /**
      * Define the keyboard inputs (key pressed, released)
+     * @property {number[]} keys
      */
     class Keyboard {
         constructor() {
             this.keys = []
         }
 
+        /**
+         * @param {number} key
+         */
         setKeyPressed(key) {
             if (!this.isKeyPressed(key)) {
                 this.keys.push(key)
             }
         }
 
+        /**
+         * @param {number} key
+         */
         setKeyReleased(key) {
             if (this.isKeyPressed(key)) {
-                var index = this.keys.indexOf(key)
+                let index = this.keys.indexOf(key)
                 this.keys.splice(index, 1)
             }
         }
 
+        /**
+         * @param {number} key
+         * @return {Boolean}
+         */
         isKeyPressed(key) {
-            var index = this.keys.indexOf(key)
+            let index = this.keys.indexOf(key)
             return index !== -1
         }
     }

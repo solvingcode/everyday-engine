@@ -9,6 +9,8 @@ define(function (require) {
     /**
      * Entity Manager class
      * Manage the entities list, used to manipulate the entities (get, add, load, ...)
+     *
+     * @property {Entity[]} entities
      */
     class EntityManager {
         constructor() {
@@ -165,8 +167,7 @@ define(function (require) {
                 cloneAttachEntity.entities.a = cloneEntityA
                 cloneAttachEntity.entities.b = cloneEntityB
             })
-            const cloneEntities = cloneBodyEntities.concat(cloneAttachEntities)
-            return cloneEntities
+            return cloneBodyEntities.concat(cloneAttachEntities)
         }
 
         /**
@@ -414,7 +415,7 @@ define(function (require) {
          * Get dynamic entities (not static, like platform, ...)
          * @param {Entity[]} entities
          */
-        getDynamicEntities(entities) {
+        getDynamicEntities(entities = null) {
             return (entities || this.entities).filter(entity => this.isNotStaticEntity(entity))
         }
 

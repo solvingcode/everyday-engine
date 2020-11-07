@@ -3,6 +3,9 @@ define(function (require) {
     const EntityManager = require('../world/manager/EntityManager.js')
     class Physics {
 
+        /**
+         * @param {PhysicsEngine} physicsEngine
+         */
         constructor(physicsEngine) {
             this.entityManager = EntityManager.get()
             this.physicsEngine = physicsEngine
@@ -12,7 +15,7 @@ define(function (require) {
 
         /**
          * Update physics, and train AI
-         * @param {AIEngine} aiEngine
+         * @param {AiEngine} aiEngine
          */
         update(aiEngine) {
             if (this.toRestart) {
@@ -55,6 +58,7 @@ define(function (require) {
             this.entityManager.getBodyEntities().forEach(entity => {
                 this.physicsEngine.update(entity)
             })
+            this.physicsEngine.updateEngine()
             aiEngine.update()
         }
 

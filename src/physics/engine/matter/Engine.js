@@ -1,7 +1,7 @@
 define(function (require) {
 
     const PhysicsEngine = require('../PhysicsEngine.js')
-    const ShapeLoader = require('./ShapeLoader.js')
+    const ShapeLoader = require('../ShapeLoader.js')
 
     /**
      * Matter Physics Engine class
@@ -40,7 +40,7 @@ define(function (require) {
          * Run the physics engine
          */
         run() {
-            Matter.Engine.run(this.engine)
+            //Matter.Engine.run(this.engine)
         }
 
         /**
@@ -53,35 +53,42 @@ define(function (require) {
         }
 
         /**
-         * @inherit
+         * @inheritDoc
+         */
+        updateEngine() {
+            Matter.Engine.update(this.engine)
+        }
+
+        /**
+         * @inheritDoc
          */
         getEngine() {
             return Matter
         }
 
         /**
-         * @inherit
+         * @inheritDoc
          */
         getBodies() {
             return Matter.Composite.allBodies(this.engine.world)
         }
 
         /**
-         * @inherit
+         * @inheritDoc
          */
         getJoints() {
             return Matter.Composite.allConstraints(this.engine.world)
         }
 
         /**
-         * @inherit
+         * @inheritDoc
          */
         newGroup() {
             return Matter.Body.nextGroup(true)
         }
 
         /**
-         * @inherit
+         * @inheritDoc
          */
         updateCollisionFilters(entity) {
             const body = this.getBodyFromEntity(entity)
@@ -90,7 +97,7 @@ define(function (require) {
         }
 
         /**
-         * @inherit
+         * @inheritDoc
          */
         updateJointPosition(entity) {
             const points = entity.points

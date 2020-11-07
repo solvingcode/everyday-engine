@@ -51,8 +51,8 @@ define(function (require) {
          * @param {Object} data 
          */
         hasData(data) {
-            for (const pindex in data) {
-                if (data[pindex] !== this.data[pindex]) {
+            for (const pIndex in data) {
+                if (data[pIndex] !== this.data[pIndex]) {
                     return false
                 }
             }
@@ -61,7 +61,7 @@ define(function (require) {
 
         /**
          * Add a state to the states list.
-         * @param {AppState.States} state 
+         * @param {string} state
          * @param {Boolean} isHistory
          */
         addState(state, isHistory = true) {
@@ -86,7 +86,7 @@ define(function (require) {
          * @param {Boolean} exact 
          */
         findStateIndex(state, exact = true) {
-            var indices = []
+            let indices = []
             if (exact) {
                 const index = this.state.indexOf(state)
                 if (index >= 0) {
