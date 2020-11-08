@@ -12,6 +12,7 @@ define(function (require) {
      *
      * @property {Mesh} mesh
      * @property {number} id
+     * @property {string} shape
      *
      * @typedef {{color: string, fillColor: string}} Style
      * @typedef {{style: Style, name: string,

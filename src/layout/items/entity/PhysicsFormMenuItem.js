@@ -61,7 +61,7 @@ define(function (require) {
             const entityManager = EntityManager.get()
             this.items = []
 
-            if (!entityManager.isAttachEntity(this.object)) {
+            if (this.object && !entityManager.isAttachEntity(this.object)) {
                 this.items = this.items.concat([
                     new CheckboxMenuItem(this,
                         { name: 'Static' },

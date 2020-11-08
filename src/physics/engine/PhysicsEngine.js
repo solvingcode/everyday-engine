@@ -34,7 +34,8 @@ define(function () {
 
         /**
          * Get the shape for entity.
-         * @param {Entity} entity 
+         * @param {Entity} entity
+         * @return {Body}
          */
         loadShape(entity) {
             throw new TypeError('"loadShape" method must be implemented')
@@ -50,6 +51,7 @@ define(function () {
 
         /**
          * Get the Engine (third party)
+         * @return {any}
          */
         getEngine() {
             throw new TypeError('"getEngine" method must be implemented')
@@ -86,6 +88,7 @@ define(function () {
 
         /**
          * Get bodies informations (position, ...)
+         * @return {any[]}
          */
         getBodies() {
             throw new TypeError('"getBodies" method must be implemented')
@@ -93,6 +96,7 @@ define(function () {
 
         /**
          * Get joints information (position, ...)
+         * @return {any[]}
          */
         getJoints() {
             throw new TypeError('"getJoints" method must be implemented')
@@ -100,6 +104,7 @@ define(function () {
 
         /**
          * Create new group of collision
+         * @return {any}
          */
         newGroup() {
             throw new TypeError('"newGroup" method must be implemented')

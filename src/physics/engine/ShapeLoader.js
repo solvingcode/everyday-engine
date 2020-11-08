@@ -11,6 +11,8 @@ define(function (require) {
     /**
      * Shape Loader class
      * Manage and load shapes
+     *
+     * @property {{[string]: Shape}} mapShapes
      */
     class ShapeLoader {
 
@@ -27,7 +29,9 @@ define(function (require) {
 
         /**
          * Load entity shape to the Engine world
-         * @param {Entity} entity 
+         * @param {Entity} entity
+         *
+         * @return {Shape}
          */
         load(entity) {
             const type = this.mapShapes[entity.shape]

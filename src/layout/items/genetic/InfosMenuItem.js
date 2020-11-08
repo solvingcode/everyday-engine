@@ -41,7 +41,7 @@ define(function (require) {
         }
 
         /**
-         * @inherit
+         * @inheritDoc
          */
         isValid() {
             return this.appState.hasState('SIMULATE_PROGRESS')

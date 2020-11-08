@@ -30,10 +30,16 @@ define(function (require) {
             this.setDataState({ form: { event, item: this } })
         }
         /**
-         * @inherit
+         * @inheritDoc
          */
         isSelected() {
             return false
+        }
+        /**
+         * @inheritDoc
+         */
+        isValid() {
+            return this.parent.isValid();
         }
     }
 

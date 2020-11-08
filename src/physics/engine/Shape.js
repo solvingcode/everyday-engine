@@ -8,6 +8,8 @@ define(function (require) {
      * and Body (managed by the Engine).
      * Used to synchronize information between the Body and related Entity
      * @abstract
+     *
+     * @property {Shape} instance
      */
     class Shape {
 
@@ -21,6 +23,7 @@ define(function (require) {
         /**
          * Generate the body for the given entity
          * @param {Entity} entity
+         * @return {Body}
          */
         generate(entity) {
             throw new TypeError('"Shape.generate" method must be implemented')
@@ -28,7 +31,8 @@ define(function (require) {
 
         /**
          * Load the body for the given entity, and update physics
-         * @param {Entity} entity 
+         * @param {Entity} entity
+         * @return {Body}
          */
         load(entity) {
             const body = this.generate(entity)
@@ -66,9 +70,11 @@ define(function (require) {
         /**
          * Get the instance of type using the given physics engine
          * @param {Shape} type 
-         * @param {PhysicsEngine} physicEngine 
+         * @param {PhysicsEngine} physicEngine
+         *
+         * @return {Shape}
          */
-        static get(type, physicEngine) {
+        static get(type, physicEngine = null) {
             if (physicEngine && !type.instance) {
                 type.instance = new type(physicEngine)
             }

@@ -414,6 +414,7 @@ define(function (require) {
         /**
          * Get dynamic entities (not static, like platform, ...)
          * @param {Entity[]} entities
+         * @return {Entity[]}
          */
         getDynamicEntities(entities = null) {
             return (entities || this.entities).filter(entity => this.isNotStaticEntity(entity))

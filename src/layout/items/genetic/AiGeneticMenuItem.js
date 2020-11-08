@@ -4,6 +4,7 @@ define(function (require) {
     const InfosMenuItem = require('./InfosMenuItem.js')
     const FitnessGraphMenuItem = require('./FitnessGraphMenuItem.js')
     const FormMenuItem = require('./FormMenuItem.js')
+    const FormSimulationMenuItem = require('./FormSimulationMenuItem.js')
     const Layout = require('../../Layout.js')
 
     /**
@@ -20,7 +21,8 @@ define(function (require) {
             this.items = [
                 new InfosMenuItem(this),
                 new FitnessGraphMenuItem(this),
-                new FormMenuItem(this)
+                new FormMenuItem(this),
+                new FormSimulationMenuItem(this)
             ]
         }
 

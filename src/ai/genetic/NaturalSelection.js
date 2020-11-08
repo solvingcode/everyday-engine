@@ -5,6 +5,10 @@ define(function () {
      * Define methods for natural selection
      */
     class NaturalSelection {
+
+        /**
+         * @param {GeneticEngine} aiEngine
+         */
         constructor(aiEngine) {
             this.aiEngine = aiEngine
         }
@@ -15,14 +19,16 @@ define(function () {
             this.doSnapshotData()
             const parents = this.doParentsSelection()
             const nextGenomes = this.doCrossover(parents)
-            const genomes = this.doMutation(nextGenomes)
-            return genomes
+            return this.doMutation(nextGenomes)
         }
         /**
          * Select parents.
          * 1. Select parent for the first group using random fitness
          * 2. For the other group, use the parent from the first group for the selection 
-         * @todo Simplfy this function
+         * @todo Simplify this function
+         *
+         * @var {number} parentIndexFirstGroup
+         * @var {Gnome[]} parentGroup
          */
         doParentsSelection() {
             const { genomes, nbGroups } = this.aiEngine
@@ -50,6 +56,7 @@ define(function () {
         /**
          * Select a parent
          * @param {Genome[]} genomes
+         * @return {Genome}
          */
         selectParent(genomes) {
             const totalFitness = this.getTotalFitness(genomes)
@@ -62,6 +69,7 @@ define(function () {
         }
         /**
          * Group genomes by entity type
+         * @return {Genome[][]}
          */
         getGroupGenomes(genomes) {
             const { nbGroups } = this.aiEngine
@@ -99,17 +107,32 @@ define(function () {
         /**
          * Get the best genome in the population
          * @param {Genome[]} genomes
+         * @return {Genome[]}
          */
         getBestGenomes(genomes) {
             const groupGenomes = this.getGroupGenomes(genomes)
-            return groupGenomes.map(groupGenome => {
-                const bestGenome = groupGenome
-                    .reduce((best, current) =>
+            const bestFirstGroup = groupGenomes[0]
+                .reduce((best, current) =>
                         best && best.fitness > current.fitness ? best : current,
-                        null)
+                    null)
+            return this.getAttachedGenome(bestFirstGroup, genomes).map((bestGenome) => {
                 bestGenome.setIsBest()
                 return bestGenome
             })
+        }
+
+        /**
+         * Get all attached genomes inside the given genomes (include also
+         * the given genome)
+         * @param {Genome} genome
+         * @param {Genome[]} genomes
+         * @return {Genome[]}
+         */
+        getAttachedGenome(genome, genomes){
+            const groupGenomes = this.getGroupGenomes(genomes)
+            const findGroup = groupGenomes.find((gGenomes) => gGenomes.includes(genome))
+            const genomeIndex = findGroup.findIndex((gGenome) => gGenome === genome)
+            return groupGenomes.reduce((list, gGenomes) => list.concat([gGenomes[genomeIndex]]), [])
         }
         /**
          * Calculate the fitness

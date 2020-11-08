@@ -209,7 +209,7 @@ define(function (require) {
         ACTION_PHYSICS_STATIC_STOP: { history: false },
         ACTION_PHYSICS_NOT_STATIC_START: { history: true },
         ACTION_PHYSICS_NOT_STATIC_STOP: { history: false },
-        ACTION_FORM_UPDATE_START: { history: true },
+        ACTION_FORM_UPDATE_START: { history: false },
         ACTION_FORM_UPDATE_STOP: { history: false }
     }
 

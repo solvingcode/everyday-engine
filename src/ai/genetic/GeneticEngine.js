@@ -11,6 +11,8 @@ define(function (require) {
      * GeneticEngine class
      * Define the AI engine which use Genetic algorithms to train AI
      * @property {Genome[]} genomes
+     * @property {number} nbGroups
+     * @property {boolean} showOnlyBest
      */
     class GeneticEngine extends AiEngine {
 
@@ -18,6 +20,7 @@ define(function (require) {
             super(physics, entityManager, camera)
             this.naturalSelection = new NaturalSelection(this)
             this.nbPerGeneration = 20
+            this.showOnlyBest = false
             this.maxLifeInSec = 20
             this.timeToReactInSec = 0.1
             this.mutationProb = 0.01
@@ -52,6 +55,19 @@ define(function (require) {
             }
         }
         /**
+         * Set show only best genome
+         * PS. the first element in the population is maintained as the best genome
+         * @param {boolean} value
+         */
+        setShowOnlyBest(value){
+            this.showOnlyBest = value
+            this.getPopulation().forEach((entity, index) => {
+                if(index >= this.nbGroups){
+                    value ? this.entityManager.hide(entity) : this.entityManager.show(entity)
+                }
+            })
+        }
+        /**
          * Update population
          */
         updatePopulation() {
@@ -59,6 +75,7 @@ define(function (require) {
         }
         /**
          * Get the population using the entity manager
+         * @return {Entity[]}
          */
         getPopulation() {
             return this.entityManager
@@ -109,6 +126,7 @@ define(function (require) {
             this.newPopulation()
             this.updatePopulation()
             this.setupGenomes()
+            this.setShowOnlyBest(this.showOnlyBest)
             this.numGeneration++
             if (this.numGeneration > 1) {
                 this.physics.setToRestart(true)
@@ -131,6 +149,7 @@ define(function (require) {
                 })
                 .reduce((list, currentList) => currentList.concat(list), [])
             this.entityManager.concatEntities(clones)
+            this.entityManager.disableCollision()
         }
         /**
          * Check if the population is dead
