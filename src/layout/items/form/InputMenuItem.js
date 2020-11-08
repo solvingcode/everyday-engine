@@ -39,7 +39,7 @@ define(function (require) {
          * @inheritDoc
          */
         isValid() {
-            return this.parent.isValid();
+            return (!this.parent || this.parent.items.includes(this)) && this.parent.isValid();
         }
     }
 

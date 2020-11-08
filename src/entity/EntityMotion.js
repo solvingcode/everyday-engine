@@ -35,6 +35,7 @@ define(function (require) {
             }
             this.collision = { group: 0, category: 1, mask: 1 }
             this.die = false
+            this.controlled = false
         }
 
         /**
@@ -46,9 +47,26 @@ define(function (require) {
 
         /**
          * Set the static flag
+         * @return {boolean}
          */
         setStatic(isStatic) {
             this.physics.static = isStatic
+        }
+
+        /**
+         * Is the entity controlled
+         * @return {boolean}
+         */
+        isControlled() {
+            return this.controlled
+        }
+
+        /**
+         * Set the controlled flag
+         * @param {boolean} value
+         */
+        setControlled(value) {
+            this.controlled = value
         }
 
         /**

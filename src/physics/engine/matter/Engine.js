@@ -107,19 +107,23 @@ define(function (require) {
             if (entity.attached) {
                 entities.a.movePointTo(pointA, pointB)
                 entity.movePointTo(pointA, pointB)
-                entity.updatePoints(pointB, { x: pointB.x + 1, y: pointB.y + 1 })
+                entity.updatePoints(pointB, {x: pointB.x + 1, y: pointB.y + 1})
                 return true
             }
             return false
         }
 
         /**
-         * @inherit
+         * @inheritDoc
+         * @todo Implement an intelligent controlling physics
          */
-        applyForce(body, entity) {
-            const { force, rotationConstraint } = entity.physics
-            const { min: minRotation, max: maxRotation } = rotationConstraint
-            if (maxRotation && entity.rotation > maxRotation) {
+        applyPhysics(body, entity) {
+            const {force, rotationConstraint} = entity.physics
+            const {min: minRotation, max: maxRotation} = rotationConstraint
+            if (entity.isControlled()) {
+                const moveSpeed = 2
+                this.getEngine().Body.setPosition(body, {x: body.position.x + moveSpeed, y: body.position.y})
+            } else if (maxRotation && entity.rotation > maxRotation) {
                 this.getEngine().Body.setAngle(body, maxRotation)
             } else if (minRotation && entity.rotation < minRotation) {
                 this.getEngine().Body.setAngle(body, minRotation)

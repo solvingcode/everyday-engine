@@ -22,7 +22,7 @@ define(function (require) {
 
         /**
          * Generate the body for the given entity
-         * @param {Entity} entity
+         * @param {EntityMotion} entity
          * @return {Body}
          */
         generate(entity) {
@@ -36,6 +36,7 @@ define(function (require) {
          */
         load(entity) {
             const body = this.generate(entity)
+            this.setup(entity, body)
             this.update(entity, body)
             return body
         }
@@ -56,14 +57,24 @@ define(function (require) {
         }
 
         /**
+         * Setup the body for the given entity
+         * @param {EntityMotion} entity
+         * @param {Matter.Body} body
+         */
+        setup(entity, body){
+            entity.isControlled() && entity.setCollisionGroup(-1)
+            body.isStatic = body.isStatic || entity.isControlled()
+        }
+
+        /**
          * Synchronize informations from entity to body
          * Do not apply force to Attach entities
-         * @param {Entity} entity 
+         * @param {EntityMotion} entity
          * @param {Body} body 
          */
         update(entity, body) {
             if (!(entity instanceof AttachEntity)) {
-                this.physicEngine.applyForce(body, entity)
+                this.physicEngine.applyPhysics(body, entity)
             }
         }
 

@@ -14,7 +14,6 @@ define(function (require) {
     /**
      * HTML UI Renderer class
      * Define the UI renderer for html
-     * @abstract
      */
     class HtmlUIRenderer extends UIRenderer {
 

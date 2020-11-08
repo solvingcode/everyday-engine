@@ -121,9 +121,9 @@ define(function () {
         /**
          * Apply force to the entity
          * @param {Object} body 
-         * @param {Entity} force 
+         * @param {EntityMotion} entity
          */
-        applyForce(body, entity) {
+        applyPhysics(body, entity) {
             throw new TypeError('"applyForce" method must be implemented')
         }
 

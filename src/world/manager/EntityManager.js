@@ -10,7 +10,7 @@ define(function (require) {
      * Entity Manager class
      * Manage the entities list, used to manipulate the entities (get, add, load, ...)
      *
-     * @property {Entity[]} entities
+     * @property {EntityMotion[]} entities
      */
     class EntityManager {
         constructor() {
@@ -331,10 +331,10 @@ define(function (require) {
 
         /**
          * Is the given entity is not static
-         * @param {Entity} entity 
+         * @param {EntityMotion} entity
          */
         isNotStaticEntity(entity) {
-            return !(entity instanceof PlatformEntity)
+            return !(entity instanceof PlatformEntity) && !entity.isControlled()
         }
 
         /**
@@ -413,11 +413,11 @@ define(function (require) {
 
         /**
          * Get dynamic entities (not static, like platform, ...)
-         * @param {Entity[]} entities
-         * @return {Entity[]}
+         * @param {EntityMotion[]} entities
+         * @return {EntityMotion[]}
          */
         getDynamicEntities(entities = null) {
-            return (entities || this.entities).filter(entity => this.isNotStaticEntity(entity))
+            return (entities || this.entities).filter((entity) => this.isNotStaticEntity(entity))
         }
 
         /**

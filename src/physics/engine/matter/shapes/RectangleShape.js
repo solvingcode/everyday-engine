@@ -10,7 +10,7 @@ define(function (require) {
     class RectangleShape extends Shape {
 
         /**
-         * @inherit
+         * @inheritDoc
          */
         generate(entity) {
             const centerPosition = entity.toCenterPosition()
@@ -20,8 +20,8 @@ define(function (require) {
                 centerPosition.y,
                 entity.size.width,
                 entity.size.height,
-                { 
-                    isStatic: entity instanceof PlatformEntity, 
+                {
+                    isStatic: (entity instanceof PlatformEntity),
                     density: entity.physics.density 
                 }
             )

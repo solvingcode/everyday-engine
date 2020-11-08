@@ -77,7 +77,12 @@ define(function (require) {
                         { name: 'Max rotation (°)' },
                         () => Maths.toDegree(this.object.getRotationConstraint().max),
                         (value) => this.object.setRotationConstraint({ max: Maths.fromDegree(value) })
-                    )
+                    ),
+                    new CheckboxMenuItem(this,
+                        { name: 'Controlled' },
+                        () => this.object.isControlled(),
+                        (value) => this.object.setControlled(value)
+                    ),
                 ])
             }else if (entityManager.isAttachEntity(this.object)) {
                 this.items = this.items.concat([
