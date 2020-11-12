@@ -9,10 +9,11 @@ define(function (require) {
     class ShowMenuItem extends MenuItem {
         constructor() {
             super({
-                name: 'Show'
+                name: 'eye',
+                title: 'Show'
             })
             this.zone = Layout.zone.TOP
-            this.type = Layout.type.ACTION
+            this.type = Layout.type.ICON
         }
         run() {
             this.setActionState('SHOW', 'START')

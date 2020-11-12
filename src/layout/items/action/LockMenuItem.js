@@ -9,10 +9,11 @@ define(function (require) {
     class LockMenuItem extends MenuItem {
         constructor() {
             super({
-                name: 'Lock'
+                name: 'lock',
+                title: 'Lock'
             })
             this.zone = Layout.zone.TOP
-            this.type = Layout.type.ACTION
+            this.type = Layout.type.ICON
         }
         run() {
             this.setActionState('LOCK', 'START')

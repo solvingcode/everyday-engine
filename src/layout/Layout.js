@@ -21,7 +21,9 @@ define(function () {
         LAYER_ACTION: 'layer_action',
         TEXT: 'text',
         FORM: 'form',
-        FORM_ELEMENT: 'form_element'
+        FORM_ELEMENT: 'form_element',
+        GRAPH: 'graph',
+        ICON: 'icon'
     }
 
     Layout.form = {

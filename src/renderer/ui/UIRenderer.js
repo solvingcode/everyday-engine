@@ -30,6 +30,25 @@ define(function (require) {
         }
 
         /**
+         * Create/Update and return the HTML element for the given menu item
+         * @param {MenuItemUI} menuItem
+         * @return {HTMLElement}
+         */
+        getElement(menuItem) {
+            throw new TypeError('"UIRenderer.getElement" method must be implemented')
+        }
+
+        /**
+         * Get the body of a menu item
+         * Used to define where to append child elements
+         * @param {MenuItemUI} menuItem
+         * @return {HTMLElement}
+         */
+        getBody(menuItem) {
+            throw new TypeError('"UIRenderer.getBody" method must be implemented')
+        }
+
+        /**
          * Get zone UI properties
          */
         getZoneProps(zone) {
@@ -46,6 +65,7 @@ define(function (require) {
 
         /**
          * Get the button UI for color
+         * @return {ItemUI}
          */
         getColorButtonUI() {
             throw new TypeError('"UIRenderer.getColorButtonUI" method must be implemented')
@@ -53,6 +73,7 @@ define(function (require) {
 
         /**
          * Get the button UI for layer entity
+         * @return {ItemUI}
          */
         getLayerEntityButtonUI() {
             throw new TypeError('"UIRenderer.getLayerEntityButtonUI" method must be implemented')
@@ -60,13 +81,23 @@ define(function (require) {
 
         /**
          * Get the button UI for default
+         * @return {ItemUI}
          */
         getDefaultButtonUI() {
             throw new TypeError('"UIRenderer.getDefaultButtonUI" method must be implemented')
         }
 
         /**
+         * Get the button UI for icons
+         * @return {ItemUI}
+         */
+        getIconButtonUI() {
+            throw new TypeError('"UIRenderer.getIconButtonUI" method must be implemented')
+        }
+
+        /**
          * Get the panel UI
+         * @return {ItemUI}
          */
         getPanelUI() {
             throw new TypeError('"UIRenderer.getPanelUI" method must be implemented')
@@ -74,6 +105,7 @@ define(function (require) {
 
         /**
          * Get the text UI
+         * @return {ItemUI}
          */
         getTextUI() {
             throw new TypeError('"UIRenderer.getTextUI" method must be implemented')
@@ -81,6 +113,7 @@ define(function (require) {
 
         /**
          * Get the graph UI
+         * @return {ItemUI}
          */
         getGraphUI() {
             throw new TypeError('"UIRenderer.getGraphUI" method must be implemented')
@@ -88,6 +121,7 @@ define(function (require) {
 
         /**
          * Get the form UI
+         * @return {ItemUI}
          */
         getFormUI() {
             throw new TypeError('"UIRenderer.getFormUI" method must be implemented')
@@ -95,6 +129,7 @@ define(function (require) {
 
         /**
          * Get the form input UI
+         * @return {ItemUI}
          */
         getFormElementUI() {
             throw new TypeError('"UIRenderer.getFormElementUI" method must be implemented')
@@ -102,8 +137,8 @@ define(function (require) {
 
         /**
          * Get the UI type of the given menu item
-         * @param {MenuItemUI} item 
-         * @param {UIRenderer} uiRenderer
+         * @param {MenuItemUI} item
+         * @return {ItemUI}
          */
         getType(item) {
             const { element } = item
@@ -121,6 +156,8 @@ define(function (require) {
                 return this.getFormUI()
             } else if (element.type === Layout.type.FORM_ELEMENT) {
                 return this.getFormElementUI().getType(item)
+            } else if (element.type === Layout.type.ICON) {
+                return this.getIconButtonUI()
             }
             return this.getDefaultButtonUI()
         }

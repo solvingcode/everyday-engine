@@ -1,12 +1,15 @@
 define(function (require) {
 
     const MenuItem = require('../../MenuItem.js')
+    const Layout = require('../../Layout.js')
 
     class JointMenuItem extends MenuItem {
         constructor() {
             super({
-                name: 'Joint'
+                name: 'bone',
+                title: 'Rigid joints'
             })
+            this.type = Layout.type.ICON
         }
         run() {
             this.setDrawState('JOINT')

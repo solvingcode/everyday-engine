@@ -1,12 +1,15 @@
 define(function (require) {
 
     const MenuItem = require('../../MenuItem.js')
+    const Layout = require('../../Layout.js')
 
     class SimulateMenuItem extends MenuItem {
         constructor() {
             super({
-                name: 'Simulate'
+                name: 'play',
+                title: 'Start the simulation'
             })
+            this.type = Layout.type.ICON
         }
         run() {
             this.appState.removeAllState()

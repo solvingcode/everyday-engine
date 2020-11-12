@@ -3,6 +3,7 @@ define(function () {
     /**
      * ItemUI class
      * Define an item UI which define how to create HTML element
+     * @abstract
      */
     class ItemUI {
         /**
@@ -11,7 +12,7 @@ define(function () {
          * @param {HTMLElement} el 
          * @param {UIRenderer} uiRenderer 
          */
-        static postCreate(item, el, uiRenderer) { }
+        static postCreate(item, el, uiRenderer = null) { }
 
         /**
          * What to do after update HTML Element
@@ -19,7 +20,7 @@ define(function () {
          * @param {HTMLElement} el 
          * @param {UIRenderer} uiRenderer 
          */
-        static postUpdate(item, el, uiRenderer) { }
+        static postUpdate(item, el, uiRenderer = null) { }
 
         /**
          * Get Style for the given menu item
@@ -41,10 +42,20 @@ define(function () {
         static clean(item, el) { }
 
         /**
-         * Get HTML element propertis
+         * Get HTML element properties
+         * @return {Object}
          */
         static getProps(){
             return this.props
+        }
+
+        /**
+         * Get HTML element body
+         * @param {HTMLElement} el
+         * @return {HTMLElement}
+         */
+        static getBody(el){
+            return el
         }
     }
 

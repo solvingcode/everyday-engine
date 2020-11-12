@@ -10,8 +10,7 @@ define(function (require) {
          * @param {UIRenderer} uiRenderer
          */
         static draw(item, uiRenderer) {
-            const parentEl = uiRenderer.getElement(item.parent)
-            uiRenderer.getElement(item, parentEl.getElementsByTagName('div')[0])
+            uiRenderer.getElement(item)
         }
 
         /**

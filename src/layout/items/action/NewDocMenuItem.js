@@ -4,25 +4,25 @@ define(function (require) {
     const Layout = require('../../Layout.js')
 
     /**
-     * Move down entities in z-index
+     * Create new document
      */
-    class MoveDownMenuItem extends MenuItem {
+    class NewDocMenuItem extends MenuItem {
         constructor() {
             super({
-                name: 'arrow-down',
-                title: 'Move down'
+                name: 'file',
+                title: 'New document'
             })
             this.zone = Layout.zone.TOP
             this.type = Layout.type.ICON
         }
         run() {
-            this.setActionState('MOVE_DOWN', 'START')
+
         }
         isSelected(){
-            return this.hasActionState('MOVE_DOWN')
+
         }
     }
 
-    return MoveDownMenuItem
+    return NewDocMenuItem
 
 })

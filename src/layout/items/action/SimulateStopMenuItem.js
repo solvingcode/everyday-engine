@@ -1,12 +1,15 @@
 define(function (require) {
 
     const MenuItem = require('../../MenuItem.js')
+    const Layout = require('../../Layout.js')
 
     class SimulateStopMenuItem extends MenuItem {
         constructor() {
             super({
-                name: 'Stop'
+                name: 'stop-circle',
+                title: 'Stop the simulation'
             })
+            this.type = Layout.type.ICON
         }
         run() {
             this.setSimulateState('STOP')

@@ -9,22 +9,22 @@ define(function (require) {
          * @param {UIRenderer} uiRenderer
          */
         static draw(item, uiRenderer) {
-            const parentEl = item.parent && uiRenderer.getElement(item.parent)
-            uiRenderer.getElement(item, parentEl)
+            uiRenderer.getElement(item)
         }
 
         /**
-         * @inherit
+         * @inheritDoc
          */
-        static postCreate(item, el) {
+        static postCreate(item, el, uiRenderer) {
             const { props, value } = item.element
             const { inputProps } = this.props
             const input = document.createElement(inputProps.tag)
             input.type = inputProps.type
             input.id = `${el.id}-${inputProps.suffix}`
             input.value = value()
+            input.style = 'width: 100px'
             const labelEl = document.createElement('label')
-            labelEl.textContent = props.name
+            labelEl.textContent = `${props.name} : `
             labelEl.htmlFor = input.id
             el.appendChild(labelEl)
             el.appendChild(input)

@@ -6,10 +6,11 @@ define(function (require) {
     class DeleteMenuItem extends MenuItem {
         constructor() {
             super({
-                name: 'Delete'
+                name: 'trash-alt',
+                title: 'Delete'
             })
             this.zone = Layout.zone.TOP
-            this.type = Layout.type.ACTION
+            this.type = Layout.type.ICON
         }
         run() {
             this.setActionState('DELETE', 'START')

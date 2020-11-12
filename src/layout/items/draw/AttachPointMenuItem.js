@@ -1,12 +1,15 @@
 define(function (require) {
 
     const MenuItem = require('../../MenuItem.js')
+    const Layout = require('../../Layout.js')
 
     class AttachPointMenuItem extends MenuItem {
         constructor() {
             super({
-                name: 'Pin joint'
+                name: 'thumbtack',
+                title: 'Pin joints'
             })
+            this.type = Layout.type.ICON
         }
         run() {
             this.setDrawState('ATTACH_POINT')

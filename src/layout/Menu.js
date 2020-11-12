@@ -5,6 +5,7 @@ define(function (require) {
     const JointMenuItem = require('./items/draw/JointMenuItem.js')
     const AttachPointMenuItem = require('./items/draw/AttachPointMenuItem.js')
     const SelectorMenuItem = require('./items/draw/SelectorMenuItem.js')
+    const NewDocMenuItem = require('./items/action/NewDocMenuItem.js')
     const SimulateStartMenuItem = require('./items/action/SimulateStartMenuItem.js')
     const SimulateStopMenuItem = require('./items/action/SimulateStopMenuItem.js')
     const DeleteMenuItem = require('./items/action/DeleteMenuItem.js')
@@ -16,7 +17,6 @@ define(function (require) {
     const UnlockMenuItem = require('./items/action/UnlockMenuItem.js')
     const HideMenuItem = require('./items/action/HideMenuItem.js')
     const ShowMenuItem = require('./items/action/ShowMenuItem.js')
-    const StyleMenuItem = require('./items/style/StyleMenuItem.js')
     const MenuItemUI = require('../renderer/ui/MenuItemUI.js')
     const LayerMenuItem = require('./items/layer/LayerMenuItem.js')
     const AiGeneticMenuItem = require('./items/genetic/AiGeneticMenuItem.js')
@@ -33,6 +33,7 @@ define(function (require) {
                 new AttachPointMenuItem(),
                 new SimulateStartMenuItem(),
                 new SimulateStopMenuItem(),
+                new NewDocMenuItem(),
                 new DeleteMenuItem(),
                 new DuplicateMenuItem(),
                 new UndoMenuItem(),
@@ -42,7 +43,6 @@ define(function (require) {
                 new UnlockMenuItem(),
                 new HideMenuItem(),
                 new ShowMenuItem(),
-                new StyleMenuItem(),
                 new EntityMenuItem(),
                 new ConditionMenuItem(),
                 new LayerMenuItem(),

@@ -34,11 +34,18 @@ define(function (require) {
                 titleEl.textContent = name
             }
         }
+
+        /**
+         * @inheritDoc
+         */
+        static getBody(el){
+            return el.getElementsByTagName('div')[0]
+        }
     }
 
     HtmlPanelUI.props = {
         tag: 'div',
-        width: '200px',
+        width: '100%',
         className: 'panel'
     }
 

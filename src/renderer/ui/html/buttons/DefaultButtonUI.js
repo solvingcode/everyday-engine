@@ -5,23 +5,22 @@ define(function (require) {
     class DefaultButtonUI extends ItemUI {
         /**
          * Draw a default button.
-         * @param {MenuItem} item
+         * @param {MenuItemUI} item
          * @param {UIRenderer} uiRenderer
          */
         static draw(item, uiRenderer) {
-            const parentEl = item.parent && uiRenderer.getElement(item.parent)
-            uiRenderer.getElement(item, parentEl)
+            uiRenderer.getElement(item)
         }
 
         /**
-         * @inherit
+         * @inheritDoc
          */
         static postCreate(item, el) {
             el.textContent = item.element.props.name
         }
 
         /**
-         * @inherit
+         * @inheritDoc
          */
         static postUpdate(item, el) {
             const { name } = item.element.props

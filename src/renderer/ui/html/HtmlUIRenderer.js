@@ -2,6 +2,7 @@ define(function (require) {
 
     const UIRenderer = require('../UIRenderer.js')
     const DefaultButtonUI = require('./buttons/DefaultButtonUI.js')
+    const IconButtonUI = require('./buttons/IconButtonUI.js')
     const ColorButtonUI = require('./buttons/ColorButtonUI.js')
     const LayerEntityButtonUI = require('./buttons/LayerEntityButtonUI.js')
     const HtmlPanelUI = require('./HtmlPanelUI.js')
@@ -18,7 +19,7 @@ define(function (require) {
     class HtmlUIRenderer extends UIRenderer {
 
         /**
-         * @param {CanvasRenderingContext2D} context 
+         * @param {CanvasRenderingContext2D} context
          */
         constructor(context) {
             super()
@@ -28,56 +29,63 @@ define(function (require) {
         }
 
         /**
-         * @inherit
+         * @inheritDoc
          */
         getDefaultButtonUI() {
             return DefaultButtonUI
         }
 
         /**
-         * @inherit
+         * @inheritDoc
+         */
+        getIconButtonUI() {
+            return IconButtonUI
+        }
+
+        /**
+         * @inheritDoc
          */
         getPanelUI() {
             return HtmlPanelUI
         }
 
         /**
-         * @inherit
+         * @inheritDoc
          */
         getTextUI() {
             return HtmlTextUI
         }
 
         /**
-         * @inherit
+         * @inheritDoc
          */
         getGraphUI() {
             return HtmlGraphUI
         }
 
         /**
-         * @inherit
+         * @inheritDoc
          */
         getFormUI() {
             return HtmlFormUI
         }
 
         /**
-         * @inherit
+         * @inheritDoc
          */
         getFormElementUI() {
             return HtmlFormElementUI
         }
 
         /**
-         * @inherit
+         * @inheritDoc
          */
         getColorButtonUI() {
             return ColorButtonUI
         }
 
         /**
-         * @inherit
+         * @inheritDoc
          */
         getLayerEntityButtonUI() {
             return LayerEntityButtonUI
@@ -85,7 +93,7 @@ define(function (require) {
 
         /**
          * Get/Create zone DIV
-         * @param {String} zone 
+         * @param {String} zone
          */
         getZoneDiv(zone) {
             const id = `${HTML_ID_PREFIX}${zone}`
@@ -99,14 +107,13 @@ define(function (require) {
         }
 
         /**
-         * Get HTML element for the given menu item
-         * @param {MenuItemUI} item 
-         * @param {HTMLElement} parentHTML 
+         * @inheritDoc
          */
-        getElement(item, parentHTML) {
-            const { element } = item
+        getElement(item) {
+            const {element} = item
             const type = this.getType(item)
             const tag = type.getProps().tag
+            const parentHTML = item.parent && this.getBody(item.parent)
             const zoneDiv = parentHTML || this.getZoneDiv(element.zone)
             const id = item.getId()
             const existEl = document.getElementById(id)
@@ -121,12 +128,20 @@ define(function (require) {
         }
 
         /**
+         * @inheritDoc
+         */
+        getBody(item){
+            const type = this.getType(item)
+            return type.getBody(this.getElement(item))
+        }
+
+        /**
          * What to do after create HTML Element
-         * @param {MenuItemUI} item 
-         * @param {HTMLElement} el 
+         * @param {MenuItemUI} item
+         * @param {HTMLElement} el
          */
         postCreate(item, el) {
-            const { element, index } = item
+            const {element, index} = item
             const type = this.getType(item)
             el.setAttribute('id', item.getId())
             el.setAttribute('data-index', index)
@@ -137,8 +152,8 @@ define(function (require) {
 
         /**
          * What to do after update HTML Element
-         * @param {MenuItemUI} item 
-         * @param {HTMLElement} el 
+         * @param {MenuItemUI} item
+         * @param {HTMLElement} el
          */
         postUpdate(item, el) {
             const style = this.getStyle(item)
@@ -156,7 +171,7 @@ define(function (require) {
 
         /**
          * Get class names for the given menu item
-         * @param {MenuItemUI} item 
+         * @param {MenuItemUI} item
          */
         getClassName(item) {
             const classNames = []
@@ -178,7 +193,7 @@ define(function (require) {
                 x0, y0,
                 width, height,
                 backgroundColor
-            } = { ...type.getProps(), ...itemStyle }
+            } = {...type.getProps(), ...itemStyle}
             let style = []
             if (x0 || y0) {
                 style.push('position: absolute')
@@ -193,10 +208,10 @@ define(function (require) {
         }
 
         /**
-         * @inherit
+         * @inheritDoc
          */
         getItemAt(mouse) {
-            const { path } = mouse
+            const {path} = mouse
             const target = path && path.find(el => el.getAttribute && el.getAttribute('data-index'))
             const index = target && parseInt(target.getAttribute('data-index'))
             const zone = target && target.getAttribute('data-zone')
@@ -218,7 +233,7 @@ define(function (require) {
                 if (!item) {
                     node.remove()
                 } else {
-                    const { tag } = this.getType(item).getProps()
+                    const {tag} = this.getType(item).getProps()
                     if (tag !== node.tagName.toLowerCase() ||
                         item.element.props.name !== node.getAttribute('data-name')) {
                         node.remove()

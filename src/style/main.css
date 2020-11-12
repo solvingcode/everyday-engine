@@ -18,7 +18,6 @@ canvas{
 
 button{
     border: none;
-    background-color: #f4f4f4;
     position: relative;
 }
 
@@ -30,10 +29,6 @@ button:focus{
     outline: none;
 }
 
-button.selected, button.hidden.selected, button.locked.selected{
-    background-color: #89c4ff;
-}
-
 button.hidden{
     background-color: #dddddd;
     color: #999999;
@@ -41,6 +36,11 @@ button.hidden{
 
 button.locked{
     background-color: #ffe7ff;
+}
+
+button[data-icon]{
+    font-size: 18px;
+    margin-bottom: 5px;
 }
 
 /* -- button */
@@ -58,13 +58,20 @@ h4{
 /* panel -- */
 
 .panel{
-    border: 1px solid #777777;
-    margin: 10px;
+    margin-bottom: 2px;
 }
 
 .panel > div{
     max-height: 300px;
     overflow: auto;
+    margin-top: -1px;
+    padding: 3px;
+}
+
+.panel h4{
+    padding: 5px 10px;
+    margin: 0;
+    display: inline-block;
 }
 
 #app-el-left, #app-el-top, #app-el-right{
@@ -73,21 +80,27 @@ h4{
 }
 
 #app-el-left{
-    width: 80px;
-    top: 20px;
-    left: 20px;
+    width: 40px;
+    top: 53px;
+    left: 0px;
+    padding: 5px;
+    height: calc(100% - 60px);
 }
 
 #app-el-top{
-    height: 50px;
-    top: 20px;
-    left: 160px;
+    height: 40px;
+    padding: 5px;
+    top: 0px;
+    left: 0px;
+    width: calc(100% - 10px);
 }
 
 #app-el-right{
-    width: 200px;
-    top: 20px;
-    left: calc(100% - 250px);
+    width: 250px;
+    top: 53px;
+    left: calc(100% - 260px);
+    padding: 10px 5px;
+    height: calc(100% - 65px);
 }
 
 /* -- panel */
@@ -120,11 +133,6 @@ h4{
 
 .color{
     padding: 10px;
-    border: 2px solid #ffffff;
-}
-
-.color.selected{
-    border: 2px solid #555555;
 }
 
 /* -- color */
@@ -183,8 +191,16 @@ i.static-entity::before{
     float: left;
 }
 .form .form-input label{
-    display: block;
-    width: 100%;
+}
+
+.form input[type=text]{
+    border-radius: 2px;
+    padding: 3px;
+}
+
+.form select{
+    border-radius: 2px;
+    padding: 3px;
 }
 
 /* -- form */

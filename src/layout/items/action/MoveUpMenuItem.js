@@ -9,10 +9,11 @@ define(function (require) {
     class MoveUpMenuItem extends MenuItem {
         constructor() {
             super({
-                name: 'Up'
+                name: 'arrow-up',
+                title: 'Move up'
             })
             this.zone = Layout.zone.TOP
-            this.type = Layout.type.ACTION
+            this.type = Layout.type.ICON
         }
         run() {
             this.setActionState('MOVE_UP', 'START')

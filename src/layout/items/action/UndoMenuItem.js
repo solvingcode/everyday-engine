@@ -6,10 +6,11 @@ define(function (require) {
     class UndoMenuItem extends MenuItem {
         constructor() {
             super({
-                name: 'Undo'
+                name: 'undo',
+                title: 'Undo'
             })
             this.zone = Layout.zone.TOP
-            this.type = Layout.type.ACTION
+            this.type = Layout.type.ICON
         }
         run() {
             this.setActionState('UNDO', 'START')

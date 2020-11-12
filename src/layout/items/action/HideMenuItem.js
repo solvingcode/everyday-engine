@@ -9,10 +9,11 @@ define(function (require) {
     class HideMenuItem extends MenuItem {
         constructor() {
             super({
-                name: 'Hide'
+                name: 'eye-slash',
+                title: 'Hide'
             })
             this.zone = Layout.zone.TOP
-            this.type = Layout.type.ACTION
+            this.type = Layout.type.ICON
         }
         run() {
             this.setActionState('HIDE', 'START')

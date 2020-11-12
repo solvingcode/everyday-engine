@@ -6,10 +6,11 @@ define(function (require) {
     class DuplicateMenuItem extends MenuItem {
         constructor() {
             super({
-                name: 'Duplicate'
+                name: 'copy',
+                title: 'Duplicate'
             })
             this.zone = Layout.zone.TOP
-            this.type = Layout.type.ACTION
+            this.type = Layout.type.ICON
         }
         run() {
             this.setActionState('DUPLICATE', 'START')

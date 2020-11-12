@@ -12,7 +12,7 @@ define(function (require) {
      * Shape Loader class
      * Manage and load shapes
      *
-     * @property {{[string]: Shape}} mapShapes
+     * @property {Object<string, Shape>} mapShapes
      */
     class ShapeLoader {
 

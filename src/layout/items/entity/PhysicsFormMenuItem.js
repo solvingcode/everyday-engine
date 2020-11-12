@@ -68,6 +68,11 @@ define(function (require) {
                         () => this.object.isStatic(),
                         (value) => this.object.setStatic(value)
                     ),
+                    new CheckboxMenuItem(this,
+                        { name: 'Controlled' },
+                        () => this.object.isControlled(),
+                        (value) => this.object.setControlled(value)
+                    ),
                     new TextMenuItem(this,
                         { name: 'Min rotation (°)' },
                         () => Maths.toDegree(this.object.getRotationConstraint().min),
@@ -77,11 +82,6 @@ define(function (require) {
                         { name: 'Max rotation (°)' },
                         () => Maths.toDegree(this.object.getRotationConstraint().max),
                         (value) => this.object.setRotationConstraint({ max: Maths.fromDegree(value) })
-                    ),
-                    new CheckboxMenuItem(this,
-                        { name: 'Controlled' },
-                        () => this.object.isControlled(),
-                        (value) => this.object.setControlled(value)
                     ),
                 ])
             }else if (entityManager.isAttachEntity(this.object)) {

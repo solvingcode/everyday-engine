@@ -3,6 +3,12 @@ define(function (require) {
     const AppState = require('../core/AppState.js')
     const Layout = require('./Layout.js')
 
+    /**
+     * Define an item in the menu
+     * @abstract
+     *
+     * @property {MenuItem|Menu} parent
+     */
     class MenuItem {
         constructor(props) {
             this.props = props

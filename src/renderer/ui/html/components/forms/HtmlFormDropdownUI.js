@@ -23,7 +23,7 @@ define(function (require) {
             this.createOptions(item, formEl)
             formEl.id = `${el.id}-${inputProps.suffix}`
             const labelEl = document.createElement('label')
-            labelEl.textContent = props.name
+            labelEl.textContent = `${props.name} : `
             labelEl.htmlFor = formEl.id
             el.appendChild(labelEl)
             el.appendChild(formEl)
