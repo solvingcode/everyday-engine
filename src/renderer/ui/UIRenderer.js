@@ -22,7 +22,7 @@ define(function (require) {
                     isVertical: false
                 },
                 [Layout.zone.RIGHT]: {
-                    x0: WINDOW_WIDTH - 250,
+                    x0: SCENE_WIDTH - 250,
                     y0: 20,
                     isVertical: true
                 }

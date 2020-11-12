@@ -16,7 +16,7 @@ define(function (require) {
 
         constructor() {
             this.entityManager = EntityManager.get()
-            this.camera = new Camera({ x: WINDOW_WIDTH / 2, y: WINDOW_HEIGHT / 2 })
+            this.camera = new Camera({ x: SCENE_WIDTH / 2, y: SCENE_HEIGHT / 2 })
             this.physics = new Physics(new MatterEngine())
             this.aiEngine = new GeneticEngine(this.physics, this.entityManager, this.camera)
         }
@@ -54,10 +54,10 @@ define(function (require) {
          */
         drawEntity(entity, renderer) {
             const { x: cameraX, y: cameraY } = this.getCamera().position
-            const minX = cameraX - WINDOW_WIDTH / 2 - entity.size.width
-            const maxX = cameraX + WINDOW_WIDTH / 2
-            const minY = cameraY - WINDOW_HEIGHT / 2 - entity.size.height
-            const maxY = cameraY + WINDOW_HEIGHT / 2
+            const minX = cameraX - SCENE_WIDTH / 2 - entity.size.width
+            const maxX = cameraX + SCENE_WIDTH / 2
+            const minY = cameraY - SCENE_HEIGHT / 2 - entity.size.height
+            const maxY = cameraY + SCENE_HEIGHT / 2
             if (minX <= entity.position.x && maxX >= entity.position.x &&
                 minY <= entity.position.y && maxY >= entity.position.y) {
                 entity.draw(renderer)

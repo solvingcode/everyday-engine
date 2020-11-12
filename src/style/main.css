@@ -9,6 +9,7 @@ canvas{
 }
 #object{
     z-index: 3;
+    background-color: #f4f4f4;
 }
 #root{
     z-index: 2;
@@ -84,7 +85,7 @@ h4{
     top: 53px;
     left: 0px;
     padding: 5px;
-    height: calc(100% - 60px);
+    height: calc(100% - 65px);
 }
 
 #app-el-top{
@@ -99,7 +100,7 @@ h4{
     width: 250px;
     top: 53px;
     left: calc(100% - 260px);
-    padding: 10px 5px;
+    padding: 5px 5px;
     height: calc(100% - 65px);
 }
 
@@ -108,20 +109,24 @@ h4{
 /* layer entity -- */
 
 .layer-entity{
-    background-color: #ffffff;
     padding: 5px;
-    border-bottom: 1px solid #eeeeee;
     position: relative;
+    width: 100%;
+    overflow: hidden;
 }
 
-.layer-entity img{
-   float: left;
+.layer-entity .entity-img-wrapper{
+    width: 30px;
+    height: 30px;
+    float: left;
+    padding: 5px;
+    overflow: hidden;
 }
 
 .layer-entity span{
    float: left;
    display: block;
-   margin: 6px;
+   margin: 12px 10px;
    width: 100px;
    text-align: left;
    white-space: nowrap;

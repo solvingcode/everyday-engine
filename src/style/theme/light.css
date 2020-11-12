@@ -21,3 +21,8 @@ button.selected, button.hidden.selected, button.locked.selected{
 .color.selected{
     border: 2px solid #555555;
 }
+
+.layer-entity{
+    background-color: #ffffff;
+    border-bottom: 1px solid #eeeeee;
+}

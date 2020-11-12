@@ -71,3 +71,15 @@ button.selected, button.hidden.selected, button.locked.selected{
     background-color: #383838;
     color: #f4f4f4;
 }
+
+.layer-entity{
+     border-bottom: 1px solid #383838;
+ }
+
+.layer-entity .entity-img-wrapper{
+    background-color: #f4f4f4;
+}
+
+.layer-entity.selected{
+    background-color: #686866;
+}

@@ -35,7 +35,7 @@ define(function (require) {
          */
         clear() {
             rootContext.canvas.width = WINDOW_WIDTH
-            objectContext.canvas.width = WINDOW_WIDTH
+            objectContext.canvas.width = SCENE_WIDTH
         }
 
         /**

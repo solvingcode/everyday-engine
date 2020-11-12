@@ -21,10 +21,13 @@ define(function (require) {
             if (entity) {
                 const image = EntityUI.getImage(entity, this.props)
                 const title = document.createElement('span')
+                const imageWrapper = document.createElement('div')
+                imageWrapper.className = 'entity-img-wrapper'
+                imageWrapper.appendChild(image)
                 title.textContent = entity.name
                 el.setAttribute('data-entity-id', entity.id)
                 el.setAttribute('id', item.getId())
-                el.appendChild(image)
+                el.appendChild(imageWrapper)
                 el.appendChild(title)
             }
         }
@@ -63,7 +66,6 @@ define(function (require) {
         className: 'layer-entity',
         prefix: 'layer-entity-',
         width: '100%',
-        height: '40px',
         entityWidth: 30,
         entityHeight: 30
     }

@@ -26,8 +26,8 @@ define(function () {
          * Calculate and return the camera view
          */
         getCameraView() {
-            const cameraViewX = this.position.x - WINDOW_WIDTH / 2
-            const cameraViewY = this.position.y - WINDOW_HEIGHT / 2
+            const cameraViewX = this.position.x - SCENE_WIDTH / 2
+            const cameraViewY = this.position.y - SCENE_HEIGHT / 2
             return { cameraViewX, cameraViewY }
         }
         /**
