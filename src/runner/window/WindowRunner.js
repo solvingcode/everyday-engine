@@ -2,7 +2,7 @@ define(function (require) {
 
     const EntitySelector = require('../../world/manager/EntitySelector.js')
     const Runner = require('../Runner.js')
-    const AppState = require('../../core/AppState.js')
+    const AppState = require('../../state/AppState.js')
     const { CURSOR } = require('../../core/Mouse.js')
 
     class WindowRunner extends Runner {

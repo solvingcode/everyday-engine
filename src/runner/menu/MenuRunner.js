@@ -2,6 +2,10 @@ define(function (require) {
 
     const Runner = require('../Runner.js')
 
+    /**
+     * Execute actions related to menu items
+     * @property {Menu} menu
+     */
     class MenuRunner extends Runner {
 
         constructor(menu) {

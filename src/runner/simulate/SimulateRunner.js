@@ -2,7 +2,7 @@ define(function (require) {
 
     const { MouseButton } = require('../../core/Mouse.js')
     const Runner = require('../Runner.js')
-    const AppState = require('../../core/AppState.js')
+    const AppState = require('../../state/AppState.js')
     const World = require('../../world/World.js')
     const EntitySelector = require('../../world/manager/EntitySelector.js')
     const EntityManager = require('../../world/manager/EntityManager.js')

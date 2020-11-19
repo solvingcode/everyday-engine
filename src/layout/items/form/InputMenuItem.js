@@ -5,13 +5,22 @@ define(function (require) {
 
     /**
      * Input Menu Item
+     * Can be used many times by the different menu items;
+     * Start/run action must be handled differently
      */
     class InputMenuItem extends MenuItem {
+
+        /**
+         * @const
+         * @type {string}
+         */
+        FORM_UPDATE = 'FORM_UPDATE'
+
         /**
          * @param {MenuItem} parent 
          * @param {Object} props
          * @param {any} value The default value
-         * @param {Function} event The event binded to the field
+         * @param {callback} event The event bound to the field
          */
         constructor(parent, props, value, event) {
             super(props)
@@ -22,25 +31,35 @@ define(function (require) {
             this.value = value
         }
         /**
-         * @inherit
+         * @override
          */
         run() {
             const { event } = this
-            this.setActionState('FORM_UPDATE', 'START')
-            this.setDataState({ form: { event, item: this } })
+            this.startAction(this.FORM_UPDATE, this.id, { event, item: this })
         }
         /**
-         * @inheritDoc
+         * @override
+         */
+        stop() {
+            this.stopAction(this.FORM_UPDATE)
+        }
+        /**
+         * @override
          */
         isSelected() {
-            return false
+            return this.hasAction(this.FORM_UPDATE, this.id)
         }
         /**
-         * @inheritDoc
+         * @override
          */
         isValid() {
             return (!this.parent || this.parent.items.includes(this)) && this.parent.isValid();
         }
+
+        /**
+         * The event to call
+         * @callback callback
+         */
     }
 
     return InputMenuItem

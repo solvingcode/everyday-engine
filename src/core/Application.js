@@ -1,7 +1,7 @@
 define(function (require) {
     const Window = require('./Window.js')
     const Menu = require('../layout/Menu.js')
-    const AppState = require('./AppState.js')
+    const AppState = require('../state/AppState.js')
     const EventHandler = require('./EventHandler.js')
     const World = require('../world/World.js')
     const Renderer = require('../renderer/Renderer.js')

@@ -2,7 +2,7 @@ define(function (require) {
 
     const EntityMotion = require('../../entity/EntityMotion.js')
     const EntitySelector = require('../manager/EntitySelector.js')
-    const AppState = require('../../core/AppState.js')
+    const AppState = require('../../state/AppState.js')
 
     class SelectorEntity extends EntityMotion {
 
@@ -76,7 +76,7 @@ define(function (require) {
 
         /**
          * Calculate the largest rectangle for given rotation and size
-         * @param {Float} angleRadian 
+         * @param {number} angleRadian
          * @param {Object} size 
          */
         getLargestRectangle(angleRadian, size) {

@@ -4,7 +4,7 @@ body{
 }
 
 #app-el-left{
-    border-right: 4px solid #333333;
+    border-right: 1px solid #333333;
     background-color: #4d4d4c;
 }
 
@@ -81,5 +81,9 @@ button.selected, button.hidden.selected, button.locked.selected{
 }
 
 .layer-entity.selected{
-    background-color: #686866;
+    background-color: #4f606c;
+}
+
+.layer-entity i{
+    color: #d2d2d2;
 }

@@ -8,10 +8,7 @@ define(function (require) {
      */
     class CheckboxMenuItem extends InputMenuItem {
         /**
-         * @param {MenuItem} parent 
-         * @param {Object} props
-         * @param {any} value The default value
-         * @param {Function} event The event binded to the field
+         * @inheritDoc
          */
         constructor(parent, props, value, event) {
             super(parent, props, value, event)

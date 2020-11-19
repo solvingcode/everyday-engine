@@ -26,10 +26,13 @@ define(function () {
          */
         render(camera) {
             this.clear()
-            for (var iMesh in this.meshes) {
-                const mesh = this.meshes[iMesh]
-                const { x, y } = camera.toCanvasCoord(mesh.position)
-                objectContext.drawImage(mesh.context.canvas, x, y)
+            for (let iMesh in this.meshes) {
+                if(this.meshes.hasOwnProperty(iMesh)){
+                    const mesh = this.meshes[iMesh]
+                    const { x, y } = camera.toCanvasCoord(mesh.position)
+                    const { x: sceneX, y: sceneY } = this.toSceneCoord({x, y})
+                    objectContext.drawImage(mesh.context.canvas, sceneX, sceneY)
+                }
             }
             this.meshes = []
         }
@@ -40,6 +43,16 @@ define(function () {
          */
         add(mesh) {
             this.meshes.push(mesh)
+        }
+
+        /**
+         * Convert position to scene coordinates
+         * @param {{x: number, y: number}} position
+         * @return {{x: number, y: number}}
+         */
+        toSceneCoord({x, y}){
+            const {left: sceneCanvasX, top: sceneCanvasY} = objectContext.canvas.getBoundingClientRect()
+            return {x: x - sceneCanvasX, y: y - sceneCanvasY}
         }
     }
 

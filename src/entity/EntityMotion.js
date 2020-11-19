@@ -1,7 +1,7 @@
 define(function (require) {
 
     const Entity = require('./Entity.js')
-    const AppState = require('../core/AppState.js')
+    const AppState = require('../state/AppState.js')
     const Vector = require('../core/Vector.js')
 
     /**

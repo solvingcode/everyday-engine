@@ -4,6 +4,10 @@ define(function (require) {
     const Layout = require('../../Layout.js')
     const EntityManager = require('../../../world/manager/EntityManager.js')
 
+    /**
+     * Define a layer entity block
+     * @property {{entity: EntityMotion}} data
+     */
     class LayerEntityMenuItem extends MenuItem {
         constructor(parent, data) {
             super({
@@ -16,7 +20,7 @@ define(function (require) {
         }
 
         /**
-         * @inherit
+         * @inheritDoc
          */
         run() {
             this.setActionState('SELECT_ENTITY', 'START')
@@ -24,14 +28,14 @@ define(function (require) {
         }
 
         /**
-         * @inherit
+         * @inheritDoc
          */
         isSelected() {
             return this.getEntity().selected
         }
         
         /**
-         * @inherit
+         * @inheritDoc
          */
         isValid() {
             return super.isValid() && EntityManager.get().entities.includes(this.getEntity()) &&
@@ -40,6 +44,7 @@ define(function (require) {
 
         /**
          * Get entity attached to the layer
+         * @return {Entity}
          */
         getEntity(){
             return this.data.entity

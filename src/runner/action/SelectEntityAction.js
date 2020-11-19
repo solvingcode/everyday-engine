@@ -1,7 +1,7 @@
 define(function (require) {
 
     const Action = require('./Action.js')
-    const AppState = require('../../core/AppState.js')
+    const AppState = require('../../state/AppState.js')
     const EntitySelector = require('../../world/manager/EntitySelector.js')
 
     /**

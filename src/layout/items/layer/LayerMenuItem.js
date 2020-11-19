@@ -20,21 +20,21 @@ define(function (require) {
         }
 
         /**
-         * @inherit
+         * @inheritDoc
          */
         run() {
             return false
         }
 
         /**
-         * @inherit
+         * @inheritDoc
          */
         isSelected() {
             return false
         }
 
         /**
-         * @inherit
+         * @inheritDoc
          */
         update() {
             const entities = EntityManager.get().getValidBodyEntities().reverse()

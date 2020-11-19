@@ -1,9 +1,14 @@
 define(function (require) {
 
-    const { CURSOR } = require('./Mouse.js')
+    const { CURSOR } = require('../core/Mouse.js')
+
+    /**
+     * @typedef {{code: string, id: number}} StateType
+     */
 
     /**
      * Manage the state of the application over time
+     * @property {StateType[]} stateList
      */
     class AppState {
 
@@ -30,17 +35,37 @@ define(function (require) {
         }
 
         /**
-         * Set data associated to a topic.
+         * Set data.
          * Used to set data for a given state
+         * @param {Object} data
          */
         setData(data) {
-            this.data = Object.assign(this.data, data)
+            this.data = _.merge(this.data, data)
+            return this
+        }
+
+        /**
+         * Set data associated to a topic
+         * @param {string} topic
+         * @param {Object|Array} data
+         */
+        setDataByTopic(topic, data) {
+            const dataTopic = this.data[topic]
+            if(dataTopic){
+                if(_.isArray(dataTopic)){
+                    this.data[topic] = dataTopic.concat(data)
+                }else{
+                    this.data[topic] = {dataTopic, ...data}
+                }
+            }else{
+                this.data[topic] = data
+            }
             return this
         }
 
         /**
          * Verify if Application has a state.
-         * @param {String[]} state 
+         * @param {String} state
          */
         hasState(state) {
             return this.state.indexOf(state) >= 0
@@ -130,6 +155,15 @@ define(function (require) {
             const state = `${stateGroup}_${type}`
             const isHistory = !(this.findStateIndex(state, true).length)
             this.removeState(stateGroup, false)
+            this.addState(state, isHistory)
+        }
+
+        /**
+         * Set a state.
+         * @param {String} state
+         */
+        setState(state) {
+            const isHistory = !(this.findStateIndex(state, true).length)
             this.addState(state, isHistory)
         }
 

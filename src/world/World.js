@@ -54,10 +54,11 @@ define(function (require) {
          */
         drawEntity(entity, renderer) {
             const { x: cameraX, y: cameraY } = this.getCamera().position
-            const minX = cameraX - SCENE_WIDTH / 2 - entity.size.width
-            const maxX = cameraX + SCENE_WIDTH / 2
-            const minY = cameraY - SCENE_HEIGHT / 2 - entity.size.height
-            const maxY = cameraY + SCENE_HEIGHT / 2
+            const {left: sceneCanvasX, top: sceneCanvasY} = objectContext.canvas.getBoundingClientRect()
+            const minX = cameraX - SCENE_WIDTH / 2 - entity.size.width + sceneCanvasX
+            const maxX = cameraX + SCENE_WIDTH / 2 + sceneCanvasX
+            const minY = cameraY - SCENE_HEIGHT / 2 - entity.size.height + sceneCanvasY
+            const maxY = cameraY + SCENE_HEIGHT / 2 + sceneCanvasY
             if (minX <= entity.position.x && maxX >= entity.position.x &&
                 minY <= entity.position.y && maxY >= entity.position.y) {
                 entity.draw(renderer)

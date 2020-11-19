@@ -1,6 +1,6 @@
 define(function (require) {
 
-    const AppState = require('../../core/AppState.js')
+    const AppState = require('../../state/AppState.js')
     const Runner = require('../Runner.js')
     const { MouseButton } = require('../../core/Mouse.js')
     const EntityManager = require('../../world/manager/EntityManager.js')
@@ -128,7 +128,7 @@ define(function (require) {
         /**
          * Is position of the given mouse is valid (inside draw area)
          * @param {Mouse} mouse
-         * @param {MouseRunner} menuRunner  
+         * @param {Menu} menu
          */
         isPositionValid(mouse, menu) {
             return !menu.getUIRenderer().getItemAt(mouse)

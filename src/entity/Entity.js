@@ -392,6 +392,22 @@ define(function (require) {
         }
 
         /**
+         * Is entity visible
+         * @return {boolean}
+         */
+        isVisible() {
+            return this.visible
+        }
+
+        /**
+         * Is entity locked
+         * @return {boolean}
+         */
+        isLocked() {
+            return this.locked
+        }
+
+        /**
          * Is entity active (valid, unlocked, ...)
          */
         isActive() {

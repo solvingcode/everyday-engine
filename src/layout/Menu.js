@@ -23,6 +23,11 @@ define(function (require) {
     const EntityMenuItem = require('./items/entity/EntityMenuItem.js')
     const ConditionMenuItem = require('./items/condition/ConditionMenuItem.js')
 
+    /**
+     * Define all menu items
+     * @property {MenuItem[]} types
+     * @property {MenuItemUI[]} items
+     */
     class Menu {
         constructor() {
             this.types = [
@@ -43,9 +48,9 @@ define(function (require) {
                 new UnlockMenuItem(),
                 new HideMenuItem(),
                 new ShowMenuItem(),
+                new LayerMenuItem(),
                 new EntityMenuItem(),
                 new ConditionMenuItem(),
-                new LayerMenuItem(),
                 new AiGeneticMenuItem()
             ]
             this.items = []
@@ -68,8 +73,7 @@ define(function (require) {
         /**
          * Prepare the Menu and sub menu for rendering
          * @param {MenuItem | Menu} item 
-         * @param {Object} parent 
-         * @param {Number} parentIndex 
+         * @param {Object} parent
          */
         prepare(item, parent = null) {
             if (item.isValid()) {
@@ -77,8 +81,7 @@ define(function (require) {
                 const existItem = this.items.find(pItem => pItem.element === item)
                 const lastIndex = itemsZone.length
                 if (existItem) {
-                    const indexItem = itemsZone.findIndex(pItem => pItem.element === item)
-                    existItem.index = indexItem
+                    existItem.index = itemsZone.findIndex(pItem => pItem.element === item)
                 }
                 const resultItem = existItem || new MenuItemUI(item, lastIndex, parent)
                 !existItem && this.items.push(resultItem)
@@ -100,7 +103,7 @@ define(function (require) {
 
         /**
          * Find menu item by index and zone
-         * @param {MznuItem} element 
+         * @param {MenuItem} element
          */
         findItemByElement(element) {
             return this.items.find(pItem => pItem.element === element)
@@ -119,14 +122,15 @@ define(function (require) {
          */
         selectItem(menuItem) {
             if (menuItem) {
-                this.items.map(item => {
+                for(const iItem in this.items){
+                    const item = this.items[iItem]
                     if (item.element.isSelected()) {
                         item.element.stop()
                     }
                     if (item.element === menuItem.element) {
                         item.element.run()
                     }
-                })
+                }
             }
         }
 

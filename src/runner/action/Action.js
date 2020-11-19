@@ -9,7 +9,8 @@ define(function () {
         }
 
         /**
-         * Execute actions.
+         * Execute actions
+         * @param {any} params
          */
         static run(...params) {
             throw new TypeError('"run" method must be implemented')
@@ -18,8 +19,30 @@ define(function () {
         /**
          * Stop actions.
          */
-        static stop(...params) {
+        static stop() {
             return true
+        }
+
+        /**
+         * Should start the action
+         * @param {string} type
+         * @param {StateManager} stateManager
+         *
+         * @return {boolean}
+         */
+        static shouldStart(type, stateManager){
+            return stateManager.isStartAction(type)
+        }
+
+        /**
+         * Should stop the action
+         * @param {string} type
+         * @param {StateManager} stateManager
+         *
+         * @return {boolean}
+         */
+        static shouldStop(type, stateManager){
+            return stateManager.isStopAction(type)
         }
 
     }

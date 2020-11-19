@@ -1,7 +1,7 @@
 define(function (require) {
 
     const Runner = require('../Runner.js')
-    const AppState = require('../../core/AppState.js')
+    const StateManager = require('../../state/StateManager.js')
     const EntitySelector = require('../../world/manager/EntitySelector.js')
     const DeleteAction = require('./DeleteAction.js')
     const DuplicateAction = require('./DuplicateAction.js')
@@ -40,7 +40,7 @@ define(function (require) {
          * @param {Mouse} mouse 
          */
         execute(mouse) {
-            const appState = AppState.get()
+            const stateManager = StateManager.get()
             const typeActions = {
                 DELETE: DeleteAction,
                 DUPLICATE: DuplicateAction,
@@ -67,10 +67,11 @@ define(function (require) {
             Object.entries(typeActions).forEach(typeAction => {
                 const type = typeAction[0]
                 const action = typeAction[1]
-                if (appState.hasState(`ACTION_${type}_START`)) {
-                    this.runAction(action, mouse, selectedEntities) && appState.setUniqStateByGroup('ACTION', `${type}_STOP`)
-                } else if (appState.hasState(`ACTION_${type}_STOP`)) {
-                    this.stopAction(action, mouse, selectedEntities) && appState.removeState(`ACTION_${type}_STOP`)
+                if (action.shouldStart(type, stateManager)) {
+                    this.runAction(action, mouse, selectedEntities) && stateManager.stopAction(type)
+                }
+                if (action.shouldStop(type, stateManager)) {
+                    this.stopAction(action, mouse, selectedEntities) && stateManager.endAction(type)
                 }
             })
         }
@@ -88,6 +89,8 @@ define(function (require) {
         /**
          * Stop action
          * @param {Action} action
+         * @param {Mouse} mouse
+         * @param {Entity[]} selectedEntities
          */
         stopAction(action, mouse, selectedEntities) {
             return action.stop(mouse, selectedEntities)

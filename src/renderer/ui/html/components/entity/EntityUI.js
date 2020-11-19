@@ -1,7 +1,8 @@
 define(function (require) {
 
     const AttachEntityUI = require('./AttachEntityUI.js')
-    const StaticEntityUI = require('./StaticEntityUI.js')
+    const HideEntityUI = require('./HideEntityUI.js')
+    const LockEntityUI = require('./LockEntityUI.js')
 
     /**
      * EntityUI class
@@ -16,12 +17,14 @@ define(function (require) {
          */
         static draw(item, el, uiRenderer) {
             AttachEntityUI.draw(item, el, uiRenderer)
-            StaticEntityUI.draw(item, el, uiRenderer)
+            HideEntityUI.draw(item, el)
+            LockEntityUI.draw(item, el)
         }
 
         /**
          * Get screen shot of the entity as image
-         * @param {MenuItemUI} item 
+         * @param {Entity} entity
+         * @param {{entityWidth: number, entityHeight: number}} props
          */
         static getImage(entity, props) {
             const { entityWidth, entityHeight } = props
