@@ -7,15 +7,11 @@ define(function (require) {
         constructor() {
             super({
                 name: 'stop',
-                title: 'Draw a rectangle'
+                title: 'Draw a rectangle',
+                stateCode: 'DRAW_RECT',
+                type: Layout.type.ICON,
+                zone: Layout.zone.LEFT
             })
-            this.type = Layout.type.ICON
-        }
-        run() {
-            this.setDrawState('RECT')
-        }
-        isSelected(){
-            return this.hasDrawState('RECT')
         }
     }
 

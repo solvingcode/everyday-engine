@@ -11,34 +11,14 @@ define(function (require) {
     class EntityMenuItem extends MenuItem {
         constructor() {
             super({
-                name: 'Properties'
+                name: 'Properties',
+                stateCode: '',
+                type: Layout.type.PANEL,
+                zone: Layout.zone.RIGHT
             })
-            this.zone = Layout.zone.RIGHT
-            this.type = Layout.type.PANEL
             this.items = [
                 new PhysicsFormMenuItem(this)
             ]
-        }
-
-        /**
-         * @inherit
-         */
-        run() {
-            return false
-        }
-
-        /**
-         * @inherit
-         */
-        isSelected() {
-            return false
-        }
-
-        /**
-         * @inherit
-         */
-        update() {
-            this.items.forEach(item => item.isValid() && item.update())
         }
     }
 

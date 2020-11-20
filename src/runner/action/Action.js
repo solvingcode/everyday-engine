@@ -31,7 +31,7 @@ define(function () {
          * @return {boolean}
          */
         static shouldStart(type, stateManager){
-            return stateManager.isStartAction(type)
+            return stateManager.isStart(type)
         }
 
         /**
@@ -42,7 +42,7 @@ define(function () {
          * @return {boolean}
          */
         static shouldStop(type, stateManager){
-            return stateManager.isStopAction(type)
+            return stateManager.isStop(type)
         }
 
     }

@@ -12,12 +12,13 @@ define(function (require) {
     class FormMenuItem extends MenuItem {
         constructor(parent, data) {
             super({
-                name: 'Properties'
+                name: 'Properties',
+                stateCode: '',
+                type: Layout.type.FORM,
+                zone: parent.zone
             })
             this.parent = parent
             this.data = data
-            this.zone = parent.zone
-            this.type = Layout.type.FORM
             this.init()
         }
         /**
@@ -29,17 +30,7 @@ define(function (require) {
             this.version = 0
         }
         /**
-         * @inherit
-         */
-        run() { }
-        /**
-         * @inherit
-         */
-        isSelected() {
-            return false
-        }
-        /**
-         * @inherit
+         * @override
          */
         update() {
             const aiEngine = World.get().getAiEngine()

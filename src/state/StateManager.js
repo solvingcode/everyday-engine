@@ -21,16 +21,16 @@ define(function (require) {
          * Is the action type a start action
          * @param {string} type
          */
-        isStartAction(type){
-            return this.appState.hasState(`ACTION_${type}_START`)
+        isStart(type){
+            return this.appState.hasState(`${type}_START`)
         }
 
         /**
          * Is the action type a stop action
          * @param {string} type
          */
-        isStopAction(type){
-            return this.appState.hasState(`ACTION_${type}_STOP`)
+        isStop(type){
+            return this.appState.hasState(`${type}_STOP`)
         }
 
         /**
@@ -43,7 +43,7 @@ define(function (require) {
             if(!id){
                 throw new TypeError('Action id must be defined')
             }
-            const state = `ACTION_${type}_START`
+            const state = `${type}_START`
             this.appState.addState(state)
             this.appState.setDataByTopic(state, [{id, ...data}])
         }
@@ -53,15 +53,11 @@ define(function (require) {
          * @param {string} type
          */
         stopAction(type){
-            const state = `ACTION_${type}_STOP`
-            const data = this.getStartActionData(type)
-            if(data){
-                this.appState.addState(state)
-                this.appState.setData({[state]: [data]})
-                this.removeStartActionData(type)
-            }else{
-                this.appState.setUniqStateByGroup('ACTION', `${type}_STOP`)
-            }
+            const state = `${type}_STOP`
+            const data = this.getStartData(type)
+            this.appState.addState(state)
+            this.appState.setData({[state]: [data]})
+            this.removeStartData(type)
         }
 
         /**
@@ -69,9 +65,9 @@ define(function (require) {
          * @param {string} type
          */
         endAction(type){
-            const state = `ACTION_${type}_STOP`
+            const state = `${type}_STOP`
             this.appState.removeState(state)
-            this.removeStopActionData(type)
+            this.removeStopData(type)
         }
 
         /**
@@ -81,9 +77,9 @@ define(function (require) {
          * @return {boolean}
          */
         hasAction(type, id){
-            return (this.isStartAction(type) || this.isStopAction(type))
-                    && (this.getDataById(`ACTION_${type}_START`, id)
-                    || this.getDataById(`ACTION_${type}_STOP`, id))
+            return (this.isStart(type) || this.isStop(type))
+                    && (this.getDataById(`${type}_START`, id)
+                    || this.getDataById(`${type}_STOP`, id))
 
         }
 
@@ -92,9 +88,9 @@ define(function (require) {
          * @param {string} type
          * @return {Object|null}
          */
-        getStartActionData(type){
-            if(this.isStartAction(type)){
-                const state = `ACTION_${type}_START`
+        getStartData(type){
+            if(this.isStart(type)){
+                const state = `${type}_START`
                 return this.getNextData(state)
             }
             return null
@@ -104,11 +100,14 @@ define(function (require) {
          * Remove the start action data
          * @param {string} type
          */
-        removeStartActionData(type){
-            if(this.isStartAction(type)){
-                const state = `ACTION_${type}_START`
+        removeStartData(type){
+            if(this.isStart(type)){
+                const state = `${type}_START`
                 const data = this.getData(state)
                 data && data.splice(0, 1)
+                if(data && !data.length){
+                    this.appState.removeState(state)
+                }
             }
         }
 
@@ -116,9 +115,9 @@ define(function (require) {
          * Remove the start action data
          * @param {string} type
          */
-        removeStopActionData(type){
-            if(this.isStartAction(type)){
-                const state = `ACTION_${type}_STOP`
+        removeStopData(type){
+            if(this.isStart(type)){
+                const state = `${type}_STOP`
                 const data = this.getData(state)
                 data && data.splice(0, 1)
             }
@@ -129,9 +128,9 @@ define(function (require) {
          * @param {string} type
          * @return {Object|null}
          */
-        getStopActionData(type){
-            if(this.isStopAction(type)){
-                const state = `ACTION_${type}_STOP`
+        getStopData(type){
+            if(this.isStop(type)){
+                const state = `${type}_STOP`
                 return this.getNextData(state)
             }
             return null
@@ -144,7 +143,7 @@ define(function (require) {
          */
         getDataById(type, id){
             const data = this.getData(type)
-            return data && data.find(value => value.id === id)
+            return data && data.find(value => value && value.id === id)
         }
 
         /**

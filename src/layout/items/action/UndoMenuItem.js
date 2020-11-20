@@ -7,16 +7,11 @@ define(function (require) {
         constructor() {
             super({
                 name: 'undo',
-                title: 'Undo'
+                title: 'Undo',
+                stateCode: 'ACTION_UNDO',
+                type: Layout.type.ICON,
+                zone: Layout.zone.TOP
             })
-            this.zone = Layout.zone.TOP
-            this.type = Layout.type.ICON
-        }
-        run() {
-            this.setActionState('UNDO', 'START')
-        }
-        isSelected(){
-            return this.hasActionState('UNDO')
         }
     }
 

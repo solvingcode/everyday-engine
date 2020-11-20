@@ -11,10 +11,11 @@ define(function (require) {
     class ConditionMenuItem extends MenuItem {
         constructor() {
             super({
-                name: 'Conditions'
+                name: 'Conditions',
+                stateCode: '',
+                type: Layout.type.PANEL,
+                zone: Layout.zone.RIGHT
             })
-            this.zone = Layout.zone.RIGHT
-            this.type = Layout.type.PANEL
             this.items = [
                 new FormMenuItem(this)
             ]

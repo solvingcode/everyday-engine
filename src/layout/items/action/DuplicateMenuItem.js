@@ -7,16 +7,11 @@ define(function (require) {
         constructor() {
             super({
                 name: 'copy',
-                title: 'Duplicate'
+                title: 'Duplicate',
+                stateCode: 'ACTION_DUPLICATE',
+                type: Layout.type.ICON,
+                zone: Layout.zone.TOP
             })
-            this.zone = Layout.zone.TOP
-            this.type = Layout.type.ICON
-        }
-        run() {
-            this.setActionState('DUPLICATE', 'START')
-        }
-        isSelected(){
-            return this.hasActionState('DUPLICATE')
         }
     }
 

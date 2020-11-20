@@ -99,7 +99,7 @@ define(function (require) {
                     }
                     cursor && this.setData({ cursor })
                 } else {
-                    throw `${state} is not recognized as Application State`
+                    throw new TypeError(`${state} is not recognized as Application State`)
                 }
             }
         }
@@ -188,24 +188,16 @@ define(function (require) {
      * @todo: Think to externalize the states configuration
      */
     AppState.States = {
-        TO_DRAW_ELLIPSE: { history: false },
-        TO_DRAW_RECT: { history: false, cursor: CURSOR.CROSSHAIR },
-        TO_DRAW_LINE: { history: false },
-        TO_DRAW_JOINT: { history: false, cursor: CURSOR.CROSSHAIR },
-        TO_DRAW_ATTACH_JOINT: { history: false },
-        TO_DRAW_ATTACH_POINT: { history: false, cursor: CURSOR.POINTER },
-        TO_DRAW_SELECT: { history: false, cursor: CURSOR.MOVE_ENTITY },
-        TO_DRAW_POLY: { history: false },
-        TO_DRAW_CIRCLE: { history: false, cursor: CURSOR.CROSSHAIR },
-        DRAWING_ELLIPSE: { history: true },
-        DRAWING_CIRCLE: { history: true, cursor: CURSOR.CROSSHAIR },
-        DRAWING_RECT: { history: true, cursor: CURSOR.CROSSHAIR },
-        DRAWING_LINE: { history: true },
-        DRAWING_JOINT: { history: true, cursor: CURSOR.CROSSHAIR },
-        DRAWING_ATTACH_JOINT: { history: true, cursor: CURSOR.POINTER },
-        DRAWING_ATTACH_POINT: { history: true },
-        DRAWING_POLY: { history: true },
-        DRAWING_SELECT: { history: false },
+        DRAW_RECT_START: { history: false, cursor: CURSOR.CROSSHAIR },
+        DRAW_JOINT_START: { history: false, cursor: CURSOR.CROSSHAIR },
+        DRAW_ATTACH_POINT_START: { history: false, cursor: CURSOR.POINTER },
+        DRAW_SELECT_START: { history: false, cursor: CURSOR.MOVE_ENTITY },
+        DRAW_CIRCLE_START: { history: false, cursor: CURSOR.CROSSHAIR },
+        DRAW_CIRCLE_STOP: { history: true, cursor: CURSOR.CROSSHAIR },
+        DRAW_RECT_STOP: { history: true, cursor: CURSOR.CROSSHAIR },
+        DRAW_JOINT_STOP: { history: true, cursor: CURSOR.CROSSHAIR },
+        DRAW_ATTACH_POINT_STOP: { history: true },
+        DRAW_SELECT_STOP: { history: false },
         SIMULATE_START: { history: false, cursor: CURSOR.DEFAULT },
         SIMULATE_STOP: { history: false },
         SIMULATE_PROGRESS: { history: false },

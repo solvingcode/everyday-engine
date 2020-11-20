@@ -58,6 +58,7 @@ define(function (require) {
         /**
          * Get MenuItem at a specific position.
          * @param {Mouse} mouse
+         * @return {MenuItemUI}
          */
         getItemAt(mouse) {
             throw new TypeError('"UIRenderer.getItemAt" method must be implemented')

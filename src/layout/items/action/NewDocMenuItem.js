@@ -10,16 +10,11 @@ define(function (require) {
         constructor() {
             super({
                 name: 'file',
-                title: 'New document'
+                title: 'New document',
+                stateCode: 'ACTION_NEW_DOC',
+                type: Layout.type.ICON,
+                zone: Layout.zone.TOP
             })
-            this.zone = Layout.zone.TOP
-            this.type = Layout.type.ICON
-        }
-        run() {
-
-        }
-        isSelected(){
-
         }
     }
 

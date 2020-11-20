@@ -7,15 +7,11 @@ define(function (require) {
         constructor() {
             super({
                 name: 'mouse-pointer',
-                title: 'Select/Move'
+                title: 'Select/Move',
+                stateCode: 'DRAW_SELECT',
+                type: Layout.type.ICON,
+                zone: Layout.zone.LEFT
             })
-            this.type = Layout.type.ICON
-        }
-        run() {
-            this.setDrawState('SELECT')
-        }
-        isSelected(){
-            return this.hasDrawState('SELECT')
         }
     }
 

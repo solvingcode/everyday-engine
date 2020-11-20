@@ -10,16 +10,11 @@ define(function (require) {
         constructor() {
             super({
                 name: 'unlock',
-                title: 'Unlock'
+                title: 'Unlock',
+                stateCode: 'ACTION_UNLOCK',
+                type: Layout.type.ICON,
+                zone: Layout.zone.TOP
             })
-            this.zone = Layout.zone.TOP
-            this.type = Layout.type.ICON
-        }
-        run() {
-            this.setActionState('UNLOCK', 'START')
-        }
-        isSelected(){
-            return this.hasActionState('UNLOCK')
         }
     }
 

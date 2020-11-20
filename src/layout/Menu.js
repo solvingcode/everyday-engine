@@ -118,18 +118,16 @@ define(function (require) {
 
         /**
          * Select item in the menu.
-         * @param {MenuItem} menuItem 
+         * @param {MenuItemUI} menuItem
          */
         selectItem(menuItem) {
-            if (menuItem) {
-                for(const iItem in this.items){
-                    const item = this.items[iItem]
-                    if (item.element.isSelected()) {
-                        item.element.stop()
-                    }
-                    if (item.element === menuItem.element) {
-                        item.element.run()
-                    }
+            for(const iItem in this.items){
+                const item = this.items[iItem]
+                if (item.element.isSelected()) {
+                    item.element.stop()
+                }
+                if (menuItem && item.element === menuItem.element) {
+                    item.element.run()
                 }
             }
         }
@@ -170,6 +168,7 @@ define(function (require) {
 
         /**
          * Get the UI Renderer
+         * @return {UIRenderer}
          */
         getUIRenderer() {
             return this.uiRenderer

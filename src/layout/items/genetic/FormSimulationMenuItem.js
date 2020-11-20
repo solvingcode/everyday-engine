@@ -12,12 +12,13 @@ define(function (require) {
     class FormSimulationMenuItem extends MenuItem {
         constructor(parent, data) {
             super({
-                name: 'Form Simulation'
+                name: 'Form Simulation',
+                stateCode: '',
+                type: Layout.type.FORM,
+                zone: parent.zone
             })
             this.parent = parent
             this.data = data
-            this.zone = parent.zone
-            this.type = Layout.type.FORM
             this.init()
         }
         /**
@@ -29,23 +30,13 @@ define(function (require) {
             this.version = 0
         }
         /**
-         * @inheritDoc
+         * @override
          */
         isValid() {
             return this.appState.hasState('SIMULATE_PROGRESS')
         }
         /**
-         * @inheritDoc
-         */
-        run() { }
-        /**
-         * @inheritDoc
-         */
-        isSelected() {
-            return false
-        }
-        /**
-         * @inheritDoc
+         * @override
          */
         update() {
             const aiEngine = World.get().getAiEngine()

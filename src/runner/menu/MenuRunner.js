@@ -20,11 +20,8 @@ define(function (require) {
          */
         execute(mouse) {
             const menuItem = this.menu.getUIRenderer().getItemAt(mouse)
-            if (menuItem) {
-                this.menu.selectItem(menuItem)
-                return true
-            }
-            return false
+            this.menu.selectItem(menuItem)
+            return !!menuItem;
         }
 
         /**

@@ -7,15 +7,11 @@ define(function (require) {
         constructor() {
             super({
                 name: 'circle',
-                title: 'Draw circle'
+                title: 'Draw circle',
+                stateCode: 'DRAW_CIRCLE',
+                type: Layout.type.ICON,
+                zone: Layout.zone.LEFT
             })
-            this.type = Layout.type.ICON
-        }
-        run() {
-            this.setDrawState('CIRCLE')
-        }
-        isSelected(){
-            return this.hasDrawState('CIRCLE')
         }
     }
 

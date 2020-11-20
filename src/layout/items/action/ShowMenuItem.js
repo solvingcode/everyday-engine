@@ -10,16 +10,11 @@ define(function (require) {
         constructor() {
             super({
                 name: 'eye',
-                title: 'Show'
+                title: 'Show',
+                stateCode: 'ACTION_SHOW',
+                type: Layout.type.ICON,
+                zone: Layout.zone.TOP
             })
-            this.zone = Layout.zone.TOP
-            this.type = Layout.type.ICON
-        }
-        run() {
-            this.setActionState('SHOW', 'START')
-        }
-        isSelected(){
-            return this.hasActionState('SHOW')
         }
     }
 

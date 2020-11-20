@@ -12,29 +12,16 @@ define(function (require) {
     class LayerMenuItem extends MenuItem {
         constructor() {
             super({
-                name: 'Layer'
+                name: 'Layer',
+                stateCode: '',
+                type: Layout.type.PANEL,
+                zone: Layout.zone.RIGHT
             })
-            this.zone = Layout.zone.RIGHT
-            this.type = Layout.type.PANEL
             this.items = []
         }
 
         /**
-         * @inheritDoc
-         */
-        run() {
-            return false
-        }
-
-        /**
-         * @inheritDoc
-         */
-        isSelected() {
-            return false
-        }
-
-        /**
-         * @inheritDoc
+         * @override
          */
         update() {
             const entities = EntityManager.get().getValidBodyEntities().reverse()

@@ -14,10 +14,11 @@ define(function (require) {
     class AiGeneticMenuItem extends MenuItem {
         constructor() {
             super({
-                name: 'AI Genetic'
+                name: 'AI Genetic',
+                stateCode: '',
+                type: Layout.type.PANEL,
+                zone: Layout.zone.RIGHT
             })
-            this.zone = Layout.zone.RIGHT
-            this.type = Layout.type.PANEL
             this.items = [
                 new InfosMenuItem(this),
                 new FitnessGraphMenuItem(this),
@@ -27,31 +28,10 @@ define(function (require) {
         }
 
         /**
-         * @inherit
-         */
-        run() {
-            return false
-        }
-
-        /**
-         * @inherit
-         */
-        isSelected() {
-            return false
-        }
-
-        /**
-         * @inherit
+         * @override
          */
         isValid() {
             return super.isValid() || this.appState.hasState('SIMULATE_PROGRESS')
-        }
-
-        /**
-         * @inherit
-         */
-        update() {
-            this.items.forEach(item => item.isValid() && item.update())
         }
     }
 

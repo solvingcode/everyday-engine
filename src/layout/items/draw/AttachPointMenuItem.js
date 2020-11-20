@@ -7,15 +7,11 @@ define(function (require) {
         constructor() {
             super({
                 name: 'thumbtack',
-                title: 'Pin joints'
+                title: 'Pin joints',
+                stateCode: 'DRAW_ATTACH_POINT',
+                type: Layout.type.ICON,
+                zone: Layout.zone.LEFT
             })
-            this.type = Layout.type.ICON
-        }
-        run() {
-            this.setDrawState('ATTACH_POINT')
-        }
-        isSelected(){
-            return this.hasDrawState('ATTACH_POINT')
         }
     }
 

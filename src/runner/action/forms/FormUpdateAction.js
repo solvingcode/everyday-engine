@@ -10,28 +10,30 @@ define(function (require) {
          * @const
          * @type {string}
          */
-        static FORM_UPDATE = 'FORM_UPDATE'
+        static FORM_UPDATE = 'ACTION_FORM_UPDATE'
 
         /**
-         * @inheritDoc
+         * @override
          */
         static run() {
             return false
         }
 
         /**
-         * @inheritDoc
+         * @override
          */
         static stop() {
-            console.log('stop')
-            const {event, item} = StateManager.get().getStopActionData(this.FORM_UPDATE)
+            const {event, item} = StateManager.get().getStopData(this.FORM_UPDATE)
 
             const menu = Menu.get()
             const menuItemUI = menu.findItemByElement(item)
             const uiRenderer = menu.getUIRenderer()
-            const formElement = uiRenderer.getType(menuItemUI).getFormElement(menuItemUI, uiRenderer)
-
-            event(formElement.value)
+            if(menuItemUI){
+                const formElement = uiRenderer.getType(menuItemUI).getFormElement(menuItemUI, uiRenderer)
+                event(formElement.value)
+            }else{
+                console.warn(`ElementUI for item ${item.id} cannot be found!`)
+            }
             return true
         }
 
@@ -39,14 +41,14 @@ define(function (require) {
          * @override
          */
         static shouldStart(type, stateManager) {
-            return !!stateManager.getStartActionData(type)
+            return !!stateManager.getStartData(type)
         }
 
         /**
          * @override
          */
         static shouldStop(type, stateManager) {
-            return !!stateManager.getStopActionData(type)
+            return !!stateManager.getStopData(type)
         }
 
     }

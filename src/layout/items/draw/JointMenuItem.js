@@ -7,15 +7,11 @@ define(function (require) {
         constructor() {
             super({
                 name: 'bone',
-                title: 'Rigid joints'
+                title: 'Rigid joints',
+                stateCode: 'DRAW_JOINT',
+                type: Layout.type.ICON,
+                zone: Layout.zone.LEFT
             })
-            this.type = Layout.type.ICON
-        }
-        run() {
-            this.setDrawState('JOINT')
-        }
-        isSelected(){
-            return this.hasDrawState('JOINT')
         }
     }
 

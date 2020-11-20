@@ -7,16 +7,11 @@ define(function (require) {
         constructor() {
             super({
                 name: 'trash-alt',
-                title: 'Delete'
+                title: 'Delete',
+                stateCode: 'ACTION_DELETE',
+                type: Layout.type.ICON,
+                zone: Layout.zone.TOP
             })
-            this.zone = Layout.zone.TOP
-            this.type = Layout.type.ICON
-        }
-        run() {
-            this.setActionState('DELETE', 'START')
-        }
-        isSelected(){
-            return this.hasActionState('DELETE')
         }
     }
 

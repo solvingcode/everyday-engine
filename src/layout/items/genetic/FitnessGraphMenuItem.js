@@ -11,11 +11,12 @@ define(function (require) {
     class FitnessGraphMenuItem extends MenuItem {
         constructor(parent) {
             super({
-                name: 'Fitness graph'
+                name: 'Fitness graph',
+                stateCode: '',
+                type: Layout.type.GRAPH,
+                zone: parent.zone
             })
             this.parent = parent
-            this.zone = parent.zone
-            this.type = Layout.type.GRAPH
             this.init()
         }
 
@@ -36,7 +37,7 @@ define(function (require) {
         }
 
         /**
-         * @inherit
+         * @override
          */
         update() {
             const aiEngine = GeneticEngine.get()
@@ -65,7 +66,6 @@ define(function (require) {
 
         /**
          * Setup data (setup Y-axis, ...)
-         * @param {Number} numGeneration
          */
         setupData() {
             const { maxY, maxX } = this.graph
@@ -78,22 +78,10 @@ define(function (require) {
         }
 
         /**
-         * @inherit
+         * @override
          */
         isValid() {
             return this.appState.hasState('SIMULATE_PROGRESS')
-        }
-
-        /**
-         * @inherit
-         */
-        run() { }
-
-        /**
-         * @inherit
-         */
-        isSelected() {
-            return false
         }
     }
 

@@ -7,9 +7,11 @@ define(function (require) {
         constructor() {
             super({
                 name: 'stop-circle',
-                title: 'Stop the simulation'
+                title: 'Stop the simulation',
+                stateCode: 'SIMULATE',
+                type: Layout.type.ICON,
+                zone: Layout.zone.LEFT
             })
-            this.type = Layout.type.ICON
         }
         run() {
             this.setSimulateState('STOP')

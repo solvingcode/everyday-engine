@@ -10,16 +10,11 @@ define(function (require) {
         constructor() {
             super({
                 name: 'arrow-up',
-                title: 'Move up'
+                title: 'Move up',
+                stateCode: 'ACTION_MOVE_UP',
+                type: Layout.type.ICON,
+                zone: Layout.zone.TOP
             })
-            this.zone = Layout.zone.TOP
-            this.type = Layout.type.ICON
-        }
-        run() {
-            this.setActionState('MOVE_UP', 'START')
-        }
-        isSelected(){
-            return this.hasActionState('MOVE_UP')
         }
     }
 

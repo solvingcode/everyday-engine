@@ -2,7 +2,6 @@ define(function (require) {
 
     const AppState = require('../state/AppState.js')
     const StateManager = require('../state/StateManager.js')
-    const Layout = require('./Layout.js')
     const Maths = require('../utils/Maths.js')
 
     /**
@@ -12,17 +11,28 @@ define(function (require) {
      * @property {MenuItem|Menu} parent
      * @property {{items: MenuItem[]}} items
      * @property {MenuItem} element
+     * @property {string} stateCode
      */
     class MenuItem {
         constructor(props) {
             this.props = props
+            if(props.stateCode === undefined){
+                throw new TypeError('State code for MenuItem is required!')
+            }
+            if(props.zone === undefined){
+                throw new TypeError('Zone for MenuItem is required!')
+            }
+            if(props.type === undefined){
+                throw new TypeError('Type for MenuItem is required!')
+            }
             this.appState = AppState.get()
             this.stateManager = StateManager.get()
-            this.zone = Layout.zone.LEFT
-            this.type = Layout.type.DRAW
+            this.zone = props.zone
+            this.type = props.type
             this.data = {}
             this.menu = null
             this.id = Maths.generateId()
+            this.stateCode = props.stateCode
         }
 
         /**
@@ -30,20 +40,22 @@ define(function (require) {
          * @return {boolean}
          */
         isSelected() {
-            throw new TypeError('Abstract "isSelected" method must be implemented')
+            return this.stateCode && this.hasAction(this.stateCode, this.id)
         }
 
         /**
          * Run the action when the item is trigerred
          */
         run() {
-            throw new TypeError('Abstract "run" method must be implemented')
+            this.stateCode && this.startAction(this.stateCode, this.id)
         }
 
         /**
          * Update the items for the menu
          */
-        update() { }
+        update() {
+            this.items && this.items.forEach(item => item.isValid() && item.update())
+        }
 
         /**
          * Is menu item valid
@@ -58,7 +70,9 @@ define(function (require) {
         /**
          * Stop the action when the item is unselected
          */
-        stop() { }
+        stop() {
+            this.stopAction(this.stateCode)
+        }
 
         /**
          * Add draw state
@@ -91,7 +105,7 @@ define(function (require) {
          * @param {number} id
          * @param {Object} data
          */
-        startAction(type, id, data){
+        startAction(type, id, data = {}){
             this.stateManager.startAction(type, id, data)
         }
 

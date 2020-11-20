@@ -13,12 +13,13 @@ define(function (require) {
     class FormMenuItem extends MenuItem {
         constructor(parent, data) {
             super({
-                name: 'Conditions'
+                name: 'Conditions',
+                stateCode: '',
+                type: Layout.type.FORM,
+                zone: parent.zone
             })
             this.parent = parent
             this.data = data
-            this.zone = parent.zone
-            this.type = Layout.type.FORM
         }
         /**
          * Init the menu item

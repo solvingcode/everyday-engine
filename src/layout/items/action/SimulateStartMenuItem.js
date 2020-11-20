@@ -7,19 +7,11 @@ define(function (require) {
         constructor() {
             super({
                 name: 'play',
-                title: 'Start the simulation'
+                title: 'Start the simulation',
+                stateCode: 'SIMULATE',
+                type: Layout.type.ICON,
+                zone: Layout.zone.LEFT
             })
-            this.type = Layout.type.ICON
-        }
-        run() {
-            this.appState.removeAllState()
-            this.setSimulateState('START')
-        }
-        stop() {
-            this.setSimulateState('STOP')
-        }
-        isSelected(){
-            return this.hasSimulateState()
         }
     }
 

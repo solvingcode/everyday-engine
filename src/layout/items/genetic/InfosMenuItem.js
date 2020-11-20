@@ -11,16 +11,17 @@ define(function (require) {
     class InfosMenuItem extends MenuItem {
         constructor(parent, data) {
             super({
-                name: 'AI Genetic'
+                name: 'AI Genetic',
+                stateCode: '',
+                type: Layout.type.TEXT,
+                zone: parent.zone
             })
             this.parent = parent
             this.data = data
-            this.zone = parent.zone
-            this.type = Layout.type.TEXT
         }
 
         /**
-         * @inherit
+         * @override
          */
         update() {
             const aiEngine = GeneticEngine.get()
@@ -41,22 +42,10 @@ define(function (require) {
         }
 
         /**
-         * @inheritDoc
+         * @override
          */
         isValid() {
             return this.appState.hasState('SIMULATE_PROGRESS')
-        }
-
-        /**
-         * @inherit
-         */
-        run() { }
-
-        /**
-         * @inherit
-         */
-        isSelected() {
-            return false
         }
     }
 

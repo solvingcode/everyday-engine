@@ -28,7 +28,8 @@ define(function () {
 
     Layout.form = {
         CHECKBOX: 'checkbox',
-        TEXT: 'text'
+        TEXT: 'text',
+        DROPDOWN: 'dropdown'
     }
 
     return Layout

@@ -65,7 +65,7 @@ define(function (require) {
             }
             const selectedEntities = this.entitySelector.getSelected()
             Object.entries(typeActions).forEach(typeAction => {
-                const type = typeAction[0]
+                const type = `ACTION_${typeAction[0]}`
                 const action = typeAction[1]
                 if (action.shouldStart(type, stateManager)) {
                     this.runAction(action, mouse, selectedEntities) && stateManager.stopAction(type)

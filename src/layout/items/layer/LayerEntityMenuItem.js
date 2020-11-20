@@ -11,31 +11,24 @@ define(function (require) {
     class LayerEntityMenuItem extends MenuItem {
         constructor(parent, data) {
             super({
-                name: 'Layer'
+                name: 'Layer',
+                stateCode: 'ACTION_SELECT_ENTITY',
+                type: Layout.type.LAYER_ENTITY,
+                zone: parent.zone
             })
             this.parent = parent
             this.data = data
-            this.zone = parent.zone
-            this.type = Layout.type.LAYER_ENTITY
         }
 
         /**
-         * @inheritDoc
-         */
-        run() {
-            this.setActionState('SELECT_ENTITY', 'START')
-            this.setDataState(this.data)
-        }
-
-        /**
-         * @inheritDoc
+         * @override
          */
         isSelected() {
             return this.getEntity().selected
         }
         
         /**
-         * @inheritDoc
+         * @override
          */
         isValid() {
             return super.isValid() && EntityManager.get().entities.includes(this.getEntity()) &&

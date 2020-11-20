@@ -10,16 +10,11 @@ define(function (require) {
         constructor() {
             super({
                 name: 'arrow-down',
-                title: 'Move down'
+                title: 'Move down',
+                stateCode: 'ACTION_MOVE_DOWN',
+                type: Layout.type.ICON,
+                zone: Layout.zone.TOP
             })
-            this.zone = Layout.zone.TOP
-            this.type = Layout.type.ICON
-        }
-        run() {
-            this.setActionState('MOVE_DOWN', 'START')
-        }
-        isSelected(){
-            return this.hasActionState('MOVE_DOWN')
         }
     }
 

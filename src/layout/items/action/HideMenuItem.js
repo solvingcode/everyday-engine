@@ -10,16 +10,11 @@ define(function (require) {
         constructor() {
             super({
                 name: 'eye-slash',
-                title: 'Hide'
+                title: 'Hide',
+                stateCode: 'ACTION_HIDE',
+                type: Layout.type.ICON,
+                zone: Layout.zone.TOP
             })
-            this.zone = Layout.zone.TOP
-            this.type = Layout.type.ICON
-        }
-        run() {
-            this.setActionState('HIDE', 'START')
-        }
-        isSelected(){
-            return this.hasActionState('HIDE')
         }
     }
 
