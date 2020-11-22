@@ -9,7 +9,7 @@ define(function (require) {
      * Show/Manage all informations for AI Genetic
      */
     class InfosMenuItem extends MenuItem {
-        constructor(parent, data) {
+        constructor(parent) {
             super({
                 name: 'AI Genetic',
                 stateCode: '',
@@ -17,7 +17,6 @@ define(function (require) {
                 zone: parent.zone
             })
             this.parent = parent
-            this.data = data
         }
 
         /**
@@ -45,7 +44,7 @@ define(function (require) {
          * @override
          */
         isValid() {
-            return this.appState.hasState('SIMULATE_PROGRESS')
+            return this.stateManager.isRunning()
         }
     }
 

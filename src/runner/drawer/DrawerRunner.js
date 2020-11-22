@@ -4,14 +4,10 @@ define(function (require) {
     const Runner = require('../Runner.js')
     const {MouseButton} = require('../../core/Mouse.js')
     const EntityManager = require('../../world/manager/EntityManager.js')
-    const EllipseEntity = require('../../world/entity/EllipseEntity.js')
     const CircleEntity = require('../../world/entity/CircleEntity.js')
     const RectEntity = require('../../world/entity/RectEntity.js')
-    const LineEntity = require('../../world/entity/LineEntity.js')
     const JointEntity = require('../../world/entity/JointEntity.js')
-    const AttachJointEntity = require('../../world/entity/AttachJointEntity.js')
     const AttachPointEntity = require('../../world/entity/AttachPointEntity.js')
-    const PolyEntity = require('../../world/entity/PolyEntity.js')
     const SelectorEntity = require('../../world/entity/SelectorEntity.js')
 
     /**
@@ -40,31 +36,17 @@ define(function (require) {
                 CIRCLE: {
                     entity: CircleEntity
                 },
-                ELLIPSE: {
-                    entity: EllipseEntity
-                },
                 RECT: {
                     entity: RectEntity
                 },
-                LINE: {
-                    entity: LineEntity
-                },
                 JOINT: {
                     entity: JointEntity
-                },
-                ATTACH_JOINT: {
-                    entity: AttachJointEntity
                 },
                 ATTACH_POINT: {
                     entity: AttachPointEntity
                 },
                 SELECT: {
                     entity: SelectorEntity
-                },
-                POLY: {
-                    entity: PolyEntity,
-                    startEvent: (pMouse) => pMouse.isButtonClicked(MouseButton.LEFT),
-                    endEvent: (pMouse) => pMouse.isButtonDoubleClicked(MouseButton.LEFT)
                 }
             }
             Object.entries(typeEntity).forEach(entry => {
@@ -75,12 +57,14 @@ define(function (require) {
                 if (startEvent(mouse) && stateManager.isStart(type) && this.isPositionValid(mouse, menu)) {
                     this.startDraw(stateManager, type)
                 }
-                if (stateManager.isStop(type)) {
+                if (stateManager.isProgress(type)) {
+                    this.draw(mouse.position, props.entity)
                     if (endEvent(mouse)) {
-                        this.endDraw(stateManager, type)
-                    } else {
-                        this.draw(mouse.position, props.entity)
+                        stateManager.stopState(type)
                     }
+                }
+                if (stateManager.isStop(type)) {
+                    this.endDraw(stateManager, type)
                 }
             })
         }
@@ -91,7 +75,7 @@ define(function (require) {
          * @param {String} type
          */
         startDraw(stateManager, type) {
-            stateManager.stopAction(type)
+            stateManager.progressState(type)
             this.currentEntity = null
         }
 
@@ -102,12 +86,15 @@ define(function (require) {
          */
         endDraw(stateManager, type) {
             const entityManager = EntityManager.get()
-            stateManager.endAction(type)
-            this.currentEntity.end()
-            if (this.isCurrentDrawValid) {
-                this.currentEntity.close()
-            } else {
-                entityManager.delete(this.currentEntity)
+            stateManager.endState(type)
+            if(this.currentEntity){
+                this.currentEntity.end()
+                if (this.isCurrentDrawValid) {
+                    this.currentEntity.close()
+                } else {
+                    entityManager.delete(this.currentEntity)
+                }
+                this.currentEntity = null
             }
         }
 

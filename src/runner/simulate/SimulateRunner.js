@@ -1,14 +1,25 @@
 define(function (require) {
 
-    const { MouseButton } = require('../../core/Mouse.js')
+    const {MouseButton} = require('../../core/Mouse.js')
     const Runner = require('../Runner.js')
-    const AppState = require('../../state/AppState.js')
+    const StateManager = require('../../state/StateManager.js')
     const World = require('../../world/World.js')
     const EntitySelector = require('../../world/manager/EntitySelector.js')
     const EntityManager = require('../../world/manager/EntityManager.js')
     const Storage = require('../../core/Storage.js')
 
     class SimulateRunner extends Runner {
+
+        /**
+         * @const
+         * @type {string}
+         */
+        STATE = 'SIMULATE'
+
+        /**
+         * @type {SimulateRunner}
+         */
+        static instance = null
 
         constructor() {
             super()
@@ -18,29 +29,32 @@ define(function (require) {
 
         /**
          * Execute start/stop simulation
-         * @param {Mouse} mouse 
+         * @param {Mouse} mouse
          */
         execute(mouse) {
-            const appState = AppState.get()
+            const stateManager = StateManager.get()
             const entityManager = EntityManager.get()
             const storage = Storage.get()
-            if (appState.hasState('SIMULATE_START')) {
-                this.start(storage, entityManager, appState)
-            } else if (appState.hasState('SIMULATE_PROGRESS')) {
+            if (stateManager.isStart(this.STATE)) {
+                this.start(storage, entityManager, stateManager)
+            } else if (stateManager.isProgress(this.STATE)) {
                 this.progress()
-            } else if (appState.hasState('SIMULATE_STOP')) {
-                this.stop(storage, entityManager, appState)
+            } else if (stateManager.isStop(this.STATE)) {
+                this.stop(storage, entityManager, stateManager)
             }
             //debug
             if (mouse.isButtonPressed(MouseButton.MIDDLE)) {
-                console.log(appState)
+                console.log(stateManager)
             }
         }
 
         /**
          * Start the simulation
+         * @param {Storage} storage
+         * @param {EntityManager} entityManager
+         * @param {StateManager} stateManager
          */
-        start(storage, entityManager, appState) {
+        start(storage, entityManager, stateManager) {
             const world = World.get()
             EntitySelector.get().unselectAll()
             storage.update(Storage.type.ENTITY, entityManager.entities)
@@ -51,10 +65,10 @@ define(function (require) {
                     this.isPhysicsLoaded = true
                 } catch (error) {
                     console.warn(error)
-                    appState.removeState('SIMULATE_START')
+                    stateManager.stopState(this.STATE)
                 }
             }
-            appState.setUniqStateByGroup('SIMULATE', 'PROGRESS')
+            stateManager.progressState(this.STATE)
         }
 
         /**
@@ -68,15 +82,18 @@ define(function (require) {
 
         /**
          * Stop the simulation
+         * @param {Storage} storage
+         * @param {EntityManager} entityManager
+         * @param {StateManager} stateManager
          */
-        stop(storage, entityManager, appState) {
+        stop(storage, entityManager, stateManager) {
+            stateManager.endState(this.STATE)
             const world = World.get()
             entityManager.entities = storage.fetch(Storage.type.ENTITY)
             entityManager.entities.map(entity => entity.regenerate())
             this.isPhysicsLoaded = false
             world.getPhysics().stop()
             world.resetCamera()
-            appState.removeState('SIMULATE_STOP')
         }
 
         static get() {
@@ -86,8 +103,6 @@ define(function (require) {
             return SimulateRunner.instance
         }
     }
-
-    SimulateRunner.instance = null
 
     return SimulateRunner
 })

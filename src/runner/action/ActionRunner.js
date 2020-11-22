@@ -68,10 +68,13 @@ define(function (require) {
                 const type = `ACTION_${typeAction[0]}`
                 const action = typeAction[1]
                 if (action.shouldStart(type, stateManager)) {
-                    this.runAction(action, mouse, selectedEntities) && stateManager.stopAction(type)
+                    stateManager.progressState(type)
+                }
+                if (action.shouldProgress(type, stateManager)) {
+                    this.runAction(action, mouse, selectedEntities) && stateManager.stopState(type)
                 }
                 if (action.shouldStop(type, stateManager)) {
-                    this.stopAction(action, mouse, selectedEntities) && stateManager.endAction(type)
+                    this.stopState(action, mouse, selectedEntities) && stateManager.endState(type)
                 }
             })
         }
@@ -92,7 +95,7 @@ define(function (require) {
          * @param {Mouse} mouse
          * @param {Entity[]} selectedEntities
          */
-        stopAction(action, mouse, selectedEntities) {
+        stopState(action, mouse, selectedEntities) {
             return action.stop(mouse, selectedEntities)
         }
 

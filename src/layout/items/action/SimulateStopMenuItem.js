@@ -13,14 +13,12 @@ define(function (require) {
                 zone: Layout.zone.LEFT
             })
         }
-        run() {
-            this.setSimulateState('STOP')
-        }
-        isSelected() {
-            return false
-        }
+
+        /**
+         * @override
+         */
         isValid() {
-            return this.appState.hasState('SIMULATE_PROGRESS')
+            return this.stateManager.isRunning()
         }
     }
 

@@ -12,7 +12,7 @@ define(function (require) {
      * Form physics properties
      */
     class PhysicsFormMenuItem extends MenuItem {
-        constructor(parent, data) {
+        constructor(parent) {
             super({
                 name: 'Properties',
                 stateCode: '',
@@ -20,7 +20,6 @@ define(function (require) {
                 zone: parent.zone
             })
             this.parent = parent
-            this.data = data
         }
         /**
          * Init the menu item

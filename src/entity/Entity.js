@@ -212,6 +212,7 @@ define(function (require) {
         /**
          * Convert current position to center position
          * @abstract
+         * @return {{x: number, y: number}}
          */
         toCenterPosition() {
             throw new TypeError('"toCenterPosition" method must be implemented')
@@ -221,6 +222,7 @@ define(function (require) {
          * Get current position from center position
          * @param {Vector} position
          * @abstract
+         * @return {{x: number, y: number}}
          */
         fromCenterPosition(position) {
             throw new TypeError('"fromCenterPosition" method must be implemented')

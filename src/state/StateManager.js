@@ -18,18 +18,26 @@ define(function (require) {
         }
 
         /**
-         * Is the action type a start action
+         * Is the state type a start action
          * @param {string} type
          */
-        isStart(type){
+        isStart(type) {
             return this.appState.hasState(`${type}_START`)
+        }
+
+        /**
+         * Is the state type in progress
+         * @param {string} type
+         */
+        isProgress(type) {
+            return this.appState.hasState(`${type}_PROGRESS`)
         }
 
         /**
          * Is the action type a stop action
          * @param {string} type
          */
-        isStop(type){
+        isStop(type) {
             return this.appState.hasState(`${type}_STOP`)
         }
 
@@ -38,9 +46,10 @@ define(function (require) {
          * @param {string} type
          * @param {number} id
          * @param {Object} data
+         * @TODO Add history (call addHistory(state))
          */
-        startAction(type, id,  data = {}){
-            if(!id){
+        startState(type, id, data = {}) {
+            if (!id) {
                 throw new TypeError('Action id must be defined')
             }
             const state = `${type}_START`
@@ -49,25 +58,38 @@ define(function (require) {
         }
 
         /**
-         * Stop an action (state)
+         * Progress an action (state)
          * @param {string} type
+         * @TODO Add history (call addHistory(state))
          */
-        stopAction(type){
-            const state = `${type}_STOP`
+        progressState(type) {
+            const state = `${type}_PROGRESS`
             const data = this.getStartData(type)
             this.appState.addState(state)
             this.appState.setData({[state]: [data]})
-            this.removeStartData(type)
+            this.removeStartState(type)
+        }
+
+        /**
+         * Stop an action (state)
+         * @param {string} type
+         * @TODO Add history (call addHistory(state))
+         */
+        stopState(type) {
+            const state = `${type}_STOP`
+            const data = this.getProgressData(type)
+            this.appState.addState(state)
+            this.appState.setData({[state]: [data]})
+            this.removeStartState(type)
+            this.removeProgressState(type)
         }
 
         /**
          * Delete the stop action (end action)
          * @param {string} type
          */
-        endAction(type){
-            const state = `${type}_STOP`
-            this.appState.removeState(state)
-            this.removeStopData(type)
+        endState(type) {
+            this.removeStopState(type)
         }
 
         /**
@@ -76,64 +98,81 @@ define(function (require) {
          * @param {number} id
          * @return {boolean}
          */
-        hasAction(type, id){
-            return (this.isStart(type) || this.isStop(type))
-                    && (this.getDataById(`${type}_START`, id)
+        hasState(type, id) {
+            return (this.isStart(type) || this.isStop(type) || this.isProgress(type))
+                && (this.getDataById(`${type}_START`, id)
+                    || this.getDataById(`${type}_PROGRESS`, id)
                     || this.getDataById(`${type}_STOP`, id))
-
         }
 
         /**
-         * Get the start action data
+         * Is running state is in progress
+         */
+        isRunning(){
+            return this.isProgress('SIMULATE')
+        }
+
+        /**
+         * Add data to history (state)
+         * @param {string} state
+         * @TODO check we can not pass an ID
+         */
+        addHistory(state) {
+            const isHistory = this.appState.getIsHistory(state)
+            if (isHistory) {
+                this.startState('ACTION_HISTORY_PUSH', 1)
+            }
+        }
+
+        /**
+         * Get the start state data
          * @param {string} type
          * @return {Object|null}
          */
-        getStartData(type){
-            if(this.isStart(type)){
-                const state = `${type}_START`
-                return this.getNextData(state)
-            }
-            return null
+        getStartData(type) {
+            return this.getStateData(`${type}_START`)
         }
 
         /**
-         * Remove the start action data
-         * @param {string} type
-         */
-        removeStartData(type){
-            if(this.isStart(type)){
-                const state = `${type}_START`
-                const data = this.getData(state)
-                data && data.splice(0, 1)
-                if(data && !data.length){
-                    this.appState.removeState(state)
-                }
-            }
-        }
-
-        /**
-         * Remove the start action data
-         * @param {string} type
-         */
-        removeStopData(type){
-            if(this.isStart(type)){
-                const state = `${type}_STOP`
-                const data = this.getData(state)
-                data && data.splice(0, 1)
-            }
-        }
-
-        /**
-         * Get the start action data
+         * Get the progress state data
          * @param {string} type
          * @return {Object|null}
          */
-        getStopData(type){
-            if(this.isStop(type)){
-                const state = `${type}_STOP`
-                return this.getNextData(state)
-            }
-            return null
+        getProgressData(type) {
+            return this.getStateData(`${type}_PROGRESS`)
+        }
+
+        /**
+         * Get the start state data
+         * @param {string} type
+         * @return {Object|null}
+         */
+        getStopData(type) {
+            return this.getStateData(`${type}_STOP`)
+        }
+
+        /**
+         * Remove the start state
+         * @param {string} type
+         */
+        removeStartState(type){
+            this.removeState(`${type}_START`)
+        }
+
+        /**
+         * Remove the progress state
+         * @param {string} type
+         */
+        removeProgressState(type){
+            this.removeState(`${type}_PROGRESS`)
+        }
+
+        /**
+         * Remove the stop state
+         * @param {string} type
+         */
+        removeStopState(type){
+            this.removeState(`${type}_STOP`)
         }
 
         /**
@@ -141,36 +180,59 @@ define(function (require) {
          * @param {string} type
          * @param {number} id
          */
-        getDataById(type, id){
+        getDataById(type, id) {
             const data = this.getData(type)
             return data && data.find(value => value && value.id === id)
         }
 
         /**
          * Get the data state for the given type
-         * @param {string} type
+         * @param {string} state
          * @return {Array}
          */
-        getData(type){
-            return this.appState.getData(type)
+        getData(state) {
+            return this.appState.getData(state)
         }
 
         /**
          * Get the next data state for the given type
-         * @param {string} type
+         * @param {string} state
          * @return {Object}
          */
-        getNextData(type){
-            const data = this.getData(type)
+        getNextData(state) {
+            const data = this.getData(state)
             return data && data[0]
         }
 
         /**
-         * Start the drawing (state)
-         * @param {string} itemToDraw
+         * Remove the state
+         * @param {string} state
          */
-        startDraw(itemToDraw){
-            this.appState.setUniqStateByGroup('TO_DRAW', itemToDraw)
+        removeState(state){
+            this.appState.removeState(state)
+            this.removeStateData(state)
+        }
+
+        /**
+         * Remove the state data
+         * @param {string} state
+         */
+        removeStateData(state) {
+            const data = this.getData(state)
+            data && data.splice(0, 1)
+            if(data && !data.length){
+                this.appState.removeState(state)
+                this.appState.removeData(state)
+            }
+        }
+
+        /**
+         * Get the state data
+         * @param {string} state
+         * @return {Object|null}
+         */
+        getStateData(state) {
+            return this.getNextData(state)
         }
 
         /**

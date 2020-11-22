@@ -33,7 +33,7 @@ define(function (require) {
          */
         run() {
             const {event} = this
-            this.startAction(this.stateCode, this.id, {event, item: this})
+            this.startState(this.stateCode, this.id, {event, item: this})
         }
 
         /**

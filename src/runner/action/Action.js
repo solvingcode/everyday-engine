@@ -17,9 +17,10 @@ define(function () {
         }
 
         /**
-         * Stop actions.
+         * Stop actions
+         * @param {any} params
          */
-        static stop() {
+        static stop(...params) {
             return true
         }
 
@@ -32,6 +33,17 @@ define(function () {
          */
         static shouldStart(type, stateManager){
             return stateManager.isStart(type)
+        }
+
+        /**
+         * Should progress the action
+         * @param {string} type
+         * @param {StateManager} stateManager
+         *
+         * @return {boolean}
+         */
+        static shouldProgress(type, stateManager){
+            return stateManager.isProgress(type)
         }
 
         /**

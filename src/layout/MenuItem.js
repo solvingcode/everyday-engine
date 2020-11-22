@@ -1,6 +1,5 @@
 define(function (require) {
 
-    const AppState = require('../state/AppState.js')
     const StateManager = require('../state/StateManager.js')
     const Maths = require('../utils/Maths.js')
 
@@ -25,7 +24,6 @@ define(function (require) {
             if(props.type === undefined){
                 throw new TypeError('Type for MenuItem is required!')
             }
-            this.appState = AppState.get()
             this.stateManager = StateManager.get()
             this.zone = props.zone
             this.type = props.type
@@ -40,14 +38,14 @@ define(function (require) {
          * @return {boolean}
          */
         isSelected() {
-            return this.stateCode && this.hasAction(this.stateCode, this.id)
+            return this.stateCode && this.hasState(this.stateCode, this.id)
         }
 
         /**
          * Run the action when the item is trigerred
          */
         run() {
-            this.stateCode && this.startAction(this.stateCode, this.id)
+            this.stateCode && this.startState(this.stateCode, this.id)
         }
 
         /**
@@ -63,40 +61,14 @@ define(function (require) {
          */
         isValid() {
             return (!this.parent || this.parent.items.includes(this))
-                && !this.appState.hasState('SIMULATE_PROGRESS')
-                && !this.appState.hasState('SIMULATE_STOP')
+                && !this.stateManager.isRunning()
         }
 
         /**
          * Stop the action when the item is unselected
          */
         stop() {
-            this.stopAction(this.stateCode)
-        }
-
-        /**
-         * Add draw state
-         * @param {String} itemToDraw 
-         */
-        setDrawState(itemToDraw) {
-            this.stateManager.startDraw(itemToDraw)
-        }
-
-        /**
-         * Add simulate state
-         * @param {String} event 
-         */
-        setSimulateState(event) {
-            this.appState.setUniqStateByGroup('SIMULATE', event)
-        }
-
-        /**
-         * Add action state
-         * @param {String} type
-         * @param {String} event
-         */
-        setActionState(type, event) {
-            this.appState.setState(`ACTION_${type}_${event}`)
+            this.stopState(this.stateCode)
         }
 
         /**
@@ -105,16 +77,16 @@ define(function (require) {
          * @param {number} id
          * @param {Object} data
          */
-        startAction(type, id, data = {}){
-            this.stateManager.startAction(type, id, data)
+        startState(type, id, data = {}){
+            this.stateManager.startState(type, id, data)
         }
 
         /**
          * Stop an action by type (state)
          * @param {string} type
          */
-        stopAction(type){
-            this.stateManager.stopAction(type)
+        stopState(type){
+            this.stateManager.stopState(type)
         }
 
         /**
@@ -123,61 +95,8 @@ define(function (require) {
          * @param {number} id
          * @return {boolean}
          */
-        hasAction(type, id){
-            return this.stateManager.hasAction(type, id)
-        }
-
-        /**
-         * Set data state
-         * @param {Object} data
-         */
-        setDataState(data) {
-            this.appState.setData(data)
-        }
-
-        /**
-         * Get data state
-         */
-        getDataState() {
-            return this.appState.data
-        }
-
-        /**
-         * Has action state
-         * @param {String} type
-         * @return {boolean}
-         */
-        hasActionState(type) {
-            return this.appState.hasState(`ACTION_${type}_START`) ||
-                this.appState.hasState(`ACTION_${type}_STOP`)
-        }
-
-        /**
-         * Has data state
-         * @param {Object} data
-         * @return {boolean}
-         */
-        hasDataState(data) {
-            return this.appState.hasData(data)
-        }
-
-        /**
-         * Has action state
-         * @param {String} itemToDraw
-         * @return {boolean}
-         */
-        hasDrawState(itemToDraw) {
-            return this.appState.hasState(`TO_DRAW_${itemToDraw}`) ||
-                this.appState.hasState(`DRAWING_${itemToDraw}`)
-        }
-
-        /**
-         * Has action state
-         * @return {boolean}
-         */
-        hasSimulateState() {
-            return this.appState.hasState(`SIMULATE_START`) ||
-                this.appState.hasState(`SIMULATE_PROGRESS`)
+        hasState(type, id){
+            return this.stateManager.hasState(type, id)
         }
 
         /**

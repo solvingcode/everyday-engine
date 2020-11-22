@@ -2,7 +2,7 @@ define(function (require) {
 
     const EntityMotion = require('../../entity/EntityMotion.js')
     const EntitySelector = require('../manager/EntitySelector.js')
-    const AppState = require('../../state/AppState.js')
+    const StateManager = require('../../state/StateManager.js')
 
     class SelectorEntity extends EntityMotion {
 
@@ -11,7 +11,7 @@ define(function (require) {
             this.shape = EntityMotion.shapes.RECT
             this.selectable = false
             this.entitySelector = EntitySelector.get()
-            this.appState = AppState.get()
+            this.stateManager = StateManager.get()
         }
 
         /**
@@ -36,10 +36,10 @@ define(function (require) {
                 const triggerEntity = this.entitySelector.get(this.getCurrentMousePosition())
                 const isEntityMove = triggerEntity && selectedEntities.includes(triggerEntity)
                 if (isEntityMove) {
-                    this.appState.setUniqStateByGroup('ACTION', 'MOVE_START')
+                    this.stateManager.startState('ACTION_MOVE', 1)
                     return true
                 } else {
-                    this.appState.setUniqStateByGroup('ACTION', 'MOVE_STOP')
+                    this.stateManager.stopState('ACTION_MOVE')
                 }
             }
             return false
@@ -103,7 +103,7 @@ define(function (require) {
         }
 
         /**
-         * @inherit
+         * @override
          */
         toCenterPosition() {
             return {
@@ -113,7 +113,7 @@ define(function (require) {
         }
 
         /**
-         * @inherit
+         * @override
          */
         fromCenterPosition(position) {
             return {
@@ -123,12 +123,10 @@ define(function (require) {
         }
 
         /**
-         * @inherit
+         * @override
          */
         end() {
-            if (this.appState.hasState('ACTION_MOVE_START')) {
-                this.appState.setUniqStateByGroup('ACTION', 'MOVE_STOP')
-            }
+            this.stateManager.stopState('ACTION_MOVE')
         }
 
     }

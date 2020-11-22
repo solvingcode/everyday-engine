@@ -11,7 +11,7 @@ define(function (require) {
      * Form properties
      */
     class FormMenuItem extends MenuItem {
-        constructor(parent, data) {
+        constructor(parent) {
             super({
                 name: 'Conditions',
                 stateCode: '',
@@ -19,7 +19,6 @@ define(function (require) {
                 zone: parent.zone
             })
             this.parent = parent
-            this.data = data
         }
         /**
          * Init the menu item

@@ -10,7 +10,7 @@ define(function (require) {
      * Form AI Engine properties
      */
     class FormMenuItem extends MenuItem {
-        constructor(parent, data) {
+        constructor(parent) {
             super({
                 name: 'Properties',
                 stateCode: '',
@@ -18,7 +18,6 @@ define(function (require) {
                 zone: parent.zone
             })
             this.parent = parent
-            this.data = data
             this.init()
         }
         /**

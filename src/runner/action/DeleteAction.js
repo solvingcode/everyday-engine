@@ -6,8 +6,7 @@ define(function (require) {
     class DeleteAction extends Action {
 
         /**
-         * Delete selected entities
-         * @param {Array} selectedEntities
+         * @override
          */
         static run(mouse, selectedEntities) {
             const entityManager = EntityManager.get()

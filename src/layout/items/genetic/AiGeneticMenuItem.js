@@ -31,7 +31,7 @@ define(function (require) {
          * @override
          */
         isValid() {
-            return super.isValid() || this.appState.hasState('SIMULATE_PROGRESS')
+            return true
         }
     }
 

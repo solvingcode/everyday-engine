@@ -81,7 +81,7 @@ define(function (require) {
          * @override
          */
         isValid() {
-            return this.appState.hasState('SIMULATE_PROGRESS')
+            return this.stateManager.isRunning()
         }
     }
 

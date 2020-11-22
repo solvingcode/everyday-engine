@@ -10,7 +10,7 @@ define(function (require) {
      * Form AI Engine properties
      */
     class FormSimulationMenuItem extends MenuItem {
-        constructor(parent, data) {
+        constructor(parent) {
             super({
                 name: 'Form Simulation',
                 stateCode: '',
@@ -18,7 +18,6 @@ define(function (require) {
                 zone: parent.zone
             })
             this.parent = parent
-            this.data = data
             this.init()
         }
         /**
@@ -33,7 +32,7 @@ define(function (require) {
          * @override
          */
         isValid() {
-            return this.appState.hasState('SIMULATE_PROGRESS')
+            return this.parent.isValid()
         }
         /**
          * @override

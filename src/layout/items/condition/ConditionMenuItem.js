@@ -20,23 +20,8 @@ define(function (require) {
                 new FormMenuItem(this)
             ]
         }
-
         /**
-         * @inherit
-         */
-        run() {
-            return false
-        }
-
-        /**
-         * @inherit
-         */
-        isSelected() {
-            return false
-        }
-
-        /**
-         * @inherit
+         * @override
          */
         update() {
             this.items.forEach(item => item.isValid() && item.update())

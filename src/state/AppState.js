@@ -87,21 +87,27 @@ define(function (require) {
         /**
          * Add a state to the states list.
          * @param {string} state
-         * @param {Boolean} isHistory
          */
-        addState(state, isHistory = true) {
+        addState(state) {
             if (this.state.indexOf(state) === -1) {
                 if (Object.keys(AppState.States).indexOf(state) >= 0) {
                     this.state.push(state)
-                    const { history, cursor } = AppState.States[state]
-                    if (history && isHistory) {
-                        this.addState('ACTION_HISTORY_PUSH_START')
-                    }
+                    const { cursor } = AppState.States[state]
                     cursor && this.setData({ cursor })
                 } else {
                     throw new TypeError(`${state} is not recognized as Application State`)
                 }
             }
+        }
+
+        /**
+         * Is the state can trigger history
+         * @param {string} state
+         * @return {boolean}
+         */
+        getIsHistory(state){
+            const { history } = AppState.States[state]
+            return history
         }
 
         /**
@@ -135,6 +141,14 @@ define(function (require) {
         removeState(state, exact = true) {
             const indices = this.findStateIndex(state, exact)
             indices.map((index) => this.state.splice(index, 1))
+        }
+
+        /**
+         * Remove data state
+         * @param {string} state
+         */
+        removeData(state) {
+            delete this.data[state]
         }
 
         /**
@@ -193,49 +207,63 @@ define(function (require) {
         DRAW_ATTACH_POINT_START: { history: false, cursor: CURSOR.POINTER },
         DRAW_SELECT_START: { history: false, cursor: CURSOR.MOVE_ENTITY },
         DRAW_CIRCLE_START: { history: false, cursor: CURSOR.CROSSHAIR },
-        DRAW_CIRCLE_STOP: { history: true, cursor: CURSOR.CROSSHAIR },
-        DRAW_RECT_STOP: { history: true, cursor: CURSOR.CROSSHAIR },
-        DRAW_JOINT_STOP: { history: true, cursor: CURSOR.CROSSHAIR },
+        DRAW_RECT_PROGRESS: { history: false, cursor: CURSOR.CROSSHAIR },
+        DRAW_JOINT_PROGRESS: { history: false, cursor: CURSOR.CROSSHAIR },
+        DRAW_ATTACH_POINT_PROGRESS: { history: false, cursor: CURSOR.POINTER },
+        DRAW_SELECT_PROGRESS: { history: false, cursor: CURSOR.MOVE_ENTITY },
+        DRAW_CIRCLE_PROGRESS: { history: false, cursor: CURSOR.CROSSHAIR },
+        DRAW_CIRCLE_STOP: { history: true, cursor: CURSOR.DEFAULT },
+        DRAW_RECT_STOP: { history: true, cursor: CURSOR.DEFAULT },
+        DRAW_JOINT_STOP: { history: true, cursor: CURSOR.DEFAULT },
         DRAW_ATTACH_POINT_STOP: { history: true },
         DRAW_SELECT_STOP: { history: false },
         SIMULATE_START: { history: false, cursor: CURSOR.DEFAULT },
-        SIMULATE_STOP: { history: false },
         SIMULATE_PROGRESS: { history: false },
+        SIMULATE_STOP: { history: false },
         ACTION_DELETE_START: { history: true },
+        ACTION_DELETE_PROGRESS: { history: false },
         ACTION_DELETE_STOP: { history: false },
         ACTION_DUPLICATE_START: { history: true },
+        ACTION_DUPLICATE_PROGRESS: { history: false },
         ACTION_DUPLICATE_STOP: { history: false },
         ACTION_UNDO_START: { history: false },
+        ACTION_UNDO_PROGRESS: { history: false },
         ACTION_UNDO_STOP: { history: false },
         ACTION_MOVE_START: { history: true, cursor: CURSOR.MOVE },
+        ACTION_MOVE_PROGRESS: { history: false },
         ACTION_MOVE_STOP: { history: false },
         ACTION_MOVE_UP_START: { history: true },
+        ACTION_MOVE_UP_PROGRESS: { history: false },
         ACTION_MOVE_UP_STOP: { history: false },
         ACTION_MOVE_DOWN_START: { history: true },
+        ACTION_MOVE_DOWN_PROGRESS: { history: false },
         ACTION_MOVE_DOWN_STOP: { history: false },
         ACTION_LOCK_START: { history: true },
+        ACTION_LOCK_PROGRESS: { history: false },
         ACTION_LOCK_STOP: { history: false },
         ACTION_UNLOCK_START: { history: true },
+        ACTION_UNLOCK_PROGRESS: { history: false },
         ACTION_UNLOCK_STOP: { history: false },
         ACTION_HIDE_START: { history: true },
+        ACTION_HIDE_PROGRESS: { history: false },
         ACTION_HIDE_STOP: { history: false },
         ACTION_SHOW_START: { history: true },
+        ACTION_SHOW_PROGRESS: { history: false },
         ACTION_SHOW_STOP: { history: false },
         ACTION_SELECT_ENTITY_START: { history: true },
+        ACTION_SELECT_ENTITY_PROGRESS: { history: false },
         ACTION_SELECT_ENTITY_STOP: { history: false },
         ACTION_HISTORY_PUSH_START: { history: false },
+        ACTION_HISTORY_PUSH_PROGRESS: { history: false },
         ACTION_HISTORY_PUSH_STOP: { history: false },
-        ACTION_STYLE_COLOR_START: { history: true },
-        ACTION_STYLE_COLOR_STOP: { history: false },
-        ACTION_ATTACH_CAMERA_START: { history: false },
-        ACTION_ATTACH_CAMERA_STOP: { history: false },
-        ACTION_DETACH_CAMERA_START: { history: false },
-        ACTION_DETACH_CAMERA_STOP: { history: false },
         ACTION_PHYSICS_STATIC_START: { history: true },
+        ACTION_PHYSICS_STATIC_PROGRESS: { history: false },
         ACTION_PHYSICS_STATIC_STOP: { history: false },
         ACTION_PHYSICS_NOT_STATIC_START: { history: true },
+        ACTION_PHYSICS_NOT_STATIC_PROGRESS: { history: false },
         ACTION_PHYSICS_NOT_STATIC_STOP: { history: false },
         ACTION_FORM_UPDATE_START: { history: false },
+        ACTION_FORM_UPDATE_PROGRESS: { history: false },
         ACTION_FORM_UPDATE_STOP: { history: false }
     }
 

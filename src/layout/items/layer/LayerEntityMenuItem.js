@@ -37,7 +37,7 @@ define(function (require) {
 
         /**
          * Get entity attached to the layer
-         * @return {Entity}
+         * @return {EntityMotion}
          */
         getEntity(){
             return this.data.entity

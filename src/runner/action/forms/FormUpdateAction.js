@@ -37,20 +37,6 @@ define(function (require) {
             return true
         }
 
-        /**
-         * @override
-         */
-        static shouldStart(type, stateManager) {
-            return !!stateManager.getStartData(type)
-        }
-
-        /**
-         * @override
-         */
-        static shouldStop(type, stateManager) {
-            return !!stateManager.getStopData(type)
-        }
-
     }
 
     return FormUpdateAction
