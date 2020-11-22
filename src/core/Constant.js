@@ -9,3 +9,5 @@ const SCENE_HEIGHT = WINDOW_HEIGHT - SCENE_POSITION_Y - 50
 
 const HTML_ID_PREFIX = 'app-el-'
 const CANVAS_CONTEXT_TYPE = '2d'
+
+const STYLE_THEME = 'dark'

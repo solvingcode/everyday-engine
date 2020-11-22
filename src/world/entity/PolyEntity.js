@@ -69,6 +69,7 @@ define(function (require) {
             const { width, height } = this.getLargestRectangle(this.rotation)
             this.canvas = new OffscreenCanvas(width, height)
             const context = this.canvas.getContext(CANVAS_CONTEXT_TYPE)
+            context.strokeStyle = this.getColor()
             context.beginPath()
             this.drawPoints(context)
             context.stroke()

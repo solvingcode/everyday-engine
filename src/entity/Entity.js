@@ -136,12 +136,19 @@ define(function (require) {
         }
 
         /**
-         * Set the entity's style
+         * Set the entity's style and re-Generate the Mesh
          * @param {Style} style
          */
         setStyleAndGenerate(style) {
             this.style = style
             this.regenerate()
+        }
+
+        /**
+         * Set the entity's style
+         */
+        setStyle(style){
+            this.style = style
         }
 
         /**

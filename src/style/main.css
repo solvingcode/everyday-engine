@@ -220,7 +220,15 @@ i.static-entity::before{
 
 /* components -- */
 
-/*  cross -- */
+/* graph -- */
+
+.graph {
+    text-align: center;
+}
+
+/* -- graph */
+
+/* cross -- */
 
 .cross{
     position: relative;

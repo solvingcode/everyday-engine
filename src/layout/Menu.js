@@ -134,7 +134,7 @@ define(function (require) {
 
         /**
          * Get selected item.
-         * @return {MenuItem}
+         * @return {MenuItemUI}
          */
         getSelected() {
             return this.items.find((item) => item.element.isSelected())
@@ -153,9 +153,9 @@ define(function (require) {
          * @param {MenuItem} type 
          */
         getPrevItem(type) {
-            const index = this.types.findIndex(ptype => ptype === type)
+            const index = this.types.findIndex(pType => pType === type)
             const element = this.types[index - 1]
-            return this.items.find(pitem => pitem.element === element)
+            return this.items.find(pItem => pItem.element === element)
         }
 
         /**
