@@ -25,6 +25,7 @@ define(function (require) {
             super()
             this.currentEntity = null
             this.isPhysicsLoaded = false
+            this.isSimulating = false
         }
 
         /**
@@ -36,7 +37,11 @@ define(function (require) {
             const entityManager = EntityManager.get()
             const storage = Storage.get()
             if (stateManager.isStart(this.STATE)) {
-                this.start(storage, entityManager, stateManager)
+                if(!this.isSimulating){
+                    this.start(storage, entityManager, stateManager)
+                }else{
+                    stateManager.stopNextState(this.STATE)
+                }
             } else if (stateManager.isProgress(this.STATE)) {
                 this.progress()
             } else if (stateManager.isStop(this.STATE)) {
@@ -63,6 +68,7 @@ define(function (require) {
                 try {
                     world.getPhysics().run()
                     this.isPhysicsLoaded = true
+                    this.isSimulating = true
                 } catch (error) {
                     console.warn(error)
                     stateManager.stopNextState(this.STATE)
@@ -87,11 +93,12 @@ define(function (require) {
          * @param {StateManager} stateManager
          */
         stop(storage, entityManager, stateManager) {
-            stateManager.endState(this.STATE)
+            stateManager.endNextState(this.STATE)
             const world = World.get()
             entityManager.entities = storage.fetch(Storage.type.ENTITY)
             entityManager.entities.map(entity => entity.regenerate())
             this.isPhysicsLoaded = false
+            this.isSimulating = false
             world.getPhysics().stop()
             world.resetCamera()
         }

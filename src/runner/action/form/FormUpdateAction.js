@@ -23,7 +23,7 @@ define(function (require) {
          * @override
          */
         static stop() {
-            const {event, item} = StateManager.get().getStopData(this.STATE)
+            const {event, item} = StateManager.get().getNextStopData(this.STATE)
             const menu = Menu.get()
             const menuItemUI = menu.findItemByElement(item)
             const uiRenderer = menu.getUIRenderer()

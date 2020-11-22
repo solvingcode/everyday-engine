@@ -122,7 +122,7 @@ define(function (require) {
          * @param {string} type
          */
         stopNextState(type) {
-            const data = this.getNextProgressData(type)
+            const data = this.getNextProgressData(type) || this.getNextStartData(type)
             this.stopState(type, data.id)
         }
 
@@ -143,9 +143,9 @@ define(function (require) {
          */
         hasState(type, id) {
             return (this.isStart(type) || this.isStop(type) || this.isProgress(type))
-                && (this.getDataById(`${type}_START`, id)
-                    || this.getDataById(`${type}_PROGRESS`, id)
-                    || this.getDataById(`${type}_STOP`, id))
+                && (this.getStartData(type, id)
+                    || this.getProgressData(type, id)
+                    || this.getStartData(type, id))
         }
 
         /**
