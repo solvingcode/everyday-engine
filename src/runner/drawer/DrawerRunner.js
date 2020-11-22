@@ -26,6 +26,9 @@ define(function (require) {
          * Execute draw action for each type of item (Ellipse, Rect, ...)
          * @param {Mouse} mouse
          * @param {Menu} menu
+         *
+         * @var {{[string]: {entity: Entity, startEvent: any, endEvent: any}}} typeEntity
+         *
          * @todo Think to not use the MenuRunner to valid position
          */
         execute(mouse, menu) {
@@ -60,11 +63,13 @@ define(function (require) {
                 if (stateManager.isProgress(type)) {
                     this.draw(mouse.position, props.entity)
                     if (endEvent(mouse)) {
-                        stateManager.stopState(type)
+                        this.endDraw(stateManager, type)
+                        stateManager.endState(type, 1)
+                        stateManager.startState(type, 1)
                     }
                 }
                 if (stateManager.isStop(type)) {
-                    this.endDraw(stateManager, type)
+                    stateManager.endState(type ,1)
                 }
             })
         }
@@ -75,7 +80,7 @@ define(function (require) {
          * @param {String} type
          */
         startDraw(stateManager, type) {
-            stateManager.progressState(type)
+            stateManager.progressState(type, 1)
             this.currentEntity = null
         }
 
@@ -86,7 +91,6 @@ define(function (require) {
          */
         endDraw(stateManager, type) {
             const entityManager = EntityManager.get()
-            stateManager.endState(type)
             if(this.currentEntity){
                 this.currentEntity.end()
                 if (this.isCurrentDrawValid) {

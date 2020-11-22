@@ -21,7 +21,6 @@ define(function (require) {
          */
         handle(window) {
             const mouse = window.mouse
-            const keyboard = window.keyboard
             const action = Action.get()
             const menu = Menu.get()
             const menuRunner = MenuRunner.get(Menu.get())
@@ -32,9 +31,6 @@ define(function (require) {
             action.add(simulateRunner, mouse)
             action.add(actionRunner, mouse)
             if (mouse.isButtonClicked(MouseButton.LEFT)) {
-                action.add(menuRunner, mouse)
-            }
-            if (keyboard.is) {
                 action.add(menuRunner, mouse)
             }
             if (mouse.isMouseMove()) {

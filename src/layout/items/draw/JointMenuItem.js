@@ -6,6 +6,7 @@ define(function (require) {
     class JointMenuItem extends MenuItem {
         constructor() {
             super({
+                id: 1,
                 name: 'bone',
                 title: 'Rigid joints',
                 stateCode: 'DRAW_JOINT',

@@ -65,10 +65,10 @@ define(function (require) {
                     this.isPhysicsLoaded = true
                 } catch (error) {
                     console.warn(error)
-                    stateManager.stopState(this.STATE)
+                    stateManager.stopNextState(this.STATE)
                 }
             }
-            stateManager.progressState(this.STATE)
+            stateManager.progressNextState(this.STATE)
         }
 
         /**

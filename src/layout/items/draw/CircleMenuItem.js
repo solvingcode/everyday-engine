@@ -6,6 +6,7 @@ define(function (require) {
     class CircleMenuItem extends MenuItem {
         constructor() {
             super({
+                id: 1,
                 name: 'circle',
                 title: 'Draw circle',
                 stateCode: 'DRAW_CIRCLE',

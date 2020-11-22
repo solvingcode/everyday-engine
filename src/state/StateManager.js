@@ -23,6 +23,7 @@ define(function (require) {
          */
         isStart(type) {
             return this.appState.hasState(`${type}_START`)
+                && this.getNextStartData(type)
         }
 
         /**
@@ -31,6 +32,7 @@ define(function (require) {
          */
         isProgress(type) {
             return this.appState.hasState(`${type}_PROGRESS`)
+                && this.getNextProgressData(type)
         }
 
         /**
@@ -39,6 +41,7 @@ define(function (require) {
          */
         isStop(type) {
             return this.appState.hasState(`${type}_STOP`)
+                && this.getNextStopData(type)
         }
 
         /**
@@ -60,36 +63,76 @@ define(function (require) {
         /**
          * Progress an action (state)
          * @param {string} type
+         * @param {number} id
          * @TODO Add history (call addHistory(state))
          */
-        progressState(type) {
+        progressState(type, id) {
+            if (!id) {
+                throw new TypeError('Action id must be defined')
+            }
             const state = `${type}_PROGRESS`
-            const data = this.getStartData(type)
+            const data = this.getStartData(type, id)
             this.appState.addState(state)
-            this.appState.setData({[state]: [data]})
-            this.removeStartState(type)
+            data && this.appState.setData({[state]: [data]})
+            this.removeStartState(type, id)
         }
 
         /**
          * Stop an action (state)
          * @param {string} type
+         * @param {number} id
          * @TODO Add history (call addHistory(state))
          */
-        stopState(type) {
+        stopState(type, id) {
+            if (!id) {
+                throw new TypeError('Action id must be defined')
+            }
             const state = `${type}_STOP`
-            const data = this.getProgressData(type)
+            const data = this.getProgressData(type, id)
             this.appState.addState(state)
-            this.appState.setData({[state]: [data]})
-            this.removeStartState(type)
-            this.removeProgressState(type)
+            data && this.appState.setData({[state]: [data]})
+            this.removeStartState(type, id)
+            this.removeProgressState(type, id)
         }
 
         /**
          * Delete the stop action (end action)
          * @param {string} type
+         * @param {number} id
          */
-        endState(type) {
-            this.removeStopState(type)
+        endState(type, id) {
+            if (!id) {
+                throw new TypeError('Action id must be defined')
+            }
+            this.removeProgressState(type, id)
+            this.removeStopState(type, id)
+        }
+
+        /**
+         * Progress the next state
+         * @param {string} type
+         */
+        progressNextState(type) {
+            const data = this.getNextStartData(type)
+            this.progressState(type, data.id)
+        }
+
+        /**
+         * Stop the next state
+         * @param {string} type
+         */
+        stopNextState(type) {
+            const data = this.getNextProgressData(type)
+            this.stopState(type, data.id)
+        }
+
+        /**
+         * End the next state
+         * @param {string} type
+         */
+        endNextState(type) {
+            const data = this.getNextStopData(type)
+            data && this.endState(type, data.id)
         }
 
         /**
@@ -106,9 +149,9 @@ define(function (require) {
         }
 
         /**
-         * Is running state is in progress
+         * Is running states is in progress
          */
-        isRunning(){
+        isRunning() {
             return this.isProgress('SIMULATE')
         }
 
@@ -127,56 +170,99 @@ define(function (require) {
         /**
          * Get the start state data
          * @param {string} type
+         * @param {number} id
          * @return {Object|null}
          */
-        getStartData(type) {
-            return this.getStateData(`${type}_START`)
+        getStartData(type, id) {
+            if (!id) {
+                throw new TypeError('Action id must be defined')
+            }
+            return this.getStateData(`${type}_START`, id)
         }
 
         /**
          * Get the progress state data
          * @param {string} type
+         * @param {number} id
          * @return {Object|null}
          */
-        getProgressData(type) {
-            return this.getStateData(`${type}_PROGRESS`)
+        getProgressData(type, id) {
+            if (!id) {
+                throw new TypeError('Action id must be defined')
+            }
+            return this.getStateData(`${type}_PROGRESS`, id)
         }
 
         /**
          * Get the start state data
          * @param {string} type
+         * @param {number} id
          * @return {Object|null}
          */
-        getStopData(type) {
-            return this.getStateData(`${type}_STOP`)
+        getStopData(type, id) {
+            if (!id) {
+                throw new TypeError('Action id must be defined')
+            }
+            return this.getStateData(`${type}_STOP`, id)
+        }
+
+        /**
+         * Get the next progress state data
+         * @param {string} type
+         * @return {Object|null}
+         */
+        getNextStartData(type) {
+            return this.getNextData(`${type}_START`)
+        }
+
+        /**
+         * Get the next progress state data
+         * @param {string} type
+         * @return {Object|null}
+         */
+        getNextProgressData(type) {
+            return this.getNextData(`${type}_PROGRESS`)
+        }
+
+        /**
+         * Get the next progress state data
+         * @param {string} type
+         * @return {Object|null}
+         */
+        getNextStopData(type) {
+            return this.getNextData(`${type}_STOP`)
         }
 
         /**
          * Remove the start state
          * @param {string} type
+         * @param {number} id
          */
-        removeStartState(type){
-            this.removeState(`${type}_START`)
+        removeStartState(type, id) {
+            this.removeState(`${type}_START`, id)
         }
 
         /**
          * Remove the progress state
          * @param {string} type
+         * @param {number} id
          */
-        removeProgressState(type){
-            this.removeState(`${type}_PROGRESS`)
+        removeProgressState(type, id) {
+            this.removeState(`${type}_PROGRESS`, id)
         }
 
         /**
          * Remove the stop state
          * @param {string} type
+         * @param {number} id
          */
-        removeStopState(type){
-            this.removeState(`${type}_STOP`)
+        removeStopState(type, id) {
+            this.removeState(`${type}_STOP`, id)
         }
 
         /**
-         * Get the data by elementId
+         * Get the data by State/Id
+         * @private
          * @param {string} type
          * @param {number} id
          */
@@ -187,6 +273,7 @@ define(function (require) {
 
         /**
          * Get the data state for the given type
+         * @private
          * @param {string} state
          * @return {Array}
          */
@@ -196,6 +283,7 @@ define(function (require) {
 
         /**
          * Get the next data state for the given type
+         * @private
          * @param {string} state
          * @return {Object}
          */
@@ -206,21 +294,27 @@ define(function (require) {
 
         /**
          * Remove the state
+         * @private
          * @param {string} state
+         * @param {number} id
          */
-        removeState(state){
-            this.appState.removeState(state)
-            this.removeStateData(state)
+        removeState(state, id) {
+            this.removeStateData(state, id)
         }
 
         /**
          * Remove the state data
+         * @private
          * @param {string} state
+         * @param {number} id
          */
-        removeStateData(state) {
-            const data = this.getData(state)
-            data && data.splice(0, 1)
-            if(data && !data.length){
+        removeStateData(state, id) {
+            const dataList = this.getData(state)
+            const data = this.getDataById(state, id)
+            if (data) {
+                dataList.splice(dataList.indexOf(data), 1)
+            }
+            if (dataList && !dataList.length) {
                 this.appState.removeState(state)
                 this.appState.removeData(state)
             }
@@ -228,11 +322,13 @@ define(function (require) {
 
         /**
          * Get the state data
+         * @private
          * @param {string} state
+         * @param {number} id
          * @return {Object|null}
          */
-        getStateData(state) {
-            return this.getNextData(state)
+        getStateData(state, id) {
+            return this.getDataById(state, id)
         }
 
         /**

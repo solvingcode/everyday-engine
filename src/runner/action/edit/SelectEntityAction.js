@@ -21,7 +21,7 @@ define(function (require) {
          */
         static run() {
             EntitySelector.get().unselectAll()
-            const {entity} = StateManager.get().getProgressData(this.STATE)
+            const {entity} = StateManager.get().getNextProgressData(this.STATE)
             entity.select()
             return true
         }

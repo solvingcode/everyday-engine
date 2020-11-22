@@ -13,7 +13,7 @@ define(function (require) {
         /**
          * @param {MenuItem} parent
          * @param {Object} props
-         * @param {any} value The default value
+         * @param {callback} value The default value
          * @param {callback} event The event bound to the field
          */
         constructor(parent, props, value, event) {
@@ -24,9 +24,22 @@ define(function (require) {
                 ...props
             })
             this.parent = parent
-            this.event = event
-            this.value = value
+            this.event = this.callbackExecute(event)
+            this.value = this.callbackExecute(value)
             this.data = {event, item: this}
+        }
+
+        /**
+         * Execute callback
+         */
+        callbackExecute(callback) {
+            return () => {
+                try {
+                    return callback()
+                } catch (e) {
+                    console.warn(`Callback error! `, e)
+                }
+            }
         }
 
         /**

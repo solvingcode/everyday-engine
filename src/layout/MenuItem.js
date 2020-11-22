@@ -29,7 +29,7 @@ define(function (require) {
             this.type = props.type
             this.data = {}
             this.menu = null
-            this.id = Maths.generateId()
+            this.id = props.id || Maths.generateId()
             this.stateCode = props.stateCode
         }
 
@@ -45,7 +45,7 @@ define(function (require) {
          * Run the action when the item is trigerred
          */
         run() {
-            this.stateCode && this.startState(this.stateCode, this.id, this.data)
+            this.stateCode && this.startState()
         }
 
         /**
@@ -68,25 +68,21 @@ define(function (require) {
          * Stop the action when the item is unselected
          */
         stop() {
-            this.stopState(this.stateCode)
+            this.stopState()
         }
 
         /**
          * Start an action by type and data (state)
-         * @param {string} type
-         * @param {number} id
-         * @param {Object} data
          */
-        startState(type, id, data = {}){
-            this.stateManager.startState(type, id, data)
+        startState(){
+            this.stateManager.startState(this.stateCode, this.id, this.data)
         }
 
         /**
          * Stop an action by type (state)
-         * @param {string} type
          */
-        stopState(type){
-            this.stateManager.stopState(type)
+        stopState(){
+            this.stateManager.stopState(this.stateCode, this.id)
         }
 
         /**

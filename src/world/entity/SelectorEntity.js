@@ -39,7 +39,7 @@ define(function (require) {
                     this.stateManager.startState('ACTION_MOVE', 1)
                     return true
                 } else {
-                    this.stateManager.stopState('ACTION_MOVE')
+                    this.stateManager.stopState('ACTION_MOVE', 1)
                 }
             }
             return false
@@ -126,7 +126,7 @@ define(function (require) {
          * @override
          */
         end() {
-            this.stateManager.stopState('ACTION_MOVE')
+            this.stateManager.stopState('ACTION_MOVE', 1)
         }
 
     }

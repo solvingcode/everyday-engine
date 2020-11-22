@@ -6,6 +6,7 @@ define(function (require) {
     class RectMenuItem extends MenuItem {
         constructor() {
             super({
+                id: 1,
                 name: 'stop',
                 title: 'Draw a rectangle',
                 stateCode: 'DRAW_RECT',

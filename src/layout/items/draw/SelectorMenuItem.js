@@ -6,6 +6,7 @@ define(function (require) {
     class SelectorMenuItem extends MenuItem {
         constructor() {
             super({
+                id: 1,
                 name: 'mouse-pointer',
                 title: 'Select/Move',
                 stateCode: 'DRAW_SELECT',

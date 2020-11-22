@@ -20,7 +20,7 @@ define(function (require) {
     const DetachCameraAction = require('./camera/DetachCameraAction.js')
     const PhysicsStaticAction = require('./physics/PhysicsStaticAction.js')
     const PhysicsNotStaticAction = require('./physics/PhysicsNotStaticAction.js')
-    const FormUpdateAction = require('./forms/FormUpdateAction.js')
+    const FormUpdateAction = require('./form/FormUpdateAction.js')
 
     /**
      * Action Runner class.
@@ -68,13 +68,13 @@ define(function (require) {
                 const type = `ACTION_${typeAction[0]}`
                 const action = typeAction[1]
                 if (action.shouldStart(type, stateManager)) {
-                    stateManager.progressState(type)
+                    stateManager.progressNextState(type)
                 }
                 if (action.shouldProgress(type, stateManager)) {
-                    this.runAction(action, mouse, selectedEntities) && stateManager.stopState(type)
+                    this.runAction(action, mouse, selectedEntities) && stateManager.stopNextState(type)
                 }
                 if (action.shouldStop(type, stateManager)) {
-                    this.stopState(action, mouse, selectedEntities) && stateManager.endState(type)
+                    this.stopState(action, mouse, selectedEntities) && stateManager.endNextState(type)
                 }
             })
         }

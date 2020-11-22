@@ -62,7 +62,7 @@ define(function (require) {
          * in the screen.
          */
         setup() {
-            this.clean()
+            this.items = []
             for (var iType in this.types) {
                 const type = this.types[iType]
                 type.menu = this
@@ -123,8 +123,8 @@ define(function (require) {
         selectItem(menuItem) {
             for(const iItem in this.items){
                 const item = this.items[iItem]
-                if (item.element.isSelected()) {
-                    item.element.stop()
+                if (menuItem && item.element.isSelected()) {
+                    menuItem !== item && item.element.stop()
                 }
                 if (menuItem && item.element === menuItem.element) {
                     item.element.run()
