@@ -2,7 +2,7 @@ define(function (require) {
 
     const EntitySelector = require('../../world/manager/EntitySelector.js')
     const Runner = require('../Runner.js')
-    const AppState = require('../../state/AppState.js')
+    const StateManager = require('../../state/StateManager.js')
     const { CURSOR } = require('../../core/Mouse.js')
 
     class WindowRunner extends Runner {
@@ -13,8 +13,8 @@ define(function (require) {
          */
         execute(mouse) {
             const entitySelector = EntitySelector.get()
-            const appState = AppState.get()
-            if (!appState.hasState('SIMULATE_PROGRESS')) {
+            const stateManager = StateManager.get()
+            if (!stateManager.isRunning()) {
                 this.focus(entitySelector, mouse)
             }
             this.cursor(entitySelector, mouse)
@@ -36,7 +36,7 @@ define(function (require) {
          * @param {Mouse} mouse 
          */
         cursor(entitySelector, mouse) {
-            let { cursor } = AppState.get().data
+            let cursor = StateManager.get().getData('cursor')
             if (cursor === CURSOR.MOVE_ENTITY) {
                 const entity = entitySelector.get(mouse.currentPosition)
                 cursor = entity && entity.selected && CURSOR.MOVE

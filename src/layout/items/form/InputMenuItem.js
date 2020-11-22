@@ -26,14 +26,15 @@ define(function (require) {
             this.parent = parent
             this.event = event
             this.value = value
+            this.data = {event, item: this}
         }
 
         /**
+         * Input menu item must be valid as the parent keeps valid
          * @override
          */
-        run() {
-            const {event} = this
-            this.startState(this.stateCode, this.id, {event, item: this})
+        isValid() {
+            return this.parent.isValid()
         }
 
         /**

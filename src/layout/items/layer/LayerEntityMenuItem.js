@@ -31,8 +31,7 @@ define(function (require) {
          * @override
          */
         isValid() {
-            return super.isValid() && EntityManager.get().entities.includes(this.getEntity()) &&
-                this.parent.items.includes(this)
+            return super.isValid() && EntityManager.get().entities.includes(this.getEntity())
         }
 
         /**

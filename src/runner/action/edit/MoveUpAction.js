@@ -1,7 +1,7 @@
 define(function (require) {
 
-    const Action = require('./Action.js')
-    const EntityManager = require('../../world/manager/EntityManager.js')
+    const Action = require('../Action.js')
+    const EntityManager = require('../../../world/manager/EntityManager.js')
 
     class MoveUpAction extends Action {
 

@@ -1,6 +1,6 @@
 define(function (require) {
 
-    const Action = require('./Action.js')
+    const Action = require('../Action.js')
 
     class StyleColorAction extends Action {
 

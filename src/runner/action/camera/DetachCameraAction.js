@@ -1,7 +1,7 @@
 define(function (require) {
 
-    const Action = require('./Action.js')
-    const World = require('../../world/World.js')
+    const Action = require('../Action.js')
+    const World = require('../../../world/World.js')
 
     /**
      * Detach camera action

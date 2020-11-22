@@ -32,7 +32,7 @@ define(function (require) {
          * @override
          */
         isValid() {
-            return this.parent.isValid()
+            return true
         }
         /**
          * @override

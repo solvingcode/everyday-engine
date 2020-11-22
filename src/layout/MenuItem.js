@@ -45,7 +45,7 @@ define(function (require) {
          * Run the action when the item is trigerred
          */
         run() {
-            this.stateCode && this.startState(this.stateCode, this.id)
+            this.stateCode && this.startState(this.stateCode, this.id, this.data)
         }
 
         /**
