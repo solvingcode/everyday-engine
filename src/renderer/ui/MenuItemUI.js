@@ -1,5 +1,10 @@
 define(function () {
 
+    /**
+     * Menu item UI
+     * @property {MenuItem} element
+     * @property {MenuItemUI} parent
+     */
     class MenuItemUI {
         constructor(item, index, parent) {
             this.element = item
@@ -17,6 +22,7 @@ define(function () {
 
         /**
          * Get id of menu item
+         * @return {string}
          */
         getId() {
             const zone = this.element.zone

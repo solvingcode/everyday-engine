@@ -11,7 +11,7 @@ define(function (require) {
     /**
      * Form physics properties
      */
-    class PhysicsFormMenuItem extends MenuItem {
+    class PropsFormMenuItem extends MenuItem {
         constructor(parent) {
             super({
                 name: 'Properties',
@@ -53,6 +53,11 @@ define(function (require) {
 
             if (this.object && !entityManager.isAttachEntity(this.object)) {
                 this.items = this.items.concat([
+                    new TextMenuItem(this,
+                        { name: 'Name' },
+                        () => this.object.getName(),
+                        (value) => this.object.setName(value)
+                    ),
                     new CheckboxMenuItem(this,
                         { name: 'Static' },
                         () => this.object.isStatic(),
@@ -102,6 +107,6 @@ define(function (require) {
         }
     }
 
-    return PhysicsFormMenuItem
+    return PropsFormMenuItem
 
 })

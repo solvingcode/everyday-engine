@@ -1,7 +1,7 @@
 define(function (require) {
 
     const MenuItem = require('../../MenuItem.js')
-    const PhysicsFormMenuItem = require('./PhysicsFormMenuItem.js')
+    const PropsFormMenuItem = require('./PropsFormMenuItem.js')
     const Layout = require('../../Layout.js')
 
     /**
@@ -17,7 +17,7 @@ define(function (require) {
                 zone: Layout.zone.RIGHT
             })
             this.items = [
-                new PhysicsFormMenuItem(this)
+                new PropsFormMenuItem(this)
             ]
         }
     }

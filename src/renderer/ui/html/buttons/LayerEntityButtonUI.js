@@ -6,7 +6,7 @@ define(function (require) {
     class LayerEntityButtonUI extends ItemUI {
         /**
          * Draw a default button.
-         * @param {MenuItem} item
+         * @param {MenuItemUI} item
          * @param {UIRenderer} uiRenderer
          */
         static draw(item, uiRenderer) {
@@ -14,7 +14,7 @@ define(function (require) {
         }
 
         /**
-         * @inherit
+         * @override
          */
         static postCreate(item, el, uiRenderer) {
             const entity = item.element.getEntity()
@@ -26,6 +26,7 @@ define(function (require) {
                 imageWrapper.appendChild(image)
                 title.textContent = entity.name
                 el.setAttribute('data-entity-id', entity.id)
+                el.setAttribute('data-entity-name', entity.name)
                 el.setAttribute('id', item.getId())
                 el.appendChild(imageWrapper)
                 el.appendChild(title)
@@ -39,7 +40,8 @@ define(function (require) {
             const entity = item.element.getEntity()
             if (entity) {
                 const entityId = el.getAttribute('data-entity-id')
-                if (parseInt(entityId) !== entity.id) {
+                const entityName = el.getAttribute('data-entity-name')
+                if (parseInt(entityId) !== entity.id || entityName !== entity.name) {
                     el.innerHTML = ''
                     this.postCreate(item, el, uiRenderer)
                 }

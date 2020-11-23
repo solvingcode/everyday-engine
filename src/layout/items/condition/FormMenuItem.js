@@ -60,7 +60,7 @@ define(function (require) {
             const entityManager = EntityManager.get()
             const bodyEntities = entityManager.getBodyEntities()
                 .filter(entity => entity !== this.object)
-                .map(entity => ({ value: entity.id, label: entity.props.name }))
+                .map(entity => ({ value: entity.id, label: entity.name }))
             this.items = []
             if (!entityManager.isAttachEntity(this.object)) {
                 this.items = this.items.concat([

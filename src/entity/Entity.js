@@ -13,6 +13,7 @@ define(function (require) {
      * @property {Mesh} mesh
      * @property {number} id
      * @property {string} shape
+     * @property {string} name
      *
      * @typedef {{color: string, fillColor: string}} Style
      * @typedef {{style: Style, name: string,
@@ -46,6 +47,22 @@ define(function (require) {
             this.visible = true
             this.style = props.style
             this.attachedEntities = null
+        }
+
+        /**
+         * Get the entity's name
+         * @return {string}
+         */
+        getName() {
+            return this.name
+        }
+
+        /**
+         * Set the entity's name
+         * @param {string} name
+         */
+        setName(name) {
+            this.name = name
         }
 
         /**
