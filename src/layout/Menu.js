@@ -63,7 +63,7 @@ define(function (require) {
          */
         setup() {
             this.items = []
-            for (var iType in this.types) {
+            for (const iType in this.types) {
                 const type = this.types[iType]
                 type.menu = this
                 this.prepare(type)
@@ -72,7 +72,7 @@ define(function (require) {
 
         /**
          * Prepare the Menu and sub menu for rendering
-         * @param {MenuItem | Menu} item 
+         * @param {MenuItem} item
          * @param {Object} parent
          */
         prepare(item, parent = null) {
@@ -102,7 +102,7 @@ define(function (require) {
         }
 
         /**
-         * Find menu item by index and zone
+         * Find menu item by element
          * @param {MenuItem} element
          */
         findItemByElement(element) {

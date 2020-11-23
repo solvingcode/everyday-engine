@@ -11,6 +11,8 @@ define(function (require) {
      * @property {{items: MenuItem[]}} items
      * @property {MenuItem} element
      * @property {string} stateCode
+     * @property {string} zone
+     * @property {string} type
      */
     class MenuItem {
         constructor(props) {
