@@ -5,12 +5,11 @@ define(function (require) {
     class HtmlTextUI extends ItemUI {
         /**
          * Draw a panel.
-         * @param {MenuItem} item
+         * @param {MenuItemUI} item
          * @param {UIRenderer} uiRenderer
          */
         static draw(item, uiRenderer) {
-            const parentEl = uiRenderer.getElement(item.parent)
-            uiRenderer.getElement(item, parentEl)
+            uiRenderer.getElement(item)
         }
 
         /**

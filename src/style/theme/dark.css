@@ -1,6 +1,7 @@
 body{
     background-color: #222222;
     text-shadow: #000000 1px 1px;
+    color: #f4f4f4;
 }
 
 #app-el-left{
@@ -10,6 +11,11 @@ body{
 
 #app-el-top{
     border-bottom: 1px solid #222222;
+    border-top: 1px solid #222222;
+    background-color: #4d4d4c;
+}
+
+#app-el-bottom{
     border-top: 1px solid #222222;
     background-color: #4d4d4c;
 }
@@ -46,7 +52,6 @@ button.selected, button.hidden.selected, button.locked.selected{
 
 .panel > div{
     background-color: #4d4d4c;
-    color: #f4f4f4;
     border-bottom: 1px solid #222222;
     border-left: 1px solid #222222;
     border-top: 1px solid #222222;

@@ -16,8 +16,6 @@ define(function (require) {
             this.world = World.get()
             this.menu = Menu.get()
             this.event = EventHandler.get()
-            this.startTimeFPS = Date.now()
-            this.nbFrame = 0
             this.runLoop = this.runLoop.bind(this)
         }
 
@@ -41,7 +39,6 @@ define(function (require) {
          * Start the loop animation frame
          */
         runLoop() {
-            this.updateFPS()
             this.menu.update()
             this.event.handle(this.window)
             this.world.load()
@@ -57,20 +54,6 @@ define(function (require) {
          */
         init() {
             this.loadEvents()
-        }
-
-        /**
-         * Update the FPS and show it in the title
-         */
-        updateFPS() {
-            const deltaTime = (Date.now() - this.startTimeFPS) / 1000
-            if (deltaTime > 1) {
-                document.title = `${this.title} - (${Math.floor(this.nbFrame / deltaTime)} FPS)`
-                this.nbFrame = 0
-                this.startTimeFPS = Date.now()
-            } else {
-                this.nbFrame++
-            }
         }
     }
 

@@ -25,6 +25,10 @@ define(function (require) {
                     x0: SCENE_WIDTH - 250,
                     y0: 20,
                     isVertical: true
+                },
+                [Layout.zone.BOTTOM]: {
+                    x0: 20,
+                    y0: WINDOW_HEIGHT - 40
                 }
             }
         }

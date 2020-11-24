@@ -77,7 +77,7 @@ h4{
     display: inline-block;
 }
 
-#app-el-left, #app-el-top, #app-el-right{
+#app-el-left, #app-el-top, #app-el-right, #app-el-bottom{
     position: absolute;
     z-index: 9999;
 }
@@ -104,6 +104,14 @@ h4{
     left: calc(100% - 260px);
     padding: 5px 5px;
     height: calc(100% - 65px);
+}
+
+#app-el-bottom{
+    height: 40px;
+    padding: 5px;
+    bottom: 0;
+    left: 0;
+    width: calc(100% - 10px);
 }
 
 /* -- panel */

@@ -8,7 +8,8 @@ define(function () {
     Layout.zone = {
         LEFT: 'left',
         TOP: 'top',
-        RIGHT: 'right'
+        RIGHT: 'right',
+        BOTTOM: 'bottom'
     }
 
     Layout.type = {
