@@ -6,6 +6,15 @@ define(function (require) {
     const Maths = require('../utils/Maths.js')
 
     /**
+     * @typedef {{color: string, fillColor: string}} Style
+     * @typedef {{style: Style, name: string,
+     *      position: {x: number, y: number},
+     *      rotation: number,
+     *      size: {width: number, height: number} | number
+     *      }} EntityProps
+     */
+
+    /**
      * Abstract Entity class
      * @abstract
      * @todo Think to use a MeshManager for performance
@@ -14,13 +23,7 @@ define(function (require) {
      * @property {number} id
      * @property {string} shape
      * @property {string} name
-     *
-     * @typedef {{color: string, fillColor: string}} Style
-     * @typedef {{style: Style, name: string,
-     *      position: {x: number, y: number},
-     *      rotation: number,
-     *      size: {width: number, height: number} | number
-     *      }} EntityProps
+     * @property {Style} advancedStyle
      */
     class Entity {
         /**
@@ -30,7 +33,7 @@ define(function (require) {
             if (this.constructor === Entity) {
                 throw new TypeError('Abstract class Entity cannot be instantiated directly')
             }
-            props.style = props.style || { color: '#000000' }
+            props.style = props.style || {color: '#000000', fillColor: ''}
             this.id = Maths.generateId()
             this.props = props
             this.name = props.name
@@ -40,12 +43,14 @@ define(function (require) {
             this.isPhyiscsLoaded = false
             this.size = props.size || 1
             this.mesh = new Mesh(this.position, this.size)
+            this.meshBgColor = new Mesh()
             this.selectable = true
             this.selected = false
             this.focused = false
             this.locked = false
             this.visible = true
             this.style = props.style
+            this.advancedStyle = {backgroundImageBlob: ''}
             this.attachedEntities = null
         }
 
@@ -66,6 +71,31 @@ define(function (require) {
         }
 
         /**
+         * Set the background image
+         * @param {string} backgroundImageBlob
+         */
+        async setBackgroundImageBlob(backgroundImageBlob) {
+            if (await this.meshBgColor.fromImage(backgroundImageBlob)) {
+                this.advancedStyle.backgroundImageBlob = backgroundImageBlob
+            }
+        }
+
+        /**
+         * Get the background image blob
+         * @return {string}
+         */
+        getBackgroundImageBlob() {
+            return this.advancedStyle.backgroundImageBlob
+        }
+
+        /**
+         * Update the mesh from the background image
+         */
+        updateMeshFromBgImage() {
+            this.getBackgroundImageBlob() && this.mesh.copyFromMesh(this.meshBgColor)
+        }
+
+        /**
          * Build the Entity (generate mesh, set properties ...)
          */
         build() {
@@ -75,7 +105,8 @@ define(function (require) {
         /**
          * End the build of the Entity
          */
-        end() { }
+        end() {
+        }
 
         /**
          * Generate mesh
@@ -124,7 +155,7 @@ define(function (require) {
 
         /**
          * Send the Mesh to the renderer for drawing
-         * @param {Renderer} renderer 
+         * @param {Renderer} renderer
          */
         draw(renderer) {
             if (this.isBuffered) {
@@ -134,7 +165,7 @@ define(function (require) {
 
         /**
          * Set the entity's position
-         * @param {Object} position 
+         * @param {Object} position
          */
         setPosition(position) {
             this.position = position
@@ -157,14 +188,14 @@ define(function (require) {
          * @param {Style} style
          */
         setStyleAndGenerate(style) {
-            this.style = style
+            this.setStyle(style)
             this.regenerate()
         }
 
         /**
          * Set the entity's style
          */
-        setStyle(style){
+        setStyle(style) {
             this.style = style
         }
 
@@ -173,7 +204,7 @@ define(function (require) {
          */
         select() {
             this.selected = true
-            this.setStyleAndGenerate({ color: '#FF00FF', fillColor: 'rgba(255, 0, 255, 0.2)' })
+            this.setStyleAndGenerate({color: '#FF00FF', fillColor: 'rgba(255, 0, 255, 0.2)'})
         }
 
         /**
@@ -181,7 +212,7 @@ define(function (require) {
          */
         focus() {
             this.focused = true
-            !this.selected && this.setStyleAndGenerate({ color: '#000000', fillColor: 'rgba(0, 0, 0, 0.1)' })
+            !this.selected && this.setStyleAndGenerate({color: '#000000', fillColor: 'rgba(0, 0, 0, 0.1)'})
         }
 
         /**
@@ -221,13 +252,13 @@ define(function (require) {
          * Get the base style (use as default)
          */
         getStyle() {
-            const styleLocked = { color: '#AAAAAA', fillColor: 'rgba(0, 0, 0, 0.01)' }
+            const styleLocked = {color: '#AAAAAA', fillColor: 'rgba(0, 0, 0, 0.01)'}
             return (this.locked && styleLocked) || this.props.style
         }
 
         /**
          * Set new position for the Mesh
-         * @param {Object} position 
+         * @param {Object} position
          */
         setMeshPosition(position) {
             this.mesh.position = position
@@ -260,7 +291,7 @@ define(function (require) {
         movePointTo(pointA, pointB) {
             const x = this.position.x + pointB.x - pointA.x
             const y = this.position.y + pointB.y - pointA.y
-            this.setPosition({ x, y })
+            this.setPosition({x, y})
         }
 
         /**
@@ -293,7 +324,7 @@ define(function (require) {
          * @return {{x: number, y: number}}
          */
         toRelativeCenterPosition(point) {
-            const { x, y } = this.toCenterPosition()
+            const {x, y} = this.toCenterPosition()
             return {
                 x: point.x - x,
                 y: point.y - y
@@ -305,7 +336,7 @@ define(function (require) {
          * @param {Vector} point Absolute coordinate
          */
         fromRelativeCenterPosition(point) {
-            const { x, y } = this.toCenterPosition()
+            const {x, y} = this.toCenterPosition()
             return {
                 x: x + point.x,
                 y: y + point.y
@@ -329,7 +360,7 @@ define(function (require) {
             if (dragDistance.y <= 0) {
                 newY = window.mouse.currentPosition.y
             }
-            this.setMeshPosition({ x: newX, y: newY })
+            this.setMeshPosition({x: newX, y: newY})
             return dragDistance
         }
 
@@ -354,7 +385,7 @@ define(function (require) {
         updateMeshFromContext(context) {
             const sw = context.canvas.width, sh = context.canvas.height
             if (sw && sh) {
-                this.mesh.clear({ width: sw, height: sh })
+                this.mesh.clear({width: sw, height: sh})
                 this.mesh.context = context
                 return true
             }
@@ -389,7 +420,7 @@ define(function (require) {
 
         /**
          * Add entity to physics Engine
-         * @param {PhysicsEngine} physicsEngine 
+         * @param {PhysicsEngine} physicsEngine
          */
         loadPhysics(physicsEngine) {
             if (!this.isPhyiscsLoaded) {

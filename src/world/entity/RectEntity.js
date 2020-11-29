@@ -43,6 +43,8 @@ define(function (require) {
                 context.rect(0, 0, this.size.width, this.size.height)
                 if (fillColor) {
                     context.fill()
+                }else if(this.getBackgroundImageBlob()) {
+                    context.drawImage(this.meshBgColor.context.canvas, 0, 0, this.size.width, this.size.height)
                 }
                 context.stroke()
                 return this.updateMeshFromContext(context)
@@ -52,7 +54,7 @@ define(function (require) {
 
         /**
          * Calculate the largest rectangle for given rotation and size
-         * @param {Float} angleRadian 
+         * @param {number} angleRadian
          * @param {Object} size 
          */
         getLargestRectangle(angleRadian, size) {

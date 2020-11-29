@@ -49,11 +49,6 @@ define(function (require) {
         isValid() {
             return this.parent.isValid()
         }
-
-        /**
-         * The event to call
-         * @callback callback
-         */
     }
 
     return InputMenuItem

@@ -1,22 +1,12 @@
 define(function (require) {
 
-    const ItemUI = require('../../ItemUI.js')
+    const HtmlFormUI = require('./HtmlFormUI.js')
 
-    class HtmlFormCheckboxUI extends ItemUI {
+    class HtmlFormCheckboxUI extends HtmlFormUI {
         /**
-         * Draw a checkbox.
-         * @param {MenuItemUI} item
-         * @param {UIRenderer} uiRenderer
+         * @override
          */
-        static draw(item, uiRenderer) {
-            const parentEl = item.parent && uiRenderer.getElement(item.parent)
-            uiRenderer.getElement(item, parentEl)
-        }
-
-        /**
-         * @inherit
-         */
-        static postCreate(item, el) {
+        static postCreate(item, el, uiRenderer) {
             const { props, value } = item.element
             const { inputProps } = this.props
             const input = document.createElement(inputProps.tag)
@@ -31,21 +21,7 @@ define(function (require) {
         }
 
         /**
-         * Get HTML form element
-         * @param {MenuItemUI} item
-         * @param {UIRenderer} uiRenderer
-         */
-        static getFormElement(item, uiRenderer) {
-            const { inputProps } = this.props
-            const el = uiRenderer.getElement(item)
-            const elId = `${el.id}-${inputProps.suffix}`
-            const element = document.getElementById(elId)
-            return { element, value: this.getValue(element) }
-        }
-
-        /**
-         * Get HTML value form element
-         * @param {HTMLElement} formElement
+         * @override
          */
         static getValue(formElement) {
             return formElement.checked

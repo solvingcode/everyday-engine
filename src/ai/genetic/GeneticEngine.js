@@ -13,6 +13,7 @@ define(function (require) {
      * @property {Genome[]} genomes
      * @property {number} nbGroups
      * @property {boolean} showOnlyBest
+     * @property {boolean} randomizeColor
      */
     class GeneticEngine extends AiEngine {
 
@@ -20,7 +21,8 @@ define(function (require) {
             super(physics, entityManager, camera)
             this.naturalSelection = new NaturalSelection(this)
             this.nbPerGeneration = 20
-            this.showOnlyBest = false
+            this.showOnlyBest = true
+            this.randomizeColor = false
             this.maxLifeInSec = 20
             this.timeToReactInSec = 0.1
             this.mutationProb = 0.01
@@ -67,6 +69,13 @@ define(function (require) {
                 }
             })
         }
+
+        /**
+         * @param {boolean} randomizeColor
+         */
+        setRandomizeColor(randomizeColor){
+            this.randomizeColor = randomizeColor
+        }
         /**
          * Update population
          */
@@ -88,7 +97,7 @@ define(function (require) {
         setupGenomes() {
             this.genomes.forEach((genome, index) => {
                 genome.setEntity(this.population[index])
-                this.updateColor(genome)
+                this.randomizeColor && this.updateColor(genome)
             })
         }
         /**

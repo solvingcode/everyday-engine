@@ -36,8 +36,7 @@ define(function (require) {
             this.center = { x: centerX, y: centerY }
             this.radius = Math.abs(sw / 2 - 1)
             const fillColor = this.getFillColor()
-            const color = this.getColor()
-            context.strokeStyle = color
+            context.strokeStyle = this.getColor()
             if (fillColor) {
                 context.fillStyle = fillColor
             }
@@ -46,16 +45,21 @@ define(function (require) {
             context.rotate(this.rotation)
             context.translate(-centerX, -centerY)
             context.ellipse(centerX, centerY, this.radius, this.radius, 0, 0, 2 * Math.PI)
+            if(this.getBackgroundImageBlob()) {
+                context.clip()
+            }
             context.stroke()
             if (fillColor) {
                 context.fill()
+            }else if(this.getBackgroundImageBlob()) {
+                context.drawImage(this.meshBgColor.context.canvas, 0, 0, this.size.width, this.size.height)
             }
             return this.updateMeshFromContext(context)
         }
 
         /**
          * Calculate the largest rectangle for given rotation and size
-         * @param {Float} angleRadian 
+         * @param {number} angleRadian
          * @param {Object} size 
          */
         getLargestRectangle(angleRadian, size) {

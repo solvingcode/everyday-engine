@@ -53,6 +53,11 @@ define(function (require) {
                     { name: 'Show only best' },
                     () => this.object.showOnlyBest,
                     (value) => this.object.setShowOnlyBest(value)
+                ),
+                new CheckboxMenuItem(this,
+                    { name: 'Randomize color' },
+                    () => this.object.randomizeColor,
+                    (value) => this.object.setRandomizeColor(value)
                 )
             ]
             this.version = Maths.generateId()

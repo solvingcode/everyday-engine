@@ -5,17 +5,18 @@ define(function () {
      * Attached to an entity, and used to draw pixels by the GPU
      * @property {{x: number, y: number}} position
      * @property {{width: number, height: number}} size
+     * @property {OffscreenCanvasRenderingContext2D} context
      */
     class Mesh {
 
-        constructor(position, size) {
+        constructor(position = {x: 0, y: 0}, size = 1) {
             this.size = this.getSize(size)
             this.position = position
             this.initCanvas()
         }
 
         getSize(size) {
-            return typeof size === 'number' ? { width: size, height: size } : size
+            return typeof size === 'number' ? {width: size, height: size} : size
         }
 
         /**
@@ -25,16 +26,16 @@ define(function () {
             const canvas = new OffscreenCanvas(this.size.width, this.size.height)
             this.context = canvas.getContext(CANVAS_CONTEXT_TYPE)
         }
-        
+
         /**
          * Copy a given canvas to the mesh
-         * @param {OffscreenCanvas} canvas 
-         * @param {Number} x 
-         * @param {Number} y 
-         * @param {Number} sw 
-         * @param {Number} sh 
+         * @param {OffscreenCanvas | HTMLImageElement} canvas
+         * @param {Number} x
+         * @param {Number} y
+         * @param {Number} sw
+         * @param {Number} sh
          */
-        copy(canvas, x, y, sw, sh){
+        copy(canvas, x, y, sw, sh) {
             this.context.drawImage(canvas, x, y, sw, sh)
         }
 
@@ -51,6 +52,35 @@ define(function () {
             }
             return false
         }
+
+        /**
+         * Create a mesh from another Mesh
+         * @param {Mesh} mesh
+         */
+        copyFromMesh(mesh){
+            this.copy(mesh.context.canvas, 0, 0, this.size.width, this.size.height)
+        }
+
+        /**
+         * Create a mesh from a image URL
+         * @param {string} imageInput Image url or blob
+         * @return {boolean}
+         */
+        async fromImage(imageInput) {
+            if(imageInput){
+                const image = new Image()
+                image.src = imageInput
+                await image.decode()
+                const {width, height} = image
+                if(width && height) {
+                    this.clear({width, height})
+                    this.copy(image, 0, 0, width, height)
+                    return true
+                }
+            }
+            return false
+        }
+
     }
 
     return Mesh

@@ -214,7 +214,7 @@ i.static-entity::before{
 .form .form-input label{
 }
 
-.form input[type=text]{
+.form input[type=text], .form input[type=file]{
     border-radius: 2px;
     padding: 3px;
 }

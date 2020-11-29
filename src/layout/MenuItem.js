@@ -13,6 +13,8 @@ define(function (require) {
      * @property {string} stateCode
      * @property {string} zone
      * @property {string} type
+     * @property {callback} value The default value
+     * @property {callback} event The event bound to the field
      */
     class MenuItem {
         constructor(props) {
@@ -106,6 +108,11 @@ define(function (require) {
         }
 
     }
+
+    /**
+     * The event to call
+     * @callback callback
+     */
 
     return MenuItem
 

@@ -19,7 +19,8 @@ define(function (require) {
         static postCreate(item, el, uiRenderer) {
             const entity = item.element.getEntity()
             if (entity) {
-                const image = EntityUI.getImage(entity, this.props)
+                const {entityWidth, entityHeight} = this.props
+                const image = EntityUI.getImage(entity, {width: entityWidth, height: entityHeight})
                 const title = document.createElement('span')
                 const imageWrapper = document.createElement('div')
                 imageWrapper.className = 'entity-img-wrapper'

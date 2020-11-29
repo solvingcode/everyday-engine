@@ -5,6 +5,7 @@ define(function (require) {
     const HtmlFormCheckboxUI = require('../components/forms/HtmlFormCheckboxUI.js')
     const HtmlFormTextUI = require('../components/forms/HtmlFormTextUI.js')
     const HtmlFormDropdownUI = require('../components/forms/HtmlFormDropdownUI.js')
+    const HtmlFormFileUI = require('../components/forms/HtmlFormFileUI.js')
 
     class HtmlFormElementUI extends ItemUI {
         /**
@@ -19,6 +20,8 @@ define(function (require) {
                 return HtmlFormTextUI
             } else if (field === Layout.form.DROPDOWN) {
                 return HtmlFormDropdownUI
+            } else if (field === Layout.form.FILE) {
+                return HtmlFormFileUI
             }
         }
     }

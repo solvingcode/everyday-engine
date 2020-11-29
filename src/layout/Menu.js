@@ -21,6 +21,7 @@ define(function (require) {
     const LayerMenuItem = require('./items/layer/LayerMenuItem.js')
     const AiGeneticMenuItem = require('./items/genetic/AiGeneticMenuItem.js')
     const EntityMenuItem = require('./items/entity/EntityMenuItem.js')
+    const StyleMenuItem = require('./items/style/StyleMenuItem.js')
     const ConditionMenuItem = require('./items/condition/ConditionMenuItem.js')
     const AppMenuItem = require('./items/app/AppMenuItem.js')
 
@@ -50,6 +51,7 @@ define(function (require) {
                 new HideMenuItem(),
                 new ShowMenuItem(),
                 new LayerMenuItem(),
+                new StyleMenuItem(),
                 new EntityMenuItem(),
                 new ConditionMenuItem(),
                 new AiGeneticMenuItem(),

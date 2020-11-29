@@ -247,7 +247,8 @@ define(function (require) {
          * tha application state (color, ...)
          */
         updateStyle() {
-            this.props.style.fillColor = AppState.get().data.color
+            const {color} = AppState.get().data
+            color && (this.props.style.fillColor = color)
             return this
         }
 

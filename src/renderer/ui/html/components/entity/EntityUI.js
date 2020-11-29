@@ -24,12 +24,23 @@ define(function (require) {
         /**
          * Get screen shot of the entity as image
          * @param {Entity} entity
-         * @param {{entityWidth: number, entityHeight: number}} props
+         * @param {{width: number, height: number}} props
          */
         static getImage(entity, props) {
-            const { entityWidth, entityHeight } = props
-            const { context } = entity.mesh
+            return this.getImageFromMesh(entity.mesh, props)
+        }
+
+        /**
+         * Get image from a mesh
+         * @param {Mesh} mesh
+         * @param {{width: number, height: number}} props
+         */
+        static getImageFromMesh(mesh, props = {}){
+            const { context } = mesh
             const canvas = context.canvas
+
+            const entityWidth = props.width || mesh.size.width
+            const entityHeight = props.height || mesh.size.height
 
             const isWidthGtHeight = canvas.width > canvas.height
             const coefResize = isWidthGtHeight ? entityWidth / canvas.width : entityHeight / canvas.height
@@ -37,8 +48,8 @@ define(function (require) {
             const height = isWidthGtHeight ? canvas.height * coefResize : entityHeight
 
             const canvasEl = document.createElement('canvas')
-            canvasEl.width = entityWidth
-            canvasEl.height = entityHeight
+            canvasEl.width = width
+            canvasEl.height = height
 
             const contextEl = canvasEl.getContext(CANVAS_CONTEXT_TYPE)
             contextEl.drawImage(canvas, 0, 0, width, height)
