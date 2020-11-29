@@ -11,6 +11,7 @@ define(function () {
         /**
          * Execute actions
          * @param {any} params
+         * @return {boolean}
          */
         static run(...params) {
             throw new TypeError('"run" method must be implemented')
@@ -19,6 +20,7 @@ define(function () {
         /**
          * Stop actions
          * @param {any} params
+         * @return {boolean}
          */
         static stop(...params) {
             return true

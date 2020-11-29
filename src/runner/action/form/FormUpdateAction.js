@@ -18,7 +18,7 @@ define(function (require) {
          */
         static run() {
             const {item} = StateManager.get().getNextProgressData(this.STATE)
-            return item.field !== Layout.form.TEXT
+            return this.isInstantField(item.field)
         }
 
         /**
@@ -36,6 +36,16 @@ define(function (require) {
                 console.warn(`ElementUI for item ${item.id} cannot be found!`)
             }
             return true
+        }
+
+        /**
+         * Check if the update event must be triggered instantly
+         * when is clicked
+         * @param {string} field
+         * @return {boolean}
+         */
+        static isInstantField(field){
+            return ![Layout.form.TEXT, Layout.form.FILE].includes(field)
         }
 
     }

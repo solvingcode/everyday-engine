@@ -4,12 +4,14 @@ define(function () {
      * Menu item UI
      * @property {MenuItem} element
      * @property {MenuItemUI} parent
+     * @property {number} version
      */
     class MenuItemUI {
         constructor(item, index, parent) {
             this.element = item
             this.index = index
             this.parent = parent
+            this.version = 0
         }
 
         /**

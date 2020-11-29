@@ -24,6 +24,7 @@ define(function (require) {
          * Init the menu item
          */
         init() {
+            this.bindObject = null
             this.object = null
             this.items = []
             this.version = 0
@@ -35,8 +36,9 @@ define(function (require) {
             const selectedEntities = EntitySelector.get().getSelected()
             if (selectedEntities.length) {
                 const selectedEntity = selectedEntities[0]
-                if (selectedEntity !== this.object) {
-                    this.object = selectedEntity
+                if (!_.isEqual(selectedEntity, this.object)) {
+                    this.bindObject = selectedEntity
+                    this.object = _.cloneDeep(selectedEntity)
                     this.updateForm()
                 }
             } else {
@@ -50,12 +52,12 @@ define(function (require) {
             const entityManager = EntityManager.get()
             this.items = []
 
-            if (this.object && !entityManager.isAttachEntity(this.object)) {
+            if (this.bindObject && !entityManager.isAttachEntity(this.bindObject)) {
                 this.items = this.items.concat([
                     new FileMenuItem(this,
                         { name: 'Background' },
                         () => null,
-                        (value) => this.object.setBackgroundImageBlob(value)
+                        (value) => this.bindObject.setBackgroundImageBlob(value)
                     )
                 ])
             }
@@ -68,7 +70,7 @@ define(function (require) {
          * @return {Entity}
          */
         getEntity(){
-            return this.object
+            return this.bindObject
         }
     }
 

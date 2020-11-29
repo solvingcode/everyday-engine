@@ -14,7 +14,7 @@ define(function (require) {
         }
 
         /**
-         * @inherit
+         * @override
          */
         static postCreate(item, el) {
             const { version } = item.element
@@ -22,12 +22,12 @@ define(function (require) {
         }
 
         /**
-         * @inherit
+         * @override
          */
         static postUpdate(item, el) {
             const { version } = item.element
             const currentVersion = el.getAttribute(this.props.version)
-            if (version != currentVersion) {
+            if (version !== parseInt(currentVersion)) {
                 el.innerHTML = ''
                 this.postCreate(item, el)
             }
