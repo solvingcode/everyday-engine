@@ -1,18 +1,17 @@
 define(function (require) {
 
-    const FormMenuItem = require('../form/FormMenuItem.js')
     const Layout = require('../../Layout.js')
     const EntitySelector = require('../../../world/manager/EntitySelector.js')
     const EntityManager = require('../../../world/manager/EntityManager.js')
+    const FormMenuItem = require('../form/FormMenuItem.js')
 
     /**
-     * Form style background
-     * @property {Entity} bindObject
+     * Form properties
      */
-    class BackgroundFormMenuItem extends FormMenuItem {
+    class ConditionFormMenuItem extends FormMenuItem {
         constructor(parent) {
             super({
-                name: 'Background',
+                name: 'Conditions',
                 stateCode: '',
                 type: Layout.type.FORM,
                 zone: parent.zone
@@ -24,20 +23,18 @@ define(function (require) {
          * @override
          */
         getFields() {
+            const bodyEntities = EntityManager.get().getBodyEntities()
+                .filter(entity => entity !== this.object)
+                .map(entity => ({ value: entity.id, label: entity.name }))
+
             return [
                 {
-                    bind: 'backgroundImageBlob',
-                    label: 'Background',
-                    type: Layout.form.FILE
+                    bind: 'dieCondition',
+                    label: 'Die when collide',
+                    type: Layout.form.DROPDOWN,
+                    list: bodyEntities
                 }
             ]
-        }
-
-        /**
-         * @override
-         */
-        shouldUpdate(){
-            return this.bindObject && !EntityManager.get().isAttachEntity(this.bindObject)
         }
 
         /**
@@ -52,6 +49,6 @@ define(function (require) {
         }
     }
 
-    return BackgroundFormMenuItem
+    return ConditionFormMenuItem
 
 })

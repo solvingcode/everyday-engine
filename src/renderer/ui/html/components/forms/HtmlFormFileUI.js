@@ -10,7 +10,7 @@ define(function (require) {
         static postCreate(item, el, uiRenderer) {
             super.postCreate(item, el, uiRenderer)
             const {parent} = item.element
-            const entity = parent.getEntity()
+            const entity = parent.getBindObject()
             const {meshBgColor} = entity
             const {width, height} = this.props.imageProps
             if (entity.getBackgroundImageBlob()) {

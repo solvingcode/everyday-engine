@@ -23,7 +23,7 @@ define(function (require) {
 
         /**
          * Draw the context
-         * @param {{center: {x: number, y: number}, context: OffscreenCanvasRenderingContext2D}} dataContext
+         * @param {DataContext} dataContext
          */
         drawContext(dataContext) {
             const {context} = dataContext

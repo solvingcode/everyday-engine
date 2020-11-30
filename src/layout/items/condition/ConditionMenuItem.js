@@ -1,7 +1,7 @@
 define(function (require) {
 
     const MenuItem = require('../../MenuItem.js')
-    const FormMenuItem = require('./FormMenuItem.js')
+    const FormMenuItem = require('./ConditionFormMenuItem.js')
     const Layout = require('../../Layout.js')
 
     /**
