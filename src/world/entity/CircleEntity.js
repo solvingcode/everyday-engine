@@ -12,7 +12,7 @@ define(function (require) {
         }
 
         /**
-         * @inherit
+         * @override
          */
         build() {
             const dragDistance = this.setMeshPositionByDragDistance()
@@ -24,37 +24,14 @@ define(function (require) {
         }
 
         /**
-         * Generate mesh for a circle
+         * Draw the context
+         * @param {{center: {x: number, y: number}, context: OffscreenCanvasRenderingContext2D}} dataContext
          */
-        generateMesh() {
-            const { width, height } = this.getLargestRectangle(this.rotation, this.size)
-            const sw = this.size.width, sh = this.size.height
-            const canvas = new OffscreenCanvas(width, height)
-            const context = canvas.getContext(CANVAS_CONTEXT_TYPE)
-            const centerX = sw / 2
-            const centerY = sh / 2
-            this.center = { x: centerX, y: centerY }
+        drawContext(dataContext) {
+            const {center, context} = dataContext
+            const sw = this.size.width
             this.radius = Math.abs(sw / 2 - 1)
-            const fillColor = this.getFillColor()
-            context.strokeStyle = this.getColor()
-            if (fillColor) {
-                context.fillStyle = fillColor
-            }
-            context.lineWidth = 1
-            context.translate(width / 2, height / 2)
-            context.rotate(this.rotation)
-            context.translate(-centerX, -centerY)
-            context.ellipse(centerX, centerY, this.radius, this.radius, 0, 0, 2 * Math.PI)
-            if(this.getBackgroundImageBlob()) {
-                context.clip()
-            }
-            context.stroke()
-            if (fillColor) {
-                context.fill()
-            }else if(this.getBackgroundImageBlob()) {
-                context.drawImage(this.meshBgColor.context.canvas, 0, 0, this.size.width, this.size.height)
-            }
-            return this.updateMeshFromContext(context)
+            context.ellipse(center.x, center.y, this.radius, this.radius, 0, 0, 2 * Math.PI)
         }
 
         /**
@@ -67,7 +44,7 @@ define(function (require) {
         }
 
         /**
-         * @inherit
+         * @override
          */
         toCenterPosition() {
             return {
@@ -77,7 +54,7 @@ define(function (require) {
         }
 
         /**
-         * @inherit
+         * @override
          */
         fromCenterPosition(position) {
             return {

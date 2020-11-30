@@ -10,11 +10,11 @@ define(function (require) {
         }
 
         /**
-         * @inherit
+         * @override
          */
         build() {
             const dragDistance = this.setMeshPositionByDragDistance()
-            this.size = { width: Math.abs(dragDistance.x), height: Math.abs(dragDistance.y) }
+            this.size = {width: Math.abs(dragDistance.x), height: Math.abs(dragDistance.y)}
             if (this.clearBuffer()) {
                 return this.generate()
             }
@@ -22,51 +22,29 @@ define(function (require) {
         }
 
         /**
-         * Generate mesh for the rect
+         * Draw the context
+         * @param {{center: {x: number, y: number}, context: OffscreenCanvasRenderingContext2D}} dataContext
          */
-        generateMesh() {
-            const { width, height } = this.getLargestRectangle(this.rotation, this.size)
-            if (width && height) {
-                const center = { x: this.size.width / 2, y: this.size.height / 2 }
-                const canvas = new OffscreenCanvas(width, height)
-                const context = canvas.getContext(CANVAS_CONTEXT_TYPE)
-                const fillColor = this.getFillColor()
-                const color = this.getColor()
-                context.strokeStyle = color
-                if (fillColor) {
-                    context.fillStyle = fillColor
-                }
-                context.lineWidth = 1
-                context.translate(width / 2, height / 2)
-                context.rotate(this.rotation)
-                context.translate(-center.x, -center.y)
-                context.rect(0, 0, this.size.width, this.size.height)
-                if (fillColor) {
-                    context.fill()
-                }else if(this.getBackgroundImageBlob()) {
-                    context.drawImage(this.meshBgColor.context.canvas, 0, 0, this.size.width, this.size.height)
-                }
-                context.stroke()
-                return this.updateMeshFromContext(context)
-            }
-            return false
+        drawContext(dataContext) {
+            const {context} = dataContext
+            context.rect(0, 0, this.size.width, this.size.height)
         }
 
         /**
          * Calculate the largest rectangle for given rotation and size
          * @param {number} angleRadian
-         * @param {Object} size 
+         * @param {Object} size
          */
         getLargestRectangle(angleRadian, size) {
             const cosA = Math.cos(angleRadian)
             const sinA = Math.sin(angleRadian)
             const points = [
-                { x: 0, y: 0 },
-                { x: size.width, y: 0 },
-                { x: 0, y: size.height },
-                { x: size.width, y: size.height }
+                {x: 0, y: 0},
+                {x: size.width, y: 0},
+                {x: 0, y: size.height},
+                {x: size.width, y: size.height}
             ]
-            const rotatedPoints = points.map(({ x, y }) => ({
+            const rotatedPoints = points.map(({x, y}) => ({
                 x: x * cosA - y * sinA,
                 y: x * sinA + y * cosA
             }))
@@ -81,7 +59,7 @@ define(function (require) {
         }
 
         /**
-         * @inherit
+         * @override
          */
         toCenterPosition() {
             return {
@@ -91,7 +69,7 @@ define(function (require) {
         }
 
         /**
-         * @inherit
+         * @override
          */
         fromCenterPosition(position) {
             return {

@@ -109,10 +109,65 @@ define(function (require) {
         }
 
         /**
-         * Generate mesh
+         * Generate mesh for the rect
+         * @return {boolean}
          */
         generateMesh() {
-            throw new TypeError('"generateMesh" method must be implemented')
+            const dataContext = this.startContext()
+            if (dataContext) {
+                this.drawContext(dataContext)
+                return this.closeContext(dataContext)
+            }
+        }
+
+        /**
+         * Draw the context
+         * @param {DataContext} dataContext
+         */
+        drawContext(dataContext) {
+            throw new TypeError('"drawContext" method must be implemented')
+        }
+
+        /**
+         * Start the context
+         * @return {DataContext | null}
+         */
+        startContext() {
+            const {width, height} = this.getLargestRectangle(this.rotation, this.size)
+            if (width && height) {
+                const center = {x: this.size.width / 2, y: this.size.height / 2}
+                const canvas = new OffscreenCanvas(width, height)
+                const context = canvas.getContext(CANVAS_CONTEXT_TYPE)
+                const fillColor = this.getFillColor()
+                context.strokeStyle = this.getColor()
+                if (fillColor) {
+                    context.fillStyle = fillColor
+                }
+                context.lineWidth = 1
+                context.translate(width / 2, height / 2)
+                context.rotate(this.rotation)
+                context.translate(-center.x, -center.y)
+                return {center, context}
+            }
+            return null
+        }
+
+        /**
+         * Close drawing context
+         * @param {DataContext} dataContext
+         * @return {boolean}
+         */
+        closeContext(dataContext) {
+            const fillColor = this.getFillColor()
+            const {context} = dataContext
+            context.stroke()
+            if (fillColor) {
+                context.fill()
+            } else if (this.getBackgroundImageBlob()) {
+                context.clip()
+                context.drawImage(this.meshBgColor.context.canvas, 0, 0, this.size.width, this.size.height)
+            }
+            return this.updateMeshFromContext(context)
         }
 
         /**
@@ -487,6 +542,10 @@ define(function (require) {
         CIRCLE: 'Circle',
         ATTACH: 'Attach'
     }
+
+    /**
+     * @typedef {{center: {x: number, y: number}, context: OffscreenCanvasRenderingContext2D}} DataContext
+     */
 
     return Entity
 })
