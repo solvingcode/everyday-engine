@@ -7,10 +7,10 @@ define(function (require) {
     /**
      * Form AI Engine properties
      */
-    class FormSimulationMenuItem extends FormMenuItem {
+    class AiFormMenuItem extends FormMenuItem {
         constructor(parent) {
             super({
-                name: 'Form Simulation',
+                name: 'Properties',
                 stateCode: '',
                 type: Layout.type.FORM,
                 zone: parent.zone
@@ -24,23 +24,21 @@ define(function (require) {
         getFields() {
             return [
                 {
-                    bind: 'showOnlyBest',
-                    label: 'Show only best',
-                    type: Layout.form.CHECKBOX
+                    bind: 'nbPerGeneration',
+                    label: 'Nb. Generation',
+                    type: Layout.form.TEXT
                 },
                 {
-                    bind: 'randomizeColor',
-                    label: 'Randomize color',
-                    type: Layout.form.CHECKBOX
+                    bind: 'maxLifeInSec',
+                    label: 'Max. life (sec)',
+                    type: Layout.form.TEXT
+                },
+                {
+                    bind: 'mutationProb',
+                    label: 'Mutation rate (%)',
+                    type: Layout.form.TEXT
                 }
             ]
-        }
-
-        /**
-         * @override
-         */
-        isValid() {
-            return true
         }
 
         /**
@@ -51,6 +49,6 @@ define(function (require) {
         }
     }
 
-    return FormSimulationMenuItem
+    return AiFormMenuItem
 
 })

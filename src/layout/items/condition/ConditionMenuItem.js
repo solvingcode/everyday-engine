@@ -1,7 +1,7 @@
 define(function (require) {
 
     const MenuItem = require('../../MenuItem.js')
-    const FormMenuItem = require('./ConditionFormMenuItem.js')
+    const ConditionFormMenuItem = require('./ConditionFormMenuItem.js')
     const Layout = require('../../Layout.js')
 
     /**
@@ -17,14 +17,8 @@ define(function (require) {
                 zone: Layout.zone.RIGHT
             })
             this.items = [
-                new FormMenuItem(this)
+                new ConditionFormMenuItem(this)
             ]
-        }
-        /**
-         * @override
-         */
-        update() {
-            this.items.forEach(item => item.isValid() && item.update())
         }
     }
 

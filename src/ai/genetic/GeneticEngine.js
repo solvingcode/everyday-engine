@@ -32,7 +32,7 @@ define(function (require) {
             GeneticEngine.instance = this
         }
         /**
-         * @inherit
+         * @override
          */
         init() {
             this.newVersion()
@@ -45,7 +45,43 @@ define(function (require) {
             this.updateCamera()
         }
         /**
-         * @inherit
+         * @return {number}
+         */
+        getNbPerGeneration(){
+            return this.nbPerGeneration
+        }
+        /**
+         * @param {number} value
+         */
+        setNbPerGeneration(value){
+            this.nbPerGeneration = value
+        }
+        /**
+         * @return {number}
+         */
+        getMaxLifeInSec(){
+            return this.maxLifeInSec
+        }
+        /**
+         * @param {number} value
+         */
+        setMaxLifeInSec(value){
+            this.maxLifeInSec = value
+        }
+        /**
+         * @return {number}
+         */
+        getMutationProb(){
+            return this.mutationProb
+        }
+        /**
+         * @param {number} value
+         */
+        setMutationProb(value){
+            this.mutationProb = value
+        }
+        /**
+         * @override
          */
         update() {
             if (this.isPopulationDead()) {
@@ -55,6 +91,12 @@ define(function (require) {
             } else {
                 this.population.map(entity => this.behave(entity))
             }
+        }
+        /**
+         * @return {boolean}
+         */
+        isShowOnlyBest(){
+            return this.showOnlyBest
         }
         /**
          * Set show only best genome
@@ -69,7 +111,12 @@ define(function (require) {
                 }
             })
         }
-
+        /**
+         * @return {boolean}
+         */
+        isRandomizeColor(){
+            return this.randomizeColor
+        }
         /**
          * @param {boolean} randomizeColor
          */
