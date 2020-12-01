@@ -46,6 +46,9 @@ define(function (require) {
          */
         setTerrainType(type) {
             const terrain = this.terrainTypes[type]
+            if(this.terrain){
+                this.terrain.unload()
+            }
             if (terrain) {
                 this.terrain = new terrain(this.physics, this.entityManager, this.camera)
             }else{

@@ -28,7 +28,8 @@ define(function (require) {
          * Get an entity at (x,y)
          * @param {int} x 
          * @param {int} y 
-         * @param {Entity} type 
+         * @param {Entity} type
+         * @return {Entity}
          */
         getAt(x, y, type) {
             return this.entities.find((element) =>
@@ -52,7 +53,7 @@ define(function (require) {
 
         /**
          * Find an entity by Id
-         * @param {Entity} entity 
+         * @param {string} entityId
          */
         findById(entityId) {
             return this.entities.find((element) =>
@@ -64,7 +65,8 @@ define(function (require) {
          * Get an entity if founded, else create it
          * @param {int} x 
          * @param {int} y 
-         * @param {Entity} type 
+         * @param {Entity} type
+         * @return {Entity}
          */
         get(x, y, type) {
             if (!(type.prototype instanceof Entity)) {
@@ -83,7 +85,8 @@ define(function (require) {
          * Load and generate an entity
          * @param {int} x 
          * @param {int} y 
-         * @param {Entity} type 
+         * @param {Entity} type
+         * @return {Entity}
          */
         load(x, y, type) {
             const entity = this.get(x, y, type)

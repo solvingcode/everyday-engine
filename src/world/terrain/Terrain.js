@@ -10,6 +10,7 @@ define(function(require){
      * @property {EntityManager} entityManager
      * @property {Physics} physics
      * @property {Camera} camera
+     * @property {Entity} entity
      */
     class Terrain {
         /**
@@ -21,6 +22,7 @@ define(function(require){
             this.physics = physics
             this.entityManager = entityManager
             this.camera = camera
+            this.entity = null
             this.init()
         }
         /**
@@ -43,6 +45,13 @@ define(function(require){
          */
         load() {
             throw new TypeError('"Terrain.load" method must be implemented')
+        }
+        /**
+         * Unload the terrain
+         * @abstract
+         */
+        unload() {
+            throw new TypeError('"Terrain.unload" method must be implemented')
         }
         /**
          * Generate new version

@@ -78,7 +78,9 @@ define(function (require) {
          */
         load() {
             const terrain = this.getTerrainManager().getTerrain()
-            terrain && terrain.load()
+            if(terrain){
+                terrain.load()
+            }
         }
 
         /**

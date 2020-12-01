@@ -220,7 +220,7 @@ define(function (require) {
 
         /**
          * Set the entity's position
-         * @param {Object} position
+         * @param {{x: number, y: number}} position
          */
         setPosition(position) {
             this.position = position
