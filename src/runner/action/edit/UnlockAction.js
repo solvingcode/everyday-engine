@@ -2,7 +2,7 @@ define(function (require) {
 
     const Action = require('../Action.js')
     const EntityManager = require('../../../world/manager/EntityManager.js')
-    const AttachEntity = require('../../../world/entity/AttachEntity.js')
+    const AttachEntity = require('../../../entity/types/AttachEntity.js')
 
     class UnlockAction extends Action {
 

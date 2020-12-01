@@ -2,8 +2,8 @@ define(function (require) {
 
     const EntityGenerator = require('../generator/EntityGenerator.js')
     const Entity = require('../../entity/Entity.js')
-    const AttachEntity = require('../entity/AttachEntity.js')
-    const PlatformEntity = require('../entity/PlatformEntity.js')
+    const AttachEntity = require('../../entity/types/AttachEntity.js')
+    const PlatformEntity = require('../../entity/types/PlatformEntity.js')
     const Maths = require('../../utils/Maths.js')
 
     /**
@@ -422,6 +422,7 @@ define(function (require) {
 
         /**
          * Get valid entities of type body
+         * @return {Entity[]}
          */
         getValidBodyEntities() {
             return this.getBodyEntities().filter(entity => entity.isValid())

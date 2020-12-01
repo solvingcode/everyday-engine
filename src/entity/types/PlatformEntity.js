@@ -1,6 +1,6 @@
 define(function (require) {
 
-    const EntityMotion = require('../../entity/EntityMotion.js')
+    const EntityMotion = require('../EntityMotion.js')
 
     class PlatformEntity extends EntityMotion {
 

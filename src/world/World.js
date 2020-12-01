@@ -1,11 +1,11 @@
 define(function (require) {
 
     const EntityManager = require('./manager/EntityManager.js')
-    const PlatformEntity = require('./entity/PlatformEntity.js')
     const Camera = require('../core/Camera.js')
     const GeneticEngine = require('../ai/genetic/GeneticEngine.js')
     const Physics = require('../physics/Physics.js')
     const MatterEngine = require('../physics/engine/matter/Engine.js')
+    const TerrainManager = require('./terrain/TerrainManager.js')
 
     /**
      * Define the World
@@ -19,6 +19,7 @@ define(function (require) {
             this.camera = new Camera({ x: SCENE_WIDTH / 2, y: SCENE_HEIGHT / 2 })
             this.physics = new Physics(new MatterEngine())
             this.aiEngine = new GeneticEngine(this.physics, this.entityManager, this.camera)
+            this.terrainManager = new TerrainManager(this.physics, this.entityManager, this.camera)
         }
 
         /**
@@ -33,6 +34,13 @@ define(function (require) {
          */
         getAiEngine() {
             return this.aiEngine
+        }
+
+        /**
+         * Get the terrain manager
+         */
+        getTerrainManager() {
+            return this.terrainManager
         }
 
         /**
@@ -69,7 +77,8 @@ define(function (require) {
          * Load the world
          */
         load() {
-            this.entityManager.load(0, 700, PlatformEntity)
+            const terrain = this.getTerrainManager().getTerrain()
+            terrain && terrain.load()
         }
 
         /**

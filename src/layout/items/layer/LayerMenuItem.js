@@ -7,7 +7,7 @@ define(function (require) {
 
     /**
      * Layer Menu Item
-     * Menu responsible for managing entiies (z-index, ...)
+     * Menu responsible for managing entities (z-index, ...)
      */
     class LayerMenuItem extends MenuItem {
         constructor() {

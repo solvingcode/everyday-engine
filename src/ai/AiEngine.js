@@ -5,7 +5,7 @@ define(function (require) {
     /**
      * AIEngine class
      * Define the AI engine wich responsible to update entities and apply
-     * Machine learning algotithms
+     * Machine learning algorithms
      * @abstract
      *
      * @property {EntityManager} entityManager

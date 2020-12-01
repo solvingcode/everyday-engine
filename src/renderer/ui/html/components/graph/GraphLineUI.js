@@ -1,6 +1,6 @@
 define(function (require) {
 
-    const PolyEntity = require('../../../../../world/entity/PolyEntity.js')
+    const PolyEntity = require('../../../../../entity/types/PolyEntity.js')
     const EntityUI = require('../entity/EntityUI.js')
     const Style = require('../../../../../utils/Style.js')
 

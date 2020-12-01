@@ -4,11 +4,11 @@ define(function (require) {
     const Runner = require('../Runner.js')
     const {MouseButton} = require('../../core/Mouse.js')
     const EntityManager = require('../../world/manager/EntityManager.js')
-    const CircleEntity = require('../../world/entity/CircleEntity.js')
-    const RectEntity = require('../../world/entity/RectEntity.js')
-    const JointEntity = require('../../world/entity/JointEntity.js')
-    const AttachPointEntity = require('../../world/entity/AttachPointEntity.js')
-    const SelectorEntity = require('../../world/entity/SelectorEntity.js')
+    const CircleEntity = require('../../entity/types/CircleEntity.js')
+    const RectEntity = require('../../entity/types/RectEntity.js')
+    const JointEntity = require('../../entity/types/JointEntity.js')
+    const AttachPointEntity = require('../../entity/types/AttachPointEntity.js')
+    const SelectorEntity = require('../../entity/types/SelectorEntity.js')
 
     /**
      * Draw Runner class

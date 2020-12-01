@@ -40,8 +40,8 @@ define(function (require) {
             suffix: '-field'
         },
         imageProps: {
-            width: 100,
-            height: 100
+            width: 50,
+            height: 50
         }
     }
 

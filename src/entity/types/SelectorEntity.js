@@ -1,7 +1,7 @@
 define(function (require) {
 
-    const EntityMotion = require('../../entity/EntityMotion.js')
-    const EntitySelector = require('../manager/EntitySelector.js')
+    const EntityMotion = require('../EntityMotion.js')
+    const EntitySelector = require('../../world/manager/EntitySelector.js')
     const StateManager = require('../../state/StateManager.js')
 
     class SelectorEntity extends EntityMotion {

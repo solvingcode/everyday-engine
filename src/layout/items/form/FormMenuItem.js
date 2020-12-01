@@ -193,7 +193,7 @@ define(function (require) {
     }
 
     /**
-     * @typedef {{bind: string, label: string, type: string, list?: any[]}} FormField
+     * @typedef {{bind: string, label: string, type: string, list?: { value: string|number, label: string }[]}} FormField
      */
 
     return FormMenuItem

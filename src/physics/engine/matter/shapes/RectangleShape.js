@@ -1,6 +1,6 @@
 define(function (require) {
 
-    const PlatformEntity = require('../../../../world/entity/PlatformEntity.js')
+    const PlatformEntity = require('../../../../entity/types/PlatformEntity.js')
     const Shape = require('../../Shape.js')
 
     /**

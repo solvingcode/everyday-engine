@@ -3,14 +3,15 @@ define(function (require) {
     const Layout = require('../../Layout.js')
     const World = require('../../../world/World.js')
     const FormMenuItem = require('../form/FormMenuItem.js')
+    const TerrainManager = require('../../../world/terrain/TerrainManager.js')
 
     /**
      * Form AI Engine properties
      */
-    class AiFormMenuItem extends FormMenuItem {
+    class TerrainFormMenuItem extends FormMenuItem {
         constructor(parent) {
             super({
-                name: 'Properties',
+                name: 'Terrain form',
                 stateCode: '',
                 type: Layout.type.FORM,
                 zone: parent.zone
@@ -24,19 +25,13 @@ define(function (require) {
         getFields() {
             return [
                 {
-                    bind: 'nbPerGeneration',
-                    label: 'Nb. Generation',
-                    type: Layout.form.TEXT
-                },
-                {
-                    bind: 'maxLifeInSec',
-                    label: 'Max. life (sec)',
-                    type: Layout.form.TEXT
-                },
-                {
-                    bind: 'mutationProb',
-                    label: 'Mutation rate',
-                    type: Layout.form.TEXT
+                    bind: 'terrainType',
+                    label: 'Type',
+                    type: Layout.form.DROPDOWN,
+                    list: [{
+                        value: TerrainManager.TYPES.PLAIN,
+                        label: 'Plain'
+                    }]
                 }
             ]
         }
@@ -45,10 +40,10 @@ define(function (require) {
          * @override
          */
         getFormObject(){
-            return World.get().getAiEngine()
+            return World.get().getTerrainManager()
         }
     }
 
-    return AiFormMenuItem
+    return TerrainFormMenuItem
 
 })

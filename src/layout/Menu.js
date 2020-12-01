@@ -24,6 +24,7 @@ define(function (require) {
     const StyleMenuItem = require('./items/style/StyleMenuItem.js')
     const ConditionMenuItem = require('./items/condition/ConditionMenuItem.js')
     const AppMenuItem = require('./items/app/AppMenuItem.js')
+    const TerrainMenuItem = require('./items/terrain/TerrainMenuItem.js')
 
     /**
      * Define all menu items
@@ -55,7 +56,8 @@ define(function (require) {
                 new EntityMenuItem(),
                 new ConditionMenuItem(),
                 new AiGeneticMenuItem(),
-                new AppMenuItem()
+                new AppMenuItem(),
+                new TerrainMenuItem()
             ]
             this.items = []
             this.setup()
