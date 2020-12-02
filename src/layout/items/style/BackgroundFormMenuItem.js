@@ -26,6 +26,11 @@ define(function (require) {
         getFields() {
             return [
                 {
+                    bind: 'backgroundImageRepeat',
+                    label: 'Background repeat',
+                    type: Layout.form.CHECKBOX
+                },
+                {
                     bind: 'backgroundImageBlob',
                     label: 'Background',
                     type: Layout.form.FILE

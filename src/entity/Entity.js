@@ -50,7 +50,7 @@ define(function (require) {
             this.locked = false
             this.visible = true
             this.style = props.style
-            this.advancedStyle = {backgroundImageBlob: ''}
+            this.advancedStyle = {backgroundImageBlob: '', backgroundImageRepeat: false}
             this.attachedEntities = null
         }
 
@@ -71,21 +71,35 @@ define(function (require) {
         }
 
         /**
-         * Set the background image
          * @param {string} backgroundImageBlob
          */
         async setBackgroundImageBlob(backgroundImageBlob) {
             if (await this.meshBgColor.fromImage(backgroundImageBlob)) {
                 this.advancedStyle.backgroundImageBlob = backgroundImageBlob
+                this.regenerate()
             }
         }
 
         /**
-         * Get the background image blob
          * @return {string}
          */
         getBackgroundImageBlob() {
             return this.advancedStyle.backgroundImageBlob
+        }
+
+        /**
+         * @param {boolean} repeat
+         */
+        setBackgroundImageRepeat(repeat) {
+            this.advancedStyle.backgroundImageRepeat = repeat
+            this.regenerate()
+        }
+
+        /**
+         * @return {boolean}
+         */
+        isBackgroundImageRepeat() {
+            return this.advancedStyle.backgroundImageRepeat
         }
 
         /**
@@ -166,7 +180,13 @@ define(function (require) {
                 context.fill()
             } else if (this.getBackgroundImageBlob()) {
                 context.clip()
-                context.drawImage(this.meshBgColor.context.canvas, 0, 0, this.size.width, this.size.height)
+                const canvasBg = this.meshBgColor.context.canvas
+                if(this.isBackgroundImageRepeat()){
+                    context.fillStyle = context.createPattern(canvasBg, 'repeat')
+                    context.fill()
+                }else{
+                    context.drawImage(this.meshBgColor.context.canvas, 0, 0, this.size.width, this.size.height)
+                }
             }
             return this.updateMeshFromContext(context)
         }

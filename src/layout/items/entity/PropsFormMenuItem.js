@@ -10,7 +10,7 @@ define(function (require) {
     class PropsFormMenuItem extends FormMenuItem {
         constructor(parent) {
             super({
-                name: 'Properties',
+                name: '',
                 stateCode: '',
                 type: Layout.type.FORM,
                 zone: parent.zone

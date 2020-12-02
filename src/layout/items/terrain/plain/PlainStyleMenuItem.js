@@ -1,14 +1,13 @@
 define(function (require) {
 
     const MenuItem = require('../../../MenuItem.js')
-    const PlainFormMenuItem = require('./PlainFormMenuItem.js')
-    const PlainStyleMenuItem = require('./PlainStyleMenuItem.js')
+    const PlainBackgroundMenuItem = require('./PlainBackgroundMenuItem.js')
     const Layout = require('../../../Layout.js')
 
     /**
-     * Plain terrain Menu Item
+     * Plain terrain style Menu Item
      */
-    class PlainMenuItem extends MenuItem {
+    class PlainStyleMenuItem extends MenuItem {
         constructor(parent) {
             super({
                 name: '',
@@ -18,12 +17,11 @@ define(function (require) {
             })
             this.parent = parent
             this.items = [
-                new PlainFormMenuItem(this),
-                new PlainStyleMenuItem(this)
+                new PlainBackgroundMenuItem(this)
             ]
         }
     }
 
-    return PlainMenuItem
+    return PlainStyleMenuItem
 
 })

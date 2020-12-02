@@ -88,8 +88,12 @@ define(function (require) {
                 if (this.fields.hasOwnProperty(iField)) {
                     const field = this.fields[iField]
                     const getterString = this.getGetterString(field)
-                    if (object[getterString]() !== this.object[getterString]()) {
-                        return true
+                    try {
+                        if (object[getterString]() !== this.object[getterString]()) {
+                            return true
+                        }
+                    }catch(e){
+                        throw new ReferenceError(`Error comparing ${getterString} for ${object.constructor.name}`)
                     }
                 }
             }

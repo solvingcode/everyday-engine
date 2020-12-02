@@ -210,6 +210,7 @@ i.static-entity::before{
 
 .form .form-input input[type=checkbox]{
     float: left;
+    margin: 3px 3px 3px 0;
 }
 .form .form-input label{
 }
