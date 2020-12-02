@@ -103,7 +103,8 @@ h4{
     top: 53px;
     left: calc(100% - 260px);
     padding: 5px 5px;
-    height: calc(100% - 65px);
+    height: calc(100% - 115px);
+    overflow: auto;
 }
 
 #app-el-bottom{
@@ -270,3 +271,17 @@ i.static-entity::before{
 /*  -- cross */
 
 /* -- components */
+
+/* scroll -- */
+::-webkit-scrollbar {
+    width: 10px;
+}
+
+::-webkit-scrollbar-track {
+    border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+}
+/* -- scroll */

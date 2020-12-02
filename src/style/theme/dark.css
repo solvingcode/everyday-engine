@@ -107,3 +107,11 @@ button.selected, button.hidden.selected, button.locked.selected{
 .layer-entity i{
     color: #d2d2d2;
 }
+
+::-webkit-scrollbar-track {
+    background-color: #383838;
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: #555554;
+}

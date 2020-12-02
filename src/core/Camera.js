@@ -70,6 +70,34 @@ define(function () {
         getEntity(entityManager) {
             return entityManager.findById(this.entityId)
         }
+
+        /**
+         * @param {number} x
+         */
+        setPositionX(x) {
+            this.position.x = x
+        }
+
+        /**
+         * @param {number} y
+         */
+        setPositionY(y) {
+            this.position.y = y
+        }
+
+        /**
+         * @return {number}
+         */
+        getPositionX() {
+            return this.position.x
+        }
+
+        /**
+         * @return {number}
+         */
+        getPositionY() {
+            return this.position.y
+        }
     }
 
     return Camera

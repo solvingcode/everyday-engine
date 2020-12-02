@@ -13,8 +13,8 @@ define(function (require) {
         init() {
             this.entity = this.entityManager.load(0, 700, PlatformEntity)
             this.props = {
-                width: 20000,
-                height: 50,
+                width: this.entity.size.width,
+                height: this.entity.size.height,
             }
         }
 

@@ -14,6 +14,11 @@ define(function (require) {
      */
     class FormMenuItem extends MenuItem {
 
+        constructor(props){
+            super(props)
+            this.init()
+        }
+
         /**
          * Init the form menu
          */
@@ -28,7 +33,7 @@ define(function (require) {
         /**
          * @abstract
          * Get all fields
-         * @return {(FormField | MenuItem)[]}
+         * @return {FormField[]}
          */
         getFields() {
             throw new TypeError('"getFields" method must be implemented')
