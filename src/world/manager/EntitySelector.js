@@ -15,6 +15,17 @@ define(function (require) {
         }
 
         /**
+         * Get first entity selected
+         */
+        getFirstSelected() {
+            const selectedEntities = this.getSelected()
+            if (selectedEntities.length) {
+                return selectedEntities[0]
+            }
+            return null
+        }
+
+        /**
          * Get the entity in a specific point (absolute position)
          * @param {Object} point 
          * @param {Entity} exceptType 

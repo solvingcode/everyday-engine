@@ -44,11 +44,7 @@ define(function (require) {
          * @override
          */
         getFormObject(){
-            const selectedEntities = EntitySelector.get().getSelected()
-            if (selectedEntities.length) {
-                return selectedEntities[0]
-            }
-            return null
+            return EntitySelector.get().getFirstSelected()
         }
     }
 

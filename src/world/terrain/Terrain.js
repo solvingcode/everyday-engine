@@ -33,13 +33,6 @@ define(function(require){
             throw new TypeError('"Terrain.init" method must be implemented')
         }
         /**
-         * Update the terrain
-         * @abstract
-         */
-        update() {
-            throw new TypeError('"Terrain.update" method must be implemented')
-        }
-        /**
          * Load the terrain
          * @abstract
          */
@@ -64,6 +57,12 @@ define(function(require){
          */
         getVersion() {
             return this.version
+        }
+        /**
+         * @return {Entity}
+         */
+        getEntity(){
+            return this.entity
         }
     }
 

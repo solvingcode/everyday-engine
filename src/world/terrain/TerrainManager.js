@@ -8,7 +8,7 @@ define(function (require) {
      * @property {EntityManager} entityManager
      * @property {Physics} physics
      * @property {Camera} camera
-     * @property {{[string]: Terrain}} terrainTypes
+     * @property {Object.<string, Terrain>} terrainTypes
      * @property {Terrain} terrain
      */
     class TerrainManager {
@@ -35,7 +35,7 @@ define(function (require) {
         }
 
         /**
-         * @return {{[string]: Terrain}}
+         * @return {Object.<string, Terrain>}
          */
         getTerrainTypes() {
             return this.terrainTypes
@@ -61,8 +61,10 @@ define(function (require) {
          */
         getTerrainType() {
             for (const tType in this.terrainTypes) {
-                if (this.terrain instanceof this.terrainTypes[tType]) {
-                    return tType
+                if(this.terrainTypes.hasOwnProperty(tType)) {
+                    if (this.terrain instanceof this.terrainTypes[tType]) {
+                        return tType
+                    }
                 }
             }
         }

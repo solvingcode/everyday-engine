@@ -7,42 +7,39 @@ define(function (require) {
         constructor(props) {
             super({...props, name: 'Platform'})
             this.shape = EntityMotion.shapes.RECT
+            this.isDrawRuler = true
         }
 
         /**
-         * @inherit
+         * @override
          */
         build() {
             this.size = { width: 20000, height: 50 }
-            this.clearBuffer()
-            return this.generate()
+            if (this.clearBuffer()) {
+                return this.generate()
+            }
+            return false
         }
 
         /**
-         * Generate mesh for the rect
+         * @override
          */
-        generateMesh() {
-            const sw = this.size.width, sh = this.size.height
-            const canvas = new OffscreenCanvas(sw, sh)
-            const context = canvas.getContext(CANVAS_CONTEXT_TYPE)
-            context.strokeStyle = this.style.color
-            context.beginPath()
-            context.rect(0, 0, sw, sh)
-            this.drawRuler(context, sw)
-            context.stroke()
-            return this.updateMeshFromContext(context)
+        drawContext(dataContext) {
+            const {context} = dataContext
+            context.rect(0, 0, this.size.width, this.size.height)
+            this.isDrawRuler && this.drawRuler(context, this.size.width)
         }
 
         /**
          * Draw a ruler
-         * @param {CanvasRenderingContext2D} context 
+         * @param {OffscreenCanvasRenderingContext2D} context
          * @param {Number} sw 
          */
         drawRuler(context, sw) {
             const stepRule = 40
             for (let xRule = stepRule; xRule < sw; xRule += stepRule) {
                 context.fillText(
-                    xRule,
+                    xRule.toString(),
                     xRule,
                     20
                 )
@@ -50,7 +47,7 @@ define(function (require) {
         }
 
         /**
-         * @inherit
+         * @override
          */
         toCenterPosition() {
             return {
@@ -60,7 +57,7 @@ define(function (require) {
         }
 
         /**
-         * @inherit
+         * @override
          */
         fromCenterPosition(position) {
             return {

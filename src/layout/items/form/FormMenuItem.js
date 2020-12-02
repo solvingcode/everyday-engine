@@ -28,7 +28,7 @@ define(function (require) {
         /**
          * @abstract
          * Get all fields
-         * @return {FormField[]}
+         * @return {(FormField | MenuItem)[]}
          */
         getFields() {
             throw new TypeError('"getFields" method must be implemented')

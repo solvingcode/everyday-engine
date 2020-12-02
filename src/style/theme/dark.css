@@ -57,6 +57,21 @@ button.selected, button.hidden.selected, button.locked.selected{
     border-top: 1px solid #222222;
 }
 
+.panel .panel{
+    background-color: #4d4d4c;
+    border: none;
+}
+
+.panel .panel h4{
+    border: none;
+    border-bottom: 1px solid #222222;
+}
+
+.panel .panel > div{
+    border: none;
+    border-top: 1px solid #222222;
+}
+
 .color{
     border: 2px solid #4d4d4c;
 }

@@ -13,30 +13,32 @@ define(function (require) {
         }
 
         /**
-         * @inherit
+         * @override
          */
         static postCreate(item, el) {
             const title = item.element.props.name
-            const titleEl = document.createElement('h4')
             const body = document.createElement('div')
-            titleEl.textContent = title
-            el.appendChild(titleEl)
+            if(title){
+                const titleEl = document.createElement('h4')
+                titleEl.textContent = title
+                el.appendChild(titleEl)
+            }
             el.appendChild(body)
         }
 
         /**
-         * @inherit
+         * @override
          */
         static postUpdate(item, el) {
             const { name } = item.element.props
             const titleEl = el.getElementsByTagName('h4')[0]
-            if (titleEl.textContent !== name) {
+            if (titleEl && titleEl.textContent !== name) {
                 titleEl.textContent = name
             }
         }
 
         /**
-         * @inheritDoc
+         * @override
          */
         static getBody(el){
             return el.getElementsByTagName('div')[0]
