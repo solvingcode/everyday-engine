@@ -77,26 +77,6 @@ define(function (require) {
         /**
          * @override
          */
-        toCenterPosition() {
-            return {
-                x: this.position.x + this.mesh.size.width / 2,
-                y: this.position.y + this.mesh.size.height / 2
-            }
-        }
-
-        /**
-         * @override
-         */
-        fromCenterPosition(position) {
-            return {
-                x: position.x - this.mesh.size.width / 2,
-                y: position.y - this.mesh.size.height / 2
-            }
-        }
-
-        /**
-         * @override
-         */
         end() {
             this.stateManager.stopState('ACTION_MOVE', 1)
         }

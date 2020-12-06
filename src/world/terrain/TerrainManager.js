@@ -1,6 +1,7 @@
 define(function (require) {
 
     const PlainTerrain = require('./plain/PlainTerrain.js')
+    const NoiseTerrain = require('./plain/NoiseTerrain.js')
 
     /**
      * Manage all terrains
@@ -30,7 +31,8 @@ define(function (require) {
          */
         init() {
             this.terrainTypes = {
-                [TerrainManager.TYPES.PLAIN]: PlainTerrain
+                [TerrainManager.TYPES.PLAIN]: PlainTerrain,
+                [TerrainManager.TYPES.NOISE]: NoiseTerrain
             }
         }
 
@@ -78,7 +80,8 @@ define(function (require) {
 
         static get TYPES() {
             return {
-                PLAIN: 'plain'
+                PLAIN: 'plain',
+                NOISE: 'noise'
             }
         }
     }

@@ -1,16 +1,16 @@
 define(function (require) {
 
-    const Layout = require('../../../Layout.js')
-    const FormMenuItem = require('../../form/FormMenuItem.js')
-    const World = require('../../../../world/World.js')
+    const Layout = require('../../Layout.js')
+    const EntitySelector = require('../../../world/manager/EntitySelector.js')
+    const FormMenuItem = require('../form/FormMenuItem.js')
 
     /**
-     * Plain terrain form
+     * Entity's size properties
      */
-    class PlainFormMenuItem extends FormMenuItem {
+    class SizeFormMenuItem extends FormMenuItem {
         constructor(parent) {
             super({
-                name: 'Plain terrain form',
+                name: '',
                 stateCode: '',
                 type: Layout.type.FORM,
                 zone: parent.zone
@@ -40,10 +40,10 @@ define(function (require) {
          * @override
          */
         getFormObject(){
-            return World.get().getTerrainManager().getTerrain()
+            return EntitySelector.get().getFirstSelected()
         }
     }
 
-    return PlainFormMenuItem
+    return SizeFormMenuItem
 
 })

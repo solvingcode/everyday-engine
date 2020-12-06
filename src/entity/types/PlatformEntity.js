@@ -46,26 +46,6 @@ define(function (require) {
             }
         }
 
-        /**
-         * @override
-         */
-        toCenterPosition() {
-            return {
-                x: this.position.x + this.size.width / 2,
-                y: this.position.y + this.size.height / 2
-            }
-        }
-
-        /**
-         * @override
-         */
-        fromCenterPosition(position) {
-            return {
-                x: position.x - this.size.width / 2,
-                y: position.y - this.size.height / 2
-            }
-        }
-
     }
 
     return PlatformEntity

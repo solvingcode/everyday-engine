@@ -2,6 +2,8 @@ define(function (require) {
 
     const MenuItem = require('../../MenuItem.js')
     const PropsFormMenuItem = require('./PropsFormMenuItem.js')
+    const SizeFormMenuItem = require('./SizeFormMenuItem.js')
+    const PositionFormMenuItem = require('./PositionFormMenuItem.js')
     const Layout = require('../../Layout.js')
 
     /**
@@ -17,7 +19,9 @@ define(function (require) {
                 zone: Layout.zone.RIGHT
             })
             this.items = [
-                new PropsFormMenuItem(this)
+                new PropsFormMenuItem(this),
+                new PositionFormMenuItem(this),
+                new SizeFormMenuItem(this)
             ]
         }
     }

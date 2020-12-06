@@ -2,11 +2,12 @@ define(function () {
     /**
      * Camera class
      * Define the camera
+     * @property {{x: number, y: number, z: number}} position
      */
     class Camera {
         constructor(position) {
-            this.initPosition = position
-            this.position = position
+            this.initPosition = Object.assign({x: 0, y: 0, z: 0}, position)
+            this.position = this.initPosition
             this.entityId = null
         }
         /**
@@ -14,7 +15,7 @@ define(function () {
          * @param {Object} position 
          */
         update(position) {
-            this.position = position
+            this.position = Object.assign({x: 0, y: 0, z: 0}, position)
         }
         /**
          * Reset camera position
@@ -28,7 +29,8 @@ define(function () {
         getCameraView() {
             const cameraViewX = this.position.x - SCENE_WIDTH / 2
             const cameraViewY = this.position.y - SCENE_HEIGHT / 2
-            return { cameraViewX, cameraViewY }
+            const cameraViewZ = this.position.z || 0
+            return { cameraViewX, cameraViewY, cameraViewZ }
         }
         /**
          * Convert a position to canvas coordination
@@ -72,17 +74,24 @@ define(function () {
         }
 
         /**
-         * @param {number} x
+         * @param {string} x
          */
         setPositionX(x) {
-            this.position.x = x
+            this.position.x = parseFloat(x)
         }
 
         /**
-         * @param {number} y
+         * @param {string} y
          */
         setPositionY(y) {
-            this.position.y = y
+            this.position.y = parseFloat(y)
+        }
+
+        /**
+         * @param {string} z
+         */
+        setPositionZ(z) {
+            this.position.z = parseFloat(z)
         }
 
         /**
@@ -97,6 +106,13 @@ define(function () {
          */
         getPositionY() {
             return this.position.y
+        }
+
+        /**
+         * @return {number}
+         */
+        getPositionZ() {
+            return this.position.z
         }
     }
 

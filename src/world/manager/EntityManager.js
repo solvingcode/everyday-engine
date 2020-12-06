@@ -97,6 +97,13 @@ define(function (require) {
         }
 
         /**
+         * @param {EntityMotion} entity
+         */
+        add(entity){
+            this.entities.push(entity)
+        }
+
+        /**
          * Delete entity from the entities list
          * @param {Entity} entity 
          */
@@ -359,8 +366,7 @@ define(function (require) {
         /**
          * Get attached entities (bidirectional).
          * PS: The list include the given entity
-         * @param {Entity} entity 
-         * @param {Class} attachType
+         * @param {Entity} entity
          * @param {Entity[]} exculdeEntities
          */
         getAttachedEntities(entity, exculdeEntities = []) {
@@ -381,8 +387,7 @@ define(function (require) {
 
         /**
          * Get all Attach entities for the given entity and type
-         * @param {Entity} entity 
-         * @param {Class} attachType
+         * @param {Entity} entity
          */
         getAllAttachTypeEntity(entity) {
             return this.getAttachEntities().filter(pEntity =>

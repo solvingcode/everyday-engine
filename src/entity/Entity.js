@@ -175,8 +175,8 @@ define(function (require) {
         closeContext(dataContext) {
             const fillColor = this.getFillColor()
             const {context} = dataContext
-            context.stroke()
             if (fillColor) {
+                context.stroke()
                 context.fill()
             } else if (this.getBackgroundImageBlob()) {
                 context.clip()
@@ -187,6 +187,8 @@ define(function (require) {
                 }else{
                     context.drawImage(this.meshBgColor.context.canvas, 0, 0, this.size.width, this.size.height)
                 }
+            }else{
+                context.stroke()
             }
             return this.updateMeshFromContext(context)
         }
@@ -277,6 +279,42 @@ define(function (require) {
         }
 
         /**
+         * @param {string} x
+         */
+        setPositionX(x){
+            this.setPositionAndGenerate({x: parseInt(x), y: this.position.y})
+        }
+
+        /**
+         * @param {string} y
+         */
+        setPositionY(y){
+            this.setPositionAndGenerate({x: this.position.x, y: parseInt(y)})
+        }
+
+        /**
+         * @return {number}
+         */
+        getPositionX(){
+            return this.position.x
+        }
+
+        /**
+         * @return {number}
+         */
+        getPositionY(){
+            return this.position.y
+        }
+
+        /**
+         * Set the entity's position and generate the Mesh
+         */
+        setPositionAndGenerate(position){
+            this.setPosition(position)
+            this.regenerate()
+        }
+
+        /**
          * Set the entity's rotation
          * @param {Number} angle
          */
@@ -305,6 +343,34 @@ define(function (require) {
                 this.size = size
                 this.regenerate()
             }
+        }
+
+        /**
+         * @return {number}
+         */
+        getWidth() {
+            return this.size.width
+        }
+
+        /**
+         * @return {number}
+         */
+        getHeight() {
+            return this.size.height
+        }
+
+        /**
+         * @param {number} width
+         */
+        setWidth(width) {
+            this.setSizeAndGenerate({width, height: this.size.height})
+        }
+
+        /**
+         * @param {number} height
+         */
+        setHeight(height) {
+            this.setSizeAndGenerate({width: this.size.width, height})
         }
 
         /**
@@ -381,21 +447,25 @@ define(function (require) {
 
         /**
          * Convert current position to center position
-         * @abstract
          * @return {{x: number, y: number}}
          */
         toCenterPosition() {
-            throw new TypeError('"toCenterPosition" method must be implemented')
+            return {
+                x: this.position.x + this.mesh.size.width / 2,
+                y: this.position.y + this.mesh.size.height / 2
+            }
         }
 
         /**
          * Get current position from center position
          * @param {Vector} position
-         * @abstract
          * @return {{x: number, y: number}}
          */
         fromCenterPosition(position) {
-            throw new TypeError('"fromCenterPosition" method must be implemented')
+            return {
+                x: position.x - this.mesh.size.width / 2,
+                y: position.y - this.mesh.size.height / 2
+            }
         }
 
         /**

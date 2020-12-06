@@ -19,6 +19,7 @@ define(function (require) {
             this.parent = parent
             this.init()
         }
+
         /**
          * @override
          */
@@ -28,10 +29,16 @@ define(function (require) {
                     bind: 'terrainType',
                     label: 'Type',
                     type: Layout.form.DROPDOWN,
-                    list: [{
-                        value: TerrainManager.TYPES.PLAIN,
-                        label: 'Plain'
-                    }]
+                    list: [
+                        {
+                            value: TerrainManager.TYPES.PLAIN,
+                            label: 'Plain'
+                        },
+                        {
+                            value: TerrainManager.TYPES.NOISE,
+                            label: 'Noise'
+                        }
+                    ]
                 }
             ]
         }
@@ -39,7 +46,7 @@ define(function (require) {
         /**
          * @override
          */
-        getFormObject(){
+        getFormObject() {
             return World.get().getTerrainManager()
         }
     }

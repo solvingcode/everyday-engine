@@ -1,7 +1,8 @@
 define(function (require) {
 
     const MenuItem = require('../../../MenuItem.js')
-    const PlainFormMenuItem = require('./PlainFormMenuItem.js')
+    const PlainPosFormMenuItem = require('./PlainPosFormMenuItem.js')
+    const PlainSizeFormMenuItem = require('./PlainSizeFormMenuItem.js')
     const PlainStyleMenuItem = require('./PlainStyleMenuItem.js')
     const Layout = require('../../../Layout.js')
 
@@ -18,7 +19,8 @@ define(function (require) {
             })
             this.parent = parent
             this.items = [
-                new PlainFormMenuItem(this),
+                new PlainPosFormMenuItem(this),
+                new PlainSizeFormMenuItem(this),
                 new PlainStyleMenuItem(this)
             ]
         }

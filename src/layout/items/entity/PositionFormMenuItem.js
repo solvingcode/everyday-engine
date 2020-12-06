@@ -1,13 +1,13 @@
 define(function (require) {
 
     const Layout = require('../../Layout.js')
-    const World = require('../../../world/World.js')
+    const EntitySelector = require('../../../world/manager/EntitySelector.js')
     const FormMenuItem = require('../form/FormMenuItem.js')
 
     /**
-     * Form properties
+     * Entity's position properties
      */
-    class PropsFormMenuItem extends FormMenuItem {
+    class PositionFormMenuItem extends FormMenuItem {
         constructor(parent) {
             super({
                 name: '',
@@ -32,11 +32,6 @@ define(function (require) {
                     bind: 'positionY',
                     label: 'Y',
                     type: Layout.form.TEXT
-                },
-                {
-                    bind: 'positionZ',
-                    label: 'Z',
-                    type: Layout.form.TEXT
                 }
             ]
         }
@@ -45,10 +40,10 @@ define(function (require) {
          * @override
          */
         getFormObject(){
-            return World.get().getCamera()
+            return EntitySelector.get().getFirstSelected()
         }
     }
 
-    return PropsFormMenuItem
+    return PositionFormMenuItem
 
 })
