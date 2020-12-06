@@ -4,9 +4,13 @@ define(function (require) {
 
     class PolyShape extends Shape {
 
-        generate(entity, bodies){
+        /**
+         * @override
+         */
+        generate(entity){
             const centerPosition = entity.toCenterPosition()
-            return bodies.fromVertices(centerPosition.x, centerPosition.y, entity.points)
+            const engine = this.getEngine()
+            return engine.Bodies.fromVertices(centerPosition.x, centerPosition.y, entity.points)
         }
 
     }

@@ -31,7 +31,7 @@ define(function (require) {
          * Load entity shape to the Engine world
          * @param {Entity} entity
          *
-         * @return {Shape}
+         * @return {Body}
          */
         load(entity) {
             const type = this.mapShapes[entity.shape]

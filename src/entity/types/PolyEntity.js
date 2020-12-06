@@ -10,7 +10,6 @@ define(function (require) {
             this.shape = EntityMotion.shapes.POLY
             this.points = []
             this.nbPoints = 0
-            this.canvas = new OffscreenCanvas(1, 1)
         }
 
         /**
@@ -65,7 +64,6 @@ define(function (require) {
          */
         drawContext(dataContext) {
             const {context} = dataContext
-            context.beginPath()
             this.drawPoints(context)
         }
 
@@ -74,12 +72,15 @@ define(function (require) {
          * @param {OffscreenCanvasRenderingContext2D} context 
          */
         drawPoints(context) {
+            context.beginPath()
             const minPoint = this.getMinPoint()
             for (let iPoint in this.points) {
-                const pointFrom = this.points[iPoint]
                 const pointTo = this.points[parseInt(iPoint) + 1]
-                if (pointTo) {
+                if(!iPoint){
+                    const pointFrom = this.points[iPoint]
                     context.moveTo(pointFrom.x - minPoint.x, pointFrom.y - minPoint.y)
+                }
+                else if (pointTo) {
                     context.lineTo(pointTo.x - minPoint.x, pointTo.y - minPoint.y)
                 }
             }
@@ -98,20 +99,6 @@ define(function (require) {
             const minPoint = this.getMinPoint()
             const maxPoint = this.getMaxPoint()
             this.size = { width: maxPoint.x - minPoint.x, height: maxPoint.y - minPoint.y }
-        }
-
-        /**
-         * @override
-         */
-        getLargestRectangle(angleRadian, size) {
-            const minX = this.points.reduce((mnX, current) => ((mnX > current.x && current.x) || mnX), this.points[0].x)
-            const maxX = this.points.reduce((mxX, current) => ((mxX < current.x && current.x) || mxX), this.points[0].x)
-            const minY = this.points.reduce((mnY, current) => ((mnY > current.y && current.y) || mnY), this.points[0].y)
-            const maxY = this.points.reduce((mxY, current) => ((mxY < current.y && current.y) || mxY), this.points[0].y)
-            return {
-                width: Math.ceil(maxX - minX),
-                height: Math.ceil(maxY - minY)
-            }
         }
 
         /**

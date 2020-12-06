@@ -10,7 +10,7 @@ define(function (require) {
     class RectangleShape extends Shape {
 
         /**
-         * @inheritDoc
+         * @override
          */
         generate(entity) {
             const centerPosition = entity.toCenterPosition()

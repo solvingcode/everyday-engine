@@ -8,6 +8,9 @@ define(function (require) {
      */
     class CircleShape extends Shape {
 
+        /**
+         * @override
+         */
         generate(entity) {
             const centerPosition = entity.toCenterPosition()
             const engine = this.getEngine()
