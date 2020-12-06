@@ -105,7 +105,7 @@ define(function (require) {
          */
         behave(entity) {
             const force = this.getForce()
-            if (!entity.isStatic()) {
+            if (entity.isMotion()) {
                 entity.setForce(force)
             }
             this.haveToDie(entity)

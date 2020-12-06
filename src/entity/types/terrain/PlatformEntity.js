@@ -1,11 +1,11 @@
 define(function (require) {
 
-    const EntityMotion = require('../EntityMotion.js')
+    const EntityMotion = require('../../EntityMotion.js')
 
     class PlatformEntity extends EntityMotion {
 
         constructor(props) {
-            super({...props, name: 'Platform'})
+            super({...props, name: 'Plain Terrain'})
             this.shape = EntityMotion.shapes.RECT
             this.isDrawRuler = true
         }
@@ -13,12 +13,9 @@ define(function (require) {
         /**
          * @override
          */
-        build() {
+        init() {
             this.size = { width: 20000, height: 50 }
-            if (this.clearBuffer()) {
-                return this.generate()
-            }
-            return false
+            this.setStatic(true)
         }
 
         /**

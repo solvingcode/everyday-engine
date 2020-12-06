@@ -1,6 +1,6 @@
 define(function (require) {
 
-    const EntityMotion = require('../EntityMotion.js')
+    const EntityMotion = require('../../EntityMotion.js')
 
     class CircleEntity extends EntityMotion {
 
@@ -14,13 +14,9 @@ define(function (require) {
         /**
          * @override
          */
-        build() {
+        init() {
             const dragDistance = this.setMeshPositionByDragDistance()
             this.size = { width: Math.abs(dragDistance.x), height: Math.abs(dragDistance.x) }
-            if (this.clearBuffer()) {
-                return this.generate()
-            }
-            return false
         }
 
         /**

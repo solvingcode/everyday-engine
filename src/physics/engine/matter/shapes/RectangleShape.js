@@ -1,6 +1,5 @@
 define(function (require) {
 
-    const PlatformEntity = require('../../../../entity/types/PlatformEntity.js')
     const Shape = require('../../Shape.js')
 
     /**
@@ -21,7 +20,6 @@ define(function (require) {
                 entity.size.width,
                 entity.size.height,
                 {
-                    isStatic: (entity instanceof PlatformEntity),
                     density: entity.physics.density 
                 }
             )

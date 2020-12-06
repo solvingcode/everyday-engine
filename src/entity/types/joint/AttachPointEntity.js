@@ -1,9 +1,9 @@
 define(function (require) {
 
-    const EntityMotion = require('../EntityMotion.js')
-    const EntitySelector = require('../../world/manager/EntitySelector.js')
+    const EntityMotion = require('../../EntityMotion.js')
+    const EntitySelector = require('../../../world/manager/EntitySelector.js')
     const AttachEntity = require('./AttachEntity.js')
-    const Color = require('../../utils/Color.js')
+    const Color = require('../../../utils/Color.js')
 
     class AttachPointEntity extends AttachEntity {
 

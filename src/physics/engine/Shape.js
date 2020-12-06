@@ -1,6 +1,6 @@
 define(function (require) {
 
-    const AttachEntity = require('../../entity/types/AttachEntity.js')
+    const AttachEntity = require('../../entity/types/joint/AttachEntity.js')
 
     /**
      * Shape class
@@ -63,7 +63,7 @@ define(function (require) {
          */
         setup(entity, body){
             entity.isControlled() && entity.setCollisionGroup(-1)
-            body.isStatic = body.isStatic || entity.isControlled()
+            body.isStatic = body.isStatic || entity.isControlled() || entity.isStatic()
         }
 
         /**

@@ -1,7 +1,7 @@
 define(function (require) {
 
-    const EntityMotion = require('../EntityMotion.js')
-    const EntitySelector = require('../../world/manager/EntitySelector.js')
+    const EntityMotion = require('../../EntityMotion.js')
+    const EntitySelector = require('../../../world/manager/EntitySelector.js')
     const AttachEntity = require('./AttachEntity.js')
 
     class JointEntity extends AttachEntity {

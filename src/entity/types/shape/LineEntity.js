@@ -1,6 +1,6 @@
 define(function (require) {
 
-    const EntityMotion = require('../EntityMotion.js')
+    const EntityMotion = require('../../EntityMotion.js')
 
     class LineEntity extends EntityMotion {
 
@@ -11,35 +11,28 @@ define(function (require) {
         }
 
         /**
-         * @inherit
+         * @override
          */
-        build() {
+        init() {
             const dragDistance = this.setMeshPositionByDragDistance()
-            this.size = { width: Math.abs(dragDistance.x), height: Math.abs(dragDistance.y) }
-            if (this.size.width > 0 && this.size.height > 0) {
-                this.clearBuffer()
-                if (dragDistance.x * dragDistance.y < 0) {
-                    this.points = [{ x: this.size.width, y: 0 }, { x: 0, y: this.size.height }]
-                } else {
-                    this.points = [{ x: 0, y: 0 }, { x: this.size.width, y: this.size.height }]
-                }
-                this.generate()
+            this.size = {width: Math.abs(dragDistance.x), height: Math.abs(dragDistance.y)}
+            if (dragDistance.x * dragDistance.y < 0) {
+                this.points = [{x: this.size.width, y: 0}, {x: 0, y: this.size.height}]
+            } else {
+                this.points = [{x: 0, y: 0}, {x: this.size.width, y: this.size.height}]
             }
         }
 
         /**
-         * Generate mesh for the line
+         * @override
          */
-        generateMesh() {
+        drawContext(dataContext) {
+            const {context} = dataContext
             const x0 = this.points[0].x, y0 = this.points[0].y
             const x1 = this.points[1].x, y1 = this.points[1].y
-            const canvas = new OffscreenCanvas(this.size.width, this.size.height)
-            const context = canvas.getContext(CANVAS_CONTEXT_TYPE)
             context.beginPath()
             context.moveTo(x0, y0)
             context.lineTo(x1, y1)
-            context.stroke()
-            this.updateMeshFromContext(context)
         }
 
         /**

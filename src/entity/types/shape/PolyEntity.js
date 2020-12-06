@@ -1,7 +1,7 @@
 define(function (require) {
 
-    const EntityMotion = require('../EntityMotion.js')
-    const Window = require('../../core/Window.js')
+    const EntityMotion = require('../../EntityMotion.js')
+    const Window = require('../../../core/Window.js')
 
     class PolyEntity extends EntityMotion {
 
@@ -15,15 +15,11 @@ define(function (require) {
         /**
          * @override
          */
-        build() {
+        init() {
             this.makePoints()
             const minPoint = this.getMinPoint()
             this.setMeshPosition({ x: minPoint.x, y: minPoint.y })
             this.calculateSize()
-            if(this.clearBuffer()){
-                return this.generate()
-            }
-            return false
         }
 
         /**
@@ -88,7 +84,7 @@ define(function (require) {
         }
 
         /**
-         * @param {Vector[]} points 
+         * @param {Vector[]} points
          */
         setPoints(points) {
             this.points = points

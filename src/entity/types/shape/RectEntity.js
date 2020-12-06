@@ -1,6 +1,6 @@
 define(function (require) {
 
-    const EntityMotion = require('../EntityMotion.js')
+    const EntityMotion = require('../../EntityMotion.js')
 
     class RectEntity extends EntityMotion {
 
@@ -12,13 +12,9 @@ define(function (require) {
         /**
          * @override
          */
-        build() {
+        init() {
             const dragDistance = this.setMeshPositionByDragDistance()
             this.size = {width: Math.abs(dragDistance.x), height: Math.abs(dragDistance.y)}
-            if (this.clearBuffer()) {
-                return this.generate()
-            }
-            return false
         }
 
         /**

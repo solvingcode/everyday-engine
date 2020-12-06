@@ -34,6 +34,11 @@ define(function (require) {
                     type: Layout.form.CHECKBOX
                 },
                 {
+                    bind: 'motion',
+                    label: 'Motion',
+                    type: Layout.form.CHECKBOX
+                },
+                {
                     bind: 'controlled',
                     label: 'Controlled',
                     type: Layout.form.CHECKBOX

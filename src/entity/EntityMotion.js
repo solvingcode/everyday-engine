@@ -22,6 +22,7 @@ define(function (require) {
                 density: 0.001,
                 force: { x: 0, y: 0 },
                 static: false,
+                motion: true,
                 rotationConstraint: {
                     min: -Math.PI * 2,
                     max: Math.PI * 2
@@ -39,18 +40,34 @@ define(function (require) {
         }
 
         /**
-         * Is the entity is static
+         * @return {boolean}
          */
         isStatic() {
             return this.physics.static
         }
 
         /**
-         * Set the static flag
-         * @return {boolean}
+         * If the entity is static, is automatically motionless
+         * @param {boolean} isStatic
          */
         setStatic(isStatic) {
             this.physics.static = isStatic
+            isStatic && this.setMotion(false)
+        }
+
+        /**
+         * @return {boolean}
+         */
+        isMotion() {
+            return this.physics.motion
+        }
+
+        /**
+         * @param {boolean} isMotion
+         */
+        setMotion(isMotion) {
+            this.physics.motion = isMotion
+            isMotion && this.setStatic(false)
         }
 
         /**

@@ -114,7 +114,8 @@ define(function (require) {
          * @return {boolean}
          */
         build() {
-            throw new TypeError('"build" method must be implemented')
+            this.init()
+            return this.regenerate()
         }
 
         /**
@@ -133,6 +134,14 @@ define(function (require) {
                 this.drawContext(dataContext)
                 return this.closeContext(dataContext)
             }
+        }
+
+        /**
+         * Called before starting drawing entities (calculate size, init mesh position, ...)
+         * @abstract
+         */
+        init(){
+            throw new TypeError('Entity.init must be implemented')
         }
 
         /**

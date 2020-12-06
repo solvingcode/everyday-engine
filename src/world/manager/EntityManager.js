@@ -2,8 +2,7 @@ define(function (require) {
 
     const EntityGenerator = require('../generator/EntityGenerator.js')
     const Entity = require('../../entity/Entity.js')
-    const AttachEntity = require('../../entity/types/AttachEntity.js')
-    const PlatformEntity = require('../../entity/types/PlatformEntity.js')
+    const AttachEntity = require('../../entity/types/joint/AttachEntity.js')
     const Maths = require('../../utils/Maths.js')
 
     /**
@@ -344,7 +343,7 @@ define(function (require) {
          * @param {EntityMotion} entity
          */
         isNotStaticEntity(entity) {
-            return !(entity instanceof PlatformEntity) && !entity.isControlled()
+            return !entity.isStatic() && !entity.isControlled()
         }
 
         /**
