@@ -455,13 +455,25 @@ define(function (require) {
         }
 
         /**
+         * Calculate the centroid
+         * @return {{x: number, y: number}}
+         */
+        getCenter() {
+            return {
+                x: this.mesh.size.width / 2,
+                y: this.mesh.size.height / 2
+            }
+        }
+
+        /**
          * Convert current position to center position
          * @return {{x: number, y: number}}
          */
         toCenterPosition() {
+            const center = this.getCenter()
             return {
-                x: this.position.x + this.mesh.size.width / 2,
-                y: this.position.y + this.mesh.size.height / 2
+                x: this.position.x + center.x,
+                y: this.position.y + center.y
             }
         }
 
@@ -471,9 +483,10 @@ define(function (require) {
          * @return {{x: number, y: number}}
          */
         fromCenterPosition(position) {
+            const center = this.getCenter()
             return {
-                x: position.x - this.mesh.size.width / 2,
-                y: position.y - this.mesh.size.height / 2
+                x: position.x - center.x,
+                y: position.y - center.y
             }
         }
 

@@ -2,6 +2,7 @@ define(function (require) {
 
     const EntityMotion = require('../../EntityMotion.js')
     const Window = require('../../../core/Window.js')
+    const Vertex = require('../../../utils/Vertex.js')
 
     class PolyEntity extends EntityMotion {
 
@@ -64,22 +65,18 @@ define(function (require) {
         }
 
         /**
-         * Draw the points stored from mouse clicks
          * @param {OffscreenCanvasRenderingContext2D} context 
          */
         drawPoints(context) {
             context.beginPath()
-            const minPoint = this.getMinPoint()
-            for (let iPoint in this.points) {
-                const pointTo = this.points[parseInt(iPoint) + 1]
+            this.points.forEach((point, iPoint) => {
                 if(!iPoint){
-                    const pointFrom = this.points[iPoint]
-                    context.moveTo(pointFrom.x - minPoint.x, pointFrom.y - minPoint.y)
+                    context.moveTo(point.x, point.y)
                 }
-                else if (pointTo) {
-                    context.lineTo(pointTo.x - minPoint.x, pointTo.y - minPoint.y)
+                else {
+                    context.lineTo(point.x, point.y)
                 }
-            }
+            })
             context.closePath()
         }
 
@@ -103,6 +100,13 @@ define(function (require) {
         convertPointToRelPosition() {
             const minPoint = this.getMinPoint()
             this.points = this.points.map(point => ({ x: point.x - minPoint.x, y: point.y - minPoint.y }))
+        }
+
+        /**
+         * @override
+         */
+        getCenter() {
+            return Vertex.getCenter(this.points)
         }
 
         /**
