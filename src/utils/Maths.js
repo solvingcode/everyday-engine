@@ -44,6 +44,17 @@ define(function () {
             t = parseInt(t.toString(2).slice(-31), 2)
             return 1.0 - t / 1073741824
         }
+
+        /**
+         * @param {number} a
+         * @param {number} b
+         * @param {number} t
+         * @return {number}
+         */
+        static cosineInterpolate(a, b, t){
+            const c = (1 - Math.cos(t * 3.1415927)) * .5
+            return (1. - c) * a + c * b
+        }
     }
 
     return Maths

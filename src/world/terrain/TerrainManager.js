@@ -1,7 +1,7 @@
 define(function (require) {
 
-    const PlainTerrain = require('./plain/PlainTerrain.js')
-    const NoiseTerrain = require('./plain/NoiseTerrain.js')
+    const PlainTerrain = require('./types/PlainTerrain.js')
+    const NoiseTerrain = require('./types/NoiseTerrain.js')
 
     /**
      * Manage all terrains
