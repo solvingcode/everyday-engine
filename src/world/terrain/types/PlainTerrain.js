@@ -11,21 +11,13 @@ define(function (require) {
          * @override
          */
         init() {
-            this.entity = this.entityManager.load(0, 700, PlatformEntity)
+            this.entityId = this.entityManager.load(0, 700, PlatformEntity).getId()
         }
 
         /**
          * @override
          */
         load() {
-
-        }
-
-        /**
-         * @override
-         */
-        unload() {
-            this.entityManager.delete(this.entity)
         }
     }
 

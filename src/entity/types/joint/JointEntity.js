@@ -110,10 +110,11 @@ define(function (require) {
 
         /**
          * Update points (A, B) from an absolute positions
-         * @param {Object} point 
+         * @param {Vector} pointA
+         * @param {Vector} pointB
          */
         updatePoints(pointA, pointB) {
-            const dragDistance = { x: parseInt(pointB.x - pointA.x), y: parseInt(pointB.y - pointA.y) }
+            const dragDistance = { x: Math.floor(pointB.x - pointA.x), y: Math.floor(pointB.y - pointA.y) }
             if (this.generatePoints(dragDistance) && this.clearBuffer()) {
                 let newX = pointA.x, newY = pointA.y
                 if (dragDistance.x <= 0) {

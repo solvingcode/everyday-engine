@@ -20,6 +20,7 @@ define(function (require) {
                 angleBMin: - Math.PI * 2, 
                 angleBMax: Math.PI * 2 }
             super({...props, physics})
+            this.shape = EntityMotion.shapes.ATTACH
         }
 
         /**

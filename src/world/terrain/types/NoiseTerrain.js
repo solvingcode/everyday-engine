@@ -11,20 +11,13 @@ define(function (require) {
          * @override
          */
         init() {
-            this.entity = this.entityManager.load(200, 500, NoiseEntity)
+            this.entityId = this.entityManager.load(200, 500, NoiseEntity).getId()
         }
 
         /**
          * @override
          */
         load() {
-        }
-
-        /**
-         * @override
-         */
-        unload() {
-            this.entityManager.delete(this.entity)
         }
     }
 

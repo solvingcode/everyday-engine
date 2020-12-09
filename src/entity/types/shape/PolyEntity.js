@@ -17,7 +17,7 @@ define(function (require) {
          * @override
          */
         init() {
-            this.makePoints()
+            this.generatePoints()
             const minPoint = this.getMinPoint()
             this.setMeshPosition({ x: minPoint.x, y: minPoint.y })
             this.calculateSize()
@@ -44,7 +44,7 @@ define(function (require) {
         /**
          * Add points to the poly based on the click position
          */
-        makePoints() {
+        generatePoints() {
             const window = Window.get()
             const position = window.mouse.position
             const currentPosition = window.mouse.currentPosition

@@ -10,7 +10,7 @@ define(function(require){
      * @property {EntityManager} entityManager
      * @property {Physics} physics
      * @property {Camera} camera
-     * @property {Entity} entity
+     * @property {number} entityId
      */
     class Terrain {
         /**
@@ -22,7 +22,7 @@ define(function(require){
             this.physics = physics
             this.entityManager = entityManager
             this.camera = camera
-            this.entity = null
+            this.entityId = null
             this.init()
         }
         /**
@@ -41,10 +41,10 @@ define(function(require){
         }
         /**
          * Unload the terrain
-         * @abstract
          */
         unload() {
-            throw new TypeError('"Terrain.unload" method must be implemented')
+            const entity = this.entityManager.findById(this.entityId)
+            this.entityManager.delete(entity)
         }
         /**
          * Generate new version
@@ -62,7 +62,7 @@ define(function(require){
          * @return {Entity}
          */
         getEntity(){
-            return this.entity
+            return this.entityManager.findById(this.entityId)
         }
     }
 

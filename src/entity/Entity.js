@@ -55,7 +55,13 @@ define(function (require) {
         }
 
         /**
-         * Get the entity's name
+         * @return {number}
+         */
+        getId() {
+            return this.id
+        }
+
+        /**
          * @return {string}
          */
         getName() {
@@ -63,7 +69,6 @@ define(function (require) {
         }
 
         /**
-         * Set the entity's name
          * @param {string} name
          */
         setName(name) {
