@@ -44,22 +44,39 @@ define(function (require) {
             })
             this.physicsEngine.getJoints().map((joint, index) => {
                 const entity = jointEntites[index]
-                const pointA = entity.entities.a.fromRelativeCenterPosition(joint.pointA)
-                const pointB = entity.entities.b.fromRelativeCenterPosition(joint.pointB)
+                const pointA = entity.entities.a ? entity.entities.a.fromRelativeCenterPosition(joint.pointA) : joint.pointA
+                const pointB = entity.entities.b ? entity.entities.b.fromRelativeCenterPosition(joint.pointB) : joint.pointB
                 entity.updatePoints(pointA, pointB)
             })
         }
 
         /**
          * Update the World using AI and physics Engine
-         * @param {AiEngine} aiEngine 
+         * @param {AiEngine} aiEngine
+         * @TODO: updating the joint entities crash the physics, to be revisited
          */
         updateEngine(aiEngine) {
+            this.entityManager.getAttachEntities().forEach(entity => {
+                this.physicsEngine.update(entity)
+            })
             this.entityManager.getBodyEntities().forEach(entity => {
                 this.physicsEngine.update(entity)
             })
             this.physicsEngine.updateEngine()
-            aiEngine.update()
+            aiEngine && aiEngine.update()
+        }
+
+        /**
+         * @param {AttachEntity} entity
+         * @param {Constraint} constraint
+         */
+        updateConstraint(entity, constraint){
+            const shape = this.physicsEngine.findShapeFromEntity(entity)
+            if (shape) {
+                this.physicsEngine.updateConstraint(entity, constraint)
+            }else{
+                throw TypeError(`Shape not founded for the constraint entity ${entity.id}`)
+            }
         }
 
         /**
@@ -69,7 +86,8 @@ define(function (require) {
         getBodyFromEntity(entity) {
             const shape = this.physicsEngine.findShapeFromEntity(entity)
             const bodies = this.physicsEngine.getBodies()
-            if (!shape || !bodies.includes(shape)) {
+            const joints = this.physicsEngine.getJoints()
+            if (!shape || (!bodies.includes(shape) && !joints.includes(shape))) {
                 throw TypeError(`Shape not founded for the entity ${entity.id}`)
             }
             return shape

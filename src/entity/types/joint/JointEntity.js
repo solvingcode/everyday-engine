@@ -4,6 +4,9 @@ define(function (require) {
     const EntitySelector = require('../../../world/manager/EntitySelector.js')
     const AttachEntity = require('./AttachEntity.js')
 
+    /**
+     * @property {Vector[]} points relative positions for entities A & B
+     */
     class JointEntity extends AttachEntity {
 
         constructor(props) {
@@ -16,14 +19,11 @@ define(function (require) {
         }
 
         /**
-         * @inherit
+         * @override
          */
-        build() {
+        init() {
             const dragDistance = this.setMeshPositionByDragDistance()
-            if (this.generatePoints(dragDistance)) {
-                return this.setConstraintEntities() && this.generate()
-            }
-            return false
+            return this.generatePoints(dragDistance) && this.setConstraintEntities()
         }
 
         /**
@@ -105,13 +105,13 @@ define(function (require) {
             this.entities.a && (this.entities.a.attachedEntities = null)
             this.entities.b && (this.entities.b.attachedEntities = null)
 
-            return this.entities.a && this.entities.b
+            return this.entities.a || this.entities.b
         }
 
         /**
          * Update points (A, B) from an absolute positions
-         * @param {Vector} pointA
-         * @param {Vector} pointB
+         * @param {Vector} pointA absolute position
+         * @param {Vector} pointB absolute position
          */
         updatePoints(pointA, pointB) {
             const dragDistance = { x: Math.floor(pointB.x - pointA.x), y: Math.floor(pointB.y - pointA.y) }

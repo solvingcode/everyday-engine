@@ -44,7 +44,7 @@ define(function (require) {
          * @override
          */
         isValid() {
-            return this.stateManager.isRunning()
+            return this.stateManager.isRunning() && GeneticEngine.get()
         }
     }
 

@@ -119,6 +119,15 @@ define(function () {
         }
 
         /**
+         * Update constraint bodies using the given constraint param
+         * @param {Entity} entity
+         * @param {Constraint} constraint
+         */
+        updateConstraint(entity, constraint){
+            throw new TypeError('"updateConstraint" method must be implemented')
+        }
+
+        /**
          * Apply force to the entity
          * @param {Object} body 
          * @param {EntityMotion} entity

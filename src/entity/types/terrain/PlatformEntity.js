@@ -16,6 +16,7 @@ define(function (require) {
         init() {
             this.size = { width: 20000, height: 50 }
             this.setStatic(true)
+            return true
         }
 
         /**

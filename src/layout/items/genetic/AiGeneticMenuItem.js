@@ -6,6 +6,7 @@ define(function (require) {
     const AiFormMenuItem = require('./AiFormMenuItem.js')
     const FormSimulationMenuItem = require('./FormSimulationMenuItem.js')
     const Layout = require('../../Layout.js')
+    const GeneticEngine = require('../../../ai/genetic/GeneticEngine.js')
 
     /**
      * AI Genetic Menu Item
@@ -31,7 +32,7 @@ define(function (require) {
          * @override
          */
         isValid() {
-            return true
+            return GeneticEngine.get()
         }
     }
 

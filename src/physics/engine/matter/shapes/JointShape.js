@@ -9,42 +9,53 @@ define(function (require) {
     class JointShape extends Shape {
 
         /**
-         * @inherit
+         * @override
          */
         generate(entity) {
             const engine = this.getEngine()
-            const points = entity.points
-            const entities = entity.entities
-            const bodyA = this.getBodyFromEntity(entities.a)
-            const bodyB = this.getBodyFromEntity(entities.b)
-            const pointA = entities.a.getRelativeCenterPosition(entity, points.a)
-            const pointB = entities.b.getRelativeCenterPosition(entity, points.b)
-            const { stiffness,
-                angleAStiffness,
-                angleBStiffness,
-                angleAMin, angleAMax,
-                angleBMin,
-                angleBMax } = entity.physics
-            if (!bodyA || !bodyB) {
-                throw new ReferenceError('Body not yet created or entity not founded')
-            }
             entity.attached && this.addGroup(entity)
-            return engine.Constraint.create({
-                bodyA, pointA, bodyB, pointB,
-                stiffness, angleAStiffness, angleBStiffness, 
-                angleAMin, angleAMax, angleBMin, angleBMax
-            })
+            return engine.Constraint.create(this.getConstraint(entity))
         }
 
+        /**
+         * @param {EntityMotion} entity
+         * @return {Object}
+         */
+        getConstraint(entity){
+            const points = entity.points
+            const entities = entity.entities
+            const bodyA = entities.a && this.getBodyFromEntity(entities.a)
+            const bodyB = entities.b && this.getBodyFromEntity(entities.b)
+            const pointA = entities.a ? entities.a.getRelativeCenterPosition(entity, points.a) : entity.fromRelativePosition(points.a)
+            const pointB = entities.b ? entities.b.getRelativeCenterPosition(entity, points.b) : entity.fromRelativePosition(points.b)
+            const {
+                stiffness,
+                angularStiffness,
+                angleA, angleB
+            } = entity.physics
+            if ((entities.a && !bodyA) || (entities.b && !bodyB)) {
+                throw new ReferenceError('Body not yet created or entity not founded')
+            }
+            return {
+                bodyA, pointA, bodyB, pointB,
+                stiffness, angularStiffness, angleA, angleB
+            }
+        }
+
+        /**
+         * Add the constraint and the attached entities to the same collision group
+         * (disable collision between attached bodies)
+         * @param {Entity} entity
+         */
         addGroup(entity) {
             const collisionGroup = entity.collision.group ||
-                entity.entities.a.collision.group ||
-                entity.entities.b.collision.group ||
+                (entity.entities.a && entity.entities.a.collision.group) ||
+                (entity.entities.b && entity.entities.b.collision.group) ||
                 this.physicEngine.newGroup()
 
             entity.collision.group = collisionGroup
-            entity.entities.a.collision.group = collisionGroup
-            entity.entities.b.collision.group = collisionGroup
+            entity.entities.a && (entity.entities.a.collision.group = collisionGroup)
+            entity.entities.b && (entity.entities.b.collision.group = collisionGroup)
         }
 
     }

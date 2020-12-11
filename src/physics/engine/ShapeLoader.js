@@ -39,7 +39,7 @@ define(function (require) {
         }
 
         /**
-         * Update the body props from entity
+         * Update the physics props from entity
          * @param {Entity} entity 
          */
         update(entity) {

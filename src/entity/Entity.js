@@ -49,6 +49,7 @@ define(function (require) {
             this.focused = false
             this.locked = false
             this.visible = true
+            this.clonable = true
             this.style = props.style
             this.advancedStyle = {backgroundImageBlob: '', backgroundImageRepeat: false}
             this.attachedEntities = null
@@ -119,8 +120,7 @@ define(function (require) {
          * @return {boolean}
          */
         build() {
-            this.init()
-            return this.regenerate()
+            return this.init() && this.regenerate()
         }
 
         /**
@@ -144,6 +144,7 @@ define(function (require) {
         /**
          * Called before starting drawing entities (calculate size, init mesh position, ...)
          * @abstract
+         * @return {boolean}
          */
         init(){
             throw new TypeError('Entity.init must be implemented')
@@ -543,12 +544,24 @@ define(function (require) {
             }
         }
 
-        /**
+        /**fromRelativeCenterPosition
          * Convert relative coordinate (based to the center) to absolute coordinate
-         * @param {Vector} point Absolute coordinate
+         * @param {Vector} point relative coordinate
          */
         fromRelativeCenterPosition(point) {
             const {x, y} = this.toCenterPosition()
+            return {
+                x: x + point.x,
+                y: y + point.y
+            }
+        }
+
+        /**
+         * Convert relative coordinate to absolute coordinate
+         * @param {Vector} point Absolute coordinate
+         */
+        fromRelativePosition(point) {
+            const {x, y} = this.position
             return {
                 x: x + point.x,
                 y: y + point.y

@@ -1,11 +1,13 @@
 define(function (require) {
 
     const EntityManager = require('./manager/EntityManager.js')
+    const EntitySelector = require('./manager/EntitySelector.js')
     const Camera = require('../core/Camera.js')
     const GeneticEngine = require('../ai/genetic/GeneticEngine.js')
     const Physics = require('../physics/Physics.js')
     const MatterEngine = require('../physics/engine/matter/Engine.js')
     const TerrainManager = require('./terrain/TerrainManager.js')
+    const ConstraintEntity = require('../entity/types/joint/ConstraintEntity.js')
 
     /**
      * Define the World
@@ -18,8 +20,9 @@ define(function (require) {
             this.entityManager = EntityManager.get()
             this.camera = new Camera({ x: SCENE_WIDTH / 2, y: SCENE_HEIGHT / 2 })
             this.physics = new Physics(new MatterEngine())
-            this.aiEngine = new GeneticEngine(this.physics, this.entityManager, this.camera)
+            //this.aiEngine = new GeneticEngine(this.physics, this.entityManager, this.camera)
             this.terrainManager = new TerrainManager(this.physics, this.entityManager, this.camera)
+            this.mouseConstraintId = this.entityManager.load(0, 0, ConstraintEntity).getId()
         }
 
         /**
@@ -74,6 +77,15 @@ define(function (require) {
         }
 
         /**
+         * Get the entity from world coordinate
+         * @param {{x: number, y: number}} position canvas coordinates (window)
+         */
+        findEntity(position){
+            const entitySelector = EntitySelector.get()
+            return entitySelector.get(this.getWorldPosition(position))
+        }
+
+        /**
          * Load the world
          */
         load() {
@@ -110,6 +122,21 @@ define(function (require) {
          */
         getCamera() {
             return this.camera
+        }
+
+        /**
+         * @param {{x: number, y: number}} position
+         * @return {{x: number, y: number}}
+         */
+        getWorldPosition(position){
+            return this.getCamera().fromCanvasCoord(position)
+        }
+
+        /**
+         * @return {ConstraintEntity}
+         */
+        getMouseConstraint() {
+            return this.entityManager.findById(this.mouseConstraintId)
         }
 
         static get() {

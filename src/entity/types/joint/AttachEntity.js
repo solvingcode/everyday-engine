@@ -1,7 +1,6 @@
 define(function (require) {
 
     const EntityMotion = require('../../EntityMotion.js')
-    const AppState = require('../../../state/AppState.js')
 
     /**
      * Attach Entity (abstruct class) used to attach two entities
@@ -12,22 +11,12 @@ define(function (require) {
 
         constructor(props) {
             const physics = { 
-                stiffness: 1, 
-                angleAStiffness: 1, 
-                angleBStiffness: 1, 
-                angleAMin: - Math.PI * 2, 
-                angleAMax: Math.PI * 2, 
-                angleBMin: - Math.PI * 2, 
-                angleBMax: Math.PI * 2 }
+                stiffness: 1,
+                angleA: null,
+                angleB: null,
+                angularStiffness: null}
             super({...props, physics})
             this.shape = EntityMotion.shapes.ATTACH
-        }
-
-        /**
-         * @inherit
-         */
-        isCanGenerate() {
-            return super.isCanGenerate() && !AppState.get().hasState('SIMULATE_PROGRESS')
         }
 
     }

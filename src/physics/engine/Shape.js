@@ -43,7 +43,8 @@ define(function (require) {
 
         /**
          * Get the body physics from the entity
-         * @param {Entity} entity 
+         * @param {Entity} entity
+         * @return {Body | Constraint}
          */
         getBodyFromEntity(entity) {
             return this.physicEngine.getBodyFromEntity(entity)
@@ -69,12 +70,12 @@ define(function (require) {
         /**
          * Synchronize informations from entity to body
          * Do not apply force to Attach entities
-         * @param {EntityMotion} entity
-         * @param {Body} body 
+         * @param {EntityMotion | AttachEntity} entity
+         * @param {Body | Constraint} physicEntity
          */
-        update(entity, body) {
+        update(entity, physicEntity) {
             if (!(entity instanceof AttachEntity)) {
-                this.physicEngine.applyPhysics(body, entity)
+                this.physicEngine.applyPhysics(physicEntity, entity)
             }
         }
 

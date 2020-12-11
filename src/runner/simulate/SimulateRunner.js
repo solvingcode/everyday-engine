@@ -61,9 +61,10 @@ define(function (require) {
          */
         start(storage, entityManager, stateManager) {
             const world = World.get()
+            const aiEngine = world.getAiEngine()
             EntitySelector.get().unselectAll()
             storage.update(Storage.type.ENTITY, entityManager.entities)
-            world.getAiEngine().init()
+            aiEngine && aiEngine.init()
             if (!this.isPhysicsLoaded) {
                 try {
                     world.getPhysics().run()

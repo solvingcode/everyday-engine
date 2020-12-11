@@ -21,6 +21,7 @@ define(function (require) {
             } else {
                 this.points = [{x: 0, y: 0}, {x: this.size.width, y: this.size.height}]
             }
+            return true
         }
 
         /**

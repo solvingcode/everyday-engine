@@ -153,8 +153,8 @@ define(function (require) {
          * @todo think to optimize the clone process
          */
         cloneEntities(entities, options = {}) {
-            const bodyEntities = this.getBodyEntities(entities)
-            const attachEntities = this.getAttachEntities(entities)
+            const bodyEntities = this.getBodyEntities(entities).filter(entity => entity.clonable)
+            const attachEntities = this.getAttachEntities(entities).filter(entity => entity.clonable)
             const cloneBodyEntities = bodyEntities.map(entity => this.clone(entity))
             const cloneAttachEntities = attachEntities.map(entity => this.clone(entity))
             attachEntities.forEach((attachEntity, attachIndex) => {
@@ -165,11 +165,11 @@ define(function (require) {
                 const bodyIndexB = bodyEntities.findIndex(body => bodyEntityB === body)
                 let cloneEntityA = (bodyIndexA >= 0 && cloneBodyEntities[bodyIndexA])
                 let cloneEntityB = (bodyIndexB >= 0 && cloneBodyEntities[bodyIndexB])
-                if (!cloneEntityA) {
+                if (!cloneEntityA && bodyEntityA) {
                     cloneEntityA = this.clone(bodyEntityA, options)
                     cloneBodyEntities.push(cloneEntityA)
                 }
-                if (!cloneEntityB) {
+                if (!cloneEntityB && bodyEntityB) {
                     cloneEntityB = this.clone(bodyEntityB)
                     cloneBodyEntities.push(cloneEntityB)
                 }

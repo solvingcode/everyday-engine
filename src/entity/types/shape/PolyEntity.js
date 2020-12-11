@@ -21,6 +21,7 @@ define(function (require) {
             const minPoint = this.getMinPoint()
             this.setMeshPosition({ x: minPoint.x, y: minPoint.y })
             this.calculateSize()
+            return true
         }
 
         /**

@@ -13,7 +13,7 @@ define(function (require) {
         }
 
         /**
-         * @inherit
+         * @override
          */
         init() {
             this.engine = Matter.Engine.create()
@@ -21,7 +21,7 @@ define(function (require) {
         }
 
         /**
-         * @inherit
+         * @override
          */
         loadShape(entity) {
             const shape = this.shapeLoader.load(entity)
@@ -30,7 +30,7 @@ define(function (require) {
         }
 
         /**
-         * @inherit
+         * @override
          */
         update(entity) {
             this.shapeLoader.update(entity)
@@ -53,42 +53,42 @@ define(function (require) {
         }
 
         /**
-         * @inheritDoc
+         * @override
          */
         updateEngine() {
             Matter.Engine.update(this.engine)
         }
 
         /**
-         * @inheritDoc
+         * @override
          */
         getEngine() {
             return Matter
         }
 
         /**
-         * @inheritDoc
+         * @override
          */
         getBodies() {
             return Matter.Composite.allBodies(this.engine.world)
         }
 
         /**
-         * @inheritDoc
+         * @override
          */
         getJoints() {
             return Matter.Composite.allConstraints(this.engine.world)
         }
 
         /**
-         * @inheritDoc
+         * @override
          */
         newGroup() {
             return Matter.Body.nextGroup(true)
         }
 
         /**
-         * @inheritDoc
+         * @override
          */
         updateCollisionFilters(entity) {
             const body = this.getBodyFromEntity(entity)
@@ -97,7 +97,7 @@ define(function (require) {
         }
 
         /**
-         * @inheritDoc
+         * @override
          */
         updateJointPosition(entity) {
             const points = entity.points
@@ -105,7 +105,7 @@ define(function (require) {
             const pointA = entity.toAbsolutePosition(points.a)
             const pointB = entity.toAbsolutePosition(points.b)
             if (entity.attached) {
-                entities.a.movePointTo(pointA, pointB)
+                entities.a && entities.a.movePointTo(pointA, pointB)
                 entity.movePointTo(pointA, pointB)
                 entity.updatePoints(pointB, {x: pointB.x + 1, y: pointB.y + 1})
                 return true
@@ -114,7 +114,23 @@ define(function (require) {
         }
 
         /**
-         * @inheritDoc
+         * @override
+         */
+        updateConstraint(entity, constraint){
+            const {entityB, pointA, pointB} = constraint
+            const body = this.getBodyFromEntity(entity)
+            const bodyB = entityB && this.getBodyFromEntity(entityB)
+            if(entityB && !bodyB){
+                throw new TypeError(`updateConstraint failed! Body not found for entity ${entity.id}`)
+            }
+            body.bodyB = bodyB
+            body.angleB = bodyB && bodyB.angle
+            body.pointA = pointA
+            body.pointB = pointB
+        }
+
+        /**
+         * @override
          * @todo Implement an intelligent controlling physics
          */
         applyPhysics(body, entity) {
@@ -133,7 +149,7 @@ define(function (require) {
         }
 
         /**
-         * @inherit
+         * @override
          */
         isCollide(entityAId, entityBId) {
             const physicsManager = this.getPhysicsManager()

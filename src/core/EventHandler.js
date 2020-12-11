@@ -8,6 +8,7 @@ define(function (require) {
     const SimulateRunner = require('../runner/simulate/SimulateRunner.js')
     const ActionRunner = require('../runner/action/ActionRunner.js')
     const WindowRunner = require('../runner/window/WindowRunner.js')
+    const ConstraintRunner = require('../runner/constraint/ConstraintRunner.js')
 
     /**
      * Handle global events triggered by the user (click , mouse move)
@@ -28,8 +29,10 @@ define(function (require) {
             const simulateRunner = SimulateRunner.get()
             const actionRunner = ActionRunner.get()
             const windowRunner = WindowRunner.get()
+            const constraintRunner = ConstraintRunner.get()
             action.add(simulateRunner, mouse)
             action.add(actionRunner, mouse)
+            action.add(constraintRunner, mouse)
             if (mouse.isButtonClicked(MouseButton.LEFT)) {
                 action.add(menuRunner, mouse)
             }
