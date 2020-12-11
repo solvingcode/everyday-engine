@@ -35,7 +35,7 @@ define(function (require) {
         }
 
         /**
-         * @inherit
+         * @override
          */
         static postUpdate(item, el, uiRenderer) {
             const entity = item.element.getEntity()

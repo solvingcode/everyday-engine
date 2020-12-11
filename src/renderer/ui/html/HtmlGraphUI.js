@@ -15,7 +15,7 @@ define(function (require) {
         }
 
         /**
-         * @inherit
+         * @override
          */
         static postCreate(item, el) {
             const { graph } = item.element
@@ -29,7 +29,7 @@ define(function (require) {
         }
 
         /**
-         * @inherit
+         * @override
          */
         static postUpdate(item, el) {
             const { graph } = item.element

@@ -13,7 +13,7 @@ define(function (require) {
         }
 
         /**
-         * @inherit
+         * @override
          */
         static postCreate(item, el) {
             const { text } = item.element
@@ -24,7 +24,7 @@ define(function (require) {
         }
 
         /**
-         * @inherit
+         * @override
          */
         static postUpdate(item, el) {
             const { text } = item.element

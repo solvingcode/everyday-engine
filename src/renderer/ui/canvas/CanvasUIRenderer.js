@@ -25,35 +25,35 @@ define(function (require) {
         }
 
         /**
-         * @inherit
+         * @override
          */
         getColorButtonUI() {
             return ColorButtonUI
         }
 
         /**
-         * @inherit
+         * @override
          */
         getLayerEntityButtonUI() {
             return LayerEntityButtonUI
         }
 
         /**
-         * @inherit
+         * @override
          */
         getDefaultButtonUI() {
             return DefaultButtonUI
         }
 
         /**
-         * @inherit
+         * @override
          */
         getPanelUI() {
             return CanvasPanelUI
         }
 
         /**
-         * @inherit
+         * @override
          */
         getItemAt(mouse) {
             const { x, y } = mouse.position

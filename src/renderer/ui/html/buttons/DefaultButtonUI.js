@@ -13,14 +13,14 @@ define(function (require) {
         }
 
         /**
-         * @inheritDoc
+         * @override
          */
         static postCreate(item, el) {
             el.textContent = item.element.props.name
         }
 
         /**
-         * @inheritDoc
+         * @override
          */
         static postUpdate(item, el) {
             const { name } = item.element.props

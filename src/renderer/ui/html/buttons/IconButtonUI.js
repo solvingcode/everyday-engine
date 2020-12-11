@@ -4,7 +4,7 @@ define(function (require) {
 
     class IconButtonUI extends DefaultButtonUI {
         /**
-         * @inheritDoc
+         * @override
          */
         static postCreate(item, el) {
             el.setAttribute(this.props.attrIcon, item.element.props.name)
@@ -12,7 +12,7 @@ define(function (require) {
         }
 
         /**
-         * @inheritDoc
+         * @override
          */
         static postUpdate(item, el) {
             const { name } = item.element.props
@@ -23,7 +23,7 @@ define(function (require) {
         }
 
         /**
-         * @inheritDoc
+         * @override
          */
         static getClassName(item) {
             return `fa-${item.element.props.name}`

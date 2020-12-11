@@ -137,7 +137,7 @@ define(function (require) {
         }
 
         /**
-         * @inherit
+         * @override
          */
         toCenterPosition() {
             return {
@@ -147,7 +147,7 @@ define(function (require) {
         }
 
         /**
-         * @inherit
+         * @override
          */
         fromCenterPosition(position) {
             return {

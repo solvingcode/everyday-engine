@@ -15,7 +15,7 @@ define(function (require) {
         }
 
         /**
-         * @inherit
+         * @override
          */
         drawLine(context, pointFrom, pointTo) {
             super.drawLine(context, pointFrom, pointTo)
@@ -34,7 +34,7 @@ define(function (require) {
         }
 
         /**
-         * @inherit
+         * @override
          */
         calculateSize(dragDistance) {
             return {
@@ -44,14 +44,14 @@ define(function (require) {
         }
 
         /**
-         * @inherit
+         * @override
          */
         setMeshPosition(position) {
             super.setMeshPosition({ x: position.x, y: position.y - this.getArrowProps().height / 2 })
         }
 
         /**
-         * @inherit
+         * @override
          */
         setConstraintEntities() {
             if (super.setConstraintEntities()) {

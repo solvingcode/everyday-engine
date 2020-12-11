@@ -8,7 +8,7 @@ define(function (require) {
      */
     class CheckboxMenuItem extends InputMenuItem {
         /**
-         * @inheritDoc
+         * @override
          */
         constructor(parent, props, value, event) {
             super(parent, props, value, event)

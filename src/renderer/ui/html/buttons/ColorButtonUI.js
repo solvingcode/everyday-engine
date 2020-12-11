@@ -17,7 +17,7 @@ define(function (require) {
         }
 
         /**
-         * @inherit
+         * @override
          */
         static getStyle(item) {
             const { color } = item.element.data
@@ -28,7 +28,7 @@ define(function (require) {
         }
 
         /**
-         * @inherit
+         * @override
          */
         static getClassName(item) {
             const { color } = item.element.data

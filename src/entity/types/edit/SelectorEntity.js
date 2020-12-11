@@ -15,7 +15,7 @@ define(function (require) {
         }
 
         /**
-         * @inherit
+         * @override
          */
         build() {
             const dragDistance = this.setMeshPositionByDragDistance()

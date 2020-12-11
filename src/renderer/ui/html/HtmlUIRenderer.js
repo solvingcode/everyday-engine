@@ -29,63 +29,63 @@ define(function (require) {
         }
 
         /**
-         * @inheritDoc
+         * @override
          */
         getDefaultButtonUI() {
             return DefaultButtonUI
         }
 
         /**
-         * @inheritDoc
+         * @override
          */
         getIconButtonUI() {
             return IconButtonUI
         }
 
         /**
-         * @inheritDoc
+         * @override
          */
         getPanelUI() {
             return HtmlPanelUI
         }
 
         /**
-         * @inheritDoc
+         * @override
          */
         getTextUI() {
             return HtmlTextUI
         }
 
         /**
-         * @inheritDoc
+         * @override
          */
         getGraphUI() {
             return HtmlGraphUI
         }
 
         /**
-         * @inheritDoc
+         * @override
          */
         getFormUI() {
             return HtmlFormUI
         }
 
         /**
-         * @inheritDoc
+         * @override
          */
         getFormElementUI() {
             return HtmlFormElementUI
         }
 
         /**
-         * @inheritDoc
+         * @override
          */
         getColorButtonUI() {
             return ColorButtonUI
         }
 
         /**
-         * @inheritDoc
+         * @override
          */
         getLayerEntityButtonUI() {
             return LayerEntityButtonUI
@@ -107,7 +107,7 @@ define(function (require) {
         }
 
         /**
-         * @inheritDoc
+         * @override
          */
         getElement(item) {
             const {element} = item
@@ -128,7 +128,7 @@ define(function (require) {
         }
 
         /**
-         * @inheritDoc
+         * @override
          */
         getBody(item){
             const type = this.getType(item)
@@ -208,7 +208,7 @@ define(function (require) {
         }
 
         /**
-         * @inheritDoc
+         * @override
          */
         getItemAt(mouse) {
             const {path} = mouse
