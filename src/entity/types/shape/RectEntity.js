@@ -15,6 +15,7 @@ define(function (require) {
         init() {
             const dragDistance = this.setMeshPositionByDragDistance()
             this.size = {width: Math.abs(dragDistance.x), height: Math.abs(dragDistance.y)}
+            this.vertices = this.generateVertices()
             return true
         }
 

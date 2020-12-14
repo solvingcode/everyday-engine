@@ -3,18 +3,18 @@ define(function (require) {
     const MenuItem = require('../../MenuItem.js')
     const Layout = require('../../Layout.js')
 
-    class UndoMenuItem extends MenuItem {
+    class RotateUpMenuItem extends MenuItem {
         constructor() {
             super({
-                name: 'reply',
-                title: 'Undo',
-                stateCode: 'ACTION_UNDO',
+                name: 'redo',
+                title: 'Rotate',
+                stateCode: 'ACTION_ROTATE_UP',
                 type: Layout.type.ICON,
                 zone: Layout.zone.TOP
             })
         }
     }
 
-    return UndoMenuItem
+    return RotateUpMenuItem
 
 })

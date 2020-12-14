@@ -4,6 +4,7 @@ define(function (require) {
     const Window = require('../core/Window.js')
     const Keyboard = require('../core/Keyboard.js')
     const Maths = require('../utils/Maths.js')
+    const Vertex = require('../utils/Vertex.js')
 
     /**
      * @typedef {{color: string, fillColor: string}} Style
@@ -146,7 +147,7 @@ define(function (require) {
          * @abstract
          * @return {boolean}
          */
-        init(){
+        init() {
             throw new TypeError('Entity.init must be implemented')
         }
 
@@ -196,13 +197,13 @@ define(function (require) {
             } else if (this.getBackgroundImageBlob()) {
                 context.clip()
                 const canvasBg = this.meshBgColor.context.canvas
-                if(this.isBackgroundImageRepeat()){
+                if (this.isBackgroundImageRepeat()) {
                     context.fillStyle = context.createPattern(canvasBg, 'repeat')
                     context.fill()
-                }else{
+                } else {
                     context.drawImage(this.meshBgColor.context.canvas, 0, 0, this.size.width, this.size.height)
                 }
-            }else{
+            } else {
                 context.stroke()
             }
             return this.updateMeshFromContext(context)
@@ -219,8 +220,8 @@ define(function (require) {
             const points = [
                 {x: 0, y: 0},
                 {x: size.width, y: 0},
+                {x: size.width, y: size.height},
                 {x: 0, y: size.height},
-                {x: size.width, y: size.height}
             ]
             const rotatedPoints = points.map(({x, y}) => ({
                 x: x * cosA - y * sinA,
@@ -296,35 +297,35 @@ define(function (require) {
         /**
          * @param {string} x
          */
-        setPositionX(x){
+        setPositionX(x) {
             this.setPositionAndGenerate({x: parseInt(x), y: this.position.y})
         }
 
         /**
          * @param {string} y
          */
-        setPositionY(y){
+        setPositionY(y) {
             this.setPositionAndGenerate({x: this.position.x, y: parseInt(y)})
         }
 
         /**
          * @return {number}
          */
-        getPositionX(){
+        getPositionX() {
             return this.position.x
         }
 
         /**
          * @return {number}
          */
-        getPositionY(){
+        getPositionY() {
             return this.position.y
         }
 
         /**
          * Set the entity's position and generate the Mesh
          */
-        setPositionAndGenerate(position){
+        setPositionAndGenerate(position) {
             this.setPosition(position)
             this.regenerate()
         }
@@ -375,6 +376,13 @@ define(function (require) {
         }
 
         /**
+         * @return {number}
+         */
+        getRotationDegree() {
+            return Maths.toDegree(this.rotation)
+        }
+
+        /**
          * @param {number} width
          */
         setWidth(width) {
@@ -386,6 +394,13 @@ define(function (require) {
          */
         setHeight(height) {
             this.setSizeAndGenerate({width: this.size.width, height})
+        }
+
+        /**
+         * @param {number} angle
+         */
+        setRotationDegree(angle) {
+            this.setRotationAndGenerate(Maths.fromDegree(angle))
         }
 
         /**
@@ -521,7 +536,7 @@ define(function (require) {
 
         /**
          * Convert absolute coordinate to relative coordinate
-         * @param {Vector} point Absolute coordinate
+         * @param {{x: number, y: number}} point Absolute coordinate
          */
         fromAbsolutePosition(point) {
             return {
@@ -657,13 +672,43 @@ define(function (require) {
         /**
          * Check if point is inside the entity (using size)
          * Method can be overwrite by the sub-entities for more precision
-         * @param {Object} point absolute coordinate
+         * @param {{x: number, y: number}} point absolute coordinate
+         * @abstract
          */
         includes(point) {
-            return point.x >= this.position.x &&
-                point.x <= this.position.x + this.size.width &&
-                point.y >= this.position.y &&
-                point.y <= this.position.y + this.size.height
+            const vertices = this.generateVertices()
+            return Vertex.contains(vertices, this.fromAbsolutePosition(point))
+        }
+
+        /**
+         * @abstract
+         * @return {{x: number, y: number}[]}
+         */
+        loadVertices() {
+            const {width, height} = this.size
+            return [
+                {x: 0, y: 0},
+                {x: width, y: 0},
+                {x: width, y: height},
+                {x: 0, y: height}
+            ]
+        }
+
+        /**
+         * Generate vertices for the current entity (relative coordinates)
+         * @return {{x: number, y: number}[]}
+         */
+        generateVertices() {
+            const {width: mWidth, height: mHeight} = this.getLargestRectangle(this.rotation, this.size)
+            const center = {x: this.size.width / 2, y: this.size.height / 2}
+            const mCenter = {x: mWidth / 2, y: mHeight / 2}
+
+            let vertices = this.loadVertices()
+            vertices = Vertex.translate(vertices, center, -1)
+            vertices = Vertex.rotate(vertices, this.rotation, {x: 0, y: 0})
+            vertices = Vertex.translate(vertices, mCenter)
+
+            return vertices
         }
 
         /**

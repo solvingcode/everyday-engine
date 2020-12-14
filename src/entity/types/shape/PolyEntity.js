@@ -111,6 +111,13 @@ define(function (require) {
         }
 
         /**
+         * @override
+         */
+        loadVertices(){
+            return this.points
+        }
+
+        /**
          * Trigger other drawing instruction when the drawing is ended
          */
         close() {

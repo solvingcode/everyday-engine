@@ -32,6 +32,11 @@ define(function (require) {
                     bind: 'height',
                     label: 'Height',
                     type: Layout.form.TEXT
+                },
+                {
+                    bind: 'rotationDegree',
+                    label: 'Rotation (°)',
+                    type: Layout.form.TEXT
                 }
             ]
         }

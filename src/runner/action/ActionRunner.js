@@ -13,6 +13,7 @@ define(function (require) {
     const UnlockAction = require('./edit/UnlockAction.js')
     const HideAction = require('./edit/HideAction.js')
     const ShowAction = require('./edit/ShowAction.js')
+    const RotateUpAction = require('./edit/RotateUpAction.js')
     const StyleColorAction = require('./edit/StyleColorAction.js')
     const SelectEntityAction = require('./edit/SelectEntityAction.js')
     const PushHistoryAction = require('./history/PushHistoryAction.js')
@@ -52,6 +53,7 @@ define(function (require) {
                 UNLOCK: UnlockAction,
                 HIDE: HideAction,
                 SHOW: ShowAction,
+                ROTATE_UP: RotateUpAction,
                 STYLE_COLOR: StyleColorAction,
                 SELECT_ENTITY: SelectEntityAction,
                 ATTACH_CAMERA: AttachCameraAction,

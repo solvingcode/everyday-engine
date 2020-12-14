@@ -20,7 +20,8 @@ define(function (require) {
                 entity.size.width,
                 entity.size.height,
                 {
-                    density: entity.physics.density 
+                    density: entity.physics.density,
+                    angle: entity.rotation
                 }
             )
         }

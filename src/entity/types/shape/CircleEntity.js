@@ -40,6 +40,15 @@ define(function (require) {
             return size
         }
 
+        /**
+         * @override
+         */
+        includes(point){
+            const {x, y} = this.fromAbsolutePosition(point)
+            const center = this.getCenter()
+            return Math.pow(x - center.x, 2) + Math.pow(y - center.y, 2) < Math.pow(this.radius, 2)
+        }
+
     }
 
     return CircleEntity

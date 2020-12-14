@@ -17,6 +17,7 @@ define(function (require) {
     const UnlockMenuItem = require('./items/action/UnlockMenuItem.js')
     const HideMenuItem = require('./items/action/HideMenuItem.js')
     const ShowMenuItem = require('./items/action/ShowMenuItem.js')
+    const RotateUpMenuItem = require('./items/action/RotateUpMenuItem.js')
     const MenuItemUI = require('../renderer/ui/MenuItemUI.js')
     const LayerMenuItem = require('./items/layer/LayerMenuItem.js')
     const AiGeneticMenuItem = require('./items/genetic/AiGeneticMenuItem.js')
@@ -52,6 +53,7 @@ define(function (require) {
                 new UnlockMenuItem(),
                 new HideMenuItem(),
                 new ShowMenuItem(),
+                new RotateUpMenuItem(),
                 new LayerMenuItem(),
                 new StyleMenuItem(),
                 new EntityMenuItem(),
