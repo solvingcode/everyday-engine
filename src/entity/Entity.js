@@ -383,17 +383,17 @@ define(function (require) {
         }
 
         /**
-         * @param {number} width
+         * @param {string|number} width
          */
         setWidth(width) {
-            this.setSizeAndGenerate({width, height: this.size.height})
+            this.setSizeAndGenerate({width: parseInt(width), height: this.size.height})
         }
 
         /**
-         * @param {number} height
+         * @param {string|number} height
          */
         setHeight(height) {
-            this.setSizeAndGenerate({width: this.size.width, height})
+            this.setSizeAndGenerate({width: this.size.width, height: parseInt(height)})
         }
 
         /**
