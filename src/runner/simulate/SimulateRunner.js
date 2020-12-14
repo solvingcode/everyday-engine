@@ -1,6 +1,5 @@
 define(function (require) {
 
-    const {MouseButton} = require('../../core/Mouse.js')
     const Runner = require('../Runner.js')
     const StateManager = require('../../state/StateManager.js')
     const World = require('../../world/World.js')
@@ -46,10 +45,6 @@ define(function (require) {
                 this.progress()
             } else if (stateManager.isStop(this.STATE)) {
                 this.stop(storage, entityManager, stateManager)
-            }
-            //debug
-            if (mouse.isButtonPressed(MouseButton.MIDDLE)) {
-                console.log(stateManager)
             }
         }
 

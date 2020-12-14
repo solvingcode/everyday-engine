@@ -267,7 +267,10 @@ define(function (require) {
         ACTION_PHYSICS_NOT_STATIC_STOP: { history: false },
         ACTION_FORM_UPDATE_START: { history: false },
         ACTION_FORM_UPDATE_PROGRESS: { history: false },
-        ACTION_FORM_UPDATE_STOP: { history: false }
+        ACTION_FORM_UPDATE_STOP: { history: false },
+        ACTION_MOVE_CAMERA_START: { history: false },
+        ACTION_MOVE_CAMERA_PROGRESS: { history: false },
+        ACTION_MOVE_CAMERA_STOP: { history: false }
     }
 
     return AppState

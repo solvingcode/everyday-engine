@@ -19,6 +19,7 @@ define(function (require) {
     const PushHistoryAction = require('./history/PushHistoryAction.js')
     const AttachCameraAction = require('./camera/AttachCameraAction.js')
     const DetachCameraAction = require('./camera/DetachCameraAction.js')
+    const MoveCameraAction = require('./camera/MoveCameraAction.js')
     const PhysicsStaticAction = require('./physics/PhysicsStaticAction.js')
     const PhysicsNotStaticAction = require('./physics/PhysicsNotStaticAction.js')
     const FormUpdateAction = require('./form/FormUpdateAction.js')
@@ -58,6 +59,7 @@ define(function (require) {
                 SELECT_ENTITY: SelectEntityAction,
                 ATTACH_CAMERA: AttachCameraAction,
                 DETACH_CAMERA: DetachCameraAction,
+                MOVE_CAMERA: MoveCameraAction,
                 PHYSICS_STATIC: PhysicsStaticAction,
                 PHYSICS_NOT_STATIC: PhysicsNotStaticAction,
                 FORM_UPDATE: FormUpdateAction,

@@ -89,6 +89,16 @@ define(function () {
         }
 
         /**
+         * Drag and drop (return the drag distance and update the initial position)
+         * @return {{x: number, y: number}}
+         */
+        dragAndDrop(){
+            const dragDistance = this.getDragDistance()
+            this.position = this.currentPosition
+            return dragDistance
+        }
+
+        /**
          * @param {number} key
          * @return {Boolean}
          */
