@@ -4,6 +4,7 @@ define(function (require) {
     const Runner = require('../Runner.js')
     const StateManager = require('../../state/StateManager.js')
     const { CURSOR } = require('../../core/Mouse.js')
+    const World = require('../../world/World.js')
 
     class WindowRunner extends Runner {
 
@@ -27,7 +28,7 @@ define(function (require) {
          */
         focus(entitySelector, mouse) {
             entitySelector.unfocusAll()
-            entitySelector.focus(mouse.currentPosition)
+            entitySelector.focus(World.get().getWorldPosition(mouse.currentPosition))
         }
 
         /**

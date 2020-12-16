@@ -5,6 +5,7 @@ define(function (require) {
     const Keyboard = require('../core/Keyboard.js')
     const Maths = require('../utils/Maths.js')
     const Vertex = require('../utils/Vertex.js')
+    const Vector = require('../utils/Vector.js')
 
     /**
      * @typedef {{color: string, fillColor: string}} Style
@@ -592,13 +593,13 @@ define(function (require) {
         setMeshPositionByDragDistance() {
             const window = Window.get()
             const dragDistance = window.mouse.getDragDistance()
-            let newX = window.mouse.position.x
-            let newY = window.mouse.position.y
+            let newX = this.position.x
+            let newY = this.position.y
             if (dragDistance.x <= 0) {
-                newX = window.mouse.currentPosition.x
+                newX += dragDistance.x
             }
             if (dragDistance.y <= 0) {
-                newY = window.mouse.currentPosition.y
+                newY += dragDistance.y
             }
             this.setMeshPosition({x: newX, y: newY})
             return dragDistance
@@ -606,9 +607,11 @@ define(function (require) {
 
         /**
          * Get the current position of the mouse
+         * @return {{x: number, y: number}}
          */
         getCurrentMousePosition() {
-            return Window.get().mouse.currentPosition
+            const dragDistance = Window.get().mouse.getDragDistance()
+            return Vector.add(this.position, dragDistance)
         }
 
         /**
@@ -673,7 +676,6 @@ define(function (require) {
          * Check if point is inside the entity (using size)
          * Method can be overwrite by the sub-entities for more precision
          * @param {{x: number, y: number}} point absolute coordinate
-         * @abstract
          */
         includes(point) {
             const vertices = this.generateVertices()
@@ -681,7 +683,6 @@ define(function (require) {
         }
 
         /**
-         * @abstract
          * @return {{x: number, y: number}[]}
          */
         loadVertices() {

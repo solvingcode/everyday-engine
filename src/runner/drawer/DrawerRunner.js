@@ -9,6 +9,7 @@ define(function (require) {
     const JointEntity = require('../../entity/types/joint/JointEntity.js')
     const AttachPointEntity = require('../../entity/types/joint/AttachPointEntity.js')
     const SelectorEntity = require('../../entity/types/edit/SelectorEntity.js')
+    const World = require('../../world/World.js')
 
     /**
      * Draw Runner class
@@ -33,6 +34,8 @@ define(function (require) {
          */
         execute(mouse, menu) {
             const stateManager = StateManager.get()
+            const world = World.get()
+            const position = world.getWorldPosition(mouse.position)
             const defaultStartEvent = (pMouse) => pMouse.isButtonPressed(MouseButton.LEFT)
             const defaultEndEvent = (pMouse) => pMouse.isButtonClicked(MouseButton.LEFT)
             const typeEntity = {
@@ -61,7 +64,7 @@ define(function (require) {
                     this.startDraw(stateManager, type)
                 }
                 if (stateManager.isProgress(type)) {
-                    this.draw(mouse.position, props.entity)
+                    this.draw(position, props.entity)
                     if (endEvent(mouse)) {
                         this.endDraw(stateManager, type)
                         stateManager.endState(type, 1)
@@ -104,7 +107,7 @@ define(function (require) {
 
         /**
          * Draw an entity.
-         * @param {Object} position
+         * @param {{x: number, y: number}} position
          * @param {String} type
          */
         draw(position, type) {

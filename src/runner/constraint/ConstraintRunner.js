@@ -31,12 +31,12 @@ define(function (require) {
          */
         mouseConstraint(world, mouse) {
             const mouseConstraint = world.getMouseConstraint()
-            const mousePosition = world.getWorldPosition(mouse.currentPosition)
+            const worldMousePosition = world.getWorldPosition(mouse.currentPosition)
             if (mouseConstraint) {
                 if (mouse.isButtonPressed(MouseButton.LEFT) && !mouseConstraint.entities.b) {
-                    const clickEntity = world.findEntity(mousePosition)
+                    const clickEntity = world.findEntity(mouse.currentPosition)
                     if (clickEntity) {
-                        mouseConstraint.pointConstraint = clickEntity.toRelativeCenterPosition(mousePosition)
+                        mouseConstraint.pointConstraint = clickEntity.toRelativeCenterPosition(worldMousePosition)
                     }
                     mouseConstraint.entities.b = clickEntity
                 }else if(mouse.isButtonClicked(MouseButton.LEFT) ){
