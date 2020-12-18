@@ -11,6 +11,7 @@ define(function (require) {
             this.physicsEngine = physicsEngine
             this.physicsEngine.setPhysicsManager(this)
             this.toRestart = false
+            this.isRunning = false
         }
 
         /**
@@ -105,13 +106,14 @@ define(function (require) {
          */
         stop() {
             this.physicsEngine.stop()
+            this.isRunning = false
         }
 
         /**
          * Unload the physics for entities
          */
         unload() {
-            this.entityManager.entities.map(entity => entity.unloadPhysics())
+            this.entityManager.entities.map(entity => entity.unloadPhysics(this.physicsEngine))
         }
 
         /**
@@ -158,6 +160,27 @@ define(function (require) {
             this.physicsEngine.init()
             this.load()
             this.physicsEngine.run()
+            this.isRunning = true
+        }
+
+        /**
+         * Remove an entity from physics engine
+         * @param {Entity} entity
+         */
+        loadEntity(entity){
+            if(this.isRunning){
+                entity.loadPhysics(this.physicsEngine)
+            }
+        }
+
+        /**
+         * Remove an entity from physics engine
+         * @param {Entity} entity
+         */
+        unloadEntity(entity){
+            if(this.isRunning) {
+                entity.unloadPhysics(this.physicsEngine)
+            }
         }
 
         /**

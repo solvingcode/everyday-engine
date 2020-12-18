@@ -28,21 +28,22 @@ define(function (require) {
          * @override
          */
         unload() {
-            this.chunkIds.forEach(entityId => this.entityManager.deleteById(entityId))
+            this.chunkIds.forEach(entityId => this.world.removeEntityById(entityId))
         }
 
         /**
          * Create and load chunks by camera position
          */
         loadChunks() {
+            const camera = this.world.getCamera()
             const chunkIds = Array.from(Array(this.chunksNbr).keys())
                 .map((iChunk) => {
-                    const x = Math.floor(this.camera.position.x / this.size.width) + (iChunk - 1)
-                    return this.entityManager.load(this.size.width * x, 650, NoiseEntity).getId()
+                    const x = Math.floor(camera.position.x / this.size.width) + (iChunk - 1)
+                    return this.world.addEntity({x: this.size.width * x, y: 650}, NoiseEntity).getId()
                 })
             this.chunkIds
                 .filter(entityId => !chunkIds.includes(entityId))
-                .forEach(entityId => this.entityManager.deleteById(entityId))
+                .forEach(entityId => this.world.removeEntityById(entityId))
             this.chunkIds = chunkIds
         }
     }

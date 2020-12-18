@@ -6,22 +6,16 @@ define(function (require) {
     /**
      * Manage all terrains
      *
-     * @property {EntityManager} entityManager
-     * @property {Physics} physics
-     * @property {Camera} camera
+     * @property {World} world
      * @property {Object.<string, Terrain>} terrainTypes
      * @property {Terrain} terrain
      */
     class TerrainManager {
         /**
-         * @param {Physics} physics
-         * @param {EntityManager} entityManager
-         * @param {Camera} camera
+         * @param {World} world
          */
-        constructor(physics, entityManager, camera) {
-            this.physics = physics
-            this.entityManager = entityManager
-            this.camera = camera
+        constructor(world) {
+            this.world = world
             this.terrain = null
             this.init()
         }
@@ -52,7 +46,7 @@ define(function (require) {
                 this.terrain.unload()
             }
             if (terrain) {
-                this.terrain = new terrain(this.physics, this.entityManager, this.camera)
+                this.terrain = new terrain(this.world)
             }else{
                 this.terrain = null
             }

@@ -7,22 +7,15 @@ define(function(require){
      * Define and generate terrains
      * @abstract
      *
-     * @property {EntityManager} entityManager
-     * @property {Physics} physics
-     * @property {Camera} camera
+     * @property {World} world
      * @property {number} entityId
      */
     class Terrain {
         /**
-         * @param {Physics} physics
-         * @param {EntityManager} entityManager
-         * @param {Camera} camera
+         * @param {World} world
          */
-        constructor(physics, entityManager, camera) {
-            this.physics = physics
-            this.entityManager = entityManager
-            this.camera = camera
-            this.entityId = null
+        constructor(world) {
+            this.world = world
             this.init()
         }
         /**
@@ -62,7 +55,7 @@ define(function(require){
          * @return {Entity}
          */
         getEntity(){
-            return this.entityManager.findById(this.entityId)
+            //return this.entityManager.findById(this.entityId)
         }
     }
 

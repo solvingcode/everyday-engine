@@ -656,8 +656,12 @@ define(function (require) {
 
         /**
          * Unload physics for the entity
+         * @param {PhysicsEngine} physicsEngine
          */
-        unloadPhysics() {
+        unloadPhysics(physicsEngine) {
+            if(this.isPhyiscsLoaded){
+                physicsEngine.removeShape(this)
+            }
             this.isPhyiscsLoaded = false
         }
 

@@ -21,7 +21,7 @@ define(function (require) {
             this.camera = new Camera({ x: SCENE_WIDTH / 2, y: SCENE_HEIGHT / 2 })
             this.physics = new Physics(new MatterEngine())
             //this.aiEngine = new GeneticEngine(this.physics, this.entityManager, this.camera)
-            this.terrainManager = new TerrainManager(this.physics, this.entityManager, this.camera)
+            this.terrainManager = new TerrainManager(this)
             this.mouseConstraintId = this.entityManager.load(0, 0, ConstraintEntity).getId()
         }
 
@@ -83,6 +83,27 @@ define(function (require) {
         findEntity(position){
             const entitySelector = EntitySelector.get()
             return entitySelector.get(this.getWorldPosition(position))
+        }
+
+        /**
+         * Add an entity to the world
+         * @param {{x: number, y: number}} position
+         * @param {Class} type
+         */
+        addEntity(position, type){
+            const entity = this.entityManager.load(position.x, position.y, type)
+            this.physics.loadEntity(entity)
+            return entity
+        }
+
+        /**
+         * Remove an entity from the world
+         * @param {number} entityId
+         */
+        removeEntityById(entityId){
+            const entity = this.entityManager.findById(entityId)
+            this.physics.unloadEntity(entity)
+            this.entityManager.delete(entity)
         }
 
         /**

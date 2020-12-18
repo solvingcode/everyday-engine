@@ -151,6 +151,14 @@ define(function (require) {
         /**
          * @override
          */
+        removeShape(entity) {
+            const body = this.getBodyFromEntity(entity)
+            this.getEngine().World.remove(this.engine.world, body)
+        }
+
+        /**
+         * @override
+         */
         isCollide(entityAId, entityBId) {
             const physicsManager = this.getPhysicsManager()
             const entityA = physicsManager.getEntityById(entityAId)

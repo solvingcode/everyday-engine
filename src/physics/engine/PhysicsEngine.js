@@ -137,6 +137,15 @@ define(function () {
         }
 
         /**
+         * Remove the entity from physics engine
+         * @param {Entity} entity
+         * @abstract
+         */
+        removeShape(entity) {
+            throw new TypeError('"removeShape" method must be implemented')
+        }
+
+        /**
          * Check if two entity collide
          * @abstract
          * @param {Number} entityAId 
