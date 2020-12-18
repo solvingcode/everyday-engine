@@ -50,6 +50,9 @@ define(function (require) {
             document.addEventListener('mousemove', () => {
                 this.mouse.setMouseMove()
             })
+            document.addEventListener('wheel', (event) => {
+                this.mouse.setMouseWheel(event.deltaY)
+            })
         }
 
         /**

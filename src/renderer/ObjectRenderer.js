@@ -31,8 +31,6 @@ define(function () {
                     const mesh = this.meshes[iMesh]
                     const { x, y } = camera.toCanvasCoord(mesh.position)
                     const { x: sceneX, y: sceneY } = this.toSceneCoord({x, y})
-                    const { cameraViewZ } = camera.getCameraView()
-                    cameraViewZ && objectContext.scale(cameraViewZ, cameraViewZ)
                     objectContext.drawImage(mesh.context.canvas, sceneX, sceneY)
                 }
             }

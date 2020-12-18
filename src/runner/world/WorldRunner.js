@@ -4,6 +4,7 @@ define(function (require) {
     const StateManager = require('../../state/StateManager.js')
     const {MouseButton} = require('../../core/Mouse.js')
     const MoveCameraAction = require('../action/camera/MoveCameraAction.js')
+    const ZoomInOutCameraAction = require('../action/camera/ZoomInOutCameraAction.js')
 
     class WorldRunner extends Runner {
 
@@ -21,6 +22,10 @@ define(function (require) {
             if (!stateManager.isRunning()) {
                 if (mouse.isButtonPressed(MouseButton.MIDDLE)) {
                     stateManager.startState(MoveCameraAction.STATE, 1)
+                }
+                if (mouse.getMouseWheel().y) {
+                    stateManager.startState(ZoomInOutCameraAction.STATE, 1,
+                        {deltaY: mouse.getMouseWheel().y})
                 }
             }
         }

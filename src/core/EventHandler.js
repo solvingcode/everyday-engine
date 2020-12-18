@@ -44,7 +44,7 @@ define(function (require) {
                 action.add(drawerRunner, mouse, menu)
             }
             action.run()
-            mouse.clearKeyClicked()
+            mouse.clear()
         }
 
         static get() {

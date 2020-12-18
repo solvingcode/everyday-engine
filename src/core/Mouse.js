@@ -11,6 +11,7 @@ define(function () {
             this.target = null
             this.currentPosition = { x: 0, y: 0 }
             this.lastPosition = this.currentPosition
+            this.mouseWheel = {y: 0}
         }
 
         /**
@@ -78,6 +79,13 @@ define(function () {
         }
 
         /**
+         * @param {number} deltaY
+         */
+        setMouseWheel(deltaY) {
+            this.mouseWheel.y = deltaY
+        }
+
+        /**
          * Return the distance between the currentPosition and the position
          * of the mouse on the click
          * @returns {{x: number, y: number}}
@@ -85,7 +93,7 @@ define(function () {
         getDragDistance() {
             const x = this.currentPosition.x - this.position.x
             const y = this.currentPosition.y - this.position.y
-            return { x, y }
+            return { x, y, z: 0 }
         }
 
         /**
@@ -133,6 +141,13 @@ define(function () {
                 this.lastPosition.y !== this.currentPosition.y
         }
 
+        /**
+         * @return {{y: number}}
+         */
+        getMouseWheel() {
+            return this.mouseWheel
+        }
+
         setMouseMove() {
             this.lastPosition = this.currentPosition
             this.currentPosition = this.getPosition(event)
@@ -143,8 +158,9 @@ define(function () {
             this.keydbclicks = []
         }
 
-        clearKeyPressed() {
-            this.keydowns = []
+        clear(){
+            this.clearKeyClicked()
+            this.mouseWheel.y = 0
         }
     }
 

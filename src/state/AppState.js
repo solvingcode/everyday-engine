@@ -270,7 +270,10 @@ define(function (require) {
         ACTION_FORM_UPDATE_STOP: { history: false },
         ACTION_MOVE_CAMERA_START: { history: false },
         ACTION_MOVE_CAMERA_PROGRESS: { history: false },
-        ACTION_MOVE_CAMERA_STOP: { history: false }
+        ACTION_MOVE_CAMERA_STOP: { history: false },
+        ACTION_ZOOM_CAMERA_START: { history: false },
+        ACTION_ZOOM_CAMERA_PROGRESS: { history: false },
+        ACTION_ZOOM_CAMERA_STOP: { history: false }
     }
 
     return AppState

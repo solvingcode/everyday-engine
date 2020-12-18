@@ -4,9 +4,10 @@ define(function () {
      * Define a vector coordinate (X, Y)
      */
     class Vector {
-        constructor({ x, y }) {
+        constructor({ x, y, z }) {
             this.x = x
             this.y = y
+            this.z = z
         }
 
         /**
@@ -26,7 +27,8 @@ define(function () {
         static add(vectorA, vectorB){
             return {
                 x: vectorA.x + vectorB.x,
-                y: vectorA.y + vectorB.y
+                y: vectorA.y + vectorB.y,
+                z: vectorA.z + vectorB.z
             }
         }
 
@@ -36,7 +38,7 @@ define(function () {
          * @return {Vector}
          */
         static multiply(vector, value){
-            return { x: vector.x * value, y: vector.y * value }
+            return { x: vector.x * value, y: vector.y * value, z: vector.z * value }
         }
 
         /**
@@ -45,7 +47,7 @@ define(function () {
          * @return {Vector}
          */
         static divide(vector, value){
-            return { x: vector.x / value, y: vector.y / value }
+            return { x: vector.x / value, y: vector.y / value, z: vector.z / value }
         }
     }
     return Vector

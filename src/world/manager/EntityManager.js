@@ -120,6 +120,15 @@ define(function (require) {
         }
 
         /**
+         * Delete the given entity and all related AttachEntity (by Id)
+         * @param {number} entityId
+         */
+        deleteById(entityId) {
+            const entity = this.findById(entityId)
+            this.delete(entity)
+        }
+
+        /**
          * Clone entity to the entities list
          * @param {Entity} entity
          * @param {Object} options 

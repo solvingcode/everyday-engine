@@ -14,7 +14,7 @@ define(function (require) {
          * @override
          */
         init() {
-            this.size = { width: 5000, height: 200 }
+            this.size = { width: SCENE_WIDTH, height: 300 }
             this.setStatic(true)
             return true
         }
@@ -28,10 +28,11 @@ define(function (require) {
             const step = 10
 
             points.push({x: 0, y: this.size.height})
-            for(let i = step; i <= this.size.width; i+=step){
-                const height = perlinNoise.getPerlinNoise(i, 0)
+            for(let i = 0; i <= this.size.width; i+=step){
+                const height = perlinNoise.getPerlinNoise(this.position.x + i, 0)
                 points.push({x: i, y: Math.floor(height)})
             }
+            points.push({x: this.size.width, y: points[points.length - 1].y})
             points.push({x: this.size.width, y: this.size.height})
 
             this.setPoints(points)
