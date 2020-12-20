@@ -34,8 +34,11 @@ define(function (require) {
          * @return {Body}
          */
         load(entity) {
+            if(!this.mapShapes.hasOwnProperty(entity.shape)) {
+                throw new TypeError(`Shape ${entity.shape} is not configured`)
+            }
             const type = this.mapShapes[entity.shape]
-            return Shape.get(type, this.physicEngine).load(entity)
+            return type && Shape.get(type, this.physicEngine).load(entity)
         }
 
         /**

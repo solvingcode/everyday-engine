@@ -8,16 +8,12 @@ define(function (require) {
      */
     class PlainTerrain extends Terrain {
         /**
-         * @override
+         * @param {number} x
+         * @param {number} y
+         * @param {Object} props
          */
-        init() {
-            this.entityId = this.entityManager.load(0, 700, PlatformEntity).getId()
-        }
-
-        /**
-         * @override
-         */
-        load() {
+        loadChunk(x, y, props) {
+            return this.world.addEntity({x, y}, PlatformEntity, props).getId()
         }
     }
 

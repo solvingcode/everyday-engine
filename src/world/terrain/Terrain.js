@@ -1,6 +1,7 @@
 define(function(require){
 
     const Maths = require('../../utils/Maths.js')
+    const GroupEntity = require('../../entity/types/group/GroupEntity.js')
 
     /**
      * Terrain class
@@ -8,6 +9,8 @@ define(function(require){
      * @abstract
      *
      * @property {World} world
+     * @property {number[]} chunkIds
+     * @property {Vector} position
      * @property {number} entityId
      */
     class Terrain {
@@ -16,28 +19,33 @@ define(function(require){
          */
         constructor(world) {
             this.world = world
+            this.entityId = null
+            this.size = {width: SCENE_WIDTH, height: 300}
+            this.rotation = 0
             this.init()
         }
         /**
          * Initialize data
-         * @abstract
          */
         init() {
-            throw new TypeError('"Terrain.init" method must be implemented')
+            this.chunksNbr = 3
+            this.chunkIds = []
+            this.entityId = this.world.addEntity(
+                {x: 0, y: 650},
+                GroupEntity,
+                {size: this.size}).getId()
         }
         /**
          * Load the terrain
-         * @abstract
          */
         load() {
-            throw new TypeError('"Terrain.load" method must be implemented')
+            this.loadChunks()
         }
         /**
          * Unload the terrain
          */
         unload() {
-            const entity = this.entityManager.findById(this.entityId)
-            this.entityManager.delete(entity)
+            this.world.removeEntityById(this.entityId)
         }
         /**
          * Generate new version
@@ -52,10 +60,113 @@ define(function(require){
             return this.version
         }
         /**
+         * @param {number} entityId
+         * @return {Entity}
+         */
+        getEntityById(entityId){
+            return this.world.getEntityManager().findById(entityId)
+        }
+        /**
          * @return {Entity}
          */
         getEntity(){
-            //return this.entityManager.findById(this.entityId)
+            return this.getEntityById(this.entityId)
+        }
+        /**
+         * @return {Entity[]}
+         */
+        getChunkEntities(){
+            return this.chunkIds.map(entityId => this.world.getEntityManager().findById(entityId))
+        }
+        /**
+         * Create and load chunks by camera position
+         */
+        loadChunks() {
+            const camera = this.world.getCamera()
+            const entity = this.getEntity()
+            const chunkIds = Array.from(Array(this.chunksNbr).keys())
+                .map((iChunk) => {
+                    const x = Math.floor(camera.position.x / this.getWidth()) + (iChunk - 1)
+                    return this.loadChunk(
+                        x * this.getWidth() + entity.getPositionX(),
+                        entity.getPositionY(),
+                        {size: {width: this.getWidth(), height: this.getHeight()}}
+                    )
+                })
+            this.chunkIds
+                .filter(entityId => !chunkIds.includes(entityId))
+                .forEach(entityId => this.world.removeEntityById(entityId))
+
+            this.chunkIds = chunkIds
+            this.updateChunks()
+        }
+
+        /**
+         * Update all chunks (background, size, ...)
+         */
+        updateChunks(){
+            this.chunkIds.forEach(entityId => {
+                const chunkEntity = this.getEntityById(entityId)
+                const entity = this.getEntity()
+                if(entity.getBackgroundImageBlob() !== chunkEntity.getBackgroundImageBlob()){
+                    chunkEntity.setBackgroundImageBlob(entity.getBackgroundImageBlob())
+                }
+                if(entity.isBackgroundImageRepeat() !== chunkEntity.isBackgroundImageRepeat()){
+                    chunkEntity.setBackgroundImageRepeat(entity.isBackgroundImageRepeat())
+                }
+            })
+        }
+
+        /**
+         * Remove all chunks from the world
+         */
+        removeChunks(){
+            this.chunkIds
+                .forEach(entityId => this.world.removeEntityById(entityId))
+        }
+
+        /**
+         * @param {string|number} width
+         */
+        setWidth(width) {
+            this.removeChunks()
+            this.size.width = parseInt(width)
+        }
+
+        /**
+         * @param {string|number} height
+         */
+        setHeight(height) {
+            this.removeChunks()
+            this.size.height = parseInt(height)
+        }
+
+        /**
+         * @param {number} angle
+         */
+        setRotationDegree(angle) {
+            this.rotation = Maths.fromDegree(angle)
+        }
+
+        /**
+         * @return {number}
+         */
+        getWidth() {
+            return this.size.width
+        }
+
+        /**
+         * @return {number}
+         */
+        getHeight() {
+            return this.size.height
+        }
+
+        /**
+         * @return {number}
+         */
+        getRotationDegree() {
+            return Maths.toDegree(this.rotation)
         }
     }
 

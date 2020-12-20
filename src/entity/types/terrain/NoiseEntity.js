@@ -14,7 +14,6 @@ define(function (require) {
          * @override
          */
         init() {
-            this.size = { width: SCENE_WIDTH, height: 300 }
             this.setStatic(true)
             return true
         }

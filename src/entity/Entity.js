@@ -760,7 +760,8 @@ define(function (require) {
         LINE: 'Line',
         POLY: 'Poly',
         CIRCLE: 'Circle',
-        ATTACH: 'Attach'
+        ATTACH: 'Attach',
+        GROUP: 'Group'
     }
 
     /**

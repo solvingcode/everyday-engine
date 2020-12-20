@@ -33,6 +33,13 @@ define(function (require) {
         }
 
         /**
+         * @return {EntityManager}
+         */
+        getEntityManager() {
+            return this.entityManager
+        }
+
+        /**
          * Get the Ai engine
          */
         getAiEngine() {
@@ -89,9 +96,10 @@ define(function (require) {
          * Add an entity to the world
          * @param {{x: number, y: number}} position
          * @param {Class} type
+         * @param {Object} props
          */
-        addEntity(position, type){
-            const entity = this.entityManager.load(position.x, position.y, type)
+        addEntity(position, type, props = {}){
+            const entity = this.entityManager.load(position.x, position.y, type, props)
             this.physics.loadEntity(entity)
             return entity
         }
@@ -102,8 +110,10 @@ define(function (require) {
          */
         removeEntityById(entityId){
             const entity = this.entityManager.findById(entityId)
-            this.physics.unloadEntity(entity)
-            this.entityManager.delete(entity)
+            if(entity){
+                this.physics.unloadEntity(entity)
+                this.entityManager.delete(entity)
+            }
         }
 
         /**

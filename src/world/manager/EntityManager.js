@@ -3,6 +3,7 @@ define(function (require) {
     const EntityGenerator = require('../generator/EntityGenerator.js')
     const Entity = require('../../entity/Entity.js')
     const AttachEntity = require('../../entity/types/joint/AttachEntity.js')
+    const GroupEntity = require('../../entity/types/group/GroupEntity.js')
     const Maths = require('../../utils/Maths.js')
 
     /**
@@ -52,7 +53,8 @@ define(function (require) {
 
         /**
          * Find an entity by Id
-         * @param {string} entityId
+         * @param {string|number} entityId
+         * @return {Entity}
          */
         findById(entityId) {
             return this.entities.find((element) =>
@@ -65,16 +67,18 @@ define(function (require) {
          * @param {int} x 
          * @param {int} y 
          * @param {Entity} type
+         * @param {Object} defaultProps
          * @return {Entity}
          */
-        get(x, y, type) {
+        get(x, y, type, defaultProps = {}) {
             if (!(type.prototype instanceof Entity)) {
                 throw new TypeError(`type must be child of Entity class (${type} given)`)
             }
             const entity = this.getAt(x, y, type)
             if (!entity) {
                 const name = `Layer ${this.entities.length}`
-                const element = new type({ position: { x, y }, name })
+                const props = Object.assign(defaultProps, { position: { x, y }, name })
+                const element = new type(props)
                 this.entities.push(element)
             }
             return this.getAt(x, y, type)
@@ -85,10 +89,11 @@ define(function (require) {
          * @param {int} x 
          * @param {int} y 
          * @param {Entity} type
+         * @param {Object} props
          * @return {Entity}
          */
-        load(x, y, type) {
-            const entity = this.get(x, y, type)
+        load(x, y, type, props = {}) {
+            const entity = this.get(x, y, type, props)
             if (!entity.isBuffered) {
                 this.make(entity)
             }
@@ -336,7 +341,7 @@ define(function (require) {
          * @param {Entity} entity 
          */
         isBodyEntity(entity) {
-            return !(entity instanceof AttachEntity)
+            return !(entity instanceof AttachEntity) && !(entity instanceof GroupEntity)
         }
 
         /**
