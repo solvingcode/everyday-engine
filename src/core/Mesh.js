@@ -81,6 +81,17 @@ define(function () {
             return false
         }
 
+        /**
+         * Instantiate new Mesh from image URL
+         * @param {string} imageInput Image url or blob
+         * @return {Mesh}
+         */
+        static async fromImage(imageInput){
+            const mesh = new Mesh()
+            await mesh.fromImage(imageInput)
+            return mesh
+        }
+
     }
 
     return Mesh

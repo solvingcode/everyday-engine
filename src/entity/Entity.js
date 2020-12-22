@@ -8,15 +8,6 @@ define(function (require) {
     const Vector = require('../utils/Vector.js')
 
     /**
-     * @typedef {{color: string, fillColor: string}} Style
-     * @typedef {{style: Style, name: string,
-     *      position: {x: number, y: number},
-     *      rotation: number,
-     *      size: {width: number, height: number} | number
-     *      }} EntityProps
-     */
-
-    /**
      * Abstract Entity class
      * @abstract
      * @todo Think to use a MeshManager for performance
@@ -44,6 +35,11 @@ define(function (require) {
             this.isBuffered = false
             this.isPhyiscsLoaded = false
             this.size = props.size || 1
+            this.style = props.style
+            this.advancedStyle = Object.assign(
+                {backgroundImageBlob: '', backgroundImageRepeat: false},
+                props.advancedStyle || {}
+            )
             this.mesh = new Mesh(this.position, this.size)
             this.meshBgColor = new Mesh()
             this.selectable = true
@@ -52,8 +48,6 @@ define(function (require) {
             this.locked = false
             this.visible = true
             this.clonable = true
-            this.style = props.style
-            this.advancedStyle = {backgroundImageBlob: '', backgroundImageRepeat: false}
             this.attachedEntities = null
         }
 
@@ -83,9 +77,9 @@ define(function (require) {
          */
         async setBackgroundImageBlob(backgroundImageBlob) {
             if (await this.meshBgColor.fromImage(backgroundImageBlob)) {
-                this.advancedStyle.backgroundImageBlob = backgroundImageBlob
                 this.regenerate()
             }
+            this.advancedStyle.backgroundImageBlob = backgroundImageBlob
         }
 
         /**
@@ -766,6 +760,16 @@ define(function (require) {
 
     /**
      * @typedef {{center: {x: number, y: number}, context: OffscreenCanvasRenderingContext2D}} DataContext
+     */
+
+    /**
+     * @typedef {{color: string, fillColor: string}} Style
+     * @typedef {{style: Style, name: string,
+     *      position: {x: number, y: number},
+     *      rotation: number,
+     *      size: {width: number, height: number} | number
+     *      advancedStyle: {backgroundImageBlob: string, backgroundImageRepeat: boolean}
+     *      }} EntityProps
      */
 
     return Entity

@@ -11,7 +11,8 @@ define(function (require) {
          * @override
          */
         getFormObject(){
-            return World.get().getTerrainManager().getTerrain()
+            const terrain = World.get().getTerrainManager().getTerrain()
+            return terrain && terrain.getEntity()
         }
     }
 

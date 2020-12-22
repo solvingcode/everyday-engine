@@ -45,6 +45,7 @@ define(function(require){
          * Unload the terrain
          */
         unload() {
+            this.removeChunks()
             this.world.removeEntityById(this.entityId)
         }
         /**
@@ -76,7 +77,7 @@ define(function(require){
          * @return {Entity[]}
          */
         getChunkEntities(){
-            return this.chunkIds.map(entityId => this.world.getEntityManager().findById(entityId))
+            return this.chunkIds.map(entityId => this.getEntityById(entityId))
         }
         /**
          * Create and load chunks by camera position
@@ -86,11 +87,13 @@ define(function(require){
             const entity = this.getEntity()
             const chunkIds = Array.from(Array(this.chunksNbr).keys())
                 .map((iChunk) => {
-                    const x = Math.floor(camera.position.x / this.getWidth()) + (iChunk - 1)
+                    const x = Math.floor(camera.position.x / entity.getWidth()) + (iChunk - 1)
                     return this.loadChunk(
-                        x * this.getWidth() + entity.getPositionX(),
+                        x * entity.getWidth() + entity.getPositionX(),
                         entity.getPositionY(),
-                        {size: {width: this.getWidth(), height: this.getHeight()}}
+                        {
+                            size: {width: entity.getWidth(), height: entity.getHeight()}
+                        }
                     )
                 })
             this.chunkIds
@@ -114,6 +117,12 @@ define(function(require){
                 if(entity.isBackgroundImageRepeat() !== chunkEntity.isBackgroundImageRepeat()){
                     chunkEntity.setBackgroundImageRepeat(entity.isBackgroundImageRepeat())
                 }
+                if(entity.size.width !== chunkEntity.size.width){
+                    this.removeChunk(entityId)
+                }
+                if(entity.size.height !== chunkEntity.size.height){
+                    this.removeChunk(entityId)
+                }
             })
         }
 
@@ -126,47 +135,11 @@ define(function(require){
         }
 
         /**
-         * @param {string|number} width
+         * Remove the given chunk ID
+         * @param chunkId
          */
-        setWidth(width) {
-            this.removeChunks()
-            this.size.width = parseInt(width)
-        }
-
-        /**
-         * @param {string|number} height
-         */
-        setHeight(height) {
-            this.removeChunks()
-            this.size.height = parseInt(height)
-        }
-
-        /**
-         * @param {number} angle
-         */
-        setRotationDegree(angle) {
-            this.rotation = Maths.fromDegree(angle)
-        }
-
-        /**
-         * @return {number}
-         */
-        getWidth() {
-            return this.size.width
-        }
-
-        /**
-         * @return {number}
-         */
-        getHeight() {
-            return this.size.height
-        }
-
-        /**
-         * @return {number}
-         */
-        getRotationDegree() {
-            return Maths.toDegree(this.rotation)
+        removeChunk(chunkId){
+            this.world.removeEntityById(chunkId)
         }
     }
 

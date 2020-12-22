@@ -89,10 +89,17 @@ define(function (require) {
             this.calculateSize()
         }
 
+        /**
+         * Do not calculate Size if it's defined in the props
+         */
         calculateSize(){
-            const minPoint = this.getMinPoint()
-            const maxPoint = this.getMaxPoint()
-            this.size = { width: maxPoint.x - minPoint.x, height: maxPoint.y - minPoint.y }
+            if(this.props.size){
+                this.size = this.props.size
+            }else{
+                const minPoint = this.getMinPoint()
+                const maxPoint = this.getMaxPoint()
+                this.size = { width: maxPoint.x - minPoint.x, height: maxPoint.y - minPoint.y }
+            }
         }
 
         /**
