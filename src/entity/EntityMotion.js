@@ -37,6 +37,7 @@ define(function (require) {
             this.collision = { group: 0, category: 1, mask: 1 }
             this.die = false
             this.controlled = false
+            this.visible = true
         }
 
         /**

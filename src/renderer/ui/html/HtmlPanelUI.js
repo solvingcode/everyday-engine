@@ -48,7 +48,7 @@ define(function (require) {
     HtmlPanelUI.props = {
         tag: 'div',
         width: '100%',
-        className: 'panel'
+        className: 'panel panel-static'
     }
 
     return HtmlPanelUI

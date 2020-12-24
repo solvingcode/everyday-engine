@@ -11,16 +11,10 @@ define(function (require) {
     class PerlinNoise {
 
         /**
-         * @param {number} seed
+         * @param {PerlinNoiseConfig} configs
          */
-        constructor(seed){
-            this.seed = seed
-            this.configs = {
-                octaves: 9,
-                amplitude: 80,
-                persistence: 0.51,
-                smoothness: 250
-            }
+        constructor(configs){
+            this.configs = configs
         }
 
         /**
@@ -53,14 +47,7 @@ define(function (require) {
          * @return {number}
          */
         getNoise(x, y){
-            return NoiseRandom.get(this.seed).getNoiseValue(x + y)
-        }
-
-        /**
-         * @param {PerlinNoiseConfig} configs
-         */
-        setConfigs(configs){
-            this.configs = configs
+            return NoiseRandom.get(this.configs.seed).getNoiseValue(x + y)
         }
 
         /**
@@ -83,7 +70,7 @@ define(function (require) {
     }
 
     /**
-     * @typedef {{octaves: number, amplitude: number, persistence: number, smoothing: number}} PerlinNoiseConfig
+     * @typedef {{seed: number, octaves: number, amplitude: number, persistence: number, smoothness: number}} PerlinNoiseConfig
      */
 
     return PerlinNoise

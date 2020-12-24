@@ -1,7 +1,6 @@
-define(function(require){
+define(function (require) {
 
-    const Maths = require('../../utils/Maths.js')
-    const GroupEntity = require('../../entity/types/group/GroupEntity.js')
+    const VirtualEntity = require('../../entity/VirtualEntity.js')
 
     /**
      * Terrain class
@@ -24,6 +23,7 @@ define(function(require){
             this.rotation = 0
             this.init()
         }
+
         /**
          * Initialize data
          */
@@ -32,15 +32,26 @@ define(function(require){
             this.chunkIds = []
             this.entityId = this.world.addEntity(
                 {x: 0, y: 650},
-                GroupEntity,
-                {size: this.size}).getId()
+                VirtualEntity,
+                {
+                    size: this.size,
+                    noiseConfigs: {
+                        seed: 1234,
+                        octaves: 9,
+                        amplitude: 80,
+                        persistence: 0.51,
+                        smoothness: 250
+                    }
+                }).getId()
         }
+
         /**
          * Load the terrain
          */
         load() {
             this.loadChunks()
         }
+
         /**
          * Unload the terrain
          */
@@ -48,37 +59,22 @@ define(function(require){
             this.removeChunks()
             this.world.removeEntityById(this.entityId)
         }
-        /**
-         * Generate new version
-         */
-        newVersion(){
-            this.version = Maths.generateId()
-        }
-        /**
-         * Get the version of the engine
-         */
-        getVersion() {
-            return this.version
-        }
+
         /**
          * @param {number} entityId
          * @return {Entity}
          */
-        getEntityById(entityId){
+        getEntityById(entityId) {
             return this.world.getEntityManager().findById(entityId)
         }
+
         /**
          * @return {Entity}
          */
-        getEntity(){
+        getEntity() {
             return this.getEntityById(this.entityId)
         }
-        /**
-         * @return {Entity[]}
-         */
-        getChunkEntities(){
-            return this.chunkIds.map(entityId => this.getEntityById(entityId))
-        }
+
         /**
          * Create and load chunks by camera position
          */
@@ -92,7 +88,8 @@ define(function(require){
                         x * entity.getWidth() + entity.getPositionX(),
                         entity.getPositionY(),
                         {
-                            size: {width: entity.getWidth(), height: entity.getHeight()}
+                            size: {width: entity.getWidth(), height: entity.getHeight()},
+                            noiseConfigs: _.clone(entity.noiseConfigs)
                         }
                     )
                 })
@@ -107,20 +104,20 @@ define(function(require){
         /**
          * Update all chunks (background, size, ...)
          */
-        updateChunks(){
+        updateChunks() {
             this.chunkIds.forEach(entityId => {
                 const chunkEntity = this.getEntityById(entityId)
                 const entity = this.getEntity()
-                if(entity.getBackgroundImageBlob() !== chunkEntity.getBackgroundImageBlob()){
+                if (entity.getBackgroundImageBlob() !== chunkEntity.getBackgroundImageBlob()) {
                     chunkEntity.setBackgroundImageBlob(entity.getBackgroundImageBlob())
                 }
-                if(entity.isBackgroundImageRepeat() !== chunkEntity.isBackgroundImageRepeat()){
+                if (entity.isBackgroundImageRepeat() !== chunkEntity.isBackgroundImageRepeat()) {
                     chunkEntity.setBackgroundImageRepeat(entity.isBackgroundImageRepeat())
                 }
-                if(entity.size.width !== chunkEntity.size.width){
-                    this.removeChunk(entityId)
-                }
-                if(entity.size.height !== chunkEntity.size.height){
+                if (
+                    !_.isEqual(entity.size, chunkEntity.size) ||
+                    !_.isEqual(entity.noiseConfigs, chunkEntity.noiseConfigs)
+                ) {
                     this.removeChunk(entityId)
                 }
             })
@@ -129,7 +126,7 @@ define(function(require){
         /**
          * Remove all chunks from the world
          */
-        removeChunks(){
+        removeChunks() {
             this.chunkIds
                 .forEach(entityId => this.world.removeEntityById(entityId))
         }
@@ -138,7 +135,7 @@ define(function(require){
          * Remove the given chunk ID
          * @param chunkId
          */
-        removeChunk(chunkId){
+        removeChunk(chunkId) {
             this.world.removeEntityById(chunkId)
         }
     }

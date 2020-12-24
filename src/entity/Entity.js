@@ -46,9 +46,10 @@ define(function (require) {
             this.selected = false
             this.focused = false
             this.locked = false
-            this.visible = true
+            this.visible = false
             this.clonable = true
             this.attachedEntities = null
+            this.noiseConfigs = props.noiseConfigs || {}
         }
 
         /**
@@ -746,6 +747,76 @@ define(function (require) {
         isCanGenerate() {
             return this.visible
         }
+
+        /**
+         * @param {number} value
+         */
+        setSeed(value){
+            this.noiseConfigs.seed = value
+        }
+
+        /**
+         * @returns {number}
+         */
+        getSeed(){
+            return this.noiseConfigs.seed
+        }
+
+        /**
+         * @param {number} value
+         */
+        setOctaves(value){
+            this.noiseConfigs.octaves = value
+        }
+
+        /**
+         * @returns {number}
+         */
+        getOctaves(){
+            return this.noiseConfigs.octaves
+        }
+
+        /**
+         * @param {number} value
+         */
+        setAmplitude(value){
+            this.noiseConfigs.amplitude = value
+        }
+
+        /**
+         * @returns {number}
+         */
+        getAmplitude(){
+            return this.noiseConfigs.amplitude
+        }
+
+        /**
+         * @param {number} value
+         */
+        setPersistence(value){
+            this.noiseConfigs.persistence = value
+        }
+
+        /**
+         * @returns {number}
+         */
+        getPersistence(){
+            return this.noiseConfigs.persistence
+        }
+
+        /**
+         * @param {number} value
+         */
+        setSmoothness(value){
+            this.noiseConfigs.smoothness = value
+        }
+
+        /**
+         * @returns {number}
+         */
+        getSmoothness(){
+            return this.noiseConfigs.smoothness
+        }
     }
 
     Entity.shapes = {
@@ -755,7 +826,8 @@ define(function (require) {
         POLY: 'Poly',
         CIRCLE: 'Circle',
         ATTACH: 'Attach',
-        GROUP: 'Group'
+        GROUP: 'Group',
+        VIRTUAL: 'Virtual'
     }
 
     /**
@@ -769,6 +841,7 @@ define(function (require) {
      *      rotation: number,
      *      size: {width: number, height: number} | number
      *      advancedStyle: {backgroundImageBlob: string, backgroundImageRepeat: boolean}
+     *      noiseConfigs: PerlinNoiseConfig
      *      }} EntityProps
      */
 

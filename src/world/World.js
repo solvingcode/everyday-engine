@@ -48,6 +48,7 @@ define(function (require) {
 
         /**
          * Get the terrain manager
+         * @return {TerrainManager}
          */
         getTerrainManager() {
             return this.terrainManager

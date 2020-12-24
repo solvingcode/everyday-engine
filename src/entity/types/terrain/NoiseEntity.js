@@ -7,7 +7,9 @@ define(function (require) {
 
         constructor(props) {
             super({...props, name: 'Noise Terrain'})
-            this.seed = 123456
+            if(!this.noiseConfigs){
+                throw new TypeError('Configs must be set to setup the noises')
+            }
         }
 
         /**
@@ -22,7 +24,7 @@ define(function (require) {
          * @override
          */
         drawContext(dataContext){
-            const perlinNoise = new PerlinNoise(this.seed)
+            const perlinNoise = new PerlinNoise(this.noiseConfigs)
             const points = []
             const step = 10
             const {size} = this.props

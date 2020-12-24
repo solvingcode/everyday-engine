@@ -3,7 +3,7 @@ define(function (require) {
     const EntityGenerator = require('../generator/EntityGenerator.js')
     const Entity = require('../../entity/Entity.js')
     const AttachEntity = require('../../entity/types/joint/AttachEntity.js')
-    const GroupEntity = require('../../entity/types/group/GroupEntity.js')
+    const GroupEntity = require('../../entity/VirtualEntity.js')
     const Maths = require('../../utils/Maths.js')
 
     /**

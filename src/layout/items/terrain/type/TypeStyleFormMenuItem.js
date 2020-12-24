@@ -1,13 +1,13 @@
 define(function (require) {
 
     const MenuItem = require('../../../MenuItem.js')
-    const PlainBackgroundMenuItem = require('./PlainBackgroundMenuItem.js')
+    const PlainBackgroundMenuItem = require('./TypeBackgroundMenuItem.js')
     const Layout = require('../../../Layout.js')
 
     /**
-     * Plain terrain style Menu Item
+     * Terrain style Menu Item
      */
-    class PlainStyleMenuItem extends MenuItem {
+    class TypeStyleMenuItem extends MenuItem {
         constructor(parent) {
             super({
                 name: '',
@@ -22,6 +22,6 @@ define(function (require) {
         }
     }
 
-    return PlainStyleMenuItem
+    return TypeStyleMenuItem
 
 })

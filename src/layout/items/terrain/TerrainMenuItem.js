@@ -2,7 +2,7 @@ define(function (require) {
 
     const MenuItem = require('../../MenuItem.js')
     const ManagerFormMenuItem = require('./ManagerFormMenuItem.js')
-    const PlainMenuItem = require('./type/PlainMenuItem.js')
+    const TypeMenuItem = require('./type/TypeMenuItem.js')
     const Layout = require('../../Layout.js')
 
     /**
@@ -19,7 +19,7 @@ define(function (require) {
             })
             this.items = [
                 new ManagerFormMenuItem(this),
-                new PlainMenuItem(this)
+                new TypeMenuItem(this)
             ]
         }
     }

@@ -66,6 +66,8 @@ define(function (require) {
                     this.bindObject = object
                     this.object = _.cloneDeep(object)
                     this.shouldUpdate() && this.updateForm()
+                }else if(this.object && object.id !== this.object.id){
+                    this.updateForm()
                 }
             } else {
                 this.init()
@@ -86,7 +88,7 @@ define(function (require) {
          * @return {boolean}
          */
         isFormUpdated(object) {
-            if (!this.object) {
+            if (!this.object || object.id !== this.object.id) {
                 return true
             }
             for (const iField in this.fields) {

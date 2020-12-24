@@ -11,7 +11,7 @@ define(function (require) {
         /**
          * @param {number} x
          * @param {number} y
-         * @param {Object} props
+         * @param {EntityProps} props
          */
         loadChunk(x, y, props) {
             return this.world.addEntity({x, y}, NoiseEntity, props).getId()

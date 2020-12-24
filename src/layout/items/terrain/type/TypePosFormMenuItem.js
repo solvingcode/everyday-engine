@@ -1,12 +1,12 @@
 define(function (require) {
 
-    const BackgroundFormMenuItem = require('../../style/BackgroundFormMenuItem.js')
+    const PositionFormMenuItem = require('../../entity/PositionFormMenuItem.js')
     const World = require('../../../../world/World.js')
 
     /**
-     * Plain terrain background Menu Item
+     * Terrain's position form
      */
-    class PlainBackgroundMenuItem extends BackgroundFormMenuItem {
+    class TypePosFormMenuItem extends PositionFormMenuItem {
         /**
          * @override
          */
@@ -16,6 +16,6 @@ define(function (require) {
         }
     }
 
-    return PlainBackgroundMenuItem
+    return TypePosFormMenuItem
 
 })

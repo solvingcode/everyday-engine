@@ -65,10 +65,13 @@ h4{
 }
 
 .panel > div{
-    max-height: 300px;
     overflow: auto;
     margin-top: -1px;
     padding: 3px;
+}
+
+.panel-static > div:only-child{
+    max-height: 300px;
 }
 
 .panel h4{
