@@ -27,6 +27,7 @@ define(function (require) {
 
         /**
          * Get the physics manager
+         * @return {Physics}
          */
         getPhysics() {
             return this.physics

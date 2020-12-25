@@ -61,13 +61,11 @@ define(function (require) {
          */
         update() {
             const object = this.getFormObject()
+            this.bindObject = object
             if (object) {
                 if (this.isFormUpdated(object)) {
-                    this.bindObject = object
                     this.object = _.cloneDeep(object)
                     this.shouldUpdate() && this.updateForm()
-                }else if(this.object && object.id !== this.object.id){
-                    this.updateForm()
                 }
             } else {
                 this.init()
@@ -144,9 +142,9 @@ define(function (require) {
         getGetter(field) {
             const getterString = this.getGetterString(field)
             if (field.type !== Layout.form.FILE) {
-                return (function (getter, object) {
-                    return () => object[getter]()
-                })(getterString, this.bindObject)
+                return (function (getter, self) {
+                    return () => self.bindObject[getter]()
+                })(getterString, this)
             }
             return () => null
         }
@@ -168,9 +166,9 @@ define(function (require) {
          */
         getSetter(field) {
             const setterString = this.getSetterString(field)
-            return (function (setter, object) {
-                return (value) => object[setter](value)
-            })(setterString, this.bindObject)
+            return (function (setter, self) {
+                return (value) => self.bindObject[setter](value)
+            })(setterString, this)
         }
 
         /**

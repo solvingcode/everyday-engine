@@ -150,6 +150,7 @@ define(function (require) {
 
         /**
          * Is running states is in progress
+         * @return {boolean}
          */
         isRunning() {
             return this.isProgress('SIMULATE')
