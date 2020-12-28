@@ -3,13 +3,14 @@ define(function (require) {
     const Mesh = require('../core/Mesh.js')
     const Window = require('../core/Window.js')
     const Keyboard = require('../core/Keyboard.js')
-    const Maths = require('../utils/Maths.js')
     const Vertex = require('../utils/Vertex.js')
     const Vector = require('../utils/Vector.js')
+    const EntityData = require('./EntityData.js')
 
     /**
      * Abstract Entity class
      * @abstract
+     * @extends {EntityData}
      * @todo Think to use a MeshManager for performance
      *
      * @property {Mesh} mesh
@@ -18,98 +19,33 @@ define(function (require) {
      * @property {string} name
      * @property {Style} advancedStyle
      */
-    class Entity {
+    class Entity extends EntityData {
         /**
          * @param {EntityProps} props
          */
         constructor(props) {
+            super(props)
             if (this.constructor === Entity) {
                 throw new TypeError('Abstract class Entity cannot be instantiated directly')
             }
-            props.style = props.style || {color: '#000000', fillColor: ''}
-            this.id = Maths.generateId()
             this.props = props
-            this.name = props.name
-            this.position = props.position
-            this.rotation = props.rotation || 0
             this.isBuffered = false
             this.isPhyiscsLoaded = false
-            this.size = props.size || 1
-            this.style = props.style
-            this.advancedStyle = Object.assign(
-                {backgroundImageBlob: '', backgroundImageRepeat: false},
-                props.advancedStyle || {}
-            )
             this.mesh = new Mesh(this.position, this.size)
             this.meshBgColor = new Mesh()
-            this.selectable = true
             this.selected = false
             this.focused = false
-            this.locked = false
-            this.visible = false
-            this.clonable = true
             this.attachedEntities = null
-            this.noiseConfigs = props.noiseConfigs || {}
         }
 
         /**
-         * @return {number}
-         */
-        getId() {
-            return this.id
-        }
-
-        /**
-         * @return {string}
-         */
-        getName() {
-            return this.name
-        }
-
-        /**
-         * @param {string} name
-         */
-        setName(name) {
-            this.name = name
-        }
-
-        /**
-         * @param {string} backgroundImageBlob
+         * @override
          */
         async setBackgroundImageBlob(backgroundImageBlob) {
+            super.setBackgroundImageBlob(backgroundImageBlob)
             if (await this.meshBgColor.fromImage(backgroundImageBlob)) {
                 this.regenerate()
             }
-            this.advancedStyle.backgroundImageBlob = backgroundImageBlob
-        }
-
-        /**
-         * @return {string}
-         */
-        getBackgroundImageBlob() {
-            return this.advancedStyle.backgroundImageBlob
-        }
-
-        /**
-         * @param {boolean} repeat
-         */
-        setBackgroundImageRepeat(repeat) {
-            this.advancedStyle.backgroundImageRepeat = repeat
-            this.regenerate()
-        }
-
-        /**
-         * @return {boolean}
-         */
-        isBackgroundImageRepeat() {
-            return this.advancedStyle.backgroundImageRepeat
-        }
-
-        /**
-         * Update the mesh from the background image
-         */
-        updateMeshFromBgImage() {
-            this.getBackgroundImageBlob() && this.mesh.copyFromMesh(this.meshBgColor)
         }
 
         /**
@@ -282,40 +218,11 @@ define(function (require) {
         }
 
         /**
-         * Set the entity's position
-         * @param {{x: number, y: number}} position
+         * @override
          */
         setPosition(position) {
-            this.position = position
+            super.setPosition(position)
             this.mesh.position = position
-        }
-
-        /**
-         * @param {string} x
-         */
-        setPositionX(x) {
-            this.setPositionAndGenerate({x: parseInt(x), y: this.position.y})
-        }
-
-        /**
-         * @param {string} y
-         */
-        setPositionY(y) {
-            this.setPositionAndGenerate({x: this.position.x, y: parseInt(y)})
-        }
-
-        /**
-         * @return {number}
-         */
-        getPositionX() {
-            return this.position.x
-        }
-
-        /**
-         * @return {number}
-         */
-        getPositionY() {
-            return this.position.y
         }
 
         /**
@@ -323,7 +230,9 @@ define(function (require) {
          */
         setPositionAndGenerate(position) {
             this.setPosition(position)
-            this.regenerate()
+            if(!_.isEqual(this.position, position)){
+                this.regenerate()
+            }
         }
 
         /**
@@ -332,7 +241,7 @@ define(function (require) {
          */
         setRotationAndGenerate(angle) {
             if (this.rotation !== angle) {
-                this.rotation = angle
+                super.setRotation(angle)
                 this.regenerate()
             }
         }
@@ -351,59 +260,10 @@ define(function (require) {
          * @param {{width: number, height: number}} size
          */
         setSizeAndGenerate(size) {
-            if (this.size.width !== size.width || this.size.height !== size.height) {
-                this.size = size
+            super.setSize(size)
+            if (!_.isEqual(this.size, size)) {
                 this.regenerate()
             }
-        }
-
-        /**
-         * @return {number}
-         */
-        getWidth() {
-            return this.size.width
-        }
-
-        /**
-         * @return {number}
-         */
-        getHeight() {
-            return this.size.height
-        }
-
-        /**
-         * @return {number}
-         */
-        getRotationDegree() {
-            return Maths.toDegree(this.rotation)
-        }
-
-        /**
-         * @param {string|number} width
-         */
-        setWidth(width) {
-            this.setSizeAndGenerate({width: parseInt(width), height: this.size.height})
-        }
-
-        /**
-         * @param {string|number} height
-         */
-        setHeight(height) {
-            this.setSizeAndGenerate({width: this.size.width, height: parseInt(height)})
-        }
-
-        /**
-         * @param {number} angle
-         */
-        setRotationDegree(angle) {
-            this.setRotationAndGenerate(Maths.fromDegree(angle))
-        }
-
-        /**
-         * Set the entity's style
-         */
-        setStyle(style) {
-            this.style = style
         }
 
         /**
@@ -449,14 +309,14 @@ define(function (require) {
 
         /**
          * Show the entity
-         * @param {Boolean} visible
+         * @param {boolean} visible
          */
         show(visible) {
-            this.visible = visible
+            super.setVisible(visible)
         }
 
         /**
-         * Get the base style (use as default)
+         * @override
          */
         getStyle() {
             const styleLocked = {color: '#AAAAAA', fillColor: 'rgba(0, 0, 0, 0.01)'}
@@ -719,22 +579,6 @@ define(function (require) {
         }
 
         /**
-         * Is entity visible
-         * @return {boolean}
-         */
-        isVisible() {
-            return this.visible
-        }
-
-        /**
-         * Is entity locked
-         * @return {boolean}
-         */
-        isLocked() {
-            return this.locked
-        }
-
-        /**
          * Is entity active (valid, unlocked, ...)
          */
         isActive() {
@@ -745,105 +589,15 @@ define(function (require) {
          * is the generate hook must be disabled
          */
         isCanGenerate() {
-            return this.visible
+            return super.isVisible()
         }
 
-        /**
-         * @param {number} value
-         */
-        setSeed(value){
-            this.noiseConfigs.seed = value
-        }
-
-        /**
-         * @returns {number}
-         */
-        getSeed(){
-            return this.noiseConfigs.seed
-        }
-
-        /**
-         * @param {number} value
-         */
-        setOctaves(value){
-            this.noiseConfigs.octaves = value
-        }
-
-        /**
-         * @returns {number}
-         */
-        getOctaves(){
-            return this.noiseConfigs.octaves
-        }
-
-        /**
-         * @param {number} value
-         */
-        setAmplitude(value){
-            this.noiseConfigs.amplitude = value
-        }
-
-        /**
-         * @returns {number}
-         */
-        getAmplitude(){
-            return this.noiseConfigs.amplitude
-        }
-
-        /**
-         * @param {number} value
-         */
-        setPersistence(value){
-            this.noiseConfigs.persistence = value
-        }
-
-        /**
-         * @returns {number}
-         */
-        getPersistence(){
-            return this.noiseConfigs.persistence
-        }
-
-        /**
-         * @param {number} value
-         */
-        setSmoothness(value){
-            this.noiseConfigs.smoothness = value
-        }
-
-        /**
-         * @returns {number}
-         */
-        getSmoothness(){
-            return this.noiseConfigs.smoothness
-        }
-    }
-
-    Entity.shapes = {
-        ELLIPSE: 'Ellipse',
-        RECT: 'Rect',
-        LINE: 'Line',
-        POLY: 'Poly',
-        CIRCLE: 'Circle',
-        ATTACH: 'Attach',
-        GROUP: 'Group',
-        VIRTUAL: 'Virtual'
     }
 
     /**
      * @typedef {{center: {x: number, y: number}, context: OffscreenCanvasRenderingContext2D}} DataContext
      */
 
-    /**
-     * @typedef {{color: string, fillColor: string}} Style
-     * @typedef {{style: Style, name: string,
-     *      position: {x: number, y: number},
-     *      rotation: number,
-     *      size: {width: number, height: number} | number
-     *      advancedStyle: {backgroundImageBlob: string, backgroundImageRepeat: boolean}
-     *      noiseConfigs: PerlinNoiseConfig
-     *      }} EntityProps
-     */
 
     return Entity
 })

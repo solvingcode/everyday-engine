@@ -7,6 +7,7 @@ define(function (require) {
     /**
      * Abstract EntityMotion class
      * @abstract
+     * @extends {Entity}
      * @todo Refactor collision properties
      */
     class EntityMotion extends Entity {

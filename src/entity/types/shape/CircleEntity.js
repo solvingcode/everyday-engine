@@ -7,7 +7,6 @@ define(function (require) {
         constructor(props) {
             super(props)
             this.shape = EntityMotion.shapes.CIRCLE
-            this.center = null
             this.radius = 0
         }
 

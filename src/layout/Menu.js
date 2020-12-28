@@ -6,6 +6,7 @@ define(function (require) {
     const AttachPointMenuItem = require('./items/draw/AttachPointMenuItem.js')
     const SelectorMenuItem = require('./items/draw/SelectorMenuItem.js')
     const NewDocMenuItem = require('./items/action/NewDocMenuItem.js')
+    const SaveProjectMenuItem = require('./items/action/SaveProjectMenuItem.js')
     const SimulateStartMenuItem = require('./items/action/SimulateStartMenuItem.js')
     const SimulateStopMenuItem = require('./items/action/SimulateStopMenuItem.js')
     const DeleteMenuItem = require('./items/action/DeleteMenuItem.js')
@@ -36,6 +37,7 @@ define(function (require) {
     class Menu {
         constructor() {
             this.types = [
+                //LEFT
                 new SelectorMenuItem(),
                 new CircleMenuItem(),
                 new RectMenuItem(),
@@ -43,7 +45,10 @@ define(function (require) {
                 new AttachPointMenuItem(),
                 new SimulateStartMenuItem(),
                 new SimulateStopMenuItem(),
+
+                //TOP
                 new NewDocMenuItem(),
+                new SaveProjectMenuItem(),
                 new DeleteMenuItem(),
                 new DuplicateMenuItem(),
                 new UndoMenuItem(),
@@ -54,14 +59,18 @@ define(function (require) {
                 new HideMenuItem(),
                 new ShowMenuItem(),
                 new RotateUpMenuItem(),
+
+                //RIGHT
                 new LayerMenuItem(),
                 new StyleMenuItem(),
                 new EntityMenuItem(),
                 new ConditionMenuItem(),
                 new AiGeneticMenuItem(),
-                new AppMenuItem(),
                 new TerrainMenuItem(),
-                new CameraMenuItem()
+                new CameraMenuItem(),
+
+                //BOTTOM
+                new AppMenuItem()
             ]
             this.items = []
             this.setup()
