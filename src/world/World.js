@@ -1,58 +1,27 @@
 define(function (require) {
 
+    const WorldData = require('../project/data/WorldData.js')
     const EntityManager = require('./manager/EntityManager.js')
     const EntitySelector = require('./manager/EntitySelector.js')
     const Camera = require('../core/Camera.js')
-    const GeneticEngine = require('../ai/genetic/GeneticEngine.js')
     const Physics = require('../physics/Physics.js')
     const MatterEngine = require('../physics/engine/matter/Engine.js')
     const TerrainManager = require('./terrain/TerrainManager.js')
     const ConstraintEntity = require('../entity/types/joint/ConstraintEntity.js')
 
     /**
-     * Define the World
-     * @property {AiEngine} aiEngine
-     * @property {Camera} camera
+     * @class {World}
+     * @extends {WorldData}
      */
-    class World {
+    class World extends WorldData {
 
         constructor() {
+            super()
             this.entityManager = EntityManager.get()
             this.camera = new Camera({ x: SCENE_WIDTH / 2, y: SCENE_HEIGHT / 2 })
             this.physics = new Physics(new MatterEngine())
-            //this.aiEngine = new GeneticEngine(this.physics, this.entityManager, this.camera)
             this.terrainManager = new TerrainManager(this)
             this.mouseConstraintId = this.entityManager.load(0, 0, ConstraintEntity).getId()
-        }
-
-        /**
-         * Get the physics manager
-         * @return {Physics}
-         */
-        getPhysics() {
-            return this.physics
-        }
-
-        /**
-         * @return {EntityManager}
-         */
-        getEntityManager() {
-            return this.entityManager
-        }
-
-        /**
-         * Get the Ai engine
-         */
-        getAiEngine() {
-            return this.aiEngine
-        }
-
-        /**
-         * Get the terrain manager
-         * @return {TerrainManager}
-         */
-        getTerrainManager() {
-            return this.terrainManager
         }
 
         /**
@@ -61,8 +30,8 @@ define(function (require) {
          * @param {Renderer} renderer 
          */
         draw(renderer) {
-            const bodyEntities = this.entityManager.getBodyEntities()
-            const attachEntities = this.entityManager.getAttachEntities()
+            const bodyEntities = this.getEntityManager().getBodyEntities()
+            const attachEntities = this.getEntityManager().getAttachEntities()
             bodyEntities.forEach((entity) => this.drawEntity(entity, renderer))
             attachEntities.forEach((entity) => this.drawEntity(entity, renderer))
         }
@@ -101,8 +70,8 @@ define(function (require) {
          * @param {Object} props
          */
         addEntity(position, type, props = {}){
-            const entity = this.entityManager.load(position.x, position.y, type, props)
-            this.physics.loadEntity(entity)
+            const entity = this.getEntityManager().load(position.x, position.y, type, props)
+            this.getPhysics().loadEntity(entity)
             return entity
         }
 
@@ -111,10 +80,10 @@ define(function (require) {
          * @param {number} entityId
          */
         removeEntityById(entityId){
-            const entity = this.entityManager.findById(entityId)
+            const entity = this.getEntityManager().findById(entityId)
             if(entity){
-                this.physics.unloadEntity(entity)
-                this.entityManager.delete(entity)
+                this.getPhysics().unloadEntity(entity)
+                this.getEntityManager().delete(entity)
             }
         }
 
@@ -132,29 +101,22 @@ define(function (require) {
          * Update all entities.
          */
         update() {
-            this.entityManager.update()
+            this.getEntityManager().update()
         }
 
         /**
          * Update the camera position
          */
         updateCamera() {
-            const entity = this.camera.getEntity(this.entityManager)
-            entity && this.camera.update({ x: entity.position.x, y: this.camera.position.y })
+            const entity = this.getCamera().getEntity(this.getEntityManager())
+            entity && this.getCamera().update({ x: entity.position.x, y: this.getCamera().position.y })
         }
 
         /**
          * Reset the camera position
          */
         resetCamera() {
-            this.camera.reset()
-        }
-
-        /**
-         * Get the principal camera (active)
-         */
-        getCamera() {
-            return this.camera
+            this.getCamera().reset()
         }
 
         /**
@@ -166,10 +128,10 @@ define(function (require) {
         }
 
         /**
-         * @return {ConstraintEntity}
+         * @return {Entity}
          */
         getMouseConstraint() {
-            return this.entityManager.findById(this.mouseConstraintId)
+            return this.getEntityManager().findById(this.mouseConstraintId)
         }
 
         static get() {

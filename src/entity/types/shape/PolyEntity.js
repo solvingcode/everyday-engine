@@ -9,7 +9,7 @@ define(function (require) {
         constructor(props) {
             super(props)
             this.shape = EntityMotion.shapes.POLY
-            this.points = []
+            this.vertices = []
             this.nbPoints = 0
         }
 
@@ -28,8 +28,8 @@ define(function (require) {
          * Get the min point
          */
         getMinPoint() {
-            const x = this.points.reduce((minX, point) => point.x < minX ? point.x : minX, 99999)
-            const y = this.points.reduce((minY, point) => point.y < minY ? point.y : minY, 99999)
+            const x = this.vertices.reduce((minX, point) => point.x < minX ? point.x : minX, 99999)
+            const y = this.vertices.reduce((minY, point) => point.y < minY ? point.y : minY, 99999)
             return { x, y }
         }
 
@@ -37,23 +37,23 @@ define(function (require) {
          * Get the max point
          */
         getMaxPoint() {
-            const x = this.points.reduce((maxX, point) => point.x > maxX ? point.x : maxX, 0)
-            const y = this.points.reduce((maxY, point) => point.y > maxY ? point.y : maxY, 0)
+            const x = this.vertices.reduce((maxX, point) => point.x > maxX ? point.x : maxX, 0)
+            const y = this.vertices.reduce((maxY, point) => point.y > maxY ? point.y : maxY, 0)
             return { x, y }
         }
 
         /**
-         * Add points to the poly based on the click position
+         * Add vertices to the poly based on the click position
          */
         generatePoints() {
             const window = Window.get()
             const position = window.mouse.position
             const currentPosition = window.mouse.currentPosition
-            if (!this.points.find(point => point.x === position.x && point.y === position.y)) {
-                this.points[this.nbPoints] = position
-                this.nbPoints = this.points.length
+            if (!this.vertices.find(point => point.x === position.x && point.y === position.y)) {
+                this.vertices[this.nbPoints] = position
+                this.nbPoints = this.vertices.length
             } else {
-                this.points[this.nbPoints] = currentPosition
+                this.vertices[this.nbPoints] = currentPosition
             }
         }
 
@@ -70,7 +70,7 @@ define(function (require) {
          */
         drawPoints(context) {
             context.beginPath()
-            this.points.forEach((point, iPoint) => {
+            this.vertices.forEach((point, iPoint) => {
                 if(!iPoint){
                     context.moveTo(point.x, point.y)
                 }
@@ -82,10 +82,10 @@ define(function (require) {
         }
 
         /**
-         * @param {Vector[]} points
+         * @param {Vector[]} vertices
          */
-        setPoints(points) {
-            this.points = points
+        setPoints(vertices) {
+            this.vertices = vertices
             this.calculateSize()
         }
 
@@ -103,32 +103,32 @@ define(function (require) {
         }
 
         /**
-         * Convert points to relative position of the Entity
+         * Convert vertices to relative position of the Entity
          */
         convertPointToRelPosition() {
             const minPoint = this.getMinPoint()
-            this.points = this.points.map(point => ({ x: point.x - minPoint.x, y: point.y - minPoint.y }))
+            this.vertices = this.vertices.map(point => ({ x: point.x - minPoint.x, y: point.y - minPoint.y }))
         }
 
         /**
          * @override
          */
         getCenter() {
-            return Vertex.getCenter(this.points)
+            return Vertex.getCenter(this.vertices)
         }
 
         /**
          * @override
          */
         loadVertices(){
-            return this.points
+            return this.vertices
         }
 
         /**
          * Trigger other drawing instruction when the drawing is ended
          */
         close() {
-            this.points.push(this.points[0])
+            this.vertices.push(this.vertices[0])
             this.build()
             this.convertPointToRelPosition()
             super.close()

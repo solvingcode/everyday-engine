@@ -10,7 +10,7 @@ define(function (require) {
         generate(entity){
             const centerPosition = entity.toCenterPosition()
             const engine = this.getEngine()
-            return engine.Bodies.fromVertices(centerPosition.x, centerPosition.y, entity.points)
+            return engine.Bodies.fromVertices(centerPosition.x, centerPosition.y, entity.vertices)
         }
 
     }

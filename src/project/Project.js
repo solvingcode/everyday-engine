@@ -1,7 +1,8 @@
 define(function (require) {
 
-    const EntityManager = require('../world/manager/EntityManager.js')
+    const World = require('../world/World.js')
     const Storage = require('../core/Storage.js')
+    const FileHelper = require('../utils/FileHelper.js')
 
     class Project {
 
@@ -17,10 +18,10 @@ define(function (require) {
         save(){
             const data = _.cloneDeep(
                 this.storage
-                    .updateAndValidate(Storage.type.ENTITY, EntityManager.get().entities)
+                    .updateAndValidate(Storage.type.WORLD, World.get())
             )
             const dataExport = data.export(Storage.format.XML)
-            console.log(dataExport)
+            FileHelper.save(dataExport, FileHelper.type.XML)
         }
 
         /**

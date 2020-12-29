@@ -5,7 +5,7 @@ define(function (require) {
     const Keyboard = require('../core/Keyboard.js')
     const Vertex = require('../utils/Vertex.js')
     const Vector = require('../utils/Vector.js')
-    const EntityData = require('./EntityData.js')
+    const EntityData = require('../project/data/EntityData.js')
 
     /**
      * Abstract Entity class

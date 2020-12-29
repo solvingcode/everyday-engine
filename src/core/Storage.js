@@ -1,7 +1,7 @@
 define(function (require) {
 
     const XmlHelper = require('../utils/XmlHelper.js')
-    const Schema = require('./Schema.js')
+    const Schema = require('../project/schema/Schema.js')
 
     /**
      * Utils to manage the storage of data over time.
@@ -79,8 +79,8 @@ define(function (require) {
                         })
                     return key !== 'element' ? {[key]: result} : result
                 }
-            }else if(_.isObject(data) || _.isArray(data)){
-                throw new TypeError(`${key} must be defined in the schema`)
+            }else{
+                throw new TypeError(`${schemaMeta} must be defined in the schema`)
             }
             return null
         }
@@ -127,7 +127,8 @@ define(function (require) {
     }
 
     Storage.type = {
-        ENTITY: 'entities'
+        ENTITY: 'entities',
+        WORLD: 'world'
     }
 
     Storage.format = {

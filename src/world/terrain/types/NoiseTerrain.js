@@ -9,9 +9,7 @@ define(function (require) {
      */
     class NoiseTerrain extends Terrain {
         /**
-         * @param {number} x
-         * @param {number} y
-         * @param {EntityProps} props
+         * @override
          */
         loadChunk(x, y, props) {
             return this.world.addEntity({x, y}, NoiseEntity, props).getId()

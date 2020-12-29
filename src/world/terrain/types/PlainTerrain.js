@@ -8,9 +8,7 @@ define(function (require) {
      */
     class PlainTerrain extends Terrain {
         /**
-         * @param {number} x
-         * @param {number} y
-         * @param {Object} props
+         * @override
          */
         loadChunk(x, y, props) {
             return this.world.addEntity({x, y}, PlatformEntity, props).getId()

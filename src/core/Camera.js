@@ -1,11 +1,15 @@
-define(function () {
+define(function (require) {
+
+    const CameraData = require('../project/data/CameraData.js')
+
     /**
-     * Camera class
+     * @class {Camera}
      * Define the camera
      * @property {{x: number, y: number, z: number}} position
      */
-    class Camera {
+    class Camera  extends CameraData{
         constructor(position) {
+            super()
             this.initPosition = Object.assign({x: 0, y: 0, z: 0}, position)
             this.position = this.initPosition
             this.entityId = null
@@ -73,47 +77,6 @@ define(function () {
             return entityManager.findById(this.entityId)
         }
 
-        /**
-         * @param {string} x
-         */
-        setPositionX(x) {
-            this.position.x = parseFloat(x)
-        }
-
-        /**
-         * @param {string} y
-         */
-        setPositionY(y) {
-            this.position.y = parseFloat(y)
-        }
-
-        /**
-         * @param {string} z
-         */
-        setPositionZ(z) {
-            this.position.z = parseFloat(z)
-        }
-
-        /**
-         * @return {number}
-         */
-        getPositionX() {
-            return this.position.x
-        }
-
-        /**
-         * @return {number}
-         */
-        getPositionY() {
-            return this.position.y
-        }
-
-        /**
-         * @return {number}
-         */
-        getPositionZ() {
-            return this.position.z
-        }
     }
 
     return Camera

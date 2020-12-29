@@ -1,12 +1,15 @@
 define(function (require) {
 
     const EntityManager = require('../world/manager/EntityManager.js')
-    class Physics {
+    const PhysicsData = require('../project/data/PhysicsData.js')
+
+    class Physics extends PhysicsData {
 
         /**
          * @param {PhysicsEngine} physicsEngine
          */
         constructor(physicsEngine) {
+            super()
             this.entityManager = EntityManager.get()
             this.physicsEngine = physicsEngine
             this.physicsEngine.setPhysicsManager(this)
@@ -35,9 +38,9 @@ define(function (require) {
             const jointEntites = this.entityManager.getAttachEntities()
             this.physicsEngine.getBodies().map((body, index) => {
                 const entity = bodyEntities[index]
-                const { x, y } = entity.fromCenterPosition(body.position)
+                const {x, y} = entity.fromCenterPosition(body.position)
                 const rotation = body.angle ? body.angle % (Math.PI * 2) : 0
-                entity.setPosition({ x: parseInt(x), y: parseInt(y) })
+                entity.setPosition({x: parseInt(x), y: parseInt(y)})
                 entity.setRotationAndGenerate(Math.round(rotation * 100) / 100)
                 entity.setVelocity(body.velocity)
                 entity.setAngularVelocity(body.angularVelocity)
@@ -71,18 +74,18 @@ define(function (require) {
          * @param {AttachEntity} entity
          * @param {Constraint} constraint
          */
-        updateConstraint(entity, constraint){
+        updateConstraint(entity, constraint) {
             const shape = this.physicsEngine.findShapeFromEntity(entity)
             if (shape) {
                 this.physicsEngine.updateConstraint(entity, constraint)
-            }else{
+            } else {
                 throw TypeError(`Shape not founded for the constraint entity ${entity.id}`)
             }
         }
 
         /**
          * Get the body phyiscs from the given entity
-         * @param {Entity} entity 
+         * @param {Entity} entity
          */
         getBodyFromEntity(entity) {
             const shape = this.physicsEngine.findShapeFromEntity(entity)
@@ -167,8 +170,8 @@ define(function (require) {
          * Remove an entity from physics engine
          * @param {Entity} entity
          */
-        loadEntity(entity){
-            if(this.isRunning){
+        loadEntity(entity) {
+            if (this.isRunning) {
                 entity.loadPhysics(this.physicsEngine)
             }
         }
@@ -177,15 +180,15 @@ define(function (require) {
          * Remove an entity from physics engine
          * @param {Entity} entity
          */
-        unloadEntity(entity){
-            if(this.isRunning) {
+        unloadEntity(entity) {
+            if (this.isRunning) {
                 entity.unloadPhysics(this.physicsEngine)
             }
         }
 
         /**
          * Flag the physics to restart
-         * @param {Boolean} toRestart 
+         * @param {Boolean} toRestart
          */
         setToRestart(toRestart) {
             this.toRestart = toRestart

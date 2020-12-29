@@ -2,19 +2,23 @@ define(function (require) {
 
     const PlainTerrain = require('./types/PlainTerrain.js')
     const NoiseTerrain = require('./types/NoiseTerrain.js')
+    const TerrainManagerData = require('../../project/data/TerrainManagerData.js')
 
     /**
      * Manage all terrains
+     * @class {TerrainManager}
+     * @extends {TerrainManagerData}
      *
      * @property {World} world
      * @property {Object.<string, Terrain>} terrainTypes
      * @property {Terrain} terrain
      */
-    class TerrainManager {
+    class TerrainManager extends TerrainManagerData{
         /**
          * @param {World} world
          */
         constructor(world) {
+            super()
             this.world = world
             this.terrain = null
             this.init()

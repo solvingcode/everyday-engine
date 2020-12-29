@@ -1,10 +1,13 @@
 define(function (require) {
 
     const VirtualEntity = require('../../entity/VirtualEntity.js')
+    const TerrainData = require('../../project/data/TerrainData.js')
 
     /**
      * Terrain class
      * Define and generate terrains
+     * @class {Terrain}
+     * @extends {TerrainData}
      * @abstract
      *
      * @property {World} world
@@ -12,11 +15,12 @@ define(function (require) {
      * @property {Vector} position
      * @property {number} entityId
      */
-    class Terrain {
+    class Terrain extends TerrainData{
         /**
          * @param {World} world
          */
         constructor(world) {
+            super()
             this.world = world
             this.entityId = null
             this.size = {width: SCENE_WIDTH, height: 300}
@@ -50,6 +54,17 @@ define(function (require) {
          */
         load() {
             this.loadChunks()
+        }
+
+        /**
+         * @abstract
+         * @param {number} x
+         * @param {number} y
+         * @param {EntityProps} props
+         * @return {number}
+         */
+        loadChunk(x, y, props) {
+            throw new TypeError('loadChunks must be implemented')
         }
 
         /**

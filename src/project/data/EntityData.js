@@ -1,6 +1,6 @@
 define(function (require) {
 
-    const Maths = require('../utils/Maths.js')
+    const Maths = require('../../utils/Maths.js')
 
     /**
      * Class define all entity's data and props (getters and setters)
