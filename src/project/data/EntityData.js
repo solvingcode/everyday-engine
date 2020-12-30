@@ -1,17 +1,20 @@
-define(function (require) {
+define(function(require){
 
+    const Data = require('./Data.js')
     const Maths = require('../../utils/Maths.js')
 
     /**
      * Class define all entity's data and props (getters and setters)
      * @abstract
+     * @extends {Data}
      */
-    class EntityData{
+    class EntityData extends Data{
 
         /**
          * @param {EntityProps} props
          */
         constructor(props = {}) {
+            super()
             props.style = props.style || {color: '#000000', fillColor: ''}
             this.id = Maths.generateId()
             this.shape = null

@@ -13,6 +13,8 @@ define(function (require) {
 
         constructor() {
             this.storage = Storage.get()
+            this.fileType = FileHelper.type.XML
+            this.dataFormat = Storage.format.XML
         }
 
         save(){
@@ -20,15 +22,19 @@ define(function (require) {
                 this.storage
                     .updateAndValidate(Storage.type.WORLD, World.get())
             )
-            const dataExport = data.export(Storage.format.XML)
-            FileHelper.save(dataExport, FileHelper.type.XML)
+            const dataExport = data.export(this.dataFormat)
+            FileHelper.save(dataExport, this.fileType)
         }
 
         /**
-         * @param {Object} file
+         * @param {Blob} file
          */
-        load(file){
-
+        async load(file){
+            const data = await FileHelper.load(file, this.fileType)
+            if(data){
+                const dataImport = this.storage.import(data, this.dataFormat)
+                dataImport && this.storage.load(Storage.type.WORLD, dataImport.project, World)
+            }
         }
 
         static get() {

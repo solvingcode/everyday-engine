@@ -21,6 +21,47 @@ define(function () {
         }
 
         /**
+         * @param {string} data
+         * @returns {Map<string, *>}
+         */
+        static import(data) {
+            if (_.isArray(data)) {
+                throw new TypeError('Data to export as XML must be an Object')
+            }
+            const parser = new DOMParser()
+            const node = parser.parseFromString(data, 'application/xml')
+            return this.importData('project', node.documentElement)
+        }
+
+        /**
+         * @param {string} key
+         * @param {HTMLElement|ChildNode} node
+         */
+        static importData(key, node){
+            const isArray = key === 'element'
+            let data = {}
+            const attributes = node.attributes
+            for(let nodeAttr in attributes){
+                if(attributes.hasOwnProperty(nodeAttr)){
+                    const attribute = attributes[nodeAttr].name
+                    data[attribute] = attributes[attribute].nodeValue
+                }
+            }
+            node.childNodes.forEach(cNode => {
+                const subObject = this.importData(cNode.nodeName, cNode)
+                if(subObject){
+                    if(_.isArray(subObject)){
+                        data = !Object.keys(data).length ? [] : data
+                        data = data.concat(subObject)
+                    }else{
+                        data = Object.assign(data, subObject)
+                    }
+                }
+            })
+            return isArray ? [data] : {[key]: data}
+        }
+
+        /**
          * @param {string} key
          * @param {Object|Array} data
          * @param {Document} root

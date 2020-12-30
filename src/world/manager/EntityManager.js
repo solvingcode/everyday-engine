@@ -5,6 +5,7 @@ define(function (require) {
     const AttachEntity = require('../../entity/types/joint/AttachEntity.js')
     const GroupEntity = require('../../entity/VirtualEntity.js')
     const Maths = require('../../utils/Maths.js')
+    const EntityManagerData = require('../../project/data/EntityManagerData.js')
 
     /**
      * Entity Manager class
@@ -12,8 +13,10 @@ define(function (require) {
      *
      * @property {EntityMotion[]} entities
      */
-    class EntityManager {
+    class EntityManager extends EntityManagerData {
+
         constructor() {
+            super()
             this.entities = []
         }
 
@@ -82,6 +85,13 @@ define(function (require) {
                 this.entities.push(element)
             }
             return this.getAt(x, y, type)
+        }
+
+        /**
+         * Regenerate the mesh of all entities
+         */
+        regenerateAll(){
+            this.entities.forEach(entity => this.regenerate(entity))
         }
 
         /**

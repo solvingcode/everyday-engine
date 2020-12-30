@@ -13,19 +13,52 @@ define(function (require) {
          */
         static getMeta(prefix = '', rootMeta = null) {
             !rootMeta && (rootMeta = SchemaMeta)
-            let meta = {}
+            let resultMeta = {}
             for (let eMetaData in rootMeta) {
                 if (rootMeta.hasOwnProperty(eMetaData)) {
-                    const metaData = rootMeta[eMetaData]
+                    const {type, meta, prototype} = rootMeta[eMetaData]
                     const metaPrefix = `${prefix}${eMetaData}`
-                    meta[metaPrefix] = metaData.type
-                    const subMeta = metaData.meta
+                    resultMeta[metaPrefix] = prototype || this.getPrototypeOf(type)
+                    const subMeta = meta
                     if (subMeta) {
-                        meta = Object.assign(meta, this.getMeta(`${metaPrefix}.`, subMeta))
+                        resultMeta = Object.assign(resultMeta, this.getMeta(`${metaPrefix}.`, subMeta))
                     }
                 }
             }
-            return meta
+            return resultMeta
+        }
+
+        /**
+         * Get the prototype from the given type
+         * @param {Class|string} type
+         * @return {Class|string|null}
+         */
+        static getPrototypeOf(type){
+            let prototype = type
+            if(!_.isString(type) && type !== Array){
+                prototype = this.findDataPrototypeOf(type)
+                if(!prototype){
+                    throw new TypeError(`${type.name} must extends Data type class!`)
+                }
+            }
+            return prototype
+        }
+
+        /**
+         * Find parent Data class
+         * @param {Class} type
+         * @return {Class|null}
+         */
+        static findDataPrototypeOf(type){
+            const prototype = Object.getPrototypeOf(type)
+            if(prototype && prototype.name){
+                if(prototype.name.match(/^[a-zA-Z]+Data$/)){
+                    return prototype
+                }else{
+                    return this.findDataPrototypeOf(prototype)
+                }
+            }
+            return null
         }
 
         /**

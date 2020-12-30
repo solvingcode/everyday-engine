@@ -8,6 +8,7 @@ define(function (require) {
     const MatterEngine = require('../physics/engine/matter/Engine.js')
     const TerrainManager = require('./terrain/TerrainManager.js')
     const ConstraintEntity = require('../entity/types/joint/ConstraintEntity.js')
+    const ObjectHelper = require('../utils/ObjectHelper.js')
 
     /**
      * @class {World}
@@ -87,8 +88,12 @@ define(function (require) {
             }
         }
 
+        reload(){
+            this.getEntityManager().regenerateAll()
+        }
+
         /**
-         * Load the world
+         * Load the world (generate terrain, ...)
          */
         load() {
             const terrain = this.getTerrainManager().getTerrain()
@@ -132,6 +137,14 @@ define(function (require) {
          */
         getMouseConstraint() {
             return this.getEntityManager().findById(this.mouseConstraintId)
+        }
+
+        /**
+         * @param {Object} data
+         */
+        static set(data){
+            World.instance = ObjectHelper.deepMerge(World.instance, data)
+            world.instance.reload()
         }
 
         static get() {

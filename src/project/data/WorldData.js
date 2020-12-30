@@ -1,11 +1,15 @@
-define(function(){
+define(function(require){
+
+    const Data = require('./Data.js')
 
     /**
      * @class {WorldData}
+     * @extends {Data}
+     *
      * @property {AiEngine} aiEngine
      * @property {Camera} camera
      */
-    class WorldData {
+    class WorldData extends Data{
 
         entityManager
         camera

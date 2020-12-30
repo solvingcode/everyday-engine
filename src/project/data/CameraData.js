@@ -1,9 +1,12 @@
-define(function(){
+define(function(require){
+
+    const Data = require('./Data.js')
 
     /**
      * @class {CameraData}
+     * @extends {Data}
      */
-    class CameraData {
+    class CameraData extends Data {
 
         position
         entityId

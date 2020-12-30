@@ -1,9 +1,12 @@
-define(function(){
+define(function(require){
+
+    const Data = require('./Data.js')
 
     /**
      * @class {TerrainManagerData}
+     * @extends {Data}
      */
-    class TerrainManagerData {
+    class TerrainManagerData extends Data{
 
         terrain
 

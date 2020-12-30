@@ -1,9 +1,12 @@
-define(function(){
+define(function(require){
+
+    const Data = require('./Data.js')
 
     /**
      * @class {PhysicsData}
+     * @extends {Data}
      */
-    class PhysicsData {
+    class PhysicsData extends Data{
 
     }
 

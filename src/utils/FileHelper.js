@@ -17,6 +17,33 @@ define(function () {
             a.click()
         }
 
+        /**
+         * @param {Blob} file
+         * @param {string} type
+         */
+        static load(file, type){
+            if(this.validate(file, type)){
+                return new Promise((resolve, reject) => {
+                    const reader = new FileReader()
+                    reader.onload = () => {
+                        resolve(reader.result)
+                    }
+                    reader.onerror = reject
+                    reader.readAsText(file)
+                })
+            }
+        }
+
+        /**
+         * @param {Blob} file
+         * @param {string} type
+         * @return {boolean}
+         */
+        static validate(file, type){
+            const fileType = file.type
+            return fileType === type
+        }
+
         static type = {
             XML: 'text/xml'
         }

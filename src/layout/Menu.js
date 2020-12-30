@@ -5,8 +5,9 @@ define(function (require) {
     const JointMenuItem = require('./items/draw/JointMenuItem.js')
     const AttachPointMenuItem = require('./items/draw/AttachPointMenuItem.js')
     const SelectorMenuItem = require('./items/draw/SelectorMenuItem.js')
-    const NewDocMenuItem = require('./items/action/NewDocMenuItem.js')
-    const SaveProjectMenuItem = require('./items/action/SaveProjectMenuItem.js')
+    const NewDocMenuItem = require('./items/project/NewDocMenuItem.js')
+    const SaveProjectMenuItem = require('./items/project/SaveProjectMenuItem.js')
+    const LoadProjectMenuItem = require('./items/project/LoadProjectMenuItem.js')
     const SimulateStartMenuItem = require('./items/action/SimulateStartMenuItem.js')
     const SimulateStopMenuItem = require('./items/action/SimulateStopMenuItem.js')
     const DeleteMenuItem = require('./items/action/DeleteMenuItem.js')
@@ -48,6 +49,7 @@ define(function (require) {
 
                 //TOP
                 new NewDocMenuItem(),
+                new LoadProjectMenuItem(),
                 new SaveProjectMenuItem(),
                 new DeleteMenuItem(),
                 new DuplicateMenuItem(),

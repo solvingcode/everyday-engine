@@ -51,6 +51,17 @@ define(function (require) {
         }
 
         /**
+         * Load and validate data to the given target
+         * @param {string} type
+         * @param {Object|Array} data
+         * @param {Object} target
+         */
+        load(type, data, target){
+            this.updateAndValidate(type, data[type])
+            target.set(_.cloneDeep(this.data[type]))
+        }
+
+        /**
          * @param {string} key
          * @param {Object|Array} data
          * @param {SchemaMeta} schema
@@ -92,7 +103,7 @@ define(function (require) {
          */
         getProperties(object, prototype) {
             if(prototype === Array){
-                return (object || []).map(value => ({key: 'element', value}))
+                return _.isArray(object) ? object.map(value => ({key: 'element', value})) : []
             }else {
                 const tempPrototype = new prototype()
                 return Object.getOwnPropertyNames(tempPrototype)
@@ -121,6 +132,21 @@ define(function (require) {
                     return XmlHelper.export(this.data)
                 default:
                     throw new TypeError(`Export format ${format} not recognized`)
+            }
+        }
+
+        /**
+         * Import data from the given data and format
+         * @param {string} data
+         * @param {Storage.format} format
+         * @return {Map<string, any>}
+         */
+        import(data, format){
+            switch (format) {
+                case Storage.format.XML:
+                    return XmlHelper.import(data)
+                default:
+                    throw new TypeError(`Import format ${format} not recognized`)
             }
         }
 

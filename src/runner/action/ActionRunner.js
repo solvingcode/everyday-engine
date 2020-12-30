@@ -21,6 +21,7 @@ define(function (require) {
     const DetachCameraAction = require('./camera/DetachCameraAction.js')
     const MoveCameraAction = require('./camera/MoveCameraAction.js')
     const SaveProjectAction = require('./project/SaveProjectAction.js')
+    const LoadProjectAction = require('./project/LoadProjectAction.js')
     const ZoomInOutCameraAction = require('./camera/ZoomInOutCameraAction.js')
     const PhysicsStaticAction = require('./physics/PhysicsStaticAction.js')
     const PhysicsNotStaticAction = require('./physics/PhysicsNotStaticAction.js')
@@ -63,6 +64,7 @@ define(function (require) {
                 DETACH_CAMERA: DetachCameraAction,
                 MOVE_CAMERA: MoveCameraAction,
                 SAVE_PROJECT: SaveProjectAction,
+                LOAD_PROJECT: LoadProjectAction,
                 ZOOM_CAMERA: ZoomInOutCameraAction,
                 PHYSICS_STATIC: PhysicsStaticAction,
                 PHYSICS_NOT_STATIC: PhysicsNotStaticAction,

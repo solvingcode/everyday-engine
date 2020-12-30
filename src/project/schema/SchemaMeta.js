@@ -1,20 +1,20 @@
 define(function(require){
 
-    const EntityData = require('../data/EntityData.js')
+    const EntityMotion = require('../../entity/EntityMotion.js')
     const Vector = require('../../utils/Vector.js')
     const Size = require('../../pobject/Size.js')
     const Style = require('../../pobject/Style.js')
     const PerlinNoiseConfig = require('../../pobject/PerlinNoiseConfig.js')
-    const WorldData = require('../data/WorldData.js')
+    const World = require('../../world/World.js')
     const EntityManager = require('../../world/manager/EntityManager.js')
-    const CameraData = require('../data/CameraData.js')
-    const PhysicsData = require('../data/PhysicsData.js')
-    const TerrainManagerData = require('../data/TerrainManagerData.js')
-    const TerrainData = require('../../project/data/TerrainData.js')
+    const Camera = require('../../core/Camera.js')
+    const Physics = require('../../physics/Physics.js')
+    const TerrainManager = require('../../world/terrain/TerrainManager.js')
+    const Terrain = require('../../world/terrain/Terrain.js')
 
     return {
         world: {
-            type: WorldData,
+            type: World,
             meta: {
                 mouseConstraintId: {
                   type: 'number'
@@ -26,7 +26,7 @@ define(function(require){
                             type: Array,
                             meta: {
                                 element: {
-                                    type: EntityData,
+                                    type: EntityMotion,
                                     meta: {
                                         id: {
                                             type: 'number'
@@ -59,7 +59,7 @@ define(function(require){
                                             type: 'boolean'
                                         },
                                         size: {
-                                            type: Size,
+                                            prototype: Size,
                                             meta: {
                                                 width: {
                                                     type: 'number'
@@ -70,7 +70,7 @@ define(function(require){
                                             }
                                         },
                                         style: {
-                                            type: Style,
+                                            prototype: Style,
                                             meta: {
                                                 color: {
                                                     type: 'string'
@@ -87,7 +87,7 @@ define(function(require){
                                             }
                                         },
                                         advancedStyle: {
-                                            type: Style,
+                                            prototype: Style,
                                             meta: {
                                                 color: {
                                                     type: 'string'
@@ -104,7 +104,7 @@ define(function(require){
                                             }
                                         },
                                         noiseConfigs: {
-                                            type: PerlinNoiseConfig,
+                                            prototype: PerlinNoiseConfig,
                                             meta: {
                                                 seed: {
                                                     type: 'number'
@@ -127,7 +127,7 @@ define(function(require){
                                             type: Array,
                                             meta: {
                                                 element: {
-                                                    type: Vector,
+                                                    prototype: Vector,
                                                     meta: {
                                                         x: {
                                                             type: 'number'
@@ -143,7 +143,7 @@ define(function(require){
                                             }
                                         },
                                         position: {
-                                            type: Vector,
+                                            prototype: Vector,
                                             meta: {
                                                 x: {
                                                     type: 'number'
@@ -163,13 +163,13 @@ define(function(require){
                     }
                 },
                 camera: {
-                    type: CameraData,
+                    type: Camera,
                     meta: {
                         entityId: {
                             type: 'number'
                         },
                         position: {
-                            type: Vector,
+                            prototype: Vector,
                             meta: {
                                 x: {
                                     type: 'number'
@@ -185,13 +185,13 @@ define(function(require){
                     }
                 },
                 physics: {
-                    type: PhysicsData
+                    type: Physics
                 },
                 terrainManager: {
-                    type: TerrainManagerData,
+                    type: TerrainManager,
                     meta: {
                         terrain: {
-                            type: TerrainData,
+                            type: Terrain,
                             meta: {
                                 entityId: {
                                     type: 'number'
@@ -200,7 +200,7 @@ define(function(require){
                                     type: 'number'
                                 },
                                 size: {
-                                    type: Size,
+                                    prototype: Size,
                                     meta: {
                                         width: {
                                             type: 'number'
