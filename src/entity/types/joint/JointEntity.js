@@ -9,7 +9,7 @@ define(function (require) {
      */
     class JointEntity extends AttachEntity {
 
-        constructor(props) {
+        constructor(props = {}) {
             props.style = props.style || { color: '#0000FF' }
             super(props)
             this.shape = EntityMotion.shapes.ATTACH

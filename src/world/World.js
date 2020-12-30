@@ -5,10 +5,8 @@ define(function (require) {
     const EntitySelector = require('./manager/EntitySelector.js')
     const Camera = require('../core/Camera.js')
     const Physics = require('../physics/Physics.js')
-    const MatterEngine = require('../physics/engine/matter/Engine.js')
     const TerrainManager = require('./terrain/TerrainManager.js')
     const ConstraintEntity = require('../entity/types/joint/ConstraintEntity.js')
-    const ObjectHelper = require('../utils/ObjectHelper.js')
 
     /**
      * @class {World}
@@ -20,7 +18,7 @@ define(function (require) {
             super()
             this.entityManager = EntityManager.get()
             this.camera = new Camera({ x: SCENE_WIDTH / 2, y: SCENE_HEIGHT / 2 })
-            this.physics = new Physics(new MatterEngine())
+            this.physics = new Physics()
             this.terrainManager = new TerrainManager(this)
             this.mouseConstraintId = this.entityManager.load(0, 0, ConstraintEntity).getId()
         }
@@ -140,11 +138,14 @@ define(function (require) {
         }
 
         /**
-         * @param {Object} data
+         * @param {World} data
          */
         static set(data){
-            World.instance = ObjectHelper.deepMerge(World.instance, data)
-            world.instance.reload()
+            if(data instanceof World){
+                World.instance = data
+            }else{
+                throw new TypeError('Cannot set the new world, data must be instance of World class')
+            }
         }
 
         static get() {

@@ -2,16 +2,14 @@ define(function (require) {
 
     const EntityManager = require('../world/manager/EntityManager.js')
     const PhysicsData = require('../project/data/PhysicsData.js')
+    const MatterEngine = require('../physics/engine/matter/Engine.js')
 
     class Physics extends PhysicsData {
 
-        /**
-         * @param {PhysicsEngine} physicsEngine
-         */
-        constructor(physicsEngine) {
+        constructor() {
             super()
             this.entityManager = EntityManager.get()
-            this.physicsEngine = physicsEngine
+            this.physicsEngine = new MatterEngine()
             this.physicsEngine.setPhysicsManager(this)
             this.toRestart = false
             this.isRunning = false

@@ -18,7 +18,10 @@ define(function (require) {
                 if (rootMeta.hasOwnProperty(eMetaData)) {
                     const {type, meta, prototype} = rootMeta[eMetaData]
                     const metaPrefix = `${prefix}${eMetaData}`
-                    resultMeta[metaPrefix] = prototype || this.getPrototypeOf(type)
+                    resultMeta[metaPrefix] = {
+                        prototype: prototype || this.getPrototypeOf(type),
+                        type: type || prototype
+                    }
                     const subMeta = meta
                     if (subMeta) {
                         resultMeta = Object.assign(resultMeta, this.getMeta(`${metaPrefix}.`, subMeta))
@@ -33,11 +36,11 @@ define(function (require) {
          * @param {Class|string} type
          * @return {Class|string|null}
          */
-        static getPrototypeOf(type){
+        static getPrototypeOf(type) {
             let prototype = type
-            if(!_.isString(type) && type !== Array){
+            if (!_.isString(type) && type !== Array) {
                 prototype = this.findDataPrototypeOf(type)
-                if(!prototype){
+                if (!prototype) {
                     throw new TypeError(`${type.name} must extends Data type class!`)
                 }
             }
@@ -49,12 +52,12 @@ define(function (require) {
          * @param {Class} type
          * @return {Class|null}
          */
-        static findDataPrototypeOf(type){
+        static findDataPrototypeOf(type) {
             const prototype = Object.getPrototypeOf(type)
-            if(prototype && prototype.name){
-                if(prototype.name.match(/^[a-zA-Z]+Data$/)){
+            if (prototype && prototype.name) {
+                if (prototype.name.match(/^[a-zA-Z]+Data$/)) {
                     return prototype
-                }else{
+                } else {
                     return this.findDataPrototypeOf(prototype)
                 }
             }
@@ -69,9 +72,9 @@ define(function (require) {
          */
         static getValue(schemaMeta, value) {
             const schema = this.getMeta()
-            const type = schema[schemaMeta]
+            const {prototype} = schema[schemaMeta]
             let newValue
-            switch (type) {
+            switch (prototype) {
                 case 'number':
                     newValue = _.isNumber(value) ? value : 0
                     break

@@ -15,7 +15,7 @@ define(function (require) {
      * @property {Vector} position
      * @property {number} entityId
      */
-    class Terrain extends TerrainData{
+    class Terrain extends TerrainData {
         /**
          * @param {World} world
          */

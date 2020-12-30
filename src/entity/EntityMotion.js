@@ -279,6 +279,13 @@ define(function (require) {
             return this.style.color || this.props.style.color
         }
 
+        /**
+         * @override
+         */
+        static newInstance(data){
+
+        }
+
     }
 
     return EntityMotion

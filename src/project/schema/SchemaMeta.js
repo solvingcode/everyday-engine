@@ -12,22 +12,42 @@ define(function(require){
     const TerrainManager = require('../../world/terrain/TerrainManager.js')
     const Terrain = require('../../world/terrain/Terrain.js')
 
+    /**
+     * Define the schema of project data.
+     * Used to serialize/deserialize all data when saving/loading the project.
+     * the schema of each data can be defined using type or prototype properties :
+     *      - Type: the type can be a string (like 'number'), Array, or a Class of Data type.
+     *              if type defined as Data, the Data parent class will be used for serializing,
+     *              and the type for deserializing
+     *      - Prototype: the prototype can be a string, Array or any Class
+     *                   if prototype is specified, it will be used for serializing and deserializing
+     */
+
     return {
         world: {
             type: World,
             meta: {
+                dataId: {
+                    type: 'number'
+                },
                 mouseConstraintId: {
                   type: 'number'
                 },
                 entityManager: {
                     type: EntityManager,
                     meta: {
+                        dataId: {
+                            type: 'number'
+                        },
                         entities: {
                             type: Array,
                             meta: {
                                 element: {
                                     type: EntityMotion,
                                     meta: {
+                                        dataId: {
+                                            type: 'number'
+                                        },
                                         id: {
                                             type: 'number'
                                         },
@@ -165,6 +185,9 @@ define(function(require){
                 camera: {
                     type: Camera,
                     meta: {
+                        dataId: {
+                            type: 'number'
+                        },
                         entityId: {
                             type: 'number'
                         },
@@ -185,14 +208,25 @@ define(function(require){
                     }
                 },
                 physics: {
-                    type: Physics
+                    type: Physics,
+                    meta: {
+                        dataId: {
+                            type: 'number'
+                        }
+                    }
                 },
                 terrainManager: {
                     type: TerrainManager,
                     meta: {
+                        dataId: {
+                            type: 'number'
+                        },
                         terrain: {
                             type: Terrain,
                             meta: {
+                                dataId: {
+                                    type: 'number'
+                                },
                                 entityId: {
                                     type: 'number'
                                 },

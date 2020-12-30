@@ -2,6 +2,8 @@ define(function (require) {
 
     const XmlHelper = require('../utils/XmlHelper.js')
     const Schema = require('../project/schema/Schema.js')
+    const Data = require('../project/data/Data.js')
+    const DataSchema = require('../project/data/DataSchema.js')
 
     /**
      * Utils to manage the storage of data over time.
@@ -43,9 +45,10 @@ define(function (require) {
          * Update the storage and validate data
          * @param {string} type
          * @param {Object|Array} data
+         * @param {boolean} serialize
          */
-        updateAndValidate(type, data){
-            const validData = this.validate(type, data, Schema.getMeta())
+        updateAndValidate(type, data, serialize = true){
+            const validData = this.validate(type, data, Schema.getMeta(), {serialize})
             this.data[type] = _.cloneDeep(validData[type])
             return this
         }
@@ -57,35 +60,47 @@ define(function (require) {
          * @param {Object} target
          */
         load(type, data, target){
-            this.updateAndValidate(type, data[type])
+            this.updateAndValidate(type, data[type], false)
             target.set(_.cloneDeep(this.data[type]))
         }
 
         /**
          * @param {string} key
-         * @param {Object|Array} data
+         * @param {Object|Array|Data} data
          * @param {SchemaMeta} schema
          * @param {string} schemaPrefix
+         * @param {{serialize: boolean}} options
          * @return {Object|Array}
+         * @todo: Refactor/Simplify the implementation
          */
-        validate(key, data, schema, schemaPrefix = ''){
+        validate(key, data, schema, options, schemaPrefix = ''){
             const schemaMeta = `${schemaPrefix}${key}`
-            const prototype = schema[schemaMeta]
-            if (prototype) {
+            const schemaMetaProto = schema[schemaMeta]
+            if (schemaMetaProto) {
+                const prototype = options.serialize ? schemaMetaProto.prototype : schemaMetaProto.type
                 if(!_.isString(prototype)){
-                    const isArray = prototype === Array
-                    let result = isArray ? [] : {}
-                    this.getProperties(data, prototype)
+                    let result
+                    if(prototype.prototype instanceof Data){
+                        if(options.serialize){
+                            result = new prototype()
+                            data && data.setDataId(DataSchema.getId(data.constructor))
+                        }else{
+                            result = DataSchema.newInstance(data.dataId, prototype)
+                        }
+                    }else{
+                        result = new prototype()
+                    }
+                    result && this.getProperties(data, schemaMetaProto.prototype)
                         .forEach(prop => {
-                            const subResult = this.validate(prop.key, prop.value, schema,`${schemaMeta}.`)
+                            const subResult = this.validate(prop.key, prop.value, schema, options,`${schemaMeta}.`)
                             if (subResult) {
-                                if(isArray){
+                                if(_.isArray(result)){
                                     result.push(subResult)
                                 }else{
                                     result = Object.assign(result, subResult)
                                 }
                             } else {
-                                result[prop.key] =  Schema.getValue(`${schemaMeta}.${prop.key}`, prop.value)
+                                result[prop.key] = Schema.getValue(`${schemaMeta}.${prop.key}`, prop.value)
                             }
                         })
                     return key !== 'element' ? {[key]: result} : result
@@ -139,7 +154,7 @@ define(function (require) {
          * Import data from the given data and format
          * @param {string} data
          * @param {Storage.format} format
-         * @return {Map<string, any>}
+         * @return {Map<string, *>}
          */
         import(data, format){
             switch (format) {
