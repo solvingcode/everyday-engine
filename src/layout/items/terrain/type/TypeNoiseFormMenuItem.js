@@ -12,7 +12,7 @@ define(function (require) {
          */
         getFormObject(){
             const terrain = World.get().getTerrainManager().getTerrain()
-            return terrain && terrain.getEntity()
+            return terrain && terrain.getEntity(World.get())
         }
     }
 

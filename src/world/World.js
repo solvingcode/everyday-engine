@@ -96,7 +96,7 @@ define(function (require) {
         load() {
             const terrain = this.getTerrainManager().getTerrain()
             if(terrain){
-                terrain.load()
+                terrain.load(this)
             }
         }
 
@@ -143,6 +143,7 @@ define(function (require) {
         static set(data){
             if(data instanceof World){
                 World.instance = data
+                World.instance.reload()
             }else{
                 throw new TypeError('Cannot set the new world, data must be instance of World class')
             }

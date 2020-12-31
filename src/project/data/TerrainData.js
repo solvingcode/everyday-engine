@@ -11,6 +11,8 @@ define(function(require){
         entityId
         size
         rotation
+        chunksNbr
+        chunkIds
 
     }
 

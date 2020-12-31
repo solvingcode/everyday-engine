@@ -10,96 +10,102 @@ define(function (require) {
      * @extends {TerrainData}
      * @abstract
      *
-     * @property {World} world
      * @property {number[]} chunkIds
      * @property {Vector} position
      * @property {number} entityId
      */
     class Terrain extends TerrainData {
-        /**
-         * @param {World} world
-         */
-        constructor(world) {
+
+        constructor() {
             super()
-            this.world = world
             this.entityId = null
             this.size = {width: SCENE_WIDTH, height: 300}
             this.rotation = 0
-            this.init()
+            this.chunksNbr = 3
+            this.chunkIds = []
         }
 
         /**
          * Initialize data
+         * @param {World} world
          */
-        init() {
-            this.chunksNbr = 3
-            this.chunkIds = []
-            this.entityId = this.world.addEntity(
-                {x: 0, y: 650},
-                VirtualEntity,
-                {
-                    size: this.size,
-                    noiseConfigs: {
-                        seed: 1234,
-                        octaves: 9,
-                        amplitude: 80,
-                        persistence: 0.51,
-                        smoothness: 250
-                    }
-                }).getId()
+        init(world) {
+            if(!this.entityId){
+                this.entityId = world.addEntity(
+                    {x: 0, y: 650},
+                    VirtualEntity,
+                    {
+                        size: this.size,
+                        noiseConfigs: {
+                            seed: 1234,
+                            octaves: 9,
+                            amplitude: 80,
+                            persistence: 0.51,
+                            smoothness: 250
+                        }
+                    }).getId()
+            }
         }
 
         /**
          * Load the terrain
+         * @param {World} world
          */
-        load() {
-            this.loadChunks()
+        load(world) {
+            this.init(world)
+            this.loadChunks(world)
         }
 
         /**
          * @abstract
+         * @param {World} world
          * @param {number} x
          * @param {number} y
          * @param {EntityProps} props
          * @return {number}
          */
-        loadChunk(x, y, props) {
+        loadChunk(world, x, y, props) {
             throw new TypeError('loadChunks must be implemented')
         }
 
         /**
          * Unload the terrain
+         * @param {World} world
          */
-        unload() {
-            this.removeChunks()
-            this.world.removeEntityById(this.entityId)
+        unload(world) {
+            this.removeChunks(world)
+            world.removeEntityById(this.entityId)
         }
 
         /**
          * @param {number} entityId
+         * @param {World} world
          * @return {Entity}
          */
-        getEntityById(entityId) {
-            return this.world.getEntityManager().findById(entityId)
+        getEntityById(world, entityId) {
+            return world.getEntityManager().findById(entityId)
         }
 
         /**
+         * @param {World} world
          * @return {Entity}
          */
-        getEntity() {
-            return this.getEntityById(this.entityId)
+        getEntity(world) {
+            return this.getEntityById(world, this.entityId)
         }
 
         /**
          * Create and load chunks by camera position
+         * @param {World} world
          */
-        loadChunks() {
-            const camera = this.world.getCamera()
-            const entity = this.getEntity()
+        loadChunks(world) {
+            const camera = world.getCamera()
+            const entity = this.getEntity(world)
             const chunkIds = Array.from(Array(this.chunksNbr).keys())
                 .map((iChunk) => {
                     const x = Math.floor(camera.position.x / entity.getWidth()) + (iChunk - 1)
                     return this.loadChunk(
+                        world,
                         x * entity.getWidth() + entity.getPositionX(),
                         entity.getPositionY(),
                         {
@@ -110,19 +116,20 @@ define(function (require) {
                 })
             this.chunkIds
                 .filter(entityId => !chunkIds.includes(entityId))
-                .forEach(entityId => this.world.removeEntityById(entityId))
+                .forEach(entityId => world.removeEntityById(entityId))
 
             this.chunkIds = chunkIds
-            this.updateChunks()
+            this.updateChunks(world)
         }
 
         /**
          * Update all chunks (background, size, ...)
+         * @param {World} world
          */
-        updateChunks() {
+        updateChunks(world) {
             this.chunkIds.forEach(entityId => {
-                const chunkEntity = this.getEntityById(entityId)
-                const entity = this.getEntity()
+                const chunkEntity = this.getEntityById(world, entityId)
+                const entity = this.getEntity(world)
                 if (entity.getBackgroundImageBlob() !== chunkEntity.getBackgroundImageBlob()) {
                     chunkEntity.setBackgroundImageBlob(entity.getBackgroundImageBlob())
                 }
@@ -133,25 +140,27 @@ define(function (require) {
                     !_.isEqual(entity.size, chunkEntity.size) ||
                     !_.isEqual(entity.noiseConfigs, chunkEntity.noiseConfigs)
                 ) {
-                    this.removeChunk(entityId)
+                    this.removeChunk(world, entityId)
                 }
             })
         }
 
         /**
          * Remove all chunks from the world
+         * @param {World} world
          */
-        removeChunks() {
+        removeChunks(world) {
             this.chunkIds
-                .forEach(entityId => this.world.removeEntityById(entityId))
+                .forEach(entityId => world.removeEntityById(entityId))
         }
 
         /**
          * Remove the given chunk ID
-         * @param chunkId
+         * @param {World} world
+         * @param {number} chunkId
          */
-        removeChunk(chunkId) {
-            this.world.removeEntityById(chunkId)
+        removeChunk(world, chunkId) {
+            world.removeEntityById(chunkId)
         }
     }
 

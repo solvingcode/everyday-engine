@@ -11,7 +11,7 @@ define(function (require) {
      * @todo Refactor collision properties
      */
     class EntityMotion extends Entity {
-        constructor(props) {
+        constructor(props = {}) {
             super(props)
             if (this.constructor === EntityMotion) {
                 throw new TypeError('Abstract class EntityMotion cannot be instantiated directly')

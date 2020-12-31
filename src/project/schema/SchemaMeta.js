@@ -233,6 +233,17 @@ define(function(require){
                                 rotation: {
                                     type: 'number'
                                 },
+                                chunksNbr: {
+                                    type: 'number'
+                                },
+                                chunkIds: {
+                                    type: Array,
+                                    meta: {
+                                        element: {
+                                            type: 'number'
+                                        }
+                                    }
+                                },
                                 size: {
                                     prototype: Size,
                                     meta: {

@@ -9,17 +9,13 @@ define(function (require) {
      * @class {TerrainManager}
      * @extends {TerrainManagerData}
      *
-     * @property {World} world
      * @property {Object.<string, Terrain>} terrainTypes
      * @property {Terrain} terrain
      */
     class TerrainManager extends TerrainManagerData{
-        /**
-         * @param {World} world
-         */
-        constructor(world) {
+
+        constructor() {
             super()
-            this.world = world
             this.terrain = null
             this.init()
         }
@@ -47,10 +43,10 @@ define(function (require) {
         setTerrainType(type) {
             const terrain = this.terrainTypes[type]
             if(this.terrain){
-                this.terrain.unload()
+                this.terrain.unload(this)
             }
             if (terrain) {
-                this.terrain = new terrain(this.world)
+                this.terrain = new terrain()
             }else{
                 this.terrain = null
             }

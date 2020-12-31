@@ -11,8 +11,8 @@ define(function (require) {
         /**
          * @override
          */
-        loadChunk(x, y, props) {
-            return this.world.addEntity({x, y}, NoiseEntity, props).getId()
+        loadChunk(world, x, y, props) {
+            return world.addEntity({x, y}, NoiseEntity, props).getId()
         }
     }
 
