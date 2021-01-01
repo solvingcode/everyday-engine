@@ -2,7 +2,7 @@ define(function (require) {
 
     const MenuItem = require('../../MenuItem.js')
     const Layout = require('../../Layout.js')
-    const EntityManager = require('../../../world/manager/EntityManager.js')
+    const World = require('../../../world/World.js')
 
     /**
      * Define a layer entity block
@@ -31,7 +31,7 @@ define(function (require) {
          * @override
          */
         isValid() {
-            return super.isValid() && EntityManager.get().entities.includes(this.getEntity())
+            return super.isValid() && World.get().getEntityManager().entities.includes(this.getEntity())
         }
 
         /**

@@ -4,7 +4,6 @@ define(function (require) {
     const StateManager = require('../../state/StateManager.js')
     const World = require('../../world/World.js')
     const EntitySelector = require('../../world/manager/EntitySelector.js')
-    const EntityManager = require('../../world/manager/EntityManager.js')
     const Storage = require('../../core/Storage.js')
 
     class SimulateRunner extends Runner {
@@ -33,7 +32,7 @@ define(function (require) {
          */
         execute(mouse) {
             const stateManager = StateManager.get()
-            const entityManager = EntityManager.get()
+            const entityManager = World.get().getEntityManager()
             const storage = Storage.get()
             if (stateManager.isStart(this.STATE)) {
                 if(!this.isSimulating){
@@ -57,12 +56,12 @@ define(function (require) {
         start(storage, entityManager, stateManager) {
             const world = World.get()
             const aiEngine = world.getAiEngine()
-            EntitySelector.get().unselectAll()
+            EntitySelector.get().unselectAll(world)
             storage.update(Storage.type.ENTITY, entityManager.entities)
             aiEngine && aiEngine.init()
             if (!this.isPhysicsLoaded) {
                 try {
-                    world.getPhysics().run()
+                    world.getPhysics().run(entityManager)
                     this.isPhysicsLoaded = true
                     this.isSimulating = true
                 } catch (error) {
@@ -78,7 +77,7 @@ define(function (require) {
          */
         progress() {
             const world = World.get()
-            world.getPhysics().update(world.getAiEngine())
+            world.getPhysics().update(world.getEntityManager(), world.getAiEngine())
             world.updateCamera()
         }
 

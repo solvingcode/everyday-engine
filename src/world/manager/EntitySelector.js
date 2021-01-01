@@ -1,6 +1,4 @@
-define(function (require) {
-
-    const EntityManager = require('./EntityManager.js')
+define(function () {
 
     class EntitySelector {
         constructor() {
@@ -9,16 +7,18 @@ define(function (require) {
 
         /**
          * Get all entities selected
+         * @param {World} world
          */
-        getSelected() {
-            return EntityManager.get().entities.filter((entity) => entity.selected)
+        getSelected(world) {
+            return world.getEntityManager().entities.filter((entity) => entity.selected)
         }
 
         /**
          * Get first entity selected
+         * @param {World} world
          */
-        getFirstSelected() {
-            const selectedEntities = this.getSelected()
+        getFirstSelected(world) {
+            const selectedEntities = this.getSelected(world)
             if (selectedEntities.length) {
                 return selectedEntities[0]
             }
@@ -27,21 +27,23 @@ define(function (require) {
 
         /**
          * Get the entity in a specific point (absolute position)
+         * @param {World} world
          * @param {Object} point 
          * @param {Entity} exceptType 
          */
-        get(point, exceptType = null) {
-            const entities = this.getAll(point, exceptType)
+        get(world, point, exceptType = null) {
+            const entities = this.getAll(world, point, exceptType)
             return entities.length && entities[entities.length - 1]
         }
 
         /**
          * Get all entities in a specific point (absolute position)
+         * @param {World} world
          * @param {Object} point 
          * @param {Entity} exceptType 
          */
-        getAll(point, exceptType = null) {
-            return EntityManager.get().getActiveEntities().filter((entity) =>
+        getAll(world, point, exceptType = null) {
+            return world.getEntityManager().getActiveEntities().filter((entity) =>
                 entity.includes(point) && entity.selectable &&
                 (!exceptType || !(entity instanceof exceptType))
             )
@@ -49,11 +51,12 @@ define(function (require) {
 
         /**
          * Get all entities inside a selected area
+         * @param {World} world
          * @param {Object} point 
          * @param {Object} size 
          */
-        getInsideArea(point, size) {
-            return EntityManager.get().getActiveEntities().filter((entity) => {
+        getInsideArea(world, point, size) {
+            return world.getEntityManager().getActiveEntities().filter((entity) => {
                 return entity.selectable &&
                     entity.position.x >= point.x &&
                     entity.position.x + entity.size.width <= point.x + size.width &&
@@ -64,50 +67,55 @@ define(function (require) {
 
         /**
          * Select all entities inside the area of selection
+         * @param {World} world
          * @param {Object} point 
          * @param {Object} size 
          * @param {Boolean} includeAttach 
          */
-        select(point, size, includeAttach = false) {
+        select(world, point, size, includeAttach = false) {
             let selectedEntities = []
             if (!size || (!size.width && !size.height)) {
-                const selectedEntity = this.get(point)
+                const selectedEntity = this.get(world, point)
                 if (selectedEntity) {
                     if (includeAttach) {
                         selectedEntities = selectedEntities.concat(
-                            selectedEntity.getAttachedEntities(EntityManager.get())
+                            selectedEntity.getAttachedEntities(world.getEntityManager())
                         )
                     } else {
                         selectedEntities.push(selectedEntity)
                     }
                 }
             } else {
-                selectedEntities = this.getInsideArea(point, size)
+                selectedEntities = this.getInsideArea(world, point, size)
             }
             return selectedEntities.map(selectedEntity => selectedEntity.isActive() && selectedEntity.select())
         }
 
         /**
          * Unselect all entities
+         * @param {World} world
          */
-        unselectAll() {
-            EntityManager.get().entities.map((entity) => entity.unselect())
+        unselectAll(world) {
+            world.getEntityManager().entities.map((entity) => entity.unselect())
         }
 
         /**
          * Unfocus all entities.
          * Do not unfocus entity in loading mode
+         * @param {World} world
          */
-        unfocusAll() {
-            EntityManager.get().getActiveEntities().map((entity) => entity.unfocus())
+        unfocusAll(world) {
+            world.getEntityManager().getActiveEntities().map((entity) => entity.unfocus())
         }
 
         /**
          * focus all entities in a given point.
          * Do not focus entity in loading mode
+         * @param {World} world
+         * @param {Vector} point
          */
-        focus(point) {
-            this.getAll(point).map((entity) => entity.focus())
+        focus(world, point) {
+            this.getAll(world, point).map((entity) => entity.focus())
         }
 
         static get() {

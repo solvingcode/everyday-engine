@@ -3,6 +3,7 @@ define(function (require) {
     const Layout = require('../../Layout.js')
     const EntitySelector = require('../../../world/manager/EntitySelector.js')
     const FormMenuItem = require('../form/FormMenuItem.js')
+    const World = require('../../../world/World.js')
 
     /**
      * Entity's noise configs properties
@@ -55,7 +56,7 @@ define(function (require) {
          * @override
          */
         getFormObject(){
-            return EntitySelector.get().getFirstSelected()
+            return EntitySelector.get().getFirstSelected(World.get())
         }
     }
 

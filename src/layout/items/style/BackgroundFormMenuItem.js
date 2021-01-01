@@ -3,7 +3,7 @@ define(function (require) {
     const FormMenuItem = require('../form/FormMenuItem.js')
     const Layout = require('../../Layout.js')
     const EntitySelector = require('../../../world/manager/EntitySelector.js')
-    const EntityManager = require('../../../world/manager/EntityManager.js')
+    const World = require('../../../world/World.js')
 
     /**
      * Form style background
@@ -42,14 +42,14 @@ define(function (require) {
          * @override
          */
         shouldUpdate(){
-            return this.bindObject && !EntityManager.get().isAttachEntity(this.bindObject)
+            return this.bindObject && !World.get().getEntityManager().isAttachEntity(this.bindObject)
         }
 
         /**
          * @override
          */
         getFormObject(){
-            return EntitySelector.get().getFirstSelected()
+            return EntitySelector.get().getFirstSelected(World.get())
         }
     }
 

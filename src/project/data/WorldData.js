@@ -21,7 +21,16 @@ define(function(require){
          * @param {World} data
          */
         set(data){
-            Object.getOwnPropertyNames(this).map(prop => this[prop] = data[prop])
+            if(data instanceof WorldData){
+                Object.getOwnPropertyNames(this).map(prop => this[prop] = data[prop])
+                this.reload()
+            }else{
+                throw new TypeError('Cannot set the new world, data must be instance of World class')
+            }
+        }
+
+        reload(){
+            throw new TypeError('World.reload must be implemented!')
         }
 
         /**

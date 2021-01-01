@@ -1,7 +1,7 @@
 define(function (require) {
 
     const Action = require('../Action.js')
-    const EntityManager = require('../../../world/manager/EntityManager.js')
+    const World = require('../../../world/World.js')
 
     class DeleteAction extends Action {
 
@@ -9,7 +9,7 @@ define(function (require) {
          * @override
          */
         static run(mouse, selectedEntities) {
-            const entityManager = EntityManager.get()
+            const entityManager = World.get().getEntityManager()
             selectedEntities.forEach(entity => entityManager.delete(entity))
             return true
         }

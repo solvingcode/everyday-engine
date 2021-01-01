@@ -1,7 +1,7 @@
 define(function (require) {
 
     const Action = require('../Action.js')
-    const EntityManager = require('../../../world/manager/EntityManager.js')
+    const World = require('../../../world/World.js')
 
     /**
      * Duplicate Action
@@ -10,11 +10,10 @@ define(function (require) {
     class DuplicateAction extends Action {
 
         /**
-         * Duplicate selected entities
-         * @param {Array} selectedEntities
+         * @override
          */
         static run(mouse, selectedEntities, entitySelector) {
-            const entityManager = EntityManager.get()
+            const entityManager = World.get().getEntityManager()
             entitySelector.unselectAll()
             const clones = entityManager.cloneEntities(selectedEntities)
             clones.forEach(entity => entity.select())

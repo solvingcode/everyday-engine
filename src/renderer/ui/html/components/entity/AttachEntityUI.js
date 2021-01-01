@@ -1,7 +1,7 @@
 define(function (require) {
 
-    const EntityManager = require('../../../../../world/manager/EntityManager.js')
     const Color = require('../../../../../utils/Color.js')
+    const World = require('../../../../../world/World.js')
 
     /**
      * AttachEntityUI class
@@ -16,7 +16,7 @@ define(function (require) {
          */
         static draw(item, el, uiRenderer) {
             const entity = item.element.getEntity()
-            const attachEntities = EntityManager.get().getAllAttachTypeEntity(entity)
+            const attachEntities = World.get().getEntityManager().getAllAttachTypeEntity(entity)
             if (attachEntities.length) {
                 this.create(el, attachEntities)
             }

@@ -2,7 +2,6 @@ define(function (require) {
 
     const Mesh = require('../core/Mesh.js')
     const Window = require('../core/Window.js')
-    const Keyboard = require('../core/Keyboard.js')
     const Vertex = require('../utils/Vertex.js')
     const Vector = require('../utils/Vector.js')
     const EntityData = require('../project/data/EntityData.js')
@@ -466,13 +465,6 @@ define(function (require) {
         getCurrentMousePosition() {
             const dragDistance = Window.get().mouse.getDragDistance()
             return Vector.add(this.position, dragDistance)
-        }
-
-        /**
-         * Verify if CTRL key is pressed
-         */
-        isCtrlKeyPressed() {
-            return Window.get().keyboard.isKeyPressed(Keyboard.Keys.CTRL)
         }
 
         /**

@@ -2,7 +2,7 @@ define(function (require) {
 
     const Layout = require('../../Layout.js')
     const EntitySelector = require('../../../world/manager/EntitySelector.js')
-    const EntityManager = require('../../../world/manager/EntityManager.js')
+    const World = require('../../../world/World.js')
     const FormMenuItem = require('../form/FormMenuItem.js')
 
     /**
@@ -23,7 +23,7 @@ define(function (require) {
          * @override
          */
         getFields() {
-            const bodyEntities = EntityManager.get().getBodyEntities()
+            const bodyEntities = World.get().getEntityManager().getBodyEntities()
                 .filter(entity => entity !== this.object)
                 .map(entity => ({ value: entity.id, label: entity.name }))
 
@@ -41,7 +41,7 @@ define(function (require) {
          * @override
          */
         getFormObject(){
-            return EntitySelector.get().getFirstSelected()
+            return EntitySelector.get().getFirstSelected(World.get())
         }
     }
 

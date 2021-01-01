@@ -1,16 +1,15 @@
 define(function (require) {
 
     const Action = require('../Action.js')
-    const EntityManager = require('../../../world/manager/EntityManager.js')
+    const World = require('../../../world/World.js')
 
     class MoveDownAction extends Action {
 
         /**
-         * Move selected entities down
-         * @param {Array} selectedEntities
+         * @override
          */
         static run(mouse, selectedEntities) {
-            const entityManager = EntityManager.get()
+            const entityManager = World.get().getEntityManager()
             selectedEntities.forEach(entity => entityManager.moveDown((entity)))
             return true
         }

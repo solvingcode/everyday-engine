@@ -1,6 +1,7 @@
 define(function (require) {
 
     const Runner = require('../Runner.js')
+    const World = require('../../world/World.js')
     const StateManager = require('../../state/StateManager.js')
     const EntitySelector = require('../../world/manager/EntitySelector.js')
     const DeleteAction = require('./edit/DeleteAction.js')
@@ -73,7 +74,7 @@ define(function (require) {
                 //must be the last action
                 HISTORY_PUSH: PushHistoryAction
             }
-            const selectedEntities = this.entitySelector.getSelected()
+            const selectedEntities = this.entitySelector.getSelected(World.get())
             Object.entries(typeActions).forEach(typeAction => {
                 const type = `ACTION_${typeAction[0]}`
                 const action = typeAction[1]

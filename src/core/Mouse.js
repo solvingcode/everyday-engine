@@ -97,6 +97,26 @@ define(function () {
         }
 
         /**
+         * Calculate and return the area of drag (selection)
+         * @return {{position: Vector, size: Size}}
+         */
+        getDragArea(){
+            const dragDistance = this.getDragDistance()
+            let newX = this.position.x
+            let newY = this.position.y
+            if (dragDistance.x <= 0) {
+                newX += dragDistance.x
+            }
+            if (dragDistance.y <= 0) {
+                newY += dragDistance.y
+            }
+            return {
+                position: {x: newX, y: newY},
+                size: {width: Math.abs(dragDistance.x), height: Math.abs(dragDistance.y)}
+            }
+        }
+
+        /**
          * Drag and drop (return the drag distance and update the initial position)
          * @return {{x: number, y: number}}
          */

@@ -20,13 +20,6 @@ define(function (require) {
             this.entities = []
         }
 
-        static get() {
-            if (!EntityManager.instance) {
-                EntityManager.instance = new EntityManager()
-            }
-            return EntityManager.instance
-        }
-
         /**
          * Get an entity at (x,y)
          * @param {int} x 
@@ -466,8 +459,6 @@ define(function (require) {
         }
 
     }
-
-    EntityManager.instance = null
 
     return EntityManager
 })

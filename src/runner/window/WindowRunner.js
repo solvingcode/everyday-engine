@@ -15,31 +15,34 @@ define(function (require) {
         execute(mouse) {
             const entitySelector = EntitySelector.get()
             const stateManager = StateManager.get()
+            const world = World.get()
             if (!stateManager.isRunning()) {
-                this.focus(entitySelector, mouse)
+                this.focus(world, entitySelector, mouse)
             }
-            this.cursor(entitySelector, mouse)
+            this.cursor(world, entitySelector, mouse)
         }
 
         /**
          * Focus entity over mouse
+         * @param {World} world
          * @param {EntitySelector} entitySelector 
          * @param {Mouse} mouse 
          */
-        focus(entitySelector, mouse) {
-            entitySelector.unfocusAll()
-            entitySelector.focus(World.get().getWorldPosition(mouse.currentPosition))
+        focus(world, entitySelector, mouse) {
+            entitySelector.unfocusAll(world)
+            entitySelector.focus(world, world.getWorldPosition(mouse.currentPosition))
         }
 
         /**
          * Change cursor mouse
+         * @param {World} world
          * @param {EntitySelector} entitySelector 
          * @param {Mouse} mouse 
          */
-        cursor(entitySelector, mouse) {
+        cursor(world, entitySelector, mouse) {
             let cursor = StateManager.get().getData('cursor')
             if (cursor === CURSOR.MOVE_ENTITY) {
-                const entity = entitySelector.get(mouse.currentPosition)
+                const entity = entitySelector.get(world, mouse.currentPosition)
                 cursor = entity && entity.selected && CURSOR.MOVE
             }
             document.body.style.cursor = cursor || 'default'

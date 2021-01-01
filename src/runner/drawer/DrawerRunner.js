@@ -3,7 +3,6 @@ define(function (require) {
     const StateManager = require('../../state/StateManager.js')
     const Runner = require('../Runner.js')
     const {MouseButton} = require('../../core/Mouse.js')
-    const EntityManager = require('../../world/manager/EntityManager.js')
     const CircleEntity = require('../../entity/types/shape/CircleEntity.js')
     const RectEntity = require('../../entity/types/shape/RectEntity.js')
     const JointEntity = require('../../entity/types/joint/JointEntity.js')
@@ -93,7 +92,7 @@ define(function (require) {
          * @param {String} type
          */
         endDraw(stateManager, type) {
-            const entityManager = EntityManager.get()
+            const entityManager = World.get().getEntityManager()
             if(this.currentEntity){
                 this.currentEntity.end()
                 if (this.isCurrentDrawValid) {
@@ -111,7 +110,7 @@ define(function (require) {
          * @param {String} type
          */
         draw(position, type) {
-            const entityManager = EntityManager.get()
+            const entityManager = World.get().getEntityManager()
             if (!this.currentEntity) {
                 this.currentEntity = entityManager.load(position.x, position.y, type)
             }

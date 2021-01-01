@@ -16,7 +16,7 @@ define(function (require) {
 
         constructor() {
             super()
-            this.entityManager = EntityManager.get()
+            this.entityManager = new EntityManager()
             this.camera = new Camera({ x: SCENE_WIDTH / 2, y: SCENE_HEIGHT / 2 })
             this.physics = new Physics()
             this.terrainManager = new TerrainManager(this)
@@ -59,7 +59,7 @@ define(function (require) {
          */
         findEntity(position){
             const entitySelector = EntitySelector.get()
-            return entitySelector.get(this.getWorldPosition(position))
+            return entitySelector.get(this, this.getWorldPosition(position))
         }
 
         /**
@@ -123,8 +123,9 @@ define(function (require) {
         }
 
         /**
-         * @param {{x: number, y: number}} position
-         * @return {{x: number, y: number}}
+         * Get the world position of a given screen position
+         * @param {Vector} position
+         * @return {Vector}
          */
         getWorldPosition(position){
             return this.getCamera().fromCanvasCoord(position)
@@ -135,18 +136,6 @@ define(function (require) {
          */
         getMouseConstraint() {
             return this.getEntityManager().findById(this.mouseConstraintId)
-        }
-
-        /**
-         * @param {World} data
-         */
-        static set(data){
-            if(data instanceof World){
-                World.instance = data
-                World.instance.reload()
-            }else{
-                throw new TypeError('Cannot set the new world, data must be instance of World class')
-            }
         }
 
         static get() {

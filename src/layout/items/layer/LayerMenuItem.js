@@ -3,7 +3,7 @@ define(function (require) {
     const MenuItem = require('../../MenuItem.js')
     const LayerEntityMenuItem = require('./LayerEntityMenuItem.js')
     const Layout = require('../../Layout.js')
-    const EntityManager = require('../../../world/manager/EntityManager.js')
+    const World = require('../../../world/World.js')
 
     /**
      * Layer Menu Item
@@ -24,7 +24,7 @@ define(function (require) {
          * @override
          */
         update() {
-            const entities = EntityManager.get().getValidBodyEntities().reverse()
+            const entities = World.get().getEntityManager().getValidBodyEntities().reverse()
             this.items = entities.map((entity, index) => {
                 const layerEntity = this.items[index]
                 if (layerEntity && layerEntity.data.entity !== entity) {
