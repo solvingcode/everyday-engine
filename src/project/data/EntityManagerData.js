@@ -10,6 +10,13 @@ define(function(require){
 
         entities
 
+        /**
+         * @param {EntityData} entities
+         */
+        setEntities(entities){
+            this.entities = entities
+        }
+
     }
 
     return EntityManagerData

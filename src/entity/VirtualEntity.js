@@ -10,7 +10,7 @@ define(function (require) {
         constructor(props) {
             super({...props, name: 'Virtual'})
             this.shape = EntityMotion.shapes.VIRTUAL
-            this.visible = false
+            this.visible = true
         }
 
         /**
@@ -18,6 +18,12 @@ define(function (require) {
          */
         init() {
             return true
+        }
+
+        /**
+         * @override
+         */
+        drawContext(dataContext){
         }
 
     }

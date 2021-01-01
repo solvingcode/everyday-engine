@@ -12,10 +12,6 @@ define(function (require) {
         constructor() {
             this.title = 'Combat Simulation'
             this.renderer = new Renderer()
-            this.window = Window.get()
-            this.world = World.get()
-            this.menu = Menu.get()
-            this.event = EventHandler.get()
             this.runLoop = this.runLoop.bind(this)
         }
 
@@ -32,20 +28,23 @@ define(function (require) {
          * Load event listeners
          */
         loadEvents() {
-            this.window.initEvents()
+            Window.get().initEvents()
         }
 
         /**
          * Start the loop animation frame
          */
         runLoop() {
-            this.menu.update()
-            this.event.handle(this.window)
-            this.world.load()
-            this.world.update()
-            this.world.draw(this.renderer)
+            const world = World.get()
+            const menu = Menu.get()
+
+            menu.update()
+            EventHandler.get().handle(Window.get())
+            world.load()
+            world.update()
+            world.draw(this.renderer)
             this.renderer.clear()
-            this.renderer.render(this.world.getCamera(), this.menu)
+            this.renderer.render(world.getCamera(), menu)
             requestAnimationFrame(this.runLoop)
         }
 

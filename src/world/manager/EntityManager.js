@@ -91,7 +91,8 @@ define(function (require) {
          * Regenerate the mesh of all entities
          */
         regenerateAll(){
-            this.entities.forEach(entity => this.regenerate(entity))
+            const entities = this.entities.map(entity => entity)
+            entities.forEach(entity => this.regenerate(entity))
         }
 
         /**
@@ -239,9 +240,7 @@ define(function (require) {
          * Update the Mesh for all entities
          */
         update() {
-            for (const iEntity in this.entities) {
-                this.entities[iEntity].update()
-            }
+            this.entities.forEach(entity => entity.update())
         }
 
         /**

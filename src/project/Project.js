@@ -33,7 +33,7 @@ define(function (require) {
             const data = await FileHelper.load(file, this.fileType)
             if(data){
                 const dataImport = this.storage.import(data, this.dataFormat)
-                dataImport && this.storage.load(Storage.type.WORLD, dataImport.project, World)
+                dataImport && this.storage.load(Storage.type.WORLD, dataImport.project, World.get())
             }
         }
 

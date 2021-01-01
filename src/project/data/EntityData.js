@@ -15,25 +15,82 @@ define(function(require){
          */
         constructor(props = {}) {
             super()
-            props.style = props.style || {color: '#000000', fillColor: ''}
             this.id = Maths.generateId()
             this.shape = null
-            this.name = props.name
-            this.position = props.position
-            this.rotation = props.rotation || 0
             this.center = null
             this.radius = null
             this.vertices = null
+            this.selectable = true
+            this.locked = false
+            this.visible = false
+            this.clonable = true
+            this.setProps(props)
+        }
+
+        /**
+         * @param {number} id
+         */
+        setId(id) {
+            this.id = id
+        }
+
+        /**
+         * @param {string} shape
+         */
+        setShape(shape) {
+            this.shape = shape
+        }
+
+        /**
+         * @param {Vector} center
+         */
+        setCenter(center) {
+            this.center = center
+        }
+
+        /**
+         * @param {number} radius
+         */
+        setRadius(radius) {
+            this.radius = radius
+        }
+
+        /**
+         * @param {number[]} vertices
+         */
+        setVertices(vertices){
+            this.vertices = vertices
+        }
+
+        /**
+         * @param {Style} advancedStyle
+         */
+        setAdvancedStyle(advancedStyle){
+            this.advancedStyle = advancedStyle
+        }
+
+        /**
+         * @param {PerlinNoiseConfig} noiseConfigs
+         */
+        setNoiseConfigs(noiseConfigs){
+            this.noiseConfigs = noiseConfigs
+        }
+
+        /**
+         * @param {EntityProps} props
+         */
+        setProps(props){
+            this.props = props
+            props.style = props.style || {color: '#000000', fillColor: ''}
+            this.name = props.name
+            this.position = props.position
+            this.rotation = props.rotation || 0
             this.size = props.size || 1
             this.style = props.style
             this.advancedStyle = Object.assign(
                 {backgroundImageBlob: '', backgroundImageRepeat: false},
                 props.advancedStyle || {}
             )
-            this.selectable = true
-            this.locked = false
-            this.visible = false
-            this.clonable = true
             this.noiseConfigs = props.noiseConfigs || {}
         }
 
@@ -207,6 +264,9 @@ define(function(require){
             this.setRotationAndGenerate(Maths.fromDegree(angle))
         }
 
+        /**
+         * @param {string} style
+         */
         setStyle(style) {
             this.style = style
         }
@@ -216,6 +276,13 @@ define(function(require){
          */
         setVisible(value) {
             this.visible = value
+        }
+
+        /**
+         * @param {boolean} selectable
+         */
+        setSelectable(selectable) {
+            this.selectable = selectable
         }
 
         /**
@@ -233,6 +300,13 @@ define(function(require){
         }
 
         /**
+         * @param {boolean} locked
+         */
+        setLocked(locked) {
+            this.locked = locked
+        }
+
+        /**
          * @return {boolean}
          */
         getLocked() {
@@ -244,6 +318,13 @@ define(function(require){
          */
         isLocked() {
             return this.getLocked()
+        }
+
+        /**
+         * @param {boolean} clonable
+         */
+        setClonable(clonable) {
+            this.clonable = clonable
         }
 
         /**
@@ -328,17 +409,6 @@ define(function(require){
         GROUP: 'group',
         VIRTUAL: 'virtual'
     }
-
-    /**
-     * @typedef {{color: string, fillColor: string}} Style
-     * @typedef {{style: Style, name: string,
-     *      position: {x: number, y: number},
-     *      rotation: number,
-     *      size: {width: number, height: number} | number
-     *      advancedStyle: {backgroundImageBlob: string, backgroundImageRepeat: boolean}
-     *      noiseConfigs: PerlinNoiseConfig
-     *      }} EntityProps
-     */
 
     return EntityData
 

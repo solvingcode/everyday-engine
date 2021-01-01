@@ -28,7 +28,6 @@ define(function (require) {
             if (this.constructor === Entity) {
                 throw new TypeError('Abstract class Entity cannot be instantiated directly')
             }
-            this.props = props
             this.isBuffered = false
             this.isPhyiscsLoaded = false
             this.mesh = new Mesh(this.position, this.size)

@@ -17,6 +17,13 @@ define(function(require){
             return this.terrain
         }
 
+        /**
+         * @param {TerrainData} terrain
+         */
+        setTerrain(terrain){
+            this.terrain = terrain
+        }
+
     }
 
     return TerrainManagerData

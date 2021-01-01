@@ -7,6 +7,20 @@ define(function () {
             this.width = width
             this.height = height
         }
+
+        /**
+         * @param {number} width
+         */
+        setWidth(width){
+            this.width = width
+        }
+
+        /**
+         * @param {number} height
+         */
+        setHeight(height){
+            this.height = height
+        }
     }
     return Size
 })

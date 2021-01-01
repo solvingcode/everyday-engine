@@ -4,6 +4,7 @@ define(function (require) {
     const Schema = require('../project/schema/Schema.js')
     const Data = require('../project/data/Data.js')
     const DataSchema = require('../project/data/DataSchema.js')
+    const ClassHelper = require('../utils/ClassHelper.js')
 
     /**
      * Utils to manage the storage of data over time.
@@ -49,7 +50,7 @@ define(function (require) {
          */
         updateAndValidate(type, data, serialize = true){
             const validData = this.validate(type, data, Schema.getMeta(), {serialize})
-            this.data[type] = _.cloneDeep(validData[type])
+            this.data[type] = _.cloneDeep(validData)
             return this
         }
 
@@ -97,13 +98,15 @@ define(function (require) {
                                 if(_.isArray(result)){
                                     result.push(subResult)
                                 }else{
-                                    result = Object.assign(result, subResult)
+                                    const setter = ClassHelper.getSetter(result, prop.key)
+                                    result[setter](subResult)
                                 }
                             } else {
-                                result[prop.key] = Schema.getValue(`${schemaMeta}.${prop.key}`, prop.value)
+                                const setter = ClassHelper.getSetter(result, prop.key)
+                                result[setter](Schema.getValue(`${schemaMeta}.${prop.key}`, prop.value))
                             }
                         })
-                    return key !== 'element' ? {[key]: result} : result
+                    return result
                 }
             }else{
                 throw new TypeError(`${schemaMeta} must be defined in the schema`)

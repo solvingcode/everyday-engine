@@ -12,6 +12,20 @@ define(function(require){
         entityId
 
         /**
+         * @param {Vector} position
+         */
+        setPosition(position){
+            this.position = position
+        }
+
+        /**
+         * @param {number} entityId
+         */
+        setEntityId(entityId){
+            this.entityId = entityId
+        }
+
+        /**
          * @param {string} x
          */
         setPositionX(x) {

@@ -11,6 +11,27 @@ define(function () {
         }
 
         /**
+         * @param {number} x
+         */
+        setX(x){
+            this.x = x
+        }
+
+        /**
+         * @param {number} y
+         */
+        setY(y){
+            this.y = y
+        }
+
+        /**
+         * @param {number} z
+         */
+        setZ(z){
+            this.z = z
+        }
+
+        /**
          * @param {Vector} vectorA
          * @param {Vector} vectorB
          * @return {number}

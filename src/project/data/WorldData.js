@@ -18,6 +18,48 @@ define(function(require){
         mouseConstraintId
 
         /**
+         * @param {World} data
+         */
+        set(data){
+            Object.getOwnPropertyNames(this).map(prop => this[prop] = data[prop])
+        }
+
+        /**
+         * @param {number} mouseConstraintId
+         */
+        setMouseConstraintId(mouseConstraintId){
+            this.mouseConstraintId = mouseConstraintId
+        }
+
+        /**
+         * @param {EntityManagerData} entityManager
+         */
+        setEntityManager(entityManager){
+            this.entityManager = entityManager
+        }
+
+        /**
+         * @param {CameraData} camera
+         */
+        setCamera(camera){
+            this.camera = camera
+        }
+
+        /**
+         * @param {PhysicsData} physics
+         */
+        setPhysics(physics){
+            this.physics = physics
+        }
+
+        /**
+         * @param {TerrainManagerData} terrainManager
+         */
+        setTerrainManager(terrainManager){
+            this.terrainManager = terrainManager
+        }
+
+        /**
          * Get the physics manager
          * @return {Physics}
          */

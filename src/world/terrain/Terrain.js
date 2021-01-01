@@ -2,6 +2,7 @@ define(function (require) {
 
     const VirtualEntity = require('../../entity/VirtualEntity.js')
     const TerrainData = require('../../project/data/TerrainData.js')
+    const ObjectHelper = require('../../utils/ObjectHelper.js')
 
     /**
      * Terrain class
@@ -137,8 +138,8 @@ define(function (require) {
                     chunkEntity.setBackgroundImageRepeat(entity.isBackgroundImageRepeat())
                 }
                 if (
-                    !_.isEqual(entity.size, chunkEntity.size) ||
-                    !_.isEqual(entity.noiseConfigs, chunkEntity.noiseConfigs)
+                    !ObjectHelper.isEqual(entity.size, chunkEntity.size) ||
+                    !ObjectHelper.isEqual(entity.noiseConfigs, chunkEntity.noiseConfigs)
                 ) {
                     this.removeChunk(world, entityId)
                 }

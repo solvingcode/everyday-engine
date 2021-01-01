@@ -11,6 +11,7 @@ define(function(require){
     const Physics = require('../../physics/Physics.js')
     const TerrainManager = require('../../world/terrain/TerrainManager.js')
     const Terrain = require('../../world/terrain/Terrain.js')
+    const EntityProps = require('../../pobject/EntityProps.js')
 
     /**
      * Define the schema of project data.
@@ -47,6 +48,96 @@ define(function(require){
                                     meta: {
                                         dataId: {
                                             type: 'number'
+                                        },
+                                        props: {
+                                            prototype: EntityProps,
+                                            meta: {
+                                                name: {
+                                                    type: 'string'
+                                                },
+                                                style: {
+                                                    prototype: Style,
+                                                    meta: {
+                                                        color: {
+                                                            type: 'string'
+                                                        },
+                                                        fillColor: {
+                                                            type: 'string'
+                                                        },
+                                                        backgroundImageBlob: {
+                                                            type: 'string'
+                                                        },
+                                                        backgroundImageRepeat: {
+                                                            type: 'boolean'
+                                                        }
+                                                    }
+                                                },
+                                                position: {
+                                                    prototype: Vector,
+                                                    meta: {
+                                                        x: {
+                                                            type: 'number'
+                                                        },
+                                                        y: {
+                                                            type: 'number'
+                                                        },
+                                                        z: {
+                                                            type: 'number'
+                                                        }
+                                                    }
+                                                },
+                                                rotation: {
+                                                    type: 'number'
+                                                },
+                                                advancedStyle: {
+                                                    prototype: Style,
+                                                    meta: {
+                                                        color: {
+                                                            type: 'string'
+                                                        },
+                                                        fillColor: {
+                                                            type: 'string'
+                                                        },
+                                                        backgroundImageBlob: {
+                                                            type: 'string'
+                                                        },
+                                                        backgroundImageRepeat: {
+                                                            type: 'boolean'
+                                                        }
+                                                    }
+                                                },
+                                                noiseConfigs: {
+                                                    prototype: PerlinNoiseConfig,
+                                                    meta: {
+                                                        seed: {
+                                                            type: 'number'
+                                                        },
+                                                        octaves: {
+                                                            type: 'number'
+                                                        },
+                                                        amplitude: {
+                                                            type: 'number'
+                                                        },
+                                                        persistence: {
+                                                            type: 'number'
+                                                        },
+                                                        smoothness: {
+                                                            type: 'number'
+                                                        }
+                                                    }
+                                                },
+                                                size: {
+                                                    prototype: Size,
+                                                    meta: {
+                                                        width: {
+                                                            type: 'number'
+                                                        },
+                                                        height: {
+                                                            type: 'number'
+                                                        }
+                                                    }
+                                                }
+                                            }
                                         },
                                         id: {
                                             type: 'number'

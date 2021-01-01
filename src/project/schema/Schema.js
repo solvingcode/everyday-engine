@@ -82,7 +82,7 @@ define(function (require) {
                     newValue = _.isString(value) ? value : ''
                     break
                 case 'boolean':
-                    newValue = !!value
+                    newValue = value === 'false' ? false : !!value
                     break
                 default:
                     newValue = ''

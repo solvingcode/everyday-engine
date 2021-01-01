@@ -7,12 +7,14 @@ define(function (require) {
     const NoiseEntity = require('../../entity/types/terrain/NoiseEntity.js')
     const PlatformEntity = require('../../entity/types/terrain/PlatformEntity.js')
     const CircleEntity = require('../../entity/types/shape/CircleEntity.js')
+    const RectEntity = require('../../entity/types/shape/RectEntity.js')
     const Camera = require('../../core/Camera.js')
     const Physics = require('../../physics/Physics.js')
     const TerrainManager = require('../../world/terrain/TerrainManager.js')
     const Terrain = require('../../world/terrain/Terrain.js')
     const NoiseTerrain = require('../../world/terrain/types/NoiseTerrain.js')
     const PlainTerrain = require('../../world/terrain/types/PlainTerrain.js')
+    const EntityProps = require('../../pobject/EntityProps.js')
 
     /**
      * @class {DataSchema}
@@ -34,7 +36,9 @@ define(function (require) {
             {id: 10, type: NoiseTerrain},
             {id: 11, type: PlatformEntity},
             {id: 12, type: PlainTerrain},
-            {id: 13, type: CircleEntity}
+            {id: 13, type: CircleEntity},
+            {id: 14, type: RectEntity},
+            {id: 15, type: EntityProps}
         ]
 
         /**
