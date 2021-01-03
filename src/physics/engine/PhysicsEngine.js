@@ -51,7 +51,7 @@ define(function () {
 
         /**
          * Get the Engine (third party)
-         * @return {any}
+         * @return {*}
          */
         getEngine() {
             throw new TypeError('"getEngine" method must be implemented')
@@ -88,7 +88,7 @@ define(function () {
 
         /**
          * Get bodies informations (position, ...)
-         * @return {any[]}
+         * @return {*[]}
          */
         getBodies() {
             throw new TypeError('"getBodies" method must be implemented')
@@ -96,7 +96,7 @@ define(function () {
 
         /**
          * Get joints information (position, ...)
-         * @return {any[]}
+         * @return {*[]}
          */
         getJoints() {
             throw new TypeError('"getJoints" method must be implemented')
@@ -104,7 +104,7 @@ define(function () {
 
         /**
          * Create new group of collision
-         * @return {any}
+         * @return {*}
          */
         newGroup() {
             throw new TypeError('"newGroup" method must be implemented')
@@ -191,9 +191,11 @@ define(function () {
         /**
          * Update joint position
          * @abstract
+         * @param {World} world
          * @param {Entity} entity
+         * @return {boolean}
          */
-        updateJointPosition(entity){
+        updateJointPosition(world, entity){
             throw new TypeError('"updateJointPosition" method must be implemented')
         }
 

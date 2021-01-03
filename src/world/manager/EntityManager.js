@@ -90,16 +90,17 @@ define(function (require) {
 
         /**
          * Load and generate an entity
-         * @param {int} x 
-         * @param {int} y 
+         * @param {World} world
+         * @param {Vector} position
          * @param {Entity} type
          * @param {Object} props
          * @return {Entity}
          */
-        load(x, y, type, props = {}) {
+        load(world, position, type, props = {}) {
+            const {x, y} = position
             const entity = this.get(x, y, type, props)
             if (!entity.isBuffered) {
-                this.make(entity)
+                this.make(world, entity)
             }
             return entity
         }
@@ -215,10 +216,11 @@ define(function (require) {
 
         /**
          * Make an entity.
+         * @param {World} world
          * @param {Entity} entity 
          */
-        make(entity) {
-            return EntityGenerator.make(entity)
+        make(world, entity) {
+            return EntityGenerator.make(world, entity)
         }
 
         /**

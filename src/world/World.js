@@ -7,6 +7,7 @@ define(function (require) {
     const Physics = require('../physics/Physics.js')
     const TerrainManager = require('./terrain/TerrainManager.js')
     const ConstraintEntity = require('../entity/types/joint/ConstraintEntity.js')
+    const Vector = require('../utils/Vector.js')
 
     /**
      * @class {World}
@@ -20,7 +21,7 @@ define(function (require) {
             this.camera = new Camera({ x: SCENE_WIDTH / 2, y: SCENE_HEIGHT / 2 })
             this.physics = new Physics()
             this.terrainManager = new TerrainManager(this)
-            this.mouseConstraintId = this.entityManager.load(0, 0, ConstraintEntity).getId()
+            this.mouseConstraintId = this.loadEntity(new Vector({x: 0, y: 0}), ConstraintEntity).getId()
         }
 
         /**
@@ -66,10 +67,10 @@ define(function (require) {
          * Add an entity to the world
          * @param {{x: number, y: number}} position
          * @param {Class} type
-         * @param {Object} props
+         * @param {EntityProps} props
          */
         addEntity(position, type, props = {}){
-            const entity = this.getEntityManager().load(position.x, position.y, type, props)
+            const entity = this.loadEntity(position, type, props)
             this.getPhysics().loadEntity(entity)
             return entity
         }
@@ -84,6 +85,29 @@ define(function (require) {
                 this.getPhysics().unloadEntity(entity)
                 this.getEntityManager().delete(entity)
             }
+        }
+
+        /**
+         * @param {Entity} entity
+         */
+        deleteEntity(entity){
+            this.getEntityManager().delete(entity)
+        }
+
+        /**
+         * @param {Vector} position
+         * @param {Entity} type
+         * @param {EntityProps} props
+         */
+        loadEntity(position, type, props = {}){
+            return this.getEntityManager().load(this, position, type, props)
+        }
+
+        /**
+         * @param {Entity} entity
+         */
+        makeEntity(entity){
+            return this.getEntityManager().make(this, entity)
         }
 
         reload(){

@@ -51,7 +51,7 @@ define(function (require) {
          * Update the physics constraint from entity.
          * Must set the default position for the pointB to (1,1) and the pointA to (0,0), else the mesh of
          * the constraint wouldn't updated because the size will be 0
-         * @param {ConstraintEntity} constraint
+         * @param {Entity} constraint
          * @param {World} world
          * @param {Mouse} mouse
          */

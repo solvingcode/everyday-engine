@@ -1,6 +1,7 @@
 define(function (require) {
 
     const CameraData = require('../project/data/CameraData.js')
+    const Vector = require('../utils/Vector.js')
 
     /**
      * @class {Camera}
@@ -44,7 +45,7 @@ define(function (require) {
             const { cameraViewX, cameraViewY } = this.getCameraView()
             const x = parseInt(position.x) - cameraViewX
             const y = parseInt(position.y) - cameraViewY
-            return { x, y }
+            return new Vector({ x, y })
         }
         /**
          * Get the canvas coordination from the given position
@@ -54,7 +55,7 @@ define(function (require) {
             const { cameraViewX, cameraViewY } = this.getCameraView()
             const x = position.x + cameraViewX
             const y = position.y + cameraViewY
-            return { x, y }
+            return new Vector({ x, y })
         }
         /**
          * Attach the camera to an entity

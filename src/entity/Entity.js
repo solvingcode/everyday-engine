@@ -48,10 +48,11 @@ define(function (require) {
 
         /**
          * Build the Entity (generate mesh, set properties ...)
+         * @param {World} world
          * @return {boolean}
          */
-        build() {
-            return this.init() && this.regenerate()
+        build(world) {
+            return this.init(world) && this.regenerate(world)
         }
 
         /**
@@ -62,9 +63,10 @@ define(function (require) {
 
         /**
          * Generate mesh for the rect
+         * @param {World} world
          * @return {boolean}
          */
-        generateMesh() {
+        generateMesh(world) {
             const dataContext = this.startContext()
             if (dataContext) {
                 this.drawContext(dataContext)
@@ -75,9 +77,10 @@ define(function (require) {
         /**
          * Called before starting drawing entities (calculate size, init mesh position, ...)
          * @abstract
+         * @param {World} world
          * @return {boolean}
          */
-        init() {
+        init(world) {
             throw new TypeError('Entity.init must be implemented')
         }
 
@@ -169,16 +172,18 @@ define(function (require) {
 
         /**
          * Generate the entity
+         * @param {World} world
          */
-        generate() {
-            return this.isCanGenerate() && this.generateMesh()
+        generate(world) {
+            return this.isCanGenerate() && this.generateMesh(world)
         }
 
         /**
          * Regenerate the mesh
+         * @param {World} world
          */
-        regenerate() {
-            return this.clearBuffer() && this.generate()
+        regenerate(world) {
+            return this.clearBuffer() && this.generate(world)
         }
 
         /**
@@ -378,14 +383,14 @@ define(function (require) {
 
         /**
          * Convert relative coordinate to absolute coordinate
-         * @param {{x: number, y: number}} point Relative coordinate
-         * @return {{x: number, y: number}}
+         * @param {Vector} point Relative coordinate
+         * @return {Vector}
          */
         toAbsolutePosition(point) {
-            return {
+            return new Vector({
                 x: point.x + this.mesh.position.x,
                 y: point.y + this.mesh.position.y
-            }
+            })
         }
 
         /**
@@ -402,15 +407,15 @@ define(function (require) {
         /**
          * Convert absolute coordinate to relative coordinate
          * based to the center of the object
-         * @param {{x: number, y: number}} point Absolute coordinate
-         * @return {{x: number, y: number}}
+         * @param {Vector} point Absolute coordinate
+         * @return {Vector}
          */
         toRelativeCenterPosition(point) {
             const {x, y} = this.toCenterPosition()
-            return {
+            return new Vector({
                 x: point.x - x,
                 y: point.y - y
-            }
+            })
         }
 
         /**fromRelativeCenterPosition

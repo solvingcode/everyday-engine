@@ -3,39 +3,40 @@ define(function (require) {
     const EntityMotion = require('../../EntityMotion.js')
     const EntitySelector = require('../../../world/manager/EntitySelector.js')
     const AttachEntity = require('./AttachEntity.js')
+    const Vector = require('../../../utils/Vector.js')
 
     /**
-     * @property {Vector[]} points relative positions for entities A & B
+     * @property {Vector[]} vertices relative positions for entities A & B
      */
     class JointEntity extends AttachEntity {
 
         constructor(props = {}) {
-            props.style = props.style || { color: '#0000FF' }
+            props.style = props.style || {color: '#0000FF'}
             super(props)
             this.shape = EntityMotion.shapes.ATTACH
-            this.points = { a: null, b: null }
-            this.entities = { a: null, b: null }
+            this.vertices = [null, null]
+            this.entities = {a: null, b: null}
             this.attached = false
         }
 
         /**
          * @override
          */
-        init() {
+        init(world) {
             const dragDistance = this.setMeshPositionByDragDistance()
-            return this.generatePoints(dragDistance) && this.setConstraintEntities()
+            return this.generatePoints(dragDistance) && this.setConstraintEntities(world)
         }
 
         /**
          * Calculate the size of the canvas using the drag distance
-         * @param {Object} dragDistance 
+         * @param {Object} dragDistance
          */
         calculateSize(dragDistance) {
-            return { width: Math.abs(dragDistance.x), height: Math.abs(dragDistance.y) }
+            return {width: Math.abs(dragDistance.x), height: Math.abs(dragDistance.y)}
         }
 
         /**
-         * Generate points from drag distance
+         * Generate vertices from drag distance
          */
         generatePoints(dragDistance) {
             this.size = this.calculateSize(dragDistance)
@@ -44,53 +45,39 @@ define(function (require) {
                 const pointX = Math.abs(dragDistance.x)
                 const pointY = Math.abs(dragDistance.y)
                 if (dragDistance.x * dragDistance.y < 0) {
-                    this.points = { a: { x: pointX, y: 0 }, b: { x: 0, y: pointY } }
+                    this.vertices = [new Vector({x: pointX, y: 0}), new Vector({x: 0, y: pointY})]
                 } else {
-                    this.points = { a: { x: 0, y: 0 }, b: { x: pointX, y: pointY } }
+                    this.vertices = [new Vector({x: 0, y: 0}), new Vector({x: pointX, y: pointY})]
                 }
                 if (dragDistance.y < 0) {
-                    const pointPermut = this.points.a
-                    this.points.a = this.points.b
-                    this.points.b = pointPermut
+                    const point = this.vertices[0]
+                    this.vertices[0] = this.vertices[1]
+                    this.vertices[1] = point
                 }
-                return this.points.a && this.points.b
+                return this.vertices[0]  && this.vertices[1]
             }
             return false
         }
 
         /**
-         * Generate mesh for the line
+         * @override
          */
-        generateMesh() {
-            const x0 = this.points.a.x, y0 = this.points.a.y
-            const x1 = this.points.b.x, y1 = this.points.b.y
-            const canvas = new OffscreenCanvas(this.size.width, this.size.height)
-            const context = canvas.getContext(CANVAS_CONTEXT_TYPE)
-            this.drawLine(context, { x: x0, y: y0 }, { x: x1, y: y1 })
-            return this.updateMeshFromContext(context)
-        }
-
-        /**
-         * Draw the shape to the offscreen context
-         * @param {CanvasRenderingContext2D} context 
-         * @param {Object} pointFrom 
-         * @param {Object} pointTo 
-         */
-        drawLine(context, pointFrom, pointTo) {
-            context.strokeStyle = this.style.color
+        drawContext(dataContext) {
+            const {context} = dataContext
+            const x0 = this.vertices[0].x, y0 = this.vertices[0].y
+            const x1 = this.vertices[1].x, y1 = this.vertices[1].y
             context.beginPath()
-            context.moveTo(pointFrom.x, pointFrom.y)
-            context.lineTo(pointTo.x, pointTo.y)
-            context.stroke()
+            context.moveTo(x0, y0)
+            context.lineTo(x1, y1)
         }
 
         /**
          * Find related entities using point a and b, and attach them to the joint
          */
-        setConstraintEntities() {
+        setConstraintEntities(world) {
             const entitySelector = EntitySelector.get()
-            this.entities.a = entitySelector.get(this.toAbsolutePosition(this.points.a), AttachEntity)
-            this.entities.b = entitySelector.getAll(this.toAbsolutePosition(this.points.b), AttachEntity)
+            this.entities.a = entitySelector.get(world, this.toAbsolutePosition(this.vertices[0]), AttachEntity)
+            this.entities.b = entitySelector.getAll(world, this.toAbsolutePosition(this.vertices[1]), AttachEntity)
                 .find(entity => entity !== this.entities.a)
             if (this.entities.a instanceof AttachEntity) {
                 this.entities.a = null
@@ -101,7 +88,7 @@ define(function (require) {
             if (this.entities.a === this.entities.b) {
                 this.entities.b = null
             }
-            
+
             this.entities.a && (this.entities.a.attachedEntities = null)
             this.entities.b && (this.entities.b.attachedEntities = null)
 
@@ -109,12 +96,12 @@ define(function (require) {
         }
 
         /**
-         * Update points (A, B) from an absolute positions
+         * Update vertices (A, B) from an absolute positions
          * @param {Vector} pointA absolute position
          * @param {Vector} pointB absolute position
          */
         updatePoints(pointA, pointB) {
-            const dragDistance = { x: Math.floor(pointB.x - pointA.x), y: Math.floor(pointB.y - pointA.y) }
+            const dragDistance = {x: Math.floor(pointB.x - pointA.x), y: Math.floor(pointB.y - pointA.y)}
             if (this.generatePoints(dragDistance) && this.clearBuffer()) {
                 let newX = pointA.x, newY = pointA.y
                 if (dragDistance.x <= 0) {
@@ -123,17 +110,16 @@ define(function (require) {
                 if (dragDistance.y <= 0) {
                     newY = pointB.y
                 }
-                this.setPosition({ x: parseInt(newX), y: parseInt(newY) })
-                this.generate()
+                this.setPosition({x: parseInt(newX), y: parseInt(newY)})
             }
         }
 
         getLineWidth() {
-            return Math.abs(this.points.b.x - this.points.a.x)
+            return Math.abs(this.vertices[1].x - this.vertices[0].x)
         }
 
         getLineHeight() {
-            return Math.abs(this.points.b.y - this.points.a.y)
+            return Math.abs(this.vertices[1].y - this.vertices[0].y)
         }
 
         /**
@@ -154,6 +140,15 @@ define(function (require) {
                 x: position.x - this.getLineWidth() / 2,
                 y: position.y - this.getLineHeight() / 2
             }
+        }
+
+        /**
+         * @param {Entity} entityA
+         * @param {Entity} entityB
+         */
+        setEntities(entityA, entityB){
+            this.entities.a = entityA
+            this.entities.b = entityB
         }
 
     }

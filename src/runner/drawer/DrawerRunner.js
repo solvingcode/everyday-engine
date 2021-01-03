@@ -92,13 +92,12 @@ define(function (require) {
          * @param {String} type
          */
         endDraw(stateManager, type) {
-            const entityManager = World.get().getEntityManager()
             if(this.currentEntity){
                 this.currentEntity.end()
                 if (this.isCurrentDrawValid) {
                     this.currentEntity.close()
                 } else {
-                    entityManager.delete(this.currentEntity)
+                    World.get().deleteEntity(this.currentEntity)
                 }
                 this.currentEntity = null
             }
@@ -106,15 +105,15 @@ define(function (require) {
 
         /**
          * Draw an entity.
-         * @param {{x: number, y: number}} position
-         * @param {String} type
+         * @param {Vector} position
+         * @param {Entity} type
          */
         draw(position, type) {
-            const entityManager = World.get().getEntityManager()
+            const world = World.get()
             if (!this.currentEntity) {
-                this.currentEntity = entityManager.load(position.x, position.y, type)
+                this.currentEntity = world.loadEntity(position, type)
             }
-            this.isCurrentDrawValid = entityManager.make(this.currentEntity)
+            this.isCurrentDrawValid = world.makeEntity(this.currentEntity)
         }
 
         /**

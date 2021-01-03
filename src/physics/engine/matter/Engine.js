@@ -5,6 +5,7 @@ define(function (require) {
 
     /**
      * Matter Physics Engine class
+     * @extends {PhysicsEngine}
      */
     class MatterEngine extends PhysicsEngine {
 
@@ -99,11 +100,10 @@ define(function (require) {
         /**
          * @override
          */
-        updateJointPosition(entity) {
-            const points = entity.points
-            const entities = entity.entities
-            const pointA = entity.toAbsolutePosition(points.a)
-            const pointB = entity.toAbsolutePosition(points.b)
+        updateJointPosition(world, entity) {
+            const {vertices, entities} = entity
+            const pointA = entity.toAbsolutePosition(vertices[0])
+            const pointB = entity.toAbsolutePosition(vertices[1])
             if (entity.attached) {
                 entities.a && entities.a.movePointTo(pointA, pointB)
                 entity.movePointTo(pointA, pointB)

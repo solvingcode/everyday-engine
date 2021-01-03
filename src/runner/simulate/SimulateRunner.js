@@ -61,7 +61,7 @@ define(function (require) {
             aiEngine && aiEngine.init()
             if (!this.isPhysicsLoaded) {
                 try {
-                    world.getPhysics().run(entityManager)
+                    world.getPhysics().run(world)
                     this.isPhysicsLoaded = true
                     this.isSimulating = true
                 } catch (error) {
@@ -77,7 +77,7 @@ define(function (require) {
          */
         progress() {
             const world = World.get()
-            world.getPhysics().update(world.getEntityManager(), world.getAiEngine())
+            world.getPhysics().update(world, world.getAiEngine())
             world.updateCamera()
         }
 

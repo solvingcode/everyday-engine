@@ -6,11 +6,12 @@ define(function () {
     class EntityGenerator {
         /**
          * Generate and build the Entity
+         * @param {World} world
          * @param {Entity} entity 
          */
-        static make(entity) {
+        static make(world, entity) {
             entity.loading = true
-            return entity.updateStyle().build()
+            return entity.updateStyle().build(world)
         }
     }
 

@@ -243,11 +243,12 @@ define(function (require) {
 
         /**
          * Update position for entities attached
+         * @param {World} world
          * @param {PhysicsEngine} physicsEngine 
          */
-        updateJointPosition(physicsEngine) {
+        updateJointPosition(world, physicsEngine) {
             if (!this.isPhyiscsLoaded) {
-                physicsEngine.updateJointPosition(this)
+                physicsEngine.updateJointPosition(world, this)
             }
         }
 

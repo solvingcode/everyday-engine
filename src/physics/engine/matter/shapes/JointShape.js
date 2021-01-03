@@ -22,12 +22,11 @@ define(function (require) {
          * @return {Object}
          */
         getConstraint(entity){
-            const points = entity.points
-            const entities = entity.entities
+            const {vertices, entities} = entity
             const bodyA = entities.a && this.getBodyFromEntity(entities.a)
             const bodyB = entities.b && this.getBodyFromEntity(entities.b)
-            const pointA = entities.a ? entities.a.getRelativeCenterPosition(entity, points.a) : entity.fromRelativePosition(points.a)
-            const pointB = entities.b ? entities.b.getRelativeCenterPosition(entity, points.b) : entity.fromRelativePosition(points.b)
+            const pointA = entities.a ? entities.a.getRelativeCenterPosition(entity, vertices[0]) : entity.fromRelativePosition(vertices[0])
+            const pointB = entities.b ? entities.b.getRelativeCenterPosition(entity, vertices[1]) : entity.fromRelativePosition(vertices[1])
             const {
                 stiffness,
                 angularStiffness,

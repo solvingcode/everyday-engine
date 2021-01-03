@@ -15,23 +15,24 @@ define(function (require) {
 
         /**
          * Update physics, and train AI
-         * @param {EntityManager} entityManager
+         * @param {World} world
          * @param {AiEngine} aiEngine
          */
-        update(entityManager, aiEngine) {
+        update(world, aiEngine) {
             if (this.toRestart) {
-                this.restart(entityManager)
+                this.restart(world)
             } else {
-                this.updateEntities(entityManager)
-                this.updateEngine(entityManager, aiEngine)
+                this.updateEntities(world)
+                this.updateEngine(world, aiEngine)
             }
         }
 
         /**
          * Update entities props from Physics engine results
-         * @param {EntityManager} entityManager
+         * @param {World} world
          */
-        updateEntities(entityManager) {
+        updateEntities(world) {
+            const entityManager = world.getEntityManager()
             const bodyEntities = entityManager.getBodyEntities()
             const jointEntites = entityManager.getAttachEntities()
             this.physicsEngine.getBodies().map((body, index) => {
@@ -54,11 +55,12 @@ define(function (require) {
 
         /**
          * Update the World using AI and physics Engine
-         * @param {EntityManager} entityManager
+         * @param {World} world
          * @param {AiEngine} aiEngine
          * @TODO: updating the joint entities crash the physics, to be revisited
          */
-        updateEngine(entityManager, aiEngine) {
+        updateEngine(world, aiEngine) {
+            const entityManager = world.getEntityManager()
             entityManager.getAttachEntities().forEach(entity => {
                 this.physicsEngine.update(entity)
             })
@@ -98,11 +100,11 @@ define(function (require) {
 
         /**
          * Get an entity from an ID
-         * @param {EntityManager} entityManager
+         * @param {World} world
          * @param {number} entityId
          */
-        getEntityById(entityManager, entityId) {
-            return entityManager.findById(entityId)
+        getEntityById(world, entityId) {
+            return world.getEntityManager().findById(entityId)
         }
 
         /**
@@ -115,35 +117,36 @@ define(function (require) {
 
         /**
          * Unload the physics for entities
-         * @param {EntityManager} entityManager
+         * @param {World} world
          */
-        unload(entityManager) {
-            entityManager.entities.map(entity => entity.unloadPhysics(this.physicsEngine))
+        unload(world) {
+            world.getEntityManager().entities.map(entity => entity.unloadPhysics(this.physicsEngine))
         }
 
         /**
          * Load the physics for entities
-         * @param {EntityManager} entityManager
+         * @param {World} world
          */
-        load(entityManager) {
-            return this.before(entityManager) && this.setup(entityManager) && this.after(entityManager)
+        load(world) {
+            return this.before(world) && this.setup(world) && this.after(world)
         }
 
         /**
          * Init the phyiscs for entities before loading
-         * @param {EntityManager} entityManager
+         * @param {World} world
          */
-        before(entityManager) {
-            const jointEntities = entityManager.getAttachEntities()
-            jointEntities.map(entity => entity.updateJointPosition(this.physicsEngine))
+        before(world) {
+            const jointEntities = world.getEntityManager().getAttachEntities()
+            jointEntities.map(entity => entity.updateJointPosition(world, this.physicsEngine))
             return true
         }
 
         /**
          * Setup the physics for entities
-         * @param {EntityManager} entityManager
+         * @param {World} world
          */
-        setup(entityManager) {
+        setup(world) {
+            const entityManager = world.getEntityManager()
             const bodyEntities = entityManager.getBodyEntities()
             const attachEntities = entityManager.getAttachEntities()
             bodyEntities.map(entity => entity.loadPhysics(this.physicsEngine))
@@ -153,23 +156,23 @@ define(function (require) {
 
         /**
          * Complete the physics after setup
-         * @param {EntityManager} entityManager
+         * @param {World} world
          */
-        after(entityManager) {
-            const bodyEntities = entityManager.getBodyEntities()
+        after(world) {
+            const bodyEntities = world.getEntityManager().getBodyEntities()
             bodyEntities.map(entity => entity.updateCollisionFilters(this.physicsEngine))
             return true
         }
 
         /**
          * Run the physics
-         * @param {EntityManager} entityManager
+         * @param {World} world
          */
-        run(entityManager) {
-            this.unload(entityManager)
+        run(world) {
+            this.unload(world)
             this.physicsEngine.init()
-            this.load(entityManager)
-            this.physicsEngine.run(entityManager)
+            this.load(world)
+            this.physicsEngine.run(world)
             this.isRunning = true
         }
 
@@ -203,11 +206,11 @@ define(function (require) {
 
         /**
          * Restart the engine
-         * @param {EntityManager} entityManager
+         * @param {World} world
          */
-        restart(entityManager) {
+        restart(world) {
             this.stop()
-            this.run(entityManager)
+            this.run(world)
             this.setToRestart(false)
         }
 
