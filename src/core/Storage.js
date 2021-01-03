@@ -61,7 +61,7 @@ define(function (require) {
          * @param {Object} target
          */
         load(type, data, target){
-            this.updateAndValidate(type, data[type], false)
+            this.updateAndValidate(type, data, false)
             target.set(_.cloneDeep(this.data[type]))
         }
 
@@ -141,13 +141,14 @@ define(function (require) {
 
         /**
          * Export all data to the given format
+         * @param {string} key
          * @param {Storage.format} format
          * @return {string}
          */
-        export(format){
+        export(key, format){
             switch (format) {
                 case Storage.format.XML:
-                    return XmlHelper.export(this.data)
+                    return XmlHelper.export(this.data[key])
                 default:
                     throw new TypeError(`Export format ${format} not recognized`)
             }

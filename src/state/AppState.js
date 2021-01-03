@@ -279,7 +279,10 @@ define(function (require) {
         ACTION_SAVE_PROJECT_STOP: { history: false },
         ACTION_LOAD_PROJECT_START: { history: false },
         ACTION_LOAD_PROJECT_PROGRESS: { history: false },
-        ACTION_LOAD_PROJECT_STOP: { history: false }
+        ACTION_LOAD_PROJECT_STOP: { history: false },
+        ACTION_NEW_PROJECT_START: { history: false },
+        ACTION_NEW_PROJECT_PROGRESS: { history: false },
+        ACTION_NEW_PROJECT_STOP: { history: false }
     }
 
     return AppState

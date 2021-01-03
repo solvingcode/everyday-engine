@@ -22,7 +22,7 @@ define(function (require) {
                 this.storage
                     .updateAndValidate(Storage.type.WORLD, World.get())
             )
-            const dataExport = data.export(this.dataFormat)
+            const dataExport = data.export(Storage.type.WORLD, this.dataFormat)
             FileHelper.save(dataExport, this.fileType)
         }
 

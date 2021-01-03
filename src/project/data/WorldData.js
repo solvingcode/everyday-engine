@@ -11,6 +11,8 @@ define(function(require){
      */
     class WorldData extends Data{
 
+        static instance
+
         entityManager
         camera
         physics
@@ -103,6 +105,10 @@ define(function(require){
          */
         getCamera() {
             return this.camera
+        }
+
+        static new(){
+            this.instance = new this()
         }
 
     }

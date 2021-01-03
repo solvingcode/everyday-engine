@@ -23,6 +23,7 @@ define(function (require) {
     const MoveCameraAction = require('./camera/MoveCameraAction.js')
     const SaveProjectAction = require('./project/SaveProjectAction.js')
     const LoadProjectAction = require('./project/LoadProjectAction.js')
+    const NewProjectAction = require('./project/NewProjectAction.js')
     const ZoomInOutCameraAction = require('./camera/ZoomInOutCameraAction.js')
     const PhysicsStaticAction = require('./physics/PhysicsStaticAction.js')
     const PhysicsNotStaticAction = require('./physics/PhysicsNotStaticAction.js')
@@ -66,6 +67,7 @@ define(function (require) {
                 MOVE_CAMERA: MoveCameraAction,
                 SAVE_PROJECT: SaveProjectAction,
                 LOAD_PROJECT: LoadProjectAction,
+                NEW_PROJECT: NewProjectAction,
                 ZOOM_CAMERA: ZoomInOutCameraAction,
                 PHYSICS_STATIC: PhysicsStaticAction,
                 PHYSICS_NOT_STATIC: PhysicsNotStaticAction,

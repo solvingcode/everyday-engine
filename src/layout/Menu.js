@@ -5,7 +5,7 @@ define(function (require) {
     const JointMenuItem = require('./items/draw/JointMenuItem.js')
     const AttachPointMenuItem = require('./items/draw/AttachPointMenuItem.js')
     const SelectorMenuItem = require('./items/draw/SelectorMenuItem.js')
-    const NewDocMenuItem = require('./items/project/NewDocMenuItem.js')
+    const NewDocMenuItem = require('./items/project/NewProjectMenuItem.js')
     const SaveProjectMenuItem = require('./items/project/SaveProjectMenuItem.js')
     const LoadProjectMenuItem = require('./items/project/LoadProjectMenuItem.js')
     const SimulateStartMenuItem = require('./items/action/SimulateStartMenuItem.js')

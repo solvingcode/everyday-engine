@@ -4,20 +4,20 @@ define(function (require) {
     const Layout = require('../../Layout.js')
 
     /**
-     * Create new document
+     * Create new project
      */
-    class NewDocMenuItem extends MenuItem {
+    class NewProjectMenuItem extends MenuItem {
         constructor() {
             super({
                 name: 'file',
                 title: 'New project',
-                stateCode: 'ACTION_NEW_DOC',
+                stateCode: 'ACTION_NEW_PROJECT',
                 type: Layout.type.ICON,
                 zone: Layout.zone.TOP
             })
         }
     }
 
-    return NewDocMenuItem
+    return NewProjectMenuItem
 
 })

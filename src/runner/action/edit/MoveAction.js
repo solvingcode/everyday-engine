@@ -29,10 +29,9 @@ define(function (require) {
          */
         static stop(mouse, selectedEntities) {
             const instance = MoveAction.get()
-            const entityManager = World.get().getEntityManager()
             instance.relativeEntityPositions = null
             instance.position = null
-            selectedEntities.map(entity => entityManager.regenerate(entity))
+            selectedEntities.map(entity => World.get().generateEntity(entity))
             return true
         }
 

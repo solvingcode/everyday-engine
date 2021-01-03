@@ -106,6 +106,13 @@ define(function (require) {
         /**
          * @param {Entity} entity
          */
+        generateEntity(entity){
+            return this.getEntityManager().regenerate(this, entity)
+        }
+
+        /**
+         * @param {Entity} entity
+         */
         makeEntity(entity){
             return this.getEntityManager().make(this, entity)
         }
@@ -170,8 +177,6 @@ define(function (require) {
         }
 
     }
-
-    World.instance = null
 
     return World
 })
