@@ -111,7 +111,7 @@ define(function (require) {
         }
 
         reload(){
-            this.getEntityManager().regenerateAll()
+            this.getEntityManager().regenerateAll(this)
         }
 
         /**

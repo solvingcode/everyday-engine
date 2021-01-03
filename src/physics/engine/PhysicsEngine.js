@@ -183,9 +183,9 @@ define(function () {
          * @param {Entity} entity 
          */
         findShapeFromEntity(entity){
-            return this.mapShapeToEntity
+            const shapeEntity = this.mapShapeToEntity
                 .find(mShape => mShape.entityId === parseInt(entity.id))
-                .shape
+            return shapeEntity && shapeEntity.shape
         }
 
         /**

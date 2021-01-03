@@ -37,6 +37,20 @@ define(function (require) {
         }
 
         /**
+         * @return {number}
+         */
+        getLineWidth() {
+            return Math.abs(this.vertices[1].x - this.vertices[0].x)
+        }
+
+        /**
+         * @return {number}
+         */
+        getLineHeight() {
+            return Math.abs(this.vertices[1].y - this.vertices[0].y)
+        }
+
+        /**
          * @override
          */
         toCenterPosition() {

@@ -82,10 +82,11 @@ define(function (require) {
 
         /**
          * Regenerate the mesh of all entities
+         * @param {World} world
          */
-        regenerateAll(){
+        regenerateAll(world){
             const entities = this.entities.map(entity => entity)
-            entities.forEach(entity => this.regenerate(entity))
+            entities.forEach(entity => this.regenerate(world, entity))
         }
 
         /**
@@ -225,10 +226,11 @@ define(function (require) {
 
         /**
          * Regenerate the given entity and delete if not valid
+         * @param {World} world
          * @param {Entity} entity 
          */
-        regenerate(entity) {
-            !entity.regenerate() && this.delete(entity)
+        regenerate(world, entity) {
+            entity.regenerate(world)
         }
 
         /**

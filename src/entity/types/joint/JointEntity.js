@@ -1,6 +1,5 @@
 define(function (require) {
 
-    const EntityMotion = require('../../EntityMotion.js')
     const EntitySelector = require('../../../world/manager/EntitySelector.js')
     const AttachEntity = require('./AttachEntity.js')
     const Vector = require('../../../utils/Vector.js')
@@ -13,7 +12,6 @@ define(function (require) {
         constructor(props = {}) {
             props.style = props.style || {color: '#0000FF'}
             super(props)
-            this.shape = EntityMotion.shapes.ATTACH
             this.vertices = [null, null]
             this.entities = {a: null, b: null}
             this.attached = false
@@ -60,18 +58,6 @@ define(function (require) {
         }
 
         /**
-         * @override
-         */
-        drawContext(dataContext) {
-            const {context} = dataContext
-            const x0 = this.vertices[0].x, y0 = this.vertices[0].y
-            const x1 = this.vertices[1].x, y1 = this.vertices[1].y
-            context.beginPath()
-            context.moveTo(x0, y0)
-            context.lineTo(x1, y1)
-        }
-
-        /**
          * Find related entities using point a and b, and attach them to the joint
          */
         setConstraintEntities(world) {
@@ -111,34 +97,6 @@ define(function (require) {
                     newY = pointB.y
                 }
                 this.setPosition({x: parseInt(newX), y: parseInt(newY)})
-            }
-        }
-
-        getLineWidth() {
-            return Math.abs(this.vertices[1].x - this.vertices[0].x)
-        }
-
-        getLineHeight() {
-            return Math.abs(this.vertices[1].y - this.vertices[0].y)
-        }
-
-        /**
-         * @override
-         */
-        toCenterPosition() {
-            return {
-                x: this.mesh.position.x + this.getLineWidth() / 2,
-                y: this.mesh.position.y + this.getLineHeight() / 2
-            }
-        }
-
-        /**
-         * @override
-         */
-        fromCenterPosition(position) {
-            return {
-                x: position.x - this.getLineWidth() / 2,
-                y: position.y - this.getLineHeight() / 2
             }
         }
 

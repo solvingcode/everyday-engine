@@ -1,13 +1,13 @@
 define(function (require) {
 
-    const EntityMotion = require('../../EntityMotion.js')
+    const LineEntity = require('../shape/LineEntity.js')
 
     /**
-     * Attach Entity (abstruct class) used to attach two entities
+     * Attach Entity (abstract class) used to attach two entities
      * Different type of attach are possible (joint, point, ...)
      * @abstract
      */
-    class AttachEntity extends EntityMotion {
+    class AttachEntity extends LineEntity {
 
         constructor(props) {
             const physics = { 
@@ -16,7 +16,7 @@ define(function (require) {
                 angleB: null,
                 angularStiffness: null}
             super({...props, physics})
-            this.shape = EntityMotion.shapes.ATTACH
+            this.shape = LineEntity.shapes.ATTACH
         }
 
     }
