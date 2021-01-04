@@ -70,8 +70,8 @@ define(function (require) {
                 new ConditionMenuItem(),
                 new AiGeneticMenuItem(),
                 new TerrainMenuItem(),
-                new CameraMenuItem(),
                 new TextureMenuItem(),
+                new CameraMenuItem(),
 
                 //BOTTOM
                 new AppMenuItem()

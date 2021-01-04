@@ -17,6 +17,14 @@ define(function(require){
             this.entities = entities
         }
 
+        /**
+         * @return {EntityData[]}
+         */
+        getEntities(){
+            return this.entities
+        }
+
+
     }
 
     return EntityManagerData

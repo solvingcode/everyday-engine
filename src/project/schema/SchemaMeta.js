@@ -15,6 +15,7 @@ define(function(require){
     const EntityProps = require('../../pobject/EntityProps.js')
     const PhysicsProps = require('../../pobject/PhysicsProps.js')
     const Texture = require('../../core/Texture.js')
+    const Mesh = require('../../core/Mesh.js')
 
     /**
      * Define the schema of project data.
@@ -421,6 +422,39 @@ define(function(require){
                                         },
                                         name: {
                                             type: 'string'
+                                        },
+                                        mesh: {
+                                            type: Mesh,
+                                            meta: {
+                                                size: {
+                                                    prototype: Size,
+                                                    meta: {
+                                                        width: {
+                                                            type: 'number'
+                                                        },
+                                                        height: {
+                                                            type: 'number'
+                                                        }
+                                                    }
+                                                },
+                                                position: {
+                                                    prototype: Vector,
+                                                    meta: {
+                                                        x: {
+                                                            type: 'number'
+                                                        },
+                                                        y: {
+                                                            type: 'number'
+                                                        },
+                                                        z: {
+                                                            type: 'number'
+                                                        }
+                                                    }
+                                                },
+                                                dataUrl: {
+                                                    type: 'string'
+                                                }
+                                            }
                                         }
                                     }
                                 }

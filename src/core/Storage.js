@@ -125,7 +125,18 @@ define(function (require) {
             }else {
                 const tempPrototype = new prototype()
                 return Object.getOwnPropertyNames(tempPrototype)
-                    .map(prop => ({key: prop, value: object && object[prop]}))
+                    .map(prop => {
+                        let value
+                        if(object){
+                            if(object.constructor === Object){
+                                value = object[prop]
+                            }else{
+                                const getter = ClassHelper.getGetter(object, prop)
+                                value = object[getter]()
+                            }
+                        }
+                        return {key: prop, value}
+                    })
             }
         }
 

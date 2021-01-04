@@ -10,6 +10,7 @@ define(function(require){
 
         id
         name
+        mesh
 
         /**
          * @param {number} id
@@ -19,10 +20,38 @@ define(function(require){
         }
 
         /**
-         * @param {number} name
+         * @return {number}
+         */
+        getId(){
+            return this.id
+        }
+
+        /**
+         * @param {string} name
          */
         setName(name){
             this.name = name
+        }
+
+        /**
+         * @return {string}
+         */
+        getName(){
+            return this.name
+        }
+
+        /**
+         * @param {Mesh} mesh
+         */
+        setMesh(mesh){
+            this.mesh = mesh
+        }
+
+        /**
+         * @return {Mesh}
+         */
+        getMesh(){
+            return this.mesh
         }
 
     }

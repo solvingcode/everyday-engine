@@ -1,15 +1,20 @@
-define(function () {
+define(function (require) {
+
+    const MeshData = require('../project/data/MeshData.js')
+    const ImageHelper = require('../utils/ImageHelper.js')
 
     /**
      * Define a block of pixels loaded to the VRAM.
      * Attached to an entity, and used to draw pixels by the GPU
+     * @extends {MeshData}
      * @property {{x: number, y: number}} position
      * @property {{width: number, height: number}} size
      * @property {OffscreenCanvasRenderingContext2D} context
      */
-    class Mesh {
+    class Mesh extends MeshData{
 
         constructor(position = {x: 0, y: 0}, size = 1) {
+            super()
             this.size = this.getSize(size)
             this.position = position
             this.initCanvas()
@@ -79,6 +84,20 @@ define(function () {
                 }
             }
             return false
+        }
+
+        /**
+         * @override
+         */
+        async setDataUrl(dataUrl){
+            this.fromImage(dataUrl)
+        }
+
+        /**
+         * @override
+         */
+        getDataUrl(){
+            return ImageHelper.getDataURL(this.context.canvas, this.size)
         }
 
         /**

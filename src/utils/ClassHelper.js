@@ -25,6 +25,26 @@ define(function(){
             return setter
         }
 
+        /**
+         * Get the getter name
+         * @param {*} object
+         * @param {string} key
+         * @return {string}
+         */
+        static getGetter(object, key) {
+            let getter
+            if(object.constructor === Array){
+                getter = key
+            }else {
+                const prefix = 'get'
+                getter = `${prefix}${key.charAt(0).toUpperCase() + key.slice(1)}`
+                if (typeof object[getter] !== 'function') {
+                    throw new TypeError(`${getter} must be implemented for ${object.constructor.name}`)
+                }
+            }
+            return getter
+        }
+
     }
 
     return ClassHelper

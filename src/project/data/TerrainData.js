@@ -10,7 +10,6 @@ define(function(require){
 
         entityId
         size
-        rotation
         chunksNbr
         chunkIds
 
@@ -22,10 +21,10 @@ define(function(require){
         }
 
         /**
-         * @param {number} rotation
+         * @return {number}
          */
-        setRotation(rotation){
-            this.rotation = rotation
+        getEntityId(){
+            return this.entityId
         }
 
         /**
@@ -36,6 +35,13 @@ define(function(require){
         }
 
         /**
+         * @return {number}
+         */
+        getChunksNbr(){
+            return this.chunksNbr
+        }
+
+        /**
          * @param {number[]} chunkIds
          */
         setChunkIds(chunkIds){
@@ -43,10 +49,24 @@ define(function(require){
         }
 
         /**
+         * @return {number[]}
+         */
+        getChunkIds(){
+            return this.chunkIds
+        }
+
+        /**
          * @param {Size} size
          */
         setSize(size){
             this.size = size
+        }
+
+        /**
+         * @return {Size}
+         */
+        getSize(){
+            return this.size
         }
     }
 

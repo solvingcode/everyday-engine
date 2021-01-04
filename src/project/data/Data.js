@@ -16,6 +16,13 @@ define(function(){
             this.dataId = id
         }
 
+        /**
+         * @return {number}
+         */
+        getDataId(){
+            return this.dataId
+        }
+
     }
     return Data
 })

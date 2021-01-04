@@ -44,6 +44,13 @@ define(function(require){
         }
 
         /**
+         * @return {number}
+         */
+        getMouseConstraintId(){
+            return this.mouseConstraintId
+        }
+
+        /**
          * @param {EntityManagerData} entityManager
          */
         setEntityManager(entityManager){

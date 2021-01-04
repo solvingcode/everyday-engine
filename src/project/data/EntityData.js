@@ -43,10 +43,24 @@ define(function(require){
         }
 
         /**
+         * @return {string}
+         */
+        getShape(){
+            return this.shape
+        }
+
+        /**
          * @param {Vector} center
          */
         setCenter(center) {
             this.center = center
+        }
+
+        /**
+         * @return {Vector}
+         */
+        getCenter() {
+            return this.center
         }
 
         /**
@@ -57,10 +71,24 @@ define(function(require){
         }
 
         /**
+         * @return {number}
+         */
+        getRadius() {
+            return this.radius
+        }
+
+        /**
          * @param {number[]} vertices
          */
         setVertices(vertices){
             this.vertices = vertices
+        }
+
+        /**
+         * @return {number[]}
+         */
+        getVertices(){
+            return this.vertices
         }
 
         /**
@@ -71,10 +99,24 @@ define(function(require){
         }
 
         /**
+         * @return {Style}
+         */
+        getAdvancedStyle(){
+            return this.advancedStyle
+        }
+
+        /**
          * @param {PerlinNoiseConfig} noiseConfigs
          */
         setNoiseConfigs(noiseConfigs){
             this.noiseConfigs = noiseConfigs
+        }
+
+        /**
+         * @return {PerlinNoiseConfig}
+         */
+        getNoiseConfigs(){
+            return this.noiseConfigs
         }
 
         /**
@@ -94,6 +136,14 @@ define(function(require){
             )
             this.noiseConfigs = props.noiseConfigs || {}
         }
+
+        /**
+         * @return {EntityProps}
+         */
+        getProps() {
+            return this.props
+        }
+
 
         /**
          * @return {number}
@@ -289,6 +339,13 @@ define(function(require){
         /**
          * @return {boolean}
          */
+        getSelectable() {
+            return this.selectable
+        }
+
+        /**
+         * @return {boolean}
+         */
         getVisible() {
             return this.visible
         }
@@ -326,6 +383,13 @@ define(function(require){
          */
         setClonable(clonable) {
             this.clonable = clonable
+        }
+
+        /**
+         * @return {boolean}
+         */
+        getClonable() {
+            return this.clonable
         }
 
         /**
@@ -399,10 +463,17 @@ define(function(require){
         }
 
         /**
-         * @param {PhysicsProps}
+         * @param {PhysicsProps} physics
          */
         setPhysics(physics){
             this.physics = physics
+        }
+
+        /**
+         * @return {PhysicsProps}
+         */
+        getPhysics(){
+            return this.physics
         }
 
     }

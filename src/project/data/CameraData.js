@@ -19,10 +19,24 @@ define(function(require){
         }
 
         /**
+         * @return {Vector}
+         */
+        getPosition(){
+            return this.position
+        }
+
+        /**
          * @param {number} entityId
          */
         setEntityId(entityId){
             this.entityId = entityId
+        }
+
+        /**
+         * @return {number}
+         */
+        getEntityId(){
+            return this.entityId
         }
 
         /**

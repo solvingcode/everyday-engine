@@ -18,6 +18,13 @@ define(function () {
         }
 
         /**
+         * @return {number}
+         */
+        getX(){
+            return this.x
+        }
+
+        /**
          * @param {number} y
          */
         setY(y){
@@ -25,10 +32,24 @@ define(function () {
         }
 
         /**
+         * @return {number}
+         */
+        getY(){
+            return this.y
+        }
+
+        /**
          * @param {number} z
          */
         setZ(z){
             this.z = z
+        }
+
+        /**
+         * @return {number}
+         */
+        getZ(){
+            return this.z
         }
 
         /**
