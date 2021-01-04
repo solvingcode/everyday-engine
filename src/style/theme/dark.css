@@ -108,6 +108,22 @@ button.selected, button.hidden.selected, button.locked.selected{
     color: #d2d2d2;
 }
 
+.list-element{
+    border-bottom: 1px solid #383838;
+}
+
+.list-element .list-element-img-wrapper{
+    background-color: #f4f4f4;
+}
+
+.list-element.selected{
+    background-color: #4f606c;
+}
+
+.list-element i{
+    color: #d2d2d2;
+}
+
 ::-webkit-scrollbar-track {
     background-color: #383838;
 }

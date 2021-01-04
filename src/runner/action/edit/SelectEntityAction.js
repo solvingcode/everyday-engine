@@ -6,7 +6,7 @@ define(function (require) {
     const World = require('../../../world/World.js')
 
     /**
-     * SelectEntityAction class
+     * @class {SelectEntityAction}
      * Select the entity provided in the AppState
      */
     class SelectEntityAction extends Action {

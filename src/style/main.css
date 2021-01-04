@@ -154,6 +154,41 @@ h4{
 
 /* -- layer entity */
 
+
+/* list element -- */
+
+.list-element{
+    padding: 5px;
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+}
+
+.list-element .list-element-img-wrapper{
+    width: 30px;
+    height: 30px;
+    float: left;
+    padding: 5px;
+    overflow: hidden;
+}
+
+.list-element span{
+    float: left;
+    display: block;
+    margin: 12px 10px;
+    width: 100px;
+    text-align: left;
+    white-space: nowrap;
+}
+
+.list-element i{
+    float: right;
+    line-height: 2.5rem;
+    margin-right: 0.5rem;
+}
+
+/* -- list element */
+
 /* color -- */
 
 .color{

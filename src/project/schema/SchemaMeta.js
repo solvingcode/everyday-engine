@@ -7,11 +7,14 @@ define(function(require){
     const PerlinNoiseConfig = require('../../pobject/PerlinNoiseConfig.js')
     const World = require('../../world/World.js')
     const EntityManager = require('../../world/manager/EntityManager.js')
+    const TextureManager = require('../../world/manager/TextureManager.js')
     const Camera = require('../../core/Camera.js')
     const Physics = require('../../physics/Physics.js')
     const TerrainManager = require('../../world/terrain/TerrainManager.js')
     const Terrain = require('../../world/terrain/Terrain.js')
     const EntityProps = require('../../pobject/EntityProps.js')
+    const PhysicsProps = require('../../pobject/PhysicsProps.js')
+    const Texture = require('../../core/Texture.js')
 
     /**
      * Define the schema of project data.
@@ -266,6 +269,54 @@ define(function(require){
                                                     type: 'number'
                                                 }
                                             }
+                                        },
+                                        physics: {
+                                            prototype: PhysicsProps,
+                                            meta: {
+                                                velocity: {
+                                                    prototype: Vector,
+                                                    meta: {
+                                                        x: {
+                                                            type: 'number'
+                                                        },
+                                                        y: {
+                                                            type: 'number'
+                                                        },
+                                                        z: {
+                                                            type: 'number'
+                                                        }
+                                                    }
+                                                },
+                                                angularVelocity: {
+                                                    type: 'number'
+                                                },
+                                                speed: {
+                                                    type: 'number'
+                                                },
+                                                density: {
+                                                    type: 'number'
+                                                },
+                                                force: {
+                                                    prototype: Vector,
+                                                    meta: {
+                                                        x: {
+                                                            type: 'number'
+                                                        },
+                                                        y: {
+                                                            type: 'number'
+                                                        },
+                                                        z: {
+                                                            type: 'number'
+                                                        }
+                                                    }
+                                                },
+                                                fixed: {
+                                                    type: 'boolean'
+                                                },
+                                                motion: {
+                                                    type: 'boolean'
+                                                }
+                                            }
                                         }
                                     }
                                 }
@@ -343,6 +394,33 @@ define(function(require){
                                         },
                                         height: {
                                             type: 'number'
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                textureManager: {
+                    type: TextureManager,
+                    meta: {
+                        dataId: {
+                            type: 'number'
+                        },
+                        textures: {
+                            type: Array,
+                            meta: {
+                                element: {
+                                    type: Texture,
+                                    meta: {
+                                        dataId: {
+                                            type: 'number'
+                                        },
+                                        id: {
+                                            type: 'number'
+                                        },
+                                        name: {
+                                            type: 'string'
                                         }
                                     }
                                 }

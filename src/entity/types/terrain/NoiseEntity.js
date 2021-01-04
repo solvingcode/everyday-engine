@@ -16,7 +16,7 @@ define(function (require) {
          * @override
          */
         init() {
-            this.setStatic(true)
+            this.setFixed(true)
             return true
         }
 

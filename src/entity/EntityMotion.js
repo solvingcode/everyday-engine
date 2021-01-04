@@ -22,12 +22,8 @@ define(function (require) {
                 speed: 0.7,
                 density: 0.001,
                 force: { x: 0, y: 0 },
-                static: false,
+                fixed: false,
                 motion: true,
-                rotationConstraint: {
-                    min: -Math.PI * 2,
-                    max: Math.PI * 2
-                },
                 ...props.physics
             }
             this.condition = {
@@ -42,19 +38,26 @@ define(function (require) {
         }
 
         /**
-         * @return {boolean}
+         * @override
          */
-        isStatic() {
-            return this.physics.static
+        init(world){
+            return super.init(world)
         }
 
         /**
-         * If the entity is static, is automatically motionless
-         * @param {boolean} isStatic
+         * @return {boolean}
          */
-        setStatic(isStatic) {
-            this.physics.static = isStatic
-            isStatic && this.setMotion(false)
+        isFixed() {
+            return this.physics.fixed
+        }
+
+        /**
+         * If the entity is fixed, is automatically motionless
+         * @param {boolean} isFixed
+         */
+        setFixed(isFixed) {
+            this.physics.fixed = isFixed
+            isFixed && this.setMotion(false)
         }
 
         /**
@@ -69,7 +72,7 @@ define(function (require) {
          */
         setMotion(isMotion) {
             this.physics.motion = isMotion
-            isMotion && this.setStatic(false)
+            isMotion && this.setFixed(false)
         }
 
         /**
@@ -110,13 +113,6 @@ define(function (require) {
          */
         setAngularVelocity(velocity) {
             this.physics.angularVelocity = velocity
-        }
-
-        /**
-         * Is the entity is static
-         */
-        getRotationConstraint() {
-            return this.physics.rotationConstraint
         }
 
         /**
@@ -164,18 +160,6 @@ define(function (require) {
          */
         getWorldId() {
             return this.worldId || this.id
-        }
-
-        /**
-         * Set the static flag
-         * @param {number} min
-         * @param {number} max
-         */
-        setRotationConstraint({ min, max }) {
-            const constraint = this.getRotationConstraint()
-            min && (constraint.min = min)
-            max && (constraint.max = max)
-            this.physics.rotationConstraint = constraint
         }
 
         /**
@@ -278,13 +262,6 @@ define(function (require) {
 
         getColor() {
             return this.style.color || this.props.style.color
-        }
-
-        /**
-         * @override
-         */
-        static newInstance(data){
-
         }
 
     }

@@ -363,7 +363,7 @@ define(function (require) {
          * @param {EntityMotion} entity
          */
         isNotStaticEntity(entity) {
-            return !entity.isStatic() && !entity.isControlled()
+            return !entity.isFixed() && !entity.isControlled()
         }
 
         /**

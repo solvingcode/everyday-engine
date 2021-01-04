@@ -1,26 +1,8 @@
 define(function (require) {
 
     const HtmlFormTextUI = require('./HtmlFormTextUI.js')
-    const EntityUI = require('../entity/EntityUI.js')
 
     class HtmlFormFileUI extends HtmlFormTextUI {
-        /**
-         * @override
-         */
-        static postCreate(item, el, uiRenderer) {
-            super.postCreate(item, el, uiRenderer)
-            const {parent} = item.element
-            const entity = parent.getBindObject()
-            const {meshBgColor} = entity
-            const {width, height} = this.props.imageProps
-            if (entity.getBackgroundImageBlob()) {
-                const image = EntityUI.getImageFromMesh(meshBgColor, {width, height})
-                const imageWrapper = document.createElement('div')
-                imageWrapper.appendChild(image)
-                el.appendChild(imageWrapper)
-            }
-        }
-
         /**
          * @override
          */

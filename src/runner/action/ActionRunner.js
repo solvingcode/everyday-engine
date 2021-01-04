@@ -17,6 +17,7 @@ define(function (require) {
     const RotateUpAction = require('./edit/RotateUpAction.js')
     const StyleColorAction = require('./edit/StyleColorAction.js')
     const SelectEntityAction = require('./edit/SelectEntityAction.js')
+    const SelectElementAction = require('./edit/SelectElementAction.js')
     const PushHistoryAction = require('./history/PushHistoryAction.js')
     const AttachCameraAction = require('./camera/AttachCameraAction.js')
     const DetachCameraAction = require('./camera/DetachCameraAction.js')
@@ -62,6 +63,7 @@ define(function (require) {
                 ROTATE_UP: RotateUpAction,
                 STYLE_COLOR: StyleColorAction,
                 SELECT_ENTITY: SelectEntityAction,
+                SELECT_LIST_ELEMENT: SelectElementAction,
                 ATTACH_CAMERA: AttachCameraAction,
                 DETACH_CAMERA: DetachCameraAction,
                 MOVE_CAMERA: MoveCameraAction,

@@ -24,6 +24,7 @@ define(function(require){
             this.locked = false
             this.visible = false
             this.clonable = true
+            this.physics = null
             this.setProps(props)
         }
 
@@ -395,6 +396,13 @@ define(function(require){
          */
         getSmoothness(){
             return this.noiseConfigs.smoothness
+        }
+
+        /**
+         * @param {PhysicsProps}
+         */
+        setPhysics(physics){
+            this.physics = physics
         }
 
     }

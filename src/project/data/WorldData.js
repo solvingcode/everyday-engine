@@ -17,6 +17,7 @@ define(function(require){
         camera
         physics
         terrainManager
+        textureManager
         mouseConstraintId
 
         /**
@@ -71,6 +72,13 @@ define(function(require){
         }
 
         /**
+         * @param {TextureManagerData} textureManager
+         */
+        setTextureManager(textureManager){
+            this.textureManager = textureManager
+        }
+
+        /**
          * Get the physics manager
          * @return {Physics}
          */
@@ -93,11 +101,17 @@ define(function(require){
         }
 
         /**
-         * Get the terrain manager
          * @return {TerrainManager}
          */
         getTerrainManager() {
             return this.terrainManager
+        }
+
+        /**
+         * @return {TextureManager}
+         */
+        getTextureManager() {
+            return this.textureManager
         }
 
         /**

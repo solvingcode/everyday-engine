@@ -64,7 +64,7 @@ define(function (require) {
          */
         setup(entity, body){
             entity.isControlled() && entity.setCollisionGroup(-1)
-            body.isStatic = body.isStatic || entity.isControlled() || entity.isStatic()
+            body.isStatic = body.isStatic || entity.isControlled() || entity.isFixed()
         }
 
         /**

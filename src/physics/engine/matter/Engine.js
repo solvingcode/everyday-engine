@@ -134,15 +134,10 @@ define(function (require) {
          * @todo Implement an intelligent controlling physics
          */
         applyPhysics(body, entity) {
-            const {force, rotationConstraint} = entity.physics
-            const {min: minRotation, max: maxRotation} = rotationConstraint
+            const {force} = entity.physics
             if (entity.isControlled()) {
                 const moveSpeed = 2
                 this.getEngine().Body.setPosition(body, {x: body.position.x + moveSpeed, y: body.position.y})
-            } else if (maxRotation && entity.rotation > maxRotation) {
-                this.getEngine().Body.setAngle(body, maxRotation)
-            } else if (minRotation && entity.rotation < minRotation) {
-                this.getEngine().Body.setAngle(body, minRotation)
             } else {
                 this.getEngine().Body.applyForce(body, entity.getForcePosition(), force)
             }

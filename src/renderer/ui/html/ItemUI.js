@@ -7,6 +7,16 @@ define(function () {
      */
     class ItemUI {
         /**
+         * @abstract
+         * Draw the menu item
+         * @param {MenuItemUI} item
+         * @param {UIRenderer} uiRenderer
+         */
+        static draw(item, uiRenderer) {
+            throw new TypeError('ItemUI.draw must be implemented!')
+        }
+
+        /**
          * What to do after create HTML Element
          * @param {MenuItemUI} item 
          * @param {HTMLElement} el 

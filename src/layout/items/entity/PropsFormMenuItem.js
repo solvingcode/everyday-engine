@@ -30,7 +30,7 @@ define(function (require) {
                     type: Layout.form.TEXT
                 },
                 {
-                    bind: 'static',
+                    bind: 'fixed',
                     label: 'Static',
                     type: Layout.form.CHECKBOX
                 },

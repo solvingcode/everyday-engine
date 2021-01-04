@@ -5,6 +5,7 @@ define(function (require) {
     const IconButtonUI = require('./buttons/IconButtonUI.js')
     const ColorButtonUI = require('./buttons/ColorButtonUI.js')
     const LayerEntityButtonUI = require('./buttons/LayerEntityButtonUI.js')
+    const ListElementButtonUI = require('./buttons/ListElementButtonUI.js')
     const HtmlPanelUI = require('./HtmlPanelUI.js')
     const HtmlTextUI = require('./HtmlTextUI.js')
     const HtmlGraphUI = require('./HtmlGraphUI.js')
@@ -89,6 +90,13 @@ define(function (require) {
          */
         getLayerEntityButtonUI() {
             return LayerEntityButtonUI
+        }
+
+        /**
+         * @override
+         */
+        getListElementUI() {
+            return ListElementButtonUI
         }
 
         /**

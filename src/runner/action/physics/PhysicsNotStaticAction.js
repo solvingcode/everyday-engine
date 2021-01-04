@@ -12,7 +12,7 @@ define(function (require) {
          * @param {Array} selectedEntities
          */
         static run(mouse, selectedEntities) {
-            selectedEntities.map(entity => entity.setStatic(false))
+            selectedEntities.map(entity => entity.setFixed(false))
             return true
         }
 

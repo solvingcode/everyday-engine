@@ -8,6 +8,7 @@ define(function (require) {
     const TerrainManager = require('./terrain/TerrainManager.js')
     const ConstraintEntity = require('../entity/types/joint/ConstraintEntity.js')
     const Vector = require('../utils/Vector.js')
+    const TextureManager = require('./manager/TextureManager.js')
 
     /**
      * @class {World}
@@ -21,6 +22,7 @@ define(function (require) {
             this.camera = new Camera({ x: SCENE_WIDTH / 2, y: SCENE_HEIGHT / 2 })
             this.physics = new Physics()
             this.terrainManager = new TerrainManager(this)
+            this.textureManager = new TextureManager()
             this.mouseConstraintId = this.loadEntity(new Vector({x: 0, y: 0}), ConstraintEntity).getId()
         }
 

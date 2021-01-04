@@ -20,6 +20,7 @@ define(function () {
         STYLE_COLOR: 'style_color',
         LAYER_ENTITY: 'layer_entity',
         LAYER_ACTION: 'layer_action',
+        LIST_ELEMENT: 'list_element',
         TEXT: 'text',
         FORM: 'form',
         FORM_ELEMENT: 'form_element',

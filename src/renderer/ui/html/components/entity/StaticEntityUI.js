@@ -1,4 +1,4 @@
-define(function (require) {
+define(function () {
 
     /**
      * StaticEntityUI class
@@ -12,7 +12,7 @@ define(function (require) {
          */
         static draw(item, el) {
             const entity = item.element.getEntity()
-            entity.isStatic() && this.create(el, entity)
+            entity.isFixed() && this.create(el, entity)
             this.clean(el, entity)
         }
 
@@ -44,7 +44,7 @@ define(function (require) {
             const existIcon = this.getElement(el)
             if (existIcon && (
                 parseInt(existIcon.getAttribute(attrId)) !== entity.id
-                || !entity.isStatic())
+                || !entity.isFixed())
             ) {
                 existIcon.remove()
             }

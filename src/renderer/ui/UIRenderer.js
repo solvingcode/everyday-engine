@@ -34,6 +34,7 @@ define(function (require) {
         }
 
         /**
+         * @abstract
          * Create/Update and return the HTML element for the given menu item
          * @param {MenuItemUI} menuItem
          * @return {HTMLElement}
@@ -43,6 +44,7 @@ define(function (require) {
         }
 
         /**
+         * @abstract
          * Get the body of a menu item
          * Used to define where to append child elements
          * @param {MenuItemUI} menuItem
@@ -60,6 +62,7 @@ define(function (require) {
         }
 
         /**
+         * @abstract
          * Get MenuItem at a specific position.
          * @param {Mouse} mouse
          * @return {MenuItemUI}
@@ -69,6 +72,7 @@ define(function (require) {
         }
 
         /**
+         * @abstract
          * Get the button UI for color
          * @return {ItemUI}
          */
@@ -77,6 +81,7 @@ define(function (require) {
         }
 
         /**
+         * @abstract
          * Get the button UI for layer entity
          * @return {ItemUI}
          */
@@ -85,6 +90,7 @@ define(function (require) {
         }
 
         /**
+         * @abstract
          * Get the button UI for default
          * @return {ItemUI}
          */
@@ -93,6 +99,7 @@ define(function (require) {
         }
 
         /**
+         * @abstract
          * Get the button UI for icons
          * @return {ItemUI}
          */
@@ -101,6 +108,7 @@ define(function (require) {
         }
 
         /**
+         * @abstract
          * Get the panel UI
          * @return {ItemUI}
          */
@@ -109,6 +117,7 @@ define(function (require) {
         }
 
         /**
+         * @abstract
          * Get the text UI
          * @return {ItemUI}
          */
@@ -117,6 +126,7 @@ define(function (require) {
         }
 
         /**
+         * @abstract
          * Get the graph UI
          * @return {ItemUI}
          */
@@ -125,6 +135,7 @@ define(function (require) {
         }
 
         /**
+         * @abstract
          * Get the form UI
          * @return {ItemUI}
          */
@@ -133,11 +144,20 @@ define(function (require) {
         }
 
         /**
+         * @abstract
          * Get the form input UI
          * @return {ItemUI}
          */
         getFormElementUI() {
             throw new TypeError('"UIRenderer.getFormElementUI" method must be implemented')
+        }
+
+        /**
+         * @abstract
+         * @return {ItemUI}
+         */
+        getListElementUI() {
+            throw new TypeError('"UIRenderer.getListElementUI" method must be implemented')
         }
 
         /**
@@ -163,6 +183,8 @@ define(function (require) {
                 return this.getFormElementUI().getType(item)
             } else if (element.type === Layout.type.ICON) {
                 return this.getIconButtonUI()
+            } else if (element.type === Layout.type.LIST_ELEMENT) {
+                return this.getListElementUI()
             }
             return this.getDefaultButtonUI()
         }

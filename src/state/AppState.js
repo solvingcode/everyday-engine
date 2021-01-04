@@ -282,7 +282,10 @@ define(function (require) {
         ACTION_LOAD_PROJECT_STOP: { history: false },
         ACTION_NEW_PROJECT_START: { history: false },
         ACTION_NEW_PROJECT_PROGRESS: { history: false },
-        ACTION_NEW_PROJECT_STOP: { history: false }
+        ACTION_NEW_PROJECT_STOP: { history: false },
+        ACTION_SELECT_LIST_ELEMENT_START: { history: false },
+        ACTION_SELECT_LIST_ELEMENT_PROGRESS: { history: false },
+        ACTION_SELECT_LIST_ELEMENT_STOP: { history: false }
     }
 
     return AppState

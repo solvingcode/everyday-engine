@@ -11,10 +11,12 @@ define(function (require) {
     const Camera = require('../../core/Camera.js')
     const Physics = require('../../physics/Physics.js')
     const TerrainManager = require('../../world/terrain/TerrainManager.js')
+    const TextureManager = require('../../world/manager/TextureManager.js')
     const Terrain = require('../../world/terrain/Terrain.js')
     const NoiseTerrain = require('../../world/terrain/types/NoiseTerrain.js')
     const PlainTerrain = require('../../world/terrain/types/PlainTerrain.js')
     const EntityProps = require('../../pobject/EntityProps.js')
+    const Texture = require('../../core/Texture.js')
 
     /**
      * @class {DataSchema}
@@ -38,7 +40,9 @@ define(function (require) {
             {id: 12, type: PlainTerrain},
             {id: 13, type: CircleEntity},
             {id: 14, type: RectEntity},
-            {id: 15, type: EntityProps}
+            {id: 15, type: EntityProps},
+            {id: 16, type: TextureManager},
+            {id: 17, type: Texture}
         ]
 
         /**
