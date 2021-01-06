@@ -102,25 +102,27 @@ define(function (require) {
         loadChunks(world) {
             const camera = world.getCamera()
             const entity = this.getEntity(world)
-            const chunkIds = Array.from(Array(this.chunksNbr).keys())
-                .map((iChunk) => {
-                    const x = Math.floor(camera.position.x / entity.getWidth()) + (iChunk - 1)
-                    return this.loadChunk(
-                        world,
-                        x * entity.getWidth() + entity.getPositionX(),
-                        entity.getPositionY(),
-                        {
-                            size: {width: entity.getWidth(), height: entity.getHeight()},
-                            noiseConfigs: _.clone(entity.noiseConfigs)
-                        }
-                    )
-                })
-            this.chunkIds
-                .filter(entityId => !chunkIds.includes(entityId))
-                .forEach(entityId => world.removeEntityById(entityId))
+            if(entity){
+                const chunkIds = Array.from(Array(this.chunksNbr).keys())
+                    .map((iChunk) => {
+                        const x = Math.floor(camera.position.x / entity.getWidth()) + (iChunk - 1)
+                        return this.loadChunk(
+                            world,
+                            x * entity.getWidth() + entity.getPositionX(),
+                            entity.getPositionY(),
+                            {
+                                size: {width: entity.getWidth(), height: entity.getHeight()},
+                                noiseConfigs: _.clone(entity.noiseConfigs)
+                            }
+                        )
+                    })
+                this.chunkIds
+                    .filter(entityId => !chunkIds.includes(entityId))
+                    .forEach(entityId => world.removeEntityById(entityId))
 
-            this.chunkIds = chunkIds
-            this.updateChunks(world)
+                this.chunkIds = chunkIds
+                this.updateChunks(world)
+            }
         }
 
         /**
@@ -131,8 +133,8 @@ define(function (require) {
             this.chunkIds.forEach(entityId => {
                 const chunkEntity = this.getEntityById(world, entityId)
                 const entity = this.getEntity(world)
-                if (entity.getBackgroundImageBlob() !== chunkEntity.getBackgroundImageBlob()) {
-                    chunkEntity.setBackgroundImageBlob(entity.getBackgroundImageBlob())
+                if (entity.getTextureId() !== chunkEntity.getTextureId()) {
+                    chunkEntity.setTextureId(entity.getTextureId())
                 }
                 if (entity.isBackgroundImageRepeat() !== chunkEntity.isBackgroundImageRepeat()) {
                     chunkEntity.setBackgroundImageRepeat(entity.isBackgroundImageRepeat())

@@ -18,10 +18,24 @@ define(function () {
         }
 
         /**
+         * @return {Style}
+         */
+        getAdvancedStyle(){
+            return this.advancedStyle
+        }
+
+        /**
          * @param {PerlinNoiseConfig} noiseConfigs
          */
         setNoiseConfigs(noiseConfigs){
             this.noiseConfigs = noiseConfigs
+        }
+
+        /**
+         * @return {PerlinNoiseConfig}
+         */
+        getNoiseConfigs(){
+            return this.noiseConfigs
         }
 
         /**
@@ -32,18 +46,39 @@ define(function () {
         }
 
         /**
+         * @return {string}
+         */
+        getName() {
+            return this.name
+        }
+
+        /**
          * Set the entity's position
-         * @param {{x: number, y: number}} position
+         * @param {Vector} position
          */
         setPosition(position) {
             this.position = position
         }
 
         /**
-         * @param {{width: number, height: number}} value
+         * @return {Vector}
+         */
+        getPosition() {
+            return this.position
+        }
+
+        /**
+         * @param {Size} value
          */
         setSize(value) {
             this.size = value
+        }
+
+        /**
+         * @return {Size}
+         */
+        getSize() {
+            return this.size
         }
 
         /**
@@ -54,10 +89,24 @@ define(function () {
         }
 
         /**
+         * @return {string}
+         */
+        getStyle() {
+            return this.style
+        }
+
+        /**
          * @param {number} value
          */
         setRotation(value) {
             this.rotation = value
+        }
+
+        /**
+         * @return {number}
+         */
+        getRotation() {
+            return this.rotation
         }
 
     }

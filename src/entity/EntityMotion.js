@@ -170,13 +170,6 @@ define(function (require) {
         }
 
         /**
-         * Update the entity props and the Mesh
-         */
-        update() {
-            super.update()
-        }
-
-        /**
          * Move the entity by distance related to a given point.
          * Move also attached entities
          * @param {EntityManager} entityManager

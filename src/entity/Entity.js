@@ -37,16 +37,6 @@ define(function (require) {
         }
 
         /**
-         * @override
-         */
-        async setBackgroundImageBlob(backgroundImageBlob) {
-            super.setBackgroundImageBlob(backgroundImageBlob)
-            if (await this.meshBgColor.fromImage(backgroundImageBlob)) {
-                this.regenerate()
-            }
-        }
-
-        /**
          * Build the Entity (generate mesh, set properties ...)
          * @param {World} world
          * @return {boolean}
@@ -127,7 +117,7 @@ define(function (require) {
             if (fillColor) {
                 context.stroke()
                 context.fill()
-            } else if (this.getBackgroundImageBlob()) {
+            } else if (this.getTextureId()) {
                 context.clip()
                 const canvasBg = this.meshBgColor.context.canvas
                 if (this.isBackgroundImageRepeat()) {
@@ -204,13 +194,6 @@ define(function (require) {
         }
 
         /**
-         * Update the entity props and the Mesh
-         */
-        update() {
-            this.addToBuffer()
-        }
-
-        /**
          * Send the Mesh to the renderer for drawing
          * @param {Renderer} renderer
          */
@@ -234,7 +217,7 @@ define(function (require) {
         setPositionAndGenerate(position) {
             this.setPosition(position)
             if(!_.isEqual(this.position, position)){
-                this.regenerate()
+                this.setGenerated(false)
             }
         }
 
@@ -245,7 +228,7 @@ define(function (require) {
         setRotationAndGenerate(angle) {
             if (this.rotation !== angle) {
                 super.setRotation(angle)
-                this.regenerate()
+                this.setGenerated(false)
             }
         }
 
@@ -255,7 +238,7 @@ define(function (require) {
          */
         setStyleAndGenerate(style) {
             this.setStyle(style)
-            this.regenerate()
+            this.setGenerated(false)
         }
 
         /**
@@ -265,7 +248,7 @@ define(function (require) {
         setSizeAndGenerate(size) {
             super.setSize(size)
             if (!_.isEqual(this.size, size)) {
-                this.regenerate()
+                this.setGenerated(false)
             }
         }
 
@@ -586,6 +569,47 @@ define(function (require) {
          */
         isCanGenerate() {
             return super.isVisible()
+        }
+
+        /**
+         * @return {boolean}
+         */
+        isGenerated(){
+            return this.generated
+        }
+
+        /**
+         * @param {boolean} generated
+         */
+        setGenerated(generated){
+            this.generated = generated
+        }
+
+        /**
+         * @override
+         */
+        setTextureId(textureId) {
+            super.setTextureId(textureId)
+            this.setGenerated(false)
+        }
+
+        /**
+         * @param {World} world
+         */
+        updateTexture(world){
+            this.meshBgColor = this.getTexture(world)
+        }
+
+        /**
+         * @param {World} world
+         * @return {Mesh}
+         */
+        getTexture(world){
+            const texture = world.getTextureManager().findById(this.getTextureId())
+            if(texture){
+                return texture.getMesh()
+            }
+            return null
         }
 
     }

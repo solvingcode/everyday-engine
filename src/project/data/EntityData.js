@@ -10,21 +10,23 @@ define(function(require){
      */
     class EntityData extends Data{
 
+        shape
+        center
+        radius
+        vertices
+        physics
+        textureId
+
         /**
          * @param {EntityProps} props
          */
         constructor(props = {}) {
             super()
             this.id = Maths.generateId()
-            this.shape = null
-            this.center = null
-            this.radius = null
-            this.vertices = null
             this.selectable = true
             this.locked = false
             this.visible = false
             this.clonable = true
-            this.physics = null
             this.setProps(props)
         }
 
@@ -346,6 +348,13 @@ define(function(require){
         /**
          * @return {boolean}
          */
+        isSelected(){
+            return this.selected
+        }
+
+        /**
+         * @return {boolean}
+         */
         getVisible() {
             return this.visible
         }
@@ -474,6 +483,20 @@ define(function(require){
          */
         getPhysics(){
             return this.physics
+        }
+
+        /**
+         * @param {number} textureId
+         */
+        setTextureId(textureId){
+            this.textureId = textureId
+        }
+
+        /**
+         * @return {number}
+         */
+        getTextureId(){
+            return this.textureId
         }
 
     }

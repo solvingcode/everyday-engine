@@ -53,6 +53,9 @@ define(function(require){
                                         dataId: {
                                             type: 'number'
                                         },
+                                        textureId: {
+                                            type: 'number'
+                                        },
                                         props: {
                                             prototype: EntityProps,
                                             meta: {
@@ -66,9 +69,6 @@ define(function(require){
                                                             type: 'string'
                                                         },
                                                         fillColor: {
-                                                            type: 'string'
-                                                        },
-                                                        backgroundImageBlob: {
                                                             type: 'string'
                                                         },
                                                         backgroundImageRepeat: {
@@ -100,9 +100,6 @@ define(function(require){
                                                             type: 'string'
                                                         },
                                                         fillColor: {
-                                                            type: 'string'
-                                                        },
-                                                        backgroundImageBlob: {
                                                             type: 'string'
                                                         },
                                                         backgroundImageRepeat: {
@@ -193,9 +190,6 @@ define(function(require){
                                                 fillColor: {
                                                     type: 'string'
                                                 },
-                                                backgroundImageBlob: {
-                                                    type: 'string'
-                                                },
                                                 backgroundImageRepeat: {
                                                     type: 'boolean'
                                                 }
@@ -208,9 +202,6 @@ define(function(require){
                                                     type: 'string'
                                                 },
                                                 fillColor: {
-                                                    type: 'string'
-                                                },
-                                                backgroundImageBlob: {
                                                     type: 'string'
                                                 },
                                                 backgroundImageRepeat: {
@@ -364,37 +355,42 @@ define(function(require){
                         dataId: {
                             type: 'number'
                         },
-                        terrain: {
-                            type: Terrain,
+                        terrains: {
+                            type: Array,
                             meta: {
-                                dataId: {
-                                    type: 'number'
-                                },
-                                entityId: {
-                                    type: 'number'
-                                },
-                                rotation: {
-                                    type: 'number'
-                                },
-                                chunksNbr: {
-                                    type: 'number'
-                                },
-                                chunkIds: {
-                                    type: Array,
+                                element: {
+                                    type: Terrain,
                                     meta: {
-                                        element: {
-                                            type: 'number'
-                                        }
-                                    }
-                                },
-                                size: {
-                                    prototype: Size,
-                                    meta: {
-                                        width: {
+                                        dataId: {
                                             type: 'number'
                                         },
-                                        height: {
+                                        entityId: {
                                             type: 'number'
+                                        },
+                                        rotation: {
+                                            type: 'number'
+                                        },
+                                        chunksNbr: {
+                                            type: 'number'
+                                        },
+                                        chunkIds: {
+                                            type: Array,
+                                            meta: {
+                                                element: {
+                                                    type: 'number'
+                                                }
+                                            }
+                                        },
+                                        size: {
+                                            prototype: Size,
+                                            meta: {
+                                                width: {
+                                                    type: 'number'
+                                                },
+                                                height: {
+                                                    type: 'number'
+                                                }
+                                            }
                                         }
                                     }
                                 }

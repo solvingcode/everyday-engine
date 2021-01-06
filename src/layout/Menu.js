@@ -21,7 +21,7 @@ define(function (require) {
     const ShowMenuItem = require('./items/action/ShowMenuItem.js')
     const RotateUpMenuItem = require('./items/action/RotateUpMenuItem.js')
     const MenuItemUI = require('../renderer/ui/MenuItemUI.js')
-    const LayerMenuItem = require('./items/layer/LayerMenuItem.js')
+    const LayerMenuItem = require('./items/entity/LayerMenuItem.js')
     const AiGeneticMenuItem = require('./items/genetic/AiGeneticMenuItem.js')
     const EntityMenuItem = require('./items/entity/EntityMenuItem.js')
     const StyleMenuItem = require('./items/style/StyleMenuItem.js')

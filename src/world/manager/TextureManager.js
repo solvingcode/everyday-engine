@@ -34,11 +34,11 @@ define(function(require){
         }
 
         /**
-         * @param {number} textureId
+         * @param {number|string} textureId
          * @return {Texture | null}
          */
         findById(textureId){
-            return this.textures.find(texture => texture.id === textureId)
+            return this.textures.find(texture => texture.id === parseInt(textureId))
         }
 
     }

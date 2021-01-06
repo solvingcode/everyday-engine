@@ -13,8 +13,8 @@ define(function (require) {
         /**
          * @override
          */
-        init() {
-            this.setStatic(true)
+        init(world) {
+            this.setFixed(true)
             return true
         }
 

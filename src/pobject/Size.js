@@ -16,10 +16,24 @@ define(function () {
         }
 
         /**
+         * @return {number}
+         */
+        getWidth(){
+            return this.width
+        }
+
+        /**
          * @param {number} height
          */
         setHeight(height){
             this.height = height
+        }
+
+        /**
+         * @return {number}
+         */
+        getHeight(){
+            return this.height
         }
     }
     return Size

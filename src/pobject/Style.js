@@ -3,18 +3,23 @@ define(function () {
      * @class {Style}
      */
     class Style {
-        constructor() {
-            this.color = null
-            this.fillColor = null
-            this.backgroundImageBlob = null
-            this.backgroundImageRepeat = false
-        }
+
+        color
+        fillColor
+        backgroundImageRepeat
 
         /**
          * @param {string} color
          */
         setColor(color){
             this.color = color
+        }
+
+        /**
+         * @return {string}
+         */
+        getColor(){
+            return this.color
         }
 
         /**
@@ -25,10 +30,10 @@ define(function () {
         }
 
         /**
-         * @param {string} backgroundImageBlob
+         * @return {string}
          */
-        setBackgroundImageBlob(backgroundImageBlob){
-            this.backgroundImageBlob = backgroundImageBlob
+        getFillColor(){
+            return this.fillColor
         }
 
         /**
@@ -36,6 +41,13 @@ define(function () {
          */
         setBackgroundImageRepeat(backgroundImageRepeat){
             this.backgroundImageRepeat = backgroundImageRepeat
+        }
+
+        /**
+         * @return {boolean}
+         */
+        getBackgroundImageRepeat(){
+            return this.backgroundImageRepeat
         }
     }
     return Style

@@ -6,13 +6,13 @@ define(function (require) {
     const World = require('../../../world/World.js')
 
     /**
-     * Form style background
+     * @class {TextureFormMenuItem}
      * @property {Entity} bindObject
      */
-    class BackgroundFormMenuItem extends FormMenuItem {
+    class TextureFormMenuItem extends FormMenuItem {
         constructor(parent) {
             super({
-                name: 'Background',
+                name: '',
                 stateCode: '',
                 type: Layout.type.FORM,
                 zone: parent.zone
@@ -24,16 +24,20 @@ define(function (require) {
          * @override
          */
         getFields() {
+            const textures = World.get().getTextureManager().getTextures()
+                .map(texture => ({ value: texture.id, label: texture.name }))
+
             return [
                 {
                     bind: 'backgroundImageRepeat',
-                    label: 'Background repeat',
+                    label: 'Texture repeat',
                     type: Layout.form.CHECKBOX
                 },
                 {
-                    bind: 'backgroundImageBlob',
-                    label: 'Background',
-                    type: Layout.form.FILE
+                    bind: 'textureId',
+                    label: 'Texture',
+                    type: Layout.form.DROPDOWN,
+                    list: textures
                 }
             ]
         }
@@ -53,6 +57,6 @@ define(function (require) {
         }
     }
 
-    return BackgroundFormMenuItem
+    return TextureFormMenuItem
 
 })

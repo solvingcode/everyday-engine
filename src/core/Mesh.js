@@ -90,7 +90,7 @@ define(function (require) {
          * @override
          */
         async setDataUrl(dataUrl){
-            this.fromImage(dataUrl)
+            await this.fromImage(dataUrl)
         }
 
         /**

@@ -1,6 +1,6 @@
 define(function (require) {
 
-    const BackgroundFormMenuItem = require('../../style/BackgroundFormMenuItem.js')
+    const BackgroundFormMenuItem = require('../../style/TextureFormMenuItem.js')
     const World = require('../../../../world/World.js')
 
     /**

@@ -91,7 +91,7 @@ define(function (require) {
             stateManager.endNextState(this.STATE)
             const world = World.get()
             entityManager.entities = storage.fetch(Storage.type.ENTITY)
-            entityManager.entities.map(entity => entity.regenerate())
+            entityManager.entities.map(entity => entity.regenerate(world))
             this.isPhysicsLoaded = false
             this.isSimulating = false
             world.getPhysics().stop()

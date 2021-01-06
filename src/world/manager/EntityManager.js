@@ -22,8 +22,8 @@ define(function (require) {
 
         /**
          * Get an entity at (x,y)
-         * @param {int} x 
-         * @param {int} y 
+         * @param {int} x
+         * @param {int} y
          * @param {Entity} type
          * @return {Entity}
          */
@@ -60,8 +60,8 @@ define(function (require) {
 
         /**
          * Get an entity if founded, else create it
-         * @param {int} x 
-         * @param {int} y 
+         * @param {int} x
+         * @param {int} y
          * @param {Entity} type
          * @param {Object} defaultProps
          * @return {Entity}
@@ -73,7 +73,7 @@ define(function (require) {
             const entity = this.getAt(x, y, type)
             if (!entity) {
                 const name = `Layer ${this.entities.length}`
-                const props = Object.assign(defaultProps, { position: { x, y }, name })
+                const props = Object.assign(defaultProps, {position: {x, y}, name})
                 const element = new type(props)
                 this.entities.push(element)
             }
@@ -84,7 +84,7 @@ define(function (require) {
          * Regenerate the mesh of all entities
          * @param {World} world
          */
-        regenerateAll(world){
+        regenerateAll(world) {
             const entities = this.entities.map(entity => entity)
             entities.forEach(entity => this.regenerate(world, entity))
         }
@@ -109,13 +109,13 @@ define(function (require) {
         /**
          * @param {EntityMotion} entity
          */
-        add(entity){
+        add(entity) {
             this.entities.push(entity)
         }
 
         /**
          * Delete entity from the entities list
-         * @param {Entity} entity 
+         * @param {Entity} entity
          */
         deleteEntity(entity) {
             return this.entities.splice(this.getIndexOf(entity), 1)
@@ -142,7 +142,7 @@ define(function (require) {
         /**
          * Clone entity to the entities list
          * @param {Entity} entity
-         * @param {Object} options 
+         * @param {Object} options
          */
         clone(entity, options = {}) {
             const cloneEntity = entity.clone()
@@ -154,8 +154,8 @@ define(function (require) {
 
         /**
          * check if the entity and all attached entities must dies
-         * @param {Entity} entity 
-         * @param {PhysicsEngine} physicsEngine 
+         * @param {Entity} entity
+         * @param {PhysicsEngine} physicsEngine
          */
         haveToDie(entity, physicsEngine) {
             const attachedEntities = entity.getAttachedEntities(this)
@@ -201,7 +201,7 @@ define(function (require) {
 
         /**
          * Concat entities
-         * @param {Entity[]} entities 
+         * @param {Entity[]} entities
          */
         concatEntities(entities) {
             this.entities = this.entities.concat(entities)
@@ -209,7 +209,7 @@ define(function (require) {
 
         /**
          * Replace entities
-         * @param {Entity[]} entities 
+         * @param {Entity[]} entities
          */
         replaceEntities(entities) {
             this.entities = entities
@@ -218,7 +218,7 @@ define(function (require) {
         /**
          * Make an entity.
          * @param {World} world
-         * @param {Entity} entity 
+         * @param {Entity} entity
          */
         make(world, entity) {
             return EntityGenerator.make(world, entity)
@@ -227,7 +227,7 @@ define(function (require) {
         /**
          * Regenerate the given entity and delete if not valid
          * @param {World} world
-         * @param {Entity} entity 
+         * @param {Entity} entity
          */
         regenerate(world, entity) {
             entity.regenerate(world)
@@ -235,14 +235,22 @@ define(function (require) {
 
         /**
          * Update the Mesh for all entities
+         * @param {World} world
          */
-        update() {
-            this.entities.forEach(entity => entity.update())
+        update(world) {
+            this.entities.forEach(entity => {
+                if (!entity.isGenerated()) {
+                    entity.setGenerated(true)
+                    entity.updateTexture(world)
+                    entity.regenerate(world)
+                }
+                entity.addToBuffer(world)
+            })
         }
 
         /**
          * Move an entity up (z-index)
-         * @param {Entity} entity 
+         * @param {Entity} entity
          */
         moveUp(entity) {
             this.moveIndex(entity, 1)
@@ -250,7 +258,7 @@ define(function (require) {
 
         /**
          * Move an entity down (z-index)
-         * @param {Entity} entity 
+         * @param {Entity} entity
          */
         moveDown(entity) {
             this.moveIndex(entity, 0)
@@ -258,7 +266,7 @@ define(function (require) {
 
         /**
          * Lock entity for modification
-         * @param {Entity} entity 
+         * @param {Entity} entity
          */
         lock(entity) {
             this.lockEntity(entity, true)
@@ -266,7 +274,7 @@ define(function (require) {
 
         /**
          * Unlock entity for modification
-         * @param {Entity} entity 
+         * @param {Entity} entity
          */
         unlock(entity) {
             this.lockEntity(entity, false)
@@ -274,7 +282,7 @@ define(function (require) {
 
         /**
          * Hide the given entity
-         * @param {Entity} entity 
+         * @param {Entity} entity
          */
         hide(entity) {
             entity.show(false)
@@ -282,7 +290,7 @@ define(function (require) {
 
         /**
          * Show the given entity
-         * @param {Entity} entity 
+         * @param {Entity} entity
          */
         show(entity) {
             entity.show(true)
@@ -290,7 +298,7 @@ define(function (require) {
 
         /**
          * Replace entities by the given list
-         * @param {Entity[]} entities 
+         * @param {Entity[]} entities
          */
         replace(entities) {
             this.entities = entities
@@ -299,8 +307,8 @@ define(function (require) {
         /**
          * Move the index of an entity up/down.
          * NB: The first element in the list is always the Platform Entity.
-         * @param {Entity} entity 
-         * @param {Boolean} up (1 = UP, 0 = DOWN) 
+         * @param {Entity} entity
+         * @param {Boolean} up (1 = UP, 0 = DOWN)
          */
         moveIndex(entity, up) {
             const entities = this.getBodyEntities()
@@ -313,8 +321,8 @@ define(function (require) {
 
         /**
          * Permute two entities
-         * @param {Entity} entityA 
-         * @param {Entity} entityB 
+         * @param {Entity} entityA
+         * @param {Entity} entityB
          */
         permutEntity(entityA, entityB) {
             const indexA = this.entities.findIndex((pEntity => pEntity === entityA))
@@ -327,8 +335,8 @@ define(function (require) {
 
         /**
          * Lock/Unlock the given entity and all attached type entities
-         * @param {Entity} entity 
-         * @param {Boolean} lock 
+         * @param {Entity} entity
+         * @param {Boolean} lock
          */
         lockEntity(entity, lock) {
             this.getAllAttachTypeEntity(entity).map(pEntity => this.lockEntity(pEntity, lock))
@@ -344,7 +352,7 @@ define(function (require) {
 
         /**
          * Is the given entity is a body type
-         * @param {Entity} entity 
+         * @param {Entity} entity
          */
         isBodyEntity(entity) {
             return !(entity instanceof AttachEntity) && !(entity instanceof GroupEntity)
@@ -352,7 +360,7 @@ define(function (require) {
 
         /**
          * Is the given entity is an attach type
-         * @param {Entity} entity 
+         * @param {Entity} entity
          */
         isAttachEntity(entity) {
             return entity instanceof AttachEntity
@@ -368,7 +376,7 @@ define(function (require) {
 
         /**
          * Get all entities of specific type
-         * @param {Entity} type 
+         * @param {Entity} type
          */
         getEntitiesAs(type) {
             return this.entities.filter(entity => entity instanceof type)
@@ -376,7 +384,7 @@ define(function (require) {
 
         /**
          * Get all entities does not of specific type
-         * @param {Entity} type 
+         * @param {Entity} type
          */
         getEntitiesNotAs(type) {
             return this.entities.filter(entity => !(entity instanceof type))

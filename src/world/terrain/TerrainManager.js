@@ -16,7 +16,7 @@ define(function (require) {
 
         constructor() {
             super()
-            this.terrain = null
+            this.terrains = []
             this.init()
         }
 
@@ -31,6 +31,18 @@ define(function (require) {
         }
 
         /**
+         * @param {World} world
+         */
+        load(world){
+            const terrain = this.getTerrain()
+            terrain && terrain.load(world)
+            this.getTerrains()
+                .filter(pTerrain => pTerrain !== terrain)
+                .forEach(pTerrain => pTerrain && pTerrain.unload(world))
+            this.setTerrains([terrain])
+        }
+
+        /**
          * @return {Object.<string, Terrain>}
          */
         getTerrainTypes() {
@@ -42,13 +54,10 @@ define(function (require) {
          */
         setTerrainType(type) {
             const terrain = this.terrainTypes[type]
-            if(this.terrain){
-                this.terrain.unload(this)
-            }
             if (terrain) {
-                this.terrain = new terrain()
+                this.terrains.push(new terrain())
             }else{
-                this.terrain = null
+                this.terrains.push(null)
             }
         }
 
@@ -69,7 +78,7 @@ define(function (require) {
          * @return {Terrain}
          */
         getTerrain() {
-            return this.terrain
+            return this.terrains.length && this.terrains[this.terrains.length - 1]
         }
 
         static get TYPES() {

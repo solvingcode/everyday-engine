@@ -11,10 +11,17 @@ define(function(){
         motion
 
         /**
-         * @param {number} velocity
+         * @param {Vector} velocity
          */
         setVelocity(velocity){
             this.velocity = velocity
+        }
+
+        /**
+         * @return {Vector}
+         */
+        getVelocity(){
+            return this.velocity
         }
 
         /**
@@ -25,10 +32,24 @@ define(function(){
         }
 
         /**
+         * @return {number}
+         */
+        getAngularVelocity(){
+            return this.angularVelocity
+        }
+
+        /**
          * @param {number} speed
          */
         setSpeed(speed){
             this.speed = speed
+        }
+
+        /**
+         * @return {number}
+         */
+        getSpeed(){
+            return this.speed
         }
 
         /**
@@ -39,10 +60,24 @@ define(function(){
         }
 
         /**
-         * @param {number} force
+         * @return {number}
+         */
+        getDensity(){
+            return this.density
+        }
+
+        /**
+         * @param {Vector} force
          */
         setForce(force){
             this.force = force
+        }
+
+        /**
+         * @return {Vector}
+         */
+        getForce(){
+            return this.force
         }
 
         /**
@@ -53,10 +88,24 @@ define(function(){
         }
 
         /**
+         * @return {boolean}
+         */
+        getFixed(){
+            return this.fixed
+        }
+
+        /**
          * @param {boolean} motion
          */
         setMotion(motion){
             this.motion = motion
+        }
+
+        /**
+         * @return {boolean}
+         */
+        getMotion(){
+            return this.motion
         }
 
     }

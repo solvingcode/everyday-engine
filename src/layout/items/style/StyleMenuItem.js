@@ -1,7 +1,7 @@
 define(function (require) {
 
     const MenuItem = require('../../MenuItem.js')
-    const BackgroundFormMenuItem = require('./BackgroundFormMenuItem.js')
+    const TextureFormMenuItem = require('./TextureFormMenuItem.js')
     const Layout = require('../../Layout.js')
 
     /**
@@ -17,7 +17,7 @@ define(function (require) {
                 zone: Layout.zone.RIGHT
             })
             this.items = [
-                new BackgroundFormMenuItem(this)
+                new TextureFormMenuItem(this)
             ]
         }
     }

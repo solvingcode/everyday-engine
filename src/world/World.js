@@ -21,7 +21,7 @@ define(function (require) {
             this.entityManager = new EntityManager()
             this.camera = new Camera({ x: SCENE_WIDTH / 2, y: SCENE_HEIGHT / 2 })
             this.physics = new Physics()
-            this.terrainManager = new TerrainManager(this)
+            this.terrainManager = new TerrainManager()
             this.textureManager = new TextureManager()
             this.mouseConstraintId = this.loadEntity(new Vector({x: 0, y: 0}), ConstraintEntity).getId()
         }
@@ -120,24 +120,21 @@ define(function (require) {
         }
 
         reload(){
-            this.getEntityManager().regenerateAll(this)
+            this.update()
         }
 
         /**
          * Load the world (generate terrain, ...)
          */
         load() {
-            const terrain = this.getTerrainManager().getTerrain()
-            if(terrain){
-                terrain.load(this)
-            }
+            this.getTerrainManager().load(this)
         }
 
         /**
          * Update all entities.
          */
         update() {
-            this.getEntityManager().update()
+            this.getEntityManager().update(this)
         }
 
         /**

@@ -8,20 +8,20 @@ define(function(require){
      */
     class TerrainManagerData extends Data{
 
-        terrain
+        terrains
 
         /**
-         * @return {Terrain}
+         * @return {Terrain[]}
          */
-        getTerrain(){
-            return this.terrain
+        getTerrains(){
+            return this.terrains
         }
 
         /**
-         * @param {TerrainData} terrain
+         * @param {Terrain[]} terrains
          */
-        setTerrain(terrain){
-            this.terrain = terrain
+        setTerrains(terrains){
+            this.terrains = terrains
         }
 
     }

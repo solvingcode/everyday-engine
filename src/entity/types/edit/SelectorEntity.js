@@ -13,9 +13,9 @@ define(function (require) {
         /**
          * @override
          */
-        build() {
+        build(world) {
             if(!StateManager.get().isProgress('ACTION_MOVE')) {
-                super.build()
+                super.build(world)
             }
             return false
         }
