@@ -82,6 +82,9 @@ define(function (require) {
 
         /**
          * Regenerate the mesh of all entities
+         * NB: The local variable entities must be a copy of this.entities, and the loop forEach must be based
+         * on that copy, because the regenerate method may remove elements in this.entities if is not valid,
+         * and will have a side effect on the loop forEach
          * @param {World} world
          */
         regenerateAll(world) {

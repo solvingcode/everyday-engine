@@ -120,7 +120,7 @@ define(function (require) {
         }
 
         reload(){
-            this.update()
+            this.getEntityManager().regenerateAll(this)
         }
 
         /**
