@@ -127,7 +127,7 @@ define(function (require) {
          * Load the world (generate terrain, ...)
          */
         load() {
-            this.getTerrainManager().load(this)
+            this.getTerrainManager().update(this)
         }
 
         /**

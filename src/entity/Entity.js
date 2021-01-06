@@ -34,6 +34,7 @@ define(function (require) {
             this.selected = false
             this.focused = false
             this.attachedEntities = null
+            this.generated = true
         }
 
         /**

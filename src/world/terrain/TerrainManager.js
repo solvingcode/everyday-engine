@@ -33,9 +33,24 @@ define(function (require) {
         /**
          * @param {World} world
          */
+        update(world){
+            this.unload(world)
+            this.load(world)
+        }
+
+        /**
+         * @param {World} world
+         */
         load(world){
             const terrain = this.getTerrain()
             terrain && terrain.load(world)
+        }
+
+        /**
+         * @param {World} world
+         */
+        unload(world){
+            const terrain = this.getTerrain()
             this.getTerrains()
                 .filter(pTerrain => pTerrain !== terrain)
                 .forEach(pTerrain => pTerrain && pTerrain.unload(world))
