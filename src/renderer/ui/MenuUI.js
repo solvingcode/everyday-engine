@@ -12,7 +12,7 @@ define(function (require) {
          */
         static draw(menu, uiRenderer) {
             uiRenderer.clean()
-            for (var iItem in menu.items) {
+            for (let iItem in menu.items) {
                 menu.items[iItem].draw(uiRenderer)
             }
         }

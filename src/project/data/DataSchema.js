@@ -2,7 +2,8 @@ define(function (require) {
 
     const World = require('../../world/World.js')
     const EntityManager = require('../../world/manager/EntityManager.js')
-    const ConstraintEntity = require('../../entity/types/joint/ConstraintEntity.js')
+    const ConstraintEntity = require('../../entity/types/constraint/ConstraintEntity.js')
+    const MouseConstraintEntity = require('../../entity/types/constraint/MouseConstraintEntity.js')
     const VirtualEntity = require('../../entity/VirtualEntity.js')
     const NoiseEntity = require('../../entity/types/terrain/NoiseEntity.js')
     const PlatformEntity = require('../../entity/types/terrain/PlatformEntity.js')
@@ -42,7 +43,8 @@ define(function (require) {
             {id: 14, type: RectEntity},
             {id: 15, type: EntityProps},
             {id: 16, type: TextureManager},
-            {id: 17, type: Texture}
+            {id: 17, type: Texture},
+            {id: 18, type: MouseConstraintEntity}
         ]
 
         /**

@@ -80,9 +80,10 @@ define(function (require) {
          * @return {string}
          */
         getTerrainType() {
+            const terrain = this.getTerrain()
             for (const tType in this.terrainTypes) {
                 if(this.terrainTypes.hasOwnProperty(tType)) {
-                    if (this.terrain instanceof this.terrainTypes[tType]) {
+                    if (terrain instanceof this.terrainTypes[tType]) {
                         return tType
                     }
                 }

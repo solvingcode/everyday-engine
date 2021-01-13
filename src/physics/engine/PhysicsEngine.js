@@ -189,7 +189,7 @@ define(function () {
         }
 
         /**
-         * Update joint position
+         * Update constraint position
          * @abstract
          * @param {World} world
          * @param {Entity} entity

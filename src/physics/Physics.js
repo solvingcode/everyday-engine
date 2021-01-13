@@ -57,7 +57,7 @@ define(function (require) {
          * Update the World using AI and physics Engine
          * @param {World} world
          * @param {AiEngine} aiEngine
-         * @TODO: updating the joint entities crash the physics, to be revisited
+         * @TODO: updating the constraint entities crash the physics, to be revisited
          */
         updateEngine(world, aiEngine) {
             const entityManager = world.getEntityManager()

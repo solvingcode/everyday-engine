@@ -17,9 +17,9 @@ define(function (require) {
             this.dataFormat = Storage.format.XML
         }
 
-        save(){
+        async save(){
             const data = _.cloneDeep(
-                this.storage
+                await this.storage
                     .updateAndValidate(Storage.type.WORLD, World.get())
             )
             const dataExport = data.export(Storage.type.WORLD, this.dataFormat)
@@ -33,7 +33,7 @@ define(function (require) {
             const data = await FileHelper.load(file, this.fileType)
             if(data){
                 const dataImport = this.storage.import(data, this.dataFormat)
-                dataImport && this.storage.load(Storage.type.WORLD, dataImport.project, World.get())
+                dataImport && await this.storage.load(Storage.type.WORLD, dataImport.project, World.get())
             }
         }
 

@@ -2,6 +2,7 @@ define(function (require) {
 
     const MenuItem = require('../../MenuItem.js')
     const AddTextureFormMenuItem = require('./AddTextureFormMenuItem.js')
+    const UpdateTextureFormMenuItem = require('./UpdateTextureFormMenuItem.js')
     const ListTextureFormMenuItem = require('./ListTextureFormMenuItem.js')
     const Layout = require('../../Layout.js')
 
@@ -19,7 +20,8 @@ define(function (require) {
             })
             this.items = [
                 new AddTextureFormMenuItem(this),
-                new ListTextureFormMenuItem(this)
+                new ListTextureFormMenuItem(this),
+                new UpdateTextureFormMenuItem(this)
             ]
         }
     }

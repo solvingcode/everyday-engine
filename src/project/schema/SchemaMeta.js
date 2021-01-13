@@ -56,6 +56,9 @@ define(function(require){
                                         textureId: {
                                             type: 'number'
                                         },
+                                        subEntity: {
+                                            type: 'boolean'
+                                        },
                                         props: {
                                             prototype: EntityProps,
                                             meta: {

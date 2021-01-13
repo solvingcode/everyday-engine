@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Web engine - Test</title>
+    <link rel="stylesheet" href="/lib/test/mocha.css">
+</head>
+<body>
+    <div id="mocha"></div>
+    <!-- unit test dependencies -->
+    <script type="text/javascript" src="/src/core/Constant.js"></script>
+    <script src="/lib/lodash.min.js"></script>
+    <script src="/lib/test/mocha.js"></script>
+    <script src="/lib/test/chai.js"></script>
+    <script type="module" class="mocha-init">mocha.setup('bdd')</script>
+    <script data-main="test/main" src="/lib/require.js"></script>
+</body>
+</html>

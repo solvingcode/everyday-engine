@@ -1,7 +1,7 @@
 define(function () {
 
     /**
-     * Menu item UI
+     * @class {MenuItemUI}
      * @property {MenuItem} element
      * @property {MenuItemUI} parent
      * @property {number} version
@@ -15,7 +15,6 @@ define(function () {
         }
 
         /**
-         * Draw the Menu Item UI
          * @param {UIRenderer} uiRenderer 
          */
         draw(uiRenderer) {
@@ -23,7 +22,6 @@ define(function () {
         }
 
         /**
-         * Get id of menu item
          * @return {string}
          */
         getId() {

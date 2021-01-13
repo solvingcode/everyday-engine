@@ -18,7 +18,8 @@ define(function (require) {
          * @override
          */
         static run() {
-            const {bind} = StateManager.get().getNextProgressData(this.STATE)
+            const {bind, list} = StateManager.get().getNextProgressData(this.STATE)
+            list.forEach(element => element.unselect())
             bind.select()
             return true
         }

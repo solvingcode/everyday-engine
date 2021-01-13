@@ -4,7 +4,7 @@ define(function (require) {
 
     /**
      * Attach Entity (abstract class) used to attach two entities
-     * Different type of attach are possible (joint, point, ...)
+     * Different type of attach are possible (constraint, point, ...)
      * @abstract
      */
     class AttachEntity extends LineEntity {

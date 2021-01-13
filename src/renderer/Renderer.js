@@ -23,7 +23,7 @@ define(function (require) {
         }
 
         /**
-         * Draw and object
+         * Draw an entity
          * @param {Entity} object 
          */
         draw(object) {

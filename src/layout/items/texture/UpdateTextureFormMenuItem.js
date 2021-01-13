@@ -5,9 +5,9 @@ define(function (require) {
     const World = require('../../../world/World.js')
 
     /**
-     * @class {AddTextureFormMenuItem}
+     * @class {UpdateTextureFormMenuItem}
      */
-    class AddTextureFormMenuItem extends FormMenuItem {
+    class UpdateTextureFormMenuItem extends FormMenuItem {
         constructor(parent) {
             super({
                 name: '',
@@ -24,9 +24,9 @@ define(function (require) {
         getFields() {
             return [
                 {
-                    bind: 'texture',
-                    label: 'Add Texture',
-                    type: Layout.form.FILE
+                    bind: 'name',
+                    label: 'Name',
+                    type: Layout.form.TEXT
                 }
             ]
         }
@@ -35,10 +35,10 @@ define(function (require) {
          * @override
          */
         getFormObject(){
-            return World.get().getTextureManager()
+            return World.get().getTextureManager().getSelectedTexture()
         }
     }
 
-    return AddTextureFormMenuItem
+    return UpdateTextureFormMenuItem
 
 })

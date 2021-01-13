@@ -35,6 +35,7 @@ define(function (require) {
             this.focused = false
             this.attachedEntities = null
             this.generated = true
+            this.loading = false
         }
 
         /**
@@ -562,7 +563,7 @@ define(function (require) {
          * Is entity active (valid, unlocked, ...)
          */
         isActive() {
-            return this.isValid() && !this.locked && this.visible
+            return this.isValid() && !this.isLocked() && this.isVisible() && !this.isSubEntity()
         }
 
         /**
@@ -611,6 +612,20 @@ define(function (require) {
                 return texture.getMesh()
             }
             return null
+        }
+
+        /**
+         * @return {boolean}
+         */
+        isLoading(){
+            return this.loading
+        }
+
+        /**
+         * @param {boolean} loading
+         */
+        setLoading(loading){
+            this.loading = loading
         }
 
     }

@@ -26,6 +26,10 @@ define(function(require){
             this.selected = true
         }
 
+        unselect(){
+            this.selected = false
+        }
+
         /**
          * @param {string} image
          * @return {boolean}

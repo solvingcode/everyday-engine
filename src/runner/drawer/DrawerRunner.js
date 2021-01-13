@@ -5,8 +5,8 @@ define(function (require) {
     const {MouseButton} = require('../../core/Mouse.js')
     const CircleEntity = require('../../entity/types/shape/CircleEntity.js')
     const RectEntity = require('../../entity/types/shape/RectEntity.js')
-    const JointEntity = require('../../entity/types/joint/JointEntity.js')
-    const AttachPointEntity = require('../../entity/types/joint/AttachPointEntity.js')
+    const JointEntity = require('../../entity/types/constraint/JointEntity.js')
+    const AttachPointEntity = require('../../entity/types/constraint/AttachPointEntity.js')
     const SelectorEntity = require('../../entity/types/edit/SelectorEntity.js')
     const World = require('../../world/World.js')
 
@@ -112,6 +112,7 @@ define(function (require) {
             const world = World.get()
             if (!this.currentEntity) {
                 this.currentEntity = world.loadEntity(position, type)
+                this.currentEntity.setLoading(true)
             }
             this.isCurrentDrawValid = world.makeEntity(this.currentEntity)
         }

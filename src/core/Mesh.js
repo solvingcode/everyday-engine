@@ -2,6 +2,7 @@ define(function (require) {
 
     const MeshData = require('../project/data/MeshData.js')
     const ImageHelper = require('../utils/ImageHelper.js')
+    const Size = require('../pobject/Size.js')
 
     /**
      * Define a block of pixels loaded to the VRAM.
@@ -20,8 +21,12 @@ define(function (require) {
             this.initCanvas()
         }
 
+        /**
+         * @param {number|Size} size
+         * @return {Size}
+         */
         getSize(size) {
-            return typeof size === 'number' ? {width: size, height: size} : size
+            return _.isNumber(size) ? new Size({width: size, height: size}) : size
         }
 
         /**
@@ -46,7 +51,7 @@ define(function (require) {
 
         /**
          * Clear the Mesh
-         * @param {number|{ width: number, height: number }} size
+         * @param {number|Size} size
          */
         clear(size = 0) {
             this.size = this.getSize(size || this.size)

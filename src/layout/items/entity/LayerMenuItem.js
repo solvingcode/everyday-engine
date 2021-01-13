@@ -19,7 +19,8 @@ define(function (require) {
          * @override
          */
         getFormObject(){
-            return World.get().getEntityManager().getValidBodyEntities().reverse()
+            return World.get().getEntityManager().getValidBodyEntities()
+                .filter(entity => !entity.isSubEntity()).reverse()
         }
     }
 

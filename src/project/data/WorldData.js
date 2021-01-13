@@ -18,7 +18,6 @@ define(function(require){
         physics
         terrainManager
         textureManager
-        mouseConstraintId
 
         /**
          * @param {World} data
@@ -34,20 +33,6 @@ define(function(require){
 
         reload(){
             throw new TypeError('World.reload must be implemented!')
-        }
-
-        /**
-         * @param {number} mouseConstraintId
-         */
-        setMouseConstraintId(mouseConstraintId){
-            this.mouseConstraintId = mouseConstraintId
-        }
-
-        /**
-         * @return {number}
-         */
-        getMouseConstraintId(){
-            return this.mouseConstraintId
         }
 
         /**

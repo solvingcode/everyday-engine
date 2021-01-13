@@ -48,8 +48,8 @@ define(function (require) {
          * @param {Object|Array} data
          * @param {boolean} serialize
          */
-        updateAndValidate(type, data, serialize = true){
-            const validData = this.validate(type, data, Schema.getMeta(), {serialize})
+        async updateAndValidate(type, data, serialize = true){
+            const validData = await this.validate(type, data, Schema.getMeta(), {serialize})
             this.data[type] = _.cloneDeep(validData)
             return this
         }
@@ -60,12 +60,13 @@ define(function (require) {
          * @param {Object|Array} data
          * @param {Object} target
          */
-        load(type, data, target){
-            this.updateAndValidate(type, data, false)
+        async load(type, data, target){
+            await this.updateAndValidate(type, data, false)
             target.set(_.cloneDeep(this.data[type]))
         }
 
         /**
+         * @private
          * @param {string} key
          * @param {Object|Array|Data} data
          * @param {SchemaMeta} schema
@@ -74,7 +75,7 @@ define(function (require) {
          * @return {Object|Array}
          * @todo: Refactor/Simplify the implementation
          */
-        validate(key, data, schema, options, schemaPrefix = ''){
+        async validate(key, data, schema, options, schemaPrefix = ''){
             const schemaMeta = `${schemaPrefix}${key}`
             const schemaMetaProto = schema[schemaMeta]
             if (schemaMetaProto) {
@@ -91,21 +92,24 @@ define(function (require) {
                     }else{
                         result = new prototype()
                     }
-                    result && this.getProperties(data, schemaMetaProto.prototype)
-                        .forEach(prop => {
-                            const subResult = this.validate(prop.key, prop.value, schema, options,`${schemaMeta}.`)
+                    if(result) {
+                        const props = this.getProperties(data, schemaMetaProto.prototype)
+                        for(const iProp in props){
+                            const prop = props[iProp]
+                            const subResult = await this.validate(prop.key, prop.value, schema, options, `${schemaMeta}.`)
                             if (subResult) {
-                                if(_.isArray(result)){
+                                if (_.isArray(result)) {
                                     result.push(subResult)
-                                }else{
+                                } else {
                                     const setter = ClassHelper.getSetter(result, prop.key)
-                                    result[setter](subResult)
+                                    await result[setter](subResult)
                                 }
                             } else {
                                 const setter = ClassHelper.getSetter(result, prop.key)
-                                result[setter](Schema.getValue(`${schemaMeta}.${prop.key}`, prop.value))
+                                await result[setter](Schema.getValue(`${schemaMeta}.${prop.key}`, prop.value))
                             }
-                        })
+                        }
+                    }
                     return result
                 }
             }else{

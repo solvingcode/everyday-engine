@@ -10,7 +10,6 @@ define(function () {
          * @param {Entity} entity 
          */
         static make(world, entity) {
-            entity.loading = true
             return entity.updateStyle().build(world)
         }
     }

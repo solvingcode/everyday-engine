@@ -22,7 +22,7 @@ define(function () {
         /**
          * Render the meshes to the screen
          * @param {Camera} camera 
-         * @todo Optimize this to not delete all meshes (rerender just entities updates)
+         * @todo Optimize this to not delete all meshes (rerender just entities updated)
          */
         render(camera) {
             this.clear()

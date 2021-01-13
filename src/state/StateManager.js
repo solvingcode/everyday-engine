@@ -109,30 +109,39 @@ define(function (require) {
         }
 
         /**
-         * Progress the next state
          * @param {string} type
          */
         progressNextState(type) {
             const data = this.getNextStartData(type)
-            this.progressState(type, data.id)
+            if(data){
+                this.progressState(type, data.id)
+            }else{
+                throw new TypeError(`Progress data state not found for ${type}`)
+            }
         }
 
         /**
-         * Stop the next state
          * @param {string} type
          */
         stopNextState(type) {
             const data = this.getNextProgressData(type) || this.getNextStartData(type)
-            this.stopState(type, data.id)
+            if(data){
+                this.stopState(type, data.id)
+            }else{
+                throw new TypeError(`Stop data state not found for ${type}`)
+            }
         }
 
         /**
-         * End the next state
          * @param {string} type
          */
         endNextState(type) {
             const data = this.getNextStopData(type)
-            data && this.endState(type, data.id)
+            if(data){
+                this.endState(type, data.id)
+            }else{
+                throw new TypeError(`End data state not found for ${type}`)
+            }
         }
 
         /**
@@ -149,7 +158,7 @@ define(function (require) {
         }
 
         /**
-         * Is running states is in progress
+         * Is running states in progress
          * @return {boolean}
          */
         isRunning() {

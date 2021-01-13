@@ -81,7 +81,7 @@ define(function (require) {
         }
 
         /**
-         * Find related entities using point a and b, and attach them to the joint
+         * Find related entities using point a and b, and attach them to the constraint
          */
         setConstraintEntities() {
             const entitySelector = EntitySelector.get()

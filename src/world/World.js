@@ -6,7 +6,7 @@ define(function (require) {
     const Camera = require('../core/Camera.js')
     const Physics = require('../physics/Physics.js')
     const TerrainManager = require('./terrain/TerrainManager.js')
-    const ConstraintEntity = require('../entity/types/joint/ConstraintEntity.js')
+    const MouseConstraintEntity = require('../entity/types/constraint/MouseConstraintEntity.js')
     const Vector = require('../utils/Vector.js')
     const TextureManager = require('./manager/TextureManager.js')
 
@@ -23,7 +23,16 @@ define(function (require) {
             this.physics = new Physics()
             this.terrainManager = new TerrainManager()
             this.textureManager = new TextureManager()
-            this.mouseConstraintId = this.loadEntity(new Vector({x: 0, y: 0}), ConstraintEntity).getId()
+            this.mouseConstraintId = null
+            this.init()
+
+        }
+
+        /**
+         * Initialize the world. will erase also world's element from imported project
+         */
+        init(){
+            this.createMouseConstraint()
         }
 
         /**
@@ -46,7 +55,7 @@ define(function (require) {
         drawEntity(entity, renderer) {
             const { x: cameraX, y: cameraY } = this.getCamera().position
             const {left: sceneCanvasX, top: sceneCanvasY} = objectContext.canvas.getBoundingClientRect()
-            const minX = cameraX - SCENE_WIDTH / 2 - entity.size.width + sceneCanvasX
+            const minX = cameraX - SCENE_WIDTH / 2 - entity.size.width
             const maxX = cameraX + SCENE_WIDTH / 2 + sceneCanvasX
             const minY = cameraY - SCENE_HEIGHT / 2 - entity.size.height + sceneCanvasY
             const maxY = cameraY + SCENE_HEIGHT / 2 + sceneCanvasY
@@ -78,7 +87,6 @@ define(function (require) {
         }
 
         /**
-         * Remove an entity from the world
          * @param {number} entityId
          */
         removeEntityById(entityId){
@@ -87,6 +95,14 @@ define(function (require) {
                 this.getPhysics().unloadEntity(entity)
                 this.getEntityManager().delete(entity)
             }
+        }
+
+        /**
+         * @param {Class} type
+         */
+        removeEntityByType(type){
+            const entities = this.getEntityManager().findByType(type)
+            entities.forEach(entity => this.removeEntityById(entity.id))
         }
 
         /**
@@ -100,6 +116,7 @@ define(function (require) {
          * @param {Vector} position
          * @param {Entity} type
          * @param {EntityProps} props
+         * @return {Entity}
          */
         loadEntity(position, type, props = {}){
             return this.getEntityManager().load(this, position, type, props)
@@ -119,7 +136,11 @@ define(function (require) {
             return this.getEntityManager().make(this, entity)
         }
 
+        /**
+         * Force the regeneration of all entities (regenerate meshes)
+         */
         reload(){
+            this.init()
             this.getEntityManager().regenerateAll(this)
         }
 
@@ -131,14 +152,14 @@ define(function (require) {
         }
 
         /**
-         * Update all entities.
+         * Update all entities (check all entities tagged for regeneration)
          */
         update() {
             this.getEntityManager().update(this)
         }
 
         /**
-         * Update the camera position
+         * Update the camera position for the attached entity (if the camera must be focused on a given entity)
          */
         updateCamera() {
             const entity = this.getCamera().getEntity(this.getEntityManager())
@@ -166,6 +187,27 @@ define(function (require) {
          */
         getMouseConstraint() {
             return this.getEntityManager().findById(this.mouseConstraintId)
+        }
+
+        createMouseConstraint(){
+            this.removeEntityByType(MouseConstraintEntity)
+            const constraint = this.loadEntity(new Vector({x: 0, y: 0}), MouseConstraintEntity)
+            constraint.setSelectable(false)
+            this.mouseConstraintId = constraint.getId()
+        }
+
+        /**
+         * @param {number} mouseConstraintId
+         */
+        setMouseConstraintId(mouseConstraintId){
+            this.mouseConstraintId = mouseConstraintId
+        }
+
+        /**
+         * @return {number}
+         */
+        getMouseConstraintId(){
+            return this.mouseConstraintId
         }
 
         static get() {

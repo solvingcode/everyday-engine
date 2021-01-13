@@ -10,7 +10,7 @@ define(function () {
          * @param {World} world
          */
         getSelected(world) {
-            return world.getEntityManager().entities.filter((entity) => entity.selected)
+            return world.getEntityManager().entities.filter((entity) => entity.isSelected())
         }
 
         /**
@@ -44,7 +44,7 @@ define(function () {
          */
         getAll(world, point, exceptType = null) {
             return world.getEntityManager().getActiveEntities().filter((entity) =>
-                entity.includes(point) && entity.selectable &&
+                entity.includes(point) && entity.isSelectable() &&
                 (!exceptType || !(entity instanceof exceptType))
             )
         }

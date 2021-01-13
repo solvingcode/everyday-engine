@@ -3,7 +3,18 @@ define(function () {
      * @class {Size}
      */
     class Size {
-        constructor({ width, height } = {width: 0, height: 0}) {
+        /**
+         * @param {number|{width: number, height: number}} size
+         */
+        constructor(size) {
+            let width = 0, height = 0
+            if(_.isNumber(size)){
+                width = size
+                height = size
+            }else if(size){
+                width = size.width || width
+                height = size.height || height
+            }
             this.width = width
             this.height = height
         }

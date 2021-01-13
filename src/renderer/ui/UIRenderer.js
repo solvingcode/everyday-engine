@@ -35,6 +35,13 @@ define(function (require) {
 
         /**
          * @abstract
+         */
+        clean() {
+            throw new TypeError('"UIRenderer.clean" method must be implemented')
+        }
+
+        /**
+         * @abstract
          * Create/Update and return the HTML element for the given menu item
          * @param {MenuItemUI} menuItem
          * @return {HTMLElement}

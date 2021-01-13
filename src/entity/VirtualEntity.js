@@ -8,9 +8,8 @@ define(function (require) {
     class VirtualEntity extends EntityMotion {
 
         constructor(props) {
-            super({...props, name: 'Virtual'})
+            super(props)
             this.shape = EntityMotion.shapes.VIRTUAL
-            this.visible = true
         }
 
         /**

@@ -60,14 +60,9 @@ define(function (require) {
             storage.update(Storage.type.ENTITY, entityManager.entities)
             aiEngine && aiEngine.init()
             if (!this.isPhysicsLoaded) {
-                try {
-                    world.getPhysics().run(world)
-                    this.isPhysicsLoaded = true
-                    this.isSimulating = true
-                } catch (error) {
-                    console.warn(error)
-                    stateManager.stopNextState(this.STATE)
-                }
+                world.getPhysics().run(world)
+                this.isPhysicsLoaded = true
+                this.isSimulating = true
             }
             stateManager.progressNextState(this.STATE)
         }

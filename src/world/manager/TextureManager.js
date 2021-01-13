@@ -34,6 +34,13 @@ define(function(require){
         }
 
         /**
+         * @return {Texture}
+         */
+        getSelectedTexture(){
+            return this.getTextures().find(texture => texture.isSelected())
+        }
+
+        /**
          * @param {number|string} textureId
          * @return {Texture | null}
          */

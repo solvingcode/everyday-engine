@@ -2,8 +2,8 @@ define(function (require) {
 
     const EntityGenerator = require('../generator/EntityGenerator.js')
     const Entity = require('../../entity/Entity.js')
-    const AttachEntity = require('../../entity/types/joint/AttachEntity.js')
-    const GroupEntity = require('../../entity/VirtualEntity.js')
+    const AttachEntity = require('../../entity/types/constraint/AttachEntity.js')
+    const VirtualEntity = require('../../entity/VirtualEntity.js')
     const Maths = require('../../utils/Maths.js')
     const EntityManagerData = require('../../project/data/EntityManagerData.js')
 
@@ -36,7 +36,6 @@ define(function (require) {
         }
 
         /**
-         * Get the index of entity
          * @param {Entity} entity
          */
         getIndexOf(entity) {
@@ -48,7 +47,6 @@ define(function (require) {
         }
 
         /**
-         * Find an entity by Id
          * @param {string|number} entityId
          * @return {Entity}
          */
@@ -56,6 +54,14 @@ define(function (require) {
             return this.entities.find((element) =>
                 element.id === parseInt(entityId)
             )
+        }
+
+        /**
+         * @param {Class} type
+         * @return {Entity[]}
+         */
+        findByType(type) {
+            return this.entities.filter(element => element instanceof type)
         }
 
         /**
@@ -73,7 +79,7 @@ define(function (require) {
             const entity = this.getAt(x, y, type)
             if (!entity) {
                 const name = `Layer ${this.entities.length}`
-                const props = Object.assign(defaultProps, {position: {x, y}, name})
+                const props = Object.assign({position: {x, y}, name}, defaultProps)
                 const element = new type(props)
                 this.entities.push(element)
             }
@@ -88,8 +94,8 @@ define(function (require) {
          * @param {World} world
          */
         regenerateAll(world) {
-            const entities = this.entities.map(entity => entity)
-            entities.forEach(entity => this.regenerate(world, entity))
+            this.entities.forEach(entity => entity.setGenerated(false))
+            this.update(world)
         }
 
         /**
@@ -358,7 +364,7 @@ define(function (require) {
          * @param {Entity} entity
          */
         isBodyEntity(entity) {
-            return !(entity instanceof AttachEntity) && !(entity instanceof GroupEntity)
+            return !(entity instanceof AttachEntity) && !(entity instanceof VirtualEntity)
         }
 
         /**

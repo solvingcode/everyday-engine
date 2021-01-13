@@ -1,6 +1,6 @@
 define(function (require) {
 
-    const AttachEntity = require('../../entity/types/joint/AttachEntity.js')
+    const AttachEntity = require('../../entity/types/constraint/AttachEntity.js')
 
     /**
      * Shape class

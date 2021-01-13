@@ -2,6 +2,7 @@ define(function(require){
 
     const Data = require('./Data.js')
     const Maths = require('../../utils/Maths.js')
+    const Size = require('../../pobject/Size.js')
 
     /**
      * Class define all entity's data and props (getters and setters)
@@ -16,6 +17,11 @@ define(function(require){
         vertices
         physics
         textureId
+        selectable
+        locked
+        visible
+        clonable
+        subEntity
 
         /**
          * @param {EntityProps} props
@@ -27,6 +33,7 @@ define(function(require){
             this.locked = false
             this.visible = false
             this.clonable = true
+            this.subEntity = false
             this.setProps(props)
         }
 
@@ -130,7 +137,7 @@ define(function(require){
             this.name = props.name
             this.position = props.position
             this.rotation = props.rotation || 0
-            this.size = props.size || 1
+            this.size = props.size || new Size(1)
             this.style = props.style
             this.advancedStyle = Object.assign(
                 {backgroundImageBlob: '', backgroundImageRepeat: false},
@@ -269,7 +276,7 @@ define(function(require){
         }
 
         /**
-         * @return {{width: number, height: number}}
+         * @return {Size}
          */
         getSize() {
             return this.size
@@ -343,6 +350,13 @@ define(function(require){
          */
         getSelectable() {
             return this.selectable
+        }
+
+        /**
+         * @return {boolean}
+         */
+        isSelectable(){
+            return this.getSelectable()
         }
 
         /**
@@ -497,6 +511,27 @@ define(function(require){
          */
         getTextureId(){
             return this.textureId
+        }
+
+        /**
+         * @return {boolean}
+         */
+        getSubEntity(){
+            return this.subEntity
+        }
+
+        /**
+         * @param {boolean} subEntity
+         */
+        setSubEntity(subEntity){
+            this.subEntity = subEntity
+        }
+
+        /**
+         * @return {boolean}
+         */
+        isSubEntity(){
+            return this.getSubEntity()
         }
 
     }

@@ -4,15 +4,16 @@ define(function (require) {
     const HtmlUIRenderer = require('./ui/html/HtmlUIRenderer.js')
 
     /**
-     * Manager the renderer for the layout (fix element, menus, buttons, ...)
+     * Manage the renderer for the layout (fix element, menus, buttons, ...)
      */
     class SetupRenderer {
         constructor() {
             this.uiRenderer = new HtmlUIRenderer(rootContext)
         }
+
         /**
          * Render the layout (Menu, UI, ...).
-         * @param {Menu} menu 
+         * @param {Menu} menu
          */
         render(menu) {
             MenuUI.draw(menu, this.uiRenderer)

@@ -12,7 +12,7 @@ define(function (require) {
          * @override
          */
         loadChunk(world, x, y, props) {
-            return world.addEntity({x, y}, NoiseEntity, props).getId()
+            return world.addEntity({x, y}, NoiseEntity, props)
         }
     }
 

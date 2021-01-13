@@ -37,7 +37,7 @@ define(function (require) {
                 if (element && element.data.bind !== each) {
                     element.data.bind = each
                 }
-                return element || new ListElementFormMenuItem(this, { bind: each })
+                return element || new ListElementFormMenuItem(this, { bind: each, list })
             })
         }
     }

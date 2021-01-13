@@ -36,6 +36,7 @@ define(function (require) {
                     {x: 0, y: 650},
                     VirtualEntity,
                     {
+                        name: 'Terrain',
                         size: this.size,
                         noiseConfigs: {
                             seed: 1234,
@@ -63,7 +64,7 @@ define(function (require) {
          * @param {number} x
          * @param {number} y
          * @param {EntityProps} props
-         * @return {number}
+         * @return {Entity}
          */
         loadChunk(world, x, y, props) {
             throw new TypeError('loadChunks must be implemented')
@@ -106,7 +107,7 @@ define(function (require) {
                 const chunkIds = Array.from(Array(this.chunksNbr).keys())
                     .map((iChunk) => {
                         const x = Math.floor(camera.position.x / entity.getWidth()) + (iChunk - 1)
-                        return this.loadChunk(
+                        const chunk = this.loadChunk(
                             world,
                             x * entity.getWidth() + entity.getPositionX(),
                             entity.getPositionY(),
@@ -115,6 +116,8 @@ define(function (require) {
                                 noiseConfigs: _.clone(entity.noiseConfigs)
                             }
                         )
+                        chunk.setSubEntity(true)
+                        return chunk.getId()
                     })
                 this.chunkIds
                     .filter(entityId => !chunkIds.includes(entityId))
