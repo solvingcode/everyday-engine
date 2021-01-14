@@ -34,7 +34,7 @@ define(function (require) {
             const worldMousePosition = world.getWorldPosition(mouse.currentPosition)
             if (mouseConstraint) {
                 if (mouse.isButtonPressed(MouseButton.LEFT) && !mouseConstraint.entities.b) {
-                    const clickEntity = world.findEntity(mouse.currentPosition)
+                    const clickEntity = world.findBodyEntity(mouse.currentPosition)
                     if (clickEntity) {
                         mouseConstraint.pointConstraint = clickEntity.toRelativeCenterPosition(worldMousePosition)
                     }

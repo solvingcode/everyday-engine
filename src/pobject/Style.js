@@ -7,6 +7,8 @@ define(function () {
         color
         fillColor
         backgroundImageRepeat
+        opacity
+        borderSize
 
         /**
          * @param {string} color
@@ -49,6 +51,35 @@ define(function () {
         getBackgroundImageRepeat(){
             return this.backgroundImageRepeat
         }
+
+        /**
+         * @param {number} opacity
+         */
+        setOpacity(opacity){
+            this.opacity = opacity
+        }
+
+        /**
+         * @return {number}
+         */
+        getOpacity(){
+            return this.opacity
+        }
+
+        /**
+         * @param {number} borderSize
+         */
+        setBorderSize(borderSize){
+            this.borderSize = borderSize
+        }
+
+        /**
+         * @return {number}
+         */
+        getBorderSize(){
+            return this.borderSize
+        }
+
     }
     return Style
 })

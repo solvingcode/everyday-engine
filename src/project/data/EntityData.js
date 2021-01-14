@@ -22,6 +22,7 @@ define(function(require){
         visible
         clonable
         subEntity
+        style
 
         /**
          * @param {EntityProps} props
@@ -329,6 +330,13 @@ define(function(require){
          */
         setStyle(style) {
             this.style = style
+        }
+
+        /**
+         * @return {Style}
+         */
+        getStyle() {
+            return this.style
         }
 
         /**

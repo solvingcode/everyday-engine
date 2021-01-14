@@ -67,11 +67,21 @@ define(function (require) {
 
         /**
          * Get the entity from world coordinate
-         * @param {{x: number, y: number}} position canvas coordinates (window)
+         * @param {Vector} position canvas coordinates (window)
+         * @return {Entity|null}
          */
         findEntity(position){
             const entitySelector = EntitySelector.get()
             return entitySelector.get(this, this.getWorldPosition(position))
+        }
+
+        /**
+         * @param {Vector} position position canvas coordinates (window)
+         * @return {Entity|null}
+         */
+        findBodyEntity(position){
+            const entity = this.findEntity(position)
+            return this.getEntityManager().isBodyEntity(entity) && entity
         }
 
         /**

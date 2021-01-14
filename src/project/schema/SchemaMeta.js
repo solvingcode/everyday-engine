@@ -76,6 +76,12 @@ define(function(require){
                                                         },
                                                         backgroundImageRepeat: {
                                                             type: 'boolean'
+                                                        },
+                                                        opacity: {
+                                                            type: 'number'
+                                                        },
+                                                        borderSize: {
+                                                            type: 'number'
                                                         }
                                                     }
                                                 },
@@ -107,6 +113,12 @@ define(function(require){
                                                         },
                                                         backgroundImageRepeat: {
                                                             type: 'boolean'
+                                                        },
+                                                        opacity: {
+                                                            type: 'number'
+                                                        },
+                                                        borderSize: {
+                                                            type: 'number'
                                                         }
                                                     }
                                                 },
@@ -195,6 +207,12 @@ define(function(require){
                                                 },
                                                 backgroundImageRepeat: {
                                                     type: 'boolean'
+                                                },
+                                                opacity: {
+                                                    type: 'number'
+                                                },
+                                                borderSize: {
+                                                    type: 'number'
                                                 }
                                             }
                                         },
@@ -209,6 +227,12 @@ define(function(require){
                                                 },
                                                 backgroundImageRepeat: {
                                                     type: 'boolean'
+                                                },
+                                                opacity: {
+                                                    type: 'number'
+                                                },
+                                                borderSize: {
+                                                    type: 'number'
                                                 }
                                             }
                                         },

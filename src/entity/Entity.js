@@ -5,6 +5,7 @@ define(function (require) {
     const Vertex = require('../utils/Vertex.js')
     const Vector = require('../utils/Vector.js')
     const EntityData = require('../project/data/EntityData.js')
+    const Style = require('../pobject/Style.js')
 
     /**
      * Abstract Entity class
@@ -95,11 +96,11 @@ define(function (require) {
                 const canvas = new OffscreenCanvas(width, height)
                 const context = canvas.getContext(CANVAS_CONTEXT_TYPE)
                 const fillColor = this.getFillColor()
+                const {opacity, borderSize} = this.getStyle()
                 context.strokeStyle = this.getColor()
-                if (fillColor) {
-                    context.fillStyle = fillColor
-                }
-                context.lineWidth = 1
+                fillColor && (context.fillStyle = fillColor)
+                _.isNumber(opacity) && (context.globalAlpha = opacity)
+                context.lineWidth = borderSize || 1
                 context.translate(width / 2, height / 2)
                 context.rotate(this.rotation)
                 context.translate(-center.x, -center.y)
@@ -115,11 +116,14 @@ define(function (require) {
          */
         closeContext(dataContext) {
             const fillColor = this.getFillColor()
+            const {borderSize} = this.getStyle()
             const {context} = dataContext
-            if (fillColor) {
-                context.stroke()
-                context.fill()
-            } else if (this.getTextureId()) {
+            if (this.getTextureId()) {
+                borderSize && context.stroke()
+                if(fillColor){
+                    context.fill()
+                    context.globalCompositeOperation = 'destination-over'
+                }
                 context.clip()
                 const canvasBg = this.meshBgColor.context.canvas
                 if (this.isBackgroundImageRepeat()) {
@@ -128,6 +132,9 @@ define(function (require) {
                 } else {
                     context.drawImage(this.meshBgColor.context.canvas, 0, 0, this.size.width, this.size.height)
                 }
+            } else if (fillColor) {
+                context.stroke()
+                context.fill()
             } else {
                 context.stroke()
             }
@@ -218,7 +225,7 @@ define(function (require) {
          */
         setPositionAndGenerate(position) {
             this.setPosition(position)
-            if(!_.isEqual(this.position, position)){
+            if (!_.isEqual(this.position, position)) {
                 this.setGenerated(false)
             }
         }
@@ -259,7 +266,11 @@ define(function (require) {
          */
         select() {
             this.selected = true
-            this.setStyleAndGenerate({color: '#FF00FF', fillColor: 'rgba(255, 0, 255, 0.2)'})
+            const style = new Style()
+            style.setColor('#FF00FF')
+            style.setFillColor('rgba(255, 0, 255, 0.3)')
+            style.setBorderSize(1)
+            this.setStyleAndGenerate(style)
         }
 
         /**
@@ -267,14 +278,19 @@ define(function (require) {
          */
         focus() {
             this.focused = true
-            !this.selected && this.setStyleAndGenerate({color: '#000000', fillColor: 'rgba(0, 0, 0, 0.1)'})
+            const style = new Style()
+            style.setColor('orange')
+            style.setFillColor('orange')
+            style.setOpacity(0.5)
+            style.setBorderSize(1)
+            !this.selected && this.setStyleAndGenerate(style)
         }
 
         /**
          * Unfocus the current entity (apply styles, ...)
          */
         unfocus() {
-            !this.selected && this.focused && this.setStyleAndGenerate(this.getStyle())
+            !this.selected && this.focused && this.setStyleAndGenerate(this.defineStyle())
             this.focused = false
         }
 
@@ -282,7 +298,7 @@ define(function (require) {
          * Unselect the current entity (apply styles, ...)
          */
         unselect() {
-            this.selected && this.setStyleAndGenerate(this.getStyle())
+            this.selected && this.setStyleAndGenerate(this.defineStyle())
             this.selected = false
         }
 
@@ -292,7 +308,7 @@ define(function (require) {
          */
         lock(lock) {
             this.locked = lock
-            this.setStyleAndGenerate(this.getStyle())
+            this.setStyleAndGenerate(this.defineStyle())
         }
 
         /**
@@ -306,7 +322,7 @@ define(function (require) {
         /**
          * @override
          */
-        getStyle() {
+        defineStyle() {
             const styleLocked = {color: '#AAAAAA', fillColor: 'rgba(0, 0, 0, 0.01)'}
             return (this.locked && styleLocked) || this.props.style
         }
@@ -495,7 +511,7 @@ define(function (require) {
          * @param {PhysicsEngine} physicsEngine
          */
         unloadPhysics(physicsEngine) {
-            if(this.isPhyiscsLoaded){
+            if (this.isPhyiscsLoaded) {
                 physicsEngine.removeShape(this)
             }
             this.isPhyiscsLoaded = false
@@ -576,14 +592,14 @@ define(function (require) {
         /**
          * @return {boolean}
          */
-        isGenerated(){
+        isGenerated() {
             return this.generated
         }
 
         /**
          * @param {boolean} generated
          */
-        setGenerated(generated){
+        setGenerated(generated) {
             this.generated = generated
         }
 
@@ -598,7 +614,7 @@ define(function (require) {
         /**
          * @param {World} world
          */
-        updateTexture(world){
+        updateTexture(world) {
             this.meshBgColor = this.getTexture(world)
         }
 
@@ -606,9 +622,9 @@ define(function (require) {
          * @param {World} world
          * @return {Mesh}
          */
-        getTexture(world){
+        getTexture(world) {
             const texture = world.getTextureManager().findById(this.getTextureId())
-            if(texture){
+            if (texture) {
                 return texture.getMesh()
             }
             return null
@@ -617,15 +633,23 @@ define(function (require) {
         /**
          * @return {boolean}
          */
-        isLoading(){
+        isLoading() {
             return this.loading
         }
 
         /**
          * @param {boolean} loading
          */
-        setLoading(loading){
+        setLoading(loading) {
             this.loading = loading
+        }
+
+        getFillColor() {
+            return this.style.fillColor || this.props.style.fillColor
+        }
+
+        getColor() {
+            return this.style.color || this.props.style.color
         }
 
     }

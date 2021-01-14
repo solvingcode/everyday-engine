@@ -249,14 +249,6 @@ define(function (require) {
             return this
         }
 
-        getFillColor() {
-            return this.style.fillColor || this.props.style.fillColor
-        }
-
-        getColor() {
-            return this.style.color || this.props.style.color
-        }
-
     }
 
     return EntityMotion
