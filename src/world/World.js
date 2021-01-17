@@ -86,7 +86,7 @@ define(function (require) {
 
         /**
          * Add an entity to the world
-         * @param {{x: number, y: number}} position
+         * @param {Vector} position
          * @param {Class} type
          * @param {EntityProps} props
          */
@@ -155,16 +155,10 @@ define(function (require) {
         }
 
         /**
-         * Load the world (generate terrain, ...)
-         */
-        load() {
-            this.getTerrainManager().update(this)
-        }
-
-        /**
-         * Update all entities (check all entities tagged for regeneration)
+         * Update entities, terrains, ... (check all entities tagged for regeneration)
          */
         update() {
+            this.getTerrainManager().update(this)
             this.getEntityManager().update(this)
         }
 

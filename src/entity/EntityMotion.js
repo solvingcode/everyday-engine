@@ -233,7 +233,7 @@ define(function (require) {
          * Get the relative position of a point inside the current entity
          * from a relative point inside a given entity
          * @param {Entity} entity 
-         * @param {{x: number, y: number}} point
+         * @param {Vector} point
          */
         getRelativeCenterPosition(entity, point) {
             return this.toRelativeCenterPosition(entity.toAbsolutePosition(point))

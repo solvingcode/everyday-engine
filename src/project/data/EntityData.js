@@ -214,14 +214,14 @@ define(function(require){
 
         /**
          * Set the entity's position
-         * @param {{x: number, y: number}} position
+         * @param {Vector} position
          */
         setPosition(position) {
             this.position = position
         }
 
         /**
-         * @return {{x: number, y: number}}
+         * @return {Vector}
          */
         getPosition(){
             return this.position

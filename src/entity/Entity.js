@@ -337,7 +337,7 @@ define(function (require) {
 
         /**
          * Calculate the centroid
-         * @return {{x: number, y: number}}
+         * @return {Vector}
          */
         getCenter() {
             return {
@@ -348,7 +348,7 @@ define(function (require) {
 
         /**
          * Convert current position to center position
-         * @return {{x: number, y: number}}
+         * @return {Vector}
          */
         toCenterPosition() {
             const center = this.getCenter()
@@ -361,7 +361,7 @@ define(function (require) {
         /**
          * Get current position from center position
          * @param {Vector} position
-         * @return {{x: number, y: number}}
+         * @return {Vector}
          */
         fromCenterPosition(position) {
             const center = this.getCenter()
@@ -396,7 +396,7 @@ define(function (require) {
 
         /**
          * Convert absolute coordinate to relative coordinate
-         * @param {{x: number, y: number}} point Absolute coordinate
+         * @param {Vector} point Absolute coordinate
          */
         fromAbsolutePosition(point) {
             return {
@@ -447,7 +447,7 @@ define(function (require) {
          * Update the Mesh position related to the distance
          * between the click mouse position and the actual
          * position of the mouse, and return the drag distance
-         * @return {{x: number, y: number}}
+         * @return {Vector}
          */
         setMeshPositionByDragDistance() {
             const window = Window.get()
@@ -466,7 +466,7 @@ define(function (require) {
 
         /**
          * Get the current position of the mouse
-         * @return {{x: number, y: number}}
+         * @return {Vector}
          */
         getCurrentMousePosition() {
             const dragDistance = Window.get().mouse.getDragDistance()
@@ -531,7 +531,7 @@ define(function (require) {
         /**
          * Check if point is inside the entity (using size)
          * Method can be overwrite by the sub-entities for more precision
-         * @param {{x: number, y: number}} point absolute coordinate
+         * @param {Vector} point absolute coordinate
          */
         includes(point) {
             const vertices = this.generateVertices()

@@ -1,5 +1,8 @@
 define(function () {
 
+    /**
+     * @abstract
+     */
     class Action {
 
         constructor() {
@@ -10,6 +13,7 @@ define(function () {
 
         /**
          * Execute actions
+         * @abstract
          * @param {any} params
          * @return {boolean}
          */

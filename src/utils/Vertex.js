@@ -39,7 +39,7 @@ define(function (require) {
         /**
          * Check if a point is inside a set of vertices
          * @param {{x: number, y: number}[]} vertices
-         * @param {{x: number, y: number}} point
+         * @param {Vector} point
          */
         static contains(vertices, point) {
             for (let iVertex = 0; iVertex < vertices.length; iVertex++) {
@@ -56,7 +56,7 @@ define(function (require) {
          * Rotate a set of vertices by the given angle and point
          * @param {{x: number, y: number}[]} vertices
          * @param {number} angleRadian
-         * @param {{x: number, y: number}} point
+         * @param {Vector} point
          *
          * @return {{x: number, y: number}[]}
          */
@@ -76,7 +76,7 @@ define(function (require) {
         /**
          * Translate a set of vertices by the given vector
          * @param {{x: number, y: number}[]} vertices
-         * @param {{x: number, y: number}} vector
+         * @param {Vector} vector
          * @param {number} sign
          */
         static translate(vertices, vector, sign = 1) {

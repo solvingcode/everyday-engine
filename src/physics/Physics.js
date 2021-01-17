@@ -2,6 +2,7 @@ define(function (require) {
 
     const PhysicsData = require('../project/data/PhysicsData.js')
     const MatterEngine = require('../physics/engine/matter/Engine.js')
+    const PhysicError = require('../exception/type/PhysicError.js')
 
     class Physics extends PhysicsData {
 
@@ -80,7 +81,7 @@ define(function (require) {
             if (shape) {
                 this.physicsEngine.updateConstraint(entity, constraint)
             } else {
-                throw TypeError(`Shape not founded for the constraint entity ${entity.id}`)
+                throw new PhysicError(`Shape not founded for the constraint entity ${entity.id}`)
             }
         }
 
@@ -93,7 +94,7 @@ define(function (require) {
             const bodies = this.physicsEngine.getBodies()
             const joints = this.physicsEngine.getJoints()
             if (!shape || (!bodies.includes(shape) && !joints.includes(shape))) {
-                throw TypeError(`Shape not founded for the entity ${entity.id}`)
+                throw new PhysicError(`Shape not founded for the entity ${entity.id}`)
             }
             return shape
         }

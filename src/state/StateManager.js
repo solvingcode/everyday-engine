@@ -18,6 +18,23 @@ define(function (require) {
         }
 
         /**
+         * @param {string} state
+         * @return {string|null}
+         */
+        getType(state){
+            const stepPrefix = ['START', 'PROGRESS', 'STOP']
+            for (const iStep in stepPrefix){
+                if(stepPrefix.hasOwnProperty(iStep)){
+                    const regex = new RegExp(`([A-Z_]+)_${stepPrefix[iStep]}$`)
+                    if(state.match(regex)){
+                        return state.replace(regex, '$1')
+                    }
+                }
+            }
+            return null
+        }
+
+        /**
          * Is the state type a start action
          * @param {string} type
          */
@@ -339,6 +356,21 @@ define(function (require) {
          */
         getStateData(state, id) {
             return this.getDataById(state, id)
+        }
+
+        reset(){
+            this.appState.reset()
+        }
+
+        /**
+         * Search for all states and stop them all
+         */
+        stopAll(){
+            const states = this.appState.getState()
+            states.forEach(state => {
+                const type = this.getType(state)
+                type && this.stopNextState(type)
+            })
         }
 
         /**

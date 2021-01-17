@@ -16,7 +16,7 @@ define(function () {
 
         /**
          * @param {MouseEvent} event
-         * @return {{x: number, y: number}}
+         * @return {Vector}
          */
         getPosition(event) {
             return { x: event.clientX, y: event.clientY }
@@ -88,7 +88,7 @@ define(function () {
         /**
          * Return the distance between the currentPosition and the position
          * of the mouse on the click
-         * @returns {{x: number, y: number}}
+         * @returns {Vector}
          */
         getDragDistance() {
             const x = this.currentPosition.x - this.position.x
@@ -118,7 +118,7 @@ define(function () {
 
         /**
          * Drag and drop (return the drag distance and update the initial position)
-         * @return {{x: number, y: number}}
+         * @return {Vector}
          */
         dragAndDrop(){
             const dragDistance = this.getDragDistance()

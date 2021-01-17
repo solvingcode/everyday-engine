@@ -4,6 +4,7 @@ define(function (require) {
     const EventHandler = require('./EventHandler.js')
     const World = require('../world/World.js')
     const Renderer = require('../renderer/Renderer.js')
+    const ExceptionHandler = require('../exception/ExceptionHandler.js')
 
     /**
      * Define the application main
@@ -12,6 +13,7 @@ define(function (require) {
         constructor() {
             this.title = 'Combat Simulation'
             this.renderer = new Renderer()
+            this.exceptionHandler = ExceptionHandler.get()
             this.runLoop = this.runLoop.bind(this)
         }
 
@@ -35,16 +37,18 @@ define(function (require) {
          * Start the loop animation frame
          */
         runLoop() {
-            const world = World.get()
-            const menu = Menu.get()
-
-            menu.update()
-            EventHandler.get().handle(Window.get())
-            world.load()
-            world.update()
-            world.draw(this.renderer)
-            this.renderer.clear()
-            this.renderer.render(world.getCamera(), menu)
+            try {
+                const world = World.get()
+                const menu = Menu.get()
+                menu.update()
+                EventHandler.get().handle(Window.get())
+                world.update()
+                world.draw(this.renderer)
+                this.renderer.clear()
+                this.renderer.render(world.getCamera(), menu)
+            }catch (e) {
+                this.exceptionHandler.handle(e)
+            }
             requestAnimationFrame(this.runLoop)
         }
 

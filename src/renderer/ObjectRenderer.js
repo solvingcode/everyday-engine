@@ -47,8 +47,8 @@ define(function () {
 
         /**
          * Convert position to scene coordinates
-         * @param {{x: number, y: number}} position
-         * @return {{x: number, y: number}}
+         * @param {Vector} position
+         * @return {Vector}
          */
         toSceneCoord({x, y}){
             const {left: sceneCanvasX, top: sceneCanvasY} = objectContext.canvas.getBoundingClientRect()

@@ -8,7 +8,7 @@ define(function (require) {
      * Define a block of pixels loaded to the VRAM.
      * Attached to an entity, and used to draw pixels by the GPU
      * @extends {MeshData}
-     * @property {{x: number, y: number}} position
+     * @property {Vector} position
      * @property {{width: number, height: number}} size
      * @property {OffscreenCanvasRenderingContext2D} context
      */

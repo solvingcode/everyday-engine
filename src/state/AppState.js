@@ -13,8 +13,7 @@ define(function (require) {
     class AppState {
 
         constructor() {
-            this.state = []
-            this.data = {}
+            this.reset()
         }
 
         /**
@@ -186,6 +185,7 @@ define(function (require) {
          */
         reset() {
             this.state = []
+            this.data = {}
         }
 
         static get() {

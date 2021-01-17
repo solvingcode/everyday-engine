@@ -125,7 +125,6 @@ define(function (require) {
         }
 
         /**
-         * Find menu item by element
          * @param {MenuItem} element
          */
         findItemByElement(element) {
@@ -156,16 +155,12 @@ define(function (require) {
         }
 
         /**
-         * Get selected item.
          * @return {MenuItemUI}
          */
         getSelected() {
             return this.items.find((item) => item.element.isSelected())
         }
 
-        /**
-         * Update menu items
-         */
         update() {
             this.types.forEach(type => type.isValid() && type.update())
             this.setup()
@@ -190,7 +185,6 @@ define(function (require) {
         }
 
         /**
-         * Get the UI Renderer
          * @return {UIRenderer}
          */
         getUIRenderer() {
