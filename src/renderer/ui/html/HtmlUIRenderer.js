@@ -19,12 +19,8 @@ define(function (require) {
      */
     class HtmlUIRenderer extends UIRenderer {
 
-        /**
-         * @param {CanvasRenderingContext2D} context
-         */
-        constructor(context) {
+        constructor() {
             super()
-            this.context = context
             this.menu = Menu.get()
             this.menu.setUIRenderer(this)
         }

@@ -8,6 +8,7 @@ define(function (require) {
     const NewDocMenuItem = require('./items/project/NewProjectMenuItem.js')
     const SaveProjectMenuItem = require('./items/project/SaveProjectMenuItem.js')
     const LoadProjectMenuItem = require('./items/project/LoadProjectMenuItem.js')
+    const ExportProjectMenuItem = require('./items/project/ExportProjectMenuItem.js')
     const SimulateStartMenuItem = require('./items/action/SimulateStartMenuItem.js')
     const SimulateStopMenuItem = require('./items/action/SimulateStopMenuItem.js')
     const DeleteMenuItem = require('./items/action/DeleteMenuItem.js')
@@ -52,6 +53,7 @@ define(function (require) {
                 new NewDocMenuItem(),
                 new LoadProjectMenuItem(),
                 new SaveProjectMenuItem(),
+                new ExportProjectMenuItem(),
                 new DeleteMenuItem(),
                 new DuplicateMenuItem(),
                 new UndoMenuItem(),

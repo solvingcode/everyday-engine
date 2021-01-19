@@ -24,6 +24,7 @@ define(function (require) {
     const MoveCameraAction = require('./camera/MoveCameraAction.js')
     const SaveProjectAction = require('./project/SaveProjectAction.js')
     const LoadProjectAction = require('./project/LoadProjectAction.js')
+    const ExportProjectAction = require('./project/ExportProjectAction.js')
     const NewProjectAction = require('./project/NewProjectAction.js')
     const ZoomInOutCameraAction = require('./camera/ZoomInOutCameraAction.js')
     const PhysicsStaticAction = require('./physics/PhysicsStaticAction.js')
@@ -41,6 +42,13 @@ define(function (require) {
         constructor() {
             super()
             this.entitySelector = EntitySelector.get()
+        }
+
+        /**
+         * @override
+         */
+        isHandle(window){
+            return true
         }
 
         /**
@@ -70,6 +78,7 @@ define(function (require) {
                 SAVE_PROJECT: SaveProjectAction,
                 LOAD_PROJECT: LoadProjectAction,
                 NEW_PROJECT: NewProjectAction,
+                EXPORT_PROJECT: ExportProjectAction,
                 ZOOM_CAMERA: ZoomInOutCameraAction,
                 PHYSICS_STATIC: PhysicsStaticAction,
                 PHYSICS_NOT_STATIC: PhysicsNotStaticAction,

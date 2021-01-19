@@ -19,9 +19,10 @@ define(function (require) {
             this.mouse = new Mouse()
         }
 
-        /**
-         * Inialize the event listeners
-         */
+        init(){
+            this.initEvents()
+        }
+
         initEvents() {
             document.addEventListener('keydown', (event) => {
                 const key = event.keyCode
@@ -55,14 +56,18 @@ define(function (require) {
             })
         }
 
+        clear(){
+            this.mouse.clear()
+        }
+
         /**
          * @return {Window}
          */
         static get() {
-            if (!Window.instance) {
-                Window.instance = new Window()
+            if (!this.instance) {
+                this.instance = new this()
             }
-            return Window.instance
+            return this.instance
         }
     }
 

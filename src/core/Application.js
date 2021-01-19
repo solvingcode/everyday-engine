@@ -1,63 +1,46 @@
 define(function (require) {
+
     const Window = require('./Window.js')
-    const Menu = require('../layout/Menu.js')
     const EventHandler = require('./EventHandler.js')
-    const World = require('../world/World.js')
-    const Renderer = require('../renderer/Renderer.js')
     const ExceptionHandler = require('../exception/ExceptionHandler.js')
 
     /**
      * Define the application main
      */
     class Application {
-        constructor() {
-            this.title = 'Combat Simulation'
-            this.renderer = new Renderer()
+
+        /**
+         * @param {Class<Loop>[]} loops
+         */
+        constructor(loops) {
+            this.loops = loops
             this.exceptionHandler = ExceptionHandler.get()
-            this.runLoop = this.runLoop.bind(this)
+            this.window = Window.get()
+            this.run = this.run.bind(this)
         }
 
-        /**
-         * Start the application
-         */
         start() {
-            this.renderer.init()
-            this.init()
-            this.runLoop()
+            this.window.init()
+            this.run()
         }
 
         /**
-         * Load event listeners
+         * @private
          */
-        loadEvents() {
-            Window.get().initEvents()
-        }
-
-        /**
-         * Start the loop animation frame
-         */
-        runLoop() {
+        run() {
             try {
-                const world = World.get()
-                const menu = Menu.get()
-                menu.update()
-                EventHandler.get().handle(Window.get())
-                world.update()
-                world.draw(this.renderer)
-                this.renderer.clear()
-                this.renderer.render(world.getCamera(), menu)
-            }catch (e) {
+                this.loops.forEach(loop => {
+                    const loopInstance = loop.get()
+                    EventHandler.get().handle(Window.get(), loopInstance.getRunners())
+                    loopInstance.loop()
+                })
+            } catch (e) {
                 this.exceptionHandler.handle(e)
             }
-            requestAnimationFrame(this.runLoop)
+            this.window.clear()
+            requestAnimationFrame(this.run)
         }
 
-        /**
-         * Initialize the application
-         */
-        init() {
-            this.loadEvents()
-        }
     }
 
     return Application

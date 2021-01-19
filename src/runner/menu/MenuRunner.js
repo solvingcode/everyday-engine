@@ -1,6 +1,8 @@
 define(function (require) {
 
     const Runner = require('../Runner.js')
+    const Menu = require('../../layout/Menu.js')
+    const { MouseButton } = require('../../core/Mouse.js')
 
     /**
      * Execute actions related to menu items
@@ -8,9 +10,16 @@ define(function (require) {
      */
     class MenuRunner extends Runner {
 
-        constructor(menu) {
+        constructor() {
             super()
-            this.menu = menu
+            this.menu = Menu.get()
+        }
+
+        /**
+         * @override
+         */
+        isHandle(window){
+            return window.mouse.isButtonClicked(MouseButton.LEFT)
         }
 
         /**
@@ -22,16 +31,6 @@ define(function (require) {
             const menuItem = this.menu.getUIRenderer().getItemAt(mouse)
             this.menu.selectItem(menuItem)
             return !!menuItem;
-        }
-
-        /**
-         * @param {Menu} menu 
-         */
-        static get(menu) {
-            if (!MenuRunner.instance) {
-                MenuRunner.instance = new MenuRunner(menu)
-            }
-            return MenuRunner.instance
         }
     }
 

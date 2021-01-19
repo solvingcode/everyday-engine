@@ -12,6 +12,13 @@ define(function (require) {
     class ConstraintRunner extends Runner {
 
         /**
+         * @override
+         */
+        isHandle(window){
+            return true
+        }
+
+        /**
          * Execute all constraints (mouse constraint, ...)
          * @param {Mouse} mouse
          */

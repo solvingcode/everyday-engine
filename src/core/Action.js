@@ -37,6 +37,9 @@ define(function () {
                     }
                 }
             }
+        }
+
+        reset(){
             this.queue = []
         }
 

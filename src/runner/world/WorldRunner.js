@@ -16,6 +16,13 @@ define(function (require) {
         static instance = null
 
         /**
+         * @override
+         */
+        isHandle(window){
+            return true
+        }
+
+        /**
          * Execute all world actions (move camera, ...)
          * @param {Mouse} mouse
          */

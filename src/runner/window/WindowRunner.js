@@ -9,6 +9,13 @@ define(function (require) {
     class WindowRunner extends Runner {
 
         /**
+         * @override
+         */
+        isHandle(window){
+            return window.mouse.isMouseMove()
+        }
+
+        /**
          * Execute all windows actions (move mouse, ...)
          * @param {Mouse} mouse 
          */

@@ -27,6 +27,13 @@ define(function (require) {
         }
 
         /**
+         * @override
+         */
+        isHandle(window){
+            return true
+        }
+
+        /**
          * Execute start/stop simulation
          * @param {Mouse} mouse
          */

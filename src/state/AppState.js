@@ -283,6 +283,9 @@ define(function (require) {
         ACTION_NEW_PROJECT_START: { history: false },
         ACTION_NEW_PROJECT_PROGRESS: { history: false },
         ACTION_NEW_PROJECT_STOP: { history: false },
+        ACTION_EXPORT_PROJECT_START: { history: false },
+        ACTION_EXPORT_PROJECT_PROGRESS: { history: false },
+        ACTION_EXPORT_PROJECT_STOP: { history: false },
         ACTION_SELECT_LIST_ELEMENT_START: { history: false },
         ACTION_SELECT_LIST_ELEMENT_PROGRESS: { history: false },
         ACTION_SELECT_LIST_ELEMENT_STOP: { history: false }

@@ -37,11 +37,15 @@ define(function (require) {
             }
         }
 
+        async export(){
+
+        }
+
         static get() {
-            if (!Project.instance) {
-                Project.instance = new Project()
+            if (!this.instance) {
+                this.instance = new this()
             }
-            return Project.instance
+            return this.instance
         }
 
     }

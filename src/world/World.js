@@ -25,7 +25,6 @@ define(function (require) {
             this.textureManager = new TextureManager()
             this.mouseConstraintId = null
             this.init()
-
         }
 
         /**

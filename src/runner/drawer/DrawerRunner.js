@@ -23,7 +23,14 @@ define(function (require) {
         }
 
         /**
-         * Execute draw action for each type of item (Ellipse, Rect, ...)
+         * @override
+         */
+        isHandle(window){
+            return window.mouse.isMouseMove()
+        }
+
+        /**
+         * Execute draw action for each type of item (Circle, Rect, ...)
          * @param {Mouse} mouse
          * @param {Menu} menu
          *
