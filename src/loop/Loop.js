@@ -21,6 +21,10 @@ define(function () {
             return this.runners
         }
 
+        init(){
+            throw new TypeError('Loop.init must be implemented!')
+        }
+
         loop(){
             throw new TypeError('Loop.loop must be implemented!')
         }

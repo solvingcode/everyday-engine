@@ -2,7 +2,7 @@ define(function(require) {
     const expect = chai.expect
     const Size = require('/src/pobject/Size.js')
     const Storage = require('/src/core/Storage.js')
-    const Schema = require('/src/project/schema/Schema.js')
+    const Schema = require('/src/schema/Schema.js')
     const CircleEntity = require('/src/entity/types/shape/CircleEntity.js')
     describe('Storage', function () {
         it('Should validate Entity Size', async function () {

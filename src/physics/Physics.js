@@ -206,6 +206,20 @@ define(function (require) {
         }
 
         /**
+         * @param {PhysicsEngine} physicsEngine
+         */
+        setPhysicsEngine(physicsEngine){
+            this.physicsEngine = physicsEngine
+        }
+
+        /**
+         * @param {boolean} value
+         */
+        setIsRunning(value){
+            this.isRunning = value
+        }
+
+        /**
          * Restart the engine
          * @param {World} world
          */

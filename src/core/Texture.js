@@ -23,11 +23,18 @@ define(function(require){
         }
 
         select(){
-            this.selected = true
+            this.setSelected(true)
         }
 
         unselect(){
-            this.selected = false
+            this.setSelected(false)
+        }
+
+        /**
+         * @param {boolean} value
+         */
+        setSelected(value){
+            this.selected = value
         }
 
         /**

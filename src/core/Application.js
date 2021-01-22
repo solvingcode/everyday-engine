@@ -16,18 +16,19 @@ define(function (require) {
             this.loops = loops
             this.exceptionHandler = ExceptionHandler.get()
             this.window = Window.get()
-            this.run = this.run.bind(this)
+            this.loop = this.loop.bind(this)
         }
 
         start() {
             this.window.init()
-            this.run()
+            this.loops.forEach(loop => loop.get().init())
+            this.loop()
         }
 
         /**
          * @private
          */
-        run() {
+        loop() {
             try {
                 this.loops.forEach(loop => {
                     const loopInstance = loop.get()
@@ -38,7 +39,7 @@ define(function (require) {
                 this.exceptionHandler.handle(e)
             }
             this.window.clear()
-            requestAnimationFrame(this.run)
+            requestAnimationFrame(this.loop)
         }
 
     }

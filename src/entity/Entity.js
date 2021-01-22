@@ -644,6 +644,55 @@ define(function (require) {
             this.loading = loading
         }
 
+        /**
+         * @param {boolean} value
+         */
+        setIsBuffered(value){
+            this.isBuffered = value
+        }
+
+        /**
+         * @param {boolean} value
+         */
+        setIsPhyiscsLoaded(value){
+            this.isPhyiscsLoaded = value
+        }
+
+        /**
+         * @param {Mesh} value
+         */
+        setMesh(value){
+            this.mesh = value
+        }
+
+        /**
+         * @param {Mesh} value
+         */
+        setMeshBgColor(value){
+            this.meshBgColor = value
+        }
+
+        /**
+         * @param {boolean} value
+         */
+        setSelected(value){
+            this.selected = value
+        }
+
+        /**
+         * @param {boolean} value
+         */
+        setFocused(value){
+            this.focused = value
+        }
+
+        /**
+         * @param {Entity[]} entities
+         */
+        setAttachedEntities(entities){
+            this.attachedEntities = entities
+        }
+
         getFillColor() {
             return this.style.fillColor || this.props.style.fillColor
         }

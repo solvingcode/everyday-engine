@@ -76,7 +76,7 @@ define(function (require) {
             let newValue
             switch (prototype) {
                 case 'number':
-                    newValue = value !== null ? parseFloat(value) : value
+                    newValue = value !== null && value !== undefined ? parseFloat(value) : value
                     break
                 case 'string':
                     newValue = _.isString(value) ? value : ''

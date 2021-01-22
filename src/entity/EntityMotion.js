@@ -249,6 +249,20 @@ define(function (require) {
             return this
         }
 
+        /**
+         * @param {Object} value
+         */
+        setCondition(value){
+            this.condition = value
+        }
+
+        /**
+         * @param {Object} value
+         */
+        setCollision(value){
+            this.collision = value
+        }
+
     }
 
     return EntityMotion

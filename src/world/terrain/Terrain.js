@@ -21,7 +21,6 @@ define(function (require) {
             super()
             this.entityId = null
             this.size = {width: SCENE_WIDTH, height: 300}
-            this.rotation = 0
             this.chunksNbr = 3
             this.chunkIds = []
         }

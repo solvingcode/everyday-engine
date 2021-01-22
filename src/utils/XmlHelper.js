@@ -6,7 +6,7 @@ define(function () {
     class XmlHelper {
 
         /**
-         * @param {Map<string, *>} data
+         * @param {Object} data
          * @returns {string}
          */
         static export(data) {
@@ -80,7 +80,7 @@ define(function () {
                         if (subNode) {
                             node.appendChild(subNode)
                         } else {
-                            node.setAttribute(pKey, pValue)
+                            pValue !== null && node.setAttribute(pKey, pValue)
                         }
                     }
                 }

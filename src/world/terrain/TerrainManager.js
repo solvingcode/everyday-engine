@@ -65,6 +65,13 @@ define(function (require) {
         }
 
         /**
+         * @param {Object.<string, Terrain>} types
+         */
+        setTerrainTypes(types){
+            this.terrainTypes = types
+        }
+
+        /**
          * @param {string} type
          */
         setTerrainType(type) {

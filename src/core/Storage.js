@@ -1,7 +1,9 @@
 define(function (require) {
 
     const XmlHelper = require('../utils/XmlHelper.js')
-    const Schema = require('../project/schema/Schema.js')
+    const WebHelper = require('../utils/WebHelper.js')
+    const BinHelper = require('../utils/BinHelper.js')
+    const Schema = require('../schema/Schema.js')
     const Data = require('../project/data/Data.js')
     const DataSchema = require('../project/data/DataSchema.js')
     const ClassHelper = require('../utils/ClassHelper.js')
@@ -158,12 +160,16 @@ define(function (require) {
          * Export all data to the given format
          * @param {string} key
          * @param {Storage.format} format
-         * @return {string}
+         * @return {string|Object}
          */
         export(key, format){
             switch (format) {
                 case Storage.format.XML:
                     return XmlHelper.export(this.data[key])
+                case Storage.format.WEB:
+                    return WebHelper.export(this.data[key])
+                case Storage.format.BIN:
+                    return BinHelper.export(this.data[key])
                 default:
                     throw new TypeError(`Export format ${format} not recognized`)
             }
@@ -192,7 +198,9 @@ define(function (require) {
     }
 
     Storage.format = {
-        XML: 'xml'
+        XML: 'xml',
+        WEB: 'web',
+        BIN: 'bin'
     }
 
     return Storage

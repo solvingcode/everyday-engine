@@ -27,17 +27,20 @@ define(function (require) {
             this.runners = [SimulateRunner, ActionRunner, WorldRunner, MenuRunner, WindowRunner, DrawerRunner]
         }
 
+        /**
+         * @override
+         */
+        init(){
+            //not needed
+        }
+
+        /**
+         * @override
+         */
         loop() {
             const menu = Menu.get()
             menu.update()
             this.setupRenderer.render(menu)
-        }
-
-        static get() {
-            if (!this.instance) {
-                this.instance = new this()
-            }
-            return this.instance
         }
 
     }

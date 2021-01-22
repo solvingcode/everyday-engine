@@ -78,6 +78,12 @@ define(function (require) {
             return entityManager.findById(this.entityId)
         }
 
+        /**
+         * @param {Vector} position
+         */
+        setInitPosition(position){
+            this.initPosition = position
+        }
     }
 
     return Camera

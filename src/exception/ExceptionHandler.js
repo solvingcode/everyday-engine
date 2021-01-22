@@ -14,6 +14,9 @@ define(function (require) {
          */
         handle(e){
             StateManager.get().stopAll()
+            if(e instanceof TypeError){
+                throw e
+            }
             alert(e.message)
         }
 

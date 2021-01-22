@@ -39,7 +39,7 @@ define(function(){
                 const prefix = 'get'
                 getter = `${prefix}${key.charAt(0).toUpperCase() + key.slice(1)}`
                 if (typeof object[getter] !== 'function') {
-                    throw new TypeError(`${getter} must be implemented for ${object.constructor.name}`)
+                    throw new TypeError(`${key}: ${getter} must be implemented for ${object.constructor.name}`)
                 }
             }
             return getter

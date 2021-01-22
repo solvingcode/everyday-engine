@@ -8,11 +8,12 @@ define(function () {
         /**
          * @param {string} content
          * @param {string} type
+         * @param {string} filename
          */
-        static save(content, type){
+        static save(content, type, filename = ''){
             const blob = new Blob([content], {type})
             const a = document.createElement('a')
-            a.download = 'webEngine.xml'
+            a.download = filename || 'webEngine'
             a.href = window.URL.createObjectURL(blob)
             a.click()
         }
@@ -45,7 +46,9 @@ define(function () {
         }
 
         static type = {
-            XML: 'text/xml'
+            XML: 'text/xml',
+            JS: 'text/javascript',
+            BIN: 'application/octet-binary;charset=utf-8'
         }
 
     }

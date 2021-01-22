@@ -106,6 +106,13 @@ define(function (require) {
         }
 
         /**
+         * @param {OffscreenCanvasRenderingContext2D} context
+         */
+        setContext(context){
+            this.context = context
+        }
+
+        /**
          * Instantiate new Mesh from image URL
          * @param {string} imageInput Image url or blob
          * @return {Mesh}
