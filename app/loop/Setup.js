@@ -9,6 +9,7 @@ define(function (require) {
     const ActionRunner = require('../runner/action/ActionRunner.js')
     const WindowRunner = require('../runner/window/WindowRunner.js')
     const WorldRunner = require('../runner/world/WorldRunner.js')
+    const Storage = require('../core/Storage.js')
 
     /**
      * @class {Setup}
@@ -31,7 +32,7 @@ define(function (require) {
          * @override
          */
         async init(){
-            //not needed
+            Storage.get().reset()
         }
 
         /**

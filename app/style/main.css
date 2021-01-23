@@ -82,6 +82,20 @@ h4{
     display: inline-block;
 }
 
+.panel h4::after{
+    display: block;
+    float: right;
+    margin-left: 5px;
+    font-family: "Font Awesome 5 Free";
+    font-size: 10px;
+    line-height: 20px;
+    content: "\f078";
+}
+
+.panel h4.collapsed::after{
+    content: "\f054";
+}
+
 #app-el-left, #app-el-top, #app-el-right, #app-el-bottom{
     position: absolute;
     z-index: 9999;

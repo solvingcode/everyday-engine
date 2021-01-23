@@ -1,6 +1,6 @@
 define(function(require) {
     const expect = chai.expect
-    const StateManager = require('/src/state/StateManager.js')
+    const StateManager = require('/app/state/StateManager.js')
     describe('StateManager', function () {
         it('Should getType for valid state', function () {
             const stateManager = new StateManager()

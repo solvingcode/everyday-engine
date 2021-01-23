@@ -21,7 +21,6 @@ define(function (require) {
         constructor() {
             super()
             this.currentEntity = null
-            this.isPhysicsLoaded = false
             this.isSimulating = false
             this.windowInstance = null
         }
@@ -46,6 +45,8 @@ define(function (require) {
                 }else{
                     stateManager.stopNextState(this.STATE)
                 }
+            } else if (stateManager.isProgress(this.STATE)) {
+                this.progress(stateManager)
             } else if (stateManager.isStop(this.STATE)) {
                 this.stop(storage, stateManager)
             }
@@ -60,7 +61,16 @@ define(function (require) {
             await storage.saveLocal(Storage.type.WORLD, World.get())
             this.isSimulating = true
             stateManager.progressNextState(this.STATE)
-            this.windowInstance = window.open('/preview/', '_blank', `width=${SCENE_WIDTH},height=${SCENE_HEIGHT}`)
+            this.windowInstance = window.open(
+                '/preview/',
+                '_blank',
+                `width=${SCENE_WIDTH},height=${SCENE_HEIGHT}`)
+        }
+
+        progress(stateManager){
+            if(this.windowInstance.closed){
+                stateManager.stopNextState(this.STATE)
+            }
         }
 
         /**
