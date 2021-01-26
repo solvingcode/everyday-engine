@@ -121,7 +121,18 @@ define(function (require) {
          * @return {Object}
          */
         async loadLocal(key, target){
-            const data = JSON.parse(localStorage.getItem(key))
+            await this.loadJson(key, target, localStorage.getItem(key))
+        }
+
+        /**
+         * Load data from the given json string
+         * @param {string} key
+         * @param {Object} target
+         * @param {string} jsonString
+         * @return {Object}
+         */
+        async loadJson(key, target, jsonString){
+            const data = JSON.parse(jsonString)
             await this.load(key, data, target)
         }
 

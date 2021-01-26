@@ -1,7 +1,6 @@
 define(function (require) {
 
     const Runner = require('../Runner.js')
-    const StateManager = require('../../state/StateManager.js')
     const {MouseButton} = require('../../core/Mouse.js')
     const World = require('../../world/World.js')
 
@@ -23,11 +22,8 @@ define(function (require) {
          * @param {Mouse} mouse
          */
         execute(mouse) {
-            const stateManager = StateManager.get()
-            if (stateManager.isRunning()) {
-                const world = World.get()
-                this.mouseConstraint(world, mouse)
-            }
+            const world = World.get()
+            this.mouseConstraint(world, mouse)
         }
 
         /**

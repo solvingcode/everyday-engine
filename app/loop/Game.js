@@ -2,7 +2,6 @@ define(function (require) {
 
     const Scene = require('./Scene.js')
     const World = require('../world/World.js')
-    const Storage = require('../core/Storage.js')
     const ConstraintRunner = require('../runner/constraint/ConstraintRunner.js')
 
     /**
@@ -27,7 +26,6 @@ define(function (require) {
         async init(){
             await super.init()
             const world = World.get()
-            await Storage.get().loadLocal(Storage.type.WORLD, world)
             world.getPhysics().run(world)
         }
 

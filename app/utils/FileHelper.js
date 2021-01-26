@@ -48,6 +48,7 @@ define(function () {
         static type = {
             XML: 'text/xml',
             JS: 'text/javascript',
+            Json: 'application/json',
             BIN: 'application/octet-binary;charset=utf-8'
         }
 

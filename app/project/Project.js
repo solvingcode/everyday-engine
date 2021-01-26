@@ -3,6 +3,7 @@ define(function (require) {
     const World = require('../world/World.js')
     const Storage = require('../core/Storage.js')
     const FileHelper = require('../utils/FileHelper.js')
+    const JsProjectExporter = require('./exporter/JsProjectExporter.js')
 
     class Project {
 
@@ -16,7 +17,6 @@ define(function (require) {
             this.saveFormat = Storage.format.XML
             this.saveFileType = FileHelper.type.XML
             this.exportFormat = Storage.format.WEB
-            this.exportFileType = FileHelper.type.JS
         }
 
         async save(){
@@ -39,7 +39,20 @@ define(function (require) {
         async export(){
             await this.storage.save(Storage.type.WORLD, World.get())
             const dataExport = this.storage.export(Storage.type.WORLD, this.exportFormat)
-            FileHelper.save(dataExport, this.exportFileType)
+            this.getProjectExporter(this.exportFormat).export(dataExport)
+        }
+
+        /**
+         * @param {string} type
+         * @return {ProjectExporter}
+         */
+        getProjectExporter(type){
+            switch (type) {
+                case Storage.format.WEB:
+                    return new JsProjectExporter()
+                default:
+                    throw new TypeError(`${type} not recognized as export type!`)
+            }
         }
 
         static get() {

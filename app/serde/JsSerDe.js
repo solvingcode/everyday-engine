@@ -16,7 +16,8 @@ define(function (require) {
             if (_.isArray(data)) {
                 throw new TypeError('Data to export must be an Object')
             }
-            const result = this.exportData('world', data)
+            const schema = Schema.getMeta()
+            const result = this.exportData('world', data, schema)
             return result.join('\n')
         }
 
@@ -30,14 +31,14 @@ define(function (require) {
         /**
          * @param {string} key
          * @param {Object|Array} data
+         * @param {Object} schema
          * @param {string} varname
          * @param {string} schemaPrefix
          *
          * @returns {string[]}
          */
-        exportData(key, data, varname = '', schemaPrefix = '') {
+        exportData(key, data, schema, varname = '', schemaPrefix = '') {
             let instr = []
-            const schema = Schema.getMeta()
             const schemaMeta = `${schemaPrefix}${key}`
             varname = varname ? varname : key
             if(_.isObject(data) || _.isArray(data)) {
@@ -45,14 +46,20 @@ define(function (require) {
                 for (const iData in data) {
                     if (data.hasOwnProperty(iData)) {
                         const pKey = `${varname}${iData}`
+                        const pSchemaKey = _.isArray(data) ? 'element' : iData
                         let pValue
-                        const subInstr = this.exportData(_.isArray(data) ? 'element' : iData, data[iData], pKey, `${schemaMeta}.`)
+                        const subInstr = this.exportData(pSchemaKey, data[iData], schema, pKey, `${schemaMeta}.`)
                         if (subInstr.length) {
                             instr = instr.concat(subInstr)
                             pValue = pKey
                         }else{
                             pValue = data[iData]
-                            pValue = schema[`${schemaMeta}.${iData}`].prototype === 'string' ? `"${pValue}"` : pValue
+                            const schemaMetaData = schema[`${schemaMeta}.${pSchemaKey}`]
+                            if(schemaMetaData){
+                                pValue = schemaMetaData.prototype === 'string' ? `"${pValue}"` : pValue
+                            }else{
+                                throw new TypeError(`${schemaMeta}.${pSchemaKey} not found in the Schema!`)
+                            }
                         }
                         if(data.constructor === Array){
                             instr.push(`${varname}[${iData}] = ${pValue}`)

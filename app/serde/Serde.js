@@ -17,7 +17,7 @@ define(function () {
 
         /**
          * @abstract
-         * @param {Object} data
+         * @param {Object|string} data
          * @return {Object|Map<string, *>}
          */
         deserialize(data){
