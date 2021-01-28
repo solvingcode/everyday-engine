@@ -1,37 +1,33 @@
-define(function (require) {
+import StateManager from '../state/StateManager.js'
 
-    import StateManager from '../state/StateManager.js'
+class ExceptionHandler {
 
-    class ExceptionHandler{
+    /**
+     * @type {ExceptionHandler}
+     */
+    static instance
 
-        /**
-         * @type {ExceptionHandler}
-         */
-        static instance
-
-        /**
-         * @param {Error} e
-         */
-        handle(e){
-            StateManager.get().stopAll()
-            if(e instanceof TypeError){
-                throw e
-            }
-            alert(e.message)
+    /**
+     * @param {Error} e
+     */
+    handle(e) {
+        StateManager.get().stopAll()
+        if (e instanceof TypeError) {
+            throw e
         }
-
-        /**
-         * @return {ExceptionHandler}
-         */
-        static get() {
-            if (!this.instance) {
-                this.instance = new this()
-            }
-            return this.instance
-        }
-
+        alert(e.message)
     }
 
-    export default ExceptionHandler
+    /**
+     * @return {ExceptionHandler}
+     */
+    static get() {
+        if (!this.instance) {
+            this.instance = new this()
+        }
+        return this.instance
+    }
 
-})
+}
+
+export default ExceptionHandler

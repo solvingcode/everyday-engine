@@ -1,56 +1,53 @@
-define(function (require) {
+import Storage from '../core/Storage.js'
 
-    import Storage from '../core/Storage.js'
+/**
+ * Handle the history of action executed.
+ * Use the storage to push/pop data.
+ * This class is used to manage the Undo action
+ * @property {Storage} storage
+ * @property {number} maxList
+ * @property {Object[]} list
+ */
+class History {
 
     /**
-     * Handle the history of action executed.
-     * Use the storage to push/pop data.
-     * This class is used to manage the Undo action
-     * @property {Storage} storage
-     * @property {number} maxList
-     * @property {Object[]} list
+     * @type {History}
      */
-    class History {
+    static instance = null
 
-        /**
-         * @type {History}
-         */
-        static instance = null
-
-        constructor() {
-            this.list = []
-            this.storage = Storage.get()
-            this.maxList = 10
-        }
-
-        static get() {
-            if (!History.instance) {
-                History.instance = new History()
-            }
-            return History.instance
-        }
-
-        /**
-         * Get the last element in the list
-         * @return {Object}
-         */
-        pop() {
-            return this.list.length && this.list.pop()
-        }
-
-        /**
-         * Push data into the history
-         * @param {String} type
-         * @param {Object} data
-         */
-        push(type, data) {
-            if (this.list.length > this.maxList) {
-                this.list.shift()
-            }
-            this.list.push(_.cloneDeep(this.storage.update(type, data)))
-        }
-
+    constructor() {
+        this.list = []
+        this.storage = Storage.get()
+        this.maxList = 10
     }
 
-    export default History
-})
+    static get() {
+        if (!History.instance) {
+            History.instance = new History()
+        }
+        return History.instance
+    }
+
+    /**
+     * Get the last element in the list
+     * @return {Object}
+     */
+    pop() {
+        return this.list.length && this.list.pop()
+    }
+
+    /**
+     * Push data into the history
+     * @param {String} type
+     * @param {Object} data
+     */
+    push(type, data) {
+        if (this.list.length > this.maxList) {
+            this.list.shift()
+        }
+        this.list.push(_.cloneDeep(this.storage.update(type, data)))
+    }
+
+}
+
+export default History

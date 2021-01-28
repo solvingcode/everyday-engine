@@ -1,20 +1,16 @@
-define(function (require) {
+import Action from '../Action.js'
+import World from '../../../world/World.js'
 
-    import Action from '../Action.js'
-    import World from '../../../world/World.js'
+class NewProjectAction extends Action {
 
-    class NewProjectAction extends Action {
-
-        /**
-         * @override
-         */
-        static run() {
-            World.new()
-            return true
-        }
-
+    /**
+     * @override
+     */
+    static run() {
+        World.new()
+        return true
     }
 
-    export default NewProjectAction
+}
 
-})
+export default NewProjectAction

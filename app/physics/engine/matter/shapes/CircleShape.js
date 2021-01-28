@@ -1,27 +1,24 @@
-define(function (require) {
+import Shape from '../../Shape.js'
 
-    import Shape from '../../Shape.js'
+/**
+ * Circle Shape class
+ * Define the shape for circles (CircleEntity)
+ */
+class CircleShape extends Shape {
 
     /**
-     * Circle Shape class
-     * Define the shape for circles (CircleEntity)
+     * @override
      */
-    class CircleShape extends Shape {
-
-        /**
-         * @override
-         */
-        generate(entity) {
-            const centerPosition = entity.toCenterPosition()
-            const engine = this.getEngine()
-            return engine.Bodies.circle(
-                centerPosition.x,
-                centerPosition.y,
-                entity.radius,
-            )
-        }
-
+    generate(entity) {
+        const centerPosition = entity.toCenterPosition()
+        const engine = this.getEngine()
+        return engine.Bodies.circle(
+            centerPosition.x,
+            centerPosition.y,
+            entity.radius,
+        )
     }
 
-    export default CircleShape
-})
+}
+
+export default CircleShape

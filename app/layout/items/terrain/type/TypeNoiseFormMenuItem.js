@@ -1,21 +1,17 @@
-define(function (require) {
+import NoiseFormMenuItem from '../../entity/NoiseFormMenuItem.js'
+import World from '../../../../world/World.js'
 
-    import NoiseFormMenuItem from '../../entity/NoiseFormMenuItem.js'
-    import World from '../../../../world/World.js'
-
+/**
+ * Terrain's noise configs form
+ */
+class TypeNoiseFormMenuItem extends NoiseFormMenuItem {
     /**
-     * Terrain's noise configs form
+     * @override
      */
-    class TypeNoiseFormMenuItem extends NoiseFormMenuItem {
-        /**
-         * @override
-         */
-        getFormObject(){
-            const terrain = World.get().getTerrainManager().getTerrain()
-            return terrain && terrain.getEntity(World.get())
-        }
+    getFormObject() {
+        const terrain = World.get().getTerrainManager().getTerrain()
+        return terrain && terrain.getEntity(World.get())
     }
+}
 
-    export default TypeNoiseFormMenuItem
-
-})
+export default TypeNoiseFormMenuItem

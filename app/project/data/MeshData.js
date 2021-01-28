@@ -1,55 +1,51 @@
-define(function(){
+class MeshData {
 
-    class MeshData{
+    size
+    position
+    dataUrl
 
-        size
-        position
-        dataUrl
-
-        /**
-         * @param {Size} size
-         */
-        setSize(size){
-            this.size = size
-        }
-
-        /**
-         * @return {Size}
-         */
-        getSize(){
-            return this.size
-        }
-
-        /**
-         * @param {Vector} position
-         */
-        setPosition(position){
-            this.position = position
-        }
-
-        /**
-         * @return {Vector}
-         */
-        getPosition(){
-            return this.position
-        }
-
-        /**
-         * @param {string} dataUrl
-         */
-        async setDataUrl(dataUrl){
-            this.dataUrl = dataUrl
-        }
-
-        /**
-         * @return {string}
-         */
-        getDataUrl(){
-            return this.dataUrl
-        }
-
+    /**
+     * @param {Size} size
+     */
+    setSize(size) {
+        this.size = size
     }
 
-    export default MeshData
+    /**
+     * @return {Size}
+     */
+    getSize() {
+        return this.size
+    }
 
-})
+    /**
+     * @param {Vector} position
+     */
+    setPosition(position) {
+        this.position = position
+    }
+
+    /**
+     * @return {Vector}
+     */
+    getPosition() {
+        return this.position
+    }
+
+    /**
+     * @param {string} dataUrl
+     */
+    async setDataUrl(dataUrl) {
+        this.dataUrl = dataUrl
+    }
+
+    /**
+     * @return {string}
+     */
+    getDataUrl() {
+        return this.dataUrl
+    }
+
+}
+
+export default MeshData

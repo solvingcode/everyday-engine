@@ -1,31 +1,27 @@
-define(function(require){
+import Data from './Data.js'
 
-    import Data from './Data.js'
+/**
+ * @class {TerrainManagerData}
+ * @extends {Data}
+ */
+class TerrainManagerData extends Data {
+
+    terrains
 
     /**
-     * @class {TerrainManagerData}
-     * @extends {Data}
+     * @return {Terrain[]}
      */
-    class TerrainManagerData extends Data{
-
-        terrains
-
-        /**
-         * @return {Terrain[]}
-         */
-        getTerrains(){
-            return this.terrains
-        }
-
-        /**
-         * @param {Terrain[]} terrains
-         */
-        setTerrains(terrains){
-            this.terrains = terrains
-        }
-
+    getTerrains() {
+        return this.terrains
     }
 
-    export default TerrainManagerData
+    /**
+     * @param {Terrain[]} terrains
+     */
+    setTerrains(terrains) {
+        this.terrains = terrains
+    }
 
-})
+}
+
+export default TerrainManagerData

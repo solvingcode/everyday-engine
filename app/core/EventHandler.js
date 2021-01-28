@@ -1,42 +1,39 @@
-define(function (require) {
+import Menu from '../layout/Menu.js'
+import Action from './Action.js'
 
-    import Menu from '../layout/Menu.js'
-    import Action from './Action.js'
+/**
+ * Handle global events triggered by the user (click , mouse move)
+ * and define related action (Runner) to be executed
+ */
+class EventHandler {
 
     /**
-     * Handle global events triggered by the user (click , mouse move)
-     * and define related action (Runner) to be executed
+     * Apply actions when event is triggered onto the window (Mouse and Keyboard events, ...)
+     * @param {Window} window
+     * @param {Class[]} runners
      */
-    class EventHandler {
-
-        /**
-         * Apply actions when event is triggered onto the window (Mouse and Keyboard events, ...)
-         * @param {Window} window
-         * @param {Class[]} runners
-         */
-        handle(window, runners) {
-            const mouse = window.mouse
-            const action = Action.get()
-            const menu = Menu.get()
-            action.reset()
-            runners.forEach(runner => {
-                const runnerInstance = runner.get()
-                if(runnerInstance.isHandle(window)){
-                    action.add(runnerInstance, mouse, menu)
-                }
-            })
-            action.run()
-        }
-
-        static get() {
-            if (!this.instance) {
-                this.instance = new this()
+    handle(window, runners) {
+        const mouse = window.mouse
+        const action = Action.get()
+        const menu = Menu.get()
+        action.reset()
+        runners.forEach(runner => {
+            const runnerInstance = runner.get()
+            if (runnerInstance.isHandle(window)) {
+                action.add(runnerInstance, mouse, menu)
             }
-            return this.instance
-        }
+        })
+        action.run()
     }
 
-    EventHandler.instance = null
+    static get() {
+        if (!this.instance) {
+            this.instance = new this()
+        }
+        return this.instance
+    }
+}
 
-    export default EventHandler
-})
+EventHandler.instance = null
+
+export default EventHandler

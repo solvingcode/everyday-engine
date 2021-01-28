@@ -1,23 +1,20 @@
-define(function (require) {
+import Action from '../Action.js'
 
-    import Action from '../Action.js'
+/**
+ * Physics Static action
+ */
+class PhysicsNotStaticAction extends Action {
 
     /**
-     * Physics Static action
+     * Make the entity not  static (move)
+     * @param {Mouse} mouse
+     * @param {Array} selectedEntities
      */
-    class PhysicsNotStaticAction extends Action {
-
-        /**
-         * Make the entity not  static (move)
-         * @param {Array} selectedEntities
-         */
-        static run(mouse, selectedEntities) {
-            selectedEntities.map(entity => entity.setFixed(false))
-            return true
-        }
-
+    static run(mouse, selectedEntities) {
+        selectedEntities.map(entity => entity.setFixed(false))
+        return true
     }
 
-    export default PhysicsNotStaticAction
+}
 
-})
+export default PhysicsNotStaticAction

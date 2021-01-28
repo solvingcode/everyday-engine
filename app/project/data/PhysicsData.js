@@ -1,15 +1,11 @@
-define(function(require){
+import Data from './Data.js'
 
-    import Data from './Data.js'
+/**
+ * @class {PhysicsData}
+ * @extends {Data}
+ */
+class PhysicsData extends Data {
 
-    /**
-     * @class {PhysicsData}
-     * @extends {Data}
-     */
-    class PhysicsData extends Data{
+}
 
-    }
-
-    export default PhysicsData
-
-})
+export default PhysicsData

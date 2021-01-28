@@ -1,26 +1,22 @@
-define(function (require) {
+import ListFormMenuItem from '../form/ListFormMenuItem.js'
+import World from '../../../world/World.js'
 
-    import ListFormMenuItem from '../form/ListFormMenuItem.js'
-    import World from '../../../world/World.js'
+/**
+ * @class {ListTextureFormMenuItem}
+ */
+class ListTextureFormMenuItem extends ListFormMenuItem {
 
-    /**
-     * @class {ListTextureFormMenuItem}
-     */
-    class ListTextureFormMenuItem extends ListFormMenuItem {
-
-        constructor(parent, props) {
-            super(props)
-        }
-
-        /**
-         * @override
-         */
-        getFormObject(){
-            return World.get().getTextureManager().getTextures()
-        }
-
+    constructor(parent, props) {
+        super(props)
     }
 
-    export default ListTextureFormMenuItem
+    /**
+     * @override
+     */
+    getFormObject() {
+        return World.get().getTextureManager().getTextures()
+    }
 
-})
+}
+
+export default ListTextureFormMenuItem

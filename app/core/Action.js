@@ -1,51 +1,48 @@
-define(function () {
+/**
+ * Define the action to be executed when an event is triggered
+ */
+class Action {
+
+    constructor() {
+        this.queue = []
+    }
+
+    static get() {
+        if (!Action.instance) {
+            Action.instance = new Action()
+        }
+        return Action.instance
+    }
 
     /**
-     * Define the action to be executed when an event is triggered
+     * Add action to the queue.
+     * @param {Object} object the object must define the method "execute"
+     * @param {...any} args
      */
-    class Action {
+    add(object, ...args) {
+        this.queue.push({object, args})
+    }
 
-        constructor() {
-            this.queue = []
-        }
-
-        static get() {
-            if (!Action.instance) {
-                Action.instance = new Action()
-            }
-            return Action.instance
-        }
-
-        /**
-         * Add action to the queue.
-         * @param {Object} object the object must define the method "execute"
-         * @param {...any} args
-         */
-        add(object, ...args) {
-            this.queue.push({object, args})
-        }
-
-        /**
-         * Run all actions. stop the execution if the "execute" return true.
-         */
-        run() {
-            for (const iQueue in this.queue) {
-                if (this.queue.hasOwnProperty(iQueue)) {
-                    const action = this.queue[iQueue]
-                    if (action.object.execute(...action.args)) {
-                        break;
-                    }
+    /**
+     * Run all actions. stop the execution if the "execute" return true.
+     */
+    run() {
+        for (const iQueue in this.queue) {
+            if (this.queue.hasOwnProperty(iQueue)) {
+                const action = this.queue[iQueue]
+                if (action.object.execute(...action.args)) {
+                    break;
                 }
             }
         }
-
-        reset(){
-            this.queue = []
-        }
-
     }
 
-    Action.instance = null
+    reset() {
+        this.queue = []
+    }
 
-    export default Action
-})
+}
+
+Action.instance = null
+
+export default Action

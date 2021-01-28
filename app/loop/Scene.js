@@ -1,38 +1,34 @@
-define(function (require) {
+import Loop from './Loop.js'
+import ObjectRenderer from '../renderer/ObjectRenderer.js'
+import World from '../world/World.js'
 
-    import Loop from './Loop.js'
-    import ObjectRenderer from '../renderer/ObjectRenderer.js'
-    import World from '../world/World.js'
+/**
+ * @class {Scene}
+ * @extends {Loop}
+ */
+class Scene extends Loop {
 
     /**
-     * @class {Scene}
-     * @extends {Loop}
+     * @type {Scene}
      */
-    class Scene extends Loop{
+    static instance
 
-        /**
-         * @type {Scene}
-         */
-        static instance
-
-        constructor() {
-            super()
-            this.objectRenderer = new ObjectRenderer()
-        }
-
-        async init(){
-            //not needed
-        }
-
-        loop(){
-            const world = World.get()
-            world.update()
-            world.draw(this.objectRenderer)
-            this.objectRenderer.render(world.getCamera())
-        }
-
+    constructor() {
+        super()
+        this.objectRenderer = new ObjectRenderer()
     }
 
-    export default Scene
+    async init() {
+        //not needed
+    }
 
-})
+    loop() {
+        const world = World.get()
+        world.update()
+        world.draw(this.objectRenderer)
+        this.objectRenderer.render(world.getCamera())
+    }
+
+}
+
+export default Scene

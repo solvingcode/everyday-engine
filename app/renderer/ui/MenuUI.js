@@ -1,22 +1,19 @@
-define(function (require) {
-
+/**
+ * Menu UI class
+ * Used to draw the menu
+ */
+class MenuUI {
     /**
-     * Menu UI class
-     * Used to draw the menu
+     * Draw a button.
+     * @param {Menu} menu
+     * @param {UIRenderer} uiRenderer
      */
-    class MenuUI {
-        /**
-         * Draw a button.
-         * @param {Menu} item
-         * @param {UIRenderer} uiRenderer
-         */
-        static draw(menu, uiRenderer) {
-            uiRenderer.clean()
-            for (let iItem in menu.items) {
-                menu.items[iItem].draw(uiRenderer)
-            }
+    static draw(menu, uiRenderer) {
+        uiRenderer.clean()
+        for (let iItem in menu.items) {
+            menu.items[iItem].draw(uiRenderer)
         }
     }
+}
 
-    export default MenuUI
-})
+export default MenuUI

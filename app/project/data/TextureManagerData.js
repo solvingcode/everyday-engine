@@ -1,31 +1,27 @@
-define(function(require){
+import Data from './Data.js'
 
-    import Data from './Data.js'
+/**
+ * @class {TextureManagerData}
+ * @extends {Data}
+ */
+class TextureManagerData extends Data {
+
+    textures
 
     /**
-     * @class {TextureManagerData}
-     * @extends {Data}
+     * @return {Texture[]}
      */
-    class TextureManagerData extends Data{
-
-        textures
-
-        /**
-         * @return {Texture[]}
-         */
-        getTextures(){
-            return this.textures
-        }
-
-        /**
-         * @param {Texture[]} textures
-         */
-        setTextures(textures){
-            this.textures = textures
-        }
-
+    getTextures() {
+        return this.textures
     }
 
-    export default TextureManagerData
+    /**
+     * @param {Texture[]} textures
+     */
+    setTextures(textures) {
+        this.textures = textures
+    }
 
-})
+}
+
+export default TextureManagerData

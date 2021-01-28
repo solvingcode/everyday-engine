@@ -1,20 +1,16 @@
-define(function (require) {
+import MenuItem from '../../MenuItem.js'
+import Layout from '../../Layout.js'
 
-    import MenuItem from '../../MenuItem.js'
-    import Layout from '../../Layout.js'
-
-    class DeleteMenuItem extends MenuItem {
-        constructor() {
-            super({
-                name: 'trash-alt',
-                title: 'Delete',
-                stateCode: 'ACTION_DELETE',
-                type: Layout.type.ICON,
-                zone: Layout.zone.TOP
-            })
-        }
+class DeleteMenuItem extends MenuItem {
+    constructor() {
+        super({
+            name: 'trash-alt',
+            title: 'Delete',
+            stateCode: 'ACTION_DELETE',
+            type: Layout.type.ICON,
+            zone: Layout.zone.TOP
+        })
     }
+}
 
-    export default DeleteMenuItem
-
-})
+export default DeleteMenuItem

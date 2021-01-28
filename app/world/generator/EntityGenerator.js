@@ -1,18 +1,16 @@
-define(function () {
+/**
+ * EntityGenerator class.
+ * Generate an entity (related to the type, make and load the meshes)
+ */
+class EntityGenerator {
     /**
-     * EntityGenerator class.
-     * Generate an entity (related to the type, make and load the meshes)
+     * Generate and build the Entity
+     * @param {World} world
+     * @param {Entity} entity
      */
-    class EntityGenerator {
-        /**
-         * Generate and build the Entity
-         * @param {World} world
-         * @param {Entity} entity 
-         */
-        static make(world, entity) {
-            return entity.updateStyle().build(world)
-        }
+    static make(world, entity) {
+        return entity.updateStyle().build(world)
     }
+}
 
-    export default EntityGenerator
-})
+export default EntityGenerator

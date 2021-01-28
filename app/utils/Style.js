@@ -1,16 +1,13 @@
-define(function () {
-
+/**
+ * Style utils
+ */
+class Style {
     /**
-     * Style utils
+     * is theme dark
      */
-    class Style {
-        /**
-         * is theme dark
-         */
-        static isThemeDark() {
-            return STYLE_THEME === 'dark'
-        }
+    static isThemeDark() {
+        return STYLE_THEME === 'dark'
     }
+}
 
-    export default Style
-})
+export default Style

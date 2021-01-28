@@ -1,45 +1,43 @@
-define(function () {
+/**
+ * Define the keyboard inputs (key pressed, released)
+ * @property {number[]} keys
+ */
+class Keyboard {
+    constructor() {
+        this.keys = []
+    }
+
     /**
-     * Define the keyboard inputs (key pressed, released)
-     * @property {number[]} keys
+     * @param {number} key
      */
-    class Keyboard {
-        constructor() {
-            this.keys = []
+    setKeyPressed(key) {
+        if (!this.isKeyPressed(key)) {
+            this.keys.push(key)
         }
+    }
 
-        /**
-         * @param {number} key
-         */
-        setKeyPressed(key) {
-            if (!this.isKeyPressed(key)) {
-                this.keys.push(key)
-            }
-        }
-
-        /**
-         * @param {number} key
-         */
-        setKeyReleased(key) {
-            if (this.isKeyPressed(key)) {
-                let index = this.keys.indexOf(key)
-                this.keys.splice(index, 1)
-            }
-        }
-
-        /**
-         * @param {number} key
-         * @return {Boolean}
-         */
-        isKeyPressed(key) {
+    /**
+     * @param {number} key
+     */
+    setKeyReleased(key) {
+        if (this.isKeyPressed(key)) {
             let index = this.keys.indexOf(key)
-            return index !== -1
+            this.keys.splice(index, 1)
         }
     }
 
-    Keyboard.Keys = {
-        CTRL: 17
+    /**
+     * @param {number} key
+     * @return {Boolean}
+     */
+    isKeyPressed(key) {
+        let index = this.keys.indexOf(key)
+        return index !== -1
     }
+}
 
-    export default Keyboard
-})
+Keyboard.Keys = {
+    CTRL: 17
+}
+
+export default Keyboard
