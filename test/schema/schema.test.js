@@ -1,7 +1,7 @@
 const expect = chai.expect
-import Size from '/app/pobject/Size.js'
-import Schema from '/app/schema/Schema.js'
-import CircleEntity from '/app/entity/types/shape/CircleEntity.js'
+import Size from '/src/app/pobject/Size.js'
+import Schema from '/src/app/schema/Schema.js'
+import CircleEntity from '/src/app/entity/types/shape/CircleEntity.js'
 
 describe('Schema', function () {
     it('Should validate Entity Size', async function () {

@@ -1,5 +1,5 @@
 const expect = chai.expect
-import StateManager from '/app/state/StateManager.js'
+import StateManager from '/src/app/state/StateManager.js'
 
 describe('StateManager', function () {
     it('Should getType for valid state', function () {

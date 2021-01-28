@@ -1,0 +1,36 @@
+{
+  "name": "web-engine",
+  "version": "1.0.0",
+  "description": "Game engine on the browser",
+  "main": "index.js",
+  "directories": {
+    "lib": "lib",
+    "test": "test"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/solvingcode/web-engine.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/solvingcode/web-engine/issues"
+  },
+  "homepage": "https://github.com/solvingcode/web-engine#readme",
+  "devDependencies": {
+    "@babel/cli": "^7.12.10",
+    "@babel/core": "^7.12.10",
+    "@babel/plugin-syntax-bigint": "^7.8.3",
+    "@babel/plugin-syntax-class-properties": "^7.12.1",
+    "@babel/plugin-transform-runtime": "^7.12.10",
+    "@babel/preset-env": "^7.12.11",
+    "babel-plugin-transform-class-properties": "^6.24.1",
+    "babelify": "^10.0.0",
+    "browserify": "^17.0.0",
+    "gulp": "^4.0.2",
+    "vinyl-source-stream": "^2.0.0"
+  }
+}
