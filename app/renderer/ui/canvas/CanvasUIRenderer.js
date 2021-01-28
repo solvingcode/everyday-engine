@@ -1,11 +1,11 @@
 define(function (require) {
 
-    const UIRenderer = require('../UIRenderer.js')
-    const ColorButtonUI = require('./buttons/ColorButtonUI.js')
-    const DefaultButtonUI = require('./buttons/DefaultButtonUI.js')
-    const LayerEntityButtonUI = require('./buttons/LayerEntityButtonUI.js')
-    const CanvasPanelUI = require('./CanvasPanelUI.js')
-    const Menu = require('../../../layout/Menu.js')
+    import UIRenderer from '../UIRenderer.js'
+    import ColorButtonUI from './buttons/ColorButtonUI.js'
+    import DefaultButtonUI from './buttons/DefaultButtonUI.js'
+    import LayerEntityButtonUI from './buttons/LayerEntityButtonUI.js'
+    import CanvasPanelUI from './CanvasPanelUI.js'
+    import Menu from '../../../layout/Menu.js'
 
     /**
      * Canvas UI Renderer class
@@ -28,28 +28,28 @@ define(function (require) {
          * @override
          */
         getColorButtonUI() {
-            return ColorButtonUI
+            export default ColorButtonUI
         }
 
         /**
          * @override
          */
         getLayerEntityButtonUI() {
-            return LayerEntityButtonUI
+            export default LayerEntityButtonUI
         }
 
         /**
          * @override
          */
         getDefaultButtonUI() {
-            return DefaultButtonUI
+            export default DefaultButtonUI
         }
 
         /**
          * @override
          */
         getPanelUI() {
-            return CanvasPanelUI
+            export default CanvasPanelUI
         }
 
         /**
@@ -65,5 +65,5 @@ define(function (require) {
 
     }
 
-    return CanvasUIRenderer
+    export default CanvasUIRenderer
 })

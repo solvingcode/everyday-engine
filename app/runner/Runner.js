@@ -38,6 +38,6 @@ define(function () {
 
     }
 
-    return Runner
+    export default Runner
 
 })

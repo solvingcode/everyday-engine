@@ -111,6 +111,6 @@ define(function () {
 
     }
 
-    return EntityProps
+    export default EntityProps
 
 })

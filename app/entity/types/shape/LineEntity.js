@@ -1,6 +1,6 @@
 define(function (require) {
 
-    const EntityMotion = require('../../EntityMotion.js')
+    import EntityMotion from '../../EntityMotion.js'
 
     class LineEntity extends EntityMotion {
 
@@ -72,5 +72,5 @@ define(function (require) {
 
     }
 
-    return LineEntity
+    export default LineEntity
 })

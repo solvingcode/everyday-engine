@@ -1,6 +1,6 @@
 define(function (require) {
 
-    const HtmlFormUI = require('./HtmlFormUI.js')
+    import HtmlFormUI from './HtmlFormUI.js'
 
     class HtmlFormDropdownUI extends HtmlFormUI {
         /**
@@ -49,5 +49,5 @@ define(function (require) {
         }
     }
 
-    return HtmlFormDropdownUI
+    export default HtmlFormDropdownUI
 })

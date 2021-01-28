@@ -1,6 +1,6 @@
 define(function (require) {
 
-    const Storage = require('../core/Storage.js')
+    import Storage from '../core/Storage.js'
 
     /**
      * Handle the history of action executed.
@@ -52,5 +52,5 @@ define(function (require) {
 
     }
 
-    return History
+    export default History
 })

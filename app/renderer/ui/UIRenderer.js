@@ -1,6 +1,6 @@
 define(function (require) {
 
-    const Layout = require('../../layout/Layout.js')
+    import Layout from '../../layout/Layout.js'
 
     /**
      * UI Renderer class
@@ -197,5 +197,5 @@ define(function (require) {
         }
     }
 
-    return UIRenderer
+    export default UIRenderer
 })

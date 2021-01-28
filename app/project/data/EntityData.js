@@ -1,8 +1,8 @@
 define(function(require){
 
-    const Data = require('./Data.js')
-    const Maths = require('../../utils/Maths.js')
-    const Size = require('../../pobject/Size.js')
+    import Data from './Data.js'
+    import Maths from '../../utils/Maths.js'
+    import Size from '../../pobject/Size.js'
 
     /**
      * Class define all entity's data and props (getters and setters)
@@ -540,6 +540,6 @@ define(function(require){
         VIRTUAL: 'virtual'
     }
 
-    return EntityData
+    export default EntityData
 
 })

@@ -1,6 +1,6 @@
 define(function (require) {
 
-    const ItemUI = require('../ItemUI.js')
+    import ItemUI from '../ItemUI.js'
 
     class DefaultButtonUI extends ItemUI {
         /**
@@ -37,5 +37,5 @@ define(function (require) {
         height: '40px'
     }
 
-    return DefaultButtonUI
+    export default DefaultButtonUI
 })

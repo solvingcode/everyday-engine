@@ -1,7 +1,7 @@
 define(function (require) {
 
-    const MenuItem = require('../../MenuItem.js')
-    const Layout = require('../../Layout.js')
+    import MenuItem from '../../MenuItem.js'
+    import Layout from '../../Layout.js'
 
     /**
      * @class {ListElementFormMenuItem}
@@ -41,6 +41,6 @@ define(function (require) {
         }
     }
 
-    return ListElementFormMenuItem
+    export default ListElementFormMenuItem
 
 })

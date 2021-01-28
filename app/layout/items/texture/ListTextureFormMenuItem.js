@@ -1,7 +1,7 @@
 define(function (require) {
 
-    const ListFormMenuItem = require('../form/ListFormMenuItem.js')
-    const World = require('../../../world/World.js')
+    import ListFormMenuItem from '../form/ListFormMenuItem.js'
+    import World from '../../../world/World.js'
 
     /**
      * @class {ListTextureFormMenuItem}
@@ -21,6 +21,6 @@ define(function (require) {
 
     }
 
-    return ListTextureFormMenuItem
+    export default ListTextureFormMenuItem
 
 })

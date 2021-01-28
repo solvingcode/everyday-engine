@@ -1,12 +1,12 @@
 define(function (require) {
 
-    const Entity = require('../../entity/Entity.js')
-    const RectangleShape = require('./matter/shapes/RectangleShape.js')
-    const EllipseShape = require('./matter/shapes/EllipseShape.js')
-    const PolyShape = require('./matter/shapes/PolyShape.js')
-    const CircleShape = require('./matter/shapes/CircleShape.js')
-    const JointShape = require('./matter/shapes/JointShape.js')
-    const Shape = require('./Shape.js')
+    import Entity from '../../entity/Entity.js'
+    import RectangleShape from './matter/shapes/RectangleShape.js'
+    import EllipseShape from './matter/shapes/EllipseShape.js'
+    import PolyShape from './matter/shapes/PolyShape.js'
+    import CircleShape from './matter/shapes/CircleShape.js'
+    import JointShape from './matter/shapes/JointShape.js'
+    import Shape from './Shape.js'
 
     /**
      * Shape Loader class
@@ -53,5 +53,5 @@ define(function (require) {
 
     }
 
-    return ShapeLoader
+    export default ShapeLoader
 })

@@ -1,6 +1,6 @@
 define(function (require) {
 
-    const LineEntity = require('../shape/LineEntity.js')
+    import LineEntity from '../shape/LineEntity.js'
 
     /**
      * Attach Entity (abstract class) used to attach two entities
@@ -21,5 +21,5 @@ define(function (require) {
 
     }
 
-    return AttachEntity
+    export default AttachEntity
 })

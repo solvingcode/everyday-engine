@@ -1,8 +1,8 @@
 define(function (require) {
 
-    const Action = require('../Action.js')
-    const World = require('../../../world/World.js')
-    const Vector = require('../../../utils/Vector.js')
+    import Action from '../Action.js'
+    import World from '../../../world/World.js'
+    import Vector from '../../../utils/Vector.js'
 
     /**
      * Move camera action
@@ -27,6 +27,6 @@ define(function (require) {
 
     }
 
-    return MoveCameraAction
+    export default MoveCameraAction
 
 })

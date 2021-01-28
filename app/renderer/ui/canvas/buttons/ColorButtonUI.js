@@ -1,6 +1,6 @@
 define(function (require) {
 
-    const PanelButtonUI = require('./PanelButtonUI.js')
+    import PanelButtonUI from './PanelButtonUI.js'
 
     class ColorButtonUI extends PanelButtonUI {
         /**
@@ -45,5 +45,5 @@ define(function (require) {
         numberPerLine: 5
     }
 
-    return ColorButtonUI
+    export default ColorButtonUI
 })

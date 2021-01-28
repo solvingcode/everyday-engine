@@ -1,6 +1,6 @@
 define(function (require) {
 
-    const AttachEntity = require('../../entity/types/constraint/AttachEntity.js')
+    import AttachEntity from '../../entity/types/constraint/AttachEntity.js'
 
     /**
      * Shape class
@@ -95,5 +95,5 @@ define(function (require) {
 
     }
 
-    return Shape
+    export default Shape
 })

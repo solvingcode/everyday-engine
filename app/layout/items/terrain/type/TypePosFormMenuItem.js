@@ -1,7 +1,7 @@
 define(function (require) {
 
-    const PositionFormMenuItem = require('../../entity/PositionFormMenuItem.js')
-    const World = require('../../../../world/World.js')
+    import PositionFormMenuItem from '../../entity/PositionFormMenuItem.js'
+    import World from '../../../../world/World.js'
 
     /**
      * Terrain's position form
@@ -16,6 +16,6 @@ define(function (require) {
         }
     }
 
-    return TypePosFormMenuItem
+    export default TypePosFormMenuItem
 
 })

@@ -128,5 +128,5 @@ define(function () {
 
     EntitySelector.instance = null
 
-    return EntitySelector
+    export default EntitySelector
 })

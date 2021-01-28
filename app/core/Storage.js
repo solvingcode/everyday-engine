@@ -1,8 +1,8 @@
 define(function (require) {
 
-    const XmlSerDe = require('../serde/XmlSerDe.js')
-    const JsSerDe = require('../serde/JsSerDe.js')
-    const Schema = require('../schema/Schema.js')
+    import XmlSerDe from '../serde/XmlSerDe.js'
+    import JsSerDe from '../serde/JsSerDe.js'
+    import Schema from '../schema/Schema.js'
 
     /**
      * Utils to manage the storage of data over time.
@@ -147,11 +147,11 @@ define(function (require) {
         getSerDe(format){
             switch (format) {
                 case Storage.format.XML:
-                    return XmlSerDe
+                    export default XmlSerDe
                 case Storage.format.WEB:
-                    return JsSerDe
+                    export default JsSerDe
                 case Storage.format.BIN:
-                    return BinSerDe
+                    export default BinSerDe
                 default:
                     throw new TypeError(`Export format ${format} not recognized`)
             }
@@ -170,5 +170,5 @@ define(function (require) {
         BIN: 'bin'
     }
 
-    return Storage
+    export default Storage
 })

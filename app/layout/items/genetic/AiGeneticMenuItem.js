@@ -1,12 +1,12 @@
 define(function (require) {
 
-    const MenuItem = require('../../MenuItem.js')
-    const InfosMenuItem = require('./InfosMenuItem.js')
-    const FitnessGraphMenuItem = require('./FitnessGraphMenuItem.js')
-    const AiFormMenuItem = require('./AiFormMenuItem.js')
-    const FormSimulationMenuItem = require('./FormSimulationMenuItem.js')
-    const Layout = require('../../Layout.js')
-    const GeneticEngine = require('../../../ai/genetic/GeneticEngine.js')
+    import MenuItem from '../../MenuItem.js'
+    import InfosMenuItem from './InfosMenuItem.js'
+    import FitnessGraphMenuItem from './FitnessGraphMenuItem.js'
+    import AiFormMenuItem from './AiFormMenuItem.js'
+    import FormSimulationMenuItem from './FormSimulationMenuItem.js'
+    import Layout from '../../Layout.js'
+    import GeneticEngine from '../../../ai/genetic/GeneticEngine.js'
 
     /**
      * AI Genetic Menu Item
@@ -36,6 +36,6 @@ define(function (require) {
         }
     }
 
-    return AiGeneticMenuItem
+    export default AiGeneticMenuItem
 
 })

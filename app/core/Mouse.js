@@ -198,5 +198,5 @@ define(function () {
         MOVE_ENTITY: 'moveentity'
     }
 
-    return Mouse
+    export default Mouse
 })

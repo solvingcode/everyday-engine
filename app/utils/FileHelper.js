@@ -54,6 +54,6 @@ define(function () {
 
     }
 
-    return FileHelper
+    export default FileHelper
 
 })

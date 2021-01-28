@@ -1,9 +1,9 @@
 define(function (require) {
 
-    const MenuItem = require('../../MenuItem.js')
-    const ManagerFormMenuItem = require('./ManagerFormMenuItem.js')
-    const TypeMenuItem = require('./type/TypeMenuItem.js')
-    const Layout = require('../../Layout.js')
+    import MenuItem from '../../MenuItem.js'
+    import ManagerFormMenuItem from './ManagerFormMenuItem.js'
+    import TypeMenuItem from './type/TypeMenuItem.js'
+    import Layout from '../../Layout.js'
 
     /**
      * Terrain Menu Item
@@ -24,6 +24,6 @@ define(function (require) {
         }
     }
 
-    return TerrainMenuItem
+    export default TerrainMenuItem
 
 })

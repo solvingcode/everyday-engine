@@ -1,6 +1,6 @@
 define(function (require) {
 
-    const EntityMotion = require('./EntityMotion.js')
+    import EntityMotion from './EntityMotion.js'
 
     /**
      * Virtual Entity can be used to manage entity's props
@@ -27,5 +27,5 @@ define(function (require) {
 
     }
 
-    return VirtualEntity
+    export default VirtualEntity
 })

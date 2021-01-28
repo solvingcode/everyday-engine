@@ -1,8 +1,8 @@
 define(function (require) {
 
-    const PolyEntity = require('../../../../../entity/types/shape/PolyEntity.js')
-    const EntityUI = require('../entity/EntityUI.js')
-    const Style = require('../../../../../utils/Style.js')
+    import PolyEntity from '../../../../../entity/types/shape/PolyEntity.js'
+    import EntityUI from '../entity/EntityUI.js'
+    import Style from '../../../../../utils/Style.js'
 
     /**
      * GraphLineUI class
@@ -28,5 +28,5 @@ define(function (require) {
         entityHeight: 100
     }
 
-    return GraphLineUI
+    export default GraphLineUI
 })

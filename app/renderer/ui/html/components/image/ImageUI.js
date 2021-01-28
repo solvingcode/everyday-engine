@@ -1,7 +1,7 @@
 define(function (require) {
 
-    const ImageHelper = require('../../../../../utils/ImageHelper.js')
-    const Size = require('../../../../../pobject/Size.js')
+    import ImageHelper from '../../../../../utils/ImageHelper.js'
+    import Size from '../../../../../pobject/Size.js'
 
     /**
      * @class {ImageUI}
@@ -34,5 +34,5 @@ define(function (require) {
         }
     }
 
-    return ImageUI
+    export default ImageUI
 })

@@ -1,8 +1,8 @@
 define(function (require) {
 
-    const Layout = require('../../Layout.js')
-    const World = require('../../../world/World.js')
-    const FormMenuItem = require('../form/FormMenuItem.js')
+    import Layout from '../../Layout.js'
+    import World from '../../../world/World.js'
+    import FormMenuItem from '../form/FormMenuItem.js'
 
     /**
      * Form properties
@@ -49,6 +49,6 @@ define(function (require) {
         }
     }
 
-    return PropsFormMenuItem
+    export default PropsFormMenuItem
 
 })

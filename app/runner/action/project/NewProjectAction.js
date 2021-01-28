@@ -1,7 +1,7 @@
 define(function (require) {
 
-    const Action = require('../Action.js')
-    const World = require('../../../world/World.js')
+    import Action from '../Action.js'
+    import World from '../../../world/World.js'
 
     class NewProjectAction extends Action {
 
@@ -15,6 +15,6 @@ define(function (require) {
 
     }
 
-    return NewProjectAction
+    export default NewProjectAction
 
 })

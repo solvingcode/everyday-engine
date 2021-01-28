@@ -1,7 +1,7 @@
 define(function (require) {
 
-    const SizeFormMenuItem = require('../../entity/SizeFormMenuItem.js')
-    const World = require('../../../../world/World.js')
+    import SizeFormMenuItem from '../../entity/SizeFormMenuItem.js'
+    import World from '../../../../world/World.js'
 
     /**
      * Terrain's size form
@@ -16,6 +16,6 @@ define(function (require) {
         }
     }
 
-    return TypeSizeFormMenuItem
+    export default TypeSizeFormMenuItem
 
 })

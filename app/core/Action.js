@@ -47,5 +47,5 @@ define(function () {
 
     Action.instance = null
 
-    return Action
+    export default Action
 })

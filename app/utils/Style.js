@@ -12,5 +12,5 @@ define(function () {
         }
     }
 
-    return Style
+    export default Style
 })

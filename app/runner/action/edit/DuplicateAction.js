@@ -1,7 +1,7 @@
 define(function (require) {
 
-    const Action = require('../Action.js')
-    const World = require('../../../world/World.js')
+    import Action from '../Action.js'
+    import World from '../../../world/World.js'
 
     /**
      * Duplicate Action
@@ -23,6 +23,6 @@ define(function (require) {
 
     }
 
-    return DuplicateAction
+    export default DuplicateAction
 
 })

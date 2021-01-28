@@ -1,6 +1,6 @@
 define(function(require){
 
-    const Data = require('./Data.js')
+    import Data from './Data.js'
 
     /**
      * @class {TextureManagerData}
@@ -26,6 +26,6 @@ define(function(require){
 
     }
 
-    return TextureManagerData
+    export default TextureManagerData
 
 })

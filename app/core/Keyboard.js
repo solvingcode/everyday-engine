@@ -41,5 +41,5 @@ define(function () {
         CTRL: 17
     }
 
-    return Keyboard
+    export default Keyboard
 })

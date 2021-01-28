@@ -1,11 +1,11 @@
 define(function (require) {
 
-    const Mesh = require('../core/Mesh.js')
-    const Window = require('../core/Window.js')
-    const Vertex = require('../utils/Vertex.js')
-    const Vector = require('../utils/Vector.js')
-    const EntityData = require('../project/data/EntityData.js')
-    const Style = require('../pobject/Style.js')
+    import Mesh from '../core/Mesh.js'
+    import Window from '../core/Window.js'
+    import Vertex from '../utils/Vertex.js'
+    import Vector from '../utils/Vector.js'
+    import EntityData from '../project/data/EntityData.js'
+    import Style from '../pobject/Style.js'
 
     /**
      * Abstract Entity class
@@ -708,5 +708,5 @@ define(function (require) {
      */
 
 
-    return Entity
+    export default Entity
 })

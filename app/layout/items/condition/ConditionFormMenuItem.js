@@ -1,9 +1,9 @@
 define(function (require) {
 
-    const Layout = require('../../Layout.js')
-    const EntitySelector = require('../../../world/manager/EntitySelector.js')
-    const World = require('../../../world/World.js')
-    const FormMenuItem = require('../form/FormMenuItem.js')
+    import Layout from '../../Layout.js'
+    import EntitySelector from '../../../world/manager/EntitySelector.js'
+    import World from '../../../world/World.js'
+    import FormMenuItem from '../form/FormMenuItem.js'
 
     /**
      * Form properties
@@ -45,6 +45,6 @@ define(function (require) {
         }
     }
 
-    return ConditionFormMenuItem
+    export default ConditionFormMenuItem
 
 })

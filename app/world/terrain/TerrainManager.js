@@ -1,8 +1,8 @@
 define(function (require) {
 
-    const PlainTerrain = require('./types/PlainTerrain.js')
-    const NoiseTerrain = require('./types/NoiseTerrain.js')
-    const TerrainManagerData = require('../../project/data/TerrainManagerData.js')
+    import PlainTerrain from './types/PlainTerrain.js'
+    import NoiseTerrain from './types/NoiseTerrain.js'
+    import TerrainManagerData from '../../project/data/TerrainManagerData.js'
 
     /**
      * Manage all terrains
@@ -112,6 +112,6 @@ define(function (require) {
         }
     }
 
-    return TerrainManager
+    export default TerrainManager
 
 })

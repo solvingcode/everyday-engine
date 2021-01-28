@@ -1,9 +1,9 @@
 define(function (require) {
 
-    const SchemaMeta = require('./SchemaMeta.js')
-    const Data = require('../project/data/Data.js')
-    const DataSchema = require('../project/data/DataSchema.js')
-    const ClassHelper = require('../utils/ClassHelper.js')
+    import SchemaMeta from './SchemaMeta.js'
+    import Data from '../project/data/Data.js'
+    import DataSchema from '../project/data/DataSchema.js'
+    import ClassHelper from '../utils/ClassHelper.js'
 
     /**
      * @class {Schema}
@@ -172,5 +172,5 @@ define(function (require) {
         }
     }
 
-    return Schema
+    export default Schema
 })

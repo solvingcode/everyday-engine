@@ -1,6 +1,6 @@
 define(function (require) {
-    const Application = require('/app/core/Application.js')
-    const PreviewGame = require('/app/loop/PreviewGame.js')
+    import Application from '/app/core/Application.js'
+    import PreviewGame from '/app/loop/PreviewGame.js'
 
     let app = new Application([PreviewGame])
     app.start()

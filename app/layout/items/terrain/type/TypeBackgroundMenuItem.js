@@ -1,7 +1,7 @@
 define(function (require) {
 
-    const BackgroundFormMenuItem = require('../../style/TextureFormMenuItem.js')
-    const World = require('../../../../world/World.js')
+    import TextureFormMenuItem from '../../style/TextureFormMenuItem.js'
+    import World from '../../../../world/World.js'
 
     /**
      * Plain terrain background Menu Item
@@ -16,6 +16,6 @@ define(function (require) {
         }
     }
 
-    return TypeBackgroundMenuItem
+    export default TypeBackgroundMenuItem
 
 })

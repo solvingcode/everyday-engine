@@ -1,7 +1,7 @@
 define(function (require) {
 
-    const Action = require('../Action.js')
-    const World = require('../../../world/World.js')
+    import Action from '../Action.js'
+    import World from '../../../world/World.js'
 
     class MoveAction extends Action {
 
@@ -46,6 +46,6 @@ define(function (require) {
 
     MoveAction.instance = null
 
-    return MoveAction
+    export default MoveAction
 
 })

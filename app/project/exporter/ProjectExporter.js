@@ -16,6 +16,6 @@ define(function () {
 
     }
 
-    return ProjectExporter
+    export default ProjectExporter
 
 })

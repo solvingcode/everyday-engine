@@ -1,8 +1,8 @@
 define(function (require) {
 
-    const MenuUI = require('./ui/MenuUI.js')
-    const HtmlUIRenderer = require('./ui/html/HtmlUIRenderer.js')
-    const Renderer = require('./Renderer.js')
+    import MenuUI from './ui/MenuUI.js'
+    import HtmlUIRenderer from './ui/html/HtmlUIRenderer.js'
+    import Renderer from './Renderer.js'
 
     /**
      * Manage the renderer for the layout (fix element, menus, buttons, ...)
@@ -36,5 +36,5 @@ define(function (require) {
         }
     }
 
-    return SetupRenderer
+    export default SetupRenderer
 })

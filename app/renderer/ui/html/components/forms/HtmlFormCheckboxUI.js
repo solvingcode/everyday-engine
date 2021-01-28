@@ -1,6 +1,6 @@
 define(function (require) {
 
-    const HtmlFormUI = require('./HtmlFormUI.js')
+    import HtmlFormUI from './HtmlFormUI.js'
 
     class HtmlFormCheckboxUI extends HtmlFormUI {
         /**
@@ -39,5 +39,5 @@ define(function (require) {
         }
     }
 
-    return HtmlFormCheckboxUI
+    export default HtmlFormCheckboxUI
 })

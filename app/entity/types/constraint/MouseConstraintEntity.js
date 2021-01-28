@@ -1,6 +1,6 @@
 define(function (require) {
 
-    const ConstraintEntity = require('./ConstraintEntity.js')
+    import ConstraintEntity from './ConstraintEntity.js'
 
     /**
      * @class {MouseConstraintEntity}
@@ -15,5 +15,5 @@ define(function (require) {
 
     }
 
-    return MouseConstraintEntity
+    export default MouseConstraintEntity
 })

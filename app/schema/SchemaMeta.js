@@ -1,21 +1,21 @@
 define(function(require){
 
-    const EntityMotion = require('../entity/EntityMotion.js')
-    const Vector = require('../utils/Vector.js')
-    const Size = require('../pobject/Size.js')
-    const Style = require('../pobject/Style.js')
-    const PerlinNoiseConfig = require('../pobject/PerlinNoiseConfig.js')
-    const World = require('../world/World.js')
-    const EntityManager = require('../world/manager/EntityManager.js')
-    const TextureManager = require('../world/manager/TextureManager.js')
-    const Camera = require('../core/Camera.js')
-    const Physics = require('../physics/Physics.js')
-    const TerrainManager = require('../world/terrain/TerrainManager.js')
-    const Terrain = require('../world/terrain/Terrain.js')
-    const EntityProps = require('../pobject/EntityProps.js')
-    const PhysicsProps = require('../pobject/PhysicsProps.js')
-    const Texture = require('../core/Texture.js')
-    const Mesh = require('../core/Mesh.js')
+    import EntityMotion from '../entity/EntityMotion.js'
+    import Vector from '../utils/Vector.js'
+    import Size from '../pobject/Size.js'
+    import Style from '../pobject/Style.js'
+    import PerlinNoiseConfig from '../pobject/PerlinNoiseConfig.js'
+    import World from '../world/World.js'
+    import EntityManager from '../world/manager/EntityManager.js'
+    import TextureManager from '../world/manager/TextureManager.js'
+    import Camera from '../core/Camera.js'
+    import Physics from '../physics/Physics.js'
+    import TerrainManager from '../world/terrain/TerrainManager.js'
+    import Terrain from '../world/terrain/Terrain.js'
+    import EntityProps from '../pobject/EntityProps.js'
+    import PhysicsProps from '../pobject/PhysicsProps.js'
+    import Texture from '../core/Texture.js'
+    import Mesh from '../core/Mesh.js'
 
     /**
      * Define the schema of project data.

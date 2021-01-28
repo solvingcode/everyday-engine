@@ -1,9 +1,9 @@
 define(function (require) {
 
-    const Layout = require('../../Layout.js')
-    const World = require('../../../world/World.js')
-    const FormMenuItem = require('../form/FormMenuItem.js')
-    const TerrainManager = require('../../../world/terrain/TerrainManager.js')
+    import Layout from '../../Layout.js'
+    import World from '../../../world/World.js'
+    import FormMenuItem from '../form/FormMenuItem.js'
+    import TerrainManager from '../../../world/terrain/TerrainManager.js'
 
     /**
      * Form AI Engine properties
@@ -51,6 +51,6 @@ define(function (require) {
         }
     }
 
-    return TerrainFormMenuItem
+    export default TerrainFormMenuItem
 
 })

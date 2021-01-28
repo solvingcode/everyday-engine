@@ -1,6 +1,6 @@
 define(function(require){
 
-    const Data = require('./Data.js')
+    import Data from './Data.js'
 
     /**
      * @class {EntityManagerData}
@@ -27,6 +27,6 @@ define(function(require){
 
     }
 
-    return EntityManagerData
+    export default EntityManagerData
 
 })

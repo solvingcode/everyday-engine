@@ -1,6 +1,6 @@
 define(function (require) {
 
-    const CanvasPanelUI = require('../CanvasPanelUI.js')
+    import CanvasPanelUI from '../CanvasPanelUI.js'
 
     /**
      * Panel ButtonUI.
@@ -27,5 +27,5 @@ define(function (require) {
         }
     }
 
-    return PanelButtonUI
+    export default PanelButtonUI
 })

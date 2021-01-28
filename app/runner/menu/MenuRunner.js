@@ -1,7 +1,7 @@
 define(function (require) {
 
-    const Runner = require('../Runner.js')
-    const Menu = require('../../layout/Menu.js')
+    import Runner from '../Runner.js'
+    import Menu from '../../layout/Menu.js'
     const { MouseButton } = require('../../core/Mouse.js')
 
     /**
@@ -36,5 +36,5 @@ define(function (require) {
 
     MenuRunner.instance = null
 
-    return MenuRunner
+    export default MenuRunner
 })

@@ -65,6 +65,6 @@ define(function () {
 
     }
 
-    return Action
+    export default Action
 
 })

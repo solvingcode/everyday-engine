@@ -64,5 +64,5 @@ define(function () {
         attrId: 'data-hide-entity'
     }
 
-    return HideEntityUI
+    export default HideEntityUI
 })

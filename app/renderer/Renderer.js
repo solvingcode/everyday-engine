@@ -32,5 +32,5 @@ define(function () {
         }
     }
 
-    return Renderer
+    export default Renderer
 })

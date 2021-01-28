@@ -1,7 +1,7 @@
 define(function (require) {
 
-    const MenuItem = require('../../MenuItem.js')
-    const Layout = require('../../Layout.js')
+    import MenuItem from '../../MenuItem.js'
+    import Layout from '../../Layout.js'
 
     class UndoMenuItem extends MenuItem {
         constructor() {
@@ -15,6 +15,6 @@ define(function (require) {
         }
     }
 
-    return UndoMenuItem
+    export default UndoMenuItem
 
 })

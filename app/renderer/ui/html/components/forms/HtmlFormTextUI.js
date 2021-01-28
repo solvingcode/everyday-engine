@@ -1,6 +1,6 @@
 define(function (require) {
 
-    const HtmlFormUI = require('./HtmlFormUI.js')
+    import HtmlFormUI from './HtmlFormUI.js'
 
     class HtmlFormTextUI extends HtmlFormUI {
         /**
@@ -33,5 +33,5 @@ define(function (require) {
         }
     }
 
-    return HtmlFormTextUI
+    export default HtmlFormTextUI
 })

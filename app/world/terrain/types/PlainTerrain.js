@@ -1,7 +1,7 @@
 define(function (require) {
 
-    const Terrain = require('../Terrain.js')
-    const PlatformEntity = require('../../../entity/types/terrain/PlatformEntity.js')
+    import Terrain from '../Terrain.js'
+    import PlatformEntity from '../../../entity/types/terrain/PlatformEntity.js'
 
     /**
      * Manage and generate plain terrains
@@ -15,6 +15,6 @@ define(function (require) {
         }
     }
 
-    return PlainTerrain
+    export default PlainTerrain
 
 })

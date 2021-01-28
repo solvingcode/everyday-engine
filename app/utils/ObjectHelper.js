@@ -17,6 +17,6 @@ define(function(){
 
     }
 
-    return ObjectHelper
+    export default ObjectHelper
 
 })

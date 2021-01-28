@@ -1,10 +1,10 @@
 define(function (require) {
 
-    const MenuItem = require('../../MenuItem.js')
-    const PropsFormMenuItem = require('./PropsFormMenuItem.js')
-    const SizeFormMenuItem = require('./SizeFormMenuItem.js')
-    const PositionFormMenuItem = require('./PositionFormMenuItem.js')
-    const Layout = require('../../Layout.js')
+    import MenuItem from '../../MenuItem.js'
+    import PropsFormMenuItem from './PropsFormMenuItem.js'
+    import SizeFormMenuItem from './SizeFormMenuItem.js'
+    import PositionFormMenuItem from './PositionFormMenuItem.js'
+    import Layout from '../../Layout.js'
 
     /**
      * Entity Menu Item
@@ -26,6 +26,6 @@ define(function (require) {
         }
     }
 
-    return EntityMenuItem
+    export default EntityMenuItem
 
 })

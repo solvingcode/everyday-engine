@@ -1,6 +1,6 @@
 define(function (require) {
 
-    const ItemUI = require('./ItemUI.js')
+    import ItemUI from './ItemUI.js'
 
     class HtmlPanelUI extends ItemUI {
         /**
@@ -51,5 +51,5 @@ define(function (require) {
         className: 'panel panel-static'
     }
 
-    return HtmlPanelUI
+    export default HtmlPanelUI
 })

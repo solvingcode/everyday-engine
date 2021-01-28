@@ -1,23 +1,23 @@
 define(function (require) {
 
-    const World = require('../../world/World.js')
-    const EntityManager = require('../../world/manager/EntityManager.js')
-    const ConstraintEntity = require('../../entity/types/constraint/ConstraintEntity.js')
-    const MouseConstraintEntity = require('../../entity/types/constraint/MouseConstraintEntity.js')
-    const VirtualEntity = require('../../entity/VirtualEntity.js')
-    const NoiseEntity = require('../../entity/types/terrain/NoiseEntity.js')
-    const PlatformEntity = require('../../entity/types/terrain/PlatformEntity.js')
-    const CircleEntity = require('../../entity/types/shape/CircleEntity.js')
-    const RectEntity = require('../../entity/types/shape/RectEntity.js')
-    const Camera = require('../../core/Camera.js')
-    const Physics = require('../../physics/Physics.js')
-    const TerrainManager = require('../../world/terrain/TerrainManager.js')
-    const TextureManager = require('../../world/manager/TextureManager.js')
-    const Terrain = require('../../world/terrain/Terrain.js')
-    const NoiseTerrain = require('../../world/terrain/types/NoiseTerrain.js')
-    const PlainTerrain = require('../../world/terrain/types/PlainTerrain.js')
-    const EntityProps = require('../../pobject/EntityProps.js')
-    const Texture = require('../../core/Texture.js')
+    import World from '../../world/World.js'
+    import EntityManager from '../../world/manager/EntityManager.js'
+    import ConstraintEntity from '../../entity/types/constraint/ConstraintEntity.js'
+    import MouseConstraintEntity from '../../entity/types/constraint/MouseConstraintEntity.js'
+    import VirtualEntity from '../../entity/VirtualEntity.js'
+    import NoiseEntity from '../../entity/types/terrain/NoiseEntity.js'
+    import PlatformEntity from '../../entity/types/terrain/PlatformEntity.js'
+    import CircleEntity from '../../entity/types/shape/CircleEntity.js'
+    import RectEntity from '../../entity/types/shape/RectEntity.js'
+    import Camera from '../../core/Camera.js'
+    import Physics from '../../physics/Physics.js'
+    import TerrainManager from '../../world/terrain/TerrainManager.js'
+    import TextureManager from '../../world/manager/TextureManager.js'
+    import Terrain from '../../world/terrain/Terrain.js'
+    import NoiseTerrain from '../../world/terrain/types/NoiseTerrain.js'
+    import PlainTerrain from '../../world/terrain/types/PlainTerrain.js'
+    import EntityProps from '../../pobject/EntityProps.js'
+    import Texture from '../../core/Texture.js'
 
     /**
      * @class {DataSchema}
@@ -80,5 +80,5 @@ define(function (require) {
 
     }
 
-    return DataSchema
+    export default DataSchema
 })

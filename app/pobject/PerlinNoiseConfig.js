@@ -81,5 +81,5 @@ define(function () {
             return this.smoothness
         }
     }
-    return PerlinNoiseConfig
+    export default PerlinNoiseConfig
 })

@@ -47,5 +47,5 @@ define(function () {
             return this.height
         }
     }
-    return Size
+    export default Size
 })

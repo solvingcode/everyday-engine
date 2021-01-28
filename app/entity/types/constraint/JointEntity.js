@@ -1,8 +1,8 @@
 define(function (require) {
 
-    const EntitySelector = require('../../../world/manager/EntitySelector.js')
-    const AttachEntity = require('./AttachEntity.js')
-    const Vector = require('../../../utils/Vector.js')
+    import EntitySelector from '../../../world/manager/EntitySelector.js'
+    import AttachEntity from './AttachEntity.js'
+    import Vector from '../../../utils/Vector.js'
 
     /**
      * @property {Vector[]} vertices relative positions for entities A & B
@@ -111,5 +111,5 @@ define(function (require) {
 
     }
 
-    return JointEntity
+    export default JointEntity
 })

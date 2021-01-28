@@ -1,7 +1,7 @@
 define(function (require) {
 
-    const ItemUI = require('../ItemUI.js')
-    const EntityUI = require('../components/entity/EntityUI.js')
+    import ItemUI from '../ItemUI.js'
+    import EntityUI from '../components/entity/EntityUI.js'
 
     /**
      * @class {ListElementButtonUI}
@@ -62,5 +62,5 @@ define(function (require) {
         imageHeight: 30
     }
 
-    return ListElementButtonUI
+    export default ListElementButtonUI
 })

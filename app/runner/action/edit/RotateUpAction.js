@@ -1,6 +1,6 @@
 define(function (require) {
 
-    const Action = require('../Action.js')
+    import Action from '../Action.js'
 
     /**
      * Rotate Action
@@ -24,6 +24,6 @@ define(function (require) {
 
     }
 
-    return RotateUpAction
+    export default RotateUpAction
 
 })

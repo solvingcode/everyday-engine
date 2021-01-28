@@ -1,8 +1,8 @@
 define(function (require) {
 
-    const VirtualEntity = require('../../entity/VirtualEntity.js')
-    const TerrainData = require('../../project/data/TerrainData.js')
-    const ObjectHelper = require('../../utils/ObjectHelper.js')
+    import VirtualEntity from '../../entity/VirtualEntity.js'
+    import TerrainData from '../../project/data/TerrainData.js'
+    import ObjectHelper from '../../utils/ObjectHelper.js'
 
     /**
      * Terrain class
@@ -169,6 +169,6 @@ define(function (require) {
         }
     }
 
-    return Terrain
+    export default Terrain
 
 })

@@ -1,9 +1,9 @@
 define(function (require) {
 
-    const Runner = require('../Runner.js')
-    const StateManager = require('../../state/StateManager.js')
-    const World = require('../../world/World.js')
-    const Storage = require('../../core/Storage.js')
+    import Runner from '../Runner.js'
+    import StateManager from '../../state/StateManager.js'
+    import World from '../../world/World.js'
+    import Storage from '../../core/Storage.js'
 
     class SimulateRunner extends Runner {
 
@@ -92,5 +92,5 @@ define(function (require) {
         }
     }
 
-    return SimulateRunner
+    export default SimulateRunner
 })

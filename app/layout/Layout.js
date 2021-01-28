@@ -35,6 +35,6 @@ define(function () {
         FILE: 'file'
     }
 
-    return Layout
+    export default Layout
 
 })

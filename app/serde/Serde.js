@@ -26,6 +26,6 @@ define(function () {
 
     }
 
-    return SerDe
+    export default SerDe
 
 })

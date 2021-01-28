@@ -1,8 +1,8 @@
 define(function(require) {
     const expect = chai.expect
-    const Size = require('/app/pobject/Size.js')
-    const Schema = require('/app/schema/Schema.js')
-    const CircleEntity = require('/app/entity/types/shape/CircleEntity.js')
+    import Size from '/app/pobject/Size.js'
+    import Schema from '/app/schema/Schema.js'
+    import CircleEntity from '/app/entity/types/shape/CircleEntity.js'
     describe('Schema', function () {
         it('Should validate Entity Size', async function () {
             const data = {width: 100, height: 200}

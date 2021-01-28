@@ -1,9 +1,9 @@
 define(function (require) {
 
-    const AttachEntityUI = require('./AttachEntityUI.js')
-    const HideEntityUI = require('./HideEntityUI.js')
-    const LockEntityUI = require('./LockEntityUI.js')
-    const ImageUI = require('../image/ImageUI.js')
+    import AttachEntityUI from './AttachEntityUI.js'
+    import HideEntityUI from './HideEntityUI.js'
+    import LockEntityUI from './LockEntityUI.js'
+    import ImageUI from '../image/ImageUI.js'
 
     /**
      * EntityUI class
@@ -33,5 +33,5 @@ define(function (require) {
 
     }
 
-    return EntityUI
+    export default EntityUI
 })

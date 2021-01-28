@@ -1,7 +1,7 @@
 define(function (require) {
 
-    const NoiseFormMenuItem = require('../../entity/NoiseFormMenuItem.js')
-    const World = require('../../../../world/World.js')
+    import NoiseFormMenuItem from '../../entity/NoiseFormMenuItem.js'
+    import World from '../../../../world/World.js'
 
     /**
      * Terrain's noise configs form
@@ -16,6 +16,6 @@ define(function (require) {
         }
     }
 
-    return TypeNoiseFormMenuItem
+    export default TypeNoiseFormMenuItem
 
 })

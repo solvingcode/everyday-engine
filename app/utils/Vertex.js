@@ -1,6 +1,6 @@
 define(function (require) {
 
-    const Vector = require('./Vector.js')
+    import Vector from './Vector.js'
 
     /**
      * Define methods to manipulate vertices
@@ -87,5 +87,5 @@ define(function (require) {
         }
     }
 
-    return Vertex
+    export default Vertex
 })

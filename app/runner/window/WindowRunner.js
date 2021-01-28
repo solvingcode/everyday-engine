@@ -1,10 +1,10 @@
 define(function (require) {
 
-    const EntitySelector = require('../../world/manager/EntitySelector.js')
-    const Runner = require('../Runner.js')
-    const StateManager = require('../../state/StateManager.js')
+    import EntitySelector from '../../world/manager/EntitySelector.js'
+    import Runner from '../Runner.js'
+    import StateManager from '../../state/StateManager.js'
     const { CURSOR } = require('../../core/Mouse.js')
-    const World = require('../../world/World.js')
+    import World from '../../world/World.js'
 
     class WindowRunner extends Runner {
 
@@ -65,5 +65,5 @@ define(function (require) {
 
     WindowRunner.instance = null
 
-    return WindowRunner
+    export default WindowRunner
 })

@@ -1,35 +1,35 @@
 define(function (require) {
 
-    const Runner = require('../Runner.js')
-    const World = require('../../world/World.js')
-    const StateManager = require('../../state/StateManager.js')
-    const EntitySelector = require('../../world/manager/EntitySelector.js')
-    const DeleteAction = require('./edit/DeleteAction.js')
-    const DuplicateAction = require('./edit/DuplicateAction.js')
-    const UndoAction = require('./edit/UndoAction.js')
-    const MoveAction = require('./edit/MoveAction.js')
-    const MoveUpAction = require('./edit/MoveUpAction.js')
-    const MoveDownAction = require('./edit/MoveDownAction.js')
-    const LockAction = require('./edit/LockAction.js')
-    const UnlockAction = require('./edit/UnlockAction.js')
-    const HideAction = require('./edit/HideAction.js')
-    const ShowAction = require('./edit/ShowAction.js')
-    const RotateUpAction = require('./edit/RotateUpAction.js')
-    const StyleColorAction = require('./edit/StyleColorAction.js')
-    const SelectEntityAction = require('./edit/SelectEntityAction.js')
-    const SelectElementAction = require('./edit/SelectElementAction.js')
-    const PushHistoryAction = require('./history/PushHistoryAction.js')
-    const AttachCameraAction = require('./camera/AttachCameraAction.js')
-    const DetachCameraAction = require('./camera/DetachCameraAction.js')
-    const MoveCameraAction = require('./camera/MoveCameraAction.js')
-    const SaveProjectAction = require('./project/SaveProjectAction.js')
-    const LoadProjectAction = require('./project/LoadProjectAction.js')
-    const ExportProjectAction = require('./project/ExportProjectAction.js')
-    const NewProjectAction = require('./project/NewProjectAction.js')
-    const ZoomInOutCameraAction = require('./camera/ZoomInOutCameraAction.js')
-    const PhysicsStaticAction = require('./physics/PhysicsStaticAction.js')
-    const PhysicsNotStaticAction = require('./physics/PhysicsNotStaticAction.js')
-    const FormUpdateAction = require('./form/FormUpdateAction.js')
+    import Runner from '../Runner.js'
+    import World from '../../world/World.js'
+    import StateManager from '../../state/StateManager.js'
+    import EntitySelector from '../../world/manager/EntitySelector.js'
+    import DeleteAction from './edit/DeleteAction.js'
+    import DuplicateAction from './edit/DuplicateAction.js'
+    import UndoAction from './edit/UndoAction.js'
+    import MoveAction from './edit/MoveAction.js'
+    import MoveUpAction from './edit/MoveUpAction.js'
+    import MoveDownAction from './edit/MoveDownAction.js'
+    import LockAction from './edit/LockAction.js'
+    import UnlockAction from './edit/UnlockAction.js'
+    import HideAction from './edit/HideAction.js'
+    import ShowAction from './edit/ShowAction.js'
+    import RotateUpAction from './edit/RotateUpAction.js'
+    import StyleColorAction from './edit/StyleColorAction.js'
+    import SelectEntityAction from './edit/SelectEntityAction.js'
+    import SelectElementAction from './edit/SelectElementAction.js'
+    import PushHistoryAction from './history/PushHistoryAction.js'
+    import AttachCameraAction from './camera/AttachCameraAction.js'
+    import DetachCameraAction from './camera/DetachCameraAction.js'
+    import MoveCameraAction from './camera/MoveCameraAction.js'
+    import SaveProjectAction from './project/SaveProjectAction.js'
+    import LoadProjectAction from './project/LoadProjectAction.js'
+    import ExportProjectAction from './project/ExportProjectAction.js'
+    import NewProjectAction from './project/NewProjectAction.js'
+    import ZoomInOutCameraAction from './camera/ZoomInOutCameraAction.js'
+    import PhysicsStaticAction from './physics/PhysicsStaticAction.js'
+    import PhysicsNotStaticAction from './physics/PhysicsNotStaticAction.js'
+    import FormUpdateAction from './form/FormUpdateAction.js'
 
     /**
      * Action Runner class.
@@ -133,5 +133,5 @@ define(function (require) {
 
     ActionRunner.instance = null
 
-    return ActionRunner
+    export default ActionRunner
 })

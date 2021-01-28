@@ -1,6 +1,6 @@
 define(function (require) {
 
-    const Action = require('../Action.js')
+    import Action from '../Action.js'
 
     /**
      * Physics Static action
@@ -18,6 +18,6 @@ define(function (require) {
 
     }
 
-    return PhysicsStaticAction
+    export default PhysicsStaticAction
 
 })

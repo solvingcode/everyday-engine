@@ -1,8 +1,8 @@
 define(function (require) {
 
-    const PhysicsData = require('../project/data/PhysicsData.js')
-    const MatterEngine = require('../physics/engine/matter/Engine.js')
-    const PhysicError = require('../exception/type/PhysicError.js')
+    import PhysicsData from '../project/data/PhysicsData.js'
+    import Engine from '../physics/engine/matter/Engine.js'
+    import PhysicError from '../exception/type/PhysicError.js'
 
     class Physics extends PhysicsData {
 
@@ -231,5 +231,5 @@ define(function (require) {
 
     }
 
-    return Physics
+    export default Physics
 })

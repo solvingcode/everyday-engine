@@ -92,5 +92,5 @@ define(function () {
             return { x: vector.x / value, y: vector.y / value, z: vector.z / value }
         }
     }
-    return Vector
+    export default Vector
 })

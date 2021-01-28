@@ -1,7 +1,7 @@
 define(function (require) {
 
-    const MenuItem = require('../../MenuItem.js')
-    const Layout = require('../../Layout.js')
+    import MenuItem from '../../MenuItem.js'
+    import Layout from '../../Layout.js'
 
     /**
      * Show selected entities
@@ -18,6 +18,6 @@ define(function (require) {
         }
     }
 
-    return ShowMenuItem
+    export default ShowMenuItem
 
 })

@@ -1,6 +1,6 @@
 define(function(require){
 
-    const Data = require('./Data.js')
+    import Data from './Data.js'
 
     /**
      * @class {CameraData}
@@ -83,6 +83,6 @@ define(function(require){
 
     }
 
-    return CameraData
+    export default CameraData
 
 })

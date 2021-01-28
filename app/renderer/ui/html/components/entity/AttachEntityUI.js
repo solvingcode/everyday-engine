@@ -1,7 +1,7 @@
 define(function (require) {
 
-    const Color = require('../../../../../utils/Color.js')
-    const World = require('../../../../../world/World.js')
+    import Color from '../../../../../utils/Color.js'
+    import World from '../../../../../world/World.js'
 
     /**
      * AttachEntityUI class
@@ -76,5 +76,5 @@ define(function (require) {
         attrId: 'data-attach-entity'
     }
 
-    return AttachEntityUI
+    export default AttachEntityUI
 })

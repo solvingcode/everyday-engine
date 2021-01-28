@@ -1,6 +1,6 @@
 define(function (require) {
 
-    const ItemUI = require('./ItemUI.js')
+    import ItemUI from './ItemUI.js'
 
     class HtmlTextUI extends ItemUI {
         /**
@@ -43,5 +43,5 @@ define(function (require) {
         className: 'text'
     }
 
-    return HtmlTextUI
+    export default HtmlTextUI
 })

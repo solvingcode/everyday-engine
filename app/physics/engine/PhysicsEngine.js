@@ -201,5 +201,5 @@ define(function () {
 
     }
 
-    return PhysicsEngine
+    export default PhysicsEngine
 })

@@ -1,11 +1,11 @@
 define(function (require) {
 
-    const ItemUI = require('../ItemUI.js')
-    const Layout = require('../../../../layout/Layout.js')
-    const HtmlFormCheckboxUI = require('../components/forms/HtmlFormCheckboxUI.js')
-    const HtmlFormTextUI = require('../components/forms/HtmlFormTextUI.js')
-    const HtmlFormDropdownUI = require('../components/forms/HtmlFormDropdownUI.js')
-    const HtmlFormFileUI = require('../components/forms/HtmlFormFileUI.js')
+    import ItemUI from '../ItemUI.js'
+    import Layout from '../../../../layout/Layout.js'
+    import HtmlFormCheckboxUI from '../components/forms/HtmlFormCheckboxUI.js'
+    import HtmlFormTextUI from '../components/forms/HtmlFormTextUI.js'
+    import HtmlFormDropdownUI from '../components/forms/HtmlFormDropdownUI.js'
+    import HtmlFormFileUI from '../components/forms/HtmlFormFileUI.js'
 
     class HtmlFormElementUI extends ItemUI {
         /**
@@ -15,15 +15,15 @@ define(function (require) {
         static getType(item) {
             const { field } = item.element
             if (field === Layout.form.CHECKBOX) {
-                return HtmlFormCheckboxUI
+                export default HtmlFormCheckboxUI
             } else if (field === Layout.form.TEXT) {
-                return HtmlFormTextUI
+                export default HtmlFormTextUI
             } else if (field === Layout.form.DROPDOWN) {
-                return HtmlFormDropdownUI
+                export default HtmlFormDropdownUI
             } else if (field === Layout.form.FILE) {
-                return HtmlFormFileUI
+                export default HtmlFormFileUI
             }
         }
     }
-    return HtmlFormElementUI
+    export default HtmlFormElementUI
 })

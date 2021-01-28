@@ -1,7 +1,7 @@
 define(function (require) {
 
-    const CameraData = require('../project/data/CameraData.js')
-    const Vector = require('../utils/Vector.js')
+    import CameraData from '../project/data/CameraData.js'
+    import Vector from '../utils/Vector.js'
 
     /**
      * @class {Camera}
@@ -86,5 +86,5 @@ define(function (require) {
         }
     }
 
-    return Camera
+    export default Camera
 })

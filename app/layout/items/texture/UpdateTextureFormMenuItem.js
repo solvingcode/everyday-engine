@@ -1,8 +1,8 @@
 define(function (require) {
 
-    const FormMenuItem = require('../form/FormMenuItem.js')
-    const Layout = require('../../Layout.js')
-    const World = require('../../../world/World.js')
+    import FormMenuItem from '../form/FormMenuItem.js'
+    import Layout from '../../Layout.js'
+    import World from '../../../world/World.js'
 
     /**
      * @class {UpdateTextureFormMenuItem}
@@ -39,6 +39,6 @@ define(function (require) {
         }
     }
 
-    return UpdateTextureFormMenuItem
+    export default UpdateTextureFormMenuItem
 
 })

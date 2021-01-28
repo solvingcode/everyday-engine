@@ -1,9 +1,9 @@
 define(function (require) {
 
-    const Action = require('../Action.js')
-    const StateManager = require('../../../state/StateManager.js')
-    const EntitySelector = require('../../../world/manager/EntitySelector.js')
-    const World = require('../../../world/World.js')
+    import Action from '../Action.js'
+    import StateManager from '../../../state/StateManager.js'
+    import EntitySelector from '../../../world/manager/EntitySelector.js'
+    import World from '../../../world/World.js'
 
     /**
      * @class {SelectEntityAction}
@@ -29,6 +29,6 @@ define(function (require) {
 
     }
 
-    return SelectEntityAction
+    export default SelectEntityAction
 
 })

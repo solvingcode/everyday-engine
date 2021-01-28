@@ -47,6 +47,6 @@ define(function(){
 
     }
 
-    return ClassHelper
+    export default ClassHelper
 
 })

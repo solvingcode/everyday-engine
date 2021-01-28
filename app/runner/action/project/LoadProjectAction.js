@@ -1,8 +1,8 @@
 define(function (require) {
 
-    const Action = require('../Action.js')
-    const Project = require('../../../project/Project.js')
-    const StateManager = require('../../../state/StateManager.js')
+    import Action from '../Action.js'
+    import Project from '../../../project/Project.js'
+    import StateManager from '../../../state/StateManager.js'
 
     class LoadProjectAction extends Action {
 
@@ -44,6 +44,6 @@ define(function (require) {
 
     }
 
-    return LoadProjectAction
+    export default LoadProjectAction
 
 })

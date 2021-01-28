@@ -1,9 +1,9 @@
 define(function (require) {
 
-    const Action = require('../Action.js')
-    const History = require('../../../core/History.js')
-    const World = require('../../../world/World.js')
-    const Storage = require('../../../core/Storage.js')
+    import Action from '../Action.js'
+    import History from '../../../core/History.js'
+    import World from '../../../world/World.js'
+    import Storage from '../../../core/Storage.js'
 
     class PushHistoryAction extends Action {
 
@@ -17,6 +17,6 @@ define(function (require) {
 
     }
 
-    return PushHistoryAction
+    export default PushHistoryAction
 
 })

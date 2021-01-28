@@ -1,8 +1,8 @@
 define(function (require) {
 
-    const Loop = require('./Loop.js')
-    const ObjectRenderer = require('../renderer/ObjectRenderer.js')
-    const World = require('../world/World.js')
+    import Loop from './Loop.js'
+    import ObjectRenderer from '../renderer/ObjectRenderer.js'
+    import World from '../world/World.js'
 
     /**
      * @class {Scene}
@@ -33,6 +33,6 @@ define(function (require) {
 
     }
 
-    return Scene
+    export default Scene
 
 })

@@ -1,14 +1,14 @@
 define(function (require) {
 
-    const StateManager = require('../../state/StateManager.js')
-    const Runner = require('../Runner.js')
+    import StateManager from '../../state/StateManager.js'
+    import Runner from '../Runner.js'
     const {MouseButton} = require('../../core/Mouse.js')
-    const CircleEntity = require('../../entity/types/shape/CircleEntity.js')
-    const RectEntity = require('../../entity/types/shape/RectEntity.js')
-    const JointEntity = require('../../entity/types/constraint/JointEntity.js')
-    const AttachPointEntity = require('../../entity/types/constraint/AttachPointEntity.js')
-    const SelectorEntity = require('../../entity/types/edit/SelectorEntity.js')
-    const World = require('../../world/World.js')
+    import CircleEntity from '../../entity/types/shape/CircleEntity.js'
+    import RectEntity from '../../entity/types/shape/RectEntity.js'
+    import JointEntity from '../../entity/types/constraint/JointEntity.js'
+    import AttachPointEntity from '../../entity/types/constraint/AttachPointEntity.js'
+    import SelectorEntity from '../../entity/types/edit/SelectorEntity.js'
+    import World from '../../world/World.js'
 
     /**
      * Draw Runner class
@@ -143,5 +143,5 @@ define(function (require) {
 
     DrawerRunner.instance = null
 
-    return DrawerRunner
+    export default DrawerRunner
 })

@@ -1,8 +1,8 @@
 define(function (require) {
 
-    const Runner = require('../Runner.js')
+    import Runner from '../Runner.js'
     const {MouseButton} = require('../../core/Mouse.js')
-    const World = require('../../world/World.js')
+    import World from '../../world/World.js'
 
     /**
      * Manage all the entity constraints (mouse constraint, ...)
@@ -80,5 +80,5 @@ define(function (require) {
 
     ConstraintRunner.instance = null
 
-    return ConstraintRunner
+    export default ConstraintRunner
 })

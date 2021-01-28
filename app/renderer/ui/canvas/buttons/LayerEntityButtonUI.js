@@ -1,6 +1,6 @@
 define(function (require) {
 
-    const PanelButtonUI = require('./PanelButtonUI.js')
+    import PanelButtonUI from './PanelButtonUI.js'
 
     /**
      * LayerEntityButtonUI class
@@ -56,5 +56,5 @@ define(function (require) {
         textSize: 16
     }
 
-    return LayerEntityButtonUI
+    export default LayerEntityButtonUI
 })

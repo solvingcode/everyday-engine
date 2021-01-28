@@ -1,7 +1,7 @@
 define(function (require) {
 
-    const Schema = require('../schema/Schema.js')
-    const SerDe = require('./Serde.js')
+    import Schema from '../schema/Schema.js'
+    import Serde from './Serde.js'
 
     /**
      * @class {JsSerDe}
@@ -74,6 +74,6 @@ define(function (require) {
 
     }
 
-    return JsSerDe
+    export default JsSerDe
 
 })

@@ -1,36 +1,36 @@
 define(function (require) {
 
-    const CircleMenuItem = require('./items/draw/CircleMenuItem.js')
-    const RectMenuItem = require('./items/draw/RectMenuItem.js')
-    const JointMenuItem = require('./items/draw/JointMenuItem.js')
-    const AttachPointMenuItem = require('./items/draw/AttachPointMenuItem.js')
-    const SelectorMenuItem = require('./items/draw/SelectorMenuItem.js')
-    const NewDocMenuItem = require('./items/project/NewProjectMenuItem.js')
-    const SaveProjectMenuItem = require('./items/project/SaveProjectMenuItem.js')
-    const LoadProjectMenuItem = require('./items/project/LoadProjectMenuItem.js')
-    const ExportProjectMenuItem = require('./items/project/ExportProjectMenuItem.js')
-    const SimulateStartMenuItem = require('./items/action/SimulateStartMenuItem.js')
-    const SimulateStopMenuItem = require('./items/action/SimulateStopMenuItem.js')
-    const DeleteMenuItem = require('./items/action/DeleteMenuItem.js')
-    const DuplicateMenuItem = require('./items/action/DuplicateMenuItem.js')
-    const UndoMenuItem = require('./items/action/UndoMenuItem.js')
-    const MoveUpMenuItem = require('./items/action/MoveUpMenuItem.js')
-    const MoveDownMenuItem = require('./items/action/MoveDownMenuItem.js')
-    const LockMenuItem = require('./items/action/LockMenuItem.js')
-    const UnlockMenuItem = require('./items/action/UnlockMenuItem.js')
-    const HideMenuItem = require('./items/action/HideMenuItem.js')
-    const ShowMenuItem = require('./items/action/ShowMenuItem.js')
-    const RotateUpMenuItem = require('./items/action/RotateUpMenuItem.js')
-    const MenuItemUI = require('../renderer/ui/MenuItemUI.js')
-    const LayerMenuItem = require('./items/entity/LayerMenuItem.js')
-    const AiGeneticMenuItem = require('./items/genetic/AiGeneticMenuItem.js')
-    const EntityMenuItem = require('./items/entity/EntityMenuItem.js')
-    const StyleMenuItem = require('./items/style/StyleMenuItem.js')
-    const ConditionMenuItem = require('./items/condition/ConditionMenuItem.js')
-    const AppMenuItem = require('./items/app/AppMenuItem.js')
-    const TerrainMenuItem = require('./items/terrain/TerrainMenuItem.js')
-    const CameraMenuItem = require('./items/camera/CameraMenuItem.js')
-    const TextureMenuItem = require('./items/texture/TextureMenuItem.js')
+    import CircleMenuItem from './items/draw/CircleMenuItem.js'
+    import RectMenuItem from './items/draw/RectMenuItem.js'
+    import JointMenuItem from './items/draw/JointMenuItem.js'
+    import AttachPointMenuItem from './items/draw/AttachPointMenuItem.js'
+    import SelectorMenuItem from './items/draw/SelectorMenuItem.js'
+    import NewProjectMenuItem from './items/project/NewProjectMenuItem.js'
+    import SaveProjectMenuItem from './items/project/SaveProjectMenuItem.js'
+    import LoadProjectMenuItem from './items/project/LoadProjectMenuItem.js'
+    import ExportProjectMenuItem from './items/project/ExportProjectMenuItem.js'
+    import SimulateStartMenuItem from './items/action/SimulateStartMenuItem.js'
+    import SimulateStopMenuItem from './items/action/SimulateStopMenuItem.js'
+    import DeleteMenuItem from './items/action/DeleteMenuItem.js'
+    import DuplicateMenuItem from './items/action/DuplicateMenuItem.js'
+    import UndoMenuItem from './items/action/UndoMenuItem.js'
+    import MoveUpMenuItem from './items/action/MoveUpMenuItem.js'
+    import MoveDownMenuItem from './items/action/MoveDownMenuItem.js'
+    import LockMenuItem from './items/action/LockMenuItem.js'
+    import UnlockMenuItem from './items/action/UnlockMenuItem.js'
+    import HideMenuItem from './items/action/HideMenuItem.js'
+    import ShowMenuItem from './items/action/ShowMenuItem.js'
+    import RotateUpMenuItem from './items/action/RotateUpMenuItem.js'
+    import MenuItemUI from '../renderer/ui/MenuItemUI.js'
+    import LayerMenuItem from './items/entity/LayerMenuItem.js'
+    import AiGeneticMenuItem from './items/genetic/AiGeneticMenuItem.js'
+    import EntityMenuItem from './items/entity/EntityMenuItem.js'
+    import StyleMenuItem from './items/style/StyleMenuItem.js'
+    import ConditionMenuItem from './items/condition/ConditionMenuItem.js'
+    import AppMenuItem from './items/app/AppMenuItem.js'
+    import TerrainMenuItem from './items/terrain/TerrainMenuItem.js'
+    import CameraMenuItem from './items/camera/CameraMenuItem.js'
+    import TextureMenuItem from './items/texture/TextureMenuItem.js'
 
     /**
      * Define all menu items
@@ -203,6 +203,6 @@ define(function (require) {
 
     Menu.instance = null
 
-    return Menu
+    export default Menu
 
 })

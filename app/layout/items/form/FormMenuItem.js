@@ -1,12 +1,12 @@
 define(function (require) {
 
-    const MenuItem = require('../../MenuItem.js')
-    const Layout = require('../../Layout.js')
-    const FileMenuItem = require('./FileMenuItem.js')
-    const TextMenuItem = require('./TextMenuItem.js')
-    const CheckboxMenuItem = require('./CheckboxMenuItem.js')
-    const DropdownMenuItem = require('./DropdownMenuItem.js')
-    const Maths = require('../../../utils/Maths.js')
+    import MenuItem from '../../MenuItem.js'
+    import Layout from '../../Layout.js'
+    import FileMenuItem from './FileMenuItem.js'
+    import TextMenuItem from './TextMenuItem.js'
+    import CheckboxMenuItem from './CheckboxMenuItem.js'
+    import DropdownMenuItem from './DropdownMenuItem.js'
+    import Maths from '../../../utils/Maths.js'
 
     /**
      * Form menu item
@@ -188,13 +188,13 @@ define(function (require) {
         getMenuItem(field) {
             switch (field.type) {
                 case Layout.form.FILE:
-                    return FileMenuItem
+                    export default FileMenuItem
                 case Layout.form.TEXT:
-                    return TextMenuItem
+                    export default TextMenuItem
                 case Layout.form.CHECKBOX:
-                    return CheckboxMenuItem
+                    export default CheckboxMenuItem
                 case Layout.form.DROPDOWN:
-                    return DropdownMenuItem
+                    export default DropdownMenuItem
                 default:
                     return null
             }
@@ -205,6 +205,6 @@ define(function (require) {
      * @typedef {{bind: string, label: string, type: string, list?: { value: string|number, label: string }[]}} FormField
      */
 
-    return FormMenuItem
+    export default FormMenuItem
 
 })

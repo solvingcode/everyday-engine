@@ -1,6 +1,6 @@
 define(function(require){
 
-    const Data = require('./Data.js')
+    import Data from './Data.js'
 
     /**
      * @abstract
@@ -56,6 +56,6 @@ define(function(require){
 
     }
 
-    return TextureData
+    export default TextureData
 
 })

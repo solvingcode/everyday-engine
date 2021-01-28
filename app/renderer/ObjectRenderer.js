@@ -1,7 +1,7 @@
 define(function (require) {
 
-    const Renderer = require('./Renderer.js')
-    const Vector = require('../utils/Vector.js')
+    import Renderer from './Renderer.js'
+    import Vector from '../utils/Vector.js'
 
     /**
      * ObjectRenderer class
@@ -69,5 +69,5 @@ define(function (require) {
         }
     }
 
-    return ObjectRenderer
+    export default ObjectRenderer
 })

@@ -1,6 +1,6 @@
 define(function (require) {
 
-    const Maths = require('../utils/Maths.js')
+    import Maths from '../utils/Maths.js'
 
     /**
      * AIEngine class
@@ -49,6 +49,6 @@ define(function (require) {
         }
     }
 
-    return AiEngine
+    export default AiEngine
 
 })

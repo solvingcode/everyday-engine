@@ -1,8 +1,8 @@
 define(function (require) {
 
-    const JointEntity = require('./JointEntity.js')
-    const Color = require('../../../utils/Color.js')
-    const Vector = require('../../../utils/Vector.js')
+    import JointEntity from './JointEntity.js'
+    import Color from '../../../utils/Color.js'
+    import Vector from '../../../utils/Vector.js'
 
     /**
      * Define an entity which represent a physics constraint (mouse constraint, ...)
@@ -35,5 +35,5 @@ define(function (require) {
 
     }
 
-    return ConstraintEntity
+    export default ConstraintEntity
 })

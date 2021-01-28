@@ -1,6 +1,6 @@
 define(function (require) {
 
-    const Shape = require('../../Shape.js')
+    import Shape from '../../Shape.js'
 
     /**
      * Circle Shape class
@@ -23,5 +23,5 @@ define(function (require) {
 
     }
 
-    return CircleShape
+    export default CircleShape
 })

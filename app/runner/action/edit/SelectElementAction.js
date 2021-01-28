@@ -1,7 +1,7 @@
 define(function (require) {
 
-    const Action = require('../Action.js')
-    const StateManager = require('../../../state/StateManager.js')
+    import Action from '../Action.js'
+    import StateManager from '../../../state/StateManager.js'
 
     /**
      * @class {SelectElementAction}
@@ -26,6 +26,6 @@ define(function (require) {
 
     }
 
-    return SelectElementAction
+    export default SelectElementAction
 
 })

@@ -32,6 +32,6 @@ define(function(){
 
     }
 
-    return ImageHelper
+    export default ImageHelper
 
 })

@@ -1,6 +1,6 @@
 define(function (require) {
 
-    const AppState = require('./AppState.js')
+    import AppState from './AppState.js'
 
     /**
      * Manage the state of the application
@@ -384,5 +384,5 @@ define(function (require) {
         }
     }
 
-    return StateManager
+    export default StateManager
 })

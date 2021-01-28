@@ -1,17 +1,17 @@
 define(function (require) {
 
-    const UIRenderer = require('../UIRenderer.js')
-    const DefaultButtonUI = require('./buttons/DefaultButtonUI.js')
-    const IconButtonUI = require('./buttons/IconButtonUI.js')
-    const ColorButtonUI = require('./buttons/ColorButtonUI.js')
-    const LayerEntityButtonUI = require('./buttons/LayerEntityButtonUI.js')
-    const ListElementButtonUI = require('./buttons/ListElementButtonUI.js')
-    const HtmlPanelUI = require('./HtmlPanelUI.js')
-    const HtmlTextUI = require('./HtmlTextUI.js')
-    const HtmlGraphUI = require('./HtmlGraphUI.js')
-    const HtmlFormUI = require('./forms/HtmlFormUI.js')
-    const HtmlFormElementUI = require('./forms/HtmlFormElementUI.js')
-    const Menu = require('../../../layout/Menu.js')
+    import UIRenderer from '../UIRenderer.js'
+    import DefaultButtonUI from './buttons/DefaultButtonUI.js'
+    import IconButtonUI from './buttons/IconButtonUI.js'
+    import ColorButtonUI from './buttons/ColorButtonUI.js'
+    import LayerEntityButtonUI from './buttons/LayerEntityButtonUI.js'
+    import ListElementButtonUI from './buttons/ListElementButtonUI.js'
+    import HtmlPanelUI from './HtmlPanelUI.js'
+    import HtmlTextUI from './HtmlTextUI.js'
+    import HtmlGraphUI from './HtmlGraphUI.js'
+    import HtmlFormUI from './forms/HtmlFormUI.js'
+    import HtmlFormElementUI from './forms/HtmlFormElementUI.js'
+    import Menu from '../../../layout/Menu.js'
 
     /**
      * HTML UI Renderer class
@@ -29,70 +29,70 @@ define(function (require) {
          * @override
          */
         getDefaultButtonUI() {
-            return DefaultButtonUI
+            export default DefaultButtonUI
         }
 
         /**
          * @override
          */
         getIconButtonUI() {
-            return IconButtonUI
+            export default IconButtonUI
         }
 
         /**
          * @override
          */
         getPanelUI() {
-            return HtmlPanelUI
+            export default HtmlPanelUI
         }
 
         /**
          * @override
          */
         getTextUI() {
-            return HtmlTextUI
+            export default HtmlTextUI
         }
 
         /**
          * @override
          */
         getGraphUI() {
-            return HtmlGraphUI
+            export default HtmlGraphUI
         }
 
         /**
          * @override
          */
         getFormUI() {
-            return HtmlFormUI
+            export default HtmlFormUI
         }
 
         /**
          * @override
          */
         getFormElementUI() {
-            return HtmlFormElementUI
+            export default HtmlFormElementUI
         }
 
         /**
          * @override
          */
         getColorButtonUI() {
-            return ColorButtonUI
+            export default ColorButtonUI
         }
 
         /**
          * @override
          */
         getLayerEntityButtonUI() {
-            return LayerEntityButtonUI
+            export default LayerEntityButtonUI
         }
 
         /**
          * @override
          */
         getListElementUI() {
-            return ListElementButtonUI
+            export default ListElementButtonUI
         }
 
         /**
@@ -248,5 +248,5 @@ define(function (require) {
 
     }
 
-    return HtmlUIRenderer
+    export default HtmlUIRenderer
 })

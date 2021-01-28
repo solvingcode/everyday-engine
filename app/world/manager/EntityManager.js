@@ -1,11 +1,11 @@
 define(function (require) {
 
-    const EntityGenerator = require('../generator/EntityGenerator.js')
-    const Entity = require('../../entity/Entity.js')
-    const AttachEntity = require('../../entity/types/constraint/AttachEntity.js')
-    const VirtualEntity = require('../../entity/VirtualEntity.js')
-    const Maths = require('../../utils/Maths.js')
-    const EntityManagerData = require('../../project/data/EntityManagerData.js')
+    import EntityGenerator from '../generator/EntityGenerator.js'
+    import Entity from '../../entity/Entity.js'
+    import AttachEntity from '../../entity/types/constraint/AttachEntity.js'
+    import VirtualEntity from '../../entity/VirtualEntity.js'
+    import Maths from '../../utils/Maths.js'
+    import EntityManagerData from '../../project/data/EntityManagerData.js'
 
     /**
      * Entity Manager class
@@ -481,5 +481,5 @@ define(function (require) {
 
     }
 
-    return EntityManager
+    export default EntityManager
 })

@@ -1,7 +1,7 @@
 define(function (require) {
 
-    const ItemUI = require('../ItemUI.js')
-    const EntityUI = require('../components/entity/EntityUI.js')
+    import ItemUI from '../ItemUI.js'
+    import EntityUI from '../components/entity/EntityUI.js'
 
     class LayerEntityButtonUI extends ItemUI {
         /**
@@ -60,5 +60,5 @@ define(function (require) {
         entityHeight: 30
     }
 
-    return LayerEntityButtonUI
+    export default LayerEntityButtonUI
 })

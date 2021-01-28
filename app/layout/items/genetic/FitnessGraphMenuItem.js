@@ -1,8 +1,8 @@
 define(function (require) {
 
-    const MenuItem = require('../../MenuItem.js')
-    const Layout = require('../../Layout.js')
-    const GeneticEngine = require('../../../ai/genetic/GeneticEngine.js')
+    import MenuItem from '../../MenuItem.js'
+    import Layout from '../../Layout.js'
+    import GeneticEngine from '../../../ai/genetic/GeneticEngine.js'
 
     /**
      * FitnessGraphMenuItem class
@@ -85,6 +85,6 @@ define(function (require) {
         }
     }
 
-    return FitnessGraphMenuItem
+    export default FitnessGraphMenuItem
 
 })

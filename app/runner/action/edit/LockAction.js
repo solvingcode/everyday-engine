@@ -1,8 +1,8 @@
 define(function (require) {
 
-    const Action = require('../Action.js')
-    const World = require('../../../world/World.js')
-    const AttachEntity = require('../../../entity/types/constraint/AttachEntity.js')
+    import Action from '../Action.js'
+    import World from '../../../world/World.js'
+    import AttachEntity from '../../../entity/types/constraint/AttachEntity.js'
 
     class LockAction extends Action {
 
@@ -18,6 +18,6 @@ define(function (require) {
 
     }
 
-    return LockAction
+    export default LockAction
 
 })

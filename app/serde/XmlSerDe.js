@@ -1,6 +1,6 @@
 define(function (require) {
 
-    const SerDe = require('./Serde.js')
+    import Serde from './Serde.js'
 
     /**
      * @class {XmlSerDe}
@@ -95,6 +95,6 @@ define(function (require) {
 
     }
 
-    return XmlSerDe
+    export default XmlSerDe
 
 })

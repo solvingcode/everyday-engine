@@ -1,12 +1,12 @@
 define(function (require) {
 
-    const Runner = require('../Runner.js')
-    const StateManager = require('../../state/StateManager.js')
-    const EntitySelector = require('../../world/manager/EntitySelector.js')
+    import Runner from '../Runner.js'
+    import StateManager from '../../state/StateManager.js'
+    import EntitySelector from '../../world/manager/EntitySelector.js'
     const {MouseButton} = require('../../core/Mouse.js')
-    const MoveCameraAction = require('../action/camera/MoveCameraAction.js')
-    const ZoomInOutCameraAction = require('../action/camera/ZoomInOutCameraAction.js')
-    const World = require('../../world/World.js')
+    import MoveCameraAction from '../action/camera/MoveCameraAction.js'
+    import ZoomInOutCameraAction from '../action/camera/ZoomInOutCameraAction.js'
+    import World from '../../world/World.js'
 
     class WorldRunner extends Runner {
 
@@ -108,5 +108,5 @@ define(function (require) {
         }
     }
 
-    return WorldRunner
+    export default WorldRunner
 })

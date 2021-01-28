@@ -1,8 +1,8 @@
 define(function (require) {
 
-    const MenuItem = require('../../MenuItem.js')
-    const TextureFormMenuItem = require('./TextureFormMenuItem.js')
-    const Layout = require('../../Layout.js')
+    import MenuItem from '../../MenuItem.js'
+    import TextureFormMenuItem from './TextureFormMenuItem.js'
+    import Layout from '../../Layout.js'
 
     /**
      * Style Menu Item
@@ -22,6 +22,6 @@ define(function (require) {
         }
     }
 
-    return StyleMenuItem
+    export default StyleMenuItem
 
 })

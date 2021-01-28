@@ -1,7 +1,7 @@
 define(function (require) {
 
-    const Terrain = require('../Terrain.js')
-    const NoiseEntity = require('../../../entity/types/terrain/NoiseEntity.js')
+    import Terrain from '../Terrain.js'
+    import NoiseEntity from '../../../entity/types/terrain/NoiseEntity.js'
 
     /**
      * Manage and generate noise terrains
@@ -16,6 +16,6 @@ define(function (require) {
         }
     }
 
-    return NoiseTerrain
+    export default NoiseTerrain
 
 })

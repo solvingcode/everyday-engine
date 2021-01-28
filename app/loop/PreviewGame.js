@@ -1,8 +1,8 @@
 define(function (require) {
 
-    const Game = require('./Game.js')
-    const World = require('../world/World.js')
-    const Storage = require('../core/Storage.js')
+    import Game from './Game.js'
+    import World from '../world/World.js'
+    import Storage from '../core/Storage.js'
 
     /**
      * @class {PreviewGame}
@@ -26,6 +26,6 @@ define(function (require) {
 
     }
 
-    return PreviewGame
+    export default PreviewGame
 
 })

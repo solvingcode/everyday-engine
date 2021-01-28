@@ -1,6 +1,6 @@
 define(function(require){
 
-    const Data = require('./Data.js')
+    import Data from './Data.js'
 
     /**
      * @class {TerrainManagerData}
@@ -26,6 +26,6 @@ define(function(require){
 
     }
 
-    return TerrainManagerData
+    export default TerrainManagerData
 
 })

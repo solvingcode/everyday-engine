@@ -1,8 +1,8 @@
 define(function (require) {
 
-    const Entity = require('./Entity.js')
-    const AppState = require('../state/AppState.js')
-    const Vector = require('../utils/Vector.js')
+    import Entity from './Entity.js'
+    import AppState from '../state/AppState.js'
+    import Vector from '../utils/Vector.js'
 
     /**
      * Abstract EntityMotion class
@@ -265,5 +265,5 @@ define(function (require) {
 
     }
 
-    return EntityMotion
+    export default EntityMotion
 })

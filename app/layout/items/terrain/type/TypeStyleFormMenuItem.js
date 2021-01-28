@@ -1,8 +1,8 @@
 define(function (require) {
 
-    const MenuItem = require('../../../MenuItem.js')
-    const PlainBackgroundMenuItem = require('./TypeBackgroundMenuItem.js')
-    const Layout = require('../../../Layout.js')
+    import MenuItem from '../../../MenuItem.js'
+    import TypeBackgroundMenuItem from './TypeBackgroundMenuItem.js'
+    import Layout from '../../../Layout.js'
 
     /**
      * Terrain style Menu Item
@@ -22,6 +22,6 @@ define(function (require) {
         }
     }
 
-    return TypeStyleMenuItem
+    export default TypeStyleMenuItem
 
 })

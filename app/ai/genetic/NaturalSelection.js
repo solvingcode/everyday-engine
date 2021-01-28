@@ -158,6 +158,6 @@ define(function () {
         }
     }
 
-    return NaturalSelection
+    export default NaturalSelection
 
 })

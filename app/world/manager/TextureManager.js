@@ -1,7 +1,7 @@
 define(function(require){
 
-    const Texture = require('../../core/Texture.js')
-    const TextureManagerData = require('../../project/data/TextureManagerData.js')
+    import Texture from '../../core/Texture.js'
+    import TextureManagerData from '../../project/data/TextureManagerData.js'
 
     /**
      * @class {TextureManager}
@@ -50,6 +50,6 @@ define(function(require){
 
     }
 
-    return TextureManager
+    export default TextureManager
 
 })

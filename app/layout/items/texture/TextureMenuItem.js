@@ -1,10 +1,10 @@
 define(function (require) {
 
-    const MenuItem = require('../../MenuItem.js')
-    const AddTextureFormMenuItem = require('./AddTextureFormMenuItem.js')
-    const UpdateTextureFormMenuItem = require('./UpdateTextureFormMenuItem.js')
-    const ListTextureFormMenuItem = require('./ListTextureFormMenuItem.js')
-    const Layout = require('../../Layout.js')
+    import MenuItem from '../../MenuItem.js'
+    import AddTextureFormMenuItem from './AddTextureFormMenuItem.js'
+    import UpdateTextureFormMenuItem from './UpdateTextureFormMenuItem.js'
+    import ListTextureFormMenuItem from './ListTextureFormMenuItem.js'
+    import Layout from '../../Layout.js'
 
     /**
      * @class {TextureMenuItem}
@@ -26,6 +26,6 @@ define(function (require) {
         }
     }
 
-    return TextureMenuItem
+    export default TextureMenuItem
 
 })

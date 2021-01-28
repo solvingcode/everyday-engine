@@ -1,6 +1,6 @@
 define(function (require) {
 
-    const Action = require('../Action.js')
+    import Action from '../Action.js'
 
     class StyleColorAction extends Action {
 
@@ -17,6 +17,6 @@ define(function (require) {
 
     }
 
-    return StyleColorAction
+    export default StyleColorAction
 
 })

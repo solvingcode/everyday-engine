@@ -24,5 +24,5 @@ define(function(){
         }
 
     }
-    return Data
+    export default Data
 })

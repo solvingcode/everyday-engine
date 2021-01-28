@@ -1,9 +1,9 @@
 define(function (require) {
 
-    const World = require('../world/World.js')
-    const Storage = require('../core/Storage.js')
-    const FileHelper = require('../utils/FileHelper.js')
-    const JsProjectExporter = require('./exporter/JsProjectExporter.js')
+    import World from '../world/World.js'
+    import Storage from '../core/Storage.js'
+    import FileHelper from '../utils/FileHelper.js'
+    import JsProjectExporter from './exporter/JsProjectExporter.js'
 
     class Project {
 
@@ -64,6 +64,6 @@ define(function (require) {
 
     }
 
-    return Project
+    export default Project
 
 })

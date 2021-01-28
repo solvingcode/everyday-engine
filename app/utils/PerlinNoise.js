@@ -1,7 +1,7 @@
 define(function (require) {
 
-    const Maths = require('./Maths.js')
-    const NoiseRandom = require('./NoiseRandom.js')
+    import Maths from './Maths.js'
+    import NoiseRandom from './NoiseRandom.js'
 
     /**
      * Generate perlin noise random values
@@ -73,5 +73,5 @@ define(function (require) {
      * @typedef {{seed: number, octaves: number, amplitude: number, persistence: number, smoothness: number}} PerlinNoiseConfig
      */
 
-    return PerlinNoise
+    export default PerlinNoise
 })

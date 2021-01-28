@@ -66,5 +66,5 @@ define(function () {
         attrId: 'data-props-entity'
     }
 
-    return StaticEntityUI
+    export default StaticEntityUI
 })

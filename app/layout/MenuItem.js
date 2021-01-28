@@ -1,7 +1,7 @@
 define(function (require) {
 
-    const StateManager = require('../state/StateManager.js')
-    const Maths = require('../utils/Maths.js')
+    import StateManager from '../state/StateManager.js'
+    import Maths from '../utils/Maths.js'
 
     /**
      * Define an item in the menu
@@ -114,6 +114,6 @@ define(function (require) {
      * @callback callback
      */
 
-    return MenuItem
+    export default MenuItem
 
 })

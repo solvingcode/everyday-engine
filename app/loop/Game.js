@@ -1,8 +1,8 @@
 define(function (require) {
 
-    const Scene = require('./Scene.js')
-    const World = require('../world/World.js')
-    const ConstraintRunner = require('../runner/constraint/ConstraintRunner.js')
+    import Scene from './Scene.js'
+    import World from '../world/World.js'
+    import ConstraintRunner from '../runner/constraint/ConstraintRunner.js'
 
     /**
      * @class {Game}
@@ -41,6 +41,6 @@ define(function (require) {
 
     }
 
-    return Game
+    export default Game
 
 })

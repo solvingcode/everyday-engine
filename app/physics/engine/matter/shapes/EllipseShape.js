@@ -1,6 +1,6 @@
 define(function (require) {
 
-    const Shape = require('../../Shape.js')
+    import Shape from '../../Shape.js'
 
     class RectangleShape extends Shape {
 
@@ -23,5 +23,5 @@ define(function (require) {
 
     }
 
-    return RectangleShape
+    export default RectangleShape
 })

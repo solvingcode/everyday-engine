@@ -18,5 +18,5 @@ define(function (require) {
         }
     }
 
-    return MenuUI
+    export default MenuUI
 })

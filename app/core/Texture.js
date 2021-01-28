@@ -1,8 +1,8 @@
 define(function(require){
 
-    const Mesh = require('./Mesh.js')
-    const Maths = require('../utils/Maths.js')
-    const TextureData = require('../project/data/TextureData.js')
+    import Mesh from './Mesh.js'
+    import Maths from '../utils/Maths.js'
+    import TextureData from '../project/data/TextureData.js'
 
     /**
      * @class {Texture}
@@ -46,6 +46,6 @@ define(function(require){
         }
     }
 
-    return Texture
+    export default Texture
 
 })

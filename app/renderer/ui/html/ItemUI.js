@@ -69,5 +69,5 @@ define(function () {
         }
     }
 
-    return ItemUI
+    export default ItemUI
 })

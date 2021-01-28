@@ -39,6 +39,6 @@ define(function () {
 
     }
 
-    return Loop
+    export default Loop
 
 })

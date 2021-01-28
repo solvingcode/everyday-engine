@@ -1,6 +1,6 @@
 define(function (require) {
 
-    const SerDe = require('./Serde.js')
+    import Serde from './Serde.js'
 
     /**
      * @class {JsonSerDe}
@@ -30,6 +30,6 @@ define(function (require) {
 
     }
 
-    return JsonSerDe
+    export default JsonSerDe
 
 })

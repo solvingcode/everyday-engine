@@ -31,5 +31,5 @@ define(function () {
         }
     }
 
-    return MenuItemUI
+    export default MenuItemUI
 })

@@ -57,5 +57,5 @@ define(function () {
         }
     }
 
-    return Maths
+    export default Maths
 })

@@ -1,9 +1,9 @@
 define(function (require) {
 
-    const Layout = require('../../Layout.js')
-    const EntitySelector = require('../../../world/manager/EntitySelector.js')
-    const FormMenuItem = require('../form/FormMenuItem.js')
-    const World = require('../../../world/World.js')
+    import Layout from '../../Layout.js'
+    import EntitySelector from '../../../world/manager/EntitySelector.js'
+    import FormMenuItem from '../form/FormMenuItem.js'
+    import World from '../../../world/World.js'
 
     /**
      * Entity's size properties
@@ -50,6 +50,6 @@ define(function (require) {
         }
     }
 
-    return SizeFormMenuItem
+    export default SizeFormMenuItem
 
 })

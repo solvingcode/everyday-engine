@@ -1,8 +1,8 @@
 define(function (require) {
 
-    const EntityMotion = require('../../EntityMotion.js')
-    const Window = require('../../../core/Window.js')
-    const Vertex = require('../../../utils/Vertex.js')
+    import EntityMotion from '../../EntityMotion.js'
+    import Window from '../../../core/Window.js'
+    import Vertex from '../../../utils/Vertex.js'
 
     class PolyEntity extends EntityMotion {
 
@@ -136,5 +136,5 @@ define(function (require) {
 
     }
 
-    return PolyEntity
+    export default PolyEntity
 })

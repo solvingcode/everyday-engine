@@ -12,6 +12,6 @@ define(function () {
 
     }
 
-    return PhysicError
+    export default PhysicError
 
 })

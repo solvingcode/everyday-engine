@@ -1,8 +1,8 @@
 define(function (require) {
 
-    const MeshData = require('../project/data/MeshData.js')
-    const ImageHelper = require('../utils/ImageHelper.js')
-    const Size = require('../pobject/Size.js')
+    import MeshData from '../project/data/MeshData.js'
+    import ImageHelper from '../utils/ImageHelper.js'
+    import Size from '../pobject/Size.js'
 
     /**
      * Define a block of pixels loaded to the VRAM.
@@ -125,5 +125,5 @@ define(function (require) {
 
     }
 
-    return Mesh
+    export default Mesh
 })

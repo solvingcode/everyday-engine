@@ -1,9 +1,9 @@
 define(function (require) {
 
-    const Action = require('../Action.js')
-    const Menu = require('../../../layout/Menu.js')
-    const StateManager = require('../../../state/StateManager.js')
-    const Layout = require('../../../layout/Layout.js')
+    import Action from '../Action.js'
+    import Menu from '../../../layout/Menu.js'
+    import StateManager from '../../../state/StateManager.js'
+    import Layout from '../../../layout/Layout.js'
 
     class FormUpdateAction extends Action {
 
@@ -50,6 +50,6 @@ define(function (require) {
 
     }
 
-    return FormUpdateAction
+    export default FormUpdateAction
 
 })

@@ -16,5 +16,5 @@ define(function () {
         }
     }
 
-    return Color
+    export default Color
 })

@@ -1,7 +1,7 @@
 define(function (require) {
 
-    const PolyEntity = require('../shape/PolyEntity.js')
-    const PerlinNoise = require('../../../utils/PerlinNoise.js')
+    import PolyEntity from '../shape/PolyEntity.js'
+    import PerlinNoise from '../../../utils/PerlinNoise.js'
 
     class NoiseEntity extends PolyEntity {
 
@@ -41,5 +41,5 @@ define(function (require) {
         }
     }
 
-    return NoiseEntity
+    export default NoiseEntity
 })

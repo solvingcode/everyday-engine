@@ -64,5 +64,5 @@ define(function () {
         attrId: 'data-lock-entity'
     }
 
-    return LockEntityUI
+    export default LockEntityUI
 })

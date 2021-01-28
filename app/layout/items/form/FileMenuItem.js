@@ -1,7 +1,7 @@
 define(function (require) {
 
-    const Layout = require('../../Layout.js')
-    const InputMenuItem = require('./InputMenuItem.js')
+    import Layout from '../../Layout.js'
+    import InputMenuItem from './InputMenuItem.js'
 
     /**
      * File Menu Item
@@ -19,6 +19,6 @@ define(function (require) {
         }
     }
 
-    return FileMenuItem
+    export default FileMenuItem
 
 })

@@ -1,6 +1,6 @@
 define(function (require) {
-    const Keyboard = require('./Keyboard.js')
-    const Mouse = require('./Mouse.js')
+    import Keyboard from './Keyboard.js'
+    import Mouse from './Mouse.js'
 
     /**
      * Handle the window event listeners (keyboard, mouse, ...)
@@ -71,5 +71,5 @@ define(function (require) {
         }
     }
 
-    return Window
+    export default Window
 })

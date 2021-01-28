@@ -1,6 +1,6 @@
 define(function (require) {
 
-    const EntityMotion = require('../../EntityMotion.js')
+    import EntityMotion from '../../EntityMotion.js'
 
     class PlatformEntity extends EntityMotion {
 
@@ -45,5 +45,5 @@ define(function (require) {
 
     }
 
-    return PlatformEntity
+    export default PlatformEntity
 })

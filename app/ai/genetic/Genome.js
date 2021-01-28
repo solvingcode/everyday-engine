@@ -1,6 +1,6 @@
 define(function (require) {
 
-    const Maths = require('../../utils/Maths.js')
+    import Maths from '../../utils/Maths.js'
 
     /**
      * Genome class
@@ -138,6 +138,6 @@ define(function (require) {
         }
     }
 
-    return Genome
+    export default Genome
 
 })

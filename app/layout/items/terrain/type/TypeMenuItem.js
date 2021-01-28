@@ -1,11 +1,11 @@
 define(function (require) {
 
-    const MenuItem = require('../../../MenuItem.js')
-    const TypePosFormMenuItem = require('./TypePosFormMenuItem.js')
-    const TypeSizeFormMenuItem = require('./TypeSizeFormMenuItem.js')
-    const TypeStyleFormMenuItem = require('./TypeStyleFormMenuItem.js')
-    const TypeNoiseFormMenuItem = require('./TypeNoiseFormMenuItem.js')
-    const Layout = require('../../../Layout.js')
+    import MenuItem from '../../../MenuItem.js'
+    import TypePosFormMenuItem from './TypePosFormMenuItem.js'
+    import TypeSizeFormMenuItem from './TypeSizeFormMenuItem.js'
+    import TypeStyleFormMenuItem from './TypeStyleFormMenuItem.js'
+    import TypeNoiseFormMenuItem from './TypeNoiseFormMenuItem.js'
+    import Layout from '../../../Layout.js'
 
     /**
      * Terrain Menu Item
@@ -28,6 +28,6 @@ define(function (require) {
         }
     }
 
-    return TypeMenuItem
+    export default TypeMenuItem
 
 })

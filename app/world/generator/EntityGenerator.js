@@ -14,5 +14,5 @@ define(function () {
         }
     }
 
-    return EntityGenerator
+    export default EntityGenerator
 })

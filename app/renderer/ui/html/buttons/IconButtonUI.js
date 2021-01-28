@@ -1,6 +1,6 @@
 define(function (require) {
 
-    const DefaultButtonUI = require('./DefaultButtonUI.js')
+    import DefaultButtonUI from './DefaultButtonUI.js'
 
     class IconButtonUI extends DefaultButtonUI {
         /**
@@ -38,5 +38,5 @@ define(function (require) {
         className: 'fas'
     }
 
-    return IconButtonUI
+    export default IconButtonUI
 })

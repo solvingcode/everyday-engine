@@ -1,9 +1,9 @@
 define(function (require) {
 
-    const FormMenuItem = require('../form/FormMenuItem.js')
-    const Layout = require('../../Layout.js')
-    const EntitySelector = require('../../../world/manager/EntitySelector.js')
-    const World = require('../../../world/World.js')
+    import FormMenuItem from '../form/FormMenuItem.js'
+    import Layout from '../../Layout.js'
+    import EntitySelector from '../../../world/manager/EntitySelector.js'
+    import World from '../../../world/World.js'
 
     /**
      * @class {TextureFormMenuItem}
@@ -57,6 +57,6 @@ define(function (require) {
         }
     }
 
-    return TextureFormMenuItem
+    export default TextureFormMenuItem
 
 })

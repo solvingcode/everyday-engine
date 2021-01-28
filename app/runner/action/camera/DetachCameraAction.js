@@ -1,7 +1,7 @@
 define(function (require) {
 
-    const Action = require('../Action.js')
-    const World = require('../../../world/World.js')
+    import Action from '../Action.js'
+    import World from '../../../world/World.js'
 
     /**
      * Detach camera action
@@ -18,6 +18,6 @@ define(function (require) {
 
     }
 
-    return DetachCameraAction
+    export default DetachCameraAction
 
 })

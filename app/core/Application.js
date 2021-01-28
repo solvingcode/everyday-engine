@@ -1,8 +1,8 @@
 define(function (require) {
 
-    const Window = require('./Window.js')
-    const EventHandler = require('./EventHandler.js')
-    const ExceptionHandler = require('../exception/ExceptionHandler.js')
+    import Window from './Window.js'
+    import EventHandler from './EventHandler.js'
+    import ExceptionHandler from '../exception/ExceptionHandler.js'
 
     /**
      * Define the application main
@@ -44,5 +44,5 @@ define(function (require) {
 
     }
 
-    return Application
+    export default Application
 })

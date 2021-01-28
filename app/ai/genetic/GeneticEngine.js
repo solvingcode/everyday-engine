@@ -1,11 +1,11 @@
 define(function (require) {
 
-    const AiEngine = require('../AiEngine.js')
-    const Genome = require('./Genome.js')
-    const Storage = require('../../core/Storage.js')
-    const NaturalSelection = require('./NaturalSelection.js')
-    const Color = require('../../utils/Color.js')
-    const Maths = require('../../utils/Maths.js')
+    import AiEngine from '../AiEngine.js'
+    import Genome from './Genome.js'
+    import Storage from '../../core/Storage.js'
+    import NaturalSelection from './NaturalSelection.js'
+    import Color from '../../utils/Color.js'
+    import Maths from '../../utils/Maths.js'
 
     /**
      * GeneticEngine class
@@ -234,6 +234,6 @@ define(function (require) {
 
     GeneticEngine.instance = null
 
-    return GeneticEngine
+    export default GeneticEngine
 
 })

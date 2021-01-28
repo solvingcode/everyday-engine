@@ -43,5 +43,5 @@ define(function () {
         colorText: '#000000'
     }
 
-    return CanvasPanelUI
+    export default CanvasPanelUI
 })

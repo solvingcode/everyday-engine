@@ -1,14 +1,14 @@
 define(function (require) {
 
-    const WorldData = require('../project/data/WorldData.js')
-    const EntityManager = require('./manager/EntityManager.js')
-    const EntitySelector = require('./manager/EntitySelector.js')
-    const Camera = require('../core/Camera.js')
-    const Physics = require('../physics/Physics.js')
-    const TerrainManager = require('./terrain/TerrainManager.js')
-    const MouseConstraintEntity = require('../entity/types/constraint/MouseConstraintEntity.js')
-    const Vector = require('../utils/Vector.js')
-    const TextureManager = require('./manager/TextureManager.js')
+    import WorldData from '../project/data/WorldData.js'
+    import EntityManager from './manager/EntityManager.js'
+    import EntitySelector from './manager/EntitySelector.js'
+    import Camera from '../core/Camera.js'
+    import Physics from '../physics/Physics.js'
+    import TerrainManager from './terrain/TerrainManager.js'
+    import MouseConstraintEntity from '../entity/types/constraint/MouseConstraintEntity.js'
+    import Vector from '../utils/Vector.js'
+    import TextureManager from './manager/TextureManager.js'
 
     /**
      * @class {World}
@@ -222,5 +222,5 @@ define(function (require) {
 
     }
 
-    return World
+    export default World
 })

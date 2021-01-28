@@ -1,9 +1,9 @@
 define(function (require) {
 
-    const Action = require('../Action.js')
-    const World = require('../../../world/World.js')
-    const Vector = require('../../../utils/Vector.js')
-    const StateManager = require('../../../state/StateManager.js')
+    import Action from '../Action.js'
+    import World from '../../../world/World.js'
+    import Vector from '../../../utils/Vector.js'
+    import StateManager from '../../../state/StateManager.js'
 
     /**
      * Move camera action
@@ -32,6 +32,6 @@ define(function (require) {
 
     }
 
-    return ZoomInOutCameraAction
+    export default ZoomInOutCameraAction
 
 })

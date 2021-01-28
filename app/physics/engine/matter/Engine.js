@@ -1,7 +1,7 @@
 define(function (require) {
 
-    const PhysicsEngine = require('../PhysicsEngine.js')
-    const ShapeLoader = require('../ShapeLoader.js')
+    import PhysicsEngine from '../PhysicsEngine.js'
+    import ShapeLoader from '../ShapeLoader.js'
 
     /**
      * Matter Physics Engine class
@@ -64,7 +64,7 @@ define(function (require) {
          * @override
          */
         getEngine() {
-            return Matter
+            export default Matter
         }
 
         /**
@@ -172,5 +172,5 @@ define(function (require) {
 
     }
 
-    return MatterEngine
+    export default MatterEngine
 })

@@ -110,6 +110,6 @@ define(function(){
 
     }
 
-    return PhysicsProps
+    export default PhysicsProps
 
 })

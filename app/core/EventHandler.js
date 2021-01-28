@@ -1,7 +1,7 @@
 define(function (require) {
 
-    const Menu = require('../layout/Menu.js')
-    const Action = require('./Action.js')
+    import Menu from '../layout/Menu.js'
+    import Action from './Action.js'
 
     /**
      * Handle global events triggered by the user (click , mouse move)
@@ -38,5 +38,5 @@ define(function (require) {
 
     EventHandler.instance = null
 
-    return EventHandler
+    export default EventHandler
 })

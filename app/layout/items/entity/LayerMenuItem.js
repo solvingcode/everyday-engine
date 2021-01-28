@@ -1,7 +1,7 @@
 define(function (require) {
 
-    const World = require('../../../world/World.js')
-    const ListFormMenuItem = require('../form/ListFormMenuItem.js')
+    import World from '../../../world/World.js'
+    import ListFormMenuItem from '../form/ListFormMenuItem.js'
 
     /**
      * Layer Menu Item
@@ -24,6 +24,6 @@ define(function (require) {
         }
     }
 
-    return LayerMenuItem
+    export default LayerMenuItem
 
 })

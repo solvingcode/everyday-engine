@@ -291,5 +291,5 @@ define(function (require) {
         ACTION_SELECT_LIST_ELEMENT_STOP: { history: false }
     }
 
-    return AppState
+    export default AppState
 })

@@ -35,5 +35,5 @@ define(function () {
         }
     }
 
-    return NoiseRandom
+    export default NoiseRandom
 })

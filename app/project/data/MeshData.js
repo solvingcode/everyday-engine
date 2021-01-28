@@ -50,6 +50,6 @@ define(function(){
 
     }
 
-    return MeshData
+    export default MeshData
 
 })

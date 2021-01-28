@@ -1,6 +1,6 @@
 define(function (require) {
 
-    const StateManager = require('../state/StateManager.js')
+    import StateManager from '../state/StateManager.js'
 
     class ExceptionHandler{
 
@@ -32,6 +32,6 @@ define(function (require) {
 
     }
 
-    return ExceptionHandler
+    export default ExceptionHandler
 
 })

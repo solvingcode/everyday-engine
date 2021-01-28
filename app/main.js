@@ -1,9 +1,5 @@
-define(function (require) {
-    const Application = require('./core/Application.js')
-    const Scene = require('./loop/Scene.js')
-    const Setup = require('./loop/Setup.js')
+import Application from './core/Application.js'
+import Scene from './loop/Scene.js'
+import Setup from './loop/Setup.js'
 
-    let app = new Application([Setup, Scene])
-
-    app.start()
-})
+new Application([Setup, Scene]).start()

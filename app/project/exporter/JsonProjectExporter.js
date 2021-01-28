@@ -1,7 +1,7 @@
 define(function(require){
 
-    const ProjectExporter = require('./ProjectExporter.js')
-    const FileHelper = require('../../utils/FileHelper.js')
+    import ProjectExporter from './ProjectExporter.js'
+    import FileHelper from '../../utils/FileHelper.js'
 
     /**
      * @class {JsonProjectExporter}
@@ -18,6 +18,6 @@ define(function(require){
 
     }
 
-    return JsonProjectExporter
+    export default JsonProjectExporter
 
 })

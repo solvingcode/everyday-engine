@@ -1,6 +1,6 @@
 define(function (require) {
 
-    const ItemUI = require('../ItemUI.js')
+    import ItemUI from '../ItemUI.js'
 
     class HtmlFormUI extends ItemUI {
         /**
@@ -41,5 +41,5 @@ define(function (require) {
         width: '100%'
     }
 
-    return HtmlFormUI
+    export default HtmlFormUI
 })

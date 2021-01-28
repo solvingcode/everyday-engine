@@ -1,7 +1,7 @@
 define(function (require) {
 
-    const RectEntity = require('../shape/RectEntity.js')
-    const StateManager = require('../../../state/StateManager.js')
+    import RectEntity from '../shape/RectEntity.js'
+    import StateManager from '../../../state/StateManager.js'
 
     class SelectorEntity extends RectEntity {
 
@@ -22,5 +22,5 @@ define(function (require) {
 
     }
 
-    return SelectorEntity
+    export default SelectorEntity
 })

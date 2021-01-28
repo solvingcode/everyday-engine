@@ -1,7 +1,7 @@
 define(function (require) {
 
-    const ItemUI = require('./ItemUI.js')
-    const GraphLineUI = require('./components/graph/GraphLineUI.js')
+    import ItemUI from './ItemUI.js'
+    import GraphLineUI from './components/graph/GraphLineUI.js'
 
     class HtmlGraphUI extends ItemUI {
         /**
@@ -61,5 +61,5 @@ define(function (require) {
         height: '100px'
     }
 
-    return HtmlGraphUI
+    export default HtmlGraphUI
 })

@@ -1,8 +1,8 @@
 define(function (require) {
 
-    const MenuItem = require('../../MenuItem.js')
-    const PropsFormMenuItem = require('./PropsFormMenuItem.js')
-    const Layout = require('../../Layout.js')
+    import MenuItem from '../../MenuItem.js'
+    import PropsFormMenuItem from './PropsFormMenuItem.js'
+    import Layout from '../../Layout.js'
 
     /**
      * Menu responsible for managing camera properties
@@ -21,6 +21,6 @@ define(function (require) {
         }
     }
 
-    return CameraMenuItem
+    export default CameraMenuItem
 
 })

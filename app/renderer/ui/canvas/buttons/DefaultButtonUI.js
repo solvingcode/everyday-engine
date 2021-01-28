@@ -1,6 +1,6 @@
 define(function (require) {
 
-    const Layout = require('../../../../layout/Layout.js')
+    import Layout from '../../../../layout/Layout.js'
 
     class DefaultButtonUI {
         /**
@@ -74,5 +74,5 @@ define(function (require) {
         }
     }
 
-    return DefaultButtonUI
+    export default DefaultButtonUI
 })
