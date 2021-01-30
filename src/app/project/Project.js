@@ -37,7 +37,7 @@ class Project {
     async export() {
         await this.storage.save(Storage.type.WORLD, World.get())
         const dataExport = this.storage.export(Storage.type.WORLD, this.exportFormat)
-        this.getProjectExporter(this.exportFormat).export(dataExport)
+        await this.getProjectExporter(this.exportFormat).export(dataExport)
     }
 
     /**

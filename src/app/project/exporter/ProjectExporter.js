@@ -8,7 +8,7 @@ class ProjectExporter {
      * @abstract
      * @param {string} data
      */
-    export(data) {
+    async export(data) {
         throw new TypeError('ProjectExport.export must be implemented!')
     }
 

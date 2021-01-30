@@ -16,7 +16,7 @@ class JsSerDe extends SerDe {
         }
         const schema = Schema.getMeta()
         const result = this.exportData('world', data, schema)
-        return result.join('\n')
+        return result.concat('var EngineWorldData = {world}').join('')
     }
 
     /**
@@ -40,7 +40,7 @@ class JsSerDe extends SerDe {
         const schemaMeta = `${schemaPrefix}${key}`
         varname = varname ? varname : key
         if (_.isObject(data) || _.isArray(data)) {
-            instr.push(`const ${varname} = new ${data.constructor.name}()`)
+            instr.push(`var ${varname} = new ${!_.isArray(data) ? 'EngineData.' : ''}${data.constructor.name}();`)
             for (const iData in data) {
                 if (data.hasOwnProperty(iData)) {
                     const pKey = `${varname}${iData}`
@@ -60,9 +60,9 @@ class JsSerDe extends SerDe {
                         }
                     }
                     if (data.constructor === Array) {
-                        instr.push(`${varname}[${iData}] = ${pValue}`)
+                        instr.push(`${varname}[${iData}] = ${pValue};`)
                     } else {
-                        instr.push(`${varname}.${iData} = ${pValue}`)
+                        instr.push(`${varname}.${iData} = ${pValue};`)
                     }
                 }
             }

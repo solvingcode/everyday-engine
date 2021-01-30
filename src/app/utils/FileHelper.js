@@ -9,7 +9,7 @@ class FileHelper {
      * @param {string} filename
      */
     static save(content, type, filename = '') {
-        const blob = new Blob([content], {type})
+        const blob = content instanceof Blob ? content : new Blob([content], {type})
         const a = document.createElement('a')
         a.download = filename || 'webEngine'
         a.href = window.URL.createObjectURL(blob)
@@ -47,7 +47,8 @@ class FileHelper {
         XML: 'text/xml',
         JS: 'text/javascript',
         Json: 'application/json',
-        BIN: 'application/octet-binary;charset=utf-8'
+        BIN: 'application/octet-binary;charset=utf-8',
+        ZIP: 'application/zip'
     }
 
 }

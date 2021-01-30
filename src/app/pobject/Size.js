@@ -7,7 +7,7 @@ class Size {
      */
     constructor(size) {
         let width = 0, height = 0
-        if (_.isNumber(size)) {
+        if (typeof size !== 'object') {
             width = size
             height = size
         } else if (size) {

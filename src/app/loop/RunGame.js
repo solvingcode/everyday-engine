@@ -3,10 +3,10 @@ import World from '../world/World.js'
 import Storage from '../core/Storage.js'
 
 /**
- * @class {PreviewGame}
+ * @class {RunGame}
  * @extends {Game}
  */
-class PreviewGame extends Game {
+class RunGame extends Game {
 
     /**
      * @type {PreviewGame}
@@ -17,10 +17,10 @@ class PreviewGame extends Game {
      * @override
      */
     async init() {
-        await Storage.get().loadLocal(Storage.type.WORLD, World.get())
+        await Storage.get().load(Storage.type.WORLD, EngineWorldData.world, World.get())
         await super.init()
     }
 
 }
 
-export default PreviewGame
+export default RunGame

@@ -36,18 +36,6 @@ class Maths {
     }
 
     /**
-     * Get random value
-     * @param {Number} seed
-     */
-    static getRandomValue(seed) {
-        let t = seed
-        t = BigInt((t << 13) ^ t)
-        t = (t * (t * t * 15731n + 789221n) + 1376312589n)
-        t = parseInt(t.toString(2).slice(-31), 2)
-        return 1.0 - t / 1073741824
-    }
-
-    /**
      * @param {number} a
      * @param {number} b
      * @param {number} t
