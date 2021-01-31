@@ -37,7 +37,7 @@ class WindowRunner extends Runner {
      */
     focus(world, entitySelector, mouse) {
         entitySelector.unfocusAll(world)
-        entitySelector.focus(world, world.getWorldPosition(mouse.currentPosition))
+        entitySelector.focus(world, world.getWorldPosition(mouse.currentScenePosition))
     }
 
     /**
@@ -49,7 +49,7 @@ class WindowRunner extends Runner {
     cursor(world, entitySelector, mouse) {
         let cursor = StateManager.get().getData('cursor')
         if (cursor === CURSOR.MOVE_ENTITY) {
-            const entity = entitySelector.get(world, mouse.currentPosition)
+            const entity = entitySelector.get(world, mouse.currentScenePosition)
             cursor = entity && entity.selected && CURSOR.MOVE
         }
         document.body.style.cursor = cursor || 'default'

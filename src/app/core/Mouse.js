@@ -1,3 +1,6 @@
+import {objectContext} from './Context.js'
+import Vector from '../utils/Vector.js'
+
 /**
  * Define the mouse inputs (pressed, clicked, mouse position, ...)
  */
@@ -7,8 +10,10 @@ class Mouse {
         this.keyclicks = []
         this.keydbclicks = []
         this.position = {x: 0, y: 0}
+        this.scenePosition = {x: 0, y: 0}
         this.target = null
         this.currentPosition = {x: 0, y: 0}
+        this.currentScenePosition = {x: 0, y: 0}
         this.lastPosition = this.currentPosition
         this.mouseWheel = {y: 0}
     }
@@ -47,6 +52,7 @@ class Mouse {
         this.position = this.getPosition(event)
         this.target = this.getTarget(event)
         this.path = this.getPath(event)
+        this.scenePosition = this.toSceneCoord(this.position)
     }
 
     /**
@@ -101,8 +107,8 @@ class Mouse {
      */
     getDragArea() {
         const dragDistance = this.getDragDistance()
-        let newX = this.position.x
-        let newY = this.position.y
+        let newX = this.scenePosition.x
+        let newY = this.scenePosition.y
         if (dragDistance.x <= 0) {
             newX += dragDistance.x
         }
@@ -167,9 +173,20 @@ class Mouse {
         return this.mouseWheel
     }
 
+    /**
+     * Convert position to scene coordinates
+     * @param {Vector} position
+     * @return {Vector}
+     */
+    toSceneCoord({x, y}) {
+        const {left: sceneCanvasX, top: sceneCanvasY} = objectContext.canvas.getBoundingClientRect()
+        return new Vector({x: x - sceneCanvasX, y: y - sceneCanvasY})
+    }
+
     setMouseMove() {
         this.lastPosition = this.currentPosition
         this.currentPosition = this.getPosition(event)
+        this.currentScenePosition = this.toSceneCoord(this.currentPosition)
     }
 
     clearKeyClicked() {

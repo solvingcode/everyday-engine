@@ -45,8 +45,8 @@ class PolyEntity extends EntityMotion {
      */
     generatePoints() {
         const window = Window.get()
-        const position = window.mouse.position
-        const currentPosition = window.mouse.currentPosition
+        const position = window.mouse.scenePosition
+        const currentPosition = window.mouse.currentScenePosition
         if (!this.vertices.find(point => point.x === position.x && point.y === position.y)) {
             this.vertices[this.nbPoints] = position
             this.nbPoints = this.vertices.length

@@ -69,7 +69,7 @@ class WorldRunner extends Runner {
             const entitySelector = EntitySelector.get()
             const selectedEntities = entitySelector.getSelected(world)
             if (selectedEntities.length) {
-                const triggerEntity = entitySelector.get(world, world.getWorldPosition(mouse.currentPosition))
+                const triggerEntity = entitySelector.get(world, world.getWorldPosition(mouse.currentScenePosition))
                 const isEntityMove = triggerEntity && selectedEntities.includes(triggerEntity)
                 if (isEntityMove) {
                     stateManager.startState('ACTION_MOVE', 1)

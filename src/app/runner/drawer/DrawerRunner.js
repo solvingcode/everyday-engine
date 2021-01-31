@@ -40,7 +40,7 @@ class DrawerRunner extends Runner {
     execute(mouse, menu) {
         const stateManager = StateManager.get()
         const world = World.get()
-        const position = world.getWorldPosition(mouse.position)
+        const position = world.getWorldPosition(mouse.scenePosition)
         const defaultStartEvent = (pMouse) => pMouse.isButtonPressed(MouseButton.LEFT)
         const defaultEndEvent = (pMouse) => pMouse.isButtonClicked(MouseButton.LEFT)
         const typeEntity = {

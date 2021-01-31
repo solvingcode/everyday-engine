@@ -1,5 +1,4 @@
 import Renderer from './Renderer.js'
-import Vector from '../utils/Vector.js'
 import {SCENE_WIDTH, SCENE_HEIGHT, CANVAS_CONTEXT_TYPE} from '../core/Constant.js'
 import {objectContext} from '../core/Context.js'
 
@@ -43,8 +42,7 @@ class ObjectRenderer extends Renderer {
             if (this.meshes.hasOwnProperty(iMesh)) {
                 const mesh = this.meshes[iMesh]
                 const {x, y} = camera.toCanvasCoord(mesh.position)
-                const {x: sceneX, y: sceneY} = this.toSceneCoord({x, y})
-                objectContext.drawImage(mesh.context.canvas, sceneX, sceneY)
+                objectContext.drawImage(mesh.context.canvas, x, y)
             }
         }
         this.meshes = []
@@ -56,16 +54,6 @@ class ObjectRenderer extends Renderer {
      */
     add(mesh) {
         this.meshes.push(mesh)
-    }
-
-    /**
-     * Convert position to scene coordinates
-     * @param {Vector} position
-     * @return {Vector}
-     */
-    toSceneCoord({x, y}) {
-        const {left: sceneCanvasX, top: sceneCanvasY} = objectContext.canvas.getBoundingClientRect()
-        return new Vector({x: x - sceneCanvasX, y: y - sceneCanvasY})
     }
 }
 

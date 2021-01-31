@@ -54,7 +54,7 @@ class CanvasUIRenderer extends UIRenderer {
      * @override
      */
     getItemAt(mouse) {
-        const {x, y} = mouse.position
+        const {x, y} = mouse.scenePosition
         return this.menu.items.find((item) => item.position &&
             x > item.position.x && x < item.position.x + item.width &&
             y > item.position.y && y < item.position.y + item.height
