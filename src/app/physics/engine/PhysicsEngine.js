@@ -1,11 +1,14 @@
+import PhysicsEngineData from '../../project/data/PhysicsEngineData.js'
+
 /**
  * Physics Engine class
  * Used as interface between the application and engine (third party Engine)
  * @abstract
  */
-class PhysicsEngine {
+class PhysicsEngine extends PhysicsEngineData {
 
     constructor() {
+        super()
         if (this.constructor === PhysicsEngine) {
             throw new TypeError('Abstract class PhysicsEngine cannot be instantiated directly')
         }

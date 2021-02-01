@@ -11,7 +11,11 @@ class ExceptionHandler {
      * @param {Error} e
      */
     handle(e) {
-        StateManager.get().stopAll()
+        try {
+            StateManager.get().stopAll()
+        } catch (e) {
+            StateManager.get().reset()
+        }
         if (e instanceof TypeError) {
             throw e
         }

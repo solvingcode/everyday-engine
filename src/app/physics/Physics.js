@@ -6,10 +6,11 @@ class Physics extends PhysicsData {
 
     constructor() {
         super()
-        this.physicsEngine = new MatterEngine()
-        this.physicsEngine.setPhysicsManager(this)
         this.toRestart = false
         this.isRunning = false
+        this.types = {
+            [Physics.TYPES.MATTERJS]: MatterEngine
+        }
     }
 
     /**
@@ -18,11 +19,13 @@ class Physics extends PhysicsData {
      * @param {AiEngine} aiEngine
      */
     update(world, aiEngine) {
-        if (this.toRestart) {
-            this.restart(world)
-        } else {
-            this.updateEntities(world)
-            this.updateEngine(world, aiEngine)
+        if (this.isEnabled()) {
+            if (this.toRestart) {
+                this.restart(world)
+            } else {
+                this.updateEntities(world)
+                this.updateEngine(world, aiEngine)
+            }
         }
     }
 
@@ -75,11 +78,13 @@ class Physics extends PhysicsData {
      * @param {Constraint} constraint
      */
     updateConstraint(entity, constraint) {
-        const shape = this.physicsEngine.findShapeFromEntity(entity)
-        if (shape) {
-            this.physicsEngine.updateConstraint(entity, constraint)
-        } else {
-            throw new PhysicError(`Shape not founded for the constraint entity ${entity.id}`)
+        if (this.isEnabled()) {
+            const shape = this.physicsEngine.findShapeFromEntity(entity)
+            if (shape) {
+                this.physicsEngine.updateConstraint(entity, constraint)
+            } else {
+                throw new PhysicError(`Shape not founded for the constraint entity ${entity.id}`)
+            }
         }
     }
 
@@ -168,11 +173,13 @@ class Physics extends PhysicsData {
      * @param {World} world
      */
     run(world) {
-        this.unload(world)
-        this.physicsEngine.init()
-        this.load(world)
-        this.physicsEngine.run(world)
-        this.isRunning = true
+        if (this.isEnabled()) {
+            this.unload(world)
+            this.physicsEngine.init()
+            this.load(world)
+            this.physicsEngine.run(world)
+            this.isRunning = true
+        }
     }
 
     /**
@@ -207,7 +214,8 @@ class Physics extends PhysicsData {
      * @param {PhysicsEngine} physicsEngine
      */
     setPhysicsEngine(physicsEngine) {
-        this.physicsEngine = physicsEngine
+        super.setPhysicsEngine(physicsEngine)
+        physicsEngine && this.physicsEngine.setPhysicsManager(this)
     }
 
     /**
@@ -218,6 +226,33 @@ class Physics extends PhysicsData {
     }
 
     /**
+     * @param {string} type
+     */
+    setType(type) {
+        const physicsEngine = this.types[type]
+        this.setPhysicsEngine(physicsEngine ? new physicsEngine() : null)
+    }
+
+    /**
+     * @return {string}
+     */
+    getType() {
+        const physicsEngine = this.getPhysicsEngine()
+        for (const type in this.types) {
+            if (physicsEngine instanceof this.types[type]) {
+                return type
+            }
+        }
+    }
+
+    /**
+     * @return {boolean}
+     */
+    isEnabled() {
+        return !!this.getPhysicsEngine()
+    }
+
+    /**
      * Restart the engine
      * @param {World} world
      */
@@ -225,6 +260,12 @@ class Physics extends PhysicsData {
         this.stop()
         this.run(world)
         this.setToRestart(false)
+    }
+
+    static get TYPES() {
+        return {
+            MATTERJS: 'matterjs'
+        }
     }
 
 }

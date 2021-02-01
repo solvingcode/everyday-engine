@@ -1,5 +1,5 @@
 import MenuItem from '../../MenuItem.js'
-import ManagerFormMenuItem from './TerrainFormMenuItem.js'
+import TerrainFormMenuItem from './TerrainFormMenuItem.js'
 import TypeMenuItem from './type/TypeMenuItem.js'
 import Layout from '../../Layout.js'
 
@@ -16,7 +16,7 @@ class TerrainMenuItem extends MenuItem {
             zone: Layout.zone.RIGHT
         })
         this.items = [
-            new ManagerFormMenuItem(this),
+            new TerrainFormMenuItem(this),
             new TypeMenuItem(this)
         ]
     }

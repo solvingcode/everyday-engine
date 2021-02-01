@@ -29,6 +29,7 @@ import AppMenuItem from './items/app/AppMenuItem.js'
 import TerrainMenuItem from './items/terrain/TerrainMenuItem.js'
 import CameraMenuItem from './items/camera/CameraMenuItem.js'
 import TextureMenuItem from './items/texture/TextureMenuItem.js'
+import PhysicsMenuItem from './items/physics/PhysicsMenuItem.js'
 
 /**
  * Define all menu items
@@ -67,6 +68,7 @@ class Menu {
             new LayerMenuItem(),
             new StyleMenuItem(),
             new EntityMenuItem(),
+            new PhysicsMenuItem(),
             new ConditionMenuItem(),
             new AiGeneticMenuItem(),
             new TerrainMenuItem(),
@@ -81,7 +83,7 @@ class Menu {
     }
 
     /**
-     * Setup the items list which calculate the position of the each item
+     * Setup the items list which calculate the position of each item
      * in the screen.
      */
     setup() {
@@ -192,10 +194,10 @@ class Menu {
     }
 
     static get() {
-        if (!Menu.instance) {
-            Menu.instance = new Menu()
+        if (!this.instance) {
+            this.instance = new this()
         }
-        return Menu.instance
+        return this.instance
     }
 }
 

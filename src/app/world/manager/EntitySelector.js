@@ -14,6 +14,7 @@ class EntitySelector {
     /**
      * Get first entity selected
      * @param {World} world
+     * @return {Entity}
      */
     getFirstSelected(world) {
         const selectedEntities = this.getSelected(world)

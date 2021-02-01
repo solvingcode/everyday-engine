@@ -1,4 +1,5 @@
 /**
+ * Runner is a component responsible for deciding what to do when a application state is defined
  * @class {Runner}
  * @abstract
  */

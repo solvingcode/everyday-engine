@@ -4,9 +4,9 @@ import FormMenuItem from '../form/FormMenuItem.js'
 import World from '../../../world/World.js'
 
 /**
- * Form physics properties
+ * @class {PhysicsPropsFormMenuItem}
  */
-class PropsFormMenuItem extends FormMenuItem {
+export default class PhysicsPropsFormMenuItem extends FormMenuItem {
     constructor(parent) {
         super({
             name: '',
@@ -23,9 +23,19 @@ class PropsFormMenuItem extends FormMenuItem {
     getFields() {
         return [
             {
-                bind: 'name',
-                label: 'Name',
-                type: Layout.form.TEXT
+                bind: 'fixed',
+                label: 'Static',
+                type: Layout.form.CHECKBOX
+            },
+            {
+                bind: 'motion',
+                label: 'Motion',
+                type: Layout.form.CHECKBOX
+            },
+            {
+                bind: 'controlled',
+                label: 'Controlled',
+                type: Layout.form.CHECKBOX
             }
         ]
     }
@@ -36,6 +46,11 @@ class PropsFormMenuItem extends FormMenuItem {
     getFormObject() {
         return EntitySelector.get().getFirstSelected(World.get())
     }
-}
 
-export default PropsFormMenuItem
+    /**
+     * @override
+     */
+    isValid() {
+        return super.isValid() && World.get().getPhysics().isEnabled()
+    }
+}

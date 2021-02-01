@@ -14,6 +14,7 @@ import EntityProps from '../pobject/EntityProps.js'
 import PhysicsProps from '../pobject/PhysicsProps.js'
 import Texture from '../core/Texture.js'
 import Mesh from '../core/Mesh.js'
+import PhysicsEngine from '../physics/engine/PhysicsEngine.js'
 
 /**
  * Define the schema of project data.
@@ -368,6 +369,14 @@ export default {
                 meta: {
                     dataId: {
                         type: 'number'
+                    },
+                    physicsEngine: {
+                        type: PhysicsEngine,
+                        meta: {
+                            dataId: {
+                                type: 'number'
+                            }
+                        }
                     }
                 }
             },

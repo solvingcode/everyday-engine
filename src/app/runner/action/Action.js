@@ -10,7 +10,9 @@ class Action {
     }
 
     /**
-     * Execute actions
+     * Execute actions.
+     * If return true, then the stop state will be triggered automatically, otherwise,
+     * the stop should be executed manually
      * @abstract
      * @param {any} params
      * @return {boolean}
@@ -20,7 +22,9 @@ class Action {
     }
 
     /**
-     * Stop actions
+     * Stop actions.
+     * If return true, then the end state will be triggered automatically, otherwise,
+     * the end state should be executed manually
      * @param {any} params
      * @return {boolean}
      */

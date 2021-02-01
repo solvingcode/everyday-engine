@@ -86,7 +86,7 @@ class Schema {
                         result = new prototype()
                         data && data.setDataId(DataSchema.getId(data.constructor))
                     } else {
-                        result = DataSchema.newInstance(data.dataId, prototype)
+                        result = DataSchema.newInstance(data && data.dataId, prototype)
                     }
                 } else {
                     result = new prototype()
