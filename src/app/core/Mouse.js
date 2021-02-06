@@ -98,17 +98,29 @@ class Mouse {
     getDragDistance() {
         const x = this.currentPosition.x - this.position.x
         const y = this.currentPosition.y - this.position.y
-        return {x, y, z: 0}
+        return new Vector({x, y, z: 0})
+    }
+
+    /**
+     * @param {Camera} camera
+     * @returns {Vector}
+     */
+    getDragDistanceCamera(camera) {
+        const x = this.currentPosition.x - this.position.x
+        const y = this.currentPosition.y - this.position.y
+        return camera.fromCameraScale(new Vector({x, y, z: 0}))
     }
 
     /**
      * Calculate and return the area of drag (selection)
+     * @param {Camera} camera
      * @return {{position: Vector, size: Size}}
      */
-    getDragArea() {
-        const dragDistance = this.getDragDistance()
-        let newX = this.scenePosition.x
-        let newY = this.scenePosition.y
+    getDragArea(camera) {
+        const dragDistance = this.getDragDistanceCamera(camera)
+        const scenePosition = camera.fromCameraScale(this.scenePosition)
+        let newX = scenePosition.x
+        let newY = scenePosition.y
         if (dragDistance.x <= 0) {
             newX += dragDistance.x
         }
@@ -116,17 +128,18 @@ class Mouse {
             newY += dragDistance.y
         }
         return {
-            position: {x: newX, y: newY},
+            position: new Vector({x: newX, y: newY}),
             size: {width: Math.abs(dragDistance.x), height: Math.abs(dragDistance.y)}
         }
     }
 
     /**
      * Drag and drop (return the drag distance and update the initial position)
+     * @param {Camera} camera
      * @return {Vector}
      */
-    dragAndDrop() {
-        const dragDistance = this.getDragDistance()
+    dragAndDrop(camera) {
+        const dragDistance = this.getDragDistanceCamera(camera)
         this.position = this.currentPosition
         return dragDistance
     }

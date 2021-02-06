@@ -17,7 +17,7 @@ class MoveCameraAction extends Action {
     static run(mouse) {
         const camera = World.get().getCamera()
         if (camera) {
-            const dragDistance = mouse.dragAndDrop()
+            const dragDistance = mouse.dragAndDrop(camera)
             camera.update(Vector.add(camera.position, Vector.multiply(dragDistance, -1)))
         }
         return true

@@ -106,6 +106,7 @@ class WorldData extends Data {
 
     /**
      * Get the principal camera (active)
+     * @return {Camera}
      */
     getCamera() {
         return this.camera

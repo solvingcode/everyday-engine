@@ -2,6 +2,7 @@ import MeshData from '../project/data/MeshData.js'
 import ImageHelper from '../utils/ImageHelper.js'
 import Size from '../pobject/Size.js'
 import {CANVAS_CONTEXT_TYPE} from './Constant.js'
+import Vector from '../utils/Vector.js'
 
 /**
  * Define a block of pixels loaded to the VRAM.
@@ -13,7 +14,7 @@ import {CANVAS_CONTEXT_TYPE} from './Constant.js'
  */
 class Mesh extends MeshData {
 
-    constructor(position = {x: 0, y: 0}, size = 1) {
+    constructor(position = new Vector(), size = 1) {
         super()
         this.size = this.getSize(size)
         this.position = position

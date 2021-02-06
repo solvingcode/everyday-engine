@@ -2513,7 +2513,7 @@ EntityData.shapes = {
 var _default = EntityData;
 exports["default"] = _default;
 
-},{"../../pobject/Size.js":17,"../../utils/Maths.js":30,"./Data.js":20,"@babel/runtime/helpers/assertThisInitialized":1,"@babel/runtime/helpers/classCallCheck":3,"@babel/runtime/helpers/createClass":4,"@babel/runtime/helpers/defineProperty":5,"@babel/runtime/helpers/getPrototypeOf":6,"@babel/runtime/helpers/inherits":7,"@babel/runtime/helpers/interopRequireDefault":8,"@babel/runtime/helpers/possibleConstructorReturn":9}],22:[function(require,module,exports){
+},{"../../pobject/Size.js":17,"../../utils/Maths.js":31,"./Data.js":20,"@babel/runtime/helpers/assertThisInitialized":1,"@babel/runtime/helpers/classCallCheck":3,"@babel/runtime/helpers/createClass":4,"@babel/runtime/helpers/defineProperty":5,"@babel/runtime/helpers/getPrototypeOf":6,"@babel/runtime/helpers/inherits":7,"@babel/runtime/helpers/interopRequireDefault":8,"@babel/runtime/helpers/possibleConstructorReturn":9}],22:[function(require,module,exports){
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
@@ -2711,11 +2711,17 @@ exports["default"] = void 0;
 
 var _classCallCheck2 = _interopRequireDefault(require("@babel/runtime/helpers/classCallCheck"));
 
+var _createClass2 = _interopRequireDefault(require("@babel/runtime/helpers/createClass"));
+
+var _assertThisInitialized2 = _interopRequireDefault(require("@babel/runtime/helpers/assertThisInitialized"));
+
 var _inherits2 = _interopRequireDefault(require("@babel/runtime/helpers/inherits"));
 
 var _possibleConstructorReturn2 = _interopRequireDefault(require("@babel/runtime/helpers/possibleConstructorReturn"));
 
 var _getPrototypeOf2 = _interopRequireDefault(require("@babel/runtime/helpers/getPrototypeOf"));
+
+var _defineProperty2 = _interopRequireDefault(require("@babel/runtime/helpers/defineProperty"));
 
 var _Data2 = _interopRequireDefault(require("./Data.js"));
 
@@ -2733,17 +2739,109 @@ var PhysicsData = /*#__PURE__*/function (_Data) {
   var _super = _createSuper(PhysicsData);
 
   function PhysicsData() {
+    var _this;
+
     (0, _classCallCheck2["default"])(this, PhysicsData);
-    return _super.apply(this, arguments);
+
+    for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
+      args[_key] = arguments[_key];
+    }
+
+    _this = _super.call.apply(_super, [this].concat(args));
+    (0, _defineProperty2["default"])((0, _assertThisInitialized2["default"])(_this), "physicsEngine", void 0);
+    return _this;
   }
 
+  (0, _createClass2["default"])(PhysicsData, [{
+    key: "setPhysicsEngine",
+
+    /**
+     * @param {PhysicsEngine} physicsEngine
+     */
+    value: function setPhysicsEngine(physicsEngine) {
+      this.physicsEngine = physicsEngine;
+    }
+    /**
+     * @return {PhysicsEngine}
+     */
+
+  }, {
+    key: "getPhysicsEngine",
+    value: function getPhysicsEngine() {
+      return this.physicsEngine;
+    }
+  }]);
   return PhysicsData;
 }(_Data2["default"]);
 
-var _default = PhysicsData;
-exports["default"] = _default;
+exports["default"] = PhysicsData;
 
-},{"./Data.js":20,"@babel/runtime/helpers/classCallCheck":3,"@babel/runtime/helpers/getPrototypeOf":6,"@babel/runtime/helpers/inherits":7,"@babel/runtime/helpers/interopRequireDefault":8,"@babel/runtime/helpers/possibleConstructorReturn":9}],25:[function(require,module,exports){
+},{"./Data.js":20,"@babel/runtime/helpers/assertThisInitialized":1,"@babel/runtime/helpers/classCallCheck":3,"@babel/runtime/helpers/createClass":4,"@babel/runtime/helpers/defineProperty":5,"@babel/runtime/helpers/getPrototypeOf":6,"@babel/runtime/helpers/inherits":7,"@babel/runtime/helpers/interopRequireDefault":8,"@babel/runtime/helpers/possibleConstructorReturn":9}],25:[function(require,module,exports){
+"use strict";
+
+var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports["default"] = void 0;
+
+var _classCallCheck2 = _interopRequireDefault(require("@babel/runtime/helpers/classCallCheck"));
+
+var _createClass2 = _interopRequireDefault(require("@babel/runtime/helpers/createClass"));
+
+var _inherits2 = _interopRequireDefault(require("@babel/runtime/helpers/inherits"));
+
+var _possibleConstructorReturn2 = _interopRequireDefault(require("@babel/runtime/helpers/possibleConstructorReturn"));
+
+var _getPrototypeOf2 = _interopRequireDefault(require("@babel/runtime/helpers/getPrototypeOf"));
+
+var _Data2 = _interopRequireDefault(require("./Data.js"));
+
+function _createSuper(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct(); return function _createSuperInternal() { var Super = (0, _getPrototypeOf2["default"])(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = (0, _getPrototypeOf2["default"])(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return (0, _possibleConstructorReturn2["default"])(this, result); }; }
+
+function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Date.prototype.toString.call(Reflect.construct(Date, [], function () {})); return true; } catch (e) { return false; } }
+
+/**
+ * @class {PhysicsEngineData}
+ * @extends {Data}
+ */
+var PhysicsEngineData = /*#__PURE__*/function (_Data) {
+  (0, _inherits2["default"])(PhysicsEngineData, _Data);
+
+  var _super = _createSuper(PhysicsEngineData);
+
+  function PhysicsEngineData() {
+    (0, _classCallCheck2["default"])(this, PhysicsEngineData);
+    return _super.apply(this, arguments);
+  }
+
+  (0, _createClass2["default"])(PhysicsEngineData, [{
+    key: "setPhysicsManager",
+
+    /**
+     * Set the physics manager that loaded the phyiscs engine
+     * @param {PhysicsData} physicsManager
+     */
+    value: function setPhysicsManager(physicsManager) {
+      this.physicsManager = physicsManager;
+    }
+    /**
+     * Get the physics manager that loaded the phyiscs engine
+     */
+
+  }, {
+    key: "getPhysicsManager",
+    value: function getPhysicsManager() {
+      return this.physicsManager;
+    }
+  }]);
+  return PhysicsEngineData;
+}(_Data2["default"]);
+
+exports["default"] = PhysicsEngineData;
+
+},{"./Data.js":20,"@babel/runtime/helpers/classCallCheck":3,"@babel/runtime/helpers/createClass":4,"@babel/runtime/helpers/getPrototypeOf":6,"@babel/runtime/helpers/inherits":7,"@babel/runtime/helpers/interopRequireDefault":8,"@babel/runtime/helpers/possibleConstructorReturn":9}],26:[function(require,module,exports){
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
@@ -2878,7 +2976,7 @@ var TerrainData = /*#__PURE__*/function (_Data) {
 var _default = TerrainData;
 exports["default"] = _default;
 
-},{"./Data.js":20,"@babel/runtime/helpers/assertThisInitialized":1,"@babel/runtime/helpers/classCallCheck":3,"@babel/runtime/helpers/createClass":4,"@babel/runtime/helpers/defineProperty":5,"@babel/runtime/helpers/getPrototypeOf":6,"@babel/runtime/helpers/inherits":7,"@babel/runtime/helpers/interopRequireDefault":8,"@babel/runtime/helpers/possibleConstructorReturn":9}],26:[function(require,module,exports){
+},{"./Data.js":20,"@babel/runtime/helpers/assertThisInitialized":1,"@babel/runtime/helpers/classCallCheck":3,"@babel/runtime/helpers/createClass":4,"@babel/runtime/helpers/defineProperty":5,"@babel/runtime/helpers/getPrototypeOf":6,"@babel/runtime/helpers/inherits":7,"@babel/runtime/helpers/interopRequireDefault":8,"@babel/runtime/helpers/possibleConstructorReturn":9}],27:[function(require,module,exports){
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
@@ -2956,7 +3054,7 @@ var TerrainManagerData = /*#__PURE__*/function (_Data) {
 var _default = TerrainManagerData;
 exports["default"] = _default;
 
-},{"./Data.js":20,"@babel/runtime/helpers/assertThisInitialized":1,"@babel/runtime/helpers/classCallCheck":3,"@babel/runtime/helpers/createClass":4,"@babel/runtime/helpers/defineProperty":5,"@babel/runtime/helpers/getPrototypeOf":6,"@babel/runtime/helpers/inherits":7,"@babel/runtime/helpers/interopRequireDefault":8,"@babel/runtime/helpers/possibleConstructorReturn":9}],27:[function(require,module,exports){
+},{"./Data.js":20,"@babel/runtime/helpers/assertThisInitialized":1,"@babel/runtime/helpers/classCallCheck":3,"@babel/runtime/helpers/createClass":4,"@babel/runtime/helpers/defineProperty":5,"@babel/runtime/helpers/getPrototypeOf":6,"@babel/runtime/helpers/inherits":7,"@babel/runtime/helpers/interopRequireDefault":8,"@babel/runtime/helpers/possibleConstructorReturn":9}],28:[function(require,module,exports){
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
@@ -3072,7 +3170,7 @@ var TextureData = /*#__PURE__*/function (_Data) {
 var _default = TextureData;
 exports["default"] = _default;
 
-},{"./Data.js":20,"@babel/runtime/helpers/assertThisInitialized":1,"@babel/runtime/helpers/classCallCheck":3,"@babel/runtime/helpers/createClass":4,"@babel/runtime/helpers/defineProperty":5,"@babel/runtime/helpers/getPrototypeOf":6,"@babel/runtime/helpers/inherits":7,"@babel/runtime/helpers/interopRequireDefault":8,"@babel/runtime/helpers/possibleConstructorReturn":9}],28:[function(require,module,exports){
+},{"./Data.js":20,"@babel/runtime/helpers/assertThisInitialized":1,"@babel/runtime/helpers/classCallCheck":3,"@babel/runtime/helpers/createClass":4,"@babel/runtime/helpers/defineProperty":5,"@babel/runtime/helpers/getPrototypeOf":6,"@babel/runtime/helpers/inherits":7,"@babel/runtime/helpers/interopRequireDefault":8,"@babel/runtime/helpers/possibleConstructorReturn":9}],29:[function(require,module,exports){
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
@@ -3150,7 +3248,7 @@ var TextureManagerData = /*#__PURE__*/function (_Data) {
 var _default = TextureManagerData;
 exports["default"] = _default;
 
-},{"./Data.js":20,"@babel/runtime/helpers/assertThisInitialized":1,"@babel/runtime/helpers/classCallCheck":3,"@babel/runtime/helpers/createClass":4,"@babel/runtime/helpers/defineProperty":5,"@babel/runtime/helpers/getPrototypeOf":6,"@babel/runtime/helpers/inherits":7,"@babel/runtime/helpers/interopRequireDefault":8,"@babel/runtime/helpers/possibleConstructorReturn":9}],29:[function(require,module,exports){
+},{"./Data.js":20,"@babel/runtime/helpers/assertThisInitialized":1,"@babel/runtime/helpers/classCallCheck":3,"@babel/runtime/helpers/createClass":4,"@babel/runtime/helpers/defineProperty":5,"@babel/runtime/helpers/getPrototypeOf":6,"@babel/runtime/helpers/inherits":7,"@babel/runtime/helpers/interopRequireDefault":8,"@babel/runtime/helpers/possibleConstructorReturn":9}],30:[function(require,module,exports){
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
@@ -3346,7 +3444,7 @@ var WorldData = /*#__PURE__*/function (_Data) {
 var _default = WorldData;
 exports["default"] = _default;
 
-},{"./Data.js":20,"@babel/runtime/helpers/assertThisInitialized":1,"@babel/runtime/helpers/classCallCheck":3,"@babel/runtime/helpers/createClass":4,"@babel/runtime/helpers/defineProperty":5,"@babel/runtime/helpers/getPrototypeOf":6,"@babel/runtime/helpers/inherits":7,"@babel/runtime/helpers/interopRequireDefault":8,"@babel/runtime/helpers/possibleConstructorReturn":9}],30:[function(require,module,exports){
+},{"./Data.js":20,"@babel/runtime/helpers/assertThisInitialized":1,"@babel/runtime/helpers/classCallCheck":3,"@babel/runtime/helpers/createClass":4,"@babel/runtime/helpers/defineProperty":5,"@babel/runtime/helpers/getPrototypeOf":6,"@babel/runtime/helpers/inherits":7,"@babel/runtime/helpers/interopRequireDefault":8,"@babel/runtime/helpers/possibleConstructorReturn":9}],31:[function(require,module,exports){
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
@@ -3429,7 +3527,7 @@ var Maths = /*#__PURE__*/function () {
 var _default = Maths;
 exports["default"] = _default;
 
-},{"@babel/runtime/helpers/classCallCheck":3,"@babel/runtime/helpers/createClass":4,"@babel/runtime/helpers/interopRequireDefault":8}],31:[function(require,module,exports){
+},{"@babel/runtime/helpers/classCallCheck":3,"@babel/runtime/helpers/createClass":4,"@babel/runtime/helpers/interopRequireDefault":8}],32:[function(require,module,exports){
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
@@ -3581,7 +3679,7 @@ var Vector = /*#__PURE__*/function () {
 var _default = Vector;
 exports["default"] = _default;
 
-},{"@babel/runtime/helpers/classCallCheck":3,"@babel/runtime/helpers/createClass":4,"@babel/runtime/helpers/interopRequireDefault":8}],32:[function(require,module,exports){
+},{"@babel/runtime/helpers/classCallCheck":3,"@babel/runtime/helpers/createClass":4,"@babel/runtime/helpers/interopRequireDefault":8}],33:[function(require,module,exports){
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
@@ -3685,38 +3783,46 @@ Object.defineProperty(exports, "MeshData", {
     return _MeshData["default"];
   }
 });
+Object.defineProperty(exports, "PhysicsEngineData", {
+  enumerable: true,
+  get: function get() {
+    return _PhysicsEngineData["default"];
+  }
+});
 
-var _WorldData = _interopRequireDefault(require("../app/project/data/WorldData"));
+var _WorldData = _interopRequireDefault(require("../app/project/data/WorldData.js"));
 
-var _EntityManagerData = _interopRequireDefault(require("../app/project/data/EntityManagerData"));
+var _EntityManagerData = _interopRequireDefault(require("../app/project/data/EntityManagerData.js"));
 
-var _EntityData = _interopRequireDefault(require("../app/project/data/EntityData"));
+var _EntityData = _interopRequireDefault(require("../app/project/data/EntityData.js"));
 
-var _Vector = _interopRequireDefault(require("../app/utils/Vector"));
+var _Vector = _interopRequireDefault(require("../app/utils/Vector.js"));
 
-var _PhysicsProps = _interopRequireDefault(require("../app/pobject/PhysicsProps"));
+var _PhysicsProps = _interopRequireDefault(require("../app/pobject/PhysicsProps.js"));
 
-var _Style = _interopRequireDefault(require("../app/pobject/Style"));
+var _Style = _interopRequireDefault(require("../app/pobject/Style.js"));
 
-var _EntityProps = _interopRequireDefault(require("../app/pobject/EntityProps"));
+var _EntityProps = _interopRequireDefault(require("../app/pobject/EntityProps.js"));
 
-var _Size = _interopRequireDefault(require("../app/pobject/Size"));
+var _Size = _interopRequireDefault(require("../app/pobject/Size.js"));
 
-var _PerlinNoiseConfig = _interopRequireDefault(require("../app/pobject/PerlinNoiseConfig"));
+var _PerlinNoiseConfig = _interopRequireDefault(require("../app/pobject/PerlinNoiseConfig.js"));
 
-var _CameraData = _interopRequireDefault(require("../app/project/data/CameraData"));
+var _CameraData = _interopRequireDefault(require("../app/project/data/CameraData.js"));
 
-var _PhysicsData = _interopRequireDefault(require("../app/project/data/PhysicsData"));
+var _PhysicsData = _interopRequireDefault(require("../app/project/data/PhysicsData.js"));
 
-var _TerrainData = _interopRequireDefault(require("../app/project/data/TerrainData"));
+var _TerrainData = _interopRequireDefault(require("../app/project/data/TerrainData.js"));
 
-var _TextureManagerData = _interopRequireDefault(require("../app/project/data/TextureManagerData"));
+var _TextureManagerData = _interopRequireDefault(require("../app/project/data/TextureManagerData.js"));
 
-var _TerrainManagerData = _interopRequireDefault(require("../app/project/data/TerrainManagerData"));
+var _TerrainManagerData = _interopRequireDefault(require("../app/project/data/TerrainManagerData.js"));
 
-var _TextureData = _interopRequireDefault(require("../app/project/data/TextureData"));
+var _TextureData = _interopRequireDefault(require("../app/project/data/TextureData.js"));
 
-var _MeshData = _interopRequireDefault(require("../app/project/data/MeshData"));
+var _MeshData = _interopRequireDefault(require("../app/project/data/MeshData.js"));
 
-},{"../app/pobject/EntityProps":14,"../app/pobject/PerlinNoiseConfig":15,"../app/pobject/PhysicsProps":16,"../app/pobject/Size":17,"../app/pobject/Style":18,"../app/project/data/CameraData":19,"../app/project/data/EntityData":21,"../app/project/data/EntityManagerData":22,"../app/project/data/MeshData":23,"../app/project/data/PhysicsData":24,"../app/project/data/TerrainData":25,"../app/project/data/TerrainManagerData":26,"../app/project/data/TextureData":27,"../app/project/data/TextureManagerData":28,"../app/project/data/WorldData":29,"../app/utils/Vector":31,"@babel/runtime/helpers/interopRequireDefault":8}]},{},[32])(32)
+var _PhysicsEngineData = _interopRequireDefault(require("../app/project/data/PhysicsEngineData.js"));
+
+},{"../app/pobject/EntityProps.js":14,"../app/pobject/PerlinNoiseConfig.js":15,"../app/pobject/PhysicsProps.js":16,"../app/pobject/Size.js":17,"../app/pobject/Style.js":18,"../app/project/data/CameraData.js":19,"../app/project/data/EntityData.js":21,"../app/project/data/EntityManagerData.js":22,"../app/project/data/MeshData.js":23,"../app/project/data/PhysicsData.js":24,"../app/project/data/PhysicsEngineData.js":25,"../app/project/data/TerrainData.js":26,"../app/project/data/TerrainManagerData.js":27,"../app/project/data/TextureData.js":28,"../app/project/data/TextureManagerData.js":29,"../app/project/data/WorldData.js":30,"../app/utils/Vector.js":32,"@babel/runtime/helpers/interopRequireDefault":8}]},{},[33])(33)
 });

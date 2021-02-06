@@ -11,21 +11,20 @@ class CircleEntity extends EntityMotion {
     /**
      * @override
      */
-    init() {
-        const dragDistance = this.setMeshPositionByDragDistance()
+    init(world) {
+        const dragDistance = this.setMeshPositionByDragDistance(world)
         this.size = {width: Math.abs(dragDistance.x), height: Math.abs(dragDistance.x)}
         return true
     }
 
     /**
-     * Draw the context
-     * @param {{center: {x: number, y: number}, context: OffscreenCanvasRenderingContext2D}} dataContext
+     * @override
      */
     drawContext(dataContext) {
-        const {center, context} = dataContext
-        const sw = this.size.width
-        this.radius = Math.abs(sw / 2 - 1)
-        context.ellipse(center.x, center.y, this.radius, this.radius, 0, 0, 2 * Math.PI)
+        const {center, context, scaleSize} = dataContext
+        const sw = scaleSize.width
+        this.radius = Math.abs(this.size.width / 2 - 1)
+        context.ellipse(center.x, center.y, sw / 2, sw / 2, 0, 0, 2 * Math.PI)
     }
 
     /**
@@ -43,7 +42,7 @@ class CircleEntity extends EntityMotion {
     includes(point) {
         const {x, y} = this.fromAbsolutePosition(point)
         const center = this.getCenter()
-        return Math.pow(x - center.x, 2) + Math.pow(y - center.y, 2) < Math.pow(this.radius, 2)
+        return Math.pow(x - center.x, 2) + Math.pow(y - center.y, 2) < Math.pow(this.size.width/2, 2)
     }
 
 }

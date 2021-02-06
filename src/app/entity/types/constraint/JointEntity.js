@@ -19,7 +19,7 @@ class JointEntity extends AttachEntity {
      * @override
      */
     init(world) {
-        const dragDistance = this.setMeshPositionByDragDistance()
+        const dragDistance = this.setMeshPositionByDragDistance(world)
         return this.generatePoints(dragDistance) && this.setConstraintEntities(world)
     }
 
@@ -94,7 +94,7 @@ class JointEntity extends AttachEntity {
             if (dragDistance.y <= 0) {
                 newY = pointB.y
             }
-            this.setPosition({x: parseInt(newX), y: parseInt(newY)})
+            this.setPosition(new Vector({x: parseInt(newX), y: parseInt(newY)}))
         }
     }
 

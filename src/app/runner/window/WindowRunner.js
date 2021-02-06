@@ -3,6 +3,7 @@ import Runner from '../Runner.js'
 import StateManager from '../../state/StateManager.js'
 import World from '../../world/World.js'
 import Mouse from '../../core/Mouse.js'
+import Vector from '../../utils/Vector.js'
 
 const {CURSOR} = Mouse
 
@@ -37,7 +38,9 @@ class WindowRunner extends Runner {
      */
     focus(world, entitySelector, mouse) {
         entitySelector.unfocusAll(world)
-        entitySelector.focus(world, world.getWorldPosition(mouse.currentScenePosition))
+        const currentScenePosition = new Vector(Object.assign(mouse.currentScenePosition,{z: 0}))
+        const vector3d = world.getCamera().fromCameraScale(currentScenePosition)
+        entitySelector.focus(world, world.getWorldPosition(vector3d))
     }
 
     /**

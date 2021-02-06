@@ -68,8 +68,9 @@ class WorldRunner extends Runner {
             const world = World.get()
             const entitySelector = EntitySelector.get()
             const selectedEntities = entitySelector.getSelected(world)
+            const currentScenePosition = world.getCamera().fromCameraScale(mouse.currentScenePosition)
             if (selectedEntities.length) {
-                const triggerEntity = entitySelector.get(world, world.getWorldPosition(mouse.currentScenePosition))
+                const triggerEntity = entitySelector.get(world, world.getWorldPosition(currentScenePosition))
                 const isEntityMove = triggerEntity && selectedEntities.includes(triggerEntity)
                 if (isEntityMove) {
                     stateManager.startState('ACTION_MOVE', 1)
@@ -94,7 +95,7 @@ class WorldRunner extends Runner {
         if (mouse.isButtonPressed(MouseButton.LEFT)) {
             const world = World.get()
             const entitySelector = EntitySelector.get()
-            const dragArea = mouse.getDragArea()
+            const dragArea = mouse.getDragArea(world.getCamera())
             entitySelector.unselectAll(world)
             entitySelector.select(world, world.getWorldPosition(dragArea.position), dragArea.size)
         }

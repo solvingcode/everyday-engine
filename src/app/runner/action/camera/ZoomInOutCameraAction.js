@@ -16,14 +16,16 @@ class ZoomInOutCameraAction extends Action {
      * @param {Mouse} mouse
      */
     static run(mouse) {
-        const camera = World.get().getCamera()
+        const world = World.get()
+        const camera = world.getCamera()
         const {deltaY} = StateManager.get().getNextProgressData(this.STATE)
         if (camera) {
             const zoom = deltaY * -0.01
             camera.update(Vector.add(
                 camera.position,
-                {x: 0, y: 0, z: Math.round(zoom * 100) / 100}
+                new Vector({x: 0, y: 0, z: Math.round(zoom * 100) / 100})
             ))
+            world.regenerateAll()
         }
         return true
     }

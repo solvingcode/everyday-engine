@@ -1,6 +1,7 @@
 import EntityMotion from '../../EntityMotion.js'
 import Window from '../../../core/Window.js'
 import Vertex from '../../../utils/Vertex.js'
+import Vector from '../../../utils/Vector.js'
 
 class PolyEntity extends EntityMotion {
 
@@ -17,7 +18,7 @@ class PolyEntity extends EntityMotion {
     init() {
         this.generatePoints()
         const minPoint = this.getMinPoint()
-        this.setMeshPosition({x: minPoint.x, y: minPoint.y})
+        this.setMeshPosition(new Vector({x: minPoint.x, y: minPoint.y}))
         this.calculateSize()
         return true
     }

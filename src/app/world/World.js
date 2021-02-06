@@ -8,7 +8,7 @@ import MouseConstraintEntity from '../entity/types/constraint/MouseConstraintEnt
 import Vector from '../utils/Vector.js'
 import TextureManager from './manager/TextureManager.js'
 import {SCENE_WIDTH, SCENE_HEIGHT} from '../core/Constant.js'
-import {objectContext} from '../core/Context.js'
+import Size from '../pobject/Size.js'
 
 /**
  * @class {World}
@@ -19,7 +19,7 @@ class World extends WorldData {
     constructor() {
         super()
         this.entityManager = new EntityManager()
-        this.camera = new Camera({x: SCENE_WIDTH / 2, y: SCENE_HEIGHT / 2})
+        this.camera = new Camera({x: 0, y: 0})
         this.physics = new Physics()
         this.terrainManager = new TerrainManager()
         this.textureManager = new TextureManager()
@@ -52,12 +52,13 @@ class World extends WorldData {
      * @param {Renderer} renderer
      */
     drawEntity(entity, renderer) {
-        const {x: cameraX, y: cameraY} = this.getCamera().position
-        const {left: sceneCanvasX, top: sceneCanvasY} = objectContext.canvas.getBoundingClientRect()
-        const minX = cameraX - SCENE_WIDTH / 2 - entity.size.width
-        const maxX = cameraX + SCENE_WIDTH / 2 + sceneCanvasX
-        const minY = cameraY - SCENE_HEIGHT / 2 - entity.size.height + sceneCanvasY
-        const maxY = cameraY + SCENE_HEIGHT / 2 + sceneCanvasY
+        const camera = this.getCamera()
+        const {x: cameraX, y: cameraY} = camera.position
+        const {width: sceneWidth, height: sceneHeight} = camera.fromScaleSize(new Size({width: SCENE_WIDTH, height: SCENE_HEIGHT}))
+        const minX = cameraX - entity.size.width
+        const maxX = cameraX + sceneWidth
+        const minY = cameraY - entity.size.height
+        const maxY = cameraY + sceneHeight
         if (minX <= entity.position.x && maxX >= entity.position.x &&
             minY <= entity.position.y && maxY >= entity.position.y) {
             entity.draw(renderer)
@@ -123,7 +124,7 @@ class World extends WorldData {
 
     /**
      * @param {Vector} position
-     * @param {Entity} type
+     * @param {Function} type
      * @param {EntityProps} props
      * @return {Entity}
      */
@@ -150,6 +151,10 @@ class World extends WorldData {
      */
     reload() {
         this.init()
+        this.regenerateAll()
+    }
+
+    regenerateAll(){
         this.getEntityManager().regenerateAll(this)
     }
 

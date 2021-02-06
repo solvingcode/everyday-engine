@@ -2,6 +2,7 @@ import VirtualEntity from '../../entity/VirtualEntity.js'
 import TerrainData from '../../project/data/TerrainData.js'
 import ObjectHelper from '../../utils/ObjectHelper.js'
 import {SCENE_WIDTH} from '../../core/Constant.js'
+import Vector from '../../utils/Vector.js'
 
 /**
  * Terrain class
@@ -31,7 +32,7 @@ class Terrain extends TerrainData {
     init(world) {
         if (!this.entityId) {
             this.entityId = world.addEntity(
-                {x: 0, y: 650},
+                new Vector({x: 0, y: 650}),
                 VirtualEntity,
                 {
                     name: 'Terrain',

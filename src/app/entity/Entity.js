@@ -5,6 +5,8 @@ import Vector from '../utils/Vector.js'
 import EntityData from '../project/data/EntityData.js'
 import Style from '../pobject/Style.js'
 import {CANVAS_CONTEXT_TYPE} from '../core/Constant.js'
+import Size from '../pobject/Size.js'
+import DataContext from '../pobject/DataContext.js'
 
 /**
  * Abstract Entity class
@@ -59,7 +61,7 @@ class Entity extends EntityData {
      * @return {boolean}
      */
     generateMesh(world) {
-        const dataContext = this.startContext()
+        const dataContext = this.startContext(world)
         if (dataContext) {
             this.drawContext(dataContext)
             return this.closeContext(dataContext)
@@ -86,26 +88,40 @@ class Entity extends EntityData {
 
     /**
      * Start the context
+     * @param {World} world
      * @return {DataContext | null}
      */
-    startContext() {
-        const {width, height} = this.getLargestRectangle(this.rotation, this.size)
-        if (width && height) {
-            const center = {x: this.size.width / 2, y: this.size.height / 2}
+    startContext(world) {
+        const scaleSize = this.getScaleSize(world.getCamera())
+        const {width, height} = this.getLargestRectangle(this.rotation, scaleSize)
+        if (width > 0 && height > 0) {
+            const center = new Vector({x: scaleSize.width / 2, y: scaleSize.height / 2})
             const canvas = new OffscreenCanvas(width, height)
             const context = canvas.getContext(CANVAS_CONTEXT_TYPE)
             const fillColor = this.getFillColor()
             const {opacity, borderSize} = this.getStyle()
             context.strokeStyle = this.getColor()
-            fillColor && (context.fillStyle = fillColor)
-            _.isNumber(opacity) && (context.globalAlpha = opacity)
+            if(fillColor){
+                context.fillStyle = fillColor
+            }
+            if (_.isNumber(opacity)) {
+                context.globalAlpha = opacity
+            }
             context.lineWidth = borderSize || 1
             context.translate(width / 2, height / 2)
             context.rotate(this.rotation)
             context.translate(-center.x, -center.y)
-            return {center, context}
+            return new DataContext(center, context, scaleSize)
         }
         return null
+    }
+
+    /**
+     * @param {Camera} camera
+     * @return {Size}
+     */
+    getScaleSize(camera) {
+        return camera.toScaleSize(this.size, this.position)
     }
 
     /**
@@ -152,7 +168,7 @@ class Entity extends EntityData {
             {x: 0, y: 0},
             {x: size.width, y: 0},
             {x: size.width, y: size.height},
-            {x: 0, y: size.height},
+            {x: 0, y: size.height}
         ]
         const rotatedPoints = points.map(({x, y}) => ({
             x: x * cosA - y * sinA,
@@ -339,10 +355,10 @@ class Entity extends EntityData {
      * @return {Vector}
      */
     getCenter() {
-        return {
-            x: this.mesh.size.width / 2,
-            y: this.mesh.size.height / 2
-        }
+        return new Vector({
+            x: this.size.width / 2,
+            y: this.size.height / 2
+        })
     }
 
     /**
@@ -351,10 +367,10 @@ class Entity extends EntityData {
      */
     toCenterPosition() {
         const center = this.getCenter()
-        return {
+        return new Vector({
             x: this.position.x + center.x,
             y: this.position.y + center.y
-        }
+        })
     }
 
     /**
@@ -378,7 +394,7 @@ class Entity extends EntityData {
     movePointTo(pointA, pointB) {
         const x = this.position.x + pointB.x - pointA.x
         const y = this.position.y + pointB.y - pointA.y
-        this.setPosition({x, y})
+        this.setPosition(new Vector({x, y}))
     }
 
     /**
@@ -389,19 +405,21 @@ class Entity extends EntityData {
     toAbsolutePosition(point) {
         return new Vector({
             x: point.x + this.mesh.position.x,
-            y: point.y + this.mesh.position.y
+            y: point.y + this.mesh.position.y,
+            z: point.z
         })
     }
 
     /**
      * Convert absolute coordinate to relative coordinate
      * @param {Vector} point Absolute coordinate
+     * @return {Vector}
      */
     fromAbsolutePosition(point) {
-        return {
+        return new Vector({
             x: point.x - this.mesh.position.x,
             y: point.y - this.mesh.position.y
-        }
+        })
     }
 
     /**
@@ -414,7 +432,8 @@ class Entity extends EntityData {
         const {x, y} = this.toCenterPosition()
         return new Vector({
             x: point.x - x,
-            y: point.y - y
+            y: point.y - y,
+            z: point.z
         })
     }
 
@@ -446,11 +465,12 @@ class Entity extends EntityData {
      * Update the Mesh position related to the distance
      * between the click mouse position and the actual
      * position of the mouse, and return the drag distance
+     * @param {World} world
      * @return {Vector}
      */
-    setMeshPositionByDragDistance() {
+    setMeshPositionByDragDistance(world) {
         const window = Window.get()
-        const dragDistance = window.mouse.getDragDistance()
+        const dragDistance = window.mouse.getDragDistanceCamera(world.getCamera())
         let newX = this.position.x
         let newY = this.position.y
         if (dragDistance.x <= 0) {
@@ -459,17 +479,8 @@ class Entity extends EntityData {
         if (dragDistance.y <= 0) {
             newY += dragDistance.y
         }
-        this.setMeshPosition({x: newX, y: newY})
+        this.setMeshPosition(new Vector({x: newX, y: newY, z: this.position.z}))
         return dragDistance
-    }
-
-    /**
-     * Get the current position of the mouse
-     * @return {Vector}
-     */
-    getCurrentMousePosition() {
-        const dragDistance = Window.get().mouse.getDragDistance()
-        return Vector.add(this.position, dragDistance)
     }
 
     /**
@@ -479,7 +490,7 @@ class Entity extends EntityData {
     updateMeshFromContext(context) {
         const sw = context.canvas.width, sh = context.canvas.height
         if (sw && sh) {
-            this.mesh.clear({width: sw, height: sh})
+            this.mesh.clear(new Size({width: sw, height: sh}))
             this.mesh.context = context
             return true
         }
@@ -701,10 +712,5 @@ class Entity extends EntityData {
     }
 
 }
-
-/**
- * @typedef {{center: {x: number, y: number}, context: OffscreenCanvasRenderingContext2D}} DataContext
- */
-
 
 export default Entity

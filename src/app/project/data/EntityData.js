@@ -178,7 +178,7 @@ class EntityData extends Data {
      */
     setBackgroundImageRepeat(repeat) {
         this.advancedStyle.backgroundImageRepeat = repeat
-        this.regenerate()
+        this.setGenerated(false)
     }
 
     /**
@@ -214,14 +214,24 @@ class EntityData extends Data {
      * @param {string} x
      */
     setPositionX(x) {
-        this.setPositionAndGenerate({x: parseInt(x), y: this.position.y})
+        const {y, z} = this.position
+        this.setPositionAndGenerate({x: parseInt(x), y, z})
     }
 
     /**
      * @param {string} y
      */
     setPositionY(y) {
-        this.setPositionAndGenerate({x: this.position.x, y: parseInt(y)})
+        const {x, z} = this.position
+        this.setPositionAndGenerate({x, y: parseInt(y), z})
+    }
+
+    /**
+     * @param {string} z
+     */
+    setPositionZ(z) {
+        const {x, y} = this.position
+        this.setPositionAndGenerate({x, y, z: parseInt(z)})
     }
 
     /**
@@ -236,6 +246,13 @@ class EntityData extends Data {
      */
     getPositionY() {
         return this.position.y
+    }
+
+    /**
+     * @return {number}
+     */
+    getPositionZ() {
+        return this.position.z
     }
 
     /**

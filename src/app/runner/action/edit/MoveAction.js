@@ -9,10 +9,13 @@ class MoveAction extends Action {
      * @param {Array} selectedEntities
      */
     static run(mouse, selectedEntities) {
-        const entityManager = World.get().getEntityManager()
+        const world = World.get()
+        const camera = world.getCamera()
+        const entityManager = world.getEntityManager()
         const instance = MoveAction.get()
-        const dragDistance = mouse.getDragDistance()
-        instance.position = World.get().getWorldPosition(mouse.scenePosition)
+        const dragDistance = mouse.getDragDistanceCamera(camera)
+        const scenePosition = camera.fromCameraScale(mouse.scenePosition)
+        instance.position = World.get().getWorldPosition(scenePosition)
         instance.relativeEntityPositions = instance.relativeEntityPositions ||
             selectedEntities.map(entity => entity.fromAbsolutePosition(instance.position))
         const targetPoint = {x: instance.position.x + dragDistance.x, y: instance.position.y + dragDistance.y}

@@ -41,7 +41,7 @@ class ObjectRenderer extends Renderer {
         for (let iMesh in this.meshes) {
             if (this.meshes.hasOwnProperty(iMesh)) {
                 const mesh = this.meshes[iMesh]
-                const {x, y} = camera.toCanvasCoord(mesh.position)
+                const {x, y} = camera.toCameraScale(camera.toCanvasCoord(mesh.position))
                 objectContext.drawImage(mesh.context.canvas, x, y)
             }
         }

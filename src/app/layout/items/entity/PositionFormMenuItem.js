@@ -31,6 +31,11 @@ class PositionFormMenuItem extends FormMenuItem {
                 bind: 'positionY',
                 label: 'Y',
                 type: Layout.form.TEXT
+            },
+            {
+                bind: 'positionZ',
+                label: 'Z',
+                type: Layout.form.TEXT
             }
         ]
     }

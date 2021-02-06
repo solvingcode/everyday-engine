@@ -1,6 +1,7 @@
 import PhysicsData from '../project/data/PhysicsData.js'
 import MatterEngine from './engine/matter/MatterEngine.js'
 import PhysicError from '../exception/type/PhysicError.js'
+import Vector from '../utils/Vector.js'
 
 class Physics extends PhysicsData {
 
@@ -41,7 +42,7 @@ class Physics extends PhysicsData {
             const entity = bodyEntities[index]
             const {x, y} = entity.fromCenterPosition(body.position)
             const rotation = body.angle ? body.angle % (Math.PI * 2) : 0
-            entity.setPosition({x: parseInt(x), y: parseInt(y)})
+            entity.setPosition(new Vector({x: parseInt(x), y: parseInt(y)}))
             entity.setRotationAndGenerate(Math.round(rotation * 100) / 100)
             entity.setVelocity(body.velocity)
             entity.setAngularVelocity(body.angularVelocity)

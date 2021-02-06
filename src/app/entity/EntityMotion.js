@@ -164,7 +164,7 @@ class EntityMotion extends Entity {
      * Get the force position (center of the entity by default)
      */
     getForcePosition() {
-        return new Vector({x: 0, y: 0})
+        return new Vector()
     }
 
     /**
@@ -176,7 +176,8 @@ class EntityMotion extends Entity {
      */
     moveRelativePointTo(entityManager, point, target) {
         const diffDistance = {x: target.x - this.position.x - point.x, y: target.y - this.position.y - point.y}
-        this.setPosition({x: this.position.x + diffDistance.x, y: this.position.y + diffDistance.y})
+        this.setPositionX(this.position.x + diffDistance.x)
+        this.setPositionY(this.position.y + diffDistance.y)
     }
 
     /**

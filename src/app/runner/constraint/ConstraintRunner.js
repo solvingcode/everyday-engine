@@ -1,6 +1,7 @@
 import Runner from '../Runner.js'
 import Mouse from '../../core/Mouse.js'
 import World from '../../world/World.js'
+import Vector from '../../utils/Vector.js'
 
 const {MouseButton} = Mouse
 
@@ -64,7 +65,7 @@ class ConstraintRunner extends Runner {
         const entity = constraint.entities.b
         constraint.setEntities(null, entity)
         physics.updateConstraint(constraint, {
-            pointA: entity ? mousePosition : {x: 0, y: 0},
+            pointA: entity ? mousePosition : new Vector(),
             entityB: entity,
             pointB: entity ? constraint.pointConstraint : {x: 1, y: 1}
         })

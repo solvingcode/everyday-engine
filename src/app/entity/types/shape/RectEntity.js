@@ -10,8 +10,8 @@ class RectEntity extends EntityMotion {
     /**
      * @override
      */
-    init() {
-        const dragDistance = this.setMeshPositionByDragDistance()
+    init(world) {
+        const dragDistance = this.setMeshPositionByDragDistance(world)
         this.size = {width: Math.abs(dragDistance.x), height: Math.abs(dragDistance.y)}
         return true
     }
@@ -21,8 +21,8 @@ class RectEntity extends EntityMotion {
      * @param {DataContext} dataContext
      */
     drawContext(dataContext) {
-        const {context} = dataContext
-        context.rect(0, 0, this.size.width, this.size.height)
+        const {context, scaleSize} = dataContext
+        context.rect(0, 0, scaleSize.width, scaleSize.height)
     }
 
 }

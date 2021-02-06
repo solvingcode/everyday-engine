@@ -7,6 +7,7 @@ import JointEntity from '../../entity/types/constraint/JointEntity.js'
 import AttachPointEntity from '../../entity/types/constraint/AttachPointEntity.js'
 import SelectorEntity from '../../entity/types/edit/SelectorEntity.js'
 import World from '../../world/World.js'
+import Vector from '../../utils/Vector.js'
 
 const {MouseButton} = Mouse
 /**
@@ -40,7 +41,9 @@ class DrawerRunner extends Runner {
     execute(mouse, menu) {
         const stateManager = StateManager.get()
         const world = World.get()
-        const position = world.getWorldPosition(mouse.scenePosition)
+        const scenePosition = new Vector(mouse.scenePosition)
+        const vector3d = world.getCamera().fromCameraScale(scenePosition)
+        const position = world.getWorldPosition(vector3d)
         const defaultStartEvent = (pMouse) => pMouse.isButtonPressed(MouseButton.LEFT)
         const defaultEndEvent = (pMouse) => pMouse.isButtonClicked(MouseButton.LEFT)
         const typeEntity = {
@@ -112,7 +115,7 @@ class DrawerRunner extends Runner {
     /**
      * Draw an entity.
      * @param {Vector} position
-     * @param {Entity} type
+     * @param {Function} type
      */
     draw(position, type) {
         const world = World.get()

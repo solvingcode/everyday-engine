@@ -138,10368 +138,12 @@ u&&(q.prototype[t]=function(){var t=this.__wrapped__,o=e?[1]:arguments,f=t insta
 var t=hl[n],r=/^(?:push|sort|unshift)$/.test(n)?"tap":"thru",e=/^(?:pop|shift)$/.test(n);q.prototype[n]=function(){var n=arguments;if(e&&!this.__chain__){var u=this.value();return t.apply(yh(u)?u:[],n)}return this[r](function(r){return t.apply(yh(r)?r:[],n)})}}),ee(Bt.prototype,function(n,t){var r=q[t];if(r){var e=r.name+"";yl.call(is,e)||(is[e]=[]),is[e].push({name:t,func:r})}}),is[Ju(Y,hn).name]=[{name:"wrapper",func:Y}],Bt.prototype.clone=Gt,Bt.prototype.reverse=Ht,Bt.prototype.value=Jt,q.prototype.at=Js,
 q.prototype.chain=Xo,q.prototype.commit=nf,q.prototype.next=tf,q.prototype.plant=ef,q.prototype.reverse=uf,q.prototype.toJSON=q.prototype.valueOf=q.prototype.value=of,q.prototype.first=q.prototype.head,Ll&&(q.prototype[Ll]=rf),q},ge=ve();"function"==typeof define&&"object"==typeof define.amd&&define.amd?(Xr._=ge,define(function(){return ge})):te?((te.exports=ge)._=ge,ne._=ge):Xr._=ge}).call(this);
 !function(e){if("object"==typeof exports&&"undefined"!=typeof module)module.exports=e();else if("function"==typeof define&&define.amd)define([],e);else{var f;"undefined"!=typeof window?f=window:"undefined"!=typeof global?f=global:"undefined"!=typeof self&&(f=self),f.decomp=e()}}(function(){return function e(f,o,n){function d(t,l){if(!o[t]){if(!f[t]){var u="function"==typeof require&&require;if(!l&&u)return u(t,!0);if(i)return i(t,!0);throw new Error("Cannot find module '"+t+"'")}var p=o[t]={exports:{}};f[t][0].call(p.exports,function(e){var o=f[t][1][e];return d(o?o:e)},p,p.exports,e,f,o,n)}return o[t].exports}for(var i="function"==typeof require&&require,t=0;t<n.length;t++)d(n[t]);return d}({1:[function(e,f,o){function n(e,f,o){o=o||0;var n,d,i,t,l,u,p,s=[0,0];return n=e[1][1]-e[0][1],d=e[0][0]-e[1][0],i=n*e[0][0]+d*e[0][1],t=f[1][1]-f[0][1],l=f[0][0]-f[1][0],u=t*f[0][0]+l*f[0][1],p=n*l-t*d,D(p,0,o)||(s[0]=(l*i-d*u)/p,s[1]=(n*u-t*i)/p),s}function d(e,f,o,n){var d=f[0]-e[0],i=f[1]-e[1],t=n[0]-o[0],l=n[1]-o[1];if(t*i-l*d===0)return!1;var u=(d*(o[1]-e[1])+i*(e[0]-o[0]))/(t*i-l*d),p=(t*(e[1]-o[1])+l*(o[0]-e[0]))/(l*d-t*i);return u>=0&&1>=u&&p>=0&&1>=p}function i(e,f,o){return(f[0]-e[0])*(o[1]-e[1])-(o[0]-e[0])*(f[1]-e[1])}function t(e,f,o){return i(e,f,o)>0}function l(e,f,o){return i(e,f,o)>=0}function u(e,f,o){return i(e,f,o)<0}function p(e,f,o){return i(e,f,o)<=0}function s(e,f,o,n){if(n){var d=F,t=G;d[0]=f[0]-e[0],d[1]=f[1]-e[1],t[0]=o[0]-f[0],t[1]=o[1]-f[1];var l=d[0]*t[0]+d[1]*t[1],u=Math.sqrt(d[0]*d[0]+d[1]*d[1]),p=Math.sqrt(t[0]*t[0]+t[1]*t[1]),s=Math.acos(l/(u*p));return n>s}return 0===i(e,f,o)}function c(e,f){var o=f[0]-e[0],n=f[1]-e[1];return o*o+n*n}function y(e,f){var o=e.length;return e[0>f?f%o+o:f%o]}function a(e){e.length=0}function m(e,f,o,n){for(var d=o;n>d;d++)e.push(f[d])}function r(e){for(var f=0,o=e,n=1;n<e.length;++n)(o[n][1]<o[f][1]||o[n][1]===o[f][1]&&o[n][0]>o[f][0])&&(f=n);return t(y(e,f-1),y(e,f),y(e,f+1))?!1:(w(e),!0)}function w(e){for(var f=[],o=e.length,n=0;n!==o;n++)f.push(e.pop());for(var n=0;n!==o;n++)e[n]=f[n]}function b(e,f){return u(y(e,f-1),y(e,f),y(e,f+1))}function g(e,f,o){var d,i,t=H,u=I;if(l(y(e,f+1),y(e,f),y(e,o))&&p(y(e,f-1),y(e,f),y(e,o)))return!1;i=c(y(e,f),y(e,o));for(var s=0;s!==e.length;++s)if((s+1)%e.length!==f&&s!==f&&l(y(e,f),y(e,o),y(e,s+1))&&p(y(e,f),y(e,o),y(e,s))&&(t[0]=y(e,f),t[1]=y(e,o),u[0]=y(e,s),u[1]=y(e,s+1),d=n(t,u),c(y(e,f),d)<i))return!1;return!0}function x(e,f,o){for(var n=0;n!==e.length;++n)if(n!==f&&n!==o&&(n+1)%e.length!==f&&(n+1)%e.length!==o&&d(y(e,f),y(e,o),y(e,n),y(e,n+1)))return!1;return!0}function j(e,f,o,n){var d=n||[];if(a(d),o>f)for(var i=f;o>=i;i++)d.push(e[i]);else{for(var i=0;o>=i;i++)d.push(e[i]);for(var i=f;i<e.length;i++)d.push(e[i])}return d}function v(e){for(var f=[],o=[],n=[],d=[],i=Number.MAX_VALUE,t=0;t<e.length;++t)if(b(e,t))for(var l=0;l<e.length;++l)if(g(e,t,l)){o=v(j(e,t,l,d)),n=v(j(e,l,t,d));for(var u=0;u<n.length;u++)o.push(n[u]);o.length<i&&(f=o,i=o.length,f.push([y(e,t),y(e,l)]))}return f}function h(e){var f=v(e);return f.length>0?k(e,f):[e]}function k(e,f){if(0===f.length)return[e];if(f instanceof Array&&f.length&&f[0]instanceof Array&&2===f[0].length&&f[0][0]instanceof Array){for(var o=[e],n=0;n<f.length;n++)for(var d=f[n],i=0;i<o.length;i++){var t=o[i],l=k(t,d);if(l){o.splice(i,1),o.push(l[0],l[1]);break}}return o}var d=f,n=e.indexOf(d[0]),i=e.indexOf(d[1]);return-1!==n&&-1!==i?[j(e,n,i),j(e,i,n)]:!1}function q(e){var f,o=e;for(f=0;f<o.length-1;f++)for(var n=0;f-1>n;n++)if(d(o[f],o[f+1],o[n],o[n+1]))return!1;for(f=1;f<o.length-2;f++)if(d(o[0],o[o.length-1],o[f],o[f+1]))return!1;return!0}function z(e,f,o,n,d){d=d||0;var i=f[1]-e[1],t=e[0]-f[0],l=i*e[0]+t*e[1],u=n[1]-o[1],p=o[0]-n[0],s=u*o[0]+p*o[1],c=i*p-u*t;return D(c,0,d)?[0,0]:[(p*l-t*s)/c,(i*s-u*l)/c]}function A(e,f,o,n,d,i,s){i=i||100,s=s||0,d=d||25,f="undefined"!=typeof f?f:[],o=o||[],n=n||[];var a=[0,0],r=[0,0],w=[0,0],g=0,j=0,v=0,h=0,k=0,q=0,B=0,C=[],D=[],E=e,F=e;if(F.length<3)return f;if(s++,s>i)return console.warn("quickDecomp: max level ("+i+") reached."),f;for(var G=0;G<e.length;++G)if(b(E,G)){o.push(E[G]),g=j=Number.MAX_VALUE;for(var H=0;H<e.length;++H)t(y(E,G-1),y(E,G),y(E,H))&&p(y(E,G-1),y(E,G),y(E,H-1))&&(w=z(y(E,G-1),y(E,G),y(E,H),y(E,H-1)),u(y(E,G+1),y(E,G),w)&&(v=c(E[G],w),j>v&&(j=v,r=w,q=H))),t(y(E,G+1),y(E,G),y(E,H+1))&&p(y(E,G+1),y(E,G),y(E,H))&&(w=z(y(E,G+1),y(E,G),y(E,H),y(E,H+1)),t(y(E,G-1),y(E,G),w)&&(v=c(E[G],w),g>v&&(g=v,a=w,k=H)));if(q===(k+1)%e.length)w[0]=(r[0]+a[0])/2,w[1]=(r[1]+a[1])/2,n.push(w),k>G?(m(C,E,G,k+1),C.push(w),D.push(w),0!==q&&m(D,E,q,E.length),m(D,E,0,G+1)):(0!==G&&m(C,E,G,E.length),m(C,E,0,k+1),C.push(w),D.push(w),m(D,E,q,G+1));else{if(q>k&&(k+=e.length),h=Number.MAX_VALUE,q>k)return f;for(var H=q;k>=H;++H)l(y(E,G-1),y(E,G),y(E,H))&&p(y(E,G+1),y(E,G),y(E,H))&&(v=c(y(E,G),y(E,H)),h>v&&x(E,G,H)&&(h=v,B=H%e.length));B>G?(m(C,E,G,B+1),0!==B&&m(D,E,B,F.length),m(D,E,0,G+1)):(0!==G&&m(C,E,G,F.length),m(C,E,0,B+1),m(D,E,B,G+1))}return C.length<D.length?(A(C,f,o,n,d,i,s),A(D,f,o,n,d,i,s)):(A(D,f,o,n,d,i,s),A(C,f,o,n,d,i,s)),f}return f.push(e),f}function B(e,f){for(var o=0,n=e.length-1;e.length>3&&n>=0;--n)s(y(e,n-1),y(e,n),y(e,n+1),f)&&(e.splice(n%e.length,1),o++);return o}function C(e,f){for(var o=e.length-1;o>=1;--o)for(var n=e[o],d=o-1;d>=0;--d)E(n,e[d],f)&&e.splice(o,1)}function D(e,f,o){return o=o||0,Math.abs(e-f)<=o}function E(e,f,o){return D(e[0],f[0],o)&&D(e[1],f[1],o)}f.exports={decomp:h,quickDecomp:A,isSimple:q,removeCollinearPoints:B,removeDuplicatePoints:C,makeCCW:r};var F=[],G=[],H=[],I=[]},{}]},{},[1])(1)});
-/**
-* matter-js 0.14.2 by @liabru 2018-06-11
-* http://brm.io/matter-js/
-* License MIT
-*/
-
-/**
- * The MIT License (MIT)
- * 
- * Copyright (c) Liam Brummitt and contributors.
- * 
- * Permission is hereby granted, free of charge, to any person obtaining a copy
- * of this software and associated documentation files (the "Software"), to deal
- * in the Software without restriction, including without limitation the rights
- * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- * copies of the Software, and to permit persons to whom the Software is
- * furnished to do so, subject to the following conditions:
- * 
- * The above copyright notice and this permission notice shall be included in
- * all copies or substantial portions of the Software.
- * 
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
- * THE SOFTWARE.
+/*!
+ * matter-js 0.16.0 by @liabru 2021-01-17
+ * http://brm.io/matter-js/
+ * License MIT
  */
-
-(function(f){if(typeof exports==="object"&&typeof module!=="undefined"){module.exports=f()}else if(typeof define==="function"&&define.amd){define([],f)}else{var g;if(typeof window!=="undefined"){g=window}else if(typeof global!=="undefined"){g=global}else if(typeof self!=="undefined"){g=self}else{g=this}g.Matter = f()}})(function(){var define,module,exports;return (function(){function r(e,n,t){function o(i,f){if(!n[i]){if(!e[i]){var c="function"==typeof require&&require;if(!f&&c)return c(i,!0);if(u)return u(i,!0);var a=new Error("Cannot find module '"+i+"'");throw a.code="MODULE_NOT_FOUND",a}var p=n[i]={exports:{}};e[i][0].call(p.exports,function(r){var n=e[i][1][r];return o(n||r)},p,p.exports,r,e,n,t)}return n[i].exports}for(var u="function"==typeof require&&require,i=0;i<t.length;i++)o(t[i]);return o}return r})()({1:[function(_dereq_,module,exports){
-/**
-* The `Matter.Body` module contains methods for creating and manipulating body models.
-* A `Matter.Body` is a rigid body that can be simulated by a `Matter.Engine`.
-* Factories for commonly used body configurations (such as rectangles, circles and other polygons) can be found in the module `Matter.Bodies`.
-*
-* See the included usage [examples](https://github.com/liabru/matter-js/tree/master/examples).
-
-* @class Body
-*/
-
-var Body = {};
-
-module.exports = Body;
-
-var Vertices = _dereq_('../geometry/Vertices');
-var Vector = _dereq_('../geometry/Vector');
-var Sleeping = _dereq_('../core/Sleeping');
-var Render = _dereq_('../render/Render');
-var Common = _dereq_('../core/Common');
-var Bounds = _dereq_('../geometry/Bounds');
-var Axes = _dereq_('../geometry/Axes');
-
-(function() {
-
-    Body._inertiaScale = 4;
-    Body._nextCollidingGroupId = 1;
-    Body._nextNonCollidingGroupId = -1;
-    Body._nextCategory = 0x0001;
-
-    /**
-     * Creates a new rigid body model. The options parameter is an object that specifies any properties you wish to override the defaults.
-     * All properties have default values, and many are pre-calculated automatically based on other properties.
-     * Vertices must be specified in clockwise order.
-     * See the properties section below for detailed information on what you can pass via the `options` object.
-     * @method create
-     * @param {} options
-     * @return {body} body
-     */
-    Body.create = function(options) {
-        var defaults = {
-            id: Common.nextId(),
-            type: 'body',
-            label: 'Body',
-            parts: [],
-            plugin: {},
-            angle: 0,
-            vertices: Vertices.fromPath('L 0 0 L 40 0 L 40 40 L 0 40'),
-            position: { x: 0, y: 0 },
-            force: { x: 0, y: 0 },
-            torque: 0,
-            positionImpulse: { x: 0, y: 0 },
-            constraintImpulse: { x: 0, y: 0, angle: 0 },
-            totalContacts: 0,
-            speed: 0,
-            angularSpeed: 0,
-            velocity: { x: 0, y: 0 },
-            angularVelocity: 0,
-            isSensor: false,
-            isStatic: false,
-            isSleeping: false,
-            motion: 0,
-            sleepThreshold: 60,
-            density: 0.001,
-            restitution: 0,
-            friction: 0.1,
-            frictionStatic: 0.5,
-            frictionAir: 0.01,
-            collisionFilter: {
-                category: 0x0001,
-                mask: 0xFFFFFFFF,
-                group: 0
-            },
-            slop: 0.05,
-            timeScale: 1,
-            render: {
-                visible: true,
-                opacity: 1,
-                sprite: {
-                    xScale: 1,
-                    yScale: 1,
-                    xOffset: 0,
-                    yOffset: 0
-                },
-                lineWidth: 0
-            }
-        };
-
-        var body = Common.extend(defaults, options);
-
-        _initProperties(body, options);
-
-        return body;
-    };
-
-    /**
-     * Returns the next unique group index for which bodies will collide.
-     * If `isNonColliding` is `true`, returns the next unique group index for which bodies will _not_ collide.
-     * See `body.collisionFilter` for more information.
-     * @method nextGroup
-     * @param {bool} [isNonColliding=false]
-     * @return {Number} Unique group index
-     */
-    Body.nextGroup = function(isNonColliding) {
-        if (isNonColliding)
-            return Body._nextNonCollidingGroupId--;
-
-        return Body._nextCollidingGroupId++;
-    };
-
-    /**
-     * Returns the next unique category bitfield (starting after the initial default category `0x0001`).
-     * There are 32 available. See `body.collisionFilter` for more information.
-     * @method nextCategory
-     * @return {Number} Unique category bitfield
-     */
-    Body.nextCategory = function() {
-        Body._nextCategory = Body._nextCategory << 1;
-        return Body._nextCategory;
-    };
-
-    /**
-     * Initialises body properties.
-     * @method _initProperties
-     * @private
-     * @param {body} body
-     * @param {} [options]
-     */
-    var _initProperties = function(body, options) {
-        options = options || {};
-
-        // init required properties (order is important)
-        Body.set(body, {
-            bounds: body.bounds || Bounds.create(body.vertices),
-            positionPrev: body.positionPrev || Vector.clone(body.position),
-            anglePrev: body.anglePrev || body.angle,
-            vertices: body.vertices,
-            parts: body.parts || [body],
-            isStatic: body.isStatic,
-            isSleeping: body.isSleeping,
-            parent: body.parent || body
-        });
-
-        Vertices.rotate(body.vertices, body.angle, body.position);
-        Axes.rotate(body.axes, body.angle);
-        Bounds.update(body.bounds, body.vertices, body.velocity);
-
-        // allow options to override the automatically calculated properties
-        Body.set(body, {
-            axes: options.axes || body.axes,
-            area: options.area || body.area,
-            mass: options.mass || body.mass,
-            inertia: options.inertia || body.inertia
-        });
-
-        // render properties
-        var defaultFillStyle = (body.isStatic ? '#2e2b44' : Common.choose(['#006BA6', '#0496FF', '#FFBC42', '#D81159', '#8F2D56'])),
-            defaultStrokeStyle = '#000';
-        body.render.fillStyle = body.render.fillStyle || defaultFillStyle;
-        body.render.strokeStyle = body.render.strokeStyle || defaultStrokeStyle;
-        body.render.sprite.xOffset += -(body.bounds.min.x - body.position.x) / (body.bounds.max.x - body.bounds.min.x);
-        body.render.sprite.yOffset += -(body.bounds.min.y - body.position.y) / (body.bounds.max.y - body.bounds.min.y);
-    };
-
-    /**
-     * Given a property and a value (or map of), sets the property(s) on the body, using the appropriate setter functions if they exist.
-     * Prefer to use the actual setter functions in performance critical situations.
-     * @method set
-     * @param {body} body
-     * @param {} settings A property name (or map of properties and values) to set on the body.
-     * @param {} value The value to set if `settings` is a single property name.
-     */
-    Body.set = function(body, settings, value) {
-        var property;
-
-        if (typeof settings === 'string') {
-            property = settings;
-            settings = {};
-            settings[property] = value;
-        }
-
-        for (property in settings) {
-            value = settings[property];
-
-            if (!settings.hasOwnProperty(property))
-                continue;
-
-            switch (property) {
-
-            case 'isStatic':
-                Body.setStatic(body, value);
-                break;
-            case 'isSleeping':
-                Sleeping.set(body, value);
-                break;
-            case 'mass':
-                Body.setMass(body, value);
-                break;
-            case 'density':
-                Body.setDensity(body, value);
-                break;
-            case 'inertia':
-                Body.setInertia(body, value);
-                break;
-            case 'vertices':
-                Body.setVertices(body, value);
-                break;
-            case 'position':
-                Body.setPosition(body, value);
-                break;
-            case 'angle':
-                Body.setAngle(body, value);
-                break;
-            case 'velocity':
-                Body.setVelocity(body, value);
-                break;
-            case 'angularVelocity':
-                Body.setAngularVelocity(body, value);
-                break;
-            case 'parts':
-                Body.setParts(body, value);
-                break;
-            default:
-                body[property] = value;
-
-            }
-        }
-    };
-
-    /**
-     * Sets the body as static, including isStatic flag and setting mass and inertia to Infinity.
-     * @method setStatic
-     * @param {body} body
-     * @param {bool} isStatic
-     */
-    Body.setStatic = function(body, isStatic) {
-        for (var i = 0; i < body.parts.length; i++) {
-            var part = body.parts[i];
-            part.isStatic = isStatic;
-
-            if (isStatic) {
-                part._original = {
-                    restitution: part.restitution,
-                    friction: part.friction,
-                    mass: part.mass,
-                    inertia: part.inertia,
-                    density: part.density,
-                    inverseMass: part.inverseMass,
-                    inverseInertia: part.inverseInertia
-                };
-
-                part.restitution = 0;
-                part.friction = 1;
-                part.mass = part.inertia = part.density = Infinity;
-                part.inverseMass = part.inverseInertia = 0;
-
-                part.positionPrev.x = part.position.x;
-                part.positionPrev.y = part.position.y;
-                part.anglePrev = part.angle;
-                part.angularVelocity = 0;
-                part.speed = 0;
-                part.angularSpeed = 0;
-                part.motion = 0;
-            } else if (part._original) {
-                part.restitution = part._original.restitution;
-                part.friction = part._original.friction;
-                part.mass = part._original.mass;
-                part.inertia = part._original.inertia;
-                part.density = part._original.density;
-                part.inverseMass = part._original.inverseMass;
-                part.inverseInertia = part._original.inverseInertia;
-
-                delete part._original;
-            }
-        }
-    };
-
-    /**
-     * Sets the mass of the body. Inverse mass, density and inertia are automatically updated to reflect the change.
-     * @method setMass
-     * @param {body} body
-     * @param {number} mass
-     */
-    Body.setMass = function(body, mass) {
-        var moment = body.inertia / (body.mass / 6);
-        body.inertia = moment * (mass / 6);
-        body.inverseInertia = 1 / body.inertia;
-
-        body.mass = mass;
-        body.inverseMass = 1 / body.mass;
-        body.density = body.mass / body.area;
-    };
-
-    /**
-     * Sets the density of the body. Mass and inertia are automatically updated to reflect the change.
-     * @method setDensity
-     * @param {body} body
-     * @param {number} density
-     */
-    Body.setDensity = function(body, density) {
-        Body.setMass(body, density * body.area);
-        body.density = density;
-    };
-
-    /**
-     * Sets the moment of inertia (i.e. second moment of area) of the body of the body. 
-     * Inverse inertia is automatically updated to reflect the change. Mass is not changed.
-     * @method setInertia
-     * @param {body} body
-     * @param {number} inertia
-     */
-    Body.setInertia = function(body, inertia) {
-        body.inertia = inertia;
-        body.inverseInertia = 1 / body.inertia;
-    };
-
-    /**
-     * Sets the body's vertices and updates body properties accordingly, including inertia, area and mass (with respect to `body.density`).
-     * Vertices will be automatically transformed to be orientated around their centre of mass as the origin.
-     * They are then automatically translated to world space based on `body.position`.
-     *
-     * The `vertices` argument should be passed as an array of `Matter.Vector` points (or a `Matter.Vertices` array).
-     * Vertices must form a convex hull, concave hulls are not supported.
-     *
-     * @method setVertices
-     * @param {body} body
-     * @param {vector[]} vertices
-     */
-    Body.setVertices = function(body, vertices) {
-        // change vertices
-        if (vertices[0].body === body) {
-            body.vertices = vertices;
-        } else {
-            body.vertices = Vertices.create(vertices, body);
-        }
-
-        // update properties
-        body.axes = Axes.fromVertices(body.vertices);
-        body.area = Vertices.area(body.vertices);
-        Body.setMass(body, body.density * body.area);
-
-        // orient vertices around the centre of mass at origin (0, 0)
-        var centre = Vertices.centre(body.vertices);
-        Vertices.translate(body.vertices, centre, -1);
-
-        // update inertia while vertices are at origin (0, 0)
-        Body.setInertia(body, Body._inertiaScale * Vertices.inertia(body.vertices, body.mass));
-
-        // update geometry
-        Vertices.translate(body.vertices, body.position);
-        Bounds.update(body.bounds, body.vertices, body.velocity);
-    };
-
-    /**
-     * Sets the parts of the `body` and updates mass, inertia and centroid.
-     * Each part will have its parent set to `body`.
-     * By default the convex hull will be automatically computed and set on `body`, unless `autoHull` is set to `false.`
-     * Note that this method will ensure that the first part in `body.parts` will always be the `body`.
-     * @method setParts
-     * @param {body} body
-     * @param [body] parts
-     * @param {bool} [autoHull=true]
-     */
-    Body.setParts = function(body, parts, autoHull) {
-        var i;
-
-        // add all the parts, ensuring that the first part is always the parent body
-        parts = parts.slice(0);
-        body.parts.length = 0;
-        body.parts.push(body);
-        body.parent = body;
-
-        for (i = 0; i < parts.length; i++) {
-            var part = parts[i];
-            if (part !== body) {
-                part.parent = body;
-                body.parts.push(part);
-            }
-        }
-
-        if (body.parts.length === 1)
-            return;
-
-        autoHull = typeof autoHull !== 'undefined' ? autoHull : true;
-
-        // find the convex hull of all parts to set on the parent body
-        if (autoHull) {
-            var vertices = [];
-            for (i = 0; i < parts.length; i++) {
-                vertices = vertices.concat(parts[i].vertices);
-            }
-
-            Vertices.clockwiseSort(vertices);
-
-            var hull = Vertices.hull(vertices),
-                hullCentre = Vertices.centre(hull);
-
-            Body.setVertices(body, hull);
-            Vertices.translate(body.vertices, hullCentre);
-        }
-
-        // sum the properties of all compound parts of the parent body
-        var total = Body._totalProperties(body);
-
-        body.area = total.area;
-        body.parent = body;
-        body.position.x = total.centre.x;
-        body.position.y = total.centre.y;
-        body.positionPrev.x = total.centre.x;
-        body.positionPrev.y = total.centre.y;
-
-        Body.setMass(body, total.mass);
-        Body.setInertia(body, total.inertia);
-        Body.setPosition(body, total.centre);
-    };
-
-    /**
-     * Sets the position of the body instantly. Velocity, angle, force etc. are unchanged.
-     * @method setPosition
-     * @param {body} body
-     * @param {vector} position
-     */
-    Body.setPosition = function(body, position) {
-        var delta = Vector.sub(position, body.position);
-        body.positionPrev.x += delta.x;
-        body.positionPrev.y += delta.y;
-
-        for (var i = 0; i < body.parts.length; i++) {
-            var part = body.parts[i];
-            part.position.x += delta.x;
-            part.position.y += delta.y;
-            Vertices.translate(part.vertices, delta);
-            Bounds.update(part.bounds, part.vertices, body.velocity);
-        }
-    };
-
-    /**
-     * Sets the angle of the body instantly. Angular velocity, position, force etc. are unchanged.
-     * @method setAngle
-     * @param {body} body
-     * @param {number} angle
-     */
-    Body.setAngle = function(body, angle) {
-        var delta = angle - body.angle;
-        body.anglePrev += delta;
-
-        for (var i = 0; i < body.parts.length; i++) {
-            var part = body.parts[i];
-            part.angle += delta;
-            Vertices.rotate(part.vertices, delta, body.position);
-            Axes.rotate(part.axes, delta);
-            Bounds.update(part.bounds, part.vertices, body.velocity);
-            if (i > 0) {
-                Vector.rotateAbout(part.position, delta, body.position, part.position);
-            }
-        }
-    };
-
-    /**
-     * Sets the linear velocity of the body instantly. Position, angle, force etc. are unchanged. See also `Body.applyForce`.
-     * @method setVelocity
-     * @param {body} body
-     * @param {vector} velocity
-     */
-    Body.setVelocity = function(body, velocity) {
-        body.positionPrev.x = body.position.x - velocity.x;
-        body.positionPrev.y = body.position.y - velocity.y;
-        body.velocity.x = velocity.x;
-        body.velocity.y = velocity.y;
-        body.speed = Vector.magnitude(body.velocity);
-    };
-
-    /**
-     * Sets the angular velocity of the body instantly. Position, angle, force etc. are unchanged. See also `Body.applyForce`.
-     * @method setAngularVelocity
-     * @param {body} body
-     * @param {number} velocity
-     */
-    Body.setAngularVelocity = function(body, velocity) {
-        body.anglePrev = body.angle - velocity;
-        body.angularVelocity = velocity;
-        body.angularSpeed = Math.abs(body.angularVelocity);
-    };
-
-    /**
-     * Moves a body by a given vector relative to its current position, without imparting any velocity.
-     * @method translate
-     * @param {body} body
-     * @param {vector} translation
-     */
-    Body.translate = function(body, translation) {
-        Body.setPosition(body, Vector.add(body.position, translation));
-    };
-
-    /**
-     * Rotates a body by a given angle relative to its current angle, without imparting any angular velocity.
-     * @method rotate
-     * @param {body} body
-     * @param {number} rotation
-     * @param {vector} [point]
-     */
-    Body.rotate = function(body, rotation, point) {
-        if (!point) {
-            Body.setAngle(body, body.angle + rotation);
-        } else {
-            var cos = Math.cos(rotation),
-                sin = Math.sin(rotation),
-                dx = body.position.x - point.x,
-                dy = body.position.y - point.y;
-                
-            Body.setPosition(body, {
-                x: point.x + (dx * cos - dy * sin),
-                y: point.y + (dx * sin + dy * cos)
-            });
-
-            Body.setAngle(body, body.angle + rotation);
-        }
-    };
-
-    /**
-     * Scales the body, including updating physical properties (mass, area, axes, inertia), from a world-space point (default is body centre).
-     * @method scale
-     * @param {body} body
-     * @param {number} scaleX
-     * @param {number} scaleY
-     * @param {vector} [point]
-     */
-    Body.scale = function(body, scaleX, scaleY, point) {
-        var totalArea = 0,
-            totalInertia = 0;
-
-        point = point || body.position;
-
-        for (var i = 0; i < body.parts.length; i++) {
-            var part = body.parts[i];
-
-            // scale vertices
-            Vertices.scale(part.vertices, scaleX, scaleY, point);
-
-            // update properties
-            part.axes = Axes.fromVertices(part.vertices);
-            part.area = Vertices.area(part.vertices);
-            Body.setMass(part, body.density * part.area);
-
-            // update inertia (requires vertices to be at origin)
-            Vertices.translate(part.vertices, { x: -part.position.x, y: -part.position.y });
-            Body.setInertia(part, Body._inertiaScale * Vertices.inertia(part.vertices, part.mass));
-            Vertices.translate(part.vertices, { x: part.position.x, y: part.position.y });
-
-            if (i > 0) {
-                totalArea += part.area;
-                totalInertia += part.inertia;
-            }
-
-            // scale position
-            part.position.x = point.x + (part.position.x - point.x) * scaleX;
-            part.position.y = point.y + (part.position.y - point.y) * scaleY;
-
-            // update bounds
-            Bounds.update(part.bounds, part.vertices, body.velocity);
-        }
-
-        // handle parent body
-        if (body.parts.length > 1) {
-            body.area = totalArea;
-
-            if (!body.isStatic) {
-                Body.setMass(body, body.density * totalArea);
-                Body.setInertia(body, totalInertia);
-            }
-        }
-
-        // handle circles
-        if (body.circleRadius) { 
-            if (scaleX === scaleY) {
-                body.circleRadius *= scaleX;
-            } else {
-                // body is no longer a circle
-                body.circleRadius = null;
-            }
-        }
-    };
-
-    /**
-     * Performs a simulation step for the given `body`, including updating position and angle using Verlet integration.
-     * @method update
-     * @param {body} body
-     * @param {number} deltaTime
-     * @param {number} timeScale
-     * @param {number} correction
-     */
-    Body.update = function(body, deltaTime, timeScale, correction) {
-        var deltaTimeSquared = Math.pow(deltaTime * timeScale * body.timeScale, 2);
-
-        // from the previous step
-        var frictionAir = 1 - body.frictionAir * timeScale * body.timeScale,
-            velocityPrevX = body.position.x - body.positionPrev.x,
-            velocityPrevY = body.position.y - body.positionPrev.y;
-
-        // update velocity with Verlet integration
-        body.velocity.x = (velocityPrevX * frictionAir * correction) + (body.force.x / body.mass) * deltaTimeSquared;
-        body.velocity.y = (velocityPrevY * frictionAir * correction) + (body.force.y / body.mass) * deltaTimeSquared;
-
-        body.positionPrev.x = body.position.x;
-        body.positionPrev.y = body.position.y;
-        body.position.x += body.velocity.x;
-        body.position.y += body.velocity.y;
-
-        // update angular velocity with Verlet integration
-        body.angularVelocity = ((body.angle - body.anglePrev) * frictionAir * correction) + (body.torque / body.inertia) * deltaTimeSquared;
-        body.anglePrev = body.angle;
-        body.angle += body.angularVelocity;
-
-        // track speed and acceleration
-        body.speed = Vector.magnitude(body.velocity);
-        body.angularSpeed = Math.abs(body.angularVelocity);
-
-        // transform the body geometry
-        for (var i = 0; i < body.parts.length; i++) {
-            var part = body.parts[i];
-
-            Vertices.translate(part.vertices, body.velocity);
-            
-            if (i > 0) {
-                part.position.x += body.velocity.x;
-                part.position.y += body.velocity.y;
-            }
-
-            if (body.angularVelocity !== 0) {
-                Vertices.rotate(part.vertices, body.angularVelocity, body.position);
-                Axes.rotate(part.axes, body.angularVelocity);
-                if (i > 0) {
-                    Vector.rotateAbout(part.position, body.angularVelocity, body.position, part.position);
-                }
-            }
-
-            Bounds.update(part.bounds, part.vertices, body.velocity);
-        }
-    };
-
-    /**
-     * Applies a force to a body from a given world-space position, including resulting torque.
-     * @method applyForce
-     * @param {body} body
-     * @param {vector} position
-     * @param {vector} force
-     */
-    Body.applyForce = function(body, position, force) {
-        body.force.x += force.x;
-        body.force.y += force.y;
-        var offset = { x: position.x - body.position.x, y: position.y - body.position.y };
-        body.torque += offset.x * force.y - offset.y * force.x;
-    };
-
-    /**
-     * Returns the sums of the properties of all compound parts of the parent body.
-     * @method _totalProperties
-     * @private
-     * @param {body} body
-     * @return {}
-     */
-    Body._totalProperties = function(body) {
-        // from equations at:
-        // https://ecourses.ou.edu/cgi-bin/ebook.cgi?doc=&topic=st&chap_sec=07.2&page=theory
-        // http://output.to/sideway/default.asp?qno=121100087
-
-        var properties = {
-            mass: 0,
-            area: 0,
-            inertia: 0,
-            centre: { x: 0, y: 0 }
-        };
-
-        // sum the properties of all compound parts of the parent body
-        for (var i = body.parts.length === 1 ? 0 : 1; i < body.parts.length; i++) {
-            var part = body.parts[i],
-                mass = part.mass !== Infinity ? part.mass : 1;
-
-            properties.mass += mass;
-            properties.area += part.area;
-            properties.inertia += part.inertia;
-            properties.centre = Vector.add(properties.centre, Vector.mult(part.position, mass));
-        }
-
-        properties.centre = Vector.div(properties.centre, properties.mass);
-
-        return properties;
-    };
-
-    /*
-    *
-    *  Events Documentation
-    *
-    */
-
-    /**
-    * Fired when a body starts sleeping (where `this` is the body).
-    *
-    * @event sleepStart
-    * @this {body} The body that has started sleeping
-    * @param {} event An event object
-    * @param {} event.source The source object of the event
-    * @param {} event.name The name of the event
-    */
-
-    /**
-    * Fired when a body ends sleeping (where `this` is the body).
-    *
-    * @event sleepEnd
-    * @this {body} The body that has ended sleeping
-    * @param {} event An event object
-    * @param {} event.source The source object of the event
-    * @param {} event.name The name of the event
-    */
-
-    /*
-    *
-    *  Properties Documentation
-    *
-    */
-
-    /**
-     * An integer `Number` uniquely identifying number generated in `Body.create` by `Common.nextId`.
-     *
-     * @property id
-     * @type number
-     */
-
-    /**
-     * A `String` denoting the type of object.
-     *
-     * @property type
-     * @type string
-     * @default "body"
-     * @readOnly
-     */
-
-    /**
-     * An arbitrary `String` name to help the user identify and manage bodies.
-     *
-     * @property label
-     * @type string
-     * @default "Body"
-     */
-
-    /**
-     * An array of bodies that make up this body. 
-     * The first body in the array must always be a self reference to the current body instance.
-     * All bodies in the `parts` array together form a single rigid compound body.
-     * Parts are allowed to overlap, have gaps or holes or even form concave bodies.
-     * Parts themselves should never be added to a `World`, only the parent body should be.
-     * Use `Body.setParts` when setting parts to ensure correct updates of all properties.
-     *
-     * @property parts
-     * @type body[]
-     */
-
-    /**
-     * An object reserved for storing plugin-specific properties.
-     *
-     * @property plugin
-     * @type {}
-     */
-
-    /**
-     * A self reference if the body is _not_ a part of another body.
-     * Otherwise this is a reference to the body that this is a part of.
-     * See `body.parts`.
-     *
-     * @property parent
-     * @type body
-     */
-
-    /**
-     * A `Number` specifying the angle of the body, in radians.
-     *
-     * @property angle
-     * @type number
-     * @default 0
-     */
-
-    /**
-     * An array of `Vector` objects that specify the convex hull of the rigid body.
-     * These should be provided about the origin `(0, 0)`. E.g.
-     *
-     *     [{ x: 0, y: 0 }, { x: 25, y: 50 }, { x: 50, y: 0 }]
-     *
-     * When passed via `Body.create`, the vertices are translated relative to `body.position` (i.e. world-space, and constantly updated by `Body.update` during simulation).
-     * The `Vector` objects are also augmented with additional properties required for efficient collision detection. 
-     *
-     * Other properties such as `inertia` and `bounds` are automatically calculated from the passed vertices (unless provided via `options`).
-     * Concave hulls are not currently supported. The module `Matter.Vertices` contains useful methods for working with vertices.
-     *
-     * @property vertices
-     * @type vector[]
-     */
-
-    /**
-     * A `Vector` that specifies the current world-space position of the body.
-     *
-     * @property position
-     * @type vector
-     * @default { x: 0, y: 0 }
-     */
-
-    /**
-     * A `Vector` that specifies the force to apply in the current step. It is zeroed after every `Body.update`. See also `Body.applyForce`.
-     *
-     * @property force
-     * @type vector
-     * @default { x: 0, y: 0 }
-     */
-
-    /**
-     * A `Number` that specifies the torque (turning force) to apply in the current step. It is zeroed after every `Body.update`.
-     *
-     * @property torque
-     * @type number
-     * @default 0
-     */
-
-    /**
-     * A `Number` that _measures_ the current speed of the body after the last `Body.update`. It is read-only and always positive (it's the magnitude of `body.velocity`).
-     *
-     * @readOnly
-     * @property speed
-     * @type number
-     * @default 0
-     */
-
-    /**
-     * A `Number` that _measures_ the current angular speed of the body after the last `Body.update`. It is read-only and always positive (it's the magnitude of `body.angularVelocity`).
-     *
-     * @readOnly
-     * @property angularSpeed
-     * @type number
-     * @default 0
-     */
-
-    /**
-     * A `Vector` that _measures_ the current velocity of the body after the last `Body.update`. It is read-only. 
-     * If you need to modify a body's velocity directly, you should either apply a force or simply change the body's `position` (as the engine uses position-Verlet integration).
-     *
-     * @readOnly
-     * @property velocity
-     * @type vector
-     * @default { x: 0, y: 0 }
-     */
-
-    /**
-     * A `Number` that _measures_ the current angular velocity of the body after the last `Body.update`. It is read-only. 
-     * If you need to modify a body's angular velocity directly, you should apply a torque or simply change the body's `angle` (as the engine uses position-Verlet integration).
-     *
-     * @readOnly
-     * @property angularVelocity
-     * @type number
-     * @default 0
-     */
-
-    /**
-     * A flag that indicates whether a body is considered static. A static body can never change position or angle and is completely fixed.
-     * If you need to set a body as static after its creation, you should use `Body.setStatic` as this requires more than just setting this flag.
-     *
-     * @property isStatic
-     * @type boolean
-     * @default false
-     */
-
-    /**
-     * A flag that indicates whether a body is a sensor. Sensor triggers collision events, but doesn't react with colliding body physically.
-     *
-     * @property isSensor
-     * @type boolean
-     * @default false
-     */
-
-    /**
-     * A flag that indicates whether the body is considered sleeping. A sleeping body acts similar to a static body, except it is only temporary and can be awoken.
-     * If you need to set a body as sleeping, you should use `Sleeping.set` as this requires more than just setting this flag.
-     *
-     * @property isSleeping
-     * @type boolean
-     * @default false
-     */
-
-    /**
-     * A `Number` that _measures_ the amount of movement a body currently has (a combination of `speed` and `angularSpeed`). It is read-only and always positive.
-     * It is used and updated by the `Matter.Sleeping` module during simulation to decide if a body has come to rest.
-     *
-     * @readOnly
-     * @property motion
-     * @type number
-     * @default 0
-     */
-
-    /**
-     * A `Number` that defines the number of updates in which this body must have near-zero velocity before it is set as sleeping by the `Matter.Sleeping` module (if sleeping is enabled by the engine).
-     *
-     * @property sleepThreshold
-     * @type number
-     * @default 60
-     */
-
-    /**
-     * A `Number` that defines the density of the body, that is its mass per unit area.
-     * If you pass the density via `Body.create` the `mass` property is automatically calculated for you based on the size (area) of the object.
-     * This is generally preferable to simply setting mass and allows for more intuitive definition of materials (e.g. rock has a higher density than wood).
-     *
-     * @property density
-     * @type number
-     * @default 0.001
-     */
-
-    /**
-     * A `Number` that defines the mass of the body, although it may be more appropriate to specify the `density` property instead.
-     * If you modify this value, you must also modify the `body.inverseMass` property (`1 / mass`).
-     *
-     * @property mass
-     * @type number
-     */
-
-    /**
-     * A `Number` that defines the inverse mass of the body (`1 / mass`).
-     * If you modify this value, you must also modify the `body.mass` property.
-     *
-     * @property inverseMass
-     * @type number
-     */
-
-    /**
-     * A `Number` that defines the moment of inertia (i.e. second moment of area) of the body.
-     * It is automatically calculated from the given convex hull (`vertices` array) and density in `Body.create`.
-     * If you modify this value, you must also modify the `body.inverseInertia` property (`1 / inertia`).
-     *
-     * @property inertia
-     * @type number
-     */
-
-    /**
-     * A `Number` that defines the inverse moment of inertia of the body (`1 / inertia`).
-     * If you modify this value, you must also modify the `body.inertia` property.
-     *
-     * @property inverseInertia
-     * @type number
-     */
-
-    /**
-     * A `Number` that defines the restitution (elasticity) of the body. The value is always positive and is in the range `(0, 1)`.
-     * A value of `0` means collisions may be perfectly inelastic and no bouncing may occur. 
-     * A value of `0.8` means the body may bounce back with approximately 80% of its kinetic energy.
-     * Note that collision response is based on _pairs_ of bodies, and that `restitution` values are _combined_ with the following formula:
-     *
-     *     Math.max(bodyA.restitution, bodyB.restitution)
-     *
-     * @property restitution
-     * @type number
-     * @default 0
-     */
-
-    /**
-     * A `Number` that defines the friction of the body. The value is always positive and is in the range `(0, 1)`.
-     * A value of `0` means that the body may slide indefinitely.
-     * A value of `1` means the body may come to a stop almost instantly after a force is applied.
-     *
-     * The effects of the value may be non-linear. 
-     * High values may be unstable depending on the body.
-     * The engine uses a Coulomb friction model including static and kinetic friction.
-     * Note that collision response is based on _pairs_ of bodies, and that `friction` values are _combined_ with the following formula:
-     *
-     *     Math.min(bodyA.friction, bodyB.friction)
-     *
-     * @property friction
-     * @type number
-     * @default 0.1
-     */
-
-    /**
-     * A `Number` that defines the static friction of the body (in the Coulomb friction model). 
-     * A value of `0` means the body will never 'stick' when it is nearly stationary and only dynamic `friction` is used.
-     * The higher the value (e.g. `10`), the more force it will take to initially get the body moving when nearly stationary.
-     * This value is multiplied with the `friction` property to make it easier to change `friction` and maintain an appropriate amount of static friction.
-     *
-     * @property frictionStatic
-     * @type number
-     * @default 0.5
-     */
-
-    /**
-     * A `Number` that defines the air friction of the body (air resistance). 
-     * A value of `0` means the body will never slow as it moves through space.
-     * The higher the value, the faster a body slows when moving through space.
-     * The effects of the value are non-linear. 
-     *
-     * @property frictionAir
-     * @type number
-     * @default 0.01
-     */
-
-    /**
-     * An `Object` that specifies the collision filtering properties of this body.
-     *
-     * Collisions between two bodies will obey the following rules:
-     * - If the two bodies have the same non-zero value of `collisionFilter.group`,
-     *   they will always collide if the value is positive, and they will never collide
-     *   if the value is negative.
-     * - If the two bodies have different values of `collisionFilter.group` or if one
-     *   (or both) of the bodies has a value of 0, then the category/mask rules apply as follows:
-     *
-     * Each body belongs to a collision category, given by `collisionFilter.category`. This
-     * value is used as a bit field and the category should have only one bit set, meaning that
-     * the value of this property is a power of two in the range [1, 2^31]. Thus, there are 32
-     * different collision categories available.
-     *
-     * Each body also defines a collision bitmask, given by `collisionFilter.mask` which specifies
-     * the categories it collides with (the value is the bitwise AND value of all these categories).
-     *
-     * Using the category/mask rules, two bodies `A` and `B` collide if each includes the other's
-     * category in its mask, i.e. `(categoryA & maskB) !== 0` and `(categoryB & maskA) !== 0`
-     * are both true.
-     *
-     * @property collisionFilter
-     * @type object
-     */
-
-    /**
-     * An Integer `Number`, that specifies the collision group this body belongs to.
-     * See `body.collisionFilter` for more information.
-     *
-     * @property collisionFilter.group
-     * @type object
-     * @default 0
-     */
-
-    /**
-     * A bit field that specifies the collision category this body belongs to.
-     * The category value should have only one bit set, for example `0x0001`.
-     * This means there are up to 32 unique collision categories available.
-     * See `body.collisionFilter` for more information.
-     *
-     * @property collisionFilter.category
-     * @type object
-     * @default 1
-     */
-
-    /**
-     * A bit mask that specifies the collision categories this body may collide with.
-     * See `body.collisionFilter` for more information.
-     *
-     * @property collisionFilter.mask
-     * @type object
-     * @default -1
-     */
-
-    /**
-     * A `Number` that specifies a tolerance on how far a body is allowed to 'sink' or rotate into other bodies.
-     * Avoid changing this value unless you understand the purpose of `slop` in physics engines.
-     * The default should generally suffice, although very large bodies may require larger values for stable stacking.
-     *
-     * @property slop
-     * @type number
-     * @default 0.05
-     */
-
-    /**
-     * A `Number` that allows per-body time scaling, e.g. a force-field where bodies inside are in slow-motion, while others are at full speed.
-     *
-     * @property timeScale
-     * @type number
-     * @default 1
-     */
-
-    /**
-     * An `Object` that defines the rendering properties to be consumed by the module `Matter.Render`.
-     *
-     * @property render
-     * @type object
-     */
-
-    /**
-     * A flag that indicates if the body should be rendered.
-     *
-     * @property render.visible
-     * @type boolean
-     * @default true
-     */
-
-    /**
-     * Sets the opacity to use when rendering.
-     *
-     * @property render.opacity
-     * @type number
-     * @default 1
-    */
-
-    /**
-     * An `Object` that defines the sprite properties to use when rendering, if any.
-     *
-     * @property render.sprite
-     * @type object
-     */
-
-    /**
-     * An `String` that defines the path to the image to use as the sprite texture, if any.
-     *
-     * @property render.sprite.texture
-     * @type string
-     */
-     
-    /**
-     * A `Number` that defines the scaling in the x-axis for the sprite, if any.
-     *
-     * @property render.sprite.xScale
-     * @type number
-     * @default 1
-     */
-
-    /**
-     * A `Number` that defines the scaling in the y-axis for the sprite, if any.
-     *
-     * @property render.sprite.yScale
-     * @type number
-     * @default 1
-     */
-
-     /**
-      * A `Number` that defines the offset in the x-axis for the sprite (normalised by texture width).
-      *
-      * @property render.sprite.xOffset
-      * @type number
-      * @default 0
-      */
-
-     /**
-      * A `Number` that defines the offset in the y-axis for the sprite (normalised by texture height).
-      *
-      * @property render.sprite.yOffset
-      * @type number
-      * @default 0
-      */
-
-    /**
-     * A `Number` that defines the line width to use when rendering the body outline (if a sprite is not defined).
-     * A value of `0` means no outline will be rendered.
-     *
-     * @property render.lineWidth
-     * @type number
-     * @default 0
-     */
-
-    /**
-     * A `String` that defines the fill style to use when rendering the body (if a sprite is not defined).
-     * It is the same as when using a canvas, so it accepts CSS style property values.
-     *
-     * @property render.fillStyle
-     * @type string
-     * @default a random colour
-     */
-
-    /**
-     * A `String` that defines the stroke style to use when rendering the body outline (if a sprite is not defined).
-     * It is the same as when using a canvas, so it accepts CSS style property values.
-     *
-     * @property render.strokeStyle
-     * @type string
-     * @default a random colour
-     */
-
-    /**
-     * An array of unique axis vectors (edge normals) used for collision detection.
-     * These are automatically calculated from the given convex hull (`vertices` array) in `Body.create`.
-     * They are constantly updated by `Body.update` during the simulation.
-     *
-     * @property axes
-     * @type vector[]
-     */
-     
-    /**
-     * A `Number` that _measures_ the area of the body's convex hull, calculated at creation by `Body.create`.
-     *
-     * @property area
-     * @type string
-     * @default 
-     */
-
-    /**
-     * A `Bounds` object that defines the AABB region for the body.
-     * It is automatically calculated from the given convex hull (`vertices` array) in `Body.create` and constantly updated by `Body.update` during simulation.
-     *
-     * @property bounds
-     * @type bounds
-     */
-
-})();
-
-},{"../core/Common":14,"../core/Sleeping":22,"../geometry/Axes":25,"../geometry/Bounds":26,"../geometry/Vector":28,"../geometry/Vertices":29,"../render/Render":31}],2:[function(_dereq_,module,exports){
-/**
-* The `Matter.Composite` module contains methods for creating and manipulating composite bodies.
-* A composite body is a collection of `Matter.Body`, `Matter.Constraint` and other `Matter.Composite`, therefore composites form a tree structure.
-* It is important to use the functions in this module to modify composites, rather than directly modifying their properties.
-* Note that the `Matter.World` object is also a type of `Matter.Composite` and as such all composite methods here can also operate on a `Matter.World`.
-*
-* See the included usage [examples](https://github.com/liabru/matter-js/tree/master/examples).
-*
-* @class Composite
-*/
-
-var Composite = {};
-
-module.exports = Composite;
-
-var Events = _dereq_('../core/Events');
-var Common = _dereq_('../core/Common');
-var Bounds = _dereq_('../geometry/Bounds');
-var Body = _dereq_('./Body');
-
-(function() {
-
-    /**
-     * Creates a new composite. The options parameter is an object that specifies any properties you wish to override the defaults.
-     * See the properites section below for detailed information on what you can pass via the `options` object.
-     * @method create
-     * @param {} [options]
-     * @return {composite} A new composite
-     */
-    Composite.create = function(options) {
-        return Common.extend({ 
-            id: Common.nextId(),
-            type: 'composite',
-            parent: null,
-            isModified: false,
-            bodies: [], 
-            constraints: [], 
-            composites: [],
-            label: 'Composite',
-            plugin: {}
-        }, options);
-    };
-
-    /**
-     * Sets the composite's `isModified` flag. 
-     * If `updateParents` is true, all parents will be set (default: false).
-     * If `updateChildren` is true, all children will be set (default: false).
-     * @method setModified
-     * @param {composite} composite
-     * @param {boolean} isModified
-     * @param {boolean} [updateParents=false]
-     * @param {boolean} [updateChildren=false]
-     */
-    Composite.setModified = function(composite, isModified, updateParents, updateChildren) {
-        composite.isModified = isModified;
-
-        if (updateParents && composite.parent) {
-            Composite.setModified(composite.parent, isModified, updateParents, updateChildren);
-        }
-
-        if (updateChildren) {
-            for(var i = 0; i < composite.composites.length; i++) {
-                var childComposite = composite.composites[i];
-                Composite.setModified(childComposite, isModified, updateParents, updateChildren);
-            }
-        }
-    };
-
-    /**
-     * Generic add function. Adds one or many body(s), constraint(s) or a composite(s) to the given composite.
-     * Triggers `beforeAdd` and `afterAdd` events on the `composite`.
-     * @method add
-     * @param {composite} composite
-     * @param {} object
-     * @return {composite} The original composite with the objects added
-     */
-    Composite.add = function(composite, object) {
-        var objects = [].concat(object);
-
-        Events.trigger(composite, 'beforeAdd', { object: object });
-
-        for (var i = 0; i < objects.length; i++) {
-            var obj = objects[i];
-
-            switch (obj.type) {
-
-            case 'body':
-                // skip adding compound parts
-                if (obj.parent !== obj) {
-                    Common.warn('Composite.add: skipped adding a compound body part (you must add its parent instead)');
-                    break;
-                }
-
-                Composite.addBody(composite, obj);
-                break;
-            case 'constraint':
-                Composite.addConstraint(composite, obj);
-                break;
-            case 'composite':
-                Composite.addComposite(composite, obj);
-                break;
-            case 'mouseConstraint':
-                Composite.addConstraint(composite, obj.constraint);
-                break;
-
-            }
-        }
-
-        Events.trigger(composite, 'afterAdd', { object: object });
-
-        return composite;
-    };
-
-    /**
-     * Generic remove function. Removes one or many body(s), constraint(s) or a composite(s) to the given composite.
-     * Optionally searching its children recursively.
-     * Triggers `beforeRemove` and `afterRemove` events on the `composite`.
-     * @method remove
-     * @param {composite} composite
-     * @param {} object
-     * @param {boolean} [deep=false]
-     * @return {composite} The original composite with the objects removed
-     */
-    Composite.remove = function(composite, object, deep) {
-        var objects = [].concat(object);
-
-        Events.trigger(composite, 'beforeRemove', { object: object });
-
-        for (var i = 0; i < objects.length; i++) {
-            var obj = objects[i];
-
-            switch (obj.type) {
-
-            case 'body':
-                Composite.removeBody(composite, obj, deep);
-                break;
-            case 'constraint':
-                Composite.removeConstraint(composite, obj, deep);
-                break;
-            case 'composite':
-                Composite.removeComposite(composite, obj, deep);
-                break;
-            case 'mouseConstraint':
-                Composite.removeConstraint(composite, obj.constraint);
-                break;
-
-            }
-        }
-
-        Events.trigger(composite, 'afterRemove', { object: object });
-
-        return composite;
-    };
-
-    /**
-     * Adds a composite to the given composite.
-     * @private
-     * @method addComposite
-     * @param {composite} compositeA
-     * @param {composite} compositeB
-     * @return {composite} The original compositeA with the objects from compositeB added
-     */
-    Composite.addComposite = function(compositeA, compositeB) {
-        compositeA.composites.push(compositeB);
-        compositeB.parent = compositeA;
-        Composite.setModified(compositeA, true, true, false);
-        return compositeA;
-    };
-
-    /**
-     * Removes a composite from the given composite, and optionally searching its children recursively.
-     * @private
-     * @method removeComposite
-     * @param {composite} compositeA
-     * @param {composite} compositeB
-     * @param {boolean} [deep=false]
-     * @return {composite} The original compositeA with the composite removed
-     */
-    Composite.removeComposite = function(compositeA, compositeB, deep) {
-        var position = Common.indexOf(compositeA.composites, compositeB);
-        if (position !== -1) {
-            Composite.removeCompositeAt(compositeA, position);
-            Composite.setModified(compositeA, true, true, false);
-        }
-
-        if (deep) {
-            for (var i = 0; i < compositeA.composites.length; i++){
-                Composite.removeComposite(compositeA.composites[i], compositeB, true);
-            }
-        }
-
-        return compositeA;
-    };
-
-    /**
-     * Removes a composite from the given composite.
-     * @private
-     * @method removeCompositeAt
-     * @param {composite} composite
-     * @param {number} position
-     * @return {composite} The original composite with the composite removed
-     */
-    Composite.removeCompositeAt = function(composite, position) {
-        composite.composites.splice(position, 1);
-        Composite.setModified(composite, true, true, false);
-        return composite;
-    };
-
-    /**
-     * Adds a body to the given composite.
-     * @private
-     * @method addBody
-     * @param {composite} composite
-     * @param {body} body
-     * @return {composite} The original composite with the body added
-     */
-    Composite.addBody = function(composite, body) {
-        composite.bodies.push(body);
-        Composite.setModified(composite, true, true, false);
-        return composite;
-    };
-
-    /**
-     * Removes a body from the given composite, and optionally searching its children recursively.
-     * @private
-     * @method removeBody
-     * @param {composite} composite
-     * @param {body} body
-     * @param {boolean} [deep=false]
-     * @return {composite} The original composite with the body removed
-     */
-    Composite.removeBody = function(composite, body, deep) {
-        var position = Common.indexOf(composite.bodies, body);
-        if (position !== -1) {
-            Composite.removeBodyAt(composite, position);
-            Composite.setModified(composite, true, true, false);
-        }
-
-        if (deep) {
-            for (var i = 0; i < composite.composites.length; i++){
-                Composite.removeBody(composite.composites[i], body, true);
-            }
-        }
-
-        return composite;
-    };
-
-    /**
-     * Removes a body from the given composite.
-     * @private
-     * @method removeBodyAt
-     * @param {composite} composite
-     * @param {number} position
-     * @return {composite} The original composite with the body removed
-     */
-    Composite.removeBodyAt = function(composite, position) {
-        composite.bodies.splice(position, 1);
-        Composite.setModified(composite, true, true, false);
-        return composite;
-    };
-
-    /**
-     * Adds a constraint to the given composite.
-     * @private
-     * @method addConstraint
-     * @param {composite} composite
-     * @param {constraint} constraint
-     * @return {composite} The original composite with the constraint added
-     */
-    Composite.addConstraint = function(composite, constraint) {
-        composite.constraints.push(constraint);
-        Composite.setModified(composite, true, true, false);
-        return composite;
-    };
-
-    /**
-     * Removes a constraint from the given composite, and optionally searching its children recursively.
-     * @private
-     * @method removeConstraint
-     * @param {composite} composite
-     * @param {constraint} constraint
-     * @param {boolean} [deep=false]
-     * @return {composite} The original composite with the constraint removed
-     */
-    Composite.removeConstraint = function(composite, constraint, deep) {
-        var position = Common.indexOf(composite.constraints, constraint);
-        if (position !== -1) {
-            Composite.removeConstraintAt(composite, position);
-        }
-
-        if (deep) {
-            for (var i = 0; i < composite.composites.length; i++){
-                Composite.removeConstraint(composite.composites[i], constraint, true);
-            }
-        }
-
-        return composite;
-    };
-
-    /**
-     * Removes a body from the given composite.
-     * @private
-     * @method removeConstraintAt
-     * @param {composite} composite
-     * @param {number} position
-     * @return {composite} The original composite with the constraint removed
-     */
-    Composite.removeConstraintAt = function(composite, position) {
-        composite.constraints.splice(position, 1);
-        Composite.setModified(composite, true, true, false);
-        return composite;
-    };
-
-    /**
-     * Removes all bodies, constraints and composites from the given composite.
-     * Optionally clearing its children recursively.
-     * @method clear
-     * @param {composite} composite
-     * @param {boolean} keepStatic
-     * @param {boolean} [deep=false]
-     */
-    Composite.clear = function(composite, keepStatic, deep) {
-        if (deep) {
-            for (var i = 0; i < composite.composites.length; i++){
-                Composite.clear(composite.composites[i], keepStatic, true);
-            }
-        }
-        
-        if (keepStatic) {
-            composite.bodies = composite.bodies.filter(function(body) { return body.isStatic; });
-        } else {
-            composite.bodies.length = 0;
-        }
-
-        composite.constraints.length = 0;
-        composite.composites.length = 0;
-        Composite.setModified(composite, true, true, false);
-
-        return composite;
-    };
-
-    /**
-     * Returns all bodies in the given composite, including all bodies in its children, recursively.
-     * @method allBodies
-     * @param {composite} composite
-     * @return {body[]} All the bodies
-     */
-    Composite.allBodies = function(composite) {
-        var bodies = [].concat(composite.bodies);
-
-        for (var i = 0; i < composite.composites.length; i++)
-            bodies = bodies.concat(Composite.allBodies(composite.composites[i]));
-
-        return bodies;
-    };
-
-    /**
-     * Returns all constraints in the given composite, including all constraints in its children, recursively.
-     * @method allConstraints
-     * @param {composite} composite
-     * @return {constraint[]} All the constraints
-     */
-    Composite.allConstraints = function(composite) {
-        var constraints = [].concat(composite.constraints);
-
-        for (var i = 0; i < composite.composites.length; i++)
-            constraints = constraints.concat(Composite.allConstraints(composite.composites[i]));
-
-        return constraints;
-    };
-
-    /**
-     * Returns all composites in the given composite, including all composites in its children, recursively.
-     * @method allComposites
-     * @param {composite} composite
-     * @return {composite[]} All the composites
-     */
-    Composite.allComposites = function(composite) {
-        var composites = [].concat(composite.composites);
-
-        for (var i = 0; i < composite.composites.length; i++)
-            composites = composites.concat(Composite.allComposites(composite.composites[i]));
-
-        return composites;
-    };
-
-    /**
-     * Searches the composite recursively for an object matching the type and id supplied, null if not found.
-     * @method get
-     * @param {composite} composite
-     * @param {number} id
-     * @param {string} type
-     * @return {object} The requested object, if found
-     */
-    Composite.get = function(composite, id, type) {
-        var objects,
-            object;
-
-        switch (type) {
-        case 'body':
-            objects = Composite.allBodies(composite);
-            break;
-        case 'constraint':
-            objects = Composite.allConstraints(composite);
-            break;
-        case 'composite':
-            objects = Composite.allComposites(composite).concat(composite);
-            break;
-        }
-
-        if (!objects)
-            return null;
-
-        object = objects.filter(function(object) { 
-            return object.id.toString() === id.toString(); 
-        });
-
-        return object.length === 0 ? null : object[0];
-    };
-
-    /**
-     * Moves the given object(s) from compositeA to compositeB (equal to a remove followed by an add).
-     * @method move
-     * @param {compositeA} compositeA
-     * @param {object[]} objects
-     * @param {compositeB} compositeB
-     * @return {composite} Returns compositeA
-     */
-    Composite.move = function(compositeA, objects, compositeB) {
-        Composite.remove(compositeA, objects);
-        Composite.add(compositeB, objects);
-        return compositeA;
-    };
-
-    /**
-     * Assigns new ids for all objects in the composite, recursively.
-     * @method rebase
-     * @param {composite} composite
-     * @return {composite} Returns composite
-     */
-    Composite.rebase = function(composite) {
-        var objects = Composite.allBodies(composite)
-                        .concat(Composite.allConstraints(composite))
-                        .concat(Composite.allComposites(composite));
-
-        for (var i = 0; i < objects.length; i++) {
-            objects[i].id = Common.nextId();
-        }
-
-        Composite.setModified(composite, true, true, false);
-
-        return composite;
-    };
-
-    /**
-     * Translates all children in the composite by a given vector relative to their current positions, 
-     * without imparting any velocity.
-     * @method translate
-     * @param {composite} composite
-     * @param {vector} translation
-     * @param {bool} [recursive=true]
-     */
-    Composite.translate = function(composite, translation, recursive) {
-        var bodies = recursive ? Composite.allBodies(composite) : composite.bodies;
-
-        for (var i = 0; i < bodies.length; i++) {
-            Body.translate(bodies[i], translation);
-        }
-
-        Composite.setModified(composite, true, true, false);
-
-        return composite;
-    };
-
-    /**
-     * Rotates all children in the composite by a given angle about the given point, without imparting any angular velocity.
-     * @method rotate
-     * @param {composite} composite
-     * @param {number} rotation
-     * @param {vector} point
-     * @param {bool} [recursive=true]
-     */
-    Composite.rotate = function(composite, rotation, point, recursive) {
-        var cos = Math.cos(rotation),
-            sin = Math.sin(rotation),
-            bodies = recursive ? Composite.allBodies(composite) : composite.bodies;
-
-        for (var i = 0; i < bodies.length; i++) {
-            var body = bodies[i],
-                dx = body.position.x - point.x,
-                dy = body.position.y - point.y;
-                
-            Body.setPosition(body, {
-                x: point.x + (dx * cos - dy * sin),
-                y: point.y + (dx * sin + dy * cos)
-            });
-
-            Body.rotate(body, rotation);
-        }
-
-        Composite.setModified(composite, true, true, false);
-
-        return composite;
-    };
-
-    /**
-     * Scales all children in the composite, including updating physical properties (mass, area, axes, inertia), from a world-space point.
-     * @method scale
-     * @param {composite} composite
-     * @param {number} scaleX
-     * @param {number} scaleY
-     * @param {vector} point
-     * @param {bool} [recursive=true]
-     */
-    Composite.scale = function(composite, scaleX, scaleY, point, recursive) {
-        var bodies = recursive ? Composite.allBodies(composite) : composite.bodies;
-
-        for (var i = 0; i < bodies.length; i++) {
-            var body = bodies[i],
-                dx = body.position.x - point.x,
-                dy = body.position.y - point.y;
-                
-            Body.setPosition(body, {
-                x: point.x + dx * scaleX,
-                y: point.y + dy * scaleY
-            });
-
-            Body.scale(body, scaleX, scaleY);
-        }
-
-        Composite.setModified(composite, true, true, false);
-
-        return composite;
-    };
-
-    /**
-     * Returns the union of the bounds of all of the composite's bodies.
-     * @method bounds
-     * @param {composite} composite The composite.
-     * @returns {bounds} The composite bounds.
-     */
-    Composite.bounds = function(composite) {
-        var bodies = Composite.allBodies(composite),
-            vertices = [];
-
-        for (var i = 0; i < bodies.length; i += 1) {
-            var body = bodies[i];
-            vertices.push(body.bounds.min, body.bounds.max);
-        }
-
-        return Bounds.create(vertices);
-    };
-
-    /*
-    *
-    *  Events Documentation
-    *
-    */
-
-    /**
-    * Fired when a call to `Composite.add` is made, before objects have been added.
-    *
-    * @event beforeAdd
-    * @param {} event An event object
-    * @param {} event.object The object(s) to be added (may be a single body, constraint, composite or a mixed array of these)
-    * @param {} event.source The source object of the event
-    * @param {} event.name The name of the event
-    */
-
-    /**
-    * Fired when a call to `Composite.add` is made, after objects have been added.
-    *
-    * @event afterAdd
-    * @param {} event An event object
-    * @param {} event.object The object(s) that have been added (may be a single body, constraint, composite or a mixed array of these)
-    * @param {} event.source The source object of the event
-    * @param {} event.name The name of the event
-    */
-
-    /**
-    * Fired when a call to `Composite.remove` is made, before objects have been removed.
-    *
-    * @event beforeRemove
-    * @param {} event An event object
-    * @param {} event.object The object(s) to be removed (may be a single body, constraint, composite or a mixed array of these)
-    * @param {} event.source The source object of the event
-    * @param {} event.name The name of the event
-    */
-
-    /**
-    * Fired when a call to `Composite.remove` is made, after objects have been removed.
-    *
-    * @event afterRemove
-    * @param {} event An event object
-    * @param {} event.object The object(s) that have been removed (may be a single body, constraint, composite or a mixed array of these)
-    * @param {} event.source The source object of the event
-    * @param {} event.name The name of the event
-    */
-
-    /*
-    *
-    *  Properties Documentation
-    *
-    */
-
-    /**
-     * An integer `Number` uniquely identifying number generated in `Composite.create` by `Common.nextId`.
-     *
-     * @property id
-     * @type number
-     */
-
-    /**
-     * A `String` denoting the type of object.
-     *
-     * @property type
-     * @type string
-     * @default "composite"
-     * @readOnly
-     */
-
-    /**
-     * An arbitrary `String` name to help the user identify and manage composites.
-     *
-     * @property label
-     * @type string
-     * @default "Composite"
-     */
-
-    /**
-     * A flag that specifies whether the composite has been modified during the current step.
-     * Most `Matter.Composite` methods will automatically set this flag to `true` to inform the engine of changes to be handled.
-     * If you need to change it manually, you should use the `Composite.setModified` method.
-     *
-     * @property isModified
-     * @type boolean
-     * @default false
-     */
-
-    /**
-     * The `Composite` that is the parent of this composite. It is automatically managed by the `Matter.Composite` methods.
-     *
-     * @property parent
-     * @type composite
-     * @default null
-     */
-
-    /**
-     * An array of `Body` that are _direct_ children of this composite.
-     * To add or remove bodies you should use `Composite.add` and `Composite.remove` methods rather than directly modifying this property.
-     * If you wish to recursively find all descendants, you should use the `Composite.allBodies` method.
-     *
-     * @property bodies
-     * @type body[]
-     * @default []
-     */
-
-    /**
-     * An array of `Constraint` that are _direct_ children of this composite.
-     * To add or remove constraints you should use `Composite.add` and `Composite.remove` methods rather than directly modifying this property.
-     * If you wish to recursively find all descendants, you should use the `Composite.allConstraints` method.
-     *
-     * @property constraints
-     * @type constraint[]
-     * @default []
-     */
-
-    /**
-     * An array of `Composite` that are _direct_ children of this composite.
-     * To add or remove composites you should use `Composite.add` and `Composite.remove` methods rather than directly modifying this property.
-     * If you wish to recursively find all descendants, you should use the `Composite.allComposites` method.
-     *
-     * @property composites
-     * @type composite[]
-     * @default []
-     */
-
-    /**
-     * An object reserved for storing plugin-specific properties.
-     *
-     * @property plugin
-     * @type {}
-     */
-
-})();
-
-},{"../core/Common":14,"../core/Events":16,"../geometry/Bounds":26,"./Body":1}],3:[function(_dereq_,module,exports){
-/**
-* The `Matter.World` module contains methods for creating and manipulating the world composite.
-* A `Matter.World` is a `Matter.Composite` body, which is a collection of `Matter.Body`, `Matter.Constraint` and other `Matter.Composite`.
-* A `Matter.World` has a few additional properties including `gravity` and `bounds`.
-* It is important to use the functions in the `Matter.Composite` module to modify the world composite, rather than directly modifying its properties.
-* There are also a few methods here that alias those in `Matter.Composite` for easier readability.
-*
-* See the included usage [examples](https://github.com/liabru/matter-js/tree/master/examples).
-*
-* @class World
-* @extends Composite
-*/
-
-var World = {};
-
-module.exports = World;
-
-var Composite = _dereq_('./Composite');
-var Constraint = _dereq_('../constraint/Constraint');
-var Common = _dereq_('../core/Common');
-
-(function() {
-
-    /**
-     * Creates a new world composite. The options parameter is an object that specifies any properties you wish to override the defaults.
-     * See the properties section below for detailed information on what you can pass via the `options` object.
-     * @method create
-     * @constructor
-     * @param {} options
-     * @return {world} A new world
-     */
-    World.create = function(options) {
-        var composite = Composite.create();
-
-        var defaults = {
-            label: 'World',
-            gravity: {
-                x: 0,
-                y: 1,
-                scale: 0.001
-            },
-            bounds: { 
-                min: { x: -Infinity, y: -Infinity }, 
-                max: { x: Infinity, y: Infinity } 
-            }
-        };
-        
-        return Common.extend(composite, defaults, options);
-    };
-
-    /*
-    *
-    *  Properties Documentation
-    *
-    */
-
-    /**
-     * The gravity to apply on the world.
-     *
-     * @property gravity
-     * @type object
-     */
-
-    /**
-     * The gravity x component.
-     *
-     * @property gravity.x
-     * @type object
-     * @default 0
-     */
-
-    /**
-     * The gravity y component.
-     *
-     * @property gravity.y
-     * @type object
-     * @default 1
-     */
-
-    /**
-     * The gravity scale factor.
-     *
-     * @property gravity.scale
-     * @type object
-     * @default 0.001
-     */
-
-    /**
-     * A `Bounds` object that defines the world bounds for collision detection.
-     *
-     * @property bounds
-     * @type bounds
-     * @default { min: { x: -Infinity, y: -Infinity }, max: { x: Infinity, y: Infinity } }
-     */
-
-    // World is a Composite body
-    // see src/module/Outro.js for these aliases:
-    
-    /**
-     * An alias for Composite.add
-     * @method add
-     * @param {world} world
-     * @param {} object
-     * @return {composite} The original world with the objects added
-     */
-
-    /**
-     * An alias for Composite.remove
-     * @method remove
-     * @param {world} world
-     * @param {} object
-     * @param {boolean} [deep=false]
-     * @return {composite} The original world with the objects removed
-     */
-
-    /**
-     * An alias for Composite.clear
-     * @method clear
-     * @param {world} world
-     * @param {boolean} keepStatic
-     */
-
-    /**
-     * An alias for Composite.addComposite
-     * @method addComposite
-     * @param {world} world
-     * @param {composite} composite
-     * @return {world} The original world with the objects from composite added
-     */
-    
-     /**
-      * An alias for Composite.addBody
-      * @method addBody
-      * @param {world} world
-      * @param {body} body
-      * @return {world} The original world with the body added
-      */
-
-     /**
-      * An alias for Composite.addConstraint
-      * @method addConstraint
-      * @param {world} world
-      * @param {constraint} constraint
-      * @return {world} The original world with the constraint added
-      */
-
-})();
-
-},{"../constraint/Constraint":12,"../core/Common":14,"./Composite":2}],4:[function(_dereq_,module,exports){
-/**
-* The `Matter.Contact` module contains methods for creating and manipulating collision contacts.
-*
-* @class Contact
-*/
-
-var Contact = {};
-
-module.exports = Contact;
-
-(function() {
-
-    /**
-     * Creates a new contact.
-     * @method create
-     * @param {vertex} vertex
-     * @return {contact} A new contact
-     */
-    Contact.create = function(vertex) {
-        return {
-            id: Contact.id(vertex),
-            vertex: vertex,
-            normalImpulse: 0,
-            tangentImpulse: 0
-        };
-    };
-    
-    /**
-     * Generates a contact id.
-     * @method id
-     * @param {vertex} vertex
-     * @return {string} Unique contactID
-     */
-    Contact.id = function(vertex) {
-        return vertex.body.id + '_' + vertex.index;
-    };
-
-})();
-
-},{}],5:[function(_dereq_,module,exports){
-/**
-* The `Matter.Detector` module contains methods for detecting collisions given a set of pairs.
-*
-* @class Detector
-*/
-
-// TODO: speculative contacts
-
-var Detector = {};
-
-module.exports = Detector;
-
-var SAT = _dereq_('./SAT');
-var Pair = _dereq_('./Pair');
-var Bounds = _dereq_('../geometry/Bounds');
-
-(function() {
-
-    /**
-     * Finds all collisions given a list of pairs.
-     * @method collisions
-     * @param {pair[]} broadphasePairs
-     * @param {engine} engine
-     * @return {array} collisions
-     */
-    Detector.collisions = function(broadphasePairs, engine) {
-        var collisions = [],
-            pairsTable = engine.pairs.table;
-
-        
-        for (var i = 0; i < broadphasePairs.length; i++) {
-            var bodyA = broadphasePairs[i][0], 
-                bodyB = broadphasePairs[i][1];
-
-            if ((bodyA.isStatic || bodyA.isSleeping) && (bodyB.isStatic || bodyB.isSleeping))
-                continue;
-            
-            if (!Detector.canCollide(bodyA.collisionFilter, bodyB.collisionFilter))
-                continue;
-
-
-            // mid phase
-            if (Bounds.overlaps(bodyA.bounds, bodyB.bounds)) {
-                for (var j = bodyA.parts.length > 1 ? 1 : 0; j < bodyA.parts.length; j++) {
-                    var partA = bodyA.parts[j];
-
-                    for (var k = bodyB.parts.length > 1 ? 1 : 0; k < bodyB.parts.length; k++) {
-                        var partB = bodyB.parts[k];
-
-                        if ((partA === bodyA && partB === bodyB) || Bounds.overlaps(partA.bounds, partB.bounds)) {
-                            // find a previous collision we could reuse
-                            var pairId = Pair.id(partA, partB),
-                                pair = pairsTable[pairId],
-                                previousCollision;
-
-                            if (pair && pair.isActive) {
-                                previousCollision = pair.collision;
-                            } else {
-                                previousCollision = null;
-                            }
-
-                            // narrow phase
-                            var collision = SAT.collides(partA, partB, previousCollision);
-
-
-                            if (collision.collided) {
-                                collisions.push(collision);
-                            }
-                        }
-                    }
-                }
-            }
-        }
-
-        return collisions;
-    };
-
-    /**
-     * Returns `true` if both supplied collision filters will allow a collision to occur.
-     * See `body.collisionFilter` for more information.
-     * @method canCollide
-     * @param {} filterA
-     * @param {} filterB
-     * @return {bool} `true` if collision can occur
-     */
-    Detector.canCollide = function(filterA, filterB) {
-        if (filterA.group === filterB.group && filterA.group !== 0)
-            return filterA.group > 0;
-
-        return (filterA.mask & filterB.category) !== 0 && (filterB.mask & filterA.category) !== 0;
-    };
-
-})();
-
-},{"../geometry/Bounds":26,"./Pair":7,"./SAT":11}],6:[function(_dereq_,module,exports){
-/**
-* The `Matter.Grid` module contains methods for creating and manipulating collision broadphase grid structures.
-*
-* @class Grid
-*/
-
-var Grid = {};
-
-module.exports = Grid;
-
-var Pair = _dereq_('./Pair');
-var Detector = _dereq_('./Detector');
-var Common = _dereq_('../core/Common');
-
-(function() {
-
-    /**
-     * Creates a new grid.
-     * @method create
-     * @param {} options
-     * @return {grid} A new grid
-     */
-    Grid.create = function(options) {
-        var defaults = {
-            controller: Grid,
-            detector: Detector.collisions,
-            buckets: {},
-            pairs: {},
-            pairsList: [],
-            bucketWidth: 48,
-            bucketHeight: 48
-        };
-
-        return Common.extend(defaults, options);
-    };
-
-    /**
-     * The width of a single grid bucket.
-     *
-     * @property bucketWidth
-     * @type number
-     * @default 48
-     */
-
-    /**
-     * The height of a single grid bucket.
-     *
-     * @property bucketHeight
-     * @type number
-     * @default 48
-     */
-
-    /**
-     * Updates the grid.
-     * @method update
-     * @param {grid} grid
-     * @param {body[]} bodies
-     * @param {engine} engine
-     * @param {boolean} forceUpdate
-     */
-    Grid.update = function(grid, bodies, engine, forceUpdate) {
-        var i, col, row,
-            world = engine.world,
-            buckets = grid.buckets,
-            bucket,
-            bucketId,
-            gridChanged = false;
-
-
-        for (i = 0; i < bodies.length; i++) {
-            var body = bodies[i];
-
-            if (body.isSleeping && !forceUpdate)
-                continue;
-
-            // don't update out of world bodies
-            if (body.bounds.max.x < world.bounds.min.x || body.bounds.min.x > world.bounds.max.x
-                || body.bounds.max.y < world.bounds.min.y || body.bounds.min.y > world.bounds.max.y)
-                continue;
-
-            var newRegion = Grid._getRegion(grid, body);
-
-            // if the body has changed grid region
-            if (!body.region || newRegion.id !== body.region.id || forceUpdate) {
-
-
-                if (!body.region || forceUpdate)
-                    body.region = newRegion;
-
-                var union = Grid._regionUnion(newRegion, body.region);
-
-                // update grid buckets affected by region change
-                // iterate over the union of both regions
-                for (col = union.startCol; col <= union.endCol; col++) {
-                    for (row = union.startRow; row <= union.endRow; row++) {
-                        bucketId = Grid._getBucketId(col, row);
-                        bucket = buckets[bucketId];
-
-                        var isInsideNewRegion = (col >= newRegion.startCol && col <= newRegion.endCol
-                                                && row >= newRegion.startRow && row <= newRegion.endRow);
-
-                        var isInsideOldRegion = (col >= body.region.startCol && col <= body.region.endCol
-                                                && row >= body.region.startRow && row <= body.region.endRow);
-
-                        // remove from old region buckets
-                        if (!isInsideNewRegion && isInsideOldRegion) {
-                            if (isInsideOldRegion) {
-                                if (bucket)
-                                    Grid._bucketRemoveBody(grid, bucket, body);
-                            }
-                        }
-
-                        // add to new region buckets
-                        if (body.region === newRegion || (isInsideNewRegion && !isInsideOldRegion) || forceUpdate) {
-                            if (!bucket)
-                                bucket = Grid._createBucket(buckets, bucketId);
-                            Grid._bucketAddBody(grid, bucket, body);
-                        }
-                    }
-                }
-
-                // set the new region
-                body.region = newRegion;
-
-                // flag changes so we can update pairs
-                gridChanged = true;
-            }
-        }
-
-        // update pairs list only if pairs changed (i.e. a body changed region)
-        if (gridChanged)
-            grid.pairsList = Grid._createActivePairsList(grid);
-    };
-
-    /**
-     * Clears the grid.
-     * @method clear
-     * @param {grid} grid
-     */
-    Grid.clear = function(grid) {
-        grid.buckets = {};
-        grid.pairs = {};
-        grid.pairsList = [];
-    };
-
-    /**
-     * Finds the union of two regions.
-     * @method _regionUnion
-     * @private
-     * @param {} regionA
-     * @param {} regionB
-     * @return {} region
-     */
-    Grid._regionUnion = function(regionA, regionB) {
-        var startCol = Math.min(regionA.startCol, regionB.startCol),
-            endCol = Math.max(regionA.endCol, regionB.endCol),
-            startRow = Math.min(regionA.startRow, regionB.startRow),
-            endRow = Math.max(regionA.endRow, regionB.endRow);
-
-        return Grid._createRegion(startCol, endCol, startRow, endRow);
-    };
-
-    /**
-     * Gets the region a given body falls in for a given grid.
-     * @method _getRegion
-     * @private
-     * @param {} grid
-     * @param {} body
-     * @return {} region
-     */
-    Grid._getRegion = function(grid, body) {
-        var bounds = body.bounds,
-            startCol = Math.floor(bounds.min.x / grid.bucketWidth),
-            endCol = Math.floor(bounds.max.x / grid.bucketWidth),
-            startRow = Math.floor(bounds.min.y / grid.bucketHeight),
-            endRow = Math.floor(bounds.max.y / grid.bucketHeight);
-
-        return Grid._createRegion(startCol, endCol, startRow, endRow);
-    };
-
-    /**
-     * Creates a region.
-     * @method _createRegion
-     * @private
-     * @param {} startCol
-     * @param {} endCol
-     * @param {} startRow
-     * @param {} endRow
-     * @return {} region
-     */
-    Grid._createRegion = function(startCol, endCol, startRow, endRow) {
-        return { 
-            id: startCol + ',' + endCol + ',' + startRow + ',' + endRow,
-            startCol: startCol, 
-            endCol: endCol, 
-            startRow: startRow, 
-            endRow: endRow 
-        };
-    };
-
-    /**
-     * Gets the bucket id at the given position.
-     * @method _getBucketId
-     * @private
-     * @param {} column
-     * @param {} row
-     * @return {string} bucket id
-     */
-    Grid._getBucketId = function(column, row) {
-        return 'C' + column + 'R' + row;
-    };
-
-    /**
-     * Creates a bucket.
-     * @method _createBucket
-     * @private
-     * @param {} buckets
-     * @param {} bucketId
-     * @return {} bucket
-     */
-    Grid._createBucket = function(buckets, bucketId) {
-        var bucket = buckets[bucketId] = [];
-        return bucket;
-    };
-
-    /**
-     * Adds a body to a bucket.
-     * @method _bucketAddBody
-     * @private
-     * @param {} grid
-     * @param {} bucket
-     * @param {} body
-     */
-    Grid._bucketAddBody = function(grid, bucket, body) {
-        // add new pairs
-        for (var i = 0; i < bucket.length; i++) {
-            var bodyB = bucket[i];
-
-            if (body.id === bodyB.id || (body.isStatic && bodyB.isStatic))
-                continue;
-
-            // keep track of the number of buckets the pair exists in
-            // important for Grid.update to work
-            var pairId = Pair.id(body, bodyB),
-                pair = grid.pairs[pairId];
-
-            if (pair) {
-                pair[2] += 1;
-            } else {
-                grid.pairs[pairId] = [body, bodyB, 1];
-            }
-        }
-
-        // add to bodies (after pairs, otherwise pairs with self)
-        bucket.push(body);
-    };
-
-    /**
-     * Removes a body from a bucket.
-     * @method _bucketRemoveBody
-     * @private
-     * @param {} grid
-     * @param {} bucket
-     * @param {} body
-     */
-    Grid._bucketRemoveBody = function(grid, bucket, body) {
-        // remove from bucket
-        bucket.splice(Common.indexOf(bucket, body), 1);
-
-        // update pair counts
-        for (var i = 0; i < bucket.length; i++) {
-            // keep track of the number of buckets the pair exists in
-            // important for _createActivePairsList to work
-            var bodyB = bucket[i],
-                pairId = Pair.id(body, bodyB),
-                pair = grid.pairs[pairId];
-
-            if (pair)
-                pair[2] -= 1;
-        }
-    };
-
-    /**
-     * Generates a list of the active pairs in the grid.
-     * @method _createActivePairsList
-     * @private
-     * @param {} grid
-     * @return [] pairs
-     */
-    Grid._createActivePairsList = function(grid) {
-        var pairKeys,
-            pair,
-            pairs = [];
-
-        // grid.pairs is used as a hashmap
-        pairKeys = Common.keys(grid.pairs);
-
-        // iterate over grid.pairs
-        for (var k = 0; k < pairKeys.length; k++) {
-            pair = grid.pairs[pairKeys[k]];
-
-            // if pair exists in at least one bucket
-            // it is a pair that needs further collision testing so push it
-            if (pair[2] > 0) {
-                pairs.push(pair);
-            } else {
-                delete grid.pairs[pairKeys[k]];
-            }
-        }
-
-        return pairs;
-    };
-    
-})();
-
-},{"../core/Common":14,"./Detector":5,"./Pair":7}],7:[function(_dereq_,module,exports){
-/**
-* The `Matter.Pair` module contains methods for creating and manipulating collision pairs.
-*
-* @class Pair
-*/
-
-var Pair = {};
-
-module.exports = Pair;
-
-var Contact = _dereq_('./Contact');
-
-(function() {
-    
-    /**
-     * Creates a pair.
-     * @method create
-     * @param {collision} collision
-     * @param {number} timestamp
-     * @return {pair} A new pair
-     */
-    Pair.create = function(collision, timestamp) {
-        var bodyA = collision.bodyA,
-            bodyB = collision.bodyB,
-            parentA = collision.parentA,
-            parentB = collision.parentB;
-
-        var pair = {
-            id: Pair.id(bodyA, bodyB),
-            bodyA: bodyA,
-            bodyB: bodyB,
-            contacts: {},
-            activeContacts: [],
-            separation: 0,
-            isActive: true,
-            isSensor: bodyA.isSensor || bodyB.isSensor,
-            timeCreated: timestamp,
-            timeUpdated: timestamp,
-            inverseMass: parentA.inverseMass + parentB.inverseMass,
-            friction: Math.min(parentA.friction, parentB.friction),
-            frictionStatic: Math.max(parentA.frictionStatic, parentB.frictionStatic),
-            restitution: Math.max(parentA.restitution, parentB.restitution),
-            slop: Math.max(parentA.slop, parentB.slop)
-        };
-
-        Pair.update(pair, collision, timestamp);
-
-        return pair;
-    };
-
-    /**
-     * Updates a pair given a collision.
-     * @method update
-     * @param {pair} pair
-     * @param {collision} collision
-     * @param {number} timestamp
-     */
-    Pair.update = function(pair, collision, timestamp) {
-        var contacts = pair.contacts,
-            supports = collision.supports,
-            activeContacts = pair.activeContacts,
-            parentA = collision.parentA,
-            parentB = collision.parentB;
-        
-        pair.collision = collision;
-        pair.inverseMass = parentA.inverseMass + parentB.inverseMass;
-        pair.friction = Math.min(parentA.friction, parentB.friction);
-        pair.frictionStatic = Math.max(parentA.frictionStatic, parentB.frictionStatic);
-        pair.restitution = Math.max(parentA.restitution, parentB.restitution);
-        pair.slop = Math.max(parentA.slop, parentB.slop);
-        activeContacts.length = 0;
-        
-        if (collision.collided) {
-            for (var i = 0; i < supports.length; i++) {
-                var support = supports[i],
-                    contactId = Contact.id(support),
-                    contact = contacts[contactId];
-
-                if (contact) {
-                    activeContacts.push(contact);
-                } else {
-                    activeContacts.push(contacts[contactId] = Contact.create(support));
-                }
-            }
-
-            pair.separation = collision.depth;
-            Pair.setActive(pair, true, timestamp);
-        } else {
-            if (pair.isActive === true)
-                Pair.setActive(pair, false, timestamp);
-        }
-    };
-    
-    /**
-     * Set a pair as active or inactive.
-     * @method setActive
-     * @param {pair} pair
-     * @param {bool} isActive
-     * @param {number} timestamp
-     */
-    Pair.setActive = function(pair, isActive, timestamp) {
-        if (isActive) {
-            pair.isActive = true;
-            pair.timeUpdated = timestamp;
-        } else {
-            pair.isActive = false;
-            pair.activeContacts.length = 0;
-        }
-    };
-
-    /**
-     * Get the id for the given pair.
-     * @method id
-     * @param {body} bodyA
-     * @param {body} bodyB
-     * @return {string} Unique pairId
-     */
-    Pair.id = function(bodyA, bodyB) {
-        if (bodyA.id < bodyB.id) {
-            return 'A' + bodyA.id + 'B' + bodyB.id;
-        } else {
-            return 'A' + bodyB.id + 'B' + bodyA.id;
-        }
-    };
-
-})();
-
-},{"./Contact":4}],8:[function(_dereq_,module,exports){
-/**
-* The `Matter.Pairs` module contains methods for creating and manipulating collision pair sets.
-*
-* @class Pairs
-*/
-
-var Pairs = {};
-
-module.exports = Pairs;
-
-var Pair = _dereq_('./Pair');
-var Common = _dereq_('../core/Common');
-
-(function() {
-    
-    Pairs._pairMaxIdleLife = 1000;
-
-    /**
-     * Creates a new pairs structure.
-     * @method create
-     * @param {object} options
-     * @return {pairs} A new pairs structure
-     */
-    Pairs.create = function(options) {
-        return Common.extend({ 
-            table: {},
-            list: [],
-            collisionStart: [],
-            collisionActive: [],
-            collisionEnd: []
-        }, options);
-    };
-
-    /**
-     * Updates pairs given a list of collisions.
-     * @method update
-     * @param {object} pairs
-     * @param {collision[]} collisions
-     * @param {number} timestamp
-     */
-    Pairs.update = function(pairs, collisions, timestamp) {
-        var pairsList = pairs.list,
-            pairsTable = pairs.table,
-            collisionStart = pairs.collisionStart,
-            collisionEnd = pairs.collisionEnd,
-            collisionActive = pairs.collisionActive,
-            activePairIds = [],
-            collision,
-            pairId,
-            pair,
-            i;
-
-        // clear collision state arrays, but maintain old reference
-        collisionStart.length = 0;
-        collisionEnd.length = 0;
-        collisionActive.length = 0;
-
-        for (i = 0; i < collisions.length; i++) {
-            collision = collisions[i];
-
-            if (collision.collided) {
-                pairId = Pair.id(collision.bodyA, collision.bodyB);
-                activePairIds.push(pairId);
-
-                pair = pairsTable[pairId];
-                
-                if (pair) {
-                    // pair already exists (but may or may not be active)
-                    if (pair.isActive) {
-                        // pair exists and is active
-                        collisionActive.push(pair);
-                    } else {
-                        // pair exists but was inactive, so a collision has just started again
-                        collisionStart.push(pair);
-                    }
-
-                    // update the pair
-                    Pair.update(pair, collision, timestamp);
-                } else {
-                    // pair did not exist, create a new pair
-                    pair = Pair.create(collision, timestamp);
-                    pairsTable[pairId] = pair;
-
-                    // push the new pair
-                    collisionStart.push(pair);
-                    pairsList.push(pair);
-                }
-            }
-        }
-
-        // deactivate previously active pairs that are now inactive
-        for (i = 0; i < pairsList.length; i++) {
-            pair = pairsList[i];
-            if (pair.isActive && Common.indexOf(activePairIds, pair.id) === -1) {
-                Pair.setActive(pair, false, timestamp);
-                collisionEnd.push(pair);
-            }
-        }
-    };
-    
-    /**
-     * Finds and removes pairs that have been inactive for a set amount of time.
-     * @method removeOld
-     * @param {object} pairs
-     * @param {number} timestamp
-     */
-    Pairs.removeOld = function(pairs, timestamp) {
-        var pairsList = pairs.list,
-            pairsTable = pairs.table,
-            indexesToRemove = [],
-            pair,
-            collision,
-            pairIndex,
-            i;
-
-        for (i = 0; i < pairsList.length; i++) {
-            pair = pairsList[i];
-            collision = pair.collision;
-            
-            // never remove sleeping pairs
-            if (collision.bodyA.isSleeping || collision.bodyB.isSleeping) {
-                pair.timeUpdated = timestamp;
-                continue;
-            }
-
-            // if pair is inactive for too long, mark it to be removed
-            if (timestamp - pair.timeUpdated > Pairs._pairMaxIdleLife) {
-                indexesToRemove.push(i);
-            }
-        }
-
-        // remove marked pairs
-        for (i = 0; i < indexesToRemove.length; i++) {
-            pairIndex = indexesToRemove[i] - i;
-            pair = pairsList[pairIndex];
-            delete pairsTable[pair.id];
-            pairsList.splice(pairIndex, 1);
-        }
-    };
-
-    /**
-     * Clears the given pairs structure.
-     * @method clear
-     * @param {pairs} pairs
-     * @return {pairs} pairs
-     */
-    Pairs.clear = function(pairs) {
-        pairs.table = {};
-        pairs.list.length = 0;
-        pairs.collisionStart.length = 0;
-        pairs.collisionActive.length = 0;
-        pairs.collisionEnd.length = 0;
-        return pairs;
-    };
-
-})();
-
-},{"../core/Common":14,"./Pair":7}],9:[function(_dereq_,module,exports){
-/**
-* The `Matter.Query` module contains methods for performing collision queries.
-*
-* See the included usage [examples](https://github.com/liabru/matter-js/tree/master/examples).
-*
-* @class Query
-*/
-
-var Query = {};
-
-module.exports = Query;
-
-var Vector = _dereq_('../geometry/Vector');
-var SAT = _dereq_('./SAT');
-var Bounds = _dereq_('../geometry/Bounds');
-var Bodies = _dereq_('../factory/Bodies');
-var Vertices = _dereq_('../geometry/Vertices');
-
-(function() {
-
-    /**
-     * Returns a list of collisions between `body` and `bodies`.
-     * @method collides
-     * @param {body} body
-     * @param {body[]} bodies
-     * @return {object[]} Collisions
-     */
-    Query.collides = function(body, bodies) {
-        var collisions = [];
-
-        for (var i = 0; i < bodies.length; i++) {
-            var bodyA = bodies[i];
-            
-            if (Bounds.overlaps(bodyA.bounds, body.bounds)) {
-                for (var j = bodyA.parts.length === 1 ? 0 : 1; j < bodyA.parts.length; j++) {
-                    var part = bodyA.parts[j];
-
-                    if (Bounds.overlaps(part.bounds, body.bounds)) {
-                        var collision = SAT.collides(part, body);
-
-                        if (collision.collided) {
-                            collisions.push(collision);
-                            break;
-                        }
-                    }
-                }
-            }
-        }
-
-        return collisions;
-    };
-
-    /**
-     * Casts a ray segment against a set of bodies and returns all collisions, ray width is optional. Intersection points are not provided.
-     * @method ray
-     * @param {body[]} bodies
-     * @param {vector} startPoint
-     * @param {vector} endPoint
-     * @param {number} [rayWidth]
-     * @return {object[]} Collisions
-     */
-    Query.ray = function(bodies, startPoint, endPoint, rayWidth) {
-        rayWidth = rayWidth || 1e-100;
-
-        var rayAngle = Vector.angle(startPoint, endPoint),
-            rayLength = Vector.magnitude(Vector.sub(startPoint, endPoint)),
-            rayX = (endPoint.x + startPoint.x) * 0.5,
-            rayY = (endPoint.y + startPoint.y) * 0.5,
-            ray = Bodies.rectangle(rayX, rayY, rayLength, rayWidth, { angle: rayAngle }),
-            collisions = Query.collides(ray, bodies);
-
-        for (var i = 0; i < collisions.length; i += 1) {
-            var collision = collisions[i];
-            collision.body = collision.bodyB = collision.bodyA;            
-        }
-
-        return collisions;
-    };
-
-    /**
-     * Returns all bodies whose bounds are inside (or outside if set) the given set of bounds, from the given set of bodies.
-     * @method region
-     * @param {body[]} bodies
-     * @param {bounds} bounds
-     * @param {bool} [outside=false]
-     * @return {body[]} The bodies matching the query
-     */
-    Query.region = function(bodies, bounds, outside) {
-        var result = [];
-
-        for (var i = 0; i < bodies.length; i++) {
-            var body = bodies[i],
-                overlaps = Bounds.overlaps(body.bounds, bounds);
-            if ((overlaps && !outside) || (!overlaps && outside))
-                result.push(body);
-        }
-
-        return result;
-    };
-
-    /**
-     * Returns all bodies whose vertices contain the given point, from the given set of bodies.
-     * @method point
-     * @param {body[]} bodies
-     * @param {vector} point
-     * @return {body[]} The bodies matching the query
-     */
-    Query.point = function(bodies, point) {
-        var result = [];
-
-        for (var i = 0; i < bodies.length; i++) {
-            var body = bodies[i];
-            
-            if (Bounds.contains(body.bounds, point)) {
-                for (var j = body.parts.length === 1 ? 0 : 1; j < body.parts.length; j++) {
-                    var part = body.parts[j];
-
-                    if (Bounds.contains(part.bounds, point)
-                        && Vertices.contains(part.vertices, point)) {
-                        result.push(body);
-                        break;
-                    }
-                }
-            }
-        }
-
-        return result;
-    };
-
-})();
-
-},{"../factory/Bodies":23,"../geometry/Bounds":26,"../geometry/Vector":28,"../geometry/Vertices":29,"./SAT":11}],10:[function(_dereq_,module,exports){
-/**
-* The `Matter.Resolver` module contains methods for resolving collision pairs.
-*
-* @class Resolver
-*/
-
-var Resolver = {};
-
-module.exports = Resolver;
-
-var Vertices = _dereq_('../geometry/Vertices');
-var Vector = _dereq_('../geometry/Vector');
-var Common = _dereq_('../core/Common');
-var Bounds = _dereq_('../geometry/Bounds');
-
-(function() {
-
-    Resolver._restingThresh = 4;
-    Resolver._restingThreshTangent = 6;
-    Resolver._positionDampen = 0.9;
-    Resolver._positionWarming = 0.8;
-    Resolver._frictionNormalMultiplier = 5;
-
-    /**
-     * Prepare pairs for position solving.
-     * @method preSolvePosition
-     * @param {pair[]} pairs
-     */
-    Resolver.preSolvePosition = function(pairs) {
-        var i,
-            pair,
-            activeCount;
-
-        // find total contacts on each body
-        for (i = 0; i < pairs.length; i++) {
-            pair = pairs[i];
-            
-            if (!pair.isActive)
-                continue;
-            
-            activeCount = pair.activeContacts.length;
-            pair.collision.parentA.totalContacts += activeCount;
-            pair.collision.parentB.totalContacts += activeCount;
-        }
-    };
-
-    /**
-     * Find a solution for pair positions.
-     * @method solvePosition
-     * @param {pair[]} pairs
-     * @param {number} timeScale
-     */
-    Resolver.solvePosition = function(pairs, timeScale) {
-        var i,
-            pair,
-            collision,
-            bodyA,
-            bodyB,
-            normal,
-            bodyBtoA,
-            contactShare,
-            positionImpulse,
-            contactCount = {},
-            tempA = Vector._temp[0],
-            tempB = Vector._temp[1],
-            tempC = Vector._temp[2],
-            tempD = Vector._temp[3];
-
-        // find impulses required to resolve penetration
-        for (i = 0; i < pairs.length; i++) {
-            pair = pairs[i];
-            
-            if (!pair.isActive || pair.isSensor)
-                continue;
-
-            collision = pair.collision;
-            bodyA = collision.parentA;
-            bodyB = collision.parentB;
-            normal = collision.normal;
-
-            // get current separation between body edges involved in collision
-            bodyBtoA = Vector.sub(Vector.add(bodyB.positionImpulse, bodyB.position, tempA), 
-                                    Vector.add(bodyA.positionImpulse, 
-                                        Vector.sub(bodyB.position, collision.penetration, tempB), tempC), tempD);
-
-            pair.separation = Vector.dot(normal, bodyBtoA);
-        }
-        
-        for (i = 0; i < pairs.length; i++) {
-            pair = pairs[i];
-
-            if (!pair.isActive || pair.isSensor)
-                continue;
-            
-            collision = pair.collision;
-            bodyA = collision.parentA;
-            bodyB = collision.parentB;
-            normal = collision.normal;
-            positionImpulse = (pair.separation - pair.slop) * timeScale;
-
-            if (bodyA.isStatic || bodyB.isStatic)
-                positionImpulse *= 2;
-            
-            if (!(bodyA.isStatic || bodyA.isSleeping)) {
-                contactShare = Resolver._positionDampen / bodyA.totalContacts;
-                bodyA.positionImpulse.x += normal.x * positionImpulse * contactShare;
-                bodyA.positionImpulse.y += normal.y * positionImpulse * contactShare;
-            }
-
-            if (!(bodyB.isStatic || bodyB.isSleeping)) {
-                contactShare = Resolver._positionDampen / bodyB.totalContacts;
-                bodyB.positionImpulse.x -= normal.x * positionImpulse * contactShare;
-                bodyB.positionImpulse.y -= normal.y * positionImpulse * contactShare;
-            }
-        }
-    };
-
-    /**
-     * Apply position resolution.
-     * @method postSolvePosition
-     * @param {body[]} bodies
-     */
-    Resolver.postSolvePosition = function(bodies) {
-        for (var i = 0; i < bodies.length; i++) {
-            var body = bodies[i];
-
-            // reset contact count
-            body.totalContacts = 0;
-
-            if (body.positionImpulse.x !== 0 || body.positionImpulse.y !== 0) {
-                // update body geometry
-                for (var j = 0; j < body.parts.length; j++) {
-                    var part = body.parts[j];
-                    Vertices.translate(part.vertices, body.positionImpulse);
-                    Bounds.update(part.bounds, part.vertices, body.velocity);
-                    part.position.x += body.positionImpulse.x;
-                    part.position.y += body.positionImpulse.y;
-                }
-
-                // move the body without changing velocity
-                body.positionPrev.x += body.positionImpulse.x;
-                body.positionPrev.y += body.positionImpulse.y;
-
-                if (Vector.dot(body.positionImpulse, body.velocity) < 0) {
-                    // reset cached impulse if the body has velocity along it
-                    body.positionImpulse.x = 0;
-                    body.positionImpulse.y = 0;
-                } else {
-                    // warm the next iteration
-                    body.positionImpulse.x *= Resolver._positionWarming;
-                    body.positionImpulse.y *= Resolver._positionWarming;
-                }
-            }
-        }
-    };
-
-    /**
-     * Prepare pairs for velocity solving.
-     * @method preSolveVelocity
-     * @param {pair[]} pairs
-     */
-    Resolver.preSolveVelocity = function(pairs) {
-        var i,
-            j,
-            pair,
-            contacts,
-            collision,
-            bodyA,
-            bodyB,
-            normal,
-            tangent,
-            contact,
-            contactVertex,
-            normalImpulse,
-            tangentImpulse,
-            offset,
-            impulse = Vector._temp[0],
-            tempA = Vector._temp[1];
-        
-        for (i = 0; i < pairs.length; i++) {
-            pair = pairs[i];
-            
-            if (!pair.isActive || pair.isSensor)
-                continue;
-            
-            contacts = pair.activeContacts;
-            collision = pair.collision;
-            bodyA = collision.parentA;
-            bodyB = collision.parentB;
-            normal = collision.normal;
-            tangent = collision.tangent;
-
-            // resolve each contact
-            for (j = 0; j < contacts.length; j++) {
-                contact = contacts[j];
-                contactVertex = contact.vertex;
-                normalImpulse = contact.normalImpulse;
-                tangentImpulse = contact.tangentImpulse;
-
-                if (normalImpulse !== 0 || tangentImpulse !== 0) {
-                    // total impulse from contact
-                    impulse.x = (normal.x * normalImpulse) + (tangent.x * tangentImpulse);
-                    impulse.y = (normal.y * normalImpulse) + (tangent.y * tangentImpulse);
-                    
-                    // apply impulse from contact
-                    if (!(bodyA.isStatic || bodyA.isSleeping)) {
-                        offset = Vector.sub(contactVertex, bodyA.position, tempA);
-                        bodyA.positionPrev.x += impulse.x * bodyA.inverseMass;
-                        bodyA.positionPrev.y += impulse.y * bodyA.inverseMass;
-                        bodyA.anglePrev += Vector.cross(offset, impulse) * bodyA.inverseInertia;
-                    }
-
-                    if (!(bodyB.isStatic || bodyB.isSleeping)) {
-                        offset = Vector.sub(contactVertex, bodyB.position, tempA);
-                        bodyB.positionPrev.x -= impulse.x * bodyB.inverseMass;
-                        bodyB.positionPrev.y -= impulse.y * bodyB.inverseMass;
-                        bodyB.anglePrev -= Vector.cross(offset, impulse) * bodyB.inverseInertia;
-                    }
-                }
-            }
-        }
-    };
-
-    /**
-     * Find a solution for pair velocities.
-     * @method solveVelocity
-     * @param {pair[]} pairs
-     * @param {number} timeScale
-     */
-    Resolver.solveVelocity = function(pairs, timeScale) {
-        var timeScaleSquared = timeScale * timeScale,
-            impulse = Vector._temp[0],
-            tempA = Vector._temp[1],
-            tempB = Vector._temp[2],
-            tempC = Vector._temp[3],
-            tempD = Vector._temp[4],
-            tempE = Vector._temp[5];
-        
-        for (var i = 0; i < pairs.length; i++) {
-            var pair = pairs[i];
-            
-            if (!pair.isActive || pair.isSensor)
-                continue;
-            
-            var collision = pair.collision,
-                bodyA = collision.parentA,
-                bodyB = collision.parentB,
-                normal = collision.normal,
-                tangent = collision.tangent,
-                contacts = pair.activeContacts,
-                contactShare = 1 / contacts.length;
-
-            // update body velocities
-            bodyA.velocity.x = bodyA.position.x - bodyA.positionPrev.x;
-            bodyA.velocity.y = bodyA.position.y - bodyA.positionPrev.y;
-            bodyB.velocity.x = bodyB.position.x - bodyB.positionPrev.x;
-            bodyB.velocity.y = bodyB.position.y - bodyB.positionPrev.y;
-            bodyA.angularVelocity = bodyA.angle - bodyA.anglePrev;
-            bodyB.angularVelocity = bodyB.angle - bodyB.anglePrev;
-
-            // resolve each contact
-            for (var j = 0; j < contacts.length; j++) {
-                var contact = contacts[j],
-                    contactVertex = contact.vertex,
-                    offsetA = Vector.sub(contactVertex, bodyA.position, tempA),
-                    offsetB = Vector.sub(contactVertex, bodyB.position, tempB),
-                    velocityPointA = Vector.add(bodyA.velocity, Vector.mult(Vector.perp(offsetA), bodyA.angularVelocity), tempC),
-                    velocityPointB = Vector.add(bodyB.velocity, Vector.mult(Vector.perp(offsetB), bodyB.angularVelocity), tempD), 
-                    relativeVelocity = Vector.sub(velocityPointA, velocityPointB, tempE),
-                    normalVelocity = Vector.dot(normal, relativeVelocity);
-
-                var tangentVelocity = Vector.dot(tangent, relativeVelocity),
-                    tangentSpeed = Math.abs(tangentVelocity),
-                    tangentVelocityDirection = Common.sign(tangentVelocity);
-
-                // raw impulses
-                var normalImpulse = (1 + pair.restitution) * normalVelocity,
-                    normalForce = Common.clamp(pair.separation + normalVelocity, 0, 1) * Resolver._frictionNormalMultiplier;
-
-                // coulomb friction
-                var tangentImpulse = tangentVelocity,
-                    maxFriction = Infinity;
-
-                if (tangentSpeed > pair.friction * pair.frictionStatic * normalForce * timeScaleSquared) {
-                    maxFriction = tangentSpeed;
-                    tangentImpulse = Common.clamp(
-                        pair.friction * tangentVelocityDirection * timeScaleSquared,
-                        -maxFriction, maxFriction
-                    );
-                }
-
-                // modify impulses accounting for mass, inertia and offset
-                var oAcN = Vector.cross(offsetA, normal),
-                    oBcN = Vector.cross(offsetB, normal),
-                    share = contactShare / (bodyA.inverseMass + bodyB.inverseMass + bodyA.inverseInertia * oAcN * oAcN  + bodyB.inverseInertia * oBcN * oBcN);
-
-                normalImpulse *= share;
-                tangentImpulse *= share;
-
-                // handle high velocity and resting collisions separately
-                if (normalVelocity < 0 && normalVelocity * normalVelocity > Resolver._restingThresh * timeScaleSquared) {
-                    // high normal velocity so clear cached contact normal impulse
-                    contact.normalImpulse = 0;
-                } else {
-                    // solve resting collision constraints using Erin Catto's method (GDC08)
-                    // impulse constraint tends to 0
-                    var contactNormalImpulse = contact.normalImpulse;
-                    contact.normalImpulse = Math.min(contact.normalImpulse + normalImpulse, 0);
-                    normalImpulse = contact.normalImpulse - contactNormalImpulse;
-                }
-
-                // handle high velocity and resting collisions separately
-                if (tangentVelocity * tangentVelocity > Resolver._restingThreshTangent * timeScaleSquared) {
-                    // high tangent velocity so clear cached contact tangent impulse
-                    contact.tangentImpulse = 0;
-                } else {
-                    // solve resting collision constraints using Erin Catto's method (GDC08)
-                    // tangent impulse tends to -tangentSpeed or +tangentSpeed
-                    var contactTangentImpulse = contact.tangentImpulse;
-                    contact.tangentImpulse = Common.clamp(contact.tangentImpulse + tangentImpulse, -maxFriction, maxFriction);
-                    tangentImpulse = contact.tangentImpulse - contactTangentImpulse;
-                }
-
-                // total impulse from contact
-                impulse.x = (normal.x * normalImpulse) + (tangent.x * tangentImpulse);
-                impulse.y = (normal.y * normalImpulse) + (tangent.y * tangentImpulse);
-                
-                // apply impulse from contact
-                if (!(bodyA.isStatic || bodyA.isSleeping)) {
-                    bodyA.positionPrev.x += impulse.x * bodyA.inverseMass;
-                    bodyA.positionPrev.y += impulse.y * bodyA.inverseMass;
-                    bodyA.anglePrev += Vector.cross(offsetA, impulse) * bodyA.inverseInertia;
-                }
-
-                if (!(bodyB.isStatic || bodyB.isSleeping)) {
-                    bodyB.positionPrev.x -= impulse.x * bodyB.inverseMass;
-                    bodyB.positionPrev.y -= impulse.y * bodyB.inverseMass;
-                    bodyB.anglePrev -= Vector.cross(offsetB, impulse) * bodyB.inverseInertia;
-                }
-            }
-        }
-    };
-
-})();
-
-},{"../core/Common":14,"../geometry/Bounds":26,"../geometry/Vector":28,"../geometry/Vertices":29}],11:[function(_dereq_,module,exports){
-/**
-* The `Matter.SAT` module contains methods for detecting collisions using the Separating Axis Theorem.
-*
-* @class SAT
-*/
-
-// TODO: true circles and curves
-
-var SAT = {};
-
-module.exports = SAT;
-
-var Vertices = _dereq_('../geometry/Vertices');
-var Vector = _dereq_('../geometry/Vector');
-
-(function() {
-
-    /**
-     * Detect collision between two bodies using the Separating Axis Theorem.
-     * @method collides
-     * @param {body} bodyA
-     * @param {body} bodyB
-     * @param {collision} previousCollision
-     * @return {collision} collision
-     */
-    SAT.collides = function(bodyA, bodyB, previousCollision) {
-        var overlapAB,
-            overlapBA, 
-            minOverlap,
-            collision,
-            canReusePrevCol = false;
-
-        if (previousCollision) {
-            // estimate total motion
-            var parentA = bodyA.parent,
-                parentB = bodyB.parent,
-                motion = parentA.speed * parentA.speed + parentA.angularSpeed * parentA.angularSpeed
-                       + parentB.speed * parentB.speed + parentB.angularSpeed * parentB.angularSpeed;
-
-            // we may be able to (partially) reuse collision result 
-            // but only safe if collision was resting
-            canReusePrevCol = previousCollision && previousCollision.collided && motion < 0.2;
-
-            // reuse collision object
-            collision = previousCollision;
-        } else {
-            collision = { collided: false, bodyA: bodyA, bodyB: bodyB };
-        }
-
-        if (previousCollision && canReusePrevCol) {
-            // if we can reuse the collision result
-            // we only need to test the previously found axis
-            var axisBodyA = collision.axisBody,
-                axisBodyB = axisBodyA === bodyA ? bodyB : bodyA,
-                axes = [axisBodyA.axes[previousCollision.axisNumber]];
-
-            minOverlap = SAT._overlapAxes(axisBodyA.vertices, axisBodyB.vertices, axes);
-            collision.reused = true;
-
-            if (minOverlap.overlap <= 0) {
-                collision.collided = false;
-                return collision;
-            }
-        } else {
-            // if we can't reuse a result, perform a full SAT test
-
-            overlapAB = SAT._overlapAxes(bodyA.vertices, bodyB.vertices, bodyA.axes);
-
-            if (overlapAB.overlap <= 0) {
-                collision.collided = false;
-                return collision;
-            }
-
-            overlapBA = SAT._overlapAxes(bodyB.vertices, bodyA.vertices, bodyB.axes);
-
-            if (overlapBA.overlap <= 0) {
-                collision.collided = false;
-                return collision;
-            }
-
-            if (overlapAB.overlap < overlapBA.overlap) {
-                minOverlap = overlapAB;
-                collision.axisBody = bodyA;
-            } else {
-                minOverlap = overlapBA;
-                collision.axisBody = bodyB;
-            }
-
-            // important for reuse later
-            collision.axisNumber = minOverlap.axisNumber;
-        }
-
-        collision.bodyA = bodyA.id < bodyB.id ? bodyA : bodyB;
-        collision.bodyB = bodyA.id < bodyB.id ? bodyB : bodyA;
-        collision.collided = true;
-        collision.depth = minOverlap.overlap;
-        collision.parentA = collision.bodyA.parent;
-        collision.parentB = collision.bodyB.parent;
-        
-        bodyA = collision.bodyA;
-        bodyB = collision.bodyB;
-
-        // ensure normal is facing away from bodyA
-        if (Vector.dot(minOverlap.axis, Vector.sub(bodyB.position, bodyA.position)) < 0) {
-            collision.normal = {
-                x: minOverlap.axis.x,
-                y: minOverlap.axis.y
-            };
-        } else {
-            collision.normal = {
-                x: -minOverlap.axis.x,
-                y: -minOverlap.axis.y
-            };
-        }
-
-        collision.tangent = Vector.perp(collision.normal);
-
-        collision.penetration = collision.penetration || {};
-        collision.penetration.x = collision.normal.x * collision.depth;
-        collision.penetration.y = collision.normal.y * collision.depth; 
-
-        // find support points, there is always either exactly one or two
-        var verticesB = SAT._findSupports(bodyA, bodyB, collision.normal),
-            supports = [];
-
-        // find the supports from bodyB that are inside bodyA
-        if (Vertices.contains(bodyA.vertices, verticesB[0]))
-            supports.push(verticesB[0]);
-
-        if (Vertices.contains(bodyA.vertices, verticesB[1]))
-            supports.push(verticesB[1]);
-
-        // find the supports from bodyA that are inside bodyB
-        if (supports.length < 2) {
-            var verticesA = SAT._findSupports(bodyB, bodyA, Vector.neg(collision.normal));
-                
-            if (Vertices.contains(bodyB.vertices, verticesA[0]))
-                supports.push(verticesA[0]);
-
-            if (supports.length < 2 && Vertices.contains(bodyB.vertices, verticesA[1]))
-                supports.push(verticesA[1]);
-        }
-
-        // account for the edge case of overlapping but no vertex containment
-        if (supports.length < 1)
-            supports = [verticesB[0]];
-        
-        collision.supports = supports;
-
-        return collision;
-    };
-
-    /**
-     * Find the overlap between two sets of vertices.
-     * @method _overlapAxes
-     * @private
-     * @param {} verticesA
-     * @param {} verticesB
-     * @param {} axes
-     * @return result
-     */
-    SAT._overlapAxes = function(verticesA, verticesB, axes) {
-        var projectionA = Vector._temp[0], 
-            projectionB = Vector._temp[1],
-            result = { overlap: Number.MAX_VALUE },
-            overlap,
-            axis;
-
-        for (var i = 0; i < axes.length; i++) {
-            axis = axes[i];
-
-            SAT._projectToAxis(projectionA, verticesA, axis);
-            SAT._projectToAxis(projectionB, verticesB, axis);
-
-            overlap = Math.min(projectionA.max - projectionB.min, projectionB.max - projectionA.min);
-
-            if (overlap <= 0) {
-                result.overlap = overlap;
-                return result;
-            }
-
-            if (overlap < result.overlap) {
-                result.overlap = overlap;
-                result.axis = axis;
-                result.axisNumber = i;
-            }
-        }
-
-        return result;
-    };
-
-    /**
-     * Projects vertices on an axis and returns an interval.
-     * @method _projectToAxis
-     * @private
-     * @param {} projection
-     * @param {} vertices
-     * @param {} axis
-     */
-    SAT._projectToAxis = function(projection, vertices, axis) {
-        var min = Vector.dot(vertices[0], axis),
-            max = min;
-
-        for (var i = 1; i < vertices.length; i += 1) {
-            var dot = Vector.dot(vertices[i], axis);
-
-            if (dot > max) { 
-                max = dot; 
-            } else if (dot < min) { 
-                min = dot; 
-            }
-        }
-
-        projection.min = min;
-        projection.max = max;
-    };
-    
-    /**
-     * Finds supporting vertices given two bodies along a given direction using hill-climbing.
-     * @method _findSupports
-     * @private
-     * @param {} bodyA
-     * @param {} bodyB
-     * @param {} normal
-     * @return [vector]
-     */
-    SAT._findSupports = function(bodyA, bodyB, normal) {
-        var nearestDistance = Number.MAX_VALUE,
-            vertexToBody = Vector._temp[0],
-            vertices = bodyB.vertices,
-            bodyAPosition = bodyA.position,
-            distance,
-            vertex,
-            vertexA,
-            vertexB;
-
-        // find closest vertex on bodyB
-        for (var i = 0; i < vertices.length; i++) {
-            vertex = vertices[i];
-            vertexToBody.x = vertex.x - bodyAPosition.x;
-            vertexToBody.y = vertex.y - bodyAPosition.y;
-            distance = -Vector.dot(normal, vertexToBody);
-
-            if (distance < nearestDistance) {
-                nearestDistance = distance;
-                vertexA = vertex;
-            }
-        }
-
-        // find next closest vertex using the two connected to it
-        var prevIndex = vertexA.index - 1 >= 0 ? vertexA.index - 1 : vertices.length - 1;
-        vertex = vertices[prevIndex];
-        vertexToBody.x = vertex.x - bodyAPosition.x;
-        vertexToBody.y = vertex.y - bodyAPosition.y;
-        nearestDistance = -Vector.dot(normal, vertexToBody);
-        vertexB = vertex;
-
-        var nextIndex = (vertexA.index + 1) % vertices.length;
-        vertex = vertices[nextIndex];
-        vertexToBody.x = vertex.x - bodyAPosition.x;
-        vertexToBody.y = vertex.y - bodyAPosition.y;
-        distance = -Vector.dot(normal, vertexToBody);
-        if (distance < nearestDistance) {
-            vertexB = vertex;
-        }
-
-        return [vertexA, vertexB];
-    };
-
-})();
-
-},{"../geometry/Vector":28,"../geometry/Vertices":29}],12:[function(_dereq_,module,exports){
-/**
-* The `Matter.Constraint` module contains methods for creating and manipulating constraints.
-* Constraints are used for specifying that a fixed distance must be maintained between two bodies (or a body and a fixed world-space position).
-* The stiffness of constraints can be modified to create springs or elastic.
-*
-* See the included usage [examples](https://github.com/liabru/matter-js/tree/master/examples).
-*
-* @class Constraint
-*/
-
-var Constraint = {};
-
-module.exports = Constraint;
-
-var Vertices = _dereq_('../geometry/Vertices');
-var Vector = _dereq_('../geometry/Vector');
-var Sleeping = _dereq_('../core/Sleeping');
-var Bounds = _dereq_('../geometry/Bounds');
-var Axes = _dereq_('../geometry/Axes');
-var Common = _dereq_('../core/Common');
-
-(function() {
-
-    Constraint._warming = 0.4;
-    Constraint._torqueDampen = 1;
-    Constraint._minLength = 0.000001;
-
-    /**
-     * Creates a new constraint.
-     * All properties have default values, and many are pre-calculated automatically based on other properties.
-     * To simulate a revolute constraint (or pin constraint) set `length: 0` and a high `stiffness` value (e.g. `0.7` or above).
-     * If the constraint is unstable, try lowering the `stiffness` value and / or increasing `engine.constraintIterations`.
-     * For compound bodies, constraints must be applied to the parent body (not one of its parts).
-     * See the properties section below for detailed information on what you can pass via the `options` object.
-     * @method create
-     * @param {} options
-     * @return {constraint} constraint
-     */
-    Constraint.create = function(options) {
-        var constraint = options;
-
-        // if bodies defined but no points, use body centre
-        if (constraint.bodyA && !constraint.pointA)
-            constraint.pointA = { x: 0, y: 0 };
-        if (constraint.bodyB && !constraint.pointB)
-            constraint.pointB = { x: 0, y: 0 };
-
-        // calculate static length using initial world space points
-        var initialPointA = constraint.bodyA ? Vector.add(constraint.bodyA.position, constraint.pointA) : constraint.pointA,
-            initialPointB = constraint.bodyB ? Vector.add(constraint.bodyB.position, constraint.pointB) : constraint.pointB,
-            length = Vector.magnitude(Vector.sub(initialPointA, initialPointB));
-    
-        constraint.length = typeof constraint.length !== 'undefined' ? constraint.length : length;
-
-        // option defaults
-        constraint.id = constraint.id || Common.nextId();
-        constraint.label = constraint.label || 'Constraint';
-        constraint.type = 'constraint';
-        constraint.stiffness = constraint.stiffness || (constraint.length > 0 ? 1 : 0.7);
-        constraint.damping = constraint.damping || 0;
-        constraint.angularStiffness = constraint.angularStiffness || 0;
-        constraint.angleA = constraint.bodyA ? constraint.bodyA.angle : constraint.angleA;
-        constraint.angleB = constraint.bodyB ? constraint.bodyB.angle : constraint.angleB;
-        constraint.plugin = {};
-
-        // render
-        var render = {
-            visible: true,
-            lineWidth: 2,
-            strokeStyle: '#ffffff',
-            type: 'line',
-            anchors: true
-        };
-
-        if (constraint.length === 0 && constraint.stiffness > 0.1) {
-            render.type = 'pin';
-            render.anchors = false;
-        } else if (constraint.stiffness < 0.9) {
-            render.type = 'spring';
-        }
-
-        constraint.render = Common.extend(render, constraint.render);
-
-        return constraint;
-    };
-
-    /**
-     * Prepares for solving by constraint warming.
-     * @private
-     * @method preSolveAll
-     * @param {body[]} bodies
-     */
-    Constraint.preSolveAll = function(bodies) {
-        for (var i = 0; i < bodies.length; i += 1) {
-            var body = bodies[i],
-                impulse = body.constraintImpulse;
-
-            if (body.isStatic || (impulse.x === 0 && impulse.y === 0 && impulse.angle === 0)) {
-                continue;
-            }
-
-            body.position.x += impulse.x;
-            body.position.y += impulse.y;
-            body.angle += impulse.angle;
-        }
-    };
-
-    /**
-     * Solves all constraints in a list of collisions.
-     * @private
-     * @method solveAll
-     * @param {constraint[]} constraints
-     * @param {number} timeScale
-     */
-    Constraint.solveAll = function(constraints, timeScale) {
-        // Solve fixed constraints first.
-        for (var i = 0; i < constraints.length; i += 1) {
-            var constraint = constraints[i],
-                fixedA = !constraint.bodyA || (constraint.bodyA && constraint.bodyA.isStatic),
-                fixedB = !constraint.bodyB || (constraint.bodyB && constraint.bodyB.isStatic);
-
-            if (fixedA || fixedB) {
-                Constraint.solve(constraints[i], timeScale);
-            }
-        }
-
-        // Solve free constraints last.
-        for (i = 0; i < constraints.length; i += 1) {
-            constraint = constraints[i];
-            fixedA = !constraint.bodyA || (constraint.bodyA && constraint.bodyA.isStatic);
-            fixedB = !constraint.bodyB || (constraint.bodyB && constraint.bodyB.isStatic);
-
-            if (!fixedA && !fixedB) {
-                Constraint.solve(constraints[i], timeScale);
-            }
-        }
-    };
-
-    /**
-     * Solves a distance constraint with Gauss-Siedel method.
-     * @private
-     * @method solve
-     * @param {constraint} constraint
-     * @param {number} timeScale
-     */
-    Constraint.solve = function(constraint, timeScale) {
-        var bodyA = constraint.bodyA,
-            bodyB = constraint.bodyB,
-            pointA = constraint.pointA,
-            pointB = constraint.pointB;
-
-        if (!bodyA && !bodyB)
-            return;
-
-        // update reference angle
-        if (bodyA && !bodyA.isStatic) {
-            Vector.rotate(pointA, bodyA.angle - constraint.angleA, pointA);
-            constraint.angleA = bodyA.angle;
-        }
-        
-        // update reference angle
-        if (bodyB && !bodyB.isStatic) {
-            Vector.rotate(pointB, bodyB.angle - constraint.angleB, pointB);
-            constraint.angleB = bodyB.angle;
-        }
-
-        var pointAWorld = pointA,
-            pointBWorld = pointB;
-
-        if (bodyA) pointAWorld = Vector.add(bodyA.position, pointA);
-        if (bodyB) pointBWorld = Vector.add(bodyB.position, pointB);
-
-        if (!pointAWorld || !pointBWorld)
-            return;
-
-        var delta = Vector.sub(pointAWorld, pointBWorld),
-            currentLength = Vector.magnitude(delta);
-
-        // prevent singularity
-        if (currentLength < Constraint._minLength) {
-            currentLength = Constraint._minLength;
-        }
-
-        // solve distance constraint with Gauss-Siedel method
-        var difference = (currentLength - constraint.length) / currentLength,
-            stiffness = constraint.stiffness < 1 ? constraint.stiffness * timeScale : constraint.stiffness,
-            force = Vector.mult(delta, difference * stiffness),
-            massTotal = (bodyA ? bodyA.inverseMass : 0) + (bodyB ? bodyB.inverseMass : 0),
-            inertiaTotal = (bodyA ? bodyA.inverseInertia : 0) + (bodyB ? bodyB.inverseInertia : 0),
-            resistanceTotal = massTotal + inertiaTotal,
-            torque,
-            share,
-            normal,
-            normalVelocity,
-            relativeVelocity;
-
-        if (constraint.damping) {
-            var zero = Vector.create();
-            normal = Vector.div(delta, currentLength);
-
-            relativeVelocity = Vector.sub(
-                bodyB && Vector.sub(bodyB.position, bodyB.positionPrev) || zero,
-                bodyA && Vector.sub(bodyA.position, bodyA.positionPrev) || zero
-            );
-
-            normalVelocity = Vector.dot(normal, relativeVelocity);
-        }
-
-        if (bodyA && !bodyA.isStatic) {
-            share = bodyA.inverseMass / massTotal;
-
-            // keep track of applied impulses for post solving
-            bodyA.constraintImpulse.x -= force.x * share;
-            bodyA.constraintImpulse.y -= force.y * share;
-
-            // apply forces
-            bodyA.position.x -= force.x * share;
-            bodyA.position.y -= force.y * share;
-
-            // apply damping
-            if (constraint.damping) {
-                bodyA.positionPrev.x -= constraint.damping * normal.x * normalVelocity * share;
-                bodyA.positionPrev.y -= constraint.damping * normal.y * normalVelocity * share;
-            }
-
-            // apply torque
-            torque = (Vector.cross(pointA, force) / resistanceTotal) * Constraint._torqueDampen * bodyA.inverseInertia * (1 - constraint.angularStiffness);
-            bodyA.constraintImpulse.angle -= torque;
-            bodyA.angle -= torque;
-        }
-
-        if (bodyB && !bodyB.isStatic) {
-            share = bodyB.inverseMass / massTotal;
-
-            // keep track of applied impulses for post solving
-            bodyB.constraintImpulse.x += force.x * share;
-            bodyB.constraintImpulse.y += force.y * share;
-            
-            // apply forces
-            bodyB.position.x += force.x * share;
-            bodyB.position.y += force.y * share;
-
-            // apply damping
-            if (constraint.damping) {
-                bodyB.positionPrev.x += constraint.damping * normal.x * normalVelocity * share;
-                bodyB.positionPrev.y += constraint.damping * normal.y * normalVelocity * share;
-            }
-
-            // apply torque
-            torque = (Vector.cross(pointB, force) / resistanceTotal) * Constraint._torqueDampen * bodyB.inverseInertia * (1 - constraint.angularStiffness);
-            bodyB.constraintImpulse.angle += torque;
-            bodyB.angle += torque;
-        }
-
-    };
-
-    /**
-     * Performs body updates required after solving constraints.
-     * @private
-     * @method postSolveAll
-     * @param {body[]} bodies
-     */
-    Constraint.postSolveAll = function(bodies) {
-        for (var i = 0; i < bodies.length; i++) {
-            var body = bodies[i],
-                impulse = body.constraintImpulse;
-
-            if (body.isStatic || (impulse.x === 0 && impulse.y === 0 && impulse.angle === 0)) {
-                continue;
-            }
-
-            Sleeping.set(body, false);
-
-            // update geometry and reset
-            for (var j = 0; j < body.parts.length; j++) {
-                var part = body.parts[j];
-                
-                Vertices.translate(part.vertices, impulse);
-
-                if (j > 0) {
-                    part.position.x += impulse.x;
-                    part.position.y += impulse.y;
-                }
-
-                if (impulse.angle !== 0) {
-                    Vertices.rotate(part.vertices, impulse.angle, body.position);
-                    Axes.rotate(part.axes, impulse.angle);
-                    if (j > 0) {
-                        Vector.rotateAbout(part.position, impulse.angle, body.position, part.position);
-                    }
-                }
-
-                Bounds.update(part.bounds, part.vertices, body.velocity);
-            }
-
-            // dampen the cached impulse for warming next step
-            impulse.angle *= Constraint._warming;
-            impulse.x *= Constraint._warming;
-            impulse.y *= Constraint._warming;
-        }
-    };
-
-    /*
-    *
-    *  Properties Documentation
-    *
-    */
-
-    /**
-     * An integer `Number` uniquely identifying number generated in `Composite.create` by `Common.nextId`.
-     *
-     * @property id
-     * @type number
-     */
-
-    /**
-     * A `String` denoting the type of object.
-     *
-     * @property type
-     * @type string
-     * @default "constraint"
-     * @readOnly
-     */
-
-    /**
-     * An arbitrary `String` name to help the user identify and manage bodies.
-     *
-     * @property label
-     * @type string
-     * @default "Constraint"
-     */
-
-    /**
-     * An `Object` that defines the rendering properties to be consumed by the module `Matter.Render`.
-     *
-     * @property render
-     * @type object
-     */
-
-    /**
-     * A flag that indicates if the constraint should be rendered.
-     *
-     * @property render.visible
-     * @type boolean
-     * @default true
-     */
-
-    /**
-     * A `Number` that defines the line width to use when rendering the constraint outline.
-     * A value of `0` means no outline will be rendered.
-     *
-     * @property render.lineWidth
-     * @type number
-     * @default 2
-     */
-
-    /**
-     * A `String` that defines the stroke style to use when rendering the constraint outline.
-     * It is the same as when using a canvas, so it accepts CSS style property values.
-     *
-     * @property render.strokeStyle
-     * @type string
-     * @default a random colour
-     */
-
-    /**
-     * A `String` that defines the constraint rendering type. 
-     * The possible values are 'line', 'pin', 'spring'.
-     * An appropriate render type will be automatically chosen unless one is given in options.
-     *
-     * @property render.type
-     * @type string
-     * @default 'line'
-     */
-
-    /**
-     * A `Boolean` that defines if the constraint's anchor points should be rendered.
-     *
-     * @property render.anchors
-     * @type boolean
-     * @default true
-     */
-
-    /**
-     * The first possible `Body` that this constraint is attached to.
-     *
-     * @property bodyA
-     * @type body
-     * @default null
-     */
-
-    /**
-     * The second possible `Body` that this constraint is attached to.
-     *
-     * @property bodyB
-     * @type body
-     * @default null
-     */
-
-    /**
-     * A `Vector` that specifies the offset of the constraint from center of the `constraint.bodyA` if defined, otherwise a world-space position.
-     *
-     * @property pointA
-     * @type vector
-     * @default { x: 0, y: 0 }
-     */
-
-    /**
-     * A `Vector` that specifies the offset of the constraint from center of the `constraint.bodyB` if defined, otherwise a world-space position.
-     *
-     * @property pointB
-     * @type vector
-     * @default { x: 0, y: 0 }
-     */
-
-    /**
-     * A `Number` that specifies the stiffness of the constraint, i.e. the rate at which it returns to its resting `constraint.length`.
-     * A value of `1` means the constraint should be very stiff.
-     * A value of `0.2` means the constraint acts like a soft spring.
-     *
-     * @property stiffness
-     * @type number
-     * @default 1
-     */
-
-    /**
-     * A `Number` that specifies the damping of the constraint, 
-     * i.e. the amount of resistance applied to each body based on their velocities to limit the amount of oscillation.
-     * Damping will only be apparent when the constraint also has a very low `stiffness`.
-     * A value of `0.1` means the constraint will apply heavy damping, resulting in little to no oscillation.
-     * A value of `0` means the constraint will apply no damping.
-     *
-     * @property damping
-     * @type number
-     * @default 0
-     */
-
-    /**
-     * A `Number` that specifies the target resting length of the constraint. 
-     * It is calculated automatically in `Constraint.create` from initial positions of the `constraint.bodyA` and `constraint.bodyB`.
-     *
-     * @property length
-     * @type number
-     */
-
-    /**
-     * An object reserved for storing plugin-specific properties.
-     *
-     * @property plugin
-     * @type {}
-     */
-
-})();
-
-},{"../core/Common":14,"../core/Sleeping":22,"../geometry/Axes":25,"../geometry/Bounds":26,"../geometry/Vector":28,"../geometry/Vertices":29}],13:[function(_dereq_,module,exports){
-/**
-* The `Matter.MouseConstraint` module contains methods for creating mouse constraints.
-* Mouse constraints are used for allowing user interaction, providing the ability to move bodies via the mouse or touch.
-*
-* See the included usage [examples](https://github.com/liabru/matter-js/tree/master/examples).
-*
-* @class MouseConstraint
-*/
-
-var MouseConstraint = {};
-
-module.exports = MouseConstraint;
-
-var Vertices = _dereq_('../geometry/Vertices');
-var Sleeping = _dereq_('../core/Sleeping');
-var Mouse = _dereq_('../core/Mouse');
-var Events = _dereq_('../core/Events');
-var Detector = _dereq_('../collision/Detector');
-var Constraint = _dereq_('./Constraint');
-var Composite = _dereq_('../body/Composite');
-var Common = _dereq_('../core/Common');
-var Bounds = _dereq_('../geometry/Bounds');
-
-(function() {
-
-    /**
-     * Creates a new mouse constraint.
-     * All properties have default values, and many are pre-calculated automatically based on other properties.
-     * See the properties section below for detailed information on what you can pass via the `options` object.
-     * @method create
-     * @param {engine} engine
-     * @param {} options
-     * @return {MouseConstraint} A new MouseConstraint
-     */
-    MouseConstraint.create = function(engine, options) {
-        var mouse = (engine ? engine.mouse : null) || (options ? options.mouse : null);
-
-        if (!mouse) {
-            if (engine && engine.render && engine.render.canvas) {
-                mouse = Mouse.create(engine.render.canvas);
-            } else if (options && options.element) {
-                mouse = Mouse.create(options.element);
-            } else {
-                mouse = Mouse.create();
-                Common.warn('MouseConstraint.create: options.mouse was undefined, options.element was undefined, may not function as expected');
-            }
-        }
-
-        var constraint = Constraint.create({ 
-            label: 'Mouse Constraint',
-            pointA: mouse.position,
-            pointB: { x: 0, y: 0 },
-            length: 0.01, 
-            stiffness: 0.1,
-            angularStiffness: 1,
-            render: {
-                strokeStyle: '#90EE90',
-                lineWidth: 3
-            }
-        });
-
-        var defaults = {
-            type: 'mouseConstraint',
-            mouse: mouse,
-            element: null,
-            body: null,
-            constraint: constraint,
-            collisionFilter: {
-                category: 0x0001,
-                mask: 0xFFFFFFFF,
-                group: 0
-            }
-        };
-
-        var mouseConstraint = Common.extend(defaults, options);
-
-        Events.on(engine, 'beforeUpdate', function() {
-            var allBodies = Composite.allBodies(engine.world);
-            MouseConstraint.update(mouseConstraint, allBodies);
-            MouseConstraint._triggerEvents(mouseConstraint);
-        });
-
-        return mouseConstraint;
-    };
-
-    /**
-     * Updates the given mouse constraint.
-     * @private
-     * @method update
-     * @param {MouseConstraint} mouseConstraint
-     * @param {body[]} bodies
-     */
-    MouseConstraint.update = function(mouseConstraint, bodies) {
-        var mouse = mouseConstraint.mouse,
-            constraint = mouseConstraint.constraint,
-            body = mouseConstraint.body;
-
-        if (mouse.button === 0) {
-            if (!constraint.bodyB) {
-                for (var i = 0; i < bodies.length; i++) {
-                    body = bodies[i];
-                    if (Bounds.contains(body.bounds, mouse.position) 
-                            && Detector.canCollide(body.collisionFilter, mouseConstraint.collisionFilter)) {
-                        for (var j = body.parts.length > 1 ? 1 : 0; j < body.parts.length; j++) {
-                            var part = body.parts[j];
-                            if (Vertices.contains(part.vertices, mouse.position)) {
-                                constraint.pointA = mouse.position;
-                                constraint.bodyB = mouseConstraint.body = body;
-                                constraint.pointB = { x: mouse.position.x - body.position.x, y: mouse.position.y - body.position.y };
-                                constraint.angleB = body.angle;
-
-                                Sleeping.set(body, false);
-                                Events.trigger(mouseConstraint, 'startdrag', { mouse: mouse, body: body });
-
-                                break;
-                            }
-                        }
-                    }
-                }
-            } else {
-                Sleeping.set(constraint.bodyB, false);
-                constraint.pointA = mouse.position;
-            }
-        } else {
-            constraint.bodyB = mouseConstraint.body = null;
-            constraint.pointB = null;
-
-            if (body)
-                Events.trigger(mouseConstraint, 'enddrag', { mouse: mouse, body: body });
-        }
-    };
-
-    /**
-     * Triggers mouse constraint events.
-     * @method _triggerEvents
-     * @private
-     * @param {mouse} mouseConstraint
-     */
-    MouseConstraint._triggerEvents = function(mouseConstraint) {
-        var mouse = mouseConstraint.mouse,
-            mouseEvents = mouse.sourceEvents;
-
-        if (mouseEvents.mousemove)
-            Events.trigger(mouseConstraint, 'mousemove', { mouse: mouse });
-
-        if (mouseEvents.mousedown)
-            Events.trigger(mouseConstraint, 'mousedown', { mouse: mouse });
-
-        if (mouseEvents.mouseup)
-            Events.trigger(mouseConstraint, 'mouseup', { mouse: mouse });
-
-        // reset the mouse state ready for the next step
-        Mouse.clearSourceEvents(mouse);
-    };
-
-    /*
-    *
-    *  Events Documentation
-    *
-    */
-
-    /**
-    * Fired when the mouse has moved (or a touch moves) during the last step
-    *
-    * @event mousemove
-    * @param {} event An event object
-    * @param {mouse} event.mouse The engine's mouse instance
-    * @param {} event.source The source object of the event
-    * @param {} event.name The name of the event
-    */
-
-    /**
-    * Fired when the mouse is down (or a touch has started) during the last step
-    *
-    * @event mousedown
-    * @param {} event An event object
-    * @param {mouse} event.mouse The engine's mouse instance
-    * @param {} event.source The source object of the event
-    * @param {} event.name The name of the event
-    */
-
-    /**
-    * Fired when the mouse is up (or a touch has ended) during the last step
-    *
-    * @event mouseup
-    * @param {} event An event object
-    * @param {mouse} event.mouse The engine's mouse instance
-    * @param {} event.source The source object of the event
-    * @param {} event.name The name of the event
-    */
-
-    /**
-    * Fired when the user starts dragging a body
-    *
-    * @event startdrag
-    * @param {} event An event object
-    * @param {mouse} event.mouse The engine's mouse instance
-    * @param {body} event.body The body being dragged
-    * @param {} event.source The source object of the event
-    * @param {} event.name The name of the event
-    */
-
-    /**
-    * Fired when the user ends dragging a body
-    *
-    * @event enddrag
-    * @param {} event An event object
-    * @param {mouse} event.mouse The engine's mouse instance
-    * @param {body} event.body The body that has stopped being dragged
-    * @param {} event.source The source object of the event
-    * @param {} event.name The name of the event
-    */
-
-    /*
-    *
-    *  Properties Documentation
-    *
-    */
-
-    /**
-     * A `String` denoting the type of object.
-     *
-     * @property type
-     * @type string
-     * @default "constraint"
-     * @readOnly
-     */
-
-    /**
-     * The `Mouse` instance in use. If not supplied in `MouseConstraint.create`, one will be created.
-     *
-     * @property mouse
-     * @type mouse
-     * @default mouse
-     */
-
-    /**
-     * The `Body` that is currently being moved by the user, or `null` if no body.
-     *
-     * @property body
-     * @type body
-     * @default null
-     */
-
-    /**
-     * The `Constraint` object that is used to move the body during interaction.
-     *
-     * @property constraint
-     * @type constraint
-     */
-
-    /**
-     * An `Object` that specifies the collision filter properties.
-     * The collision filter allows the user to define which types of body this mouse constraint can interact with.
-     * See `body.collisionFilter` for more information.
-     *
-     * @property collisionFilter
-     * @type object
-     */
-
-})();
-
-},{"../body/Composite":2,"../collision/Detector":5,"../core/Common":14,"../core/Events":16,"../core/Mouse":19,"../core/Sleeping":22,"../geometry/Bounds":26,"../geometry/Vertices":29,"./Constraint":12}],14:[function(_dereq_,module,exports){
-(function (global){
-/**
-* The `Matter.Common` module contains utility functions that are common to all modules.
-*
-* @class Common
-*/
-
-var Common = {};
-
-module.exports = Common;
-
-(function() {
-
-    Common._nextId = 0;
-    Common._seed = 0;
-    Common._nowStartTime = +(new Date());
-
-    /**
-     * Extends the object in the first argument using the object in the second argument.
-     * @method extend
-     * @param {} obj
-     * @param {boolean} deep
-     * @return {} obj extended
-     */
-    Common.extend = function(obj, deep) {
-        var argsStart,
-            args,
-            deepClone;
-
-        if (typeof deep === 'boolean') {
-            argsStart = 2;
-            deepClone = deep;
-        } else {
-            argsStart = 1;
-            deepClone = true;
-        }
-
-        for (var i = argsStart; i < arguments.length; i++) {
-            var source = arguments[i];
-
-            if (source) {
-                for (var prop in source) {
-                    if (deepClone && source[prop] && source[prop].constructor === Object) {
-                        if (!obj[prop] || obj[prop].constructor === Object) {
-                            obj[prop] = obj[prop] || {};
-                            Common.extend(obj[prop], deepClone, source[prop]);
-                        } else {
-                            obj[prop] = source[prop];
-                        }
-                    } else {
-                        obj[prop] = source[prop];
-                    }
-                }
-            }
-        }
-        
-        return obj;
-    };
-
-    /**
-     * Creates a new clone of the object, if deep is true references will also be cloned.
-     * @method clone
-     * @param {} obj
-     * @param {bool} deep
-     * @return {} obj cloned
-     */
-    Common.clone = function(obj, deep) {
-        return Common.extend({}, deep, obj);
-    };
-
-    /**
-     * Returns the list of keys for the given object.
-     * @method keys
-     * @param {} obj
-     * @return {string[]} keys
-     */
-    Common.keys = function(obj) {
-        if (Object.keys)
-            return Object.keys(obj);
-
-        // avoid hasOwnProperty for performance
-        var keys = [];
-        for (var key in obj)
-            keys.push(key);
-        return keys;
-    };
-
-    /**
-     * Returns the list of values for the given object.
-     * @method values
-     * @param {} obj
-     * @return {array} Array of the objects property values
-     */
-    Common.values = function(obj) {
-        var values = [];
-        
-        if (Object.keys) {
-            var keys = Object.keys(obj);
-            for (var i = 0; i < keys.length; i++) {
-                values.push(obj[keys[i]]);
-            }
-            return values;
-        }
-        
-        // avoid hasOwnProperty for performance
-        for (var key in obj)
-            values.push(obj[key]);
-        return values;
-    };
-
-    /**
-     * Gets a value from `base` relative to the `path` string.
-     * @method get
-     * @param {} obj The base object
-     * @param {string} path The path relative to `base`, e.g. 'Foo.Bar.baz'
-     * @param {number} [begin] Path slice begin
-     * @param {number} [end] Path slice end
-     * @return {} The object at the given path
-     */
-    Common.get = function(obj, path, begin, end) {
-        path = path.split('.').slice(begin, end);
-
-        for (var i = 0; i < path.length; i += 1) {
-            obj = obj[path[i]];
-        }
-
-        return obj;
-    };
-
-    /**
-     * Sets a value on `base` relative to the given `path` string.
-     * @method set
-     * @param {} obj The base object
-     * @param {string} path The path relative to `base`, e.g. 'Foo.Bar.baz'
-     * @param {} val The value to set
-     * @param {number} [begin] Path slice begin
-     * @param {number} [end] Path slice end
-     * @return {} Pass through `val` for chaining
-     */
-    Common.set = function(obj, path, val, begin, end) {
-        var parts = path.split('.').slice(begin, end);
-        Common.get(obj, path, 0, -1)[parts[parts.length - 1]] = val;
-        return val;
-    };
-
-    /**
-     * Shuffles the given array in-place.
-     * The function uses a seeded random generator.
-     * @method shuffle
-     * @param {array} array
-     * @return {array} array shuffled randomly
-     */
-    Common.shuffle = function(array) {
-        for (var i = array.length - 1; i > 0; i--) {
-            var j = Math.floor(Common.random() * (i + 1));
-            var temp = array[i];
-            array[i] = array[j];
-            array[j] = temp;
-        }
-        return array;
-    };
-
-    /**
-     * Randomly chooses a value from a list with equal probability.
-     * The function uses a seeded random generator.
-     * @method choose
-     * @param {array} choices
-     * @return {object} A random choice object from the array
-     */
-    Common.choose = function(choices) {
-        return choices[Math.floor(Common.random() * choices.length)];
-    };
-
-    /**
-     * Returns true if the object is a HTMLElement, otherwise false.
-     * @method isElement
-     * @param {object} obj
-     * @return {boolean} True if the object is a HTMLElement, otherwise false
-     */
-    Common.isElement = function(obj) {
-        if (typeof HTMLElement !== 'undefined') {
-            return obj instanceof HTMLElement;
-        }
-
-        return !!(obj && obj.nodeType && obj.nodeName);
-    };
-
-    /**
-     * Returns true if the object is an array.
-     * @method isArray
-     * @param {object} obj
-     * @return {boolean} True if the object is an array, otherwise false
-     */
-    Common.isArray = function(obj) {
-        return Object.prototype.toString.call(obj) === '[object Array]';
-    };
-
-    /**
-     * Returns true if the object is a function.
-     * @method isFunction
-     * @param {object} obj
-     * @return {boolean} True if the object is a function, otherwise false
-     */
-    Common.isFunction = function(obj) {
-        return typeof obj === "function";
-    };
-
-    /**
-     * Returns true if the object is a plain object.
-     * @method isPlainObject
-     * @param {object} obj
-     * @return {boolean} True if the object is a plain object, otherwise false
-     */
-    Common.isPlainObject = function(obj) {
-        return typeof obj === 'object' && obj.constructor === Object;
-    };
-
-    /**
-     * Returns true if the object is a string.
-     * @method isString
-     * @param {object} obj
-     * @return {boolean} True if the object is a string, otherwise false
-     */
-    Common.isString = function(obj) {
-        return toString.call(obj) === '[object String]';
-    };
-    
-    /**
-     * Returns the given value clamped between a minimum and maximum value.
-     * @method clamp
-     * @param {number} value
-     * @param {number} min
-     * @param {number} max
-     * @return {number} The value clamped between min and max inclusive
-     */
-    Common.clamp = function(value, min, max) {
-        if (value < min)
-            return min;
-        if (value > max)
-            return max;
-        return value;
-    };
-    
-    /**
-     * Returns the sign of the given value.
-     * @method sign
-     * @param {number} value
-     * @return {number} -1 if negative, +1 if 0 or positive
-     */
-    Common.sign = function(value) {
-        return value < 0 ? -1 : 1;
-    };
-    
-    /**
-     * Returns the current timestamp since the time origin (e.g. from page load).
-     * The result will be high-resolution including decimal places if available.
-     * @method now
-     * @return {number} the current timestamp
-     */
-    Common.now = function() {
-        if (window.performance) {
-            if (window.performance.now) {
-                return window.performance.now();
-            } else if (window.performance.webkitNow) {
-                return window.performance.webkitNow();
-            }
-        }
-
-        return (new Date()) - Common._nowStartTime;
-    };
-    
-    /**
-     * Returns a random value between a minimum and a maximum value inclusive.
-     * The function uses a seeded random generator.
-     * @method random
-     * @param {number} min
-     * @param {number} max
-     * @return {number} A random number between min and max inclusive
-     */
-    Common.random = function(min, max) {
-        min = (typeof min !== "undefined") ? min : 0;
-        max = (typeof max !== "undefined") ? max : 1;
-        return min + _seededRandom() * (max - min);
-    };
-
-    var _seededRandom = function() {
-        // https://en.wikipedia.org/wiki/Linear_congruential_generator
-        Common._seed = (Common._seed * 9301 + 49297) % 233280;
-        return Common._seed / 233280;
-    };
-
-    /**
-     * Converts a CSS hex colour string into an integer.
-     * @method colorToNumber
-     * @param {string} colorString
-     * @return {number} An integer representing the CSS hex string
-     */
-    Common.colorToNumber = function(colorString) {
-        colorString = colorString.replace('#','');
-
-        if (colorString.length == 3) {
-            colorString = colorString.charAt(0) + colorString.charAt(0)
-                        + colorString.charAt(1) + colorString.charAt(1)
-                        + colorString.charAt(2) + colorString.charAt(2);
-        }
-
-        return parseInt(colorString, 16);
-    };
-
-    /**
-     * The console logging level to use, where each level includes all levels above and excludes the levels below.
-     * The default level is 'debug' which shows all console messages.  
-     *
-     * Possible level values are:
-     * - 0 = None
-     * - 1 = Debug
-     * - 2 = Info
-     * - 3 = Warn
-     * - 4 = Error
-     * @property Common.logLevel
-     * @type {Number}
-     * @default 1
-     */
-    Common.logLevel = 1;
-
-    /**
-     * Shows a `console.log` message only if the current `Common.logLevel` allows it.
-     * The message will be prefixed with 'matter-js' to make it easily identifiable.
-     * @method log
-     * @param ...objs {} The objects to log.
-     */
-    Common.log = function() {
-        if (console && Common.logLevel > 0 && Common.logLevel <= 3) {
-            console.log.apply(console, ['matter-js:'].concat(Array.prototype.slice.call(arguments)));
-        }
-    };
-
-    /**
-     * Shows a `console.info` message only if the current `Common.logLevel` allows it.
-     * The message will be prefixed with 'matter-js' to make it easily identifiable.
-     * @method info
-     * @param ...objs {} The objects to log.
-     */
-    Common.info = function() {
-        if (console && Common.logLevel > 0 && Common.logLevel <= 2) {
-            console.info.apply(console, ['matter-js:'].concat(Array.prototype.slice.call(arguments)));
-        }
-    };
-
-    /**
-     * Shows a `console.warn` message only if the current `Common.logLevel` allows it.
-     * The message will be prefixed with 'matter-js' to make it easily identifiable.
-     * @method warn
-     * @param ...objs {} The objects to log.
-     */
-    Common.warn = function() {
-        if (console && Common.logLevel > 0 && Common.logLevel <= 3) {
-            console.warn.apply(console, ['matter-js:'].concat(Array.prototype.slice.call(arguments)));
-        }
-    };
-
-    /**
-     * Returns the next unique sequential ID.
-     * @method nextId
-     * @return {Number} Unique sequential ID
-     */
-    Common.nextId = function() {
-        return Common._nextId++;
-    };
-
-    /**
-     * A cross browser compatible indexOf implementation.
-     * @method indexOf
-     * @param {array} haystack
-     * @param {object} needle
-     * @return {number} The position of needle in haystack, otherwise -1.
-     */
-    Common.indexOf = function(haystack, needle) {
-        if (haystack.indexOf)
-            return haystack.indexOf(needle);
-
-        for (var i = 0; i < haystack.length; i++) {
-            if (haystack[i] === needle)
-                return i;
-        }
-
-        return -1;
-    };
-
-    /**
-     * A cross browser compatible array map implementation.
-     * @method map
-     * @param {array} list
-     * @param {function} func
-     * @return {array} Values from list transformed by func.
-     */
-    Common.map = function(list, func) {
-        if (list.map) {
-            return list.map(func);
-        }
-
-        var mapped = [];
-
-        for (var i = 0; i < list.length; i += 1) {
-            mapped.push(func(list[i]));
-        }
-
-        return mapped;
-    };
-
-    /**
-     * Takes a directed graph and returns the partially ordered set of vertices in topological order.
-     * Circular dependencies are allowed.
-     * @method topologicalSort
-     * @param {object} graph
-     * @return {array} Partially ordered set of vertices in topological order.
-     */
-    Common.topologicalSort = function(graph) {
-        // https://github.com/mgechev/javascript-algorithms
-        // Copyright (c) Minko Gechev (MIT license)
-        // Modifications: tidy formatting and naming
-        var result = [],
-            visited = [],
-            temp = [];
-
-        for (var node in graph) {
-            if (!visited[node] && !temp[node]) {
-                Common._topologicalSort(node, visited, temp, graph, result);
-            }
-        }
-
-        return result;
-    };
-
-    Common._topologicalSort = function(node, visited, temp, graph, result) {
-        var neighbors = graph[node] || [];
-        temp[node] = true;
-
-        for (var i = 0; i < neighbors.length; i += 1) {
-            var neighbor = neighbors[i];
-
-            if (temp[neighbor]) {
-                // skip circular dependencies
-                continue;
-            }
-
-            if (!visited[neighbor]) {
-                Common._topologicalSort(neighbor, visited, temp, graph, result);
-            }
-        }
-
-        temp[node] = false;
-        visited[node] = true;
-
-        result.push(node);
-    };
-
-    /**
-     * Takes _n_ functions as arguments and returns a new function that calls them in order.
-     * The arguments applied when calling the new function will also be applied to every function passed.
-     * The value of `this` refers to the last value returned in the chain that was not `undefined`.
-     * Therefore if a passed function does not return a value, the previously returned value is maintained.
-     * After all passed functions have been called the new function returns the last returned value (if any).
-     * If any of the passed functions are a chain, then the chain will be flattened.
-     * @method chain
-     * @param ...funcs {function} The functions to chain.
-     * @return {function} A new function that calls the passed functions in order.
-     */
-    Common.chain = function() {
-        var funcs = [];
-
-        for (var i = 0; i < arguments.length; i += 1) {
-            var func = arguments[i];
-
-            if (func._chained) {
-                // flatten already chained functions
-                funcs.push.apply(funcs, func._chained);
-            } else {
-                funcs.push(func);
-            }
-        }
-
-        var chain = function() {
-            // https://github.com/GoogleChrome/devtools-docs/issues/53#issuecomment-51941358
-            var lastResult,
-                args = new Array(arguments.length);
-
-            for (var i = 0, l = arguments.length; i < l; i++) {
-                args[i] = arguments[i];
-            }
-
-            for (i = 0; i < funcs.length; i += 1) {
-                var result = funcs[i].apply(lastResult, args);
-
-                if (typeof result !== 'undefined') {
-                    lastResult = result;
-                }
-            }
-
-            return lastResult;
-        };
-
-        chain._chained = funcs;
-
-        return chain;
-    };
-
-    /**
-     * Chains a function to excute before the original function on the given `path` relative to `base`.
-     * See also docs for `Common.chain`.
-     * @method chainPathBefore
-     * @param {} base The base object
-     * @param {string} path The path relative to `base`
-     * @param {function} func The function to chain before the original
-     * @return {function} The chained function that replaced the original
-     */
-    Common.chainPathBefore = function(base, path, func) {
-        return Common.set(base, path, Common.chain(
-            func,
-            Common.get(base, path)
-        ));
-    };
-
-    /**
-     * Chains a function to excute after the original function on the given `path` relative to `base`.
-     * See also docs for `Common.chain`.
-     * @method chainPathAfter
-     * @param {} base The base object
-     * @param {string} path The path relative to `base`
-     * @param {function} func The function to chain after the original
-     * @return {function} The chained function that replaced the original
-     */
-    Common.chainPathAfter = function(base, path, func) {
-        return Common.set(base, path, Common.chain(
-            Common.get(base, path),
-            func
-        ));
-    };
-
-    /**
-     * Used to require external libraries outside of the bundle.
-     * It first looks for the `globalName` on the environment's global namespace.
-     * If the global is not found, it will fall back to using the standard `require` using the `moduleName`.
-     * @private
-     * @method _requireGlobal
-     * @param {string} globalName The global module name
-     * @param {string} moduleName The fallback CommonJS module name
-     * @return {} The loaded module
-     */
-    Common._requireGlobal = function(globalName, moduleName) {
-        var obj = (typeof window !== 'undefined' ? window[globalName] : typeof global !== 'undefined' ? global[globalName] : null);
-        return obj || _dereq_(moduleName);
-    };
-})();
-
-}).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{}],15:[function(_dereq_,module,exports){
-/**
-* The `Matter.Engine` module contains methods for creating and manipulating engines.
-* An engine is a controller that manages updating the simulation of the world.
-* See `Matter.Runner` for an optional game loop utility.
-*
-* See the included usage [examples](https://github.com/liabru/matter-js/tree/master/examples).
-*
-* @class Engine
-*/
-
-var Engine = {};
-
-module.exports = Engine;
-
-var World = _dereq_('../body/World');
-var Sleeping = _dereq_('./Sleeping');
-var Resolver = _dereq_('../collision/Resolver');
-var Render = _dereq_('../render/Render');
-var Pairs = _dereq_('../collision/Pairs');
-var Metrics = _dereq_('./Metrics');
-var Grid = _dereq_('../collision/Grid');
-var Events = _dereq_('./Events');
-var Composite = _dereq_('../body/Composite');
-var Constraint = _dereq_('../constraint/Constraint');
-var Common = _dereq_('./Common');
-var Body = _dereq_('../body/Body');
-
-(function() {
-
-    /**
-     * Creates a new engine. The options parameter is an object that specifies any properties you wish to override the defaults.
-     * All properties have default values, and many are pre-calculated automatically based on other properties.
-     * See the properties section below for detailed information on what you can pass via the `options` object.
-     * @method create
-     * @param {object} [options]
-     * @return {engine} engine
-     */
-    Engine.create = function(element, options) {
-        // options may be passed as the first (and only) argument
-        options = Common.isElement(element) ? options : element;
-        element = Common.isElement(element) ? element : null;
-        options = options || {};
-
-        if (element || options.render) {
-            Common.warn('Engine.create: engine.render is deprecated (see docs)');
-        }
-
-        var defaults = {
-            positionIterations: 6,
-            velocityIterations: 4,
-            constraintIterations: 2,
-            enableSleeping: false,
-            events: [],
-            plugin: {},
-            timing: {
-                timestamp: 0,
-                timeScale: 1
-            },
-            broadphase: {
-                controller: Grid
-            }
-        };
-
-        var engine = Common.extend(defaults, options);
-
-        // @deprecated
-        if (element || engine.render) {
-            var renderDefaults = {
-                element: element,
-                controller: Render
-            };
-            
-            engine.render = Common.extend(renderDefaults, engine.render);
-        }
-
-        // @deprecated
-        if (engine.render && engine.render.controller) {
-            engine.render = engine.render.controller.create(engine.render);
-        }
-
-        // @deprecated
-        if (engine.render) {
-            engine.render.engine = engine;
-        }
-
-        engine.world = options.world || World.create(engine.world);
-        engine.pairs = Pairs.create();
-        engine.broadphase = engine.broadphase.controller.create(engine.broadphase);
-        engine.metrics = engine.metrics || { extended: false };
-
-
-        return engine;
-    };
-
-    /**
-     * Moves the simulation forward in time by `delta` ms.
-     * The `correction` argument is an optional `Number` that specifies the time correction factor to apply to the update.
-     * This can help improve the accuracy of the simulation in cases where `delta` is changing between updates.
-     * The value of `correction` is defined as `delta / lastDelta`, i.e. the percentage change of `delta` over the last step.
-     * Therefore the value is always `1` (no correction) when `delta` constant (or when no correction is desired, which is the default).
-     * See the paper on <a href="http://lonesock.net/article/verlet.html">Time Corrected Verlet</a> for more information.
-     *
-     * Triggers `beforeUpdate` and `afterUpdate` events.
-     * Triggers `collisionStart`, `collisionActive` and `collisionEnd` events.
-     * @method update
-     * @param {engine} engine
-     * @param {number} [delta=16.666]
-     * @param {number} [correction=1]
-     */
-    Engine.update = function(engine, delta, correction) {
-        delta = delta || 1000 / 60;
-        correction = correction || 1;
-
-        var world = engine.world,
-            timing = engine.timing,
-            broadphase = engine.broadphase,
-            broadphasePairs = [],
-            i;
-
-        // increment timestamp
-        timing.timestamp += delta * timing.timeScale;
-
-        // create an event object
-        var event = {
-            timestamp: timing.timestamp
-        };
-
-        Events.trigger(engine, 'beforeUpdate', event);
-
-        // get lists of all bodies and constraints, no matter what composites they are in
-        var allBodies = Composite.allBodies(world),
-            allConstraints = Composite.allConstraints(world);
-
-
-        // if sleeping enabled, call the sleeping controller
-        if (engine.enableSleeping)
-            Sleeping.update(allBodies, timing.timeScale);
-
-        // applies gravity to all bodies
-        Engine._bodiesApplyGravity(allBodies, world.gravity);
-
-        // update all body position and rotation by integration
-        Engine._bodiesUpdate(allBodies, delta, timing.timeScale, correction, world.bounds);
-
-        // update all constraints (first pass)
-        Constraint.preSolveAll(allBodies);
-        for (i = 0; i < engine.constraintIterations; i++) {
-            Constraint.solveAll(allConstraints, timing.timeScale);
-        }
-        Constraint.postSolveAll(allBodies);
-
-        // broadphase pass: find potential collision pairs
-        if (broadphase.controller) {
-            // if world is dirty, we must flush the whole grid
-            if (world.isModified)
-                broadphase.controller.clear(broadphase);
-
-            // update the grid buckets based on current bodies
-            broadphase.controller.update(broadphase, allBodies, engine, world.isModified);
-            broadphasePairs = broadphase.pairsList;
-        } else {
-            // if no broadphase set, we just pass all bodies
-            broadphasePairs = allBodies;
-        }
-
-        // clear all composite modified flags
-        if (world.isModified) {
-            Composite.setModified(world, false, false, true);
-        }
-
-        // narrowphase pass: find actual collisions, then create or update collision pairs
-        var collisions = broadphase.detector(broadphasePairs, engine);
-
-        // update collision pairs
-        var pairs = engine.pairs,
-            timestamp = timing.timestamp;
-        Pairs.update(pairs, collisions, timestamp);
-        Pairs.removeOld(pairs, timestamp);
-
-        // wake up bodies involved in collisions
-        if (engine.enableSleeping)
-            Sleeping.afterCollisions(pairs.list, timing.timeScale);
-
-        // trigger collision events
-        if (pairs.collisionStart.length > 0)
-            Events.trigger(engine, 'collisionStart', { pairs: pairs.collisionStart });
-
-        // iteratively resolve position between collisions
-        Resolver.preSolvePosition(pairs.list);
-        for (i = 0; i < engine.positionIterations; i++) {
-            Resolver.solvePosition(pairs.list, timing.timeScale);
-        }
-        Resolver.postSolvePosition(allBodies);
-
-        // update all constraints (second pass)
-        Constraint.preSolveAll(allBodies);
-        for (i = 0; i < engine.constraintIterations; i++) {
-            Constraint.solveAll(allConstraints, timing.timeScale);
-        }
-        Constraint.postSolveAll(allBodies);
-
-        // iteratively resolve velocity between collisions
-        Resolver.preSolveVelocity(pairs.list);
-        for (i = 0; i < engine.velocityIterations; i++) {
-            Resolver.solveVelocity(pairs.list, timing.timeScale);
-        }
-
-        // trigger collision events
-        if (pairs.collisionActive.length > 0)
-            Events.trigger(engine, 'collisionActive', { pairs: pairs.collisionActive });
-
-        if (pairs.collisionEnd.length > 0)
-            Events.trigger(engine, 'collisionEnd', { pairs: pairs.collisionEnd });
-
-
-        // clear force buffers
-        Engine._bodiesClearForces(allBodies);
-
-        Events.trigger(engine, 'afterUpdate', event);
-
-        return engine;
-    };
-    
-    /**
-     * Merges two engines by keeping the configuration of `engineA` but replacing the world with the one from `engineB`.
-     * @method merge
-     * @param {engine} engineA
-     * @param {engine} engineB
-     */
-    Engine.merge = function(engineA, engineB) {
-        Common.extend(engineA, engineB);
-        
-        if (engineB.world) {
-            engineA.world = engineB.world;
-
-            Engine.clear(engineA);
-
-            var bodies = Composite.allBodies(engineA.world);
-
-            for (var i = 0; i < bodies.length; i++) {
-                var body = bodies[i];
-                Sleeping.set(body, false);
-                body.id = Common.nextId();
-            }
-        }
-    };
-
-    /**
-     * Clears the engine including the world, pairs and broadphase.
-     * @method clear
-     * @param {engine} engine
-     */
-    Engine.clear = function(engine) {
-        var world = engine.world;
-        
-        Pairs.clear(engine.pairs);
-
-        var broadphase = engine.broadphase;
-        if (broadphase.controller) {
-            var bodies = Composite.allBodies(world);
-            broadphase.controller.clear(broadphase);
-            broadphase.controller.update(broadphase, bodies, engine, true);
-        }
-    };
-
-    /**
-     * Zeroes the `body.force` and `body.torque` force buffers.
-     * @method _bodiesClearForces
-     * @private
-     * @param {body[]} bodies
-     */
-    Engine._bodiesClearForces = function(bodies) {
-        for (var i = 0; i < bodies.length; i++) {
-            var body = bodies[i];
-
-            // reset force buffers
-            body.force.x = 0;
-            body.force.y = 0;
-            body.torque = 0;
-        }
-    };
-
-    /**
-     * Applys a mass dependant force to all given bodies.
-     * @method _bodiesApplyGravity
-     * @private
-     * @param {body[]} bodies
-     * @param {vector} gravity
-     */
-    Engine._bodiesApplyGravity = function(bodies, gravity) {
-        var gravityScale = typeof gravity.scale !== 'undefined' ? gravity.scale : 0.001;
-
-        if ((gravity.x === 0 && gravity.y === 0) || gravityScale === 0) {
-            return;
-        }
-        
-        for (var i = 0; i < bodies.length; i++) {
-            var body = bodies[i];
-
-            if (body.isStatic || body.isSleeping)
-                continue;
-
-            // apply gravity
-            body.force.y += body.mass * gravity.y * gravityScale;
-            body.force.x += body.mass * gravity.x * gravityScale;
-        }
-    };
-
-    /**
-     * Applys `Body.update` to all given `bodies`.
-     * @method _bodiesUpdate
-     * @private
-     * @param {body[]} bodies
-     * @param {number} deltaTime 
-     * The amount of time elapsed between updates
-     * @param {number} timeScale
-     * @param {number} correction 
-     * The Verlet correction factor (deltaTime / lastDeltaTime)
-     * @param {bounds} worldBounds
-     */
-    Engine._bodiesUpdate = function(bodies, deltaTime, timeScale, correction, worldBounds) {
-        for (var i = 0; i < bodies.length; i++) {
-            var body = bodies[i];
-
-            if (body.isStatic || body.isSleeping)
-                continue;
-
-            Body.update(body, deltaTime, timeScale, correction);
-        }
-    };
-
-    /**
-     * An alias for `Runner.run`, see `Matter.Runner` for more information.
-     * @method run
-     * @param {engine} engine
-     */
-
-    /**
-    * Fired just before an update
-    *
-    * @event beforeUpdate
-    * @param {} event An event object
-    * @param {number} event.timestamp The engine.timing.timestamp of the event
-    * @param {} event.source The source object of the event
-    * @param {} event.name The name of the event
-    */
-
-    /**
-    * Fired after engine update and all collision events
-    *
-    * @event afterUpdate
-    * @param {} event An event object
-    * @param {number} event.timestamp The engine.timing.timestamp of the event
-    * @param {} event.source The source object of the event
-    * @param {} event.name The name of the event
-    */
-
-    /**
-    * Fired after engine update, provides a list of all pairs that have started to collide in the current tick (if any)
-    *
-    * @event collisionStart
-    * @param {} event An event object
-    * @param {} event.pairs List of affected pairs
-    * @param {number} event.timestamp The engine.timing.timestamp of the event
-    * @param {} event.source The source object of the event
-    * @param {} event.name The name of the event
-    */
-
-    /**
-    * Fired after engine update, provides a list of all pairs that are colliding in the current tick (if any)
-    *
-    * @event collisionActive
-    * @param {} event An event object
-    * @param {} event.pairs List of affected pairs
-    * @param {number} event.timestamp The engine.timing.timestamp of the event
-    * @param {} event.source The source object of the event
-    * @param {} event.name The name of the event
-    */
-
-    /**
-    * Fired after engine update, provides a list of all pairs that have ended collision in the current tick (if any)
-    *
-    * @event collisionEnd
-    * @param {} event An event object
-    * @param {} event.pairs List of affected pairs
-    * @param {number} event.timestamp The engine.timing.timestamp of the event
-    * @param {} event.source The source object of the event
-    * @param {} event.name The name of the event
-    */
-
-    /*
-    *
-    *  Properties Documentation
-    *
-    */
-
-    /**
-     * An integer `Number` that specifies the number of position iterations to perform each update.
-     * The higher the value, the higher quality the simulation will be at the expense of performance.
-     *
-     * @property positionIterations
-     * @type number
-     * @default 6
-     */
-
-    /**
-     * An integer `Number` that specifies the number of velocity iterations to perform each update.
-     * The higher the value, the higher quality the simulation will be at the expense of performance.
-     *
-     * @property velocityIterations
-     * @type number
-     * @default 4
-     */
-
-    /**
-     * An integer `Number` that specifies the number of constraint iterations to perform each update.
-     * The higher the value, the higher quality the simulation will be at the expense of performance.
-     * The default value of `2` is usually very adequate.
-     *
-     * @property constraintIterations
-     * @type number
-     * @default 2
-     */
-
-    /**
-     * A flag that specifies whether the engine should allow sleeping via the `Matter.Sleeping` module.
-     * Sleeping can improve stability and performance, but often at the expense of accuracy.
-     *
-     * @property enableSleeping
-     * @type boolean
-     * @default false
-     */
-
-    /**
-     * An `Object` containing properties regarding the timing systems of the engine. 
-     *
-     * @property timing
-     * @type object
-     */
-
-    /**
-     * A `Number` that specifies the global scaling factor of time for all bodies.
-     * A value of `0` freezes the simulation.
-     * A value of `0.1` gives a slow-motion effect.
-     * A value of `1.2` gives a speed-up effect.
-     *
-     * @property timing.timeScale
-     * @type number
-     * @default 1
-     */
-
-    /**
-     * A `Number` that specifies the current simulation-time in milliseconds starting from `0`. 
-     * It is incremented on every `Engine.update` by the given `delta` argument. 
-     *
-     * @property timing.timestamp
-     * @type number
-     * @default 0
-     */
-
-    /**
-     * An instance of a `Render` controller. The default value is a `Matter.Render` instance created by `Engine.create`.
-     * One may also develop a custom renderer module based on `Matter.Render` and pass an instance of it to `Engine.create` via `options.render`.
-     *
-     * A minimal custom renderer object must define at least three functions: `create`, `clear` and `world` (see `Matter.Render`).
-     * It is also possible to instead pass the _module_ reference via `options.render.controller` and `Engine.create` will instantiate one for you.
-     *
-     * @property render
-     * @type render
-     * @deprecated see Demo.js for an example of creating a renderer
-     * @default a Matter.Render instance
-     */
-
-    /**
-     * An instance of a broadphase controller. The default value is a `Matter.Grid` instance created by `Engine.create`.
-     *
-     * @property broadphase
-     * @type grid
-     * @default a Matter.Grid instance
-     */
-
-    /**
-     * A `World` composite object that will contain all simulated bodies and constraints.
-     *
-     * @property world
-     * @type world
-     * @default a Matter.World instance
-     */
-
-    /**
-     * An object reserved for storing plugin-specific properties.
-     *
-     * @property plugin
-     * @type {}
-     */
-
-})();
-
-},{"../body/Body":1,"../body/Composite":2,"../body/World":3,"../collision/Grid":6,"../collision/Pairs":8,"../collision/Resolver":10,"../constraint/Constraint":12,"../render/Render":31,"./Common":14,"./Events":16,"./Metrics":18,"./Sleeping":22}],16:[function(_dereq_,module,exports){
-/**
-* The `Matter.Events` module contains methods to fire and listen to events on other objects.
-*
-* See the included usage [examples](https://github.com/liabru/matter-js/tree/master/examples).
-*
-* @class Events
-*/
-
-var Events = {};
-
-module.exports = Events;
-
-var Common = _dereq_('./Common');
-
-(function() {
-
-    /**
-     * Subscribes a callback function to the given object's `eventName`.
-     * @method on
-     * @param {} object
-     * @param {string} eventNames
-     * @param {function} callback
-     */
-    Events.on = function(object, eventNames, callback) {
-        var names = eventNames.split(' '),
-            name;
-
-        for (var i = 0; i < names.length; i++) {
-            name = names[i];
-            object.events = object.events || {};
-            object.events[name] = object.events[name] || [];
-            object.events[name].push(callback);
-        }
-
-        return callback;
-    };
-
-    /**
-     * Removes the given event callback. If no callback, clears all callbacks in `eventNames`. If no `eventNames`, clears all events.
-     * @method off
-     * @param {} object
-     * @param {string} eventNames
-     * @param {function} callback
-     */
-    Events.off = function(object, eventNames, callback) {
-        if (!eventNames) {
-            object.events = {};
-            return;
-        }
-
-        // handle Events.off(object, callback)
-        if (typeof eventNames === 'function') {
-            callback = eventNames;
-            eventNames = Common.keys(object.events).join(' ');
-        }
-
-        var names = eventNames.split(' ');
-
-        for (var i = 0; i < names.length; i++) {
-            var callbacks = object.events[names[i]],
-                newCallbacks = [];
-
-            if (callback && callbacks) {
-                for (var j = 0; j < callbacks.length; j++) {
-                    if (callbacks[j] !== callback)
-                        newCallbacks.push(callbacks[j]);
-                }
-            }
-
-            object.events[names[i]] = newCallbacks;
-        }
-    };
-
-    /**
-     * Fires all the callbacks subscribed to the given object's `eventName`, in the order they subscribed, if any.
-     * @method trigger
-     * @param {} object
-     * @param {string} eventNames
-     * @param {} event
-     */
-    Events.trigger = function(object, eventNames, event) {
-        var names,
-            name,
-            callbacks,
-            eventClone;
-
-        if (object.events) {
-            if (!event)
-                event = {};
-
-            names = eventNames.split(' ');
-
-            for (var i = 0; i < names.length; i++) {
-                name = names[i];
-                callbacks = object.events[name];
-
-                if (callbacks) {
-                    eventClone = Common.clone(event, false);
-                    eventClone.name = name;
-                    eventClone.source = object;
-
-                    for (var j = 0; j < callbacks.length; j++) {
-                        callbacks[j].apply(object, [eventClone]);
-                    }
-                }
-            }
-        }
-    };
-
-})();
-
-},{"./Common":14}],17:[function(_dereq_,module,exports){
-/**
-* The `Matter` module is the top level namespace. It also includes a function for installing plugins on top of the library.
-*
-* @class Matter
-*/
-
-var Matter = {};
-
-module.exports = Matter;
-
-var Plugin = _dereq_('./Plugin');
-var Common = _dereq_('./Common');
-
-(function() {
-
-    /**
-     * The library name.
-     * @property name
-     * @readOnly
-     * @type {String}
-     */
-    Matter.name = 'matter-js';
-
-    /**
-     * The library version.
-     * @property version
-     * @readOnly
-     * @type {String}
-     */
-    Matter.version = '0.14.2';
-
-    /**
-     * A list of plugin dependencies to be installed. These are normally set and installed through `Matter.use`.
-     * Alternatively you may set `Matter.uses` manually and install them by calling `Plugin.use(Matter)`.
-     * @property uses
-     * @type {Array}
-     */
-    Matter.uses = [];
-
-    /**
-     * The plugins that have been installed through `Matter.Plugin.install`. Read only.
-     * @property used
-     * @readOnly
-     * @type {Array}
-     */
-    Matter.used = [];
-
-    /**
-     * Installs the given plugins on the `Matter` namespace.
-     * This is a short-hand for `Plugin.use`, see it for more information.
-     * Call this function once at the start of your code, with all of the plugins you wish to install as arguments.
-     * Avoid calling this function multiple times unless you intend to manually control installation order.
-     * @method use
-     * @param ...plugin {Function} The plugin(s) to install on `base` (multi-argument).
-     */
-    Matter.use = function() {
-        Plugin.use(Matter, Array.prototype.slice.call(arguments));
-    };
-
-    /**
-     * Chains a function to excute before the original function on the given `path` relative to `Matter`.
-     * See also docs for `Common.chain`.
-     * @method before
-     * @param {string} path The path relative to `Matter`
-     * @param {function} func The function to chain before the original
-     * @return {function} The chained function that replaced the original
-     */
-    Matter.before = function(path, func) {
-        path = path.replace(/^Matter./, '');
-        return Common.chainPathBefore(Matter, path, func);
-    };
-
-    /**
-     * Chains a function to excute after the original function on the given `path` relative to `Matter`.
-     * See also docs for `Common.chain`.
-     * @method after
-     * @param {string} path The path relative to `Matter`
-     * @param {function} func The function to chain after the original
-     * @return {function} The chained function that replaced the original
-     */
-    Matter.after = function(path, func) {
-        path = path.replace(/^Matter./, '');
-        return Common.chainPathAfter(Matter, path, func);
-    };
-
-})();
-
-},{"./Common":14,"./Plugin":20}],18:[function(_dereq_,module,exports){
-
-},{"../body/Composite":2,"./Common":14}],19:[function(_dereq_,module,exports){
-/**
-* The `Matter.Mouse` module contains methods for creating and manipulating mouse inputs.
-*
-* @class Mouse
-*/
-
-var Mouse = {};
-
-module.exports = Mouse;
-
-var Common = _dereq_('../core/Common');
-
-(function() {
-
-    /**
-     * Creates a mouse input.
-     * @method create
-     * @param {HTMLElement} element
-     * @return {mouse} A new mouse
-     */
-    Mouse.create = function(element) {
-        var mouse = {};
-
-        if (!element) {
-            Common.log('Mouse.create: element was undefined, defaulting to document.body', 'warn');
-        }
-        
-        mouse.element = element || document.body;
-        mouse.absolute = { x: 0, y: 0 };
-        mouse.position = { x: 0, y: 0 };
-        mouse.mousedownPosition = { x: 0, y: 0 };
-        mouse.mouseupPosition = { x: 0, y: 0 };
-        mouse.offset = { x: 0, y: 0 };
-        mouse.scale = { x: 1, y: 1 };
-        mouse.wheelDelta = 0;
-        mouse.button = -1;
-        mouse.pixelRatio = mouse.element.getAttribute('data-pixel-ratio') || 1;
-
-        mouse.sourceEvents = {
-            mousemove: null,
-            mousedown: null,
-            mouseup: null,
-            mousewheel: null
-        };
-        
-        mouse.mousemove = function(event) { 
-            var position = Mouse._getRelativeMousePosition(event, mouse.element, mouse.pixelRatio),
-                touches = event.changedTouches;
-
-            if (touches) {
-                mouse.button = 0;
-                event.preventDefault();
-            }
-
-            mouse.absolute.x = position.x;
-            mouse.absolute.y = position.y;
-            mouse.position.x = mouse.absolute.x * mouse.scale.x + mouse.offset.x;
-            mouse.position.y = mouse.absolute.y * mouse.scale.y + mouse.offset.y;
-            mouse.sourceEvents.mousemove = event;
-        };
-        
-        mouse.mousedown = function(event) {
-            var position = Mouse._getRelativeMousePosition(event, mouse.element, mouse.pixelRatio),
-                touches = event.changedTouches;
-
-            if (touches) {
-                mouse.button = 0;
-                event.preventDefault();
-            } else {
-                mouse.button = event.button;
-            }
-
-            mouse.absolute.x = position.x;
-            mouse.absolute.y = position.y;
-            mouse.position.x = mouse.absolute.x * mouse.scale.x + mouse.offset.x;
-            mouse.position.y = mouse.absolute.y * mouse.scale.y + mouse.offset.y;
-            mouse.mousedownPosition.x = mouse.position.x;
-            mouse.mousedownPosition.y = mouse.position.y;
-            mouse.sourceEvents.mousedown = event;
-        };
-        
-        mouse.mouseup = function(event) {
-            var position = Mouse._getRelativeMousePosition(event, mouse.element, mouse.pixelRatio),
-                touches = event.changedTouches;
-
-            if (touches) {
-                event.preventDefault();
-            }
-            
-            mouse.button = -1;
-            mouse.absolute.x = position.x;
-            mouse.absolute.y = position.y;
-            mouse.position.x = mouse.absolute.x * mouse.scale.x + mouse.offset.x;
-            mouse.position.y = mouse.absolute.y * mouse.scale.y + mouse.offset.y;
-            mouse.mouseupPosition.x = mouse.position.x;
-            mouse.mouseupPosition.y = mouse.position.y;
-            mouse.sourceEvents.mouseup = event;
-        };
-
-        mouse.mousewheel = function(event) {
-            mouse.wheelDelta = Math.max(-1, Math.min(1, event.wheelDelta || -event.detail));
-            event.preventDefault();
-        };
-
-        Mouse.setElement(mouse, mouse.element);
-
-        return mouse;
-    };
-
-    /**
-     * Sets the element the mouse is bound to (and relative to).
-     * @method setElement
-     * @param {mouse} mouse
-     * @param {HTMLElement} element
-     */
-    Mouse.setElement = function(mouse, element) {
-        mouse.element = element;
-
-        element.addEventListener('mousemove', mouse.mousemove);
-        element.addEventListener('mousedown', mouse.mousedown);
-        element.addEventListener('mouseup', mouse.mouseup);
-        
-        element.addEventListener('mousewheel', mouse.mousewheel);
-        element.addEventListener('DOMMouseScroll', mouse.mousewheel);
-
-        element.addEventListener('touchmove', mouse.mousemove);
-        element.addEventListener('touchstart', mouse.mousedown);
-        element.addEventListener('touchend', mouse.mouseup);
-    };
-
-    /**
-     * Clears all captured source events.
-     * @method clearSourceEvents
-     * @param {mouse} mouse
-     */
-    Mouse.clearSourceEvents = function(mouse) {
-        mouse.sourceEvents.mousemove = null;
-        mouse.sourceEvents.mousedown = null;
-        mouse.sourceEvents.mouseup = null;
-        mouse.sourceEvents.mousewheel = null;
-        mouse.wheelDelta = 0;
-    };
-
-    /**
-     * Sets the mouse position offset.
-     * @method setOffset
-     * @param {mouse} mouse
-     * @param {vector} offset
-     */
-    Mouse.setOffset = function(mouse, offset) {
-        mouse.offset.x = offset.x;
-        mouse.offset.y = offset.y;
-        mouse.position.x = mouse.absolute.x * mouse.scale.x + mouse.offset.x;
-        mouse.position.y = mouse.absolute.y * mouse.scale.y + mouse.offset.y;
-    };
-
-    /**
-     * Sets the mouse position scale.
-     * @method setScale
-     * @param {mouse} mouse
-     * @param {vector} scale
-     */
-    Mouse.setScale = function(mouse, scale) {
-        mouse.scale.x = scale.x;
-        mouse.scale.y = scale.y;
-        mouse.position.x = mouse.absolute.x * mouse.scale.x + mouse.offset.x;
-        mouse.position.y = mouse.absolute.y * mouse.scale.y + mouse.offset.y;
-    };
-    
-    /**
-     * Gets the mouse position relative to an element given a screen pixel ratio.
-     * @method _getRelativeMousePosition
-     * @private
-     * @param {} event
-     * @param {} element
-     * @param {number} pixelRatio
-     * @return {}
-     */
-    Mouse._getRelativeMousePosition = function(event, element, pixelRatio) {
-        var elementBounds = element.getBoundingClientRect(),
-            rootNode = (document.documentElement || document.body.parentNode || document.body),
-            scrollX = (window.pageXOffset !== undefined) ? window.pageXOffset : rootNode.scrollLeft,
-            scrollY = (window.pageYOffset !== undefined) ? window.pageYOffset : rootNode.scrollTop,
-            touches = event.changedTouches,
-            x, y;
-        
-        if (touches) {
-            x = touches[0].pageX - elementBounds.left - scrollX;
-            y = touches[0].pageY - elementBounds.top - scrollY;
-        } else {
-            x = event.pageX - elementBounds.left - scrollX;
-            y = event.pageY - elementBounds.top - scrollY;
-        }
-
-        return { 
-            x: x / (element.clientWidth / (element.width || element.clientWidth) * pixelRatio),
-            y: y / (element.clientHeight / (element.height || element.clientHeight) * pixelRatio)
-        };
-    };
-
-})();
-
-},{"../core/Common":14}],20:[function(_dereq_,module,exports){
-/**
-* The `Matter.Plugin` module contains functions for registering and installing plugins on modules.
-*
-* @class Plugin
-*/
-
-var Plugin = {};
-
-module.exports = Plugin;
-
-var Common = _dereq_('./Common');
-
-(function() {
-
-    Plugin._registry = {};
-
-    /**
-     * Registers a plugin object so it can be resolved later by name.
-     * @method register
-     * @param plugin {} The plugin to register.
-     * @return {object} The plugin.
-     */
-    Plugin.register = function(plugin) {
-        if (!Plugin.isPlugin(plugin)) {
-            Common.warn('Plugin.register:', Plugin.toString(plugin), 'does not implement all required fields.');
-        }
-
-        if (plugin.name in Plugin._registry) {
-            var registered = Plugin._registry[plugin.name],
-                pluginVersion = Plugin.versionParse(plugin.version).number,
-                registeredVersion = Plugin.versionParse(registered.version).number;
-
-            if (pluginVersion > registeredVersion) {
-                Common.warn('Plugin.register:', Plugin.toString(registered), 'was upgraded to', Plugin.toString(plugin));
-                Plugin._registry[plugin.name] = plugin;
-            } else if (pluginVersion < registeredVersion) {
-                Common.warn('Plugin.register:', Plugin.toString(registered), 'can not be downgraded to', Plugin.toString(plugin));
-            } else if (plugin !== registered) {
-                Common.warn('Plugin.register:', Plugin.toString(plugin), 'is already registered to different plugin object');
-            }
-        } else {
-            Plugin._registry[plugin.name] = plugin;
-        }
-
-        return plugin;
-    };
-
-    /**
-     * Resolves a dependency to a plugin object from the registry if it exists. 
-     * The `dependency` may contain a version, but only the name matters when resolving.
-     * @method resolve
-     * @param dependency {string} The dependency.
-     * @return {object} The plugin if resolved, otherwise `undefined`.
-     */
-    Plugin.resolve = function(dependency) {
-        return Plugin._registry[Plugin.dependencyParse(dependency).name];
-    };
-
-    /**
-     * Returns a pretty printed plugin name and version.
-     * @method toString
-     * @param plugin {} The plugin.
-     * @return {string} Pretty printed plugin name and version.
-     */
-    Plugin.toString = function(plugin) {
-        return typeof plugin === 'string' ? plugin : (plugin.name || 'anonymous') + '@' + (plugin.version || plugin.range || '0.0.0');
-    };
-
-    /**
-     * Returns `true` if the object meets the minimum standard to be considered a plugin.
-     * This means it must define the following properties:
-     * - `name`
-     * - `version`
-     * - `install`
-     * @method isPlugin
-     * @param obj {} The obj to test.
-     * @return {boolean} `true` if the object can be considered a plugin otherwise `false`.
-     */
-    Plugin.isPlugin = function(obj) {
-        return obj && obj.name && obj.version && obj.install;
-    };
-
-    /**
-     * Returns `true` if a plugin with the given `name` been installed on `module`.
-     * @method isUsed
-     * @param module {} The module.
-     * @param name {string} The plugin name.
-     * @return {boolean} `true` if a plugin with the given `name` been installed on `module`, otherwise `false`.
-     */
-    Plugin.isUsed = function(module, name) {
-        return module.used.indexOf(name) > -1;
-    };
-
-    /**
-     * Returns `true` if `plugin.for` is applicable to `module` by comparing against `module.name` and `module.version`.
-     * If `plugin.for` is not specified then it is assumed to be applicable.
-     * The value of `plugin.for` is a string of the format `'module-name'` or `'module-name@version'`.
-     * @method isFor
-     * @param plugin {} The plugin.
-     * @param module {} The module.
-     * @return {boolean} `true` if `plugin.for` is applicable to `module`, otherwise `false`.
-     */
-    Plugin.isFor = function(plugin, module) {
-        var parsed = plugin.for && Plugin.dependencyParse(plugin.for);
-        return !plugin.for || (module.name === parsed.name && Plugin.versionSatisfies(module.version, parsed.range));
-    };
-
-    /**
-     * Installs the plugins by calling `plugin.install` on each plugin specified in `plugins` if passed, otherwise `module.uses`.
-     * For installing plugins on `Matter` see the convenience function `Matter.use`.
-     * Plugins may be specified either by their name or a reference to the plugin object.
-     * Plugins themselves may specify further dependencies, but each plugin is installed only once.
-     * Order is important, a topological sort is performed to find the best resulting order of installation.
-     * This sorting attempts to satisfy every dependency's requested ordering, but may not be exact in all cases.
-     * This function logs the resulting status of each dependency in the console, along with any warnings.
-     * - A green tick ✅ indicates a dependency was resolved and installed.
-     * - An orange diamond 🔶 indicates a dependency was resolved but a warning was thrown for it or one if its dependencies.
-     * - A red cross ❌ indicates a dependency could not be resolved.
-     * Avoid calling this function multiple times on the same module unless you intend to manually control installation order.
-     * @method use
-     * @param module {} The module install plugins on.
-     * @param [plugins=module.uses] {} The plugins to install on module (optional, defaults to `module.uses`).
-     */
-    Plugin.use = function(module, plugins) {
-        module.uses = (module.uses || []).concat(plugins || []);
-
-        if (module.uses.length === 0) {
-            Common.warn('Plugin.use:', Plugin.toString(module), 'does not specify any dependencies to install.');
-            return;
-        }
-
-        var dependencies = Plugin.dependencies(module),
-            sortedDependencies = Common.topologicalSort(dependencies),
-            status = [];
-
-        for (var i = 0; i < sortedDependencies.length; i += 1) {
-            if (sortedDependencies[i] === module.name) {
-                continue;
-            }
-
-            var plugin = Plugin.resolve(sortedDependencies[i]);
-
-            if (!plugin) {
-                status.push('❌ ' + sortedDependencies[i]);
-                continue;
-            }
-
-            if (Plugin.isUsed(module, plugin.name)) {
-                continue;
-            }
-
-            if (!Plugin.isFor(plugin, module)) {
-                Common.warn('Plugin.use:', Plugin.toString(plugin), 'is for', plugin.for, 'but installed on', Plugin.toString(module) + '.');
-                plugin._warned = true;
-            }
-
-            if (plugin.install) {
-                plugin.install(module);
-            } else {
-                Common.warn('Plugin.use:', Plugin.toString(plugin), 'does not specify an install function.');
-                plugin._warned = true;
-            }
-
-            if (plugin._warned) {
-                status.push('🔶 ' + Plugin.toString(plugin));
-                delete plugin._warned;
-            } else {
-                status.push('✅ ' + Plugin.toString(plugin));
-            }
-
-            module.used.push(plugin.name);
-        }
-
-        if (status.length > 0) {
-            Common.info(status.join('  '));
-        }
-    };
-
-    /**
-     * Recursively finds all of a module's dependencies and returns a flat dependency graph.
-     * @method dependencies
-     * @param module {} The module.
-     * @return {object} A dependency graph.
-     */
-    Plugin.dependencies = function(module, tracked) {
-        var parsedBase = Plugin.dependencyParse(module),
-            name = parsedBase.name;
-
-        tracked = tracked || {};
-
-        if (name in tracked) {
-            return;
-        }
-
-        module = Plugin.resolve(module) || module;
-
-        tracked[name] = Common.map(module.uses || [], function(dependency) {
-            if (Plugin.isPlugin(dependency)) {
-                Plugin.register(dependency);
-            }
-
-            var parsed = Plugin.dependencyParse(dependency),
-                resolved = Plugin.resolve(dependency);
-
-            if (resolved && !Plugin.versionSatisfies(resolved.version, parsed.range)) {
-                Common.warn(
-                    'Plugin.dependencies:', Plugin.toString(resolved), 'does not satisfy',
-                    Plugin.toString(parsed), 'used by', Plugin.toString(parsedBase) + '.'
-                );
-
-                resolved._warned = true;
-                module._warned = true;
-            } else if (!resolved) {
-                Common.warn(
-                    'Plugin.dependencies:', Plugin.toString(dependency), 'used by',
-                    Plugin.toString(parsedBase), 'could not be resolved.'
-                );
-
-                module._warned = true;
-            }
-
-            return parsed.name;
-        });
-
-        for (var i = 0; i < tracked[name].length; i += 1) {
-            Plugin.dependencies(tracked[name][i], tracked);
-        }
-
-        return tracked;
-    };
-
-    /**
-     * Parses a dependency string into its components.
-     * The `dependency` is a string of the format `'module-name'` or `'module-name@version'`.
-     * See documentation for `Plugin.versionParse` for a description of the format.
-     * This function can also handle dependencies that are already resolved (e.g. a module object).
-     * @method dependencyParse
-     * @param dependency {string} The dependency of the format `'module-name'` or `'module-name@version'`.
-     * @return {object} The dependency parsed into its components.
-     */
-    Plugin.dependencyParse = function(dependency) {
-        if (Common.isString(dependency)) {
-            var pattern = /^[\w-]+(@(\*|[\^~]?\d+\.\d+\.\d+(-[0-9A-Za-z-]+)?))?$/;
-
-            if (!pattern.test(dependency)) {
-                Common.warn('Plugin.dependencyParse:', dependency, 'is not a valid dependency string.');
-            }
-
-            return {
-                name: dependency.split('@')[0],
-                range: dependency.split('@')[1] || '*'
-            };
-        }
-
-        return {
-            name: dependency.name,
-            range: dependency.range || dependency.version
-        };
-    };
-
-    /**
-     * Parses a version string into its components.  
-     * Versions are strictly of the format `x.y.z` (as in [semver](http://semver.org/)).
-     * Versions may optionally have a prerelease tag in the format `x.y.z-alpha`.
-     * Ranges are a strict subset of [npm ranges](https://docs.npmjs.com/misc/semver#advanced-range-syntax).
-     * Only the following range types are supported:
-     * - Tilde ranges e.g. `~1.2.3`
-     * - Caret ranges e.g. `^1.2.3`
-     * - Exact version e.g. `1.2.3`
-     * - Any version `*`
-     * @method versionParse
-     * @param range {string} The version string.
-     * @return {object} The version range parsed into its components.
-     */
-    Plugin.versionParse = function(range) {
-        var pattern = /^\*|[\^~]?\d+\.\d+\.\d+(-[0-9A-Za-z-]+)?$/;
-
-        if (!pattern.test(range)) {
-            Common.warn('Plugin.versionParse:', range, 'is not a valid version or range.');
-        }
-
-        var identifiers = range.split('-');
-        range = identifiers[0];
-
-        var isRange = isNaN(Number(range[0])),
-            version = isRange ? range.substr(1) : range,
-            parts = Common.map(version.split('.'), function(part) {
-                return Number(part);
-            });
-
-        return {
-            isRange: isRange,
-            version: version,
-            range: range,
-            operator: isRange ? range[0] : '',
-            parts: parts,
-            prerelease: identifiers[1],
-            number: parts[0] * 1e8 + parts[1] * 1e4 + parts[2]
-        };
-    };
-
-    /**
-     * Returns `true` if `version` satisfies the given `range`.
-     * See documentation for `Plugin.versionParse` for a description of the format.
-     * If a version or range is not specified, then any version (`*`) is assumed to satisfy.
-     * @method versionSatisfies
-     * @param version {string} The version string.
-     * @param range {string} The range string.
-     * @return {boolean} `true` if `version` satisfies `range`, otherwise `false`.
-     */
-    Plugin.versionSatisfies = function(version, range) {
-        range = range || '*';
-
-        var rangeParsed = Plugin.versionParse(range),
-            rangeParts = rangeParsed.parts,
-            versionParsed = Plugin.versionParse(version),
-            versionParts = versionParsed.parts;
-
-        if (rangeParsed.isRange) {
-            if (rangeParsed.operator === '*' || version === '*') {
-                return true;
-            }
-
-            if (rangeParsed.operator === '~') {
-                return versionParts[0] === rangeParts[0] && versionParts[1] === rangeParts[1] && versionParts[2] >= rangeParts[2];
-            }
-
-            if (rangeParsed.operator === '^') {
-                if (rangeParts[0] > 0) {
-                    return versionParts[0] === rangeParts[0] && versionParsed.number >= rangeParsed.number;
-                }
-
-                if (rangeParts[1] > 0) {
-                    return versionParts[1] === rangeParts[1] && versionParts[2] >= rangeParts[2];
-                }
-
-                return versionParts[2] === rangeParts[2];
-            }
-        }
-
-        return version === range || version === '*';
-    };
-
-})();
-
-},{"./Common":14}],21:[function(_dereq_,module,exports){
-/**
-* The `Matter.Runner` module is an optional utility which provides a game loop, 
-* that handles continuously updating a `Matter.Engine` for you within a browser.
-* It is intended for development and debugging purposes, but may also be suitable for simple games.
-* If you are using your own game loop instead, then you do not need the `Matter.Runner` module.
-* Instead just call `Engine.update(engine, delta)` in your own loop.
-*
-* See the included usage [examples](https://github.com/liabru/matter-js/tree/master/examples).
-*
-* @class Runner
-*/
-
-var Runner = {};
-
-module.exports = Runner;
-
-var Events = _dereq_('./Events');
-var Engine = _dereq_('./Engine');
-var Common = _dereq_('./Common');
-
-(function() {
-
-    var _requestAnimationFrame,
-        _cancelAnimationFrame;
-
-    if (typeof window !== 'undefined') {
-        _requestAnimationFrame = window.requestAnimationFrame || window.webkitRequestAnimationFrame
-                                      || window.mozRequestAnimationFrame || window.msRequestAnimationFrame;
-   
-        _cancelAnimationFrame = window.cancelAnimationFrame || window.mozCancelAnimationFrame 
-                                      || window.webkitCancelAnimationFrame || window.msCancelAnimationFrame;
-    }
-
-    if (!_requestAnimationFrame) {
-        var _frameTimeout;
-
-        _requestAnimationFrame = function(callback){ 
-            _frameTimeout = setTimeout(function() { 
-                callback(Common.now()); 
-            }, 1000 / 60);
-        };
-
-        _cancelAnimationFrame = function() {
-            clearTimeout(_frameTimeout);
-        };
-    }
-
-    /**
-     * Creates a new Runner. The options parameter is an object that specifies any properties you wish to override the defaults.
-     * @method create
-     * @param {} options
-     */
-    Runner.create = function(options) {
-        var defaults = {
-            fps: 60,
-            correction: 1,
-            deltaSampleSize: 60,
-            counterTimestamp: 0,
-            frameCounter: 0,
-            deltaHistory: [],
-            timePrev: null,
-            timeScalePrev: 1,
-            frameRequestId: null,
-            isFixed: false,
-            enabled: true
-        };
-
-        var runner = Common.extend(defaults, options);
-
-        runner.delta = runner.delta || 1000 / runner.fps;
-        runner.deltaMin = runner.deltaMin || 1000 / runner.fps;
-        runner.deltaMax = runner.deltaMax || 1000 / (runner.fps * 0.5);
-        runner.fps = 1000 / runner.delta;
-
-        return runner;
-    };
-
-    /**
-     * Continuously ticks a `Matter.Engine` by calling `Runner.tick` on the `requestAnimationFrame` event.
-     * @method run
-     * @param {engine} engine
-     */
-    Runner.run = function(runner, engine) {
-        // create runner if engine is first argument
-        if (typeof runner.positionIterations !== 'undefined') {
-            engine = runner;
-            runner = Runner.create();
-        }
-
-        (function render(time){
-            runner.frameRequestId = _requestAnimationFrame(render);
-
-            if (time && runner.enabled) {
-                Runner.tick(runner, engine, time);
-            }
-        })();
-
-        return runner;
-    };
-
-    /**
-     * A game loop utility that updates the engine and renderer by one step (a 'tick').
-     * Features delta smoothing, time correction and fixed or dynamic timing.
-     * Triggers `beforeTick`, `tick` and `afterTick` events on the engine.
-     * Consider just `Engine.update(engine, delta)` if you're using your own loop.
-     * @method tick
-     * @param {runner} runner
-     * @param {engine} engine
-     * @param {number} time
-     */
-    Runner.tick = function(runner, engine, time) {
-        var timing = engine.timing,
-            correction = 1,
-            delta;
-
-        // create an event object
-        var event = {
-            timestamp: timing.timestamp
-        };
-
-        Events.trigger(runner, 'beforeTick', event);
-        Events.trigger(engine, 'beforeTick', event); // @deprecated
-
-        if (runner.isFixed) {
-            // fixed timestep
-            delta = runner.delta;
-        } else {
-            // dynamic timestep based on wall clock between calls
-            delta = (time - runner.timePrev) || runner.delta;
-            runner.timePrev = time;
-
-            // optimistically filter delta over a few frames, to improve stability
-            runner.deltaHistory.push(delta);
-            runner.deltaHistory = runner.deltaHistory.slice(-runner.deltaSampleSize);
-            delta = Math.min.apply(null, runner.deltaHistory);
-            
-            // limit delta
-            delta = delta < runner.deltaMin ? runner.deltaMin : delta;
-            delta = delta > runner.deltaMax ? runner.deltaMax : delta;
-
-            // correction for delta
-            correction = delta / runner.delta;
-
-            // update engine timing object
-            runner.delta = delta;
-        }
-
-        // time correction for time scaling
-        if (runner.timeScalePrev !== 0)
-            correction *= timing.timeScale / runner.timeScalePrev;
-
-        if (timing.timeScale === 0)
-            correction = 0;
-
-        runner.timeScalePrev = timing.timeScale;
-        runner.correction = correction;
-
-        // fps counter
-        runner.frameCounter += 1;
-        if (time - runner.counterTimestamp >= 1000) {
-            runner.fps = runner.frameCounter * ((time - runner.counterTimestamp) / 1000);
-            runner.counterTimestamp = time;
-            runner.frameCounter = 0;
-        }
-
-        Events.trigger(runner, 'tick', event);
-        Events.trigger(engine, 'tick', event); // @deprecated
-
-        // if world has been modified, clear the render scene graph
-        if (engine.world.isModified 
-            && engine.render
-            && engine.render.controller
-            && engine.render.controller.clear) {
-            engine.render.controller.clear(engine.render); // @deprecated
-        }
-
-        // update
-        Events.trigger(runner, 'beforeUpdate', event);
-        Engine.update(engine, delta, correction);
-        Events.trigger(runner, 'afterUpdate', event);
-
-        // render
-        // @deprecated
-        if (engine.render && engine.render.controller) {
-            Events.trigger(runner, 'beforeRender', event);
-            Events.trigger(engine, 'beforeRender', event); // @deprecated
-
-            engine.render.controller.world(engine.render);
-
-            Events.trigger(runner, 'afterRender', event);
-            Events.trigger(engine, 'afterRender', event); // @deprecated
-        }
-
-        Events.trigger(runner, 'afterTick', event);
-        Events.trigger(engine, 'afterTick', event); // @deprecated
-    };
-
-    /**
-     * Ends execution of `Runner.run` on the given `runner`, by canceling the animation frame request event loop.
-     * If you wish to only temporarily pause the engine, see `engine.enabled` instead.
-     * @method stop
-     * @param {runner} runner
-     */
-    Runner.stop = function(runner) {
-        _cancelAnimationFrame(runner.frameRequestId);
-    };
-
-    /**
-     * Alias for `Runner.run`.
-     * @method start
-     * @param {runner} runner
-     * @param {engine} engine
-     */
-    Runner.start = function(runner, engine) {
-        Runner.run(runner, engine);
-    };
-
-    /*
-    *
-    *  Events Documentation
-    *
-    */
-
-    /**
-    * Fired at the start of a tick, before any updates to the engine or timing
-    *
-    * @event beforeTick
-    * @param {} event An event object
-    * @param {number} event.timestamp The engine.timing.timestamp of the event
-    * @param {} event.source The source object of the event
-    * @param {} event.name The name of the event
-    */
-
-    /**
-    * Fired after engine timing updated, but just before update
-    *
-    * @event tick
-    * @param {} event An event object
-    * @param {number} event.timestamp The engine.timing.timestamp of the event
-    * @param {} event.source The source object of the event
-    * @param {} event.name The name of the event
-    */
-
-    /**
-    * Fired at the end of a tick, after engine update and after rendering
-    *
-    * @event afterTick
-    * @param {} event An event object
-    * @param {number} event.timestamp The engine.timing.timestamp of the event
-    * @param {} event.source The source object of the event
-    * @param {} event.name The name of the event
-    */
-
-    /**
-    * Fired before update
-    *
-    * @event beforeUpdate
-    * @param {} event An event object
-    * @param {number} event.timestamp The engine.timing.timestamp of the event
-    * @param {} event.source The source object of the event
-    * @param {} event.name The name of the event
-    */
-
-    /**
-    * Fired after update
-    *
-    * @event afterUpdate
-    * @param {} event An event object
-    * @param {number} event.timestamp The engine.timing.timestamp of the event
-    * @param {} event.source The source object of the event
-    * @param {} event.name The name of the event
-    */
-
-    /**
-    * Fired before rendering
-    *
-    * @event beforeRender
-    * @param {} event An event object
-    * @param {number} event.timestamp The engine.timing.timestamp of the event
-    * @param {} event.source The source object of the event
-    * @param {} event.name The name of the event
-    * @deprecated
-    */
-
-    /**
-    * Fired after rendering
-    *
-    * @event afterRender
-    * @param {} event An event object
-    * @param {number} event.timestamp The engine.timing.timestamp of the event
-    * @param {} event.source The source object of the event
-    * @param {} event.name The name of the event
-    * @deprecated
-    */
-
-    /*
-    *
-    *  Properties Documentation
-    *
-    */
-
-    /**
-     * A flag that specifies whether the runner is running or not.
-     *
-     * @property enabled
-     * @type boolean
-     * @default true
-     */
-
-    /**
-     * A `Boolean` that specifies if the runner should use a fixed timestep (otherwise it is variable).
-     * If timing is fixed, then the apparent simulation speed will change depending on the frame rate (but behaviour will be deterministic).
-     * If the timing is variable, then the apparent simulation speed will be constant (approximately, but at the cost of determininism).
-     *
-     * @property isFixed
-     * @type boolean
-     * @default false
-     */
-
-    /**
-     * A `Number` that specifies the time step between updates in milliseconds.
-     * If `engine.timing.isFixed` is set to `true`, then `delta` is fixed.
-     * If it is `false`, then `delta` can dynamically change to maintain the correct apparent simulation speed.
-     *
-     * @property delta
-     * @type number
-     * @default 1000 / 60
-     */
-
-})();
-
-},{"./Common":14,"./Engine":15,"./Events":16}],22:[function(_dereq_,module,exports){
-/**
-* The `Matter.Sleeping` module contains methods to manage the sleeping state of bodies.
-*
-* @class Sleeping
-*/
-
-var Sleeping = {};
-
-module.exports = Sleeping;
-
-var Events = _dereq_('./Events');
-
-(function() {
-
-    Sleeping._motionWakeThreshold = 0.18;
-    Sleeping._motionSleepThreshold = 0.08;
-    Sleeping._minBias = 0.9;
-
-    /**
-     * Puts bodies to sleep or wakes them up depending on their motion.
-     * @method update
-     * @param {body[]} bodies
-     * @param {number} timeScale
-     */
-    Sleeping.update = function(bodies, timeScale) {
-        var timeFactor = timeScale * timeScale * timeScale;
-
-        // update bodies sleeping status
-        for (var i = 0; i < bodies.length; i++) {
-            var body = bodies[i],
-                motion = body.speed * body.speed + body.angularSpeed * body.angularSpeed;
-
-            // wake up bodies if they have a force applied
-            if (body.force.x !== 0 || body.force.y !== 0) {
-                Sleeping.set(body, false);
-                continue;
-            }
-
-            var minMotion = Math.min(body.motion, motion),
-                maxMotion = Math.max(body.motion, motion);
-        
-            // biased average motion estimation between frames
-            body.motion = Sleeping._minBias * minMotion + (1 - Sleeping._minBias) * maxMotion;
-            
-            if (body.sleepThreshold > 0 && body.motion < Sleeping._motionSleepThreshold * timeFactor) {
-                body.sleepCounter += 1;
-                
-                if (body.sleepCounter >= body.sleepThreshold)
-                    Sleeping.set(body, true);
-            } else if (body.sleepCounter > 0) {
-                body.sleepCounter -= 1;
-            }
-        }
-    };
-
-    /**
-     * Given a set of colliding pairs, wakes the sleeping bodies involved.
-     * @method afterCollisions
-     * @param {pair[]} pairs
-     * @param {number} timeScale
-     */
-    Sleeping.afterCollisions = function(pairs, timeScale) {
-        var timeFactor = timeScale * timeScale * timeScale;
-
-        // wake up bodies involved in collisions
-        for (var i = 0; i < pairs.length; i++) {
-            var pair = pairs[i];
-            
-            // don't wake inactive pairs
-            if (!pair.isActive)
-                continue;
-
-            var collision = pair.collision,
-                bodyA = collision.bodyA.parent, 
-                bodyB = collision.bodyB.parent;
-        
-            // don't wake if at least one body is static
-            if ((bodyA.isSleeping && bodyB.isSleeping) || bodyA.isStatic || bodyB.isStatic)
-                continue;
-        
-            if (bodyA.isSleeping || bodyB.isSleeping) {
-                var sleepingBody = (bodyA.isSleeping && !bodyA.isStatic) ? bodyA : bodyB,
-                    movingBody = sleepingBody === bodyA ? bodyB : bodyA;
-
-                if (!sleepingBody.isStatic && movingBody.motion > Sleeping._motionWakeThreshold * timeFactor) {
-                    Sleeping.set(sleepingBody, false);
-                }
-            }
-        }
-    };
-  
-    /**
-     * Set a body as sleeping or awake.
-     * @method set
-     * @param {body} body
-     * @param {boolean} isSleeping
-     */
-    Sleeping.set = function(body, isSleeping) {
-        var wasSleeping = body.isSleeping;
-
-        if (isSleeping) {
-            body.isSleeping = true;
-            body.sleepCounter = body.sleepThreshold;
-
-            body.positionImpulse.x = 0;
-            body.positionImpulse.y = 0;
-
-            body.positionPrev.x = body.position.x;
-            body.positionPrev.y = body.position.y;
-
-            body.anglePrev = body.angle;
-            body.speed = 0;
-            body.angularSpeed = 0;
-            body.motion = 0;
-
-            if (!wasSleeping) {
-                Events.trigger(body, 'sleepStart');
-            }
-        } else {
-            body.isSleeping = false;
-            body.sleepCounter = 0;
-
-            if (wasSleeping) {
-                Events.trigger(body, 'sleepEnd');
-            }
-        }
-    };
-
-})();
-
-},{"./Events":16}],23:[function(_dereq_,module,exports){
-/**
-* The `Matter.Bodies` module contains factory methods for creating rigid body models 
-* with commonly used body configurations (such as rectangles, circles and other polygons).
-*
-* See the included usage [examples](https://github.com/liabru/matter-js/tree/master/examples).
-*
-* @class Bodies
-*/
-
-// TODO: true circle bodies
-
-var Bodies = {};
-
-module.exports = Bodies;
-
-var Vertices = _dereq_('../geometry/Vertices');
-var Common = _dereq_('../core/Common');
-var Body = _dereq_('../body/Body');
-var Bounds = _dereq_('../geometry/Bounds');
-var Vector = _dereq_('../geometry/Vector');
-var decomp;
-
-(function() {
-
-    /**
-     * Creates a new rigid body model with a rectangle hull. 
-     * The options parameter is an object that specifies any properties you wish to override the defaults.
-     * See the properties section of the `Matter.Body` module for detailed information on what you can pass via the `options` object.
-     * @method rectangle
-     * @param {number} x
-     * @param {number} y
-     * @param {number} width
-     * @param {number} height
-     * @param {object} [options]
-     * @return {body} A new rectangle body
-     */
-    Bodies.rectangle = function(x, y, width, height, options) {
-        options = options || {};
-
-        var rectangle = { 
-            label: 'Rectangle Body',
-            position: { x: x, y: y },
-            vertices: Vertices.fromPath('L 0 0 L ' + width + ' 0 L ' + width + ' ' + height + ' L 0 ' + height)
-        };
-
-        if (options.chamfer) {
-            var chamfer = options.chamfer;
-            rectangle.vertices = Vertices.chamfer(rectangle.vertices, chamfer.radius, 
-                                    chamfer.quality, chamfer.qualityMin, chamfer.qualityMax);
-            delete options.chamfer;
-        }
-
-        return Body.create(Common.extend({}, rectangle, options));
-    };
-    
-    /**
-     * Creates a new rigid body model with a trapezoid hull. 
-     * The options parameter is an object that specifies any properties you wish to override the defaults.
-     * See the properties section of the `Matter.Body` module for detailed information on what you can pass via the `options` object.
-     * @method trapezoid
-     * @param {number} x
-     * @param {number} y
-     * @param {number} width
-     * @param {number} height
-     * @param {number} slope
-     * @param {object} [options]
-     * @return {body} A new trapezoid body
-     */
-    Bodies.trapezoid = function(x, y, width, height, slope, options) {
-        options = options || {};
-
-        slope *= 0.5;
-        var roof = (1 - (slope * 2)) * width;
-        
-        var x1 = width * slope,
-            x2 = x1 + roof,
-            x3 = x2 + x1,
-            verticesPath;
-
-        if (slope < 0.5) {
-            verticesPath = 'L 0 0 L ' + x1 + ' ' + (-height) + ' L ' + x2 + ' ' + (-height) + ' L ' + x3 + ' 0';
-        } else {
-            verticesPath = 'L 0 0 L ' + x2 + ' ' + (-height) + ' L ' + x3 + ' 0';
-        }
-
-        var trapezoid = { 
-            label: 'Trapezoid Body',
-            position: { x: x, y: y },
-            vertices: Vertices.fromPath(verticesPath)
-        };
-
-        if (options.chamfer) {
-            var chamfer = options.chamfer;
-            trapezoid.vertices = Vertices.chamfer(trapezoid.vertices, chamfer.radius, 
-                                    chamfer.quality, chamfer.qualityMin, chamfer.qualityMax);
-            delete options.chamfer;
-        }
-
-        return Body.create(Common.extend({}, trapezoid, options));
-    };
-
-    /**
-     * Creates a new rigid body model with a circle hull. 
-     * The options parameter is an object that specifies any properties you wish to override the defaults.
-     * See the properties section of the `Matter.Body` module for detailed information on what you can pass via the `options` object.
-     * @method circle
-     * @param {number} x
-     * @param {number} y
-     * @param {number} radius
-     * @param {object} [options]
-     * @param {number} [maxSides]
-     * @return {body} A new circle body
-     */
-    Bodies.circle = function(x, y, radius, options, maxSides) {
-        options = options || {};
-
-        var circle = {
-            label: 'Circle Body',
-            circleRadius: radius
-        };
-        
-        // approximate circles with polygons until true circles implemented in SAT
-        maxSides = maxSides || 25;
-        var sides = Math.ceil(Math.max(10, Math.min(maxSides, radius)));
-
-        // optimisation: always use even number of sides (half the number of unique axes)
-        if (sides % 2 === 1)
-            sides += 1;
-
-        return Bodies.polygon(x, y, sides, radius, Common.extend({}, circle, options));
-    };
-
-    /**
-     * Creates a new rigid body model with a regular polygon hull with the given number of sides. 
-     * The options parameter is an object that specifies any properties you wish to override the defaults.
-     * See the properties section of the `Matter.Body` module for detailed information on what you can pass via the `options` object.
-     * @method polygon
-     * @param {number} x
-     * @param {number} y
-     * @param {number} sides
-     * @param {number} radius
-     * @param {object} [options]
-     * @return {body} A new regular polygon body
-     */
-    Bodies.polygon = function(x, y, sides, radius, options) {
-        options = options || {};
-
-        if (sides < 3)
-            return Bodies.circle(x, y, radius, options);
-
-        var theta = 2 * Math.PI / sides,
-            path = '',
-            offset = theta * 0.5;
-
-        for (var i = 0; i < sides; i += 1) {
-            var angle = offset + (i * theta),
-                xx = Math.cos(angle) * radius,
-                yy = Math.sin(angle) * radius;
-
-            path += 'L ' + xx.toFixed(3) + ' ' + yy.toFixed(3) + ' ';
-        }
-
-        var polygon = { 
-            label: 'Polygon Body',
-            position: { x: x, y: y },
-            vertices: Vertices.fromPath(path)
-        };
-
-        if (options.chamfer) {
-            var chamfer = options.chamfer;
-            polygon.vertices = Vertices.chamfer(polygon.vertices, chamfer.radius, 
-                                    chamfer.quality, chamfer.qualityMin, chamfer.qualityMax);
-            delete options.chamfer;
-        }
-
-        return Body.create(Common.extend({}, polygon, options));
-    };
-
-    /**
-     * Creates a body using the supplied vertices (or an array containing multiple sets of vertices).
-     * If the vertices are convex, they will pass through as supplied.
-     * Otherwise if the vertices are concave, they will be decomposed if [poly-decomp.js](https://github.com/schteppe/poly-decomp.js) is available.
-     * Note that this process is not guaranteed to support complex sets of vertices (e.g. those with holes may fail).
-     * By default the decomposition will discard collinear edges (to improve performance).
-     * It can also optionally discard any parts that have an area less than `minimumArea`.
-     * If the vertices can not be decomposed, the result will fall back to using the convex hull.
-     * The options parameter is an object that specifies any `Matter.Body` properties you wish to override the defaults.
-     * See the properties section of the `Matter.Body` module for detailed information on what you can pass via the `options` object.
-     * @method fromVertices
-     * @param {number} x
-     * @param {number} y
-     * @param [[vector]] vertexSets
-     * @param {object} [options]
-     * @param {bool} [flagInternal=false]
-     * @param {number} [removeCollinear=0.01]
-     * @param {number} [minimumArea=10]
-     * @return {body}
-     */
-    Bodies.fromVertices = function(x, y, vertexSets, options, flagInternal, removeCollinear, minimumArea) {
-        if (!decomp) {
-            decomp = Common._requireGlobal('decomp', 'poly-decomp');
-        }
-
-        var body,
-            parts,
-            isConvex,
-            vertices,
-            i,
-            j,
-            k,
-            v,
-            z;
-
-        options = options || {};
-        parts = [];
-
-        flagInternal = typeof flagInternal !== 'undefined' ? flagInternal : false;
-        removeCollinear = typeof removeCollinear !== 'undefined' ? removeCollinear : 0.01;
-        minimumArea = typeof minimumArea !== 'undefined' ? minimumArea : 10;
-
-        if (!decomp) {
-            Common.warn('Bodies.fromVertices: poly-decomp.js required. Could not decompose vertices. Fallback to convex hull.');
-        }
-
-        // ensure vertexSets is an array of arrays
-        if (!Common.isArray(vertexSets[0])) {
-            vertexSets = [vertexSets];
-        }
-
-        for (v = 0; v < vertexSets.length; v += 1) {
-            vertices = vertexSets[v];
-            isConvex = Vertices.isConvex(vertices);
-
-            if (isConvex || !decomp) {
-                if (isConvex) {
-                    vertices = Vertices.clockwiseSort(vertices);
-                } else {
-                    // fallback to convex hull when decomposition is not possible
-                    vertices = Vertices.hull(vertices);
-                }
-
-                parts.push({
-                    position: { x: x, y: y },
-                    vertices: vertices
-                });
-            } else {
-                // initialise a decomposition
-                var concave = vertices.map(function(vertex) {
-                    return [vertex.x, vertex.y];
-                });
-
-                // vertices are concave and simple, we can decompose into parts
-                decomp.makeCCW(concave);
-                if (removeCollinear !== false)
-                    decomp.removeCollinearPoints(concave, removeCollinear);
-
-                // use the quick decomposition algorithm (Bayazit)
-                var decomposed = decomp.quickDecomp(concave);
-
-                // for each decomposed chunk
-                for (i = 0; i < decomposed.length; i++) {
-                    var chunk = decomposed[i];
-
-                    // convert vertices into the correct structure
-                    var chunkVertices = chunk.map(function(vertices) {
-                        return {
-                            x: vertices[0],
-                            y: vertices[1]
-                        };
-                    });
-
-                    // skip small chunks
-                    if (minimumArea > 0 && Vertices.area(chunkVertices) < minimumArea)
-                        continue;
-
-                    // create a compound part
-                    parts.push({
-                        position: Vertices.centre(chunkVertices),
-                        vertices: chunkVertices
-                    });
-                }
-            }
-        }
-
-        // create body parts
-        for (i = 0; i < parts.length; i++) {
-            parts[i] = Body.create(Common.extend(parts[i], options));
-        }
-
-        // flag internal edges (coincident part edges)
-        if (flagInternal) {
-            var coincident_max_dist = 5;
-
-            for (i = 0; i < parts.length; i++) {
-                var partA = parts[i];
-
-                for (j = i + 1; j < parts.length; j++) {
-                    var partB = parts[j];
-
-                    if (Bounds.overlaps(partA.bounds, partB.bounds)) {
-                        var pav = partA.vertices,
-                            pbv = partB.vertices;
-
-                        // iterate vertices of both parts
-                        for (k = 0; k < partA.vertices.length; k++) {
-                            for (z = 0; z < partB.vertices.length; z++) {
-                                // find distances between the vertices
-                                var da = Vector.magnitudeSquared(Vector.sub(pav[(k + 1) % pav.length], pbv[z])),
-                                    db = Vector.magnitudeSquared(Vector.sub(pav[k], pbv[(z + 1) % pbv.length]));
-
-                                // if both vertices are very close, consider the edge concident (internal)
-                                if (da < coincident_max_dist && db < coincident_max_dist) {
-                                    pav[k].isInternal = true;
-                                    pbv[z].isInternal = true;
-                                }
-                            }
-                        }
-
-                    }
-                }
-            }
-        }
-
-        if (parts.length > 1) {
-            // create the parent body to be returned, that contains generated compound parts
-            body = Body.create(Common.extend({ parts: parts.slice(0) }, options));
-            Body.setPosition(body, { x: x, y: y });
-
-            return body;
-        } else {
-            return parts[0];
-        }
-    };
-
-})();
-
-},{"../body/Body":1,"../core/Common":14,"../geometry/Bounds":26,"../geometry/Vector":28,"../geometry/Vertices":29}],24:[function(_dereq_,module,exports){
-/**
-* The `Matter.Composites` module contains factory methods for creating composite bodies
-* with commonly used configurations (such as stacks and chains).
-*
-* See the included usage [examples](https://github.com/liabru/matter-js/tree/master/examples).
-*
-* @class Composites
-*/
-
-var Composites = {};
-
-module.exports = Composites;
-
-var Composite = _dereq_('../body/Composite');
-var Constraint = _dereq_('../constraint/Constraint');
-var Common = _dereq_('../core/Common');
-var Body = _dereq_('../body/Body');
-var Bodies = _dereq_('./Bodies');
-
-(function() {
-
-    /**
-     * Create a new composite containing bodies created in the callback in a grid arrangement.
-     * This function uses the body's bounds to prevent overlaps.
-     * @method stack
-     * @param {number} xx
-     * @param {number} yy
-     * @param {number} columns
-     * @param {number} rows
-     * @param {number} columnGap
-     * @param {number} rowGap
-     * @param {function} callback
-     * @return {composite} A new composite containing objects created in the callback
-     */
-    Composites.stack = function(xx, yy, columns, rows, columnGap, rowGap, callback) {
-        var stack = Composite.create({ label: 'Stack' }),
-            x = xx,
-            y = yy,
-            lastBody,
-            i = 0;
-
-        for (var row = 0; row < rows; row++) {
-            var maxHeight = 0;
-            
-            for (var column = 0; column < columns; column++) {
-                var body = callback(x, y, column, row, lastBody, i);
-                    
-                if (body) {
-                    var bodyHeight = body.bounds.max.y - body.bounds.min.y,
-                        bodyWidth = body.bounds.max.x - body.bounds.min.x; 
-
-                    if (bodyHeight > maxHeight)
-                        maxHeight = bodyHeight;
-                    
-                    Body.translate(body, { x: bodyWidth * 0.5, y: bodyHeight * 0.5 });
-
-                    x = body.bounds.max.x + columnGap;
-
-                    Composite.addBody(stack, body);
-                    
-                    lastBody = body;
-                    i += 1;
-                } else {
-                    x += columnGap;
-                }
-            }
-            
-            y += maxHeight + rowGap;
-            x = xx;
-        }
-
-        return stack;
-    };
-    
-    /**
-     * Chains all bodies in the given composite together using constraints.
-     * @method chain
-     * @param {composite} composite
-     * @param {number} xOffsetA
-     * @param {number} yOffsetA
-     * @param {number} xOffsetB
-     * @param {number} yOffsetB
-     * @param {object} options
-     * @return {composite} A new composite containing objects chained together with constraints
-     */
-    Composites.chain = function(composite, xOffsetA, yOffsetA, xOffsetB, yOffsetB, options) {
-        var bodies = composite.bodies;
-        
-        for (var i = 1; i < bodies.length; i++) {
-            var bodyA = bodies[i - 1],
-                bodyB = bodies[i],
-                bodyAHeight = bodyA.bounds.max.y - bodyA.bounds.min.y,
-                bodyAWidth = bodyA.bounds.max.x - bodyA.bounds.min.x, 
-                bodyBHeight = bodyB.bounds.max.y - bodyB.bounds.min.y,
-                bodyBWidth = bodyB.bounds.max.x - bodyB.bounds.min.x;
-        
-            var defaults = {
-                bodyA: bodyA,
-                pointA: { x: bodyAWidth * xOffsetA, y: bodyAHeight * yOffsetA },
-                bodyB: bodyB,
-                pointB: { x: bodyBWidth * xOffsetB, y: bodyBHeight * yOffsetB }
-            };
-            
-            var constraint = Common.extend(defaults, options);
-        
-            Composite.addConstraint(composite, Constraint.create(constraint));
-        }
-
-        composite.label += ' Chain';
-        
-        return composite;
-    };
-
-    /**
-     * Connects bodies in the composite with constraints in a grid pattern, with optional cross braces.
-     * @method mesh
-     * @param {composite} composite
-     * @param {number} columns
-     * @param {number} rows
-     * @param {boolean} crossBrace
-     * @param {object} options
-     * @return {composite} The composite containing objects meshed together with constraints
-     */
-    Composites.mesh = function(composite, columns, rows, crossBrace, options) {
-        var bodies = composite.bodies,
-            row,
-            col,
-            bodyA,
-            bodyB,
-            bodyC;
-        
-        for (row = 0; row < rows; row++) {
-            for (col = 1; col < columns; col++) {
-                bodyA = bodies[(col - 1) + (row * columns)];
-                bodyB = bodies[col + (row * columns)];
-                Composite.addConstraint(composite, Constraint.create(Common.extend({ bodyA: bodyA, bodyB: bodyB }, options)));
-            }
-
-            if (row > 0) {
-                for (col = 0; col < columns; col++) {
-                    bodyA = bodies[col + ((row - 1) * columns)];
-                    bodyB = bodies[col + (row * columns)];
-                    Composite.addConstraint(composite, Constraint.create(Common.extend({ bodyA: bodyA, bodyB: bodyB }, options)));
-
-                    if (crossBrace && col > 0) {
-                        bodyC = bodies[(col - 1) + ((row - 1) * columns)];
-                        Composite.addConstraint(composite, Constraint.create(Common.extend({ bodyA: bodyC, bodyB: bodyB }, options)));
-                    }
-
-                    if (crossBrace && col < columns - 1) {
-                        bodyC = bodies[(col + 1) + ((row - 1) * columns)];
-                        Composite.addConstraint(composite, Constraint.create(Common.extend({ bodyA: bodyC, bodyB: bodyB }, options)));
-                    }
-                }
-            }
-        }
-
-        composite.label += ' Mesh';
-        
-        return composite;
-    };
-    
-    /**
-     * Create a new composite containing bodies created in the callback in a pyramid arrangement.
-     * This function uses the body's bounds to prevent overlaps.
-     * @method pyramid
-     * @param {number} xx
-     * @param {number} yy
-     * @param {number} columns
-     * @param {number} rows
-     * @param {number} columnGap
-     * @param {number} rowGap
-     * @param {function} callback
-     * @return {composite} A new composite containing objects created in the callback
-     */
-    Composites.pyramid = function(xx, yy, columns, rows, columnGap, rowGap, callback) {
-        return Composites.stack(xx, yy, columns, rows, columnGap, rowGap, function(x, y, column, row, lastBody, i) {
-            var actualRows = Math.min(rows, Math.ceil(columns / 2)),
-                lastBodyWidth = lastBody ? lastBody.bounds.max.x - lastBody.bounds.min.x : 0;
-            
-            if (row > actualRows)
-                return;
-            
-            // reverse row order
-            row = actualRows - row;
-            
-            var start = row,
-                end = columns - 1 - row;
-
-            if (column < start || column > end)
-                return;
-            
-            // retroactively fix the first body's position, since width was unknown
-            if (i === 1) {
-                Body.translate(lastBody, { x: (column + (columns % 2 === 1 ? 1 : -1)) * lastBodyWidth, y: 0 });
-            }
-
-            var xOffset = lastBody ? column * lastBodyWidth : 0;
-            
-            return callback(xx + xOffset + column * columnGap, y, column, row, lastBody, i);
-        });
-    };
-
-    /**
-     * Creates a composite with a Newton's Cradle setup of bodies and constraints.
-     * @method newtonsCradle
-     * @param {number} xx
-     * @param {number} yy
-     * @param {number} number
-     * @param {number} size
-     * @param {number} length
-     * @return {composite} A new composite newtonsCradle body
-     */
-    Composites.newtonsCradle = function(xx, yy, number, size, length) {
-        var newtonsCradle = Composite.create({ label: 'Newtons Cradle' });
-
-        for (var i = 0; i < number; i++) {
-            var separation = 1.9,
-                circle = Bodies.circle(xx + i * (size * separation), yy + length, size, 
-                            { inertia: Infinity, restitution: 1, friction: 0, frictionAir: 0.0001, slop: 1 }),
-                constraint = Constraint.create({ pointA: { x: xx + i * (size * separation), y: yy }, bodyB: circle });
-
-            Composite.addBody(newtonsCradle, circle);
-            Composite.addConstraint(newtonsCradle, constraint);
-        }
-
-        return newtonsCradle;
-    };
-    
-    /**
-     * Creates a composite with simple car setup of bodies and constraints.
-     * @method car
-     * @param {number} xx
-     * @param {number} yy
-     * @param {number} width
-     * @param {number} height
-     * @param {number} wheelSize
-     * @return {composite} A new composite car body
-     */
-    Composites.car = function(xx, yy, width, height, wheelSize) {
-        var group = Body.nextGroup(true),
-            wheelBase = 20,
-            wheelAOffset = -width * 0.5 + wheelBase,
-            wheelBOffset = width * 0.5 - wheelBase,
-            wheelYOffset = 0;
-    
-        var car = Composite.create({ label: 'Car' }),
-            body = Bodies.rectangle(xx, yy, width, height, { 
-                collisionFilter: {
-                    group: group
-                },
-                chamfer: {
-                    radius: height * 0.5
-                },
-                density: 0.0002
-            });
-    
-        var wheelA = Bodies.circle(xx + wheelAOffset, yy + wheelYOffset, wheelSize, { 
-            collisionFilter: {
-                group: group
-            },
-            friction: 0.8
-        });
-                    
-        var wheelB = Bodies.circle(xx + wheelBOffset, yy + wheelYOffset, wheelSize, { 
-            collisionFilter: {
-                group: group
-            },
-            friction: 0.8
-        });
-                    
-        var axelA = Constraint.create({
-            bodyB: body,
-            pointB: { x: wheelAOffset, y: wheelYOffset },
-            bodyA: wheelA,
-            stiffness: 1,
-            length: 0
-        });
-                        
-        var axelB = Constraint.create({
-            bodyB: body,
-            pointB: { x: wheelBOffset, y: wheelYOffset },
-            bodyA: wheelB,
-            stiffness: 1,
-            length: 0
-        });
-        
-        Composite.addBody(car, body);
-        Composite.addBody(car, wheelA);
-        Composite.addBody(car, wheelB);
-        Composite.addConstraint(car, axelA);
-        Composite.addConstraint(car, axelB);
-
-        return car;
-    };
-
-    /**
-     * Creates a simple soft body like object.
-     * @method softBody
-     * @param {number} xx
-     * @param {number} yy
-     * @param {number} columns
-     * @param {number} rows
-     * @param {number} columnGap
-     * @param {number} rowGap
-     * @param {boolean} crossBrace
-     * @param {number} particleRadius
-     * @param {} particleOptions
-     * @param {} constraintOptions
-     * @return {composite} A new composite softBody
-     */
-    Composites.softBody = function(xx, yy, columns, rows, columnGap, rowGap, crossBrace, particleRadius, particleOptions, constraintOptions) {
-        particleOptions = Common.extend({ inertia: Infinity }, particleOptions);
-        constraintOptions = Common.extend({ stiffness: 0.2, render: { type: 'line', anchors: false } }, constraintOptions);
-
-        var softBody = Composites.stack(xx, yy, columns, rows, columnGap, rowGap, function(x, y) {
-            return Bodies.circle(x, y, particleRadius, particleOptions);
-        });
-
-        Composites.mesh(softBody, columns, rows, crossBrace, constraintOptions);
-
-        softBody.label = 'Soft Body';
-
-        return softBody;
-    };
-
-})();
-
-},{"../body/Body":1,"../body/Composite":2,"../constraint/Constraint":12,"../core/Common":14,"./Bodies":23}],25:[function(_dereq_,module,exports){
-/**
-* The `Matter.Axes` module contains methods for creating and manipulating sets of axes.
-*
-* @class Axes
-*/
-
-var Axes = {};
-
-module.exports = Axes;
-
-var Vector = _dereq_('../geometry/Vector');
-var Common = _dereq_('../core/Common');
-
-(function() {
-
-    /**
-     * Creates a new set of axes from the given vertices.
-     * @method fromVertices
-     * @param {vertices} vertices
-     * @return {axes} A new axes from the given vertices
-     */
-    Axes.fromVertices = function(vertices) {
-        var axes = {};
-
-        // find the unique axes, using edge normal gradients
-        for (var i = 0; i < vertices.length; i++) {
-            var j = (i + 1) % vertices.length, 
-                normal = Vector.normalise({ 
-                    x: vertices[j].y - vertices[i].y, 
-                    y: vertices[i].x - vertices[j].x
-                }),
-                gradient = (normal.y === 0) ? Infinity : (normal.x / normal.y);
-            
-            // limit precision
-            gradient = gradient.toFixed(3).toString();
-            axes[gradient] = normal;
-        }
-
-        return Common.values(axes);
-    };
-
-    /**
-     * Rotates a set of axes by the given angle.
-     * @method rotate
-     * @param {axes} axes
-     * @param {number} angle
-     */
-    Axes.rotate = function(axes, angle) {
-        if (angle === 0)
-            return;
-        
-        var cos = Math.cos(angle),
-            sin = Math.sin(angle);
-
-        for (var i = 0; i < axes.length; i++) {
-            var axis = axes[i],
-                xx;
-            xx = axis.x * cos - axis.y * sin;
-            axis.y = axis.x * sin + axis.y * cos;
-            axis.x = xx;
-        }
-    };
-
-})();
-
-},{"../core/Common":14,"../geometry/Vector":28}],26:[function(_dereq_,module,exports){
-/**
-* The `Matter.Bounds` module contains methods for creating and manipulating axis-aligned bounding boxes (AABB).
-*
-* @class Bounds
-*/
-
-var Bounds = {};
-
-module.exports = Bounds;
-
-(function() {
-
-    /**
-     * Creates a new axis-aligned bounding box (AABB) for the given vertices.
-     * @method create
-     * @param {vertices} vertices
-     * @return {bounds} A new bounds object
-     */
-    Bounds.create = function(vertices) {
-        var bounds = { 
-            min: { x: 0, y: 0 }, 
-            max: { x: 0, y: 0 }
-        };
-
-        if (vertices)
-            Bounds.update(bounds, vertices);
-        
-        return bounds;
-    };
-
-    /**
-     * Updates bounds using the given vertices and extends the bounds given a velocity.
-     * @method update
-     * @param {bounds} bounds
-     * @param {vertices} vertices
-     * @param {vector} velocity
-     */
-    Bounds.update = function(bounds, vertices, velocity) {
-        bounds.min.x = Infinity;
-        bounds.max.x = -Infinity;
-        bounds.min.y = Infinity;
-        bounds.max.y = -Infinity;
-
-        for (var i = 0; i < vertices.length; i++) {
-            var vertex = vertices[i];
-            if (vertex.x > bounds.max.x) bounds.max.x = vertex.x;
-            if (vertex.x < bounds.min.x) bounds.min.x = vertex.x;
-            if (vertex.y > bounds.max.y) bounds.max.y = vertex.y;
-            if (vertex.y < bounds.min.y) bounds.min.y = vertex.y;
-        }
-        
-        if (velocity) {
-            if (velocity.x > 0) {
-                bounds.max.x += velocity.x;
-            } else {
-                bounds.min.x += velocity.x;
-            }
-            
-            if (velocity.y > 0) {
-                bounds.max.y += velocity.y;
-            } else {
-                bounds.min.y += velocity.y;
-            }
-        }
-    };
-
-    /**
-     * Returns true if the bounds contains the given point.
-     * @method contains
-     * @param {bounds} bounds
-     * @param {vector} point
-     * @return {boolean} True if the bounds contain the point, otherwise false
-     */
-    Bounds.contains = function(bounds, point) {
-        return point.x >= bounds.min.x && point.x <= bounds.max.x 
-               && point.y >= bounds.min.y && point.y <= bounds.max.y;
-    };
-
-    /**
-     * Returns true if the two bounds intersect.
-     * @method overlaps
-     * @param {bounds} boundsA
-     * @param {bounds} boundsB
-     * @return {boolean} True if the bounds overlap, otherwise false
-     */
-    Bounds.overlaps = function(boundsA, boundsB) {
-        return (boundsA.min.x <= boundsB.max.x && boundsA.max.x >= boundsB.min.x
-                && boundsA.max.y >= boundsB.min.y && boundsA.min.y <= boundsB.max.y);
-    };
-
-    /**
-     * Translates the bounds by the given vector.
-     * @method translate
-     * @param {bounds} bounds
-     * @param {vector} vector
-     */
-    Bounds.translate = function(bounds, vector) {
-        bounds.min.x += vector.x;
-        bounds.max.x += vector.x;
-        bounds.min.y += vector.y;
-        bounds.max.y += vector.y;
-    };
-
-    /**
-     * Shifts the bounds to the given position.
-     * @method shift
-     * @param {bounds} bounds
-     * @param {vector} position
-     */
-    Bounds.shift = function(bounds, position) {
-        var deltaX = bounds.max.x - bounds.min.x,
-            deltaY = bounds.max.y - bounds.min.y;
-            
-        bounds.min.x = position.x;
-        bounds.max.x = position.x + deltaX;
-        bounds.min.y = position.y;
-        bounds.max.y = position.y + deltaY;
-    };
-    
-})();
-
-},{}],27:[function(_dereq_,module,exports){
-/**
-* The `Matter.Svg` module contains methods for converting SVG images into an array of vector points.
-*
-* To use this module you also need the SVGPathSeg polyfill: https://github.com/progers/pathseg
-*
-* See the included usage [examples](https://github.com/liabru/matter-js/tree/master/examples).
-*
-* @class Svg
-*/
-
-var Svg = {};
-
-module.exports = Svg;
-
-var Bounds = _dereq_('../geometry/Bounds');
-var Common = _dereq_('../core/Common');
-
-(function() {
-
-    /**
-     * Converts an SVG path into an array of vector points.
-     * If the input path forms a concave shape, you must decompose the result into convex parts before use.
-     * See `Bodies.fromVertices` which provides support for this.
-     * Note that this function is not guaranteed to support complex paths (such as those with holes).
-     * You must load the `pathseg.js` polyfill on newer browsers.
-     * @method pathToVertices
-     * @param {SVGPathElement} path
-     * @param {Number} [sampleLength=15]
-     * @return {Vector[]} points
-     */
-    Svg.pathToVertices = function(path, sampleLength) {
-        if (typeof window !== 'undefined' && !('SVGPathSeg' in window)) {
-            Common.warn('Svg.pathToVertices: SVGPathSeg not defined, a polyfill is required.');
-        }
-
-        // https://github.com/wout/svg.topoly.js/blob/master/svg.topoly.js
-        var i, il, total, point, segment, segments, 
-            segmentsQueue, lastSegment, 
-            lastPoint, segmentIndex, points = [],
-            lx, ly, length = 0, x = 0, y = 0;
-
-        sampleLength = sampleLength || 15;
-
-        var addPoint = function(px, py, pathSegType) {
-            // all odd-numbered path types are relative except PATHSEG_CLOSEPATH (1)
-            var isRelative = pathSegType % 2 === 1 && pathSegType > 1;
-
-            // when the last point doesn't equal the current point add the current point
-            if (!lastPoint || px != lastPoint.x || py != lastPoint.y) {
-                if (lastPoint && isRelative) {
-                    lx = lastPoint.x;
-                    ly = lastPoint.y;
-                } else {
-                    lx = 0;
-                    ly = 0;
-                }
-
-                var point = {
-                    x: lx + px,
-                    y: ly + py
-                };
-
-                // set last point
-                if (isRelative || !lastPoint) {
-                    lastPoint = point;
-                }
-
-                points.push(point);
-
-                x = lx + px;
-                y = ly + py;
-            }
-        };
-
-        var addSegmentPoint = function(segment) {
-            var segType = segment.pathSegTypeAsLetter.toUpperCase();
-
-            // skip path ends
-            if (segType === 'Z') 
-                return;
-
-            // map segment to x and y
-            switch (segType) {
-
-            case 'M':
-            case 'L':
-            case 'T':
-            case 'C':
-            case 'S':
-            case 'Q':
-                x = segment.x;
-                y = segment.y;
-                break;
-            case 'H':
-                x = segment.x;
-                break;
-            case 'V':
-                y = segment.y;
-                break;
-            }
-
-            addPoint(x, y, segment.pathSegType);
-        };
-
-        // ensure path is absolute
-        Svg._svgPathToAbsolute(path);
-
-        // get total length
-        total = path.getTotalLength();
-
-        // queue segments
-        segments = [];
-        for (i = 0; i < path.pathSegList.numberOfItems; i += 1)
-            segments.push(path.pathSegList.getItem(i));
-
-        segmentsQueue = segments.concat();
-
-        // sample through path
-        while (length < total) {
-            // get segment at position
-            segmentIndex = path.getPathSegAtLength(length);
-            segment = segments[segmentIndex];
-
-            // new segment
-            if (segment != lastSegment) {
-                while (segmentsQueue.length && segmentsQueue[0] != segment)
-                    addSegmentPoint(segmentsQueue.shift());
-
-                lastSegment = segment;
-            }
-
-            // add points in between when curving
-            // TODO: adaptive sampling
-            switch (segment.pathSegTypeAsLetter.toUpperCase()) {
-
-            case 'C':
-            case 'T':
-            case 'S':
-            case 'Q':
-            case 'A':
-                point = path.getPointAtLength(length);
-                addPoint(point.x, point.y, 0);
-                break;
-
-            }
-
-            // increment by sample value
-            length += sampleLength;
-        }
-
-        // add remaining segments not passed by sampling
-        for (i = 0, il = segmentsQueue.length; i < il; ++i)
-            addSegmentPoint(segmentsQueue[i]);
-
-        return points;
-    };
-
-    Svg._svgPathToAbsolute = function(path) {
-        // http://phrogz.net/convert-svg-path-to-all-absolute-commands
-        // Copyright (c) Gavin Kistner
-        // http://phrogz.net/js/_ReuseLicense.txt
-        // Modifications: tidy formatting and naming
-        var x0, y0, x1, y1, x2, y2, segs = path.pathSegList,
-            x = 0, y = 0, len = segs.numberOfItems;
-
-        for (var i = 0; i < len; ++i) {
-            var seg = segs.getItem(i),
-                segType = seg.pathSegTypeAsLetter;
-
-            if (/[MLHVCSQTA]/.test(segType)) {
-                if ('x' in seg) x = seg.x;
-                if ('y' in seg) y = seg.y;
-            } else {
-                if ('x1' in seg) x1 = x + seg.x1;
-                if ('x2' in seg) x2 = x + seg.x2;
-                if ('y1' in seg) y1 = y + seg.y1;
-                if ('y2' in seg) y2 = y + seg.y2;
-                if ('x' in seg) x += seg.x;
-                if ('y' in seg) y += seg.y;
-
-                switch (segType) {
-
-                case 'm':
-                    segs.replaceItem(path.createSVGPathSegMovetoAbs(x, y), i);
-                    break;
-                case 'l':
-                    segs.replaceItem(path.createSVGPathSegLinetoAbs(x, y), i);
-                    break;
-                case 'h':
-                    segs.replaceItem(path.createSVGPathSegLinetoHorizontalAbs(x), i);
-                    break;
-                case 'v':
-                    segs.replaceItem(path.createSVGPathSegLinetoVerticalAbs(y), i);
-                    break;
-                case 'c':
-                    segs.replaceItem(path.createSVGPathSegCurvetoCubicAbs(x, y, x1, y1, x2, y2), i);
-                    break;
-                case 's':
-                    segs.replaceItem(path.createSVGPathSegCurvetoCubicSmoothAbs(x, y, x2, y2), i);
-                    break;
-                case 'q':
-                    segs.replaceItem(path.createSVGPathSegCurvetoQuadraticAbs(x, y, x1, y1), i);
-                    break;
-                case 't':
-                    segs.replaceItem(path.createSVGPathSegCurvetoQuadraticSmoothAbs(x, y), i);
-                    break;
-                case 'a':
-                    segs.replaceItem(path.createSVGPathSegArcAbs(x, y, seg.r1, seg.r2, seg.angle, seg.largeArcFlag, seg.sweepFlag), i);
-                    break;
-                case 'z':
-                case 'Z':
-                    x = x0;
-                    y = y0;
-                    break;
-
-                }
-            }
-
-            if (segType == 'M' || segType == 'm') {
-                x0 = x;
-                y0 = y;
-            }
-        }
-    };
-
-})();
-},{"../core/Common":14,"../geometry/Bounds":26}],28:[function(_dereq_,module,exports){
-/**
-* The `Matter.Vector` module contains methods for creating and manipulating vectors.
-* Vectors are the basis of all the geometry related operations in the engine.
-* A `Matter.Vector` object is of the form `{ x: 0, y: 0 }`.
-*
-* See the included usage [examples](https://github.com/liabru/matter-js/tree/master/examples).
-*
-* @class Vector
-*/
-
-// TODO: consider params for reusing vector objects
-
-var Vector = {};
-
-module.exports = Vector;
-
-(function() {
-
-    /**
-     * Creates a new vector.
-     * @method create
-     * @param {number} x
-     * @param {number} y
-     * @return {vector} A new vector
-     */
-    Vector.create = function(x, y) {
-        return { x: x || 0, y: y || 0 };
-    };
-
-    /**
-     * Returns a new vector with `x` and `y` copied from the given `vector`.
-     * @method clone
-     * @param {vector} vector
-     * @return {vector} A new cloned vector
-     */
-    Vector.clone = function(vector) {
-        return { x: vector.x, y: vector.y };
-    };
-
-    /**
-     * Returns the magnitude (length) of a vector.
-     * @method magnitude
-     * @param {vector} vector
-     * @return {number} The magnitude of the vector
-     */
-    Vector.magnitude = function(vector) {
-        return Math.sqrt((vector.x * vector.x) + (vector.y * vector.y));
-    };
-
-    /**
-     * Returns the magnitude (length) of a vector (therefore saving a `sqrt` operation).
-     * @method magnitudeSquared
-     * @param {vector} vector
-     * @return {number} The squared magnitude of the vector
-     */
-    Vector.magnitudeSquared = function(vector) {
-        return (vector.x * vector.x) + (vector.y * vector.y);
-    };
-
-    /**
-     * Rotates the vector about (0, 0) by specified angle.
-     * @method rotate
-     * @param {vector} vector
-     * @param {number} angle
-     * @param {vector} [output]
-     * @return {vector} The vector rotated about (0, 0)
-     */
-    Vector.rotate = function(vector, angle, output) {
-        var cos = Math.cos(angle), sin = Math.sin(angle);
-        if (!output) output = {};
-        var x = vector.x * cos - vector.y * sin;
-        output.y = vector.x * sin + vector.y * cos;
-        output.x = x;
-        return output;
-    };
-
-    /**
-     * Rotates the vector about a specified point by specified angle.
-     * @method rotateAbout
-     * @param {vector} vector
-     * @param {number} angle
-     * @param {vector} point
-     * @param {vector} [output]
-     * @return {vector} A new vector rotated about the point
-     */
-    Vector.rotateAbout = function(vector, angle, point, output) {
-        var cos = Math.cos(angle), sin = Math.sin(angle);
-        if (!output) output = {};
-        var x = point.x + ((vector.x - point.x) * cos - (vector.y - point.y) * sin);
-        output.y = point.y + ((vector.x - point.x) * sin + (vector.y - point.y) * cos);
-        output.x = x;
-        return output;
-    };
-
-    /**
-     * Normalises a vector (such that its magnitude is `1`).
-     * @method normalise
-     * @param {vector} vector
-     * @return {vector} A new vector normalised
-     */
-    Vector.normalise = function(vector) {
-        var magnitude = Vector.magnitude(vector);
-        if (magnitude === 0)
-            return { x: 0, y: 0 };
-        return { x: vector.x / magnitude, y: vector.y / magnitude };
-    };
-
-    /**
-     * Returns the dot-product of two vectors.
-     * @method dot
-     * @param {vector} vectorA
-     * @param {vector} vectorB
-     * @return {number} The dot product of the two vectors
-     */
-    Vector.dot = function(vectorA, vectorB) {
-        return (vectorA.x * vectorB.x) + (vectorA.y * vectorB.y);
-    };
-
-    /**
-     * Returns the cross-product of two vectors.
-     * @method cross
-     * @param {vector} vectorA
-     * @param {vector} vectorB
-     * @return {number} The cross product of the two vectors
-     */
-    Vector.cross = function(vectorA, vectorB) {
-        return (vectorA.x * vectorB.y) - (vectorA.y * vectorB.x);
-    };
-
-    /**
-     * Returns the cross-product of three vectors.
-     * @method cross3
-     * @param {vector} vectorA
-     * @param {vector} vectorB
-     * @param {vector} vectorC
-     * @return {number} The cross product of the three vectors
-     */
-    Vector.cross3 = function(vectorA, vectorB, vectorC) {
-        return (vectorB.x - vectorA.x) * (vectorC.y - vectorA.y) - (vectorB.y - vectorA.y) * (vectorC.x - vectorA.x);
-    };
-
-    /**
-     * Adds the two vectors.
-     * @method add
-     * @param {vector} vectorA
-     * @param {vector} vectorB
-     * @param {vector} [output]
-     * @return {vector} A new vector of vectorA and vectorB added
-     */
-    Vector.add = function(vectorA, vectorB, output) {
-        if (!output) output = {};
-        output.x = vectorA.x + vectorB.x;
-        output.y = vectorA.y + vectorB.y;
-        return output;
-    };
-
-    /**
-     * Subtracts the two vectors.
-     * @method sub
-     * @param {vector} vectorA
-     * @param {vector} vectorB
-     * @param {vector} [output]
-     * @return {vector} A new vector of vectorA and vectorB subtracted
-     */
-    Vector.sub = function(vectorA, vectorB, output) {
-        if (!output) output = {};
-        output.x = vectorA.x - vectorB.x;
-        output.y = vectorA.y - vectorB.y;
-        return output;
-    };
-
-    /**
-     * Multiplies a vector and a scalar.
-     * @method mult
-     * @param {vector} vector
-     * @param {number} scalar
-     * @return {vector} A new vector multiplied by scalar
-     */
-    Vector.mult = function(vector, scalar) {
-        return { x: vector.x * scalar, y: vector.y * scalar };
-    };
-
-    /**
-     * Divides a vector and a scalar.
-     * @method div
-     * @param {vector} vector
-     * @param {number} scalar
-     * @return {vector} A new vector divided by scalar
-     */
-    Vector.div = function(vector, scalar) {
-        return { x: vector.x / scalar, y: vector.y / scalar };
-    };
-
-    /**
-     * Returns the perpendicular vector. Set `negate` to true for the perpendicular in the opposite direction.
-     * @method perp
-     * @param {vector} vector
-     * @param {bool} [negate=false]
-     * @return {vector} The perpendicular vector
-     */
-    Vector.perp = function(vector, negate) {
-        negate = negate === true ? -1 : 1;
-        return { x: negate * -vector.y, y: negate * vector.x };
-    };
-
-    /**
-     * Negates both components of a vector such that it points in the opposite direction.
-     * @method neg
-     * @param {vector} vector
-     * @return {vector} The negated vector
-     */
-    Vector.neg = function(vector) {
-        return { x: -vector.x, y: -vector.y };
-    };
-
-    /**
-     * Returns the angle between the vector `vectorB - vectorA` and the x-axis in radians.
-     * @method angle
-     * @param {vector} vectorA
-     * @param {vector} vectorB
-     * @return {number} The angle in radians
-     */
-    Vector.angle = function(vectorA, vectorB) {
-        return Math.atan2(vectorB.y - vectorA.y, vectorB.x - vectorA.x);
-    };
-
-    /**
-     * Temporary vector pool (not thread-safe).
-     * @property _temp
-     * @type {vector[]}
-     * @private
-     */
-    Vector._temp = [
-        Vector.create(), Vector.create(), 
-        Vector.create(), Vector.create(), 
-        Vector.create(), Vector.create()
-    ];
-
-})();
-},{}],29:[function(_dereq_,module,exports){
-/**
-* The `Matter.Vertices` module contains methods for creating and manipulating sets of vertices.
-* A set of vertices is an array of `Matter.Vector` with additional indexing properties inserted by `Vertices.create`.
-* A `Matter.Body` maintains a set of vertices to represent the shape of the object (its convex hull).
-*
-* See the included usage [examples](https://github.com/liabru/matter-js/tree/master/examples).
-*
-* @class Vertices
-*/
-
-var Vertices = {};
-
-module.exports = Vertices;
-
-var Vector = _dereq_('../geometry/Vector');
-var Common = _dereq_('../core/Common');
-
-(function() {
-
-    /**
-     * Creates a new set of `Matter.Body` compatible vertices.
-     * The `points` argument accepts an array of `Matter.Vector` points orientated around the origin `(0, 0)`, for example:
-     *
-     *     [{ x: 0, y: 0 }, { x: 25, y: 50 }, { x: 50, y: 0 }]
-     *
-     * The `Vertices.create` method returns a new array of vertices, which are similar to Matter.Vector objects,
-     * but with some additional references required for efficient collision detection routines.
-     *
-     * Vertices must be specified in clockwise order.
-     *
-     * Note that the `body` argument is not optional, a `Matter.Body` reference must be provided.
-     *
-     * @method create
-     * @param {vector[]} points
-     * @param {body} body
-     */
-    Vertices.create = function(points, body) {
-        var vertices = [];
-
-        for (var i = 0; i < points.length; i++) {
-            var point = points[i],
-                vertex = {
-                    x: point.x,
-                    y: point.y,
-                    index: i,
-                    body: body,
-                    isInternal: false
-                };
-
-            vertices.push(vertex);
-        }
-
-        return vertices;
-    };
-
-    /**
-     * Parses a string containing ordered x y pairs separated by spaces (and optionally commas), 
-     * into a `Matter.Vertices` object for the given `Matter.Body`.
-     * For parsing SVG paths, see `Svg.pathToVertices`.
-     * @method fromPath
-     * @param {string} path
-     * @param {body} body
-     * @return {vertices} vertices
-     */
-    Vertices.fromPath = function(path, body) {
-        var pathPattern = /L?\s*([\-\d\.e]+)[\s,]*([\-\d\.e]+)*/ig,
-            points = [];
-
-        path.replace(pathPattern, function(match, x, y) {
-            points.push({ x: parseFloat(x), y: parseFloat(y) });
-        });
-
-        return Vertices.create(points, body);
-    };
-
-    /**
-     * Returns the centre (centroid) of the set of vertices.
-     * @method centre
-     * @param {vertices} vertices
-     * @return {vector} The centre point
-     */
-    Vertices.centre = function(vertices) {
-        var area = Vertices.area(vertices, true),
-            centre = { x: 0, y: 0 },
-            cross,
-            temp,
-            j;
-
-        for (var i = 0; i < vertices.length; i++) {
-            j = (i + 1) % vertices.length;
-            cross = Vector.cross(vertices[i], vertices[j]);
-            temp = Vector.mult(Vector.add(vertices[i], vertices[j]), cross);
-            centre = Vector.add(centre, temp);
-        }
-
-        return Vector.div(centre, 6 * area);
-    };
-
-    /**
-     * Returns the average (mean) of the set of vertices.
-     * @method mean
-     * @param {vertices} vertices
-     * @return {vector} The average point
-     */
-    Vertices.mean = function(vertices) {
-        var average = { x: 0, y: 0 };
-
-        for (var i = 0; i < vertices.length; i++) {
-            average.x += vertices[i].x;
-            average.y += vertices[i].y;
-        }
-
-        return Vector.div(average, vertices.length);
-    };
-
-    /**
-     * Returns the area of the set of vertices.
-     * @method area
-     * @param {vertices} vertices
-     * @param {bool} signed
-     * @return {number} The area
-     */
-    Vertices.area = function(vertices, signed) {
-        var area = 0,
-            j = vertices.length - 1;
-
-        for (var i = 0; i < vertices.length; i++) {
-            area += (vertices[j].x - vertices[i].x) * (vertices[j].y + vertices[i].y);
-            j = i;
-        }
-
-        if (signed)
-            return area / 2;
-
-        return Math.abs(area) / 2;
-    };
-
-    /**
-     * Returns the moment of inertia (second moment of area) of the set of vertices given the total mass.
-     * @method inertia
-     * @param {vertices} vertices
-     * @param {number} mass
-     * @return {number} The polygon's moment of inertia
-     */
-    Vertices.inertia = function(vertices, mass) {
-        var numerator = 0,
-            denominator = 0,
-            v = vertices,
-            cross,
-            j;
-
-        // find the polygon's moment of inertia, using second moment of area
-        // from equations at http://www.physicsforums.com/showthread.php?t=25293
-        for (var n = 0; n < v.length; n++) {
-            j = (n + 1) % v.length;
-            cross = Math.abs(Vector.cross(v[j], v[n]));
-            numerator += cross * (Vector.dot(v[j], v[j]) + Vector.dot(v[j], v[n]) + Vector.dot(v[n], v[n]));
-            denominator += cross;
-        }
-
-        return (mass / 6) * (numerator / denominator);
-    };
-
-    /**
-     * Translates the set of vertices in-place.
-     * @method translate
-     * @param {vertices} vertices
-     * @param {vector} vector
-     * @param {number} scalar
-     */
-    Vertices.translate = function(vertices, vector, scalar) {
-        var i;
-        if (scalar) {
-            for (i = 0; i < vertices.length; i++) {
-                vertices[i].x += vector.x * scalar;
-                vertices[i].y += vector.y * scalar;
-            }
-        } else {
-            for (i = 0; i < vertices.length; i++) {
-                vertices[i].x += vector.x;
-                vertices[i].y += vector.y;
-            }
-        }
-
-        return vertices;
-    };
-
-    /**
-     * Rotates the set of vertices in-place.
-     * @method rotate
-     * @param {vertices} vertices
-     * @param {number} angle
-     * @param {vector} point
-     */
-    Vertices.rotate = function(vertices, angle, point) {
-        if (angle === 0)
-            return;
-
-        var cos = Math.cos(angle),
-            sin = Math.sin(angle);
-
-        for (var i = 0; i < vertices.length; i++) {
-            var vertice = vertices[i],
-                dx = vertice.x - point.x,
-                dy = vertice.y - point.y;
-                
-            vertice.x = point.x + (dx * cos - dy * sin);
-            vertice.y = point.y + (dx * sin + dy * cos);
-        }
-
-        return vertices;
-    };
-
-    /**
-     * Returns `true` if the `point` is inside the set of `vertices`.
-     * @method contains
-     * @param {vertices} vertices
-     * @param {vector} point
-     * @return {boolean} True if the vertices contains point, otherwise false
-     */
-    Vertices.contains = function(vertices, point) {
-        for (var i = 0; i < vertices.length; i++) {
-            var vertice = vertices[i],
-                nextVertice = vertices[(i + 1) % vertices.length];
-            if ((point.x - vertice.x) * (nextVertice.y - vertice.y) + (point.y - vertice.y) * (vertice.x - nextVertice.x) > 0) {
-                return false;
-            }
-        }
-
-        return true;
-    };
-
-    /**
-     * Scales the vertices from a point (default is centre) in-place.
-     * @method scale
-     * @param {vertices} vertices
-     * @param {number} scaleX
-     * @param {number} scaleY
-     * @param {vector} point
-     */
-    Vertices.scale = function(vertices, scaleX, scaleY, point) {
-        if (scaleX === 1 && scaleY === 1)
-            return vertices;
-
-        point = point || Vertices.centre(vertices);
-
-        var vertex,
-            delta;
-
-        for (var i = 0; i < vertices.length; i++) {
-            vertex = vertices[i];
-            delta = Vector.sub(vertex, point);
-            vertices[i].x = point.x + delta.x * scaleX;
-            vertices[i].y = point.y + delta.y * scaleY;
-        }
-
-        return vertices;
-    };
-
-    /**
-     * Chamfers a set of vertices by giving them rounded corners, returns a new set of vertices.
-     * The radius parameter is a single number or an array to specify the radius for each vertex.
-     * @method chamfer
-     * @param {vertices} vertices
-     * @param {number[]} radius
-     * @param {number} quality
-     * @param {number} qualityMin
-     * @param {number} qualityMax
-     */
-    Vertices.chamfer = function(vertices, radius, quality, qualityMin, qualityMax) {
-        if (typeof radius === 'number') {
-            radius = [radius];
-        } else {
-            radius = radius || [8];
-        }
-
-        // quality defaults to -1, which is auto
-        quality = (typeof quality !== 'undefined') ? quality : -1;
-        qualityMin = qualityMin || 2;
-        qualityMax = qualityMax || 14;
-
-        var newVertices = [];
-
-        for (var i = 0; i < vertices.length; i++) {
-            var prevVertex = vertices[i - 1 >= 0 ? i - 1 : vertices.length - 1],
-                vertex = vertices[i],
-                nextVertex = vertices[(i + 1) % vertices.length],
-                currentRadius = radius[i < radius.length ? i : radius.length - 1];
-
-            if (currentRadius === 0) {
-                newVertices.push(vertex);
-                continue;
-            }
-
-            var prevNormal = Vector.normalise({ 
-                x: vertex.y - prevVertex.y, 
-                y: prevVertex.x - vertex.x
-            });
-
-            var nextNormal = Vector.normalise({ 
-                x: nextVertex.y - vertex.y, 
-                y: vertex.x - nextVertex.x
-            });
-
-            var diagonalRadius = Math.sqrt(2 * Math.pow(currentRadius, 2)),
-                radiusVector = Vector.mult(Common.clone(prevNormal), currentRadius),
-                midNormal = Vector.normalise(Vector.mult(Vector.add(prevNormal, nextNormal), 0.5)),
-                scaledVertex = Vector.sub(vertex, Vector.mult(midNormal, diagonalRadius));
-
-            var precision = quality;
-
-            if (quality === -1) {
-                // automatically decide precision
-                precision = Math.pow(currentRadius, 0.32) * 1.75;
-            }
-
-            precision = Common.clamp(precision, qualityMin, qualityMax);
-
-            // use an even value for precision, more likely to reduce axes by using symmetry
-            if (precision % 2 === 1)
-                precision += 1;
-
-            var alpha = Math.acos(Vector.dot(prevNormal, nextNormal)),
-                theta = alpha / precision;
-
-            for (var j = 0; j < precision; j++) {
-                newVertices.push(Vector.add(Vector.rotate(radiusVector, theta * j), scaledVertex));
-            }
-        }
-
-        return newVertices;
-    };
-
-    /**
-     * Sorts the input vertices into clockwise order in place.
-     * @method clockwiseSort
-     * @param {vertices} vertices
-     * @return {vertices} vertices
-     */
-    Vertices.clockwiseSort = function(vertices) {
-        var centre = Vertices.mean(vertices);
-
-        vertices.sort(function(vertexA, vertexB) {
-            return Vector.angle(centre, vertexA) - Vector.angle(centre, vertexB);
-        });
-
-        return vertices;
-    };
-
-    /**
-     * Returns true if the vertices form a convex shape (vertices must be in clockwise order).
-     * @method isConvex
-     * @param {vertices} vertices
-     * @return {bool} `true` if the `vertices` are convex, `false` if not (or `null` if not computable).
-     */
-    Vertices.isConvex = function(vertices) {
-        // http://paulbourke.net/geometry/polygonmesh/
-        // Copyright (c) Paul Bourke (use permitted)
-
-        var flag = 0,
-            n = vertices.length,
-            i,
-            j,
-            k,
-            z;
-
-        if (n < 3)
-            return null;
-
-        for (i = 0; i < n; i++) {
-            j = (i + 1) % n;
-            k = (i + 2) % n;
-            z = (vertices[j].x - vertices[i].x) * (vertices[k].y - vertices[j].y);
-            z -= (vertices[j].y - vertices[i].y) * (vertices[k].x - vertices[j].x);
-
-            if (z < 0) {
-                flag |= 1;
-            } else if (z > 0) {
-                flag |= 2;
-            }
-
-            if (flag === 3) {
-                return false;
-            }
-        }
-
-        if (flag !== 0){
-            return true;
-        } else {
-            return null;
-        }
-    };
-
-    /**
-     * Returns the convex hull of the input vertices as a new array of points.
-     * @method hull
-     * @param {vertices} vertices
-     * @return [vertex] vertices
-     */
-    Vertices.hull = function(vertices) {
-        // http://geomalgorithms.com/a10-_hull-1.html
-
-        var upper = [],
-            lower = [], 
-            vertex,
-            i;
-
-        // sort vertices on x-axis (y-axis for ties)
-        vertices = vertices.slice(0);
-        vertices.sort(function(vertexA, vertexB) {
-            var dx = vertexA.x - vertexB.x;
-            return dx !== 0 ? dx : vertexA.y - vertexB.y;
-        });
-
-        // build lower hull
-        for (i = 0; i < vertices.length; i += 1) {
-            vertex = vertices[i];
-
-            while (lower.length >= 2 
-                   && Vector.cross3(lower[lower.length - 2], lower[lower.length - 1], vertex) <= 0) {
-                lower.pop();
-            }
-
-            lower.push(vertex);
-        }
-
-        // build upper hull
-        for (i = vertices.length - 1; i >= 0; i -= 1) {
-            vertex = vertices[i];
-
-            while (upper.length >= 2 
-                   && Vector.cross3(upper[upper.length - 2], upper[upper.length - 1], vertex) <= 0) {
-                upper.pop();
-            }
-
-            upper.push(vertex);
-        }
-
-        // concatenation of the lower and upper hulls gives the convex hull
-        // omit last points because they are repeated at the beginning of the other list
-        upper.pop();
-        lower.pop();
-
-        return upper.concat(lower);
-    };
-
-})();
-
-},{"../core/Common":14,"../geometry/Vector":28}],30:[function(_dereq_,module,exports){
-var Matter = module.exports = _dereq_('../core/Matter');
-
-Matter.Body = _dereq_('../body/Body');
-Matter.Composite = _dereq_('../body/Composite');
-Matter.World = _dereq_('../body/World');
-
-Matter.Contact = _dereq_('../collision/Contact');
-Matter.Detector = _dereq_('../collision/Detector');
-Matter.Grid = _dereq_('../collision/Grid');
-Matter.Pairs = _dereq_('../collision/Pairs');
-Matter.Pair = _dereq_('../collision/Pair');
-Matter.Query = _dereq_('../collision/Query');
-Matter.Resolver = _dereq_('../collision/Resolver');
-Matter.SAT = _dereq_('../collision/SAT');
-
-Matter.Constraint = _dereq_('../constraint/Constraint');
-Matter.MouseConstraint = _dereq_('../constraint/MouseConstraint');
-
-Matter.Common = _dereq_('../core/Common');
-Matter.Engine = _dereq_('../core/Engine');
-Matter.Events = _dereq_('../core/Events');
-Matter.Mouse = _dereq_('../core/Mouse');
-Matter.Runner = _dereq_('../core/Runner');
-Matter.Sleeping = _dereq_('../core/Sleeping');
-Matter.Plugin = _dereq_('../core/Plugin');
-
-
-Matter.Bodies = _dereq_('../factory/Bodies');
-Matter.Composites = _dereq_('../factory/Composites');
-
-Matter.Axes = _dereq_('../geometry/Axes');
-Matter.Bounds = _dereq_('../geometry/Bounds');
-Matter.Svg = _dereq_('../geometry/Svg');
-Matter.Vector = _dereq_('../geometry/Vector');
-Matter.Vertices = _dereq_('../geometry/Vertices');
-
-Matter.Render = _dereq_('../render/Render');
-Matter.RenderPixi = _dereq_('../render/RenderPixi');
-
-// aliases
-
-Matter.World.add = Matter.Composite.add;
-Matter.World.remove = Matter.Composite.remove;
-Matter.World.addComposite = Matter.Composite.addComposite;
-Matter.World.addBody = Matter.Composite.addBody;
-Matter.World.addConstraint = Matter.Composite.addConstraint;
-Matter.World.clear = Matter.Composite.clear;
-Matter.Engine.run = Matter.Runner.run;
-
-},{"../body/Body":1,"../body/Composite":2,"../body/World":3,"../collision/Contact":4,"../collision/Detector":5,"../collision/Grid":6,"../collision/Pair":7,"../collision/Pairs":8,"../collision/Query":9,"../collision/Resolver":10,"../collision/SAT":11,"../constraint/Constraint":12,"../constraint/MouseConstraint":13,"../core/Common":14,"../core/Engine":15,"../core/Events":16,"../core/Matter":17,"../core/Metrics":18,"../core/Mouse":19,"../core/Plugin":20,"../core/Runner":21,"../core/Sleeping":22,"../factory/Bodies":23,"../factory/Composites":24,"../geometry/Axes":25,"../geometry/Bounds":26,"../geometry/Svg":27,"../geometry/Vector":28,"../geometry/Vertices":29,"../render/Render":31,"../render/RenderPixi":32}],31:[function(_dereq_,module,exports){
-/**
-* The `Matter.Render` module is a simple HTML5 canvas based renderer for visualising instances of `Matter.Engine`.
-* It is intended for development and debugging purposes, but may also be suitable for simple games.
-* It includes a number of drawing options including wireframe, vector with support for sprites and viewports.
-*
-* @class Render
-*/
-
-var Render = {};
-
-module.exports = Render;
-
-var Common = _dereq_('../core/Common');
-var Composite = _dereq_('../body/Composite');
-var Bounds = _dereq_('../geometry/Bounds');
-var Events = _dereq_('../core/Events');
-var Grid = _dereq_('../collision/Grid');
-var Vector = _dereq_('../geometry/Vector');
-var Mouse = _dereq_('../core/Mouse');
-
-(function() {
-
-    var _requestAnimationFrame,
-        _cancelAnimationFrame;
-
-    if (typeof window !== 'undefined') {
-        _requestAnimationFrame = window.requestAnimationFrame || window.webkitRequestAnimationFrame
-                                      || window.mozRequestAnimationFrame || window.msRequestAnimationFrame
-                                      || function(callback){ window.setTimeout(function() { callback(Common.now()); }, 1000 / 60); };
-
-        _cancelAnimationFrame = window.cancelAnimationFrame || window.mozCancelAnimationFrame
-                                      || window.webkitCancelAnimationFrame || window.msCancelAnimationFrame;
-    }
-
-    /**
-     * Creates a new renderer. The options parameter is an object that specifies any properties you wish to override the defaults.
-     * All properties have default values, and many are pre-calculated automatically based on other properties.
-     * See the properties section below for detailed information on what you can pass via the `options` object.
-     * @method create
-     * @param {object} [options]
-     * @return {render} A new renderer
-     */
-    Render.create = function(options) {
-        var defaults = {
-            controller: Render,
-            engine: null,
-            element: null,
-            canvas: null,
-            mouse: null,
-            frameRequestId: null,
-            options: {
-                width: 800,
-                height: 600,
-                pixelRatio: 1,
-                background: '#18181d',
-                wireframeBackground: '#0f0f13',
-                hasBounds: !!options.bounds,
-                enabled: true,
-                wireframes: true,
-                showSleeping: true,
-                showDebug: false,
-                showBroadphase: false,
-                showBounds: false,
-                showVelocity: false,
-                showCollisions: false,
-                showSeparations: false,
-                showAxes: false,
-                showPositions: false,
-                showAngleIndicator: false,
-                showIds: false,
-                showShadows: false,
-                showVertexNumbers: false,
-                showConvexHulls: false,
-                showInternalEdges: false,
-                showMousePosition: false
-            }
-        };
-
-        var render = Common.extend(defaults, options);
-
-        if (render.canvas) {
-            render.canvas.width = render.options.width || render.canvas.width;
-            render.canvas.height = render.options.height || render.canvas.height;
-        }
-
-        render.mouse = options.mouse;
-        render.engine = options.engine;
-        render.canvas = render.canvas || _createCanvas(render.options.width, render.options.height);
-        render.context = render.canvas.getContext('2d');
-        render.textures = {};
-
-        render.bounds = render.bounds || {
-            min: {
-                x: 0,
-                y: 0
-            },
-            max: {
-                x: render.canvas.width,
-                y: render.canvas.height
-            }
-        };
-
-        if (render.options.pixelRatio !== 1) {
-            Render.setPixelRatio(render, render.options.pixelRatio);
-        }
-
-        if (Common.isElement(render.element)) {
-            render.element.appendChild(render.canvas);
-        } else if (!render.canvas.parentNode) {
-            Common.log('Render.create: options.element was undefined, render.canvas was created but not appended', 'warn');
-        }
-
-        return render;
-    };
-
-    /**
-     * Continuously updates the render canvas on the `requestAnimationFrame` event.
-     * @method run
-     * @param {render} render
-     */
-    Render.run = function(render) {
-        (function loop(time){
-            render.frameRequestId = _requestAnimationFrame(loop);
-            Render.world(render);
-        })();
-    };
-
-    /**
-     * Ends execution of `Render.run` on the given `render`, by canceling the animation frame request event loop.
-     * @method stop
-     * @param {render} render
-     */
-    Render.stop = function(render) {
-        _cancelAnimationFrame(render.frameRequestId);
-    };
-
-    /**
-     * Sets the pixel ratio of the renderer and updates the canvas.
-     * To automatically detect the correct ratio, pass the string `'auto'` for `pixelRatio`.
-     * @method setPixelRatio
-     * @param {render} render
-     * @param {number} pixelRatio
-     */
-    Render.setPixelRatio = function(render, pixelRatio) {
-        var options = render.options,
-            canvas = render.canvas;
-
-        if (pixelRatio === 'auto') {
-            pixelRatio = _getPixelRatio(canvas);
-        }
-
-        options.pixelRatio = pixelRatio;
-        canvas.setAttribute('data-pixel-ratio', pixelRatio);
-        canvas.width = options.width * pixelRatio;
-        canvas.height = options.height * pixelRatio;
-        canvas.style.width = options.width + 'px';
-        canvas.style.height = options.height + 'px';
-        render.context.scale(pixelRatio, pixelRatio);
-    };
-
-    /**
-     * Positions and sizes the viewport around the given object bounds.
-     * Objects must have at least one of the following properties:
-     * - `object.bounds`
-     * - `object.position`
-     * - `object.min` and `object.max`
-     * - `object.x` and `object.y`
-     * @method lookAt
-     * @param {render} render
-     * @param {object[]} objects
-     * @param {vector} [padding]
-     * @param {bool} [center=true]
-     */
-    Render.lookAt = function(render, objects, padding, center) {
-        center = typeof center !== 'undefined' ? center : true;
-        objects = Common.isArray(objects) ? objects : [objects];
-        padding = padding || {
-            x: 0,
-            y: 0
-        };
-
-        // find bounds of all objects
-        var bounds = {
-            min: { x: Infinity, y: Infinity },
-            max: { x: -Infinity, y: -Infinity }
-        };
-
-        for (var i = 0; i < objects.length; i += 1) {
-            var object = objects[i],
-                min = object.bounds ? object.bounds.min : (object.min || object.position || object),
-                max = object.bounds ? object.bounds.max : (object.max || object.position || object);
-
-            if (min && max) {
-                if (min.x < bounds.min.x)
-                    bounds.min.x = min.x;
-
-                if (max.x > bounds.max.x)
-                    bounds.max.x = max.x;
-
-                if (min.y < bounds.min.y)
-                    bounds.min.y = min.y;
-
-                if (max.y > bounds.max.y)
-                    bounds.max.y = max.y;
-            }
-        }
-
-        // find ratios
-        var width = (bounds.max.x - bounds.min.x) + 2 * padding.x,
-            height = (bounds.max.y - bounds.min.y) + 2 * padding.y,
-            viewHeight = render.canvas.height,
-            viewWidth = render.canvas.width,
-            outerRatio = viewWidth / viewHeight,
-            innerRatio = width / height,
-            scaleX = 1,
-            scaleY = 1;
-
-        // find scale factor
-        if (innerRatio > outerRatio) {
-            scaleY = innerRatio / outerRatio;
-        } else {
-            scaleX = outerRatio / innerRatio;
-        }
-
-        // enable bounds
-        render.options.hasBounds = true;
-
-        // position and size
-        render.bounds.min.x = bounds.min.x;
-        render.bounds.max.x = bounds.min.x + width * scaleX;
-        render.bounds.min.y = bounds.min.y;
-        render.bounds.max.y = bounds.min.y + height * scaleY;
-
-        // center
-        if (center) {
-            render.bounds.min.x += width * 0.5 - (width * scaleX) * 0.5;
-            render.bounds.max.x += width * 0.5 - (width * scaleX) * 0.5;
-            render.bounds.min.y += height * 0.5 - (height * scaleY) * 0.5;
-            render.bounds.max.y += height * 0.5 - (height * scaleY) * 0.5;
-        }
-
-        // padding
-        render.bounds.min.x -= padding.x;
-        render.bounds.max.x -= padding.x;
-        render.bounds.min.y -= padding.y;
-        render.bounds.max.y -= padding.y;
-
-        // update mouse
-        if (render.mouse) {
-            Mouse.setScale(render.mouse, {
-                x: (render.bounds.max.x - render.bounds.min.x) / render.canvas.width,
-                y: (render.bounds.max.y - render.bounds.min.y) / render.canvas.height
-            });
-
-            Mouse.setOffset(render.mouse, render.bounds.min);
-        }
-    };
-
-    /**
-     * Applies viewport transforms based on `render.bounds` to a render context.
-     * @method startViewTransform
-     * @param {render} render
-     */
-    Render.startViewTransform = function(render) {
-        var boundsWidth = render.bounds.max.x - render.bounds.min.x,
-            boundsHeight = render.bounds.max.y - render.bounds.min.y,
-            boundsScaleX = boundsWidth / render.options.width,
-            boundsScaleY = boundsHeight / render.options.height;
-
-        render.context.scale(1 / boundsScaleX, 1 / boundsScaleY);
-        render.context.translate(-render.bounds.min.x, -render.bounds.min.y);
-    };
-
-    /**
-     * Resets all transforms on the render context.
-     * @method endViewTransform
-     * @param {render} render
-     */
-    Render.endViewTransform = function(render) {
-        render.context.setTransform(render.options.pixelRatio, 0, 0, render.options.pixelRatio, 0, 0);
-    };
-
-    /**
-     * Renders the given `engine`'s `Matter.World` object.
-     * This is the entry point for all rendering and should be called every time the scene changes.
-     * @method world
-     * @param {render} render
-     */
-    Render.world = function(render) {
-        var engine = render.engine,
-            world = engine.world,
-            canvas = render.canvas,
-            context = render.context,
-            options = render.options,
-            allBodies = Composite.allBodies(world),
-            allConstraints = Composite.allConstraints(world),
-            background = options.wireframes ? options.wireframeBackground : options.background,
-            bodies = [],
-            constraints = [],
-            i;
-
-        var event = {
-            timestamp: engine.timing.timestamp
-        };
-
-        Events.trigger(render, 'beforeRender', event);
-
-        // apply background if it has changed
-        if (render.currentBackground !== background)
-            _applyBackground(render, background);
-
-        // clear the canvas with a transparent fill, to allow the canvas background to show
-        context.globalCompositeOperation = 'source-in';
-        context.fillStyle = "transparent";
-        context.fillRect(0, 0, canvas.width, canvas.height);
-        context.globalCompositeOperation = 'source-over';
-
-        // handle bounds
-        if (options.hasBounds) {
-            // filter out bodies that are not in view
-            for (i = 0; i < allBodies.length; i++) {
-                var body = allBodies[i];
-                if (Bounds.overlaps(body.bounds, render.bounds))
-                    bodies.push(body);
-            }
-
-            // filter out constraints that are not in view
-            for (i = 0; i < allConstraints.length; i++) {
-                var constraint = allConstraints[i],
-                    bodyA = constraint.bodyA,
-                    bodyB = constraint.bodyB,
-                    pointAWorld = constraint.pointA,
-                    pointBWorld = constraint.pointB;
-
-                if (bodyA) pointAWorld = Vector.add(bodyA.position, constraint.pointA);
-                if (bodyB) pointBWorld = Vector.add(bodyB.position, constraint.pointB);
-
-                if (!pointAWorld || !pointBWorld)
-                    continue;
-
-                if (Bounds.contains(render.bounds, pointAWorld) || Bounds.contains(render.bounds, pointBWorld))
-                    constraints.push(constraint);
-            }
-
-            // transform the view
-            Render.startViewTransform(render);
-
-            // update mouse
-            if (render.mouse) {
-                Mouse.setScale(render.mouse, {
-                    x: (render.bounds.max.x - render.bounds.min.x) / render.canvas.width,
-                    y: (render.bounds.max.y - render.bounds.min.y) / render.canvas.height
-                });
-
-                Mouse.setOffset(render.mouse, render.bounds.min);
-            }
-        } else {
-            constraints = allConstraints;
-            bodies = allBodies;
-        }
-
-        if (!options.wireframes || (engine.enableSleeping && options.showSleeping)) {
-            // fully featured rendering of bodies
-            Render.bodies(render, bodies, context);
-        } else {
-            if (options.showConvexHulls)
-                Render.bodyConvexHulls(render, bodies, context);
-
-            // optimised method for wireframes only
-            Render.bodyWireframes(render, bodies, context);
-        }
-
-        if (options.showBounds)
-            Render.bodyBounds(render, bodies, context);
-
-        if (options.showAxes || options.showAngleIndicator)
-            Render.bodyAxes(render, bodies, context);
-
-        if (options.showPositions)
-            Render.bodyPositions(render, bodies, context);
-
-        if (options.showVelocity)
-            Render.bodyVelocity(render, bodies, context);
-
-        if (options.showIds)
-            Render.bodyIds(render, bodies, context);
-
-        if (options.showSeparations)
-            Render.separations(render, engine.pairs.list, context);
-
-        if (options.showCollisions)
-            Render.collisions(render, engine.pairs.list, context);
-
-        if (options.showVertexNumbers)
-            Render.vertexNumbers(render, bodies, context);
-
-        if (options.showMousePosition)
-            Render.mousePosition(render, render.mouse, context);
-
-        Render.constraints(constraints, context);
-
-        if (options.showBroadphase && engine.broadphase.controller === Grid)
-            Render.grid(render, engine.broadphase, context);
-
-        if (options.showDebug)
-            Render.debug(render, context);
-
-        if (options.hasBounds) {
-            // revert view transforms
-            Render.endViewTransform(render);
-        }
-
-        Events.trigger(render, 'afterRender', event);
-    };
-
-    /**
-     * Description
-     * @private
-     * @method debug
-     * @param {render} render
-     * @param {RenderingContext} context
-     */
-    Render.debug = function(render, context) {
-        var c = context,
-            engine = render.engine,
-            world = engine.world,
-            metrics = engine.metrics,
-            options = render.options,
-            bodies = Composite.allBodies(world),
-            space = "    ";
-
-        if (engine.timing.timestamp - (render.debugTimestamp || 0) >= 500) {
-            var text = "";
-
-            if (metrics.timing) {
-                text += "fps: " + Math.round(metrics.timing.fps) + space;
-            }
-
-
-            render.debugString = text;
-            render.debugTimestamp = engine.timing.timestamp;
-        }
-
-        if (render.debugString) {
-            c.font = "12px Arial";
-
-            if (options.wireframes) {
-                c.fillStyle = 'rgba(255,255,255,0.5)';
-            } else {
-                c.fillStyle = 'rgba(0,0,0,0.5)';
-            }
-
-            var split = render.debugString.split('\n');
-
-            for (var i = 0; i < split.length; i++) {
-                c.fillText(split[i], 50, 50 + i * 18);
-            }
-        }
-    };
-
-    /**
-     * Description
-     * @private
-     * @method constraints
-     * @param {constraint[]} constraints
-     * @param {RenderingContext} context
-     */
-    Render.constraints = function(constraints, context) {
-        var c = context;
-
-        for (var i = 0; i < constraints.length; i++) {
-            var constraint = constraints[i];
-
-            if (!constraint.render.visible || !constraint.pointA || !constraint.pointB)
-                continue;
-
-            var bodyA = constraint.bodyA,
-                bodyB = constraint.bodyB,
-                start,
-                end;
-
-            if (bodyA) {
-                start = Vector.add(bodyA.position, constraint.pointA);
-            } else {
-                start = constraint.pointA;
-            }
-
-            if (constraint.render.type === 'pin') {
-                c.beginPath();
-                c.arc(start.x, start.y, 3, 0, 2 * Math.PI);
-                c.closePath();
-            } else {
-                if (bodyB) {
-                    end = Vector.add(bodyB.position, constraint.pointB);
-                } else {
-                    end = constraint.pointB;
-                }
-
-                c.beginPath();
-                c.moveTo(start.x, start.y);
-
-                if (constraint.render.type === 'spring') {
-                    var delta = Vector.sub(end, start),
-                        normal = Vector.perp(Vector.normalise(delta)),
-                        coils = Math.ceil(Common.clamp(constraint.length / 5, 12, 20)),
-                        offset;
-
-                    for (var j = 1; j < coils; j += 1) {
-                        offset = j % 2 === 0 ? 1 : -1;
-
-                        c.lineTo(
-                            start.x + delta.x * (j / coils) + normal.x * offset * 4,
-                            start.y + delta.y * (j / coils) + normal.y * offset * 4
-                        );
-                    }
-                }
-
-                c.lineTo(end.x, end.y);
-            }
-
-            if (constraint.render.lineWidth) {
-                c.lineWidth = constraint.render.lineWidth;
-                c.strokeStyle = constraint.render.strokeStyle;
-                c.stroke();
-            }
-
-            if (constraint.render.anchors) {
-                c.fillStyle = constraint.render.strokeStyle;
-                c.beginPath();
-                c.arc(start.x, start.y, 3, 0, 2 * Math.PI);
-                c.arc(end.x, end.y, 3, 0, 2 * Math.PI);
-                c.closePath();
-                c.fill();
-            }
-        }
-    };
-
-    /**
-     * Description
-     * @private
-     * @method bodyShadows
-     * @param {render} render
-     * @param {body[]} bodies
-     * @param {RenderingContext} context
-     */
-    Render.bodyShadows = function(render, bodies, context) {
-        var c = context,
-            engine = render.engine;
-
-        for (var i = 0; i < bodies.length; i++) {
-            var body = bodies[i];
-
-            if (!body.render.visible)
-                continue;
-
-            if (body.circleRadius) {
-                c.beginPath();
-                c.arc(body.position.x, body.position.y, body.circleRadius, 0, 2 * Math.PI);
-                c.closePath();
-            } else {
-                c.beginPath();
-                c.moveTo(body.vertices[0].x, body.vertices[0].y);
-                for (var j = 1; j < body.vertices.length; j++) {
-                    c.lineTo(body.vertices[j].x, body.vertices[j].y);
-                }
-                c.closePath();
-            }
-
-            var distanceX = body.position.x - render.options.width * 0.5,
-                distanceY = body.position.y - render.options.height * 0.2,
-                distance = Math.abs(distanceX) + Math.abs(distanceY);
-
-            c.shadowColor = 'rgba(0,0,0,0.15)';
-            c.shadowOffsetX = 0.05 * distanceX;
-            c.shadowOffsetY = 0.05 * distanceY;
-            c.shadowBlur = 1 + 12 * Math.min(1, distance / 1000);
-
-            c.fill();
-
-            c.shadowColor = null;
-            c.shadowOffsetX = null;
-            c.shadowOffsetY = null;
-            c.shadowBlur = null;
-        }
-    };
-
-    /**
-     * Description
-     * @private
-     * @method bodies
-     * @param {render} render
-     * @param {body[]} bodies
-     * @param {RenderingContext} context
-     */
-    Render.bodies = function(render, bodies, context) {
-        var c = context,
-            engine = render.engine,
-            options = render.options,
-            showInternalEdges = options.showInternalEdges || !options.wireframes,
-            body,
-            part,
-            i,
-            k;
-
-        for (i = 0; i < bodies.length; i++) {
-            body = bodies[i];
-
-            if (!body.render.visible)
-                continue;
-
-            // handle compound parts
-            for (k = body.parts.length > 1 ? 1 : 0; k < body.parts.length; k++) {
-                part = body.parts[k];
-
-                if (!part.render.visible)
-                    continue;
-
-                if (options.showSleeping && body.isSleeping) {
-                    c.globalAlpha = 0.5 * part.render.opacity;
-                } else if (part.render.opacity !== 1) {
-                    c.globalAlpha = part.render.opacity;
-                }
-
-                if (part.render.sprite && part.render.sprite.texture && !options.wireframes) {
-                    // part sprite
-                    var sprite = part.render.sprite,
-                        texture = _getTexture(render, sprite.texture);
-
-                    c.translate(part.position.x, part.position.y);
-                    c.rotate(part.angle);
-
-                    c.drawImage(
-                        texture,
-                        texture.width * -sprite.xOffset * sprite.xScale,
-                        texture.height * -sprite.yOffset * sprite.yScale,
-                        texture.width * sprite.xScale,
-                        texture.height * sprite.yScale
-                    );
-
-                    // revert translation, hopefully faster than save / restore
-                    c.rotate(-part.angle);
-                    c.translate(-part.position.x, -part.position.y);
-                } else {
-                    // part polygon
-                    if (part.circleRadius) {
-                        c.beginPath();
-                        c.arc(part.position.x, part.position.y, part.circleRadius, 0, 2 * Math.PI);
-                    } else {
-                        c.beginPath();
-                        c.moveTo(part.vertices[0].x, part.vertices[0].y);
-
-                        for (var j = 1; j < part.vertices.length; j++) {
-                            if (!part.vertices[j - 1].isInternal || showInternalEdges) {
-                                c.lineTo(part.vertices[j].x, part.vertices[j].y);
-                            } else {
-                                c.moveTo(part.vertices[j].x, part.vertices[j].y);
-                            }
-
-                            if (part.vertices[j].isInternal && !showInternalEdges) {
-                                c.moveTo(part.vertices[(j + 1) % part.vertices.length].x, part.vertices[(j + 1) % part.vertices.length].y);
-                            }
-                        }
-
-                        c.lineTo(part.vertices[0].x, part.vertices[0].y);
-                        c.closePath();
-                    }
-
-                    if (!options.wireframes) {
-                        c.fillStyle = part.render.fillStyle;
-
-                        if (part.render.lineWidth) {
-                            c.lineWidth = part.render.lineWidth;
-                            c.strokeStyle = part.render.strokeStyle;
-                            c.stroke();
-                        }
-
-                        c.fill();
-                    } else {
-                        c.lineWidth = 1;
-                        c.strokeStyle = '#bbb';
-                        c.stroke();
-                    }
-                }
-
-                c.globalAlpha = 1;
-            }
-        }
-    };
-
-    /**
-     * Optimised method for drawing body wireframes in one pass
-     * @private
-     * @method bodyWireframes
-     * @param {render} render
-     * @param {body[]} bodies
-     * @param {RenderingContext} context
-     */
-    Render.bodyWireframes = function(render, bodies, context) {
-        var c = context,
-            showInternalEdges = render.options.showInternalEdges,
-            body,
-            part,
-            i,
-            j,
-            k;
-
-        c.beginPath();
-
-        // render all bodies
-        for (i = 0; i < bodies.length; i++) {
-            body = bodies[i];
-
-            if (!body.render.visible)
-                continue;
-
-            // handle compound parts
-            for (k = body.parts.length > 1 ? 1 : 0; k < body.parts.length; k++) {
-                part = body.parts[k];
-
-                c.moveTo(part.vertices[0].x, part.vertices[0].y);
-
-                for (j = 1; j < part.vertices.length; j++) {
-                    if (!part.vertices[j - 1].isInternal || showInternalEdges) {
-                        c.lineTo(part.vertices[j].x, part.vertices[j].y);
-                    } else {
-                        c.moveTo(part.vertices[j].x, part.vertices[j].y);
-                    }
-
-                    if (part.vertices[j].isInternal && !showInternalEdges) {
-                        c.moveTo(part.vertices[(j + 1) % part.vertices.length].x, part.vertices[(j + 1) % part.vertices.length].y);
-                    }
-                }
-
-                c.lineTo(part.vertices[0].x, part.vertices[0].y);
-            }
-        }
-
-        c.lineWidth = 1;
-        c.strokeStyle = '#bbb';
-        c.stroke();
-    };
-
-    /**
-     * Optimised method for drawing body convex hull wireframes in one pass
-     * @private
-     * @method bodyConvexHulls
-     * @param {render} render
-     * @param {body[]} bodies
-     * @param {RenderingContext} context
-     */
-    Render.bodyConvexHulls = function(render, bodies, context) {
-        var c = context,
-            body,
-            part,
-            i,
-            j,
-            k;
-
-        c.beginPath();
-
-        // render convex hulls
-        for (i = 0; i < bodies.length; i++) {
-            body = bodies[i];
-
-            if (!body.render.visible || body.parts.length === 1)
-                continue;
-
-            c.moveTo(body.vertices[0].x, body.vertices[0].y);
-
-            for (j = 1; j < body.vertices.length; j++) {
-                c.lineTo(body.vertices[j].x, body.vertices[j].y);
-            }
-
-            c.lineTo(body.vertices[0].x, body.vertices[0].y);
-        }
-
-        c.lineWidth = 1;
-        c.strokeStyle = 'rgba(255,255,255,0.2)';
-        c.stroke();
-    };
-
-    /**
-     * Renders body vertex numbers.
-     * @private
-     * @method vertexNumbers
-     * @param {render} render
-     * @param {body[]} bodies
-     * @param {RenderingContext} context
-     */
-    Render.vertexNumbers = function(render, bodies, context) {
-        var c = context,
-            i,
-            j,
-            k;
-
-        for (i = 0; i < bodies.length; i++) {
-            var parts = bodies[i].parts;
-            for (k = parts.length > 1 ? 1 : 0; k < parts.length; k++) {
-                var part = parts[k];
-                for (j = 0; j < part.vertices.length; j++) {
-                    c.fillStyle = 'rgba(255,255,255,0.2)';
-                    c.fillText(i + '_' + j, part.position.x + (part.vertices[j].x - part.position.x) * 0.8, part.position.y + (part.vertices[j].y - part.position.y) * 0.8);
-                }
-            }
-        }
-    };
-
-    /**
-     * Renders mouse position.
-     * @private
-     * @method mousePosition
-     * @param {render} render
-     * @param {mouse} mouse
-     * @param {RenderingContext} context
-     */
-    Render.mousePosition = function(render, mouse, context) {
-        var c = context;
-        c.fillStyle = 'rgba(255,255,255,0.8)';
-        c.fillText(mouse.position.x + '  ' + mouse.position.y, mouse.position.x + 5, mouse.position.y - 5);
-    };
-
-    /**
-     * Draws body bounds
-     * @private
-     * @method bodyBounds
-     * @param {render} render
-     * @param {body[]} bodies
-     * @param {RenderingContext} context
-     */
-    Render.bodyBounds = function(render, bodies, context) {
-        var c = context,
-            engine = render.engine,
-            options = render.options;
-
-        c.beginPath();
-
-        for (var i = 0; i < bodies.length; i++) {
-            var body = bodies[i];
-
-            if (body.render.visible) {
-                var parts = bodies[i].parts;
-                for (var j = parts.length > 1 ? 1 : 0; j < parts.length; j++) {
-                    var part = parts[j];
-                    c.rect(part.bounds.min.x, part.bounds.min.y, part.bounds.max.x - part.bounds.min.x, part.bounds.max.y - part.bounds.min.y);
-                }
-            }
-        }
-
-        if (options.wireframes) {
-            c.strokeStyle = 'rgba(255,255,255,0.08)';
-        } else {
-            c.strokeStyle = 'rgba(0,0,0,0.1)';
-        }
-
-        c.lineWidth = 1;
-        c.stroke();
-    };
-
-    /**
-     * Draws body angle indicators and axes
-     * @private
-     * @method bodyAxes
-     * @param {render} render
-     * @param {body[]} bodies
-     * @param {RenderingContext} context
-     */
-    Render.bodyAxes = function(render, bodies, context) {
-        var c = context,
-            engine = render.engine,
-            options = render.options,
-            part,
-            i,
-            j,
-            k;
-
-        c.beginPath();
-
-        for (i = 0; i < bodies.length; i++) {
-            var body = bodies[i],
-                parts = body.parts;
-
-            if (!body.render.visible)
-                continue;
-
-            if (options.showAxes) {
-                // render all axes
-                for (j = parts.length > 1 ? 1 : 0; j < parts.length; j++) {
-                    part = parts[j];
-                    for (k = 0; k < part.axes.length; k++) {
-                        var axis = part.axes[k];
-                        c.moveTo(part.position.x, part.position.y);
-                        c.lineTo(part.position.x + axis.x * 20, part.position.y + axis.y * 20);
-                    }
-                }
-            } else {
-                for (j = parts.length > 1 ? 1 : 0; j < parts.length; j++) {
-                    part = parts[j];
-                    for (k = 0; k < part.axes.length; k++) {
-                        // render a single axis indicator
-                        c.moveTo(part.position.x, part.position.y);
-                        c.lineTo((part.vertices[0].x + part.vertices[part.vertices.length-1].x) / 2,
-                                 (part.vertices[0].y + part.vertices[part.vertices.length-1].y) / 2);
-                    }
-                }
-            }
-        }
-
-        if (options.wireframes) {
-            c.strokeStyle = 'indianred';
-            c.lineWidth = 1;
-        } else {
-            c.strokeStyle = 'rgba(255, 255, 255, 0.4)';
-            c.globalCompositeOperation = 'overlay';
-            c.lineWidth = 2;
-        }
-
-        c.stroke();
-        c.globalCompositeOperation = 'source-over';
-    };
-
-    /**
-     * Draws body positions
-     * @private
-     * @method bodyPositions
-     * @param {render} render
-     * @param {body[]} bodies
-     * @param {RenderingContext} context
-     */
-    Render.bodyPositions = function(render, bodies, context) {
-        var c = context,
-            engine = render.engine,
-            options = render.options,
-            body,
-            part,
-            i,
-            k;
-
-        c.beginPath();
-
-        // render current positions
-        for (i = 0; i < bodies.length; i++) {
-            body = bodies[i];
-
-            if (!body.render.visible)
-                continue;
-
-            // handle compound parts
-            for (k = 0; k < body.parts.length; k++) {
-                part = body.parts[k];
-                c.arc(part.position.x, part.position.y, 3, 0, 2 * Math.PI, false);
-                c.closePath();
-            }
-        }
-
-        if (options.wireframes) {
-            c.fillStyle = 'indianred';
-        } else {
-            c.fillStyle = 'rgba(0,0,0,0.5)';
-        }
-        c.fill();
-
-        c.beginPath();
-
-        // render previous positions
-        for (i = 0; i < bodies.length; i++) {
-            body = bodies[i];
-            if (body.render.visible) {
-                c.arc(body.positionPrev.x, body.positionPrev.y, 2, 0, 2 * Math.PI, false);
-                c.closePath();
-            }
-        }
-
-        c.fillStyle = 'rgba(255,165,0,0.8)';
-        c.fill();
-    };
-
-    /**
-     * Draws body velocity
-     * @private
-     * @method bodyVelocity
-     * @param {render} render
-     * @param {body[]} bodies
-     * @param {RenderingContext} context
-     */
-    Render.bodyVelocity = function(render, bodies, context) {
-        var c = context;
-
-        c.beginPath();
-
-        for (var i = 0; i < bodies.length; i++) {
-            var body = bodies[i];
-
-            if (!body.render.visible)
-                continue;
-
-            c.moveTo(body.position.x, body.position.y);
-            c.lineTo(body.position.x + (body.position.x - body.positionPrev.x) * 2, body.position.y + (body.position.y - body.positionPrev.y) * 2);
-        }
-
-        c.lineWidth = 3;
-        c.strokeStyle = 'cornflowerblue';
-        c.stroke();
-    };
-
-    /**
-     * Draws body ids
-     * @private
-     * @method bodyIds
-     * @param {render} render
-     * @param {body[]} bodies
-     * @param {RenderingContext} context
-     */
-    Render.bodyIds = function(render, bodies, context) {
-        var c = context,
-            i,
-            j;
-
-        for (i = 0; i < bodies.length; i++) {
-            if (!bodies[i].render.visible)
-                continue;
-
-            var parts = bodies[i].parts;
-            for (j = parts.length > 1 ? 1 : 0; j < parts.length; j++) {
-                var part = parts[j];
-                c.font = "12px Arial";
-                c.fillStyle = 'rgba(255,255,255,0.5)';
-                c.fillText(part.id, part.position.x + 10, part.position.y - 10);
-            }
-        }
-    };
-
-    /**
-     * Description
-     * @private
-     * @method collisions
-     * @param {render} render
-     * @param {pair[]} pairs
-     * @param {RenderingContext} context
-     */
-    Render.collisions = function(render, pairs, context) {
-        var c = context,
-            options = render.options,
-            pair,
-            collision,
-            corrected,
-            bodyA,
-            bodyB,
-            i,
-            j;
-
-        c.beginPath();
-
-        // render collision positions
-        for (i = 0; i < pairs.length; i++) {
-            pair = pairs[i];
-
-            if (!pair.isActive)
-                continue;
-
-            collision = pair.collision;
-            for (j = 0; j < pair.activeContacts.length; j++) {
-                var contact = pair.activeContacts[j],
-                    vertex = contact.vertex;
-                c.rect(vertex.x - 1.5, vertex.y - 1.5, 3.5, 3.5);
-            }
-        }
-
-        if (options.wireframes) {
-            c.fillStyle = 'rgba(255,255,255,0.7)';
-        } else {
-            c.fillStyle = 'orange';
-        }
-        c.fill();
-
-        c.beginPath();
-
-        // render collision normals
-        for (i = 0; i < pairs.length; i++) {
-            pair = pairs[i];
-
-            if (!pair.isActive)
-                continue;
-
-            collision = pair.collision;
-
-            if (pair.activeContacts.length > 0) {
-                var normalPosX = pair.activeContacts[0].vertex.x,
-                    normalPosY = pair.activeContacts[0].vertex.y;
-
-                if (pair.activeContacts.length === 2) {
-                    normalPosX = (pair.activeContacts[0].vertex.x + pair.activeContacts[1].vertex.x) / 2;
-                    normalPosY = (pair.activeContacts[0].vertex.y + pair.activeContacts[1].vertex.y) / 2;
-                }
-
-                if (collision.bodyB === collision.supports[0].body || collision.bodyA.isStatic === true) {
-                    c.moveTo(normalPosX - collision.normal.x * 8, normalPosY - collision.normal.y * 8);
-                } else {
-                    c.moveTo(normalPosX + collision.normal.x * 8, normalPosY + collision.normal.y * 8);
-                }
-
-                c.lineTo(normalPosX, normalPosY);
-            }
-        }
-
-        if (options.wireframes) {
-            c.strokeStyle = 'rgba(255,165,0,0.7)';
-        } else {
-            c.strokeStyle = 'orange';
-        }
-
-        c.lineWidth = 1;
-        c.stroke();
-    };
-
-    /**
-     * Description
-     * @private
-     * @method separations
-     * @param {render} render
-     * @param {pair[]} pairs
-     * @param {RenderingContext} context
-     */
-    Render.separations = function(render, pairs, context) {
-        var c = context,
-            options = render.options,
-            pair,
-            collision,
-            corrected,
-            bodyA,
-            bodyB,
-            i,
-            j;
-
-        c.beginPath();
-
-        // render separations
-        for (i = 0; i < pairs.length; i++) {
-            pair = pairs[i];
-
-            if (!pair.isActive)
-                continue;
-
-            collision = pair.collision;
-            bodyA = collision.bodyA;
-            bodyB = collision.bodyB;
-
-            var k = 1;
-
-            if (!bodyB.isStatic && !bodyA.isStatic) k = 0.5;
-            if (bodyB.isStatic) k = 0;
-
-            c.moveTo(bodyB.position.x, bodyB.position.y);
-            c.lineTo(bodyB.position.x - collision.penetration.x * k, bodyB.position.y - collision.penetration.y * k);
-
-            k = 1;
-
-            if (!bodyB.isStatic && !bodyA.isStatic) k = 0.5;
-            if (bodyA.isStatic) k = 0;
-
-            c.moveTo(bodyA.position.x, bodyA.position.y);
-            c.lineTo(bodyA.position.x + collision.penetration.x * k, bodyA.position.y + collision.penetration.y * k);
-        }
-
-        if (options.wireframes) {
-            c.strokeStyle = 'rgba(255,165,0,0.5)';
-        } else {
-            c.strokeStyle = 'orange';
-        }
-        c.stroke();
-    };
-
-    /**
-     * Description
-     * @private
-     * @method grid
-     * @param {render} render
-     * @param {grid} grid
-     * @param {RenderingContext} context
-     */
-    Render.grid = function(render, grid, context) {
-        var c = context,
-            options = render.options;
-
-        if (options.wireframes) {
-            c.strokeStyle = 'rgba(255,180,0,0.1)';
-        } else {
-            c.strokeStyle = 'rgba(255,180,0,0.5)';
-        }
-
-        c.beginPath();
-
-        var bucketKeys = Common.keys(grid.buckets);
-
-        for (var i = 0; i < bucketKeys.length; i++) {
-            var bucketId = bucketKeys[i];
-
-            if (grid.buckets[bucketId].length < 2)
-                continue;
-
-            var region = bucketId.split(/C|R/);
-            c.rect(0.5 + parseInt(region[1], 10) * grid.bucketWidth,
-                    0.5 + parseInt(region[2], 10) * grid.bucketHeight,
-                    grid.bucketWidth,
-                    grid.bucketHeight);
-        }
-
-        c.lineWidth = 1;
-        c.stroke();
-    };
-
-    /**
-     * Description
-     * @private
-     * @method inspector
-     * @param {inspector} inspector
-     * @param {RenderingContext} context
-     */
-    Render.inspector = function(inspector, context) {
-        var engine = inspector.engine,
-            selected = inspector.selected,
-            render = inspector.render,
-            options = render.options,
-            bounds;
-
-        if (options.hasBounds) {
-            var boundsWidth = render.bounds.max.x - render.bounds.min.x,
-                boundsHeight = render.bounds.max.y - render.bounds.min.y,
-                boundsScaleX = boundsWidth / render.options.width,
-                boundsScaleY = boundsHeight / render.options.height;
-
-            context.scale(1 / boundsScaleX, 1 / boundsScaleY);
-            context.translate(-render.bounds.min.x, -render.bounds.min.y);
-        }
-
-        for (var i = 0; i < selected.length; i++) {
-            var item = selected[i].data;
-
-            context.translate(0.5, 0.5);
-            context.lineWidth = 1;
-            context.strokeStyle = 'rgba(255,165,0,0.9)';
-            context.setLineDash([1,2]);
-
-            switch (item.type) {
-
-            case 'body':
-
-                // render body selections
-                bounds = item.bounds;
-                context.beginPath();
-                context.rect(Math.floor(bounds.min.x - 3), Math.floor(bounds.min.y - 3),
-                             Math.floor(bounds.max.x - bounds.min.x + 6), Math.floor(bounds.max.y - bounds.min.y + 6));
-                context.closePath();
-                context.stroke();
-
-                break;
-
-            case 'constraint':
-
-                // render constraint selections
-                var point = item.pointA;
-                if (item.bodyA)
-                    point = item.pointB;
-                context.beginPath();
-                context.arc(point.x, point.y, 10, 0, 2 * Math.PI);
-                context.closePath();
-                context.stroke();
-
-                break;
-
-            }
-
-            context.setLineDash([]);
-            context.translate(-0.5, -0.5);
-        }
-
-        // render selection region
-        if (inspector.selectStart !== null) {
-            context.translate(0.5, 0.5);
-            context.lineWidth = 1;
-            context.strokeStyle = 'rgba(255,165,0,0.6)';
-            context.fillStyle = 'rgba(255,165,0,0.1)';
-            bounds = inspector.selectBounds;
-            context.beginPath();
-            context.rect(Math.floor(bounds.min.x), Math.floor(bounds.min.y),
-                         Math.floor(bounds.max.x - bounds.min.x), Math.floor(bounds.max.y - bounds.min.y));
-            context.closePath();
-            context.stroke();
-            context.fill();
-            context.translate(-0.5, -0.5);
-        }
-
-        if (options.hasBounds)
-            context.setTransform(1, 0, 0, 1, 0, 0);
-    };
-
-    /**
-     * Description
-     * @method _createCanvas
-     * @private
-     * @param {} width
-     * @param {} height
-     * @return canvas
-     */
-    var _createCanvas = function(width, height) {
-        var canvas = document.createElement('canvas');
-        canvas.width = width;
-        canvas.height = height;
-        canvas.oncontextmenu = function() { return false; };
-        canvas.onselectstart = function() { return false; };
-        return canvas;
-    };
-
-    /**
-     * Gets the pixel ratio of the canvas.
-     * @method _getPixelRatio
-     * @private
-     * @param {HTMLElement} canvas
-     * @return {Number} pixel ratio
-     */
-    var _getPixelRatio = function(canvas) {
-        var context = canvas.getContext('2d'),
-            devicePixelRatio = window.devicePixelRatio || 1,
-            backingStorePixelRatio = context.webkitBackingStorePixelRatio || context.mozBackingStorePixelRatio
-                                      || context.msBackingStorePixelRatio || context.oBackingStorePixelRatio
-                                      || context.backingStorePixelRatio || 1;
-
-        return devicePixelRatio / backingStorePixelRatio;
-    };
-
-    /**
-     * Gets the requested texture (an Image) via its path
-     * @method _getTexture
-     * @private
-     * @param {render} render
-     * @param {string} imagePath
-     * @return {Image} texture
-     */
-    var _getTexture = function(render, imagePath) {
-        var image = render.textures[imagePath];
-
-        if (image)
-            return image;
-
-        image = render.textures[imagePath] = new Image();
-        image.src = imagePath;
-
-        return image;
-    };
-
-    /**
-     * Applies the background to the canvas using CSS.
-     * @method applyBackground
-     * @private
-     * @param {render} render
-     * @param {string} background
-     */
-    var _applyBackground = function(render, background) {
-        var cssBackground = background;
-
-        if (/(jpg|gif|png)$/.test(background))
-            cssBackground = 'url(' + background + ')';
-
-        render.canvas.style.background = cssBackground;
-        render.canvas.style.backgroundSize = "contain";
-        render.currentBackground = background;
-    };
-
-    /*
-    *
-    *  Events Documentation
-    *
-    */
-
-    /**
-    * Fired before rendering
-    *
-    * @event beforeRender
-    * @param {} event An event object
-    * @param {number} event.timestamp The engine.timing.timestamp of the event
-    * @param {} event.source The source object of the event
-    * @param {} event.name The name of the event
-    */
-
-    /**
-    * Fired after rendering
-    *
-    * @event afterRender
-    * @param {} event An event object
-    * @param {number} event.timestamp The engine.timing.timestamp of the event
-    * @param {} event.source The source object of the event
-    * @param {} event.name The name of the event
-    */
-
-    /*
-    *
-    *  Properties Documentation
-    *
-    */
-
-    /**
-     * A back-reference to the `Matter.Render` module.
-     *
-     * @property controller
-     * @type render
-     */
-
-    /**
-     * A reference to the `Matter.Engine` instance to be used.
-     *
-     * @property engine
-     * @type engine
-     */
-
-    /**
-     * A reference to the element where the canvas is to be inserted (if `render.canvas` has not been specified)
-     *
-     * @property element
-     * @type HTMLElement
-     * @default null
-     */
-
-    /**
-     * The canvas element to render to. If not specified, one will be created if `render.element` has been specified.
-     *
-     * @property canvas
-     * @type HTMLCanvasElement
-     * @default null
-     */
-
-    /**
-     * The configuration options of the renderer.
-     *
-     * @property options
-     * @type {}
-     */
-
-    /**
-     * The target width in pixels of the `render.canvas` to be created.
-     *
-     * @property options.width
-     * @type number
-     * @default 800
-     */
-
-    /**
-     * The target height in pixels of the `render.canvas` to be created.
-     *
-     * @property options.height
-     * @type number
-     * @default 600
-     */
-
-    /**
-     * A flag that specifies if `render.bounds` should be used when rendering.
-     *
-     * @property options.hasBounds
-     * @type boolean
-     * @default false
-     */
-
-    /**
-     * A `Bounds` object that specifies the drawing view region.
-     * Rendering will be automatically transformed and scaled to fit within the canvas size (`render.options.width` and `render.options.height`).
-     * This allows for creating views that can pan or zoom around the scene.
-     * You must also set `render.options.hasBounds` to `true` to enable bounded rendering.
-     *
-     * @property bounds
-     * @type bounds
-     */
-
-    /**
-     * The 2d rendering context from the `render.canvas` element.
-     *
-     * @property context
-     * @type CanvasRenderingContext2D
-     */
-
-    /**
-     * The sprite texture cache.
-     *
-     * @property textures
-     * @type {}
-     */
-
-})();
-
-},{"../body/Composite":2,"../collision/Grid":6,"../core/Common":14,"../core/Events":16,"../core/Mouse":19,"../geometry/Bounds":26,"../geometry/Vector":28}],32:[function(_dereq_,module,exports){
-/**
-* The `Matter.RenderPixi` module is an example renderer using pixi.js.
-* See also `Matter.Render` for a canvas based renderer.
-*
-* @class RenderPixi
-* @deprecated the Matter.RenderPixi module will soon be removed from the Matter.js core.
-* It will likely be moved to its own repository (but maintenance will be limited).
-*/
-
-var RenderPixi = {};
-
-module.exports = RenderPixi;
-
-var Bounds = _dereq_('../geometry/Bounds');
-var Composite = _dereq_('../body/Composite');
-var Common = _dereq_('../core/Common');
-var Events = _dereq_('../core/Events');
-var Vector = _dereq_('../geometry/Vector');
-
-(function() {
-
-    var _requestAnimationFrame,
-        _cancelAnimationFrame;
-
-    if (typeof window !== 'undefined') {
-        _requestAnimationFrame = window.requestAnimationFrame || window.webkitRequestAnimationFrame
-                                      || window.mozRequestAnimationFrame || window.msRequestAnimationFrame 
-                                      || function(callback){ window.setTimeout(function() { callback(Common.now()); }, 1000 / 60); };
-   
-        _cancelAnimationFrame = window.cancelAnimationFrame || window.mozCancelAnimationFrame 
-                                      || window.webkitCancelAnimationFrame || window.msCancelAnimationFrame;
-    }
-    
-    /**
-     * Creates a new Pixi.js WebGL renderer
-     * @method create
-     * @param {object} options
-     * @return {RenderPixi} A new renderer
-     * @deprecated
-     */
-    RenderPixi.create = function(options) {
-        Common.warn('RenderPixi.create: Matter.RenderPixi is deprecated (see docs)');
-
-        var defaults = {
-            controller: RenderPixi,
-            engine: null,
-            element: null,
-            frameRequestId: null,
-            canvas: null,
-            renderer: null,
-            container: null,
-            spriteContainer: null,
-            pixiOptions: null,
-            options: {
-                width: 800,
-                height: 600,
-                background: '#fafafa',
-                wireframeBackground: '#222',
-                hasBounds: false,
-                enabled: true,
-                wireframes: true,
-                showSleeping: true,
-                showDebug: false,
-                showBroadphase: false,
-                showBounds: false,
-                showVelocity: false,
-                showCollisions: false,
-                showAxes: false,
-                showPositions: false,
-                showAngleIndicator: false,
-                showIds: false,
-                showShadows: false
-            }
-        };
-
-        var render = Common.extend(defaults, options),
-            transparent = !render.options.wireframes && render.options.background === 'transparent';
-
-        // init pixi
-        render.pixiOptions = render.pixiOptions || {
-            view: render.canvas,
-            transparent: transparent,
-            antialias: true,
-            backgroundColor: options.background
-        };
-
-        render.mouse = options.mouse;
-        render.engine = options.engine;
-        render.renderer = render.renderer || new PIXI.WebGLRenderer(render.options.width, render.options.height, render.pixiOptions);
-        render.container = render.container || new PIXI.Container();
-        render.spriteContainer = render.spriteContainer || new PIXI.Container();
-        render.canvas = render.canvas || render.renderer.view;
-        render.bounds = render.bounds || { 
-            min: {
-                x: 0,
-                y: 0
-            }, 
-            max: { 
-                x: render.options.width,
-                y: render.options.height
-            }
-        };
-
-        // event listeners
-        Events.on(render.engine, 'beforeUpdate', function() {
-            RenderPixi.clear(render);
-        });
-
-        // caches
-        render.textures = {};
-        render.sprites = {};
-        render.primitives = {};
-
-        // use a sprite batch for performance
-        render.container.addChild(render.spriteContainer);
-
-        // insert canvas
-        if (Common.isElement(render.element)) {
-            render.element.appendChild(render.canvas);
-        } else {
-            Common.warn('No "render.element" passed, "render.canvas" was not inserted into document.');
-        }
-
-        // prevent menus on canvas
-        render.canvas.oncontextmenu = function() { return false; };
-        render.canvas.onselectstart = function() { return false; };
-
-        return render;
-    };
-
-    /**
-     * Continuously updates the render canvas on the `requestAnimationFrame` event.
-     * @method run
-     * @param {render} render
-     * @deprecated
-     */
-    RenderPixi.run = function(render) {
-        (function loop(time){
-            render.frameRequestId = _requestAnimationFrame(loop);
-            RenderPixi.world(render);
-        })();
-    };
-
-    /**
-     * Ends execution of `Render.run` on the given `render`, by canceling the animation frame request event loop.
-     * @method stop
-     * @param {render} render
-     * @deprecated
-     */
-    RenderPixi.stop = function(render) {
-        _cancelAnimationFrame(render.frameRequestId);
-    };
-
-    /**
-     * Clears the scene graph
-     * @method clear
-     * @param {RenderPixi} render
-     * @deprecated
-     */
-    RenderPixi.clear = function(render) {
-        var container = render.container,
-            spriteContainer = render.spriteContainer;
-
-        // clear stage container
-        while (container.children[0]) { 
-            container.removeChild(container.children[0]); 
-        }
-
-        // clear sprite batch
-        while (spriteContainer.children[0]) { 
-            spriteContainer.removeChild(spriteContainer.children[0]); 
-        }
-
-        var bgSprite = render.sprites['bg-0'];
-
-        // clear caches
-        render.textures = {};
-        render.sprites = {};
-        render.primitives = {};
-
-        // set background sprite
-        render.sprites['bg-0'] = bgSprite;
-        if (bgSprite)
-            container.addChildAt(bgSprite, 0);
-
-        // add sprite batch back into container
-        render.container.addChild(render.spriteContainer);
-
-        // reset background state
-        render.currentBackground = null;
-
-        // reset bounds transforms
-        container.scale.set(1, 1);
-        container.position.set(0, 0);
-    };
-
-    /**
-     * Sets the background of the canvas 
-     * @method setBackground
-     * @param {RenderPixi} render
-     * @param {string} background
-     * @deprecated
-     */
-    RenderPixi.setBackground = function(render, background) {
-        if (render.currentBackground !== background) {
-            var isColor = background.indexOf && background.indexOf('#') !== -1,
-                bgSprite = render.sprites['bg-0'];
-
-            if (isColor) {
-                // if solid background color
-                var color = Common.colorToNumber(background);
-                render.renderer.backgroundColor = color;
-
-                // remove background sprite if existing
-                if (bgSprite)
-                    render.container.removeChild(bgSprite); 
-            } else {
-                // initialise background sprite if needed
-                if (!bgSprite) {
-                    var texture = _getTexture(render, background);
-
-                    bgSprite = render.sprites['bg-0'] = new PIXI.Sprite(texture);
-                    bgSprite.position.x = 0;
-                    bgSprite.position.y = 0;
-                    render.container.addChildAt(bgSprite, 0);
-                }
-            }
-
-            render.currentBackground = background;
-        }
-    };
-
-    /**
-     * Description
-     * @method world
-     * @param {engine} engine
-     * @deprecated
-     */
-    RenderPixi.world = function(render) {
-        var engine = render.engine,
-            world = engine.world,
-            renderer = render.renderer,
-            container = render.container,
-            options = render.options,
-            bodies = Composite.allBodies(world),
-            allConstraints = Composite.allConstraints(world),
-            constraints = [],
-            i;
-
-        if (options.wireframes) {
-            RenderPixi.setBackground(render, options.wireframeBackground);
-        } else {
-            RenderPixi.setBackground(render, options.background);
-        }
-
-        // handle bounds
-        var boundsWidth = render.bounds.max.x - render.bounds.min.x,
-            boundsHeight = render.bounds.max.y - render.bounds.min.y,
-            boundsScaleX = boundsWidth / render.options.width,
-            boundsScaleY = boundsHeight / render.options.height;
-
-        if (options.hasBounds) {
-            // Hide bodies that are not in view
-            for (i = 0; i < bodies.length; i++) {
-                var body = bodies[i];
-                body.render.sprite.visible = Bounds.overlaps(body.bounds, render.bounds);
-            }
-
-            // filter out constraints that are not in view
-            for (i = 0; i < allConstraints.length; i++) {
-                var constraint = allConstraints[i],
-                    bodyA = constraint.bodyA,
-                    bodyB = constraint.bodyB,
-                    pointAWorld = constraint.pointA,
-                    pointBWorld = constraint.pointB;
-
-                if (bodyA) pointAWorld = Vector.add(bodyA.position, constraint.pointA);
-                if (bodyB) pointBWorld = Vector.add(bodyB.position, constraint.pointB);
-
-                if (!pointAWorld || !pointBWorld)
-                    continue;
-
-                if (Bounds.contains(render.bounds, pointAWorld) || Bounds.contains(render.bounds, pointBWorld))
-                    constraints.push(constraint);
-            }
-
-            // transform the view
-            container.scale.set(1 / boundsScaleX, 1 / boundsScaleY);
-            container.position.set(-render.bounds.min.x * (1 / boundsScaleX), -render.bounds.min.y * (1 / boundsScaleY));
-        } else {
-            constraints = allConstraints;
-        }
-
-        for (i = 0; i < bodies.length; i++)
-            RenderPixi.body(render, bodies[i]);
-
-        for (i = 0; i < constraints.length; i++)
-            RenderPixi.constraint(render, constraints[i]);
-
-        renderer.render(container);
-    };
-
-
-    /**
-     * Description
-     * @method constraint
-     * @param {engine} engine
-     * @param {constraint} constraint
-     * @deprecated
-     */
-    RenderPixi.constraint = function(render, constraint) {
-        var engine = render.engine,
-            bodyA = constraint.bodyA,
-            bodyB = constraint.bodyB,
-            pointA = constraint.pointA,
-            pointB = constraint.pointB,
-            container = render.container,
-            constraintRender = constraint.render,
-            primitiveId = 'c-' + constraint.id,
-            primitive = render.primitives[primitiveId];
-
-        // initialise constraint primitive if not existing
-        if (!primitive)
-            primitive = render.primitives[primitiveId] = new PIXI.Graphics();
-
-        // don't render if constraint does not have two end points
-        if (!constraintRender.visible || !constraint.pointA || !constraint.pointB) {
-            primitive.clear();
-            return;
-        }
-
-        // add to scene graph if not already there
-        if (Common.indexOf(container.children, primitive) === -1)
-            container.addChild(primitive);
-
-        // render the constraint on every update, since they can change dynamically
-        primitive.clear();
-        primitive.beginFill(0, 0);
-        primitive.lineStyle(constraintRender.lineWidth, Common.colorToNumber(constraintRender.strokeStyle), 1);
-        
-        if (bodyA) {
-            primitive.moveTo(bodyA.position.x + pointA.x, bodyA.position.y + pointA.y);
-        } else {
-            primitive.moveTo(pointA.x, pointA.y);
-        }
-
-        if (bodyB) {
-            primitive.lineTo(bodyB.position.x + pointB.x, bodyB.position.y + pointB.y);
-        } else {
-            primitive.lineTo(pointB.x, pointB.y);
-        }
-
-        primitive.endFill();
-    };
-    
-    /**
-     * Description
-     * @method body
-     * @param {engine} engine
-     * @param {body} body
-     * @deprecated
-     */
-    RenderPixi.body = function(render, body) {
-        var engine = render.engine,
-            bodyRender = body.render;
-
-        if (!bodyRender.visible)
-            return;
-
-        if (bodyRender.sprite && bodyRender.sprite.texture) {
-            var spriteId = 'b-' + body.id,
-                sprite = render.sprites[spriteId],
-                spriteContainer = render.spriteContainer;
-
-            // initialise body sprite if not existing
-            if (!sprite)
-                sprite = render.sprites[spriteId] = _createBodySprite(render, body);
-
-            // add to scene graph if not already there
-            if (Common.indexOf(spriteContainer.children, sprite) === -1)
-                spriteContainer.addChild(sprite);
-
-            // update body sprite
-            sprite.position.x = body.position.x;
-            sprite.position.y = body.position.y;
-            sprite.rotation = body.angle;
-            sprite.scale.x = bodyRender.sprite.xScale || 1;
-            sprite.scale.y = bodyRender.sprite.yScale || 1;
-        } else {
-            var primitiveId = 'b-' + body.id,
-                primitive = render.primitives[primitiveId],
-                container = render.container;
-
-            // initialise body primitive if not existing
-            if (!primitive) {
-                primitive = render.primitives[primitiveId] = _createBodyPrimitive(render, body);
-                primitive.initialAngle = body.angle;
-            }
-
-            // add to scene graph if not already there
-            if (Common.indexOf(container.children, primitive) === -1)
-                container.addChild(primitive);
-
-            // update body primitive
-            primitive.position.x = body.position.x;
-            primitive.position.y = body.position.y;
-            primitive.rotation = body.angle - primitive.initialAngle;
-        }
-    };
-
-    /**
-     * Creates a body sprite
-     * @method _createBodySprite
-     * @private
-     * @param {RenderPixi} render
-     * @param {body} body
-     * @return {PIXI.Sprite} sprite
-     * @deprecated
-     */
-    var _createBodySprite = function(render, body) {
-        var bodyRender = body.render,
-            texturePath = bodyRender.sprite.texture,
-            texture = _getTexture(render, texturePath),
-            sprite = new PIXI.Sprite(texture);
-
-        sprite.anchor.x = body.render.sprite.xOffset;
-        sprite.anchor.y = body.render.sprite.yOffset;
-
-        return sprite;
-    };
-
-    /**
-     * Creates a body primitive
-     * @method _createBodyPrimitive
-     * @private
-     * @param {RenderPixi} render
-     * @param {body} body
-     * @return {PIXI.Graphics} graphics
-     * @deprecated
-     */
-    var _createBodyPrimitive = function(render, body) {
-        var bodyRender = body.render,
-            options = render.options,
-            primitive = new PIXI.Graphics(),
-            fillStyle = Common.colorToNumber(bodyRender.fillStyle),
-            strokeStyle = Common.colorToNumber(bodyRender.strokeStyle),
-            strokeStyleIndicator = Common.colorToNumber(bodyRender.strokeStyle),
-            strokeStyleWireframe = Common.colorToNumber('#bbb'),
-            strokeStyleWireframeIndicator = Common.colorToNumber('#CD5C5C'),
-            part;
-
-        primitive.clear();
-
-        // handle compound parts
-        for (var k = body.parts.length > 1 ? 1 : 0; k < body.parts.length; k++) {
-            part = body.parts[k];
-
-            if (!options.wireframes) {
-                primitive.beginFill(fillStyle, 1);
-                primitive.lineStyle(bodyRender.lineWidth, strokeStyle, 1);
-            } else {
-                primitive.beginFill(0, 0);
-                primitive.lineStyle(1, strokeStyleWireframe, 1);
-            }
-
-            primitive.moveTo(part.vertices[0].x - body.position.x, part.vertices[0].y - body.position.y);
-
-            for (var j = 1; j < part.vertices.length; j++) {
-                primitive.lineTo(part.vertices[j].x - body.position.x, part.vertices[j].y - body.position.y);
-            }
-
-            primitive.lineTo(part.vertices[0].x - body.position.x, part.vertices[0].y - body.position.y);
-
-            primitive.endFill();
-
-            // angle indicator
-            if (options.showAngleIndicator || options.showAxes) {
-                primitive.beginFill(0, 0);
-
-                if (options.wireframes) {
-                    primitive.lineStyle(1, strokeStyleWireframeIndicator, 1);
-                } else {
-                    primitive.lineStyle(1, strokeStyleIndicator);
-                }
-
-                primitive.moveTo(part.position.x - body.position.x, part.position.y - body.position.y);
-                primitive.lineTo(((part.vertices[0].x + part.vertices[part.vertices.length-1].x) / 2 - body.position.x), 
-                                 ((part.vertices[0].y + part.vertices[part.vertices.length-1].y) / 2 - body.position.y));
-
-                primitive.endFill();
-            }
-        }
-
-        return primitive;
-    };
-
-    /**
-     * Gets the requested texture (a PIXI.Texture) via its path
-     * @method _getTexture
-     * @private
-     * @param {RenderPixi} render
-     * @param {string} imagePath
-     * @return {PIXI.Texture} texture
-     * @deprecated
-     */
-    var _getTexture = function(render, imagePath) {
-        var texture = render.textures[imagePath];
-
-        if (!texture)
-            texture = render.textures[imagePath] = PIXI.Texture.fromImage(imagePath);
-
-        return texture;
-    };
-
-})();
-
-},{"../body/Composite":2,"../core/Common":14,"../core/Events":16,"../geometry/Bounds":26,"../geometry/Vector":28}]},{},[30])(30)
-});
-
+!function(e,t){"object"==typeof exports&&"object"==typeof module?module.exports=t(require("poly-decomp")):"function"==typeof define&&define.amd?define("Matter",["poly-decomp"],t):"object"==typeof exports?exports.Matter=t(require("poly-decomp")):e.Matter=t(e.decomp)}(this,(function(e){return function(e){var t={};function n(i){if(t[i])return t[i].exports;var o=t[i]={i:i,l:!1,exports:{}};return e[i].call(o.exports,o,o.exports,n),o.l=!0,o.exports}return n.m=e,n.c=t,n.d=function(e,t,i){n.o(e,t)||Object.defineProperty(e,t,{enumerable:!0,get:i})},n.r=function(e){"undefined"!=typeof Symbol&&Symbol.toStringTag&&Object.defineProperty(e,Symbol.toStringTag,{value:"Module"}),Object.defineProperty(e,"__esModule",{value:!0})},n.t=function(e,t){if(1&t&&(e=n(e)),8&t)return e;if(4&t&&"object"==typeof e&&e&&e.__esModule)return e;var i=Object.create(null);if(n.r(i),Object.defineProperty(i,"default",{enumerable:!0,value:e}),2&t&&"string"!=typeof e)for(var o in e)n.d(i,o,function(t){return e[t]}.bind(null,o));return i},n.n=function(e){var t=e&&e.__esModule?function(){return e.default}:function(){return e};return n.d(t,"a",t),t},n.o=function(e,t){return Object.prototype.hasOwnProperty.call(e,t)},n.p="",n(n.s=24)}([function(e,t){var n={};e.exports=n,function(){n._nextId=0,n._seed=0,n._nowStartTime=+new Date,n.extend=function(e,t){var i,o;"boolean"==typeof t?(i=2,o=t):(i=1,o=!0);for(var r=i;r<arguments.length;r++){var s=arguments[r];if(s)for(var a in s)o&&s[a]&&s[a].constructor===Object?e[a]&&e[a].constructor!==Object?e[a]=s[a]:(e[a]=e[a]||{},n.extend(e[a],o,s[a])):e[a]=s[a]}return e},n.clone=function(e,t){return n.extend({},t,e)},n.keys=function(e){if(Object.keys)return Object.keys(e);var t=[];for(var n in e)t.push(n);return t},n.values=function(e){var t=[];if(Object.keys){for(var n=Object.keys(e),i=0;i<n.length;i++)t.push(e[n[i]]);return t}for(var o in e)t.push(e[o]);return t},n.get=function(e,t,n,i){t=t.split(".").slice(n,i);for(var o=0;o<t.length;o+=1)e=e[t[o]];return e},n.set=function(e,t,i,o,r){var s=t.split(".").slice(o,r);return n.get(e,t,0,-1)[s[s.length-1]]=i,i},n.shuffle=function(e){for(var t=e.length-1;t>0;t--){var i=Math.floor(n.random()*(t+1)),o=e[t];e[t]=e[i],e[i]=o}return e},n.choose=function(e){return e[Math.floor(n.random()*e.length)]},n.isElement=function(e){return"undefined"!=typeof HTMLElement?e instanceof HTMLElement:!!(e&&e.nodeType&&e.nodeName)},n.isArray=function(e){return"[object Array]"===Object.prototype.toString.call(e)},n.isFunction=function(e){return"function"==typeof e},n.isPlainObject=function(e){return"object"==typeof e&&e.constructor===Object},n.isString=function(e){return"[object String]"===toString.call(e)},n.clamp=function(e,t,n){return e<t?t:e>n?n:e},n.sign=function(e){return e<0?-1:1},n.now=function(){if("undefined"!=typeof window&&window.performance){if(window.performance.now)return window.performance.now();if(window.performance.webkitNow)return window.performance.webkitNow()}return new Date-n._nowStartTime},n.random=function(t,n){return n=void 0!==n?n:1,(t=void 0!==t?t:0)+e()*(n-t)};var e=function(){return n._seed=(9301*n._seed+49297)%233280,n._seed/233280};n.colorToNumber=function(e){return 3==(e=e.replace("#","")).length&&(e=e.charAt(0)+e.charAt(0)+e.charAt(1)+e.charAt(1)+e.charAt(2)+e.charAt(2)),parseInt(e,16)},n.logLevel=1,n.log=function(){console&&n.logLevel>0&&n.logLevel<=3&&console.log.apply(console,["matter-js:"].concat(Array.prototype.slice.call(arguments)))},n.info=function(){console&&n.logLevel>0&&n.logLevel<=2&&console.info.apply(console,["matter-js:"].concat(Array.prototype.slice.call(arguments)))},n.warn=function(){console&&n.logLevel>0&&n.logLevel<=3&&console.warn.apply(console,["matter-js:"].concat(Array.prototype.slice.call(arguments)))},n.nextId=function(){return n._nextId++},n.indexOf=function(e,t){if(e.indexOf)return e.indexOf(t);for(var n=0;n<e.length;n++)if(e[n]===t)return n;return-1},n.map=function(e,t){if(e.map)return e.map(t);for(var n=[],i=0;i<e.length;i+=1)n.push(t(e[i]));return n},n.topologicalSort=function(e){var t=[],i=[],o=[];for(var r in e)i[r]||o[r]||n._topologicalSort(r,i,o,e,t);return t},n._topologicalSort=function(e,t,i,o,r){var s=o[e]||[];i[e]=!0;for(var a=0;a<s.length;a+=1){var l=s[a];i[l]||(t[l]||n._topologicalSort(l,t,i,o,r))}i[e]=!1,t[e]=!0,r.push(e)},n.chain=function(){for(var e=[],t=0;t<arguments.length;t+=1){var n=arguments[t];n._chained?e.push.apply(e,n._chained):e.push(n)}var i=function(){for(var t,n=new Array(arguments.length),i=0,o=arguments.length;i<o;i++)n[i]=arguments[i];for(i=0;i<e.length;i+=1){var r=e[i].apply(t,n);void 0!==r&&(t=r)}return t};return i._chained=e,i},n.chainPathBefore=function(e,t,i){return n.set(e,t,n.chain(i,n.get(e,t)))},n.chainPathAfter=function(e,t,i){return n.set(e,t,n.chain(n.get(e,t),i))}}()},function(e,t){var n={};e.exports=n,n.create=function(e){var t={min:{x:0,y:0},max:{x:0,y:0}};return e&&n.update(t,e),t},n.update=function(e,t,n){e.min.x=1/0,e.max.x=-1/0,e.min.y=1/0,e.max.y=-1/0;for(var i=0;i<t.length;i++){var o=t[i];o.x>e.max.x&&(e.max.x=o.x),o.x<e.min.x&&(e.min.x=o.x),o.y>e.max.y&&(e.max.y=o.y),o.y<e.min.y&&(e.min.y=o.y)}n&&(n.x>0?e.max.x+=n.x:e.min.x+=n.x,n.y>0?e.max.y+=n.y:e.min.y+=n.y)},n.contains=function(e,t){return t.x>=e.min.x&&t.x<=e.max.x&&t.y>=e.min.y&&t.y<=e.max.y},n.overlaps=function(e,t){return e.min.x<=t.max.x&&e.max.x>=t.min.x&&e.max.y>=t.min.y&&e.min.y<=t.max.y},n.translate=function(e,t){e.min.x+=t.x,e.max.x+=t.x,e.min.y+=t.y,e.max.y+=t.y},n.shift=function(e,t){var n=e.max.x-e.min.x,i=e.max.y-e.min.y;e.min.x=t.x,e.max.x=t.x+n,e.min.y=t.y,e.max.y=t.y+i}},function(e,t){var n={};e.exports=n,n.create=function(e,t){return{x:e||0,y:t||0}},n.clone=function(e){return{x:e.x,y:e.y}},n.magnitude=function(e){return Math.sqrt(e.x*e.x+e.y*e.y)},n.magnitudeSquared=function(e){return e.x*e.x+e.y*e.y},n.rotate=function(e,t,n){var i=Math.cos(t),o=Math.sin(t);n||(n={});var r=e.x*i-e.y*o;return n.y=e.x*o+e.y*i,n.x=r,n},n.rotateAbout=function(e,t,n,i){var o=Math.cos(t),r=Math.sin(t);i||(i={});var s=n.x+((e.x-n.x)*o-(e.y-n.y)*r);return i.y=n.y+((e.x-n.x)*r+(e.y-n.y)*o),i.x=s,i},n.normalise=function(e){var t=n.magnitude(e);return 0===t?{x:0,y:0}:{x:e.x/t,y:e.y/t}},n.dot=function(e,t){return e.x*t.x+e.y*t.y},n.cross=function(e,t){return e.x*t.y-e.y*t.x},n.cross3=function(e,t,n){return(t.x-e.x)*(n.y-e.y)-(t.y-e.y)*(n.x-e.x)},n.add=function(e,t,n){return n||(n={}),n.x=e.x+t.x,n.y=e.y+t.y,n},n.sub=function(e,t,n){return n||(n={}),n.x=e.x-t.x,n.y=e.y-t.y,n},n.mult=function(e,t){return{x:e.x*t,y:e.y*t}},n.div=function(e,t){return{x:e.x/t,y:e.y/t}},n.perp=function(e,t){return{x:(t=!0===t?-1:1)*-e.y,y:t*e.x}},n.neg=function(e){return{x:-e.x,y:-e.y}},n.angle=function(e,t){return Math.atan2(t.y-e.y,t.x-e.x)},n._temp=[n.create(),n.create(),n.create(),n.create(),n.create(),n.create()]},function(e,t,n){var i={};e.exports=i;var o=n(2),r=n(0);i.create=function(e,t){for(var n=[],i=0;i<e.length;i++){var o=e[i],r={x:o.x,y:o.y,index:i,body:t,isInternal:!1};n.push(r)}return n},i.fromPath=function(e,t){var n=[];return e.replace(/L?\s*([-\d.e]+)[\s,]*([-\d.e]+)*/gi,(function(e,t,i){n.push({x:parseFloat(t),y:parseFloat(i)})})),i.create(n,t)},i.centre=function(e){for(var t,n,r,s=i.area(e,!0),a={x:0,y:0},l=0;l<e.length;l++)r=(l+1)%e.length,t=o.cross(e[l],e[r]),n=o.mult(o.add(e[l],e[r]),t),a=o.add(a,n);return o.div(a,6*s)},i.mean=function(e){for(var t={x:0,y:0},n=0;n<e.length;n++)t.x+=e[n].x,t.y+=e[n].y;return o.div(t,e.length)},i.area=function(e,t){for(var n=0,i=e.length-1,o=0;o<e.length;o++)n+=(e[i].x-e[o].x)*(e[i].y+e[o].y),i=o;return t?n/2:Math.abs(n)/2},i.inertia=function(e,t){for(var n,i,r=0,s=0,a=e,l=0;l<a.length;l++)i=(l+1)%a.length,r+=(n=Math.abs(o.cross(a[i],a[l])))*(o.dot(a[i],a[i])+o.dot(a[i],a[l])+o.dot(a[l],a[l])),s+=n;return t/6*(r/s)},i.translate=function(e,t,n){var i;if(n)for(i=0;i<e.length;i++)e[i].x+=t.x*n,e[i].y+=t.y*n;else for(i=0;i<e.length;i++)e[i].x+=t.x,e[i].y+=t.y;return e},i.rotate=function(e,t,n){if(0!==t){for(var i=Math.cos(t),o=Math.sin(t),r=0;r<e.length;r++){var s=e[r],a=s.x-n.x,l=s.y-n.y;s.x=n.x+(a*i-l*o),s.y=n.y+(a*o+l*i)}return e}},i.contains=function(e,t){for(var n=0;n<e.length;n++){var i=e[n],o=e[(n+1)%e.length];if((t.x-i.x)*(o.y-i.y)+(t.y-i.y)*(i.x-o.x)>0)return!1}return!0},i.scale=function(e,t,n,r){if(1===t&&1===n)return e;var s,a;r=r||i.centre(e);for(var l=0;l<e.length;l++)s=e[l],a=o.sub(s,r),e[l].x=r.x+a.x*t,e[l].y=r.y+a.y*n;return e},i.chamfer=function(e,t,n,i,s){t="number"==typeof t?[t]:t||[8],n=void 0!==n?n:-1,i=i||2,s=s||14;for(var a=[],l=0;l<e.length;l++){var c=e[l-1>=0?l-1:e.length-1],d=e[l],u=e[(l+1)%e.length],p=t[l<t.length?l:t.length-1];if(0!==p){var f=o.normalise({x:d.y-c.y,y:c.x-d.x}),v=o.normalise({x:u.y-d.y,y:d.x-u.x}),m=Math.sqrt(2*Math.pow(p,2)),y=o.mult(r.clone(f),p),g=o.normalise(o.mult(o.add(f,v),.5)),x=o.sub(d,o.mult(g,m)),h=n;-1===n&&(h=1.75*Math.pow(p,.32)),(h=r.clamp(h,i,s))%2==1&&(h+=1);for(var b=Math.acos(o.dot(f,v))/h,w=0;w<h;w++)a.push(o.add(o.rotate(y,b*w),x))}else a.push(d)}return a},i.clockwiseSort=function(e){var t=i.mean(e);return e.sort((function(e,n){return o.angle(t,e)-o.angle(t,n)})),e},i.isConvex=function(e){var t,n,i,o,r=0,s=e.length;if(s<3)return null;for(t=0;t<s;t++)if(i=(t+2)%s,o=(e[n=(t+1)%s].x-e[t].x)*(e[i].y-e[n].y),(o-=(e[n].y-e[t].y)*(e[i].x-e[n].x))<0?r|=1:o>0&&(r|=2),3===r)return!1;return 0!==r||null},i.hull=function(e){var t,n,i=[],r=[];for((e=e.slice(0)).sort((function(e,t){var n=e.x-t.x;return 0!==n?n:e.y-t.y})),n=0;n<e.length;n+=1){for(t=e[n];r.length>=2&&o.cross3(r[r.length-2],r[r.length-1],t)<=0;)r.pop();r.push(t)}for(n=e.length-1;n>=0;n-=1){for(t=e[n];i.length>=2&&o.cross3(i[i.length-2],i[i.length-1],t)<=0;)i.pop();i.push(t)}return i.pop(),r.pop(),i.concat(r)}},function(e,t,n){var i={};e.exports=i;var o=n(0);i.on=function(e,t,n){for(var i,o=t.split(" "),r=0;r<o.length;r++)i=o[r],e.events=e.events||{},e.events[i]=e.events[i]||[],e.events[i].push(n);return n},i.off=function(e,t,n){if(t){"function"==typeof t&&(n=t,t=o.keys(e.events).join(" "));for(var i=t.split(" "),r=0;r<i.length;r++){var s=e.events[i[r]],a=[];if(n&&s)for(var l=0;l<s.length;l++)s[l]!==n&&a.push(s[l]);e.events[i[r]]=a}}else e.events={}},i.trigger=function(e,t,n){var i,r,s,a,l=e.events;if(l&&o.keys(l).length>0){n||(n={}),i=t.split(" ");for(var c=0;c<i.length;c++)if(s=l[r=i[c]]){(a=o.clone(n,!1)).name=r,a.source=e;for(var d=0;d<s.length;d++)s[d].apply(e,[a])}}}},function(e,t,n){var i={};e.exports=i;var o=n(4),r=n(0),s=n(1),a=n(6);i.create=function(e){return r.extend({id:r.nextId(),type:"composite",parent:null,isModified:!1,bodies:[],constraints:[],composites:[],label:"Composite",plugin:{}},e)},i.setModified=function(e,t,n,o){if(e.isModified=t,n&&e.parent&&i.setModified(e.parent,t,n,o),o)for(var r=0;r<e.composites.length;r++){var s=e.composites[r];i.setModified(s,t,n,o)}},i.add=function(e,t){var n=[].concat(t);o.trigger(e,"beforeAdd",{object:t});for(var s=0;s<n.length;s++){var a=n[s];switch(a.type){case"body":if(a.parent!==a){r.warn("Composite.add: skipped adding a compound body part (you must add its parent instead)");break}i.addBody(e,a);break;case"constraint":i.addConstraint(e,a);break;case"composite":i.addComposite(e,a);break;case"mouseConstraint":i.addConstraint(e,a.constraint)}}return o.trigger(e,"afterAdd",{object:t}),e},i.remove=function(e,t,n){var r=[].concat(t);o.trigger(e,"beforeRemove",{object:t});for(var s=0;s<r.length;s++){var a=r[s];switch(a.type){case"body":i.removeBody(e,a,n);break;case"constraint":i.removeConstraint(e,a,n);break;case"composite":i.removeComposite(e,a,n);break;case"mouseConstraint":i.removeConstraint(e,a.constraint)}}return o.trigger(e,"afterRemove",{object:t}),e},i.addComposite=function(e,t){return e.composites.push(t),t.parent=e,i.setModified(e,!0,!0,!1),e},i.removeComposite=function(e,t,n){var o=r.indexOf(e.composites,t);if(-1!==o&&(i.removeCompositeAt(e,o),i.setModified(e,!0,!0,!1)),n)for(var s=0;s<e.composites.length;s++)i.removeComposite(e.composites[s],t,!0);return e},i.removeCompositeAt=function(e,t){return e.composites.splice(t,1),i.setModified(e,!0,!0,!1),e},i.addBody=function(e,t){return e.bodies.push(t),i.setModified(e,!0,!0,!1),e},i.removeBody=function(e,t,n){var o=r.indexOf(e.bodies,t);if(-1!==o&&(i.removeBodyAt(e,o),i.setModified(e,!0,!0,!1)),n)for(var s=0;s<e.composites.length;s++)i.removeBody(e.composites[s],t,!0);return e},i.removeBodyAt=function(e,t){return e.bodies.splice(t,1),i.setModified(e,!0,!0,!1),e},i.addConstraint=function(e,t){return e.constraints.push(t),i.setModified(e,!0,!0,!1),e},i.removeConstraint=function(e,t,n){var o=r.indexOf(e.constraints,t);if(-1!==o&&i.removeConstraintAt(e,o),n)for(var s=0;s<e.composites.length;s++)i.removeConstraint(e.composites[s],t,!0);return e},i.removeConstraintAt=function(e,t){return e.constraints.splice(t,1),i.setModified(e,!0,!0,!1),e},i.clear=function(e,t,n){if(n)for(var o=0;o<e.composites.length;o++)i.clear(e.composites[o],t,!0);return t?e.bodies=e.bodies.filter((function(e){return e.isStatic})):e.bodies.length=0,e.constraints.length=0,e.composites.length=0,i.setModified(e,!0,!0,!1),e},i.allBodies=function(e){for(var t=[].concat(e.bodies),n=0;n<e.composites.length;n++)t=t.concat(i.allBodies(e.composites[n]));return t},i.allConstraints=function(e){for(var t=[].concat(e.constraints),n=0;n<e.composites.length;n++)t=t.concat(i.allConstraints(e.composites[n]));return t},i.allComposites=function(e){for(var t=[].concat(e.composites),n=0;n<e.composites.length;n++)t=t.concat(i.allComposites(e.composites[n]));return t},i.get=function(e,t,n){var o,r;switch(n){case"body":o=i.allBodies(e);break;case"constraint":o=i.allConstraints(e);break;case"composite":o=i.allComposites(e).concat(e)}return o?0===(r=o.filter((function(e){return e.id.toString()===t.toString()}))).length?null:r[0]:null},i.move=function(e,t,n){return i.remove(e,t),i.add(n,t),e},i.rebase=function(e){for(var t=i.allBodies(e).concat(i.allConstraints(e)).concat(i.allComposites(e)),n=0;n<t.length;n++)t[n].id=r.nextId();return i.setModified(e,!0,!0,!1),e},i.translate=function(e,t,n){for(var o=n?i.allBodies(e):e.bodies,r=0;r<o.length;r++)a.translate(o[r],t);return i.setModified(e,!0,!0,!1),e},i.rotate=function(e,t,n,o){for(var r=Math.cos(t),s=Math.sin(t),l=o?i.allBodies(e):e.bodies,c=0;c<l.length;c++){var d=l[c],u=d.position.x-n.x,p=d.position.y-n.y;a.setPosition(d,{x:n.x+(u*r-p*s),y:n.y+(u*s+p*r)}),a.rotate(d,t)}return i.setModified(e,!0,!0,!1),e},i.scale=function(e,t,n,o,r){for(var s=r?i.allBodies(e):e.bodies,l=0;l<s.length;l++){var c=s[l],d=c.position.x-o.x,u=c.position.y-o.y;a.setPosition(c,{x:o.x+d*t,y:o.y+u*n}),a.scale(c,t,n)}return i.setModified(e,!0,!0,!1),e},i.bounds=function(e){for(var t=i.allBodies(e),n=[],o=0;o<t.length;o+=1){var r=t[o];n.push(r.bounds.min,r.bounds.max)}return s.create(n)}},function(e,t,n){var i={};e.exports=i;var o=n(3),r=n(2),s=n(7),a=(n(10),n(0)),l=n(1),c=n(15);!function(){i._inertiaScale=4,i._nextCollidingGroupId=1,i._nextNonCollidingGroupId=-1,i._nextCategory=1,i.create=function(t){var n={id:a.nextId(),type:"body",label:"Body",parts:[],plugin:{},angle:0,vertices:o.fromPath("L 0 0 L 40 0 L 40 40 L 0 40"),position:{x:0,y:0},force:{x:0,y:0},torque:0,positionImpulse:{x:0,y:0},constraintImpulse:{x:0,y:0,angle:0},totalContacts:0,speed:0,angularSpeed:0,velocity:{x:0,y:0},angularVelocity:0,isSensor:!1,isStatic:!1,isSleeping:!1,motion:0,sleepThreshold:60,density:.001,restitution:0,friction:.1,frictionStatic:.5,frictionAir:.01,collisionFilter:{category:1,mask:4294967295,group:0},slop:.05,timeScale:1,render:{visible:!0,opacity:1,strokeStyle:null,fillStyle:null,lineWidth:null,sprite:{xScale:1,yScale:1,xOffset:0,yOffset:0}},events:null,bounds:null,chamfer:null,circleRadius:0,positionPrev:null,anglePrev:0,parent:null,axes:null,area:0,mass:0,inertia:0,_original:null},i=a.extend(n,t);return e(i,t),i},i.nextGroup=function(e){return e?i._nextNonCollidingGroupId--:i._nextCollidingGroupId++},i.nextCategory=function(){return i._nextCategory=i._nextCategory<<1,i._nextCategory};var e=function(e,t){t=t||{},i.set(e,{bounds:e.bounds||l.create(e.vertices),positionPrev:e.positionPrev||r.clone(e.position),anglePrev:e.anglePrev||e.angle,vertices:e.vertices,parts:e.parts||[e],isStatic:e.isStatic,isSleeping:e.isSleeping,parent:e.parent||e}),o.rotate(e.vertices,e.angle,e.position),c.rotate(e.axes,e.angle),l.update(e.bounds,e.vertices,e.velocity),i.set(e,{axes:t.axes||e.axes,area:t.area||e.area,mass:t.mass||e.mass,inertia:t.inertia||e.inertia});var n=e.isStatic?"#14151f":a.choose(["#f19648","#f5d259","#f55a3c","#063e7b","#ececd1"]),s=e.isStatic?"#555":"#ccc",d=e.isStatic&&null===e.render.fillStyle?1:0;e.render.fillStyle=e.render.fillStyle||n,e.render.strokeStyle=e.render.strokeStyle||s,e.render.lineWidth=e.render.lineWidth||d,e.render.sprite.xOffset+=-(e.bounds.min.x-e.position.x)/(e.bounds.max.x-e.bounds.min.x),e.render.sprite.yOffset+=-(e.bounds.min.y-e.position.y)/(e.bounds.max.y-e.bounds.min.y)};i.set=function(e,t,n){var o;for(o in"string"==typeof t&&(o=t,(t={})[o]=n),t)if(Object.prototype.hasOwnProperty.call(t,o))switch(n=t[o],o){case"isStatic":i.setStatic(e,n);break;case"isSleeping":s.set(e,n);break;case"mass":i.setMass(e,n);break;case"density":i.setDensity(e,n);break;case"inertia":i.setInertia(e,n);break;case"vertices":i.setVertices(e,n);break;case"position":i.setPosition(e,n);break;case"angle":i.setAngle(e,n);break;case"velocity":i.setVelocity(e,n);break;case"angularVelocity":i.setAngularVelocity(e,n);break;case"parts":i.setParts(e,n);break;case"centre":i.setCentre(e,n);break;default:e[o]=n}},i.setStatic=function(e,t){for(var n=0;n<e.parts.length;n++){var i=e.parts[n];i.isStatic=t,t?(i._original={restitution:i.restitution,friction:i.friction,mass:i.mass,inertia:i.inertia,density:i.density,inverseMass:i.inverseMass,inverseInertia:i.inverseInertia},i.restitution=0,i.friction=1,i.mass=i.inertia=i.density=1/0,i.inverseMass=i.inverseInertia=0,i.positionPrev.x=i.position.x,i.positionPrev.y=i.position.y,i.anglePrev=i.angle,i.angularVelocity=0,i.speed=0,i.angularSpeed=0,i.motion=0):i._original&&(i.restitution=i._original.restitution,i.friction=i._original.friction,i.mass=i._original.mass,i.inertia=i._original.inertia,i.density=i._original.density,i.inverseMass=i._original.inverseMass,i.inverseInertia=i._original.inverseInertia,i._original=null)}},i.setMass=function(e,t){var n=e.inertia/(e.mass/6);e.inertia=n*(t/6),e.inverseInertia=1/e.inertia,e.mass=t,e.inverseMass=1/e.mass,e.density=e.mass/e.area},i.setDensity=function(e,t){i.setMass(e,t*e.area),e.density=t},i.setInertia=function(e,t){e.inertia=t,e.inverseInertia=1/e.inertia},i.setVertices=function(e,t){t[0].body===e?e.vertices=t:e.vertices=o.create(t,e),e.axes=c.fromVertices(e.vertices),e.area=o.area(e.vertices),i.setMass(e,e.density*e.area);var n=o.centre(e.vertices);o.translate(e.vertices,n,-1),i.setInertia(e,i._inertiaScale*o.inertia(e.vertices,e.mass)),o.translate(e.vertices,e.position),l.update(e.bounds,e.vertices,e.velocity)},i.setParts=function(e,t,n){var r;for(t=t.slice(0),e.parts.length=0,e.parts.push(e),e.parent=e,r=0;r<t.length;r++){var s=t[r];s!==e&&(s.parent=e,e.parts.push(s))}if(1!==e.parts.length){if(n=void 0===n||n){var a=[];for(r=0;r<t.length;r++)a=a.concat(t[r].vertices);o.clockwiseSort(a);var l=o.hull(a),c=o.centre(l);i.setVertices(e,l),o.translate(e.vertices,c)}var d=i._totalProperties(e);e.area=d.area,e.parent=e,e.position.x=d.centre.x,e.position.y=d.centre.y,e.positionPrev.x=d.centre.x,e.positionPrev.y=d.centre.y,i.setMass(e,d.mass),i.setInertia(e,d.inertia),i.setPosition(e,d.centre)}},i.setCentre=function(e,t,n){n?(e.positionPrev.x+=t.x,e.positionPrev.y+=t.y,e.position.x+=t.x,e.position.y+=t.y):(e.positionPrev.x=t.x-(e.position.x-e.positionPrev.x),e.positionPrev.y=t.y-(e.position.y-e.positionPrev.y),e.position.x=t.x,e.position.y=t.y)},i.setPosition=function(e,t){var n=r.sub(t,e.position);e.positionPrev.x+=n.x,e.positionPrev.y+=n.y;for(var i=0;i<e.parts.length;i++){var s=e.parts[i];s.position.x+=n.x,s.position.y+=n.y,o.translate(s.vertices,n),l.update(s.bounds,s.vertices,e.velocity)}},i.setAngle=function(e,t){var n=t-e.angle;e.anglePrev+=n;for(var i=0;i<e.parts.length;i++){var s=e.parts[i];s.angle+=n,o.rotate(s.vertices,n,e.position),c.rotate(s.axes,n),l.update(s.bounds,s.vertices,e.velocity),i>0&&r.rotateAbout(s.position,n,e.position,s.position)}},i.setVelocity=function(e,t){e.positionPrev.x=e.position.x-t.x,e.positionPrev.y=e.position.y-t.y,e.velocity.x=t.x,e.velocity.y=t.y,e.speed=r.magnitude(e.velocity)},i.setAngularVelocity=function(e,t){e.anglePrev=e.angle-t,e.angularVelocity=t,e.angularSpeed=Math.abs(e.angularVelocity)},i.translate=function(e,t){i.setPosition(e,r.add(e.position,t))},i.rotate=function(e,t,n){if(n){var o=Math.cos(t),r=Math.sin(t),s=e.position.x-n.x,a=e.position.y-n.y;i.setPosition(e,{x:n.x+(s*o-a*r),y:n.y+(s*r+a*o)}),i.setAngle(e,e.angle+t)}else i.setAngle(e,e.angle+t)},i.scale=function(e,t,n,r){var s=0,a=0;r=r||e.position;for(var d=0;d<e.parts.length;d++){var u=e.parts[d];o.scale(u.vertices,t,n,r),u.axes=c.fromVertices(u.vertices),u.area=o.area(u.vertices),i.setMass(u,e.density*u.area),o.translate(u.vertices,{x:-u.position.x,y:-u.position.y}),i.setInertia(u,i._inertiaScale*o.inertia(u.vertices,u.mass)),o.translate(u.vertices,{x:u.position.x,y:u.position.y}),d>0&&(s+=u.area,a+=u.inertia),u.position.x=r.x+(u.position.x-r.x)*t,u.position.y=r.y+(u.position.y-r.y)*n,l.update(u.bounds,u.vertices,e.velocity)}e.parts.length>1&&(e.area=s,e.isStatic||(i.setMass(e,e.density*s),i.setInertia(e,a))),e.circleRadius&&(t===n?e.circleRadius*=t:e.circleRadius=null)},i.update=function(e,t,n,i){var s=Math.pow(t*n*e.timeScale,2),a=1-e.frictionAir*n*e.timeScale,d=e.position.x-e.positionPrev.x,u=e.position.y-e.positionPrev.y;e.velocity.x=d*a*i+e.force.x/e.mass*s,e.velocity.y=u*a*i+e.force.y/e.mass*s,e.positionPrev.x=e.position.x,e.positionPrev.y=e.position.y,e.position.x+=e.velocity.x,e.position.y+=e.velocity.y,e.angularVelocity=(e.angle-e.anglePrev)*a*i+e.torque/e.inertia*s,e.anglePrev=e.angle,e.angle+=e.angularVelocity,e.speed=r.magnitude(e.velocity),e.angularSpeed=Math.abs(e.angularVelocity);for(var p=0;p<e.parts.length;p++){var f=e.parts[p];o.translate(f.vertices,e.velocity),p>0&&(f.position.x+=e.velocity.x,f.position.y+=e.velocity.y),0!==e.angularVelocity&&(o.rotate(f.vertices,e.angularVelocity,e.position),c.rotate(f.axes,e.angularVelocity),p>0&&r.rotateAbout(f.position,e.angularVelocity,e.position,f.position)),l.update(f.bounds,f.vertices,e.velocity)}},i.applyForce=function(e,t,n){e.force.x+=n.x,e.force.y+=n.y;var i=t.x-e.position.x,o=t.y-e.position.y;e.torque+=i*n.y-o*n.x},i._totalProperties=function(e){for(var t={mass:0,area:0,inertia:0,centre:{x:0,y:0}},n=1===e.parts.length?0:1;n<e.parts.length;n++){var i=e.parts[n],o=i.mass!==1/0?i.mass:1;t.mass+=o,t.area+=i.area,t.inertia+=i.inertia,t.centre=r.add(t.centre,r.mult(i.position,o))}return t.centre=r.div(t.centre,t.mass),t}}()},function(e,t,n){var i={};e.exports=i;var o=n(4);i._motionWakeThreshold=.18,i._motionSleepThreshold=.08,i._minBias=.9,i.update=function(e,t){for(var n=t*t*t,o=0;o<e.length;o++){var r=e[o],s=r.speed*r.speed+r.angularSpeed*r.angularSpeed;if(0===r.force.x&&0===r.force.y){var a=Math.min(r.motion,s),l=Math.max(r.motion,s);r.motion=i._minBias*a+(1-i._minBias)*l,r.sleepThreshold>0&&r.motion<i._motionSleepThreshold*n?(r.sleepCounter+=1,r.sleepCounter>=r.sleepThreshold&&i.set(r,!0)):r.sleepCounter>0&&(r.sleepCounter-=1)}else i.set(r,!1)}},i.afterCollisions=function(e,t){for(var n=t*t*t,o=0;o<e.length;o++){var r=e[o];if(r.isActive){var s=r.collision,a=s.bodyA.parent,l=s.bodyB.parent;if(!(a.isSleeping&&l.isSleeping||a.isStatic||l.isStatic)&&(a.isSleeping||l.isSleeping)){var c=a.isSleeping&&!a.isStatic?a:l,d=c===a?l:a;!c.isStatic&&d.motion>i._motionWakeThreshold*n&&i.set(c,!1)}}}},i.set=function(e,t){var n=e.isSleeping;t?(e.isSleeping=!0,e.sleepCounter=e.sleepThreshold,e.positionImpulse.x=0,e.positionImpulse.y=0,e.positionPrev.x=e.position.x,e.positionPrev.y=e.position.y,e.anglePrev=e.angle,e.speed=0,e.angularSpeed=0,e.motion=0,n||o.trigger(e,"sleepStart")):(e.isSleeping=!1,e.sleepCounter=0,n&&o.trigger(e,"sleepEnd"))}},function(e,t,n){var i={};e.exports=i;var o=n(3),r=n(2),s=n(7),a=n(1),l=n(15),c=n(0);i._warming=.4,i._torqueDampen=1,i._minLength=1e-6,i.create=function(e){var t=e;t.bodyA&&!t.pointA&&(t.pointA={x:0,y:0}),t.bodyB&&!t.pointB&&(t.pointB={x:0,y:0});var n=t.bodyA?r.add(t.bodyA.position,t.pointA):t.pointA,i=t.bodyB?r.add(t.bodyB.position,t.pointB):t.pointB,o=r.magnitude(r.sub(n,i));t.length=void 0!==t.length?t.length:o,t.id=t.id||c.nextId(),t.label=t.label||"Constraint",t.type="constraint",t.stiffness=t.stiffness||(t.length>0?1:.7),t.damping=t.damping||0,t.angularStiffness=t.angularStiffness||0,t.angleA=t.bodyA?t.bodyA.angle:t.angleA,t.angleB=t.bodyB?t.bodyB.angle:t.angleB,t.plugin={};var s={visible:!0,lineWidth:2,strokeStyle:"#ffffff",type:"line",anchors:!0};return 0===t.length&&t.stiffness>.1?(s.type="pin",s.anchors=!1):t.stiffness<.9&&(s.type="spring"),t.render=c.extend(s,t.render),t},i.preSolveAll=function(e){for(var t=0;t<e.length;t+=1){var n=e[t],i=n.constraintImpulse;n.isStatic||0===i.x&&0===i.y&&0===i.angle||(n.position.x+=i.x,n.position.y+=i.y,n.angle+=i.angle)}},i.solveAll=function(e,t){for(var n=0;n<e.length;n+=1){var o=e[n],r=!o.bodyA||o.bodyA&&o.bodyA.isStatic,s=!o.bodyB||o.bodyB&&o.bodyB.isStatic;(r||s)&&i.solve(e[n],t)}for(n=0;n<e.length;n+=1)r=!(o=e[n]).bodyA||o.bodyA&&o.bodyA.isStatic,s=!o.bodyB||o.bodyB&&o.bodyB.isStatic,r||s||i.solve(e[n],t)},i.solve=function(e,t){var n=e.bodyA,o=e.bodyB,s=e.pointA,a=e.pointB;if(n||o){n&&!n.isStatic&&(r.rotate(s,n.angle-e.angleA,s),e.angleA=n.angle),o&&!o.isStatic&&(r.rotate(a,o.angle-e.angleB,a),e.angleB=o.angle);var l=s,c=a;if(n&&(l=r.add(n.position,s)),o&&(c=r.add(o.position,a)),l&&c){var d=r.sub(l,c),u=r.magnitude(d);u<i._minLength&&(u=i._minLength);var p,f,v,m,y,g=(u-e.length)/u,x=e.stiffness<1?e.stiffness*t:e.stiffness,h=r.mult(d,g*x),b=(n?n.inverseMass:0)+(o?o.inverseMass:0),w=b+((n?n.inverseInertia:0)+(o?o.inverseInertia:0));if(e.damping){var S=r.create();v=r.div(d,u),y=r.sub(o&&r.sub(o.position,o.positionPrev)||S,n&&r.sub(n.position,n.positionPrev)||S),m=r.dot(v,y)}n&&!n.isStatic&&(f=n.inverseMass/b,n.constraintImpulse.x-=h.x*f,n.constraintImpulse.y-=h.y*f,n.position.x-=h.x*f,n.position.y-=h.y*f,e.damping&&(n.positionPrev.x-=e.damping*v.x*m*f,n.positionPrev.y-=e.damping*v.y*m*f),p=r.cross(s,h)/w*i._torqueDampen*n.inverseInertia*(1-e.angularStiffness),n.constraintImpulse.angle-=p,n.angle-=p),o&&!o.isStatic&&(f=o.inverseMass/b,o.constraintImpulse.x+=h.x*f,o.constraintImpulse.y+=h.y*f,o.position.x+=h.x*f,o.position.y+=h.y*f,e.damping&&(o.positionPrev.x+=e.damping*v.x*m*f,o.positionPrev.y+=e.damping*v.y*m*f),p=r.cross(a,h)/w*i._torqueDampen*o.inverseInertia*(1-e.angularStiffness),o.constraintImpulse.angle+=p,o.angle+=p)}}},i.postSolveAll=function(e){for(var t=0;t<e.length;t++){var n=e[t],c=n.constraintImpulse;if(!(n.isStatic||0===c.x&&0===c.y&&0===c.angle)){s.set(n,!1);for(var d=0;d<n.parts.length;d++){var u=n.parts[d];o.translate(u.vertices,c),d>0&&(u.position.x+=c.x,u.position.y+=c.y),0!==c.angle&&(o.rotate(u.vertices,c.angle,n.position),l.rotate(u.axes,c.angle),d>0&&r.rotateAbout(u.position,c.angle,n.position,u.position)),a.update(u.bounds,u.vertices,n.velocity)}c.angle*=i._warming,c.x*=i._warming,c.y*=i._warming}}},i.pointAWorld=function(e){return{x:(e.bodyA?e.bodyA.position.x:0)+e.pointA.x,y:(e.bodyA?e.bodyA.position.y:0)+e.pointA.y}},i.pointBWorld=function(e){return{x:(e.bodyB?e.bodyB.position.x:0)+e.pointB.x,y:(e.bodyB?e.bodyB.position.y:0)+e.pointB.y}}},function(e,t,n){var i={};e.exports=i;var o=n(18);i.create=function(e,t){var n=e.bodyA,o=e.bodyB,r=e.parentA,s=e.parentB,a={id:i.id(n,o),bodyA:n,bodyB:o,contacts:{},activeContacts:[],separation:0,isActive:!0,confirmedActive:!0,isSensor:n.isSensor||o.isSensor,timeCreated:t,timeUpdated:t,inverseMass:r.inverseMass+s.inverseMass,friction:Math.min(r.friction,s.friction),frictionStatic:Math.max(r.frictionStatic,s.frictionStatic),restitution:Math.max(r.restitution,s.restitution),slop:Math.max(r.slop,s.slop)};return i.update(a,e,t),a},i.update=function(e,t,n){var r=e.contacts,s=t.supports,a=e.activeContacts,l=t.parentA,c=t.parentB;if(e.collision=t,e.inverseMass=l.inverseMass+c.inverseMass,e.friction=Math.min(l.friction,c.friction),e.frictionStatic=Math.max(l.frictionStatic,c.frictionStatic),e.restitution=Math.max(l.restitution,c.restitution),e.slop=Math.max(l.slop,c.slop),a.length=0,t.collided){for(var d=0;d<s.length;d++){var u=s[d],p=o.id(u),f=r[p];f?a.push(f):a.push(r[p]=o.create(u))}e.separation=t.depth,i.setActive(e,!0,n)}else!0===e.isActive&&i.setActive(e,!1,n)},i.setActive=function(e,t,n){t?(e.isActive=!0,e.timeUpdated=n):(e.isActive=!1,e.activeContacts.length=0)},i.id=function(e,t){return e.id<t.id?"A"+e.id+"B"+t.id:"A"+t.id+"B"+e.id}},function(e,t,n){var i={};e.exports=i;var o=n(0),r=n(5),s=n(1),a=n(4),l=n(11),c=n(2),d=n(14);!function(){var e,t;"undefined"!=typeof window&&(e=window.requestAnimationFrame||window.webkitRequestAnimationFrame||window.mozRequestAnimationFrame||window.msRequestAnimationFrame||function(e){window.setTimeout((function(){e(o.now())}),1e3/60)},t=window.cancelAnimationFrame||window.mozCancelAnimationFrame||window.webkitCancelAnimationFrame||window.msCancelAnimationFrame),i.create=function(e){var t={controller:i,engine:null,element:null,canvas:null,mouse:null,frameRequestId:null,options:{width:800,height:600,pixelRatio:1,background:"#14151f",wireframeBackground:"#14151f",hasBounds:!!e.bounds,enabled:!0,wireframes:!0,showSleeping:!0,showDebug:!1,showBroadphase:!1,showBounds:!1,showVelocity:!1,showCollisions:!1,showSeparations:!1,showAxes:!1,showPositions:!1,showAngleIndicator:!1,showIds:!1,showShadows:!1,showVertexNumbers:!1,showConvexHulls:!1,showInternalEdges:!1,showMousePosition:!1}},r=o.extend(t,e);return r.canvas&&(r.canvas.width=r.options.width||r.canvas.width,r.canvas.height=r.options.height||r.canvas.height),r.mouse=e.mouse,r.engine=e.engine,r.canvas=r.canvas||n(r.options.width,r.options.height),r.context=r.canvas.getContext("2d"),r.textures={},r.bounds=r.bounds||{min:{x:0,y:0},max:{x:r.canvas.width,y:r.canvas.height}},1!==r.options.pixelRatio&&i.setPixelRatio(r,r.options.pixelRatio),o.isElement(r.element)?r.element.appendChild(r.canvas):r.canvas.parentNode||o.log("Render.create: options.element was undefined, render.canvas was created but not appended","warn"),r},i.run=function(t){!function n(o){t.frameRequestId=e(n),i.world(t)}()},i.stop=function(e){t(e.frameRequestId)},i.setPixelRatio=function(e,t){var n=e.options,i=e.canvas;"auto"===t&&(t=u(i)),n.pixelRatio=t,i.setAttribute("data-pixel-ratio",t),i.width=n.width*t,i.height=n.height*t,i.style.width=n.width+"px",i.style.height=n.height+"px"},i.lookAt=function(e,t,n,i){i=void 0===i||i,t=o.isArray(t)?t:[t],n=n||{x:0,y:0};for(var r={min:{x:1/0,y:1/0},max:{x:-1/0,y:-1/0}},s=0;s<t.length;s+=1){var a=t[s],l=a.bounds?a.bounds.min:a.min||a.position||a,c=a.bounds?a.bounds.max:a.max||a.position||a;l&&c&&(l.x<r.min.x&&(r.min.x=l.x),c.x>r.max.x&&(r.max.x=c.x),l.y<r.min.y&&(r.min.y=l.y),c.y>r.max.y&&(r.max.y=c.y))}var u=r.max.x-r.min.x+2*n.x,p=r.max.y-r.min.y+2*n.y,f=e.canvas.height,v=e.canvas.width/f,m=u/p,y=1,g=1;m>v?g=m/v:y=v/m,e.options.hasBounds=!0,e.bounds.min.x=r.min.x,e.bounds.max.x=r.min.x+u*y,e.bounds.min.y=r.min.y,e.bounds.max.y=r.min.y+p*g,i&&(e.bounds.min.x+=.5*u-u*y*.5,e.bounds.max.x+=.5*u-u*y*.5,e.bounds.min.y+=.5*p-p*g*.5,e.bounds.max.y+=.5*p-p*g*.5),e.bounds.min.x-=n.x,e.bounds.max.x-=n.x,e.bounds.min.y-=n.y,e.bounds.max.y-=n.y,e.mouse&&(d.setScale(e.mouse,{x:(e.bounds.max.x-e.bounds.min.x)/e.canvas.width,y:(e.bounds.max.y-e.bounds.min.y)/e.canvas.height}),d.setOffset(e.mouse,e.bounds.min))},i.startViewTransform=function(e){var t=e.bounds.max.x-e.bounds.min.x,n=e.bounds.max.y-e.bounds.min.y,i=t/e.options.width,o=n/e.options.height;e.context.setTransform(e.options.pixelRatio/i,0,0,e.options.pixelRatio/o,0,0),e.context.translate(-e.bounds.min.x,-e.bounds.min.y)},i.endViewTransform=function(e){e.context.setTransform(e.options.pixelRatio,0,0,e.options.pixelRatio,0,0)},i.world=function(e){var t,n=e.engine,o=n.world,u=e.canvas,p=e.context,v=e.options,m=r.allBodies(o),y=r.allConstraints(o),g=v.wireframes?v.wireframeBackground:v.background,x=[],h=[],b={timestamp:n.timing.timestamp};if(a.trigger(e,"beforeRender",b),e.currentBackground!==g&&f(e,g),p.globalCompositeOperation="source-in",p.fillStyle="transparent",p.fillRect(0,0,u.width,u.height),p.globalCompositeOperation="source-over",v.hasBounds){for(t=0;t<m.length;t++){var w=m[t];s.overlaps(w.bounds,e.bounds)&&x.push(w)}for(t=0;t<y.length;t++){var S=y[t],A=S.bodyA,P=S.bodyB,C=S.pointA,M=S.pointB;A&&(C=c.add(A.position,S.pointA)),P&&(M=c.add(P.position,S.pointB)),C&&M&&((s.contains(e.bounds,C)||s.contains(e.bounds,M))&&h.push(S))}i.startViewTransform(e),e.mouse&&(d.setScale(e.mouse,{x:(e.bounds.max.x-e.bounds.min.x)/e.options.width,y:(e.bounds.max.y-e.bounds.min.y)/e.options.height}),d.setOffset(e.mouse,e.bounds.min))}else h=y,x=m,1!==e.options.pixelRatio&&e.context.setTransform(e.options.pixelRatio,0,0,e.options.pixelRatio,0,0);!v.wireframes||n.enableSleeping&&v.showSleeping?i.bodies(e,x,p):(v.showConvexHulls&&i.bodyConvexHulls(e,x,p),i.bodyWireframes(e,x,p)),v.showBounds&&i.bodyBounds(e,x,p),(v.showAxes||v.showAngleIndicator)&&i.bodyAxes(e,x,p),v.showPositions&&i.bodyPositions(e,x,p),v.showVelocity&&i.bodyVelocity(e,x,p),v.showIds&&i.bodyIds(e,x,p),v.showSeparations&&i.separations(e,n.pairs.list,p),v.showCollisions&&i.collisions(e,n.pairs.list,p),v.showVertexNumbers&&i.vertexNumbers(e,x,p),v.showMousePosition&&i.mousePosition(e,e.mouse,p),i.constraints(h,p),v.showBroadphase&&n.broadphase.controller===l&&i.grid(e,n.broadphase,p),v.showDebug&&i.debug(e,p),v.hasBounds&&i.endViewTransform(e),a.trigger(e,"afterRender",b)},i.debug=function(e,t){var n=t,i=e.engine,o=i.world,s=i.metrics,a=e.options,c=r.allBodies(o);if(i.timing.timestamp-(e.debugTimestamp||0)>=500){var d="";s.timing&&(d+="fps: "+Math.round(s.timing.fps)+"    "),s.extended&&(s.timing&&(d+="delta: "+s.timing.delta.toFixed(3)+"    ",d+="correction: "+s.timing.correction.toFixed(3)+"    "),d+="bodies: "+c.length+"    ",i.broadphase.controller===l&&(d+="buckets: "+s.buckets+"    "),d+="\n",d+="collisions: "+s.collisions+"    ",d+="pairs: "+i.pairs.list.length+"    ",d+="broad: "+s.broadEff+"    ",d+="mid: "+s.midEff+"    ",d+="narrow: "+s.narrowEff+"    "),e.debugString=d,e.debugTimestamp=i.timing.timestamp}if(e.debugString){n.font="12px Arial",a.wireframes?n.fillStyle="rgba(255,255,255,0.5)":n.fillStyle="rgba(0,0,0,0.5)";for(var u=e.debugString.split("\n"),p=0;p<u.length;p++)n.fillText(u[p],50,50+18*p)}},i.constraints=function(e,t){for(var n=t,i=0;i<e.length;i++){var r=e[i];if(r.render.visible&&r.pointA&&r.pointB){var s,a,l=r.bodyA,d=r.bodyB;if(s=l?c.add(l.position,r.pointA):r.pointA,"pin"===r.render.type)n.beginPath(),n.arc(s.x,s.y,3,0,2*Math.PI),n.closePath();else{if(a=d?c.add(d.position,r.pointB):r.pointB,n.beginPath(),n.moveTo(s.x,s.y),"spring"===r.render.type)for(var u,p=c.sub(a,s),f=c.perp(c.normalise(p)),v=Math.ceil(o.clamp(r.length/5,12,20)),m=1;m<v;m+=1)u=m%2==0?1:-1,n.lineTo(s.x+p.x*(m/v)+f.x*u*4,s.y+p.y*(m/v)+f.y*u*4);n.lineTo(a.x,a.y)}r.render.lineWidth&&(n.lineWidth=r.render.lineWidth,n.strokeStyle=r.render.strokeStyle,n.stroke()),r.render.anchors&&(n.fillStyle=r.render.strokeStyle,n.beginPath(),n.arc(s.x,s.y,3,0,2*Math.PI),n.arc(a.x,a.y,3,0,2*Math.PI),n.closePath(),n.fill())}}},i.bodyShadows=function(e,t,n){for(var i=n,o=(e.engine,0);o<t.length;o++){var r=t[o];if(r.render.visible){if(r.circleRadius)i.beginPath(),i.arc(r.position.x,r.position.y,r.circleRadius,0,2*Math.PI),i.closePath();else{i.beginPath(),i.moveTo(r.vertices[0].x,r.vertices[0].y);for(var s=1;s<r.vertices.length;s++)i.lineTo(r.vertices[s].x,r.vertices[s].y);i.closePath()}var a=r.position.x-.5*e.options.width,l=r.position.y-.2*e.options.height,c=Math.abs(a)+Math.abs(l);i.shadowColor="rgba(0,0,0,0.15)",i.shadowOffsetX=.05*a,i.shadowOffsetY=.05*l,i.shadowBlur=1+12*Math.min(1,c/1e3),i.fill(),i.shadowColor=null,i.shadowOffsetX=null,i.shadowOffsetY=null,i.shadowBlur=null}}},i.bodies=function(e,t,n){var i,o,r,s,a=n,l=(e.engine,e.options),c=l.showInternalEdges||!l.wireframes;for(r=0;r<t.length;r++)if((i=t[r]).render.visible)for(s=i.parts.length>1?1:0;s<i.parts.length;s++)if((o=i.parts[s]).render.visible){if(l.showSleeping&&i.isSleeping?a.globalAlpha=.5*o.render.opacity:1!==o.render.opacity&&(a.globalAlpha=o.render.opacity),o.render.sprite&&o.render.sprite.texture&&!l.wireframes){var d=o.render.sprite,u=p(e,d.texture);a.translate(o.position.x,o.position.y),a.rotate(o.angle),a.drawImage(u,u.width*-d.xOffset*d.xScale,u.height*-d.yOffset*d.yScale,u.width*d.xScale,u.height*d.yScale),a.rotate(-o.angle),a.translate(-o.position.x,-o.position.y)}else{if(o.circleRadius)a.beginPath(),a.arc(o.position.x,o.position.y,o.circleRadius,0,2*Math.PI);else{a.beginPath(),a.moveTo(o.vertices[0].x,o.vertices[0].y);for(var f=1;f<o.vertices.length;f++)!o.vertices[f-1].isInternal||c?a.lineTo(o.vertices[f].x,o.vertices[f].y):a.moveTo(o.vertices[f].x,o.vertices[f].y),o.vertices[f].isInternal&&!c&&a.moveTo(o.vertices[(f+1)%o.vertices.length].x,o.vertices[(f+1)%o.vertices.length].y);a.lineTo(o.vertices[0].x,o.vertices[0].y),a.closePath()}l.wireframes?(a.lineWidth=1,a.strokeStyle="#bbb",a.stroke()):(a.fillStyle=o.render.fillStyle,o.render.lineWidth&&(a.lineWidth=o.render.lineWidth,a.strokeStyle=o.render.strokeStyle,a.stroke()),a.fill())}a.globalAlpha=1}},i.bodyWireframes=function(e,t,n){var i,o,r,s,a,l=n,c=e.options.showInternalEdges;for(l.beginPath(),r=0;r<t.length;r++)if((i=t[r]).render.visible)for(a=i.parts.length>1?1:0;a<i.parts.length;a++){for(o=i.parts[a],l.moveTo(o.vertices[0].x,o.vertices[0].y),s=1;s<o.vertices.length;s++)!o.vertices[s-1].isInternal||c?l.lineTo(o.vertices[s].x,o.vertices[s].y):l.moveTo(o.vertices[s].x,o.vertices[s].y),o.vertices[s].isInternal&&!c&&l.moveTo(o.vertices[(s+1)%o.vertices.length].x,o.vertices[(s+1)%o.vertices.length].y);l.lineTo(o.vertices[0].x,o.vertices[0].y)}l.lineWidth=1,l.strokeStyle="#bbb",l.stroke()},i.bodyConvexHulls=function(e,t,n){var i,o,r,s=n;for(s.beginPath(),o=0;o<t.length;o++)if((i=t[o]).render.visible&&1!==i.parts.length){for(s.moveTo(i.vertices[0].x,i.vertices[0].y),r=1;r<i.vertices.length;r++)s.lineTo(i.vertices[r].x,i.vertices[r].y);s.lineTo(i.vertices[0].x,i.vertices[0].y)}s.lineWidth=1,s.strokeStyle="rgba(255,255,255,0.2)",s.stroke()},i.vertexNumbers=function(e,t,n){var i,o,r,s=n;for(i=0;i<t.length;i++){var a=t[i].parts;for(r=a.length>1?1:0;r<a.length;r++){var l=a[r];for(o=0;o<l.vertices.length;o++)s.fillStyle="rgba(255,255,255,0.2)",s.fillText(i+"_"+o,l.position.x+.8*(l.vertices[o].x-l.position.x),l.position.y+.8*(l.vertices[o].y-l.position.y))}}},i.mousePosition=function(e,t,n){var i=n;i.fillStyle="rgba(255,255,255,0.8)",i.fillText(t.position.x+"  "+t.position.y,t.position.x+5,t.position.y-5)},i.bodyBounds=function(e,t,n){var i=n,o=(e.engine,e.options);i.beginPath();for(var r=0;r<t.length;r++){if(t[r].render.visible)for(var s=t[r].parts,a=s.length>1?1:0;a<s.length;a++){var l=s[a];i.rect(l.bounds.min.x,l.bounds.min.y,l.bounds.max.x-l.bounds.min.x,l.bounds.max.y-l.bounds.min.y)}}o.wireframes?i.strokeStyle="rgba(255,255,255,0.08)":i.strokeStyle="rgba(0,0,0,0.1)",i.lineWidth=1,i.stroke()},i.bodyAxes=function(e,t,n){var i,o,r,s,a=n,l=(e.engine,e.options);for(a.beginPath(),o=0;o<t.length;o++){var c=t[o],d=c.parts;if(c.render.visible)if(l.showAxes)for(r=d.length>1?1:0;r<d.length;r++)for(i=d[r],s=0;s<i.axes.length;s++){var u=i.axes[s];a.moveTo(i.position.x,i.position.y),a.lineTo(i.position.x+20*u.x,i.position.y+20*u.y)}else for(r=d.length>1?1:0;r<d.length;r++)for(i=d[r],s=0;s<i.axes.length;s++)a.moveTo(i.position.x,i.position.y),a.lineTo((i.vertices[0].x+i.vertices[i.vertices.length-1].x)/2,(i.vertices[0].y+i.vertices[i.vertices.length-1].y)/2)}l.wireframes?(a.strokeStyle="indianred",a.lineWidth=1):(a.strokeStyle="rgba(255, 255, 255, 0.4)",a.globalCompositeOperation="overlay",a.lineWidth=2),a.stroke(),a.globalCompositeOperation="source-over"},i.bodyPositions=function(e,t,n){var i,o,r,s,a=n,l=(e.engine,e.options);for(a.beginPath(),r=0;r<t.length;r++)if((i=t[r]).render.visible)for(s=0;s<i.parts.length;s++)o=i.parts[s],a.arc(o.position.x,o.position.y,3,0,2*Math.PI,!1),a.closePath();for(l.wireframes?a.fillStyle="indianred":a.fillStyle="rgba(0,0,0,0.5)",a.fill(),a.beginPath(),r=0;r<t.length;r++)(i=t[r]).render.visible&&(a.arc(i.positionPrev.x,i.positionPrev.y,2,0,2*Math.PI,!1),a.closePath());a.fillStyle="rgba(255,165,0,0.8)",a.fill()},i.bodyVelocity=function(e,t,n){var i=n;i.beginPath();for(var o=0;o<t.length;o++){var r=t[o];r.render.visible&&(i.moveTo(r.position.x,r.position.y),i.lineTo(r.position.x+2*(r.position.x-r.positionPrev.x),r.position.y+2*(r.position.y-r.positionPrev.y)))}i.lineWidth=3,i.strokeStyle="cornflowerblue",i.stroke()},i.bodyIds=function(e,t,n){var i,o,r=n;for(i=0;i<t.length;i++)if(t[i].render.visible){var s=t[i].parts;for(o=s.length>1?1:0;o<s.length;o++){var a=s[o];r.font="12px Arial",r.fillStyle="rgba(255,255,255,0.5)",r.fillText(a.id,a.position.x+10,a.position.y-10)}}},i.collisions=function(e,t,n){var i,o,r,s,a=n,l=e.options;for(a.beginPath(),r=0;r<t.length;r++)if((i=t[r]).isActive)for(o=i.collision,s=0;s<i.activeContacts.length;s++){var c=i.activeContacts[s].vertex;a.rect(c.x-1.5,c.y-1.5,3.5,3.5)}for(l.wireframes?a.fillStyle="rgba(255,255,255,0.7)":a.fillStyle="orange",a.fill(),a.beginPath(),r=0;r<t.length;r++)if((i=t[r]).isActive&&(o=i.collision,i.activeContacts.length>0)){var d=i.activeContacts[0].vertex.x,u=i.activeContacts[0].vertex.y;2===i.activeContacts.length&&(d=(i.activeContacts[0].vertex.x+i.activeContacts[1].vertex.x)/2,u=(i.activeContacts[0].vertex.y+i.activeContacts[1].vertex.y)/2),o.bodyB===o.supports[0].body||!0===o.bodyA.isStatic?a.moveTo(d-8*o.normal.x,u-8*o.normal.y):a.moveTo(d+8*o.normal.x,u+8*o.normal.y),a.lineTo(d,u)}l.wireframes?a.strokeStyle="rgba(255,165,0,0.7)":a.strokeStyle="orange",a.lineWidth=1,a.stroke()},i.separations=function(e,t,n){var i,o,r,s,a,l=n,c=e.options;for(l.beginPath(),a=0;a<t.length;a++)if((i=t[a]).isActive){r=(o=i.collision).bodyA;var d=1;(s=o.bodyB).isStatic||r.isStatic||(d=.5),s.isStatic&&(d=0),l.moveTo(s.position.x,s.position.y),l.lineTo(s.position.x-o.penetration.x*d,s.position.y-o.penetration.y*d),d=1,s.isStatic||r.isStatic||(d=.5),r.isStatic&&(d=0),l.moveTo(r.position.x,r.position.y),l.lineTo(r.position.x+o.penetration.x*d,r.position.y+o.penetration.y*d)}c.wireframes?l.strokeStyle="rgba(255,165,0,0.5)":l.strokeStyle="orange",l.stroke()},i.grid=function(e,t,n){var i=n;e.options.wireframes?i.strokeStyle="rgba(255,180,0,0.1)":i.strokeStyle="rgba(255,180,0,0.5)",i.beginPath();for(var r=o.keys(t.buckets),s=0;s<r.length;s++){var a=r[s];if(!(t.buckets[a].length<2)){var l=a.split(/C|R/);i.rect(.5+parseInt(l[1],10)*t.bucketWidth,.5+parseInt(l[2],10)*t.bucketHeight,t.bucketWidth,t.bucketHeight)}}i.lineWidth=1,i.stroke()},i.inspector=function(e,t){e.engine;var n,i=e.selected,o=e.render,r=o.options;if(r.hasBounds){var s=o.bounds.max.x-o.bounds.min.x,a=o.bounds.max.y-o.bounds.min.y,l=s/o.options.width,c=a/o.options.height;t.scale(1/l,1/c),t.translate(-o.bounds.min.x,-o.bounds.min.y)}for(var d=0;d<i.length;d++){var u=i[d].data;switch(t.translate(.5,.5),t.lineWidth=1,t.strokeStyle="rgba(255,165,0,0.9)",t.setLineDash([1,2]),u.type){case"body":n=u.bounds,t.beginPath(),t.rect(Math.floor(n.min.x-3),Math.floor(n.min.y-3),Math.floor(n.max.x-n.min.x+6),Math.floor(n.max.y-n.min.y+6)),t.closePath(),t.stroke();break;case"constraint":var p=u.pointA;u.bodyA&&(p=u.pointB),t.beginPath(),t.arc(p.x,p.y,10,0,2*Math.PI),t.closePath(),t.stroke()}t.setLineDash([]),t.translate(-.5,-.5)}null!==e.selectStart&&(t.translate(.5,.5),t.lineWidth=1,t.strokeStyle="rgba(255,165,0,0.6)",t.fillStyle="rgba(255,165,0,0.1)",n=e.selectBounds,t.beginPath(),t.rect(Math.floor(n.min.x),Math.floor(n.min.y),Math.floor(n.max.x-n.min.x),Math.floor(n.max.y-n.min.y)),t.closePath(),t.stroke(),t.fill(),t.translate(-.5,-.5)),r.hasBounds&&t.setTransform(1,0,0,1,0,0)};var n=function(e,t){var n=document.createElement("canvas");return n.width=e,n.height=t,n.oncontextmenu=function(){return!1},n.onselectstart=function(){return!1},n},u=function(e){var t=e.getContext("2d");return(window.devicePixelRatio||1)/(t.webkitBackingStorePixelRatio||t.mozBackingStorePixelRatio||t.msBackingStorePixelRatio||t.oBackingStorePixelRatio||t.backingStorePixelRatio||1)},p=function(e,t){var n=e.textures[t];return n||((n=e.textures[t]=new Image).src=t,n)},f=function(e,t){var n=t;/(jpg|gif|png)$/.test(t)&&(n="url("+t+")"),e.canvas.style.background=n,e.canvas.style.backgroundSize="contain",e.currentBackground=t}}()},function(e,t,n){var i={};e.exports=i;var o=n(9),r=n(12),s=n(0);i.create=function(e){var t={controller:i,detector:r.collisions,buckets:{},pairs:{},pairsList:[],bucketWidth:48,bucketHeight:48};return s.extend(t,e)},i.update=function(e,t,n,o){var r,s,a,l,c,d=n.world,u=e.buckets,p=!1,f=n.metrics;for(f.broadphaseTests=0,r=0;r<t.length;r++){var v=t[r];if((!v.isSleeping||o)&&!(v.bounds.max.x<d.bounds.min.x||v.bounds.min.x>d.bounds.max.x||v.bounds.max.y<d.bounds.min.y||v.bounds.min.y>d.bounds.max.y)){var m=i._getRegion(e,v);if(!v.region||m.id!==v.region.id||o){f.broadphaseTests+=1,v.region&&!o||(v.region=m);var y=i._regionUnion(m,v.region);for(s=y.startCol;s<=y.endCol;s++)for(a=y.startRow;a<=y.endRow;a++){l=u[c=i._getBucketId(s,a)];var g=s>=m.startCol&&s<=m.endCol&&a>=m.startRow&&a<=m.endRow,x=s>=v.region.startCol&&s<=v.region.endCol&&a>=v.region.startRow&&a<=v.region.endRow;!g&&x&&x&&l&&i._bucketRemoveBody(e,l,v),(v.region===m||g&&!x||o)&&(l||(l=i._createBucket(u,c)),i._bucketAddBody(e,l,v))}v.region=m,p=!0}}}p&&(e.pairsList=i._createActivePairsList(e))},i.clear=function(e){e.buckets={},e.pairs={},e.pairsList=[]},i._regionUnion=function(e,t){var n=Math.min(e.startCol,t.startCol),o=Math.max(e.endCol,t.endCol),r=Math.min(e.startRow,t.startRow),s=Math.max(e.endRow,t.endRow);return i._createRegion(n,o,r,s)},i._getRegion=function(e,t){var n=t.bounds,o=Math.floor(n.min.x/e.bucketWidth),r=Math.floor(n.max.x/e.bucketWidth),s=Math.floor(n.min.y/e.bucketHeight),a=Math.floor(n.max.y/e.bucketHeight);return i._createRegion(o,r,s,a)},i._createRegion=function(e,t,n,i){return{id:e+","+t+","+n+","+i,startCol:e,endCol:t,startRow:n,endRow:i}},i._getBucketId=function(e,t){return"C"+e+"R"+t},i._createBucket=function(e,t){return e[t]=[]},i._bucketAddBody=function(e,t,n){for(var i=0;i<t.length;i++){var r=t[i];if(!(n.id===r.id||n.isStatic&&r.isStatic)){var s=o.id(n,r),a=e.pairs[s];a?a[2]+=1:e.pairs[s]=[n,r,1]}}t.push(n)},i._bucketRemoveBody=function(e,t,n){t.splice(s.indexOf(t,n),1);for(var i=0;i<t.length;i++){var r=t[i],a=o.id(n,r),l=e.pairs[a];l&&(l[2]-=1)}},i._createActivePairsList=function(e){var t,n,i=[];t=s.keys(e.pairs);for(var o=0;o<t.length;o++)(n=e.pairs[t[o]])[2]>0?i.push(n):delete e.pairs[t[o]];return i}},function(e,t,n){var i={};e.exports=i;var o=n(13),r=n(9),s=n(1);i.collisions=function(e,t){for(var n=[],a=t.pairs.table,l=t.metrics,c=0;c<e.length;c++){var d=e[c][0],u=e[c][1];if((!d.isStatic&&!d.isSleeping||!u.isStatic&&!u.isSleeping)&&i.canCollide(d.collisionFilter,u.collisionFilter)&&(l.midphaseTests+=1,s.overlaps(d.bounds,u.bounds)))for(var p=d.parts.length>1?1:0;p<d.parts.length;p++)for(var f=d.parts[p],v=u.parts.length>1?1:0;v<u.parts.length;v++){var m=u.parts[v];if(f===d&&m===u||s.overlaps(f.bounds,m.bounds)){var y,g=a[r.id(f,m)];y=g&&g.isActive?g.collision:null;var x=o.collides(f,m,y);l.narrowphaseTests+=1,x.reused&&(l.narrowReuseCount+=1),x.collided&&(n.push(x),l.narrowDetections+=1)}}}return n},i.canCollide=function(e,t){return e.group===t.group&&0!==e.group?e.group>0:0!=(e.mask&t.category)&&0!=(t.mask&e.category)}},function(e,t,n){var i={};e.exports=i;var o=n(3),r=n(2);i.collides=function(e,t,n){var s,a,l,c,d=!1;if(n){var u=e.parent,p=t.parent,f=u.speed*u.speed+u.angularSpeed*u.angularSpeed+p.speed*p.speed+p.angularSpeed*p.angularSpeed;d=n&&n.collided&&f<.2,c=n}else c={collided:!1,bodyA:e,bodyB:t};if(n&&d){var v=c.axisBody,m=v===e?t:e,y=[v.axes[n.axisNumber]];if(l=i._overlapAxes(v.vertices,m.vertices,y),c.reused=!0,l.overlap<=0)return c.collided=!1,c}else{if((s=i._overlapAxes(e.vertices,t.vertices,e.axes)).overlap<=0)return c.collided=!1,c;if((a=i._overlapAxes(t.vertices,e.vertices,t.axes)).overlap<=0)return c.collided=!1,c;s.overlap<a.overlap?(l=s,c.axisBody=e):(l=a,c.axisBody=t),c.axisNumber=l.axisNumber}c.bodyA=e.id<t.id?e:t,c.bodyB=e.id<t.id?t:e,c.collided=!0,c.depth=l.overlap,c.parentA=c.bodyA.parent,c.parentB=c.bodyB.parent,e=c.bodyA,t=c.bodyB,r.dot(l.axis,r.sub(t.position,e.position))<0?c.normal={x:l.axis.x,y:l.axis.y}:c.normal={x:-l.axis.x,y:-l.axis.y},c.tangent=r.perp(c.normal),c.penetration=c.penetration||{},c.penetration.x=c.normal.x*c.depth,c.penetration.y=c.normal.y*c.depth;var g=i._findSupports(e,t,c.normal),x=[];if(o.contains(e.vertices,g[0])&&x.push(g[0]),o.contains(e.vertices,g[1])&&x.push(g[1]),x.length<2){var h=i._findSupports(t,e,r.neg(c.normal));o.contains(t.vertices,h[0])&&x.push(h[0]),x.length<2&&o.contains(t.vertices,h[1])&&x.push(h[1])}return x.length<1&&(x=[g[0]]),c.supports=x,c},i._overlapAxes=function(e,t,n){for(var o,s,a=r._temp[0],l=r._temp[1],c={overlap:Number.MAX_VALUE},d=0;d<n.length;d++){if(s=n[d],i._projectToAxis(a,e,s),i._projectToAxis(l,t,s),(o=Math.min(a.max-l.min,l.max-a.min))<=0)return c.overlap=o,c;o<c.overlap&&(c.overlap=o,c.axis=s,c.axisNumber=d)}return c},i._projectToAxis=function(e,t,n){for(var i=r.dot(t[0],n),o=i,s=1;s<t.length;s+=1){var a=r.dot(t[s],n);a>o?o=a:a<i&&(i=a)}e.min=i,e.max=o},i._findSupports=function(e,t,n){for(var i,o,s,a,l=Number.MAX_VALUE,c=r._temp[0],d=t.vertices,u=e.position,p=0;p<d.length;p++)o=d[p],c.x=o.x-u.x,c.y=o.y-u.y,(i=-r.dot(n,c))<l&&(l=i,s=o);return o=d[s.index-1>=0?s.index-1:d.length-1],c.x=o.x-u.x,c.y=o.y-u.y,l=-r.dot(n,c),a=o,o=d[(s.index+1)%d.length],c.x=o.x-u.x,c.y=o.y-u.y,(i=-r.dot(n,c))<l&&(a=o),[s,a]}},function(e,t,n){var i={};e.exports=i;var o=n(0);i.create=function(e){var t={};return e||o.log("Mouse.create: element was undefined, defaulting to document.body","warn"),t.element=e||document.body,t.absolute={x:0,y:0},t.position={x:0,y:0},t.mousedownPosition={x:0,y:0},t.mouseupPosition={x:0,y:0},t.offset={x:0,y:0},t.scale={x:1,y:1},t.wheelDelta=0,t.button=-1,t.pixelRatio=parseInt(t.element.getAttribute("data-pixel-ratio"),10)||1,t.sourceEvents={mousemove:null,mousedown:null,mouseup:null,mousewheel:null},t.mousemove=function(e){var n=i._getRelativeMousePosition(e,t.element,t.pixelRatio);e.changedTouches&&(t.button=0,e.preventDefault()),t.absolute.x=n.x,t.absolute.y=n.y,t.position.x=t.absolute.x*t.scale.x+t.offset.x,t.position.y=t.absolute.y*t.scale.y+t.offset.y,t.sourceEvents.mousemove=e},t.mousedown=function(e){var n=i._getRelativeMousePosition(e,t.element,t.pixelRatio);e.changedTouches?(t.button=0,e.preventDefault()):t.button=e.button,t.absolute.x=n.x,t.absolute.y=n.y,t.position.x=t.absolute.x*t.scale.x+t.offset.x,t.position.y=t.absolute.y*t.scale.y+t.offset.y,t.mousedownPosition.x=t.position.x,t.mousedownPosition.y=t.position.y,t.sourceEvents.mousedown=e},t.mouseup=function(e){var n=i._getRelativeMousePosition(e,t.element,t.pixelRatio);e.changedTouches&&e.preventDefault(),t.button=-1,t.absolute.x=n.x,t.absolute.y=n.y,t.position.x=t.absolute.x*t.scale.x+t.offset.x,t.position.y=t.absolute.y*t.scale.y+t.offset.y,t.mouseupPosition.x=t.position.x,t.mouseupPosition.y=t.position.y,t.sourceEvents.mouseup=e},t.mousewheel=function(e){t.wheelDelta=Math.max(-1,Math.min(1,e.wheelDelta||-e.detail)),e.preventDefault()},i.setElement(t,t.element),t},i.setElement=function(e,t){e.element=t,t.addEventListener("mousemove",e.mousemove),t.addEventListener("mousedown",e.mousedown),t.addEventListener("mouseup",e.mouseup),t.addEventListener("mousewheel",e.mousewheel),t.addEventListener("DOMMouseScroll",e.mousewheel),t.addEventListener("touchmove",e.mousemove),t.addEventListener("touchstart",e.mousedown),t.addEventListener("touchend",e.mouseup)},i.clearSourceEvents=function(e){e.sourceEvents.mousemove=null,e.sourceEvents.mousedown=null,e.sourceEvents.mouseup=null,e.sourceEvents.mousewheel=null,e.wheelDelta=0},i.setOffset=function(e,t){e.offset.x=t.x,e.offset.y=t.y,e.position.x=e.absolute.x*e.scale.x+e.offset.x,e.position.y=e.absolute.y*e.scale.y+e.offset.y},i.setScale=function(e,t){e.scale.x=t.x,e.scale.y=t.y,e.position.x=e.absolute.x*e.scale.x+e.offset.x,e.position.y=e.absolute.y*e.scale.y+e.offset.y},i._getRelativeMousePosition=function(e,t,n){var i,o,r=t.getBoundingClientRect(),s=document.documentElement||document.body.parentNode||document.body,a=void 0!==window.pageXOffset?window.pageXOffset:s.scrollLeft,l=void 0!==window.pageYOffset?window.pageYOffset:s.scrollTop,c=e.changedTouches;return c?(i=c[0].pageX-r.left-a,o=c[0].pageY-r.top-l):(i=e.pageX-r.left-a,o=e.pageY-r.top-l),{x:i/(t.clientWidth/(t.width||t.clientWidth)*n),y:o/(t.clientHeight/(t.height||t.clientHeight)*n)}}},function(e,t,n){var i={};e.exports=i;var o=n(2),r=n(0);i.fromVertices=function(e){for(var t={},n=0;n<e.length;n++){var i=(n+1)%e.length,s=o.normalise({x:e[i].y-e[n].y,y:e[n].x-e[i].x}),a=0===s.y?1/0:s.x/s.y;t[a=a.toFixed(3).toString()]=s}return r.values(t)},i.rotate=function(e,t){if(0!==t)for(var n=Math.cos(t),i=Math.sin(t),o=0;o<e.length;o++){var r,s=e[o];r=s.x*n-s.y*i,s.y=s.x*i+s.y*n,s.x=r}}},function(e,t,n){var i={};e.exports=i;var o=n(3),r=n(0),s=n(6),a=n(1),l=n(2);i.rectangle=function(e,t,n,i,a){a=a||{};var l={label:"Rectangle Body",position:{x:e,y:t},vertices:o.fromPath("L 0 0 L "+n+" 0 L "+n+" "+i+" L 0 "+i)};if(a.chamfer){var c=a.chamfer;l.vertices=o.chamfer(l.vertices,c.radius,c.quality,c.qualityMin,c.qualityMax),delete a.chamfer}return s.create(r.extend({},l,a))},i.trapezoid=function(e,t,n,i,a,l){l=l||{};var c,d=n*(a*=.5),u=d+(1-2*a)*n,p=u+d;c=a<.5?"L 0 0 L "+d+" "+-i+" L "+u+" "+-i+" L "+p+" 0":"L 0 0 L "+u+" "+-i+" L "+p+" 0";var f={label:"Trapezoid Body",position:{x:e,y:t},vertices:o.fromPath(c)};if(l.chamfer){var v=l.chamfer;f.vertices=o.chamfer(f.vertices,v.radius,v.quality,v.qualityMin,v.qualityMax),delete l.chamfer}return s.create(r.extend({},f,l))},i.circle=function(e,t,n,o,s){o=o||{};var a={label:"Circle Body",circleRadius:n};s=s||25;var l=Math.ceil(Math.max(10,Math.min(s,n)));return l%2==1&&(l+=1),i.polygon(e,t,l,n,r.extend({},a,o))},i.polygon=function(e,t,n,a,l){if(l=l||{},n<3)return i.circle(e,t,a,l);for(var c=2*Math.PI/n,d="",u=.5*c,p=0;p<n;p+=1){var f=u+p*c,v=Math.cos(f)*a,m=Math.sin(f)*a;d+="L "+v.toFixed(3)+" "+m.toFixed(3)+" "}var y={label:"Polygon Body",position:{x:e,y:t},vertices:o.fromPath(d)};if(l.chamfer){var g=l.chamfer;y.vertices=o.chamfer(y.vertices,g.radius,g.quality,g.qualityMin,g.qualityMax),delete l.chamfer}return s.create(r.extend({},y,l))},i.fromVertices=function(e,t,i,c,d,u,p,f){var v,m,y,g,x,h,b,w,S,A=n(27);for(c=c||{},m=[],d=void 0!==d&&d,u=void 0!==u?u:.01,p=void 0!==p?p:10,f=void 0!==f?f:.01,A||r.warn("Bodies.fromVertices: poly-decomp.js required. Could not decompose vertices. Fallback to convex hull."),r.isArray(i[0])||(i=[i]),w=0;w<i.length;w+=1)if(g=i[w],(y=o.isConvex(g))||!A)g=y?o.clockwiseSort(g):o.hull(g),m.push({position:{x:e,y:t},vertices:g});else{var P=g.map((function(e){return[e.x,e.y]}));A.makeCCW(P),!1!==u&&A.removeCollinearPoints(P,u),!1!==f&&A.removeDuplicatePoints&&A.removeDuplicatePoints(P,f);var C=A.quickDecomp(P);for(x=0;x<C.length;x++){var M=C[x].map((function(e){return{x:e[0],y:e[1]}}));p>0&&o.area(M)<p||m.push({position:o.centre(M),vertices:M})}}for(x=0;x<m.length;x++)m[x]=s.create(r.extend(m[x],c));if(d)for(x=0;x<m.length;x++){var k=m[x];for(h=x+1;h<m.length;h++){var B=m[h];if(a.overlaps(k.bounds,B.bounds)){var I=k.vertices,_=B.vertices;for(b=0;b<k.vertices.length;b++)for(S=0;S<B.vertices.length;S++){var T=l.magnitudeSquared(l.sub(I[(b+1)%I.length],_[S])),R=l.magnitudeSquared(l.sub(I[b],_[(S+1)%_.length]));T<5&&R<5&&(I[b].isInternal=!0,_[S].isInternal=!0)}}}}return m.length>1?(v=s.create(r.extend({parts:m.slice(0)},c)),s.setPosition(v,{x:e,y:t}),v):m[0]}},function(e,t,n){var i={};e.exports=i;var o=n(0);i._registry={},i.register=function(e){if(i.isPlugin(e)||o.warn("Plugin.register:",i.toString(e),"does not implement all required fields."),e.name in i._registry){var t=i._registry[e.name],n=i.versionParse(e.version).number,r=i.versionParse(t.version).number;n>r?(o.warn("Plugin.register:",i.toString(t),"was upgraded to",i.toString(e)),i._registry[e.name]=e):n<r?o.warn("Plugin.register:",i.toString(t),"can not be downgraded to",i.toString(e)):e!==t&&o.warn("Plugin.register:",i.toString(e),"is already registered to different plugin object")}else i._registry[e.name]=e;return e},i.resolve=function(e){return i._registry[i.dependencyParse(e).name]},i.toString=function(e){return"string"==typeof e?e:(e.name||"anonymous")+"@"+(e.version||e.range||"0.0.0")},i.isPlugin=function(e){return e&&e.name&&e.version&&e.install},i.isUsed=function(e,t){return e.used.indexOf(t)>-1},i.isFor=function(e,t){var n=e.for&&i.dependencyParse(e.for);return!e.for||t.name===n.name&&i.versionSatisfies(t.version,n.range)},i.use=function(e,t){if(e.uses=(e.uses||[]).concat(t||[]),0!==e.uses.length){for(var n=i.dependencies(e),r=o.topologicalSort(n),s=[],a=0;a<r.length;a+=1)if(r[a]!==e.name){var l=i.resolve(r[a]);l?i.isUsed(e,l.name)||(i.isFor(l,e)||(o.warn("Plugin.use:",i.toString(l),"is for",l.for,"but installed on",i.toString(e)+"."),l._warned=!0),l.install?l.install(e):(o.warn("Plugin.use:",i.toString(l),"does not specify an install function."),l._warned=!0),l._warned?(s.push("🔶 "+i.toString(l)),delete l._warned):s.push("✅ "+i.toString(l)),e.used.push(l.name)):s.push("❌ "+r[a])}s.length>0&&o.info(s.join("  "))}else o.warn("Plugin.use:",i.toString(e),"does not specify any dependencies to install.")},i.dependencies=function(e,t){var n=i.dependencyParse(e),r=n.name;if(!(r in(t=t||{}))){e=i.resolve(e)||e,t[r]=o.map(e.uses||[],(function(t){i.isPlugin(t)&&i.register(t);var r=i.dependencyParse(t),s=i.resolve(t);return s&&!i.versionSatisfies(s.version,r.range)?(o.warn("Plugin.dependencies:",i.toString(s),"does not satisfy",i.toString(r),"used by",i.toString(n)+"."),s._warned=!0,e._warned=!0):s||(o.warn("Plugin.dependencies:",i.toString(t),"used by",i.toString(n),"could not be resolved."),e._warned=!0),r.name}));for(var s=0;s<t[r].length;s+=1)i.dependencies(t[r][s],t);return t}},i.dependencyParse=function(e){return o.isString(e)?(/^[\w-]+(@(\*|[\^~]?\d+\.\d+\.\d+(-[0-9A-Za-z-]+)?))?$/.test(e)||o.warn("Plugin.dependencyParse:",e,"is not a valid dependency string."),{name:e.split("@")[0],range:e.split("@")[1]||"*"}):{name:e.name,range:e.range||e.version}},i.versionParse=function(e){var t=/^(\*)|(\^|~|>=|>)?\s*((\d+)\.(\d+)\.(\d+))(-[0-9A-Za-z-]+)?$/;t.test(e)||o.warn("Plugin.versionParse:",e,"is not a valid version or range.");var n=t.exec(e),i=Number(n[4]),r=Number(n[5]),s=Number(n[6]);return{isRange:Boolean(n[1]||n[2]),version:n[3],range:e,operator:n[1]||n[2]||"",major:i,minor:r,patch:s,parts:[i,r,s],prerelease:n[7],number:1e8*i+1e4*r+s}},i.versionSatisfies=function(e,t){t=t||"*";var n=i.versionParse(t),o=i.versionParse(e);if(n.isRange){if("*"===n.operator||"*"===e)return!0;if(">"===n.operator)return o.number>n.number;if(">="===n.operator)return o.number>=n.number;if("~"===n.operator)return o.major===n.major&&o.minor===n.minor&&o.patch>=n.patch;if("^"===n.operator)return n.major>0?o.major===n.major&&o.number>=n.number:n.minor>0?o.minor===n.minor&&o.patch>=n.patch:o.patch===n.patch}return e===t||"*"===e}},function(e,t){var n={};e.exports=n,n.create=function(e){return{id:n.id(e),vertex:e,normalImpulse:0,tangentImpulse:0}},n.id=function(e){return e.body.id+"_"+e.index}},function(e,t,n){var i={};e.exports=i;var o=n(5),r=(n(8),n(0));i.create=function(e){var t=o.create(),n={label:"World",gravity:{x:0,y:1,scale:.001},bounds:{min:{x:-1/0,y:-1/0},max:{x:1/0,y:1/0}}};return r.extend(t,n,e)}},function(e,t,n){var i={};e.exports=i;var o=n(9),r=n(0);i._pairMaxIdleLife=1e3,i.create=function(e){return r.extend({table:{},list:[],collisionStart:[],collisionActive:[],collisionEnd:[]},e)},i.update=function(e,t,n){var i,r,s,a,l=e.list,c=e.table,d=e.collisionStart,u=e.collisionEnd,p=e.collisionActive;for(d.length=0,u.length=0,p.length=0,a=0;a<l.length;a++)l[a].confirmedActive=!1;for(a=0;a<t.length;a++)(i=t[a]).collided&&((s=c[r=o.id(i.bodyA,i.bodyB)])?(s.isActive?p.push(s):d.push(s),o.update(s,i,n),s.confirmedActive=!0):(s=o.create(i,n),c[r]=s,d.push(s),l.push(s)));for(a=0;a<l.length;a++)(s=l[a]).isActive&&!s.confirmedActive&&(o.setActive(s,!1,n),u.push(s))},i.removeOld=function(e,t){var n,o,r,s,a=e.list,l=e.table,c=[];for(s=0;s<a.length;s++)(o=(n=a[s]).collision).bodyA.isSleeping||o.bodyB.isSleeping?n.timeUpdated=t:t-n.timeUpdated>i._pairMaxIdleLife&&c.push(s);for(s=0;s<c.length;s++)delete l[(n=a[r=c[s]-s]).id],a.splice(r,1)},i.clear=function(e){return e.table={},e.list.length=0,e.collisionStart.length=0,e.collisionActive.length=0,e.collisionEnd.length=0,e}},function(e,t,n){var i={};e.exports=i;var o=n(3),r=n(2),s=n(0),a=n(1);i._restingThresh=4,i._restingThreshTangent=6,i._positionDampen=.9,i._positionWarming=.8,i._frictionNormalMultiplier=5,i.preSolvePosition=function(e){var t,n,i;for(t=0;t<e.length;t++)(n=e[t]).isActive&&(i=n.activeContacts.length,n.collision.parentA.totalContacts+=i,n.collision.parentB.totalContacts+=i)},i.solvePosition=function(e,t){var n,o,s,a,l,c,d,u,p,f=r._temp[0],v=r._temp[1],m=r._temp[2],y=r._temp[3];for(n=0;n<e.length;n++)(o=e[n]).isActive&&!o.isSensor&&(a=(s=o.collision).parentA,l=s.parentB,c=s.normal,d=r.sub(r.add(l.positionImpulse,l.position,f),r.add(a.positionImpulse,r.sub(l.position,s.penetration,v),m),y),o.separation=r.dot(c,d));for(n=0;n<e.length;n++)(o=e[n]).isActive&&!o.isSensor&&(a=(s=o.collision).parentA,l=s.parentB,c=s.normal,p=(o.separation-o.slop)*t,(a.isStatic||l.isStatic)&&(p*=2),a.isStatic||a.isSleeping||(u=i._positionDampen/a.totalContacts,a.positionImpulse.x+=c.x*p*u,a.positionImpulse.y+=c.y*p*u),l.isStatic||l.isSleeping||(u=i._positionDampen/l.totalContacts,l.positionImpulse.x-=c.x*p*u,l.positionImpulse.y-=c.y*p*u))},i.postSolvePosition=function(e){for(var t=0;t<e.length;t++){var n=e[t];if(n.totalContacts=0,0!==n.positionImpulse.x||0!==n.positionImpulse.y){for(var s=0;s<n.parts.length;s++){var l=n.parts[s];o.translate(l.vertices,n.positionImpulse),a.update(l.bounds,l.vertices,n.velocity),l.position.x+=n.positionImpulse.x,l.position.y+=n.positionImpulse.y}n.positionPrev.x+=n.positionImpulse.x,n.positionPrev.y+=n.positionImpulse.y,r.dot(n.positionImpulse,n.velocity)<0?(n.positionImpulse.x=0,n.positionImpulse.y=0):(n.positionImpulse.x*=i._positionWarming,n.positionImpulse.y*=i._positionWarming)}}},i.preSolveVelocity=function(e){var t,n,i,o,s,a,l,c,d,u,p,f,v,m,y=r._temp[0],g=r._temp[1];for(t=0;t<e.length;t++)if((i=e[t]).isActive&&!i.isSensor)for(o=i.activeContacts,a=(s=i.collision).parentA,l=s.parentB,c=s.normal,d=s.tangent,n=0;n<o.length;n++)p=(u=o[n]).vertex,f=u.normalImpulse,v=u.tangentImpulse,0===f&&0===v||(y.x=c.x*f+d.x*v,y.y=c.y*f+d.y*v,a.isStatic||a.isSleeping||(m=r.sub(p,a.position,g),a.positionPrev.x+=y.x*a.inverseMass,a.positionPrev.y+=y.y*a.inverseMass,a.anglePrev+=r.cross(m,y)*a.inverseInertia),l.isStatic||l.isSleeping||(m=r.sub(p,l.position,g),l.positionPrev.x-=y.x*l.inverseMass,l.positionPrev.y-=y.y*l.inverseMass,l.anglePrev-=r.cross(m,y)*l.inverseInertia))},i.solveVelocity=function(e,t){for(var n=t*t,o=r._temp[0],a=r._temp[1],l=r._temp[2],c=r._temp[3],d=r._temp[4],u=r._temp[5],p=0;p<e.length;p++){var f=e[p];if(f.isActive&&!f.isSensor){var v=f.collision,m=v.parentA,y=v.parentB,g=v.normal,x=v.tangent,h=f.activeContacts,b=1/h.length;m.velocity.x=m.position.x-m.positionPrev.x,m.velocity.y=m.position.y-m.positionPrev.y,y.velocity.x=y.position.x-y.positionPrev.x,y.velocity.y=y.position.y-y.positionPrev.y,m.angularVelocity=m.angle-m.anglePrev,y.angularVelocity=y.angle-y.anglePrev;for(var w=0;w<h.length;w++){var S=h[w],A=S.vertex,P=r.sub(A,m.position,a),C=r.sub(A,y.position,l),M=r.add(m.velocity,r.mult(r.perp(P),m.angularVelocity),c),k=r.add(y.velocity,r.mult(r.perp(C),y.angularVelocity),d),B=r.sub(M,k,u),I=r.dot(g,B),_=r.dot(x,B),T=Math.abs(_),R=s.sign(_),L=(1+f.restitution)*I,O=s.clamp(f.separation+I,0,1)*i._frictionNormalMultiplier,V=_,E=1/0;T>f.friction*f.frictionStatic*O*n&&(E=T,V=s.clamp(f.friction*R*n,-E,E));var F=r.cross(P,g),W=r.cross(C,g),q=b/(m.inverseMass+y.inverseMass+m.inverseInertia*F*F+y.inverseInertia*W*W);if(L*=q,V*=q,I<0&&I*I>i._restingThresh*n)S.normalImpulse=0;else{var j=S.normalImpulse;S.normalImpulse=Math.min(S.normalImpulse+L,0),L=S.normalImpulse-j}if(_*_>i._restingThreshTangent*n)S.tangentImpulse=0;else{var D=S.tangentImpulse;S.tangentImpulse=s.clamp(S.tangentImpulse+V,-E,E),V=S.tangentImpulse-D}o.x=g.x*L+x.x*V,o.y=g.y*L+x.y*V,m.isStatic||m.isSleeping||(m.positionPrev.x+=o.x*m.inverseMass,m.positionPrev.y+=o.y*m.inverseMass,m.anglePrev+=r.cross(P,o)*m.inverseInertia),y.isStatic||y.isSleeping||(y.positionPrev.x-=o.x*y.inverseMass,y.positionPrev.y-=o.y*y.inverseMass,y.anglePrev-=r.cross(C,o)*y.inverseInertia)}}}}},function(e,t,n){var i={};e.exports=i;var o=n(19),r=n(7),s=n(21),a=n(10),l=n(20),c=n(23),d=n(11),u=n(4),p=n(5),f=n(8),v=n(0),m=n(6);i.create=function(e,t){t=(t=v.isElement(e)?t:e)||{},((e=v.isElement(e)?e:null)||t.render)&&v.warn("Engine.create: engine.render is deprecated (see docs)");var n={positionIterations:6,velocityIterations:4,constraintIterations:2,enableSleeping:!1,events:[],plugin:{},timing:{timestamp:0,timeScale:1},broadphase:{controller:d}},i=v.extend(n,t);if(e||i.render){var r={element:e,controller:a};i.render=v.extend(r,i.render)}return i.render&&i.render.controller&&(i.render=i.render.controller.create(i.render)),i.render&&(i.render.engine=i),i.world=t.world||o.create(i.world),i.pairs=l.create(),i.broadphase=i.broadphase.controller.create(i.broadphase),i.metrics=i.metrics||{extended:!1},i.metrics=c.create(i.metrics),i},i.update=function(e,t,n){t=t||1e3/60,n=n||1;var o,a=e.world,d=e.timing,v=e.broadphase,m=[];d.timestamp+=t*d.timeScale;var y={timestamp:d.timestamp};u.trigger(e,"beforeUpdate",y);var g=p.allBodies(a),x=p.allConstraints(a);for(c.reset(e.metrics),e.enableSleeping&&r.update(g,d.timeScale),i._bodiesApplyGravity(g,a.gravity),i._bodiesUpdate(g,t,d.timeScale,n,a.bounds),f.preSolveAll(g),o=0;o<e.constraintIterations;o++)f.solveAll(x,d.timeScale);f.postSolveAll(g),v.controller?(a.isModified&&v.controller.clear(v),v.controller.update(v,g,e,a.isModified),m=v.pairsList):m=g,a.isModified&&p.setModified(a,!1,!1,!0);var h=v.detector(m,e),b=e.pairs,w=d.timestamp;for(l.update(b,h,w),l.removeOld(b,w),e.enableSleeping&&r.afterCollisions(b.list,d.timeScale),b.collisionStart.length>0&&u.trigger(e,"collisionStart",{pairs:b.collisionStart}),s.preSolvePosition(b.list),o=0;o<e.positionIterations;o++)s.solvePosition(b.list,d.timeScale);for(s.postSolvePosition(g),f.preSolveAll(g),o=0;o<e.constraintIterations;o++)f.solveAll(x,d.timeScale);for(f.postSolveAll(g),s.preSolveVelocity(b.list),o=0;o<e.velocityIterations;o++)s.solveVelocity(b.list,d.timeScale);return b.collisionActive.length>0&&u.trigger(e,"collisionActive",{pairs:b.collisionActive}),b.collisionEnd.length>0&&u.trigger(e,"collisionEnd",{pairs:b.collisionEnd}),c.update(e.metrics,e),i._bodiesClearForces(g),u.trigger(e,"afterUpdate",y),e},i.merge=function(e,t){if(v.extend(e,t),t.world){e.world=t.world,i.clear(e);for(var n=p.allBodies(e.world),o=0;o<n.length;o++){var s=n[o];r.set(s,!1),s.id=v.nextId()}}},i.clear=function(e){var t=e.world;l.clear(e.pairs);var n=e.broadphase;if(n.controller){var i=p.allBodies(t);n.controller.clear(n),n.controller.update(n,i,e,!0)}},i._bodiesClearForces=function(e){for(var t=0;t<e.length;t++){var n=e[t];n.force.x=0,n.force.y=0,n.torque=0}},i._bodiesApplyGravity=function(e,t){var n=void 0!==t.scale?t.scale:.001;if((0!==t.x||0!==t.y)&&0!==n)for(var i=0;i<e.length;i++){var o=e[i];o.isStatic||o.isSleeping||(o.force.y+=o.mass*t.y*n,o.force.x+=o.mass*t.x*n)}},i._bodiesUpdate=function(e,t,n,i,o){for(var r=0;r<e.length;r++){var s=e[r];s.isStatic||s.isSleeping||m.update(s,t,n,i)}}},function(e,t,n){var i={};e.exports=i;var o=n(5),r=n(0);i.create=function(e){return r.extend({extended:!1,narrowDetections:0,narrowphaseTests:0,narrowReuse:0,narrowReuseCount:0,midphaseTests:0,broadphaseTests:0,narrowEff:1e-4,midEff:1e-4,broadEff:1e-4,collisions:0,buckets:0,bodies:0,pairs:0},!1,e)},i.reset=function(e){e.extended&&(e.narrowDetections=0,e.narrowphaseTests=0,e.narrowReuse=0,e.narrowReuseCount=0,e.midphaseTests=0,e.broadphaseTests=0,e.narrowEff=0,e.midEff=0,e.broadEff=0,e.collisions=0,e.buckets=0,e.pairs=0,e.bodies=0)},i.update=function(e,t){if(e.extended){var n=t.world,i=o.allBodies(n);e.collisions=e.narrowDetections,e.pairs=t.pairs.list.length,e.bodies=i.length,e.midEff=(e.narrowDetections/(e.midphaseTests||1)).toFixed(2),e.narrowEff=(e.narrowDetections/(e.narrowphaseTests||1)).toFixed(2),e.broadEff=(1-e.broadphaseTests/(i.length||1)).toFixed(2),e.narrowReuse=(e.narrowReuseCount/(e.narrowphaseTests||1)).toFixed(2)}}},function(e,t,n){var i=e.exports=n(25);i.Body=n(6),i.Composite=n(5),i.World=n(19),i.Contact=n(18),i.Detector=n(12),i.Grid=n(11),i.Pairs=n(20),i.Pair=n(9),i.Query=n(26),i.Resolver=n(21),i.SAT=n(13),i.Constraint=n(8),i.MouseConstraint=n(28),i.Common=n(0),i.Engine=n(22),i.Events=n(4),i.Mouse=n(14),i.Runner=n(29),i.Sleeping=n(7),i.Plugin=n(17),i.Metrics=n(23),i.Bodies=n(16),i.Composites=n(30),i.Axes=n(15),i.Bounds=n(1),i.Svg=n(31),i.Vector=n(2),i.Vertices=n(3),i.Render=n(10),i.RenderPixi=n(32),i.World.add=i.Composite.add,i.World.remove=i.Composite.remove,i.World.addComposite=i.Composite.addComposite,i.World.addBody=i.Composite.addBody,i.World.addConstraint=i.Composite.addConstraint,i.World.clear=i.Composite.clear,i.Engine.run=i.Runner.run},function(e,t,n){var i={};e.exports=i;var o=n(17),r=n(0);i.name="matter-js",i.version="0.16.0",i.uses=[],i.used=[],i.use=function(){o.use(i,Array.prototype.slice.call(arguments))},i.before=function(e,t){return e=e.replace(/^Matter./,""),r.chainPathBefore(i,e,t)},i.after=function(e,t){return e=e.replace(/^Matter./,""),r.chainPathAfter(i,e,t)}},function(e,t,n){var i={};e.exports=i;var o=n(2),r=n(13),s=n(1),a=n(16),l=n(3);i.collides=function(e,t){for(var n=[],i=0;i<t.length;i++){var o=t[i];if(s.overlaps(o.bounds,e.bounds))for(var a=1===o.parts.length?0:1;a<o.parts.length;a++){var l=o.parts[a];if(s.overlaps(l.bounds,e.bounds)){var c=r.collides(l,e);if(c.collided){n.push(c);break}}}}return n},i.ray=function(e,t,n,r){r=r||1e-100;for(var s=o.angle(t,n),l=o.magnitude(o.sub(t,n)),c=.5*(n.x+t.x),d=.5*(n.y+t.y),u=a.rectangle(c,d,l,r,{angle:s}),p=i.collides(u,e),f=0;f<p.length;f+=1){var v=p[f];v.body=v.bodyB=v.bodyA}return p},i.region=function(e,t,n){for(var i=[],o=0;o<e.length;o++){var r=e[o],a=s.overlaps(r.bounds,t);(a&&!n||!a&&n)&&i.push(r)}return i},i.point=function(e,t){for(var n=[],i=0;i<e.length;i++){var o=e[i];if(s.contains(o.bounds,t))for(var r=1===o.parts.length?0:1;r<o.parts.length;r++){var a=o.parts[r];if(s.contains(a.bounds,t)&&l.contains(a.vertices,t)){n.push(o);break}}}return n}},function(t,n){t.exports=e},function(e,t,n){var i={};e.exports=i;var o=n(3),r=n(7),s=n(14),a=n(4),l=n(12),c=n(8),d=n(5),u=n(0),p=n(1);i.create=function(e,t){var n=(e?e.mouse:null)||(t?t.mouse:null);n||(e&&e.render&&e.render.canvas?n=s.create(e.render.canvas):t&&t.element?n=s.create(t.element):(n=s.create(),u.warn("MouseConstraint.create: options.mouse was undefined, options.element was undefined, may not function as expected")));var o={type:"mouseConstraint",mouse:n,element:null,body:null,constraint:c.create({label:"Mouse Constraint",pointA:n.position,pointB:{x:0,y:0},length:.01,stiffness:.1,angularStiffness:1,render:{strokeStyle:"#90EE90",lineWidth:3}}),collisionFilter:{category:1,mask:4294967295,group:0}},r=u.extend(o,t);return a.on(e,"beforeUpdate",(function(){var t=d.allBodies(e.world);i.update(r,t),i._triggerEvents(r)})),r},i.update=function(e,t){var n=e.mouse,i=e.constraint,s=e.body;if(0===n.button){if(i.bodyB)r.set(i.bodyB,!1),i.pointA=n.position;else for(var c=0;c<t.length;c++)if(s=t[c],p.contains(s.bounds,n.position)&&l.canCollide(s.collisionFilter,e.collisionFilter))for(var d=s.parts.length>1?1:0;d<s.parts.length;d++){var u=s.parts[d];if(o.contains(u.vertices,n.position)){i.pointA=n.position,i.bodyB=e.body=s,i.pointB={x:n.position.x-s.position.x,y:n.position.y-s.position.y},i.angleB=s.angle,r.set(s,!1),a.trigger(e,"startdrag",{mouse:n,body:s});break}}}else i.bodyB=e.body=null,i.pointB=null,s&&a.trigger(e,"enddrag",{mouse:n,body:s})},i._triggerEvents=function(e){var t=e.mouse,n=t.sourceEvents;n.mousemove&&a.trigger(e,"mousemove",{mouse:t}),n.mousedown&&a.trigger(e,"mousedown",{mouse:t}),n.mouseup&&a.trigger(e,"mouseup",{mouse:t}),s.clearSourceEvents(t)}},function(e,t,n){var i={};e.exports=i;var o=n(4),r=n(22),s=n(0);!function(){var e,t,n;("undefined"!=typeof window&&(e=window.requestAnimationFrame||window.webkitRequestAnimationFrame||window.mozRequestAnimationFrame||window.msRequestAnimationFrame,t=window.cancelAnimationFrame||window.mozCancelAnimationFrame||window.webkitCancelAnimationFrame||window.msCancelAnimationFrame),e)||(e=function(e){n=setTimeout((function(){e(s.now())}),1e3/60)},t=function(){clearTimeout(n)});i.create=function(e){var t=s.extend({fps:60,correction:1,deltaSampleSize:60,counterTimestamp:0,frameCounter:0,deltaHistory:[],timePrev:null,timeScalePrev:1,frameRequestId:null,isFixed:!1,enabled:!0},e);return t.delta=t.delta||1e3/t.fps,t.deltaMin=t.deltaMin||1e3/t.fps,t.deltaMax=t.deltaMax||1e3/(.5*t.fps),t.fps=1e3/t.delta,t},i.run=function(t,n){return void 0!==t.positionIterations&&(n=t,t=i.create()),function o(r){t.frameRequestId=e(o),r&&t.enabled&&i.tick(t,n,r)}(),t},i.tick=function(e,t,n){var i,s=t.timing,a=1,l={timestamp:s.timestamp};o.trigger(e,"beforeTick",l),o.trigger(t,"beforeTick",l),e.isFixed?i=e.delta:(i=n-e.timePrev||e.delta,e.timePrev=n,e.deltaHistory.push(i),e.deltaHistory=e.deltaHistory.slice(-e.deltaSampleSize),a=(i=(i=(i=Math.min.apply(null,e.deltaHistory))<e.deltaMin?e.deltaMin:i)>e.deltaMax?e.deltaMax:i)/e.delta,e.delta=i),0!==e.timeScalePrev&&(a*=s.timeScale/e.timeScalePrev),0===s.timeScale&&(a=0),e.timeScalePrev=s.timeScale,e.correction=a,e.frameCounter+=1,n-e.counterTimestamp>=1e3&&(e.fps=e.frameCounter*((n-e.counterTimestamp)/1e3),e.counterTimestamp=n,e.frameCounter=0),o.trigger(e,"tick",l),o.trigger(t,"tick",l),t.world.isModified&&t.render&&t.render.controller&&t.render.controller.clear&&t.render.controller.clear(t.render),o.trigger(e,"beforeUpdate",l),r.update(t,i,a),o.trigger(e,"afterUpdate",l),t.render&&t.render.controller&&(o.trigger(e,"beforeRender",l),o.trigger(t,"beforeRender",l),t.render.controller.world(t.render),o.trigger(e,"afterRender",l),o.trigger(t,"afterRender",l)),o.trigger(e,"afterTick",l),o.trigger(t,"afterTick",l)},i.stop=function(e){t(e.frameRequestId)},i.start=function(e,t){i.run(e,t)}}()},function(e,t,n){var i={};e.exports=i;var o=n(5),r=n(8),s=n(0),a=n(6),l=n(16);i.stack=function(e,t,n,i,r,s,l){for(var c,d=o.create({label:"Stack"}),u=e,p=t,f=0,v=0;v<i;v++){for(var m=0,y=0;y<n;y++){var g=l(u,p,y,v,c,f);if(g){var x=g.bounds.max.y-g.bounds.min.y,h=g.bounds.max.x-g.bounds.min.x;x>m&&(m=x),a.translate(g,{x:.5*h,y:.5*x}),u=g.bounds.max.x+r,o.addBody(d,g),c=g,f+=1}else u+=r}p+=m+s,u=e}return d},i.chain=function(e,t,n,i,a,l){for(var c=e.bodies,d=1;d<c.length;d++){var u=c[d-1],p=c[d],f=u.bounds.max.y-u.bounds.min.y,v=u.bounds.max.x-u.bounds.min.x,m=p.bounds.max.y-p.bounds.min.y,y={bodyA:u,pointA:{x:v*t,y:f*n},bodyB:p,pointB:{x:(p.bounds.max.x-p.bounds.min.x)*i,y:m*a}},g=s.extend(y,l);o.addConstraint(e,r.create(g))}return e.label+=" Chain",e},i.mesh=function(e,t,n,i,a){var l,c,d,u,p,f=e.bodies;for(l=0;l<n;l++){for(c=1;c<t;c++)d=f[c-1+l*t],u=f[c+l*t],o.addConstraint(e,r.create(s.extend({bodyA:d,bodyB:u},a)));if(l>0)for(c=0;c<t;c++)d=f[c+(l-1)*t],u=f[c+l*t],o.addConstraint(e,r.create(s.extend({bodyA:d,bodyB:u},a))),i&&c>0&&(p=f[c-1+(l-1)*t],o.addConstraint(e,r.create(s.extend({bodyA:p,bodyB:u},a)))),i&&c<t-1&&(p=f[c+1+(l-1)*t],o.addConstraint(e,r.create(s.extend({bodyA:p,bodyB:u},a))))}return e.label+=" Mesh",e},i.pyramid=function(e,t,n,o,r,s,l){return i.stack(e,t,n,o,r,s,(function(t,i,s,c,d,u){var p=Math.min(o,Math.ceil(n/2)),f=d?d.bounds.max.x-d.bounds.min.x:0;if(!(c>p||s<(c=p-c)||s>n-1-c))return 1===u&&a.translate(d,{x:(s+(n%2==1?1:-1))*f,y:0}),l(e+(d?s*f:0)+s*r,i,s,c,d,u)}))},i.newtonsCradle=function(e,t,n,i,s){for(var a=o.create({label:"Newtons Cradle"}),c=0;c<n;c++){var d=l.circle(e+c*(1.9*i),t+s,i,{inertia:1/0,restitution:1,friction:0,frictionAir:1e-4,slop:1}),u=r.create({pointA:{x:e+c*(1.9*i),y:t},bodyB:d});o.addBody(a,d),o.addConstraint(a,u)}return a},i.car=function(e,t,n,i,s){var c=a.nextGroup(!0),d=.5*-n+20,u=.5*n-20,p=o.create({label:"Car"}),f=l.rectangle(e,t,n,i,{collisionFilter:{group:c},chamfer:{radius:.5*i},density:2e-4}),v=l.circle(e+d,t+0,s,{collisionFilter:{group:c},friction:.8}),m=l.circle(e+u,t+0,s,{collisionFilter:{group:c},friction:.8}),y=r.create({bodyB:f,pointB:{x:d,y:0},bodyA:v,stiffness:1,length:0}),g=r.create({bodyB:f,pointB:{x:u,y:0},bodyA:m,stiffness:1,length:0});return o.addBody(p,f),o.addBody(p,v),o.addBody(p,m),o.addConstraint(p,y),o.addConstraint(p,g),p},i.softBody=function(e,t,n,o,r,a,c,d,u,p){u=s.extend({inertia:1/0},u),p=s.extend({stiffness:.2,render:{type:"line",anchors:!1}},p);var f=i.stack(e,t,n,o,r,a,(function(e,t){return l.circle(e,t,d,u)}));return i.mesh(f,n,o,c,p),f.label="Soft Body",f}},function(e,t,n){var i={};e.exports=i;n(1);var o=n(0);i.pathToVertices=function(e,t){"undefined"==typeof window||"SVGPathSeg"in window||o.warn("Svg.pathToVertices: SVGPathSeg not defined, a polyfill is required.");var n,r,s,a,l,c,d,u,p,f,v,m=[],y=0,g=0,x=0;t=t||15;var h=function(e,t,n){var i=n%2==1&&n>1;if(!p||e!=p.x||t!=p.y){p&&i?(f=p.x,v=p.y):(f=0,v=0);var o={x:f+e,y:v+t};!i&&p||(p=o),m.push(o),g=f+e,x=v+t}},b=function(e){var t=e.pathSegTypeAsLetter.toUpperCase();if("Z"!==t){switch(t){case"M":case"L":case"T":case"C":case"S":case"Q":g=e.x,x=e.y;break;case"H":g=e.x;break;case"V":x=e.y}h(g,x,e.pathSegType)}};for(i._svgPathToAbsolute(e),s=e.getTotalLength(),c=[],n=0;n<e.pathSegList.numberOfItems;n+=1)c.push(e.pathSegList.getItem(n));for(d=c.concat();y<s;){if((l=c[e.getPathSegAtLength(y)])!=u){for(;d.length&&d[0]!=l;)b(d.shift());u=l}switch(l.pathSegTypeAsLetter.toUpperCase()){case"C":case"T":case"S":case"Q":case"A":a=e.getPointAtLength(y),h(a.x,a.y,0)}y+=t}for(n=0,r=d.length;n<r;++n)b(d[n]);return m},i._svgPathToAbsolute=function(e){for(var t,n,i,o,r,s,a=e.pathSegList,l=0,c=0,d=a.numberOfItems,u=0;u<d;++u){var p=a.getItem(u),f=p.pathSegTypeAsLetter;if(/[MLHVCSQTA]/.test(f))"x"in p&&(l=p.x),"y"in p&&(c=p.y);else switch("x1"in p&&(i=l+p.x1),"x2"in p&&(r=l+p.x2),"y1"in p&&(o=c+p.y1),"y2"in p&&(s=c+p.y2),"x"in p&&(l+=p.x),"y"in p&&(c+=p.y),f){case"m":a.replaceItem(e.createSVGPathSegMovetoAbs(l,c),u);break;case"l":a.replaceItem(e.createSVGPathSegLinetoAbs(l,c),u);break;case"h":a.replaceItem(e.createSVGPathSegLinetoHorizontalAbs(l),u);break;case"v":a.replaceItem(e.createSVGPathSegLinetoVerticalAbs(c),u);break;case"c":a.replaceItem(e.createSVGPathSegCurvetoCubicAbs(l,c,i,o,r,s),u);break;case"s":a.replaceItem(e.createSVGPathSegCurvetoCubicSmoothAbs(l,c,r,s),u);break;case"q":a.replaceItem(e.createSVGPathSegCurvetoQuadraticAbs(l,c,i,o),u);break;case"t":a.replaceItem(e.createSVGPathSegCurvetoQuadraticSmoothAbs(l,c),u);break;case"a":a.replaceItem(e.createSVGPathSegArcAbs(l,c,p.r1,p.r2,p.angle,p.largeArcFlag,p.sweepFlag),u);break;case"z":case"Z":l=t,c=n}"M"!=f&&"m"!=f||(t=l,n=c)}}},function(e,t,n){var i={};e.exports=i;var o=n(1),r=n(5),s=n(0),a=n(4),l=n(2);!function(){var e,t;"undefined"!=typeof window&&(e=window.requestAnimationFrame||window.webkitRequestAnimationFrame||window.mozRequestAnimationFrame||window.msRequestAnimationFrame||function(e){window.setTimeout((function(){e(s.now())}),1e3/60)},t=window.cancelAnimationFrame||window.mozCancelAnimationFrame||window.webkitCancelAnimationFrame||window.msCancelAnimationFrame),i.create=function(e){s.warn("RenderPixi.create: Matter.RenderPixi is deprecated (see docs)");var t={controller:i,engine:null,element:null,frameRequestId:null,canvas:null,renderer:null,container:null,spriteContainer:null,pixiOptions:null,options:{width:800,height:600,background:"#fafafa",wireframeBackground:"#222",hasBounds:!1,enabled:!0,wireframes:!0,showSleeping:!0,showDebug:!1,showBroadphase:!1,showBounds:!1,showVelocity:!1,showCollisions:!1,showAxes:!1,showPositions:!1,showAngleIndicator:!1,showIds:!1,showShadows:!1}},n=s.extend(t,e),o=!n.options.wireframes&&"transparent"===n.options.background;return n.pixiOptions=n.pixiOptions||{view:n.canvas,transparent:o,antialias:!0,backgroundColor:e.background},n.mouse=e.mouse,n.engine=e.engine,n.renderer=n.renderer||new PIXI.WebGLRenderer(n.options.width,n.options.height,n.pixiOptions),n.container=n.container||new PIXI.Container,n.spriteContainer=n.spriteContainer||new PIXI.Container,n.canvas=n.canvas||n.renderer.view,n.bounds=n.bounds||{min:{x:0,y:0},max:{x:n.options.width,y:n.options.height}},a.on(n.engine,"beforeUpdate",(function(){i.clear(n)})),n.textures={},n.sprites={},n.primitives={},n.container.addChild(n.spriteContainer),s.isElement(n.element)?n.element.appendChild(n.canvas):s.warn('No "render.element" passed, "render.canvas" was not inserted into document.'),n.canvas.oncontextmenu=function(){return!1},n.canvas.onselectstart=function(){return!1},n},i.run=function(t){!function n(o){t.frameRequestId=e(n),i.world(t)}()},i.stop=function(e){t(e.frameRequestId)},i.clear=function(e){for(var t=e.container,n=e.spriteContainer;t.children[0];)t.removeChild(t.children[0]);for(;n.children[0];)n.removeChild(n.children[0]);var i=e.sprites["bg-0"];e.textures={},e.sprites={},e.primitives={},e.sprites["bg-0"]=i,i&&t.addChildAt(i,0),e.container.addChild(e.spriteContainer),e.currentBackground=null,t.scale.set(1,1),t.position.set(0,0)},i.setBackground=function(e,t){if(e.currentBackground!==t){var n=t.indexOf&&-1!==t.indexOf("#"),i=e.sprites["bg-0"];if(n){var o=s.colorToNumber(t);e.renderer.backgroundColor=o,i&&e.container.removeChild(i)}else if(!i){var r=d(e,t);(i=e.sprites["bg-0"]=new PIXI.Sprite(r)).position.x=0,i.position.y=0,e.container.addChildAt(i,0)}e.currentBackground=t}},i.world=function(e){var t,n=e.engine.world,s=e.renderer,a=e.container,c=e.options,d=r.allBodies(n),u=r.allConstraints(n),p=[];c.wireframes?i.setBackground(e,c.wireframeBackground):i.setBackground(e,c.background);var f=e.bounds.max.x-e.bounds.min.x,v=e.bounds.max.y-e.bounds.min.y,m=f/e.options.width,y=v/e.options.height;if(c.hasBounds){for(t=0;t<d.length;t++){var g=d[t];g.render.sprite.visible=o.overlaps(g.bounds,e.bounds)}for(t=0;t<u.length;t++){var x=u[t],h=x.bodyA,b=x.bodyB,w=x.pointA,S=x.pointB;h&&(w=l.add(h.position,x.pointA)),b&&(S=l.add(b.position,x.pointB)),w&&S&&((o.contains(e.bounds,w)||o.contains(e.bounds,S))&&p.push(x))}a.scale.set(1/m,1/y),a.position.set(-e.bounds.min.x*(1/m),-e.bounds.min.y*(1/y))}else p=u;for(t=0;t<d.length;t++)i.body(e,d[t]);for(t=0;t<p.length;t++)i.constraint(e,p[t]);s.render(a)},i.constraint=function(e,t){e.engine;var n=t.bodyA,i=t.bodyB,o=t.pointA,r=t.pointB,a=e.container,l=t.render,c="c-"+t.id,d=e.primitives[c];d||(d=e.primitives[c]=new PIXI.Graphics),l.visible&&t.pointA&&t.pointB?(-1===s.indexOf(a.children,d)&&a.addChild(d),d.clear(),d.beginFill(0,0),d.lineStyle(l.lineWidth,s.colorToNumber(l.strokeStyle),1),n?d.moveTo(n.position.x+o.x,n.position.y+o.y):d.moveTo(o.x,o.y),i?d.lineTo(i.position.x+r.x,i.position.y+r.y):d.lineTo(r.x,r.y),d.endFill()):d.clear()},i.body=function(e,t){e.engine;var i=t.render;if(i.visible)if(i.sprite&&i.sprite.texture){var o="b-"+t.id,r=e.sprites[o],a=e.spriteContainer;r||(r=e.sprites[o]=n(e,t)),-1===s.indexOf(a.children,r)&&a.addChild(r),r.position.x=t.position.x,r.position.y=t.position.y,r.rotation=t.angle,r.scale.x=i.sprite.xScale||1,r.scale.y=i.sprite.yScale||1}else{var l="b-"+t.id,d=e.primitives[l],u=e.container;d||((d=e.primitives[l]=c(e,t)).initialAngle=t.angle),-1===s.indexOf(u.children,d)&&u.addChild(d),d.position.x=t.position.x,d.position.y=t.position.y,d.rotation=t.angle-d.initialAngle}};var n=function(e,t){var n=t.render.sprite.texture,i=d(e,n),o=new PIXI.Sprite(i);return o.anchor.x=t.render.sprite.xOffset,o.anchor.y=t.render.sprite.yOffset,o},c=function(e,t){var n,i=t.render,o=e.options,r=new PIXI.Graphics,a=s.colorToNumber(i.fillStyle),l=s.colorToNumber(i.strokeStyle),c=s.colorToNumber(i.strokeStyle),d=s.colorToNumber("#bbb"),u=s.colorToNumber("#CD5C5C");r.clear();for(var p=t.parts.length>1?1:0;p<t.parts.length;p++){n=t.parts[p],o.wireframes?(r.beginFill(0,0),r.lineStyle(1,d,1)):(r.beginFill(a,1),r.lineStyle(i.lineWidth,l,1)),r.moveTo(n.vertices[0].x-t.position.x,n.vertices[0].y-t.position.y);for(var f=1;f<n.vertices.length;f++)r.lineTo(n.vertices[f].x-t.position.x,n.vertices[f].y-t.position.y);r.lineTo(n.vertices[0].x-t.position.x,n.vertices[0].y-t.position.y),r.endFill(),(o.showAngleIndicator||o.showAxes)&&(r.beginFill(0,0),o.wireframes?r.lineStyle(1,u,1):r.lineStyle(1,c),r.moveTo(n.position.x-t.position.x,n.position.y-t.position.y),r.lineTo((n.vertices[0].x+n.vertices[n.vertices.length-1].x)/2-t.position.x,(n.vertices[0].y+n.vertices[n.vertices.length-1].y)/2-t.position.y),r.endFill())}return r},d=function(e,t){var n=e.textures[t];return n||(n=e.textures[t]=PIXI.Texture.fromImage(t)),n}}()}])}));
 (function(){function r(e,n,t){function o(i,f){if(!n[i]){if(!e[i]){var c="function"==typeof require&&require;if(!f&&c)return c(i,!0);if(u)return u(i,!0);var a=new Error("Cannot find module '"+i+"'");throw a.code="MODULE_NOT_FOUND",a}var p=n[i]={exports:{}};e[i][0].call(p.exports,function(r){var n=e[i][1][r];return o(n||r)},p,p.exports,r,e,n,t)}return n[i].exports}for(var u="function"==typeof require&&require,i=0;i<t.length;i++)o(t[i]);return o}return r})()({1:[function(require,module,exports){
 function _arrayLikeToArray(arr, len) {
   if (len == null || len > arr.length) len = arr.length;
@@ -11689,7 +1333,7 @@ var AiEngine = /*#__PURE__*/function () {
 var _default = AiEngine;
 exports["default"] = _default;
 
-},{"../utils/Maths.js":165,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/interopRequireDefault":12}],27:[function(require,module,exports){
+},{"../utils/Maths.js":169,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/interopRequireDefault":12}],27:[function(require,module,exports){
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
@@ -12071,7 +1715,7 @@ GeneticEngine.instance = null;
 var _default = GeneticEngine;
 exports["default"] = _default;
 
-},{"../../core/Storage.js":39,"../../utils/Color.js":163,"../../utils/Maths.js":165,"../AiEngine.js":26,"./Genome.js":28,"./NaturalSelection.js":29,"@babel/runtime/helpers/assertThisInitialized":3,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":17}],28:[function(require,module,exports){
+},{"../../core/Storage.js":39,"../../utils/Color.js":167,"../../utils/Maths.js":169,"../AiEngine.js":26,"./Genome.js":28,"./NaturalSelection.js":29,"@babel/runtime/helpers/assertThisInitialized":3,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":17}],28:[function(require,module,exports){
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
@@ -12301,7 +1945,7 @@ var Genome = /*#__PURE__*/function () {
 var _default = Genome;
 exports["default"] = _default;
 
-},{"../../utils/Maths.js":165,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/defineProperty":8,"@babel/runtime/helpers/interopRequireDefault":12}],29:[function(require,module,exports){
+},{"../../utils/Maths.js":169,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/defineProperty":8,"@babel/runtime/helpers/interopRequireDefault":12}],29:[function(require,module,exports){
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
@@ -12906,7 +2550,7 @@ var Camera = /*#__PURE__*/function (_CameraData) {
 var _default = Camera;
 exports["default"] = _default;
 
-},{"../project/data/CameraData.js":138,"../utils/Vector.js":169,"./Constant.js":33,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":17}],33:[function(require,module,exports){
+},{"../project/data/CameraData.js":141,"../utils/Vector.js":173,"./Constant.js":33,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":17}],33:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -13364,7 +3008,7 @@ var Mesh = /*#__PURE__*/function (_MeshData) {
 var _default = Mesh;
 exports["default"] = _default;
 
-},{"../pobject/Size.js":136,"../project/data/MeshData.js":143,"../utils/ImageHelper.js":164,"./Constant.js":33,"@babel/runtime/helpers/asyncToGenerator":4,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":17,"@babel/runtime/regenerator":25}],38:[function(require,module,exports){
+},{"../pobject/Size.js":139,"../project/data/MeshData.js":146,"../utils/ImageHelper.js":168,"./Constant.js":33,"@babel/runtime/helpers/asyncToGenerator":4,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":17,"@babel/runtime/regenerator":25}],38:[function(require,module,exports){
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
@@ -13377,6 +3021,10 @@ exports["default"] = void 0;
 var _classCallCheck2 = _interopRequireDefault(require("@babel/runtime/helpers/classCallCheck"));
 
 var _createClass2 = _interopRequireDefault(require("@babel/runtime/helpers/createClass"));
+
+var _Context = require("./Context.js");
+
+var _Vector = _interopRequireDefault(require("../utils/Vector.js"));
 
 /**
  * Define the mouse inputs (pressed, clicked, mouse position, ...)
@@ -13391,8 +3039,16 @@ var Mouse = /*#__PURE__*/function () {
       x: 0,
       y: 0
     };
+    this.scenePosition = {
+      x: 0,
+      y: 0
+    };
     this.target = null;
     this.currentPosition = {
+      x: 0,
+      y: 0
+    };
+    this.currentScenePosition = {
       x: 0,
       y: 0
     };
@@ -13449,6 +3105,7 @@ var Mouse = /*#__PURE__*/function () {
       this.position = this.getPosition(event);
       this.target = this.getTarget(event);
       this.path = this.getPath(event);
+      this.scenePosition = this.toSceneCoord(this.position);
     }
     /**
      * @param {number} key
@@ -13519,8 +3176,8 @@ var Mouse = /*#__PURE__*/function () {
     key: "getDragArea",
     value: function getDragArea() {
       var dragDistance = this.getDragDistance();
-      var newX = this.position.x;
-      var newY = this.position.y;
+      var newX = this.scenePosition.x;
+      var newY = this.scenePosition.y;
 
       if (dragDistance.x <= 0) {
         newX += dragDistance.x;
@@ -13604,11 +3261,33 @@ var Mouse = /*#__PURE__*/function () {
     value: function getMouseWheel() {
       return this.mouseWheel;
     }
+    /**
+     * Convert position to scene coordinates
+     * @param {Vector} position
+     * @return {Vector}
+     */
+
+  }, {
+    key: "toSceneCoord",
+    value: function toSceneCoord(_ref) {
+      var x = _ref.x,
+          y = _ref.y;
+
+      var _objectContext$canvas = _Context.objectContext.canvas.getBoundingClientRect(),
+          sceneCanvasX = _objectContext$canvas.left,
+          sceneCanvasY = _objectContext$canvas.top;
+
+      return new _Vector["default"]({
+        x: x - sceneCanvasX,
+        y: y - sceneCanvasY
+      });
+    }
   }, {
     key: "setMouseMove",
     value: function setMouseMove() {
       this.lastPosition = this.currentPosition;
       this.currentPosition = this.getPosition(event);
+      this.currentScenePosition = this.toSceneCoord(this.currentPosition);
     }
   }, {
     key: "clearKeyClicked",
@@ -13641,7 +3320,7 @@ Mouse.CURSOR = {
 var _default = Mouse;
 exports["default"] = _default;
 
-},{"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/interopRequireDefault":12}],39:[function(require,module,exports){
+},{"../utils/Vector.js":173,"./Context.js":34,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/interopRequireDefault":12}],39:[function(require,module,exports){
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
@@ -13998,7 +3677,7 @@ Storage.format = {
 var _default = Storage;
 exports["default"] = _default;
 
-},{"../schema/Schema.js":155,"../serde/JsSerDe.js":157,"../serde/XmlSerDe.js":159,"@babel/runtime/helpers/asyncToGenerator":4,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/defineProperty":8,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/regenerator":25}],40:[function(require,module,exports){
+},{"../schema/Schema.js":159,"../serde/JsSerDe.js":161,"../serde/XmlSerDe.js":163,"@babel/runtime/helpers/asyncToGenerator":4,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/defineProperty":8,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/regenerator":25}],40:[function(require,module,exports){
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
@@ -14113,7 +3792,7 @@ var Texture = /*#__PURE__*/function (_TextureData) {
 var _default = Texture;
 exports["default"] = _default;
 
-},{"../project/data/TextureData.js":147,"../utils/Maths.js":165,"./Mesh.js":37,"@babel/runtime/helpers/asyncToGenerator":4,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":17,"@babel/runtime/regenerator":25}],41:[function(require,module,exports){
+},{"../project/data/TextureData.js":151,"../utils/Maths.js":169,"./Mesh.js":37,"@babel/runtime/helpers/asyncToGenerator":4,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":17,"@babel/runtime/regenerator":25}],41:[function(require,module,exports){
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
@@ -15197,7 +4876,7 @@ var Entity = /*#__PURE__*/function (_EntityData) {
 var _default = Entity;
 exports["default"] = _default;
 
-},{"../core/Constant.js":33,"../core/Mesh.js":37,"../core/Window.js":41,"../pobject/Style.js":137,"../project/data/EntityData.js":141,"../utils/Vector.js":169,"../utils/Vertex.js":170,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/get":9,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":17}],43:[function(require,module,exports){
+},{"../core/Constant.js":33,"../core/Mesh.js":37,"../core/Window.js":41,"../pobject/Style.js":140,"../project/data/EntityData.js":144,"../utils/Vector.js":173,"../utils/Vertex.js":174,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/get":9,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":17}],43:[function(require,module,exports){
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
@@ -15591,7 +5270,7 @@ var EntityMotion = /*#__PURE__*/function (_Entity) {
 var _default = EntityMotion;
 exports["default"] = _default;
 
-},{"../state/AppState.js":160,"../utils/Vector.js":169,"./Entity.js":42,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/defineProperty":8,"@babel/runtime/helpers/get":9,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":17}],44:[function(require,module,exports){
+},{"../state/AppState.js":164,"../utils/Vector.js":173,"./Entity.js":42,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/defineProperty":8,"@babel/runtime/helpers/get":9,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":17}],44:[function(require,module,exports){
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
@@ -15806,7 +5485,7 @@ var ConstraintEntity = /*#__PURE__*/function (_JointEntity) {
 var _default = ConstraintEntity;
 exports["default"] = _default;
 
-},{"../../../utils/Color.js":163,"../../../utils/Vector.js":169,"./JointEntity.js":47,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":17}],47:[function(require,module,exports){
+},{"../../../utils/Color.js":167,"../../../utils/Vector.js":173,"./JointEntity.js":47,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":17}],47:[function(require,module,exports){
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
@@ -16010,7 +5689,7 @@ var JointEntity = /*#__PURE__*/function (_AttachEntity) {
 var _default = JointEntity;
 exports["default"] = _default;
 
-},{"../../../utils/Vector.js":169,"../../../world/manager/EntitySelector.js":174,"./AttachEntity.js":45,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":17}],48:[function(require,module,exports){
+},{"../../../utils/Vector.js":173,"../../../world/manager/EntitySelector.js":178,"./AttachEntity.js":45,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":17}],48:[function(require,module,exports){
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
@@ -16415,8 +6094,8 @@ var PolyEntity = /*#__PURE__*/function (_EntityMotion) {
     value: function generatePoints() {
       var window = _Window["default"].get();
 
-      var position = window.mouse.position;
-      var currentPosition = window.mouse.currentPosition;
+      var position = window.mouse.scenePosition;
+      var currentPosition = window.mouse.currentScenePosition;
 
       if (!this.vertices.find(function (point) {
         return point.x === position.x && point.y === position.y;
@@ -16534,7 +6213,7 @@ var PolyEntity = /*#__PURE__*/function (_EntityMotion) {
 var _default = PolyEntity;
 exports["default"] = _default;
 
-},{"../../../core/Window.js":41,"../../../utils/Vertex.js":170,"../../EntityMotion.js":43,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/get":9,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":17}],52:[function(require,module,exports){
+},{"../../../core/Window.js":41,"../../../utils/Vertex.js":174,"../../EntityMotion.js":43,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/get":9,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":17}],52:[function(require,module,exports){
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
@@ -16714,7 +6393,7 @@ var NoiseEntity = /*#__PURE__*/function (_PolyEntity) {
 var _default = NoiseEntity;
 exports["default"] = _default;
 
-},{"../../../utils/PerlinNoise.js":168,"../shape/PolyEntity.js":51,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/defineProperty":8,"@babel/runtime/helpers/get":9,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":17}],54:[function(require,module,exports){
+},{"../../../utils/PerlinNoise.js":172,"../shape/PolyEntity.js":51,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/defineProperty":8,"@babel/runtime/helpers/get":9,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":17}],54:[function(require,module,exports){
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
@@ -16840,7 +6519,11 @@ var ExceptionHandler = /*#__PURE__*/function () {
      * @param {Error} e
      */
     value: function handle(e) {
-      _StateManager["default"].get().stopAll();
+      try {
+        _StateManager["default"].get().stopAll();
+      } catch (e) {
+        _StateManager["default"].get().reset();
+      }
 
       if (e instanceof TypeError) {
         throw e;
@@ -16869,7 +6552,7 @@ var ExceptionHandler = /*#__PURE__*/function () {
 var _default = ExceptionHandler;
 exports["default"] = _default;
 
-},{"../state/StateManager.js":161,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/defineProperty":8,"@babel/runtime/helpers/interopRequireDefault":12}],56:[function(require,module,exports){
+},{"../state/StateManager.js":165,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/defineProperty":8,"@babel/runtime/helpers/interopRequireDefault":12}],56:[function(require,module,exports){
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
@@ -17038,6 +6721,8 @@ var _CameraMenuItem = _interopRequireDefault(require("./items/camera/CameraMenuI
 
 var _TextureMenuItem = _interopRequireDefault(require("./items/texture/TextureMenuItem.js"));
 
+var _PhysicsMenuItem = _interopRequireDefault(require("./items/physics/PhysicsMenuItem.js"));
+
 /**
  * Define all menu items
  * @property {MenuItem[]} types
@@ -17049,13 +6734,13 @@ var Menu = /*#__PURE__*/function () {
     this.types = [//LEFT
     new _SelectorMenuItem["default"](), new _CircleMenuItem["default"](), new _RectMenuItem["default"](), new _JointMenuItem["default"](), new _AttachPointMenuItem["default"](), new _SimulateStartMenuItem["default"](), new _SimulateStopMenuItem["default"](), //TOP
     new _NewProjectMenuItem["default"](), new _LoadProjectMenuItem["default"](), new _SaveProjectMenuItem["default"](), new _ExportProjectMenuItem["default"](), new _DeleteMenuItem["default"](), new _DuplicateMenuItem["default"](), new _UndoMenuItem["default"](), new _MoveUpMenuItem["default"](), new _MoveDownMenuItem["default"](), new _LockMenuItem["default"](), new _UnlockMenuItem["default"](), new _HideMenuItem["default"](), new _ShowMenuItem["default"](), new _RotateUpMenuItem["default"](), //RIGHT
-    new _LayerMenuItem["default"](), new _StyleMenuItem["default"](), new _EntityMenuItem["default"](), new _ConditionMenuItem["default"](), new _AiGeneticMenuItem["default"](), new _TerrainMenuItem["default"](), new _TextureMenuItem["default"](), new _CameraMenuItem["default"](), //BOTTOM
+    new _LayerMenuItem["default"](), new _StyleMenuItem["default"](), new _EntityMenuItem["default"](), new _PhysicsMenuItem["default"](), new _ConditionMenuItem["default"](), new _AiGeneticMenuItem["default"](), new _TerrainMenuItem["default"](), new _TextureMenuItem["default"](), new _CameraMenuItem["default"](), //BOTTOM
     new _AppMenuItem["default"]()];
     this.items = [];
     this.setup();
   }
   /**
-   * Setup the items list which calculate the position of the each item
+   * Setup the items list which calculate the position of each item
    * in the screen.
    */
 
@@ -17222,11 +6907,11 @@ var Menu = /*#__PURE__*/function () {
   }], [{
     key: "get",
     value: function get() {
-      if (!Menu.instance) {
-        Menu.instance = new Menu();
+      if (!this.instance) {
+        this.instance = new this();
       }
 
-      return Menu.instance;
+      return this.instance;
     }
   }]);
   return Menu;
@@ -17236,7 +6921,7 @@ Menu.instance = null;
 var _default = Menu;
 exports["default"] = _default;
 
-},{"../renderer/ui/MenuItemUI.js":152,"./items/action/DeleteMenuItem.js":60,"./items/action/DuplicateMenuItem.js":61,"./items/action/HideMenuItem.js":62,"./items/action/LockMenuItem.js":63,"./items/action/MoveDownMenuItem.js":64,"./items/action/MoveUpMenuItem.js":65,"./items/action/RotateUpMenuItem.js":66,"./items/action/ShowMenuItem.js":67,"./items/action/SimulateStartMenuItem.js":68,"./items/action/SimulateStopMenuItem.js":69,"./items/action/UndoMenuItem.js":70,"./items/action/UnlockMenuItem.js":71,"./items/app/AppMenuItem.js":72,"./items/camera/CameraMenuItem.js":73,"./items/condition/ConditionMenuItem.js":76,"./items/draw/AttachPointMenuItem.js":77,"./items/draw/CircleMenuItem.js":78,"./items/draw/JointMenuItem.js":79,"./items/draw/RectMenuItem.js":80,"./items/draw/SelectorMenuItem.js":81,"./items/entity/EntityMenuItem.js":82,"./items/entity/LayerMenuItem.js":83,"./items/genetic/AiGeneticMenuItem.js":97,"./items/project/ExportProjectMenuItem.js":101,"./items/project/LoadProjectMenuItem.js":102,"./items/project/NewProjectMenuItem.js":103,"./items/project/SaveProjectMenuItem.js":104,"./items/style/StyleMenuItem.js":105,"./items/terrain/TerrainMenuItem.js":108,"./items/texture/TextureMenuItem.js":117,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/interopRequireDefault":12}],59:[function(require,module,exports){
+},{"../renderer/ui/MenuItemUI.js":156,"./items/action/DeleteMenuItem.js":60,"./items/action/DuplicateMenuItem.js":61,"./items/action/HideMenuItem.js":62,"./items/action/LockMenuItem.js":63,"./items/action/MoveDownMenuItem.js":64,"./items/action/MoveUpMenuItem.js":65,"./items/action/RotateUpMenuItem.js":66,"./items/action/ShowMenuItem.js":67,"./items/action/SimulateStartMenuItem.js":68,"./items/action/SimulateStopMenuItem.js":69,"./items/action/UndoMenuItem.js":70,"./items/action/UnlockMenuItem.js":71,"./items/app/AppMenuItem.js":72,"./items/camera/CameraMenuItem.js":73,"./items/condition/ConditionMenuItem.js":76,"./items/draw/AttachPointMenuItem.js":77,"./items/draw/CircleMenuItem.js":78,"./items/draw/JointMenuItem.js":79,"./items/draw/RectMenuItem.js":80,"./items/draw/SelectorMenuItem.js":81,"./items/entity/EntityMenuItem.js":82,"./items/entity/LayerMenuItem.js":83,"./items/genetic/AiGeneticMenuItem.js":97,"./items/physics/PhysicsMenuItem.js":102,"./items/project/ExportProjectMenuItem.js":104,"./items/project/LoadProjectMenuItem.js":105,"./items/project/NewProjectMenuItem.js":106,"./items/project/SaveProjectMenuItem.js":107,"./items/style/StyleMenuItem.js":108,"./items/terrain/TerrainMenuItem.js":111,"./items/texture/TextureMenuItem.js":120,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/interopRequireDefault":12}],59:[function(require,module,exports){
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
@@ -17394,7 +7079,7 @@ var MenuItem = /*#__PURE__*/function () {
 var _default = MenuItem;
 exports["default"] = _default;
 
-},{"../state/StateManager.js":161,"../utils/Maths.js":165,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/interopRequireDefault":12}],60:[function(require,module,exports){
+},{"../state/StateManager.js":165,"../utils/Maths.js":169,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/interopRequireDefault":12}],60:[function(require,module,exports){
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
@@ -18243,7 +7928,7 @@ var PropsFormMenuItem = /*#__PURE__*/function (_FormMenuItem) {
 var _default = PropsFormMenuItem;
 exports["default"] = _default;
 
-},{"../../../world/World.js":171,"../../Layout.js":57,"../form/FormMenuItem.js":91,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":17}],75:[function(require,module,exports){
+},{"../../../world/World.js":175,"../../Layout.js":57,"../form/FormMenuItem.js":91,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":17}],75:[function(require,module,exports){
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
@@ -18338,7 +8023,7 @@ var ConditionFormMenuItem = /*#__PURE__*/function (_FormMenuItem) {
 var _default = ConditionFormMenuItem;
 exports["default"] = _default;
 
-},{"../../../world/World.js":171,"../../../world/manager/EntitySelector.js":174,"../../Layout.js":57,"../form/FormMenuItem.js":91,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":17}],76:[function(require,module,exports){
+},{"../../../world/World.js":175,"../../../world/manager/EntitySelector.js":178,"../../Layout.js":57,"../form/FormMenuItem.js":91,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":17}],76:[function(require,module,exports){
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
@@ -18768,7 +8453,7 @@ var LayerMenuItem = /*#__PURE__*/function (_ListFormMenuItem) {
 var _default = LayerMenuItem;
 exports["default"] = _default;
 
-},{"../../../world/World.js":171,"../form/ListFormMenuItem.js":94,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":17}],84:[function(require,module,exports){
+},{"../../../world/World.js":175,"../form/ListFormMenuItem.js":94,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":17}],84:[function(require,module,exports){
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
@@ -18867,7 +8552,7 @@ var NoiseFormMenuItem = /*#__PURE__*/function (_FormMenuItem) {
 var _default = NoiseFormMenuItem;
 exports["default"] = _default;
 
-},{"../../../world/World.js":171,"../../../world/manager/EntitySelector.js":174,"../../Layout.js":57,"../form/FormMenuItem.js":91,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":17}],85:[function(require,module,exports){
+},{"../../../world/World.js":175,"../../../world/manager/EntitySelector.js":178,"../../Layout.js":57,"../form/FormMenuItem.js":91,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":17}],85:[function(require,module,exports){
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
@@ -18954,7 +8639,7 @@ var PositionFormMenuItem = /*#__PURE__*/function (_FormMenuItem) {
 var _default = PositionFormMenuItem;
 exports["default"] = _default;
 
-},{"../../../world/World.js":171,"../../../world/manager/EntitySelector.js":174,"../../Layout.js":57,"../form/FormMenuItem.js":91,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":17}],86:[function(require,module,exports){
+},{"../../../world/World.js":175,"../../../world/manager/EntitySelector.js":178,"../../Layout.js":57,"../form/FormMenuItem.js":91,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":17}],86:[function(require,module,exports){
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
@@ -19019,18 +8704,6 @@ var PropsFormMenuItem = /*#__PURE__*/function (_FormMenuItem) {
         bind: 'name',
         label: 'Name',
         type: _Layout["default"].form.TEXT
-      }, {
-        bind: 'fixed',
-        label: 'Static',
-        type: _Layout["default"].form.CHECKBOX
-      }, {
-        bind: 'motion',
-        label: 'Motion',
-        type: _Layout["default"].form.CHECKBOX
-      }, {
-        bind: 'controlled',
-        label: 'Controlled',
-        type: _Layout["default"].form.CHECKBOX
       }];
     }
     /**
@@ -19049,7 +8722,7 @@ var PropsFormMenuItem = /*#__PURE__*/function (_FormMenuItem) {
 var _default = PropsFormMenuItem;
 exports["default"] = _default;
 
-},{"../../../world/World.js":171,"../../../world/manager/EntitySelector.js":174,"../../Layout.js":57,"../form/FormMenuItem.js":91,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":17}],87:[function(require,module,exports){
+},{"../../../world/World.js":175,"../../../world/manager/EntitySelector.js":178,"../../Layout.js":57,"../form/FormMenuItem.js":91,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":17}],87:[function(require,module,exports){
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
@@ -19140,7 +8813,7 @@ var SizeFormMenuItem = /*#__PURE__*/function (_FormMenuItem) {
 var _default = SizeFormMenuItem;
 exports["default"] = _default;
 
-},{"../../../world/World.js":171,"../../../world/manager/EntitySelector.js":174,"../../Layout.js":57,"../form/FormMenuItem.js":91,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":17}],88:[function(require,module,exports){
+},{"../../../world/World.js":175,"../../../world/manager/EntitySelector.js":178,"../../Layout.js":57,"../form/FormMenuItem.js":91,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":17}],88:[function(require,module,exports){
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
@@ -19595,7 +9268,7 @@ var FormMenuItem = /*#__PURE__*/function (_MenuItem) {
 var _default = FormMenuItem;
 exports["default"] = _default;
 
-},{"../../../utils/Maths.js":165,"../../Layout.js":57,"../../MenuItem.js":59,"./CheckboxMenuItem.js":88,"./DropdownMenuItem.js":89,"./FileMenuItem.js":90,"./TextMenuItem.js":95,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":17}],92:[function(require,module,exports){
+},{"../../../utils/Maths.js":169,"../../Layout.js":57,"../../MenuItem.js":59,"./CheckboxMenuItem.js":88,"./DropdownMenuItem.js":89,"./FileMenuItem.js":90,"./TextMenuItem.js":95,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":17}],92:[function(require,module,exports){
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
@@ -20031,7 +9704,7 @@ var AiFormMenuItem = /*#__PURE__*/function (_FormMenuItem) {
 var _default = AiFormMenuItem;
 exports["default"] = _default;
 
-},{"../../../world/World.js":171,"../../Layout.js":57,"../form/FormMenuItem.js":91,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":17}],97:[function(require,module,exports){
+},{"../../../world/World.js":175,"../../Layout.js":57,"../form/FormMenuItem.js":91,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":17}],97:[function(require,module,exports){
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
@@ -20353,7 +10026,7 @@ var FormSimulationMenuItem = /*#__PURE__*/function (_FormMenuItem) {
 var _default = FormSimulationMenuItem;
 exports["default"] = _default;
 
-},{"../../../world/World.js":171,"../../Layout.js":57,"../form/FormMenuItem.js":91,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":17}],100:[function(require,module,exports){
+},{"../../../world/World.js":175,"../../Layout.js":57,"../form/FormMenuItem.js":91,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":17}],100:[function(require,module,exports){
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
@@ -20451,6 +10124,255 @@ exports["default"] = void 0;
 
 var _classCallCheck2 = _interopRequireDefault(require("@babel/runtime/helpers/classCallCheck"));
 
+var _createClass2 = _interopRequireDefault(require("@babel/runtime/helpers/createClass"));
+
+var _inherits2 = _interopRequireDefault(require("@babel/runtime/helpers/inherits"));
+
+var _possibleConstructorReturn2 = _interopRequireDefault(require("@babel/runtime/helpers/possibleConstructorReturn"));
+
+var _getPrototypeOf2 = _interopRequireDefault(require("@babel/runtime/helpers/getPrototypeOf"));
+
+var _Layout = _interopRequireDefault(require("../../Layout.js"));
+
+var _World = _interopRequireDefault(require("../../../world/World.js"));
+
+var _FormMenuItem2 = _interopRequireDefault(require("../form/FormMenuItem.js"));
+
+var _Physics = _interopRequireDefault(require("../../../physics/Physics.js"));
+
+function _createSuper(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct(); return function _createSuperInternal() { var Super = (0, _getPrototypeOf2["default"])(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = (0, _getPrototypeOf2["default"])(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return (0, _possibleConstructorReturn2["default"])(this, result); }; }
+
+function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Date.prototype.toString.call(Reflect.construct(Date, [], function () {})); return true; } catch (e) { return false; } }
+
+/**
+ * @class {PhysicsFormMenuItem}
+ */
+var PhysicsFormMenuItem = /*#__PURE__*/function (_FormMenuItem) {
+  (0, _inherits2["default"])(PhysicsFormMenuItem, _FormMenuItem);
+
+  var _super = _createSuper(PhysicsFormMenuItem);
+
+  function PhysicsFormMenuItem(parent) {
+    var _this;
+
+    (0, _classCallCheck2["default"])(this, PhysicsFormMenuItem);
+    _this = _super.call(this, {
+      name: '',
+      stateCode: '',
+      type: _Layout["default"].type.FORM,
+      zone: parent.zone
+    });
+    _this.parent = parent;
+
+    _this.init();
+
+    return _this;
+  }
+  /**
+   * @override
+   */
+
+
+  (0, _createClass2["default"])(PhysicsFormMenuItem, [{
+    key: "getFields",
+    value: function getFields() {
+      return [{
+        bind: 'type',
+        label: 'Type',
+        type: _Layout["default"].form.DROPDOWN,
+        list: [{
+          value: _Physics["default"].TYPES.MATTERJS,
+          label: 'MatterJS'
+        }]
+      }];
+    }
+    /**
+     * @override
+     */
+
+  }, {
+    key: "getFormObject",
+    value: function getFormObject() {
+      return _World["default"].get().getPhysics();
+    }
+  }]);
+  return PhysicsFormMenuItem;
+}(_FormMenuItem2["default"]);
+
+exports["default"] = PhysicsFormMenuItem;
+
+},{"../../../physics/Physics.js":126,"../../../world/World.js":175,"../../Layout.js":57,"../form/FormMenuItem.js":91,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":17}],102:[function(require,module,exports){
+"use strict";
+
+var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports["default"] = void 0;
+
+var _classCallCheck2 = _interopRequireDefault(require("@babel/runtime/helpers/classCallCheck"));
+
+var _assertThisInitialized2 = _interopRequireDefault(require("@babel/runtime/helpers/assertThisInitialized"));
+
+var _inherits2 = _interopRequireDefault(require("@babel/runtime/helpers/inherits"));
+
+var _possibleConstructorReturn2 = _interopRequireDefault(require("@babel/runtime/helpers/possibleConstructorReturn"));
+
+var _getPrototypeOf2 = _interopRequireDefault(require("@babel/runtime/helpers/getPrototypeOf"));
+
+var _MenuItem2 = _interopRequireDefault(require("../../MenuItem.js"));
+
+var _Layout = _interopRequireDefault(require("../../Layout.js"));
+
+var _PhysicsPropsFormMenuItem = _interopRequireDefault(require("./PhysicsPropsFormMenuItem.js"));
+
+var _PhysicsFormMenuItem = _interopRequireDefault(require("./PhysicsFormMenuItem.js"));
+
+function _createSuper(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct(); return function _createSuperInternal() { var Super = (0, _getPrototypeOf2["default"])(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = (0, _getPrototypeOf2["default"])(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return (0, _possibleConstructorReturn2["default"])(this, result); }; }
+
+function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Date.prototype.toString.call(Reflect.construct(Date, [], function () {})); return true; } catch (e) { return false; } }
+
+/**
+ * @class {PhysicsMenuItem}
+ */
+var PhysicsMenuItem = /*#__PURE__*/function (_MenuItem) {
+  (0, _inherits2["default"])(PhysicsMenuItem, _MenuItem);
+
+  var _super = _createSuper(PhysicsMenuItem);
+
+  function PhysicsMenuItem() {
+    var _this;
+
+    (0, _classCallCheck2["default"])(this, PhysicsMenuItem);
+    _this = _super.call(this, {
+      name: 'Physics',
+      stateCode: '',
+      type: _Layout["default"].type.PANEL,
+      zone: _Layout["default"].zone.RIGHT
+    });
+    _this.items = [new _PhysicsFormMenuItem["default"]((0, _assertThisInitialized2["default"])(_this)), new _PhysicsPropsFormMenuItem["default"]((0, _assertThisInitialized2["default"])(_this))];
+    return _this;
+  }
+
+  return PhysicsMenuItem;
+}(_MenuItem2["default"]);
+
+exports["default"] = PhysicsMenuItem;
+
+},{"../../Layout.js":57,"../../MenuItem.js":59,"./PhysicsFormMenuItem.js":101,"./PhysicsPropsFormMenuItem.js":103,"@babel/runtime/helpers/assertThisInitialized":3,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":17}],103:[function(require,module,exports){
+"use strict";
+
+var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports["default"] = void 0;
+
+var _classCallCheck2 = _interopRequireDefault(require("@babel/runtime/helpers/classCallCheck"));
+
+var _createClass2 = _interopRequireDefault(require("@babel/runtime/helpers/createClass"));
+
+var _get2 = _interopRequireDefault(require("@babel/runtime/helpers/get"));
+
+var _inherits2 = _interopRequireDefault(require("@babel/runtime/helpers/inherits"));
+
+var _possibleConstructorReturn2 = _interopRequireDefault(require("@babel/runtime/helpers/possibleConstructorReturn"));
+
+var _getPrototypeOf2 = _interopRequireDefault(require("@babel/runtime/helpers/getPrototypeOf"));
+
+var _Layout = _interopRequireDefault(require("../../Layout.js"));
+
+var _EntitySelector = _interopRequireDefault(require("../../../world/manager/EntitySelector.js"));
+
+var _FormMenuItem2 = _interopRequireDefault(require("../form/FormMenuItem.js"));
+
+var _World = _interopRequireDefault(require("../../../world/World.js"));
+
+function _createSuper(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct(); return function _createSuperInternal() { var Super = (0, _getPrototypeOf2["default"])(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = (0, _getPrototypeOf2["default"])(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return (0, _possibleConstructorReturn2["default"])(this, result); }; }
+
+function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Date.prototype.toString.call(Reflect.construct(Date, [], function () {})); return true; } catch (e) { return false; } }
+
+/**
+ * @class {PhysicsPropsFormMenuItem}
+ */
+var PhysicsPropsFormMenuItem = /*#__PURE__*/function (_FormMenuItem) {
+  (0, _inherits2["default"])(PhysicsPropsFormMenuItem, _FormMenuItem);
+
+  var _super = _createSuper(PhysicsPropsFormMenuItem);
+
+  function PhysicsPropsFormMenuItem(parent) {
+    var _this;
+
+    (0, _classCallCheck2["default"])(this, PhysicsPropsFormMenuItem);
+    _this = _super.call(this, {
+      name: '',
+      stateCode: '',
+      type: _Layout["default"].type.FORM,
+      zone: parent.zone
+    });
+    _this.parent = parent;
+    return _this;
+  }
+  /**
+   * @override
+   */
+
+
+  (0, _createClass2["default"])(PhysicsPropsFormMenuItem, [{
+    key: "getFields",
+    value: function getFields() {
+      return [{
+        bind: 'fixed',
+        label: 'Static',
+        type: _Layout["default"].form.CHECKBOX
+      }, {
+        bind: 'motion',
+        label: 'Motion',
+        type: _Layout["default"].form.CHECKBOX
+      }, {
+        bind: 'controlled',
+        label: 'Controlled',
+        type: _Layout["default"].form.CHECKBOX
+      }];
+    }
+    /**
+     * @override
+     */
+
+  }, {
+    key: "getFormObject",
+    value: function getFormObject() {
+      return _EntitySelector["default"].get().getFirstSelected(_World["default"].get());
+    }
+    /**
+     * @override
+     */
+
+  }, {
+    key: "isValid",
+    value: function isValid() {
+      return (0, _get2["default"])((0, _getPrototypeOf2["default"])(PhysicsPropsFormMenuItem.prototype), "isValid", this).call(this) && _World["default"].get().getPhysics().isEnabled();
+    }
+  }]);
+  return PhysicsPropsFormMenuItem;
+}(_FormMenuItem2["default"]);
+
+exports["default"] = PhysicsPropsFormMenuItem;
+
+},{"../../../world/World.js":175,"../../../world/manager/EntitySelector.js":178,"../../Layout.js":57,"../form/FormMenuItem.js":91,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/get":9,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":17}],104:[function(require,module,exports){
+"use strict";
+
+var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports["default"] = void 0;
+
+var _classCallCheck2 = _interopRequireDefault(require("@babel/runtime/helpers/classCallCheck"));
+
 var _inherits2 = _interopRequireDefault(require("@babel/runtime/helpers/inherits"));
 
 var _possibleConstructorReturn2 = _interopRequireDefault(require("@babel/runtime/helpers/possibleConstructorReturn"));
@@ -20490,7 +10412,7 @@ var ExportProjectMenuItem = /*#__PURE__*/function (_MenuItem) {
 var _default = ExportProjectMenuItem;
 exports["default"] = _default;
 
-},{"../../Layout.js":57,"../../MenuItem.js":59,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":17}],102:[function(require,module,exports){
+},{"../../Layout.js":57,"../../MenuItem.js":59,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":17}],105:[function(require,module,exports){
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
@@ -20541,7 +10463,7 @@ var LoadProjectMenuItem = /*#__PURE__*/function (_MenuItem) {
 var _default = LoadProjectMenuItem;
 exports["default"] = _default;
 
-},{"../../Layout.js":57,"../../MenuItem.js":59,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":17}],103:[function(require,module,exports){
+},{"../../Layout.js":57,"../../MenuItem.js":59,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":17}],106:[function(require,module,exports){
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
@@ -20592,7 +10514,7 @@ var NewProjectMenuItem = /*#__PURE__*/function (_MenuItem) {
 var _default = NewProjectMenuItem;
 exports["default"] = _default;
 
-},{"../../Layout.js":57,"../../MenuItem.js":59,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":17}],104:[function(require,module,exports){
+},{"../../Layout.js":57,"../../MenuItem.js":59,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":17}],107:[function(require,module,exports){
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
@@ -20643,7 +10565,7 @@ var SaveProjectMenuItem = /*#__PURE__*/function (_MenuItem) {
 var _default = SaveProjectMenuItem;
 exports["default"] = _default;
 
-},{"../../Layout.js":57,"../../MenuItem.js":59,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":17}],105:[function(require,module,exports){
+},{"../../Layout.js":57,"../../MenuItem.js":59,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":17}],108:[function(require,module,exports){
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
@@ -20702,7 +10624,7 @@ var StyleMenuItem = /*#__PURE__*/function (_MenuItem) {
 var _default = StyleMenuItem;
 exports["default"] = _default;
 
-},{"../../Layout.js":57,"../../MenuItem.js":59,"./TextureFormMenuItem.js":106,"@babel/runtime/helpers/assertThisInitialized":3,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":17}],106:[function(require,module,exports){
+},{"../../Layout.js":57,"../../MenuItem.js":59,"./TextureFormMenuItem.js":109,"@babel/runtime/helpers/assertThisInitialized":3,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":17}],109:[function(require,module,exports){
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
@@ -20807,7 +10729,7 @@ var TextureFormMenuItem = /*#__PURE__*/function (_FormMenuItem) {
 var _default = TextureFormMenuItem;
 exports["default"] = _default;
 
-},{"../../../world/World.js":171,"../../../world/manager/EntitySelector.js":174,"../../Layout.js":57,"../form/FormMenuItem.js":91,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":17}],107:[function(require,module,exports){
+},{"../../../world/World.js":175,"../../../world/manager/EntitySelector.js":178,"../../Layout.js":57,"../form/FormMenuItem.js":91,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":17}],110:[function(require,module,exports){
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
@@ -20900,7 +10822,7 @@ var TerrainFormMenuItem = /*#__PURE__*/function (_FormMenuItem) {
 var _default = TerrainFormMenuItem;
 exports["default"] = _default;
 
-},{"../../../world/World.js":171,"../../../world/terrain/TerrainManager.js":177,"../../Layout.js":57,"../form/FormMenuItem.js":91,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":17}],108:[function(require,module,exports){
+},{"../../../world/World.js":175,"../../../world/terrain/TerrainManager.js":181,"../../Layout.js":57,"../form/FormMenuItem.js":91,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":17}],111:[function(require,module,exports){
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
@@ -20961,7 +10883,7 @@ var TerrainMenuItem = /*#__PURE__*/function (_MenuItem) {
 var _default = TerrainMenuItem;
 exports["default"] = _default;
 
-},{"../../Layout.js":57,"../../MenuItem.js":59,"./TerrainFormMenuItem.js":107,"./type/TypeMenuItem.js":110,"@babel/runtime/helpers/assertThisInitialized":3,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":17}],109:[function(require,module,exports){
+},{"../../Layout.js":57,"../../MenuItem.js":59,"./TerrainFormMenuItem.js":110,"./type/TypeMenuItem.js":113,"@babel/runtime/helpers/assertThisInitialized":3,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":17}],112:[function(require,module,exports){
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
@@ -21020,7 +10942,7 @@ var TypeBackgroundMenuItem = /*#__PURE__*/function (_TextureFormMenuItem) {
 var _default = TypeBackgroundMenuItem;
 exports["default"] = _default;
 
-},{"../../../../world/World.js":171,"../../style/TextureFormMenuItem.js":106,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":17}],110:[function(require,module,exports){
+},{"../../../../world/World.js":175,"../../style/TextureFormMenuItem.js":109,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":17}],113:[function(require,module,exports){
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
@@ -21085,7 +11007,7 @@ var TypeMenuItem = /*#__PURE__*/function (_MenuItem) {
 var _default = TypeMenuItem;
 exports["default"] = _default;
 
-},{"../../../Layout.js":57,"../../../MenuItem.js":59,"./TypeNoiseFormMenuItem.js":111,"./TypePosFormMenuItem.js":112,"./TypeSizeFormMenuItem.js":113,"./TypeStyleMenuItem.js":114,"@babel/runtime/helpers/assertThisInitialized":3,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":17}],111:[function(require,module,exports){
+},{"../../../Layout.js":57,"../../../MenuItem.js":59,"./TypeNoiseFormMenuItem.js":114,"./TypePosFormMenuItem.js":115,"./TypeSizeFormMenuItem.js":116,"./TypeStyleMenuItem.js":117,"@babel/runtime/helpers/assertThisInitialized":3,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":17}],114:[function(require,module,exports){
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
@@ -21144,7 +11066,7 @@ var TypeNoiseFormMenuItem = /*#__PURE__*/function (_NoiseFormMenuItem) {
 var _default = TypeNoiseFormMenuItem;
 exports["default"] = _default;
 
-},{"../../../../world/World.js":171,"../../entity/NoiseFormMenuItem.js":84,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":17}],112:[function(require,module,exports){
+},{"../../../../world/World.js":175,"../../entity/NoiseFormMenuItem.js":84,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":17}],115:[function(require,module,exports){
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
@@ -21203,7 +11125,7 @@ var TypePosFormMenuItem = /*#__PURE__*/function (_PositionFormMenuItem) {
 var _default = TypePosFormMenuItem;
 exports["default"] = _default;
 
-},{"../../../../world/World.js":171,"../../entity/PositionFormMenuItem.js":85,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":17}],113:[function(require,module,exports){
+},{"../../../../world/World.js":175,"../../entity/PositionFormMenuItem.js":85,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":17}],116:[function(require,module,exports){
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
@@ -21262,7 +11184,7 @@ var TypeSizeFormMenuItem = /*#__PURE__*/function (_SizeFormMenuItem) {
 var _default = TypeSizeFormMenuItem;
 exports["default"] = _default;
 
-},{"../../../../world/World.js":171,"../../entity/SizeFormMenuItem.js":87,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":17}],114:[function(require,module,exports){
+},{"../../../../world/World.js":175,"../../entity/SizeFormMenuItem.js":87,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":17}],117:[function(require,module,exports){
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
@@ -21321,7 +11243,7 @@ var TypeStyleMenuItem = /*#__PURE__*/function (_MenuItem) {
 var _default = TypeStyleMenuItem;
 exports["default"] = _default;
 
-},{"../../../Layout.js":57,"../../../MenuItem.js":59,"./TypeBackgroundMenuItem.js":109,"@babel/runtime/helpers/assertThisInitialized":3,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":17}],115:[function(require,module,exports){
+},{"../../../Layout.js":57,"../../../MenuItem.js":59,"./TypeBackgroundMenuItem.js":112,"@babel/runtime/helpers/assertThisInitialized":3,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":17}],118:[function(require,module,exports){
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
@@ -21402,7 +11324,7 @@ var AddTextureFormMenuItem = /*#__PURE__*/function (_FormMenuItem) {
 var _default = AddTextureFormMenuItem;
 exports["default"] = _default;
 
-},{"../../../world/World.js":171,"../../Layout.js":57,"../form/FormMenuItem.js":91,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":17}],116:[function(require,module,exports){
+},{"../../../world/World.js":175,"../../Layout.js":57,"../form/FormMenuItem.js":91,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":17}],119:[function(require,module,exports){
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
@@ -21459,7 +11381,7 @@ var ListTextureFormMenuItem = /*#__PURE__*/function (_ListFormMenuItem) {
 var _default = ListTextureFormMenuItem;
 exports["default"] = _default;
 
-},{"../../../world/World.js":171,"../form/ListFormMenuItem.js":94,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":17}],117:[function(require,module,exports){
+},{"../../../world/World.js":175,"../form/ListFormMenuItem.js":94,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":17}],120:[function(require,module,exports){
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
@@ -21522,7 +11444,7 @@ var TextureMenuItem = /*#__PURE__*/function (_MenuItem) {
 var _default = TextureMenuItem;
 exports["default"] = _default;
 
-},{"../../Layout.js":57,"../../MenuItem.js":59,"./AddTextureFormMenuItem.js":115,"./ListTextureFormMenuItem.js":116,"./UpdateTextureFormMenuItem.js":118,"@babel/runtime/helpers/assertThisInitialized":3,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":17}],118:[function(require,module,exports){
+},{"../../Layout.js":57,"../../MenuItem.js":59,"./AddTextureFormMenuItem.js":118,"./ListTextureFormMenuItem.js":119,"./UpdateTextureFormMenuItem.js":121,"@babel/runtime/helpers/assertThisInitialized":3,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":17}],121:[function(require,module,exports){
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
@@ -21603,7 +11525,7 @@ var UpdateTextureFormMenuItem = /*#__PURE__*/function (_FormMenuItem) {
 var _default = UpdateTextureFormMenuItem;
 exports["default"] = _default;
 
-},{"../../../world/World.js":171,"../../Layout.js":57,"../form/FormMenuItem.js":91,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":17}],119:[function(require,module,exports){
+},{"../../../world/World.js":175,"../../Layout.js":57,"../form/FormMenuItem.js":91,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":17}],122:[function(require,module,exports){
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
@@ -21718,7 +11640,7 @@ var Game = /*#__PURE__*/function (_Scene) {
 var _default = Game;
 exports["default"] = _default;
 
-},{"../runner/constraint/ConstraintRunner.js":154,"../world/World.js":171,"./Scene.js":122,"@babel/runtime/helpers/asyncToGenerator":4,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/defineProperty":8,"@babel/runtime/helpers/get":9,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":17,"@babel/runtime/regenerator":25}],120:[function(require,module,exports){
+},{"../runner/constraint/ConstraintRunner.js":158,"../world/World.js":175,"./Scene.js":125,"@babel/runtime/helpers/asyncToGenerator":4,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/defineProperty":8,"@babel/runtime/helpers/get":9,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":17,"@babel/runtime/regenerator":25}],123:[function(require,module,exports){
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
@@ -21807,7 +11729,7 @@ var Loop = /*#__PURE__*/function () {
 var _default = Loop;
 exports["default"] = _default;
 
-},{"@babel/runtime/helpers/asyncToGenerator":4,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/defineProperty":8,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/regenerator":25}],121:[function(require,module,exports){
+},{"@babel/runtime/helpers/asyncToGenerator":4,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/defineProperty":8,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/regenerator":25}],124:[function(require,module,exports){
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
@@ -21904,7 +11826,7 @@ var RunGame = /*#__PURE__*/function (_Game) {
 var _default = RunGame;
 exports["default"] = _default;
 
-},{"../core/Storage.js":39,"../world/World.js":171,"./Game.js":119,"@babel/runtime/helpers/asyncToGenerator":4,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/defineProperty":8,"@babel/runtime/helpers/get":9,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":17,"@babel/runtime/regenerator":25}],122:[function(require,module,exports){
+},{"../core/Storage.js":39,"../world/World.js":175,"./Game.js":122,"@babel/runtime/helpers/asyncToGenerator":4,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/defineProperty":8,"@babel/runtime/helpers/get":9,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":17,"@babel/runtime/regenerator":25}],125:[function(require,module,exports){
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
@@ -21999,7 +11921,7 @@ var Scene = /*#__PURE__*/function (_Loop) {
 var _default = Scene;
 exports["default"] = _default;
 
-},{"../renderer/ObjectRenderer.js":150,"../world/World.js":171,"./Loop.js":120,"@babel/runtime/helpers/asyncToGenerator":4,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/defineProperty":8,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":17,"@babel/runtime/regenerator":25}],123:[function(require,module,exports){
+},{"../renderer/ObjectRenderer.js":154,"../world/World.js":175,"./Loop.js":123,"@babel/runtime/helpers/asyncToGenerator":4,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/defineProperty":8,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":17,"@babel/runtime/regenerator":25}],126:[function(require,module,exports){
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
@@ -22009,11 +11931,13 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports["default"] = void 0;
 
+var _defineProperty2 = _interopRequireDefault(require("@babel/runtime/helpers/defineProperty"));
+
 var _classCallCheck2 = _interopRequireDefault(require("@babel/runtime/helpers/classCallCheck"));
 
 var _createClass2 = _interopRequireDefault(require("@babel/runtime/helpers/createClass"));
 
-var _assertThisInitialized2 = _interopRequireDefault(require("@babel/runtime/helpers/assertThisInitialized"));
+var _get2 = _interopRequireDefault(require("@babel/runtime/helpers/get"));
 
 var _inherits2 = _interopRequireDefault(require("@babel/runtime/helpers/inherits"));
 
@@ -22041,12 +11965,9 @@ var Physics = /*#__PURE__*/function (_PhysicsData) {
 
     (0, _classCallCheck2["default"])(this, Physics);
     _this = _super.call(this);
-    _this.physicsEngine = new _MatterEngine["default"]();
-
-    _this.physicsEngine.setPhysicsManager((0, _assertThisInitialized2["default"])(_this));
-
     _this.toRestart = false;
     _this.isRunning = false;
+    _this.types = (0, _defineProperty2["default"])({}, Physics.TYPES.MATTERJS, _MatterEngine["default"]);
     return _this;
   }
   /**
@@ -22059,11 +11980,13 @@ var Physics = /*#__PURE__*/function (_PhysicsData) {
   (0, _createClass2["default"])(Physics, [{
     key: "update",
     value: function update(world, aiEngine) {
-      if (this.toRestart) {
-        this.restart(world);
-      } else {
-        this.updateEntities(world);
-        this.updateEngine(world, aiEngine);
+      if (this.isEnabled()) {
+        if (this.toRestart) {
+          this.restart(world);
+        } else {
+          this.updateEntities(world);
+          this.updateEngine(world, aiEngine);
+        }
       }
     }
     /**
@@ -22133,12 +12056,14 @@ var Physics = /*#__PURE__*/function (_PhysicsData) {
   }, {
     key: "updateConstraint",
     value: function updateConstraint(entity, constraint) {
-      var shape = this.physicsEngine.findShapeFromEntity(entity);
+      if (this.isEnabled()) {
+        var shape = this.physicsEngine.findShapeFromEntity(entity);
 
-      if (shape) {
-        this.physicsEngine.updateConstraint(entity, constraint);
-      } else {
-        throw new _PhysicError["default"]("Shape not founded for the constraint entity ".concat(entity.id));
+        if (shape) {
+          this.physicsEngine.updateConstraint(entity, constraint);
+        } else {
+          throw new _PhysicError["default"]("Shape not founded for the constraint entity ".concat(entity.id));
+        }
       }
     }
     /**
@@ -22265,11 +12190,13 @@ var Physics = /*#__PURE__*/function (_PhysicsData) {
   }, {
     key: "run",
     value: function run(world) {
-      this.unload(world);
-      this.physicsEngine.init();
-      this.load(world);
-      this.physicsEngine.run(world);
-      this.isRunning = true;
+      if (this.isEnabled()) {
+        this.unload(world);
+        this.physicsEngine.init();
+        this.load(world);
+        this.physicsEngine.run(world);
+        this.isRunning = true;
+      }
     }
     /**
      * Remove an entity from physics engine
@@ -22312,7 +12239,8 @@ var Physics = /*#__PURE__*/function (_PhysicsData) {
   }, {
     key: "setPhysicsEngine",
     value: function setPhysicsEngine(physicsEngine) {
-      this.physicsEngine = physicsEngine;
+      (0, _get2["default"])((0, _getPrototypeOf2["default"])(Physics.prototype), "setPhysicsEngine", this).call(this, physicsEngine);
+      physicsEngine && this.physicsEngine.setPhysicsManager(this);
     }
     /**
      * @param {boolean} value
@@ -22322,6 +12250,40 @@ var Physics = /*#__PURE__*/function (_PhysicsData) {
     key: "setIsRunning",
     value: function setIsRunning(value) {
       this.isRunning = value;
+    }
+    /**
+     * @param {string} type
+     */
+
+  }, {
+    key: "setType",
+    value: function setType(type) {
+      var physicsEngine = this.types[type];
+      this.setPhysicsEngine(physicsEngine ? new physicsEngine() : null);
+    }
+    /**
+     * @return {string}
+     */
+
+  }, {
+    key: "getType",
+    value: function getType() {
+      var physicsEngine = this.getPhysicsEngine();
+
+      for (var type in this.types) {
+        if (physicsEngine instanceof this.types[type]) {
+          return type;
+        }
+      }
+    }
+    /**
+     * @return {boolean}
+     */
+
+  }, {
+    key: "isEnabled",
+    value: function isEnabled() {
+      return !!this.getPhysicsEngine();
     }
     /**
      * Restart the engine
@@ -22335,6 +12297,13 @@ var Physics = /*#__PURE__*/function (_PhysicsData) {
       this.run(world);
       this.setToRestart(false);
     }
+  }], [{
+    key: "TYPES",
+    get: function get() {
+      return {
+        MATTERJS: 'matterjs'
+      };
+    }
   }]);
   return Physics;
 }(_PhysicsData2["default"]);
@@ -22342,7 +12311,7 @@ var Physics = /*#__PURE__*/function (_PhysicsData) {
 var _default = Physics;
 exports["default"] = _default;
 
-},{"../exception/type/PhysicError.js":56,"../project/data/PhysicsData.js":144,"./engine/matter/MatterEngine.js":127,"@babel/runtime/helpers/assertThisInitialized":3,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":17}],124:[function(require,module,exports){
+},{"../exception/type/PhysicError.js":56,"../project/data/PhysicsData.js":147,"./engine/matter/MatterEngine.js":130,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/defineProperty":8,"@babel/runtime/helpers/get":9,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":17}],127:[function(require,module,exports){
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
@@ -22356,20 +12325,40 @@ var _classCallCheck2 = _interopRequireDefault(require("@babel/runtime/helpers/cl
 
 var _createClass2 = _interopRequireDefault(require("@babel/runtime/helpers/createClass"));
 
+var _inherits2 = _interopRequireDefault(require("@babel/runtime/helpers/inherits"));
+
+var _possibleConstructorReturn2 = _interopRequireDefault(require("@babel/runtime/helpers/possibleConstructorReturn"));
+
+var _getPrototypeOf2 = _interopRequireDefault(require("@babel/runtime/helpers/getPrototypeOf"));
+
+var _PhysicsEngineData2 = _interopRequireDefault(require("../../project/data/PhysicsEngineData.js"));
+
+function _createSuper(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct(); return function _createSuperInternal() { var Super = (0, _getPrototypeOf2["default"])(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = (0, _getPrototypeOf2["default"])(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return (0, _possibleConstructorReturn2["default"])(this, result); }; }
+
+function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Date.prototype.toString.call(Reflect.construct(Date, [], function () {})); return true; } catch (e) { return false; } }
+
 /**
  * Physics Engine class
  * Used as interface between the application and engine (third party Engine)
  * @abstract
  */
-var PhysicsEngine = /*#__PURE__*/function () {
-  function PhysicsEngine() {
-    (0, _classCallCheck2["default"])(this, PhysicsEngine);
+var PhysicsEngine = /*#__PURE__*/function (_PhysicsEngineData) {
+  (0, _inherits2["default"])(PhysicsEngine, _PhysicsEngineData);
 
-    if (this.constructor === PhysicsEngine) {
+  var _super = _createSuper(PhysicsEngine);
+
+  function PhysicsEngine() {
+    var _this;
+
+    (0, _classCallCheck2["default"])(this, PhysicsEngine);
+    _this = _super.call(this);
+
+    if (_this.constructor === PhysicsEngine) {
       throw new TypeError('Abstract class PhysicsEngine cannot be instantiated directly');
     }
 
-    this.mapShapeToEntity = [];
+    _this.mapShapeToEntity = [];
+    return _this;
   }
   /**
    * Initialize the engine.
@@ -22604,12 +12593,12 @@ var PhysicsEngine = /*#__PURE__*/function () {
     }
   }]);
   return PhysicsEngine;
-}();
+}(_PhysicsEngineData2["default"]);
 
 var _default = PhysicsEngine;
 exports["default"] = _default;
 
-},{"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/interopRequireDefault":12}],125:[function(require,module,exports){
+},{"../../project/data/PhysicsEngineData.js":148,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":17}],128:[function(require,module,exports){
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
@@ -22742,7 +12731,7 @@ var Shape = /*#__PURE__*/function () {
 var _default = Shape;
 exports["default"] = _default;
 
-},{"../../entity/types/constraint/AttachEntity.js":45,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/interopRequireDefault":12}],126:[function(require,module,exports){
+},{"../../entity/types/constraint/AttachEntity.js":45,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/interopRequireDefault":12}],129:[function(require,module,exports){
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
@@ -22823,7 +12812,7 @@ var ShapeLoader = /*#__PURE__*/function () {
 var _default = ShapeLoader;
 exports["default"] = _default;
 
-},{"../../entity/Entity.js":42,"./Shape.js":125,"./matter/shapes/CircleShape.js":128,"./matter/shapes/EllipseShape.js":129,"./matter/shapes/JointShape.js":130,"./matter/shapes/PolyShape.js":131,"./matter/shapes/RectangleShape.js":132,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/defineProperty":8,"@babel/runtime/helpers/interopRequireDefault":12}],127:[function(require,module,exports){
+},{"../../entity/Entity.js":42,"./Shape.js":128,"./matter/shapes/CircleShape.js":131,"./matter/shapes/EllipseShape.js":132,"./matter/shapes/JointShape.js":133,"./matter/shapes/PolyShape.js":134,"./matter/shapes/RectangleShape.js":135,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/defineProperty":8,"@babel/runtime/helpers/interopRequireDefault":12}],130:[function(require,module,exports){
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
@@ -23078,7 +13067,7 @@ var MatterEngine = /*#__PURE__*/function (_PhysicsEngine) {
 var _default = MatterEngine;
 exports["default"] = _default;
 
-},{"../PhysicsEngine.js":124,"../ShapeLoader.js":126,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":17}],128:[function(require,module,exports){
+},{"../PhysicsEngine.js":127,"../ShapeLoader.js":129,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":17}],131:[function(require,module,exports){
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
@@ -23136,7 +13125,7 @@ var CircleShape = /*#__PURE__*/function (_Shape) {
 var _default = CircleShape;
 exports["default"] = _default;
 
-},{"../../Shape.js":125,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":17}],129:[function(require,module,exports){
+},{"../../Shape.js":128,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":17}],132:[function(require,module,exports){
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
@@ -23208,7 +13197,7 @@ var EllipseShape = /*#__PURE__*/function (_Shape) {
 var _default = EllipseShape;
 exports["default"] = _default;
 
-},{"../../Shape.js":125,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":17}],130:[function(require,module,exports){
+},{"../../Shape.js":128,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":17}],133:[function(require,module,exports){
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
@@ -23315,7 +13304,7 @@ var JointShape = /*#__PURE__*/function (_Shape) {
 var _default = JointShape;
 exports["default"] = _default;
 
-},{"../../Shape.js":125,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":17}],131:[function(require,module,exports){
+},{"../../Shape.js":128,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":17}],134:[function(require,module,exports){
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
@@ -23369,7 +13358,7 @@ var PolyShape = /*#__PURE__*/function (_Shape) {
 var _default = PolyShape;
 exports["default"] = _default;
 
-},{"../../Shape.js":125,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":17}],132:[function(require,module,exports){
+},{"../../Shape.js":128,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":17}],135:[function(require,module,exports){
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
@@ -23430,7 +13419,7 @@ var RectangleShape = /*#__PURE__*/function (_Shape) {
 var _default = RectangleShape;
 exports["default"] = _default;
 
-},{"../../Shape.js":125,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":17}],133:[function(require,module,exports){
+},{"../../Shape.js":128,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":17}],136:[function(require,module,exports){
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
@@ -23592,7 +13581,7 @@ var EntityProps = /*#__PURE__*/function () {
 var _default = EntityProps;
 exports["default"] = _default;
 
-},{"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/defineProperty":8,"@babel/runtime/helpers/interopRequireDefault":12}],134:[function(require,module,exports){
+},{"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/defineProperty":8,"@babel/runtime/helpers/interopRequireDefault":12}],137:[function(require,module,exports){
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
@@ -23716,7 +13705,7 @@ var PerlinNoiseConfig = /*#__PURE__*/function () {
 var _default = PerlinNoiseConfig;
 exports["default"] = _default;
 
-},{"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/interopRequireDefault":12}],135:[function(require,module,exports){
+},{"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/interopRequireDefault":12}],138:[function(require,module,exports){
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
@@ -23877,7 +13866,7 @@ var PhysicsProps = /*#__PURE__*/function () {
 var _default = PhysicsProps;
 exports["default"] = _default;
 
-},{"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/defineProperty":8,"@babel/runtime/helpers/interopRequireDefault":12}],136:[function(require,module,exports){
+},{"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/defineProperty":8,"@babel/runtime/helpers/interopRequireDefault":12}],139:[function(require,module,exports){
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
@@ -23960,7 +13949,7 @@ var Size = /*#__PURE__*/function () {
 var _default = Size;
 exports["default"] = _default;
 
-},{"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/typeof":21}],137:[function(require,module,exports){
+},{"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/typeof":21}],140:[function(require,module,exports){
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
@@ -24086,7 +14075,7 @@ var Style = /*#__PURE__*/function () {
 var _default = Style;
 exports["default"] = _default;
 
-},{"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/defineProperty":8,"@babel/runtime/helpers/interopRequireDefault":12}],138:[function(require,module,exports){
+},{"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/defineProperty":8,"@babel/runtime/helpers/interopRequireDefault":12}],141:[function(require,module,exports){
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
@@ -24237,7 +14226,7 @@ var CameraData = /*#__PURE__*/function (_Data) {
 var _default = CameraData;
 exports["default"] = _default;
 
-},{"./Data.js":139,"@babel/runtime/helpers/assertThisInitialized":3,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/defineProperty":8,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":17}],139:[function(require,module,exports){
+},{"./Data.js":142,"@babel/runtime/helpers/assertThisInitialized":3,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/defineProperty":8,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":17}],142:[function(require,module,exports){
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
@@ -24289,7 +14278,7 @@ var Data = /*#__PURE__*/function () {
 var _default = Data;
 exports["default"] = _default;
 
-},{"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/defineProperty":8,"@babel/runtime/helpers/interopRequireDefault":12}],140:[function(require,module,exports){
+},{"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/defineProperty":8,"@babel/runtime/helpers/interopRequireDefault":12}],143:[function(require,module,exports){
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
@@ -24340,6 +14329,8 @@ var _PlainTerrain = _interopRequireDefault(require("../../world/terrain/types/Pl
 var _EntityProps = _interopRequireDefault(require("../../pobject/EntityProps.js"));
 
 var _Texture = _interopRequireDefault(require("../../core/Texture.js"));
+
+var _MatterEngine = _interopRequireDefault(require("../../physics/engine/matter/MatterEngine.js"));
 
 /**
  * @class {DataSchema}
@@ -24454,11 +14445,14 @@ var DataSchema = /*#__PURE__*/function () {
 }, {
   id: 18,
   type: _MouseConstraintEntity["default"]
+}, {
+  id: 19,
+  type: _MatterEngine["default"]
 }]);
 var _default = DataSchema;
 exports["default"] = _default;
 
-},{"../../core/Camera.js":32,"../../core/Texture.js":40,"../../entity/VirtualEntity.js":44,"../../entity/types/constraint/ConstraintEntity.js":46,"../../entity/types/constraint/MouseConstraintEntity.js":48,"../../entity/types/shape/CircleEntity.js":49,"../../entity/types/shape/RectEntity.js":52,"../../entity/types/terrain/NoiseEntity.js":53,"../../entity/types/terrain/PlatformEntity.js":54,"../../physics/Physics.js":123,"../../pobject/EntityProps.js":133,"../../world/World.js":171,"../../world/manager/EntityManager.js":173,"../../world/manager/TextureManager.js":175,"../../world/terrain/Terrain.js":176,"../../world/terrain/TerrainManager.js":177,"../../world/terrain/types/NoiseTerrain.js":178,"../../world/terrain/types/PlainTerrain.js":179,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/defineProperty":8,"@babel/runtime/helpers/interopRequireDefault":12}],141:[function(require,module,exports){
+},{"../../core/Camera.js":32,"../../core/Texture.js":40,"../../entity/VirtualEntity.js":44,"../../entity/types/constraint/ConstraintEntity.js":46,"../../entity/types/constraint/MouseConstraintEntity.js":48,"../../entity/types/shape/CircleEntity.js":49,"../../entity/types/shape/RectEntity.js":52,"../../entity/types/terrain/NoiseEntity.js":53,"../../entity/types/terrain/PlatformEntity.js":54,"../../physics/Physics.js":126,"../../physics/engine/matter/MatterEngine.js":130,"../../pobject/EntityProps.js":136,"../../world/World.js":175,"../../world/manager/EntityManager.js":177,"../../world/manager/TextureManager.js":179,"../../world/terrain/Terrain.js":180,"../../world/terrain/TerrainManager.js":181,"../../world/terrain/types/NoiseTerrain.js":182,"../../world/terrain/types/PlainTerrain.js":183,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/defineProperty":8,"@babel/runtime/helpers/interopRequireDefault":12}],144:[function(require,module,exports){
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
@@ -25191,7 +15185,7 @@ EntityData.shapes = {
 var _default = EntityData;
 exports["default"] = _default;
 
-},{"../../pobject/Size.js":136,"../../utils/Maths.js":165,"./Data.js":139,"@babel/runtime/helpers/assertThisInitialized":3,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/defineProperty":8,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":17}],142:[function(require,module,exports){
+},{"../../pobject/Size.js":139,"../../utils/Maths.js":169,"./Data.js":142,"@babel/runtime/helpers/assertThisInitialized":3,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/defineProperty":8,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":17}],145:[function(require,module,exports){
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
@@ -25269,7 +15263,7 @@ var EntityManagerData = /*#__PURE__*/function (_Data) {
 var _default = EntityManagerData;
 exports["default"] = _default;
 
-},{"./Data.js":139,"@babel/runtime/helpers/assertThisInitialized":3,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/defineProperty":8,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":17}],143:[function(require,module,exports){
+},{"./Data.js":142,"@babel/runtime/helpers/assertThisInitialized":3,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/defineProperty":8,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":17}],146:[function(require,module,exports){
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
@@ -25377,7 +15371,7 @@ var MeshData = /*#__PURE__*/function () {
 var _default = MeshData;
 exports["default"] = _default;
 
-},{"@babel/runtime/helpers/asyncToGenerator":4,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/defineProperty":8,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/regenerator":25}],144:[function(require,module,exports){
+},{"@babel/runtime/helpers/asyncToGenerator":4,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/defineProperty":8,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/regenerator":25}],147:[function(require,module,exports){
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
@@ -25389,11 +15383,17 @@ exports["default"] = void 0;
 
 var _classCallCheck2 = _interopRequireDefault(require("@babel/runtime/helpers/classCallCheck"));
 
+var _createClass2 = _interopRequireDefault(require("@babel/runtime/helpers/createClass"));
+
+var _assertThisInitialized2 = _interopRequireDefault(require("@babel/runtime/helpers/assertThisInitialized"));
+
 var _inherits2 = _interopRequireDefault(require("@babel/runtime/helpers/inherits"));
 
 var _possibleConstructorReturn2 = _interopRequireDefault(require("@babel/runtime/helpers/possibleConstructorReturn"));
 
 var _getPrototypeOf2 = _interopRequireDefault(require("@babel/runtime/helpers/getPrototypeOf"));
+
+var _defineProperty2 = _interopRequireDefault(require("@babel/runtime/helpers/defineProperty"));
 
 var _Data2 = _interopRequireDefault(require("./Data.js"));
 
@@ -25411,17 +15411,109 @@ var PhysicsData = /*#__PURE__*/function (_Data) {
   var _super = _createSuper(PhysicsData);
 
   function PhysicsData() {
+    var _this;
+
     (0, _classCallCheck2["default"])(this, PhysicsData);
-    return _super.apply(this, arguments);
+
+    for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
+      args[_key] = arguments[_key];
+    }
+
+    _this = _super.call.apply(_super, [this].concat(args));
+    (0, _defineProperty2["default"])((0, _assertThisInitialized2["default"])(_this), "physicsEngine", void 0);
+    return _this;
   }
 
+  (0, _createClass2["default"])(PhysicsData, [{
+    key: "setPhysicsEngine",
+
+    /**
+     * @param {PhysicsEngine} physicsEngine
+     */
+    value: function setPhysicsEngine(physicsEngine) {
+      this.physicsEngine = physicsEngine;
+    }
+    /**
+     * @return {PhysicsEngine}
+     */
+
+  }, {
+    key: "getPhysicsEngine",
+    value: function getPhysicsEngine() {
+      return this.physicsEngine;
+    }
+  }]);
   return PhysicsData;
 }(_Data2["default"]);
 
-var _default = PhysicsData;
-exports["default"] = _default;
+exports["default"] = PhysicsData;
 
-},{"./Data.js":139,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":17}],145:[function(require,module,exports){
+},{"./Data.js":142,"@babel/runtime/helpers/assertThisInitialized":3,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/defineProperty":8,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":17}],148:[function(require,module,exports){
+"use strict";
+
+var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports["default"] = void 0;
+
+var _classCallCheck2 = _interopRequireDefault(require("@babel/runtime/helpers/classCallCheck"));
+
+var _createClass2 = _interopRequireDefault(require("@babel/runtime/helpers/createClass"));
+
+var _inherits2 = _interopRequireDefault(require("@babel/runtime/helpers/inherits"));
+
+var _possibleConstructorReturn2 = _interopRequireDefault(require("@babel/runtime/helpers/possibleConstructorReturn"));
+
+var _getPrototypeOf2 = _interopRequireDefault(require("@babel/runtime/helpers/getPrototypeOf"));
+
+var _Data2 = _interopRequireDefault(require("./Data.js"));
+
+function _createSuper(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct(); return function _createSuperInternal() { var Super = (0, _getPrototypeOf2["default"])(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = (0, _getPrototypeOf2["default"])(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return (0, _possibleConstructorReturn2["default"])(this, result); }; }
+
+function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Date.prototype.toString.call(Reflect.construct(Date, [], function () {})); return true; } catch (e) { return false; } }
+
+/**
+ * @class {PhysicsEngineData}
+ * @extends {Data}
+ */
+var PhysicsEngineData = /*#__PURE__*/function (_Data) {
+  (0, _inherits2["default"])(PhysicsEngineData, _Data);
+
+  var _super = _createSuper(PhysicsEngineData);
+
+  function PhysicsEngineData() {
+    (0, _classCallCheck2["default"])(this, PhysicsEngineData);
+    return _super.apply(this, arguments);
+  }
+
+  (0, _createClass2["default"])(PhysicsEngineData, [{
+    key: "setPhysicsManager",
+
+    /**
+     * Set the physics manager that loaded the phyiscs engine
+     * @param {PhysicsData} physicsManager
+     */
+    value: function setPhysicsManager(physicsManager) {
+      this.physicsManager = physicsManager;
+    }
+    /**
+     * Get the physics manager that loaded the phyiscs engine
+     */
+
+  }, {
+    key: "getPhysicsManager",
+    value: function getPhysicsManager() {
+      return this.physicsManager;
+    }
+  }]);
+  return PhysicsEngineData;
+}(_Data2["default"]);
+
+exports["default"] = PhysicsEngineData;
+
+},{"./Data.js":142,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":17}],149:[function(require,module,exports){
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
@@ -25556,7 +15648,7 @@ var TerrainData = /*#__PURE__*/function (_Data) {
 var _default = TerrainData;
 exports["default"] = _default;
 
-},{"./Data.js":139,"@babel/runtime/helpers/assertThisInitialized":3,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/defineProperty":8,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":17}],146:[function(require,module,exports){
+},{"./Data.js":142,"@babel/runtime/helpers/assertThisInitialized":3,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/defineProperty":8,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":17}],150:[function(require,module,exports){
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
@@ -25634,7 +15726,7 @@ var TerrainManagerData = /*#__PURE__*/function (_Data) {
 var _default = TerrainManagerData;
 exports["default"] = _default;
 
-},{"./Data.js":139,"@babel/runtime/helpers/assertThisInitialized":3,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/defineProperty":8,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":17}],147:[function(require,module,exports){
+},{"./Data.js":142,"@babel/runtime/helpers/assertThisInitialized":3,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/defineProperty":8,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":17}],151:[function(require,module,exports){
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
@@ -25750,7 +15842,7 @@ var TextureData = /*#__PURE__*/function (_Data) {
 var _default = TextureData;
 exports["default"] = _default;
 
-},{"./Data.js":139,"@babel/runtime/helpers/assertThisInitialized":3,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/defineProperty":8,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":17}],148:[function(require,module,exports){
+},{"./Data.js":142,"@babel/runtime/helpers/assertThisInitialized":3,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/defineProperty":8,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":17}],152:[function(require,module,exports){
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
@@ -25828,7 +15920,7 @@ var TextureManagerData = /*#__PURE__*/function (_Data) {
 var _default = TextureManagerData;
 exports["default"] = _default;
 
-},{"./Data.js":139,"@babel/runtime/helpers/assertThisInitialized":3,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/defineProperty":8,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":17}],149:[function(require,module,exports){
+},{"./Data.js":142,"@babel/runtime/helpers/assertThisInitialized":3,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/defineProperty":8,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":17}],153:[function(require,module,exports){
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
@@ -26024,7 +16116,7 @@ var WorldData = /*#__PURE__*/function (_Data) {
 var _default = WorldData;
 exports["default"] = _default;
 
-},{"./Data.js":139,"@babel/runtime/helpers/assertThisInitialized":3,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/defineProperty":8,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":17}],150:[function(require,module,exports){
+},{"./Data.js":142,"@babel/runtime/helpers/assertThisInitialized":3,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/defineProperty":8,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":17}],154:[function(require,module,exports){
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
@@ -26045,8 +16137,6 @@ var _possibleConstructorReturn2 = _interopRequireDefault(require("@babel/runtime
 var _getPrototypeOf2 = _interopRequireDefault(require("@babel/runtime/helpers/getPrototypeOf"));
 
 var _Renderer2 = _interopRequireDefault(require("./Renderer.js"));
-
-var _Vector = _interopRequireDefault(require("../utils/Vector.js"));
 
 var _Constant = require("../core/Constant.js");
 
@@ -26115,14 +16205,7 @@ var ObjectRenderer = /*#__PURE__*/function (_Renderer) {
               x = _camera$toCanvasCoord.x,
               y = _camera$toCanvasCoord.y;
 
-          var _this$toSceneCoord = this.toSceneCoord({
-            x: x,
-            y: y
-          }),
-              sceneX = _this$toSceneCoord.x,
-              sceneY = _this$toSceneCoord.y;
-
-          _Context.objectContext.drawImage(mesh.context.canvas, sceneX, sceneY);
+          _Context.objectContext.drawImage(mesh.context.canvas, x, y);
         }
       }
 
@@ -26138,27 +16221,6 @@ var ObjectRenderer = /*#__PURE__*/function (_Renderer) {
     value: function add(mesh) {
       this.meshes.push(mesh);
     }
-    /**
-     * Convert position to scene coordinates
-     * @param {Vector} position
-     * @return {Vector}
-     */
-
-  }, {
-    key: "toSceneCoord",
-    value: function toSceneCoord(_ref) {
-      var x = _ref.x,
-          y = _ref.y;
-
-      var _objectContext$canvas = _Context.objectContext.canvas.getBoundingClientRect(),
-          sceneCanvasX = _objectContext$canvas.left,
-          sceneCanvasY = _objectContext$canvas.top;
-
-      return new _Vector["default"]({
-        x: x - sceneCanvasX,
-        y: y - sceneCanvasY
-      });
-    }
   }]);
   return ObjectRenderer;
 }(_Renderer2["default"]);
@@ -26166,7 +16228,7 @@ var ObjectRenderer = /*#__PURE__*/function (_Renderer) {
 var _default = ObjectRenderer;
 exports["default"] = _default;
 
-},{"../core/Constant.js":33,"../core/Context.js":34,"../utils/Vector.js":169,"./Renderer.js":151,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":17}],151:[function(require,module,exports){
+},{"../core/Constant.js":33,"../core/Context.js":34,"./Renderer.js":155,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":17}],155:[function(require,module,exports){
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
@@ -26227,7 +16289,7 @@ var Renderer = /*#__PURE__*/function () {
 var _default = Renderer;
 exports["default"] = _default;
 
-},{"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/interopRequireDefault":12}],152:[function(require,module,exports){
+},{"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/interopRequireDefault":12}],156:[function(require,module,exports){
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
@@ -26285,7 +16347,7 @@ var MenuItemUI = /*#__PURE__*/function () {
 var _default = MenuItemUI;
 exports["default"] = _default;
 
-},{"../../core/Constant.js":33,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/interopRequireDefault":12}],153:[function(require,module,exports){
+},{"../../core/Constant.js":33,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/interopRequireDefault":12}],157:[function(require,module,exports){
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
@@ -26300,6 +16362,7 @@ var _classCallCheck2 = _interopRequireDefault(require("@babel/runtime/helpers/cl
 var _createClass2 = _interopRequireDefault(require("@babel/runtime/helpers/createClass"));
 
 /**
+ * Runner is a component responsible for deciding what to do when a application state is defined
  * @class {Runner}
  * @abstract
  */
@@ -26349,7 +16412,7 @@ var Runner = /*#__PURE__*/function () {
 var _default = Runner;
 exports["default"] = _default;
 
-},{"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/interopRequireDefault":12}],154:[function(require,module,exports){
+},{"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/interopRequireDefault":12}],158:[function(require,module,exports){
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
@@ -26427,11 +16490,11 @@ var ConstraintRunner = /*#__PURE__*/function (_Runner) {
     key: "mouseConstraint",
     value: function mouseConstraint(world, mouse) {
       var mouseConstraint = world.getMouseConstraint();
-      var worldMousePosition = world.getWorldPosition(mouse.currentPosition);
+      var worldMousePosition = world.getWorldPosition(mouse.currentScenePosition);
 
       if (mouseConstraint) {
         if (mouse.isButtonPressed(MouseButton.LEFT) && !mouseConstraint.entities.b) {
-          var clickEntity = world.findBodyEntity(mouse.currentPosition);
+          var clickEntity = world.findBodyEntity(mouse.currentScenePosition);
 
           if (clickEntity) {
             mouseConstraint.pointConstraint = clickEntity.toRelativeCenterPosition(worldMousePosition);
@@ -26459,7 +16522,7 @@ var ConstraintRunner = /*#__PURE__*/function (_Runner) {
     key: "updateConstraint",
     value: function updateConstraint(constraint, world, mouse) {
       var physics = world.getPhysics();
-      var mousePosition = world.getWorldPosition(mouse.currentPosition);
+      var mousePosition = world.getWorldPosition(mouse.currentScenePosition);
       var entity = constraint.entities.b;
       constraint.setEntities(null, entity);
       physics.updateConstraint(constraint, {
@@ -26491,7 +16554,7 @@ ConstraintRunner.instance = null;
 var _default = ConstraintRunner;
 exports["default"] = _default;
 
-},{"../../core/Mouse.js":38,"../../world/World.js":171,"../Runner.js":153,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":17}],155:[function(require,module,exports){
+},{"../../core/Mouse.js":38,"../../world/World.js":175,"../Runner.js":157,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":17}],159:[function(require,module,exports){
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
@@ -26654,7 +16717,7 @@ var Schema = /*#__PURE__*/function () {
                     result = new prototype();
                     data && data.setDataId(_DataSchema["default"].getId(data.constructor));
                   } else {
-                    result = _DataSchema["default"].newInstance(data.dataId, prototype);
+                    result = _DataSchema["default"].newInstance(data && data.dataId, prototype);
                   }
                 } else {
                   result = new prototype();
@@ -26819,7 +16882,7 @@ var Schema = /*#__PURE__*/function () {
 var _default = Schema;
 exports["default"] = _default;
 
-},{"../project/data/Data.js":139,"../project/data/DataSchema.js":140,"../utils/ClassHelper.js":162,"./SchemaMeta.js":156,"@babel/runtime/helpers/asyncToGenerator":4,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/regenerator":25}],156:[function(require,module,exports){
+},{"../project/data/Data.js":142,"../project/data/DataSchema.js":143,"../utils/ClassHelper.js":166,"./SchemaMeta.js":160,"@babel/runtime/helpers/asyncToGenerator":4,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/regenerator":25}],160:[function(require,module,exports){
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
@@ -26860,6 +16923,8 @@ var _PhysicsProps = _interopRequireDefault(require("../pobject/PhysicsProps.js")
 var _Texture = _interopRequireDefault(require("../core/Texture.js"));
 
 var _Mesh = _interopRequireDefault(require("../core/Mesh.js"));
+
+var _PhysicsEngine = _interopRequireDefault(require("../physics/engine/PhysicsEngine.js"));
 
 /**
  * Define the schema of project data.
@@ -27213,6 +17278,14 @@ var _default = {
         meta: {
           dataId: {
             type: 'number'
+          },
+          physicsEngine: {
+            type: _PhysicsEngine["default"],
+            meta: {
+              dataId: {
+                type: 'number'
+              }
+            }
           }
         }
       },
@@ -27330,7 +17403,7 @@ var _default = {
 };
 exports["default"] = _default;
 
-},{"../core/Camera.js":32,"../core/Mesh.js":37,"../core/Texture.js":40,"../entity/EntityMotion.js":43,"../physics/Physics.js":123,"../pobject/EntityProps.js":133,"../pobject/PerlinNoiseConfig.js":134,"../pobject/PhysicsProps.js":135,"../pobject/Size.js":136,"../pobject/Style.js":137,"../utils/Vector.js":169,"../world/World.js":171,"../world/manager/EntityManager.js":173,"../world/manager/TextureManager.js":175,"../world/terrain/Terrain.js":176,"../world/terrain/TerrainManager.js":177,"@babel/runtime/helpers/interopRequireDefault":12}],157:[function(require,module,exports){
+},{"../core/Camera.js":32,"../core/Mesh.js":37,"../core/Texture.js":40,"../entity/EntityMotion.js":43,"../physics/Physics.js":126,"../physics/engine/PhysicsEngine.js":127,"../pobject/EntityProps.js":136,"../pobject/PerlinNoiseConfig.js":137,"../pobject/PhysicsProps.js":138,"../pobject/Size.js":139,"../pobject/Style.js":140,"../utils/Vector.js":173,"../world/World.js":175,"../world/manager/EntityManager.js":177,"../world/manager/TextureManager.js":179,"../world/terrain/Terrain.js":180,"../world/terrain/TerrainManager.js":181,"@babel/runtime/helpers/interopRequireDefault":12}],161:[function(require,module,exports){
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
@@ -27458,7 +17531,7 @@ var JsSerDe = /*#__PURE__*/function (_SerDe) {
 var _default = JsSerDe;
 exports["default"] = _default;
 
-},{"../schema/Schema.js":155,"./SerDe.js":158,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":17}],158:[function(require,module,exports){
+},{"../schema/Schema.js":159,"./SerDe.js":162,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":17}],162:[function(require,module,exports){
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
@@ -27510,7 +17583,7 @@ var SerDe = /*#__PURE__*/function () {
 var _default = SerDe;
 exports["default"] = _default;
 
-},{"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/interopRequireDefault":12}],159:[function(require,module,exports){
+},{"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/interopRequireDefault":12}],163:[function(require,module,exports){
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
@@ -27664,7 +17737,7 @@ var XmlSerDe = /*#__PURE__*/function (_SerDe) {
 var _default = XmlSerDe;
 exports["default"] = _default;
 
-},{"./SerDe.js":158,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/defineProperty":8,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":17}],160:[function(require,module,exports){
+},{"./SerDe.js":162,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/defineProperty":8,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":17}],164:[function(require,module,exports){
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
@@ -28219,7 +18292,7 @@ AppState.States = {
 var _default = AppState;
 exports["default"] = _default;
 
-},{"../core/Mouse.js":38,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/defineProperty":8,"@babel/runtime/helpers/interopRequireDefault":12}],161:[function(require,module,exports){
+},{"../core/Mouse.js":38,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/defineProperty":8,"@babel/runtime/helpers/interopRequireDefault":12}],165:[function(require,module,exports){
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
@@ -28711,7 +18784,7 @@ var StateManager = /*#__PURE__*/function () {
 var _default = StateManager;
 exports["default"] = _default;
 
-},{"./AppState.js":160,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/defineProperty":8,"@babel/runtime/helpers/interopRequireDefault":12}],162:[function(require,module,exports){
+},{"./AppState.js":164,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/defineProperty":8,"@babel/runtime/helpers/interopRequireDefault":12}],166:[function(require,module,exports){
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
@@ -28790,7 +18863,7 @@ var ClassHelper = /*#__PURE__*/function () {
 var _default = ClassHelper;
 exports["default"] = _default;
 
-},{"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/interopRequireDefault":12}],163:[function(require,module,exports){
+},{"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/interopRequireDefault":12}],167:[function(require,module,exports){
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
@@ -28832,7 +18905,7 @@ var Color = /*#__PURE__*/function () {
 var _default = Color;
 exports["default"] = _default;
 
-},{"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/interopRequireDefault":12}],164:[function(require,module,exports){
+},{"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/interopRequireDefault":12}],168:[function(require,module,exports){
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
@@ -28887,7 +18960,7 @@ var ImageHelper = /*#__PURE__*/function () {
 var _default = ImageHelper;
 exports["default"] = _default;
 
-},{"../core/Constant.js":33,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/interopRequireDefault":12}],165:[function(require,module,exports){
+},{"../core/Constant.js":33,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/interopRequireDefault":12}],169:[function(require,module,exports){
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
@@ -28970,7 +19043,7 @@ var Maths = /*#__PURE__*/function () {
 var _default = Maths;
 exports["default"] = _default;
 
-},{"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/interopRequireDefault":12}],166:[function(require,module,exports){
+},{"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/interopRequireDefault":12}],170:[function(require,module,exports){
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
@@ -29029,7 +19102,7 @@ var NoiseRandom = /*#__PURE__*/function () {
 var _default = NoiseRandom;
 exports["default"] = _default;
 
-},{"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/interopRequireDefault":12}],167:[function(require,module,exports){
+},{"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/interopRequireDefault":12}],171:[function(require,module,exports){
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
@@ -29071,7 +19144,7 @@ var ObjectHelper = /*#__PURE__*/function () {
 var _default = ObjectHelper;
 exports["default"] = _default;
 
-},{"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/interopRequireDefault":12}],168:[function(require,module,exports){
+},{"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/interopRequireDefault":12}],172:[function(require,module,exports){
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
@@ -29170,7 +19243,7 @@ var PerlinNoise = /*#__PURE__*/function () {
 var _default = PerlinNoise;
 exports["default"] = _default;
 
-},{"./Maths.js":165,"./NoiseRandom.js":166,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/interopRequireDefault":12}],169:[function(require,module,exports){
+},{"./Maths.js":169,"./NoiseRandom.js":170,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/interopRequireDefault":12}],173:[function(require,module,exports){
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
@@ -29322,7 +19395,7 @@ var Vector = /*#__PURE__*/function () {
 var _default = Vector;
 exports["default"] = _default;
 
-},{"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/interopRequireDefault":12}],170:[function(require,module,exports){
+},{"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/interopRequireDefault":12}],174:[function(require,module,exports){
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
@@ -29453,7 +19526,7 @@ var Vertex = /*#__PURE__*/function () {
 var _default = Vertex;
 exports["default"] = _default;
 
-},{"./Vector.js":169,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/interopRequireDefault":12}],171:[function(require,module,exports){
+},{"./Vector.js":173,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/interopRequireDefault":12}],175:[function(require,module,exports){
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
@@ -29797,7 +19870,7 @@ var World = /*#__PURE__*/function (_WorldData) {
 var _default = World;
 exports["default"] = _default;
 
-},{"../core/Camera.js":32,"../core/Constant.js":33,"../core/Context.js":34,"../entity/types/constraint/MouseConstraintEntity.js":48,"../physics/Physics.js":123,"../project/data/WorldData.js":149,"../utils/Vector.js":169,"./manager/EntityManager.js":173,"./manager/EntitySelector.js":174,"./manager/TextureManager.js":175,"./terrain/TerrainManager.js":177,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":17}],172:[function(require,module,exports){
+},{"../core/Camera.js":32,"../core/Constant.js":33,"../core/Context.js":34,"../entity/types/constraint/MouseConstraintEntity.js":48,"../physics/Physics.js":126,"../project/data/WorldData.js":153,"../utils/Vector.js":173,"./manager/EntityManager.js":177,"./manager/EntitySelector.js":178,"./manager/TextureManager.js":179,"./terrain/TerrainManager.js":181,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":17}],176:[function(require,module,exports){
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
@@ -29838,7 +19911,7 @@ var EntityGenerator = /*#__PURE__*/function () {
 var _default = EntityGenerator;
 exports["default"] = _default;
 
-},{"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/interopRequireDefault":12}],173:[function(require,module,exports){
+},{"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/interopRequireDefault":12}],177:[function(require,module,exports){
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
@@ -30531,7 +20604,7 @@ var EntityManager = /*#__PURE__*/function (_EntityManagerData) {
 var _default = EntityManager;
 exports["default"] = _default;
 
-},{"../../entity/Entity.js":42,"../../entity/VirtualEntity.js":44,"../../entity/types/constraint/AttachEntity.js":45,"../../project/data/EntityManagerData.js":142,"../../utils/Maths.js":165,"../generator/EntityGenerator.js":172,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":17}],174:[function(require,module,exports){
+},{"../../entity/Entity.js":42,"../../entity/VirtualEntity.js":44,"../../entity/types/constraint/AttachEntity.js":45,"../../project/data/EntityManagerData.js":145,"../../utils/Maths.js":169,"../generator/EntityGenerator.js":176,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":17}],178:[function(require,module,exports){
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
@@ -30566,6 +20639,7 @@ var EntitySelector = /*#__PURE__*/function () {
     /**
      * Get first entity selected
      * @param {World} world
+     * @return {Entity}
      */
 
   }, {
@@ -30710,7 +20784,7 @@ EntitySelector.instance = null;
 var _default = EntitySelector;
 exports["default"] = _default;
 
-},{"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/interopRequireDefault":12}],175:[function(require,module,exports){
+},{"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/interopRequireDefault":12}],179:[function(require,module,exports){
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
@@ -30843,7 +20917,7 @@ var TextureManager = /*#__PURE__*/function (_TextureManagerData) {
 var _default = TextureManager;
 exports["default"] = _default;
 
-},{"../../core/Texture.js":40,"../../project/data/TextureManagerData.js":148,"@babel/runtime/helpers/assertThisInitialized":3,"@babel/runtime/helpers/asyncToGenerator":4,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/defineProperty":8,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":17,"@babel/runtime/regenerator":25}],176:[function(require,module,exports){
+},{"../../core/Texture.js":40,"../../project/data/TextureManagerData.js":152,"@babel/runtime/helpers/assertThisInitialized":3,"@babel/runtime/helpers/asyncToGenerator":4,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/defineProperty":8,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":17,"@babel/runtime/regenerator":25}],180:[function(require,module,exports){
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
@@ -31083,7 +21157,7 @@ var Terrain = /*#__PURE__*/function (_TerrainData) {
 var _default = Terrain;
 exports["default"] = _default;
 
-},{"../../core/Constant.js":33,"../../entity/VirtualEntity.js":44,"../../project/data/TerrainData.js":145,"../../utils/ObjectHelper.js":167,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":17}],177:[function(require,module,exports){
+},{"../../core/Constant.js":33,"../../entity/VirtualEntity.js":44,"../../project/data/TerrainData.js":149,"../../utils/ObjectHelper.js":171,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":17}],181:[function(require,module,exports){
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
@@ -31260,7 +21334,7 @@ var TerrainManager = /*#__PURE__*/function (_TerrainManagerData) {
 var _default = TerrainManager;
 exports["default"] = _default;
 
-},{"../../project/data/TerrainManagerData.js":146,"./types/NoiseTerrain.js":178,"./types/PlainTerrain.js":179,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/defineProperty":8,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":17}],178:[function(require,module,exports){
+},{"../../project/data/TerrainManagerData.js":150,"./types/NoiseTerrain.js":182,"./types/PlainTerrain.js":183,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/defineProperty":8,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":17}],182:[function(require,module,exports){
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
@@ -31321,7 +21395,7 @@ var NoiseTerrain = /*#__PURE__*/function (_Terrain) {
 var _default = NoiseTerrain;
 exports["default"] = _default;
 
-},{"../../../entity/types/terrain/NoiseEntity.js":53,"../Terrain.js":176,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":17}],179:[function(require,module,exports){
+},{"../../../entity/types/terrain/NoiseEntity.js":53,"../Terrain.js":180,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":17}],183:[function(require,module,exports){
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
@@ -31381,7 +21455,7 @@ var PlainTerrain = /*#__PURE__*/function (_Terrain) {
 var _default = PlainTerrain;
 exports["default"] = _default;
 
-},{"../../../entity/types/terrain/PlatformEntity.js":54,"../Terrain.js":176,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":17}],180:[function(require,module,exports){
+},{"../../../entity/types/terrain/PlatformEntity.js":54,"../Terrain.js":180,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":17}],184:[function(require,module,exports){
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
@@ -31392,4 +21466,4 @@ var _RunGame = _interopRequireDefault(require("../app/loop/RunGame.js"));
 
 new _Application["default"]([_RunGame["default"]]).start();
 
-},{"../app/core/Application.js":31,"../app/loop/RunGame.js":121,"@babel/runtime/helpers/interopRequireDefault":12}]},{},[180]);
+},{"../app/core/Application.js":31,"../app/loop/RunGame.js":124,"@babel/runtime/helpers/interopRequireDefault":12}]},{},[184]);

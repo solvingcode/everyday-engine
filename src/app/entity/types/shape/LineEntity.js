@@ -1,4 +1,5 @@
 import EntityMotion from '../../EntityMotion.js'
+import Vector from '../../../utils/Vector.js'
 
 class LineEntity extends EntityMotion {
 
@@ -52,20 +53,20 @@ class LineEntity extends EntityMotion {
      * @override
      */
     toCenterPosition() {
-        return {
+        return new Vector({
             x: this.position.x + this.mesh.size.width / 2,
             y: this.position.y + this.mesh.size.height / 2
-        }
+        })
     }
 
     /**
      * @override
      */
     fromCenterPosition(position) {
-        return {
+        return new Vector({
             x: position.x - this.mesh.size.width / 2,
             y: position.y - this.mesh.size.height / 2
-        }
+        })
     }
 
 }

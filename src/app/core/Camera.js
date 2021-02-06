@@ -1,11 +1,11 @@
 import CameraData from '../project/data/CameraData.js'
 import Vector from '../utils/Vector.js'
-import {SCENE_WIDTH, SCENE_HEIGHT} from './Constant.js'
+import Size from '../pobject/Size.js'
 
 /**
  * @class {Camera}
  * Define the camera
- * @property {{x: number, y: number, z: number}} position
+ * @property {Vector} position
  */
 class Camera extends CameraData {
     constructor(position) {
@@ -34,15 +34,15 @@ class Camera extends CameraData {
      * Calculate and return the camera view
      */
     getCameraView() {
-        const cameraViewX = this.position.x - SCENE_WIDTH / 2
-        const cameraViewY = this.position.y - SCENE_HEIGHT / 2
+        const cameraViewX = this.position.x
+        const cameraViewY = this.position.y
         const cameraViewZ = this.position.z || 0
         return {cameraViewX, cameraViewY, cameraViewZ}
     }
 
     /**
      * Convert a position to canvas coordination
-     * @param {Object} position
+     * @param {Vector} position
      */
     toCanvasCoord(position) {
         const {cameraViewX, cameraViewY} = this.getCameraView()
@@ -53,13 +53,74 @@ class Camera extends CameraData {
 
     /**
      * Get the canvas coordination from the given position
-     * @param {Object} position
+     * @param {Vector} position
      */
     fromCanvasCoord(position) {
         const {cameraViewX, cameraViewY} = this.getCameraView()
         const x = position.x + cameraViewX
         const y = position.y + cameraViewY
-        return new Vector({x, y})
+        const z = position.z
+        return new Vector({x, y, z})
+    }
+
+    /**
+     * @param {Vector} position
+     * @return {Vector}
+     */
+    toCameraScale(position){
+        const scale = this.getScale(position)
+        const x = position.x * scale
+        const y = position.y * scale
+        const z = position.z
+        return new Vector({x, y, z})
+    }
+
+    /**
+     * @param {Vector} position
+     * @return {Vector}
+     */
+    fromCameraScale(position){
+        const scale = this.getScale(position)
+        const x = position.x / scale
+        const y = position.y / scale
+        const z = position.z
+        return new Vector({x, y, z})
+    }
+
+    /**
+     * @param {Vector} position
+     * @return {number}
+     */
+    getScale(position){
+        const {cameraViewZ} = this.getCameraView()
+        const distanceZ = cameraViewZ - position.z
+        return 1 + distanceZ * 0.5
+    }
+
+    /**
+     * @param {Size} size
+     * @param {Vector} position
+     * @return {Size}
+     */
+    toScaleSize(size, position = new Vector()){
+        const scale = this.getScale(position)
+        return new Size({
+            width: size.width * scale,
+            height: size.height * scale
+        })
+    }
+
+    /**
+     * @param {Size} size
+     * @param {Vector} position
+     * @return {Size}
+     */
+    fromScaleSize(size, position = new Vector()){
+        const scale = this.getScale(position)
+        return new Size({
+            width: size.width / scale,
+            height: size.height / scale
+        })
     }
 
     /**

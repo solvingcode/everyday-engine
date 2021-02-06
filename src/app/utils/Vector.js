@@ -6,7 +6,7 @@ class Vector {
     constructor({x, y, z} = {x: 0, y: 0, z: 0}) {
         this.x = x
         this.y = y
-        this.z = z
+        this.z = z || 0
     }
 
     /**
@@ -49,6 +49,16 @@ class Vector {
      */
     getZ() {
         return this.z
+    }
+
+    /**
+     * @param {Vector} vector
+     * @return {boolean}
+     */
+    equals(vector){
+        return this.x === vector.x &&
+            this.y === vector.y &&
+            this.z === vector.z
     }
 
     /**

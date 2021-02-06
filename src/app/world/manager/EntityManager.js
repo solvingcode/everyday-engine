@@ -19,17 +19,14 @@ class EntityManager extends EntityManagerData {
     }
 
     /**
-     * Get an entity at (x,y)
-     * @param {int} x
-     * @param {int} y
-     * @param {Entity} type
+     * @param {Vector} position
+     * @param {Function} type
      * @return {Entity}
      */
-    getAt(x, y, type) {
+    getAt(position, type) {
         return this.entities.find((element) =>
             element instanceof type &&
-            element.position.x === x &&
-            element.position.y === y
+            position.equals(element.position)
         )
     }
 
@@ -39,8 +36,7 @@ class EntityManager extends EntityManagerData {
     getIndexOf(entity) {
         return this.entities.findIndex((element) =>
             element instanceof entity.constructor &&
-            element.position.x === entity.position.x &&
-            element.position.y === entity.position.y
+            element.position.equals(entity.position)
         )
     }
 
@@ -64,24 +60,23 @@ class EntityManager extends EntityManagerData {
 
     /**
      * Get an entity if founded, else create it
-     * @param {int} x
-     * @param {int} y
-     * @param {Entity} type
+     * @param {Vector} position
+     * @param {Function} type
      * @param {Object} defaultProps
      * @return {Entity}
      */
-    get(x, y, type, defaultProps = {}) {
+    get(position, type, defaultProps = {}) {
         if (!(type.prototype instanceof Entity)) {
             throw new TypeError(`type must be child of Entity class (${type} given)`)
         }
-        const entity = this.getAt(x, y, type)
+        const entity = this.getAt(position, type)
         if (!entity) {
             const name = `Layer ${this.entities.length}`
-            const props = Object.assign({position: {x, y}, name}, defaultProps)
+            const props = Object.assign({position, name}, defaultProps)
             const element = new type(props)
             this.entities.push(element)
         }
-        return this.getAt(x, y, type)
+        return this.getAt(position, type)
     }
 
     /**
@@ -100,13 +95,12 @@ class EntityManager extends EntityManagerData {
      * Load and generate an entity
      * @param {World} world
      * @param {Vector} position
-     * @param {Entity} type
+     * @param {Function} type
      * @param {Object} props
      * @return {Entity}
      */
     load(world, position, type, props = {}) {
-        const {x, y} = position
-        const entity = this.get(x, y, type, props)
+        const entity = this.get(position, type, props)
         if (!entity.isBuffered) {
             this.make(world, entity)
         }
@@ -133,7 +127,7 @@ class EntityManager extends EntityManagerData {
      * @param {Entity} entity
      */
     delete(entity) {
-        this.getAllAttachTypeEntity(entity).map(pEntity => this.deleteEntity(pEntity))
+        this.getAllAttachTypeEntity(entity).forEach(pEntity => this.deleteEntity(pEntity))
         this.deleteEntity(entity)
     }
 
@@ -155,13 +149,15 @@ class EntityManager extends EntityManagerData {
         const cloneEntity = entity.clone()
         cloneEntity.name = `Clone of ${entity.name}`
         cloneEntity.id = Maths.generateId()
-        options.sameWorld && (cloneEntity.worldId = entity.id)
+        if(options.sameWorld){
+            cloneEntity.worldId = entity.id
+        }
         return cloneEntity
     }
 
     /**
      * check if the entity and all attached entities must dies
-     * @param {Entity} entity
+     * @param {EntityMotion} entity
      * @param {PhysicsEngine} physicsEngine
      */
     haveToDie(entity, physicsEngine) {
@@ -260,7 +256,7 @@ class EntityManager extends EntityManagerData {
      * @param {Entity} entity
      */
     moveUp(entity) {
-        this.moveIndex(entity, 1)
+        this.moveIndex(entity, true)
     }
 
     /**
@@ -268,7 +264,7 @@ class EntityManager extends EntityManagerData {
      * @param {Entity} entity
      */
     moveDown(entity) {
-        this.moveIndex(entity, 0)
+        this.moveIndex(entity, false)
     }
 
     /**
@@ -315,7 +311,7 @@ class EntityManager extends EntityManagerData {
      * Move the index of an entity up/down.
      * NB: The first element in the list is always the Platform Entity.
      * @param {Entity} entity
-     * @param {Boolean} up (1 = UP, 0 = DOWN)
+     * @param {boolean} up (1 = UP, 0 = DOWN)
      */
     moveIndex(entity, up) {
         const entities = this.getBodyEntities()
@@ -401,18 +397,20 @@ class EntityManager extends EntityManagerData {
      * Get attached entities (bidirectional).
      * PS: The list include the given entity
      * @param {Entity} entity
-     * @param {Entity[]} exculdeEntities
+     * @param {Entity[]} excludeEntities
      */
-    getAttachedEntities(entity, exculdeEntities = []) {
+    getAttachedEntities(entity, excludeEntities = []) {
         let attachedEntities = [entity]
         this.getAllAttachTypeEntity(entity).forEach(attachEntity => {
             attachedEntities.push(attachEntity)
             for (const kEntity in attachEntity.entities) {
-                const entityAB = attachEntity.entities[kEntity]
-                if (entityAB !== entity && !exculdeEntities.includes(entityAB)) {
-                    attachedEntities = attachedEntities.concat(
-                        this.getAttachedEntities(entityAB, attachedEntities)
-                    )
+                if(attachEntity.entities.hasOwnProperty(kEntity)){
+                    const entityAB = attachEntity.entities[kEntity]
+                    if (entityAB !== entity && !excludeEntities.includes(entityAB)) {
+                        attachedEntities = attachedEntities.concat(
+                            this.getAttachedEntities(entityAB, attachedEntities)
+                        )
+                    }
                 }
             }
         })
