@@ -38,7 +38,7 @@ class WindowRunner extends Runner {
      */
     focus(world, entitySelector, mouse) {
         entitySelector.unfocusAll(world)
-        const currentScenePosition = new Vector(Object.assign(mouse.currentScenePosition,{z: 0}))
+        const currentScenePosition = new Vector(mouse.currentScenePosition)
         const vector3d = world.getCamera().fromCameraScale(currentScenePosition)
         entitySelector.focus(world, world.getWorldPosition(vector3d))
     }

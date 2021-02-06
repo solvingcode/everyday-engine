@@ -12,8 +12,8 @@ class LineEntity extends EntityMotion {
     /**
      * @override
      */
-    init() {
-        const dragDistance = this.setMeshPositionByDragDistance()
+    init(world) {
+        const dragDistance = this.setMeshPositionByDragDistance(world)
         this.size = {width: Math.abs(dragDistance.x), height: Math.abs(dragDistance.y)}
         if (dragDistance.x * dragDistance.y < 0) {
             this.vertices = [{x: this.size.width, y: 0}, {x: 0, y: this.size.height}]
@@ -27,9 +27,9 @@ class LineEntity extends EntityMotion {
      * @override
      */
     drawContext(dataContext) {
-        const {context} = dataContext
-        const x0 = this.vertices[0].x, y0 = this.vertices[0].y
-        const x1 = this.vertices[1].x, y1 = this.vertices[1].y
+        const {context, camera} = dataContext
+        const {x: x0, y: y0} = camera.toCameraScale(this.vertices[0])
+        const {x: x1, y: y1} = camera.toCameraScale(this.vertices[1])
         context.beginPath()
         context.moveTo(x0, y0)
         context.lineTo(x1, y1)

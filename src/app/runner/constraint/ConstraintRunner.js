@@ -35,10 +35,11 @@ class ConstraintRunner extends Runner {
      */
     mouseConstraint(world, mouse) {
         const mouseConstraint = world.getMouseConstraint()
-        const worldMousePosition = world.getWorldPosition(mouse.currentScenePosition)
+        const currentScenePosition = world.getCamera().fromCameraScale(mouse.currentScenePosition)
+        const worldMousePosition = world.getWorldPosition(currentScenePosition)
         if (mouseConstraint) {
             if (mouse.isButtonPressed(MouseButton.LEFT) && !mouseConstraint.entities.b) {
-                const clickEntity = world.findBodyEntity(mouse.currentScenePosition)
+                const clickEntity = world.findBodyEntity(currentScenePosition)
                 if (clickEntity) {
                     mouseConstraint.pointConstraint = clickEntity.toRelativeCenterPosition(worldMousePosition)
                 }
@@ -61,7 +62,8 @@ class ConstraintRunner extends Runner {
      */
     updateConstraint(constraint, world, mouse) {
         const physics = world.getPhysics()
-        const mousePosition = world.getWorldPosition(mouse.currentScenePosition)
+        const currentScenePosition = world.getCamera().fromCameraScale(mouse.currentScenePosition)
+        const mousePosition = world.getWorldPosition(currentScenePosition)
         const entity = constraint.entities.b
         constraint.setEntities(null, entity)
         physics.updateConstraint(constraint, {

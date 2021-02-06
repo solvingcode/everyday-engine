@@ -111,7 +111,7 @@ class Entity extends EntityData {
             context.translate(width / 2, height / 2)
             context.rotate(this.rotation)
             context.translate(-center.x, -center.y)
-            return new DataContext(center, context, scaleSize)
+            return new DataContext(center, context, scaleSize, world.getCamera())
         }
         return null
     }
@@ -132,7 +132,7 @@ class Entity extends EntityData {
     closeContext(dataContext) {
         const fillColor = this.getFillColor()
         const {borderSize} = this.getStyle()
-        const {context} = dataContext
+        const {context, scaleSize} = dataContext
         if (this.getTextureId()) {
             borderSize && context.stroke()
             if (fillColor) {
@@ -145,7 +145,7 @@ class Entity extends EntityData {
                 context.fillStyle = context.createPattern(canvasBg, 'repeat')
                 context.fill()
             } else {
-                context.drawImage(this.meshBgColor.context.canvas, 0, 0, this.size.width, this.size.height)
+                context.drawImage(this.meshBgColor.context.canvas, 0, 0, scaleSize.width, scaleSize.height)
             }
         } else if (fillColor) {
             context.stroke()
