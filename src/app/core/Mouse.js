@@ -9,11 +9,11 @@ class Mouse {
         this.keydowns = []
         this.keyclicks = []
         this.keydbclicks = []
-        this.position = {x: 0, y: 0}
-        this.scenePosition = {x: 0, y: 0}
+        this.position = new Vector()
+        this.scenePosition = new Vector()
         this.target = null
-        this.currentPosition = {x: 0, y: 0}
-        this.currentScenePosition = {x: 0, y: 0}
+        this.currentPosition = new Vector()
+        this.currentScenePosition = new Vector()
         this.lastPosition = this.currentPosition
         this.mouseWheel = {y: 0}
     }
@@ -23,7 +23,7 @@ class Mouse {
      * @return {Vector}
      */
     getPosition(event) {
-        return {x: event.clientX, y: event.clientY}
+        return new Vector({x: event.clientX, y: event.clientY})
     }
 
     /**

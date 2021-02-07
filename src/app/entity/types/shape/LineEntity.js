@@ -1,5 +1,6 @@
 import EntityMotion from '../../EntityMotion.js'
 import Vector from '../../../utils/Vector.js'
+import Size from '../../../pobject/Size.js'
 
 class LineEntity extends EntityMotion {
 
@@ -14,11 +15,11 @@ class LineEntity extends EntityMotion {
      */
     init(world) {
         const dragDistance = this.setMeshPositionByDragDistance(world)
-        this.size = {width: Math.abs(dragDistance.x), height: Math.abs(dragDistance.y)}
+        this.size = new Size({width: Math.abs(dragDistance.x), height: Math.abs(dragDistance.y)})
         if (dragDistance.x * dragDistance.y < 0) {
-            this.vertices = [{x: this.size.width, y: 0}, {x: 0, y: this.size.height}]
+            this.vertices = [new Vector({x: this.size.width, y: 0}), new Vector({x: 0, y: this.size.height})]
         } else {
-            this.vertices = [{x: 0, y: 0}, {x: this.size.width, y: this.size.height}]
+            this.vertices = [new Vector({x: 0, y: 0}), new Vector({x: this.size.width, y: this.size.height})]
         }
         return true
     }

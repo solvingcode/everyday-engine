@@ -15,7 +15,7 @@ class PolyEntity extends EntityMotion {
     /**
      * @override
      */
-    init() {
+    init(world) {
         this.generatePoints()
         const minPoint = this.getMinPoint()
         this.setMeshPosition(new Vector({x: minPoint.x, y: minPoint.y}))
@@ -60,20 +60,22 @@ class PolyEntity extends EntityMotion {
      * @override
      */
     drawContext(dataContext) {
-        const {context} = dataContext
-        this.drawPoints(context)
+        const {context, camera} = dataContext
+        this.drawPoints(context, camera)
     }
 
     /**
      * @param {OffscreenCanvasRenderingContext2D} context
+     * @param {Camera} camera
      */
-    drawPoints(context) {
+    drawPoints(context, camera) {
         context.beginPath()
         this.vertices.forEach((point, iPoint) => {
+            const scalePoint = camera.toCameraScale(point)
             if (!iPoint) {
-                context.moveTo(point.x, point.y)
+                context.moveTo(scalePoint.x, scalePoint.y)
             } else {
-                context.lineTo(point.x, point.y)
+                context.lineTo(scalePoint.x, scalePoint.y)
             }
         })
         context.closePath()

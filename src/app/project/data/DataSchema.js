@@ -18,6 +18,7 @@ import EntityProps from '../../pobject/EntityProps.js'
 import Texture from '../../core/Texture.js'
 import MatterEngine from '../../physics/engine/matter/MatterEngine.js'
 import JointEntity from '../../entity/types/constraint/JointEntity.js'
+import AttachPointEntity from '../../entity/types/constraint/AttachPointEntity.js'
 
 /**
  * @class {DataSchema}
@@ -46,7 +47,8 @@ class DataSchema {
         {id: 17, type: Texture},
         {id: 18, type: MouseConstraintEntity},
         {id: 19, type: MatterEngine},
-        {id: 20, type: JointEntity}
+        {id: 20, type: JointEntity},
+        {id: 21, type: AttachPointEntity}
     ]
 
     /**

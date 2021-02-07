@@ -103,7 +103,8 @@ class Terrain extends TerrainData {
         const camera = world.getCamera()
         const entity = this.getEntity(world)
         if (entity) {
-            const chunkIds = Array.from(Array(this.chunksNbr).keys())
+            const chunksNbr = Math.ceil(camera.fromScaleNumber(this.chunksNbr, entity.position))
+            const chunkIds = Array.from(Array(chunksNbr >= 0 ? chunksNbr : 0).keys())
                 .map((iChunk) => {
                     const x = Math.floor(camera.position.x / entity.getWidth()) + (iChunk - 1)
                     const chunk = this.loadChunk(

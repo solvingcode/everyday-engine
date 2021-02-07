@@ -1,5 +1,6 @@
 import PolyEntity from '../shape/PolyEntity.js'
 import PerlinNoise from '../../../utils/PerlinNoise.js'
+import Vector from '../../../utils/Vector.js'
 
 class NoiseEntity extends PolyEntity {
 
@@ -13,7 +14,7 @@ class NoiseEntity extends PolyEntity {
     /**
      * @override
      */
-    init() {
+    init(world) {
         this.setFixed(true)
         return true
     }
@@ -26,13 +27,13 @@ class NoiseEntity extends PolyEntity {
         const points = []
         const step = 10
         const {size} = this.props
-        points.push({x: 0, y: size.height})
+        points.push(new Vector({x: 0, y: size.height}))
         for (let i = 0; i <= size.width; i += step) {
             const height = perlinNoise.getPerlinNoise(this.position.x + i, 0)
-            points.push({x: i, y: Math.floor(height)})
+            points.push(new Vector({x: i, y: Math.floor(height)}))
         }
-        points.push({x: size.width, y: points[points.length - 1].y})
-        points.push({x: size.width, y: size.height})
+        points.push(new Vector({x: size.width, y: points[points.length - 1].y}))
+        points.push(new Vector({x: size.width, y: size.height}))
 
         this.setPoints(points)
         super.drawContext(dataContext)

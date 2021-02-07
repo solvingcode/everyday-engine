@@ -111,6 +111,15 @@ class Camera extends CameraData {
     }
 
     /**
+     * @param {number} value
+     * @param {Vector} position
+     * @return {number}
+     */
+    toScaleNumber(value, position = new Vector()){
+        return value * this.getScale(position)
+    }
+
+    /**
      * @param {Size} size
      * @param {Vector} position
      * @return {Size}
@@ -121,6 +130,15 @@ class Camera extends CameraData {
             width: size.width / scale,
             height: size.height / scale
         })
+    }
+
+    /**
+     * @param {number} value
+     * @param {Vector} position
+     * @return {number}
+     */
+    fromScaleNumber(value, position = new Vector()){
+        return value / this.getScale(position)
     }
 
     /**
