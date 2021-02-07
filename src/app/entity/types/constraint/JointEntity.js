@@ -1,6 +1,7 @@
 import EntitySelector from '../../../world/manager/EntitySelector.js'
 import AttachEntity from './AttachEntity.js'
 import Vector from '../../../utils/Vector.js'
+import Size from '../../../pobject/Size.js'
 
 /**
  * @property {Vector[]} vertices relative positions for entities A & B
@@ -11,7 +12,7 @@ class JointEntity extends AttachEntity {
         props.style = props.style || {color: '#0000FF'}
         super(props)
         this.vertices = [null, null]
-        this.entities = {a: null, b: null}
+        this.entityLinkIds = [null, null]
         this.attached = false
     }
 
@@ -26,9 +27,10 @@ class JointEntity extends AttachEntity {
     /**
      * Calculate the size of the canvas using the drag distance
      * @param {Object} dragDistance
+     * @return {Size}
      */
     calculateSize(dragDistance) {
-        return {width: Math.abs(dragDistance.x), height: Math.abs(dragDistance.y)}
+        return new Size({width: Math.abs(dragDistance.x), height: Math.abs(dragDistance.y)})
     }
 
     /**
@@ -60,23 +62,27 @@ class JointEntity extends AttachEntity {
      */
     setConstraintEntities(world) {
         const entitySelector = EntitySelector.get()
-        this.entities.a = entitySelector.get(world, this.toAbsolutePosition(this.vertices[0]), AttachEntity)
-        this.entities.b = entitySelector.getAll(world, this.toAbsolutePosition(this.vertices[1]), AttachEntity)
-            .find(entity => entity !== this.entities.a)
-        if (this.entities.a instanceof AttachEntity) {
-            this.entities.a = null
+        const entityA = entitySelector.get(world, this.toAbsolutePosition(this.vertices[0]), AttachEntity)
+        const entityB = entitySelector.getAll(world, this.toAbsolutePosition(this.vertices[1]), AttachEntity)
+            .find(entity => entity !== entityA)
+        if (entityA && !(entityA instanceof AttachEntity)) {
+            this.entityLinkIds[0] = entityA.id
         }
-        if (this.entities.b instanceof AttachEntity) {
-            this.entities.b = null
+        if (entityB && !(entityB instanceof AttachEntity)) {
+            this.entityLinkIds[1] = entityB.id
         }
-        if (this.entities.a === this.entities.b) {
-            this.entities.b = null
+        if (entityA === entityB) {
+            this.entityLinkIds[1] = null
         }
 
-        this.entities.a && (this.entities.a.attachedEntities = null)
-        this.entities.b && (this.entities.b.attachedEntities = null)
+        if(entityA){
+            entityA.attachedEntities = null
+        }
+        if(entityB){
+            entityB.attachedEntities = null
+        }
 
-        return this.entities.a || this.entities.b
+        return this.entityLinkIds[0] || this.entityLinkIds[1]
     }
 
     /**
@@ -85,7 +91,7 @@ class JointEntity extends AttachEntity {
      * @param {Vector} pointB absolute position
      */
     updatePoints(pointA, pointB) {
-        const dragDistance = {x: Math.floor(pointB.x - pointA.x), y: Math.floor(pointB.y - pointA.y)}
+        const dragDistance = new Vector({x: Math.floor(pointB.x - pointA.x), y: Math.floor(pointB.y - pointA.y)})
         if (this.generatePoints(dragDistance) && this.clearBuffer()) {
             let newX = pointA.x, newY = pointA.y
             if (dragDistance.x <= 0) {
@@ -96,15 +102,6 @@ class JointEntity extends AttachEntity {
             }
             this.setPosition(new Vector({x: parseInt(newX), y: parseInt(newY)}))
         }
-    }
-
-    /**
-     * @param {Entity} entityA
-     * @param {Entity} entityB
-     */
-    setEntities(entityA, entityB) {
-        this.entities.a = entityA
-        this.entities.b = entityB
     }
 
 }

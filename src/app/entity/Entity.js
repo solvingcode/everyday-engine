@@ -530,10 +530,11 @@ class Entity extends EntityData {
     /**
      * Add entity to physics Engine
      * @param {PhysicsEngine} physicsEngine
+     * @param {World} world
      */
-    loadPhysics(physicsEngine) {
+    loadPhysics(physicsEngine, world) {
         if (!this.isPhyiscsLoaded) {
-            physicsEngine.add(this)
+            physicsEngine.add(this, world)
             this.isPhyiscsLoaded = true
         }
     }
@@ -701,6 +702,32 @@ class Entity extends EntityData {
      */
     setAttachedEntities(entities) {
         this.attachedEntities = entities
+    }
+
+    /**
+     * @param {number} index
+     * @param {World} world
+     * @return {Entity}
+     */
+    getLinkedEntityAt( index, world){
+        return world.findEntityById(this.entityLinkIds[index])
+    }
+
+    /**
+     * @param {Entity} entityA
+     * @param {Entity} entityB
+     */
+    setLinkEntities(entityA, entityB) {
+        this.entityLinkIds[0] = entityA && entityA.id
+        this.entityLinkIds[1] = entityB && entityB.id
+    }
+
+    /**
+     * @param {number} index
+     * @param {Entity} entity
+     */
+    setLinkEntity(index, entity){
+        this.entityLinkIds[index] = entity && entity.id
     }
 
     getFillColor() {

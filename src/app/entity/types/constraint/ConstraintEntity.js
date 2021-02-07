@@ -18,7 +18,7 @@ class ConstraintEntity extends JointEntity {
         this.physics.angularStiffness = 1
         this.props.style = {color: `#${Color.fromArrayInt([this.id])}`}
         this.vertices = [new Vector({x: 0, y: 0}), new Vector({x: 0, y: 0})]
-        this.entities = {a: null, b: null}
+        this.entityLinkIds = [null, null]
         this.attached = true
         this.clonable = false
         this.pointConstraint = null

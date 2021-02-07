@@ -45,7 +45,12 @@ class XmlSerDe extends SerDe {
         for (let nodeAttr in attributes) {
             if (attributes.hasOwnProperty(nodeAttr)) {
                 const attribute = attributes[nodeAttr].name
-                data[attribute] = attributes[attribute].nodeValue
+                const attrValue = attributes[attribute].nodeValue
+                if(attribute === 'value'){
+                    data = attrValue
+                }else{
+                    data[attribute] = attrValue
+                }
             }
         }
         node.childNodes.forEach(cNode => {
@@ -65,7 +70,7 @@ class XmlSerDe extends SerDe {
     /**
      * @private
      * @param {string} key
-     * @param {Object|Array} data
+     * @param {Object|Array|number|string} data
      * @param {Document} root
      *
      * @returns {HTMLElement}
@@ -82,10 +87,16 @@ class XmlSerDe extends SerDe {
                     if (subNode) {
                         node.appendChild(subNode)
                     } else {
-                        pValue !== null && node.setAttribute(pKey, pValue)
+                        if (pValue !== null) {
+                            node.setAttribute(pKey, pValue)
+                        }
                     }
                 }
             }
+            return node
+        }else if(key === 'element'){
+            const node = root.createElement(key)
+            node.setAttribute('value', data)
             return node
         }
         return null

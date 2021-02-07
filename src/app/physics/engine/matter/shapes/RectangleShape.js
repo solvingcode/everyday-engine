@@ -9,7 +9,7 @@ class RectangleShape extends Shape {
     /**
      * @override
      */
-    generate(entity) {
+    generate(entity, world) {
         const centerPosition = entity.toCenterPosition()
         const engine = this.getEngine()
         return engine.Bodies.rectangle(

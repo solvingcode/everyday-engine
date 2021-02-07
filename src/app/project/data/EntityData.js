@@ -20,6 +20,7 @@ class EntityData extends Data {
     clonable
     subEntity
     style
+    entityLinkIds
 
     /**
      * @param {EntityProps} props
@@ -32,6 +33,7 @@ class EntityData extends Data {
         this.visible = false
         this.clonable = true
         this.subEntity = false
+        this.entityLinkIds = []
         this.setProps(props)
     }
 
@@ -540,6 +542,20 @@ class EntityData extends Data {
      */
     isSubEntity() {
         return this.getSubEntity()
+    }
+
+    /**
+     * @return {number[]}
+     */
+    getEntityLinkIds(){
+        return this.entityLinkIds
+    }
+
+    /**
+     * @param {number[]} ids
+     */
+    setEntityLinkIds(ids){
+        this.entityLinkIds = ids
     }
 
 }

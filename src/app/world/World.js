@@ -76,6 +76,14 @@ class World extends WorldData {
     }
 
     /**
+     * @param {number} id
+     * @return {Entity}
+     */
+    findEntityById(id){
+        return this.getEntityManager().findById(id)
+    }
+
+    /**
      * @param {Vector} position position canvas coordinates (window)
      * @return {Entity|null}
      */

@@ -38,14 +38,14 @@ class ConstraintRunner extends Runner {
         const currentScenePosition = world.getCamera().fromCameraScale(mouse.currentScenePosition)
         const worldMousePosition = world.getWorldPosition(currentScenePosition)
         if (mouseConstraint) {
-            if (mouse.isButtonPressed(MouseButton.LEFT) && !mouseConstraint.entities.b) {
+            if (mouse.isButtonPressed(MouseButton.LEFT) && !mouseConstraint.getLinkedEntityAt(1, world)) {
                 const clickEntity = world.findBodyEntity(currentScenePosition)
                 if (clickEntity) {
                     mouseConstraint.pointConstraint = clickEntity.toRelativeCenterPosition(worldMousePosition)
                 }
-                mouseConstraint.entities.b = clickEntity
+                mouseConstraint.setLinkEntity(1, clickEntity)
             } else if (mouse.isButtonClicked(MouseButton.LEFT)) {
-                mouseConstraint.entities.b = null
+                mouseConstraint.setLinkEntity(1, null)
                 mouseConstraint.pointConstraint = null
             }
             this.updateConstraint(mouseConstraint, world, mouse)
@@ -64,8 +64,8 @@ class ConstraintRunner extends Runner {
         const physics = world.getPhysics()
         const currentScenePosition = world.getCamera().fromCameraScale(mouse.currentScenePosition)
         const mousePosition = world.getWorldPosition(currentScenePosition)
-        const entity = constraint.entities.b
-        constraint.setEntities(null, entity)
+        const entity = constraint.getLinkedEntityAt(1, world)
+        constraint.setLinkEntities(null, entity)
         physics.updateConstraint(constraint, {
             pointA: entity ? mousePosition : new Vector(),
             entityB: entity,

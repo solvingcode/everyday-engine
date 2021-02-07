@@ -25,20 +25,22 @@ class PhysicsEngine extends PhysicsEngineData {
     /**
      * Add physics to the entity.
      * @param {Entity} entity
+     * @param {World} world
      */
-    add(entity) {
+    add(entity, world) {
         this.mapShapeToEntity.push({
             entityId: entity.id,
-            shape: this.loadShape(entity)
+            shape: this.loadShape(entity, world)
         })
     }
 
     /**
      * Get the shape for entity.
      * @param {Entity} entity
+     * @param {World} world
      * @return {Body}
      */
-    loadShape(entity) {
+    loadShape(entity, world) {
         throw new TypeError('"loadShape" method must be implemented')
     }
 

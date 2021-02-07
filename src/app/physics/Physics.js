@@ -37,7 +37,7 @@ class Physics extends PhysicsData {
     updateEntities(world) {
         const entityManager = world.getEntityManager()
         const bodyEntities = entityManager.getBodyEntities()
-        const jointEntites = entityManager.getAttachEntities()
+        const jointEntities = entityManager.getAttachEntities()
         this.physicsEngine.getBodies().map((body, index) => {
             const entity = bodyEntities[index]
             const {x, y} = entity.fromCenterPosition(body.position)
@@ -49,9 +49,11 @@ class Physics extends PhysicsData {
             entityManager.haveToDie(entity, this.physicsEngine)
         })
         this.physicsEngine.getJoints().map((joint, index) => {
-            const entity = jointEntites[index]
-            const pointA = entity.entities.a ? entity.entities.a.fromRelativeCenterPosition(joint.pointA) : joint.pointA
-            const pointB = entity.entities.b ? entity.entities.b.fromRelativeCenterPosition(joint.pointB) : joint.pointB
+            const entity = jointEntities[index]
+            const entityA = entity.getLinkedEntityAt(0, world)
+            const entityB = entity.getLinkedEntityAt(1, world)
+            const pointA = entityA ? entityA.fromRelativeCenterPosition(joint.pointA) : joint.pointA
+            const pointB = entityB ? entityB.fromRelativeCenterPosition(joint.pointB) : joint.pointB
             entity.updatePoints(pointA, pointB)
         })
     }
@@ -154,8 +156,8 @@ class Physics extends PhysicsData {
         const entityManager = world.getEntityManager()
         const bodyEntities = entityManager.getBodyEntities()
         const attachEntities = entityManager.getAttachEntities()
-        bodyEntities.map(entity => entity.loadPhysics(this.physicsEngine))
-        attachEntities.map(entity => entity.loadPhysics(this.physicsEngine))
+        bodyEntities.map(entity => entity.loadPhysics(this.physicsEngine, world))
+        attachEntities.map(entity => entity.loadPhysics(this.physicsEngine, world))
         return true
     }
 

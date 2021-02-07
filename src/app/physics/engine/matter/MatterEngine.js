@@ -22,8 +22,8 @@ class MatterEngine extends PhysicsEngine {
     /**
      * @override
      */
-    loadShape(entity) {
-        const shape = this.shapeLoader.load(entity)
+    loadShape(entity, world) {
+        const shape = this.shapeLoader.load(entity, world)
         Matter.World.add(this.engine.world, shape)
         return shape
     }
@@ -99,11 +99,12 @@ class MatterEngine extends PhysicsEngine {
      * @override
      */
     updateJointPosition(world, entity) {
-        const {vertices, entities} = entity
+        const {vertices} = entity
         const pointA = entity.toAbsolutePosition(vertices[0])
         const pointB = entity.toAbsolutePosition(vertices[1])
         if (entity.attached) {
-            entities.a && entities.a.movePointTo(pointA, pointB)
+            const entityA = entity.getLinkedEntityAt(0, world)
+            entityA && entityA.movePointTo(pointA, pointB)
             entity.movePointTo(pointA, pointB)
             entity.updatePoints(pointB, {x: pointB.x + 1, y: pointB.y + 1})
             return true

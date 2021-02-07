@@ -32,6 +32,7 @@ class EntityManager extends EntityManagerData {
 
     /**
      * @param {Entity} entity
+     * @return {number}
      */
     getIndexOf(entity) {
         return this.entities.findIndex((element) =>
@@ -144,6 +145,7 @@ class EntityManager extends EntityManagerData {
      * Clone entity to the entities list
      * @param {Entity} entity
      * @param {Object} options
+     * @return {Entity}
      */
     clone(entity, options = {}) {
         const cloneEntity = entity.clone()
@@ -153,6 +155,16 @@ class EntityManager extends EntityManagerData {
             cloneEntity.worldId = entity.id
         }
         return cloneEntity
+    }
+
+    /**
+     * @param {number} entityId
+     * @param {Object} options
+     * @return {Entity}
+     */
+    cloneById(entityId, options = {}){
+        const entity = this.findById(entityId)
+        return this.clone(entity, options)
     }
 
     /**
@@ -182,22 +194,21 @@ class EntityManager extends EntityManagerData {
         const cloneAttachEntities = attachEntities.map(entity => this.clone(entity))
         attachEntities.forEach((attachEntity, attachIndex) => {
             const cloneAttachEntity = cloneAttachEntities[attachIndex]
-            const bodyEntityA = attachEntity.entities.a
-            const bodyEntityB = attachEntity.entities.b
-            const bodyIndexA = bodyEntities.findIndex(body => bodyEntityA === body)
-            const bodyIndexB = bodyEntities.findIndex(body => bodyEntityB === body)
+            const bodyEntityIdA = attachEntity.entityLinkIds[0]
+            const bodyEntityIdB = attachEntity.entityLinkIds[1]
+            const bodyIndexA = bodyEntities.findIndex(body => bodyEntityIdA === body.id)
+            const bodyIndexB = bodyEntities.findIndex(body => bodyEntityIdB === body.id)
             let cloneEntityA = (bodyIndexA >= 0 && cloneBodyEntities[bodyIndexA])
             let cloneEntityB = (bodyIndexB >= 0 && cloneBodyEntities[bodyIndexB])
-            if (!cloneEntityA && bodyEntityA) {
-                cloneEntityA = this.clone(bodyEntityA, options)
+            if (!cloneEntityA && bodyEntityIdA) {
+                cloneEntityA = this.cloneById(bodyEntityIdA, options)
                 cloneBodyEntities.push(cloneEntityA)
             }
-            if (!cloneEntityB && bodyEntityB) {
-                cloneEntityB = this.clone(bodyEntityB)
+            if (!cloneEntityB && bodyEntityIdB) {
+                cloneEntityB = this.cloneById(bodyEntityIdB)
                 cloneBodyEntities.push(cloneEntityB)
             }
-            cloneAttachEntity.entities.a = cloneEntityA
-            cloneAttachEntity.entities.b = cloneEntityB
+            cloneAttachEntity.setLinkEntities(cloneEntityA, cloneEntityB)
         })
         return cloneBodyEntities.concat(cloneAttachEntities)
     }
@@ -423,8 +434,8 @@ class EntityManager extends EntityManagerData {
      */
     getAllAttachTypeEntity(entity) {
         return this.getAttachEntities().filter(pEntity =>
-            pEntity.entities.a === entity ||
-            pEntity.entities.b === entity
+            pEntity.entityLinkIds[0] === entity.id ||
+            pEntity.entityLinkIds[1] === entity.id
         )
     }
 
@@ -446,6 +457,7 @@ class EntityManager extends EntityManagerData {
     /**
      * Get entities of type attach
      * @param {Entity[]} entities
+     * @return {Entity[]}
      */
     getAttachEntities(entities = null) {
         return (entities || this.entities).filter(entity => this.isAttachEntity(entity))

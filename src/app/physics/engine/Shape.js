@@ -21,19 +21,21 @@ class Shape {
     /**
      * Generate the body for the given entity
      * @param {EntityMotion} entity
+     * @param {World} world
      * @return {Body}
      */
-    generate(entity) {
+    generate(entity, world) {
         throw new TypeError('"Shape.generate" method must be implemented')
     }
 
     /**
      * Load the body for the given entity, and update physics
      * @param {Entity} entity
+     * @param {World} world
      * @return {Body}
      */
-    load(entity) {
-        const body = this.generate(entity)
+    load(entity, world) {
+        const body = this.generate(entity, world)
         this.setup(entity, body)
         this.update(entity, body)
         return body

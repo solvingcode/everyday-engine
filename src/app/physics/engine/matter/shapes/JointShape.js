@@ -9,28 +9,31 @@ class JointShape extends Shape {
     /**
      * @override
      */
-    generate(entity) {
+    generate(entity, world) {
         const engine = this.getEngine()
-        entity.attached && this.addGroup(entity)
-        return engine.Constraint.create(this.getConstraint(entity))
+        entity.attached && this.addGroup(entity, world)
+        return engine.Constraint.create(this.getConstraint(entity, world))
     }
 
     /**
      * @param {EntityMotion} entity
+     * @param {World} world
      * @return {Object}
      */
-    getConstraint(entity) {
-        const {vertices, entities} = entity
-        const bodyA = entities.a && this.getBodyFromEntity(entities.a)
-        const bodyB = entities.b && this.getBodyFromEntity(entities.b)
-        const pointA = entities.a ? entities.a.getRelativeCenterPosition(entity, vertices[0]) : entity.fromRelativePosition(vertices[0])
-        const pointB = entities.b ? entities.b.getRelativeCenterPosition(entity, vertices[1]) : entity.fromRelativePosition(vertices[1])
+    getConstraint(entity, world) {
+        const {vertices} = entity
+        const entityA = entity.getLinkedEntityAt(0, world)
+        const entityB = entity.getLinkedEntityAt(1, world)
+        const bodyA = entityA && this.getBodyFromEntity(entityA)
+        const bodyB = entityB && this.getBodyFromEntity(entityB)
+        const pointA = entityA ? entityA.getRelativeCenterPosition(entity, vertices[0]) : entity.fromRelativePosition(vertices[0])
+        const pointB = entityB ? entityB.getRelativeCenterPosition(entity, vertices[1]) : entity.fromRelativePosition(vertices[1])
         const {
             stiffness,
             angularStiffness,
             angleA, angleB
         } = entity.physics
-        if ((entities.a && !bodyA) || (entities.b && !bodyB)) {
+        if ((entityA && !bodyA) || (entityB && !bodyB)) {
             throw new ReferenceError('Body not yet created or entity not founded')
         }
         return {
@@ -43,16 +46,24 @@ class JointShape extends Shape {
      * Add the constraint and the attached entities to the same collision group
      * (disable collision between attached bodies)
      * @param {Entity} entity
+     * @param {World} world
      */
-    addGroup(entity) {
+    addGroup(entity, world) {
+        const entityA = entity.getLinkedEntityAt(0, world)
+        const entityB = entity.getLinkedEntityAt(1, world)
+
         const collisionGroup = entity.collision.group ||
-            (entity.entities.a && entity.entities.a.collision.group) ||
-            (entity.entities.b && entity.entities.b.collision.group) ||
+            (entityA && entityA.collision.group) ||
+            (entityB && entityB.collision.group) ||
             this.physicEngine.newGroup()
 
         entity.collision.group = collisionGroup
-        entity.entities.a && (entity.entities.a.collision.group = collisionGroup)
-        entity.entities.b && (entity.entities.b.collision.group = collisionGroup)
+        if(entityA){
+            entityA.collision.group = collisionGroup
+        }
+        if(entityB){
+            entityB.collision.group = collisionGroup
+        }
     }
 
 }

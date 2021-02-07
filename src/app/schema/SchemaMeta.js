@@ -58,6 +58,14 @@ export default {
                                     subEntity: {
                                         type: 'boolean'
                                     },
+                                    entityLinkIds: {
+                                        type: Array,
+                                        meta: {
+                                            element: {
+                                                type: 'number'
+                                            }
+                                        }
+                                    },
                                     props: {
                                         prototype: EntityProps,
                                         meta: {
