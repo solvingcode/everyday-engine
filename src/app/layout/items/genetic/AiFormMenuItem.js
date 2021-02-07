@@ -20,7 +20,7 @@ class AiFormMenuItem extends FormMenuItem {
     /**
      * @override
      */
-    getFields() {
+    generateFields() {
         return [
             {
                 bind: 'nbPerGeneration',

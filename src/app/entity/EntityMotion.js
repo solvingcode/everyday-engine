@@ -91,7 +91,7 @@ class EntityMotion extends Entity {
 
     /**
      * Set velocity for physics props
-     * @param {Object} velocity
+     * @param {Vector} velocity
      */
     setVelocity({x, y}) {
         this.physics.velocity = new Vector({x, y})
@@ -107,7 +107,7 @@ class EntityMotion extends Entity {
 
     /**
      * Set angular velocity for physics props
-     * @param {Object} velocity
+     * @param {Vector} velocity
      */
     setAngularVelocity(velocity) {
         this.physics.angularVelocity = velocity
@@ -171,11 +171,11 @@ class EntityMotion extends Entity {
      * Move the entity by distance related to a given point.
      * Move also attached entities
      * @param {EntityManager} entityManager
-     * @param {Object} point relative position
-     * @param {Object} target absolute position
+     * @param {Vector} point relative position
+     * @param {Vector} target absolute position
      */
     moveRelativePointTo(entityManager, point, target) {
-        const diffDistance = {x: target.x - this.position.x - point.x, y: target.y - this.position.y - point.y}
+        const diffDistance = new Vector({x: target.x - this.position.x - point.x, y: target.y - this.position.y - point.y})
         this.setPositionX(this.position.x + diffDistance.x)
         this.setPositionY(this.position.y + diffDistance.y)
     }

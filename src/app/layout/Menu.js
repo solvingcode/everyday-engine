@@ -27,9 +27,11 @@ import StyleMenuItem from './items/style/StyleMenuItem.js'
 import ConditionMenuItem from './items/condition/ConditionMenuItem.js'
 import AppMenuItem from './items/app/AppMenuItem.js'
 import TerrainMenuItem from './items/terrain/TerrainMenuItem.js'
-import CameraMenuItem from './items/camera/CameraMenuItem.js'
+import CameraSceneMenuItem from './items/camera/CameraSceneMenuItem.js'
 import TextureMenuItem from './items/texture/TextureMenuItem.js'
 import PhysicsMenuItem from './items/physics/PhysicsMenuItem.js'
+import CameraMenuItem from './items/draw/CameraMenuItem.js'
+import WorldMenuItem from './items/world/WorldMenuItem.js'
 
 /**
  * Define all menu items
@@ -45,6 +47,7 @@ class Menu {
             new RectMenuItem(),
             new JointMenuItem(),
             new AttachPointMenuItem(),
+            new CameraMenuItem(),
             new SimulateStartMenuItem(),
             new SimulateStopMenuItem(),
 
@@ -68,12 +71,13 @@ class Menu {
             new LayerMenuItem(),
             new StyleMenuItem(),
             new EntityMenuItem(),
+            new WorldMenuItem(),
             new PhysicsMenuItem(),
             new ConditionMenuItem(),
             new AiGeneticMenuItem(),
             new TerrainMenuItem(),
             new TextureMenuItem(),
-            new CameraMenuItem(),
+            new CameraSceneMenuItem(),
 
             //BOTTOM
             new AppMenuItem()

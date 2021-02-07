@@ -25,6 +25,8 @@ class Game extends Scene {
         await super.init()
         const world = World.get()
         world.getPhysics().run(world)
+        world.setupCamera()
+        world.regenerateAll()
     }
 
     /**
@@ -34,7 +36,6 @@ class Game extends Scene {
         super.loop()
         const world = World.get()
         world.getPhysics().update(world, world.getAiEngine())
-        world.updateCamera()
     }
 
 }

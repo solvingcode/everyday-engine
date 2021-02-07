@@ -159,7 +159,7 @@ class Entity extends EntityData {
     /**
      * Calculate the largest rectangle for given rotation and size
      * @param {number} angleRadian
-     * @param {Object} size
+     * @param {Size} size
      */
     getLargestRectangle(angleRadian, size) {
         const cosA = Math.cos(angleRadian)
@@ -237,6 +237,7 @@ class Entity extends EntityData {
 
     /**
      * Set the entity's position and generate the Mesh
+     * @param {Vector} position
      */
     setPositionAndGenerate(position) {
         this.setPosition(position)
@@ -344,7 +345,7 @@ class Entity extends EntityData {
 
     /**
      * Set new position for the Mesh
-     * @param {Object} position
+     * @param {Vector} position
      */
     setMeshPosition(position) {
         this.mesh.position = position

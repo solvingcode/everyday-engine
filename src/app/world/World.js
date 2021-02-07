@@ -24,6 +24,7 @@ class World extends WorldData {
         this.terrainManager = new TerrainManager()
         this.textureManager = new TextureManager()
         this.mouseConstraintId = null
+        this.cameraEntityId = null
         this.init()
     }
 
@@ -179,7 +180,13 @@ class World extends WorldData {
      */
     updateCamera() {
         const entity = this.getCamera().getEntity(this.getEntityManager())
-        entity && this.getCamera().update({x: entity.position.x, y: this.getCamera().position.y})
+        entity && this.getCamera().update(entity.position)
+    }
+
+    setupCamera(){
+        if(this.cameraEntityId){
+            this.getCamera().setup(this.cameraEntityId, this.getEntityManager())
+        }
     }
 
     /**

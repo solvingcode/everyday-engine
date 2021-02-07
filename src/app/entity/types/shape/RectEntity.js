@@ -17,8 +17,7 @@ class RectEntity extends EntityMotion {
     }
 
     /**
-     * Draw the context
-     * @param {DataContext} dataContext
+     * @override
      */
     drawContext(dataContext) {
         const {context, scaleSize} = dataContext

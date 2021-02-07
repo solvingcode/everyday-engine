@@ -5,6 +5,7 @@ import TextMenuItem from './TextMenuItem.js'
 import CheckboxMenuItem from './CheckboxMenuItem.js'
 import DropdownMenuItem from './DropdownMenuItem.js'
 import Maths from '../../../utils/Maths.js'
+import ObjectHelper from '../../../utils/ObjectHelper.js'
 
 /**
  * Form menu item
@@ -25,22 +26,29 @@ class FormMenuItem extends MenuItem {
         this.object = null
         this.items = []
         this.version = 0
-        this.fields = this.getFields()
+        this.updateFields()
+    }
+
+    /**
+     * @return {FormField[]}
+     */
+    getFields(){
+        return this.fields
     }
 
     /**
      * @abstract
-     * Get all fields
+     * GenerateFields all fields
      * @return {FormField[]}
      */
-    getFields() {
-        throw new TypeError('"getFields" method must be implemented')
+    generateFields() {
+        throw new TypeError('"generateFields" method must be implemented')
     }
 
     /**
      * @abstract
      * Get the object bound to the form
-     * @return {Object}
+     * @return {*}
      */
     getFormObject() {
         throw new TypeError('"getFormObject" method must be implemented')
@@ -79,14 +87,15 @@ class FormMenuItem extends MenuItem {
         this.version = Maths.generateId()
     }
 
+    updateFields(){
+        this.fields = this.generateFields()
+    }
+
     /**
-     * Check if the form is updated
+     * @param {*} object
      * @return {boolean}
      */
-    isFormUpdated(object) {
-        if (!this.object || object.id !== this.object.id) {
-            return true
-        }
+    isObjectUpdated(object){
         for (const iField in this.fields) {
             if (this.fields.hasOwnProperty(iField)) {
                 const field = this.fields[iField]
@@ -101,6 +110,36 @@ class FormMenuItem extends MenuItem {
             }
         }
         return false
+    }
+
+    /**
+     * @return {boolean}
+     */
+    isFieldsUpdated(){
+        const actualFields = this.getFields()
+        const newFields = this.generateFields()
+        return !!actualFields.find((field, iField) => {
+            if(_.isArray(field.list)){
+                const actualValues = field.list.map(elem => `${elem.value}-${elem.label}`)
+                const newValues = newFields[iField].list.map(elem => `${elem.value}-${elem.label}`)
+                return !ObjectHelper.isEqual(actualValues, newValues)
+            }
+        })
+    }
+
+    /**
+     * Check if the form is updated
+     * @param {*} object
+     * @return {boolean}
+     */
+    isFormUpdated(object) {
+        if (!this.object || object.id !== this.object.id) {
+            return true
+        }else if(this.isFieldsUpdated()){
+            this.updateFields()
+            return true
+        }
+        return this.isObjectUpdated(object)
     }
 
     /**
@@ -133,7 +172,7 @@ class FormMenuItem extends MenuItem {
     }
 
     /**
-     * Get the getter if the field
+     * Get the getter of the field
      * @param {FormField} field
      * @return {callback}
      */
@@ -181,7 +220,7 @@ class FormMenuItem extends MenuItem {
     /**
      * Get the menu item
      * @param {FormField} field
-     * @return {InputMenuItem}
+     * @return {Function}
      */
     getMenuItem(field) {
         switch (field.type) {

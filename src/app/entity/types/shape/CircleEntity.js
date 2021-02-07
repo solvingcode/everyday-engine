@@ -30,7 +30,7 @@ class CircleEntity extends EntityMotion {
     /**
      * Calculate the largest rectangle for given rotation and size
      * @param {number} angleRadian
-     * @param {Object} size
+     * @param {Size} size
      */
     getLargestRectangle(angleRadian, size) {
         return size

@@ -16,6 +16,7 @@ class WorldData extends Data {
     physics
     terrainManager
     textureManager
+    cameraEntityId
 
     /**
      * @param {World} data
@@ -102,6 +103,20 @@ class WorldData extends Data {
      */
     getTextureManager() {
         return this.textureManager
+    }
+
+    /**
+     * @return {number}
+     */
+    getCameraEntityId(){
+        return this.cameraEntityId
+    }
+
+    /**
+     * @param {number} entityId
+     */
+    setCameraEntityId(entityId){
+        this.cameraEntityId = entityId
     }
 
     /**

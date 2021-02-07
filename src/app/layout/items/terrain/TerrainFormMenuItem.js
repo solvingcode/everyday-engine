@@ -21,7 +21,7 @@ class TerrainFormMenuItem extends FormMenuItem {
     /**
      * @override
      */
-    getFields() {
+    generateFields() {
         return [
             {
                 bind: 'terrainType',

@@ -20,7 +20,7 @@ class NoiseFormMenuItem extends FormMenuItem {
     /**
      * @override
      */
-    getFields() {
+    generateFields() {
         return [
             {
                 bind: 'seed',

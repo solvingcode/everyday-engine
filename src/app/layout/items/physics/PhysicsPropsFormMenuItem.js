@@ -20,7 +20,7 @@ export default class PhysicsPropsFormMenuItem extends FormMenuItem {
     /**
      * @override
      */
-    getFields() {
+    generateFields() {
         return [
             {
                 bind: 'fixed',

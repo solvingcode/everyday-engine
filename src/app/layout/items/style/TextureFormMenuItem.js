@@ -21,7 +21,7 @@ class TextureFormMenuItem extends FormMenuItem {
     /**
      * @override
      */
-    getFields() {
+    generateFields() {
         const textures = World.get().getTextureManager().getTextures()
             .map(texture => ({value: texture.id, label: texture.name}))
 

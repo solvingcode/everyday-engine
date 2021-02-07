@@ -1,15 +1,15 @@
 import Layout from '../../Layout.js'
-import EntitySelector from '../../../world/manager/EntitySelector.js'
 import World from '../../../world/World.js'
 import FormMenuItem from '../form/FormMenuItem.js'
+import CameraEntity from '../../../entity/types/component/CameraEntity.js'
 
 /**
- * Form properties
+ * @class {CameraFormMenuItem}
  */
-class ConditionFormMenuItem extends FormMenuItem {
+export default class CameraFormMenuItem extends FormMenuItem {
     constructor(parent) {
         super({
-            name: 'Conditions',
+            name: 'Camera',
             stateCode: '',
             type: Layout.type.FORM,
             zone: parent.zone
@@ -21,16 +21,16 @@ class ConditionFormMenuItem extends FormMenuItem {
      * @override
      */
     generateFields() {
-        const bodyEntities = World.get().getEntityManager().getBodyEntities()
-            .filter(entity => entity !== this.object)
+        const cameraEntities = World.get().getEntityManager().getComponentEntities()
+            .filter(entity => entity instanceof CameraEntity)
             .map(entity => ({value: entity.id, label: entity.name}))
 
         return [
             {
-                bind: 'dieCondition',
-                label: 'Die when collide',
+                bind: 'cameraEntityId',
+                label: 'Camera',
                 type: Layout.form.DROPDOWN,
-                list: bodyEntities
+                list: cameraEntities
             }
         ]
     }
@@ -39,8 +39,6 @@ class ConditionFormMenuItem extends FormMenuItem {
      * @override
      */
     getFormObject() {
-        return EntitySelector.get().getFirstSelected(World.get())
+        return World.get()
     }
 }
-
-export default ConditionFormMenuItem

@@ -13,7 +13,7 @@ class VirtualEntity extends EntityMotion {
     /**
      * @override
      */
-    init() {
+    init(world) {
         return true
     }
 

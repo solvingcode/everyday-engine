@@ -37,6 +37,9 @@ export default {
             mouseConstraintId: {
                 type: 'number'
             },
+            cameraEntityId: {
+                type: 'number'
+            },
             entityManager: {
                 type: EntityManager,
                 meta: {

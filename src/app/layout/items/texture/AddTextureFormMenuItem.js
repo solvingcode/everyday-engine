@@ -19,7 +19,7 @@ class AddTextureFormMenuItem extends FormMenuItem {
     /**
      * @override
      */
-    getFields() {
+    generateFields() {
         return [
             {
                 bind: 'texture',

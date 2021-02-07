@@ -26,7 +26,7 @@ class JointEntity extends AttachEntity {
 
     /**
      * Calculate the size of the canvas using the drag distance
-     * @param {Object} dragDistance
+     * @param {Vector} dragDistance
      * @return {Size}
      */
     calculateSize(dragDistance) {

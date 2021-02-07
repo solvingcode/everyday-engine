@@ -1,6 +1,7 @@
 import Data from './Data.js'
 import Maths from '../../utils/Maths.js'
 import Size from '../../pobject/Size.js'
+import Vector from '../../utils/Vector.js'
 
 /**
  * Class define all entity's data and props (getters and setters)
@@ -217,7 +218,7 @@ class EntityData extends Data {
      */
     setPositionX(x) {
         const {y, z} = this.position
-        this.setPositionAndGenerate({x: parseInt(x), y, z})
+        this.setPositionAndGenerate(new Vector({x: parseInt(x), y, z}))
     }
 
     /**
@@ -225,7 +226,7 @@ class EntityData extends Data {
      */
     setPositionY(y) {
         const {x, z} = this.position
-        this.setPositionAndGenerate({x, y: parseInt(y), z})
+        this.setPositionAndGenerate(new Vector({x, y: parseInt(y), z}))
     }
 
     /**
@@ -568,7 +569,8 @@ EntityData.shapes = {
     CIRCLE: 'circle',
     ATTACH: 'attach',
     GROUP: 'group',
-    VIRTUAL: 'virtual'
+    VIRTUAL: 'virtual',
+    COMPONENT: 'component'
 }
 
 export default EntityData

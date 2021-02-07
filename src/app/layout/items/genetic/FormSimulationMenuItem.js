@@ -20,7 +20,7 @@ class FormSimulationMenuItem extends FormMenuItem {
     /**
      * @override
      */
-    getFields() {
+    generateFields() {
         return [
             {
                 bind: 'showOnlyBest',

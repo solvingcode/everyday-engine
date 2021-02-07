@@ -5,7 +5,7 @@ import Layout from '../../Layout.js'
 /**
  * Menu responsible for managing camera properties
  */
-class CameraMenuItem extends MenuItem {
+class CameraSceneMenuItem extends MenuItem {
     constructor() {
         super({
             name: 'Camera',
@@ -19,4 +19,4 @@ class CameraMenuItem extends MenuItem {
     }
 }
 
-export default CameraMenuItem
+export default CameraSceneMenuItem

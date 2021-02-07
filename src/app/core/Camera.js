@@ -17,10 +17,10 @@ class Camera extends CameraData {
 
     /**
      * Update camera position
-     * @param {Object} position
+     * @param {Vector} position
      */
     update(position) {
-        this.position = Object.assign({x: 0, y: 0, z: 0}, position)
+        this.position = position
     }
 
     /**
@@ -142,18 +142,16 @@ class Camera extends CameraData {
     }
 
     /**
-     * Attach the camera to an entity
-     * @param {Entity} entity
+     * @param {number} entityId
+     * @param {EntityManager} entityManager
      */
-    attach(entity) {
-        this.entityId = entity.id
-    }
-
-    /**
-     * Detach the camera
-     */
-    detach() {
-        this.entityId = null
+    setup(entityId, entityManager){
+        this.entityId = entityId
+        const entity = this.getEntity(entityManager)
+        if(!entity){
+            throw new TypeError(`Error Setup camera (Entity ID: ${entityId})`)
+        }
+        this.update(entity.position)
     }
 
     /**

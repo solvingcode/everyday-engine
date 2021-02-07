@@ -21,11 +21,11 @@ export default class PhysicsFormMenuItem extends FormMenuItem {
     /**
      * @override
      */
-    getFields() {
+    generateFields() {
         return [
             {
                 bind: 'type',
-                label: 'Type',
+                label: 'Physics',
                 type: Layout.form.DROPDOWN,
                 list: [
                     {
