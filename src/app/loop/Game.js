@@ -26,6 +26,7 @@ class Game extends Scene {
         const world = World.get()
         world.getPhysics().run(world)
         world.setupCamera()
+        world.hideComponents()
         world.regenerateAll()
     }
 

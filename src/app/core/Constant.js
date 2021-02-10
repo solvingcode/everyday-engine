@@ -1,6 +1,3 @@
-export const WINDOW_WIDTH = window.innerWidth
-export const WINDOW_HEIGHT = window.innerHeight
-
 export const SCENE_WIDTH = 1438
 export const SCENE_HEIGHT = 781
 

@@ -17,8 +17,8 @@ class LayerMenuItem extends ListFormMenuItem {
      * @override
      */
     getFormObject() {
-        return World.get().getEntityManager().getValidBodyEntities()
-            .filter(entity => !entity.isSubEntity()).reverse()
+        return World.get().getEntityManager().getManagedEntities()
+            .filter(entity => !entity.isSubEntity() && entity.isValid()).reverse()
     }
 }
 

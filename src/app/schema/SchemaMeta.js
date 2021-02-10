@@ -422,17 +422,6 @@ export default {
                                                 type: 'number'
                                             }
                                         }
-                                    },
-                                    size: {
-                                        prototype: Size,
-                                        meta: {
-                                            width: {
-                                                type: 'number'
-                                            },
-                                            height: {
-                                                type: 'number'
-                                            }
-                                        }
                                     }
                                 }
                             }

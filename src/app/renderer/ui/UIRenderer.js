@@ -1,5 +1,5 @@
 import Layout from '../../layout/Layout.js'
-import {SCENE_WIDTH, WINDOW_HEIGHT} from '../../core/Constant.js'
+import {SCENE_WIDTH, SCENE_HEIGHT} from '../../core/Constant.js'
 
 /**
  * UI Renderer class
@@ -27,7 +27,7 @@ class UIRenderer {
             },
             [Layout.zone.BOTTOM]: {
                 x0: 20,
-                y0: WINDOW_HEIGHT - 40
+                y0: SCENE_HEIGHT - 40
             }
         }
     }
@@ -160,6 +160,15 @@ class UIRenderer {
 
     /**
      * @abstract
+     * Get the form UI
+     * @return {ItemUI}
+     */
+    getFormInlineUI() {
+        throw new TypeError('"UIRenderer.getFormInlineUI" method must be implemented')
+    }
+
+    /**
+     * @abstract
      * @return {ItemUI}
      */
     getListElementUI() {
@@ -191,6 +200,8 @@ class UIRenderer {
             return this.getIconButtonUI()
         } else if (element.type === Layout.type.LIST_ELEMENT) {
             return this.getListElementUI()
+        } else if (element.type === Layout.type.FORM_INLINE) {
+            return this.getFormInlineUI()
         }
         return this.getDefaultButtonUI()
     }

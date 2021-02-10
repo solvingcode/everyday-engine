@@ -368,18 +368,45 @@ class EntityManager extends EntityManagerData {
     /**
      * Is the given entity is a body type
      * @param {Entity} entity
+     * @return {boolean}
      */
     isBodyEntity(entity) {
-        return !(entity instanceof AttachEntity) &&
-            !(entity instanceof VirtualEntity)
+        return !this.isAttachEntity(entity) &&
+            !this.isVirtualEntity(entity) &&
+            !this.isComponentEntity(entity)
     }
 
     /**
      * Is the given entity is an attach type
      * @param {Entity} entity
+     * @return {boolean}
      */
     isAttachEntity(entity) {
         return entity instanceof AttachEntity
+    }
+
+    /**
+     * @param {Entity} entity
+     * @return {boolean}
+     */
+    isVirtualEntity(entity) {
+        return entity instanceof VirtualEntity
+    }
+
+    /**
+     * @param {Entity} entity
+     * @return {boolean}
+     */
+    isComponentEntity(entity){
+        return entity instanceof ComponentEntity
+    }
+
+    /**
+     * @param {Entity} entity
+     * @return {boolean}
+     */
+    isManagedEntity(entity){
+        return this.isBodyEntity(entity) || this.isComponentEntity(entity)
     }
 
     /**
@@ -388,6 +415,10 @@ class EntityManager extends EntityManagerData {
      */
     isNotStaticEntity(entity) {
         return !entity.isFixed() && !entity.isControlled()
+    }
+
+    hideComponents(){
+        this.getComponentEntities().forEach(entity => this.hide(entity))
     }
 
     /**
@@ -457,10 +488,18 @@ class EntityManager extends EntityManagerData {
     }
 
     /**
+     * Get entities that can be managed on the Layer panel and the scene
+     * @return {Entity[]}
+     */
+    getManagedEntities(){
+        return this.entities.filter(entity => this.isManagedEntity(entity))
+    }
+
+    /**
      * @return {ComponentEntity[]}
      */
     getComponentEntities(){
-        return this.entities.filter(entity => entity instanceof ComponentEntity)
+        return this.entities.filter(entity => this.isComponentEntity(entity))
     }
 
     /**
@@ -482,7 +521,6 @@ class EntityManager extends EntityManagerData {
     }
 
     /**
-     * Get valid entities of type body
      * @return {Entity[]}
      */
     getValidBodyEntities() {

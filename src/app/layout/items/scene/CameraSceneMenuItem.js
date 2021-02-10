@@ -8,7 +8,7 @@ import Layout from '../../Layout.js'
 class CameraSceneMenuItem extends MenuItem {
     constructor() {
         super({
-            name: 'Camera',
+            name: 'Scene',
             stateCode: '',
             type: Layout.type.PANEL,
             zone: Layout.zone.RIGHT

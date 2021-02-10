@@ -1,7 +1,7 @@
 import VirtualEntity from '../../entity/VirtualEntity.js'
 import TerrainData from '../../project/data/TerrainData.js'
 import ObjectHelper from '../../utils/ObjectHelper.js'
-import {SCENE_WIDTH} from '../../core/Constant.js'
+import Window from '../../core/Window.js'
 import Vector from '../../utils/Vector.js'
 
 /**
@@ -20,7 +20,6 @@ class Terrain extends TerrainData {
     constructor() {
         super()
         this.entityId = null
-        this.size = {width: SCENE_WIDTH, height: 300}
         this.chunksNbr = 3
         this.chunkIds = []
     }
@@ -36,7 +35,7 @@ class Terrain extends TerrainData {
                 VirtualEntity,
                 {
                     name: 'Terrain',
-                    size: this.size,
+                    size: Window.get().size,
                     noiseConfigs: {
                         seed: 1234,
                         octaves: 9,

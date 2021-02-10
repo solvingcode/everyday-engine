@@ -5,6 +5,11 @@ import ComponentEntity from '../../ComponentEntity.js'
  */
 export default class CameraEntity extends ComponentEntity {
 
+    constructor(props) {
+        super(props)
+        this.props.style = {color: '#CCCCCC'}
+    }
+
     /**
      * @override
      */

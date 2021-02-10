@@ -11,6 +11,7 @@ import HtmlFormUI from './forms/HtmlFormUI.js'
 import HtmlFormElementUI from './forms/HtmlFormElementUI.js'
 import Menu from '../../../layout/Menu.js'
 import {HTML_ID_PREFIX} from '../../../core/Constant.js'
+import HtmlFormInlineUI from './forms/HtmlFormInlineUI.js'
 
 /**
  * HTML UI Renderer class
@@ -64,6 +65,13 @@ class HtmlUIRenderer extends UIRenderer {
      */
     getFormUI() {
         return HtmlFormUI
+    }
+
+    /**
+     * @override
+     */
+    getFormInlineUI() {
+        return HtmlFormInlineUI
     }
 
     /**

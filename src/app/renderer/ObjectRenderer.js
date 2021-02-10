@@ -1,6 +1,7 @@
 import Renderer from './Renderer.js'
-import {SCENE_WIDTH, SCENE_HEIGHT, CANVAS_CONTEXT_TYPE} from '../core/Constant.js'
+import {CANVAS_CONTEXT_TYPE} from '../core/Constant.js'
 import {objectContext} from '../core/Context.js'
+import Window from '../core/Window.js'
 
 /**
  * ObjectRenderer class
@@ -12,7 +13,12 @@ class ObjectRenderer extends Renderer {
     constructor() {
         super()
         this.meshes = []
-        this.canvas = new OffscreenCanvas(SCENE_WIDTH, SCENE_HEIGHT)
+        this.initCanvas()
+    }
+
+    initCanvas(){
+        const {size} = Window.get()
+        this.canvas = new OffscreenCanvas(size.width, size.height)
         this.context = this.canvas.getContext(CANVAS_CONTEXT_TYPE)
     }
 
@@ -27,8 +33,9 @@ class ObjectRenderer extends Renderer {
      * @override
      */
     clear() {
-        objectContext.canvas.width = SCENE_WIDTH
-        this.context.canvas.width = SCENE_WIDTH
+        const {size} = Window.get()
+        objectContext.canvas.width = size.width
+        this.context.canvas.width = size.width
     }
 
     /**

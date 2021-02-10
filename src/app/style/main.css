@@ -86,7 +86,7 @@ h4{
     display: block;
     float: right;
     margin-left: 5px;
-    font-family: "Font Awesome 5 Free";
+    font-family: "Font Awesome 5 Free", sans-serif;
     font-size: 10px;
     line-height: 20px;
     content: "\f078";
@@ -278,6 +278,10 @@ i.static-entity::before{
 .form select{
     border-radius: 2px;
     padding: 3px;
+}
+
+.form.form-inline .form-input{
+    float: left;
 }
 
 /* -- form */

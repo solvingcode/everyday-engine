@@ -7,8 +7,7 @@ import TerrainManager from './terrain/TerrainManager.js'
 import MouseConstraintEntity from '../entity/types/constraint/MouseConstraintEntity.js'
 import Vector from '../utils/Vector.js'
 import TextureManager from './manager/TextureManager.js'
-import {SCENE_WIDTH, SCENE_HEIGHT} from '../core/Constant.js'
-import Size from '../pobject/Size.js'
+import Window from '../core/Window.js'
 
 /**
  * @class {World}
@@ -19,7 +18,7 @@ class World extends WorldData {
     constructor() {
         super()
         this.entityManager = new EntityManager()
-        this.camera = new Camera({x: 0, y: 0})
+        this.camera = new Camera(new Vector())
         this.physics = new Physics()
         this.terrainManager = new TerrainManager()
         this.textureManager = new TextureManager()
@@ -41,9 +40,9 @@ class World extends WorldData {
      * @param {Renderer} renderer
      */
     draw(renderer) {
-        const bodyEntities = this.getEntityManager().getBodyEntities()
+        const managedEntities = this.getEntityManager().getManagedEntities()
         const attachEntities = this.getEntityManager().getAttachEntities()
-        bodyEntities.forEach((entity) => this.drawEntity(entity, renderer))
+        managedEntities.forEach((entity) => this.drawEntity(entity, renderer))
         attachEntities.forEach((entity) => this.drawEntity(entity, renderer))
     }
 
@@ -53,9 +52,10 @@ class World extends WorldData {
      * @param {Renderer} renderer
      */
     drawEntity(entity, renderer) {
+        const {size: windowSize} = Window.get()
         const camera = this.getCamera()
         const {x: cameraX, y: cameraY} = camera.position
-        const {width: sceneWidth, height: sceneHeight} = camera.fromScaleSize(new Size({width: SCENE_WIDTH, height: SCENE_HEIGHT}))
+        const {width: sceneWidth, height: sceneHeight} = camera.fromScaleSize(windowSize)
         const minX = cameraX - entity.size.width
         const maxX = cameraX + sceneWidth
         const minY = cameraY - entity.size.height
@@ -196,6 +196,10 @@ class World extends WorldData {
         this.getCamera().reset()
     }
 
+    hideComponents(){
+        this.getEntityManager().hideComponents()
+    }
+
     /**
      * Get the world position of a given screen position
      * @param {Vector} position
@@ -239,7 +243,6 @@ class World extends WorldData {
         }
         return World.instance
     }
-
 }
 
 export default World

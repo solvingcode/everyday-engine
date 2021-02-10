@@ -7,7 +7,6 @@ import Data from './Data.js'
 class TerrainData extends Data {
 
     entityId
-    size
     chunksNbr
     chunkIds
 

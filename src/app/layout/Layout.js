@@ -23,6 +23,7 @@ Layout.type = {
     TEXT: 'text',
     FORM: 'form',
     FORM_ELEMENT: 'form_element',
+    FORM_INLINE: 'form_inline',
     GRAPH: 'graph',
     ICON: 'icon'
 }

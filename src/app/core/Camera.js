@@ -10,7 +10,7 @@ import Size from '../pobject/Size.js'
 class Camera extends CameraData {
     constructor(position) {
         super()
-        this.initPosition = Object.assign({x: 0, y: 0, z: 0}, position)
+        this.initPosition = position
         this.position = this.initPosition
         this.entityId = null
     }
