@@ -98,6 +98,14 @@ class Camera extends CameraData {
     }
 
     /**
+     * @param {number} scale
+     */
+    setScale(scale){
+        const distanceZ = (scale - 1) / 0.5
+        this.setPositionZ(distanceZ)
+    }
+
+    /**
      * @param {Size} size
      * @param {Vector} position
      * @return {Size}
@@ -143,15 +151,17 @@ class Camera extends CameraData {
 
     /**
      * @param {number} entityId
-     * @param {EntityManager} entityManager
+     * @param {World} world
      */
-    setup(entityId, entityManager){
+    setup(entityId, world){
         this.entityId = entityId
-        const entity = this.getEntity(entityManager)
+        const entity = this.getEntity(world.getEntityManager())
         if(!entity){
             throw new TypeError(`Error Setup camera (Entity ID: ${entityId})`)
         }
+        const scale = world.getResolution().getWidth() / entity.getSize().getWidth()
         this.update(entity.position)
+        this.setScale(scale)
     }
 
     /**

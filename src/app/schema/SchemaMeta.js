@@ -391,6 +391,17 @@ export default {
                     }
                 }
             },
+            resolution: {
+                prototype: Size,
+                meta: {
+                    width: {
+                        type: 'number'
+                    },
+                    height: {
+                        type: 'number'
+                    }
+                }
+            },
             terrainManager: {
                 type: TerrainManager,
                 meta: {

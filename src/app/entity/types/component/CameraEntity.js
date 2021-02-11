@@ -15,7 +15,10 @@ export default class CameraEntity extends ComponentEntity {
      */
     init(world) {
         const dragDistance = this.setMeshPositionByDragDistance(world)
-        this.size = {width: Math.abs(dragDistance.x), height: Math.abs(dragDistance.y)}
+        const {width: resolutionWidth, height: resolutionHeight} = world.getResolution()
+        const dragX = Math.abs(dragDistance.x)
+        this.ratio = dragX / resolutionWidth
+        this.size = {width: dragX, height: Math.ceil(resolutionHeight * this.ratio)}
         return true
     }
 
@@ -31,6 +34,31 @@ export default class CameraEntity extends ComponentEntity {
         context.lineTo(width, height)
         context.moveTo(width, 0)
         context.lineTo(0, height)
+    }
+
+    /**
+     * @return {number}
+     */
+    getRatio(){
+        return this.getWidth() / this.getHeight()
+    }
+
+    /**
+     * @override
+     */
+    setWidth(width) {
+        const ratio = this.getRatio()
+        this.size.height = this.getHeight() * ratio
+        super.setWidth(width)
+    }
+
+    /**
+     * @override
+     */
+    setHeight(height) {
+        const ratio = this.getRatio()
+        this.size.width = this.getWidth() / ratio
+        super.setHeight(height)
     }
 
 }

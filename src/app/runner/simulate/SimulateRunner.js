@@ -3,7 +3,6 @@ import StateManager from '../../state/StateManager.js'
 import World from '../../world/World.js'
 import Storage from '../../core/Storage.js'
 import {PREVIEW_URL} from '../../core/Constant.js'
-import Window from '../../core/Window.js'
 
 class SimulateRunner extends Runner {
 
@@ -58,8 +57,9 @@ class SimulateRunner extends Runner {
      * @param {StateManager} stateManager
      */
     async start(storage, stateManager) {
-        const {size} = Window.get()
-        await storage.saveLocal(Storage.type.WORLD, World.get())
+        const world = World.get()
+        const size = world.getResolution()
+        await storage.saveLocal(Storage.type.WORLD, world)
         this.isSimulating = true
         stateManager.progressNextState(this.STATE)
         this.windowInstance = window.open(

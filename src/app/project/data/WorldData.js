@@ -17,6 +17,7 @@ class WorldData extends Data {
     terrainManager
     textureManager
     cameraEntityId
+    resolution
 
     /**
      * @param {World} data
@@ -125,6 +126,20 @@ class WorldData extends Data {
      */
     getCamera() {
         return this.camera
+    }
+
+    /**
+     * @return {Size}
+     */
+    getResolution(){
+        return this.resolution
+    }
+
+    /**
+     * @param {Size} resolution
+     */
+    setResolution(resolution){
+        this.resolution = resolution
     }
 
     static new() {

@@ -8,6 +8,8 @@ import MouseConstraintEntity from '../entity/types/constraint/MouseConstraintEnt
 import Vector from '../utils/Vector.js'
 import TextureManager from './manager/TextureManager.js'
 import Window from '../core/Window.js'
+import Size from '../pobject/Size.js'
+import {SCENE_HEIGHT, SCENE_WIDTH} from '../core/Constant.js'
 
 /**
  * @class {World}
@@ -24,6 +26,7 @@ class World extends WorldData {
         this.textureManager = new TextureManager()
         this.mouseConstraintId = null
         this.cameraEntityId = null
+        this.resolution = new Size({width: SCENE_WIDTH, height: SCENE_HEIGHT})
         this.init()
     }
 
@@ -185,7 +188,7 @@ class World extends WorldData {
 
     setupCamera(){
         if(this.cameraEntityId){
-            this.getCamera().setup(this.cameraEntityId, this.getEntityManager())
+            this.getCamera().setup(this.cameraEntityId, this)
         }
     }
 

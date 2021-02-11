@@ -1,6 +1,7 @@
 import Scene from './Scene.js'
 import World from '../world/World.js'
 import ConstraintRunner from '../runner/constraint/ConstraintRunner.js'
+import Window from '../core/Window.js'
 
 /**
  * @class {Game}
@@ -24,6 +25,8 @@ class Game extends Scene {
     async init() {
         await super.init()
         const world = World.get()
+        const window = Window.get()
+        window.setSize(world.getResolution())
         world.getPhysics().run(world)
         world.setupCamera()
         world.hideComponents()

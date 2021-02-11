@@ -38,21 +38,21 @@ class CameraData extends Data {
     }
 
     /**
-     * @param {string} x
+     * @param {string|number} x
      */
     setPositionX(x) {
         this.position.x = parseFloat(x)
     }
 
     /**
-     * @param {string} y
+     * @param {string|number} y
      */
     setPositionY(y) {
         this.position.y = parseFloat(y)
     }
 
     /**
-     * @param {string} z
+     * @param {string|number} z
      */
     setPositionZ(z) {
         this.position.z = parseFloat(z)
