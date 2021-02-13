@@ -1,9 +1,9 @@
-import ComponentEntity from '../../ComponentEntity.js'
+import ManagedComponentEntity from '../ManagedComponentEntity.js'
 
 /**
  * @class {CameraEntity}
  */
-export default class CameraEntity extends ComponentEntity {
+export default class CameraEntity extends ManagedComponentEntity {
 
     constructor(props) {
         super(props)

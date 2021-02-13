@@ -43,9 +43,11 @@ class World extends WorldData {
      * @param {Renderer} renderer
      */
     draw(renderer) {
-        const managedEntities = this.getEntityManager().getManagedEntities()
+        const bodyEntities = this.getEntityManager().getBodyEntities()
+        const componentEntities = this.getEntityManager().getComponentEntities()
         const attachEntities = this.getEntityManager().getAttachEntities()
-        managedEntities.forEach((entity) => this.drawEntity(entity, renderer))
+        bodyEntities.forEach((entity) => this.drawEntity(entity, renderer))
+        componentEntities.forEach((entity) => this.drawEntity(entity, renderer))
         attachEntities.forEach((entity) => this.drawEntity(entity, renderer))
     }
 
@@ -120,11 +122,13 @@ class World extends WorldData {
     }
 
     /**
-     * @param {Class} type
+     * @param {Class[]} type
      */
     removeEntityByType(type) {
-        const entities = this.getEntityManager().findByType(type)
-        entities.forEach(entity => this.removeEntityById(entity.id))
+        type.forEach(eType => {
+            const entities = this.getEntityManager().findByType(eType)
+            entities.forEach(entity => this.removeEntityById(entity.id))
+        })
     }
 
     /**
@@ -132,6 +136,16 @@ class World extends WorldData {
      */
     deleteEntity(entity) {
         this.getEntityManager().delete(entity)
+    }
+
+    /**
+     * @param {{position: Vector, size: Size}} dragArea
+     * @return {Entity[]}
+     */
+    selectEntities(dragArea){
+        const entitySelector = EntitySelector.get()
+        entitySelector.unselectAll(this)
+        return entitySelector.select(this, this.getWorldPosition(dragArea.position), dragArea.size)
     }
 
     /**
@@ -192,9 +206,6 @@ class World extends WorldData {
         }
     }
 
-    /**
-     * Reset the camera position
-     */
     resetCamera() {
         this.getCamera().reset()
     }
@@ -220,7 +231,7 @@ class World extends WorldData {
     }
 
     createMouseConstraint() {
-        this.removeEntityByType(MouseConstraintEntity)
+        this.removeEntityByType([MouseConstraintEntity])
         const constraint = this.loadEntity(new Vector({x: 0, y: 0}), MouseConstraintEntity)
         constraint.setSelectable(false)
         this.mouseConstraintId = constraint.getId()

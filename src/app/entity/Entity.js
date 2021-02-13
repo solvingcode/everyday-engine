@@ -278,7 +278,9 @@ class Entity extends EntityData {
     }
 
     /**
-     * Select the current entity (apply styles, ...)
+     * Select the current entity (apply styles, ...).
+     * Return true if the entity is selected
+     * @return {boolean}
      */
     select() {
         this.selected = true
@@ -287,6 +289,7 @@ class Entity extends EntityData {
         style.setFillColor('rgba(255, 0, 255, 0.3)')
         style.setBorderSize(1)
         this.setStyleAndGenerate(style)
+        return this.selected
     }
 
     /**
@@ -472,16 +475,25 @@ class Entity extends EntityData {
     setMeshPositionByDragDistance(world) {
         const window = Window.get()
         const dragDistance = window.mouse.getDragDistanceCamera(world.getCamera())
+        this.setMeshPositionByVertex(dragDistance)
+        return dragDistance
+    }
+
+    /**
+     * Update the mesh position using the given vertex, it used to adjusted the position of the entity if the vertex
+     * is negated through X or Y axis
+     * @param {Vector} vertex
+     */
+    setMeshPositionByVertex(vertex){
         let newX = this.position.x
         let newY = this.position.y
-        if (dragDistance.x <= 0) {
-            newX += dragDistance.x
+        if (vertex.x <= 0) {
+            newX += vertex.x
         }
-        if (dragDistance.y <= 0) {
-            newY += dragDistance.y
+        if (vertex.y <= 0) {
+            newY += vertex.y
         }
         this.setMeshPosition(new Vector({x: newX, y: newY, z: this.position.z}))
-        return dragDistance
     }
 
     /**

@@ -65,11 +65,12 @@ class EntitySelector {
     }
 
     /**
-     * Select all entities inside the area of selection
+     * Select all entities inside the area of selection, and return selected entities
      * @param {World} world
      * @param {Object} point
      * @param {Object} size
      * @param {Boolean} includeAttach
+     * @return {Entity[]}
      */
     select(world, point, size, includeAttach = false) {
         let selectedEntities = []
@@ -87,7 +88,9 @@ class EntitySelector {
         } else {
             selectedEntities = this.getInsideArea(world, point, size)
         }
-        return selectedEntities.map(selectedEntity => selectedEntity.isActive() && selectedEntity.select())
+        return selectedEntities.map(selectedEntity =>
+            selectedEntity.isActive() && selectedEntity.select() && selectedEntity
+        ).filter(entity => entity)
     }
 
     /**

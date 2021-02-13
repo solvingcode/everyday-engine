@@ -1,4 +1,4 @@
-import EntityMotion from './EntityMotion.js'
+import EntityMotion from '../../EntityMotion.js'
 
 /**
  * @class {ComponentEntity}

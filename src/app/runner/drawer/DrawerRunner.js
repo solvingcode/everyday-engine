@@ -8,7 +8,7 @@ import AttachPointEntity from '../../entity/types/constraint/AttachPointEntity.j
 import SelectorEntity from '../../entity/types/edit/SelectorEntity.js'
 import World from '../../world/World.js'
 import Vector from '../../utils/Vector.js'
-import CameraEntity from '../../entity/types/component/CameraEntity.js'
+import CameraEntity from '../../entity/types/component/camera/CameraEntity.js'
 
 const {MouseButton} = Mouse
 /**

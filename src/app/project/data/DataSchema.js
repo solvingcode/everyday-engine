@@ -19,7 +19,7 @@ import Texture from '../../core/Texture.js'
 import MatterEngine from '../../physics/engine/matter/MatterEngine.js'
 import JointEntity from '../../entity/types/constraint/JointEntity.js'
 import AttachPointEntity from '../../entity/types/constraint/AttachPointEntity.js'
-import CameraEntity from '../../entity/types/component/CameraEntity.js'
+import CameraEntity from '../../entity/types/component/camera/CameraEntity.js'
 
 /**
  * @class {DataSchema}

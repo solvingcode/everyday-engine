@@ -4,7 +4,8 @@ import AttachEntity from '../../entity/types/constraint/AttachEntity.js'
 import VirtualEntity from '../../entity/VirtualEntity.js'
 import Maths from '../../utils/Maths.js'
 import EntityManagerData from '../../project/data/EntityManagerData.js'
-import ComponentEntity from '../../entity/ComponentEntity.js'
+import ComponentEntity from '../../entity/types/component/ComponentEntity.js'
+import ManagedComponentEntity from '../../entity/types/component/ManagedComponentEntity.js'
 
 /**
  * Entity Manager class
@@ -405,8 +406,16 @@ class EntityManager extends EntityManagerData {
      * @param {Entity} entity
      * @return {boolean}
      */
+    isManagedComponentEntity(entity){
+        return entity instanceof ManagedComponentEntity
+    }
+
+    /**
+     * @param {Entity} entity
+     * @return {boolean}
+     */
     isManagedEntity(entity){
-        return this.isBodyEntity(entity) || this.isComponentEntity(entity)
+        return this.isBodyEntity(entity) || this.isManagedComponentEntity(entity)
     }
 
     /**

@@ -5,6 +5,8 @@ import MoveCameraAction from '../action/camera/MoveCameraAction.js'
 import ZoomInOutCameraAction from '../action/camera/ZoomInOutCameraAction.js'
 import World from '../../world/World.js'
 import Mouse from '../../core/Mouse.js'
+import MoveXEntity from '../../entity/types/component/move/MoveXEntity.js'
+import MoveYEntity from '../../entity/types/component/move/MoveYEntity.js'
 
 const {MouseButton} = Mouse
 
@@ -94,10 +96,23 @@ class WorldRunner extends Runner {
     selectEntities(stateManager, mouse) {
         if (mouse.isButtonPressed(MouseButton.LEFT)) {
             const world = World.get()
-            const entitySelector = EntitySelector.get()
             const dragArea = mouse.getDragArea(world.getCamera())
-            entitySelector.unselectAll(world)
-            entitySelector.select(world, world.getWorldPosition(dragArea.position), dragArea.size)
+            const selectEntities = world.selectEntities(dragArea)
+            this.setupMoveEditor(selectEntities)
+        }
+    }
+
+    /**
+     * @param {Entity[]} selectedEntities
+     */
+    setupMoveEditor(selectedEntities){
+        const world = World.get()
+        world.removeEntityByType([MoveXEntity, MoveYEntity])
+        let moveEditorPosition = selectedEntities
+            .reduce((position, entity) => entity.toCenterPosition(), null)
+        if(moveEditorPosition){
+            world.addEntity(moveEditorPosition, MoveXEntity)
+            world.addEntity(moveEditorPosition, MoveYEntity)
         }
     }
 

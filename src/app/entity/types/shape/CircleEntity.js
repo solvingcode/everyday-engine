@@ -45,6 +45,22 @@ class CircleEntity extends EntityMotion {
         return Math.pow(x - center.x, 2) + Math.pow(y - center.y, 2) < Math.pow(this.size.width/2, 2)
     }
 
+    /**
+     * @override
+     */
+    setWidth(width) {
+        this.size.height = width
+        super.setWidth(width)
+    }
+
+    /**
+     * @override
+     */
+    setHeight(height) {
+        this.size.width = height
+        super.setHeight(height)
+    }
+
 }
 
 export default CircleEntity
