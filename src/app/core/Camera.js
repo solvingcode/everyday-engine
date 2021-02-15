@@ -12,6 +12,7 @@ class Camera extends CameraData {
         super()
         this.initPosition = position
         this.position = this.initPosition
+        this.scaleFactor = 0.2
         this.entityId = null
     }
 
@@ -94,14 +95,14 @@ class Camera extends CameraData {
     getScale(position){
         const {cameraViewZ} = this.getCameraView()
         const distanceZ = cameraViewZ - position.z
-        return 1 + distanceZ * 0.5
+        return 1 + distanceZ * this.scaleFactor
     }
 
     /**
      * @param {number} scale
      */
     setScale(scale){
-        const distanceZ = (scale - 1) / 0.5
+        const distanceZ = (scale - 1) / this.scaleFactor
         this.setPositionZ(distanceZ)
     }
 

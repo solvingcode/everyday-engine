@@ -1,6 +1,6 @@
 import ComponentEntity from '../ComponentEntity.js'
 
-export default class MoveEntity extends ComponentEntity{
+export default class MoveAxisEntity extends ComponentEntity{
 
     constructor(props) {
         super(props)
@@ -9,28 +9,13 @@ export default class MoveEntity extends ComponentEntity{
     }
 
     /**
-     * @abstract
-     */
-    initMoveVertices(){
-        throw new TypeError('MoveEntity.initMoveVertices must be implemented!')
-    }
-
-    /**
-     * @override
-     */
-    init(world){
-        this.initMoveVertices()
-        return true
-    }
-
-    /**
      * @override
      */
     drawContext(dataContext) {
-        const {context} = dataContext
+        const {context, camera} = dataContext
         context.beginPath()
-        this.drawLine(context)
-        this.drawArrow(context)
+        this.drawLine(context, camera)
+        this.drawArrow(context, camera)
     }
 
     /**
@@ -45,19 +30,23 @@ export default class MoveEntity extends ComponentEntity{
 
     /**
      * @param {OffscreenCanvasRenderingContext2D} context
+     * @param {Camera} camera
      */
-    drawLine(context){
-        context.moveTo(this.vertices[0].x, this.vertices[0].y)
-        context.lineTo(this.vertices[1].x, this.vertices[1].y)
+    drawLine(context, camera){
+        const scaleVertices = this.getScaleVertices(camera)
+        context.moveTo(scaleVertices[0].x, scaleVertices[0].y)
+        context.lineTo(scaleVertices[1].x, scaleVertices[1].y)
     }
 
     /**
      * @param {OffscreenCanvasRenderingContext2D} context
+     * @param {Camera} camera
      */
-    drawArrow(context){
+    drawArrow(context, camera){
+        const scaleVertices = this.getScaleVertices(camera)
         const arrowProps = this.getArrowProps()
-        const pointFrom = this.vertices[0]
-        const pointTo = this.vertices[1]
+        const pointFrom = scaleVertices[0]
+        const pointTo = scaleVertices[1]
         const dx = pointTo.x - pointFrom.x
         const dy = pointTo.y - pointFrom.y
         const angle = Math.atan2(dy, dx)

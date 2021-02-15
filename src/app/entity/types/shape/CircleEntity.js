@@ -23,14 +23,13 @@ class CircleEntity extends EntityMotion {
     drawContext(dataContext) {
         const {center, context, scaleSize} = dataContext
         const sw = scaleSize.width
-        this.radius = Math.abs(this.size.width / 2 - 1)
-        context.ellipse(center.x, center.y, sw / 2, sw / 2, 0, 0, 2 * Math.PI)
+        this.radius = Math.abs(this.size.width / 2)
+        const radiusScale = sw / 2 - 1
+        context.ellipse(center.x, center.y, radiusScale, radiusScale, 0, 0, 2 * Math.PI)
     }
 
     /**
-     * Calculate the largest rectangle for given rotation and size
-     * @param {number} angleRadian
-     * @param {Size} size
+     * @override
      */
     getLargestRectangle(angleRadian, size) {
         return size

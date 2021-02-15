@@ -38,6 +38,7 @@ class Entity extends EntityData {
         this.attachedEntities = null
         this.generated = true
         this.loading = false
+        this.scalable = true
     }
 
     /**
@@ -122,6 +123,14 @@ class Entity extends EntityData {
      */
     getScaleSize(camera) {
         return camera.toScaleSize(this.size, this.position)
+    }
+
+    /**
+     * @param {Camera} camera
+     * @return {Vector[]}
+     */
+    getScaleVertices(camera){
+        return this.vertices.map(vertex => camera.toCameraScale(vertex))
     }
 
     /**
@@ -659,6 +668,13 @@ class Entity extends EntityData {
      */
     isLoading() {
         return this.loading
+    }
+
+    /**
+     * @return {boolean}
+     */
+    isScalable(){
+        return this.scalable
     }
 
     /**

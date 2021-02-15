@@ -7,6 +7,7 @@ import World from '../../world/World.js'
 import Mouse from '../../core/Mouse.js'
 import MoveXEntity from '../../entity/types/component/move/MoveXEntity.js'
 import MoveYEntity from '../../entity/types/component/move/MoveYEntity.js'
+import MoveCenterEntity from '../../entity/types/component/move/MoveCenterEntity.js'
 
 const {MouseButton} = Mouse
 
@@ -107,20 +108,20 @@ class WorldRunner extends Runner {
      */
     setupMoveEditor(selectedEntities){
         const world = World.get()
-        world.removeEntityByType([MoveXEntity, MoveYEntity])
+        const moveEntityClasses = [MoveXEntity, MoveYEntity, MoveCenterEntity]
+        world.removeEntityByType(moveEntityClasses)
         let moveEditorPosition = selectedEntities
             .reduce((position, entity) => entity.toCenterPosition(), null)
         if(moveEditorPosition){
-            world.addEntity(moveEditorPosition, MoveXEntity)
-            world.addEntity(moveEditorPosition, MoveYEntity)
+            moveEntityClasses.forEach(entityClass => world.addEntity(moveEditorPosition, entityClass))
         }
     }
 
     static get() {
-        if (!WorldRunner.instance) {
-            WorldRunner.instance = new WorldRunner()
+        if (!this.instance) {
+            this.instance = new this()
         }
-        return WorldRunner.instance
+        return this.instance
     }
 }
 
