@@ -2,10 +2,7 @@ import EntitySelector from '../../world/manager/EntitySelector.js'
 import Runner from '../Runner.js'
 import StateManager from '../../state/StateManager.js'
 import World from '../../world/World.js'
-import Mouse from '../../core/Mouse.js'
 import Vector from '../../utils/Vector.js'
-
-const {CURSOR} = Mouse
 
 class WindowRunner extends Runner {
 
@@ -51,12 +48,6 @@ class WindowRunner extends Runner {
      */
     cursor(world, entitySelector, mouse) {
         let cursor = StateManager.get().getData('cursor')
-        const currentScenePosition = new Vector(mouse.currentScenePosition)
-        const vector3d = world.getCamera().fromCameraScale(currentScenePosition)
-        if (cursor === CURSOR.MOVE_ENTITY) {
-            const entity = entitySelector.get(world, world.getWorldPosition(vector3d))
-            cursor = entity && entity.selected && CURSOR.MOVE
-        }
         document.body.style.cursor = cursor || 'default'
     }
 

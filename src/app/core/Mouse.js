@@ -225,7 +225,8 @@ Mouse.CURSOR = {
     CROSSHAIR: 'crosshair',
     POINTER: 'pointer',
     MOVE: 'move',
-    MOVE_ENTITY: 'moveentity'
+    MOVE_ENTITY: 'moveentity',
+    RESIZE: 'ew-resize'
 }
 
 export default Mouse

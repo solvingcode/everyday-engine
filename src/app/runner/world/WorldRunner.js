@@ -10,6 +10,11 @@ import MoveYEntity from '../../entity/types/component/move/MoveYEntity.js'
 import MoveCenterEntity from '../../entity/types/component/move/MoveCenterEntity.js'
 import MoveEntity from '../../entity/types/component/move/MoveEntity.js'
 import MoveAction from '../action/edit/MoveAction.js'
+import ScaleXEntity from '../../entity/types/component/scale/ScaleXEntity.js'
+import ScaleYEntity from '../../entity/types/component/scale/ScaleYEntity.js'
+import ScaleCenterEntity from '../../entity/types/component/scale/ScaleCenterEntity.js'
+import ScaleEntity from '../../entity/types/component/scale/ScaleEntity.js'
+import ScaleAction from '../action/edit/ScaleAction.js'
 
 const {MouseButton} = Mouse
 
@@ -37,7 +42,7 @@ class WorldRunner extends Runner {
             this.updateMouseWheel(stateManager, mouse)
             this.handleEntityEvent(stateManager, mouse)
             this.selectEntities(stateManager, mouse)
-            this.setupMoveEditor()
+            this.setupMoveEditor(stateManager)
         }
     }
 
@@ -61,12 +66,22 @@ class WorldRunner extends Runner {
      */
     selectEntities(stateManager, mouse) {
         if (mouse.isButtonPressed(MouseButton.LEFT) &&
-            stateManager.isProgress('DRAW_SELECT') &&
-            !stateManager.hasState(MoveAction.STATE, 1)) {
+            this.isSelectEdit(stateManager) &&
+            !stateManager.hasState(MoveAction.STATE, 1)&&
+            !stateManager.hasState(ScaleAction.STATE, 1)) {
             const world = World.get()
             const dragArea = mouse.getDragArea(world.getCamera())
             world.selectEntities(dragArea)
         }
+    }
+
+    /**
+     * @param {StateManager} stateManager
+     * @return {boolean}
+     */
+    isSelectEdit(stateManager){
+        return stateManager.isProgress('DRAW_SELECT') ||
+            stateManager.isProgress('DRAW_SCALE')
     }
 
     /**
@@ -75,44 +90,49 @@ class WorldRunner extends Runner {
      * @param {Mouse} mouse
      */
     handleEntityEvent(stateManager, mouse){
-        if(stateManager.isProgress('DRAW_SELECT')){
+        if(this.isSelectEdit(stateManager)){
             if (mouse.isButtonPressed(MouseButton.LEFT)) {
-                if(!stateManager.isProgress(MoveAction.STATE)){
-                    const world = World.get()
-                    const currentScenePosition = world.getCamera().fromCameraScale(mouse.currentScenePosition)
-                    const entity = world.findFirstEntityByPosition(world.getWorldPosition(currentScenePosition))
-                    const dragArea = mouse.getDragArea(world.getCamera())
-                    if(dragArea){
-                        if(entity instanceof MoveEntity){
-                            stateManager.startState(MoveAction.STATE, 1, {entity})
-                        }
+                const world = World.get()
+                const currentScenePosition = world.getCamera().fromCameraScale(mouse.currentScenePosition)
+                const entity = world.findFirstEntityByPosition(world.getWorldPosition(currentScenePosition))
+                const dragArea = mouse.getDragArea(world.getCamera())
+                if(dragArea){
+                    if(entity instanceof MoveEntity){
+                        !stateManager.isProgress(MoveAction.STATE) &&
+                        stateManager.startState(MoveAction.STATE, 1, {entity})
+                    }else if(entity instanceof ScaleEntity){
+                        !stateManager.isProgress(ScaleAction.STATE) &&
+                        stateManager.startState(ScaleAction.STATE, 1, {entity})
                     }
                 }
             } else {
                 stateManager.isProgress(MoveAction.STATE)
                 && stateManager.stopState(MoveAction.STATE, 1)
+                stateManager.isProgress(ScaleAction.STATE)
+                && stateManager.stopState(ScaleAction.STATE, 1)
             }
         }
 
     }
 
-    setupMoveEditor(){
+    /**
+     * @param {StateManager} stateManager
+     */
+    setupMoveEditor(stateManager){
         const world = World.get()
         const selectedEntities = EntitySelector.get().getSelected(world)
         const moveEntityClasses = [MoveXEntity, MoveYEntity, MoveCenterEntity]
-        world.removeEntityByType(moveEntityClasses)
-        let moveEditorPosition = selectedEntities
+        const scaleEntityClasses = [ScaleXEntity, ScaleYEntity, ScaleCenterEntity]
+        world.removeEntityByType([].concat(moveEntityClasses, scaleEntityClasses))
+        let editorPosition = selectedEntities
             .reduce((position, entity) => entity.toCenterPosition(), null)
-        if(moveEditorPosition){
-            moveEntityClasses.forEach(entityClass => world.addEntity(moveEditorPosition, entityClass))
+        if(editorPosition) {
+            if(stateManager.hasAnyState('DRAW_SELECT')){
+                moveEntityClasses.forEach(entityClass => world.addEntity(editorPosition, entityClass))
+            }else if(stateManager.hasAnyState('DRAW_SCALE')){
+                scaleEntityClasses.forEach(entityClass => world.addEntity(editorPosition, entityClass))
+            }
         }
-    }
-
-    static get() {
-        if (!this.instance) {
-            this.instance = new this()
-        }
-        return this.instance
     }
 }
 

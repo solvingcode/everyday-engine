@@ -1,8 +1,8 @@
 import Size from '../../../../pobject/Size.js'
 import Vector from '../../../../utils/Vector.js'
-import MoveEntity from './MoveEntity.js'
+import ScaleEntity from './ScaleEntity.js'
 
-export default class MoveCenterEntity extends MoveEntity{
+export default class ScaleCenterEntity extends ScaleEntity{
 
     constructor(props) {
         super(props)
@@ -13,7 +13,7 @@ export default class MoveCenterEntity extends MoveEntity{
      * @override
      */
     init(world) {
-        this.size = new Size({width: 50, height: 50})
+        this.size = new Size({width: 100, height: 100})
         this.setMeshPositionByVertex(new Vector({x: -this.size.width / 2, y: -this.size.height / 2}))
         return true
     }

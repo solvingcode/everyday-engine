@@ -1,8 +1,10 @@
-import CircleMenuItem from './items/draw/CircleMenuItem.js'
-import RectMenuItem from './items/draw/RectMenuItem.js'
-import JointMenuItem from './items/draw/JointMenuItem.js'
-import AttachPointMenuItem from './items/draw/AttachPointMenuItem.js'
-import SelectorMenuItem from './items/draw/SelectorMenuItem.js'
+import CircleMenuItem from './items/edit/CircleMenuItem.js'
+import RectMenuItem from './items/edit/RectMenuItem.js'
+import JointMenuItem from './items/edit/JointMenuItem.js'
+import AttachPointMenuItem from './items/edit/AttachPointMenuItem.js'
+import SelectorMenuItem from './items/edit/SelectorMenuItem.js'
+import CameraMenuItem from './items/edit/CameraMenuItem.js'
+import ScaleMenuItem from './items/edit/ScaleMenuItem.js'
 import NewProjectMenuItem from './items/project/NewProjectMenuItem.js'
 import SaveProjectMenuItem from './items/project/SaveProjectMenuItem.js'
 import LoadProjectMenuItem from './items/project/LoadProjectMenuItem.js'
@@ -30,7 +32,6 @@ import TerrainMenuItem from './items/terrain/TerrainMenuItem.js'
 import CameraSceneMenuItem from './items/scene/CameraSceneMenuItem.js'
 import TextureMenuItem from './items/texture/TextureMenuItem.js'
 import PhysicsMenuItem from './items/physics/PhysicsMenuItem.js'
-import CameraMenuItem from './items/draw/CameraMenuItem.js'
 import WorldMenuItem from './items/world/WorldMenuItem.js'
 
 /**
@@ -43,6 +44,7 @@ class Menu {
         this.types = [
             //LEFT
             new SelectorMenuItem(),
+            new ScaleMenuItem(),
             new CircleMenuItem(),
             new RectMenuItem(),
             new JointMenuItem(),

@@ -9,7 +9,10 @@
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "serve -l 8300"
+    "start": "serve -l 8300",
+    "build": "gulp -f build/config/gulpfile.js libs run data",
+    "bundle": "gulp -f build/config/gulpfile.js bundle",
+    "export": "gulp -f build/config/gulpfile.js export"
   },
   "repository": {
     "type": "git",

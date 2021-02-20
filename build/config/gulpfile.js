@@ -29,6 +29,7 @@ const task = (sources, target, standalone) => {
         .pipe(gulp.dest(distDir))
 }
 
+// build third party libs
 gulp.task('libs', () =>
     gulp.src(['lib/thirdparty/common/*.js', 'lib/thirdparty/physics/*.js']
         .map(file => path.join(rootDir, file)))
@@ -36,14 +37,17 @@ gulp.task('libs', () =>
         .pipe(gulp.dest(distDir))
 )
 
+// build the entry point of the game (main)
 gulp.task('run', () =>
     task(['src/run/main.js'], 'run.js')
 )
 
+// build the engine data used to read the world game
 gulp.task('data', () =>
     task(['src/run/data.js'], 'data.js', 'EngineData')
 )
 
+//build the static source code of the game (libs and entry point) to bundle file
 gulp.task('bundle', () =>
     gulp.src(['libs.js', 'run.js']
         .map(file => path.join(distDir, file)))
@@ -51,7 +55,8 @@ gulp.task('bundle', () =>
         .pipe(gulp.dest(distDir))
 )
 
-gulp.task('build-run', (cb) =>
+// build the final executable files (copy bundle and data file to run folder)
+gulp.task('export', (cb) =>
     /*pump([
         gulp.src(['bundle.js', 'data.js']
             .map(file => path.join(distDir, file))),

@@ -1668,7 +1668,7 @@ var CameraData = /*#__PURE__*/function (_Data) {
       return this.entityId;
     }
     /**
-     * @param {string} x
+     * @param {string|number} x
      */
 
   }, {
@@ -1677,7 +1677,7 @@ var CameraData = /*#__PURE__*/function (_Data) {
       this.position.x = parseFloat(x);
     }
     /**
-     * @param {string} y
+     * @param {string|number} y
      */
 
   }, {
@@ -1686,7 +1686,7 @@ var CameraData = /*#__PURE__*/function (_Data) {
       this.position.y = parseFloat(y);
     }
     /**
-     * @param {string} z
+     * @param {string|number} z
      */
 
   }, {
@@ -1810,6 +1810,8 @@ var _Maths = _interopRequireDefault(require("../../utils/Maths.js"));
 
 var _Size = _interopRequireDefault(require("../../pobject/Size.js"));
 
+var _Vector = _interopRequireDefault(require("../../utils/Vector.js"));
+
 function _createSuper(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct(); return function _createSuperInternal() { var Super = (0, _getPrototypeOf2["default"])(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = (0, _getPrototypeOf2["default"])(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return (0, _possibleConstructorReturn2["default"])(this, result); }; }
 
 function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Date.prototype.toString.call(Reflect.construct(Date, [], function () {})); return true; } catch (e) { return false; } }
@@ -1844,12 +1846,14 @@ var EntityData = /*#__PURE__*/function (_Data) {
     (0, _defineProperty2["default"])((0, _assertThisInitialized2["default"])(_this), "clonable", void 0);
     (0, _defineProperty2["default"])((0, _assertThisInitialized2["default"])(_this), "subEntity", void 0);
     (0, _defineProperty2["default"])((0, _assertThisInitialized2["default"])(_this), "style", void 0);
+    (0, _defineProperty2["default"])((0, _assertThisInitialized2["default"])(_this), "entityLinkIds", void 0);
     _this.id = _Maths["default"].generateId();
     _this.selectable = true;
     _this.locked = false;
     _this.visible = false;
     _this.clonable = true;
     _this.subEntity = false;
+    _this.entityLinkIds = [];
 
     _this.setProps(props);
 
@@ -2040,7 +2044,7 @@ var EntityData = /*#__PURE__*/function (_Data) {
     key: "setBackgroundImageRepeat",
     value: function setBackgroundImageRepeat(repeat) {
       this.advancedStyle.backgroundImageRepeat = repeat;
-      this.regenerate();
+      this.setGenerated(false);
     }
     /**
      * @return {boolean}
@@ -2086,10 +2090,14 @@ var EntityData = /*#__PURE__*/function (_Data) {
   }, {
     key: "setPositionX",
     value: function setPositionX(x) {
-      this.setPositionAndGenerate({
+      var _this$position = this.position,
+          y = _this$position.y,
+          z = _this$position.z;
+      this.setPositionAndGenerate(new _Vector["default"]({
         x: parseInt(x),
-        y: this.position.y
-      });
+        y: y,
+        z: z
+      }));
     }
     /**
      * @param {string} y
@@ -2098,9 +2106,29 @@ var EntityData = /*#__PURE__*/function (_Data) {
   }, {
     key: "setPositionY",
     value: function setPositionY(y) {
+      var _this$position2 = this.position,
+          x = _this$position2.x,
+          z = _this$position2.z;
+      this.setPositionAndGenerate(new _Vector["default"]({
+        x: x,
+        y: parseInt(y),
+        z: z
+      }));
+    }
+    /**
+     * @param {string} z
+     */
+
+  }, {
+    key: "setPositionZ",
+    value: function setPositionZ(z) {
+      var _this$position3 = this.position,
+          x = _this$position3.x,
+          y = _this$position3.y;
       this.setPositionAndGenerate({
-        x: this.position.x,
-        y: parseInt(y)
+        x: x,
+        y: y,
+        z: parseInt(z)
       });
     }
     /**
@@ -2120,6 +2148,15 @@ var EntityData = /*#__PURE__*/function (_Data) {
     key: "getPositionY",
     value: function getPositionY() {
       return this.position.y;
+    }
+    /**
+     * @return {number}
+     */
+
+  }, {
+    key: "getPositionZ",
+    value: function getPositionZ() {
+      return this.position.z;
     }
     /**
      * @param {number} value
@@ -2496,6 +2533,24 @@ var EntityData = /*#__PURE__*/function (_Data) {
     value: function isSubEntity() {
       return this.getSubEntity();
     }
+    /**
+     * @return {number[]}
+     */
+
+  }, {
+    key: "getEntityLinkIds",
+    value: function getEntityLinkIds() {
+      return this.entityLinkIds;
+    }
+    /**
+     * @param {number[]} ids
+     */
+
+  }, {
+    key: "setEntityLinkIds",
+    value: function setEntityLinkIds(ids) {
+      this.entityLinkIds = ids;
+    }
   }]);
   return EntityData;
 }(_Data2["default"]);
@@ -2508,12 +2563,13 @@ EntityData.shapes = {
   CIRCLE: 'circle',
   ATTACH: 'attach',
   GROUP: 'group',
-  VIRTUAL: 'virtual'
+  VIRTUAL: 'virtual',
+  COMPONENT: 'component'
 };
 var _default = EntityData;
 exports["default"] = _default;
 
-},{"../../pobject/Size.js":17,"../../utils/Maths.js":31,"./Data.js":20,"@babel/runtime/helpers/assertThisInitialized":1,"@babel/runtime/helpers/classCallCheck":3,"@babel/runtime/helpers/createClass":4,"@babel/runtime/helpers/defineProperty":5,"@babel/runtime/helpers/getPrototypeOf":6,"@babel/runtime/helpers/inherits":7,"@babel/runtime/helpers/interopRequireDefault":8,"@babel/runtime/helpers/possibleConstructorReturn":9}],22:[function(require,module,exports){
+},{"../../pobject/Size.js":17,"../../utils/Maths.js":31,"../../utils/Vector.js":32,"./Data.js":20,"@babel/runtime/helpers/assertThisInitialized":1,"@babel/runtime/helpers/classCallCheck":3,"@babel/runtime/helpers/createClass":4,"@babel/runtime/helpers/defineProperty":5,"@babel/runtime/helpers/getPrototypeOf":6,"@babel/runtime/helpers/inherits":7,"@babel/runtime/helpers/interopRequireDefault":8,"@babel/runtime/helpers/possibleConstructorReturn":9}],22:[function(require,module,exports){
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
@@ -2891,7 +2947,6 @@ var TerrainData = /*#__PURE__*/function (_Data) {
 
     _this = _super.call.apply(_super, [this].concat(args));
     (0, _defineProperty2["default"])((0, _assertThisInitialized2["default"])(_this), "entityId", void 0);
-    (0, _defineProperty2["default"])((0, _assertThisInitialized2["default"])(_this), "size", void 0);
     (0, _defineProperty2["default"])((0, _assertThisInitialized2["default"])(_this), "chunksNbr", void 0);
     (0, _defineProperty2["default"])((0, _assertThisInitialized2["default"])(_this), "chunkIds", void 0);
     return _this;
@@ -3305,6 +3360,8 @@ var WorldData = /*#__PURE__*/function (_Data) {
     (0, _defineProperty2["default"])((0, _assertThisInitialized2["default"])(_this), "physics", void 0);
     (0, _defineProperty2["default"])((0, _assertThisInitialized2["default"])(_this), "terrainManager", void 0);
     (0, _defineProperty2["default"])((0, _assertThisInitialized2["default"])(_this), "textureManager", void 0);
+    (0, _defineProperty2["default"])((0, _assertThisInitialized2["default"])(_this), "cameraEntityId", void 0);
+    (0, _defineProperty2["default"])((0, _assertThisInitialized2["default"])(_this), "resolution", void 0);
     return _this;
   }
 
@@ -3423,13 +3480,50 @@ var WorldData = /*#__PURE__*/function (_Data) {
       return this.textureManager;
     }
     /**
+     * @return {number}
+     */
+
+  }, {
+    key: "getCameraEntityId",
+    value: function getCameraEntityId() {
+      return this.cameraEntityId;
+    }
+    /**
+     * @param {number} entityId
+     */
+
+  }, {
+    key: "setCameraEntityId",
+    value: function setCameraEntityId(entityId) {
+      this.cameraEntityId = entityId;
+    }
+    /**
      * Get the principal camera (active)
+     * @return {Camera}
      */
 
   }, {
     key: "getCamera",
     value: function getCamera() {
       return this.camera;
+    }
+    /**
+     * @return {Size}
+     */
+
+  }, {
+    key: "getResolution",
+    value: function getResolution() {
+      return this.resolution;
+    }
+    /**
+     * @param {Size} resolution
+     */
+
+  }, {
+    key: "setResolution",
+    value: function setResolution(resolution) {
+      this.resolution = resolution;
     }
   }], [{
     key: "new",
@@ -3559,7 +3653,7 @@ var Vector = /*#__PURE__*/function () {
     (0, _classCallCheck2["default"])(this, Vector);
     this.x = x;
     this.y = y;
-    this.z = z;
+    this.z = z || 0;
   }
   /**
    * @param {number} x
@@ -3617,6 +3711,16 @@ var Vector = /*#__PURE__*/function () {
       return this.z;
     }
     /**
+     * @param {Vector} vector
+     * @return {boolean}
+     */
+
+  }, {
+    key: "equals",
+    value: function equals(vector) {
+      return this.x === vector.x && this.y === vector.y && this.z === vector.z;
+    }
+    /**
      * @param {Vector} vectorA
      * @param {Vector} vectorB
      * @return {number}
@@ -3651,11 +3755,11 @@ var Vector = /*#__PURE__*/function () {
   }, {
     key: "multiply",
     value: function multiply(vector, value) {
-      return {
+      return new Vector({
         x: vector.x * value,
         y: vector.y * value,
         z: vector.z * value
-      };
+      });
     }
     /**
      * @param {Vector} vector
@@ -3666,11 +3770,11 @@ var Vector = /*#__PURE__*/function () {
   }, {
     key: "divide",
     value: function divide(vector, value) {
-      return {
+      return new Vector({
         x: vector.x / value,
         y: vector.y / value,
         z: vector.z / value
-      };
+      });
     }
   }]);
   return Vector;

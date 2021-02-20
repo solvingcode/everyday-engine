@@ -173,6 +173,15 @@ class StateManager {
     }
 
     /**
+     * Is state has action of given type (even if state data is not set)
+     * @param {string} type
+     * @return {boolean}
+     */
+    hasAnyState(type){
+        return this.isStart(type) || this.isStop(type) || this.isProgress(type)
+    }
+
+    /**
      * Is running states in progress
      * @return {boolean}
      */

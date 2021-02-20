@@ -84,7 +84,7 @@ class Entity extends EntityData {
      * @param {DataContext} dataContext
      */
     drawContext(dataContext) {
-        throw new TypeError('"drawContext" method must be implemented')
+        throw new TypeError('Entity.drawContext method must be implemented')
     }
 
     /**
@@ -280,10 +280,10 @@ class Entity extends EntityData {
      * @param {{width: number, height: number}} size
      */
     setSizeAndGenerate(size) {
-        super.setSize(size)
         if (!_.isEqual(this.size, size)) {
             this.setGenerated(false)
         }
+        super.setSize(size)
     }
 
     /**

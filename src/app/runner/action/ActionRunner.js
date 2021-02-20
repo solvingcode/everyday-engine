@@ -28,6 +28,7 @@ import ZoomInOutCameraAction from './camera/ZoomInOutCameraAction.js'
 import PhysicsStaticAction from './physics/PhysicsStaticAction.js'
 import PhysicsNotStaticAction from './physics/PhysicsNotStaticAction.js'
 import FormUpdateAction from './form/FormUpdateAction.js'
+import ScaleAction from './edit/ScaleAction.js'
 
 /**
  * Action Runner class.
@@ -60,6 +61,7 @@ class ActionRunner extends Runner {
             DUPLICATE: DuplicateAction,
             UNDO: UndoAction,
             MOVE: MoveAction,
+            SCALE: ScaleAction,
             MOVE_UP: MoveUpAction,
             MOVE_DOWN: MoveDownAction,
             LOCK: LockAction,
