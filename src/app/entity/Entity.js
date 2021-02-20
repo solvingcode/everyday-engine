@@ -292,13 +292,14 @@ class Entity extends EntityData {
      * @return {boolean}
      */
     select() {
-        this.selected = true
-        const style = new Style()
-        style.setColor('#FF00FF')
-        style.setFillColor('rgba(255, 0, 255, 0.3)')
-        style.setBorderSize(1)
-        this.setStyleAndGenerate(style)
-        return this.selected
+        if(this.isSelectable()){
+            this.selected = true
+            const style = new Style()
+            style.setColor('orange')
+            style.setBorderSize(3)
+            this.setStyleAndGenerate(style)
+            return this.selected
+        }
     }
 
     /**
@@ -307,10 +308,8 @@ class Entity extends EntityData {
     focus() {
         this.focused = true
         const style = new Style()
-        style.setColor('orange')
-        style.setFillColor('orange')
+        style.setBorderSize(this.props.style.borderSize)
         style.setOpacity(0.5)
-        style.setBorderSize(1)
         !this.selected && this.setStyleAndGenerate(style)
     }
 

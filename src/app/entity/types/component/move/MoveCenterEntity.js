@@ -1,8 +1,8 @@
-import ComponentEntity from '../ComponentEntity.js'
 import Size from '../../../../pobject/Size.js'
 import Vector from '../../../../utils/Vector.js'
+import MoveEntity from './MoveEntity.js'
 
-export default class MoveCenterEntity extends ComponentEntity{
+export default class MoveCenterEntity extends MoveEntity{
 
     constructor(props) {
         super(props)

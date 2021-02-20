@@ -36,6 +36,16 @@ class EntitySelector {
     }
 
     /**
+     * @param {World} world
+     * @param {Object} point
+     * @param {Entity} exceptType
+     */
+    getFirstSelectable(world, point, exceptType = null){
+        const entities = this.getAll(world, point, exceptType).filter(entity => entity.isSelectable())
+        return entities.length && entities[entities.length - 1]
+    }
+
+    /**
      * Get all entities in a specific point (absolute position)
      * @param {World} world
      * @param {Object} point
@@ -43,7 +53,7 @@ class EntitySelector {
      */
     getAll(world, point, exceptType = null) {
         return world.getEntityManager().getActiveEntities().filter((entity) =>
-            entity.includes(point) && entity.isSelectable() &&
+            entity.includes(point) &&
             (!exceptType || !(entity instanceof exceptType))
         )
     }
@@ -75,7 +85,7 @@ class EntitySelector {
     select(world, point, size, includeAttach = false) {
         let selectedEntities = []
         if (!size || (!size.width && !size.height)) {
-            const selectedEntity = this.get(world, point)
+            const selectedEntity = this.getFirstSelectable(world, point)
             if (selectedEntity) {
                 if (includeAttach) {
                     selectedEntities = selectedEntities.concat(

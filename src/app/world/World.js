@@ -150,6 +150,22 @@ class World extends WorldData {
 
     /**
      * @param {Vector} position
+     * @return {Entity[]}
+     */
+    findEntitiesByPosition(position){
+        return EntitySelector.get().getAll(this, position)
+    }
+
+    /**
+     * @param {Vector} position
+     * @return {Entity[]}
+     */
+    findFirstEntityByPosition(position){
+        return EntitySelector.get().get(this, position)
+    }
+
+    /**
+     * @param {Vector} position
      * @param {Function} type
      * @param {EntityProps} props
      * @return {Entity}

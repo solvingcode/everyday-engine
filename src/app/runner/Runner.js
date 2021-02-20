@@ -12,6 +12,7 @@ class Runner {
     }
 
     /**
+     * Define when the runner can be handle by the eventHandler
      * @abstract
      * @param {Window} window
      * @return {boolean}

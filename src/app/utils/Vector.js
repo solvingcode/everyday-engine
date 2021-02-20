@@ -89,7 +89,7 @@ class Vector {
      * @return {Vector}
      */
     static multiply(vector, value) {
-        return {x: vector.x * value, y: vector.y * value, z: vector.z * value}
+        return new Vector({x: vector.x * value, y: vector.y * value, z: vector.z * value})
     }
 
     /**
@@ -98,7 +98,7 @@ class Vector {
      * @return {Vector}
      */
     static divide(vector, value) {
-        return {x: vector.x / value, y: vector.y / value, z: vector.z / value}
+        return new Vector({x: vector.x / value, y: vector.y / value, z: vector.z / value})
     }
 }
 

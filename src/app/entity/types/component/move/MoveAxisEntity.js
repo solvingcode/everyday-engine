@@ -1,12 +1,6 @@
-import ComponentEntity from '../ComponentEntity.js'
+import MoveEntity from './MoveEntity.js'
 
-export default class MoveAxisEntity extends ComponentEntity{
-
-    constructor(props) {
-        super(props)
-        this.selectable = false
-        this.props.style.borderSize = 4
-    }
+export default class MoveAxisEntity extends MoveEntity{
 
     /**
      * @override

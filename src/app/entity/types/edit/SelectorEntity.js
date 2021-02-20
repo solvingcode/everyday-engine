@@ -1,5 +1,6 @@
 import RectEntity from '../shape/RectEntity.js'
 import StateManager from '../../../state/StateManager.js'
+import MoveAction from '../../../runner/action/edit/MoveAction.js'
 
 class SelectorEntity extends RectEntity {
 
@@ -12,7 +13,7 @@ class SelectorEntity extends RectEntity {
      * @override
      */
     build(world) {
-        if (!StateManager.get().isProgress('ACTION_MOVE')) {
+        if (!StateManager.get().isProgress(MoveAction.STATE)) {
             super.build(world)
         }
         return false

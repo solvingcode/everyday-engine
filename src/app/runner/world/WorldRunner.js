@@ -8,6 +8,8 @@ import Mouse from '../../core/Mouse.js'
 import MoveXEntity from '../../entity/types/component/move/MoveXEntity.js'
 import MoveYEntity from '../../entity/types/component/move/MoveYEntity.js'
 import MoveCenterEntity from '../../entity/types/component/move/MoveCenterEntity.js'
+import MoveEntity from '../../entity/types/component/move/MoveEntity.js'
+import MoveAction from '../action/edit/MoveAction.js'
 
 const {MouseButton} = Mouse
 
@@ -33,7 +35,9 @@ class WorldRunner extends Runner {
         const stateManager = StateManager.get()
         if (!stateManager.isRunning()) {
             this.updateMouseWheel(stateManager, mouse)
-            this.selectMoveEntities(stateManager, mouse)
+            this.handleEntityEvent(stateManager, mouse)
+            this.selectEntities(stateManager, mouse)
+            this.setupMoveEditor()
         }
     }
 
@@ -55,59 +59,46 @@ class WorldRunner extends Runner {
      * @param {StateManager} stateManager
      * @param {Mouse} mouse
      */
-    selectMoveEntities(stateManager, mouse) {
-        if (stateManager.isProgress('DRAW_SELECT')) {
-            !this.moveEntities(stateManager, mouse) && this.selectEntities(stateManager, mouse)
-        }
-    }
-
-    /**
-     * Move on drag/drop if the mouse click position is a selected entity
-     * @param {StateManager} stateManager
-     * @param {Mouse} mouse
-     */
-    moveEntities(stateManager, mouse) {
-        if (mouse.isButtonPressed(MouseButton.LEFT)) {
-            const world = World.get()
-            const entitySelector = EntitySelector.get()
-            const selectedEntities = entitySelector.getSelected(world)
-            const currentScenePosition = world.getCamera().fromCameraScale(mouse.currentScenePosition)
-            if (selectedEntities.length) {
-                const triggerEntity = entitySelector.get(world, world.getWorldPosition(currentScenePosition))
-                const isEntityMove = triggerEntity && selectedEntities.includes(triggerEntity)
-                if (isEntityMove) {
-                    stateManager.startState('ACTION_MOVE', 1)
-                    return true
-                } else {
-                    stateManager.stopState('ACTION_MOVE', 1)
-                }
-            }
-        } else {
-            stateManager.isProgress('ACTION_MOVE')
-            && stateManager.stopState('ACTION_MOVE', 1)
-        }
-        return false
-    }
-
-    /**
-     * Select entities on drag/drop
-     * @param {StateManager} stateManager
-     * @param {Mouse} mouse
-     */
     selectEntities(stateManager, mouse) {
-        if (mouse.isButtonPressed(MouseButton.LEFT)) {
+        if (mouse.isButtonPressed(MouseButton.LEFT) &&
+            stateManager.isProgress('DRAW_SELECT') &&
+            !stateManager.hasState(MoveAction.STATE, 1)) {
             const world = World.get()
             const dragArea = mouse.getDragArea(world.getCamera())
-            const selectEntities = world.selectEntities(dragArea)
-            this.setupMoveEditor(selectEntities)
+            world.selectEntities(dragArea)
         }
     }
 
     /**
-     * @param {Entity[]} selectedEntities
+     * Handle action when entity's event is triggered (like click, drag, ...)
+     * @param {StateManager} stateManager
+     * @param {Mouse} mouse
      */
-    setupMoveEditor(selectedEntities){
+    handleEntityEvent(stateManager, mouse){
+        if(stateManager.isProgress('DRAW_SELECT')){
+            if (mouse.isButtonPressed(MouseButton.LEFT)) {
+                if(!stateManager.isProgress(MoveAction.STATE)){
+                    const world = World.get()
+                    const currentScenePosition = world.getCamera().fromCameraScale(mouse.currentScenePosition)
+                    const entity = world.findFirstEntityByPosition(world.getWorldPosition(currentScenePosition))
+                    const dragArea = mouse.getDragArea(world.getCamera())
+                    if(dragArea){
+                        if(entity instanceof MoveEntity){
+                            stateManager.startState(MoveAction.STATE, 1, {entity})
+                        }
+                    }
+                }
+            } else {
+                stateManager.isProgress(MoveAction.STATE)
+                && stateManager.stopState(MoveAction.STATE, 1)
+            }
+        }
+
+    }
+
+    setupMoveEditor(){
         const world = World.get()
+        const selectedEntities = EntitySelector.get().getSelected(world)
         const moveEntityClasses = [MoveXEntity, MoveYEntity, MoveCenterEntity]
         world.removeEntityByType(moveEntityClasses)
         let moveEditorPosition = selectedEntities

@@ -1,5 +1,6 @@
 import {objectContext} from './Context.js'
 import Vector from '../utils/Vector.js'
+import Size from '../pobject/Size.js'
 
 /**
  * Define the mouse inputs (pressed, clicked, mouse position, ...)
@@ -129,7 +130,7 @@ class Mouse {
         }
         return {
             position: new Vector({x: newX, y: newY}),
-            size: {width: Math.abs(dragDistance.x), height: Math.abs(dragDistance.y)}
+            size: new Size({width: Math.abs(dragDistance.x), height: Math.abs(dragDistance.y)})
         }
     }
 
