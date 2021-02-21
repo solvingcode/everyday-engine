@@ -2,6 +2,8 @@
  * Vector class.
  * Define a vector coordinate (X, Y)
  */
+import Maths from './Maths.js'
+
 class Vector {
     constructor({x, y, z} = {x: 0, y: 0, z: 0}) {
         this.x = x
@@ -73,6 +75,15 @@ class Vector {
     /**
      * @param {Vector} vectorA
      * @param {Vector} vectorB
+     * @return {number}
+     */
+    static dot(vectorA, vectorB) {
+        return (vectorA.x * vectorB.x) + (vectorA.y * vectorB.y)
+    }
+
+    /**
+     * @param {Vector} vectorA
+     * @param {Vector} vectorB
      * @return {Vector}
      */
     static add(vectorA, vectorB) {
@@ -99,6 +110,31 @@ class Vector {
      */
     static divide(vector, value) {
         return new Vector({x: vector.x / value, y: vector.y / value, z: vector.z / value})
+    }
+
+    /**
+     * @param {Vector} vector
+     * @return {number}
+     */
+    static length(vector){
+        return Math.sqrt(Math.pow(vector.x, 2) + Math.pow(vector.y, 2))
+    }
+
+    /**
+     * @param {Vector} vector
+     */
+    static normalize(vector){
+        return this.divide(vector, this.length(vector))
+    }
+
+    /**
+     * @param {Vector} vectorA
+     * @param {Vector} vectorB
+     * @return {number}
+     */
+    static angle(vectorA, vectorB){
+        const signedAngle = Math.atan2(vectorB.y, vectorB.x) - Math.atan2(vectorA.y, vectorA.x)
+        return Maths.toDegree(signedAngle) || 0
     }
 }
 

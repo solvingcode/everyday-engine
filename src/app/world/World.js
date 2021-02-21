@@ -240,6 +240,15 @@ class World extends WorldData {
     }
 
     /**
+     * Get the world position from the camera scale
+     * @param {Vector} position
+     * @return {Vector}
+     */
+    getWorldScalePosition(position){
+        return this.getWorldPosition(this.getCamera().fromCameraScale(position))
+    }
+
+    /**
      * @return {Entity}
      */
     getMouseConstraint() {

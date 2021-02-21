@@ -29,6 +29,7 @@ import PhysicsStaticAction from './physics/PhysicsStaticAction.js'
 import PhysicsNotStaticAction from './physics/PhysicsNotStaticAction.js'
 import FormUpdateAction from './form/FormUpdateAction.js'
 import ScaleAction from './edit/ScaleAction.js'
+import RotateAction from './edit/RotateAction.js'
 
 /**
  * Action Runner class.
@@ -62,6 +63,7 @@ class ActionRunner extends Runner {
             UNDO: UndoAction,
             MOVE: MoveAction,
             SCALE: ScaleAction,
+            ROTATE: RotateAction,
             MOVE_UP: MoveUpAction,
             MOVE_DOWN: MoveDownAction,
             LOCK: LockAction,

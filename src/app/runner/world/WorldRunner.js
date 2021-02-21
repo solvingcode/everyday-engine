@@ -15,6 +15,9 @@ import ScaleYEntity from '../../entity/types/component/scale/ScaleYEntity.js'
 import ScaleCenterEntity from '../../entity/types/component/scale/ScaleCenterEntity.js'
 import ScaleEntity from '../../entity/types/component/scale/ScaleEntity.js'
 import ScaleAction from '../action/edit/ScaleAction.js'
+import RotateEntity from '../../entity/types/component/rotate/RotateEntity.js'
+import RotateAction from '../action/edit/RotateAction.js'
+import RotateZEntity from '../../entity/types/component/rotate/RotateZEntity.js'
 
 const {MouseButton} = Mouse
 
@@ -42,7 +45,7 @@ class WorldRunner extends Runner {
             this.updateMouseWheel(stateManager, mouse)
             this.handleEntityEvent(stateManager, mouse)
             this.selectEntities(stateManager, mouse)
-            this.setupMoveEditor(stateManager)
+            this.setupEditor(stateManager)
         }
     }
 
@@ -67,8 +70,9 @@ class WorldRunner extends Runner {
     selectEntities(stateManager, mouse) {
         if (mouse.isButtonPressed(MouseButton.LEFT) &&
             this.isSelectEdit(stateManager) &&
-            !stateManager.hasState(MoveAction.STATE, 1)&&
-            !stateManager.hasState(ScaleAction.STATE, 1)) {
+            !stateManager.hasState(MoveAction.STATE, 1) &&
+            !stateManager.hasState(ScaleAction.STATE, 1) &&
+            !stateManager.hasState(RotateAction.STATE, 1)) {
             const world = World.get()
             const dragArea = mouse.getDragArea(world.getCamera())
             world.selectEntities(dragArea)
@@ -81,7 +85,8 @@ class WorldRunner extends Runner {
      */
     isSelectEdit(stateManager){
         return stateManager.isProgress('DRAW_SELECT') ||
-            stateManager.isProgress('DRAW_SCALE')
+            stateManager.isProgress('DRAW_SCALE') ||
+            stateManager.isProgress('DRAW_ROTATE')
     }
 
     /**
@@ -103,6 +108,9 @@ class WorldRunner extends Runner {
                     }else if(entity instanceof ScaleEntity){
                         !stateManager.isProgress(ScaleAction.STATE) &&
                         stateManager.startState(ScaleAction.STATE, 1, {entity})
+                    }else if(entity instanceof RotateEntity){
+                        !stateManager.isProgress(RotateAction.STATE) &&
+                        stateManager.startState(RotateAction.STATE, 1, {entity})
                     }
                 }
             } else {
@@ -110,6 +118,8 @@ class WorldRunner extends Runner {
                 && stateManager.stopState(MoveAction.STATE, 1)
                 stateManager.isProgress(ScaleAction.STATE)
                 && stateManager.stopState(ScaleAction.STATE, 1)
+                stateManager.isProgress(RotateAction.STATE)
+                && stateManager.stopState(RotateAction.STATE, 1)
             }
         }
 
@@ -118,19 +128,22 @@ class WorldRunner extends Runner {
     /**
      * @param {StateManager} stateManager
      */
-    setupMoveEditor(stateManager){
+    setupEditor(stateManager){
         const world = World.get()
         const selectedEntities = EntitySelector.get().getSelected(world)
         const moveEntityClasses = [MoveXEntity, MoveYEntity, MoveCenterEntity]
         const scaleEntityClasses = [ScaleXEntity, ScaleYEntity, ScaleCenterEntity]
-        world.removeEntityByType([].concat(moveEntityClasses, scaleEntityClasses))
+        const rotateEntityClasses = [RotateZEntity]
+        world.removeEntityByType([].concat(moveEntityClasses, scaleEntityClasses, rotateEntityClasses))
         let editorPosition = selectedEntities
-            .reduce((position, entity) => entity.toCenterPosition(), null)
+            .reduce((position, entity) => entity.toLargeCenterPosition(), null)
         if(editorPosition) {
             if(stateManager.hasAnyState('DRAW_SELECT')){
                 moveEntityClasses.forEach(entityClass => world.addEntity(editorPosition, entityClass))
             }else if(stateManager.hasAnyState('DRAW_SCALE')){
                 scaleEntityClasses.forEach(entityClass => world.addEntity(editorPosition, entityClass))
+            }else if(stateManager.hasAnyState('DRAW_ROTATE')){
+                rotateEntityClasses.forEach(entityClass => world.addEntity(editorPosition, entityClass))
             }
         }
     }

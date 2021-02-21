@@ -142,6 +142,7 @@ class Mouse {
     dragAndDrop(camera) {
         const dragDistance = this.getDragDistanceCamera(camera)
         this.position = this.currentPosition
+        this.scenePosition = this.currentScenePosition
         return dragDistance
     }
 

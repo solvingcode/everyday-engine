@@ -374,11 +374,35 @@ class Entity extends EntityData {
     }
 
     /**
+     * Calculate centroid (based to the rotation)
+     * @return {Vector}
+     */
+    getLargeCenter(){
+        const size = this.getLargestRectangle(this.rotation, this.size)
+        return new Vector({
+            x: size.width / 2,
+            y: size.height / 2
+        })
+    }
+
+    /**
      * Convert current position to center position
      * @return {Vector}
      */
     toCenterPosition() {
         const center = this.getCenter()
+        return new Vector({
+            x: this.position.x + center.x,
+            y: this.position.y + center.y
+        })
+    }
+
+    /**
+     * Convert current position to large center position
+     * @return {Vector}
+     */
+    toLargeCenterPosition() {
+        const center = this.getLargeCenter()
         return new Vector({
             x: this.position.x + center.x,
             y: this.position.y + center.y

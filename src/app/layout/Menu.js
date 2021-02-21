@@ -20,7 +20,6 @@ import LockMenuItem from './items/action/LockMenuItem.js'
 import UnlockMenuItem from './items/action/UnlockMenuItem.js'
 import HideMenuItem from './items/action/HideMenuItem.js'
 import ShowMenuItem from './items/action/ShowMenuItem.js'
-import RotateUpMenuItem from './items/action/RotateUpMenuItem.js'
 import MenuItemUI from '../renderer/ui/MenuItemUI.js'
 import LayerMenuItem from './items/entity/LayerMenuItem.js'
 import AiGeneticMenuItem from './items/genetic/AiGeneticMenuItem.js'
@@ -33,6 +32,7 @@ import CameraSceneMenuItem from './items/scene/CameraSceneMenuItem.js'
 import TextureMenuItem from './items/texture/TextureMenuItem.js'
 import PhysicsMenuItem from './items/physics/PhysicsMenuItem.js'
 import WorldMenuItem from './items/world/WorldMenuItem.js'
+import RotateMenuItem from './items/edit/RotateMenuItem.js'
 
 /**
  * Define all menu items
@@ -45,6 +45,7 @@ class Menu {
             //LEFT
             new SelectorMenuItem(),
             new ScaleMenuItem(),
+            new RotateMenuItem(),
             new CircleMenuItem(),
             new RectMenuItem(),
             new JointMenuItem(),
@@ -67,7 +68,6 @@ class Menu {
             new UnlockMenuItem(),
             new HideMenuItem(),
             new ShowMenuItem(),
-            new RotateUpMenuItem(),
 
             //RIGHT
             new LayerMenuItem(),
