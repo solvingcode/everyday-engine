@@ -52,11 +52,11 @@ class Vertex {
 
     /**
      * Rotate a set of vertices by the given angle and point
-     * @param {{x: number, y: number}[]} vertices
+     * @param {Vector[]} vertices
      * @param {number} angleRadian
      * @param {Vector} point
      *
-     * @return {{x: number, y: number}[]}
+     * @return {Vector[]}
      */
     static rotate(vertices, angleRadian, point) {
         const cos = Math.cos(angleRadian)
@@ -64,24 +64,25 @@ class Vertex {
         return vertices.map(vertex => {
             const dx = vertex.x - point.x
             const dy = vertex.y - point.y
-            return {
+            return new Vector({
                 x: point.x + (dx * cos - dy * sin),
                 y: point.y + (dx * sin + dy * cos)
-            }
+            })
         })
     }
 
     /**
      * Translate a set of vertices by the given vector
-     * @param {{x: number, y: number}[]} vertices
+     * @param {Vector[]} vertices
      * @param {Vector} vector
      * @param {number} sign
+     * @return {Vector[]}
      */
     static translate(vertices, vector, sign = 1) {
-        return vertices.map(vertex => ({
+        return vertices.map(vertex => (new Vector({
             x: vertex.x + vector.x * sign,
             y: vertex.y + vector.y * sign
-        }))
+        })))
     }
 }
 

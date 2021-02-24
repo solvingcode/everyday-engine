@@ -2,8 +2,6 @@
  * Vector class.
  * Define a vector coordinate (X, Y)
  */
-import Maths from './Maths.js'
-
 class Vector {
     constructor({x, y, z} = {x: 0, y: 0, z: 0}) {
         this.x = x
@@ -133,8 +131,8 @@ class Vector {
      * @return {number}
      */
     static angle(vectorA, vectorB){
-        const signedAngle = Math.atan2(vectorB.y, vectorB.x) - Math.atan2(vectorA.y, vectorA.x)
-        return Maths.toDegree(signedAngle) || 0
+        const signedAngleRadian = Math.atan2(vectorB.y, vectorB.x) - Math.atan2(vectorA.y, vectorA.x)
+        return signedAngleRadian || 0
     }
 }
 

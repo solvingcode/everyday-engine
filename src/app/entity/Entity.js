@@ -7,6 +7,7 @@ import Style from '../pobject/Style.js'
 import {CANVAS_CONTEXT_TYPE} from '../core/Constant.js'
 import Size from '../pobject/Size.js'
 import DataContext from '../pobject/DataContext.js'
+import Maths from '../utils/Maths.js'
 
 /**
  * Abstract Entity class
@@ -264,6 +265,14 @@ class Entity extends EntityData {
             super.setRotation(angle)
             this.setGenerated(false)
         }
+    }
+
+    /**
+     * @param {number} angleRadian
+     */
+    rotate(angleRadian){
+        const newAngleRadian = this.rotation + angleRadian
+        this.setRotationDegree(Maths.toDegree(newAngleRadian))
     }
 
     /**
@@ -595,7 +604,7 @@ class Entity extends EntityData {
     }
 
     /**
-     * @return {{x: number, y: number}[]}
+     * @return {Vector[]}
      */
     loadVertices() {
         const {width, height} = this.size
@@ -609,19 +618,30 @@ class Entity extends EntityData {
 
     /**
      * Generate vertices for the current entity (relative coordinates)
-     * @return {{x: number, y: number}[]}
+     * @return {Vector[]}
      */
     generateVertices() {
-        const {width: mWidth, height: mHeight} = this.getLargestRectangle(this.rotation, this.size)
-        const center = {x: this.size.width / 2, y: this.size.height / 2}
-        const mCenter = {x: mWidth / 2, y: mHeight / 2}
+        const vertices = this.loadVertices()
+        return this.rotateVertices(vertices, this.rotation)
+    }
 
-        let vertices = this.loadVertices()
-        vertices = Vertex.translate(vertices, center, -1)
-        vertices = Vertex.rotate(vertices, this.rotation, {x: 0, y: 0})
-        vertices = Vertex.translate(vertices, mCenter)
+    /**
+     * @param {Vector[]} vertices
+     * @param {number} rotation
+     * @param {Vector} rotateCenter
+     * @return {Vector[]}
+     */
+    rotateVertices(vertices, rotation, rotateCenter = new Vector()){
+        const {width: mWidth, height: mHeight} = this.getLargestRectangle(rotation, this.size)
+        const center = new Vector({x: this.size.width / 2, y: this.size.height / 2})
+        const mCenter = new Vector({x: mWidth / 2, y: mHeight / 2})
 
-        return vertices
+        let newVertices = vertices
+        newVertices = Vertex.translate(newVertices, center, -1)
+        newVertices = Vertex.rotate(newVertices, rotation, rotateCenter)
+        newVertices = Vertex.translate(newVertices, mCenter)
+
+        return newVertices
     }
 
     /**

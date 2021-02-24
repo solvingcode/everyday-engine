@@ -31,11 +31,9 @@ export default class RotateAction extends Action {
         mouse.dragAndDrop(world.getCamera())
         const vectorStart = rotateEntity.fromAbsolutePosition(scenePosition)
         const vectorEnd = rotateEntity.fromAbsolutePosition(currentScenePosition)
-        const angle = Vector.angle(vectorStart, vectorEnd)
+        const angleRadian = Vector.angle(vectorStart, vectorEnd)
         selectedEntities.map((entity) => {
-            entity.setRotationDegree(
-                (entity.getRotationDegree() + angle) % 360
-            )
+            entity.rotate(angleRadian)
         })
     }
 
