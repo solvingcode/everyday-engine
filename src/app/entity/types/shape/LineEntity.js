@@ -50,26 +50,6 @@ class LineEntity extends EntityMotion {
         return Math.abs(this.vertices[1].y - this.vertices[0].y)
     }
 
-    /**
-     * @override
-     */
-    toCenterPosition() {
-        return new Vector({
-            x: this.position.x + this.mesh.size.width / 2,
-            y: this.position.y + this.mesh.size.height / 2
-        })
-    }
-
-    /**
-     * @override
-     */
-    fromCenterPosition(position) {
-        return new Vector({
-            x: position.x - this.mesh.size.width / 2,
-            y: position.y - this.mesh.size.height / 2
-        })
-    }
-
 }
 
 export default LineEntity

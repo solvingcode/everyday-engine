@@ -221,8 +221,9 @@ class Entity extends EntityData {
 
     /**
      * Close the build of the Entity
+     * @param {World} world
      */
-    close() {
+    close(world) {
         this.position = this.mesh.position
         this.loading = false
     }
@@ -286,7 +287,7 @@ class Entity extends EntityData {
 
     /**
      * Set the entity's size
-     * @param {{width: number, height: number}} size
+     * @param {Size} size
      */
     setSizeAndGenerate(size) {
         if (!_.isEqual(this.size, size)) {
@@ -372,7 +373,7 @@ class Entity extends EntityData {
     }
 
     /**
-     * Calculate the centroid
+     * Calculate the centroid (based on entity's size)
      * @return {Vector}
      */
     getCenter() {
@@ -383,7 +384,7 @@ class Entity extends EntityData {
     }
 
     /**
-     * Calculate centroid (based to the rotation)
+     * Calculate centroid (based on entity's rotation)
      * @return {Vector}
      */
     getLargeCenter(){
@@ -399,7 +400,7 @@ class Entity extends EntityData {
      * @return {Vector}
      */
     toCenterPosition() {
-        const center = this.getCenter()
+        const center = this.getLargeCenter()
         return new Vector({
             x: this.position.x + center.x,
             y: this.position.y + center.y
@@ -424,11 +425,11 @@ class Entity extends EntityData {
      * @return {Vector}
      */
     fromCenterPosition(position) {
-        const center = this.getCenter()
-        return {
+        const center = this.getLargeCenter()
+        return new Vector({
             x: position.x - center.x,
             y: position.y - center.y
-        }
+        })
     }
 
     /**

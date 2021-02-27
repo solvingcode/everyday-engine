@@ -113,7 +113,7 @@ class PolyEntity extends EntityMotion {
     /**
      * @override
      */
-    getCenter() {
+    getLargeCenter() {
         return Vertex.getCenter(this.vertices)
     }
 
@@ -125,13 +125,13 @@ class PolyEntity extends EntityMotion {
     }
 
     /**
-     * Trigger other drawing instruction when the drawing is ended
+     * @override
      */
-    close() {
+    close(world) {
         this.vertices.push(this.vertices[0])
-        this.build()
+        this.build(world)
         this.convertPointToRelPosition()
-        super.close()
+        super.close(world)
     }
 
 }

@@ -17,6 +17,11 @@ const {MouseButton} = Mouse
  */
 class DrawerRunner extends Runner {
 
+    /**
+     * @type {Entity}
+     */
+    currentEntity
+
     constructor() {
         super()
         this.currentEntity = null
@@ -114,7 +119,7 @@ class DrawerRunner extends Runner {
         if (this.currentEntity) {
             this.currentEntity.end()
             if (this.isCurrentDrawValid) {
-                this.currentEntity.close()
+                this.currentEntity.close(World.get())
             } else {
                 World.get().deleteEntity(this.currentEntity)
             }
