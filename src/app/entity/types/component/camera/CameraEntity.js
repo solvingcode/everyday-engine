@@ -6,7 +6,7 @@ import ManagedComponentEntity from '../ManagedComponentEntity.js'
 export default class CameraEntity extends ManagedComponentEntity {
 
     constructor(props) {
-        super(props)
+        super({name: 'Camera', ...props})
         this.props.style = {color: '#CCCCCC'}
     }
 

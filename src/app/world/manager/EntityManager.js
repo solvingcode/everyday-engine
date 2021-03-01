@@ -54,6 +54,16 @@ class EntityManager extends EntityManagerData {
     }
 
     /**
+     * @param {string} name
+     * @return {Entity}
+     */
+    findByName(name) {
+        return this.entities.find((element) =>
+            element.name === name
+        )
+    }
+
+    /**
      * @param {Class} type
      * @return {Entity[]}
      */
@@ -74,9 +84,9 @@ class EntityManager extends EntityManagerData {
         }
         const entity = this.getAt(position, type)
         if (!entity) {
-            const name = `Layer ${this.entities.length}`
-            const props = Object.assign({position, name}, defaultProps)
+            const props = Object.assign({position}, defaultProps)
             const element = new type(props)
+            this.setupEntityName(element)
             this.entities.push(element)
         }
         return this.getAt(position, type)
@@ -153,7 +163,7 @@ class EntityManager extends EntityManagerData {
         const cloneEntity = entity.clone()
         cloneEntity.name = `Clone of ${entity.name}`
         cloneEntity.id = Maths.generateId()
-        if(options.sameWorld){
+        if (options.sameWorld) {
             cloneEntity.worldId = entity.id
         }
         return cloneEntity
@@ -164,7 +174,7 @@ class EntityManager extends EntityManagerData {
      * @param {Object} options
      * @return {Entity}
      */
-    cloneById(entityId, options = {}){
+    cloneById(entityId, options = {}) {
         const entity = this.findById(entityId)
         return this.clone(entity, options)
     }
@@ -399,7 +409,7 @@ class EntityManager extends EntityManagerData {
      * @param {Entity} entity
      * @return {boolean}
      */
-    isComponentEntity(entity){
+    isComponentEntity(entity) {
         return entity instanceof ComponentEntity
     }
 
@@ -407,7 +417,7 @@ class EntityManager extends EntityManagerData {
      * @param {Entity} entity
      * @return {boolean}
      */
-    isManagedComponentEntity(entity){
+    isManagedComponentEntity(entity) {
         return entity instanceof ManagedComponentEntity
     }
 
@@ -415,7 +425,7 @@ class EntityManager extends EntityManagerData {
      * @param {Entity} entity
      * @return {boolean}
      */
-    isManagedEntity(entity){
+    isManagedEntity(entity) {
         return this.isBodyEntity(entity) || this.isManagedComponentEntity(entity)
     }
 
@@ -427,7 +437,7 @@ class EntityManager extends EntityManagerData {
         return !entity.isFixed() && !entity.isControlled()
     }
 
-    hideComponents(){
+    hideComponents() {
         this.getComponentEntities().forEach(entity => this.hide(entity))
     }
 
@@ -458,7 +468,7 @@ class EntityManager extends EntityManagerData {
         this.getAllAttachTypeEntity(entity).forEach(attachEntity => {
             attachedEntities.push(attachEntity)
             for (const kEntity in attachEntity.entities) {
-                if(attachEntity.entities.hasOwnProperty(kEntity)){
+                if (attachEntity.entities.hasOwnProperty(kEntity)) {
                     const entityAB = attachEntity.entities[kEntity]
                     if (entityAB !== entity && !excludeEntities.includes(entityAB)) {
                         attachedEntities = attachedEntities.concat(
@@ -501,14 +511,14 @@ class EntityManager extends EntityManagerData {
      * Get entities that can be managed on the Layer panel and the scene
      * @return {Entity[]}
      */
-    getManagedEntities(){
+    getManagedEntities() {
         return this.entities.filter(entity => this.isManagedEntity(entity))
     }
 
     /**
      * @return {ComponentEntity[]}
      */
-    getComponentEntities(){
+    getComponentEntities() {
         return this.entities.filter(entity => this.isComponentEntity(entity))
     }
 
@@ -544,6 +554,23 @@ class EntityManager extends EntityManagerData {
         this.getDynamicEntities().map(entity => entity.setCollisionGroup(-1))
     }
 
+    /**
+     * @param {Entity} element
+     */
+    setupEntityName(element) {
+        const initialName = element.getName()
+        let name = initialName
+        let existEntity = null
+        let iDuplicate = 0
+        do {
+            element.setName(name)
+            existEntity = this.findByName(name)
+            if (existEntity) {
+                iDuplicate++
+                name = `${initialName} (${iDuplicate})`
+            }
+        } while (existEntity)
+    }
 }
 
 export default EntityManager
