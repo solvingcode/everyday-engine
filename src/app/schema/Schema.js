@@ -83,8 +83,12 @@ class Schema {
                 let result
                 if (prototype.prototype instanceof Data) {
                     if (options.serialize) {
-                        result = new prototype()
-                        data && data.setDataId(DataSchema.getId(data.constructor))
+                        if (data && DataSchema.isExcluded(data.constructor)) {
+                            result = undefined // element to be excluded from the exported data
+                        } else {
+                            result = new prototype()
+                            data && data.setDataId(DataSchema.getId(data.constructor))
+                        }
                     } else {
                         result = DataSchema.newInstance(data && data.dataId, prototype)
                     }
@@ -103,7 +107,7 @@ class Schema {
                                 const setter = ClassHelper.getSetter(result, prop.key)
                                 await result[setter](subResult)
                             }
-                        } else {
+                        } else if (subResult === null) {
                             const setter = ClassHelper.getSetter(result, prop.key)
                             await result[setter](Schema.getValue(`${schemaMeta}.${prop.key}`, prop.value))
                         }

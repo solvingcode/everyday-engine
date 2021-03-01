@@ -20,13 +20,14 @@ class World extends WorldData {
     constructor() {
         super()
         this.entityManager = new EntityManager()
-        this.camera = new Camera(new Vector())
+        this.camera = new Camera(new Vector({x: -SCENE_WIDTH / 2, y: -SCENE_HEIGHT / 2}))
         this.physics = new Physics()
         this.terrainManager = new TerrainManager()
         this.textureManager = new TextureManager()
         this.mouseConstraintId = null
         this.cameraEntityId = null
         this.resolution = new Size({width: SCENE_WIDTH, height: SCENE_HEIGHT})
+        this.gridEntityId = null
         this.init()
     }
 
@@ -116,8 +117,7 @@ class World extends WorldData {
     removeEntityById(entityId) {
         const entity = this.getEntityManager().findById(entityId)
         if (entity) {
-            this.getPhysics().unloadEntity(entity)
-            this.getEntityManager().delete(entity)
+            entity.delete(this)
         }
     }
 
@@ -274,6 +274,20 @@ class World extends WorldData {
      */
     getMouseConstraintId() {
         return this.mouseConstraintId
+    }
+
+    /**
+     * @param {number} id
+     */
+    setGridEntityId(id){
+        this.gridEntityId = id
+    }
+
+    /**
+     * @return {number}
+     */
+    getGridEntityId(){
+        return this.gridEntityId
     }
 
     static get() {

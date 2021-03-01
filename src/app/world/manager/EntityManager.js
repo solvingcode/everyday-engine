@@ -260,6 +260,7 @@ class EntityManager extends EntityManagerData {
                 entity.updateTexture(world)
                 entity.regenerate(world)
             }
+            entity.update(world)
             entity.addToBuffer(world)
         })
     }

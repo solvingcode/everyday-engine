@@ -61,6 +61,14 @@ export default {
                                     subEntity: {
                                         type: 'boolean'
                                     },
+                                    entityChildIds: {
+                                        type: Array,
+                                        meta: {
+                                            element: {
+                                                type: 'number'
+                                            }
+                                        }
+                                    },
                                     entityLinkIds: {
                                         type: Array,
                                         meta: {

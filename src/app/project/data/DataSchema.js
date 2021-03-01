@@ -20,6 +20,10 @@ import MatterEngine from '../../physics/engine/matter/MatterEngine.js'
 import JointEntity from '../../entity/types/constraint/JointEntity.js'
 import AttachPointEntity from '../../entity/types/constraint/AttachPointEntity.js'
 import CameraEntity from '../../entity/types/component/camera/CameraEntity.js'
+import GridEntity from '../../entity/types/component/grid/GridEntity.js'
+import GridChunkEntity from '../../entity/types/component/grid/GridChunkEntity.js'
+import GridXEntity from '../../entity/types/component/grid/GridXEntity.js'
+import GridYEntity from '../../entity/types/component/grid/GridYEntity.js'
 
 /**
  * @class {DataSchema}
@@ -53,6 +57,13 @@ class DataSchema {
         {id: 22, type: CameraEntity}
     ]
 
+    static exclude = [
+        GridEntity,
+        GridChunkEntity,
+        GridXEntity,
+        GridYEntity
+    ]
+
     /**
      * @param {Class} type
      * @return {number}
@@ -63,6 +74,14 @@ class DataSchema {
             throw new TypeError(`Type ${type.name} not found in DataSchema!`)
         }
         return schemaType.id
+    }
+
+    /**
+     * @param {Class} type
+     * @return {boolean}
+     */
+    static isExcluded(type){
+        return this.exclude.includes(type)
     }
 
     /**

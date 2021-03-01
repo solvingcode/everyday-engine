@@ -18,6 +18,9 @@ import ScaleAction from '../action/edit/ScaleAction.js'
 import RotateEntity from '../../entity/types/component/rotate/RotateEntity.js'
 import RotateAction from '../action/edit/RotateAction.js'
 import RotateZEntity from '../../entity/types/component/rotate/RotateZEntity.js'
+import {objectCanvas} from '../../core/Context.js'
+import GridEntity from '../../entity/types/component/grid/GridEntity.js'
+import Vector from '../../utils/Vector.js'
 
 const {MouseButton} = Mouse
 
@@ -46,6 +49,16 @@ class WorldRunner extends Runner {
             this.handleEntityEvent(stateManager, mouse)
             this.selectEntities(stateManager, mouse)
             this.setupEditor(stateManager)
+            this.createGridEntity()
+        }
+    }
+
+    createGridEntity() {
+        const world = World.get()
+        if(!world.getGridEntityId()){
+            world.removeEntityByType([GridEntity])
+            const gridEntity = world.loadEntity(new Vector({x: 0, y: 0}), GridEntity)
+            world.setGridEntityId(gridEntity.getId())
         }
     }
 
@@ -57,7 +70,7 @@ class WorldRunner extends Runner {
         if (mouse.isButtonPressed(MouseButton.MIDDLE)) {
             stateManager.startState(MoveCameraAction.STATE, 1)
         }
-        if (mouse.getMouseWheel().y) {
+        if (mouse.getMouseWheel().y && mouse.target === objectCanvas) {
             stateManager.startState(ZoomInOutCameraAction.STATE, 1,
                 {deltaY: mouse.getMouseWheel().y})
         }

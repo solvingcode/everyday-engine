@@ -22,6 +22,7 @@ class EntityData extends Data {
     subEntity
     style
     entityLinkIds
+    entityChildIds
 
     /**
      * @param {EntityProps} props
@@ -35,6 +36,7 @@ class EntityData extends Data {
         this.clonable = true
         this.subEntity = false
         this.entityLinkIds = []
+        this.entityChildIds = []
         this.setProps(props)
     }
 
@@ -539,6 +541,7 @@ class EntityData extends Data {
     }
 
     /**
+     * subEntity will not be show in the layers panel, and will be inactive (not selected, not focusable)
      * @return {boolean}
      */
     isSubEntity() {
@@ -557,6 +560,20 @@ class EntityData extends Data {
      */
     setEntityLinkIds(ids){
         this.entityLinkIds = ids
+    }
+
+    /**
+     * @return {number[]}
+     */
+    getEntityChildIds(){
+        return this.entityChildIds
+    }
+
+    /**
+     * @param {number[]} ids
+     */
+    setEntityChildIds(ids){
+        this.entityChildIds = ids
     }
 
 }

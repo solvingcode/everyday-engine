@@ -89,6 +89,7 @@ class Mouse {
      */
     setMouseWheel(deltaY) {
         this.mouseWheel.y = deltaY
+        this.target = this.getTarget(event)
     }
 
     /**

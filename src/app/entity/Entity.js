@@ -58,6 +58,12 @@ class Entity extends EntityData {
     }
 
     /**
+     * @param {World} world
+     */
+    update(world){
+    }
+
+    /**
      * Generate mesh for the rect
      * @param {World} world
      * @return {boolean}
@@ -113,7 +119,7 @@ class Entity extends EntityData {
             context.translate(width / 2, height / 2)
             context.rotate(this.rotation)
             context.translate(-center.x, -center.y)
-            return new DataContext(center, context, scaleSize, world.getCamera())
+            return new DataContext(center, context, scaleSize, world.getCamera(), world)
         }
         return null
     }
@@ -572,6 +578,15 @@ class Entity extends EntityData {
     }
 
     /**
+     * @param {World} world
+     */
+    delete(world){
+        world.getPhysics().unloadEntity(this)
+        world.getEntityManager().delete(this)
+        this.entityChildIds.forEach(childId => world.removeEntityById(childId))
+    }
+
+    /**
      * Unload physics for the entity
      * @param {PhysicsEngine} physicsEngine
      */
@@ -793,6 +808,13 @@ class Entity extends EntityData {
     setLinkEntities(entityA, entityB) {
         this.entityLinkIds[0] = entityA && entityA.id
         this.entityLinkIds[1] = entityB && entityB.id
+    }
+
+    /**
+     * @param {Entity} entity
+     */
+    addEntityChild(entity){
+        this.entityChildIds.push(entity.id)
     }
 
     /**

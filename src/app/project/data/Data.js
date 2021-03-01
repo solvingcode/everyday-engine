@@ -21,6 +21,14 @@ class Data {
         return this.dataId
     }
 
+    /**
+     * Exportable data will be added to the exported object (ex: world)
+     * @return {boolean}
+     */
+    isExportable(){
+        return true
+    }
+
 }
 
 export default Data
