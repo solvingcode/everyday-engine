@@ -183,11 +183,13 @@ class HtmlUIRenderer extends UIRenderer {
     /**
      * Get class names for the given menu item
      * @param {MenuItemUI} item
+     * @return {string}
      */
     getClassName(item) {
         const classNames = []
         const type = this.getType(item)
         item.element.isSelected() && classNames.push('selected')
+        item.element.isCollapsed() && classNames.push('collapsed')
         classNames.push(type.getProps().className)
         classNames.push(type.getClassName(item))
         return classNames.join(' ')

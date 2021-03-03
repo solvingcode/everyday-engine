@@ -41,8 +41,17 @@ button.locked{
 }
 
 button[data-icon]{
+    width: 45px;
+    height: 45px;
     font-size: 18px;
-    margin-bottom: 5px;
+}
+
+#app-el-left button[data-icon]:nth-child(1){
+    border-radius: 5px 5px 0 0;
+}
+
+#app-el-left button[data-icon]:nth-last-child(1){
+    border-radius: 0 0 5px 5px;
 }
 
 /* -- button */
@@ -60,37 +69,35 @@ h4{
 /* panel -- */
 
 .panel{
-    margin-bottom: 2px;
 }
 
 .panel > div{
     overflow: auto;
-    margin-top: -1px;
-    padding: 3px;
+    padding: 5px;
 }
 
-/*.panel-static > div:only-child{
-    max-height: 300px;
-}*/
-
 .panel h4{
-    padding: 5px 10px;
+    padding: 10px 10px;
     margin: 0;
     display: inline-block;
 }
 
-.panel h4::after{
+.panel h4::before{
     display: block;
-    float: right;
-    margin-left: 5px;
+    float: left;
+    margin-right: 7px;
     font-family: "Font Awesome 5 Free", sans-serif;
     font-size: 10px;
     line-height: 20px;
     content: "\f078";
 }
 
-.panel h4.collapsed::after{
+.panel.collapsed h4::before{
     content: "\f054";
+}
+
+.panel.collapsed div {
+    display: none;
 }
 
 #app-el-left, #app-el-top, #app-el-right, #app-el-bottom{
@@ -100,26 +107,24 @@ h4{
 
 #app-el-left{
     width: 40px;
-    top: 52px;
-    left: 0;
-    padding: 5px;
-    height: calc(100% - 63px);
+    top: 60px;
+    left: 10px;
+    border-radius: 5px;
 }
 
 #app-el-top{
-    height: 40px;
-    padding: 5px;
+    height: 45px;
     top: 0;
     left: 0;
-    width: calc(100% - 10px);
+    width: 100%;
 }
 
 #app-el-right{
     width: 250px;
-    top: 53px;
+    top: 47px;
     left: calc(100% - 260px);
     padding: 5px 5px;
-    height: calc(100% - 115px);
+    height: calc(100% - 105px);
     overflow: auto;
 }
 
@@ -136,7 +141,6 @@ h4{
 /* layer entity -- */
 
 .layer-entity{
-    padding: 5px;
     position: relative;
     width: 100%;
     overflow: hidden;
@@ -146,7 +150,6 @@ h4{
     width: 30px;
     height: 30px;
     float: left;
-    padding: 5px;
     overflow: hidden;
 }
 
@@ -262,19 +265,28 @@ i.static-entity::before{
 
 .form .form-input input[type=checkbox]{
     float: left;
-    margin: 3px 3px 3px 0;
+    margin: 3px 10px 3px 0;
 }
 .form .form-input label{
+    width: 40%;
+    padding-right: 10px;
+    box-sizing: border-box;
+    display: inline-block;
+    text-align: right;
+    white-space: nowrap;
+    text-overflow: ellipsis;
 }
 
 .form input[type=text], .form input[type=file]{
     border-radius: 2px;
     padding: 3px;
+    width: 60%;
 }
 
 .form select{
     border-radius: 2px;
     padding: 3px;
+    width: 60%;
 }
 
 .form.form-inline .form-input{

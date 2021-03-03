@@ -6,7 +6,6 @@ body{
 
 #app-el-left{
     border-right: 1px solid #333333;
-    background-color: #4d4d4c;
 }
 
 #app-el-top{
@@ -21,12 +20,12 @@ body{
 }
 
 #app-el-right{
-    background-color: #333333;
+    background-color: #222222;
 }
 
 button{
-    background-color: #4d4d4c;
-    color: #f4f4f4;
+    background-color: rgba(77, 77, 76, 0.51);
+    color: #d9d9d9;
 }
 
 button:hover, button.locked:hover, button.hidden:hover{
@@ -34,42 +33,33 @@ button:hover, button.locked:hover, button.hidden:hover{
 }
 
 button.selected, button.hidden.selected, button.locked.selected{
-    background-color: #333333;
+    background-color: #395889;
 }
 
 .panel{
-    background-color: #393938;
-    border-top: 1px solid #222222;
-    border-right: 1px solid #222222;
+    background-color: #474747;
 }
 
 .panel h4{
-    background-color: #4d4d4c;
-    color: #f4f4f4;
-    border-right: 1px solid #222222;
-    border-left: 1px solid #222222;
+    background-color: #474747;
+    color: #dbdbdb;
 }
 
 .panel > div{
-    background-color: #4d4d4c;
-    border-bottom: 1px solid #222222;
-    border-left: 1px solid #222222;
-    border-top: 1px solid #222222;
+    background-color: #3e3e3e;
 }
 
 .panel .panel{
-    background-color: #4d4d4c;
+    background-color: #474747;
     border: none;
 }
 
 .panel .panel h4{
     border: none;
-    border-bottom: 1px solid #222222;
 }
 
 .panel .panel > div{
     border: none;
-    border-top: 1px solid #222222;
 }
 
 .color{
@@ -82,13 +72,13 @@ button.selected, button.hidden.selected, button.locked.selected{
 
 .form input[type=text]{
     border: 1px solid #5a5a5a;
-    background-color: #383838;
+    background-color: #323232;
     color: #f4f4f4;
 }
 
 .form select{
     border: 1px solid #5a5a5a;
-    background-color: #383838;
+    background-color: #323232;
     color: #f4f4f4;
 }
 

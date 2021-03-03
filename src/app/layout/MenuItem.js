@@ -33,6 +33,7 @@ class MenuItem {
         this.menu = null
         this.id = props.id || Maths.generateId()
         this.stateCode = props.stateCode
+        this.collapsed = false
     }
 
     /**
@@ -41,6 +42,20 @@ class MenuItem {
      */
     isSelected() {
         return this.stateCode && this.hasState(this.stateCode, this.id)
+    }
+
+    /**
+     * @return {boolean}
+     */
+    isCollapsed(){
+        return this.collapsed
+    }
+
+    /**
+     * @param {boolean} collapsed
+     */
+    setCollapsed(collapsed){
+        this.collapsed = collapsed
     }
 
     /**

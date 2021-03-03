@@ -302,7 +302,10 @@ AppState.States = {
     ACTION_EXPORT_PROJECT_STOP: {history: false},
     ACTION_SELECT_LIST_ELEMENT_START: {history: false},
     ACTION_SELECT_LIST_ELEMENT_PROGRESS: {history: false},
-    ACTION_SELECT_LIST_ELEMENT_STOP: {history: false}
+    ACTION_SELECT_LIST_ELEMENT_STOP: {history: false},
+    ACTION_COLLAPSE_PANEL_START: {history: false},
+    ACTION_COLLAPSE_PANEL_PROGRESS: {history: false},
+    ACTION_COLLAPSE_PANEL_STOP: {history: false}
 }
 
 export default AppState

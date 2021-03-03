@@ -11,9 +11,9 @@ class HtmlFormTextUI extends HtmlFormUI {
         input.type = inputProps.type
         input.id = `${el.id}-${inputProps.suffix}`
         input.value = value()
-        input.style = 'width: 100px'
         const labelEl = document.createElement('label')
-        labelEl.textContent = `${props.name} : `
+        labelEl.textContent = props.name
+        labelEl.setAttribute('title', props.name)
         labelEl.htmlFor = input.id
         el.appendChild(labelEl)
         el.appendChild(input)

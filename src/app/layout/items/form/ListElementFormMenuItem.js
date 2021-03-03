@@ -9,7 +9,7 @@ class ListElementFormMenuItem extends MenuItem {
     constructor(parent, data) {
         super({
             name: '',
-            stateCode: parent.stateCode,
+            stateCode: 'ACTION_SELECT_LIST_ELEMENT',
             type: Layout.type.LIST_ELEMENT,
             zone: parent.zone
         })

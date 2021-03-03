@@ -21,7 +21,7 @@ class SelectEntityAction extends Action {
     static run() {
         EntitySelector.get().unselectAll(World.get())
         const {bind} = StateManager.get().getNextProgressData(this.STATE)
-        bind.select()
+        bind && bind.select()
         return true
     }
 

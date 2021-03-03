@@ -1,17 +1,15 @@
-import MenuItem from '../../MenuItem.js'
 import TextureFormMenuItem from './TextureFormMenuItem.js'
 import Layout from '../../Layout.js'
+import PanelMenuItem from '../panel/PanelMenuItem.js'
 
 /**
  * Style Menu Item
  * Menu responsible for managing entity's styles
  */
-class StyleMenuItem extends MenuItem {
+class StyleMenuItem extends PanelMenuItem {
     constructor() {
         super({
             name: 'Style',
-            stateCode: '',
-            type: Layout.type.PANEL,
             zone: Layout.zone.RIGHT
         })
         this.items = [

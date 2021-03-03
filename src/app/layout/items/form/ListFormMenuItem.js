@@ -1,16 +1,14 @@
-import MenuItem from '../../MenuItem.js'
 import Layout from '../../Layout.js'
 import ListElementFormMenuItem from './ListElementFormMenuItem.js'
+import PanelMenuItem from '../panel/PanelMenuItem.js'
 
 /**
  * @class {ListFormMenuItem}
  */
-class ListFormMenuItem extends MenuItem {
+class ListFormMenuItem extends PanelMenuItem {
     constructor(props) {
         super({
             name: '',
-            stateCode: 'ACTION_SELECT_LIST_ELEMENT',
-            type: Layout.type.PANEL,
             zone: Layout.zone.RIGHT,
             ...props
         })

@@ -1,19 +1,17 @@
-import MenuItem from '../../MenuItem.js'
 import AddTextureFormMenuItem from './AddTextureFormMenuItem.js'
 import UpdateTextureFormMenuItem from './UpdateTextureFormMenuItem.js'
 import ListTextureFormMenuItem from './ListTextureFormMenuItem.js'
 import Layout from '../../Layout.js'
+import PanelMenuItem from '../panel/PanelMenuItem.js'
 
 /**
  * @class {TextureMenuItem}
  * Menu responsible for managing textures
  */
-class TextureMenuItem extends MenuItem {
+class TextureMenuItem extends PanelMenuItem {
     constructor() {
         super({
             name: 'Textures',
-            stateCode: '',
-            type: Layout.type.PANEL,
             zone: Layout.zone.RIGHT
         })
         this.items = [

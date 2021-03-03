@@ -8,8 +8,7 @@ import ListFormMenuItem from '../form/ListFormMenuItem.js'
 class LayerMenuItem extends ListFormMenuItem {
     constructor() {
         super({
-            name: 'Layer',
-            stateCode: 'ACTION_SELECT_ENTITY'
+            name: 'Layer'
         })
     }
 

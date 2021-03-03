@@ -27,7 +27,7 @@ export default class GridEntity extends GroupComponentEntity {
      */
     loadGrid(world) {
         const camera = world.getCamera()
-        const sizeChunk = new Size({width: 400, height: 400})
+        const sizeChunk = new Size({width: 600, height: 600})
         const maxChunkNbr = 14 * 8
         const chunkSizeNbrX = Math.ceil(camera.fromScaleNumber(this.size.width / sizeChunk.width, this.position)) + 1
         const chunkSizeNbrY = Math.ceil(camera.fromScaleNumber(this.size.height / sizeChunk.height, this.position)) + 1

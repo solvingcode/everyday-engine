@@ -1,19 +1,17 @@
-import MenuItem from '../../MenuItem.js'
 import PropsFormMenuItem from './PropsFormMenuItem.js'
 import SizeFormMenuItem from './SizeFormMenuItem.js'
 import PositionFormMenuItem from './PositionFormMenuItem.js'
 import Layout from '../../Layout.js'
+import PanelMenuItem from '../panel/PanelMenuItem.js'
 
 /**
  * Entity Menu Item
  * Menu responsible for managing entity's props
  */
-class EntityMenuItem extends MenuItem {
+class EntityMenuItem extends PanelMenuItem {
     constructor() {
         super({
             name: 'Properties',
-            stateCode: '',
-            type: Layout.type.PANEL,
             zone: Layout.zone.RIGHT
         })
         this.items = [

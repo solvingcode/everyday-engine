@@ -15,13 +15,11 @@ class HtmlPanelUI extends ItemUI {
      */
     static postCreate(item, el) {
         const title = item.element.props.name
-        const body = document.createElement('div')
         if (title) {
             const titleEl = document.createElement('h4')
             titleEl.textContent = title
             el.appendChild(titleEl)
         }
-        el.appendChild(body)
     }
 
     /**
@@ -39,7 +37,14 @@ class HtmlPanelUI extends ItemUI {
      * @override
      */
     static getBody(el) {
-        return el.getElementsByTagName('div')[0]
+        const existBody = el.getElementsByTagName('div')[0]
+        if(existBody){
+            return existBody
+        }else{
+            const body = document.createElement('div')
+            el.appendChild(body)
+            return body
+        }
     }
 }
 

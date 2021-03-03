@@ -1,17 +1,15 @@
-import MenuItem from '../../MenuItem.js'
 import Layout from '../../Layout.js'
 import PhysicsFormMenuItem from './PhysicsFormMenuItem.js'
 import CameraFormMenuItem from './CameraFormMenuItem.js'
+import PanelMenuItem from '../panel/PanelMenuItem.js'
 
 /**
  * @class {WorldMenuItem}
  */
-export default class WorldMenuItem extends MenuItem {
+export default class WorldMenuItem extends PanelMenuItem {
     constructor() {
         super({
             name: 'World',
-            stateCode: '',
-            type: Layout.type.PANEL,
             zone: Layout.zone.RIGHT
         })
         this.items = [

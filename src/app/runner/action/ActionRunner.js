@@ -30,6 +30,7 @@ import PhysicsNotStaticAction from './physics/PhysicsNotStaticAction.js'
 import FormUpdateAction from './form/FormUpdateAction.js'
 import ScaleAction from './edit/ScaleAction.js'
 import RotateAction from './edit/RotateAction.js'
+import PanelCollapseAction from './panel/PanelCollapseAction.js'
 
 /**
  * Action Runner class.
@@ -85,6 +86,7 @@ class ActionRunner extends Runner {
             PHYSICS_STATIC: PhysicsStaticAction,
             PHYSICS_NOT_STATIC: PhysicsNotStaticAction,
             FORM_UPDATE: FormUpdateAction,
+            COLLAPSE_PANEL: PanelCollapseAction,
 
             //must be the last action
             HISTORY_PUSH: PushHistoryAction

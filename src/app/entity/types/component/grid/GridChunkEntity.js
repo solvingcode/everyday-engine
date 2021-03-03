@@ -1,7 +1,7 @@
-import EntityMotion from '../../../EntityMotion.js'
 import Size from '../../../../pobject/Size.js'
+import ComponentEntity from '../ComponentEntity.js'
 
-export default class GridChunkEntity extends EntityMotion {
+export default class GridChunkEntity extends ComponentEntity {
 
     init(world) {
         this.size = this.props.size
@@ -14,7 +14,7 @@ export default class GridChunkEntity extends EntityMotion {
      */
     drawContext(dataContext) {
         const {context, scaleSize} = dataContext
-        const chunkNbr = 10
+        const chunkNbr = 20
         const chunkSize = new Size({
                 width: scaleSize.width / chunkNbr,
                 height: scaleSize.height / chunkNbr

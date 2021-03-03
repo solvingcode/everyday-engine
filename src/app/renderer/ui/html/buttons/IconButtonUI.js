@@ -31,8 +31,6 @@ class IconButtonUI extends DefaultButtonUI {
 IconButtonUI.props = {
     tag: 'button',
     attrIcon: 'data-icon',
-    width: '40px',
-    height: '40px',
     className: 'fas'
 }
 
