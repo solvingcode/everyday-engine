@@ -90,9 +90,15 @@ class MenuItem {
 
     /**
      * Stop the action when the item is unselected
+     * @param {string} sourceState the source state that trigger the stop
      */
-    stop() {
+    stop(sourceState= '') {
         this.stopState()
+        if(sourceState && this.stateManager.isActionState(sourceState)){
+            if(this.stateManager.isEditState(this.stateCode)){
+                this.startState()
+            }
+        }
     }
 
     /**

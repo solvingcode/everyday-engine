@@ -29,6 +29,7 @@ import PhysicsMenuItem from './items/physics/PhysicsMenuItem.js'
 import WorldMenuItem from './items/world/WorldMenuItem.js'
 import RotateMenuItem from './items/edit/RotateMenuItem.js'
 import LayerMenuItem from './items/entity/LayerMenuItem.js'
+import MoveMenuItem from './items/edit/MoveMenuItem.js'
 
 /**
  * Define all menu items
@@ -40,6 +41,7 @@ class Menu {
         this.types = [
             //LEFT
             new SelectorMenuItem(),
+            new MoveMenuItem(),
             new ScaleMenuItem(),
             new RotateMenuItem(),
             new CircleMenuItem(),
@@ -145,11 +147,12 @@ class Menu {
     selectItem(menuItem) {
         for (const iItem in this.items) {
             const item = this.items[iItem]
-            if (menuItem && item.element.isSelected()) {
-                menuItem !== item && item.element.stop()
+            const {element} = item
+            if (menuItem && element.isSelected()) {
+                menuItem !== item && element.stop(menuItem.element.stateCode)
             }
-            if (menuItem && item.element === menuItem.element) {
-                item.element.run()
+            if (menuItem && element === menuItem.element) {
+                element.run()
             }
         }
     }

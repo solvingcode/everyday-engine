@@ -33,6 +33,22 @@ class StateManager {
     }
 
     /**
+     * @param {string} state
+     * @return {boolean}
+     */
+    isActionState(state){
+        return !!state.match(/^ACTION_/)
+    }
+
+    /**
+     * @param {string} state
+     * @return {boolean}
+     */
+    isEditState(state){
+        return !!state.match(/^DRAW_/)
+    }
+
+    /**
      * Is the state type a start action
      * @param {string} type
      */

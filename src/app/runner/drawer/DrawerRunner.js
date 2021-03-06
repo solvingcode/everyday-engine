@@ -68,6 +68,9 @@ class DrawerRunner extends Runner {
             SELECT: {
                 entity: SelectorEntity
             },
+            MOVE: {
+                entity: SelectorEntity
+            },
             SCALE: {
                 entity: SelectorEntity
             },

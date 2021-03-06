@@ -98,6 +98,7 @@ class WorldRunner extends Runner {
      */
     isSelectEdit(stateManager){
         return stateManager.isProgress('DRAW_SELECT') ||
+            stateManager.isProgress('DRAW_MOVE') ||
             stateManager.isProgress('DRAW_SCALE') ||
             stateManager.isProgress('DRAW_ROTATE')
     }
@@ -151,7 +152,7 @@ class WorldRunner extends Runner {
         let editorPosition = selectedEntities
             .reduce((position, entity) => entity.toLargeCenterPosition(), null)
         if(editorPosition) {
-            if(stateManager.hasAnyState('DRAW_SELECT')){
+            if(stateManager.hasAnyState('DRAW_MOVE')){
                 moveEntityClasses.forEach(entityClass => world.addEntity(editorPosition, entityClass))
             }else if(stateManager.hasAnyState('DRAW_SCALE')){
                 scaleEntityClasses.forEach(entityClass => world.addEntity(editorPosition, entityClass))
