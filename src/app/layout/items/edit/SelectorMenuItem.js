@@ -6,7 +6,7 @@ class SelectorMenuItem extends MenuItem {
         super({
             id: 1,
             name: 'mouse-pointer',
-            title: 'Select/Move',
+            title: 'Select',
             stateCode: 'DRAW_SELECT',
             type: Layout.type.ICON,
             zone: Layout.zone.LEFT

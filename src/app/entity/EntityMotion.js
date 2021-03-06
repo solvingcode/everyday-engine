@@ -1,6 +1,7 @@
 import Entity from './Entity.js'
 import AppState from '../state/AppState.js'
 import Vector from '../utils/Vector.js'
+import EntityProps from '../pobject/EntityProps.js'
 
 /**
  * Abstract EntityMotion class
@@ -9,7 +10,7 @@ import Vector from '../utils/Vector.js'
  * @todo Refactor collision properties
  */
 class EntityMotion extends Entity {
-    constructor(props = {}) {
+    constructor(props = new EntityProps()) {
         super(props)
         if (this.constructor === EntityMotion) {
             throw new TypeError('Abstract class EntityMotion cannot be instantiated directly')

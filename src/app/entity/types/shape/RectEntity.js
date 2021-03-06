@@ -3,7 +3,7 @@ import EntityMotion from '../../EntityMotion.js'
 class RectEntity extends EntityMotion {
 
     constructor(props) {
-        super({name: 'Rect', ...props})
+        super({...props, name: 'Rect'})
         this.shape = EntityMotion.shapes.RECT
     }
 

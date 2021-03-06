@@ -13,6 +13,22 @@ class ObjectHelper {
             .find(prop => object1[prop] !== object2[prop]))
     }
 
+    /**
+     * @param {Object} target
+     * @param {Object} source
+     */
+    static assign(target, source){
+        Object.getOwnPropertyNames(source).forEach(srcProperty => {
+            const setterProperty = `set${srcProperty.charAt(0).toUpperCase() + srcProperty.slice(1)}`
+            const valProperty = source[srcProperty]
+            if(_.isObject(valProperty)){
+                this.assign(target[srcProperty], valProperty)
+            }else{
+                target[setterProperty](valProperty)
+            }
+        })
+    }
+
 }
 
 export default ObjectHelper

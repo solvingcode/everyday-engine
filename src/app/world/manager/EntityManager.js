@@ -6,6 +6,7 @@ import Maths from '../../utils/Maths.js'
 import EntityManagerData from '../../project/data/EntityManagerData.js'
 import ComponentEntity from '../../entity/types/component/ComponentEntity.js'
 import ManagedComponentEntity from '../../entity/types/component/ManagedComponentEntity.js'
+import EntityProps from '../../pobject/EntityProps.js'
 
 /**
  * Entity Manager class
@@ -75,16 +76,16 @@ class EntityManager extends EntityManagerData {
      * Get an entity if founded, else create it
      * @param {Vector} position
      * @param {Function} type
-     * @param {Object} defaultProps
+     * @param {Object} props
      * @return {Entity}
      */
-    get(position, type, defaultProps = {}) {
+    get(position, type, props = new EntityProps()) {
         if (!(type.prototype instanceof Entity)) {
             throw new TypeError(`type must be child of Entity class (${type} given)`)
         }
         const entity = this.getAt(position, type)
         if (!entity) {
-            const props = Object.assign({position}, defaultProps)
+            props.setPosition(position)
             const element = new type(props)
             this.setupEntityName(element)
             this.entities.push(element)
@@ -112,7 +113,7 @@ class EntityManager extends EntityManagerData {
      * @param {Object} props
      * @return {Entity}
      */
-    load(world, position, type, props = {}) {
+    load(world, position, type, props = new EntityProps()) {
         const entity = this.get(position, type, props)
         if (!entity.isBuffered) {
             this.make(world, entity)

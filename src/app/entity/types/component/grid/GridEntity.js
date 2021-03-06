@@ -5,6 +5,7 @@ import Vector from '../../../../utils/Vector.js'
 import GridChunkEntity from './GridChunkEntity.js'
 import GridXEntity from './GridXEntity.js'
 import GridYEntity from './GridYEntity.js'
+import EntityProps from '../../../../pobject/EntityProps.js'
 
 export default class GridEntity extends GroupComponentEntity {
 
@@ -44,9 +45,9 @@ export default class GridEntity extends GroupComponentEntity {
             gridChunks.forEach(gridChunk => {
                 chunkIds = chunkIds.concat(
                     chunkVectors.map(({x, y}) => {
-                        const chunk = world.addEntity(new Vector({x, y}), gridChunk,
-                            { size: sizeChunk }
-                        )
+                        const props = new EntityProps()
+                        props.setSize(sizeChunk)
+                        const chunk = world.addEntity(new Vector({x, y}), gridChunk, props)
                         chunk.setSubEntity(true)
                         return chunk.getId()
                     })

@@ -43,7 +43,7 @@ class FormUpdateAction extends Action {
      * @return {boolean}
      */
     static isInstantField(field) {
-        return ![Layout.form.TEXT, Layout.form.FILE].includes(field)
+        return ![Layout.form.TEXT, Layout.form.COLOR, Layout.form.FILE].includes(field)
     }
 
 }

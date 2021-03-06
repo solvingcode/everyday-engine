@@ -5,7 +5,7 @@ import Size from '../../../pobject/Size.js'
 class LineEntity extends EntityMotion {
 
     constructor(props) {
-        super({name: 'Line', ...props})
+        super({...props, name: 'Line'})
         this.shape = EntityMotion.shapes.LINE
         this.vertices = []
     }

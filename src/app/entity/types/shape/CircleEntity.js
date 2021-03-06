@@ -3,7 +3,7 @@ import EntityMotion from '../../EntityMotion.js'
 class CircleEntity extends EntityMotion {
 
     constructor(props) {
-        super({name: 'Circle', ...props})
+        super({...props, name: 'Circle'})
         this.shape = EntityMotion.shapes.CIRCLE
         this.radius = 0
     }

@@ -32,7 +32,8 @@ Layout.form = {
     CHECKBOX: 'checkbox',
     TEXT: 'text',
     DROPDOWN: 'dropdown',
-    FILE: 'file'
+    FILE: 'file',
+    COLOR: 'color'
 }
 
 export default Layout

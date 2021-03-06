@@ -4,6 +4,7 @@ import HtmlFormCheckboxUI from '../components/forms/HtmlFormCheckboxUI.js'
 import HtmlFormTextUI from '../components/forms/HtmlFormTextUI.js'
 import HtmlFormDropdownUI from '../components/forms/HtmlFormDropdownUI.js'
 import HtmlFormFileUI from '../components/forms/HtmlFormFileUI.js'
+import HtmlFormColorUI from '../components/forms/HtmlFormColorUI.js'
 
 class HtmlFormElementUI extends ItemUI {
     /**
@@ -20,6 +21,8 @@ class HtmlFormElementUI extends ItemUI {
             return HtmlFormDropdownUI
         } else if (field === Layout.form.FILE) {
             return HtmlFormFileUI
+        } else if (field === Layout.form.COLOR) {
+            return HtmlFormColorUI
         }
     }
 }
