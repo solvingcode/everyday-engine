@@ -305,7 +305,19 @@ AppState.States = {
     ACTION_SELECT_LIST_ELEMENT_STOP: {history: false},
     ACTION_COLLAPSE_PANEL_START: {history: false},
     ACTION_COLLAPSE_PANEL_PROGRESS: {history: false},
-    ACTION_COLLAPSE_PANEL_STOP: {history: false}
+    ACTION_COLLAPSE_PANEL_STOP: {history: false},
+    ACTION_HIDE_ITEM_START: {history: false},
+    ACTION_HIDE_ITEM_PROGRESS: {history: false},
+    ACTION_HIDE_ITEM_STOP: {history: false},
+    ACTION_SHOW_ITEM_START: {history: false},
+    ACTION_SHOW_ITEM_PROGRESS: {history: false},
+    ACTION_SHOW_ITEM_STOP: {history: false},
+    ACTION_LOCK_ITEM_START: {history: false},
+    ACTION_LOCK_ITEM_PROGRESS: {history: false},
+    ACTION_LOCK_ITEM_STOP: {history: false},
+    ACTION_UNLOCK_ITEM_START: {history: false},
+    ACTION_UNLOCK_ITEM_PROGRESS: {history: false},
+    ACTION_UNLOCK_ITEM_STOP: {history: false}
 }
 
 export default AppState

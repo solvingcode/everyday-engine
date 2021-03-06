@@ -44,7 +44,6 @@ class LayerEntityButtonUI extends ItemUI {
                 el.innerHTML = ''
                 this.postCreate(item, el, uiRenderer)
             }
-            EntityUI.draw(item, el, uiRenderer)
         }
     }
 }

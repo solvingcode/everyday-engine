@@ -68,12 +68,13 @@ h4{
 
 /* panel -- */
 
-.panel{
-}
-
 .panel > div{
     overflow: auto;
     padding: 5px;
+}
+
+.panel .panel > div{
+    padding: 0;
 }
 
 .panel h4{
@@ -138,61 +139,28 @@ h4{
 
 /* -- panel */
 
-/* layer entity -- */
-
-.layer-entity{
-    position: relative;
-    width: 100%;
-    overflow: hidden;
-}
-
-.layer-entity .entity-img-wrapper{
-    width: 30px;
-    height: 30px;
-    float: left;
-    overflow: hidden;
-}
-
-.layer-entity span{
-   float: left;
-   display: block;
-   margin: 12px 10px;
-   width: 100px;
-   text-align: left;
-   white-space: nowrap;
-}
-
-.layer-entity i{
-    float: right;
-    line-height: 2.5rem;
-    margin-right: 0.5rem;
-}
-
-/* -- layer entity */
-
-
 /* list element -- */
 
 .list-element{
-    padding: 5px;
+    padding: 0;
     position: relative;
     width: 100%;
     overflow: hidden;
 }
 
 .list-element .list-element-img-wrapper{
-    width: 30px;
-    height: 30px;
+    width: 20px;
+    height: 20px;
     float: left;
-    padding: 5px;
     overflow: hidden;
+    margin: 5px;
+    padding: 2.5px;
 }
 
 .list-element span{
     float: left;
     display: block;
-    margin: 12px 10px;
-    width: 100px;
+    margin: 10px 10px 10px 5px;
     text-align: left;
     white-space: nowrap;
 }
@@ -201,6 +169,19 @@ h4{
     float: right;
     line-height: 2.5rem;
     margin-right: 0.5rem;
+}
+
+.list-element button{
+    background: none;
+    font-size: 14px;
+    width: 25px;
+    height: 25px;
+    float: right;
+    line-height: 2rem;
+}
+
+.list-element button:hover{
+    background: none;
 }
 
 /* -- list element */

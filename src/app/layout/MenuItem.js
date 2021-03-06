@@ -37,6 +37,13 @@ class MenuItem {
     }
 
     /**
+     * @param {{bind: Object, list: *[]}} data
+     */
+    setData(data){
+        throw new TypeError('MenuItem.setData must be implemented')
+    }
+
+    /**
      * Define if the menu is selected
      * @return {boolean}
      */

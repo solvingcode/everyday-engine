@@ -82,24 +82,20 @@ button.selected, button.hidden.selected, button.locked.selected{
     color: #f4f4f4;
 }
 
-.layer-entity{
-     border-bottom: 1px solid #383838;
- }
-
-.layer-entity .entity-img-wrapper{
-    background-color: #f4f4f4;
+.list-element:hover{
+    background-color: #4e4e4e !important;
 }
 
-.layer-entity.selected{
-    background-color: #4f606c;
-}
-
-.layer-entity i{
-    color: #d2d2d2;
+.list-element.selected:hover{
+    background-color: #3f6093 !important;
 }
 
 .list-element{
-    border-bottom: 1px solid #383838;
+    background: none;
+}
+
+.list-element:nth-child(2n) {
+    background-color: #404040;
 }
 
 .list-element .list-element-img-wrapper{
@@ -107,7 +103,7 @@ button.selected, button.hidden.selected, button.locked.selected{
 }
 
 .list-element.selected{
-    background-color: #4f606c;
+    background-color: #395889;
 }
 
 .list-element i{

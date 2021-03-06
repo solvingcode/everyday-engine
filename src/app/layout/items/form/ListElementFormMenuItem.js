@@ -3,7 +3,7 @@ import Layout from '../../Layout.js'
 
 /**
  * @class {ListElementFormMenuItem}
- * @property {{bind: Object}} data
+ * @property {{bind: Object, list: *[]}} data
  */
 class ListElementFormMenuItem extends MenuItem {
     constructor(parent, data) {
@@ -14,7 +14,15 @@ class ListElementFormMenuItem extends MenuItem {
             zone: parent.zone
         })
         this.parent = parent
+        this.setData(data)
+    }
+
+    /**
+     * @override
+     */
+    setData(data){
         this.data = data
+        this.items = this.parent.getActions(this.data.bind)
     }
 
     /**

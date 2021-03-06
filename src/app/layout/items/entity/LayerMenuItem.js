@@ -1,24 +1,15 @@
-import World from '../../../world/World.js'
-import ListFormMenuItem from '../form/ListFormMenuItem.js'
+import PanelMenuItem from '../panel/PanelMenuItem.js'
+import Layout from '../../Layout.js'
+import ListEntityMenuItem from './ListEntityMenuItem.js'
 
-/**
- * Layer Menu Item
- * Menu responsible for managing entities (z-index, ...)
- */
-class LayerMenuItem extends ListFormMenuItem {
+export default class LayerMenuItem extends PanelMenuItem {
     constructor() {
         super({
-            name: 'Layer'
+            name: 'Layer',
+            zone: Layout.zone.RIGHT
         })
-    }
-
-    /**
-     * @override
-     */
-    getFormObject() {
-        return World.get().getEntityManager().getManagedEntities()
-            .filter(entity => !entity.isSubEntity() && entity.isValid()).reverse()
+        this.items = [
+            new ListEntityMenuItem(this)
+        ]
     }
 }
-
-export default LayerMenuItem

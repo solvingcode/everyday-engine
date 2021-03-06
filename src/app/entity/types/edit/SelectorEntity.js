@@ -7,6 +7,8 @@ class SelectorEntity extends RectEntity {
     constructor(props) {
         super(props)
         this.selectable = false
+        this.props.style.borderSize = 3
+        this.props.style.color = '#FFFFFF'
     }
 
     /**

@@ -16,12 +16,7 @@ import DuplicateMenuItem from './items/action/DuplicateMenuItem.js'
 import UndoMenuItem from './items/action/UndoMenuItem.js'
 import MoveUpMenuItem from './items/action/MoveUpMenuItem.js'
 import MoveDownMenuItem from './items/action/MoveDownMenuItem.js'
-import LockMenuItem from './items/action/LockMenuItem.js'
-import UnlockMenuItem from './items/action/UnlockMenuItem.js'
-import HideMenuItem from './items/action/HideMenuItem.js'
-import ShowMenuItem from './items/action/ShowMenuItem.js'
 import MenuItemUI from '../renderer/ui/MenuItemUI.js'
-import LayerMenuItem from './items/entity/LayerMenuItem.js'
 import AiGeneticMenuItem from './items/genetic/AiGeneticMenuItem.js'
 import EntityMenuItem from './items/entity/EntityMenuItem.js'
 import StyleMenuItem from './items/style/StyleMenuItem.js'
@@ -33,6 +28,7 @@ import TextureMenuItem from './items/texture/TextureMenuItem.js'
 import PhysicsMenuItem from './items/physics/PhysicsMenuItem.js'
 import WorldMenuItem from './items/world/WorldMenuItem.js'
 import RotateMenuItem from './items/edit/RotateMenuItem.js'
+import LayerMenuItem from './items/entity/LayerMenuItem.js'
 
 /**
  * Define all menu items
@@ -64,10 +60,6 @@ class Menu {
             new UndoMenuItem(),
             new MoveUpMenuItem(),
             new MoveDownMenuItem(),
-            new LockMenuItem(),
-            new UnlockMenuItem(),
-            new HideMenuItem(),
-            new ShowMenuItem(),
 
             //RIGHT
             new LayerMenuItem(),

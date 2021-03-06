@@ -31,6 +31,10 @@ import FormUpdateAction from './form/FormUpdateAction.js'
 import ScaleAction from './edit/ScaleAction.js'
 import RotateAction from './edit/RotateAction.js'
 import PanelCollapseAction from './panel/PanelCollapseAction.js'
+import HideItemAction from './edit/HideItemAction.js'
+import ShowItemAction from './edit/ShowItemAction.js'
+import LockItemAction from './edit/LockItemAction.js'
+import UnlockItemAction from './edit/UnlockItemAction.js'
 
 /**
  * Action Runner class.
@@ -70,6 +74,10 @@ class ActionRunner extends Runner {
             LOCK: LockAction,
             UNLOCK: UnlockAction,
             HIDE: HideAction,
+            HIDE_ITEM: HideItemAction,
+            SHOW_ITEM: ShowItemAction,
+            LOCK_ITEM: LockItemAction,
+            UNLOCK_ITEM: UnlockItemAction,
             SHOW: ShowAction,
             ROTATE_UP: RotateUpAction,
             STYLE_COLOR: StyleColorAction,

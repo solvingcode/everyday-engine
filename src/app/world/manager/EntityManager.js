@@ -313,6 +313,7 @@ class EntityManager extends EntityManagerData {
      */
     hide(entity) {
         entity.show(false)
+        entity.setGenerated(false)
     }
 
     /**
@@ -321,6 +322,7 @@ class EntityManager extends EntityManagerData {
      */
     show(entity) {
         entity.show(true)
+        entity.setGenerated(false)
     }
 
     /**
@@ -368,6 +370,7 @@ class EntityManager extends EntityManagerData {
     lockEntity(entity, lock) {
         this.getAllAttachTypeEntity(entity).map(pEntity => this.lockEntity(pEntity, lock))
         entity.lock(lock)
+        entity.setGenerated(false)
     }
 
     /**

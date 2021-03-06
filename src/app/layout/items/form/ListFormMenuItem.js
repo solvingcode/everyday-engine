@@ -24,16 +24,26 @@ class ListFormMenuItem extends PanelMenuItem {
     }
 
     /**
+     * @return {MenuItem[]}
+     * @param {*} bindObject
+     * @abstract
+     */
+    getActions(bindObject){
+        throw new TypeError('ListFormMenuItem.getActions must be implemented')
+    }
+
+    /**
      * @override
      */
     update() {
         const list = this.getFormObject()
         this.items = list.map((each, index) => {
             const element = this.items[index]
+            const data = {bind: each, list}
             if (element && element.data.bind !== each) {
-                element.data.bind = each
+                element.setData(data)
             }
-            return element || new ListElementFormMenuItem(this, {bind: each, list})
+            return element || new ListElementFormMenuItem(this, data)
         })
     }
 }

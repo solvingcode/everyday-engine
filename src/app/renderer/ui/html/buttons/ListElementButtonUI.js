@@ -56,8 +56,8 @@ ListElementButtonUI.props = {
     className: 'list-element',
     prefix: 'list-element-',
     width: '100%',
-    imageWidth: 30,
-    imageHeight: 30
+    imageWidth: 20,
+    imageHeight: 20
 }
 
 export default ListElementButtonUI
