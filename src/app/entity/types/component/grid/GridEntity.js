@@ -11,7 +11,7 @@ export default class GridEntity extends GroupComponentEntity {
     constructor(props) {
         super(props)
         this.selectable = false
-        this.props.style.borderSize = 2
+        this.props.getStyle().setBorderSize(2)
         this.rank = 10
     }
 

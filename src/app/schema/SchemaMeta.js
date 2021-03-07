@@ -103,66 +103,6 @@ export default {
                                                     }
                                                 }
                                             },
-                                            physics: {
-                                                prototype: PhysicsProps,
-                                                meta: {
-                                                    velocity: {
-                                                        prototype: Vector,
-                                                        meta: {
-                                                            x: {
-                                                                type: 'number'
-                                                            },
-                                                            y: {
-                                                                type: 'number'
-                                                            },
-                                                            z: {
-                                                                type: 'number'
-                                                            }
-                                                        }
-                                                    },
-                                                    stiffness: {
-                                                        type: 'number'
-                                                    },
-                                                    angleA: {
-                                                        type: 'number'
-                                                    },
-                                                    angleB: {
-                                                        type: 'number'
-                                                    },
-                                                    angularStiffness: {
-                                                        type: 'number'
-                                                    },
-                                                    angularVelocity: {
-                                                        type: 'number'
-                                                    },
-                                                    speed: {
-                                                        type: 'number'
-                                                    },
-                                                    density: {
-                                                        type: 'number'
-                                                    },
-                                                    force: {
-                                                        prototype: Vector,
-                                                        meta: {
-                                                            x: {
-                                                                type: 'number'
-                                                            },
-                                                            y: {
-                                                                type: 'number'
-                                                            },
-                                                            z: {
-                                                                type: 'number'
-                                                            }
-                                                        }
-                                                    },
-                                                    fixed: {
-                                                        type: 'boolean'
-                                                    },
-                                                    motion: {
-                                                        type: 'boolean'
-                                                    }
-                                                }
-                                            },
                                             position: {
                                                 prototype: Vector,
                                                 meta: {
@@ -380,18 +320,6 @@ export default {
                                                         type: 'number'
                                                     }
                                                 }
-                                            },
-                                            stiffness: {
-                                                type: 'number'
-                                            },
-                                            angleA: {
-                                                type: 'number'
-                                            },
-                                            angleB: {
-                                                type: 'number'
-                                            },
-                                            angularStiffness: {
-                                                type: 'number'
                                             },
                                             angularVelocity: {
                                                 type: 'number'

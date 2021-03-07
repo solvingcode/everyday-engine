@@ -26,7 +26,7 @@ class NoiseEntity extends PolyEntity {
         const perlinNoise = new PerlinNoise(this.noiseConfigs)
         const points = []
         const step = 10
-        const {size} = this.props
+        const size = this.props.getSize()
         points.push(new Vector({x: 0, y: size.height}))
         for (let i = 0; i <= size.width; i += step) {
             const height = perlinNoise.getPerlinNoise(this.position.x + i, 0)

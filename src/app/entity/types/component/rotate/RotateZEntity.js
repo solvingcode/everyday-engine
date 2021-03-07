@@ -6,8 +6,8 @@ export default class RotateZEntity extends RotateEntity {
 
     constructor(props) {
         super(props)
-        this.props.style.color = '#00FF00'
-        this.props.style.borderSize = 2
+        this.props.getStyle().setColor('#00FF00')
+        this.props.getStyle().setBorderSize(2)
     }
 
     /**
@@ -25,7 +25,7 @@ export default class RotateZEntity extends RotateEntity {
     drawContext(dataContext) {
         const {center, context, scaleSize} = dataContext
         const sw = scaleSize.width
-        const radiusScale = sw / 2 - this.props.style.borderSize
+        const radiusScale = sw / 2 - this.props.getStyle().getBorderSize()
         context.ellipse(center.x, center.y, radiusScale, radiusScale, 0, 0, 2 * Math.PI)
     }
 

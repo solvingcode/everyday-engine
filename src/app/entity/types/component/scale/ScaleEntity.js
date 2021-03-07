@@ -5,7 +5,7 @@ export default class ScaleEntity extends ComponentEntity{
     constructor(props) {
         super(props)
         this.selectable = false
-        this.props.style.borderSize = 4
+        this.props.getStyle().setBorderSize(4)
     }
 
 }

@@ -1,3 +1,8 @@
+import Vector from '../utils/Vector.js'
+import Size from './Size.js'
+import Style from './Style.js'
+import PerlinNoiseConfig from './PerlinNoiseConfig.js'
+
 class EntityProps {
 
     style
@@ -7,6 +12,14 @@ class EntityProps {
     size
     advancedStyle
     noiseConfigs
+
+    constructor() {
+        this.position = new Vector()
+        this.size = new Size(1)
+        this.style = new Style()
+        this.advancedStyle = new Style()
+        this.noiseConfigs = new PerlinNoiseConfig()
+    }
 
     /**
      * @param {Style} advancedStyle
@@ -87,7 +100,7 @@ class EntityProps {
     }
 
     /**
-     * @return {string}
+     * @return {Style}
      */
     getStyle() {
         return this.style

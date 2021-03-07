@@ -8,7 +8,7 @@ export default class MoveXEntity extends MoveAxisEntity {
      * @override
      */
     init(world) {
-        this.props.style.color = '#FF0000'
+        this.props.getStyle().setColor('#FF0000')
         this.size = new Size({width: 100, height: 30})
         this.vertices = [
             new Vector({x: 0, y: this.size.height / 2}),

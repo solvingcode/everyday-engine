@@ -9,10 +9,10 @@ export default class GridXEntity extends ComponentEntity {
     }
 
     init(world) {
-        this.size = this.props.size
-        this.props.style.color = this.position.y === 0 ? '#FF0000' : '#555555'
-        this.props.style.borderSize = 3
-        this.vertices = [new Vector(), new Vector({x: this.size.width, y: 0})]
+        this.size = this.props.getSize()
+        this.props.getStyle().setColor(this.getPositionY() === 0 ? '#FF0000' : '#555555')
+        this.props.getStyle().setBorderSize(3)
+        this.vertices = [new Vector(), new Vector({x: this.getWidth(), y: 0})]
         return true
     }
 

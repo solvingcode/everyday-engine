@@ -325,7 +325,7 @@ class Entity extends EntityData {
     focus() {
         this.focused = true
         const style = new Style()
-        style.setBorderSize(this.props.style.borderSize)
+        style.setBorderSize(this.props.getStyle().getBorderSize())
         style.setOpacity(0.5)
         !this.selected && this.setStyleAndGenerate(style)
     }
@@ -367,7 +367,9 @@ class Entity extends EntityData {
      * @override
      */
     defineStyle() {
-        const styleLocked = {color: '#AAAAAA', fillColor: 'rgba(0, 0, 0, 0.01)'}
+        const styleLocked = new Style()
+        styleLocked.setColor('#AAAAAA')
+        styleLocked.setFillColor('rgba(0, 0, 0, 0.01)')
         return (this.locked && styleLocked) || this.props.style
     }
 
@@ -827,11 +829,11 @@ class Entity extends EntityData {
     }
 
     getFillColor() {
-        return this.style.fillColor || this.props.style.fillColor
+        return this.style.getFillColor() || this.props.getStyle().getFillColor()
     }
 
     getColor() {
-        return this.style.color || this.props.style.color
+        return this.style.getColor() || this.props.getStyle().getColor()
     }
 
 }

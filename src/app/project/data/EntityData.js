@@ -3,6 +3,8 @@ import Maths from '../../utils/Maths.js'
 import Size from '../../pobject/Size.js'
 import Vector from '../../utils/Vector.js'
 import EntityProps from '../../pobject/EntityProps.js'
+import Style from '../../pobject/Style.js'
+import ObjectHelper from '../../utils/ObjectHelper.js'
 
 /**
  * Class define all entity's data and props (getters and setters)
@@ -28,7 +30,7 @@ class EntityData extends Data {
     /**
      * @param {EntityProps} props
      */
-    constructor(props = new EntityProps()) {
+    constructor(props = {}) {
         super()
         this.id = Maths.generateId()
         this.selectable = true
@@ -122,13 +124,19 @@ class EntityData extends Data {
      * @param {EntityProps} props
      */
     setProps(props) {
-        this.props = props
-        props.style = props.style || {color: '#000000', fillColor: ''}
-        this.name = props.name
-        this.position = props.position
-        this.rotation = props.rotation || 0
-        this.size = props.size || new Size(1)
-        this.style = props.style
+        this.props = new EntityProps()
+        ObjectHelper.assign(this.props, props)
+        if(!this.props.style){
+            const defaultStyle = new Style()
+            defaultStyle.setColor('#000000')
+            defaultStyle.setFillColor('')
+            this.props.style = defaultStyle
+        }
+        this.name = this.props.name
+        this.position = this.props.position
+        this.rotation = this.props.rotation || 0
+        this.size = this.props.size || new Size(1)
+        this.style = this.props.style
         this.advancedStyle = Object.assign(
             {backgroundImageBlob: '', backgroundImageRepeat: false},
             this.props.advancedStyle || {}

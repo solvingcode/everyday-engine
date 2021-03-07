@@ -2,6 +2,7 @@ import EntityMotion from '../../EntityMotion.js'
 import Window from '../../../core/Window.js'
 import Vertex from '../../../utils/Vertex.js'
 import Vector from '../../../utils/Vector.js'
+import Size from '../../../pobject/Size.js'
 
 class PolyEntity extends EntityMotion {
 
@@ -93,12 +94,12 @@ class PolyEntity extends EntityMotion {
      * Do not calculate Size if it's defined in the props
      */
     calculateSize() {
-        if (this.props.size) {
-            this.size = this.props.size
+        if (this.props.getSize()) {
+            this.size = this.props.getSize()
         } else {
             const minPoint = this.getMinPoint()
             const maxPoint = this.getMaxPoint()
-            this.size = {width: maxPoint.x - minPoint.x, height: maxPoint.y - minPoint.y}
+            this.size = new Size({width: maxPoint.x - minPoint.x, height: maxPoint.y - minPoint.y})
         }
     }
 
@@ -107,7 +108,7 @@ class PolyEntity extends EntityMotion {
      */
     convertPointToRelPosition() {
         const minPoint = this.getMinPoint()
-        this.vertices = this.vertices.map(point => ({x: point.x - minPoint.x, y: point.y - minPoint.y}))
+        this.vertices = this.vertices.map(point => (new Vector({x: point.x - minPoint.x, y: point.y - minPoint.y})))
     }
 
     /**

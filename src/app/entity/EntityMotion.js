@@ -244,7 +244,7 @@ class EntityMotion extends Entity {
      */
     updateStyle() {
         const {color} = AppState.get().data
-        color && (this.props.style.fillColor = color)
+        color && (this.props.getStyle().setFillColor(color))
         return this
     }
 
