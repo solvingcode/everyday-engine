@@ -1,10 +1,3 @@
-import ObjectHelper from '../utils/ObjectHelper.js'
-import Style from './Style.js'
-import Vector from '../utils/Vector.js'
-import Size from './Size.js'
-import PerlinNoiseConfig from './PerlinNoiseConfig.js'
-import PhysicsProps from './PhysicsProps.js'
-
 class EntityProps {
 
     style
@@ -14,17 +7,6 @@ class EntityProps {
     size
     advancedStyle
     noiseConfigs
-    physics
-
-    constructor(props) {
-        this.style = new Style()
-        this.position = new Vector()
-        this.size = new Size(1)
-        this.advancedStyle = new Style()
-        this.noiseConfigs = new PerlinNoiseConfig()
-        this.physics = new PhysicsProps()
-        ObjectHelper.assign(this, props || {})
-    }
 
     /**
      * @param {Style} advancedStyle
@@ -101,7 +83,7 @@ class EntityProps {
      * @param {Style} style
      */
     setStyle(style) {
-        ObjectHelper.assign(this.style, style)
+        this.style = style
     }
 
     /**
@@ -123,20 +105,6 @@ class EntityProps {
      */
     getRotation() {
         return this.rotation
-    }
-
-    /**
-     * @return {PhysicsProps}
-     */
-    getPhysics(){
-        return this.physics
-    }
-
-    /**
-     * @param {PhysicsProps} physics
-     */
-    setPhysics(physics){
-        this.physics = physics
     }
 
 }

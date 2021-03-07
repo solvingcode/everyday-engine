@@ -626,10 +626,10 @@ class Entity extends EntityData {
     loadVertices() {
         const {width, height} = this.size
         return [
-            {x: 0, y: 0},
-            {x: width, y: 0},
-            {x: width, y: height},
-            {x: 0, y: height}
+            new Vector({x: 0, y: 0}),
+            new Vector({x: width, y: 0}),
+            new Vector({x: width, y: height}),
+            new Vector({x: 0, y: height})
         ]
     }
 

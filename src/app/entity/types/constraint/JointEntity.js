@@ -2,19 +2,15 @@ import EntitySelector from '../../../world/manager/EntitySelector.js'
 import AttachEntity from './AttachEntity.js'
 import Vector from '../../../utils/Vector.js'
 import Size from '../../../pobject/Size.js'
-import EntityProps from '../../../pobject/EntityProps.js'
-import Style from '../../../pobject/Style.js'
 
 /**
  * @property {Vector[]} vertices relative positions for entities A & B
  */
 class JointEntity extends AttachEntity {
 
-    constructor(props = new EntityProps()) {
+    constructor(props = {}) {
+        props.style = props.style || {color: '#0000FF'}
         super(props)
-        const style = new Style()
-        style.setColor('#0000ff')
-        this.props.setStyle(props.style || style)
         this.vertices = [null, null]
         this.entityLinkIds = [null, null]
         this.attached = false

@@ -1,5 +1,6 @@
 import PhysicsEngine from '../PhysicsEngine.js'
 import ShapeLoader from '../ShapeLoader.js'
+import Vector from '../../../utils/Vector.js'
 
 /**
  * Matter Physics Engine class
@@ -106,7 +107,7 @@ class MatterEngine extends PhysicsEngine {
             const entityA = entity.getLinkedEntityAt(0, world)
             entityA && entityA.movePointTo(pointA, pointB)
             entity.movePointTo(pointA, pointB)
-            entity.updatePoints(pointB, {x: pointB.x + 1, y: pointB.y + 1})
+            entity.updatePoints(pointB, new Vector({x: pointB.x + 1, y: pointB.y + 1}))
             return true
         }
         return false

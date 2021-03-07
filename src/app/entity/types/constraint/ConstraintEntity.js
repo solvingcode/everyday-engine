@@ -1,7 +1,6 @@
 import JointEntity from './JointEntity.js'
 import Color from '../../../utils/Color.js'
 import Vector from '../../../utils/Vector.js'
-import Style from '../../../pobject/Style.js'
 
 /**
  * Define an entity which represent a physics constraint (mouse constraint, ...)
@@ -17,9 +16,7 @@ class ConstraintEntity extends JointEntity {
         super(props)
         this.physics.stiffness = 0.1
         this.physics.angularStiffness = 1
-        const style = new Style()
-        style.setColor(`#${Color.fromArrayInt([this.id])}`)
-        this.props.setStyle(style)
+        this.props.style = {color: `#${Color.fromArrayInt([this.id])}`}
         this.vertices = [new Vector({x: 0, y: 0}), new Vector({x: 0, y: 0})]
         this.entityLinkIds = [null, null]
         this.attached = true

@@ -11,8 +11,8 @@ class DefaultButtonUI {
         this.config(item, uiRenderer)
         const {context} = uiRenderer
         const element = item.element
-        var colorButton = this.props.colorButton
-        var colorText = this.props.colorText
+        let colorButton = this.props.colorButton
+        let colorText = this.props.colorText
         if (element.isSelected()) {
             colorButton = this.props.colorButtonSelected
             colorText = this.props.colorTextSelected

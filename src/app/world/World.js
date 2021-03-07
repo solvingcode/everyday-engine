@@ -10,7 +10,6 @@ import TextureManager from './manager/TextureManager.js'
 import Window from '../core/Window.js'
 import Size from '../pobject/Size.js'
 import {SCENE_HEIGHT, SCENE_WIDTH} from '../core/Constant.js'
-import EntityProps from '../pobject/EntityProps.js'
 
 /**
  * @class {World}
@@ -101,7 +100,7 @@ class World extends WorldData {
      * @param {Class} type
      * @param {EntityProps} props
      */
-    addEntity(position, type, props = new EntityProps()) {
+    addEntity(position, type, props = {}) {
         const entity = this.loadEntity(position, type, props)
         this.getPhysics().loadEntity(entity)
         return entity
@@ -166,7 +165,7 @@ class World extends WorldData {
      * @param {EntityProps} props
      * @return {Entity}
      */
-    loadEntity(position, type, props = new EntityProps()) {
+    loadEntity(position, type, props = {}) {
         return this.getEntityManager().load(this, position, type, props)
     }
 

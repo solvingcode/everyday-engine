@@ -1,7 +1,6 @@
 import TextureFormMenuItem from './TextureFormMenuItem.js'
 import Layout from '../../Layout.js'
 import PanelMenuItem from '../panel/PanelMenuItem.js'
-import StyleColorsFormMenuItem from './StyleColorsFormMenuItem.js'
 
 /**
  * Style Menu Item
@@ -14,8 +13,7 @@ class StyleMenuItem extends PanelMenuItem {
             zone: Layout.zone.RIGHT
         })
         this.items = [
-            new TextureFormMenuItem(this),
-            new StyleColorsFormMenuItem(this)
+            new TextureFormMenuItem(this)
         ]
     }
 }
