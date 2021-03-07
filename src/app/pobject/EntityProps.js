@@ -125,6 +125,20 @@ class EntityProps {
         return this.rotation
     }
 
+    /**
+     * @return {PhysicsProps}
+     */
+    getPhysics(){
+        return this.physics
+    }
+
+    /**
+     * @param {PhysicsProps} physics
+     */
+    setPhysics(physics){
+        this.physics = physics
+    }
+
 }
 
 export default EntityProps

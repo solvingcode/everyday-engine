@@ -3,6 +3,8 @@ import TerrainData from '../../project/data/TerrainData.js'
 import ObjectHelper from '../../utils/ObjectHelper.js'
 import Window from '../../core/Window.js'
 import Vector from '../../utils/Vector.js'
+import EntityProps from '../../pobject/EntityProps.js'
+import Size from '../../pobject/Size.js'
 
 /**
  * Terrain class
@@ -33,7 +35,7 @@ class Terrain extends TerrainData {
             this.entityId = world.addEntity(
                 new Vector({x: 0, y: 650}),
                 VirtualEntity,
-                {
+                new EntityProps({
                     name: 'Terrain',
                     size: Window.get().size,
                     noiseConfigs: {
@@ -43,7 +45,7 @@ class Terrain extends TerrainData {
                         persistence: 0.51,
                         smoothness: 250
                     }
-                }).getId()
+                })).getId()
         }
     }
 
@@ -110,10 +112,10 @@ class Terrain extends TerrainData {
                         world,
                         x * entity.getWidth() + entity.getPositionX(),
                         entity.getPositionY(),
-                        {
-                            size: {width: entity.getWidth(), height: entity.getHeight()},
+                        new EntityProps({
+                            size: new Size({width: entity.getWidth(), height: entity.getHeight()}),
                             noiseConfigs: _.clone(entity.noiseConfigs)
-                        }
+                        })
                     )
                     chunk.setSubEntity(true)
                     return chunk.getId()

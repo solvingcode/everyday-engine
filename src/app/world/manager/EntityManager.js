@@ -85,10 +85,13 @@ class EntityManager extends EntityManagerData {
         }
         const entity = this.getAt(position, type)
         if (!entity) {
+            if(!(props instanceof EntityProps)){
+                debugger
+            }
             props.setPosition(position)
             const element = new type(props)
             this.setupEntityName(element)
-            this.entities.push(element)
+            this.add(element)
         }
         return this.getAt(position, type)
     }
@@ -125,7 +128,13 @@ class EntityManager extends EntityManagerData {
      * @param {EntityMotion} entity
      */
     add(entity) {
-        this.entities.push(entity)
+        const rank = entity.rank
+        const indexBiggerRank = this.entities.findIndex(pEntity => pEntity.rank > rank)
+        if(indexBiggerRank >= 0){
+            this.entities.splice(indexBiggerRank, 0, entity)
+        }else{
+            this.entities.push(entity)
+        }
     }
 
     /**

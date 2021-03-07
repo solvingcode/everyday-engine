@@ -3,6 +3,11 @@ import ComponentEntity from '../ComponentEntity.js'
 
 export default class GridYEntity extends ComponentEntity {
 
+    constructor(props) {
+        super(props)
+        this.rank = 10
+    }
+
     init(world) {
         this.size = this.props.size
         this.props.style.color = this.position.x === 0 ? '#0000FF' : '#555555'

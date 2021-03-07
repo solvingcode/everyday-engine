@@ -47,6 +47,12 @@ class FormMenuItem extends MenuItem {
     }
 
     /**
+     * @param {*} value
+     */
+    postUpdate(value){
+    }
+
+    /**
      * @abstract
      * Get the object bound to the form
      * @return {*}

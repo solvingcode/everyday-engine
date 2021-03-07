@@ -3,6 +3,11 @@ import ComponentEntity from '../ComponentEntity.js'
 
 export default class GridChunkEntity extends ComponentEntity {
 
+    constructor(props) {
+        super(props)
+        this.rank = 10
+    }
+
     init(world) {
         this.size = this.props.size
         this.props.style.color = '#3e3e3e'

@@ -13,6 +13,7 @@ export default class GridEntity extends GroupComponentEntity {
         super(props)
         this.selectable = false
         this.props.style.borderSize = 2
+        this.rank = 10
     }
 
     /**

@@ -45,12 +45,7 @@ class World extends WorldData {
      * @param {Renderer} renderer
      */
     draw(renderer) {
-        const bodyEntities = this.getEntityManager().getBodyEntities()
-        const componentEntities = this.getEntityManager().getComponentEntities()
-        const attachEntities = this.getEntityManager().getAttachEntities()
-        bodyEntities.forEach((entity) => this.drawEntity(entity, renderer))
-        attachEntities.forEach((entity) => this.drawEntity(entity, renderer))
-        componentEntities.forEach((entity) => this.drawEntity(entity, renderer))
+        this.getEntityManager().entities.forEach((entity) => this.drawEntity(entity, renderer))
     }
 
     /**

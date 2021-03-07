@@ -17,6 +17,13 @@ class ListTextureFormMenuItem extends ListFormMenuItem {
         return World.get().getTextureManager().getTextures()
     }
 
+    /**
+     * @override
+     */
+    getActions(bindObject){
+        return []
+    }
+
 }
 
 export default ListTextureFormMenuItem

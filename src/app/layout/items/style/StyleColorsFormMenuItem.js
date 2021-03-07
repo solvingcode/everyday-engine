@@ -38,8 +38,22 @@ export default class StyleColorsFormMenuItem extends FormMenuItem {
     /**
      * @override
      */
+    postUpdate(value) {
+        this.getFormObject().setGenerated(false)
+    }
+
+    /**
+     * @override
+     */
     getFormObject() {
         return EntitySelector.get().getFirstSelected(World.get())
+    }
+
+    /**
+     * @override
+     */
+    isValid() {
+        return super.isValid() && World.get().getEntityManager().isBodyEntity(this.getFormObject())
     }
 
 }

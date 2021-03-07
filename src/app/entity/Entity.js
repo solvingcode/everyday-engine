@@ -40,6 +40,7 @@ class Entity extends EntityData {
         this.generated = true
         this.loading = false
         this.scalable = true
+        this.rank = 20
     }
 
     /**

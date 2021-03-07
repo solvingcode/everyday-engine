@@ -24,7 +24,7 @@ class ObjectHelper {
             if(_.isObject(valProperty)){
                 this.assign(target[srcProperty], valProperty)
             }else{
-                target[setterProperty](valProperty)
+                target && target[setterProperty](valProperty)
             }
         })
     }

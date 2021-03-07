@@ -10,6 +10,7 @@ export default class ComponentEntity extends EntityMotion {
     constructor(props) {
         super(props)
         this.shape = EntityMotion.shapes.COMPONENT
+        this.rank = 40
     }
 
 }

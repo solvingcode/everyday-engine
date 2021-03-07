@@ -30,8 +30,9 @@ class FormUpdateAction extends Action {
         if (menuItemUI) {
             const formElement = uiRenderer.getType(menuItemUI).getFormElement(menuItemUI, uiRenderer)
             event(formElement.value)
+            item.parent.postUpdate(formElement.value)
         } else {
-            console.warn(`ElementUI for item ${item.id} cannot be found!`)
+            throw new TypeError(`ElementUI for item ${item.id} cannot be found!`)
         }
         return true
     }
