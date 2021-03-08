@@ -5,12 +5,13 @@ export default class GridChunkEntity extends ComponentEntity {
 
     constructor(props) {
         super(props)
+        this.getStyle().setColor('#3e3e3e')
+        this.getStyle().setFillColor('')
         this.rank = 10
     }
 
     init(world) {
         this.size = this.props.getSize()
-        this.props.getStyle().setColor('#3e3e3e')
         return true
     }
 

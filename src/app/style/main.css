@@ -142,7 +142,7 @@ h4{
 /* list element -- */
 
 .list-element{
-    padding: 0;
+    padding: 5px;
     position: relative;
     width: 100%;
     overflow: hidden;
@@ -153,21 +153,20 @@ h4{
     height: 20px;
     float: left;
     overflow: hidden;
-    margin: 5px;
+    margin: 0;
     padding: 2px;
 }
 
 .list-element span{
     float: left;
     display: block;
-    margin: 10px 10px 10px 5px;
+    margin: 5px 5px 5px 10px;
     text-align: left;
     white-space: nowrap;
 }
 
 .list-element i{
     float: right;
-    line-height: 2.5rem;
     margin-right: 0.5rem;
 }
 
@@ -177,7 +176,7 @@ h4{
     width: 25px;
     height: 25px;
     float: right;
-    line-height: 2rem;
+    line-height: 1.5rem;
 }
 
 .list-element button:hover{

@@ -3,7 +3,6 @@ import Maths from '../../utils/Maths.js'
 import Size from '../../pobject/Size.js'
 import Vector from '../../utils/Vector.js'
 import EntityProps from '../../pobject/EntityProps.js'
-import Style from '../../pobject/Style.js'
 import ObjectHelper from '../../utils/ObjectHelper.js'
 
 /**
@@ -126,11 +125,12 @@ class EntityData extends Data {
     setProps(props) {
         this.props = new EntityProps()
         ObjectHelper.assign(this.props, props)
-        if(!this.props.style){
-            const defaultStyle = new Style()
-            defaultStyle.setColor('#000000')
-            defaultStyle.setFillColor('#FFFFFF')
-            this.props.style = defaultStyle
+        const style = this.props.getStyle()
+        if(style.getColor() === undefined){
+            style.setColor('#000000')
+        }
+        if(style.getFillColor() === undefined){
+            style.setFillColor('#555555')
         }
         this.name = this.props.name
         this.position = this.props.position

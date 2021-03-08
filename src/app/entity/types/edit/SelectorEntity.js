@@ -9,6 +9,7 @@ class SelectorEntity extends RectEntity {
         this.selectable = false
         this.props.getStyle().setBorderSize(3)
         this.props.getStyle().setColor('#FFFFFF')
+        this.props.getStyle().setFillColor('')
     }
 
     /**

@@ -6,8 +6,9 @@ export default class ScaleCenterEntity extends ScaleEntity{
 
     constructor(props) {
         super(props)
-        this.props.getStyle().setBorderSize(2)
-        this.props.getStyle().setColor('#CCCCCC')
+        this.getStyle().setBorderSize(2)
+        this.getStyle().setColor('#CCCCCC')
+        this.getStyle().setFillColor('')
     }
 
     /**

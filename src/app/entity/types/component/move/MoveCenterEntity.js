@@ -6,8 +6,9 @@ export default class MoveCenterEntity extends MoveEntity{
 
     constructor(props) {
         super(props)
-        this.props.getStyle().setBorderSize(2)
-        this.props.getStyle().setColor('#CCCCCC')
+        this.getStyle().setBorderSize(2)
+        this.getStyle().setColor('#CCCCCC')
+        this.getStyle().setFillColor('')
     }
 
     /**
