@@ -39,7 +39,7 @@ class MenuItem {
     /**
      * @param {{bind: Object, list: *[]}} data
      */
-    setData(data){
+    setData(data) {
         throw new TypeError('MenuItem.setData must be implemented')
     }
 
@@ -54,14 +54,14 @@ class MenuItem {
     /**
      * @return {boolean}
      */
-    isCollapsed(){
+    isCollapsed() {
         return this.collapsed
     }
 
     /**
      * @param {boolean} collapsed
      */
-    setCollapsed(collapsed){
+    setCollapsed(collapsed) {
         this.collapsed = collapsed
     }
 
@@ -92,13 +92,20 @@ class MenuItem {
      * Stop the action when the item is unselected
      * @param {string} sourceState the source state that trigger the stop
      */
-    stop(sourceState= '') {
+    stop(sourceState = '') {
         this.stopState()
-        if(sourceState && this.stateManager.isActionState(sourceState)){
-            if(this.stateManager.isEditState(this.stateCode)){
+        if (sourceState && this.stateManager.isActionState(sourceState)) {
+            if (this.stateManager.isEditState(this.stateCode)) {
                 this.startState()
             }
         }
+    }
+
+    /**
+     * @return {boolean}
+     */
+    isAction(){
+        return this.stateManager.isActionState(this.stateCode)
     }
 
     /**

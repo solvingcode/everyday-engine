@@ -28,6 +28,7 @@ class World extends WorldData {
         this.cameraEntityId = null
         this.resolution = new Size({width: SCENE_WIDTH, height: SCENE_HEIGHT})
         this.gridEntityId = null
+        this.showGrid = true
         this.init()
     }
 
@@ -204,6 +205,21 @@ class World extends WorldData {
     }
 
     /**
+     * @return {boolean}
+     */
+    isShowGrid(){
+        return this.getShowGrid()
+    }
+
+    /**
+     * @param {boolean} showGrid
+     */
+    setShowGrid(showGrid){
+        super.setShowGrid(showGrid)
+        this.setGridEntityId(null)
+    }
+
+    /**
      * Update the camera position for the attached entity (if the camera must be focused on a given entity)
      */
     updateCamera() {
@@ -286,10 +302,10 @@ class World extends WorldData {
     }
 
     static get() {
-        if (!World.instance) {
-            World.instance = new World()
+        if (!this.instance) {
+            this.instance = new this()
         }
-        return World.instance
+        return this.instance
     }
 }
 

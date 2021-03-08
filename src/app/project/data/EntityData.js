@@ -129,7 +129,7 @@ class EntityData extends Data {
         if(!this.props.style){
             const defaultStyle = new Style()
             defaultStyle.setColor('#000000')
-            defaultStyle.setFillColor('')
+            defaultStyle.setFillColor('#FFFFFF')
             this.props.style = defaultStyle
         }
         this.name = this.props.name

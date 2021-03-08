@@ -44,7 +44,7 @@ class WorldRunner extends Runner {
      */
     execute(mouse) {
         const stateManager = StateManager.get()
-        if (!stateManager.isRunning()) {
+        if (!stateManager.isRunning() && !stateManager.isFormUpdating()) {
             this.updateMouseWheel(stateManager, mouse)
             this.handleEntityEvent(stateManager, mouse)
             this.selectEntities(stateManager, mouse)
@@ -55,10 +55,15 @@ class WorldRunner extends Runner {
 
     createGridEntity() {
         const world = World.get()
-        if(!world.getGridEntityId()){
-            world.removeEntityByType([GridEntity])
-            const gridEntity = world.loadEntity(new Vector({x: 0, y: 0}), GridEntity)
-            world.setGridEntityId(gridEntity.getId())
+        const gridEntityClass = GridEntity
+        if(world.isShowGrid()){
+            if(!world.getGridEntityId()){
+                world.removeEntityByType([gridEntityClass])
+                const gridEntity = world.loadEntity(new Vector({x: 0, y: 0}), gridEntityClass)
+                world.setGridEntityId(gridEntity.getId())
+            }
+        }else{
+            world.removeEntityByType([gridEntityClass])
         }
     }
 

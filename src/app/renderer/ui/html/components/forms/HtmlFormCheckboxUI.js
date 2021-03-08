@@ -1,21 +1,11 @@
-import HtmlFormUI from './HtmlFormUI.js'
+import HtmlFormTextUI from './HtmlFormTextUI.js'
 
-class HtmlFormCheckboxUI extends HtmlFormUI {
+class HtmlFormCheckboxUI extends HtmlFormTextUI {
     /**
      * @override
      */
-    static postCreate(item, el, uiRenderer) {
-        const {props, value} = item.element
-        const {inputProps} = this.props
-        const input = document.createElement(inputProps.tag)
-        input.type = inputProps.type
-        input.id = `${el.id}-${inputProps.suffix}`
-        input.checked = value()
-        const labelEl = document.createElement('label')
-        labelEl.textContent = props.name
-        labelEl.htmlFor = input.id
-        el.appendChild(input)
-        el.appendChild(labelEl)
+    static setValue(formElement, value) {
+        formElement.checked = !!value
     }
 
     /**

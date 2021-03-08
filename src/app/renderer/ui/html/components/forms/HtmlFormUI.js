@@ -32,6 +32,14 @@ class HtmlFormUI extends ItemUI {
     static getValue(formElement) {
         return formElement.value
     }
+
+    /**
+     * @param {HTMLElement | HTMLInputElement} formElement
+     * @param {string | boolean} value
+     */
+    static setValue(formElement, value){
+        formElement.value = value
+    }
 }
 
 export default HtmlFormUI

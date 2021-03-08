@@ -29,8 +29,12 @@ class MenuRunner extends Runner {
      */
     execute(mouse) {
         const menuItem = this.menu.getUIRenderer().getItemAt(mouse)
-        this.menu.selectItem(menuItem)
-        return !!menuItem;
+        if (menuItem) {
+            this.menu.selectItem(menuItem)
+        } else {
+            this.menu.stopActionMenuItem()
+        }
+        return !!menuItem
     }
 }
 

@@ -198,6 +198,11 @@ class AppState {
 
 AppState.instance = null
 
+AppState.Categories = {
+    ACTION: 'ACTION_',
+    DRAW: 'DRAW_'
+}
+
 /**
  * @todo: Think to externalize the states configuration
  */

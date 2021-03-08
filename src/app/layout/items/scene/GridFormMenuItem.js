@@ -3,9 +3,9 @@ import World from '../../../world/World.js'
 import FormMenuItem from '../form/FormMenuItem.js'
 
 /**
- * Form properties
+ * @class {GridFormMenuItem}
  */
-class PropsFormMenuItem extends FormMenuItem {
+export default class GridFormMenuItem extends FormMenuItem {
     constructor(parent) {
         super({
             name: '',
@@ -22,19 +22,9 @@ class PropsFormMenuItem extends FormMenuItem {
     generateFields() {
         return [
             {
-                bind: 'positionX',
-                label: 'X',
-                type: Layout.form.TEXT
-            },
-            {
-                bind: 'positionY',
-                label: 'Y',
-                type: Layout.form.TEXT
-            },
-            {
-                bind: 'positionZ',
-                label: 'Z',
-                type: Layout.form.TEXT
+                bind: 'showGrid',
+                label: 'Show Grid',
+                type: Layout.form.CHECKBOX
             }
         ]
     }
@@ -43,8 +33,6 @@ class PropsFormMenuItem extends FormMenuItem {
      * @override
      */
     getFormObject() {
-        return World.get().getCamera()
+        return World.get()
     }
 }
-
-export default PropsFormMenuItem

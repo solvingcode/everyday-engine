@@ -53,6 +53,13 @@ class TextureFormMenuItem extends FormMenuItem {
     getFormObject() {
         return EntitySelector.get().getFirstSelected(World.get())
     }
+
+    /**
+     * @override
+     */
+    isValid() {
+        return super.isValid() && World.get().getEntityManager().isBodyEntity(this.getFormObject())
+    }
 }
 
 export default TextureFormMenuItem

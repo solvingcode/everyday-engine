@@ -23,7 +23,7 @@ import StyleMenuItem from './items/style/StyleMenuItem.js'
 import ConditionMenuItem from './items/condition/ConditionMenuItem.js'
 import AppMenuItem from './items/app/AppMenuItem.js'
 import TerrainMenuItem from './items/terrain/TerrainMenuItem.js'
-import CameraSceneMenuItem from './items/scene/CameraSceneMenuItem.js'
+import SceneMenuItem from './items/scene/SceneMenuItem.js'
 import TextureMenuItem from './items/texture/TextureMenuItem.js'
 import PhysicsMenuItem from './items/physics/PhysicsMenuItem.js'
 import WorldMenuItem from './items/world/WorldMenuItem.js'
@@ -73,7 +73,7 @@ class Menu {
             new AiGeneticMenuItem(),
             new TerrainMenuItem(),
             new TextureMenuItem(),
-            new CameraSceneMenuItem(),
+            new SceneMenuItem(),
 
             //BOTTOM
             new AppMenuItem()
@@ -148,11 +148,21 @@ class Menu {
         for (const iItem in this.items) {
             const item = this.items[iItem]
             const {element} = item
-            if (menuItem && element.isSelected()) {
+            if (element.isSelected()) {
                 menuItem !== item && element.stop(menuItem.element.stateCode)
             }
-            if (menuItem && element === menuItem.element) {
+            if (element === menuItem.element) {
                 element.run()
+            }
+        }
+    }
+
+    stopActionMenuItem(){
+        for (const iItem in this.items) {
+            const item = this.items[iItem]
+            const {element} = item
+            if(element.isSelected() && element.isAction()){
+                element.stop()
             }
         }
     }

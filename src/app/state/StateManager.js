@@ -37,7 +37,8 @@ class StateManager {
      * @return {boolean}
      */
     isActionState(state){
-        return !!state.match(/^ACTION_/)
+        const catMatch = new RegExp(`^${AppState.Categories.ACTION}`)
+        return !!state.match(catMatch)
     }
 
     /**
@@ -45,7 +46,8 @@ class StateManager {
      * @return {boolean}
      */
     isEditState(state){
-        return !!state.match(/^DRAW_/)
+        const catMatch = new RegExp(`^${AppState.Categories.DRAW}`)
+        return !!state.match(catMatch)
     }
 
     /**
@@ -203,6 +205,13 @@ class StateManager {
      */
     isRunning() {
         return this.isProgress('SIMULATE')
+    }
+
+    /**
+     * @return {boolean}
+     */
+    isFormUpdating(){
+        return this.isProgress('ACTION_FORM_UPDATE')
     }
 
     /**
@@ -389,7 +398,22 @@ class StateManager {
      * Search for all states and stop them all
      */
     stopAll() {
-        const states = this.appState.getState()
+        this.stopStates(this.appState.getState())
+    }
+
+    /**
+     * Search for all action states (Category ACTION) and stop them all
+     */
+    stopAllAction(){
+        const states = this.appState.getState().filter(state =>
+            this.hasAnyState(this.getType(state)) && this.isActionState(state))
+        this.stopStates(states)
+    }
+
+    /**
+     * @param {string[]} states
+     */
+    stopStates(states){
         states.forEach(state => {
             const type = this.getType(state)
             type && this.stopNextState(type)

@@ -245,7 +245,6 @@ i.static-entity::before{
 }
 
 .form .form-input input[type=checkbox]{
-    float: left;
     margin: 3px 10px 3px 0;
 }
 .form .form-input label{
@@ -256,6 +255,7 @@ i.static-entity::before{
     text-align: right;
     white-space: nowrap;
     text-overflow: ellipsis;
+    overflow: hidden;
 }
 
 .form input[type=text], .form input[type=file]{

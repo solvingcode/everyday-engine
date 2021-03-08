@@ -40,6 +40,9 @@ export default {
             cameraEntityId: {
                 type: 'number'
             },
+            showGrid: {
+                type: 'boolean'
+            },
             entityManager: {
                 type: EntityManager,
                 meta: {

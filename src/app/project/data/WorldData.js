@@ -18,6 +18,7 @@ class WorldData extends Data {
     textureManager
     cameraEntityId
     resolution
+    showGrid
 
     /**
      * @param {World} data
@@ -140,6 +141,20 @@ class WorldData extends Data {
      */
     setResolution(resolution){
         this.resolution = resolution
+    }
+
+    /**
+     * @return {boolean}
+     */
+    getShowGrid(){
+        return this.showGrid
+    }
+
+    /**
+     * @param {boolean} showGrid
+     */
+    setShowGrid(showGrid){
+        this.showGrid = showGrid
     }
 
     static new() {

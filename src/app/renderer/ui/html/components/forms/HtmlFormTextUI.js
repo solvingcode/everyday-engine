@@ -10,7 +10,7 @@ class HtmlFormTextUI extends HtmlFormUI {
         const input = document.createElement(inputProps.tag)
         input.type = inputProps.type
         input.id = `${el.id}-${inputProps.suffix}`
-        input.value = value()
+        this.setValue(input, value())
         const labelEl = document.createElement('label')
         labelEl.textContent = props.name
         labelEl.setAttribute('title', props.name)
