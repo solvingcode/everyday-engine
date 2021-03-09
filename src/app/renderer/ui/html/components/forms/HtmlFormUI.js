@@ -18,6 +18,7 @@ class HtmlFormUI extends ItemUI {
         const {version} = item.element
         el.setAttribute(HtmlFormUI.props.version, version)
         this.postCreateFormItem(item, el, uiRenderer)
+        this.addCustomAttributes(item, el, uiRenderer)
     }
 
     /**
@@ -29,7 +30,20 @@ class HtmlFormUI extends ItemUI {
         if (version !== parseInt(currentVersion)) {
             el.setAttribute(HtmlFormUI.props.version, version)
             this.postUpdateFormItem(item, el, uiRenderer)
+            this.addCustomAttributes(item, el, uiRenderer)
         }
+    }
+
+    /**
+     * @param {MenuItemUI} item
+     * @param {HTMLElement} el
+     * @param {UIRenderer} uiRenderer
+     */
+    static addCustomAttributes(item, el, uiRenderer){
+        this.getCustomAttributes(item).forEach(({name, value}) => {
+            const formElement = this.getFormElementFrom(el)
+            formElement.setAttribute(name, value)
+        })
     }
 
     /**
@@ -54,13 +68,21 @@ class HtmlFormUI extends ItemUI {
      * Get HTML form element
      * @param {MenuItemUI} item
      * @param {UIRenderer} uiRenderer
+     * @return {{element: HTMLElement, value: *}}
      */
     static getFormElement(item, uiRenderer) {
-        const {inputProps} = this.props
-        const el = uiRenderer.getElement(item)
-        const elId = `${el.id}-${inputProps.suffix}`
-        const element = document.getElementById(elId)
+        const element = this.getFormElementFrom(uiRenderer.getElement(item))
         return {element, value: this.getValue(element)}
+    }
+
+    /**
+     * @param {HTMLElement} el
+     * @return {HTMLElement}
+     */
+    static getFormElementFrom(el){
+        const {inputProps} = this.props
+        const elId = `${el.id}-${inputProps.suffix}`
+        return el.querySelector(`#${elId}`)
     }
 
     /**
@@ -78,6 +100,14 @@ class HtmlFormUI extends ItemUI {
      */
     static setValue(formElement, value){
         formElement.value = value
+    }
+
+    /**
+     * @param {MenuItemUI} item
+     * @return {{name: string, value: *}[]}
+     */
+    static getCustomAttributes(item){
+        return []
     }
 
 }

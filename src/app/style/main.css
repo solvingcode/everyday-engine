@@ -109,7 +109,7 @@ h4{
 #app-el-left{
     width: 40px;
     top: 60px;
-    left: 10px;
+    left: 15px;
     border-radius: 5px;
 }
 
@@ -261,6 +261,10 @@ i.static-entity::before{
     border-radius: 2px;
     padding: 3px;
     width: 60%;
+}
+
+.form input[type=range]{
+    width: 55%;
 }
 
 .form select{

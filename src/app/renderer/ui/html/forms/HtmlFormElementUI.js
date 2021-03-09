@@ -5,6 +5,7 @@ import HtmlFormTextUI from '../components/forms/HtmlFormTextUI.js'
 import HtmlFormDropdownUI from '../components/forms/HtmlFormDropdownUI.js'
 import HtmlFormFileUI from '../components/forms/HtmlFormFileUI.js'
 import HtmlFormColorUI from '../components/forms/HtmlFormColorUI.js'
+import HtmlFormRangeUI from '../components/forms/HtmlFormRangeUI.js'
 
 class HtmlFormElementUI extends ItemUI {
     /**
@@ -23,6 +24,8 @@ class HtmlFormElementUI extends ItemUI {
             return HtmlFormFileUI
         } else if (field === Layout.form.COLOR) {
             return HtmlFormColorUI
+        } else if (field === Layout.form.RANGE) {
+            return HtmlFormRangeUI
         }
     }
 }

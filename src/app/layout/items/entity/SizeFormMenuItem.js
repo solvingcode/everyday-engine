@@ -35,7 +35,11 @@ class SizeFormMenuItem extends FormMenuItem {
             {
                 bind: 'rotationDegree',
                 label: 'Rotation (°)',
-                type: Layout.form.TEXT
+                type: Layout.form.RANGE,
+                options: {
+                    min: 0,
+                    max: 360
+                }
             }
         ]
     }

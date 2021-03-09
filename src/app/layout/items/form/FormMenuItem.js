@@ -7,6 +7,7 @@ import DropdownMenuItem from './DropdownMenuItem.js'
 import Maths from '../../../utils/Maths.js'
 import ObjectHelper from '../../../utils/ObjectHelper.js'
 import ColorMenuItem from './ColorMenuItem.js'
+import RangeMenuItem from './RangeMenuItem.js'
 
 /**
  * Form menu item
@@ -168,7 +169,8 @@ class FormMenuItem extends MenuItem {
                 return new typeMenuItem(this,
                     {
                         name: field.label,
-                        list: field.list || []
+                        list: field.list || [],
+                        options: field.options
                     },
                     getter,
                     setter
@@ -254,14 +256,12 @@ class FormMenuItem extends MenuItem {
                 return DropdownMenuItem
             case Layout.form.COLOR:
                 return ColorMenuItem
+            case Layout.form.RANGE:
+                return RangeMenuItem
             default:
                 throw new TypeError(`Form item "${field.type}" not defined`)
         }
     }
 }
-
-/**
- * @typedef {{bind: string, label: string, type: string, list?: { value: string|number, label: string }[]}} FormField
- */
 
 export default FormMenuItem

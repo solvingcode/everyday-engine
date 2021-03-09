@@ -33,7 +33,8 @@ Layout.form = {
     TEXT: 'text',
     DROPDOWN: 'dropdown',
     FILE: 'file',
-    COLOR: 'color'
+    COLOR: 'color',
+    RANGE: 'range'
 }
 
 export default Layout
