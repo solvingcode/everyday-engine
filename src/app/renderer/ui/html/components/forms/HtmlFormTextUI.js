@@ -1,22 +1,32 @@
 import HtmlFormUI from './HtmlFormUI.js'
 
 class HtmlFormTextUI extends HtmlFormUI {
+
     /**
      * @override
      */
-    static postCreate(item, el, uiRenderer) {
+    static postCreateFormItem(item, el, uiRenderer) {
         const {props, value} = item.element
         const {inputProps} = this.props
-        const input = document.createElement(inputProps.tag)
-        input.type = inputProps.type
-        input.id = `${el.id}-${inputProps.suffix}`
-        this.setValue(input, value())
+        const formEl = document.createElement(inputProps.tag)
+        formEl.type = inputProps.type
+        formEl.id = `${el.id}-${inputProps.suffix}`
+        this.setValue(formEl, value())
         const labelEl = document.createElement('label')
         labelEl.textContent = props.name
         labelEl.setAttribute('title', props.name)
-        labelEl.htmlFor = input.id
+        labelEl.htmlFor = formEl.id
         el.appendChild(labelEl)
-        el.appendChild(input)
+        el.appendChild(formEl)
+    }
+
+    /**
+     * @override
+     */
+    static postUpdateFormItem(item, el, uiRenderer) {
+        const {value} = item.element
+        const formElement = this.getFormElement(item, uiRenderer)
+        this.setValue(formElement.element, value())
     }
 }
 

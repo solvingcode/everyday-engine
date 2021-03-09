@@ -12,6 +12,45 @@ class HtmlFormUI extends ItemUI {
     }
 
     /**
+     * @override
+     */
+    static postCreate(item, el, uiRenderer = null) {
+        const {version} = item.element
+        el.setAttribute(HtmlFormUI.props.version, version)
+        this.postCreateFormItem(item, el, uiRenderer)
+    }
+
+    /**
+     * @override
+     */
+    static postUpdate(item, el, uiRenderer = null) {
+        const {version} = item.element
+        const currentVersion = el.getAttribute(HtmlFormUI.props.version)
+        if (version !== parseInt(currentVersion)) {
+            el.setAttribute(HtmlFormUI.props.version, version)
+            this.postUpdateFormItem(item, el, uiRenderer)
+        }
+    }
+
+    /**
+     * @param {MenuItemUI} item
+     * @param {HTMLElement} el
+     * @param {UIRenderer} uiRenderer
+     */
+    static postCreateFormItem(item, el, uiRenderer = null){
+        throw new TypeError('HtmlFormUI.postCreateFormItem must be implemented')
+    }
+
+    /**
+     * @param {MenuItemUI} item
+     * @param {HTMLElement} el
+     * @param {UIRenderer} uiRenderer
+     */
+    static postUpdateFormItem(item, el, uiRenderer = null){
+        throw new TypeError('HtmlFormUI.postUpdateFormItem must be implemented')
+    }
+
+    /**
      * Get HTML form element
      * @param {MenuItemUI} item
      * @param {UIRenderer} uiRenderer
@@ -40,6 +79,11 @@ class HtmlFormUI extends ItemUI {
     static setValue(formElement, value){
         formElement.value = value
     }
+
+}
+
+HtmlFormUI.props = {
+    version: 'form-version'
 }
 
 export default HtmlFormUI

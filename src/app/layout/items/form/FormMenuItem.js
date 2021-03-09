@@ -92,6 +92,7 @@ class FormMenuItem extends MenuItem {
         this.items = []
         this.buildFormItems()
         this.version = Maths.generateId()
+        this.items.forEach(item => item.version = this.version)
     }
 
     updateFields() {

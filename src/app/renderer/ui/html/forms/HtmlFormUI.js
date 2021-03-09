@@ -1,8 +1,8 @@
 import ItemUI from '../ItemUI.js'
 
 class HtmlFormUI extends ItemUI {
+
     /**
-     * Draw a graph.
      * @param {MenuItem} item
      * @param {UIRenderer} uiRenderer
      */
@@ -13,7 +13,7 @@ class HtmlFormUI extends ItemUI {
     /**
      * @override
      */
-    static postCreate(item, el) {
+    static postCreate(item, el, uiRenderer) {
         const {version} = item.element
         el.setAttribute(this.props.version, version)
     }
@@ -21,12 +21,11 @@ class HtmlFormUI extends ItemUI {
     /**
      * @override
      */
-    static postUpdate(item, el) {
+    static postUpdate(item, el, uiRenderer) {
         const {version} = item.element
         const currentVersion = el.getAttribute(this.props.version)
         if (version !== parseInt(currentVersion)) {
-            el.innerHTML = ''
-            this.postCreate(item, el)
+            el.setAttribute(this.props.version, version)
         }
     }
 }
