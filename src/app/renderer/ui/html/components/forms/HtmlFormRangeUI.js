@@ -18,7 +18,7 @@ export default class HtmlFormRangeUI extends HtmlFormTextUI {
     static getCustomAttributes(item){
         const {props} = item.element
         const {options} = props
-        return [
+        const attrs = [
             {
                 name: 'min',
                 value: options.min
@@ -28,5 +28,14 @@ export default class HtmlFormRangeUI extends HtmlFormTextUI {
                 value: options.max
             }
         ]
+
+        if(options.step){
+            attrs.push({
+                name: 'step',
+                value: options.step
+            })
+        }
+
+        return attrs
     }
 }

@@ -95,6 +95,12 @@ export default {
                                                     fillColor: {
                                                         type: 'string'
                                                     },
+                                                    colorOpacity: {
+                                                        type: 'number'
+                                                    },
+                                                    fillColorOpacity: {
+                                                        type: 'number'
+                                                    },
                                                     backgroundImageRepeat: {
                                                         type: 'boolean'
                                                     },
@@ -131,6 +137,12 @@ export default {
                                                     },
                                                     fillColor: {
                                                         type: 'string'
+                                                    },
+                                                    colorOpacity: {
+                                                        type: 'number'
+                                                    },
+                                                    fillColorOpacity: {
+                                                        type: 'number'
                                                     },
                                                     backgroundImageRepeat: {
                                                         type: 'boolean'
@@ -223,6 +235,12 @@ export default {
                                             fillColor: {
                                                 type: 'string'
                                             },
+                                            colorOpacity: {
+                                                type: 'number'
+                                            },
+                                            fillColorOpacity: {
+                                                type: 'number'
+                                            },
                                             backgroundImageRepeat: {
                                                 type: 'boolean'
                                             },
@@ -242,6 +260,12 @@ export default {
                                             },
                                             fillColor: {
                                                 type: 'string'
+                                            },
+                                            colorOpacity: {
+                                                type: 'number'
+                                            },
+                                            fillColorOpacity: {
+                                                type: 'number'
                                             },
                                             backgroundImageRepeat: {
                                                 type: 'boolean'

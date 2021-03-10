@@ -8,6 +8,7 @@ import {CANVAS_CONTEXT_TYPE} from '../core/Constant.js'
 import Size from '../pobject/Size.js'
 import DataContext from '../pobject/DataContext.js'
 import Maths from '../utils/Maths.js'
+import Color from '../utils/Color.js'
 
 /**
  * Abstract Entity class
@@ -312,8 +313,9 @@ class Entity extends EntityData {
         if(this.isSelectable()){
             this.selected = true
             const style = new Style()
-            style.setColor('orange')
+            style.setColor('#FFAE00')
             style.setBorderSize(3)
+            style.setFillColorOpacity(this.props.getStyle().getFillColorOpacity())
             this.setStyleAndGenerate(style)
             return this.selected
         }
@@ -325,8 +327,9 @@ class Entity extends EntityData {
     focus() {
         this.focused = true
         const style = new Style()
-        style.setBorderSize(this.props.getStyle().getBorderSize())
-        style.setOpacity(0.5)
+        style.setBorderSize(3)
+        style.setColor('#FFFFFF')
+        style.setFillColorOpacity(this.props.getStyle().getFillColorOpacity())
         !this.selected && this.setStyleAndGenerate(style)
     }
 
@@ -369,7 +372,8 @@ class Entity extends EntityData {
     defineStyle() {
         const styleLocked = new Style()
         styleLocked.setColor('#AAAAAA')
-        styleLocked.setFillColor('rgba(0, 0, 0, 0.01)')
+        styleLocked.setFillColor('#000000')
+        styleLocked.setFillColorOpacity(0.01)
         return (this.locked && styleLocked) || this.props.style
     }
 
@@ -828,12 +832,22 @@ class Entity extends EntityData {
         this.entityLinkIds[index] = entity && entity.id
     }
 
+    /**
+     * @return {string}
+     */
     getFillColor() {
-        return this.style.getFillColor() || this.props.getStyle().getFillColor()
+        const fillColor = this.style.getFillColor() || this.props.getStyle().getFillColor()
+        const fillColorOpacity = this.style.getFillColorOpacity() || this.props.getStyle().getFillColorOpacity()
+        return Color.hexToRgba(fillColor, fillColorOpacity)
     }
 
+    /**
+     * @return {string}
+     */
     getColor() {
-        return this.style.getColor() || this.props.getStyle().getColor()
+        const color = this.style.getColor() || this.props.getStyle().getColor()
+        const colorOpacity = this.style.getColorOpacity() || this.props.getStyle().getColorOpacity()
+        return Color.hexToRgba(color, colorOpacity)
     }
 
 }
