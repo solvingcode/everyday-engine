@@ -5,16 +5,17 @@ import Style from '../pobject/Style.js'
 import PerlinNoiseConfig from '../pobject/PerlinNoiseConfig.js'
 import World from '../world/World.js'
 import EntityManager from '../world/manager/EntityManager.js'
-import TextureManager from '../world/manager/TextureManager.js'
+import AssetsManager from '../world/manager/AssetsManager.js'
 import Camera from '../core/Camera.js'
 import Physics from '../physics/Physics.js'
 import TerrainManager from '../world/terrain/TerrainManager.js'
 import Terrain from '../world/terrain/Terrain.js'
 import EntityProps from '../pobject/EntityProps.js'
 import PhysicsProps from '../pobject/PhysicsProps.js'
-import Texture from '../core/Texture.js'
+import Asset from '../assets/Asset.js'
 import Mesh from '../core/Mesh.js'
 import PhysicsEngine from '../physics/engine/PhysicsEngine.js'
+import Folder from '../assets/Folder.js'
 
 /**
  * Define the schema of project data.
@@ -475,17 +476,17 @@ export default {
                     }
                 }
             },
-            textureManager: {
-                type: TextureManager,
+            assetsManager: {
+                type: AssetsManager,
                 meta: {
                     dataId: {
                         type: 'number'
                     },
-                    textures: {
+                    assets: {
                         type: Array,
                         meta: {
                             element: {
-                                type: Texture,
+                                type: Asset,
                                 meta: {
                                     dataId: {
                                         type: 'number'
@@ -528,6 +529,28 @@ export default {
                                                 type: 'string'
                                             }
                                         }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    folders: {
+                        type: Array,
+                        meta: {
+                            element: {
+                                type: Folder,
+                                meta: {
+                                    dataId: {
+                                        type: 'number'
+                                    },
+                                    id: {
+                                        type: 'number'
+                                    },
+                                    name: {
+                                        type: 'string'
+                                    },
+                                    folderId: {
+                                        type: 'number'
                                     }
                                 }
                             }

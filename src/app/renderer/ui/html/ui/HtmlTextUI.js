@@ -1,4 +1,4 @@
-import ItemUI from './ItemUI.js'
+import ItemUI from '../ItemUI.js'
 
 class HtmlTextUI extends ItemUI {
     /**

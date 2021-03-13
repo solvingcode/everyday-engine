@@ -93,6 +93,16 @@ h4{
     content: "\f078";
 }
 
+#app-el-bottom .panel h4::before{
+    content: "";
+}
+
+#app-el-bottom .panel h4 i{
+    float: left;
+    margin-right: 5px;
+    line-height: 1.1rem;
+}
+
 .panel.collapsed h4::before{
     content: "\f054";
 }
@@ -101,9 +111,82 @@ h4{
     display: none;
 }
 
-#app-el-left, #app-el-top, #app-el-right, #app-el-bottom{
+.panel .tree{
+    width: 30%;
+    background-color: #3e3e3e;
+    float: left;
+}
+
+.panel .tree h4{
+    background-color: #3e3e3e !important;
+}
+
+.panel-action{
+    width: 100%;
+}
+.panel-action button{
+    width: 25px;
+    height: 25px;
+    font-size: 14px;
+}
+
+.wrapper{
+    width: 100%;
+    overflow: hidden;
+}
+
+.assets-wrapper{
+    height: calc(100% - 30px - 40px);
+}
+
+.assets-wrapper .panel{
+    height: 100%;
+}
+
+.assets-wrapper .tree{
+    height: 100%;
+}
+
+.assets-wrapper .list-element{
+    width: 100px !important;
+    height: 120px;
+    text-align: center;
+}
+
+.assets-wrapper .list-element .list-element-img-wrapper{
+    float: unset;
+    margin: auto;
+    width: 100%;
+    height: 80px;
+    position: relative;
+}
+
+.assets-wrapper .list-element .list-element-img-wrapper img{
+    margin: 0;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    -ms-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+}
+
+.assets-wrapper .list-element span{
+    float: unset;
+    margin: auto;
+    margin-top: 10px;
+    text-align: center;
+}
+
+#app-el-left, #app-el-top, #app-el-right, #app-el-footer, #app-el-bottom{
     position: absolute;
     z-index: 9999;
+    box-sizing: border-box;
+}
+
+.app-zone-wrapper{
+    box-sizing: border-box;
+    width: 100%;
+    height: 100%;
 }
 
 #app-el-left{
@@ -122,19 +205,25 @@ h4{
 
 #app-el-right{
     width: 250px;
-    top: 47px;
-    left: calc(100% - 260px);
-    padding: 5px 5px;
-    height: calc(100% - 105px);
-    overflow: auto;
+    top: 45px;
+    left: calc(100% - 250px);
+    padding: 3px;
+    height: calc(100% - 85px);
+    overflow-y: auto;
+}
+
+#app-el-footer{
+    height: 40px;
+    bottom: 0;
+    left: 0;
+    width: 100%;
 }
 
 #app-el-bottom{
-    height: 40px;
-    padding: 5px;
-    bottom: 0;
+    bottom: 40px;
     left: 0;
-    width: calc(100% - 10px);
+    width: calc(100% - 250px);
+    height: 300px;
 }
 
 /* -- panel */

@@ -1,5 +1,5 @@
-import ItemUI from './ItemUI.js'
-import GraphLineUI from './components/graph/GraphLineUI.js'
+import ItemUI from '../ItemUI.js'
+import GraphLineUI from '../components/graph/GraphLineUI.js'
 
 class HtmlGraphUI extends ItemUI {
     /**

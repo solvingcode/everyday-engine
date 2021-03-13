@@ -1,19 +1,19 @@
-import Mesh from './Mesh.js'
 import Maths from '../utils/Maths.js'
-import TextureData from '../project/data/TextureData.js'
+import Mesh from '../core/Mesh.js'
+import AssetData from '../project/data/AssetData.js'
 
 /**
- * @class {Texture}
- * @extends {TextureData}
+ * @class {Asset}
  */
-class Texture extends TextureData {
+export default class Asset extends AssetData{
 
-    constructor() {
+    constructor(props) {
         super()
         this.id = Maths.generateId()
-        this.name = 'Texture'
+        this.name = props.name || 'Asset'
         this.mesh = new Mesh()
         this.selected = false
+        this.folderId = null
     }
 
     isSelected() {
@@ -43,5 +43,3 @@ class Texture extends TextureData {
         return this.mesh.fromImage(image);
     }
 }
-
-export default Texture

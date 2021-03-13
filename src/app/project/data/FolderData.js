@@ -4,21 +4,21 @@ import Data from './Data.js'
  * @abstract
  * @extends {Data}
  */
-class TextureData extends Data {
+export default class FolderData extends Data {
 
     id
     name
-    mesh
+    folderId
 
     /**
-     * @param {number} id
+     * @param {number|null} id
      */
     setId(id) {
         this.id = id
     }
 
     /**
-     * @return {number}
+     * @return {number|null}
      */
     getId() {
         return this.id
@@ -39,19 +39,17 @@ class TextureData extends Data {
     }
 
     /**
-     * @param {Mesh} mesh
+     * @param {number} folderId
      */
-    setMesh(mesh) {
-        this.mesh = mesh
+    setFolderId(folderId){
+        this.folderId = folderId
     }
 
     /**
-     * @return {Mesh}
+     * @return {number}
      */
-    getMesh() {
-        return this.mesh
+    getFolderId(){
+        return this.folderId
     }
 
 }
-
-export default TextureData

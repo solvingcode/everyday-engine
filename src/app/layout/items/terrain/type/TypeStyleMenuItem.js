@@ -1,5 +1,4 @@
 import MenuItem from '../../../MenuItem.js'
-import TypeBackgroundMenuItem from './TypeBackgroundMenuItem.js'
 import Layout from '../../../Layout.js'
 
 /**
@@ -15,7 +14,6 @@ class TypeStyleMenuItem extends MenuItem {
         })
         this.parent = parent
         this.items = [
-            new TypeBackgroundMenuItem(this)
         ]
     }
 }

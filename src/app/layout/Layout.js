@@ -8,7 +8,8 @@ Layout.zone = {
     LEFT: 'left',
     TOP: 'top',
     RIGHT: 'right',
-    BOTTOM: 'bottom'
+    BOTTOM: 'bottom',
+    FOOTER: 'footer'
 }
 
 Layout.type = {
@@ -16,6 +17,7 @@ Layout.type = {
     ACTION: 'action',
     STYLE: 'style',
     PANEL: 'panel',
+    PANEL_ACTION: 'panel_action',
     STYLE_COLOR: 'style_color',
     LAYER_ENTITY: 'layer_entity',
     LAYER_ACTION: 'layer_action',
@@ -25,7 +27,9 @@ Layout.type = {
     FORM_ELEMENT: 'form_element',
     FORM_INLINE: 'form_inline',
     GRAPH: 'graph',
-    ICON: 'icon'
+    ICON: 'icon',
+    TREE: 'tree',
+    WRAPPER: 'wrapper'
 }
 
 Layout.form = {

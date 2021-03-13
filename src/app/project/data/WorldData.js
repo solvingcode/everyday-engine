@@ -15,7 +15,7 @@ class WorldData extends Data {
     camera
     physics
     terrainManager
-    textureManager
+    assetsManager
     cameraEntityId
     resolution
     showGrid
@@ -65,10 +65,10 @@ class WorldData extends Data {
     }
 
     /**
-     * @param {TextureManagerData} textureManager
+     * @param {AssetsManagerData} assetsManager
      */
-    setTextureManager(textureManager) {
-        this.textureManager = textureManager
+    setAssetsManager(assetsManager) {
+        this.assetsManager = assetsManager
     }
 
     /**
@@ -101,10 +101,10 @@ class WorldData extends Data {
     }
 
     /**
-     * @return {TextureManager}
+     * @return {AssetsManager}
      */
-    getTextureManager() {
-        return this.textureManager
+    getAssetsManager() {
+        return this.assetsManager
     }
 
     /**

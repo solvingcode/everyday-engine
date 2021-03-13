@@ -1,6 +1,3 @@
-import AddTextureFormMenuItem from './AddTextureFormMenuItem.js'
-import UpdateTextureFormMenuItem from './UpdateTextureFormMenuItem.js'
-import ListTextureFormMenuItem from './ListTextureFormMenuItem.js'
 import Layout from '../../Layout.js'
 import PanelMenuItem from '../panel/PanelMenuItem.js'
 
@@ -15,9 +12,6 @@ class TextureMenuItem extends PanelMenuItem {
             zone: Layout.zone.RIGHT
         })
         this.items = [
-            new AddTextureFormMenuItem(this),
-            new ListTextureFormMenuItem(this),
-            new UpdateTextureFormMenuItem(this)
         ]
     }
 }

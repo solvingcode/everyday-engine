@@ -10,12 +10,12 @@ import RectEntity from '../../entity/types/shape/RectEntity.js'
 import Camera from '../../core/Camera.js'
 import Physics from '../../physics/Physics.js'
 import TerrainManager from '../../world/terrain/TerrainManager.js'
-import TextureManager from '../../world/manager/TextureManager.js'
+import AssetsManager from '../../world/manager/AssetsManager.js'
 import Terrain from '../../world/terrain/Terrain.js'
 import NoiseTerrain from '../../world/terrain/types/NoiseTerrain.js'
 import PlainTerrain from '../../world/terrain/types/PlainTerrain.js'
 import EntityProps from '../../pobject/EntityProps.js'
-import Texture from '../../core/Texture.js'
+import Asset from '../../assets/Asset.js'
 import MatterEngine from '../../physics/engine/matter/MatterEngine.js'
 import JointEntity from '../../entity/types/constraint/JointEntity.js'
 import AttachPointEntity from '../../entity/types/constraint/AttachPointEntity.js'
@@ -24,6 +24,7 @@ import GridEntity from '../../entity/types/component/grid/GridEntity.js'
 import GridChunkEntity from '../../entity/types/component/grid/GridChunkEntity.js'
 import GridXEntity from '../../entity/types/component/grid/GridXEntity.js'
 import GridYEntity from '../../entity/types/component/grid/GridYEntity.js'
+import Folder from '../../assets/Folder.js'
 
 /**
  * @class {DataSchema}
@@ -48,13 +49,14 @@ class DataSchema {
         {id: 13, type: CircleEntity},
         {id: 14, type: RectEntity},
         {id: 15, type: EntityProps},
-        {id: 16, type: TextureManager},
-        {id: 17, type: Texture},
+        {id: 16, type: AssetsManager},
+        {id: 17, type: Asset},
         {id: 18, type: MouseConstraintEntity},
         {id: 19, type: MatterEngine},
         {id: 20, type: JointEntity},
         {id: 21, type: AttachPointEntity},
-        {id: 22, type: CameraEntity}
+        {id: 22, type: CameraEntity},
+        {id: 23, type: Folder},
     ]
 
     static exclude = [

@@ -4,14 +4,17 @@ import IconButtonUI from './buttons/IconButtonUI.js'
 import ColorButtonUI from './buttons/ColorButtonUI.js'
 import LayerEntityButtonUI from './buttons/LayerEntityButtonUI.js'
 import ListElementButtonUI from './buttons/ListElementButtonUI.js'
-import HtmlPanelUI from './HtmlPanelUI.js'
-import HtmlTextUI from './HtmlTextUI.js'
-import HtmlGraphUI from './HtmlGraphUI.js'
+import HtmlPanelUI from './ui/HtmlPanelUI.js'
+import HtmlTextUI from './ui/HtmlTextUI.js'
+import HtmlGraphUI from './ui/HtmlGraphUI.js'
 import HtmlFormUI from './forms/HtmlFormUI.js'
 import HtmlFormElementUI from './forms/HtmlFormElementUI.js'
 import Menu from '../../../layout/Menu.js'
 import {HTML_ID_PREFIX} from '../../../core/Constant.js'
 import HtmlFormInlineUI from './forms/HtmlFormInlineUI.js'
+import HtmlTreeUI from './ui/HtmlTreeUI.js'
+import HtmlPanelActionUI from './ui/HtmlPanelActionUI.js'
+import HtmlWrapperUI from './ui/HtmlWrapperUI.js'
 
 /**
  * HTML UI Renderer class
@@ -42,8 +45,22 @@ class HtmlUIRenderer extends UIRenderer {
     /**
      * @override
      */
+    getWrapperUI() {
+        return HtmlWrapperUI
+    }
+
+    /**
+     * @override
+     */
     getPanelUI() {
         return HtmlPanelUI
+    }
+
+    /**
+     * @override
+     */
+    getPanelActionUI() {
+        return HtmlPanelActionUI
     }
 
     /**
@@ -103,6 +120,13 @@ class HtmlUIRenderer extends UIRenderer {
     }
 
     /**
+     * @override
+     */
+    getTreeUI() {
+        return HtmlTreeUI
+    }
+
+    /**
      * Get/Create zone DIV
      * @param {String} zone
      */
@@ -112,9 +136,12 @@ class HtmlUIRenderer extends UIRenderer {
         const div = existDiv || document.createElement('div')
         if (!existDiv) {
             div.setAttribute('id', id)
+            const wrapper = document.createElement('div')
+            wrapper.className = 'app-zone-wrapper'
+            div.appendChild(wrapper)
             document.body.appendChild(div)
         }
-        return div
+        return div.getElementsByClassName('app-zone-wrapper')[0]
     }
 
     /**

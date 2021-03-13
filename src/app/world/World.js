@@ -6,7 +6,7 @@ import Physics from '../physics/Physics.js'
 import TerrainManager from './terrain/TerrainManager.js'
 import MouseConstraintEntity from '../entity/types/constraint/MouseConstraintEntity.js'
 import Vector from '../utils/Vector.js'
-import TextureManager from './manager/TextureManager.js'
+import AssetsManager from './manager/AssetsManager.js'
 import Window from '../core/Window.js'
 import Size from '../pobject/Size.js'
 import {SCENE_HEIGHT, SCENE_WIDTH} from '../core/Constant.js'
@@ -23,7 +23,7 @@ class World extends WorldData {
         this.camera = new Camera(new Vector({x: -SCENE_WIDTH / 2, y: -SCENE_HEIGHT / 2}))
         this.physics = new Physics()
         this.terrainManager = new TerrainManager()
-        this.textureManager = new TextureManager()
+        this.assetsManager = new AssetsManager()
         this.mouseConstraintId = null
         this.cameraEntityId = null
         this.resolution = new Size({width: SCENE_WIDTH, height: SCENE_HEIGHT})

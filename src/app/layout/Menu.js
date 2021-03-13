@@ -30,6 +30,7 @@ import WorldMenuItem from './items/world/WorldMenuItem.js'
 import RotateMenuItem from './items/edit/RotateMenuItem.js'
 import LayerMenuItem from './items/entity/LayerMenuItem.js'
 import MoveMenuItem from './items/edit/MoveMenuItem.js'
+import AssetsMenuItem from './items/assets/AssetsMenuItem.js'
 
 /**
  * Define all menu items
@@ -76,6 +77,9 @@ class Menu {
             new SceneMenuItem(),
 
             //BOTTOM
+            new AssetsMenuItem(),
+
+            //FOOTER
             new AppMenuItem()
         ]
         this.items = []

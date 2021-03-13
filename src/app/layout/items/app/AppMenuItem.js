@@ -11,7 +11,7 @@ class AppMenuItem extends MenuItem {
             name: 'Information',
             stateCode: '',
             type: Layout.type.TEXT,
-            zone: Layout.zone.BOTTOM
+            zone: Layout.zone.FOOTER
         })
         this.startTimeFPS = Date.now()
         this.nbFrame = 0

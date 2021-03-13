@@ -1,12 +1,12 @@
 import Action from '../Action.js'
-import Project from '../../../project/Project.js'
 import StateManager from '../../../state/StateManager.js'
 import FileHelper from '../../../utils/FileHelper.js'
+import World from '../../../world/World.js'
 
-class LoadProjectAction extends Action {
+export default class AddAssetAction extends Action {
 
-    static fileId = 'file-load-project'
-    static STATE = 'ACTION_LOAD_PROJECT'
+    static fileId = 'file-add-asset'
+    static STATE = 'ACTION_ADD_ASSET'
 
     /**
      * @override
@@ -15,7 +15,7 @@ class LoadProjectAction extends Action {
         const fileData = FileHelper.openFileUpload(this.fileId)
         if (fileData) {
             FileHelper.removeFileUpload(this.fileId)
-            Project.get().load(fileData).then(() => {
+            World.get().getAssetsManager().setAssetByBlob(fileData).then(() => {
                 StateManager.get().stopNextState(this.STATE)
             })
         }
@@ -23,5 +23,3 @@ class LoadProjectAction extends Action {
     }
 
 }
-
-export default LoadProjectAction

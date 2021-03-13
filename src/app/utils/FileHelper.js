@@ -43,6 +43,29 @@ class FileHelper {
         return fileType === type
     }
 
+    /**
+     * @param {string} fileId
+     * @return {Blob}
+     */
+    static openFileUpload(fileId) {
+        let fileInput = document.getElementById(fileId)
+        if (!fileInput) {
+            fileInput = document.createElement('input')
+            fileInput.type = 'file'
+            fileInput.id = fileId
+            document.body.appendChild(fileInput)
+            fileInput.click()
+        }
+        return fileInput.files && fileInput.files[0]
+    }
+
+    /**
+     * @param {string} fileId
+     */
+    static removeFileUpload(fileId) {
+        document.body.removeChild(document.getElementById(fileId))
+    }
+
     static type = {
         XML: 'text/xml',
         JS: 'text/javascript',

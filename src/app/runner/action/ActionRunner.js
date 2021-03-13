@@ -35,6 +35,7 @@ import HideItemAction from './edit/HideItemAction.js'
 import ShowItemAction from './edit/ShowItemAction.js'
 import LockItemAction from './edit/LockItemAction.js'
 import UnlockItemAction from './edit/UnlockItemAction.js'
+import AddAssetAction from './assets/AddAssetAction.js'
 
 /**
  * Action Runner class.
@@ -88,6 +89,7 @@ class ActionRunner extends Runner {
             MOVE_CAMERA: MoveCameraAction,
             SAVE_PROJECT: SaveProjectAction,
             LOAD_PROJECT: LoadProjectAction,
+            ADD_ASSET: AddAssetAction,
             NEW_PROJECT: NewProjectAction,
             EXPORT_PROJECT: ExportProjectAction,
             ZOOM_CAMERA: ZoomInOutCameraAction,

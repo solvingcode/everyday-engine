@@ -115,11 +115,27 @@ class UIRenderer {
 
     /**
      * @abstract
+     * @return {ItemUI}
+     */
+    getWrapperUI() {
+        throw new TypeError('"UIRenderer.getWrapperUI" method must be implemented')
+    }
+
+    /**
+     * @abstract
      * Get the panel UI
      * @return {ItemUI}
      */
     getPanelUI() {
         throw new TypeError('"UIRenderer.getPanelUI" method must be implemented')
+    }
+
+    /**
+     * @abstract
+     * @return {ItemUI}
+     */
+    getPanelActionUI() {
+        throw new TypeError('"UIRenderer.getPanelActionUI" method must be implemented')
     }
 
     /**
@@ -176,6 +192,14 @@ class UIRenderer {
     }
 
     /**
+     * @abstract
+     * @return {ItemUI}
+     */
+    getTreeUI() {
+        throw new TypeError('"UIRenderer.getTreeUI" method must be implemented')
+    }
+
+    /**
      * Get the UI type of the given menu item
      * @param {MenuItemUI} item
      * @return {ItemUI}
@@ -184,6 +208,10 @@ class UIRenderer {
         const {element} = item
         if (element.type === Layout.type.PANEL) {
             return this.getPanelUI()
+        } else if (element.type === Layout.type.PANEL_ACTION) {
+            return this.getPanelActionUI()
+        }else if (element.type === Layout.type.WRAPPER) {
+            return this.getWrapperUI()
         } else if (element.type === Layout.type.STYLE_COLOR) {
             return this.getColorButtonUI()
         } else if (element.type === Layout.type.LAYER_ENTITY) {
@@ -202,6 +230,8 @@ class UIRenderer {
             return this.getListElementUI()
         } else if (element.type === Layout.type.FORM_INLINE) {
             return this.getFormInlineUI()
+        } else if (element.type === Layout.type.TREE) {
+            return this.getTreeUI()
         }
         return this.getDefaultButtonUI()
     }
