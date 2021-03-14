@@ -1,4 +1,6 @@
-class MeshData {
+import Data from './Data.js'
+
+class BlobData extends Data{
 
     size
     position
@@ -48,4 +50,4 @@ class MeshData {
 
 }
 
-export default MeshData
+export default BlobData

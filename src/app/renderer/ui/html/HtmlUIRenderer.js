@@ -2,8 +2,7 @@ import UIRenderer from '../UIRenderer.js'
 import DefaultButtonUI from './buttons/DefaultButtonUI.js'
 import IconButtonUI from './buttons/IconButtonUI.js'
 import ColorButtonUI from './buttons/ColorButtonUI.js'
-import LayerEntityButtonUI from './buttons/LayerEntityButtonUI.js'
-import ListElementButtonUI from './buttons/ListElementButtonUI.js'
+import EntityElementButtonUI from './list/EntityElementButtonUI.js'
 import HtmlPanelUI from './ui/HtmlPanelUI.js'
 import HtmlTextUI from './ui/HtmlTextUI.js'
 import HtmlGraphUI from './ui/HtmlGraphUI.js'
@@ -15,6 +14,9 @@ import HtmlFormInlineUI from './forms/HtmlFormInlineUI.js'
 import HtmlTreeUI from './ui/HtmlTreeUI.js'
 import HtmlPanelActionUI from './ui/HtmlPanelActionUI.js'
 import HtmlWrapperUI from './ui/HtmlWrapperUI.js'
+import AssetElementButtonUI from './list/AssetElementButtonUI.js'
+import FolderElementButtonUI from './list/FolderElementButtonUI.js'
+import HtmlAssetsUI from './ui/HtmlAssetsUI.js'
 
 /**
  * HTML UI Renderer class
@@ -108,15 +110,22 @@ class HtmlUIRenderer extends UIRenderer {
     /**
      * @override
      */
-    getLayerEntityButtonUI() {
-        return LayerEntityButtonUI
+    getEntityElementButtonUI() {
+        return EntityElementButtonUI
     }
 
     /**
      * @override
      */
-    getListElementUI() {
-        return ListElementButtonUI
+    getAssetElementButtonUI() {
+        return AssetElementButtonUI
+    }
+
+    /**
+     * @override
+     */
+    getFolderElementButtonUI() {
+        return FolderElementButtonUI
     }
 
     /**
@@ -124,6 +133,13 @@ class HtmlUIRenderer extends UIRenderer {
      */
     getTreeUI() {
         return HtmlTreeUI
+    }
+
+    /**
+     * @override
+     */
+    getAssetsUI() {
+        return HtmlAssetsUI
     }
 
     /**

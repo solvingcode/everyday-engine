@@ -1,10 +1,9 @@
 import ItemUI from '../ItemUI.js'
-import EntityUI from '../components/entity/EntityUI.js'
 
 /**
  * @class {ListElementButtonUI}
  */
-class ListElementButtonUI extends ItemUI {
+export default class ListElementButtonUI extends ItemUI {
 
     /**
      * @param {MenuItemUI} item
@@ -20,19 +19,28 @@ class ListElementButtonUI extends ItemUI {
     static postCreate(item, el, uiRenderer) {
         const bind = item.element.getDataBind()
         if (bind) {
-            const {imageWidth, imageHeight} = this.props
-            const image = EntityUI.getImage(bind, {width: imageWidth, height: imageHeight})
             const title = document.createElement('span')
-            const imageWrapper = document.createElement('div')
-            imageWrapper.className = 'list-element-img-wrapper'
-            imageWrapper.appendChild(image)
+            const icon = this.getIcon(item)
+            if(icon){
+                const imageWrapper = document.createElement('div')
+                imageWrapper.className = 'list-element-img-wrapper'
+                imageWrapper.appendChild(icon)
+                el.appendChild(imageWrapper)
+            }
             title.textContent = bind.name
             el.setAttribute('data-list-element-id', bind.id)
             el.setAttribute('data-list-element-name', bind.name)
             el.setAttribute('id', item.getId())
-            el.appendChild(imageWrapper)
             el.appendChild(title)
         }
+    }
+
+    /**
+     * @param {MenuItemUI} item
+     * @return {HTMLElement | null}
+     */
+    static getIcon(item){
+        return null
     }
 
     /**
@@ -49,15 +57,5 @@ class ListElementButtonUI extends ItemUI {
             }
         }
     }
-}
 
-ListElementButtonUI.props = {
-    tag: 'button',
-    className: 'list-element',
-    prefix: 'list-element-',
-    width: '100%',
-    imageWidth: 20,
-    imageHeight: 20
 }
-
-export default ListElementButtonUI

@@ -32,7 +32,7 @@ class CanvasUIRenderer extends UIRenderer {
     /**
      * @override
      */
-    getLayerEntityButtonUI() {
+    getEntityElementButtonUI() {
         export default LayerEntityButtonUI
     }
 

@@ -10,6 +10,7 @@ import AssetsManager from './manager/AssetsManager.js'
 import Window from '../core/Window.js'
 import Size from '../pobject/Size.js'
 import {SCENE_HEIGHT, SCENE_WIDTH} from '../core/Constant.js'
+import Folder from '../asset/Folder.js'
 
 /**
  * @class {World}
@@ -37,6 +38,7 @@ class World extends WorldData {
      */
     init() {
         this.createMouseConstraint()
+        this.createRootFolder()
     }
 
     /**
@@ -271,6 +273,16 @@ class World extends WorldData {
         const constraint = this.loadEntity(new Vector({x: 0, y: 0}), MouseConstraintEntity)
         constraint.setSelectable(false)
         this.mouseConstraintId = constraint.getId()
+    }
+
+    createRootFolder() {
+        const assetsManager = this.getAssetsManager()
+        let rootFolder = assetsManager.findFolderById(0)
+        if(!rootFolder){
+            rootFolder = new Folder('Root')
+            rootFolder.setId(0)
+            assetsManager.addFolder(rootFolder)
+        }
     }
 
     /**

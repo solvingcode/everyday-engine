@@ -8,7 +8,7 @@ class AssetData extends Data {
 
     id
     name
-    mesh
+    type
     folderId
 
     /**
@@ -40,17 +40,17 @@ class AssetData extends Data {
     }
 
     /**
-     * @param {Mesh} mesh
+     * @param {AssetType} type
      */
-    setMesh(mesh) {
-        this.mesh = mesh
+    setType(type) {
+        this.type = type
     }
 
     /**
-     * @return {Mesh}
+     * @return {AssetType}
      */
-    getMesh() {
-        return this.mesh
+    getType() {
+        return this.type
     }
 
     /**

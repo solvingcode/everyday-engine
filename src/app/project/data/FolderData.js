@@ -11,7 +11,7 @@ export default class FolderData extends Data {
     folderId
 
     /**
-     * @param {number|null} id
+     * @param {number} id
      */
     setId(id) {
         this.id = id

@@ -1,10 +1,10 @@
 import HtmlPanelUI from './HtmlPanelUI.js'
 
-export default class HtmlTreeUI extends HtmlPanelUI {
+export default class HtmlAssetsUI extends HtmlPanelUI {
 
     static props = {
         tag: 'div',
-        className: 'tree'
+        className: 'assets-list'
     }
 
 }

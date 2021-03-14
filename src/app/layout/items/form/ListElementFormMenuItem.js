@@ -1,17 +1,16 @@
 import MenuItem from '../../MenuItem.js'
-import Layout from '../../Layout.js'
 
 /**
  * @class {ListElementFormMenuItem}
  * @property {{bind: Object, list: *[]}} data
  */
 class ListElementFormMenuItem extends MenuItem {
-    constructor(parent, data) {
+    constructor(parent, data, props) {
         super({
             name: '',
             stateCode: 'ACTION_SELECT_LIST_ELEMENT',
-            type: Layout.type.LIST_ELEMENT,
-            zone: parent.zone
+            zone: parent.zone,
+            ...props
         })
         this.parent = parent
         this.setData(data)

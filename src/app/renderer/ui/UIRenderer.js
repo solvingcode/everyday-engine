@@ -88,11 +88,26 @@ class UIRenderer {
 
     /**
      * @abstract
-     * Get the button UI for layer entity
      * @return {ItemUI}
      */
-    getLayerEntityButtonUI() {
-        throw new TypeError('"UIRenderer.getLayerEntityButtonUI" method must be implemented')
+    getEntityElementButtonUI() {
+        throw new TypeError('"UIRenderer.getEntityElementButtonUI" method must be implemented')
+    }
+
+    /**
+     * @abstract
+     * @return {ItemUI}
+     */
+    getAssetElementButtonUI() {
+        throw new TypeError('"UIRenderer.getAssetElementButtonUI" method must be implemented')
+    }
+
+    /**
+     * @abstract
+     * @return {ItemUI}
+     */
+    getFolderElementButtonUI() {
+        throw new TypeError('"UIRenderer.getFolderElementButtonUI" method must be implemented')
     }
 
     /**
@@ -187,16 +202,16 @@ class UIRenderer {
      * @abstract
      * @return {ItemUI}
      */
-    getListElementUI() {
-        throw new TypeError('"UIRenderer.getListElementUI" method must be implemented')
+    getTreeUI() {
+        throw new TypeError('"UIRenderer.getTreeUI" method must be implemented')
     }
 
     /**
      * @abstract
      * @return {ItemUI}
      */
-    getTreeUI() {
-        throw new TypeError('"UIRenderer.getTreeUI" method must be implemented')
+    getAssetsUI() {
+        throw new TypeError('"UIRenderer.getAssetsUI" method must be implemented')
     }
 
     /**
@@ -210,12 +225,16 @@ class UIRenderer {
             return this.getPanelUI()
         } else if (element.type === Layout.type.PANEL_ACTION) {
             return this.getPanelActionUI()
-        }else if (element.type === Layout.type.WRAPPER) {
+        } else if (element.type === Layout.type.WRAPPER) {
             return this.getWrapperUI()
         } else if (element.type === Layout.type.STYLE_COLOR) {
             return this.getColorButtonUI()
-        } else if (element.type === Layout.type.LAYER_ENTITY) {
-            return this.getLayerEntityButtonUI()
+        } else if (element.type === Layout.type.ENTITY_ELEMENT) {
+            return this.getEntityElementButtonUI()
+        } else if (element.type === Layout.type.FOLDER_ELEMENT) {
+            return this.getFolderElementButtonUI()
+        } else if (element.type === Layout.type.ASSET_ELEMENT) {
+            return this.getAssetElementButtonUI()
         } else if (element.type === Layout.type.TEXT) {
             return this.getTextUI()
         } else if (element.type === Layout.type.GRAPH) {
@@ -226,14 +245,15 @@ class UIRenderer {
             return this.getFormElementUI().getType(item)
         } else if (element.type === Layout.type.ICON) {
             return this.getIconButtonUI()
-        } else if (element.type === Layout.type.LIST_ELEMENT) {
-            return this.getListElementUI()
         } else if (element.type === Layout.type.FORM_INLINE) {
             return this.getFormInlineUI()
         } else if (element.type === Layout.type.TREE) {
             return this.getTreeUI()
+        } else if (element.type === Layout.type.ASSETS) {
+            return this.getAssetsUI()
+        } else {
+            throw new TypeError(`Layout type "${element.type}" not supported!`)
         }
-        return this.getDefaultButtonUI()
     }
 }
 

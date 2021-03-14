@@ -1,7 +1,7 @@
 import Layout from '../../Layout.js'
 import MenuItem from '../../MenuItem.js'
 import AddAssetMenuItem from './AddAssetMenuItem.js'
-import AddFolderMenuItem from './AddFolderMenuItem.js'
+import AddFolderMenuItem from './folder/AddFolderMenuItem.js'
 
 export default class AssetsActionsMenuItem  extends MenuItem {
     constructor(parent) {

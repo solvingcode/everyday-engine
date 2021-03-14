@@ -1,5 +1,3 @@
-import Layout from '../../Layout.js'
-import ListElementFormMenuItem from './ListElementFormMenuItem.js'
 import PanelMenuItem from '../panel/PanelMenuItem.js'
 
 /**
@@ -9,7 +7,6 @@ class ListFormMenuItem extends PanelMenuItem {
     constructor(props) {
         super({
             name: '',
-            zone: Layout.zone.RIGHT,
             ...props
         })
         this.items = []
@@ -33,6 +30,14 @@ class ListFormMenuItem extends PanelMenuItem {
     }
 
     /**
+     * @return {Class<ListElementFormMenuItem>}
+     * @abstract
+     */
+    getListElementFormClass(){
+        throw new TypeError(`${this.constructor.name}.getListElementFormClass must be implemented`)
+    }
+
+    /**
      * @override
      */
     update() {
@@ -40,10 +45,11 @@ class ListFormMenuItem extends PanelMenuItem {
         this.items = list.map((each, index) => {
             const element = this.items[index]
             const data = {bind: each, list}
+            const listElementClass = this.getListElementFormClass()
             if (element && element.data.bind !== each) {
                 element.setData(data)
             }
-            return element || new ListElementFormMenuItem(this, data)
+            return element || new listElementClass(this, data)
         })
     }
 }

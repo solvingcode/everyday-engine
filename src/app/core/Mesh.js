@@ -1,18 +1,18 @@
-import MeshData from '../project/data/MeshData.js'
 import ImageHelper from '../utils/ImageHelper.js'
 import Size from '../pobject/Size.js'
 import {CANVAS_CONTEXT_TYPE} from './Constant.js'
 import Vector from '../utils/Vector.js'
+import AssetTypeData from '../asset/types/AssetTypeData.js'
 
 /**
  * Define a block of pixels loaded to the VRAM.
  * Attached to an entity, and used to draw pixels by the GPU
- * @extends {MeshData}
+ * @extends {AssetTypeData}
  * @property {Vector} position
  * @property {{width: number, height: number}} size
  * @property {OffscreenCanvasRenderingContext2D} context
  */
-class Mesh extends MeshData {
+class Mesh extends AssetTypeData {
 
     constructor(position = new Vector(), size = 1) {
         super()

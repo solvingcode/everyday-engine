@@ -15,7 +15,7 @@ import Terrain from '../../world/terrain/Terrain.js'
 import NoiseTerrain from '../../world/terrain/types/NoiseTerrain.js'
 import PlainTerrain from '../../world/terrain/types/PlainTerrain.js'
 import EntityProps from '../../pobject/EntityProps.js'
-import Asset from '../../assets/Asset.js'
+import Asset from '../../asset/Asset.js'
 import MatterEngine from '../../physics/engine/matter/MatterEngine.js'
 import JointEntity from '../../entity/types/constraint/JointEntity.js'
 import AttachPointEntity from '../../entity/types/constraint/AttachPointEntity.js'
@@ -24,7 +24,8 @@ import GridEntity from '../../entity/types/component/grid/GridEntity.js'
 import GridChunkEntity from '../../entity/types/component/grid/GridChunkEntity.js'
 import GridXEntity from '../../entity/types/component/grid/GridXEntity.js'
 import GridYEntity from '../../entity/types/component/grid/GridYEntity.js'
-import Folder from '../../assets/Folder.js'
+import Folder from '../../asset/Folder.js'
+import Mesh from '../../core/Mesh.js'
 
 /**
  * @class {DataSchema}
@@ -57,6 +58,7 @@ class DataSchema {
         {id: 21, type: AttachPointEntity},
         {id: 22, type: CameraEntity},
         {id: 23, type: Folder},
+        {id: 24, type: Mesh}
     ]
 
     static exclude = [

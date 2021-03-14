@@ -26,7 +26,7 @@ class EntityUI {
      * @param {{width: number, height: number}} props
      */
     static getImage(entity, props) {
-        return ImageUI.getImage(entity, props)
+        return ImageUI.getImage(entity.mesh, props)
     }
 
 }

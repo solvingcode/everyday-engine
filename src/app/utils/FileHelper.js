@@ -71,7 +71,9 @@ class FileHelper {
         JS: 'text/javascript',
         Json: 'application/json',
         BIN: 'application/octet-binary;charset=utf-8',
-        ZIP: 'application/zip'
+        ZIP: 'application/zip',
+        IMG_JPEG: 'image/jpeg',
+        IMG_PNG: 'image/png'
     }
 
 }

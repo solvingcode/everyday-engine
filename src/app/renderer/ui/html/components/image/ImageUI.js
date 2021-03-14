@@ -7,12 +7,12 @@ import Size from '../../../../../pobject/Size.js'
 class ImageUI {
 
     /**
-     * @param {Object} object
+     * @param {Mesh} mesh
      * @param {{width: number, height: number}} props
      * @return {HTMLImageElement}
      */
-    static getImage(object, props) {
-        return this.getImageFromMesh(object.mesh, props)
+    static getImage(mesh, props) {
+        return this.getImageFromMesh(mesh, props)
     }
 
     /**

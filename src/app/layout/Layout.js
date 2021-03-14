@@ -19,7 +19,7 @@ Layout.type = {
     PANEL: 'panel',
     PANEL_ACTION: 'panel_action',
     STYLE_COLOR: 'style_color',
-    LAYER_ENTITY: 'layer_entity',
+    ENTITY_ELEMENT: 'entity_element',
     LAYER_ACTION: 'layer_action',
     LIST_ELEMENT: 'list_element',
     TEXT: 'text',
@@ -29,7 +29,10 @@ Layout.type = {
     GRAPH: 'graph',
     ICON: 'icon',
     TREE: 'tree',
-    WRAPPER: 'wrapper'
+    ASSETS: 'assets',
+    WRAPPER: 'wrapper',
+    FOLDER_ELEMENT: 'folder_element',
+    ASSET_ELEMENT: 'asset_element'
 }
 
 Layout.form = {

@@ -1,6 +1,5 @@
 import Layout from '../../Layout.js'
-import Folder from '../../../assets/Folder.js'
-import FolderTreeMenuItem from './FolderTreeMenuItem.js'
+import FolderTreeMenuItem from './folder/FolderTreeMenuItem.js'
 import AssetsListFormMenuItem from './AssetsListFormMenuItem.js'
 import MenuItem from '../../MenuItem.js'
 
@@ -13,10 +12,8 @@ export default class AssetsWrapperMenuItem extends MenuItem {
             type: Layout.type.WRAPPER
         })
         this.parent = parent
-        const folder = new Folder('Root')
-        folder.setId(null)
         this.items = [
-            new FolderTreeMenuItem(this, {bind: folder, list: []}),
+            new FolderTreeMenuItem(this),
             new AssetsListFormMenuItem(this)
         ]
     }

@@ -1,5 +1,4 @@
 import Maths from '../utils/Maths.js'
-import Mesh from '../core/Mesh.js'
 import AssetData from '../project/data/AssetData.js'
 
 /**
@@ -7,13 +6,13 @@ import AssetData from '../project/data/AssetData.js'
  */
 export default class Asset extends AssetData{
 
-    constructor(props) {
+    constructor(props = {}) {
         super()
         this.id = Maths.generateId()
         this.name = props.name || 'Asset'
-        this.mesh = new Mesh()
         this.selected = false
         this.folderId = null
+        this.type = null
     }
 
     isSelected() {
@@ -36,10 +35,10 @@ export default class Asset extends AssetData{
     }
 
     /**
-     * @param {string} image
+     * @param {*} data
      * @return {boolean}
      */
-    async load(image) {
-        return this.mesh.fromImage(image);
+    async load(data) {
+        return this.type.load(data);
     }
 }

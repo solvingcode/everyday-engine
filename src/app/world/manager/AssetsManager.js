@@ -1,5 +1,7 @@
 import AssetsManagerData from '../../project/data/AssetsManagerData.js'
-import Asset from '../../assets/Asset.js'
+import Asset from '../../asset/Asset.js'
+import FileHelper from '../../utils/FileHelper.js'
+import AssetImage from '../../asset/types/AssetImage.js'
 
 /**
  * @class {AssetsManager}
@@ -17,11 +19,13 @@ export default class AssetsManager extends AssetsManagerData {
     }
 
     /**
-     * @param {string} image
+     * @param {string} data
+     * @param {Class<AssetType>} type
      */
-    async setAsset(image) {
+    async setAsset(data, type) {
         const asset = new Asset({})
-        if (await asset.load(image)) {
+        asset.setType(new type())
+        if (await asset.load(data)) {
             this.assets.push(asset)
         }
     }
@@ -38,8 +42,24 @@ export default class AssetsManager extends AssetsManagerData {
             reader.onerror = reject
             reader.readAsDataURL(blob)
         }).then(data => {
-            return this.setAsset(data)
+            const type = this.getAssetType(blob)
+            return this.setAsset(data, type)
         })
+    }
+
+    /**
+     * @param {Blob} blob
+     * @return {Class<AssetType>}
+     */
+    getAssetType(blob){
+        const type = blob.type
+        switch (type) {
+            case FileHelper.type.IMG_JPEG:
+            case FileHelper.type.IMG_PNG:
+                return AssetImage
+            default:
+                throw new TypeError(`Asset type "${type}" not supported`)
+        }
     }
 
     /**
@@ -81,11 +101,18 @@ export default class AssetsManager extends AssetsManagerData {
     }
 
     /**
-     * @param {number} folderId
+     * @param {number | null} folderId
      * @return {Folder[]}
      */
     findFolders(folderId){
         return this.getFolders().filter(folder => folder.folderId === folderId)
+    }
+
+    /**
+     * @param {Folder} folder
+     */
+    addFolder(folder){
+        this.folders.push(folder)
     }
 
 }

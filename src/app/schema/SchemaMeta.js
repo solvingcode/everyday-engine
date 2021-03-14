@@ -12,10 +12,11 @@ import TerrainManager from '../world/terrain/TerrainManager.js'
 import Terrain from '../world/terrain/Terrain.js'
 import EntityProps from '../pobject/EntityProps.js'
 import PhysicsProps from '../pobject/PhysicsProps.js'
-import Asset from '../assets/Asset.js'
-import Mesh from '../core/Mesh.js'
+import Asset from '../asset/Asset.js'
 import PhysicsEngine from '../physics/engine/PhysicsEngine.js'
-import Folder from '../assets/Folder.js'
+import Folder from '../asset/Folder.js'
+import AssetType from '../asset/types/AssetType.js'
+import AssetTypeData from '../asset/types/AssetTypeData.js'
 
 /**
  * Define the schema of project data.
@@ -494,39 +495,50 @@ export default {
                                     id: {
                                         type: 'number'
                                     },
+                                    folderId: {
+                                        type: 'number'
+                                    },
                                     name: {
                                         type: 'string'
                                     },
-                                    mesh: {
-                                        type: Mesh,
+                                    type: {
+                                        prototype: AssetType,
                                         meta: {
-                                            size: {
-                                                prototype: Size,
+                                            data: {
+                                                type: AssetTypeData,
                                                 meta: {
-                                                    width: {
+                                                    dataId: {
                                                         type: 'number'
                                                     },
-                                                    height: {
-                                                        type: 'number'
+                                                    size: {
+                                                        prototype: Size,
+                                                        meta: {
+                                                            width: {
+                                                                type: 'number'
+                                                            },
+                                                            height: {
+                                                                type: 'number'
+                                                            }
+                                                        }
+                                                    },
+                                                    position: {
+                                                        prototype: Vector,
+                                                        meta: {
+                                                            x: {
+                                                                type: 'number'
+                                                            },
+                                                            y: {
+                                                                type: 'number'
+                                                            },
+                                                            z: {
+                                                                type: 'number'
+                                                            }
+                                                        }
+                                                    },
+                                                    dataUrl: {
+                                                        type: 'string'
                                                     }
                                                 }
-                                            },
-                                            position: {
-                                                prototype: Vector,
-                                                meta: {
-                                                    x: {
-                                                        type: 'number'
-                                                    },
-                                                    y: {
-                                                        type: 'number'
-                                                    },
-                                                    z: {
-                                                        type: 'number'
-                                                    }
-                                                }
-                                            },
-                                            dataUrl: {
-                                                type: 'string'
                                             }
                                         }
                                     }

@@ -83,17 +83,33 @@ button.selected, button.hidden.selected, button.locked.selected{
     border: none;
 }
 
+.panel .tree{
+    background-color: #3e3e3e;
+    border-right: 1px solid #323232;
+}
+
+.panel .tree h4{
+    background-color: #3e3e3e !important;
+}
+
 .panel-action{
     background-color: unset;
     border-bottom: 1px solid #323232;
-    padding: 2px;
 }
 
 .panel-action button{
     background-color: unset;
 }
 
-.assets-wrapper .panel div{
+.panel-action button:hover{
+    background-color: #474747;
+}
+
+.assets-wrapper .assets-list{
+    background-color: #323232;
+}
+
+.assets-wrapper .assets-list .list-element-img-wrapper{
     background-color: unset;
 }
 

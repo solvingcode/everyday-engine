@@ -4,15 +4,26 @@ import HideItemMenuItem from '../action/HideItemMenuItem.js'
 import ShowItemMenuItem from '../action/ShowItemMenuItem.js'
 import LockItemMenuItem from '../action/LockItemMenuItem.js'
 import UnlockItemMenuItem from '../action/UnlockItemMenuItem.js'
+import Layout from '../../Layout.js'
+import EntityElementFormMenuItem from './EntityElementFormMenuItem.js'
 
 /**
- * Layer Menu Item
- * Menu responsible for managing entities (z-index, ...)
+ * @class {ListEntityMenuItem}
  */
 class ListEntityMenuItem extends ListFormMenuItem {
 
     constructor(parent, props) {
-        super(props)
+        super({
+            zone: Layout.zone.RIGHT,
+            ...props
+        })
+    }
+
+    /**
+     * @override
+     */
+    getListElementFormClass() {
+        return EntityElementFormMenuItem
     }
 
     /**
