@@ -133,6 +133,7 @@ class EntityData extends Data {
             style.setFillColor('#555555')
         }
         this.name = this.props.name
+        this.textureId = this.props.textureId
         this.position = this.props.position
         this.rotation = this.props.rotation || 0
         this.size = this.props.size || new Size(1)

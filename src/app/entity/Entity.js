@@ -724,7 +724,7 @@ class Entity extends EntityData {
     getTexture(world) {
         const texture = world.getAssetsManager().findAssetById(this.getTextureId())
         if (texture) {
-            return texture.getMesh()
+            return texture.getType().getData()
         }
         return null
     }

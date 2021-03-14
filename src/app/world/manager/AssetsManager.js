@@ -77,6 +77,13 @@ export default class AssetsManager extends AssetsManagerData {
     }
 
     /**
+     * @return {Asset[]}
+     */
+    getSelectedAssets() {
+        return this.getAssets().filter(asset => asset.isSelected())
+    }
+
+    /**
      * @param {number|string} assetId
      * @return {Asset | null}
      */

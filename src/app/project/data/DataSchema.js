@@ -26,6 +26,7 @@ import GridXEntity from '../../entity/types/component/grid/GridXEntity.js'
 import GridYEntity from '../../entity/types/component/grid/GridYEntity.js'
 import Folder from '../../asset/Folder.js'
 import Mesh from '../../core/Mesh.js'
+import AssetEntity from '../../entity/types/asset/AssetEntity.js'
 
 /**
  * @class {DataSchema}
@@ -58,7 +59,8 @@ class DataSchema {
         {id: 21, type: AttachPointEntity},
         {id: 22, type: CameraEntity},
         {id: 23, type: Folder},
-        {id: 24, type: Mesh}
+        {id: 24, type: Mesh},
+        {id: 25, type: AssetEntity}
     ]
 
     static exclude = [

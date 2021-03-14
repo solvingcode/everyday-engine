@@ -12,6 +12,7 @@ class EntityProps {
     size
     advancedStyle
     noiseConfigs
+    textureId
 
     constructor() {
         this.position = new Vector()
@@ -118,6 +119,20 @@ class EntityProps {
      */
     getRotation() {
         return this.rotation
+    }
+
+    /**
+     * @param {number} textureId
+     */
+    setTextureId(textureId) {
+        this.textureId = textureId
+    }
+
+    /**
+     * @return {number}
+     */
+    getTextureId() {
+        return this.textureId
     }
 
 }

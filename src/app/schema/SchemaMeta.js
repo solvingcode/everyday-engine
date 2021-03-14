@@ -88,6 +88,9 @@ export default {
                                             name: {
                                                 type: 'string'
                                             },
+                                            textureId: {
+                                                type: 'number'
+                                            },
                                             style: {
                                                 prototype: Style,
                                                 meta: {
