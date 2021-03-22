@@ -19,10 +19,10 @@ class Size {
     }
 
     /**
-     * @param {number} width
+     * @param {number|string} width
      */
     setWidth(width) {
-        this.width = width
+        this.width = parseInt(width)
     }
 
     /**
@@ -33,10 +33,10 @@ class Size {
     }
 
     /**
-     * @param {number} height
+     * @param {number|string} height
      */
     setHeight(height) {
-        this.height = height
+        this.height = parseInt(height)
     }
 
     /**

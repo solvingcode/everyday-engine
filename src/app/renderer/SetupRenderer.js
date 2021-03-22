@@ -29,7 +29,7 @@ class SetupRenderer extends Renderer {
     /**
      * @override
      */
-    draw(object) {
+    draw() {
         //not used
     }
 }

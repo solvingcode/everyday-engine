@@ -12,14 +12,17 @@ export default class AddAssetAction extends Action {
      * @override
      */
     static run() {
-        const fileData = FileHelper.openFileUpload(this.fileId)
-        if (fileData) {
-            FileHelper.removeFileUpload(this.fileId)
-            World.get().getAssetsManager().setAssetByBlob(fileData).then(() => {
-                StateManager.get().stopNextState(this.STATE)
-            })
+        const filesData = FileHelper.openFileUpload(this.fileId)
+        if (filesData.length) {
+            StateManager.get().stopNextState(this.STATE)
+            Array.from(filesData).forEach(fileData => World.get().getAssetsManager().setAssetByBlob(fileData))
         }
         return false
+    }
+
+    static stop(){
+        FileHelper.removeFileUpload(this.fileId)
+        return true
     }
 
 }

@@ -20,6 +20,7 @@ Layout.type = {
     PANEL_ACTION: 'panel_action',
     STYLE_COLOR: 'style_color',
     ENTITY_ELEMENT: 'entity_element',
+    UNIT_ELEMENT: 'unit_element',
     LAYER_ACTION: 'layer_action',
     LIST_ELEMENT: 'list_element',
     TEXT: 'text',

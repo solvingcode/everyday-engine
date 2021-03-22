@@ -1,16 +1,18 @@
 import WorldData from '../project/data/WorldData.js'
-import EntityManager from './manager/EntityManager.js'
-import EntitySelector from './manager/EntitySelector.js'
 import Camera from '../core/Camera.js'
 import Physics from '../physics/Physics.js'
 import TerrainManager from './terrain/TerrainManager.js'
-import MouseConstraintEntity from '../entity/types/constraint/MouseConstraintEntity.js'
 import Vector from '../utils/Vector.js'
-import AssetsManager from './manager/AssetsManager.js'
+import AssetsManager from '../manager/AssetsManager.js'
 import Window from '../core/Window.js'
 import Size from '../pobject/Size.js'
 import {SCENE_HEIGHT, SCENE_WIDTH} from '../core/Constant.js'
 import Folder from '../asset/Folder.js'
+import UnitManager from '../manager/UnitManager.js'
+import MeshComponent from '../component/MeshComponent.js'
+import TransformComponent from '../component/TransformComponent.js'
+import UnitSelector from '../manager/UnitSelector.js'
+import ExecutorRegistry from '../executor/ExecutorRegistry.js'
 
 /**
  * @class {World}
@@ -20,15 +22,15 @@ class World extends WorldData {
 
     constructor() {
         super()
-        this.entityManager = new EntityManager()
+        this.unitManager = new UnitManager()
         this.camera = new Camera(new Vector({x: -SCENE_WIDTH / 2, y: -SCENE_HEIGHT / 2}))
+        this.executorRegistry = ExecutorRegistry.get()
         this.physics = new Physics()
         this.terrainManager = new TerrainManager()
         this.assetsManager = new AssetsManager()
-        this.mouseConstraintId = null
-        this.cameraEntityId = null
+        this.cameraUnitId = null
         this.resolution = new Size({width: SCENE_WIDTH, height: SCENE_HEIGHT})
-        this.gridEntityId = null
+        this.gridUnitId = null
         this.showGrid = true
         this.init()
     }
@@ -37,7 +39,6 @@ class World extends WorldData {
      * Initialize the world. will erase also world's element from imported project
      */
     init() {
-        this.createMouseConstraint()
         this.createRootFolder()
     }
 
@@ -47,143 +48,94 @@ class World extends WorldData {
      * @param {Renderer} renderer
      */
     draw(renderer) {
-        this.getEntityManager().entities.forEach((entity) => this.drawEntity(entity, renderer))
+        this.getUnitManager().getUnitsHasComponents([MeshComponent, TransformComponent])
+            .forEach((unit) => this.drawUnit(unit, renderer))
     }
 
     /**
-     * Set the given entity to the renderer for drawing
-     * @param {Entity} entity
+     * @param {UnitData} unit
      * @param {Renderer} renderer
      */
-    drawEntity(entity, renderer) {
+    drawUnit(unit, renderer) {
         const {size: windowSize} = Window.get()
         const camera = this.getCamera()
         const {x: cameraX, y: cameraY} = camera.position
         const {width: sceneWidth, height: sceneHeight} = camera.fromScaleSize(windowSize)
-        const minX = cameraX - entity.size.width
+        const meshComponent = unit.getComponent(MeshComponent)
+        const transformComponent = unit.getComponent(TransformComponent)
+        const size = meshComponent.getSize()
+        const position = transformComponent.getPosition()
+        const minX = cameraX - size.getWidth()
         const maxX = cameraX + sceneWidth
-        const minY = cameraY - entity.size.height
+        const minY = cameraY - size.getHeight()
         const maxY = cameraY + sceneHeight
-        if (minX <= entity.position.x && maxX >= entity.position.x &&
-            minY <= entity.position.y && maxY >= entity.position.y) {
-            entity.draw(renderer)
+        if (minX <= position.getX() && maxX >= position.getX() &&
+            minY <= position.getY() && maxY >= position.getY()) {
+            renderer.draw(meshComponent.getMesh(), position)
         }
     }
 
     /**
-     * Get the entity from world coordinate
+     * Get the unit from world coordinate
      * @param {Vector} position canvas coordinates (window)
-     * @return {Entity|null}
+     * @return {Unit|null}
      */
-    findEntity(position) {
-        const entitySelector = EntitySelector.get()
-        return entitySelector.get(this, this.getWorldPosition(position))
+    findUnit(position) {
+        const unitSelector = UnitSelector.get()
+        return unitSelector.get(this, this.getWorldPosition(position))
     }
 
     /**
      * @param {number} id
-     * @return {Entity}
+     * @return {Unit}
      */
-    findEntityById(id){
-        return this.getEntityManager().findById(id)
+    findUnitById(id){
+        return this.getUnitManager().findById(id)
     }
 
     /**
-     * @param {Vector} position position canvas coordinates (window)
-     * @return {Entity|null}
-     */
-    findBodyEntity(position) {
-        const entity = this.findEntity(position)
-        return this.getEntityManager().isBodyEntity(entity) && entity
-    }
-
-    /**
-     * Add an entity to the world
+     * Add a unit to the world
      * @param {Vector} position
      * @param {Class} type
-     * @param {EntityProps} props
      */
-    addEntity(position, type, props = {}) {
-        const entity = this.loadEntity(position, type, props)
-        this.getPhysics().loadEntity(entity)
-        return entity
+    addUnit(position, type) {
+        const unit = this.getUnitManager().createUnit(type)
+        unit.getComponent(TransformComponent).setPosition(position)
     }
 
     /**
-     * @param {number} entityId
+     * @param {number} unitId
      */
-    removeEntityById(entityId) {
-        const entity = this.getEntityManager().findById(entityId)
-        if (entity) {
-            entity.delete(this)
+    removeUnitById(unitId) {
+        const unit = this.getUnitManager().findById(unitId)
+        if (unit) {
+            this.getUnitManager().deleteUnit(unit)
         }
     }
 
     /**
-     * @param {Class[]} type
+     * @param {Unit} unit
      */
-    removeEntityByType(type) {
-        type.forEach(eType => {
-            const entities = this.getEntityManager().findByType(eType)
-            entities.forEach(entity => this.removeEntityById(entity.id))
-        })
-    }
-
-    /**
-     * @param {Entity} entity
-     */
-    deleteEntity(entity) {
-        this.getEntityManager().delete(entity)
+    deleteUnit(unit) {
+        this.getUnitManager().delete(unit)
     }
 
     /**
      * @param {{position: Vector, size: Size}} dragArea
-     * @return {Entity[]}
+     * @return {Unit[]}
      */
-    selectEntities(dragArea){
-        const entitySelector = EntitySelector.get()
-        entitySelector.unselectAll(this)
-        return entitySelector.select(this, this.getWorldPosition(dragArea.position), dragArea.size)
+    selectUnits(dragArea){
+        const unitSelector = UnitSelector.get()
+        unitSelector.unselectAll(this)
+        return unitSelector.select(this, this.getWorldPosition(dragArea.position), dragArea.size)
     }
 
     /**
      * @param {Vector} position
-     * @return {Entity[]}
+     * @return {Unit[]}
      */
-    findEntitiesByPosition(position){
-        return EntitySelector.get().getAll(this, position)
-    }
-
-    /**
-     * @param {Vector} position
-     * @return {Entity[]}
-     */
-    findFirstEntityByPosition(position){
-        return EntitySelector.get().get(this, position)
-    }
-
-    /**
-     * @param {Vector} position
-     * @param {Function} type
-     * @param {EntityProps} props
-     * @return {Entity}
-     */
-    loadEntity(position, type, props = {}) {
-        return this.getEntityManager().load(this, position, type, props)
-    }
-
-    /**
-     * @param {Entity} entity
-     */
-    generateEntity(entity) {
-        return this.getEntityManager().regenerate(this, entity)
-    }
-
-    /**
-     * @param {Entity} entity
-     */
-    makeEntity(entity) {
-        return this.getEntityManager().make(this, entity)
+    findFirstUnitByPosition(position){
+        return UnitSelector.get().get(this, position)
     }
 
     /**
@@ -195,15 +147,11 @@ class World extends WorldData {
     }
 
     regenerateAll(){
-        this.getEntityManager().regenerateAll(this)
+        this.getUnitManager().regenerateAll(this)
     }
 
-    /**
-     * Update entities, terrains, ... (check all entities tagged for regeneration)
-     */
     update() {
-        this.getTerrainManager().update(this)
-        this.getEntityManager().update(this)
+        this.executorRegistry.execute(this)
     }
 
     /**
@@ -218,29 +166,13 @@ class World extends WorldData {
      */
     setShowGrid(showGrid){
         super.setShowGrid(showGrid)
-        this.setGridEntityId(null)
-    }
-
-    /**
-     * Update the camera position for the attached entity (if the camera must be focused on a given entity)
-     */
-    updateCamera() {
-        const entity = this.getCamera().getEntity(this.getEntityManager())
-        entity && this.getCamera().update(entity.position)
+        this.setGridUnitId(null)
     }
 
     setupCamera(){
-        if(this.cameraEntityId){
-            this.getCamera().setup(this.cameraEntityId, this)
+        if(this.cameraUnitId){
+            this.getCamera().setup(this.cameraUnitId, this)
         }
-    }
-
-    resetCamera() {
-        this.getCamera().reset()
-    }
-
-    hideComponents(){
-        this.getEntityManager().hideComponents()
     }
 
     /**
@@ -259,20 +191,6 @@ class World extends WorldData {
      */
     getWorldScalePosition(position){
         return this.getWorldPosition(this.getCamera().fromCameraScale(position))
-    }
-
-    /**
-     * @return {Entity}
-     */
-    getMouseConstraint() {
-        return this.getEntityManager().findById(this.mouseConstraintId)
-    }
-
-    createMouseConstraint() {
-        this.removeEntityByType([MouseConstraintEntity])
-        const constraint = this.loadEntity(new Vector({x: 0, y: 0}), MouseConstraintEntity)
-        constraint.setSelectable(false)
-        this.mouseConstraintId = constraint.getId()
     }
 
     createRootFolder() {
@@ -302,15 +220,15 @@ class World extends WorldData {
     /**
      * @param {number} id
      */
-    setGridEntityId(id){
-        this.gridEntityId = id
+    setGridUnitId(id){
+        this.gridUnitId = id
     }
 
     /**
      * @return {number}
      */
-    getGridEntityId(){
-        return this.gridEntityId
+    getGridUnitId(){
+        return this.gridUnitId
     }
 
     static get() {

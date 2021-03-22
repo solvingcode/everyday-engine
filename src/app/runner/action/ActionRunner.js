@@ -1,7 +1,6 @@
 import Runner from '../Runner.js'
 import World from '../../world/World.js'
 import StateManager from '../../state/StateManager.js'
-import EntitySelector from '../../world/manager/EntitySelector.js'
 import DeleteAction from './edit/DeleteAction.js'
 import DuplicateAction from './edit/DuplicateAction.js'
 import UndoAction from './edit/UndoAction.js'
@@ -37,6 +36,7 @@ import LockItemAction from './edit/LockItemAction.js'
 import UnlockItemAction from './edit/UnlockItemAction.js'
 import AddAssetAction from './assets/AddAssetAction.js'
 import AddAssetSceneAction from './assets/AddAssetSceneAction.js'
+import UnitSelector from '../../manager/UnitSelector.js'
 
 /**
  * Action Runner class.
@@ -48,7 +48,7 @@ class ActionRunner extends Runner {
 
     constructor() {
         super()
-        this.entitySelector = EntitySelector.get()
+        this.unitSelector = UnitSelector.get()
     }
 
     /**
@@ -103,7 +103,7 @@ class ActionRunner extends Runner {
             //must be the last action
             HISTORY_PUSH: PushHistoryAction
         }
-        const selectedEntities = this.entitySelector.getSelected(World.get())
+        const selectedUnits = this.unitSelector.getSelected(World.get())
         Object.entries(typeActions).forEach(typeAction => {
             const type = `ACTION_${typeAction[0]}`
             const action = typeAction[1]
@@ -111,10 +111,10 @@ class ActionRunner extends Runner {
                 stateManager.progressNextState(type)
             }
             if (action.shouldProgress(type, stateManager)) {
-                this.runAction(action, mouse, selectedEntities) && stateManager.stopNextState(type)
+                this.runAction(action, mouse, selectedUnits) && stateManager.stopNextState(type)
             }
             if (action.shouldStop(type, stateManager)) {
-                this.stopState(action, mouse, selectedEntities) && stateManager.endNextState(type)
+                this.stopState(action, mouse, selectedUnits) && stateManager.endNextState(type)
             }
         })
     }
@@ -123,20 +123,20 @@ class ActionRunner extends Runner {
      * Run action for the selected entities
      * @param {Action} action
      * @param {Mouse} mouse
-     * @param {Array} selectedEntities
+     * @param {Unit[]} selectedUnits
      */
-    runAction(action, mouse, selectedEntities) {
-        return action.run(mouse, selectedEntities, this.entitySelector)
+    runAction(action, mouse, selectedUnits) {
+        return action.run(mouse, selectedUnits, this.unitSelector)
     }
 
     /**
      * Stop action
      * @param {Action} action
      * @param {Mouse} mouse
-     * @param {Entity[]} selectedEntities
+     * @param {Unit[]} selectedUnits
      */
-    stopState(action, mouse, selectedEntities) {
-        return action.stop(mouse, selectedEntities)
+    stopState(action, mouse, selectedUnits) {
+        return action.stop(mouse, selectedUnits)
     }
 
     static get() {

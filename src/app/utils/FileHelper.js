@@ -45,7 +45,7 @@ class FileHelper {
 
     /**
      * @param {string} fileId
-     * @return {Blob}
+     * @return {Blob[]}
      */
     static openFileUpload(fileId) {
         let fileInput = document.getElementById(fileId)
@@ -53,10 +53,11 @@ class FileHelper {
             fileInput = document.createElement('input')
             fileInput.type = 'file'
             fileInput.id = fileId
+            fileInput.multiple = true
             document.body.appendChild(fileInput)
             fileInput.click()
         }
-        return fileInput.files && fileInput.files[0]
+        return fileInput.files
     }
 
     /**
@@ -64,6 +65,17 @@ class FileHelper {
      */
     static removeFileUpload(fileId) {
         document.body.removeChild(document.getElementById(fileId))
+    }
+
+    /**
+     * @param {string} name
+     * @return {string}
+     */
+    static getFilename(name){
+        if(name){
+            return name.replace(/(.+)(\.[a-zA-Z]+)/, '$1')
+        }
+        return ''
     }
 
     static type = {

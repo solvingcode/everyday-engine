@@ -1,7 +1,7 @@
 import Layout from '../../Layout.js'
 import World from '../../../world/World.js'
 import FormMenuItem from '../form/FormMenuItem.js'
-import CameraEntity from '../../../entity/types/component/camera/CameraEntity.js'
+import CameraComponent from '../../../component/CameraComponent.js'
 
 /**
  * @class {CameraFormMenuItem}
@@ -21,16 +21,15 @@ export default class CameraFormMenuItem extends FormMenuItem {
      * @override
      */
     generateFields() {
-        const cameraEntities = World.get().getEntityManager().getComponentEntities()
-            .filter(entity => entity instanceof CameraEntity)
-            .map(entity => ({value: entity.id, label: entity.name}))
+        const cameraUnits = World.get().getUnitManager().getUnitsHasComponents([CameraComponent])
+            .map(unit => ({value: unit.getId(), label: unit.getName()}))
 
         return [
             {
-                bind: 'cameraEntityId',
+                bind: 'cameraUnitId',
                 label: 'Camera',
                 type: Layout.form.DROPDOWN,
-                list: cameraEntities
+                list: cameraUnits
             }
         ]
     }

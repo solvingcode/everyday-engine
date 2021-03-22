@@ -4,19 +4,18 @@ import Data from './Data.js'
  * @class {WorldData}
  * @extends {Data}
  *
- * @property {AiEngine} aiEngine
  * @property {Camera} camera
  */
 class WorldData extends Data {
 
     static instance
 
-    entityManager
+    unitManager
     camera
     physics
     terrainManager
     assetsManager
-    cameraEntityId
+    cameraUnitId
     resolution
     showGrid
 
@@ -37,10 +36,10 @@ class WorldData extends Data {
     }
 
     /**
-     * @param {EntityManagerData} entityManager
+     * @param {UnitManagerData} unitManager
      */
-    setEntityManager(entityManager) {
-        this.entityManager = entityManager
+    setUnitManager(unitManager) {
+        this.unitManager = unitManager
     }
 
     /**
@@ -80,17 +79,10 @@ class WorldData extends Data {
     }
 
     /**
-     * @return {EntityManager}
+     * @return {UnitManager}
      */
-    getEntityManager() {
-        return this.entityManager
-    }
-
-    /**
-     * Get the Ai engine
-     */
-    getAiEngine() {
-        return this.aiEngine
+    getUnitManager() {
+        return this.unitManager
     }
 
     /**
@@ -110,15 +102,15 @@ class WorldData extends Data {
     /**
      * @return {number}
      */
-    getCameraEntityId(){
-        return this.cameraEntityId
+    getCameraUnitId(){
+        return this.cameraUnitId
     }
 
     /**
-     * @param {number} entityId
+     * @param {number} id
      */
-    setCameraEntityId(entityId){
-        this.cameraEntityId = entityId
+    setCameraUnitId(id){
+        this.cameraUnitId = id
     }
 
     /**

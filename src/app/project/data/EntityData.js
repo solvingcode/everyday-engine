@@ -12,6 +12,9 @@ import ObjectHelper from '../../utils/ObjectHelper.js'
  */
 class EntityData extends Data {
 
+    name
+    position
+    rotation
     shape
     radius
     vertices
@@ -23,7 +26,15 @@ class EntityData extends Data {
     clonable
     subEntity
     style
+    /**
+     * Used by constraint component
+     * @type {number[]}
+     */
     entityLinkIds
+    /**
+     * Used by group component
+     * @type {number[]}
+     */
     entityChildIds
 
     /**

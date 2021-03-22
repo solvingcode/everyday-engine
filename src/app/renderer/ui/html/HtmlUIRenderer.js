@@ -17,6 +17,7 @@ import HtmlWrapperUI from './ui/HtmlWrapperUI.js'
 import AssetElementButtonUI from './list/AssetElementButtonUI.js'
 import FolderElementButtonUI from './list/FolderElementButtonUI.js'
 import HtmlAssetsUI from './ui/HtmlAssetsUI.js'
+import UnitElementButtonUI from './list/UnitElementButtonUI.js'
 
 /**
  * HTML UI Renderer class
@@ -112,6 +113,13 @@ class HtmlUIRenderer extends UIRenderer {
      */
     getEntityElementButtonUI() {
         return EntityElementButtonUI
+    }
+
+    /**
+     * @override
+     */
+    getUnitElementButtonUI() {
+        return UnitElementButtonUI
     }
 
     /**
@@ -297,7 +305,6 @@ class HtmlUIRenderer extends UIRenderer {
             }
         })
     }
-
 }
 
 export default HtmlUIRenderer

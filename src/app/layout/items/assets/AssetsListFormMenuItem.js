@@ -1,4 +1,4 @@
-import ListFormMenuItem from '../form/ListFormMenuItem.js'
+import ListMenuItem from '../list/ListMenuItem.js'
 import World from '../../../world/World.js'
 import AssetElementFormMenuItem from './AssetElementFormMenuItem.js'
 import Layout from '../../Layout.js'
@@ -6,7 +6,7 @@ import Layout from '../../Layout.js'
 /**
  * @class {AssetsListFormMenuItem}
  */
-export default class AssetsListFormMenuItem extends ListFormMenuItem {
+export default class AssetsListFormMenuItem extends ListMenuItem {
 
     constructor(parent, props) {
         super({

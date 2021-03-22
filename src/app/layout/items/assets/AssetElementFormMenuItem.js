@@ -1,10 +1,10 @@
 import Layout from '../../Layout.js'
-import ListElementFormMenuItem from '../form/ListElementFormMenuItem.js'
+import ListSelectElementMenuItem from '../list/ListSelectElementMenuItem.js'
 
 /**
  * @class {AssetElementFormMenuItem}
  */
-export default class AssetElementFormMenuItem extends ListElementFormMenuItem {
+export default class AssetElementFormMenuItem extends ListSelectElementMenuItem {
     constructor(parent, data) {
         super(parent, data, {type: Layout.type.ASSET_ELEMENT})
     }

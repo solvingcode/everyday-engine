@@ -1,7 +1,3 @@
-import CircleMenuItem from './items/edit/CircleMenuItem.js'
-import RectMenuItem from './items/edit/RectMenuItem.js'
-import JointMenuItem from './items/edit/JointMenuItem.js'
-import AttachPointMenuItem from './items/edit/AttachPointMenuItem.js'
 import SelectorMenuItem from './items/edit/SelectorMenuItem.js'
 import CameraMenuItem from './items/edit/CameraMenuItem.js'
 import ScaleMenuItem from './items/edit/ScaleMenuItem.js'
@@ -17,20 +13,13 @@ import UndoMenuItem from './items/action/UndoMenuItem.js'
 import MoveUpMenuItem from './items/action/MoveUpMenuItem.js'
 import MoveDownMenuItem from './items/action/MoveDownMenuItem.js'
 import MenuItemUI from '../renderer/ui/MenuItemUI.js'
-import AiGeneticMenuItem from './items/genetic/AiGeneticMenuItem.js'
-import EntityMenuItem from './items/entity/EntityMenuItem.js'
-import StyleMenuItem from './items/style/StyleMenuItem.js'
-import ConditionMenuItem from './items/condition/ConditionMenuItem.js'
 import AppMenuItem from './items/app/AppMenuItem.js'
-import TerrainMenuItem from './items/terrain/TerrainMenuItem.js'
 import SceneMenuItem from './items/scene/SceneMenuItem.js'
-import TextureMenuItem from './items/texture/TextureMenuItem.js'
-import PhysicsMenuItem from './items/physics/PhysicsMenuItem.js'
 import WorldMenuItem from './items/world/WorldMenuItem.js'
 import RotateMenuItem from './items/edit/RotateMenuItem.js'
-import LayerMenuItem from './items/entity/LayerMenuItem.js'
 import MoveMenuItem from './items/edit/MoveMenuItem.js'
 import AssetsMenuItem from './items/assets/AssetsMenuItem.js'
+import UnitMenuItem from './items/unit/UnitMenuItem.js'
 
 /**
  * Define all menu items
@@ -45,10 +34,6 @@ class Menu {
             new MoveMenuItem(),
             new ScaleMenuItem(),
             new RotateMenuItem(),
-            new CircleMenuItem(),
-            new RectMenuItem(),
-            new JointMenuItem(),
-            new AttachPointMenuItem(),
             new CameraMenuItem(),
             new SimulateStartMenuItem(),
             new SimulateStopMenuItem(),
@@ -65,15 +50,8 @@ class Menu {
             new MoveDownMenuItem(),
 
             //RIGHT
-            new LayerMenuItem(),
-            new StyleMenuItem(),
-            new EntityMenuItem(),
+            new UnitMenuItem(),
             new WorldMenuItem(),
-            new PhysicsMenuItem(),
-            new ConditionMenuItem(),
-            new AiGeneticMenuItem(),
-            new TerrainMenuItem(),
-            new TextureMenuItem(),
             new SceneMenuItem(),
 
             //BOTTOM

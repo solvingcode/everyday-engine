@@ -1,4 +1,4 @@
-import EntitySelector from '../../../world/manager/EntitySelector.js'
+import EntitySelector from '../../../manager/EntitySelector.js'
 import AttachEntity from './AttachEntity.js'
 import Vector from '../../../utils/Vector.js'
 import Size from '../../../pobject/Size.js'

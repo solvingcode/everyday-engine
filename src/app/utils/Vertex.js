@@ -36,7 +36,7 @@ class Vertex {
 
     /**
      * Check if a point is inside a set of vertices
-     * @param {{x: number, y: number}[]} vertices
+     * @param {Vector[]} vertices
      * @param {Vector} point
      */
     static contains(vertices, point) {

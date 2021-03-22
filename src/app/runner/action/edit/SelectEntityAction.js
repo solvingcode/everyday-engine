@@ -1,6 +1,6 @@
 import Action from '../Action.js'
 import StateManager from '../../../state/StateManager.js'
-import EntitySelector from '../../../world/manager/EntitySelector.js'
+import EntitySelector from '../../../manager/EntitySelector.js'
 import World from '../../../world/World.js'
 
 /**

@@ -98,6 +98,14 @@ class UIRenderer {
      * @abstract
      * @return {ItemUI}
      */
+    getUnitElementButtonUI() {
+        throw new TypeError('"UIRenderer.getUnitElementButtonUI" method must be implemented')
+    }
+
+    /**
+     * @abstract
+     * @return {ItemUI}
+     */
     getAssetElementButtonUI() {
         throw new TypeError('"UIRenderer.getAssetElementButtonUI" method must be implemented')
     }
@@ -231,6 +239,8 @@ class UIRenderer {
             return this.getColorButtonUI()
         } else if (element.type === Layout.type.ENTITY_ELEMENT) {
             return this.getEntityElementButtonUI()
+        } else if (element.type === Layout.type.UNIT_ELEMENT) {
+            return this.getUnitElementButtonUI()
         } else if (element.type === Layout.type.FOLDER_ELEMENT) {
             return this.getFolderElementButtonUI()
         } else if (element.type === Layout.type.ASSET_ELEMENT) {

@@ -28,8 +28,9 @@ export default class ListElementButtonUI extends ItemUI {
                 el.appendChild(imageWrapper)
             }
             title.textContent = bind.name
-            el.setAttribute('data-list-element-id', bind.id)
-            el.setAttribute('data-list-element-name', bind.name)
+            title.title = bind.name
+            el.setAttribute('data-list-element-id', bind.getId())
+            el.setAttribute('data-list-element-name', bind.getName())
             el.setAttribute('id', item.getId())
             el.appendChild(title)
         }
@@ -51,7 +52,7 @@ export default class ListElementButtonUI extends ItemUI {
         if (bind) {
             const bindId = el.getAttribute('data-list-element-id')
             const bindName = el.getAttribute('data-list-element-name')
-            if (parseInt(bindId) !== bind.id || bindName !== bind.name) {
+            if (parseInt(bindId) !== bind.getId() || bindName !== bind.getName()) {
                 el.innerHTML = ''
                 this.postCreate(item, el, uiRenderer)
             }

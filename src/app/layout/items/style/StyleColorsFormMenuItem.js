@@ -1,7 +1,8 @@
 import Layout from '../../Layout.js'
-import EntitySelector from '../../../world/manager/EntitySelector.js'
 import FormMenuItem from '../form/FormMenuItem.js'
 import World from '../../../world/World.js'
+import UnitSelector from '../../../manager/UnitSelector.js'
+import MeshComponent from '../../../component/MeshComponent.js'
 
 /**
  * @class {StyleColorsFormMenuItem}
@@ -59,21 +60,16 @@ export default class StyleColorsFormMenuItem extends FormMenuItem {
      * @override
      */
     postUpdate(value) {
-        this.getFormObject().setGenerated(false)
+        const meshComponent = this.getFormObject().getComponent(MeshComponent)
+        meshComponent.setGenerated(false)
     }
 
     /**
      * @override
+     * @return {Unit}
      */
     getFormObject() {
-        return EntitySelector.get().getFirstSelected(World.get())
-    }
-
-    /**
-     * @override
-     */
-    isValid() {
-        return super.isValid() && World.get().getEntityManager().isBodyEntity(this.getFormObject())
+        return UnitSelector.get().getFirstSelected(World.get())
     }
 
 }

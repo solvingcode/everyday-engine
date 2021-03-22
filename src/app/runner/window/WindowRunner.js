@@ -1,4 +1,4 @@
-import EntitySelector from '../../world/manager/EntitySelector.js'
+import EntitySelector from '../../manager/EntitySelector.js'
 import Runner from '../Runner.js'
 import StateManager from '../../state/StateManager.js'
 import World from '../../world/World.js'
@@ -22,9 +22,9 @@ class WindowRunner extends Runner {
         const stateManager = StateManager.get()
         const world = World.get()
         if (!stateManager.isRunning()) {
-            this.focus(world, entitySelector, mouse)
+            //this.focus(world, entitySelector, mouse)
         }
-        this.cursor(world, entitySelector, mouse)
+        //this.cursor(world, entitySelector, mouse)
     }
 
     /**

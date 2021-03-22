@@ -12,6 +12,9 @@ class ObjectRenderer extends Renderer {
 
     constructor() {
         super()
+        /**
+         * @type {{mesh: Mesh, position: Vector}[]}
+         */
         this.meshes = []
         this.initCanvas()
     }
@@ -25,8 +28,8 @@ class ObjectRenderer extends Renderer {
     /**
      * @override
      */
-    draw(object) {
-        this.add(object.mesh)
+    draw(mesh, position) {
+        this.add(mesh, position)
     }
 
     /**
@@ -47,8 +50,8 @@ class ObjectRenderer extends Renderer {
         this.clear()
         for (let iMesh in this.meshes) {
             if (this.meshes.hasOwnProperty(iMesh)) {
-                const mesh = this.meshes[iMesh]
-                const {x, y} = camera.toCameraScale(camera.toCanvasCoord(mesh.position))
+                const {mesh, position} = this.meshes[iMesh]
+                const {x, y} = camera.toCameraScale(camera.toCanvasCoord(position))
                 objectContext.drawImage(mesh.context.canvas, x, y)
             }
         }
@@ -56,11 +59,11 @@ class ObjectRenderer extends Renderer {
     }
 
     /**
-     * Add a mesh
      * @param {Mesh} mesh
+     * @param {Vector} position
      */
-    add(mesh) {
-        this.meshes.push(mesh)
+    add(mesh, position) {
+        this.meshes.push({mesh, position})
     }
 }
 

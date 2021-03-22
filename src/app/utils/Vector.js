@@ -10,10 +10,10 @@ class Vector {
     }
 
     /**
-     * @param {number} x
+     * @param {number|string} x
      */
     setX(x) {
-        this.x = x
+        this.x = parseInt(x)
     }
 
     /**
@@ -24,10 +24,10 @@ class Vector {
     }
 
     /**
-     * @param {number} y
+     * @param {number|string} y
      */
     setY(y) {
-        this.y = y
+        this.y = parseInt(y)
     }
 
     /**
@@ -38,10 +38,10 @@ class Vector {
     }
 
     /**
-     * @param {number} z
+     * @param {number|string} z
      */
     setZ(z) {
-        this.z = z
+        this.z = parseInt(z)
     }
 
     /**

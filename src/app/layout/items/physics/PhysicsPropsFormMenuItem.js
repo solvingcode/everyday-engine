@@ -1,5 +1,5 @@
 import Layout from '../../Layout.js'
-import EntitySelector from '../../../world/manager/EntitySelector.js'
+import EntitySelector from '../../../manager/EntitySelector.js'
 import FormMenuItem from '../form/FormMenuItem.js'
 import World from '../../../world/World.js'
 

@@ -1,0 +1,37 @@
+import World from '../../../world/World.js'
+import ListMenuItem from '../list/ListMenuItem.js'
+import Layout from '../../Layout.js'
+import UnitElementMenuItem from './UnitElementMenuItem.js'
+
+export default class UnitListMenuItem extends ListMenuItem {
+
+    constructor(parent, props) {
+        super({
+            zone: Layout.zone.RIGHT,
+            ...props
+        })
+        this.parent = parent
+    }
+
+    /**
+     * @override
+     */
+    getListElementFormClass() {
+        return UnitElementMenuItem
+    }
+
+    /**
+     * @override
+     */
+    getFormObject() {
+        return World.get().getUnitManager().getUnits()
+    }
+
+    /**
+     * @override
+     * @param {Unit} bindObject
+     */
+    getActions(bindObject){
+        return []
+    }
+}

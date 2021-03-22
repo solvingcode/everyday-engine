@@ -15,7 +15,7 @@ import Maths from '../utils/Maths.js'
  * @property {callback} event The event bound to the field
  */
 class MenuItem {
-    constructor(props) {
+    constructor(props, parent) {
         this.props = props
         if (props.stateCode === undefined) {
             throw new TypeError('State code for MenuItem is required!')
@@ -34,6 +34,7 @@ class MenuItem {
         this.id = props.id || Maths.generateId()
         this.stateCode = props.stateCode
         this.collapsed = false
+        this.parent = parent
     }
 
     /**

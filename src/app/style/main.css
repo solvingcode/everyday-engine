@@ -75,6 +75,7 @@ h4{
 
 .panel .panel > div{
     padding: 0;
+    margin-left: 2px;
 }
 
 .panel h4{
@@ -133,8 +134,12 @@ h4{
 }
 
 .panel .tree .list-element span {
+    width: unset;
     margin: 4px 0;
     text-align: left;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
 }
 
 .panel-action{
@@ -197,6 +202,9 @@ h4{
     float: unset;
     margin: 2px auto;
     text-align: center;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
 }
 
 #app-el-left, #app-el-top, #app-el-right, #app-el-footer, #app-el-bottom{
@@ -269,11 +277,14 @@ h4{
 }
 
 .list-element span{
+    width: 100%;
     float: left;
     display: block;
     margin: 5px 5px 5px 10px;
     text-align: left;
     white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
 }
 
 .list-element i{

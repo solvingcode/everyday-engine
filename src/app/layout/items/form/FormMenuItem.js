@@ -15,8 +15,8 @@ import RangeMenuItem from './RangeMenuItem.js'
  */
 class FormMenuItem extends MenuItem {
 
-    constructor(props) {
-        super(props)
+    constructor(props, parent) {
+        super(props, parent)
         this.init()
     }
 

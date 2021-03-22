@@ -7,9 +7,10 @@ class Renderer {
 
     /**
      * @abstract
-     * @param {Entity} object
+     * @param {Mesh} mesh
+     * @param {Vector} position
      */
-    draw(object) {
+    draw(mesh, position) {
         throw new TypeError('Renderer.draw must be implemented')
     }
 

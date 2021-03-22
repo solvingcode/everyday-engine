@@ -37,8 +37,8 @@ class HtmlPanelUI extends ItemUI {
         const name = item.element.props.name
         const title = item.element.props.title
         const displayedTitle = title ? title : name
-        const titleEl = el.getElementsByTagName('h4')[0]
-        if (titleEl && titleEl.textContent !== displayedTitle) {
+        const titleEl = el.querySelector('h4')
+        if (titleEl && el.getAttribute('data-name') !== displayedTitle) {
             titleEl.textContent = displayedTitle
         }
     }

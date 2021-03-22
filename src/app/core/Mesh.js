@@ -16,7 +16,7 @@ class Mesh extends AssetTypeData {
 
     constructor(position = new Vector(), size = 1) {
         super()
-        this.size = this.getSize(size)
+        this.size = this.initSize(size)
         this.position = position
         this.initCanvas()
     }
@@ -25,7 +25,7 @@ class Mesh extends AssetTypeData {
      * @param {number|Size} size
      * @return {Size}
      */
-    getSize(size) {
+    initSize(size) {
         return _.isNumber(size) ? new Size({width: size, height: size}) : size
     }
 
@@ -54,7 +54,7 @@ class Mesh extends AssetTypeData {
      * @param {number|Size} size
      */
     clear(size = 0) {
-        this.size = this.getSize(size || this.size)
+        this.size = this.initSize(size || this.size)
         if (this.size.width > 0 && this.size.height > 0) {
             this.context.canvas.width = this.size.width
             this.context.canvas.height = this.size.height
@@ -83,7 +83,7 @@ class Mesh extends AssetTypeData {
             await image.decode()
             const {width, height} = image
             if (width && height) {
-                this.clear({width, height})
+                this.clear(new Size({width, height}))
                 this.copy(image, 0, 0, width, height)
                 return true
             }
