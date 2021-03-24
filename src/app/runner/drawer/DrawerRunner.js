@@ -1,31 +1,30 @@
 import StateManager from '../../state/StateManager.js'
 import Runner from '../Runner.js'
 import Mouse from '../../core/Mouse.js'
-import CircleEntity from '../../entity/types/shape/CircleEntity.js'
-import RectEntity from '../../entity/types/shape/RectEntity.js'
-import JointEntity from '../../entity/types/constraint/JointEntity.js'
-import AttachPointEntity from '../../entity/types/constraint/AttachPointEntity.js'
-import SelectorEntity from '../../entity/types/edit/SelectorEntity.js'
 import World from '../../world/World.js'
 import Vector from '../../utils/Vector.js'
-import CameraEntity from '../../entity/types/component/camera/CameraEntity.js'
+import {PrimitiveShape} from '../../unit/Unit.js'
+import GUIPendingComponent from '../../component/gui/GUIPendingComponent.js'
+import MeshComponent from '../../component/MeshComponent.js'
+import Size from '../../pobject/Size.js'
+import TransformComponent from '../../component/TransformComponent.js'
+import Style from '../../pobject/Style.js'
+import MoveAction from '../action/edit/MoveAction.js'
 
 const {MouseButton} = Mouse
-/**
- * Draw Runner class
- * Run actions for drawing
- */
-class DrawerRunner extends Runner {
+
+export default class DrawerRunner extends Runner {
+
+    static instance = null
 
     /**
-     * @type {Entity}
+     * @type {Unit}
      */
-    currentEntity
+    currentUnit
 
     constructor() {
         super()
-        this.currentEntity = null
-        this.isCurrentDrawValid = false
+        this.currentUnit = null
     }
 
     /**
@@ -36,13 +35,10 @@ class DrawerRunner extends Runner {
     }
 
     /**
-     * Execute draw action for each type of item (Circle, Rect, ...)
      * @param {Mouse} mouse
      * @param {Menu} menu
      *
-     * @var {{[string]: {entity: Entity, startEvent: any, endEvent: any}}} typeEntity
-     *
-     * @todo Think to not use the MenuRunner to valid position
+     * @var {{[string]: {shape: string, startEvent: any, endEvent: any}}} typeEntity
      */
     execute(mouse, menu) {
         const stateManager = StateManager.get()
@@ -53,32 +49,17 @@ class DrawerRunner extends Runner {
         const defaultStartEvent = (pMouse) => pMouse.isButtonPressed(MouseButton.LEFT)
         const defaultEndEvent = (pMouse) => pMouse.isButtonClicked(MouseButton.LEFT)
         const typeEntity = {
-            CIRCLE: {
-                entity: CircleEntity
-            },
-            RECT: {
-                entity: RectEntity
-            },
-            JOINT: {
-                entity: JointEntity
-            },
-            ATTACH_POINT: {
-                entity: AttachPointEntity
-            },
             SELECT: {
-                entity: SelectorEntity
+                shape: PrimitiveShape.RECT
             },
             MOVE: {
-                entity: SelectorEntity
+                shape: PrimitiveShape.RECT
             },
             SCALE: {
-                entity: SelectorEntity
+                shape: PrimitiveShape.RECT
             },
             ROTATE: {
-                entity: SelectorEntity
-            },
-            CAMERA: {
-                entity: CameraEntity
+                shape: PrimitiveShape.RECT
             }
         }
         Object.entries(typeEntity).forEach(entry => {
@@ -90,7 +71,9 @@ class DrawerRunner extends Runner {
                 this.startDraw(stateManager, type)
             }
             if (stateManager.isProgress(type)) {
-                this.draw(position, props.entity)
+                if(!stateManager.isProgress(MoveAction.STATE)){
+                    this.draw(position, props.shape, mouse)
+                }
                 if (endEvent(mouse)) {
                     this.endDraw(stateManager, type)
                     stateManager.endState(type, 1)
@@ -104,44 +87,65 @@ class DrawerRunner extends Runner {
     }
 
     /**
-     * Check which entity to start drawing.
      * @param {StateManager} stateManager
      * @param {String} type
      */
     startDraw(stateManager, type) {
         stateManager.progressState(type, 1)
-        this.currentEntity = null
+        this.currentUnit = null
     }
 
     /**
-     * Check which entity to end drawing.
      * @param {StateManager} stateManager
      * @param {String} type
      */
     endDraw(stateManager, type) {
-        if (this.currentEntity) {
-            this.currentEntity.end()
-            if (this.isCurrentDrawValid) {
-                this.currentEntity.close(World.get())
-            } else {
-                World.get().deleteEntity(this.currentEntity)
-            }
-            this.currentEntity = null
+        if (this.currentUnit) {
+            World.get().deleteUnit(this.currentUnit)
+            this.currentUnit = null
         }
     }
 
     /**
-     * Draw an entity.
      * @param {Vector} position
-     * @param {Function} type
+     * @param {string} shape
+     * @param {Mouse} mouse
      */
-    draw(position, type) {
+    draw(position, shape, mouse) {
         const world = World.get()
-        if (!this.currentEntity) {
-            this.currentEntity = world.loadEntity(position, type)
-            this.currentEntity.setLoading(true)
+        const dragDistance = mouse.getDragDistanceCamera(world.getCamera())
+        const newPosition = this.calculateDragPosition(position, world, mouse, dragDistance)
+        if (!this.currentUnit) {
+            this.currentUnit = world.getUnitManager().createPrimitiveUnit(shape, newPosition)
+            this.currentUnit.createComponent(GUIPendingComponent)
         }
-        this.isCurrentDrawValid = world.makeEntity(this.currentEntity)
+        const transformComponent = this.currentUnit.getComponent(TransformComponent)
+        const meshComponent = this.currentUnit.getComponent(MeshComponent)
+        transformComponent.setPosition(newPosition)
+        meshComponent.setSize(new Size({width: Math.abs(dragDistance.x), height: Math.abs(dragDistance.y)}))
+        meshComponent.setGenerated(false)
+        const style = new Style()
+        style.setColor('#FFFFFF')
+        style.setBorderSize(3)
+        meshComponent.setStyle(style)
+    }
+
+    /**
+     * @param {Vector} position
+     * @param {World} world
+     * @param {Mouse} mouse
+     * @param {Vector} dragDistance
+     */
+    calculateDragPosition(position, world, mouse, dragDistance){
+        let newX = position.x
+        let newY = position.y
+        if (dragDistance.x <= 0) {
+            newX += dragDistance.x
+        }
+        if (dragDistance.y <= 0) {
+            newY += dragDistance.y
+        }
+        return new Vector({x: newX, y: newY, z: position.z})
     }
 
     /**
@@ -154,13 +158,9 @@ class DrawerRunner extends Runner {
     }
 
     static get() {
-        if (!DrawerRunner.instance) {
-            DrawerRunner.instance = new DrawerRunner()
+        if (!this.instance) {
+            this.instance = new this()
         }
-        return DrawerRunner.instance
+        return this.instance
     }
 }
-
-DrawerRunner.instance = null
-
-export default DrawerRunner

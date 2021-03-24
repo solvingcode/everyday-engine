@@ -5,7 +5,7 @@ import UnitsWrapperMenuItem from './UnitsWrapperMenuItem.js'
 export default class UnitMenuItem extends PanelMenuItem {
     constructor() {
         super({
-            name: 'Units',
+            name: 'Layer',
             zone: Layout.zone.RIGHT
         })
         this.items = [

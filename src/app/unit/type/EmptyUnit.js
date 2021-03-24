@@ -1,5 +1,5 @@
 import Unit from '../Unit.js'
-import GUIPropertyComponent from '../../component/GUIPropertyComponent.js'
+import GUIPropertyComponent from '../../component/gui/property/GUIPropertyComponent.js'
 import MeshComponent from '../../component/MeshComponent.js'
 import TransformComponent from '../../component/TransformComponent.js'
 

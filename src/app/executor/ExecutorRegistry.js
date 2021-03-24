@@ -1,4 +1,5 @@
 import MeshGenerationExecutor from './MeshGenerationExecutor.js'
+import GUISelectionExecutor from './GUISelectionExecutor.js'
 
 export default class ExecutorRegistry {
 
@@ -13,7 +14,8 @@ export default class ExecutorRegistry {
          * @type {ComponentExecutor[]}
          */
         this.registry = [
-            new MeshGenerationExecutor()
+            new MeshGenerationExecutor(),
+            new GUISelectionExecutor()
         ]
     }
 

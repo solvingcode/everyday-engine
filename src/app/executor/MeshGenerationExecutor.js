@@ -7,7 +7,12 @@ import DataContext from '../pobject/DataContext.js'
 import TransformComponent from '../component/TransformComponent.js'
 import GeometryHelper from '../utils/GeometryHelper.js'
 import Size from '../pobject/Size.js'
+import ShapeGenerator from '../generator/ShapeGenerator.js'
+import UnitHelper from '../unit/UnitHelper.js'
 
+/**
+ * @todo: improve drawing primitives shapes
+ */
 export default class MeshGenerationExecutor extends ComponentExecutor{
 
     constructor() {
@@ -21,6 +26,7 @@ export default class MeshGenerationExecutor extends ComponentExecutor{
         const meshComponent = unit.getComponent(MeshComponent)
         const transformComponent = unit.getComponent(TransformComponent)
         if(!meshComponent.isGenerated()){
+            meshComponent.setVertices(UnitHelper.generateVertices(unit))
             if(this.generate(meshComponent, transformComponent, World.get())){
                 meshComponent.setGenerated(true)
             }
@@ -35,7 +41,7 @@ export default class MeshGenerationExecutor extends ComponentExecutor{
     generate(meshComponent, transformComponent, world){
         const dataContext = this.startContext(meshComponent, transformComponent, world)
         if (dataContext) {
-            this.drawContext(dataContext)
+            this.drawContext(meshComponent, transformComponent, dataContext)
             return this.closeContext(meshComponent, transformComponent, dataContext)
         }
     }
@@ -73,11 +79,12 @@ export default class MeshGenerationExecutor extends ComponentExecutor{
     }
 
     /**
+     * @param {MeshComponent} meshComponent
+     * @param {TransformComponent} transformComponent
      * @param {DataContext} dataContext
      */
-    drawContext(dataContext) {
-        const {context, scaleSize} = dataContext
-        context.rect(0, 0, scaleSize.width, scaleSize.height)
+    drawContext(meshComponent, transformComponent, dataContext) {
+        ShapeGenerator.get().draw(meshComponent, transformComponent, dataContext)
     }
 
     /**

@@ -1,29 +1,38 @@
 import Runner from '../Runner.js'
 import StateManager from '../../state/StateManager.js'
-import EntitySelector from '../../manager/EntitySelector.js'
 import MoveCameraAction from '../action/camera/MoveCameraAction.js'
 import ZoomInOutCameraAction from '../action/camera/ZoomInOutCameraAction.js'
 import World from '../../world/World.js'
 import Mouse from '../../core/Mouse.js'
-import MoveXEntity from '../../entity/types/component/move/MoveXEntity.js'
-import MoveYEntity from '../../entity/types/component/move/MoveYEntity.js'
-import MoveCenterEntity from '../../entity/types/component/move/MoveCenterEntity.js'
-import MoveEntity from '../../entity/types/component/move/MoveEntity.js'
 import MoveAction from '../action/edit/MoveAction.js'
-import ScaleXEntity from '../../entity/types/component/scale/ScaleXEntity.js'
-import ScaleYEntity from '../../entity/types/component/scale/ScaleYEntity.js'
-import ScaleCenterEntity from '../../entity/types/component/scale/ScaleCenterEntity.js'
-import ScaleEntity from '../../entity/types/component/scale/ScaleEntity.js'
 import ScaleAction from '../action/edit/ScaleAction.js'
-import RotateEntity from '../../entity/types/component/rotate/RotateEntity.js'
 import RotateAction from '../action/edit/RotateAction.js'
-import RotateZEntity from '../../entity/types/component/rotate/RotateZEntity.js'
 import {objectCanvas} from '../../core/Context.js'
 import GridEntity from '../../entity/types/component/grid/GridEntity.js'
 import Vector from '../../utils/Vector.js'
+import UnitSelector from '../../manager/UnitSelector.js'
+import UnitHelper from '../../unit/UnitHelper.js'
+import {PrimitiveShape} from '../../unit/Unit.js'
+import GUIMoveXComponent from '../../component/gui/move/GUIMoveXComponent.js'
+import GUIPropertyComponent from '../../component/gui/property/GUIPropertyComponent.js'
+import Size from '../../pobject/Size.js'
+import Style from '../../pobject/Style.js'
+import MeshComponent from '../../component/MeshComponent.js'
+import GUIPendingComponent from '../../component/gui/GUIPendingComponent.js'
+import GUIMoveYComponent from '../../component/gui/move/GUIMoveYComponent.js'
+import GUIMoveFreeComponent from '../../component/gui/move/GUIMoveFreeComponent.js'
+import GUIMoveComponent from '../../component/gui/move/GUIMoveComponent.js'
+import GUIScaleXComponent from '../../component/gui/scale/GUIScaleXComponent.js'
+import GUIScaleYComponent from '../../component/gui/scale/GUIScaleYComponent.js'
+import GUIScaleFreeComponent from '../../component/gui/scale/GUIScaleFreeComponent.js'
+import GUIScaleComponent from '../../component/gui/scale/GUIScaleComponent.js'
+import GUIRotateComponent from '../../component/gui/rotate/GUIRotateComponent.js'
 
 const {MouseButton} = Mouse
 
+/**
+ * @todo: need to be revisited
+ */
 class WorldRunner extends Runner {
 
     /**
@@ -46,9 +55,10 @@ class WorldRunner extends Runner {
         const stateManager = StateManager.get()
         if (!stateManager.isRunning() && !stateManager.isFormUpdating()) {
             this.updateMouseWheel(stateManager, mouse)
-            //this.handleEntityEvent(stateManager, mouse)
-            //this.selectEntities(stateManager, mouse)
-            //this.setupEditor(stateManager)
+            this.handleUnitEvent(stateManager, mouse)
+            this.selectUnits(stateManager, mouse)
+            this.focusUnits(mouse)
+            this.setupEditor(stateManager)
             //this.createGridEntity()
         }
     }
@@ -85,7 +95,7 @@ class WorldRunner extends Runner {
      * @param {StateManager} stateManager
      * @param {Mouse} mouse
      */
-    selectEntities(stateManager, mouse) {
+    selectUnits(stateManager, mouse) {
         if (mouse.isButtonPressed(MouseButton.LEFT) &&
             this.isSelectEdit(stateManager) &&
             !stateManager.hasState(MoveAction.STATE, 1) &&
@@ -93,8 +103,15 @@ class WorldRunner extends Runner {
             !stateManager.hasState(RotateAction.STATE, 1)) {
             const world = World.get()
             const dragArea = mouse.getDragArea(world.getCamera())
-            world.selectEntities(dragArea)
+            world.selectUnits(dragArea)
         }
+    }
+
+    /**
+     * @param {Mouse} mouse
+     */
+    focusUnits(mouse) {
+        World.get().focusUnits(mouse)
     }
 
     /**
@@ -113,23 +130,25 @@ class WorldRunner extends Runner {
      * @param {StateManager} stateManager
      * @param {Mouse} mouse
      */
-    handleEntityEvent(stateManager, mouse){
+    handleUnitEvent(stateManager, mouse){
         if(this.isSelectEdit(stateManager)){
             if (mouse.isButtonPressed(MouseButton.LEFT)) {
                 const world = World.get()
                 const currentScenePosition = world.getCamera().fromCameraScale(mouse.currentScenePosition)
-                const entity = world.findFirstEntityByPosition(world.getWorldPosition(currentScenePosition))
+                const unit = world.findFirstUnitByPosition(world.getWorldPosition(currentScenePosition))
                 const dragArea = mouse.getDragArea(world.getCamera())
-                if(dragArea){
-                    if(entity instanceof MoveEntity){
+                if(unit && dragArea){
+                    if(unit.getComponent(GUIMoveComponent)){
                         !stateManager.isProgress(MoveAction.STATE) &&
-                        stateManager.startState(MoveAction.STATE, 1, {entity})
-                    }else if(entity instanceof ScaleEntity){
+                        stateManager.startState(MoveAction.STATE, 1, {unit})
+                    }
+                    if(unit.getComponent(GUIScaleComponent)){
                         !stateManager.isProgress(ScaleAction.STATE) &&
-                        stateManager.startState(ScaleAction.STATE, 1, {entity})
-                    }else if(entity instanceof RotateEntity){
+                        stateManager.startState(ScaleAction.STATE, 1, {unit})
+                    }
+                    else if(unit.getComponent(GUIRotateComponent)){
                         !stateManager.isProgress(RotateAction.STATE) &&
-                        stateManager.startState(RotateAction.STATE, 1, {entity})
+                        stateManager.startState(RotateAction.STATE, 1, {unit})
                     }
                 }
             } else {
@@ -149,20 +168,104 @@ class WorldRunner extends Runner {
      */
     setupEditor(stateManager){
         const world = World.get()
-        const selectedEntities = EntitySelector.get().getSelected(world)
-        const moveEntityClasses = [MoveXEntity, MoveYEntity, MoveCenterEntity]
-        const scaleEntityClasses = [ScaleXEntity, ScaleYEntity, ScaleCenterEntity]
-        const rotateEntityClasses = [RotateZEntity]
-        world.removeEntityByType([].concat(moveEntityClasses, scaleEntityClasses, rotateEntityClasses))
-        let editorPosition = selectedEntities
-            .reduce((position, entity) => entity.toLargeCenterPosition(), null)
+        const unitManager = world.getUnitManager()
+        const moveComponentClasses = [GUIMoveXComponent, GUIMoveYComponent, GUIMoveFreeComponent]
+        const scaleComponentClasses = [GUIScaleXComponent, GUIScaleYComponent, GUIScaleFreeComponent]
+        const rotateComponentClasses = [GUIRotateComponent]
+        unitManager.getUnitsHasAnyComponents([].concat(moveComponentClasses, scaleComponentClasses, rotateComponentClasses))
+            .forEach(unit => unitManager.deleteUnit(unit))
+        const selectedUnits = UnitSelector.get().getSelected(world)
+        let editorPosition = selectedUnits
+            .reduce((position, unit) => UnitHelper.toLargeCenterPosition(unit), null)
         if(editorPosition) {
             if(stateManager.hasAnyState('DRAW_MOVE')){
-                moveEntityClasses.forEach(entityClass => world.addEntity(editorPosition, entityClass))
-            }else if(stateManager.hasAnyState('DRAW_SCALE')){
-                scaleEntityClasses.forEach(entityClass => world.addEntity(editorPosition, entityClass))
+                moveComponentClasses.forEach(componentClass => {
+                    let size, style, shape, position = new Vector()
+                    if(componentClass === GUIMoveXComponent){
+                        size = new Size({width: 100, height: 30})
+                        style = new Style()
+                        style.setColor('#FF0000')
+                        style.setBorderSize(4)
+                        shape = PrimitiveShape.ARROW_RIGHT
+                        position.setX(editorPosition.getX())
+                        position.setY(editorPosition.getY() - size.getHeight() / 2)
+                    }else if(componentClass === GUIMoveYComponent){
+                        size = new Size({width: 30, height: 100})
+                        style = new Style()
+                        style.setColor('#0000FF')
+                        style.setBorderSize(4)
+                        shape = PrimitiveShape.ARROW_DOWN
+                        position.setX(editorPosition.getX() - size.getWidth() / 2)
+                        position.setY(editorPosition.getY())
+                    }else if(componentClass === GUIMoveFreeComponent){
+                        size = new Size({width: 100, height: 100})
+                        style = new Style()
+                        style.setColor('#CCCCCC')
+                        style.setBorderSize(2)
+                        shape = PrimitiveShape.CIRCLE
+                        position.setX(editorPosition.getX() - size.getWidth() / 2)
+                        position.setY(editorPosition.getY() - size.getHeight() / 2)
+                    }
+                    const unit = unitManager.createPrimitiveUnit(shape, position)
+                    unit.createComponent(componentClass)
+                    unit.createComponent(GUIPendingComponent)
+                    unit.getComponent(GUIPropertyComponent).setStyle(style)
+                    unit.getComponent(MeshComponent).setStyle(style)
+                    unit.getComponent(MeshComponent).setSize(size)
+                })
+            }
+            else if(stateManager.hasAnyState('DRAW_SCALE')){
+                scaleComponentClasses.forEach(componentClass => {
+                    let size, style, shape, position = new Vector()
+                    if(componentClass === GUIScaleXComponent){
+                        size = new Size({width: 100, height: 30})
+                        style = new Style()
+                        style.setColor('#FF0000')
+                        style.setBorderSize(4)
+                        shape = PrimitiveShape.ARROW_RECT_RIGHT
+                        position.setX(editorPosition.getX())
+                        position.setY(editorPosition.getY() - size.getHeight() / 2)
+                    }else if(componentClass === GUIScaleYComponent){
+                        size = new Size({width: 30, height: 100})
+                        style = new Style()
+                        style.setColor('#0000FF')
+                        style.setBorderSize(4)
+                        shape = PrimitiveShape.ARROW_RECT_DOWN
+                        position.setX(editorPosition.getX() - size.getWidth() / 2)
+                        position.setY(editorPosition.getY())
+                    }else if(componentClass === GUIScaleFreeComponent){
+                        size = new Size({width: 120, height: 120})
+                        style = new Style()
+                        style.setColor('#CCCCCC')
+                        style.setBorderSize(2)
+                        shape = PrimitiveShape.CIRCLE
+                        position.setX(editorPosition.getX() - size.getWidth() / 2)
+                        position.setY(editorPosition.getY() - size.getHeight() / 2)
+                    }
+                    const unit = unitManager.createPrimitiveUnit(shape, position)
+                    unit.createComponent(componentClass)
+                    unit.createComponent(GUIPendingComponent)
+                    unit.getComponent(GUIPropertyComponent).setStyle(style)
+                    unit.getComponent(MeshComponent).setStyle(style)
+                    unit.getComponent(MeshComponent).setSize(size)
+                })
             }else if(stateManager.hasAnyState('DRAW_ROTATE')){
-                rotateEntityClasses.forEach(entityClass => world.addEntity(editorPosition, entityClass))
+                rotateComponentClasses.forEach(componentClass => {
+                    const size = new Size({width: 100, height: 100})
+                    const style = new Style()
+                    style.setColor('#00FF00')
+                    style.setBorderSize(2)
+                    const shape = PrimitiveShape.CIRCLE
+                    const position = new Vector()
+                    position.setX(editorPosition.getX() - size.getWidth() / 2)
+                    position.setY(editorPosition.getY() - size.getHeight() / 2)
+                    const unit = unitManager.createPrimitiveUnit(shape, position)
+                    unit.createComponent(componentClass)
+                    unit.createComponent(GUIPendingComponent)
+                    unit.getComponent(GUIPropertyComponent).setStyle(style)
+                    unit.getComponent(MeshComponent).setStyle(style)
+                    unit.getComponent(MeshComponent).setSize(size)
+                })
             }
         }
     }

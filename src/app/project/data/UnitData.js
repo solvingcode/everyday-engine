@@ -15,10 +15,38 @@ export default class UnitData extends ComponentData{
     }
 
     /**
-     * @param {ComponentData} component
+     * @param {ComponentData[]} componentClasses
+     * @return {boolean}
      */
-    addComponent(component){
-        this.components.push(component)
+    hasComponents(componentClasses){
+        for (const iComponentClass in componentClasses){
+            const componentClass = componentClasses[iComponentClass]
+            if(componentClasses.hasOwnProperty(iComponentClass) && !this.getComponent(componentClass)){
+                return false
+            }
+        }
+        return true
+    }
+
+    /**
+     * @param {ComponentData[]} componentClasses
+     * @return {boolean}
+     */
+    hasAnyComponents(componentClasses){
+        for (const iComponentClass in componentClasses){
+            const componentClass = componentClasses[iComponentClass]
+            if(componentClasses.hasOwnProperty(iComponentClass) && this.getComponent(componentClass)){
+                return true
+            }
+        }
+        return false
+    }
+
+    /**
+     * @param {Class<ComponentData>} componentClass
+     */
+    createComponent(componentClass){
+        this.components.push(new componentClass())
     }
 
     /**

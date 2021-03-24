@@ -1,5 +1,5 @@
 import UnitData from '../project/data/UnitData.js'
-import GUIPropertyComponent from '../component/GUIPropertyComponent.js'
+import GUIPropertyComponent from '../component/gui/property/GUIPropertyComponent.js'
 
 export default class Unit extends UnitData{
 
@@ -9,11 +9,11 @@ export default class Unit extends UnitData{
     }
 
     /**
-     * @param {Component[]} defaultComponentClasses
+     * @param {Class<ComponentData>[]} defaultComponentClasses
      */
     init(defaultComponentClasses){
         defaultComponentClasses.forEach(componentClass =>
-            this.addComponent(new componentClass())
+            this.createComponent(componentClass)
         )
     }
 
@@ -40,4 +40,13 @@ export default class Unit extends UnitData{
         this.getComponent(GUIPropertyComponent).setFocused(false)
     }
 
+}
+
+export const PrimitiveShape = {
+    RECT: 'rect',
+    CIRCLE: 'circle',
+    ARROW_RIGHT: 'arrow_right',
+    ARROW_DOWN: 'arrow_down',
+    ARROW_RECT_RIGHT: 'arrow_rect_right',
+    ARROW_RECT_DOWN: 'arrow_rect_down'
 }

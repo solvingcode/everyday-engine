@@ -4,10 +4,6 @@ body{
     color: #f4f4f4;
 }
 
-#app-el-left{
-    border-right: 1px solid #333333;
-}
-
 #app-el-top{
     border-bottom: 1px solid #222222;
     border-top: 1px solid #222222;

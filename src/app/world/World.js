@@ -117,7 +117,7 @@ class World extends WorldData {
      * @param {Unit} unit
      */
     deleteUnit(unit) {
-        this.getUnitManager().delete(unit)
+        this.getUnitManager().deleteUnit(unit)
     }
 
     /**
@@ -128,6 +128,18 @@ class World extends WorldData {
         const unitSelector = UnitSelector.get()
         unitSelector.unselectAll(this)
         return unitSelector.select(this, this.getWorldPosition(dragArea.position), dragArea.size)
+    }
+
+    /**
+     * @param {Mouse} mouse
+     * @return {Unit[]}
+     */
+    focusUnits(mouse){
+        const unitSelector = UnitSelector.get()
+        unitSelector.unfocusAll(this)
+        const currentScenePosition = new Vector(mouse.currentScenePosition)
+        const vector3d = this.getCamera().fromCameraScale(currentScenePosition)
+        unitSelector.focus(this, this.getWorldPosition(vector3d))
     }
 
     /**

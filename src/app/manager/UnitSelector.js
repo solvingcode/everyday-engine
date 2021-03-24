@@ -1,4 +1,5 @@
-import UnitHelper from './UnitHelper.js'
+import UnitHelper from '../unit/UnitHelper.js'
+import GUIPendingComponent from '../component/gui/GUIPendingComponent.js'
 
 export default class UnitSelector {
 
@@ -9,7 +10,9 @@ export default class UnitSelector {
      * @return {Unit[]}
      */
     getSelected(world) {
-        return world.getUnitManager().getUnits().filter((unit) => unit.isSelected())
+        return world.getUnitManager().getUnits().filter((unit) =>
+            unit.isSelected() &&
+            !unit.getComponent(GUIPendingComponent))
     }
 
     /**
@@ -40,7 +43,7 @@ export default class UnitSelector {
      * @return {Unit}
      */
     getFirstSelectable(world, point) {
-        const units = this.getAll(world, point).filter(unit => unit.isSelectable())
+        const units = this.getAll(world, point).filter(unit => !unit.getComponent(GUIPendingComponent))
         return units.length && units[units.length - 1]
     }
 

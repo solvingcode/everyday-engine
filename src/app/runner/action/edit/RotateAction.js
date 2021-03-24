@@ -2,6 +2,9 @@ import Action from '../Action.js'
 import World from '../../../world/World.js'
 import StateManager from '../../../state/StateManager.js'
 import Vector from '../../../utils/Vector.js'
+import UnitHelper from '../../../unit/UnitHelper.js'
+import TransformComponent from '../../../component/TransformComponent.js'
+import MeshComponent from '../../../component/MeshComponent.js'
 
 export default class RotateAction extends Action {
 
@@ -11,37 +14,41 @@ export default class RotateAction extends Action {
 
     /**
      * @param {Mouse} mouse
-     * @param {Entity[]} selectedEntities
+     * @param {Unit[]} selectedUnits
      */
-    static run(mouse, selectedEntities) {
-        const {entity} = StateManager.get().getNextProgressData(this.STATE)
-        this.rotateEntities(mouse, selectedEntities, entity)
+    static run(mouse, selectedUnits) {
+        const {unit} = StateManager.get().getNextProgressData(this.STATE)
+        this.rotateUnits(mouse, selectedUnits, unit)
         return false
     }
 
     /**
      * @param {Mouse} mouse
-     * @param {Entity[]} selectedEntities
-     * @param {Entity} rotateEntity
+     * @param {Unit[]} selectedUnits
+     * @param {Unit} rotateUnit
      */
-    static rotateEntities(mouse, selectedEntities, rotateEntity){
+    static rotateUnits(mouse, selectedUnits, rotateUnit){
         const world = World.get()
         const scenePosition = world.getWorldScalePosition(mouse.scenePosition)
         const currentScenePosition = world.getWorldScalePosition(mouse.currentScenePosition)
         mouse.dragAndDrop(world.getCamera())
-        const vectorStart = rotateEntity.fromAbsolutePosition(scenePosition)
-        const vectorEnd = rotateEntity.fromAbsolutePosition(currentScenePosition)
+        const vectorStart = UnitHelper.fromAbsolutePosition(rotateUnit, scenePosition)
+        const vectorEnd = UnitHelper.fromAbsolutePosition(rotateUnit, currentScenePosition)
         const angleRadian = Vector.angle(vectorStart, vectorEnd)
-        selectedEntities.map((entity) => {
-            entity.rotate(angleRadian)
+        selectedUnits.map((unit) => {
+            const transformComponent = unit.getComponent(TransformComponent)
+            const rotation = transformComponent.getRotation() + angleRadian
+            transformComponent.setRotation(rotation)
+            unit.getComponent(MeshComponent).setGenerated(false)
         })
     }
 
     /**
-     * Stop the move action
+     * @override
      */
-    static stop(mouse, selectedEntities) {
-        selectedEntities.map(entity => World.get().generateEntity(entity))
+    static stop(mouse, selectedUnits) {
+        selectedUnits.map(unit =>
+            unit.getComponent(MeshComponent).setGenerated(false))
         return true
     }
 

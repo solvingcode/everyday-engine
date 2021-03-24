@@ -3,6 +3,7 @@ import Mesh from '../core/Mesh.js'
 import Style from '../pobject/Style.js'
 import Layout from '../layout/Layout.js'
 import Size from '../pobject/Size.js'
+import {PrimitiveShape} from '../unit/Unit.js'
 
 export default class MeshComponent extends Component{
 
@@ -17,9 +18,11 @@ export default class MeshComponent extends Component{
 
     constructor() {
         super('Mesh')
+        this.shape = PrimitiveShape.RECT
         this.mesh = new Mesh()
         this.style = new Style()
         this.size = new Size(0)
+        this.vertices = []
         this.generated = false
     }
 

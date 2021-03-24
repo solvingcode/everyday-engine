@@ -2,6 +2,7 @@ import World from '../../../world/World.js'
 import ListMenuItem from '../list/ListMenuItem.js'
 import Layout from '../../Layout.js'
 import UnitElementMenuItem from './UnitElementMenuItem.js'
+import GUIPendingComponent from '../../../component/gui/GUIPendingComponent.js'
 
 export default class UnitListMenuItem extends ListMenuItem {
 
@@ -24,7 +25,7 @@ export default class UnitListMenuItem extends ListMenuItem {
      * @override
      */
     getFormObject() {
-        return World.get().getUnitManager().getUnits()
+        return World.get().getUnitManager().getUnits().filter(unit => !unit.getComponent(GUIPendingComponent))
     }
 
     /**

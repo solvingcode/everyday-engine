@@ -1,7 +1,9 @@
-import Component from './Component.js'
+import Component from '../../Component.js'
+import Style from '../../../pobject/Style.js'
 
 export default class GUIPropertyComponent extends Component{
 
+    style
     selectable
     selected
     locked
@@ -12,12 +14,27 @@ export default class GUIPropertyComponent extends Component{
 
     constructor() {
         super('Edit Properties')
+        this.style = new Style()
         this.selectable = true
         this.selected = false
         this.locked = false
         this.visible = true
         this.focused = false
         this.rank = 0
+    }
+
+    /**
+     * @param {Style} style
+     */
+    setStyle(style) {
+        this.style = style
+    }
+
+    /**
+     * @return {Style}
+     */
+    getStyle(){
+        return this.style
     }
 
     /**
@@ -149,8 +166,10 @@ export default class GUIPropertyComponent extends Component{
     /**
      * @override
      */
-    isHidden() {
-        return true
+    getFormFields() {
+        return [
+
+        ]
     }
 
 }

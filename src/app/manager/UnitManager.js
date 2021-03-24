@@ -1,6 +1,9 @@
 import Unit from '../unit/Unit.js'
 import UnitManagerData from '../project/data/UnitManagerData.js'
 import MeshComponent from '../component/MeshComponent.js'
+import EmptyUnit from '../unit/type/EmptyUnit.js'
+import TransformComponent from '../component/TransformComponent.js'
+import Vector from '../utils/Vector.js'
 
 /**
  * Manage the units, components list (get, add, load, ...)
@@ -66,6 +69,37 @@ export default class UnitManager extends UnitManagerData {
     }
 
     /**
+     * @param {Asset} asset
+     * @param {Vector} position
+     * @return {Unit}
+     */
+    createUnitFromAsset(asset, position){
+        const unit = this.createUnit(EmptyUnit)
+        unit.setName(asset.getName())
+        const meshComponent = unit.getComponent(MeshComponent)
+        const transformComponent = unit.getComponent(TransformComponent)
+        meshComponent.setSize(_.cloneDeep(asset.getType().getData().size))
+        meshComponent.setAssetId(asset.getId())
+        transformComponent.setPosition(new Vector())
+        return unit
+    }
+
+    /**
+     * @param {string} shape
+     * @param {Vector} position
+     * @return {Unit}
+     */
+    createPrimitiveUnit(shape, position){
+        const unit = this.createUnit(EmptyUnit)
+        unit.setName(shape)
+        const transformComponent = unit.getComponent(TransformComponent)
+        const meshComponent = unit.getComponent(MeshComponent)
+        transformComponent.setPosition(new Vector(_.cloneDeep(position)))
+        meshComponent.setShape(shape)
+        return unit
+    }
+
+    /**
      * @param {Unit} unit
      */
     addUnit(unit) {
@@ -92,15 +126,15 @@ export default class UnitManager extends UnitManagerData {
      * @return {Unit[]}
      */
     getUnitsHasComponents(componentClasses){
-        return this.getUnits().filter(unit => {
-            for (const iComponentClass in componentClasses){
-                const componentClass = componentClasses[iComponentClass]
-                if(componentClasses.hasOwnProperty(componentClass) && !unit.getComponent(componentClass)){
-                    return false
-                }
-            }
-            return true
-        })
+        return this.getUnits().filter(unit => unit.hasComponents(componentClasses))
+    }
+
+    /**
+     * @param {Component[]} componentClasses
+     * @return {Unit[]}
+     */
+    getUnitsHasAnyComponents(componentClasses){
+        return this.getUnits().filter(unit => unit.hasAnyComponents(componentClasses))
     }
 
     /**

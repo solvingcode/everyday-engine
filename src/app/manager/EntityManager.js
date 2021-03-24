@@ -1,4 +1,3 @@
-import EntityGenerator from '../world/generator/EntityGenerator.js'
 import Entity from '../entity/Entity.js'
 import AttachEntity from '../entity/types/constraint/AttachEntity.js'
 import VirtualEntity from '../entity/VirtualEntity.js'
