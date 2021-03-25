@@ -1,22 +1,17 @@
-import EntityMotion from '../entity/EntityMotion.js'
 import Vector from '../utils/Vector.js'
 import Size from '../pobject/Size.js'
-import Style from '../pobject/Style.js'
-import PerlinNoiseConfig from '../pobject/PerlinNoiseConfig.js'
 import World from '../world/World.js'
-import EntityManager from '../manager/EntityManager.js'
 import AssetsManager from '../manager/AssetsManager.js'
 import Camera from '../core/Camera.js'
 import Physics from '../physics/Physics.js'
-import TerrainManager from '../world/terrain/TerrainManager.js'
-import Terrain from '../world/terrain/Terrain.js'
-import EntityProps from '../pobject/EntityProps.js'
-import PhysicsProps from '../pobject/PhysicsProps.js'
 import Asset from '../asset/Asset.js'
 import PhysicsEngine from '../physics/engine/PhysicsEngine.js'
 import Folder from '../asset/Folder.js'
 import AssetType from '../asset/types/AssetType.js'
 import AssetTypeData from '../asset/types/AssetTypeData.js'
+import Unit from '../unit/Unit.js'
+import UnitManager from '../manager/UnitManager.js'
+import Component from '../component/Component.js'
 
 /**
  * Define the schema of project data.
@@ -39,348 +34,49 @@ export default {
             mouseConstraintId: {
                 type: 'number'
             },
-            cameraEntityId: {
+            cameraUnitId: {
                 type: 'number'
             },
             showGrid: {
                 type: 'boolean'
             },
-            entityManager: {
-                type: EntityManager,
+            unitManager: {
+                type: UnitManager,
                 meta: {
                     dataId: {
                         type: 'number'
                     },
-                    entities: {
+                    units: {
                         type: Array,
                         meta: {
                             element: {
-                                type: EntityMotion,
+                                type: Unit,
                                 meta: {
                                     dataId: {
                                         type: 'number'
                                     },
-                                    textureId: {
-                                        type: 'number'
-                                    },
-                                    subEntity: {
-                                        type: 'boolean'
-                                    },
-                                    entityChildIds: {
-                                        type: Array,
-                                        meta: {
-                                            element: {
-                                                type: 'number'
-                                            }
-                                        }
-                                    },
-                                    entityLinkIds: {
-                                        type: Array,
-                                        meta: {
-                                            element: {
-                                                type: 'number'
-                                            }
-                                        }
-                                    },
-                                    props: {
-                                        prototype: EntityProps,
-                                        meta: {
-                                            name: {
-                                                type: 'string'
-                                            },
-                                            textureId: {
-                                                type: 'number'
-                                            },
-                                            style: {
-                                                prototype: Style,
-                                                meta: {
-                                                    color: {
-                                                        type: 'string'
-                                                    },
-                                                    fillColor: {
-                                                        type: 'string'
-                                                    },
-                                                    colorOpacity: {
-                                                        type: 'number'
-                                                    },
-                                                    fillColorOpacity: {
-                                                        type: 'number'
-                                                    },
-                                                    backgroundImageRepeat: {
-                                                        type: 'boolean'
-                                                    },
-                                                    opacity: {
-                                                        type: 'number'
-                                                    },
-                                                    borderSize: {
-                                                        type: 'number'
-                                                    }
-                                                }
-                                            },
-                                            position: {
-                                                prototype: Vector,
-                                                meta: {
-                                                    x: {
-                                                        type: 'number'
-                                                    },
-                                                    y: {
-                                                        type: 'number'
-                                                    },
-                                                    z: {
-                                                        type: 'number'
-                                                    }
-                                                }
-                                            },
-                                            rotation: {
-                                                type: 'number'
-                                            },
-                                            advancedStyle: {
-                                                prototype: Style,
-                                                meta: {
-                                                    color: {
-                                                        type: 'string'
-                                                    },
-                                                    fillColor: {
-                                                        type: 'string'
-                                                    },
-                                                    colorOpacity: {
-                                                        type: 'number'
-                                                    },
-                                                    fillColorOpacity: {
-                                                        type: 'number'
-                                                    },
-                                                    backgroundImageRepeat: {
-                                                        type: 'boolean'
-                                                    },
-                                                    opacity: {
-                                                        type: 'number'
-                                                    },
-                                                    borderSize: {
-                                                        type: 'number'
-                                                    }
-                                                }
-                                            },
-                                            noiseConfigs: {
-                                                prototype: PerlinNoiseConfig,
-                                                meta: {
-                                                    seed: {
-                                                        type: 'number'
-                                                    },
-                                                    octaves: {
-                                                        type: 'number'
-                                                    },
-                                                    amplitude: {
-                                                        type: 'number'
-                                                    },
-                                                    persistence: {
-                                                        type: 'number'
-                                                    },
-                                                    smoothness: {
-                                                        type: 'number'
-                                                    }
-                                                }
-                                            },
-                                            size: {
-                                                prototype: Size,
-                                                meta: {
-                                                    width: {
-                                                        type: 'number'
-                                                    },
-                                                    height: {
-                                                        type: 'number'
-                                                    }
-                                                }
-                                            }
-                                        }
-                                    },
                                     id: {
                                         type: 'number'
-                                    },
-                                    shape: {
-                                        type: 'string'
                                     },
                                     name: {
                                         type: 'string'
                                     },
-                                    rotation: {
-                                        type: 'number'
-                                    },
-                                    radius: {
-                                        type: 'number'
-                                    },
-                                    selectable: {
-                                        type: 'boolean'
-                                    },
-                                    locked: {
-                                        type: 'boolean'
-                                    },
-                                    visible: {
-                                        type: 'boolean'
-                                    },
-                                    clonable: {
-                                        type: 'boolean'
-                                    },
-                                    size: {
-                                        prototype: Size,
-                                        meta: {
-                                            width: {
-                                                type: 'number'
-                                            },
-                                            height: {
-                                                type: 'number'
-                                            }
-                                        }
-                                    },
-                                    style: {
-                                        prototype: Style,
-                                        meta: {
-                                            color: {
-                                                type: 'string'
-                                            },
-                                            fillColor: {
-                                                type: 'string'
-                                            },
-                                            colorOpacity: {
-                                                type: 'number'
-                                            },
-                                            fillColorOpacity: {
-                                                type: 'number'
-                                            },
-                                            backgroundImageRepeat: {
-                                                type: 'boolean'
-                                            },
-                                            opacity: {
-                                                type: 'number'
-                                            },
-                                            borderSize: {
-                                                type: 'number'
-                                            }
-                                        }
-                                    },
-                                    advancedStyle: {
-                                        prototype: Style,
-                                        meta: {
-                                            color: {
-                                                type: 'string'
-                                            },
-                                            fillColor: {
-                                                type: 'string'
-                                            },
-                                            colorOpacity: {
-                                                type: 'number'
-                                            },
-                                            fillColorOpacity: {
-                                                type: 'number'
-                                            },
-                                            backgroundImageRepeat: {
-                                                type: 'boolean'
-                                            },
-                                            opacity: {
-                                                type: 'number'
-                                            },
-                                            borderSize: {
-                                                type: 'number'
-                                            }
-                                        }
-                                    },
-                                    noiseConfigs: {
-                                        prototype: PerlinNoiseConfig,
-                                        meta: {
-                                            seed: {
-                                                type: 'number'
-                                            },
-                                            octaves: {
-                                                type: 'number'
-                                            },
-                                            amplitude: {
-                                                type: 'number'
-                                            },
-                                            persistence: {
-                                                type: 'number'
-                                            },
-                                            smoothness: {
-                                                type: 'number'
-                                            }
-                                        }
-                                    },
-                                    vertices: {
+                                    components: {
                                         type: Array,
                                         meta: {
                                             element: {
-                                                prototype: Vector,
+                                                type: Component,
                                                 meta: {
-                                                    x: {
+                                                    dataId: {
                                                         type: 'number'
                                                     },
-                                                    y: {
+                                                    id: {
                                                         type: 'number'
                                                     },
-                                                    z: {
-                                                        type: 'number'
+                                                    name: {
+                                                        type: 'string'
                                                     }
                                                 }
-                                            }
-                                        }
-                                    },
-                                    position: {
-                                        prototype: Vector,
-                                        meta: {
-                                            x: {
-                                                type: 'number'
-                                            },
-                                            y: {
-                                                type: 'number'
-                                            },
-                                            z: {
-                                                type: 'number'
-                                            }
-                                        }
-                                    },
-                                    physics: {
-                                        prototype: PhysicsProps,
-                                        meta: {
-                                            velocity: {
-                                                prototype: Vector,
-                                                meta: {
-                                                    x: {
-                                                        type: 'number'
-                                                    },
-                                                    y: {
-                                                        type: 'number'
-                                                    },
-                                                    z: {
-                                                        type: 'number'
-                                                    }
-                                                }
-                                            },
-                                            angularVelocity: {
-                                                type: 'number'
-                                            },
-                                            speed: {
-                                                type: 'number'
-                                            },
-                                            density: {
-                                                type: 'number'
-                                            },
-                                            force: {
-                                                prototype: Vector,
-                                                meta: {
-                                                    x: {
-                                                        type: 'number'
-                                                    },
-                                                    y: {
-                                                        type: 'number'
-                                                    },
-                                                    z: {
-                                                        type: 'number'
-                                                    }
-                                                }
-                                            },
-                                            fixed: {
-                                                type: 'boolean'
-                                            },
-                                            motion: {
-                                                type: 'boolean'
                                             }
                                         }
                                     }
@@ -439,44 +135,6 @@ export default {
                     },
                     height: {
                         type: 'number'
-                    }
-                }
-            },
-            terrainManager: {
-                type: TerrainManager,
-                meta: {
-                    dataId: {
-                        type: 'number'
-                    },
-                    terrains: {
-                        type: Array,
-                        meta: {
-                            element: {
-                                type: Terrain,
-                                meta: {
-                                    dataId: {
-                                        type: 'number'
-                                    },
-                                    entityId: {
-                                        type: 'number'
-                                    },
-                                    rotation: {
-                                        type: 'number'
-                                    },
-                                    chunksNbr: {
-                                        type: 'number'
-                                    },
-                                    chunkIds: {
-                                        type: Array,
-                                        meta: {
-                                            element: {
-                                                type: 'number'
-                                            }
-                                        }
-                                    }
-                                }
-                            }
-                        }
                     }
                 }
             },

@@ -1,6 +1,6 @@
 import PolyEntity from '../../../../../entity/types/shape/PolyEntity.js'
 import EntityUI from '../entity/EntityUI.js'
-import Style from '../../../../../utils/Style.js'
+import StyleUtil from '../../../../../utils/StyleUtil.js'
 
 /**
  * GraphLineUI class
@@ -14,7 +14,7 @@ class GraphLineUI {
     static get(graph) {
         const entity = new PolyEntity({position: {x: 0, y: 0}})
         entity.setPoints(graph.data)
-        Style.isThemeDark() && entity.setStyle({color: '#FFFFFF'})
+        StyleUtil.isThemeDark() && entity.setStyle({color: '#FFFFFF'})
         if (entity.regenerate()) {
             return EntityUI.getImage(entity, this.props)
         }

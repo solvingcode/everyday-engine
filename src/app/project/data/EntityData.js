@@ -103,14 +103,14 @@ class EntityData extends Data {
     }
 
     /**
-     * @param {Style} advancedStyle
+     * @param {StyleUtil} advancedStyle
      */
     setAdvancedStyle(advancedStyle) {
         this.advancedStyle = advancedStyle
     }
 
     /**
-     * @return {Style}
+     * @return {StyleUtil}
      */
     getAdvancedStyle() {
         return this.advancedStyle
@@ -359,7 +359,7 @@ class EntityData extends Data {
     }
 
     /**
-     * @return {Style}
+     * @return {StyleUtil}
      */
     getStyle() {
         return this.style

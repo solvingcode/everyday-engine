@@ -29,7 +29,6 @@ class Game extends Scene {
         window.setSize(world.getResolution())
         world.getPhysics().run(world)
         world.setupCamera()
-        world.hideComponents()
         world.regenerateAll()
     }
 

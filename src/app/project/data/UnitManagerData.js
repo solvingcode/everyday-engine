@@ -6,7 +6,6 @@ import Data from './Data.js'
 export default class UnitManagerData extends Data {
 
     units
-    components
 
     /**
      * @param {Unit} units
@@ -21,20 +20,5 @@ export default class UnitManagerData extends Data {
     getUnits() {
         return this.units
     }
-
-    /**
-     * @param {Component} components
-     */
-    setComponents(components) {
-        this.components = components
-    }
-
-    /**
-     * @return {Component[]}
-     */
-    getComponents() {
-        return this.components
-    }
-
 
 }

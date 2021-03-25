@@ -3,7 +3,7 @@ import {STYLE_THEME} from '../core/Constant.js'
 /**
  * Style utils
  */
-class Style {
+class StyleUtil {
     /**
      * is theme dark
      */
@@ -12,4 +12,4 @@ class Style {
     }
 }
 
-export default Style
+export default StyleUtil

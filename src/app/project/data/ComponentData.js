@@ -5,13 +5,11 @@ export default class ComponentData extends Data{
 
     id
     name
-    components
 
     constructor(name) {
         super()
         this.id = Maths.generateId()
         this.name = name || 'Custom Component'
-        this.components = []
     }
 
     /**
@@ -40,20 +38,6 @@ export default class ComponentData extends Data{
      */
     getName(){
         return this.name
-    }
-
-    /**
-     * @param {ComponentData[]} components
-     */
-    setComponents(components){
-        this.components = components
-    }
-
-    /**
-     * @return {ComponentData[]}
-     */
-    getComponents(){
-        return this.components
     }
 
     /**

@@ -13,7 +13,6 @@ class WorldData extends Data {
     unitManager
     camera
     physics
-    terrainManager
     assetsManager
     cameraUnitId
     resolution

@@ -4,6 +4,7 @@ import MeshComponent from '../component/MeshComponent.js'
 import EmptyUnit from '../unit/type/EmptyUnit.js'
 import TransformComponent from '../component/TransformComponent.js'
 import Vector from '../utils/Vector.js'
+import GUIPropertyComponent from '../component/gui/property/GUIPropertyComponent.js'
 
 /**
  * Manage the units, components list (get, add, load, ...)
@@ -56,14 +57,31 @@ export default class UnitManager extends UnitManagerData {
     }
 
     /**
-     * @param {Function} type
-     * @return {Unit}
+     * @template T
+     * @param {Class} T
+     * @return {T}
      */
-    createUnit(type) {
-        if (!(type.prototype instanceof Unit)) {
+    createUnit(T) {
+        if (!(T.prototype instanceof Unit)) {
             throw new TypeError(`Unit type must be child of Unit class (${type} given)`)
         }
-        const unit = new type()
+        const unit = new T()
+        this.addUnit(unit)
+        return unit
+    }
+
+    /**
+     * @template T
+     * @param {Class} T
+     * @param {...any} props
+     * @return {T}
+     */
+    createUnitInstant(T, ...props) {
+        if (!(T.prototype instanceof Unit)) {
+            throw new TypeError(`Unit type must be child of Unit class (${type} given)`)
+        }
+        const unit = new T()
+        unit.instantiate(...props)
         this.addUnit(unit)
         return unit
     }
@@ -103,7 +121,13 @@ export default class UnitManager extends UnitManagerData {
      * @param {Unit} unit
      */
     addUnit(unit) {
-        this.units.push(unit)
+        const rank = unit.getComponent(GUIPropertyComponent).getRank()
+        const indexBiggerRank = this.units.findIndex(pUnit => pUnit.getComponent(GUIPropertyComponent).getRank() > rank)
+        if(indexBiggerRank >= 0){
+            this.units.splice(indexBiggerRank, 0, unit)
+        }else{
+            this.units.push(unit)
+        }
     }
 
     /**

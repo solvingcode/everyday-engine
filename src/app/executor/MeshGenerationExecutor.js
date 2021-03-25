@@ -98,7 +98,6 @@ export default class MeshGenerationExecutor extends ComponentExecutor{
         const {context, scaleSize} = dataContext
         if (meshComponent.getAssetId()) {
             const asset = dataContext.world.getAssetsManager().findAssetById(meshComponent.getAssetId())
-            borderSize && context.stroke()
             if (fillColor) {
                 context.fill()
                 context.globalCompositeOperation = 'destination-over'
@@ -111,6 +110,7 @@ export default class MeshGenerationExecutor extends ComponentExecutor{
             } else {
                 context.drawImage(canvasBg, 0, 0, scaleSize.width, scaleSize.height)
             }
+            borderSize && context.stroke()
         } else if (fillColor) {
             context.stroke()
             context.fill()
