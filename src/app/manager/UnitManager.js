@@ -5,6 +5,7 @@ import EmptyUnit from '../unit/type/EmptyUnit.js'
 import TransformComponent from '../component/TransformComponent.js'
 import Vector from '../utils/Vector.js'
 import GUIPropertyComponent from '../component/gui/property/GUIPropertyComponent.js'
+import Maths from '../utils/Maths.js'
 
 /**
  * Manage the units, components list (get, add, load, ...)
@@ -52,8 +53,17 @@ export default class UnitManager extends UnitManagerData {
      * @param {Class} type
      * @return {Unit[]}
      */
-    findUnitByType(type) {
+    findUnitsByType(type) {
         return this.units.filter(element => element instanceof type)
+    }
+
+    /**
+     * @param {Class} type
+     * @return {Unit}
+     */
+    findFirstUnitByType(type) {
+        const result = this.findUnitsByType(type)
+        return result && result[0]
     }
 
     /**
@@ -83,22 +93,6 @@ export default class UnitManager extends UnitManagerData {
         const unit = new T()
         unit.instantiate(...props)
         this.addUnit(unit)
-        return unit
-    }
-
-    /**
-     * @param {Asset} asset
-     * @param {Vector} position
-     * @return {Unit}
-     */
-    createUnitFromAsset(asset, position){
-        const unit = this.createUnit(EmptyUnit)
-        unit.setName(asset.getName())
-        const meshComponent = unit.getComponent(MeshComponent)
-        const transformComponent = unit.getComponent(TransformComponent)
-        meshComponent.setSize(_.cloneDeep(asset.getType().getData().size))
-        meshComponent.setAssetId(asset.getId())
-        transformComponent.setPosition(new Vector())
         return unit
     }
 
@@ -142,7 +136,44 @@ export default class UnitManager extends UnitManagerData {
      */
     deleteUnitById(unitId) {
         const unit = this.findUnitById(unitId)
-        this.delete(unit)
+        this.deleteUnit(unit)
+    }
+
+    /**
+     * @param {Unit} unit
+     * @param {number} targetIndex
+     */
+    moveUnitToIndex(unit, targetIndex){
+        this.deleteUnit(unit)
+        this.units.splice(targetIndex, 0, unit)
+    }
+
+    /**
+     * @param {Unit} unit
+     */
+    moveUnitUp(unit){
+        const index = this.getIndexOfUnit(unit)
+        if(index > 0){
+            this.moveUnitToIndex(unit, index - 1)
+        }
+    }
+
+    /**
+     * @param {Unit} unit
+     */
+    moveUnitDown(unit){
+        const index = this.getIndexOfUnit(unit)
+        if(index < this.units.length - 1){
+            this.moveUnitToIndex(unit, index + 1)
+        }
+    }
+
+    /**
+     * @param {number} unitId
+     */
+    tryDeleteUnitById(unitId) {
+        const unit = this.findUnitById(unitId)
+        unit && this.deleteUnit(unit)
     }
 
     /**
@@ -155,10 +186,39 @@ export default class UnitManager extends UnitManagerData {
 
     /**
      * @param {Component[]} componentClasses
+     * @return {Unit}
+     */
+    getOneUnitHasComponents(componentClasses){
+        const result = this.getUnitsHasComponents(componentClasses)
+        return result && result[0]
+    }
+
+    /**
+     * @param {Component[]} componentClasses
      * @return {Unit[]}
      */
     getUnitsHasAnyComponents(componentClasses){
         return this.getUnits().filter(unit => unit.hasAnyComponents(componentClasses))
+    }
+
+    /**
+     * @param {Unit} unit
+     * @return {Unit}
+     */
+    clone(unit) {
+        const cloneUnit = _.cloneDeep(unit)
+        cloneUnit.setName(`Clone of ${unit.getName()}`)
+        cloneUnit.setId(Maths.generateId())
+        this.addUnit(cloneUnit)
+        return cloneUnit
+    }
+
+    /**
+     * @param {Unit[]} units
+     * @return {Unit[]}
+     */
+    cloneUnits(units) {
+        return units.map(unit => this.clone(unit))
     }
 
     /**

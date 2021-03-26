@@ -6,6 +6,7 @@ import CircleShapeGenerator from './shape/circle/CircleShapeGenerator.js'
 import ArrowRectRightShapeGenerator from './shape/arrowrect/ArrowRectRightShapeGenerator.js'
 import ArrowRectDownShapeGenerator from './shape/arrowrect/ArrowRectDownShapeGenerator.js'
 import GridShapeGenerator from './shape/grid/GridShapeGenerator.js'
+import LineShapeGenerator from './shape/line/LineShapeGenerator.js'
 
 /**
  * @abstract
@@ -45,6 +46,8 @@ export default class ShapeGenerator {
                 return CircleShapeGenerator
             case PrimitiveShape.GRID:
                 return GridShapeGenerator
+            case PrimitiveShape.LINE:
+                return LineShapeGenerator
             default:
                 throw new TypeError(`${shape} not supported by ShapeGenerator`)
         }

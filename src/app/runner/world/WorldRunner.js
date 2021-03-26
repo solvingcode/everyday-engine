@@ -31,12 +31,14 @@ import RotateZUnitInstant from '../../unit/instant/type/internal/rotate/RotateZU
 import GUIGridComponent from '../../component/gui/grid/GUIGridComponent.js'
 import GridUnitInstant from '../../unit/instant/type/internal/grid/GridUnitInstant.js'
 import Window from '../../core/Window.js'
+import TransformComponent from '../../component/TransformComponent.js'
+import GridXUnitInstant from '../../unit/instant/type/internal/grid/GridXUnitInstant.js'
+import GUIGridYComponent from '../../component/gui/grid/GUIGridYComponent.js'
+import GUIGridXComponent from '../../component/gui/grid/GUIGridXComponent.js'
+import GridYUnitInstant from '../../unit/instant/type/internal/grid/GridYUnitInstant.js'
 
 const {MouseButton} = Mouse
 
-/**
- * @todo: need to be revisited
- */
 class WorldRunner extends Runner {
 
     /**
@@ -67,16 +69,18 @@ class WorldRunner extends Runner {
         }
     }
 
+    /**
+     * @todo: need to be revisited
+     */
     createGridEntity() {
         const world = World.get()
         const camera = world.getCamera()
         const windowSize = Window.get().size
         const unitManager = world.getUnitManager()
-        const gridComponentClass = GUIGridComponent
         const position = new Vector()
-        unitManager.getUnitsHasComponents([gridComponentClass])
-            .forEach(unit => unitManager.deleteUnit(unit))
-        if(world.isShowGrid()){
+        this.unitGridChildIds = (this.unitGridChildIds || [])
+        let chunkIds = []
+        if (world.isShowGrid()) {
             const sizeChunk = new Size({width: 600, height: 600})
             const maxChunkNbr = 14 * 8
             const chunkSizeNbrX = Math.ceil(camera.fromScaleNumber(windowSize.width / sizeChunk.width, position)) + 1
@@ -90,13 +94,30 @@ class WorldRunner extends Runner {
                         return new Vector({x, y})
                     })
                 chunkVectors.forEach(({x, y}) => {
-                    unitManager.createUnitInstant(GridUnitInstant,
-                        new Vector({x, y}),
-                        sizeChunk
-                    )
+                    const positionChunk = new Vector({x, y})
+
+                    const unitGridExist = unitManager.getUnitsHasComponents([GUIGridComponent])
+                        .find(unit => unit.getComponent(TransformComponent).getPosition().equals(positionChunk))
+                    const unitGrid = unitGridExist || unitManager.createUnitInstant(GridUnitInstant, positionChunk, sizeChunk)
+
+                    const unitGridXExist = unitManager.getUnitsHasComponents([GUIGridXComponent])
+                        .find(unit => unit.getComponent(TransformComponent).getPosition().equals(positionChunk))
+                    const unitGridX = unitGridXExist || unitManager.createUnitInstant(GridXUnitInstant, positionChunk, sizeChunk)
+
+                    const unitGridYExist = unitManager.getUnitsHasComponents([GUIGridYComponent])
+                        .find(unit => unit.getComponent(TransformComponent).getPosition().equals(positionChunk))
+                    const unitGridY = unitGridYExist || unitManager.createUnitInstant(GridYUnitInstant, positionChunk, sizeChunk)
+
+                    chunkIds = chunkIds.concat([unitGrid.getId(), unitGridX.getId(), unitGridY.getId()])
                 })
             }
         }
+        this.unitGridChildIds
+            .filter(childId => !chunkIds.includes(childId))
+            .forEach(childId => {
+                unitManager.tryDeleteUnitById(childId)
+            })
+        this.unitGridChildIds = chunkIds
     }
 
     /**
@@ -140,7 +161,7 @@ class WorldRunner extends Runner {
      * @param {StateManager} stateManager
      * @return {boolean}
      */
-    isSelectEdit(stateManager){
+    isSelectEdit(stateManager) {
         return stateManager.isProgress('DRAW_SELECT') ||
             stateManager.isProgress('DRAW_MOVE') ||
             stateManager.isProgress('DRAW_SCALE') ||
@@ -152,23 +173,22 @@ class WorldRunner extends Runner {
      * @param {StateManager} stateManager
      * @param {Mouse} mouse
      */
-    handleUnitEvent(stateManager, mouse){
-        if(this.isSelectEdit(stateManager)){
+    handleUnitEvent(stateManager, mouse) {
+        if (this.isSelectEdit(stateManager)) {
             if (mouse.isButtonPressed(MouseButton.LEFT)) {
                 const world = World.get()
                 const currentScenePosition = world.getCamera().fromCameraScale(mouse.currentScenePosition)
                 const unit = world.findFirstUnitByPosition(world.getWorldPosition(currentScenePosition))
                 const dragArea = mouse.getDragArea(world.getCamera())
-                if(unit && dragArea){
-                    if(unit.getComponent(GUIMoveComponent)){
+                if (unit && dragArea) {
+                    if (unit.getComponent(GUIMoveComponent)) {
                         !stateManager.isProgress(MoveAction.STATE) &&
                         stateManager.startState(MoveAction.STATE, 1, {unit})
                     }
-                    if(unit.getComponent(GUIScaleComponent)){
+                    if (unit.getComponent(GUIScaleComponent)) {
                         !stateManager.isProgress(ScaleAction.STATE) &&
                         stateManager.startState(ScaleAction.STATE, 1, {unit})
-                    }
-                    else if(unit.getComponent(GUIRotateComponent)){
+                    } else if (unit.getComponent(GUIRotateComponent)) {
                         !stateManager.isProgress(RotateAction.STATE) &&
                         stateManager.startState(RotateAction.STATE, 1, {unit})
                     }
@@ -188,7 +208,7 @@ class WorldRunner extends Runner {
     /**
      * @param {StateManager} stateManager
      */
-    setupEditor(stateManager){
+    setupEditor(stateManager) {
         const world = World.get()
         const unitManager = world.getUnitManager()
         const moveComponentClasses = [GUIMoveXComponent, GUIMoveYComponent, GUIMoveFreeComponent]
@@ -199,29 +219,28 @@ class WorldRunner extends Runner {
         const selectedUnits = UnitSelector.get().getSelected(world)
         let editorPosition = selectedUnits
             .reduce((position, unit) => UnitHelper.toLargeCenterPosition(unit), null)
-        if(editorPosition) {
-            if(stateManager.hasAnyState('DRAW_MOVE')){
+        if (editorPosition) {
+            if (stateManager.hasAnyState('DRAW_MOVE')) {
                 moveComponentClasses.forEach(componentClass => {
-                    if(componentClass === GUIMoveXComponent){
+                    if (componentClass === GUIMoveXComponent) {
                         unitManager.createUnitInstant(MoveXUnitInstant, componentClass, editorPosition)
-                    }else if(componentClass === GUIMoveYComponent){
+                    } else if (componentClass === GUIMoveYComponent) {
                         unitManager.createUnitInstant(MoveYUnitInstant, componentClass, editorPosition)
-                    }else if(componentClass === GUIMoveFreeComponent){
+                    } else if (componentClass === GUIMoveFreeComponent) {
                         unitManager.createUnitInstant(MoveFreeUnitInstant, componentClass, editorPosition)
                     }
                 })
-            }
-            else if(stateManager.hasAnyState('DRAW_SCALE')){
+            } else if (stateManager.hasAnyState('DRAW_SCALE')) {
                 scaleComponentClasses.forEach(componentClass => {
-                    if(componentClass === GUIScaleXComponent){
+                    if (componentClass === GUIScaleXComponent) {
                         unitManager.createUnitInstant(ScaleXUnitInstant, componentClass, editorPosition)
-                    }else if(componentClass === GUIScaleYComponent){
+                    } else if (componentClass === GUIScaleYComponent) {
                         unitManager.createUnitInstant(ScaleYUnitInstant, componentClass, editorPosition)
-                    }else if(componentClass === GUIScaleFreeComponent){
+                    } else if (componentClass === GUIScaleFreeComponent) {
                         unitManager.createUnitInstant(ScaleFreeUnitInstant, componentClass, editorPosition)
                     }
                 })
-            }else if(stateManager.hasAnyState('DRAW_ROTATE')){
+            } else if (stateManager.hasAnyState('DRAW_ROTATE')) {
                 rotateComponentClasses.forEach(componentClass => {
                     unitManager.createUnitInstant(RotateZUnitInstant, componentClass, editorPosition)
                 })

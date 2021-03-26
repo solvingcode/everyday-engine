@@ -45,6 +45,7 @@ export default class Unit extends UnitData{
 export const PrimitiveShape = {
     RECT: 'rect',
     CIRCLE: 'circle',
+    LINE: 'line',
     ARROW_RIGHT: 'arrow_right',
     ARROW_DOWN: 'arrow_down',
     ARROW_RECT_RIGHT: 'arrow_rect_right',

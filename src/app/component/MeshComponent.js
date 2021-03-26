@@ -9,6 +9,7 @@ export default class MeshComponent extends Component{
 
     shape
     vertices
+    shapeVertices
     assetId
     style
     mesh
@@ -23,6 +24,7 @@ export default class MeshComponent extends Component{
         this.style = new Style()
         this.size = new Size(0)
         this.vertices = []
+        this.shapeVertices = []
         this.generated = false
     }
 
@@ -129,6 +131,20 @@ export default class MeshComponent extends Component{
      */
     getVertices(){
         return this.vertices
+    }
+
+    /**
+     * @param {Vector[]} shapeVertices
+     */
+    setShapeVertices(shapeVertices){
+        this.shapeVertices = shapeVertices
+    }
+
+    /**
+     * @return {Vector[]}
+     */
+    getShapeVertices(){
+        return this.shapeVertices
     }
 
     /**

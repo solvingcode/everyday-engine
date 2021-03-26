@@ -6,7 +6,6 @@ import Asset from '../../asset/Asset.js'
 import MatterEngine from '../../physics/engine/matter/MatterEngine.js'
 import Folder from '../../asset/Folder.js'
 import Mesh from '../../core/Mesh.js'
-import AssetEntity from '../../entity/types/asset/AssetEntity.js'
 import UnitManager from '../../manager/UnitManager.js'
 import EmptyUnit from '../../unit/type/EmptyUnit.js'
 import GUIPropertyComponent from '../../component/gui/property/GUIPropertyComponent.js'
@@ -16,6 +15,7 @@ import MoveXUnitInstant from '../../unit/instant/type/internal/move/MoveXUnitIns
 import MoveYUnitInstant from '../../unit/instant/type/internal/move/MoveYUnitInstant.js'
 import MoveFreeUnitInstant from '../../unit/instant/type/internal/move/MoveFreeUnitInstant.js'
 import GridUnitInstant from '../../unit/instant/type/internal/grid/GridUnitInstant.js'
+import AssetUnitInstant from '../../unit/instant/type/internal/asset/AssetUnitInstant.js'
 
 /**
  * @class {DataSchema}
@@ -30,14 +30,14 @@ class DataSchema {
         {id: 30, type: EmptyUnit},
         {id: 40, type: MeshComponent},
         {id: 50, type: TransformComponent},
+        {id: 60, type: AssetUnitInstant},
         {id: 4, type: Camera},
         {id: 5, type: Physics},
         {id: 16, type: AssetsManager},
         {id: 17, type: Asset},
         {id: 19, type: MatterEngine},
         {id: 23, type: Folder},
-        {id: 24, type: Mesh},
-        {id: 25, type: AssetEntity}
+        {id: 24, type: Mesh}
     ]
 
     static exclude = [

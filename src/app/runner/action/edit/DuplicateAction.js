@@ -10,12 +10,12 @@ class DuplicateAction extends Action {
     /**
      * @override
      */
-    static run(mouse, selectedEntities, entitySelector) {
-        const entityManager = World.get().getEntityManager()
-        entitySelector.unselectAll()
-        const clones = entityManager.cloneEntities(selectedEntities)
-        clones.forEach(entity => entity.select())
-        entityManager.concatEntities(clones)
+    static run(mouse, selectedUnits, unitSelector) {
+        const world = World.get()
+        const unitManager = world.getUnitManager()
+        unitSelector.unselectAll(world)
+        const clones = unitManager.cloneUnits(selectedUnits)
+        clones.forEach(unit => unit.select())
         return true
     }
 

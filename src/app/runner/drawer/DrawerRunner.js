@@ -4,12 +4,11 @@ import Mouse from '../../core/Mouse.js'
 import World from '../../world/World.js'
 import Vector from '../../utils/Vector.js'
 import {PrimitiveShape} from '../../unit/Unit.js'
-import GUIPendingComponent from '../../component/gui/GUIPendingComponent.js'
 import MeshComponent from '../../component/MeshComponent.js'
 import Size from '../../pobject/Size.js'
 import TransformComponent from '../../component/TransformComponent.js'
-import Style from '../../pobject/Style.js'
 import MoveAction from '../action/edit/MoveAction.js'
+import SelectionUnitInstant from '../../unit/instant/type/internal/edit/SelectionUnitInstant.js'
 
 const {MouseButton} = Mouse
 
@@ -115,19 +114,15 @@ export default class DrawerRunner extends Runner {
         const world = World.get()
         const dragDistance = mouse.getDragDistanceCamera(world.getCamera())
         const newPosition = this.calculateDragPosition(position, world, mouse, dragDistance)
+        const size = new Size({width: Math.abs(dragDistance.x), height: Math.abs(dragDistance.y)})
         if (!this.currentUnit) {
-            this.currentUnit = world.getUnitManager().createPrimitiveUnit(shape, newPosition)
-            this.currentUnit.createComponent(GUIPendingComponent)
+            this.currentUnit = world.getUnitManager().createUnitInstant(SelectionUnitInstant, newPosition, size)
         }
         const transformComponent = this.currentUnit.getComponent(TransformComponent)
         const meshComponent = this.currentUnit.getComponent(MeshComponent)
         transformComponent.setPosition(newPosition)
-        meshComponent.setSize(new Size({width: Math.abs(dragDistance.x), height: Math.abs(dragDistance.y)}))
+        meshComponent.setSize(size)
         meshComponent.setGenerated(false)
-        const style = new Style()
-        style.setColor('#FFFFFF')
-        style.setBorderSize(3)
-        meshComponent.setStyle(style)
     }
 
     /**

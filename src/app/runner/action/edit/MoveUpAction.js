@@ -6,9 +6,9 @@ class MoveUpAction extends Action {
     /**
      * @override
      */
-    static run(mouse, selectedEntities) {
-        const entityManager = World.get().getEntityManager()
-        selectedEntities.forEach(entity => entityManager.moveUp((entity)))
+    static run(mouse, selectedUnits) {
+        const unitManager = World.get().getUnitManager()
+        selectedUnits.forEach(unit => unitManager.moveUnitUp(unit))
         return true
     }
 
