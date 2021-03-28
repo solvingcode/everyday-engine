@@ -331,7 +331,10 @@ AppState.States = {
     ACTION_LOCK_ITEM_STOP: {history: false},
     ACTION_UNLOCK_ITEM_START: {history: false},
     ACTION_UNLOCK_ITEM_PROGRESS: {history: false},
-    ACTION_UNLOCK_ITEM_STOP: {history: false}
+    ACTION_UNLOCK_ITEM_STOP: {history: false},
+    ACTION_ADD_CAMERA_START: {history: false},
+    ACTION_ADD_CAMERA_PROGRESS: {history: false},
+    ACTION_ADD_CAMERA_STOP: {history: false}
 }
 
 export default AppState

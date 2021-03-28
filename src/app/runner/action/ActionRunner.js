@@ -37,6 +37,7 @@ import UnlockItemAction from './edit/UnlockItemAction.js'
 import AddAssetAction from './assets/AddAssetAction.js'
 import AddAssetSceneAction from './assets/AddAssetSceneAction.js'
 import UnitSelector from '../../manager/UnitSelector.js'
+import AddCameraAction from './camera/AddCameraAction.js'
 
 /**
  * Action Runner class.
@@ -99,6 +100,7 @@ class ActionRunner extends Runner {
             PHYSICS_NOT_STATIC: PhysicsNotStaticAction,
             FORM_UPDATE: FormUpdateAction,
             COLLAPSE_PANEL: PanelCollapseAction,
+            ADD_CAMERA: AddCameraAction,
 
             //must be the last action
             HISTORY_PUSH: PushHistoryAction

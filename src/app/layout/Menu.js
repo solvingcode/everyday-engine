@@ -34,7 +34,6 @@ class Menu {
             new MoveMenuItem(),
             new ScaleMenuItem(),
             new RotateMenuItem(),
-            new CameraMenuItem(),
             new SimulateStartMenuItem(),
             new SimulateStopMenuItem(),
 
@@ -48,6 +47,7 @@ class Menu {
             new UndoMenuItem(),
             new MoveUpMenuItem(),
             new MoveDownMenuItem(),
+            new CameraMenuItem(),
 
             //RIGHT
             new UnitMenuItem(),

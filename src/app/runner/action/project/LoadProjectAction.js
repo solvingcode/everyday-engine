@@ -13,13 +13,19 @@ class LoadProjectAction extends Action {
      */
     static run() {
         const fileData = FileHelper.openFileUpload(this.fileId)
-        if (fileData) {
-            FileHelper.removeFileUpload(this.fileId)
-            Project.get().load(fileData).then(() => {
-                StateManager.get().stopNextState(this.STATE)
-            })
+        if (fileData.length) {
+            StateManager.get().stopNextState(this.STATE)
+            Project.get().load(fileData[0])
         }
         return false
+    }
+
+    /**
+     * @override
+     */
+    static stop(){
+        FileHelper.removeFileUpload(this.fileId)
+        return true
     }
 
 }

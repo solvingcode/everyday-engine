@@ -7,6 +7,7 @@ import ArrowRectRightShapeGenerator from './shape/arrowrect/ArrowRectRightShapeG
 import ArrowRectDownShapeGenerator from './shape/arrowrect/ArrowRectDownShapeGenerator.js'
 import GridShapeGenerator from './shape/grid/GridShapeGenerator.js'
 import LineShapeGenerator from './shape/line/LineShapeGenerator.js'
+import RectCrossShapeGenerator from './shape/rect/RectCrossShapeGenerator.js'
 
 /**
  * @abstract
@@ -34,6 +35,8 @@ export default class ShapeGenerator {
         switch (shape) {
             case PrimitiveShape.RECT:
                 return RectShapeGenerator
+            case PrimitiveShape.RECT_CROSS:
+                return RectCrossShapeGenerator
             case PrimitiveShape.ARROW_RIGHT:
                 return ArrowRightShapeGenerator
             case PrimitiveShape.ARROW_DOWN:

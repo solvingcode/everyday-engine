@@ -1,6 +1,5 @@
 import Scene from './Scene.js'
 import World from '../world/World.js'
-import ConstraintRunner from '../runner/constraint/ConstraintRunner.js'
 import Window from '../core/Window.js'
 
 /**
@@ -16,7 +15,7 @@ class Game extends Scene {
 
     constructor() {
         super()
-        this.runners = [ConstraintRunner]
+        //this.runners = [ConstraintRunner]
     }
 
     /**
@@ -38,7 +37,7 @@ class Game extends Scene {
     loop() {
         super.loop()
         const world = World.get()
-        world.getPhysics().update(world, world.getAiEngine())
+        //world.getPhysics().update(world, world.getAiEngine())
     }
 
 }

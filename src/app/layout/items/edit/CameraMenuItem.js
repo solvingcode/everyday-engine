@@ -7,9 +7,9 @@ class CameraMenuItem extends MenuItem {
             id: 1,
             name: 'video',
             title: 'Add camera',
-            stateCode: 'DRAW_CAMERA',
+            stateCode: 'ACTION_ADD_CAMERA',
             type: Layout.type.ICON,
-            zone: Layout.zone.LEFT
+            zone: Layout.zone.TOP
         })
     }
 }

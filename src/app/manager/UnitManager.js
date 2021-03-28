@@ -115,6 +115,7 @@ export default class UnitManager extends UnitManagerData {
      * @param {Unit} unit
      */
     addUnit(unit) {
+        this.setupName(unit)
         const rank = unit.getComponent(GUIPropertyComponent).getRank()
         const indexBiggerRank = this.units.findIndex(pUnit => pUnit.getComponent(GUIPropertyComponent).getRank() > rank)
         if(indexBiggerRank >= 0){
@@ -228,5 +229,23 @@ export default class UnitManager extends UnitManagerData {
         this.units.forEach(unit =>
             unit.getComponent(MeshComponent).setGenerated(false)
         )
+    }
+
+    /**
+     * @param {Unit} unit
+     */
+    setupName(unit) {
+        const initialName = unit.getName()
+        let name = initialName
+        let existUnit = null
+        let iDuplicate = 0
+        do {
+            unit.setName(name)
+            existUnit = this.findUnitByName(name)
+            if (existUnit) {
+                iDuplicate++
+                name = `${initialName} (${iDuplicate})`
+            }
+        } while (existUnit)
     }
 }
