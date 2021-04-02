@@ -3,10 +3,10 @@ import World from '../../../world/World.js'
 import StateManager from '../../../state/StateManager.js'
 import Vector from '../../../utils/Vector.js'
 import Size from '../../../pobject/Size.js'
-import GUIScaleFreeComponent from '../../../component/gui/scale/GUIScaleFreeComponent.js'
-import GUIScaleXComponent from '../../../component/gui/scale/GUIScaleXComponent.js'
-import GUIScaleYComponent from '../../../component/gui/scale/GUIScaleYComponent.js'
-import MeshComponent from '../../../component/MeshComponent.js'
+import GUIScaleFreeComponent from '../../../component/internal/gui/scale/GUIScaleFreeComponent.js'
+import GUIScaleXComponent from '../../../component/internal/gui/scale/GUIScaleXComponent.js'
+import GUIScaleYComponent from '../../../component/internal/gui/scale/GUIScaleYComponent.js'
+import MeshComponent from '../../../component/internal/MeshComponent.js'
 
 export default class ScaleAction extends Action {
 

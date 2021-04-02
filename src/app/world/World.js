@@ -8,8 +8,8 @@ import Size from '../pobject/Size.js'
 import {SCENE_HEIGHT, SCENE_WIDTH} from '../core/Constant.js'
 import Folder from '../asset/Folder.js'
 import UnitManager from '../manager/UnitManager.js'
-import MeshComponent from '../component/MeshComponent.js'
-import TransformComponent from '../component/TransformComponent.js'
+import MeshComponent from '../component/internal/MeshComponent.js'
+import TransformComponent from '../component/internal/TransformComponent.js'
 import UnitSelector from '../manager/UnitSelector.js'
 import ExecutorRegistry from '../executor/ExecutorRegistry.js'
 
@@ -153,6 +153,11 @@ class World extends WorldData {
      */
     reload() {
         this.init()
+        this.reloadAllUnit()
+    }
+
+    reloadAllUnit(){
+        this.getUnitManager().sortUnits()
         this.regenerateAll()
     }
 

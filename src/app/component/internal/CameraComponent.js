@@ -1,4 +1,4 @@
-import Component from './Component.js'
+import Component from '../Component.js'
 
 export default class CameraComponent extends Component{
 
@@ -13,4 +13,9 @@ export default class CameraComponent extends Component{
         return []
     }
 
+    /**
+     * @override
+     */
+    initAttributes() {
+    }
 }

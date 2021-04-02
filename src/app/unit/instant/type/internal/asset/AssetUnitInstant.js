@@ -1,7 +1,7 @@
 import UnitInstant from '../../../UnitInstant.js'
-import TransformComponent from '../../../../../component/TransformComponent.js'
-import MeshComponent from '../../../../../component/MeshComponent.js'
-import GUIPropertyComponent from '../../../../../component/gui/property/GUIPropertyComponent.js'
+import TransformComponent from '../../../../../component/internal/TransformComponent.js'
+import MeshComponent from '../../../../../component/internal/MeshComponent.js'
+import GUIPropertyComponent from '../../../../../component/internal/gui/property/GUIPropertyComponent.js'
 
 export default class AssetUnitInstant extends UnitInstant {
 
@@ -16,7 +16,12 @@ export default class AssetUnitInstant extends UnitInstant {
         meshComponent.setSize(_.cloneDeep(asset.getType().getData().size))
         meshComponent.setAssetId(asset.getId())
         transformComponent.setPosition(position)
-        this.getComponent(GUIPropertyComponent).setRank(20)
     }
 
+    /**
+     * @override
+     */
+    setup() {
+        this.getComponent(GUIPropertyComponent).setRank(20)
+    }
 }

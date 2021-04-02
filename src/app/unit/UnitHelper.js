@@ -1,7 +1,7 @@
 import Vertex from '../utils/Vertex.js'
 import Vector from '../utils/Vector.js'
-import MeshComponent from '../component/MeshComponent.js'
-import TransformComponent from '../component/TransformComponent.js'
+import MeshComponent from '../component/internal/MeshComponent.js'
+import TransformComponent from '../component/internal/TransformComponent.js'
 import GeometryHelper from '../utils/GeometryHelper.js'
 
 export default class UnitHelper {

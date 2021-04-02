@@ -1,6 +1,8 @@
 import CameraData from '../project/data/CameraData.js'
 import Vector from '../utils/Vector.js'
 import Size from '../pobject/Size.js'
+import MeshComponent from '../component/internal/MeshComponent.js'
+import TransformComponent from '../component/internal/TransformComponent.js'
 
 /**
  * @class {Camera}
@@ -13,7 +15,7 @@ class Camera extends CameraData {
         this.initPosition = position
         this.position = this.initPosition
         this.scaleFactor = 0.2
-        this.entityId = null
+        this.cameraUnitId = null
     }
 
     /**
@@ -151,26 +153,26 @@ class Camera extends CameraData {
     }
 
     /**
-     * @param {number} entityId
+     * @param {number} cameraUnitId
      * @param {World} world
      */
-    setup(entityId, world){
-        this.entityId = entityId
-        const entity = this.getEntity(world.getEntityManager())
-        if(!entity){
-            throw new TypeError(`Error Setup camera (Entity ID: ${entityId})`)
+    setup(cameraUnitId, world){
+        this.cameraUnitId = cameraUnitId
+        const unit = this.getUnit(world.getUnitManager())
+        if(!unit){
+            throw new TypeError(`Error Setup camera (Unit ID: ${cameraUnitId})`)
         }
-        const scale = world.getResolution().getWidth() / entity.getSize().getWidth()
-        this.update(entity.position)
+        const scale = world.getResolution().getWidth() / unit.getComponent(MeshComponent).getSize().getWidth()
+        const unitPosition = unit.getComponent(TransformComponent).getPosition()
+        this.update(unitPosition)
         this.setScale(scale)
     }
 
     /**
-     * Get the entity using the id
-     * @param {EntityManager} entityManager
+     * @param {UnitManager} unitManager
      */
-    getEntity(entityManager) {
-        return entityManager.findById(this.entityId)
+    getUnit(unitManager) {
+        return unitManager.findUnitById(this.cameraUnitId)
     }
 
     /**

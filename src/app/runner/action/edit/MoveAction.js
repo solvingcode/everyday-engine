@@ -2,11 +2,11 @@ import Action from '../Action.js'
 import World from '../../../world/World.js'
 import StateManager from '../../../state/StateManager.js'
 import Vector from '../../../utils/Vector.js'
-import GUIMoveXComponent from '../../../component/gui/move/GUIMoveXComponent.js'
+import GUIMoveXComponent from '../../../component/internal/gui/move/GUIMoveXComponent.js'
 import UnitHelper from '../../../unit/UnitHelper.js'
-import MeshComponent from '../../../component/MeshComponent.js'
-import GUIMoveYComponent from '../../../component/gui/move/GUIMoveYComponent.js'
-import GUIMoveFreeComponent from '../../../component/gui/move/GUIMoveFreeComponent.js'
+import MeshComponent from '../../../component/internal/MeshComponent.js'
+import GUIMoveYComponent from '../../../component/internal/gui/move/GUIMoveYComponent.js'
+import GUIMoveFreeComponent from '../../../component/internal/gui/move/GUIMoveFreeComponent.js'
 
 class MoveAction extends Action {
 

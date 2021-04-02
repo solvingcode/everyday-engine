@@ -1,7 +1,7 @@
 import Layout from '../../Layout.js'
 import World from '../../../world/World.js'
 import FormMenuItem from '../form/FormMenuItem.js'
-import CameraComponent from '../../../component/CameraComponent.js'
+import CameraComponent from '../../../component/internal/CameraComponent.js'
 
 /**
  * @class {CameraFormMenuItem}

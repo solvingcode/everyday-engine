@@ -1,9 +1,9 @@
 import UnitInstant from '../../UnitInstant.js'
 import Vector from '../../../../utils/Vector.js'
-import TransformComponent from '../../../../component/TransformComponent.js'
-import MeshComponent from '../../../../component/MeshComponent.js'
-import GUIPendingComponent from '../../../../component/gui/GUIPendingComponent.js'
-import GUIPropertyComponent from '../../../../component/gui/property/GUIPropertyComponent.js'
+import TransformComponent from '../../../../component/internal/TransformComponent.js'
+import MeshComponent from '../../../../component/internal/MeshComponent.js'
+import GUIPendingComponent from '../../../../component/internal/gui/GUIPendingComponent.js'
+import GUIPropertyComponent from '../../../../component/internal/gui/property/GUIPropertyComponent.js'
 
 export default class TransformUnitInstant extends UnitInstant {
 
@@ -24,6 +24,12 @@ export default class TransformUnitInstant extends UnitInstant {
         this.getComponent(GUIPropertyComponent).setStyle(style)
         this.getComponent(MeshComponent).setStyle(style)
         this.getComponent(MeshComponent).setSize(size)
+    }
+
+    /**
+     * @override
+     */
+    setup() {
         this.getComponent(GUIPropertyComponent).setRank(50)
     }
 

@@ -7,7 +7,6 @@ class Style {
     colorOpacity = 1
     fillColor
     fillColorOpacity = 1
-    backgroundImageRepeat
     opacity
     borderSize
 
@@ -65,20 +64,6 @@ class Style {
      */
     getFillColorOpacity() {
         return this.fillColorOpacity
-    }
-
-    /**
-     * @param {boolean} backgroundImageRepeat
-     */
-    setBackgroundImageRepeat(backgroundImageRepeat) {
-        this.backgroundImageRepeat = backgroundImageRepeat
-    }
-
-    /**
-     * @return {boolean}
-     */
-    getBackgroundImageRepeat() {
-        return this.backgroundImageRepeat
     }
 
     /**

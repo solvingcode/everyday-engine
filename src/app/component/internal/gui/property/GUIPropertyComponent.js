@@ -1,68 +1,67 @@
-import Component from '../../Component.js'
-import Style from '../../../pobject/Style.js'
+import Component from '../../../Component.js'
+import Style from '../../../../pobject/Style.js'
+import {TYPES} from '../../../../pobject/AttributeType.js'
 
 export default class GUIPropertyComponent extends Component{
 
-    style
-    selectable
-    selected
-    locked
-    focused
-    visible
-    clonable
-    rank
-
     constructor() {
         super('Edit Properties')
-        this.style = new Style()
-        this.selectable = true
-        this.selected = false
-        this.locked = false
-        this.visible = true
-        this.focused = false
-        this.rank = 0
+    }
+
+    /**
+     * @override
+     */
+    initAttributes() {
+        this.add('style', TYPES.STYLE, new Style())
+        this.add('selectable', TYPES.BOOLEAN, true)
+        this.add('selected', TYPES.BOOLEAN, false)
+        this.add('locked', TYPES.BOOLEAN, false)
+        this.add('visible', TYPES.BOOLEAN, true)
+        this.add('focused', TYPES.BOOLEAN, false)
+        this.add('rank', TYPES.NUMBER, 0)
+
     }
 
     /**
      * @param {Style} style
      */
     setStyle(style) {
-        this.style = style
+        this.set('style', style)
     }
 
     /**
      * @return {Style}
      */
     getStyle(){
-        return this.style
+        return this.get('style').getAttrValue()
     }
 
     /**
      * @param {boolean} value
      */
     setSelected(value) {
-        this.selected = value
+        this.set('selected', value)
     }
 
     /**
      * @return {boolean}
      */
     getSelected(){
-        return this.selected
+        return this.get('selected').getAttrValue()
     }
 
     /**
      * @param {boolean} value
      */
     setFocused(value) {
-        this.focused = value
+        this.set('focused', value)
     }
 
     /**
      * @return {boolean}
      */
     getFocused(){
-        return this.focused
+        return this.get('focused').getAttrValue()
     }
 
     /**
@@ -83,7 +82,7 @@ export default class GUIPropertyComponent extends Component{
      * @return {boolean}
      */
     getSelectable() {
-        return this.selectable
+        return this.get('selectable').getAttrValue()
     }
 
     /**
@@ -97,14 +96,14 @@ export default class GUIPropertyComponent extends Component{
      * @param {boolean} visible
      */
     setVisible(visible) {
-        this.visible = visible
+        this.set('visible', visible)
     }
 
     /**
      * @return {boolean}
      */
     getVisible() {
-        return this.visible
+        return this.get('visible').getAttrValue()
     }
 
     /**
@@ -118,14 +117,14 @@ export default class GUIPropertyComponent extends Component{
      * @param {boolean} locked
      */
     setLocked(locked) {
-        this.locked = locked
+        this.set('locked', locked)
     }
 
     /**
      * @return {boolean}
      */
     getLocked() {
-        return this.locked
+        return this.get('locked').getAttrValue()
     }
 
     /**
@@ -136,40 +135,23 @@ export default class GUIPropertyComponent extends Component{
     }
 
     /**
-     * @param {boolean} clonable
-     */
-    setClonable(clonable) {
-        this.clonable = clonable
-    }
-
-    /**
-     * @return {boolean}
-     */
-    getClonable() {
-        return this.clonable
-    }
-
-    /**
      * @param {number} rank
      */
     setRank(rank){
-        this.rank = rank
+        this.set('rank', rank)
     }
 
     /**
      * @return {number}
      */
     getRank(){
-        return this.rank
+        return this.get('rank').getAttrValue()
     }
 
     /**
      * @override
      */
     getFormFields() {
-        return [
-
-        ]
+        return []
     }
-
 }

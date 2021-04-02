@@ -2,7 +2,7 @@ import World from '../../../world/World.js'
 import ListMenuItem from '../list/ListMenuItem.js'
 import Layout from '../../Layout.js'
 import UnitElementMenuItem from './UnitElementMenuItem.js'
-import GUIPendingComponent from '../../../component/gui/GUIPendingComponent.js'
+import GUIPendingComponent from '../../../component/internal/gui/GUIPendingComponent.js'
 
 export default class UnitListMenuItem extends ListMenuItem {
 

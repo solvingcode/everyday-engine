@@ -8,9 +8,9 @@ import Folder from '../../asset/Folder.js'
 import Mesh from '../../core/Mesh.js'
 import UnitManager from '../../manager/UnitManager.js'
 import EmptyUnit from '../../unit/type/EmptyUnit.js'
-import GUIPropertyComponent from '../../component/gui/property/GUIPropertyComponent.js'
-import MeshComponent from '../../component/MeshComponent.js'
-import TransformComponent from '../../component/TransformComponent.js'
+import GUIPropertyComponent from '../../component/internal/gui/property/GUIPropertyComponent.js'
+import MeshComponent from '../../component/internal/MeshComponent.js'
+import TransformComponent from '../../component/internal/TransformComponent.js'
 import MoveXUnitInstant from '../../unit/instant/type/internal/move/MoveXUnitInstant.js'
 import MoveYUnitInstant from '../../unit/instant/type/internal/move/MoveYUnitInstant.js'
 import MoveFreeUnitInstant from '../../unit/instant/type/internal/move/MoveFreeUnitInstant.js'
@@ -19,6 +19,7 @@ import AssetUnitInstant from '../../unit/instant/type/internal/asset/AssetUnitIn
 import GridXUnitInstant from '../../unit/instant/type/internal/grid/GridXUnitInstant.js'
 import GridYUnitInstant from '../../unit/instant/type/internal/grid/GridYUnitInstant.js'
 import CameraUnitInstant from '../../unit/instant/type/internal/camera/CameraUnitInstant.js'
+import ComponentAttribute from '../../pobject/ComponentAttribute.js'
 
 /**
  * @class {DataSchema}
@@ -40,7 +41,8 @@ class DataSchema {
         {id: 17, type: Asset},
         {id: 19, type: MatterEngine},
         {id: 23, type: Folder},
-        {id: 24, type: Mesh}
+        {id: 24, type: Mesh},
+        {id: 25, type: ComponentAttribute}
     ]
 
     static exclude = [

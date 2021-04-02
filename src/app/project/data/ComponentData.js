@@ -5,11 +5,16 @@ export default class ComponentData extends Data{
 
     id
     name
+    /**
+     * @type {ComponentAttribute[]}
+     */
+    attributes
 
     constructor(name) {
         super()
         this.id = Maths.generateId()
         this.name = name || 'Custom Component'
+        this.attributes = []
     }
 
     /**
@@ -45,6 +50,20 @@ export default class ComponentData extends Data{
      */
     isHidden(){
         return false
+    }
+
+    /**
+     * @param {ComponentAttribute[]} attributes
+     */
+    setAttributes(attributes){
+        this.attributes = attributes
+    }
+
+    /**
+     * @return {ComponentAttribute[]}
+     */
+    getAttributes(){
+        return this.attributes
     }
 
 }

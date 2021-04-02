@@ -1,10 +1,10 @@
-import GUIGridComponent from '../../../../../component/gui/grid/GUIGridComponent.js'
+import GUIGridComponent from '../../../../../component/internal/gui/grid/GUIGridComponent.js'
 import UnitInstant from '../../../UnitInstant.js'
-import TransformComponent from '../../../../../component/TransformComponent.js'
-import MeshComponent from '../../../../../component/MeshComponent.js'
-import GUIPendingComponent from '../../../../../component/gui/GUIPendingComponent.js'
+import TransformComponent from '../../../../../component/internal/TransformComponent.js'
+import MeshComponent from '../../../../../component/internal/MeshComponent.js'
+import GUIPendingComponent from '../../../../../component/internal/gui/GUIPendingComponent.js'
 import Style from '../../../../../pobject/Style.js'
-import GUIPropertyComponent from '../../../../../component/gui/property/GUIPropertyComponent.js'
+import GUIPropertyComponent from '../../../../../component/internal/gui/property/GUIPropertyComponent.js'
 
 export default class SelectionUnitInstant extends UnitInstant {
 
@@ -23,6 +23,12 @@ export default class SelectionUnitInstant extends UnitInstant {
         style.setColor('#FFFFFF')
         style.setBorderSize(3)
         meshComponent.setStyle(style)
+    }
+
+    /**
+     * @override
+     */
+    setup() {
         this.getComponent(GUIPropertyComponent).setRank(60)
     }
 

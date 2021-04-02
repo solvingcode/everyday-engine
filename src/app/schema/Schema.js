@@ -1,7 +1,8 @@
-import SchemaMeta from './SchemaMeta.js'
+import SchemaMeta, {PrefSchema} from './SchemaMeta.js'
 import Data from '../project/data/Data.js'
 import DataSchema from '../project/data/DataSchema.js'
 import ClassHelper from '../utils/ClassHelper.js'
+import AttributeType from '../pobject/AttributeType.js'
 
 /**
  * @class {Schema}
@@ -71,14 +72,20 @@ class Schema {
      * @param {SchemaMeta} schema
      * @param {string} schemaPrefix
      * @param {{serialize: boolean}} options
+     * @param {Object|Array|Data} parent
+     * @param {string|Class} parentType
      * @return {Object|Array}
      * @todo: Refactor/Simplify the implementation
      */
-    static async validate(key, data, schema, options, schemaPrefix = '') {
+    static async validate(key, data, schema, options, schemaPrefix = '', parent = null, parentType = null) {
         const schemaMeta = `${schemaPrefix}${key}`
-        const schemaMetaProto = schema[schemaMeta]
+        let schemaMetaProto = schema[schemaMeta]
+        if (!schemaMetaProto) {
+            schemaMetaProto = this.getPrefSchema(key, parentType)
+        }
         if (schemaMetaProto) {
-            const prototype = options.serialize ? schemaMetaProto.prototype : schemaMetaProto.type
+            let prototype = options.serialize ? schemaMetaProto.prototype : schemaMetaProto.type
+            prototype = AttributeType.extractPrototype(prototype, parent)
             if (!_.isString(prototype)) {
                 let result
                 if (prototype.prototype instanceof Data) {
@@ -96,27 +103,37 @@ class Schema {
                     result = new prototype()
                 }
                 if (result) {
-                    const props = this.getProperties(data, schemaMetaProto.prototype)
+                    const extractParentType = AttributeType.extractPrototype(schemaMetaProto.prototype, parent)
+                    const parentTypeName = AttributeType.extractPrototypeName(schemaMetaProto.prototype, parent) || schemaMetaProto.prototype
+                    const props = this.getProperties(data, extractParentType)
                     for (const iProp in props) {
                         const prop = props[iProp]
-                        const subResult = await this.validate(prop.key, prop.value, schema, options, `${schemaMeta}.`)
-                        if (subResult) {
-                            if (_.isArray(result)) {
-                                result.push(subResult)
-                            } else {
+                        if(prop.value) {
+                            const subResult = await this.validate(prop.key, prop.value, schema, options, `${schemaMeta}.`, data, parentTypeName)
+                            if (subResult) {
+                                if (_.isArray(result)) {
+                                    result.push(subResult)
+                                } else {
+                                    const setter = ClassHelper.getSetter(result, prop.key)
+                                    let subResultMerge = subResult
+                                    //not override elements added on the instantiation
+                                    if (_.isArray(subResult)) {
+                                        const getter = ClassHelper.getGetter(result, prop.key)
+                                        subResultMerge = subResultMerge.concat(result[getter]())
+                                    }
+                                    await result[setter](subResultMerge)
+                                }
+                            } else if (subResult === null && !_.isObject(prop.value)) {
                                 const setter = ClassHelper.getSetter(result, prop.key)
-                                await result[setter](subResult)
+                                await result[setter](Schema.getValue(`${schemaMeta}.${prop.key}`, prop.value, result, prop.key, parentTypeName))
                             }
-                        } else if (subResult === null) {
-                            const setter = ClassHelper.getSetter(result, prop.key)
-                            await result[setter](Schema.getValue(`${schemaMeta}.${prop.key}`, prop.value))
                         }
                     }
                 }
                 return result
             }
         } else {
-            throw new TypeError(`${schemaMeta} must be defined in the schema`)
+            throw new TypeError(`${schemaMeta} must be defined in the schema (parentType: ${parentType})`)
         }
         return null
     }
@@ -152,10 +169,15 @@ class Schema {
      * Used to help validate the value and correct it according to the format/type
      * @param {String} schemaMeta
      * @param {number|string|boolean|null|undefined} value
+     * @param {Object} data
+     * @param {string} key
+     * @param {string} parentType
      */
-    static getValue(schemaMeta, value) {
+    static getValue(schemaMeta, value, data, key, parentType) {
         const schema = this.getMeta()
-        const {prototype} = schema[schemaMeta]
+        let schemaMetaProto = schema[schemaMeta] || this.getPrefSchema(key, parentType)
+        let {prototype} = schemaMetaProto
+        prototype = AttributeType.extractPrototype(prototype, data)
         let newValue
         switch (prototype) {
             case 'number':
@@ -168,9 +190,34 @@ class Schema {
                 newValue = value === 'false' ? false : !!value
                 break
             default:
-                newValue = ''
+                throw new TypeError(`Schema type ${prototype} not supported`)
         }
         return newValue
+    }
+
+    /**
+     * @param {string} key
+     * @param {string|Class} type
+     * @return {string}
+     */
+    static getPrefSchema(key, type) {
+        const prefSchema = PrefSchema[type]
+        let schemaMetaProto
+        if (prefSchema) {
+            schemaMetaProto = prefSchema[key]
+            if(schemaMetaProto){
+                schemaMetaProto.prototype = schemaMetaProto.type
+            }
+        }else if(key === 'element' && AttributeType.isArrayType(type)){
+            const elementArrayProto = AttributeType.extractArrayElementPrototype(type)
+            if(elementArrayProto){
+                schemaMetaProto = {
+                    type: elementArrayProto,
+                    prototype: elementArrayProto
+                }
+            }
+        }
+        return schemaMetaProto
     }
 }
 

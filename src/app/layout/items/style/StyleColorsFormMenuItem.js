@@ -2,7 +2,7 @@ import Layout from '../../Layout.js'
 import FormMenuItem from '../form/FormMenuItem.js'
 import World from '../../../world/World.js'
 import UnitSelector from '../../../manager/UnitSelector.js'
-import MeshComponent from '../../../component/MeshComponent.js'
+import MeshComponent from '../../../component/internal/MeshComponent.js'
 
 /**
  * @class {StyleColorsFormMenuItem}

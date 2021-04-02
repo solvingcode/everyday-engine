@@ -1,11 +1,11 @@
 import UnitInstant from '../../../UnitInstant.js'
-import MeshComponent from '../../../../../component/MeshComponent.js'
-import GUIPendingComponent from '../../../../../component/gui/GUIPendingComponent.js'
+import MeshComponent from '../../../../../component/internal/MeshComponent.js'
+import GUIPendingComponent from '../../../../../component/internal/gui/GUIPendingComponent.js'
 import Vector from '../../../../../utils/Vector.js'
 import {PrimitiveShape} from '../../../../Unit.js'
-import TransformComponent from '../../../../../component/TransformComponent.js'
+import TransformComponent from '../../../../../component/internal/TransformComponent.js'
 import Style from '../../../../../pobject/Style.js'
-import GUIGridYComponent from '../../../../../component/gui/grid/GUIGridYComponent.js'
+import GUIGridYComponent from '../../../../../component/internal/gui/grid/GUIGridYComponent.js'
 
 export default class GridYUnitInstant extends UnitInstant {
 
@@ -26,6 +26,12 @@ export default class GridYUnitInstant extends UnitInstant {
         meshComponent.setShapeVertices([new Vector(), new Vector({x: 0, y: size.getHeight()})])
         meshComponent.setSize(size)
         meshComponent.setStyle(style)
+    }
+
+    /**
+     * @override
+     */
+    setup() {
     }
 
 }

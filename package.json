@@ -8,11 +8,17 @@
     "test": "test"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "jest",
     "start": "serve -l 8300",
     "build": "gulp -f build/config/gulpfile.js libs run data",
     "bundle": "gulp -f build/config/gulpfile.js bundle",
     "export": "gulp -f build/config/gulpfile.js export"
+  },
+  "jest": {
+    "transform": {
+      "^.+\\.js?$": "babel-jest"
+    },
+    "setupFilesAfterEnv": ["<rootDir>/test/setup.js"]
   },
   "repository": {
     "type": "git",
@@ -26,18 +32,23 @@
   "homepage": "https://github.com/solvingcode/web-engine#readme",
   "devDependencies": {
     "@babel/cli": "^7.12.10",
-    "@babel/core": "^7.12.10",
+    "@babel/core": "^7.13.14",
     "@babel/plugin-syntax-bigint": "^7.8.3",
     "@babel/plugin-syntax-class-properties": "^7.12.1",
     "@babel/plugin-transform-runtime": "^7.12.10",
     "@babel/preset-env": "^7.12.11",
+    "@babel/register": "^7.13.14",
+    "babel-jest": "^26.6.3",
     "babel-plugin-transform-class-properties": "^6.24.1",
     "babelify": "^10.0.0",
     "browserify": "^17.0.0",
+    "core-js": "^3.10.0",
     "gulp": "^4.0.2",
     "gulp-concat": "^2.6.1",
     "gulp-uglify": "^3.0.2",
+    "jest": "^26.6.3",
     "pump": "^3.0.0",
+    "regenerator-runtime": "^0.13.7",
     "vinyl-source-stream": "^2.0.0"
   }
 }

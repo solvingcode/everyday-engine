@@ -101,7 +101,11 @@ export default class UnitData extends Data{
      * @param {Class<ComponentData>} componentClass
      */
     createComponent(componentClass){
-        this.components.push(new componentClass())
+        if(!this.getComponent(componentClass)){
+            this.components.push(new componentClass())
+        }else{
+            throw new TypeError(`Component ${componentClass.name} already created!`)
+        }
     }
 
     /**

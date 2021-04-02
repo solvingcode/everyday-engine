@@ -1,10 +1,10 @@
 import ComponentExecutor from './ComponentExecutor.js'
-import MeshComponent from '../component/MeshComponent.js'
+import MeshComponent from '../component/internal/MeshComponent.js'
 import World from '../world/World.js'
 import Vector from '../utils/Vector.js'
 import {CANVAS_CONTEXT_TYPE} from '../core/Constant.js'
 import DataContext from '../pobject/DataContext.js'
-import TransformComponent from '../component/TransformComponent.js'
+import TransformComponent from '../component/internal/TransformComponent.js'
 import GeometryHelper from '../utils/GeometryHelper.js'
 import Size from '../pobject/Size.js'
 import ShapeGenerator from '../generator/ShapeGenerator.js'
@@ -53,8 +53,8 @@ export default class MeshGenerationExecutor extends ComponentExecutor{
      * @return {DataContext | null}
      */
     startContext(meshComponent, transformComponent, world) {
-        const cameraUnit = world.getCamera()
-        const scaleSize = cameraUnit.toScaleSize(meshComponent.getSize(), transformComponent.getPosition())
+        const camera = world.getCamera()
+        const scaleSize = this.getScaleSize(camera, meshComponent, transformComponent)
         const rotation = transformComponent.getRotation()
         const {width, height} = GeometryHelper.getLargestRectangle(rotation, scaleSize)
         if (width > 0 && height > 0) {
@@ -148,4 +148,13 @@ export default class MeshGenerationExecutor extends ComponentExecutor{
         return false
     }
 
+    /**
+     * @param {Camera} camera
+     * @param {MeshComponent} meshComponent
+     * @param transformComponent
+     * @return {Size}
+     */
+    getScaleSize(camera, meshComponent, transformComponent) {
+        return camera.toScaleSize(meshComponent.getSize(), transformComponent.getPosition())
+    }
 }

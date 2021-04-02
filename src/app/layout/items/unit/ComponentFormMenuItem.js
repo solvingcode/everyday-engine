@@ -1,6 +1,6 @@
 import Layout from '../../Layout.js'
 import FormMenuItem from '../form/FormMenuItem.js'
-import MeshComponent from '../../../component/MeshComponent.js'
+import MeshComponent from '../../../component/internal/MeshComponent.js'
 
 export default class ComponentFormMenuItem extends FormMenuItem {
     /**

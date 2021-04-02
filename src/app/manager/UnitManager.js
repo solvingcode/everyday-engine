@@ -1,10 +1,10 @@
 import Unit from '../unit/Unit.js'
 import UnitManagerData from '../project/data/UnitManagerData.js'
-import MeshComponent from '../component/MeshComponent.js'
+import MeshComponent from '../component/internal/MeshComponent.js'
 import EmptyUnit from '../unit/type/EmptyUnit.js'
-import TransformComponent from '../component/TransformComponent.js'
+import TransformComponent from '../component/internal/TransformComponent.js'
 import Vector from '../utils/Vector.js'
-import GUIPropertyComponent from '../component/gui/property/GUIPropertyComponent.js'
+import GUIPropertyComponent from '../component/internal/gui/property/GUIPropertyComponent.js'
 import Maths from '../utils/Maths.js'
 
 /**
@@ -101,7 +101,7 @@ export default class UnitManager extends UnitManagerData {
      * @param {Vector} position
      * @return {Unit}
      */
-    createPrimitiveUnit(shape, position){
+    createPrimitiveUnit(shape, position) {
         const unit = this.createUnit(EmptyUnit)
         unit.setName(shape)
         const transformComponent = unit.getComponent(TransformComponent)
@@ -118,11 +118,17 @@ export default class UnitManager extends UnitManagerData {
         this.setupName(unit)
         const rank = unit.getComponent(GUIPropertyComponent).getRank()
         const indexBiggerRank = this.units.findIndex(pUnit => pUnit.getComponent(GUIPropertyComponent).getRank() > rank)
-        if(indexBiggerRank >= 0){
+        if (indexBiggerRank >= 0) {
             this.units.splice(indexBiggerRank, 0, unit)
-        }else{
+        } else {
             this.units.push(unit)
         }
+    }
+
+    sortUnits() {
+        this.units.sort((unitA, unitB) =>
+            unitA.getComponent(GUIPropertyComponent).getRank() > unitB.getComponent(GUIPropertyComponent).getRank()
+        )
     }
 
     /**
@@ -144,7 +150,7 @@ export default class UnitManager extends UnitManagerData {
      * @param {Unit} unit
      * @param {number} targetIndex
      */
-    moveUnitToIndex(unit, targetIndex){
+    moveUnitToIndex(unit, targetIndex) {
         this.deleteUnit(unit)
         this.units.splice(targetIndex, 0, unit)
     }
@@ -152,9 +158,9 @@ export default class UnitManager extends UnitManagerData {
     /**
      * @param {Unit} unit
      */
-    moveUnitUp(unit){
+    moveUnitUp(unit) {
         const index = this.getIndexOfUnit(unit)
-        if(index > 0){
+        if (index > 0) {
             this.moveUnitToIndex(unit, index - 1)
         }
     }
@@ -162,9 +168,9 @@ export default class UnitManager extends UnitManagerData {
     /**
      * @param {Unit} unit
      */
-    moveUnitDown(unit){
+    moveUnitDown(unit) {
         const index = this.getIndexOfUnit(unit)
-        if(index < this.units.length - 1){
+        if (index < this.units.length - 1) {
             this.moveUnitToIndex(unit, index + 1)
         }
     }
@@ -181,7 +187,7 @@ export default class UnitManager extends UnitManagerData {
      * @param {Component[]} componentClasses
      * @return {Unit[]}
      */
-    getUnitsHasComponents(componentClasses){
+    getUnitsHasComponents(componentClasses) {
         return this.getUnits().filter(unit => unit.hasComponents(componentClasses))
     }
 
@@ -189,7 +195,7 @@ export default class UnitManager extends UnitManagerData {
      * @param {Component[]} componentClasses
      * @return {Unit}
      */
-    getOneUnitHasComponents(componentClasses){
+    getOneUnitHasComponents(componentClasses) {
         const result = this.getUnitsHasComponents(componentClasses)
         return result && result[0]
     }
@@ -198,7 +204,7 @@ export default class UnitManager extends UnitManagerData {
      * @param {Component[]} componentClasses
      * @return {Unit[]}
      */
-    getUnitsHasAnyComponents(componentClasses){
+    getUnitsHasAnyComponents(componentClasses) {
         return this.getUnits().filter(unit => unit.hasAnyComponents(componentClasses))
     }
 

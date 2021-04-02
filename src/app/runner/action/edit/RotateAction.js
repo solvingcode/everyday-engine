@@ -3,8 +3,8 @@ import World from '../../../world/World.js'
 import StateManager from '../../../state/StateManager.js'
 import Vector from '../../../utils/Vector.js'
 import UnitHelper from '../../../unit/UnitHelper.js'
-import TransformComponent from '../../../component/TransformComponent.js'
-import MeshComponent from '../../../component/MeshComponent.js'
+import TransformComponent from '../../../component/internal/TransformComponent.js'
+import MeshComponent from '../../../component/internal/MeshComponent.js'
 
 export default class RotateAction extends Action {
 

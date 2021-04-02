@@ -1,115 +1,114 @@
-import Component from './Component.js'
-import Mesh from '../core/Mesh.js'
-import Style from '../pobject/Style.js'
-import Layout from '../layout/Layout.js'
-import Size from '../pobject/Size.js'
-import {PrimitiveShape} from '../unit/Unit.js'
+import Component from '../Component.js'
+import Mesh from '../../core/Mesh.js'
+import Style from '../../pobject/Style.js'
+import Layout from '../../layout/Layout.js'
+import Size from '../../pobject/Size.js'
+import {PrimitiveShape} from '../../unit/Unit.js'
+import {TYPES} from '../../pobject/AttributeType.js'
 
 export default class MeshComponent extends Component{
 
-    shape
-    vertices
-    shapeVertices
-    assetId
-    style
-    mesh
-    generated
-    size
-    imageRepeat
-
     constructor() {
         super('Mesh')
-        this.shape = PrimitiveShape.RECT
-        this.mesh = new Mesh()
-        this.style = new Style()
-        this.size = new Size(0)
-        this.vertices = []
-        this.shapeVertices = []
-        this.generated = false
+    }
+
+    /**
+     * @override
+     */
+    initAttributes() {
+        this.add('shape', TYPES.STRING, PrimitiveShape.RECT)
+        this.add('mesh', TYPES.MESH, new Mesh())
+        this.add('style', TYPES.STYLE, new Style())
+        this.add('size', TYPES.SIZE, new Size(0))
+        this.add('vertices', TYPES.ARRAY_VECTOR, [])
+        this.add('shapeVertices', TYPES.ARRAY_VECTOR, [])
+        this.add('generated', TYPES.BOOLEAN, false)
+        this.add('assetId', TYPES.NUMBER)
+        this.add('imageRepeat', TYPES.BOOLEAN, false)
     }
 
     /**
      * @return {string}
      */
     getShape(){
-        return this.shape
+        return this.get('shape').getAttrValue()
     }
 
     /**
      * @param {string} shape
      */
     setShape(shape){
-        this.shape = shape
+        this.set('shape', shape)
     }
 
     /**
      * @return {number}
      */
     getAssetId(){
-        return this.assetId
+        return this.get('assetId').getAttrValue()
     }
 
     /**
      * @param {number} assetId
      */
     setAssetId(assetId){
-        this.assetId = assetId
+        this.set('assetId', assetId)
     }
 
     /**
      * @return {Style}
      */
     getStyle(){
-        return this.style
+        return this.get('style').getAttrValue()
     }
 
     /**
      * @param {Style} style
      */
     setStyle(style){
-        this.style = style
+        this.set('style', style)
     }
 
     /**
      * @param {Size} size
      */
     setSize(size) {
-        this.size = size
+        this.set('size', size)
     }
 
     /**
      * @return {Size}
      */
     getSize() {
-        return this.size
+        return this.get('size').getAttrValue()
     }
 
     /**
      * @return {Mesh}
      */
     getMesh(){
-        return this.mesh
+        return this.get('mesh').getAttrValue()
     }
 
     /**
      * @param {Mesh} mesh
      */
     setMesh(mesh){
-        this.mesh = mesh
+        this.set('mesh', mesh)
     }
 
     /**
      * @param {boolean} generated
      */
     setGenerated(generated){
-        this.generated = generated
+        this.set('generated', generated)
     }
 
     /**
      * @return {boolean}
      */
     getGenerated(){
-       return this.generated
+        return this.get('generated').getAttrValue()
     }
 
     /**
@@ -123,42 +122,42 @@ export default class MeshComponent extends Component{
      * @param {Vector[]} vertices
      */
     setVertices(vertices){
-        this.vertices = vertices
+        this.set('vertices', vertices)
     }
 
     /**
      * @return {Vector[]}
      */
     getVertices(){
-        return this.vertices
+        return this.get('vertices').getAttrValue()
     }
 
     /**
      * @param {Vector[]} shapeVertices
      */
     setShapeVertices(shapeVertices){
-        this.shapeVertices = shapeVertices
+        this.set('shapeVertices', shapeVertices)
     }
 
     /**
      * @return {Vector[]}
      */
     getShapeVertices(){
-        return this.shapeVertices
+        return this.get('shapeVertices').getAttrValue()
     }
 
     /**
      * @param {boolean} imageRepeat
      */
     setImageRepeat(imageRepeat){
-        this.imageRepeat = imageRepeat
+        this.set('imageRepeat', imageRepeat)
     }
 
     /**
      * @return {boolean}
      */
     getImageRepeat(){
-        return this.imageRepeat
+        return this.get('imageRepeat').getAttrValue()
     }
 
     /**

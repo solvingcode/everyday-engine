@@ -1,10 +1,10 @@
 import UnitInstant from '../../../UnitInstant.js'
-import MeshComponent from '../../../../../component/MeshComponent.js'
-import TransformComponent from '../../../../../component/TransformComponent.js'
-import GUIPropertyComponent from '../../../../../component/gui/property/GUIPropertyComponent.js'
+import MeshComponent from '../../../../../component/internal/MeshComponent.js'
+import TransformComponent from '../../../../../component/internal/TransformComponent.js'
+import GUIPropertyComponent from '../../../../../component/internal/gui/property/GUIPropertyComponent.js'
 import Style from '../../../../../pobject/Style.js'
 import {PrimitiveShape} from '../../../../Unit.js'
-import CameraComponent from '../../../../../component/CameraComponent.js'
+import CameraComponent from '../../../../../component/internal/CameraComponent.js'
 
 export default class CameraUnitInstant extends UnitInstant {
 
@@ -23,10 +23,16 @@ export default class CameraUnitInstant extends UnitInstant {
         const transformComponent = this.getComponent(TransformComponent)
         const propertyComponent = this.getComponent(GUIPropertyComponent)
         propertyComponent.setStyle(style)
-        propertyComponent.setRank(40)
         transformComponent.setPosition(position)
         meshComponent.setSize(size)
         meshComponent.setShape(PrimitiveShape.RECT_CROSS)
+    }
+
+    /**
+     * @override
+     */
+    setup() {
+        this.getComponent(GUIPropertyComponent).setRank(40)
     }
 
 }
