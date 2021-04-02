@@ -1,60 +1,63 @@
-import Component from './Component.js'
-import Layout from '../layout/Layout.js'
-import Vector from '../utils/Vector.js'
+import Component from '../Component.js'
+import Layout from '../../layout/Layout.js'
+import Vector from '../../utils/Vector.js'
+import {TYPES} from '../../pobject/AttributeType.js'
 
 export default class TransformComponent extends Component{
 
-    position
-    rotation
-    scale
-
     constructor() {
         super('Transform')
-        this.position = new Vector()
-        this.scale = new Vector()
-        this.rotation = 0
+    }
+
+    /**
+     * @override
+     */
+    initAttributes() {
+        this.add('position', TYPES.VECTOR, new Vector())
+        this.add('scale', TYPES.VECTOR, new Vector())
+        this.add('rotation', TYPES.NUMBER, 0)
     }
 
     /**
      * @return {Vector}
      */
     getPosition(){
-        return this.position
+        return this.get('position').getAttrValue()
     }
 
     /**
      * @param {Vector} position
      */
     setPosition(position){
-        this.position = position
+        this.set('position', position)
     }
 
     /**
      * @return {number}
      */
     getRotation(){
-        return this.rotation
+        return this.get('rotation').getAttrValue()
     }
 
     /**
      * @param {number} rotation
      */
     setRotation(rotation){
-        this.rotation = rotation
+        this.set('rotation', rotation)
     }
 
     /**
      * @return {Vector}
      */
     getScale(){
-        return this.scale
+        return this.get('scale').getAttrValue()
     }
 
     /**
      * @param {Vector} scale
      */
     setScale(scale){
-        this.scale = scale
+        this.set('scale', scale)
     }
 
     /**
@@ -94,5 +97,4 @@ export default class TransformComponent extends Component{
             }
         ]
     }
-
 }
