@@ -29,7 +29,7 @@ class World extends WorldData {
         this.cameraUnitId = null
         this.resolution = new Size({width: SCENE_WIDTH, height: SCENE_HEIGHT})
         this.gridUnitId = null
-        this.showGrid = true
+        this.showGrid = false
         this.init()
     }
 

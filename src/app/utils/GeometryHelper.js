@@ -8,8 +8,8 @@ export default class GeometryHelper{
      * @param {Size} size
      */
     static getLargestRectangle(angleRadian, size) {
-        const cosA = Math.cos(angleRadian)
-        const sinA = Math.sin(angleRadian)
+        const cosA = Math.cos(angleRadian || 0)
+        const sinA = Math.sin(angleRadian || 0)
         const points = [
             {x: 0, y: 0},
             {x: size.width, y: 0},

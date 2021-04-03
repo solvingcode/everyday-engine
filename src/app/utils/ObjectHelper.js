@@ -1,6 +1,8 @@
 /**
  * @class {ObjectHelper}
  */
+import StringHelper from './StringHelper.js'
+
 class ObjectHelper {
 
     /**
@@ -19,7 +21,7 @@ class ObjectHelper {
      */
     static assign(target, source){
         Object.getOwnPropertyNames(source).forEach(srcProperty => {
-            const setterProperty = `set${srcProperty.charAt(0).toUpperCase() + srcProperty.slice(1)}`
+            const setterProperty = `set${StringHelper.capFirstLetter(srcProperty)}`
             const valProperty = source[srcProperty]
             if(_.isObject(valProperty)){
                 this.assign(target[srcProperty], valProperty)

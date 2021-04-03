@@ -24,4 +24,11 @@ export default class UnitManagerData extends Data {
         return this.units
     }
 
+    /**
+     * @param {Unit[]} units
+     */
+    concatUnits(units) {
+        this.setUnits(units)
+    }
+
 }

@@ -162,10 +162,12 @@ class Camera extends CameraData {
         if(!unit){
             throw new TypeError(`Error Setup camera (Unit ID: ${cameraUnitId})`)
         }
-        const scale = world.getResolution().getWidth() / unit.getComponent(MeshComponent).getSize().getWidth()
+        const meshComponent = unit.getComponent(MeshComponent)
+        const scale = world.getResolution().getWidth() / meshComponent.getSize().getWidth()
         const unitPosition = unit.getComponent(TransformComponent).getPosition()
         this.update(unitPosition)
         this.setScale(scale)
+        meshComponent.setEnabled(false)
     }
 
     /**

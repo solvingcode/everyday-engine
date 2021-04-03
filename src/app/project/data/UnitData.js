@@ -124,4 +124,18 @@ export default class UnitData extends Data{
         return this.components.findIndex(component => component.id === componentId)
     }
 
+    /**
+     * @param {ComponentData[]} components
+     */
+    concatComponents(components){
+        components.forEach((component) => {
+            const existIndexComponent = this.components.findIndex(pComponent => pComponent.getName() === component.getName())
+            if(existIndexComponent >= 0){
+                this.components[existIndexComponent] = _.cloneDeep(component)
+            }else{
+                this.components.push(_.cloneDeep(component))
+            }
+        })
+    }
+
 }

@@ -37,4 +37,18 @@ export default class AssetsManagerData extends Data {
         this.folders = folders
     }
 
+    /**
+     * @param {Asset[]} assets
+     */
+    concatAssets(assets) {
+        this.setAssets(assets)
+    }
+
+    /**
+     * @param {Folder[]} folders
+     */
+    concatFolders(folders) {
+        this.setFolders(folders)
+    }
+
 }

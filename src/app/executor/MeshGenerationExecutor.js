@@ -10,10 +10,7 @@ import Size from '../pobject/Size.js'
 import ShapeGenerator from '../generator/ShapeGenerator.js'
 import UnitHelper from '../unit/UnitHelper.js'
 
-/**
- * @todo: improve drawing primitives shapes
- */
-export default class MeshGenerationExecutor extends ComponentExecutor{
+export default class MeshGenerationExecutor extends ComponentExecutor {
 
     constructor() {
         super([MeshComponent, TransformComponent])
@@ -22,14 +19,15 @@ export default class MeshGenerationExecutor extends ComponentExecutor{
     /**
      * @override
      */
-    execute(unit){
+    execute(unit) {
         const meshComponent = unit.getComponent(MeshComponent)
         const transformComponent = unit.getComponent(TransformComponent)
-        if(!meshComponent.isGenerated()){
+        if (!meshComponent.isGenerated()) {
             meshComponent.setVertices(UnitHelper.generateVertices(unit))
-            if(this.generate(meshComponent, transformComponent, World.get())){
-                meshComponent.setGenerated(true)
+            if (!meshComponent.isEnabled() || !this.generate(meshComponent, transformComponent, World.get())) {
+                meshComponent.getMesh().clear()
             }
+            meshComponent.setGenerated(true)
         }
     }
 
@@ -38,7 +36,7 @@ export default class MeshGenerationExecutor extends ComponentExecutor{
      * @param {TransformComponent} transformComponent
      * @param {World} world
      */
-    generate(meshComponent, transformComponent, world){
+    generate(meshComponent, transformComponent, world) {
         const dataContext = this.startContext(meshComponent, transformComponent, world)
         if (dataContext) {
             this.drawContext(meshComponent, transformComponent, dataContext)
@@ -63,7 +61,7 @@ export default class MeshGenerationExecutor extends ComponentExecutor{
             const context = canvas.getContext(CANVAS_CONTEXT_TYPE)
             const {opacity, borderSize, fillColor, color} = meshComponent.getStyle()
             context.strokeStyle = color
-            if(fillColor){
+            if (fillColor) {
                 context.fillStyle = fillColor
             }
             if (_.isNumber(opacity)) {

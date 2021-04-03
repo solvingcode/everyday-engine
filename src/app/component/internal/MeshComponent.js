@@ -25,6 +25,7 @@ export default class MeshComponent extends Component{
         this.add('generated', TYPES.BOOLEAN, false)
         this.add('assetId', TYPES.NUMBER)
         this.add('imageRepeat', TYPES.BOOLEAN, false)
+        this.add('enabled', TYPES.BOOLEAN, true)
     }
 
     /**
@@ -116,6 +117,27 @@ export default class MeshComponent extends Component{
      */
     isGenerated(){
         return this.getGenerated()
+    }
+
+    /**
+     * @param {boolean} enabled
+     */
+    setEnabled(enabled){
+        this.set('enabled', enabled)
+    }
+
+    /**
+     * @return {boolean}
+     */
+    getEnabled(){
+        return this.get('enabled').getAttrValue()
+    }
+
+    /**
+     * @return {boolean}
+     */
+    isEnabled(){
+        return this.getEnabled()
     }
 
     /**

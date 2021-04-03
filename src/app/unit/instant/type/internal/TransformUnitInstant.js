@@ -30,7 +30,7 @@ export default class TransformUnitInstant extends UnitInstant {
      * @override
      */
     setup() {
-        this.getComponent(GUIPropertyComponent).setRank(50)
+        this.getComponent(GUIPropertyComponent).setRank(70)
     }
 
 }

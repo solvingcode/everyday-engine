@@ -3,6 +3,7 @@ import Data from '../project/data/Data.js'
 import DataSchema from '../project/data/DataSchema.js'
 import ClassHelper from '../utils/ClassHelper.js'
 import AttributeType from '../pobject/AttributeType.js'
+import StringHelper from '../utils/StringHelper.js'
 
 /**
  * @class {Schema}
@@ -118,10 +119,16 @@ class Schema {
                                     let subResultMerge = subResult
                                     //not override elements added on the instantiation
                                     if (_.isArray(subResult)) {
-                                        const getter = ClassHelper.getGetter(result, prop.key)
-                                        subResultMerge = subResultMerge.concat(result[getter]())
+                                        const concatAttr = `concat${StringHelper.capFirstLetter(prop.key)}`
+                                        if(_.isFunction(result[concatAttr])){
+                                            result[concatAttr](subResultMerge)
+                                        }else{
+                                            console.log(`Method ${concatAttr} not defined for ${result.constructor.name}`)
+                                            await result[setter](subResultMerge)
+                                        }
+                                    }else{
+                                        await result[setter](subResultMerge)
                                     }
-                                    await result[setter](subResultMerge)
                                 }
                             } else if (subResult === null && !_.isObject(prop.value)) {
                                 const setter = ClassHelper.getSetter(result, prop.key)

@@ -32,11 +32,15 @@ export default class Component extends ComponentData{
      * @param {*} defaultValue
      */
     add(name, type, defaultValue = null){
-        const componentAttribute = new ComponentAttribute()
-        componentAttribute.setAttrName(name)
-        componentAttribute.setAttrType(type)
-        componentAttribute.setAttrValue(defaultValue)
-        this.attributes.push(componentAttribute)
+        if(!this.tryGet(name)){
+            const componentAttribute = new ComponentAttribute()
+            componentAttribute.setAttrName(name)
+            componentAttribute.setAttrType(type)
+            componentAttribute.setAttrValue(defaultValue)
+            this.attributes.push(componentAttribute)
+        }else{
+            throw new TypeError(`Attribute ${name} already defined for ${this.name}Component`)
+        }
     }
 
     /**
@@ -44,11 +48,19 @@ export default class Component extends ComponentData{
      * @return {ComponentAttribute}
      */
     get(name){
-        const componentAttribute = this.attributes.find(attribute => attribute.getAttrName() === name)
+        const componentAttribute = this.tryGet(name)
         if(!componentAttribute){
             throw new TypeError(`Attribute ${name} not supported by ${this.name}Component`)
         }
         return componentAttribute
+    }
+
+    /**
+     * @param {string} name
+     * @return {ComponentAttribute}
+     */
+    tryGet(name){
+        return this.attributes.find(attribute => attribute.getAttrName() === name)
     }
 
     /**
