@@ -19,48 +19,6 @@ export default class TransformComponent extends Component{
     }
 
     /**
-     * @return {Vector}
-     */
-    getPosition(){
-        return this.get('position').getAttrValue()
-    }
-
-    /**
-     * @param {Vector} position
-     */
-    setPosition(position){
-        this.set('position', position)
-    }
-
-    /**
-     * @return {number}
-     */
-    getRotation(){
-        return this.get('rotation').getAttrValue()
-    }
-
-    /**
-     * @param {number} rotation
-     */
-    setRotation(rotation){
-        this.set('rotation', rotation)
-    }
-
-    /**
-     * @return {Vector}
-     */
-    getScale(){
-        return this.get('scale').getAttrValue()
-    }
-
-    /**
-     * @param {Vector} scale
-     */
-    setScale(scale){
-        this.set('scale', scale)
-    }
-
-    /**
      * @override
      */
     getFormFields() {
@@ -73,6 +31,11 @@ export default class TransformComponent extends Component{
             {
                 bind: 'position.y',
                 label: 'Position Y',
+                type: Layout.form.TEXT
+            },
+            {
+                bind: 'position.z',
+                label: 'Position Z',
                 type: Layout.form.TEXT
             },
             {
@@ -96,5 +59,47 @@ export default class TransformComponent extends Component{
                 }
             }
         ]
+    }
+
+    /**
+     * @return {Vector}
+     */
+    getPosition(){
+        return this.getValue('position')
+    }
+
+    /**
+     * @param {Vector} position
+     */
+    setPosition(position){
+        this.setValue('position', position)
+    }
+
+    /**
+     * @return {number}
+     */
+    getRotation(){
+        return this.getValue('rotation')
+    }
+
+    /**
+     * @param {number} rotation
+     */
+    setRotation(rotation){
+        this.setValue('rotation', rotation)
+    }
+
+    /**
+     * @return {Vector}
+     */
+    getScale(){
+        return this.getValue('scale')
+    }
+
+    /**
+     * @param {Vector} scale
+     */
+    setScale(scale){
+        this.setValue('scale', scale)
     }
 }

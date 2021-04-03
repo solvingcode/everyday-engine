@@ -12,6 +12,7 @@ import MeshComponent from '../component/internal/MeshComponent.js'
 import TransformComponent from '../component/internal/TransformComponent.js'
 import UnitSelector from '../manager/UnitSelector.js'
 import ExecutorRegistry from '../executor/ExecutorRegistry.js'
+import MeshManager from '../manager/MeshManager.js'
 
 /**
  * @class {World}
@@ -22,6 +23,7 @@ class World extends WorldData {
     constructor() {
         super()
         this.unitManager = new UnitManager()
+        this.meshManager = new MeshManager()
         this.camera = new Camera(new Vector({x: -SCENE_WIDTH / 2, y: -SCENE_HEIGHT / 2}))
         this.executorRegistry = ExecutorRegistry.get()
         this.physics = new Physics()
@@ -55,6 +57,7 @@ class World extends WorldData {
      * @param {Renderer} renderer
      */
     drawUnit(unit, renderer) {
+        const meshManager = this.getMeshManager()
         const {size: windowSize} = Window.get()
         const camera = this.getCamera()
         const {x: cameraX, y: cameraY} = camera.position
@@ -69,7 +72,8 @@ class World extends WorldData {
         const maxY = cameraY + sceneHeight
         if (minX <= position.getX() && maxX >= position.getX() &&
             minY <= position.getY() && maxY >= position.getY()) {
-            renderer.draw(meshComponent.getMesh(), position)
+            const mesh = meshManager.get(unit.getId())
+            mesh && renderer.draw(mesh, position)
         }
     }
 
@@ -206,6 +210,13 @@ class World extends WorldData {
      */
     getWorldScalePosition(position){
         return this.getWorldPosition(this.getCamera().fromCameraScale(position))
+    }
+
+    /**
+     * @return {MeshManager}
+     */
+    getMeshManager(){
+        return this.meshManager
     }
 
     createRootFolder() {

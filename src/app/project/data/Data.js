@@ -29,6 +29,24 @@ class Data {
         return true
     }
 
+    /**
+     * @param {Object[]} target
+     * @param {Object[]} source
+     * @param {Function} criteria
+     */
+    concat(target, source, criteria){
+        if(target && source){
+            source.forEach((sItem) => {
+                const existIndex = target.findIndex(tItem => criteria(tItem, sItem))
+                if(existIndex >= 0){
+                    target[existIndex] = _.cloneDeep(sItem)
+                }else{
+                    target.push(_.cloneDeep(sItem))
+                }
+            })
+        }
+    }
+
 }
 
 export default Data

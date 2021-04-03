@@ -48,7 +48,11 @@ export default class AssetsManagerData extends Data {
      * @param {Folder[]} folders
      */
     concatFolders(folders) {
-        this.setFolders(folders)
+        this.concat(
+            this.folders,
+            folders,
+            (tItem, sItem) => tItem.getName() === sItem.getName()
+        )
     }
 
 }

@@ -1,5 +1,6 @@
 import MeshGenerationExecutor from './MeshGenerationExecutor.js'
 import GUISelectionExecutor from './GUISelectionExecutor.js'
+import GUIPropertyExecutor from './GUIPropertyExecutor.js'
 
 export default class ExecutorRegistry {
 
@@ -15,7 +16,8 @@ export default class ExecutorRegistry {
          */
         this.registry = [
             new MeshGenerationExecutor(),
-            new GUISelectionExecutor()
+            new GUISelectionExecutor(),
+            new GUIPropertyExecutor()
         ]
     }
 

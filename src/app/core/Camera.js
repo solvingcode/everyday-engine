@@ -74,7 +74,7 @@ class Camera extends CameraData {
         const scale = this.getScale(position)
         const x = position.x * scale
         const y = position.y * scale
-        const z = position.z
+        const z = position.z || 0
         return new Vector({x, y, z})
     }
 
@@ -86,7 +86,7 @@ class Camera extends CameraData {
         const scale = this.getScale(position)
         const x = position.x / scale
         const y = position.y / scale
-        const z = position.z
+        const z = position.z || 0
         return new Vector({x, y, z})
     }
 
@@ -96,7 +96,7 @@ class Camera extends CameraData {
      */
     getScale(position){
         const {cameraViewZ} = this.getCameraView()
-        const distanceZ = cameraViewZ - position.z
+        const distanceZ = cameraViewZ - (position.z || 0)
         return 1 + distanceZ * this.scaleFactor
     }
 

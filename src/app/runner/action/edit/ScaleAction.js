@@ -47,8 +47,10 @@ export default class ScaleAction extends Action {
         const dragDistance = mouse.dragAndDrop(camera)
         selectedUnits.map((unit) => {
             const meshComponent = unit.getComponent(MeshComponent)
+            const {width: meshWidth, height: meshHeight} = meshComponent.getSize()
+            const ratio = meshHeight / meshWidth
             const width = meshComponent.getSize().getWidth() + dragDistance.x * direction.x
-            const height = meshComponent.getSize().getHeight() + (direction.x ? dragDistance.x : dragDistance.y) * direction.y
+            const height = meshComponent.getSize().getHeight() + (direction.x ? dragDistance.x * ratio : dragDistance.y) * direction.y
             meshComponent.setSize(new Size({width, height}))
             meshComponent.setGenerated(false)
         })

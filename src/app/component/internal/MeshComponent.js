@@ -1,5 +1,4 @@
 import Component from '../Component.js'
-import Mesh from '../../core/Mesh.js'
 import Style from '../../pobject/Style.js'
 import Layout from '../../layout/Layout.js'
 import Size from '../../pobject/Size.js'
@@ -17,7 +16,6 @@ export default class MeshComponent extends Component{
      */
     initAttributes() {
         this.add('shape', TYPES.STRING, PrimitiveShape.RECT)
-        this.add('mesh', TYPES.MESH, new Mesh())
         this.add('style', TYPES.STYLE, new Style())
         this.add('size', TYPES.SIZE, new Size(0))
         this.add('vertices', TYPES.ARRAY_VECTOR, [])
@@ -26,167 +24,6 @@ export default class MeshComponent extends Component{
         this.add('assetId', TYPES.NUMBER)
         this.add('imageRepeat', TYPES.BOOLEAN, false)
         this.add('enabled', TYPES.BOOLEAN, true)
-    }
-
-    /**
-     * @return {string}
-     */
-    getShape(){
-        return this.get('shape').getAttrValue()
-    }
-
-    /**
-     * @param {string} shape
-     */
-    setShape(shape){
-        this.set('shape', shape)
-    }
-
-    /**
-     * @return {number}
-     */
-    getAssetId(){
-        return this.get('assetId').getAttrValue()
-    }
-
-    /**
-     * @param {number} assetId
-     */
-    setAssetId(assetId){
-        this.set('assetId', assetId)
-    }
-
-    /**
-     * @return {Style}
-     */
-    getStyle(){
-        return this.get('style').getAttrValue()
-    }
-
-    /**
-     * @param {Style} style
-     */
-    setStyle(style){
-        this.set('style', style)
-    }
-
-    /**
-     * @param {Size} size
-     */
-    setSize(size) {
-        this.set('size', size)
-    }
-
-    /**
-     * @return {Size}
-     */
-    getSize() {
-        return this.get('size').getAttrValue()
-    }
-
-    /**
-     * @return {Mesh}
-     */
-    getMesh(){
-        return this.get('mesh').getAttrValue()
-    }
-
-    /**
-     * @param {Mesh} mesh
-     */
-    setMesh(mesh){
-        this.set('mesh', mesh)
-    }
-
-    /**
-     * @param {boolean} generated
-     */
-    setGenerated(generated){
-        this.set('generated', generated)
-    }
-
-    /**
-     * @return {boolean}
-     */
-    getGenerated(){
-        return this.get('generated').getAttrValue()
-    }
-
-    /**
-     * @return {boolean}
-     */
-    isGenerated(){
-        return this.getGenerated()
-    }
-
-    /**
-     * @param {boolean} enabled
-     */
-    setEnabled(enabled){
-        this.set('enabled', enabled)
-    }
-
-    /**
-     * @return {boolean}
-     */
-    getEnabled(){
-        return this.get('enabled').getAttrValue()
-    }
-
-    /**
-     * @return {boolean}
-     */
-    isEnabled(){
-        return this.getEnabled()
-    }
-
-    /**
-     * @param {Vector[]} vertices
-     */
-    setVertices(vertices){
-        this.set('vertices', vertices)
-    }
-
-    /**
-     * @return {Vector[]}
-     */
-    getVertices(){
-        return this.get('vertices').getAttrValue()
-    }
-
-    /**
-     * @param {Vector[]} shapeVertices
-     */
-    setShapeVertices(shapeVertices){
-        this.set('shapeVertices', shapeVertices)
-    }
-
-    /**
-     * @return {Vector[]}
-     */
-    getShapeVertices(){
-        return this.get('shapeVertices').getAttrValue()
-    }
-
-    /**
-     * @param {boolean} imageRepeat
-     */
-    setImageRepeat(imageRepeat){
-        this.set('imageRepeat', imageRepeat)
-    }
-
-    /**
-     * @return {boolean}
-     */
-    getImageRepeat(){
-        return this.get('imageRepeat').getAttrValue()
-    }
-
-    /**
-     * @return {boolean}
-     */
-    isImageRepeat(){
-        return this.getImageRepeat()
     }
 
     /**
@@ -210,6 +47,153 @@ export default class MeshComponent extends Component{
                 type: Layout.form.CHECKBOX
             }
         ]
+    }
+
+    /**
+     * @return {string}
+     */
+    getShape(){
+        return this.getValue('shape')
+    }
+
+    /**
+     * @param {string} shape
+     */
+    setShape(shape){
+        this.setValue('shape', shape)
+    }
+
+    /**
+     * @return {number}
+     */
+    getAssetId(){
+        return this.getValue('assetId')
+    }
+
+    /**
+     * @param {number} assetId
+     */
+    setAssetId(assetId){
+        this.setValue('assetId', assetId)
+    }
+
+    /**
+     * @return {Style}
+     */
+    getStyle(){
+        return this.getValue('style')
+    }
+
+    /**
+     * @param {Style} style
+     */
+    setStyle(style){
+        this.setValue('style', style)
+    }
+
+    /**
+     * @param {Size} size
+     */
+    setSize(size) {
+        this.setValue('size', size)
+    }
+
+    /**
+     * @return {Size}
+     */
+    getSize() {
+        return this.getValue('size')
+    }
+
+    /**
+     * @param {boolean} generated
+     */
+    setGenerated(generated){
+        this.setValue('generated', generated)
+    }
+
+    /**
+     * @return {boolean}
+     */
+    getGenerated(){
+        return this.getValue('generated')
+    }
+
+    /**
+     * @return {boolean}
+     */
+    isGenerated(){
+        return this.getGenerated()
+    }
+
+    /**
+     * @param {boolean} enabled
+     */
+    setEnabled(enabled){
+        this.setValue('enabled', enabled)
+    }
+
+    /**
+     * @return {boolean}
+     */
+    getEnabled(){
+        return this.getValue('enabled')
+    }
+
+    /**
+     * @return {boolean}
+     */
+    isEnabled(){
+        return this.getEnabled()
+    }
+
+    /**
+     * @param {Vector[]} vertices
+     */
+    setVertices(vertices){
+        this.setValue('vertices', vertices)
+    }
+
+    /**
+     * @return {Vector[]}
+     */
+    getVertices(){
+        return this.getValue('vertices')
+    }
+
+    /**
+     * @param {Vector[]} shapeVertices
+     */
+    setShapeVertices(shapeVertices){
+        this.setValue('shapeVertices', shapeVertices)
+    }
+
+    /**
+     * @return {Vector[]}
+     */
+    getShapeVertices(){
+        return this.getValue('shapeVertices')
+    }
+
+    /**
+     * @param {boolean} imageRepeat
+     */
+    setImageRepeat(imageRepeat){
+        this.setValue('imageRepeat', imageRepeat)
+    }
+
+    /**
+     * @return {boolean}
+     */
+    getImageRepeat(){
+        return this.getValue('imageRepeat')
+    }
+
+    /**
+     * @return {boolean}
+     */
+    isImageRepeat(){
+        return this.getImageRepeat()
     }
 
 }

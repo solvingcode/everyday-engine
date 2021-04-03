@@ -67,10 +67,17 @@ export default class Component extends ComponentData{
      * @param {string} name
      * @param {*} value
      */
-    set(name, value){
+    setValue(name, value){
         let attribute = this.get(name)
         attribute.setAttrValue(value)
     }
 
+    /**
+     * @param {string} name
+     * @return {*}
+     */
+    getValue(name){
+        return this.get(name).getAttrValue()
+    }
 
 }

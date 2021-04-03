@@ -9,6 +9,7 @@ import GeometryHelper from '../utils/GeometryHelper.js'
 import Size from '../pobject/Size.js'
 import ShapeGenerator from '../generator/ShapeGenerator.js'
 import UnitHelper from '../unit/UnitHelper.js'
+import Mesh from '../core/Mesh.js'
 
 export default class MeshGenerationExecutor extends ComponentExecutor {
 
@@ -22,22 +23,24 @@ export default class MeshGenerationExecutor extends ComponentExecutor {
     execute(unit) {
         const meshComponent = unit.getComponent(MeshComponent)
         const transformComponent = unit.getComponent(TransformComponent)
+        const world = World.get()
         if (!meshComponent.isGenerated()) {
             meshComponent.setVertices(UnitHelper.generateVertices(unit))
-            if (!meshComponent.isEnabled() || !this.generate(meshComponent, transformComponent, World.get())) {
-                meshComponent.getMesh().clear()
+            if (!meshComponent.isEnabled() || !this.generate(unit.getId(), meshComponent, transformComponent, world)) {
+                world.getMeshManager().clear(unit.getId())
             }
             meshComponent.setGenerated(true)
         }
     }
 
     /**
+     * @param {number} unitId
      * @param {MeshComponent} meshComponent
      * @param {TransformComponent} transformComponent
      * @param {World} world
      */
-    generate(meshComponent, transformComponent, world) {
-        const dataContext = this.startContext(meshComponent, transformComponent, world)
+    generate(unitId, meshComponent, transformComponent, world) {
+        const dataContext = this.startContext(unitId, meshComponent, transformComponent, world)
         if (dataContext) {
             this.drawContext(meshComponent, transformComponent, dataContext)
             return this.closeContext(meshComponent, transformComponent, dataContext)
@@ -45,12 +48,13 @@ export default class MeshGenerationExecutor extends ComponentExecutor {
     }
 
     /**
+     * @param {number} unitId
      * @param {MeshComponent} meshComponent
      * @param {TransformComponent} transformComponent
      * @param {World} world
      * @return {DataContext | null}
      */
-    startContext(meshComponent, transformComponent, world) {
+    startContext(unitId, meshComponent, transformComponent, world) {
         const camera = world.getCamera()
         const scaleSize = this.getScaleSize(camera, meshComponent, transformComponent)
         const rotation = transformComponent.getRotation()
@@ -71,7 +75,7 @@ export default class MeshGenerationExecutor extends ComponentExecutor {
             context.translate(width / 2, height / 2)
             context.rotate(rotation)
             context.translate(-center.x, -center.y)
-            return new DataContext(center, context, scaleSize, world.getCamera(), world)
+            return new DataContext(unitId, center, context, scaleSize, world.getCamera(), world)
         }
         return null
     }
@@ -93,7 +97,7 @@ export default class MeshGenerationExecutor extends ComponentExecutor {
      */
     closeContext(meshComponent, transformComponent, dataContext) {
         const {fillColor, borderSize} = meshComponent.getStyle()
-        const {context, scaleSize} = dataContext
+        const {context, scaleSize, world, unitId} = dataContext
         if (meshComponent.getAssetId()) {
             const asset = dataContext.world.getAssetsManager().findAssetById(meshComponent.getAssetId())
             if (fillColor) {
@@ -115,7 +119,7 @@ export default class MeshGenerationExecutor extends ComponentExecutor {
         } else {
             context.stroke()
         }
-        return this.updateMeshFromContext(meshComponent, transformComponent, context)
+        return this.updateMeshFromContext(unitId, world.getMeshManager(), context)
     }
 
     /**
@@ -131,16 +135,20 @@ export default class MeshGenerationExecutor extends ComponentExecutor {
     }
 
     /**
-     * @param {MeshComponent} meshComponent
-     * @param {TransformComponent} transformComponent
+     * @param {number} unitId
+     * @param {MeshManager} meshManager
      * @param {OffscreenCanvasRenderingContext2D} context
      */
-    updateMeshFromContext(meshComponent, transformComponent, context) {
+    updateMeshFromContext(unitId, meshManager, context) {
         const sw = context.canvas.width, sh = context.canvas.height
         if (sw && sh) {
-            const mesh = meshComponent.getMesh()
+            let mesh = meshManager.get(unitId)
+            if(!mesh){
+               mesh = new Mesh()
+            }
             mesh.clear(new Size({width: sw, height: sh}))
             mesh.context = context
+            meshManager.set(unitId, mesh)
             return true
         }
         return false

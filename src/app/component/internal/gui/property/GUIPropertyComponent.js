@@ -26,42 +26,42 @@ export default class GUIPropertyComponent extends Component{
      * @param {Style} style
      */
     setStyle(style) {
-        this.set('style', style)
+        this.setValue('style', style)
     }
 
     /**
      * @return {Style}
      */
     getStyle(){
-        return this.get('style').getAttrValue()
+        return this.getValue('style')
     }
 
     /**
      * @param {boolean} value
      */
     setSelected(value) {
-        this.set('selected', value)
+        this.setValue('selected', value)
     }
 
     /**
      * @return {boolean}
      */
     getSelected(){
-        return this.get('selected').getAttrValue()
+        return this.getValue('selected')
     }
 
     /**
      * @param {boolean} value
      */
     setFocused(value) {
-        this.set('focused', value)
+        this.setValue('focused', value)
     }
 
     /**
      * @return {boolean}
      */
     getFocused(){
-        return this.get('focused').getAttrValue()
+        return this.getValue('focused')
     }
 
     /**
@@ -82,7 +82,7 @@ export default class GUIPropertyComponent extends Component{
      * @return {boolean}
      */
     getSelectable() {
-        return this.get('selectable').getAttrValue()
+        return this.getValue('selectable')
     }
 
     /**
@@ -96,14 +96,14 @@ export default class GUIPropertyComponent extends Component{
      * @param {boolean} visible
      */
     setVisible(visible) {
-        this.set('visible', visible)
+        this.setValue('visible', visible)
     }
 
     /**
      * @return {boolean}
      */
     getVisible() {
-        return this.get('visible').getAttrValue()
+        return this.getValue('visible')
     }
 
     /**
@@ -117,14 +117,14 @@ export default class GUIPropertyComponent extends Component{
      * @param {boolean} locked
      */
     setLocked(locked) {
-        this.set('locked', locked)
+        this.setValue('locked', locked)
     }
 
     /**
      * @return {boolean}
      */
     getLocked() {
-        return this.get('locked').getAttrValue()
+        return this.getValue('locked')
     }
 
     /**
@@ -138,14 +138,14 @@ export default class GUIPropertyComponent extends Component{
      * @param {number} rank
      */
     setRank(rank){
-        this.set('rank', rank)
+        this.setValue('rank', rank)
     }
 
     /**
      * @return {number}
      */
     getRank(){
-        return this.get('rank').getAttrValue()
+        return this.getValue('rank')
     }
 
     /**

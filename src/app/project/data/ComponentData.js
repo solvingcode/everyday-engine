@@ -70,14 +70,11 @@ export default class ComponentData extends Data{
      * @param {ComponentAttribute[]} attributes
      */
     concatAttributes(attributes){
-        attributes.forEach((componentAttr) => {
-            const existIndexAttribute = this.attributes.findIndex(attribute => attribute.getAttrName() === componentAttr.getAttrName())
-            if(existIndexAttribute >= 0){
-                this.attributes[existIndexAttribute] = _.cloneDeep(componentAttr)
-            }else{
-                this.attributes.push(_.cloneDeep(componentAttr))
-            }
-        })
+        this.concat(
+            this.attributes,
+            attributes,
+            (tItem, sItem) => tItem.getAttrName() === sItem.getAttrName()
+        )
     }
 
 }

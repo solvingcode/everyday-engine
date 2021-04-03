@@ -123,8 +123,7 @@ class Schema {
                                         if(_.isFunction(result[concatAttr])){
                                             result[concatAttr](subResultMerge)
                                         }else{
-                                            console.log(`Method ${concatAttr} not defined for ${result.constructor.name}`)
-                                            await result[setter](subResultMerge)
+                                            throw new TypeError(`Method ${concatAttr} not defined for ${result.constructor.name}`)
                                         }
                                     }else{
                                         await result[setter](subResultMerge)
@@ -188,7 +187,7 @@ class Schema {
         let newValue
         switch (prototype) {
             case 'number':
-                newValue = value !== null && value !== undefined ? parseFloat(value) : null
+                newValue = parseFloat(value) || null
                 break
             case 'string':
                 newValue = _.isString(value) ? value : ''
@@ -197,7 +196,11 @@ class Schema {
                 newValue = value === 'false' ? false : !!value
                 break
             default:
-                throw new TypeError(`Schema type ${prototype} not supported`)
+                if(!_.isString(prototype)){
+                    newValue = undefined
+                }else{
+                    throw new TypeError(`Schema type ${prototype} not supported`)
+                }
         }
         return newValue
     }

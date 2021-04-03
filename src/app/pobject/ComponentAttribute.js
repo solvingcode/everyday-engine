@@ -46,4 +46,11 @@ export default class ComponentAttribute {
         return this.attrValue
     }
 
+    /**
+     * @param {*[]} values
+     */
+    concatAttrValue(values) {
+        this.setAttrValue(values)
+    }
+
 }
