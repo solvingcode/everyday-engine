@@ -1,5 +1,5 @@
 import ListElementButtonUI from './ListElementButtonUI.js'
-import EntityUI from '../components/entity/EntityUI.js'
+import UnitUI from '../components/unit/UnitUI.js'
 
 export default class EntityElementButtonUI extends ListElementButtonUI {
 
@@ -18,7 +18,7 @@ export default class EntityElementButtonUI extends ListElementButtonUI {
     static getIcon(item){
         const bind = item.element.getDataBind()
         const {imageWidth, imageHeight} = this.props
-        return EntityUI.getImage(bind, {width: imageWidth, height: imageHeight})
+        return UnitUI.getImage(bind, {width: imageWidth, height: imageHeight})
     }
 
 }

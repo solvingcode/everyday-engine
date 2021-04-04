@@ -45,6 +45,15 @@ export default class ListElementButtonUI extends ItemUI {
     }
 
     /**
+     * @param {HTMLElement} el
+     * @return {HTMLElement | null}
+     */
+    static getIconElement(el){
+        const imgWrapper = el.getElementsByClassName('list-element-img-wrapper')[0]
+        return imgWrapper && imgWrapper.childNodes[0]
+    }
+
+    /**
      * @override
      */
     static postUpdate(item, el, uiRenderer) {
@@ -53,10 +62,19 @@ export default class ListElementButtonUI extends ItemUI {
             const bindId = el.getAttribute('data-list-element-id')
             const bindName = el.getAttribute('data-list-element-name')
             if (parseInt(bindId) !== bind.getId() || bindName !== bind.getName()) {
-                el.innerHTML = ''
-                this.postCreate(item, el, uiRenderer)
+                this.update(item, el, uiRenderer)
             }
         }
+    }
+
+    /**
+     * @param {MenuItemUI} item
+     * @param {HTMLElement} el
+     * @param {UIRenderer} uiRenderer
+     */
+    static update(item, el, uiRenderer){
+        el.innerHTML = ''
+        this.postCreate(item, el, uiRenderer)
     }
 
 }

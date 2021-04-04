@@ -23,6 +23,7 @@ export default class MeshComponent extends Component{
         this.add('generated', TYPES.BOOLEAN, false)
         this.add('assetId', TYPES.NUMBER)
         this.add('imageRepeat', TYPES.BOOLEAN, false)
+        this.add('version', TYPES.NUMBER, 0)
     }
 
     /**
@@ -60,6 +61,20 @@ export default class MeshComponent extends Component{
      */
     setShape(shape){
         this.setValue('shape', shape)
+    }
+
+    /**
+     * @return {number}
+     */
+    getVersion(){
+        return this.getValue('version')
+    }
+
+    /**
+     * @param {number} version
+     */
+    setVersion(version){
+        this.setValue('version', version)
     }
 
     /**

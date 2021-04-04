@@ -10,6 +10,7 @@ import Size from '../pobject/Size.js'
 import ShapeGenerator from '../generator/ShapeGenerator.js'
 import UnitHelper from '../unit/UnitHelper.js'
 import Mesh from '../core/Mesh.js'
+import Maths from '../utils/Maths.js'
 
 export default class MeshGenerationExecutor extends ComponentExecutor {
 
@@ -30,6 +31,7 @@ export default class MeshGenerationExecutor extends ComponentExecutor {
                 world.getMeshManager().clear(unit.getId())
             }
             meshComponent.setGenerated(true)
+            meshComponent.setVersion(Maths.generateId())
         }
     }
 

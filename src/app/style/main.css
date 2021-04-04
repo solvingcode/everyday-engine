@@ -277,7 +277,7 @@ h4{
 }
 
 .list-element span{
-    width: 100%;
+    width: unset;
     float: left;
     display: block;
     margin: 5px 5px 5px 10px;
