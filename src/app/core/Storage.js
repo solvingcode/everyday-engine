@@ -1,6 +1,6 @@
 import XmlSerDe from '../serde/XmlSerDe.js'
 import JsSerDe from '../serde/JsSerDe.js'
-import Schema from '../schema/Schema.js'
+import SchemaValidator from '../schema/SchemaValidator.js'
 
 /**
  * Utils to manage the storage of data over time.
@@ -45,7 +45,7 @@ class Storage {
      * @param {boolean} serialize
      */
     async updateAndValidate(type, data, serialize = true) {
-        const validData = await Schema.validate(type, data, Schema.getMeta(), {serialize})
+        const validData = await SchemaValidator.get().validate(type, data)
         this.data[type] = _.cloneDeep(validData)
         return this
     }

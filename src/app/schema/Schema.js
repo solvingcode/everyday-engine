@@ -229,6 +229,29 @@ class Schema {
         }
         return schemaMetaProto
     }
+
+    /**
+     * @param {string} path
+     * @return {string}
+     */
+    static getParentPath(path) {
+        const arrPath = path.split('.')
+        if (arrPath.length) {
+            arrPath.splice(arrPath.length - 1, 1)
+            return arrPath.join('.')
+        }
+    }
+
+    /**
+     * @param {string} path
+     * @return {string}
+     */
+    static getPathKey(path){
+        const arrPath = path.split('.')
+        if (arrPath.length) {
+            return arrPath[arrPath.length - 1]
+        }
+    }
 }
 
 export default Schema

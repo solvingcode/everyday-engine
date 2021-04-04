@@ -80,7 +80,7 @@ class DataSchema {
 
     /**
      * @param {number|string} pDataId
-     * @param {Class} prototype
+     * @param {Data} prototype
      * @return {Data}
      */
     static newInstance(pDataId, prototype) {

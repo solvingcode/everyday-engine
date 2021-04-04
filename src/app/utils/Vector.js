@@ -4,8 +4,8 @@
  */
 class Vector {
     constructor({x, y, z} = {x: 0, y: 0, z: 0}) {
-        this.x = x
-        this.y = y
+        this.x = x || 0
+        this.y = y || 0
         this.z = z || 0
     }
 
@@ -13,7 +13,7 @@ class Vector {
      * @param {number|string} x
      */
     setX(x) {
-        this.x = parseInt(x)
+        this.x = parseFloat(x) || 0
     }
 
     /**
@@ -27,7 +27,7 @@ class Vector {
      * @param {number|string} y
      */
     setY(y) {
-        this.y = parseInt(y)
+        this.y = parseFloat(y) || 0
     }
 
     /**
@@ -41,7 +41,7 @@ class Vector {
      * @param {number|string} z
      */
     setZ(z) {
-        this.z = parseInt(z)
+        this.z = parseFloat(z) || 0
     }
 
     /**

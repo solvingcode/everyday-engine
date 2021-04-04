@@ -77,6 +77,21 @@ export const PrefSchema = {
         opacity: {
             type: TYPES.NUMBER
         }
+    },
+    [TYPES.ARRAY_VECTOR]: {
+        element: {
+            type: TYPES.VECTOR
+        }
+    },
+    [TYPES.ARRAY_NUMBER]: {
+        element: {
+            type: TYPES.NUMBER
+        }
+    },
+    [TYPES.ARRAY_STRING]: {
+        element: {
+            type: TYPES.STRING
+        }
     }
 }
 

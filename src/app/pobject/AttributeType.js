@@ -7,12 +7,12 @@ export default class AttributeType {
 
     /**
      * @param {string} prototype
-     * @param {Object} data
+     * @param {Object} parentPathData
      * @return {string|Class}
      */
-    static extractPrototype(prototype, data) {
+    static extractPrototype(prototype, parentPathData) {
         if (_.isString(prototype)) {
-            const dynamicPrototype = this.extractPrototypeName(prototype, data)
+            const dynamicPrototype = this.extractDynamicPrototypeName(prototype, parentPathData)
             return this.mapPrototype(dynamicPrototype || prototype)
         }
         return prototype
@@ -20,20 +20,17 @@ export default class AttributeType {
 
     /**
      * @param {string} prototype
-     * @param {Object} data
+     * @param {Object} parentPathData
      * @return {string|null}
      */
-    static extractPrototypeName(prototype, data){
-        if (_.isObject(data)) {
+    static extractDynamicPrototypeName(prototype, parentPathData){
+        if (_.isObject(parentPathData)) {
             const dynamicTypeRegex = /^\[([a-zA-Z]+)]$/.exec(prototype)
             const dynamicType = dynamicTypeRegex && dynamicTypeRegex[1]
             if (dynamicType) {
-                return data[dynamicType]
+                return parentPathData[dynamicType]
             }
-        } else if(data){
-            throw new TypeError(`The given data must be an Object to extract prototype (${data} given)`)
         }
-        return null
     }
 
     /**
@@ -71,23 +68,6 @@ export default class AttributeType {
      */
     static isArrayType(type){
         return _.isString(type) && !!type.match(/^3[0-9]+$/)
-    }
-
-    /**
-     * @param {string} prototype
-     * @return {string|Class}
-     */
-    static extractArrayElementPrototype(prototype){
-        switch (prototype) {
-            case TYPES.ARRAY_STRING:
-                return TYPES.STRING
-            case TYPES.ARRAY_NUMBER:
-                return TYPES.NUMBER
-            case TYPES.ARRAY_VECTOR:
-                return TYPES.VECTOR
-            default:
-                throw new TypeError(`Attribute ElementArrayType not supported (${prototype})`)
-        }
     }
 
 }
