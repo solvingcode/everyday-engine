@@ -8,6 +8,10 @@ import ActionRunner from '../runner/action/ActionRunner.js'
 import WindowRunner from '../runner/window/WindowRunner.js'
 import WorldRunner from '../runner/world/WorldRunner.js'
 import Storage from '../core/Storage.js'
+import ExecutorRegistry from '../executor/ExecutorRegistry.js'
+import MeshGenerationExecutor from '../executor/MeshGenerationExecutor.js'
+import GUISelectionExecutor from '../executor/GUISelectionExecutor.js'
+import GUIPropertyExecutor from '../executor/GUIPropertyExecutor.js'
 
 /**
  * @class {Setup}
@@ -24,6 +28,11 @@ class Setup extends Loop {
         super()
         this.setupRenderer = new SetupRenderer()
         this.runners = [SimulateRunner, ActionRunner, WorldRunner, MenuRunner, WindowRunner, DrawerRunner]
+        ExecutorRegistry.get().register([
+            new MeshGenerationExecutor(),
+            new GUISelectionExecutor(),
+            new GUIPropertyExecutor()
+        ])
     }
 
     /**

@@ -1,7 +1,3 @@
-import MeshGenerationExecutor from './MeshGenerationExecutor.js'
-import GUISelectionExecutor from './GUISelectionExecutor.js'
-import GUIPropertyExecutor from './GUIPropertyExecutor.js'
-
 export default class ExecutorRegistry {
 
     static instance
@@ -14,11 +10,14 @@ export default class ExecutorRegistry {
          * @private
          * @type {ComponentExecutor[]}
          */
-        this.registry = [
-            new MeshGenerationExecutor(),
-            new GUISelectionExecutor(),
-            new GUIPropertyExecutor()
-        ]
+        this.registry = []
+    }
+
+    /**
+     * @param {ComponentExecutor[]} registry
+     */
+    register(registry){
+        this.registry = registry
     }
 
     /**

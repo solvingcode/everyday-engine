@@ -24,6 +24,13 @@ export default class Unit extends UnitData{
         return this.getComponent(GUIPropertyComponent).isSelected()
     }
 
+    /**
+     * @return {boolean}
+     */
+    isVisible(){
+        return this.getComponent(GUIPropertyComponent).isVisible()
+    }
+
     select(){
         this.getComponent(GUIPropertyComponent).setSelected(true)
     }

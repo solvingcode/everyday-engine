@@ -11,6 +11,7 @@ import ShapeGenerator from '../generator/ShapeGenerator.js'
 import UnitHelper from '../unit/UnitHelper.js'
 import Mesh from '../core/Mesh.js'
 import Maths from '../utils/Maths.js'
+import GUIPropertyComponent from '../component/internal/gui/property/GUIPropertyComponent.js'
 
 export default class MeshGenerationExecutor extends ComponentExecutor {
 
@@ -24,10 +25,13 @@ export default class MeshGenerationExecutor extends ComponentExecutor {
     execute(unit) {
         const meshComponent = unit.getComponent(MeshComponent)
         const transformComponent = unit.getComponent(TransformComponent)
+        const propertyComponent = unit.getComponent(GUIPropertyComponent)
         const world = World.get()
         if (!meshComponent.isGenerated()) {
             meshComponent.setVertices(UnitHelper.generateVertices(unit))
-            if (!meshComponent.isEnabled() || !this.generate(unit.getId(), meshComponent, transformComponent, world)) {
+            if (!meshComponent.isEnabled() ||
+                !propertyComponent.isVisible() ||
+                !this.generate(unit.getId(), meshComponent, transformComponent, world)) {
                 world.getMeshManager().clear(unit.getId())
             }
             meshComponent.setGenerated(true)

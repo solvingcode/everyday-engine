@@ -1,6 +1,8 @@
 import Scene from './Scene.js'
 import World from '../world/World.js'
 import Window from '../core/Window.js'
+import ExecutorRegistry from '../executor/ExecutorRegistry.js'
+import MeshGenerationExecutor from '../executor/MeshGenerationExecutor.js'
 
 /**
  * @class {Game}
@@ -15,7 +17,9 @@ class Game extends Scene {
 
     constructor() {
         super()
-        //this.runners = [ConstraintRunner]
+        ExecutorRegistry.get().register([
+            new MeshGenerationExecutor()
+        ])
     }
 
     /**
@@ -36,7 +40,7 @@ class Game extends Scene {
      */
     loop() {
         super.loop()
-        const world = World.get()
+        //const world = World.get()
         //world.getPhysics().update(world, world.getAiEngine())
     }
 

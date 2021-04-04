@@ -25,7 +25,6 @@ class World extends WorldData {
         this.unitManager = new UnitManager()
         this.meshManager = new MeshManager()
         this.camera = new Camera(new Vector({x: -SCENE_WIDTH / 2, y: -SCENE_HEIGHT / 2}))
-        this.executorRegistry = ExecutorRegistry.get()
         this.physics = new Physics()
         this.assetsManager = new AssetsManager()
         this.cameraUnitId = null
@@ -170,7 +169,7 @@ class World extends WorldData {
     }
 
     update() {
-        this.executorRegistry.execute(this)
+        ExecutorRegistry.get().execute(this)
     }
 
     /**

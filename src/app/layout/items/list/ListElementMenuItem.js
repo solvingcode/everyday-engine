@@ -19,6 +19,7 @@ export default class ListElementMenuItem extends PanelMenuItem {
      */
     setData(data){
         this.data = data
+        this.items = this.parent.getActions(this.data.bind)
     }
 
     /**

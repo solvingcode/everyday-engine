@@ -1,6 +1,7 @@
 import Action from '../Action.js'
-import World from '../../../world/World.js'
 import StateManager from '../../../state/StateManager.js'
+import GUIPropertyComponent from '../../../component/internal/gui/property/GUIPropertyComponent.js'
+import MeshComponent from '../../../component/internal/MeshComponent.js'
 
 export default class ShowItemAction extends Action {
 
@@ -14,9 +15,9 @@ export default class ShowItemAction extends Action {
      * @override
      */
     static run() {
-        const entityManager = World.get().getEntityManager()
-        const {entity} = StateManager.get().getNextProgressData(this.STATE)
-        entityManager.show(entity)
+        const {unit} = StateManager.get().getNextProgressData(this.STATE)
+        unit.getComponent(GUIPropertyComponent).setVisible(true)
+        unit.getComponent(MeshComponent).setGenerated(false)
         return true
     }
 

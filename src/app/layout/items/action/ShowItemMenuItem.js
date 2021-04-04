@@ -7,9 +7,9 @@ import Layout from '../../Layout.js'
 export default class ShowItemMenuItem extends MenuItem {
 
     /**
-     * @param {Entity} entity
+     * @param {Unit} unit
      */
-    constructor(entity) {
+    constructor(unit) {
         super({
             name: 'eye',
             title: 'Show',
@@ -17,13 +17,13 @@ export default class ShowItemMenuItem extends MenuItem {
             type: Layout.type.ICON,
             zone: Layout.zone.TOP
         })
-        this.data = {entity}
+        this.data = {unit}
     }
 
     /**
      * @override
      */
     isValid() {
-        return super.isValid() && !this.data.entity.isVisible()
+        return super.isValid() && !this.data.unit.isVisible()
     }
 }

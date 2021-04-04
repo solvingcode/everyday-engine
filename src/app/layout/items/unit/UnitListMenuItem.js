@@ -3,6 +3,8 @@ import ListMenuItem from '../list/ListMenuItem.js'
 import Layout from '../../Layout.js'
 import UnitElementMenuItem from './UnitElementMenuItem.js'
 import GUIPendingComponent from '../../../component/internal/gui/GUIPendingComponent.js'
+import HideItemMenuItem from '../action/HideItemMenuItem.js'
+import ShowItemMenuItem from '../action/ShowItemMenuItem.js'
 
 export default class UnitListMenuItem extends ListMenuItem {
 
@@ -33,6 +35,9 @@ export default class UnitListMenuItem extends ListMenuItem {
      * @param {Unit} bindObject
      */
     getActions(bindObject){
-        return []
+        return [
+            new HideItemMenuItem(bindObject),
+            new ShowItemMenuItem(bindObject)
+        ]
     }
 }

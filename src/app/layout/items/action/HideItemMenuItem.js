@@ -1,15 +1,12 @@
 import MenuItem from '../../MenuItem.js'
 import Layout from '../../Layout.js'
 
-/**
- * @class {HideItemMenuItem}
- */
 export default class HideItemMenuItem extends MenuItem {
 
     /**
-     * @param {Entity} entity
+     * @param {Unit} unit
      */
-    constructor(entity) {
+    constructor(unit) {
         super({
             name: 'eye-slash',
             title: 'Hide',
@@ -17,13 +14,13 @@ export default class HideItemMenuItem extends MenuItem {
             type: Layout.type.ICON,
             zone: Layout.zone.TOP
         })
-        this.data = {entity}
+        this.data = {unit}
     }
 
     /**
      * @override
      */
     isValid() {
-        return super.isValid() && this.data.entity.isVisible()
+        return super.isValid() && this.data.unit.isVisible()
     }
 }
