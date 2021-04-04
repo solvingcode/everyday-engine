@@ -1,5 +1,6 @@
 import ComponentData from '../project/data/ComponentData.js'
 import ComponentAttribute from '../pobject/ComponentAttribute.js'
+import {TYPES} from '../pobject/AttributeType.js'
 
 /**
  * @abstract
@@ -8,7 +9,7 @@ export default class Component extends ComponentData{
 
     constructor(name) {
         super(name)
-        this.initAttributes()
+        this.init()
     }
 
     /**
@@ -20,6 +21,14 @@ export default class Component extends ComponentData{
     }
 
     /**
+     * @private
+     */
+    init(){
+        this.add('enabled', TYPES.BOOLEAN, true)
+        this.initAttributes()
+    }
+
+    /**
      * @abstract
      */
     initAttributes(){
@@ -27,6 +36,7 @@ export default class Component extends ComponentData{
     }
 
     /**
+     * @protected
      * @param {string} name
      * @param {string} type
      * @param {*} defaultValue
@@ -44,6 +54,7 @@ export default class Component extends ComponentData{
     }
 
     /**
+     * @protected
      * @param {string} name
      * @return {ComponentAttribute}
      */
@@ -56,6 +67,7 @@ export default class Component extends ComponentData{
     }
 
     /**
+     * @protected
      * @param {string} name
      * @return {ComponentAttribute}
      */
@@ -64,6 +76,7 @@ export default class Component extends ComponentData{
     }
 
     /**
+     * @protected
      * @param {string} name
      * @param {*} value
      */
@@ -73,6 +86,7 @@ export default class Component extends ComponentData{
     }
 
     /**
+     * @protected
      * @param {string} name
      * @return {*}
      */

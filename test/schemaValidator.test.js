@@ -69,6 +69,6 @@ test('Schema validate world', async function () {
     const units = result.getUnitManager().getUnits()
     expect(units.length).toBe(1)
     expect(units[0].getComponents().length).toBe(3)
-    expect(units[0].getComponent(TransformComponent).getPosition()).toStrictEqual(new Vector({x: 150, y: 180}))
+    expect(units[0].getComponent(TransformComponent).getPosition()).toStrictEqual(new Vector({x: 150, y: 80}))
     expect(result.getCamera().getPosition()).toStrictEqual(new Vector({x: -924, y: -490.5}))
 })

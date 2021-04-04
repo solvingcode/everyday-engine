@@ -1,55 +1,15 @@
 export default {
+    'dataId': 10,
     'unitManager': {
+        'dataId': 20,
         'units': [
             {
+                'dataId': 60,
                 'id': 1617505336397,
                 'name': 'maxresdefault',
                 'components': [
                     {
-                        'id': 1617505266862,
-                        'name': 'Edit Properties',
-                        'attributes': [
-                            {
-                                'attrName': 'style',
-                                'attrType': '202',
-                                'attrValue': {
-                                    'colorOpacity': 1,
-                                    'fillColorOpacity': 1
-                                }
-                            },
-                            {
-                                'attrName': 'selectable',
-                                'attrType': '003',
-                                'attrValue': true
-                            },
-                            {
-                                'attrName': 'selected',
-                                'attrType': '003',
-                                'attrValue': false
-                            },
-                            {
-                                'attrName': 'locked',
-                                'attrType': '003',
-                                'attrValue': false
-                            },
-                            {
-                                'attrName': 'visible',
-                                'attrType': '003',
-                                'attrValue': true
-                            },
-                            {
-                                'attrName': 'focused',
-                                'attrType': '003',
-                                'attrValue': false
-                            },
-                            {
-                                'attrName': 'rank',
-                                'attrType': '004',
-                                'attrValue': 20
-                            }
-                        ]
-                    },
-                    {
+                        'dataId': 40,
                         'id': 1617505255713,
                         'name': 'Mesh',
                         'attributes': [
@@ -128,6 +88,7 @@ export default {
                         ]
                     },
                     {
+                        'dataId': 50,
                         'id': 1617505266666,
                         'name': 'Transform',
                         'attributes': [
@@ -161,6 +122,7 @@ export default {
         ]
     },
     'camera': {
+        'dataId': 4,
         'position': {
             'x': -924,
             'y': -490.5,
@@ -175,41 +137,10 @@ export default {
         'cameraUnitId': null
     },
     'physics': {
+        'dataId': 5,
         'toRestart': false,
         'isRunning': false,
         'types': {}
-    },
-    'assetsManager': {
-        'assets': [
-            {
-                'id': 1617505275722,
-                'name': 'maxresdefault',
-                'type': {
-                    'data': {
-                        'size': {
-                            'width': 1280,
-                            'height': 720
-                        },
-                        'position': {
-                            'x': 0,
-                            'y': 0,
-                            'z': 0
-                        },
-                        'context': {}
-                    }
-                },
-                'folderId': null,
-                'selected': true
-            }
-        ],
-        'folders': [
-            {
-                'id': 0,
-                'name': 'Root',
-                'folderId': null,
-                'selected': false
-            }
-        ]
     },
     'cameraUnitId': null,
     'resolution': {

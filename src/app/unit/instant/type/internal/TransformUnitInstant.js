@@ -4,6 +4,7 @@ import TransformComponent from '../../../../component/internal/TransformComponen
 import MeshComponent from '../../../../component/internal/MeshComponent.js'
 import GUIPendingComponent from '../../../../component/internal/gui/GUIPendingComponent.js'
 import GUIPropertyComponent from '../../../../component/internal/gui/property/GUIPropertyComponent.js'
+import StyleComponent from '../../../../component/internal/StyleComponent.js'
 
 export default class TransformUnitInstant extends UnitInstant {
 
@@ -21,7 +22,7 @@ export default class TransformUnitInstant extends UnitInstant {
         const meshComponent = this.getComponent(MeshComponent)
         transformComponent.setPosition(new Vector(_.cloneDeep(position)))
         meshComponent.setShape(shape)
-        this.getComponent(GUIPropertyComponent).setStyle(style)
+        this.getComponent(StyleComponent).setStyle(style)
         this.getComponent(MeshComponent).setStyle(style)
         this.getComponent(MeshComponent).setSize(size)
     }

@@ -23,7 +23,6 @@ export default class MeshComponent extends Component{
         this.add('generated', TYPES.BOOLEAN, false)
         this.add('assetId', TYPES.NUMBER)
         this.add('imageRepeat', TYPES.BOOLEAN, false)
-        this.add('enabled', TYPES.BOOLEAN, true)
     }
 
     /**

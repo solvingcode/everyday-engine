@@ -1,8 +1,5 @@
-import EntitySelector from '../../manager/EntitySelector.js'
 import Runner from '../Runner.js'
 import StateManager from '../../state/StateManager.js'
-import World from '../../world/World.js'
-import Vector from '../../utils/Vector.js'
 
 class WindowRunner extends Runner {
 
@@ -14,39 +11,17 @@ class WindowRunner extends Runner {
     }
 
     /**
-     * Execute all windows actions (move mouse, ...)
+     * @override
      * @param {Mouse} mouse
      */
     execute(mouse) {
-        const entitySelector = EntitySelector.get()
-        const stateManager = StateManager.get()
-        const world = World.get()
-        if (!stateManager.isRunning()) {
-            //this.focus(world, entitySelector, mouse)
-        }
-        //this.cursor(world, entitySelector, mouse)
-    }
-
-    /**
-     * Focus entity over mouse
-     * @param {World} world
-     * @param {EntitySelector} entitySelector
-     * @param {Mouse} mouse
-     */
-    focus(world, entitySelector, mouse) {
-        entitySelector.unfocusAll(world)
-        const currentScenePosition = new Vector(mouse.currentScenePosition)
-        const vector3d = world.getCamera().fromCameraScale(currentScenePosition)
-        entitySelector.focus(world, world.getWorldPosition(vector3d))
+        this.cursor()
     }
 
     /**
      * Change cursor mouse
-     * @param {World} world
-     * @param {EntitySelector} entitySelector
-     * @param {Mouse} mouse
      */
-    cursor(world, entitySelector, mouse) {
+    cursor() {
         let cursor = StateManager.get().getData('cursor')
         document.body.style.cursor = cursor || 'default'
     }

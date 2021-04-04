@@ -21,6 +21,8 @@ import GridYUnitInstant from '../../unit/instant/type/internal/grid/GridYUnitIns
 import CameraUnitInstant from '../../unit/instant/type/internal/camera/CameraUnitInstant.js'
 import ComponentAttribute from '../../pobject/ComponentAttribute.js'
 import CameraComponent from '../../component/internal/CameraComponent.js'
+import SelectionUnitInstant from '../../unit/instant/type/internal/edit/SelectionUnitInstant.js'
+import StyleComponent from '../../component/internal/StyleComponent.js'
 
 /**
  * @class {DataSchema}
@@ -38,6 +40,7 @@ class DataSchema {
         {id: 60, type: AssetUnitInstant},
         {id: 70, type: CameraUnitInstant},
         {id: 80, type: CameraComponent},
+        {id: 90, type: StyleComponent},
         {id: 4, type: Camera},
         {id: 5, type: Physics},
         {id: 16, type: AssetsManager},
@@ -55,7 +58,8 @@ class DataSchema {
         MoveFreeUnitInstant,
         GridUnitInstant,
         GridXUnitInstant,
-        GridYUnitInstant
+        GridYUnitInstant,
+        SelectionUnitInstant
     ]
 
     /**

@@ -94,13 +94,13 @@ export default class UnitHelper {
      * @return {Vector[]}
      */
     static rotateVertices(vertices, rotation, size, rotateCenter = new Vector()){
-        const {width: mWidth, height: mHeight} = GeometryHelper.getLargestRectangle(rotation, size)
+        const {width: mWidth, height: mHeight} = GeometryHelper.getLargestRectangle(rotation || 0, size)
         const center = new Vector({x: size.width / 2, y: size.height / 2})
         const mCenter = new Vector({x: mWidth / 2, y: mHeight / 2})
 
         let newVertices = vertices
         newVertices = Vertex.translate(newVertices, center, -1)
-        newVertices = Vertex.rotate(newVertices, rotation, rotateCenter)
+        newVertices = Vertex.rotate(newVertices, rotation || 0, rotateCenter)
         newVertices = Vertex.translate(newVertices, mCenter)
 
         return newVertices

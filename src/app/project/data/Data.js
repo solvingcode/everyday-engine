@@ -8,7 +8,7 @@ class Data {
 
     /**
      * Generated when serializing object
-     * @param {number} id
+     * @param {number|null} id
      */
     setDataId(id) {
         this.dataId = id

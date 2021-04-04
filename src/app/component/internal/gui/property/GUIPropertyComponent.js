@@ -1,5 +1,4 @@
 import Component from '../../../Component.js'
-import Style from '../../../../pobject/Style.js'
 import {TYPES} from '../../../../pobject/AttributeType.js'
 
 export default class GUIPropertyComponent extends Component{
@@ -12,28 +11,12 @@ export default class GUIPropertyComponent extends Component{
      * @override
      */
     initAttributes() {
-        this.add('style', TYPES.STYLE, new Style())
         this.add('selectable', TYPES.BOOLEAN, true)
         this.add('selected', TYPES.BOOLEAN, false)
         this.add('locked', TYPES.BOOLEAN, false)
         this.add('visible', TYPES.BOOLEAN, true)
         this.add('focused', TYPES.BOOLEAN, false)
         this.add('rank', TYPES.NUMBER, 0)
-
-    }
-
-    /**
-     * @param {Style} style
-     */
-    setStyle(style) {
-        this.setValue('style', style)
-    }
-
-    /**
-     * @return {Style}
-     */
-    getStyle(){
-        return this.getValue('style')
     }
 
     /**

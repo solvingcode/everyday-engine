@@ -30,7 +30,9 @@ class SchemaValidator {
                 const prop = props[iProp]
                 const childPath = `${path}.${prop.key}` + (pathDynamicPrototypeName ? `[${pathDynamicPrototypeName}]` : '')
                 const childDataValidated = await this.validate(childPath, prop.value, data)
-                if (childDataValidated !== null && childDataValidated !== undefined) {
+                if (childDataValidated !== null &&
+                    childDataValidated !== undefined &&
+                    prop.key !== 'dataId') {
                     await ObjectHelper.setProperty(dataValidated, prop.key, childDataValidated)
                 }
             }

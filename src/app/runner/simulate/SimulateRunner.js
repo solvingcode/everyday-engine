@@ -19,7 +19,7 @@ class SimulateRunner extends Runner {
 
     constructor() {
         super()
-        this.currentEntity = null
+        this.isLoading = false
         this.isSimulating = false
         this.windowInstance = null
     }
@@ -39,10 +39,12 @@ class SimulateRunner extends Runner {
         const stateManager = StateManager.get()
         const storage = Storage.get()
         if (stateManager.isStart(this.STATE)) {
-            if (!this.isSimulating) {
-                this.start(storage, stateManager)
-            } else {
-                stateManager.stopNextState(this.STATE)
+            if (!this.isLoading) {
+                if (!this.isSimulating) {
+                    this.start(storage, stateManager)
+                } else {
+                    stateManager.stopNextState(this.STATE)
+                }
             }
         } else if (stateManager.isProgress(this.STATE)) {
             this.progress(stateManager)
@@ -56,20 +58,23 @@ class SimulateRunner extends Runner {
      * @param {Storage} storage
      * @param {StateManager} stateManager
      */
-    async start(storage, stateManager) {
+    start(storage, stateManager) {
         const world = World.get()
         const size = world.getResolution()
-        await storage.saveLocal(Storage.type.WORLD, world)
-        this.isSimulating = true
-        stateManager.progressNextState(this.STATE)
-        this.windowInstance = window.open(
-            PREVIEW_URL,
-            '_blank',
-            `width=${size.width},height=${size.height}`)
+        this.isLoading = true
+        storage.saveLocal(Storage.type.WORLD, world).then(() => {
+            this.isLoading = false
+            this.isSimulating = true
+            stateManager.progressNextState(this.STATE)
+            this.windowInstance = window.open(
+                PREVIEW_URL,
+                '_blank',
+                `width=${size.width},height=${size.height}`)
+        })
     }
 
     progress(stateManager) {
-        if (this.windowInstance.closed) {
+        if (this.windowInstance && this.windowInstance.closed) {
             stateManager.stopNextState(this.STATE)
         }
     }

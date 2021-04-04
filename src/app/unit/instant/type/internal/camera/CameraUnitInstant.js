@@ -5,6 +5,7 @@ import GUIPropertyComponent from '../../../../../component/internal/gui/property
 import Style from '../../../../../pobject/Style.js'
 import {PrimitiveShape} from '../../../../Unit.js'
 import CameraComponent from '../../../../../component/internal/CameraComponent.js'
+import StyleComponent from '../../../../../component/internal/StyleComponent.js'
 
 export default class CameraUnitInstant extends UnitInstant {
 
@@ -21,8 +22,8 @@ export default class CameraUnitInstant extends UnitInstant {
         this.createComponent(CameraComponent)
         const meshComponent = this.getComponent(MeshComponent)
         const transformComponent = this.getComponent(TransformComponent)
-        const propertyComponent = this.getComponent(GUIPropertyComponent)
-        propertyComponent.setStyle(style)
+        const styleComponent = this.getComponent(StyleComponent)
+        styleComponent.setStyle(style)
         transformComponent.setPosition(position)
         meshComponent.setSize(size)
         meshComponent.setShape(PrimitiveShape.RECT_CROSS)

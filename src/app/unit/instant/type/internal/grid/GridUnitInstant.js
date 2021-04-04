@@ -7,6 +7,7 @@ import GUIPropertyComponent from '../../../../../component/internal/gui/property
 import GUIPendingComponent from '../../../../../component/internal/gui/GUIPendingComponent.js'
 import Vector from '../../../../../utils/Vector.js'
 import Style from '../../../../../pobject/Style.js'
+import StyleComponent from '../../../../../component/internal/StyleComponent.js'
 
 export default class GridUnitInstant extends UnitInstant {
 
@@ -23,7 +24,7 @@ export default class GridUnitInstant extends UnitInstant {
         meshComponent.setShape(PrimitiveShape.GRID)
         const style = new Style()
         style.setColor('#3e3e3e')
-        this.getComponent(GUIPropertyComponent).setStyle(style)
+        this.getComponent(StyleComponent).setStyle(style)
         this.getComponent(MeshComponent).setStyle(style)
         this.getComponent(MeshComponent).setSize(size)
     }

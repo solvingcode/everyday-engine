@@ -34,12 +34,13 @@ export default class DrawerRunner extends Runner {
     }
 
     /**
+     * @override
      * @param {Mouse} mouse
      * @param {Menu} menu
      *
      * @var {{[string]: {shape: string, startEvent: any, endEvent: any}}} typeEntity
      */
-    execute(mouse, menu) {
+    async execute(mouse, menu) {
         const stateManager = StateManager.get()
         const world = World.get()
         const scenePosition = new Vector(mouse.scenePosition)
@@ -83,6 +84,7 @@ export default class DrawerRunner extends Runner {
                 stateManager.endState(type, 1)
             }
         })
+        return false
     }
 
     /**
