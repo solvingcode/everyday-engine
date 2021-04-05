@@ -2,6 +2,7 @@ import Layout from '../../Layout.js'
 import PhysicsFormMenuItem from './PhysicsFormMenuItem.js'
 import CameraFormMenuItem from './CameraFormMenuItem.js'
 import PanelMenuItem from '../panel/PanelMenuItem.js'
+import ResolutionFormMenuItem from './ResolutionFormMenuItem.js'
 
 /**
  * @class {WorldMenuItem}
@@ -14,7 +15,8 @@ export default class WorldMenuItem extends PanelMenuItem {
         })
         this.items = [
             new PhysicsFormMenuItem(this),
-            new CameraFormMenuItem(this)
+            new CameraFormMenuItem(this),
+            new ResolutionFormMenuItem(this)
         ]
     }
 }
