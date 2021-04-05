@@ -2,7 +2,7 @@ import Scene from './Scene.js'
 import World from '../world/World.js'
 import Window from '../core/Window.js'
 import ExecutorRegistry from '../executor/ExecutorRegistry.js'
-import MeshGenerationExecutor from '../executor/MeshGenerationExecutor.js'
+import MeshGenerationExecutor from '../executor/type/MeshGenerationExecutor.js'
 
 /**
  * @class {Game}

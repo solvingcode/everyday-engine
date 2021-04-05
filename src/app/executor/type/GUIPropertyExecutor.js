@@ -1,5 +1,5 @@
 import ComponentExecutor from './ComponentExecutor.js'
-import GUIPropertyComponent from '../component/internal/gui/property/GUIPropertyComponent.js'
+import GUIPropertyComponent from '../../component/internal/gui/property/GUIPropertyComponent.js'
 
 export default class GUIPropertyExecutor extends ComponentExecutor {
 

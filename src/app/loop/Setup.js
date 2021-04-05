@@ -9,9 +9,9 @@ import WindowRunner from '../runner/window/WindowRunner.js'
 import WorldRunner from '../runner/world/WorldRunner.js'
 import Storage from '../core/Storage.js'
 import ExecutorRegistry from '../executor/ExecutorRegistry.js'
-import MeshGenerationExecutor from '../executor/MeshGenerationExecutor.js'
-import GUISelectionExecutor from '../executor/GUISelectionExecutor.js'
-import GUIPropertyExecutor from '../executor/GUIPropertyExecutor.js'
+import MeshGenerationExecutor from '../executor/type/MeshGenerationExecutor.js'
+import GUISelectionExecutor from '../executor/type/GUISelectionExecutor.js'
+import GUIPropertyExecutor from '../executor/type/GUIPropertyExecutor.js'
 
 /**
  * @class {Setup}

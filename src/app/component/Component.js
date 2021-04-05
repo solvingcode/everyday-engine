@@ -1,6 +1,6 @@
 import ComponentData from '../project/data/ComponentData.js'
-import ComponentAttribute from '../pobject/ComponentAttribute.js'
 import {TYPES} from '../pobject/AttributeType.js'
+import DynamicAttributeHelper from '../utils/DynamicAttributeHelper.js'
 
 /**
  * @abstract
@@ -42,37 +42,16 @@ export default class Component extends ComponentData{
      * @param {*} defaultValue
      */
     add(name, type, defaultValue = null){
-        if(!this.tryGet(name)){
-            const componentAttribute = new ComponentAttribute()
-            componentAttribute.setAttrName(name)
-            componentAttribute.setAttrType(type)
-            componentAttribute.setAttrValue(defaultValue)
-            this.attributes.push(componentAttribute)
-        }else{
-            throw new TypeError(`Attribute ${name} already defined for ${this.name}Component`)
-        }
+        DynamicAttributeHelper.add(this.attributes, name, type, defaultValue)
     }
 
     /**
      * @protected
      * @param {string} name
-     * @return {ComponentAttribute}
+     * @return {DynamicAttribute}
      */
     get(name){
-        const componentAttribute = this.tryGet(name)
-        if(!componentAttribute){
-            throw new TypeError(`Attribute ${name} not supported by ${this.name}Component`)
-        }
-        return componentAttribute
-    }
-
-    /**
-     * @protected
-     * @param {string} name
-     * @return {ComponentAttribute}
-     */
-    tryGet(name){
-        return this.attributes.find(attribute => attribute.getAttrName() === name)
+        return DynamicAttributeHelper.get(this.attributes, name)
     }
 
     /**
@@ -81,8 +60,7 @@ export default class Component extends ComponentData{
      * @param {*} value
      */
     setValue(name, value){
-        let attribute = this.get(name)
-        attribute.setAttrValue(value)
+        DynamicAttributeHelper.setValue(this.attributes, name, value)
     }
 
     /**
@@ -91,7 +69,7 @@ export default class Component extends ComponentData{
      * @return {*}
      */
     getValue(name){
-        return this.get(name).getAttrValue()
+        return DynamicAttributeHelper.getValue(this.attributes, name)
     }
 
 }

@@ -1,9 +1,9 @@
 import ComponentExecutor from './ComponentExecutor.js'
-import MeshComponent from '../component/internal/MeshComponent.js'
-import GUIPropertyComponent from '../component/internal/gui/property/GUIPropertyComponent.js'
-import Style from '../pobject/Style.js'
-import GUIPendingComponent from '../component/internal/gui/GUIPendingComponent.js'
-import StyleComponent from '../component/internal/StyleComponent.js'
+import MeshComponent from '../../component/internal/MeshComponent.js'
+import GUIPropertyComponent from '../../component/internal/gui/property/GUIPropertyComponent.js'
+import Style from '../../pobject/Style.js'
+import GUIPendingComponent from '../../component/internal/gui/GUIPendingComponent.js'
+import StyleComponent from '../../component/internal/StyleComponent.js'
 
 export default class GUISelectionExecutor extends ComponentExecutor {
 

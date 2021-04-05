@@ -11,6 +11,6 @@ export {default as PhysicsEngineData} from '../app/project/data/PhysicsEngineDat
 export {default as AssetsManagerData} from '../app/project/data/AssetsManagerData.js'
 export {default as AssetData} from '../app/project/data/AssetData.js'
 export {default as FolderData} from '../app/project/data/FolderData.js'
-export {default as ComponentAttribute} from '../app/pobject/ComponentAttribute.js'
+export {default as DynamicAttribute} from '../app/pobject/DynamicAttribute.js'
 export {default as AssetType} from '../app/asset/types/AssetType.js'
 export {default as BlobData} from '../app/project/data/BlobData.js'

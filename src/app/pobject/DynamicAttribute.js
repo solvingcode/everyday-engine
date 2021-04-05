@@ -1,8 +1,29 @@
-export default class ComponentAttribute {
+import Maths from '../utils/Maths.js'
 
+export default class DynamicAttribute {
+
+    id
     attrName
     attrType
     attrValue
+
+    constructor() {
+        this.id = Maths.generateId()
+    }
+
+    /**
+     * @param {number} id
+     */
+    setId(id){
+        this.id = id
+    }
+
+    /**
+     * @return {number}
+     */
+    getId(){
+        return this.id
+    }
 
     /**
      * @param {string} name

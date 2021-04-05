@@ -82,6 +82,7 @@ export default class AttributeType {
  * @type {Object}
  */
 export const TYPES = {
+    ANY: '000',
     STRING: '001',
     BOOLEAN: '003',
     NUMBER: '004',

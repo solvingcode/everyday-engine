@@ -19,7 +19,7 @@ import AssetUnitInstant from '../../unit/instant/type/internal/asset/AssetUnitIn
 import GridXUnitInstant from '../../unit/instant/type/internal/grid/GridXUnitInstant.js'
 import GridYUnitInstant from '../../unit/instant/type/internal/grid/GridYUnitInstant.js'
 import CameraUnitInstant from '../../unit/instant/type/internal/camera/CameraUnitInstant.js'
-import ComponentAttribute from '../../pobject/ComponentAttribute.js'
+import DynamicAttribute from '../../pobject/DynamicAttribute.js'
 import CameraComponent from '../../component/internal/CameraComponent.js'
 import SelectionUnitInstant from '../../unit/instant/type/internal/edit/SelectionUnitInstant.js'
 import StyleComponent from '../../component/internal/StyleComponent.js'
@@ -48,7 +48,7 @@ class DataSchema {
         {id: 19, type: MatterEngine},
         {id: 23, type: Folder},
         {id: 24, type: Mesh},
-        {id: 25, type: ComponentAttribute}
+        {id: 25, type: DynamicAttribute}
     ]
 
     static exclude = [

@@ -10,7 +10,7 @@ import AssetTypeData from '../asset/types/AssetTypeData.js'
 import Unit from '../unit/Unit.js'
 import UnitManager from '../manager/UnitManager.js'
 import Component from '../component/Component.js'
-import ComponentAttribute from '../pobject/ComponentAttribute.js'
+import DynamicAttribute from '../pobject/DynamicAttribute.js'
 import {TYPES} from '../pobject/AttributeType.js'
 
 /**
@@ -151,7 +151,7 @@ export default {
                                                         type: Array,
                                                         meta: {
                                                             element: {
-                                                                prototype: ComponentAttribute,
+                                                                prototype: DynamicAttribute,
                                                                 meta: {
                                                                     attrName: {
                                                                         type: TYPES.STRING

@@ -1,7 +1,7 @@
 import Vector from '../src/app/utils/Vector.js'
 import SchemaValidator from '../src/app/schema/SchemaValidator.js'
 import {expect} from '@jest/globals'
-import ComponentAttribute from '../src/app/pobject/ComponentAttribute.js'
+import DynamicAttribute from '../src/app/pobject/DynamicAttribute.js'
 import {TYPES} from '../src/app/pobject/AttributeType.js'
 import unitsData from './__fixtures__/units.data.js'
 import worldData from './__fixtures__/world.data.js'
@@ -36,7 +36,7 @@ test('Schema serialization validate Dynamic type', async function () {
     const data = {attrName: 'component1', attrType: TYPES.NUMBER, attrValue: '120'}
     const result = await SchemaValidator.get().validate(
         'world.unitManager.units.element.components.element.attributes.element', data)
-    const componentAttribute = new ComponentAttribute()
+    const componentAttribute = new DynamicAttribute()
     componentAttribute.setAttrName('component1')
     componentAttribute.setAttrType(TYPES.NUMBER)
     componentAttribute.setAttrValue(120)

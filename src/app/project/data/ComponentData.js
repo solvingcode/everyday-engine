@@ -6,7 +6,7 @@ export default class ComponentData extends Data{
     id
     name
     /**
-     * @type {ComponentAttribute[]}
+     * @type {DynamicAttribute[]}
      */
     attributes
 
@@ -53,21 +53,21 @@ export default class ComponentData extends Data{
     }
 
     /**
-     * @param {ComponentAttribute[]} attributes
+     * @param {DynamicAttribute[]} attributes
      */
     setAttributes(attributes){
         this.attributes = attributes
     }
 
     /**
-     * @return {ComponentAttribute[]}
+     * @return {DynamicAttribute[]}
      */
     getAttributes(){
         return this.attributes
     }
 
     /**
-     * @param {ComponentAttribute[]} attributes
+     * @param {DynamicAttribute[]} attributes
      */
     concatAttributes(attributes){
         this.concat(
