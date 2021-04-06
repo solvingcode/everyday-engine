@@ -3,6 +3,7 @@ import World from '../world/World.js'
 import Window from '../core/Window.js'
 import ExecutorRegistry from '../executor/ExecutorRegistry.js'
 import MeshGenerationExecutor from '../executor/type/MeshGenerationExecutor.js'
+import EventRunner from '../runner/event/EventRunner.js'
 
 /**
  * @class {Game}
@@ -20,6 +21,7 @@ class Game extends Scene {
         ExecutorRegistry.get().register([
             new MeshGenerationExecutor()
         ])
+        this.runners = [EventRunner]
     }
 
     /**

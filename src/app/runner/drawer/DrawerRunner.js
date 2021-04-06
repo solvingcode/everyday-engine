@@ -1,6 +1,6 @@
 import StateManager from '../../state/StateManager.js'
 import Runner from '../Runner.js'
-import Mouse from '../../core/Mouse.js'
+import {MouseButton} from '../../core/Mouse.js'
 import World from '../../world/World.js'
 import Vector from '../../utils/Vector.js'
 import {PrimitiveShape} from '../../unit/Unit.js'
@@ -9,8 +9,6 @@ import Size from '../../pobject/Size.js'
 import TransformComponent from '../../component/internal/TransformComponent.js'
 import MoveAction from '../action/edit/MoveAction.js'
 import SelectionUnitInstant from '../../unit/instant/type/internal/edit/SelectionUnitInstant.js'
-
-const {MouseButton} = Mouse
 
 export default class DrawerRunner extends Runner {
 

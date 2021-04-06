@@ -216,13 +216,13 @@ class Mouse {
     }
 }
 
-Mouse.MouseButton = {
+export const MouseButton = {
     LEFT: 0,
     MIDDLE: 1,
     RIGHT: 2
 }
 
-Mouse.CURSOR = {
+export const CURSOR = {
     DEFAULT: 'default',
     CROSSHAIR: 'crosshair',
     POINTER: 'pointer',

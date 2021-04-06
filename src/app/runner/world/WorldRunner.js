@@ -3,7 +3,7 @@ import StateManager from '../../state/StateManager.js'
 import MoveCameraAction from '../action/camera/MoveCameraAction.js'
 import ZoomInOutCameraAction from '../action/camera/ZoomInOutCameraAction.js'
 import World from '../../world/World.js'
-import Mouse from '../../core/Mouse.js'
+import {MouseButton} from '../../core/Mouse.js'
 import MoveAction from '../action/edit/MoveAction.js'
 import ScaleAction from '../action/edit/ScaleAction.js'
 import RotateAction from '../action/edit/RotateAction.js'
@@ -36,8 +36,6 @@ import GridXUnitInstant from '../../unit/instant/type/internal/grid/GridXUnitIns
 import GUIGridYComponent from '../../component/internal/gui/grid/GUIGridYComponent.js'
 import GUIGridXComponent from '../../component/internal/gui/grid/GUIGridXComponent.js'
 import GridYUnitInstant from '../../unit/instant/type/internal/grid/GridYUnitInstant.js'
-
-const {MouseButton} = Mouse
 
 class WorldRunner extends Runner {
 

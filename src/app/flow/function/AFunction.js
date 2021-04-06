@@ -94,6 +94,13 @@ export default class AFunction{
     }
 
     /**
+     * @return {number[]}
+     */
+    getInputIds(){
+        return this.inputs.map(input => input.getId())
+    }
+
+    /**
      * @param {string} name
      * @param {*} value
      */
@@ -110,6 +117,14 @@ export default class AFunction{
     }
 
     /**
+     * @param {string} name
+     * @return {number}
+     */
+    getInputId(name){
+        return DynamicAttributeHelper.getId(this.inputs, name)
+    }
+
+    /**
      * @param {string} type
      * @param {*} defaultValue
      */
@@ -118,11 +133,17 @@ export default class AFunction{
     }
 
     /**
-     * @protected
      * @return {DynamicAttribute}
      */
     getOutput(){
         return this.output
+    }
+
+    /**
+     * @return {DynamicAttribute[]}
+     */
+    getInputs(){
+        return this.inputs
     }
 
     /**

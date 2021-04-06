@@ -1,9 +1,7 @@
 import Runner from '../Runner.js'
-import Mouse from '../../core/Mouse.js'
+import {MouseButton} from '../../core/Mouse.js'
 import World from '../../world/World.js'
 import Vector from '../../utils/Vector.js'
-
-const {MouseButton} = Mouse
 
 /**
  * Manage all the entity constraints (mouse constraint, ...)

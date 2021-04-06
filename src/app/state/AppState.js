@@ -1,6 +1,4 @@
-import Mouse from '../core/Mouse.js'
-
-const {CURSOR} = Mouse
+import {CURSOR} from '../core/Mouse.js'
 
 /**
  * @typedef {{code: string, id: number}} StateType

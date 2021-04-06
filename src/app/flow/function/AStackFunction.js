@@ -8,6 +8,11 @@ export default class AStackFunction extends AFunction{
      */
     stack
 
+    constructor(name) {
+        super(name)
+        this.stack = []
+    }
+
     /**
      * @override
      */

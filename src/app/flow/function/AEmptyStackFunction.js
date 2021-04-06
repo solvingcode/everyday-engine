@@ -2,6 +2,11 @@ import AStackFunction from './AStackFunction.js'
 
 export default class AEmptyStackFunction extends AStackFunction{
 
+    constructor(name) {
+        super(name)
+        this.inputs = []
+    }
+
     initAttributes(){
     }
 

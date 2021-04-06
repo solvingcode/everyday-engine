@@ -1,8 +1,6 @@
 import Runner from '../Runner.js'
 import Menu from '../../layout/Menu.js'
-import Mouse from '../../core/Mouse.js'
-
-const {MouseButton} = Mouse
+import {MouseButton} from '../../core/Mouse.js'
 
 /**
  * Execute actions related to menu items

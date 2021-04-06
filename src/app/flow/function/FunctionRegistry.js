@@ -25,7 +25,7 @@ export default class FunctionRegistry{
      */
     register(func){
         if(this.getFunction(func.getName())){
-            throw new TypeError(`Function width name ${func.getName()} is already registered`)
+            throw new TypeError(`Function with name ${func.getName()} is already registered`)
         }
         this.registry.push(func)
     }

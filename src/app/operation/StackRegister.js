@@ -31,14 +31,12 @@ export default class StackRegister {
      */
     pop(name){
         const value = this.register[name]
-        this.register[name] = null
+        delete this.register[name]
         return value
     }
 
     popRet(){
-        const value = this.register[CONSTANTS.RESULT]
-        this.register[CONSTANTS.RESULT] = null
-        return value
+        return this.register[CONSTANTS.RESULT]
     }
 
     /**

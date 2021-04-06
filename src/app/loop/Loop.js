@@ -1,11 +1,17 @@
 /**
  * @class {Loop}
  */
+import EventRegistry from '../flow/event/EventRegistry.js'
+import OnMouseClickEvent from '../flow/event/native/OnMouseClickEvent.js'
+
 class Loop {
 
     constructor() {
         this.loop = this.loop.bind(this)
         this.runners = []
+        EventRegistry.get().init([
+            new OnMouseClickEvent()
+        ])
     }
 
     /**
