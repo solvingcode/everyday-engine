@@ -13,7 +13,7 @@ export default class ANode{
     element
 
     /**
-     * @type {{sourceId: number, nodeSource: ANode, targetId: number}[]}
+     * @type {{sourceNode: ANode, targetId: number}[]}
      */
     inputs
 
@@ -41,24 +41,29 @@ export default class ANode{
     }
 
     /**
-     * @param {number} sourceId
-     * @param {ANode} nodeSource
-     * @param {number} targetId
+     * @return {{sourceNode: ANode, targetId: number}[]}
      */
-    attachInput(sourceId, nodeSource, targetId){
+    getInputs(){
+        return this.inputs
+    }
+
+    /**
+     * @param {ANode} sourceNode
+     * @param {number|null} targetId
+     */
+    attach(sourceNode, targetId){
         const inputNode = this.getInputNodeAttached(targetId)
         if(!inputNode){
-           const newInputNode = {sourceId, nodeSource, targetId}
+           const newInputNode = {sourceNode, targetId}
            this.inputs.push(newInputNode)
         }else{
-            inputNode.nodeSource = nodeSource
-            inputNode.sourceId = sourceId
+            inputNode.sourceNode = sourceNode
         }
     }
 
     /**
      * @param {number} targetId
-     * @return {{sourceId: number, nodeSource: ANode, targetId: number}}
+     * @return {{sourceNode: ANode, targetId: number}}
      */
     getInputNodeAttached(targetId){
         return this.inputs.find(input => input.targetId === targetId)

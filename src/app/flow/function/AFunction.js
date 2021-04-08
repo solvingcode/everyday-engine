@@ -125,6 +125,14 @@ export default class AFunction{
     }
 
     /**
+     * @param {number} id
+     * @return {DynamicAttribute}
+     */
+    findInputById(id){
+        return DynamicAttributeHelper.findById(this.inputs, id)
+    }
+
+    /**
      * @param {string} type
      * @param {*} defaultValue
      */

@@ -79,4 +79,13 @@ export default class DynamicAttributeHelper {
         return this.get(target, name).getId()
     }
 
+    /**
+     * @param {DynamicAttribute[]} target
+     * @param {number} id
+     * @return {DynamicAttribute}
+     */
+    static findById(target, id){
+        return target.find(attribute => attribute.getId() === id)
+    }
+
 }

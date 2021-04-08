@@ -1,5 +1,6 @@
-import Compiler from './compiler/Compiler.js'
-
+/**
+ * @abstract
+ */
 export default class AFlow {
 
     /**
@@ -26,7 +27,11 @@ export default class AFlow {
         return this.name
     }
 
-    constructor() {
+    /**
+     * @param {string} name
+     */
+    constructor(name) {
+        this.name = name
         this.nodes = []
     }
 
@@ -52,8 +57,11 @@ export default class AFlow {
         return this.nodes
     }
 
+    /**
+     * @abstract
+     */
     compile(){
-        return Compiler.get().run(this)
+        throw new TypeError(`${this.constructor.name}.compile must be implemented`)
     }
 
 }
