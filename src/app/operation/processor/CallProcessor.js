@@ -12,7 +12,7 @@ export default class CallProcessor {
         if (!functionName) {
             throw new TypeError(`Stack operation invalid (Function not provided)`)
         }
-        const aFunction = FunctionRegistry.get().getFunction(functionName)
+        const aFunction = FunctionRegistry.get().getInstance(functionName)
         if (!aFunction) {
             throw new TypeError(`Function "${functionName}" not founded in the registry`)
         }

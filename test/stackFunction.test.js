@@ -6,16 +6,20 @@ import StackOperation, {OPERATIONS} from '../src/app/operation/StackOperation.js
 import FunctionRegistry from '../src/app/flow/function/FunctionRegistry.js'
 import {CONSTANTS} from '../src/app/operation/StackRegister.js'
 import {TYPES} from '../src/app/pobject/AttributeType.js'
-import ANode from '../src/app/flow/node/ANode.js'
 import FunctionFlow from '../src/app/flow/FunctionFlow.js'
 import ClassFlow from '../src/app/flow/ClassFlow.js'
 import EventRegistry from '../src/app/flow/event/EventRegistry.js'
 import OnMouseClickEvent from '../src/app/flow/event/native/OnMouseClickEvent.js'
+import FunctionNode from '../src/app/flow/node/FunctionNode.js'
+import EventNode from '../src/app/flow/node/EventNode.js'
+import ConstantNode from '../src/app/flow/node/ConstantNode.js'
 
 test('Execute native function (without output)', function () {
     const log = new LogFunction()
     log.setInputValue('value', 'test')
+    console.log = jest.fn()
     log.execute()
+    expect(console.log).toHaveBeenCalledWith('test')
 })
 
 test('Execute native function (with output)', function () {
@@ -40,8 +44,10 @@ test('Execute stack function (without output)', function () {
         new StackOperation(OPERATIONS.PUSH, 'value', '__result__'),
         new StackOperation(OPERATIONS.CALL, 'Log')
     ])
+    console.log = jest.fn()
     func.execute()
-    expect(func.getOutputValue()).toBe(null)
+    expect(console.log).toHaveBeenCalledWith(100)
+    expect(func.getOutputValue()).toBe(undefined)
 })
 
 test('Execute stack function (with output)', function () {
@@ -64,39 +70,17 @@ test('Create and compile function flow', function () {
     FunctionRegistry.get().init([new AddFunction()])
     const flow = new FunctionFlow('testFlow')
 
-    //Create target node
-    const node = new ANode(FunctionRegistry.get().getFunction('Add'))
+    const node = new FunctionNode('Add')
+    const nodeSetValue1 = new ConstantNode(20)
+    const nodeSetValue2 = new ConstantNode(30)
 
-    //Create source node 1
-    const funcSetValue1 = new AEmptyStackFunction('funcSetValue1')
-    funcSetValue1.setOutput(TYPES.NUMBER)
-    funcSetValue1.setStack([new StackOperation(OPERATIONS.PUSH, CONSTANTS.RESULT, 20)])
-    FunctionRegistry.get().register(funcSetValue1)
-    const nodeSetValue1 = new ANode(funcSetValue1)
-
-    //Create source node 2
-    const funcSetValue2 = new AEmptyStackFunction('funcSetValue2')
-    funcSetValue2.setOutput(TYPES.NUMBER)
-    funcSetValue2.setStack([new StackOperation(OPERATIONS.PUSH, CONSTANTS.RESULT, 30)])
-    FunctionRegistry.get().register(funcSetValue2)
-    const nodeSetValue2 = new ANode(funcSetValue2)
-
-    //Attach output of node1 to value1 of the target node
-    node.attach(
-        nodeSetValue1,
-        node.getElement().getInputId('value1')
-    )
-
-    //Attach output of node2 to value2 of the target node
-    node.attach(
-        nodeSetValue2,
-        node.getElement().getInputId('value2')
-    )
+    node.attach(nodeSetValue1, node.getElement().getInputId('value1'))
+    node.attach(nodeSetValue2, node.getElement().getInputId('value2'))
 
     flow.addNode(node)
     flow.compile()
 
-    const compiledFunction = FunctionRegistry.get().getFunction('testFlow')
+    const compiledFunction = FunctionRegistry.get().getInstance('testFlow')
     compiledFunction.execute()
     expect(compiledFunction.getOutputValue()).toBe(50)
 })
@@ -107,33 +91,19 @@ test('Create and compile class flow', function () {
 
     const flow = new ClassFlow('classFlow')
 
-    //Create log node
-    const nodeLog = new ANode(FunctionRegistry.get().getFunction('Log'))
+    const nodeLog = new FunctionNode('Log')
     flow.addNode(nodeLog)
 
-    //Create add node
-    const nodeAdd = new ANode(FunctionRegistry.get().getFunction('Add'))
+    const nodeAdd = new FunctionNode('Add')
     flow.addNode(nodeAdd)
 
-    //Create constant node 1
-    const funcSetValue1 = new AEmptyStackFunction('funcSetValue1')
-    funcSetValue1.setOutput(TYPES.NUMBER)
-    funcSetValue1.setStack([new StackOperation(OPERATIONS.PUSH, CONSTANTS.RESULT, 20)])
-    FunctionRegistry.get().register(funcSetValue1)
-    const nodeSetValue1 = new ANode(funcSetValue1)
+    const nodeSetValue1 = new ConstantNode(20)
     flow.addNode(nodeSetValue1)
 
-    //Create source node 2
-    const funcSetValue2 = new AEmptyStackFunction('funcSetValue2')
-    funcSetValue2.setOutput(TYPES.NUMBER)
-    funcSetValue2.setStack([new StackOperation(OPERATIONS.PUSH, CONSTANTS.RESULT, 30)])
-    FunctionRegistry.get().register(funcSetValue2)
-    const nodeSetValue2 = new ANode(funcSetValue2)
+    const nodeSetValue2 = new ConstantNode(30)
     flow.addNode(nodeSetValue2)
 
-    //Create event node
-    const mouseEvent = EventRegistry.get().getEvent('OnMouseClickEvent')
-    const nodeEvent = new ANode(mouseEvent)
+    const nodeEvent = new EventNode('OnMouseClickEvent')
     flow.addNode(nodeEvent)
 
     nodeAdd.attach(nodeSetValue1, nodeAdd.getElement().getInputId('value1'))
@@ -143,8 +113,8 @@ test('Create and compile class flow', function () {
 
     flow.compile()
 
-    const mouseEventCompiled = EventRegistry.get().getEvent('classFlow.OnMouseClickEvent')
-    expect(FunctionRegistry.get().getFunction('classFlow')).toBe(undefined)
+    const mouseEventCompiled = EventRegistry.get().getInstance('classFlow.OnMouseClickEvent')
+    expect(FunctionRegistry.get().getInstance('classFlow')).toBe(undefined)
     expect(mouseEventCompiled).toBeDefined()
 
     console.log = jest.fn()

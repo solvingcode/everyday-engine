@@ -1,4 +1,5 @@
 import DynamicAttribute from '../pobject/DynamicAttribute.js'
+import {TYPES} from '../pobject/AttributeType.js'
 
 export default class DynamicAttributeHelper {
 
@@ -86,6 +87,21 @@ export default class DynamicAttributeHelper {
      */
     static findById(target, id){
         return target.find(attribute => attribute.getId() === id)
+    }
+
+    /**
+     * @param {string|number|boolean} value
+     * @return {string}
+     */
+    static findTypeOfValue(value){
+        if(_.isString(value)){
+            return TYPES.STRING
+        }else if(_.isNumber(value)){
+            return TYPES.NUMBER
+        }else if(_.isBoolean(value)){
+            return TYPES.BOOLEAN
+        }
+        return TYPES.ANY
     }
 
 }

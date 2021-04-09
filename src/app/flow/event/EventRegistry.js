@@ -1,57 +1,48 @@
-export default class EventRegistry{
+import Registry from '../../registry/Registry.js'
 
-    static instance
-
-    /**
-     * @private
-     */
-    constructor() {
-        /**
-         * @private
-         * @type {AEvent[]}
-         */
-        this.registry = []
-    }
+export default class EventRegistry extends Registry{
 
     /**
      * @param {AEvent[]} registry
      */
     init(registry){
-        this.registry = registry
+        super.init(registry)
     }
 
     /**
-     * @param {AEvent} event
+     * @param {AEvent} instance
      */
-    register(event){
-        if(this.getEvent(event.getName())){
-            throw new TypeError(`Event with name ${event.getName()} is already registered`)
-        }
-        this.registry.push(event)
+    register(instance) {
+        super.register(instance)
     }
 
     /**
      * @param {string} name
      * @return {AEvent}
      */
-    getEvent(name){
-        return this.registry.find(event => event.getName() === name)
+    getInstance(name) {
+        return super.getInstance(name)
+    }
+
+    /**
+     * @override
+     * @return {AEvent}
+     */
+    getClassInstance(className){
+        return super.getClassInstance(className)
     }
 
     /**
      * @return {AEvent[]}
      */
-    getEvents(){
-        return this.registry
+    getInstances() {
+        return super.getInstances()
     }
 
     /**
      * @return {EventRegistry}
      */
-    static get() {
-        if (!this.instance) {
-            this.instance = new this()
-        }
-        return this.instance
+    static get(){
+        return super.get()
     }
 }

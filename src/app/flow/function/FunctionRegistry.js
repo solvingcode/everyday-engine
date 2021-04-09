@@ -1,57 +1,40 @@
-export default class FunctionRegistry{
+import Registry from '../../registry/Registry.js'
 
-    static instance
-
-    /**
-     * @private
-     */
-    constructor() {
-        /**
-         * @private
-         * @type {AFunction[]}
-         */
-        this.registry = []
-    }
+export default class FunctionRegistry extends Registry{
 
     /**
      * @param {AFunction[]} registry
      */
     init(registry){
-        this.registry = registry
+        super.init(registry)
     }
 
     /**
-     * @param {AFunction} func
+     * @param {AFunction} instance
      */
-    register(func){
-        if(this.getFunction(func.getName())){
-            throw new TypeError(`Function with name ${func.getName()} is already registered`)
-        }
-        this.registry.push(func)
+    register(instance) {
+        super.register(instance)
     }
 
     /**
      * @param {string} name
      * @return {AFunction}
      */
-    getFunction(name){
-        return this.registry.find(func => func.getName() === name)
+    getInstance(name) {
+        return super.getInstance(name)
     }
 
     /**
      * @return {AFunction[]}
      */
-    getFunctions(){
-        return this.registry
+    getInstances() {
+        return super.getInstances()
     }
 
     /**
      * @return {FunctionRegistry}
      */
-    static get() {
-        if (!this.instance) {
-            this.instance = new this()
-        }
-        return this.instance
+    static get(){
+        return super.get()
     }
 }

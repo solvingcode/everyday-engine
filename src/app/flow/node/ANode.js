@@ -1,5 +1,8 @@
 import Maths from '../../utils/Maths.js'
 
+/**
+ * @abstract
+ */
 export default class ANode{
 
     /**

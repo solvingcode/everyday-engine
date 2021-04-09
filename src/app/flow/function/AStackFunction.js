@@ -8,6 +8,9 @@ export default class AStackFunction extends AFunction{
      */
     stack
 
+    /**
+     * @param {string} name
+     */
     constructor(name) {
         super(name)
         this.stack = []
@@ -37,7 +40,7 @@ export default class AStackFunction extends AFunction{
     }
 
     /**
-     * @override
+     * @abstract
      */
     initAttributes() {
         throw new TypeError(`${this.constructor.name}.initAttributes must be implemented for Native function`)
