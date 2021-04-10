@@ -21,7 +21,7 @@ export default class ANode{
     inputs
 
     /**
-     * @param {AEvent|AFunction} element
+     * @param {AEvent|AFunction|number|string|boolean} element
      */
     constructor(element) {
         this.id = Maths.generateId()
@@ -37,7 +37,7 @@ export default class ANode{
     }
 
     /**
-     * @return {AEvent|AFunction}
+     * @return {AEvent|AFunction|number|string|boolean}
      */
     getElement(){
         return this.element

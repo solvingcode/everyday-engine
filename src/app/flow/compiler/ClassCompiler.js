@@ -7,6 +7,8 @@ import Compiler from './Compiler.js'
 import ClassFlow from '../ClassFlow.js'
 import EventRegistry from '../event/EventRegistry.js'
 import AFunction from '../function/AFunction.js'
+import AConstant from '../constant/AConstant.js'
+import DynamicAttributeHelper from '../../utils/DynamicAttributeHelper.js'
 
 export default class ClassCompiler extends Compiler {
 
@@ -18,7 +20,6 @@ export default class ClassCompiler extends Compiler {
             throw new TypeError(`The given flow is not correct (must be a Class flow)`)
         }
         const nodes = flow.getNodes()
-        const events = []
 
         nodes.forEach((node) => {
             if (node.getInputs().length) {
@@ -37,10 +38,16 @@ export default class ClassCompiler extends Compiler {
                             const eventClass = sourceElement.constructor
                             const newEvent = new eventClass(`${flow.getName()}.${sourceElement.getName()}`)
                             newEvent.setStack([new StackOperation(OPERATIONS.CALL, functionName)])
-                            events.push(newEvent)
-                        } else if (element instanceof AFunction) {
+                            EventRegistry.get().register(newEvent)
+                        } else if (sourceElement instanceof AFunction) {
                             const targetInput = node.getElement().findInputById(targetId)
                             stack.push(new StackOperation(OPERATIONS.CALL, this.generateFunctionName(flow, sourceNode)))
+                            stack.push(new StackOperation(OPERATIONS.PUSH, targetInput.getAttrName(), CONSTANTS.RESULT))
+                        }else if(!_.isObject(sourceElement)){
+                            const constant = new AConstant(DynamicAttributeHelper.findTypeOfValue(sourceElement), sourceElement)
+                            FunctionRegistry.get().register(constant)
+                            const targetInput = node.getElement().findInputById(targetId)
+                            stack.push(new StackOperation(OPERATIONS.CALL, constant.getName()))
                             stack.push(new StackOperation(OPERATIONS.PUSH, targetInput.getAttrName(), CONSTANTS.RESULT))
                         } else if (element) {
                             throw new TypeError(`Class compiler: ${element.constructor.name} not supported`)
@@ -52,8 +59,6 @@ export default class ClassCompiler extends Compiler {
                 FunctionRegistry.get().register(stackFunction)
             }
         })
-
-        events.forEach(event => EventRegistry.get().register(event))
     }
 
     /**

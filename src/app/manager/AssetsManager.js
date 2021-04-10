@@ -2,6 +2,7 @@ import AssetsManagerData from '../project/data/AssetsManagerData.js'
 import Asset from '../asset/Asset.js'
 import FileHelper from '../utils/FileHelper.js'
 import AssetImage from '../asset/types/AssetImage.js'
+import AssetFlowXml from '../asset/types/AssetFlowXml.js'
 
 /**
  * @class {AssetsManager}
@@ -42,11 +43,24 @@ export default class AssetsManager extends AssetsManagerData {
                 resolve(reader.result)
             }
             reader.onerror = reject
-            reader.readAsDataURL(blob)
+            if(this.isAssetImage(blob)){
+                reader.readAsDataURL(blob)
+            }else{
+                reader.readAsText(blob)
+            }
         }).then(data => {
             const type = this.getAssetType(blob)
             return this.setAsset(data, type, FileHelper.getFilename(blob.name))
         })
+    }
+
+    /**
+     * @param {Blob} blob
+     */
+    isAssetImage(blob){
+        const type = this.getAssetType(blob)
+        return type === FileHelper.type.IMG_JPEG ||
+            type === FileHelper.type.IMG_PNG
     }
 
     /**
@@ -59,6 +73,8 @@ export default class AssetsManager extends AssetsManagerData {
             case FileHelper.type.IMG_JPEG:
             case FileHelper.type.IMG_PNG:
                 return AssetImage
+            case FileHelper.type.XML:
+                return AssetFlowXml
             default:
                 throw new TypeError(`Asset type "${type}" not supported`)
         }

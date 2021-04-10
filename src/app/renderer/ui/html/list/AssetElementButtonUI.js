@@ -1,5 +1,8 @@
 import ListElementButtonUI from './ListElementButtonUI.js'
 import ImageUI from '../components/image/ImageUI.js'
+import AssetImage from '../../../../asset/types/AssetImage.js'
+import AssetFlowXml from '../../../../asset/types/AssetFlowXml.js'
+import IconUI from '../components/icon/IconUI.js'
 
 export default class AssetElementButtonUI extends ListElementButtonUI {
 
@@ -18,7 +21,15 @@ export default class AssetElementButtonUI extends ListElementButtonUI {
     static getIcon(item){
         const bind = item.element.getDataBind()
         const {imageWidth, imageHeight} = this.props
-        return ImageUI.getImage(bind.getType().getData(), {width: imageWidth, height: imageHeight})
+        const type = bind.getType()
+        switch (type.constructor) {
+            case AssetImage:
+                return ImageUI.getImage(bind.getType().getData(), {width: imageWidth, height: imageHeight})
+            case AssetFlowXml:
+                return IconUI.createIcon('file-code')
+            default:
+                return IconUI.createIcon('file')
+        }
     }
 
 }

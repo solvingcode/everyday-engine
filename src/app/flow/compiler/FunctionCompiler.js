@@ -4,6 +4,9 @@ import AEmptyStackFunction from '../function/AEmptyStackFunction.js'
 import FunctionRegistry from '../function/FunctionRegistry.js'
 import Compiler from './Compiler.js'
 import FunctionFlow from '../FunctionFlow.js'
+import AConstant from '../constant/AConstant.js'
+import DynamicAttributeHelper from '../../utils/DynamicAttributeHelper.js'
+import AFunction from '../function/AFunction.js'
 
 export default class FunctionCompiler extends Compiler{
 
@@ -22,7 +25,11 @@ export default class FunctionCompiler extends Compiler{
             targetInputs.forEach(targetInput => {
                 const inputSourceNode = targetNode.getInputNodeAttached(targetInput.getId())
                 if(inputSourceNode){
-                    const element = inputSourceNode.sourceNode.getElement()
+                    let element = inputSourceNode.sourceNode.getElement()
+                    if(!(element instanceof AFunction)){
+                        element = new AConstant(DynamicAttributeHelper.findTypeOfValue(element), element)
+                        FunctionRegistry.get().register(element)
+                    }
                     outputAttribute = element.getOutput()
                     stack.push(new StackOperation(OPERATIONS.CALL, element.getName()))
                     stack.push(new StackOperation(OPERATIONS.PUSH, targetInput.getAttrName(), CONSTANTS.RESULT))

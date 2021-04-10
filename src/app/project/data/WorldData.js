@@ -11,6 +11,7 @@ class WorldData extends Data {
     static instance
 
     unitManager
+    flowManager
     camera
     physics
     assetsManager
@@ -70,6 +71,13 @@ class WorldData extends Data {
     }
 
     /**
+     * @param {FlowManager} flowManager
+     */
+    setFlowManager(flowManager) {
+        this.flowManager = flowManager
+    }
+
+    /**
      * Get the physics manager
      * @return {Physics}
      */
@@ -82,6 +90,13 @@ class WorldData extends Data {
      */
     getUnitManager() {
         return this.unitManager
+    }
+
+    /**
+     * @return {FlowManager}
+     */
+    getFlowManager() {
+        return this.flowManager
     }
 
     /**

@@ -198,6 +198,15 @@ h4{
     transform: translate(-50%, -50%);
 }
 
+.assets-wrapper .assets-list .list-element .list-element-img-wrapper i.fas {
+    font-size: 50px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    -ms-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+}
+
 .assets-wrapper .assets-list .list-element span{
     float: unset;
     margin: 2px auto;
