@@ -26,7 +26,7 @@ export default class EventRegistry extends Registry{
 
     /**
      * @override
-     * @return {AEvent}
+     * @return {AEvent[]}
      */
     getClassInstance(className){
         return super.getClassInstance(className)

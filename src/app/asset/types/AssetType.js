@@ -22,8 +22,10 @@ export default class AssetType {
 
     /**
      * @abstract
+     * @param {*} data
+     * @param {Asset} asset
      */
-    async load(data){
+    async load(data, asset){
         throw new TypeError(`${this.constructor.name}.load must be implemented`)
     }
 

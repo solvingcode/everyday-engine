@@ -43,6 +43,7 @@ export default class FunctionCompiler extends Compiler{
         }
         aFunction.setStack(stack)
         FunctionRegistry.get().register(aFunction)
+        return true
     }
 
 }

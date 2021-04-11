@@ -6,6 +6,11 @@ import World from '../../world/World.js'
  */
 export default class AssetFlowXml extends AssetType{
 
+    /**
+     * @type {string}
+     */
+    name
+
     constructor() {
         super()
         this.data = null
@@ -14,11 +19,13 @@ export default class AssetFlowXml extends AssetType{
     /**
      * @override
      */
-    async load(xmlStr) {
+    async load(xmlStr, asset) {
         return new Promise(resolve => {
             const parser = new DOMParser()
             this.data = parser.parseFromString(xmlStr, 'application/xml')
-            resolve(World.get().getFlowManager().load(this.data))
+            const flow = World.get().getFlowManager().load(this.data)
+            asset.setName(flow.getName())
+            resolve(flow)
         })
     }
 

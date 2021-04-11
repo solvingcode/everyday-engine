@@ -59,6 +59,8 @@ export default class ClassCompiler extends Compiler {
                 FunctionRegistry.get().register(stackFunction)
             }
         })
+
+        return true
     }
 
     /**

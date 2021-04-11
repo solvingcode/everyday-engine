@@ -6,8 +6,8 @@ export default class FunctionFlow extends AFlow{
     /**
      * @override
      */
-    compile(){
-        FunctionCompiler.get().run(this)
+    doCompile(){
+        return FunctionCompiler.get().run(this)
     }
 
 }

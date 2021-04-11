@@ -21,8 +21,8 @@ export default class AddFunction extends AFunction{
      */
     execute() {
         this.setOutputValue(
-            this.getInputValue('value1') +
-            this.getInputValue('value2')
+            parseFloat(this.getInputValue('value1')) +
+            parseFloat(this.getInputValue('value2'))
         )
     }
 }

@@ -14,6 +14,20 @@ export default class AFlow {
     name
 
     /**
+     * @type {string}
+     */
+    status
+
+    /**
+     * @param {string} name
+     */
+    constructor(name) {
+        this.name = name
+        this.nodes = []
+        this.status = STATUS.NEW
+    }
+
+    /**
      * @param {string} name
      */
     setName(name){
@@ -28,11 +42,17 @@ export default class AFlow {
     }
 
     /**
-     * @param {string} name
+     * @param {string} status
      */
-    constructor(name) {
-        this.name = name
-        this.nodes = []
+    setStatus(status){
+        this.status = status
+    }
+
+    /**
+     * @return {string}
+     */
+    getStatus(){
+        return this.status
     }
 
     /**
@@ -51,6 +71,13 @@ export default class AFlow {
     }
 
     /**
+     * @param {number} id
+     */
+    findNodeById(id){
+        return this.nodes.find(node => node.getId() === id)
+    }
+
+    /**
      * @return {ANode[]}
      */
     getNodes(){
@@ -58,10 +85,29 @@ export default class AFlow {
     }
 
     /**
-     * @abstract
+     * @return {boolean}
      */
     compile(){
-        throw new TypeError(`${this.constructor.name}.compile must be implemented`)
+        if(this.doCompile()){
+            this.setStatus(STATUS.COMPILED)
+        }else{
+            this.setStatus(STATUS.ERROR)
+        }
     }
 
+    /**
+     * @abstract
+     * @private
+     * @return {boolean}
+     */
+    doCompile(){
+        throw new TypeError(`${this.constructor.name}.doCompile must be implemented`)
+    }
+
+}
+
+export const STATUS = {
+    NEW: '',
+    COMPILED: 'compiled',
+    ERROR: 'error'
 }

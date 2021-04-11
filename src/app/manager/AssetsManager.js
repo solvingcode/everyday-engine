@@ -59,8 +59,7 @@ export default class AssetsManager extends AssetsManagerData {
      */
     isAssetImage(blob){
         const type = this.getAssetType(blob)
-        return type === FileHelper.type.IMG_JPEG ||
-            type === FileHelper.type.IMG_PNG
+        return type === AssetImage
     }
 
     /**

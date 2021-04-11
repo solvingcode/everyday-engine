@@ -10,8 +10,8 @@ export default class EventRunner extends Runner {
      */
     execute(mouse) {
         const eventRegistry = EventRegistry.get()
-        if (mouse.isButtonPressed(MouseButton.LEFT)) {
-            eventRegistry.getClassInstance(OnMouseClickEvent).execute()
+        if (mouse.isButtonClicked(MouseButton.LEFT)) {
+            eventRegistry.getClassInstance(OnMouseClickEvent).forEach(event => event.execute())
         }
     }
 

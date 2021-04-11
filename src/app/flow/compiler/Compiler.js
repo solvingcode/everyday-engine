@@ -8,6 +8,7 @@ export default class Compiler {
     /**
      * @abstract
      * @param {AFlow} flow
+     * @return {boolean}
      */
     run(flow){
         throw new TypeError(`${this.constructor.name}.run must be implemented`)

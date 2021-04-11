@@ -207,6 +207,17 @@ h4{
     transform: translate(-50%, -50%);
 }
 
+.assets-wrapper .assets-list .list-element .list-element-img-wrapper i.status {
+    font-size: 20px;
+    width: 30px;
+    height: 30px;
+    padding: 5px;
+    box-sizing: border-box;
+    margin-top: -15px;
+    margin-left: -15px;
+    border-radius: 45px;
+}
+
 .assets-wrapper .assets-list .list-element span{
     float: unset;
     margin: 2px auto;

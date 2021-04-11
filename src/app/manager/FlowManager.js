@@ -21,6 +21,7 @@ export default class FlowManager {
 
     /**
      * @param {string} name
+     * @return {AFlow}
      */
     findByName(name){
         return this.getFlows().find(flow => flow.getName() === name)
@@ -65,14 +66,14 @@ export default class FlowManager {
 
     /**
      * @param {XMLDocument} data
-     * @return {boolean}
+     * @return {AFlow}
      */
     load(data){
         const flow = FlowParser.parse(data)
         if(flow){
             this.add(flow)
-            return true
+            return flow
         }
-        return false
+        return null
     }
 }

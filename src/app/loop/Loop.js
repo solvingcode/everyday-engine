@@ -3,6 +3,9 @@
  */
 import EventRegistry from '../flow/event/EventRegistry.js'
 import OnMouseClickEvent from '../flow/event/native/OnMouseClickEvent.js'
+import FunctionRegistry from '../flow/function/FunctionRegistry.js'
+import LogFunction from '../flow/function/native/LogFunction.js'
+import AddFunction from '../flow/function/native/AddFunction.js'
 
 class Loop {
 
@@ -11,6 +14,10 @@ class Loop {
         this.runners = []
         EventRegistry.get().init([
             new OnMouseClickEvent()
+        ])
+        FunctionRegistry.get().init([
+            new LogFunction(),
+            new AddFunction()
         ])
     }
 

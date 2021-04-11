@@ -3,6 +3,7 @@ import MenuItem from '../../MenuItem.js'
 import AddAssetMenuItem from './AddAssetMenuItem.js'
 import AddFolderMenuItem from './folder/AddFolderMenuItem.js'
 import AddAssetSceneMenuItem from './AddAssetSceneMenuItem.js'
+import CompileAssetFlowMenuItem from './CompileAssetFlowMenuItem.js'
 
 export default class AssetsActionsMenuItem  extends MenuItem {
     constructor(parent) {
@@ -16,7 +17,8 @@ export default class AssetsActionsMenuItem  extends MenuItem {
         this.items = [
             new AddAssetMenuItem(this),
             new AddFolderMenuItem(this),
-            new AddAssetSceneMenuItem(this)
+            new AddAssetSceneMenuItem(this),
+            new CompileAssetFlowMenuItem(this)
         ]
     }
 }

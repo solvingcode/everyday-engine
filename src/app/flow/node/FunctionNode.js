@@ -7,7 +7,11 @@ export default class FunctionNode extends ANode{
      * @param {string} functionName
      */
     constructor(functionName) {
-        super(FunctionRegistry.get().getInstance(functionName))
+        const func = FunctionRegistry.get().getInstance(functionName)
+        if(!func){
+            throw new TypeError(`FunctionNode Error: ${functionName} not registered`)
+        }
+        super(func)
     }
 
 }

@@ -30,6 +30,13 @@ export default class ANode{
     }
 
     /**
+     * @param {number} id
+     */
+    setId(id){
+        this.id = id
+    }
+
+    /**
      * @return {number}
      */
     getId(){

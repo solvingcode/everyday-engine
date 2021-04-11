@@ -42,10 +42,10 @@ export default class Registry{
 
     /**
      * @param {Class} className
-     * @return {*}
+     * @return {*[]}
      */
     getClassInstance(className){
-        return this.registry.find(event => event instanceof className)
+        return this.registry.filter(event => event instanceof className)
     }
 
     /**
