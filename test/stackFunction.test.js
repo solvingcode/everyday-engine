@@ -46,7 +46,7 @@ test('Execute stack function (without output)', function () {
     console.log = jest.fn()
     func.execute(functionRegistry)
     expect(console.log).toHaveBeenCalledWith(100)
-    expect(func.getOutputValue()).toBe(undefined)
+    expect(func.getOutputValue()).toBe(null)
 })
 
 test('Execute stack function (with output)', function () {

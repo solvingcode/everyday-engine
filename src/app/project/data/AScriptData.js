@@ -1,6 +1,5 @@
 import Data from './Data.js'
 import Maths from '../../utils/Maths.js'
-import {STATUS} from '../../flow/AScript.js'
 
 export default class AScriptData extends Data{
 
@@ -27,13 +26,14 @@ export default class AScriptData extends Data{
     /**
      * @param {string} name
      */
-    constructor(name) {
+    constructor(name= '') {
         super()
         this.id = Maths.generateId()
         this.name = name
         this.nodes = []
         this.status = STATUS.NEW
     }
+
     /**
      * @param {number} id
      */
@@ -97,4 +97,10 @@ export default class AScriptData extends Data{
         this.setNodes(nodes)
     }
 
+}
+
+export const STATUS = {
+    NEW: '',
+    COMPILED: 'compiled',
+    ERROR: 'error'
 }

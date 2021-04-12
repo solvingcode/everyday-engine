@@ -1,4 +1,4 @@
-import AScriptData from '../project/data/AScriptData.js'
+import AScriptData, {STATUS} from '../project/data/AScriptData.js'
 import FunctionNode from './node/FunctionNode.js'
 import ConstantNode from './node/ConstantNode.js'
 import AConstant from './constant/AConstant.js'
@@ -76,10 +76,4 @@ export default class AScript extends AScriptData{
         throw new TypeError(`${this.constructor.name}.doCompile must be implemented`)
     }
 
-}
-
-export const STATUS = {
-    NEW: '',
-    COMPILED: 'compiled',
-    ERROR: 'error'
 }

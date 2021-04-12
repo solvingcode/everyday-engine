@@ -4,7 +4,7 @@ import AssetImage from '../../../../asset/types/AssetImage.js'
 import AssetScriptXml from '../../../../asset/types/AssetScriptXml.js'
 import IconUI from '../components/icon/IconUI.js'
 import World from '../../../../world/World.js'
-import {STATUS} from '../../../../flow/AScript.js'
+import {STATUS} from '../../../../project/data/AScriptData.js'
 
 export default class AssetElementButtonUI extends ListElementButtonUI {
 
