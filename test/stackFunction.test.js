@@ -3,16 +3,14 @@ import AddFunction from '../src/app/flow/function/native/AddFunction.js'
 import {expect} from '@jest/globals'
 import AEmptyStackFunction from '../src/app/flow/function/AEmptyStackFunction.js'
 import StackOperation, {OPERATIONS} from '../src/app/operation/StackOperation.js'
-import FunctionRegistry from '../src/app/flow/function/FunctionRegistry.js'
 import {CONSTANTS} from '../src/app/operation/StackRegister.js'
 import {TYPES} from '../src/app/pobject/AttributeType.js'
-import FunctionFlow from '../src/app/flow/FunctionFlow.js'
-import ClassFlow from '../src/app/flow/ClassFlow.js'
-import EventRegistry from '../src/app/flow/event/EventRegistry.js'
+import FunctionScript from '../src/app/flow/FunctionScript.js'
+import ClassScript from '../src/app/flow/ClassScript.js'
 import OnMouseClickEvent from '../src/app/flow/event/native/OnMouseClickEvent.js'
 import FunctionNode from '../src/app/flow/node/FunctionNode.js'
-import EventNode from '../src/app/flow/node/EventNode.js'
 import ConstantNode from '../src/app/flow/node/ConstantNode.js'
+import World from '../src/app/world/World.js'
 
 test('Execute native function (without output)', function () {
     const log = new LogFunction()
@@ -31,7 +29,8 @@ test('Execute native function (with output)', function () {
 })
 
 test('Execute stack function (without output)', function () {
-    FunctionRegistry.get().init([new LogFunction(), new AddFunction()])
+    const functionRegistry = World.get().getFunctionRegistry()
+    functionRegistry.init([new LogFunction(), new AddFunction()])
     const func = new AEmptyStackFunction('test')
     func.setInputs([])
     func.setStack([
@@ -45,15 +44,16 @@ test('Execute stack function (without output)', function () {
         new StackOperation(OPERATIONS.CALL, 'Log')
     ])
     console.log = jest.fn()
-    func.execute()
+    func.execute(functionRegistry)
     expect(console.log).toHaveBeenCalledWith(100)
     expect(func.getOutputValue()).toBe(undefined)
 })
 
 test('Execute stack function (with output)', function () {
-    FunctionRegistry.get().init([new AddFunction()])
+    const functionRegistry = World.get().getFunctionRegistry()
+    functionRegistry.init([new AddFunction()])
     const func = new AEmptyStackFunction('test')
-    func.setOutput(TYPES.NUMBER)
+    func.addOutput(TYPES.NUMBER)
     func.setStack([
         new StackOperation(OPERATIONS.PUSH, 'value1', 20),
         new StackOperation(OPERATIONS.PUSH, 'value2', 30),
@@ -62,62 +62,54 @@ test('Execute stack function (with output)', function () {
         new StackOperation(OPERATIONS.PUSH, 'value2', 60),
         new StackOperation(OPERATIONS.CALL, 'Add')
     ])
-    func.execute()
+    func.execute(functionRegistry)
     expect(func.getOutputValue()).toBe(110)
 })
 
 test('Create and compile function flow', function () {
-    FunctionRegistry.get().init([new AddFunction()])
-    const flow = new FunctionFlow('testFlow')
+    const functionRegistry = World.get().getFunctionRegistry()
+    functionRegistry.init([new AddFunction()])
+    const script = new FunctionScript('testScript')
 
-    const node = new FunctionNode('Add')
-    const nodeSetValue1 = new ConstantNode(20)
-    const nodeSetValue2 = new ConstantNode(30)
+    const nodeSetValue1 = script.createNode(functionRegistry, ConstantNode, 20)
+    const nodeSetValue2 = script.createNode(functionRegistry, ConstantNode, 30)
+    const node = script.createNode(functionRegistry, FunctionNode, 'Add')
 
-    node.attach(nodeSetValue1, node.getElement().getInputId('value1'))
-    node.attach(nodeSetValue2, node.getElement().getInputId('value2'))
+    node.attach(nodeSetValue1, functionRegistry.getInstanceById(node.getSourceId()).getInputId('value1'))
+    node.attach(nodeSetValue2, functionRegistry.getInstanceById(node.getSourceId()).getInputId('value2'))
 
-    flow.addNode(node)
-    flow.compile()
+    script.compile()
 
-    const compiledFunction = FunctionRegistry.get().getInstance('testFlow')
-    compiledFunction.execute()
+    const compiledFunction = functionRegistry.getInstance('testScript')
+    compiledFunction.execute(functionRegistry)
     expect(compiledFunction.getOutputValue()).toBe(50)
 })
 
 test('Create and compile class flow', function () {
-    FunctionRegistry.get().init([new AddFunction(), new LogFunction()])
-    EventRegistry.get().init([new OnMouseClickEvent()])
+    const functionRegistry = World.get().getFunctionRegistry()
 
-    const flow = new ClassFlow('classFlow')
+    functionRegistry.init([new OnMouseClickEvent(), new AddFunction(), new LogFunction()])
 
-    const nodeLog = new FunctionNode('Log')
-    flow.addNode(nodeLog)
+    const script = new ClassScript('classScript')
 
-    const nodeAdd = new FunctionNode('Add')
-    flow.addNode(nodeAdd)
+    const nodeLog = script.createNode(functionRegistry, FunctionNode, 'Log')
+    const nodeAdd = script.createNode(functionRegistry, FunctionNode, 'Add')
+    const nodeSetValue1 = script.createNode(functionRegistry, ConstantNode, 20)
+    const nodeSetValue2 = script.createNode(functionRegistry, ConstantNode, 30)
+    const nodeEvent = script.createNode(functionRegistry, FunctionNode, 'OnMouseClickEvent')
 
-    const nodeSetValue1 = new ConstantNode(20)
-    flow.addNode(nodeSetValue1)
-
-    const nodeSetValue2 = new ConstantNode(30)
-    flow.addNode(nodeSetValue2)
-
-    const nodeEvent = new EventNode('OnMouseClickEvent')
-    flow.addNode(nodeEvent)
-
-    nodeAdd.attach(nodeSetValue1, nodeAdd.getElement().getInputId('value1'))
-    nodeAdd.attach(nodeSetValue2, nodeAdd.getElement().getInputId('value2'))
-    nodeLog.attach(nodeAdd, nodeLog.getElement().getInputId('value'))
+    nodeAdd.attach(nodeSetValue1, functionRegistry.getInstanceById(nodeAdd.getSourceId()).getInputId('value1'))
+    nodeAdd.attach(nodeSetValue2, functionRegistry.getInstanceById(nodeAdd.getSourceId()).getInputId('value2'))
+    nodeLog.attach(nodeAdd, functionRegistry.getInstanceById(nodeLog.getSourceId()).getInputId('value'))
     nodeLog.attach(nodeEvent, null)
 
-    flow.compile()
+    script.compile()
 
-    const mouseEventCompiled = EventRegistry.get().getInstance('classFlow.OnMouseClickEvent')
-    expect(FunctionRegistry.get().getInstance('classFlow')).toBe(undefined)
+    const mouseEventCompiled = functionRegistry.getInstance('classScript.OnMouseClickEvent')
+    expect(functionRegistry.getInstance('classScript')).toBe(undefined)
     expect(mouseEventCompiled).toBeDefined()
 
     console.log = jest.fn()
-    mouseEventCompiled.execute()
+    mouseEventCompiled.execute(functionRegistry)
     expect(console.log).toHaveBeenCalledWith(50)
 })

@@ -16,9 +16,9 @@ class PreviewGame extends Game {
     /**
      * @override
      */
-    async init() {
+    async doInit() {
         await Storage.get().loadLocal(Storage.type.WORLD, World.get())
-        await super.init()
+        await super.doInit()
     }
 
 }

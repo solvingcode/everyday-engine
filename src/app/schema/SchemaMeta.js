@@ -10,8 +10,14 @@ import AssetTypeData from '../asset/types/AssetTypeData.js'
 import Unit from '../unit/Unit.js'
 import UnitManager from '../manager/UnitManager.js'
 import Component from '../component/Component.js'
-import DynamicAttribute from '../pobject/DynamicAttribute.js'
 import {TYPES} from '../pobject/AttributeType.js'
+import ScriptManager from '../manager/ScriptManager.js'
+import AScript from '../flow/AScript.js'
+import ANode from '../flow/node/ANode.js'
+import NodeInput from '../pobject/NodeInput.js'
+import FunctionRegistry from '../flow/function/FunctionRegistry.js'
+import AFunction from '../flow/function/AFunction.js'
+import StackOperation from '../operation/StackOperation.js'
 
 /**
  * Define the schema of project data.
@@ -78,6 +84,20 @@ export const PrefSchema = {
             type: TYPES.NUMBER
         }
     },
+    [TYPES.DYNAMIC_ATTRIBUTE]: {
+        id: {
+            type: TYPES.NUMBER
+        },
+        attrName: {
+            type: TYPES.STRING
+        },
+        attrType: {
+            type: TYPES.STRING
+        },
+        attrValue: {
+            type: '[attrType]'
+        }
+    },
     [TYPES.ARRAY_VECTOR]: {
         element: {
             type: TYPES.VECTOR
@@ -91,6 +111,11 @@ export const PrefSchema = {
     [TYPES.ARRAY_STRING]: {
         element: {
             type: TYPES.STRING
+        }
+    },
+    [TYPES.ARRAY_DYNAMIC_ATTRIBUTE]: {
+        element: {
+            type: TYPES.DYNAMIC_ATTRIBUTE
         }
     }
 }
@@ -148,19 +173,120 @@ export default {
                                                         type: TYPES.STRING
                                                     },
                                                     attributes: {
+                                                        type: TYPES.ARRAY_DYNAMIC_ATTRIBUTE
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            functionRegistry: {
+                type: FunctionRegistry,
+                meta: {
+                    dataId: {
+                        type: TYPES.NUMBER
+                    },
+                    name: {
+                        type: TYPES.STRING
+                    },
+                    registry: {
+                        type: Array,
+                        meta: {
+                            element: {
+                                type: AFunction,
+                                meta: {
+                                    dataId: {
+                                        type: TYPES.NUMBER
+                                    },
+                                    id: {
+                                        type: TYPES.NUMBER
+                                    },
+                                    name: {
+                                        type: TYPES.STRING
+                                    },
+                                    stack: {
+                                        type: Array,
+                                        meta: {
+                                            element: {
+                                                prototype: StackOperation,
+                                                meta: {
+                                                    operation: {
+                                                        type: TYPES.STRING
+                                                    },
+                                                    args: {
+                                                        type: TYPES.ARRAY_STRING
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    },
+                                    inputs: {
+                                        type: TYPES.ARRAY_DYNAMIC_ATTRIBUTE
+                                    },
+                                    output: {
+                                        prototype: TYPES.DYNAMIC_ATTRIBUTE
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            scriptManager: {
+                type: ScriptManager,
+                meta: {
+                    dataId: {
+                        type: TYPES.NUMBER
+                    },
+                    scripts: {
+                        type: Array,
+                        meta: {
+                            element: {
+                                type: AScript,
+                                meta: {
+                                    dataId: {
+                                        type: TYPES.NUMBER
+                                    },
+                                    id: {
+                                        type: TYPES.NUMBER
+                                    },
+                                    name: {
+                                        type: TYPES.STRING
+                                    },
+                                    status: {
+                                        type: TYPES.STRING
+                                    },
+                                    nodes: {
+                                        type: Array,
+                                        meta: {
+                                            element: {
+                                                type: ANode,
+                                                meta: {
+                                                    dataId: {
+                                                        type: TYPES.NUMBER
+                                                    },
+                                                    id: {
+                                                        type: TYPES.NUMBER
+                                                    },
+                                                    sourceId: {
+                                                        type: TYPES.NUMBER
+                                                    },
+                                                    inputs: {
                                                         type: Array,
                                                         meta: {
                                                             element: {
-                                                                prototype: DynamicAttribute,
+                                                                prototype: NodeInput,
                                                                 meta: {
-                                                                    attrName: {
-                                                                        type: TYPES.STRING
+                                                                    sourceNodeId: {
+                                                                        type: TYPES.NUMBER
                                                                     },
-                                                                    attrType: {
-                                                                        type: TYPES.STRING
-                                                                    },
-                                                                    attrValue: {
-                                                                        type: '[attrType]'
+                                                                    targetId: {
+                                                                        type: TYPES.NUMBER
                                                                     }
                                                                 }
                                                             }
@@ -234,8 +360,11 @@ export default {
                                         type: TYPES.STRING
                                     },
                                     type: {
-                                        prototype: AssetType,
+                                        type: AssetType,
                                         meta: {
+                                            dataId: {
+                                                type: TYPES.NUMBER
+                                            },
                                             data: {
                                                 type: AssetTypeData,
                                                 meta: {

@@ -1,19 +1,9 @@
+import RegistryData from '../project/data/RegistryData.js'
+
 /**
  * @abstract
  */
-export default class Registry{
-
-    static instance
-    name
-
-    /**
-     * @private
-     * @param {string} name
-     */
-    constructor(name) {
-        this.name = name
-        this.registry = []
-    }
+export default class Registry extends RegistryData{
 
     /**
      * @param {*[]} registry
@@ -37,7 +27,15 @@ export default class Registry{
      * @return {*}
      */
     getInstance(name){
-        return this.registry.find(event => event.getName() === name)
+        return this.registry.find(item => item.getName() === name)
+    }
+
+    /**
+     * @param {number} id
+     * @return {*}
+     */
+    getInstanceById(id){
+        return this.registry.find(item => item.getId() === id)
     }
 
     /**
@@ -45,7 +43,7 @@ export default class Registry{
      * @return {*[]}
      */
     getClassInstance(className){
-        return this.registry.filter(event => event instanceof className)
+        return this.registry.filter(item => item instanceof className)
     }
 
     /**
@@ -55,10 +53,4 @@ export default class Registry{
         return this.registry
     }
 
-    static get() {
-        if (!this.instance) {
-            this.instance = new this()
-        }
-        return this.instance
-    }
 }

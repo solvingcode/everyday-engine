@@ -1,48 +1,45 @@
 import StackOperation, {OPERATIONS} from '../../operation/StackOperation.js'
 import {CONSTANTS} from '../../operation/StackRegister.js'
 import AEmptyStackFunction from '../function/AEmptyStackFunction.js'
-import FunctionRegistry from '../function/FunctionRegistry.js'
 import Compiler from './Compiler.js'
-import FunctionFlow from '../FunctionFlow.js'
-import AConstant from '../constant/AConstant.js'
-import DynamicAttributeHelper from '../../utils/DynamicAttributeHelper.js'
-import AFunction from '../function/AFunction.js'
+import FunctionScript from '../FunctionScript.js'
+import World from '../../world/World.js'
 
 export default class FunctionCompiler extends Compiler{
 
     /**
      * @override
      */
-    run(flow){
-        if(!(flow instanceof FunctionFlow)){
-            throw new TypeError(`The given flow is not correct (must be a Function flow)`)
+    run(script){
+        if(!(script instanceof FunctionScript)){
+            throw new TypeError(`The given script is not correct (must be a Function script)`)
         }
-        const nodes = flow.getNodes()
+        const world = World.get()
+        const functionRegistry = world.getFunctionRegistry()
+        const nodes = script.getNodes()
         const stack = []
         let outputAttribute
         nodes.forEach(targetNode => {
-            const targetInputs = targetNode.getElement().getInputs()
+            const targetNodeSource = functionRegistry.getInstanceById(targetNode.getSourceId())
+            const targetInputs = targetNodeSource.getInputs()
             targetInputs.forEach(targetInput => {
                 const inputSourceNode = targetNode.getInputNodeAttached(targetInput.getId())
                 if(inputSourceNode){
-                    let element = inputSourceNode.sourceNode.getElement()
-                    if(!(element instanceof AFunction)){
-                        element = new AConstant(DynamicAttributeHelper.findTypeOfValue(element), element)
-                        FunctionRegistry.get().register(element)
-                    }
+                    const sourceNode = script.findNodeById(inputSourceNode.getSourceNodeId())
+                    let element = functionRegistry.getInstanceById(sourceNode.getSourceId())
                     outputAttribute = element.getOutput()
                     stack.push(new StackOperation(OPERATIONS.CALL, element.getName()))
                     stack.push(new StackOperation(OPERATIONS.PUSH, targetInput.getAttrName(), CONSTANTS.RESULT))
                 }
             })
-            stack.push(new StackOperation(OPERATIONS.CALL, targetNode.getElement().getName()))
+            stack.push(new StackOperation(OPERATIONS.CALL, targetNodeSource.getName()))
         })
-        const aFunction = new AEmptyStackFunction(flow.getName())
+        const aFunction = new AEmptyStackFunction(script.getName())
         if(outputAttribute){
-            aFunction.setOutput(outputAttribute.getAttrType())
+            aFunction.addOutput(outputAttribute.getAttrType())
         }
         aFunction.setStack(stack)
-        FunctionRegistry.get().register(aFunction)
+        world.getFunctionRegistry().register(aFunction)
         return true
     }
 

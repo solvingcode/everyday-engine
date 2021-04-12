@@ -1,52 +1,15 @@
-import Maths from '../../utils/Maths.js'
 import DynamicAttributeHelper from '../../utils/DynamicAttributeHelper.js'
 import {CONSTANTS} from '../../operation/StackRegister.js'
+import FunctionData from '../../project/data/FunctionData.js'
 
-export default class AFunction{
-
-    /**
-     * @type {number}
-     */
-    id
-    name
-    /**
-     * @type {DynamicAttribute[]}
-     */
-    inputs
-    /**
-     * @type {DynamicAttribute}
-     */
-    output
+export default class AFunction extends FunctionData{
 
     /**
      * @param {string} name
      */
     constructor(name) {
-        this.id = Maths.generateId()
-        this.name = name
-        this.inputs = []
+        super(name)
         this.init()
-    }
-
-    /**
-     * @return {number}
-     */
-    getId(){
-        return this.id
-    }
-
-    /**
-     * @param {string} name
-     */
-    setName(name){
-        this.name = name
-    }
-
-    /**
-     * @return {string}
-     */
-    getName(){
-        return this.name
     }
 
     /**
@@ -61,9 +24,10 @@ export default class AFunction{
     }
 
     /**
-     * @final
+     * @abstract
+     * @param {FunctionRegistry} functionRegistry
      */
-    execute(){
+    execute(functionRegistry){
         throw new TypeError(`${this.constructor.name}.execute must be implemented`)
     }
 
@@ -136,7 +100,7 @@ export default class AFunction{
      * @param {string} type
      * @param {*} defaultValue
      */
-    setOutput(type, defaultValue = null){
+    addOutput(type, defaultValue = null){
         this.output = DynamicAttributeHelper.create(CONSTANTS.RESULT, type, defaultValue)
     }
 

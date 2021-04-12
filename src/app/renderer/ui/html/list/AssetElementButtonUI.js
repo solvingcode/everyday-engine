@@ -1,10 +1,10 @@
 import ListElementButtonUI from './ListElementButtonUI.js'
 import ImageUI from '../components/image/ImageUI.js'
 import AssetImage from '../../../../asset/types/AssetImage.js'
-import AssetFlowXml from '../../../../asset/types/AssetFlowXml.js'
+import AssetScriptXml from '../../../../asset/types/AssetScriptXml.js'
 import IconUI from '../components/icon/IconUI.js'
 import World from '../../../../world/World.js'
-import {STATUS} from '../../../../flow/AFlow.js'
+import {STATUS} from '../../../../flow/AScript.js'
 
 export default class AssetElementButtonUI extends ListElementButtonUI {
 
@@ -24,9 +24,9 @@ export default class AssetElementButtonUI extends ListElementButtonUI {
     static postCreate(item, el, uiRenderer){
         super.postCreate(item, el, uiRenderer)
         const bind = item.element.getDataBind()
-        const flow = World.get().getFlowManager().findByName(bind.getName())
-        const flowStatus = flow ? flow.getStatus() : STATUS.NEW
-        el.setAttribute(this.props.assetStatus, flowStatus)
+        const script = World.get().getScriptManager().findByName(bind.getName())
+        const scriptStatus = script ? script.getStatus() : STATUS.NEW
+        el.setAttribute(this.props.assetStatus, scriptStatus)
     }
 
     /**
@@ -39,10 +39,10 @@ export default class AssetElementButtonUI extends ListElementButtonUI {
         switch (type.constructor) {
             case AssetImage:
                 return ImageUI.getImage(bind.getType().getData(), {width: imageWidth, height: imageHeight})
-            case AssetFlowXml:
-                return this.getIconFlowAsset(bind)
+            case AssetScriptXml:
+                return this.getIconScriptAsset(bind)
             default:
-                return IconUI.createIcon('file')
+                throw new TypeError(`Asset: No icon founded for "${type.constructor}"`)
         }
     }
 
@@ -50,11 +50,11 @@ export default class AssetElementButtonUI extends ListElementButtonUI {
      * @param {Asset} bind
      * @return {HTMLElement|DocumentFragment}
      */
-    static getIconFlowAsset(bind){
-        const flow = World.get().getFlowManager().findByName(bind.getName())
+    static getIconScriptAsset(bind){
+        const script = World.get().getScriptManager().findByName(bind.getName())
         let statusIcon
-        const flowStatus = flow ? flow.getStatus() : STATUS.NEW
-        switch (flowStatus) {
+        const scriptStatus = script ? script.getStatus() : STATUS.NEW
+        switch (scriptStatus) {
             case STATUS.NEW:
                 statusIcon = IconUI.createIcon('question', 'status status-new')
                 break
@@ -65,7 +65,7 @@ export default class AssetElementButtonUI extends ListElementButtonUI {
                 statusIcon = IconUI.createIcon('times', 'status status-error')
                 break
             default:
-                throw new TypeError(`Flow status ${flowStatus} not recognized`)
+                throw new TypeError(`Script status ${flowStatus} not recognized`)
         }
         const fragment = document.createDocumentFragment()
         fragment.appendChild(IconUI.createIcon('file-code'))
@@ -79,10 +79,10 @@ export default class AssetElementButtonUI extends ListElementButtonUI {
     static postUpdate(item, el, uiRenderer){
         super.postUpdate(item, el, uiRenderer)
         const bind = item.element.getDataBind()
-        const flow = World.get().getFlowManager().findByName(bind.getName())
-        const flowStatus = flow ? flow.getStatus() : STATUS.NEW
-        const actualFlowStatus = el.getAttribute(this.props.assetStatus)
-        if(actualFlowStatus !== flowStatus){
+        const script = World.get().getScriptManager().findByName(bind.getName())
+        const scriptStatus = script ? script.getStatus() : STATUS.NEW
+        const actualScriptStatus = el.getAttribute(this.props.assetStatus)
+        if(actualScriptStatus !== scriptStatus){
             this.update(item, el, uiRenderer)
         }
     }

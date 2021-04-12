@@ -2,6 +2,7 @@ import Style from './Style.js'
 import Size from './Size.js'
 import Vector from '../utils/Vector.js'
 import AssetTypeData from '../asset/types/AssetTypeData.js'
+import DynamicAttribute from './DynamicAttribute.js'
 
 export default class AttributeType {
 
@@ -54,6 +55,8 @@ export default class AttributeType {
                 return Size
             case TYPES.VECTOR:
                 return Vector
+            case TYPES.DYNAMIC_ATTRIBUTE:
+                return DynamicAttribute
             default:
                 if(this.isArrayType(prototype)){
                     return Array
@@ -90,8 +93,10 @@ export const TYPES = {
     STYLE: '202',
     SIZE: '203',
     VECTOR: '204',
+    DYNAMIC_ATTRIBUTE: '205',
     ARRAY_STRING: '301',
     ARRAY_NUMBER: '302',
     ARRAY_VECTOR: '303',
+    ARRAY_DYNAMIC_ATTRIBUTE: '304',
     MESH: '501'
 }

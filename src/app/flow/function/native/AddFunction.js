@@ -13,7 +13,7 @@ export default class AddFunction extends AFunction{
     initAttributes() {
         this.addInput('value1', TYPES.NUMBER, 0)
         this.addInput('value2', TYPES.NUMBER, 0)
-        this.setOutput(TYPES.NUMBER)
+        this.addOutput(TYPES.NUMBER)
     }
 
     /**

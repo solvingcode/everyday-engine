@@ -11,7 +11,8 @@ class WorldData extends Data {
     static instance
 
     unitManager
-    flowManager
+    scriptManager
+    functionRegistry
     camera
     physics
     assetsManager
@@ -43,6 +44,13 @@ class WorldData extends Data {
     }
 
     /**
+     * @param {FunctionRegistry} functionRegistry
+     */
+    setFunctionRegistry(functionRegistry) {
+        this.functionRegistry = functionRegistry
+    }
+
+    /**
      * @param {CameraData} camera
      */
     setCamera(camera) {
@@ -71,10 +79,10 @@ class WorldData extends Data {
     }
 
     /**
-     * @param {FlowManager} flowManager
+     * @param {ScriptManager} scriptManager
      */
-    setFlowManager(flowManager) {
-        this.flowManager = flowManager
+    setScriptManager(scriptManager) {
+        this.scriptManager = scriptManager
     }
 
     /**
@@ -93,10 +101,10 @@ class WorldData extends Data {
     }
 
     /**
-     * @return {FlowManager}
+     * @return {ScriptManager}
      */
-    getFlowManager() {
-        return this.flowManager
+    getScriptManager() {
+        return this.scriptManager
     }
 
     /**
@@ -111,6 +119,13 @@ class WorldData extends Data {
      */
     getAssetsManager() {
         return this.assetsManager
+    }
+
+    /**
+     * @return {FunctionRegistry}
+     */
+    getFunctionRegistry() {
+        return this.functionRegistry
     }
 
     /**

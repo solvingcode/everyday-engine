@@ -1,7 +1,7 @@
-import AFlow from './AFlow.js'
+import AScript from './AScript.js'
 import ClassCompiler from './compiler/ClassCompiler.js'
 
-export default class ClassFlow extends AFlow{
+export default class ClassScript extends AScript{
 
     /**
      * @override

@@ -38,7 +38,7 @@ import AddAssetAction from './assets/AddAssetAction.js'
 import AddAssetSceneAction from './assets/AddAssetSceneAction.js'
 import UnitSelector from '../../manager/UnitSelector.js'
 import AddCameraAction from './camera/AddCameraAction.js'
-import CompileAssetFlowAction from './assets/CompileAssetFlowAction.js'
+import CompileAssetScriptAction from './assets/CompileAssetScriptAction.js'
 
 /**
  * Action Runner class.
@@ -94,7 +94,7 @@ class ActionRunner extends Runner {
             LOAD_PROJECT: LoadProjectAction,
             ADD_ASSET: AddAssetAction,
             ADD_ASSET_SCENE: AddAssetSceneAction,
-            COMPILE_ASSET_FLOW: CompileAssetFlowAction,
+            COMPILE_ASSET_SCRIPT: CompileAssetScriptAction,
             NEW_PROJECT: NewProjectAction,
             EXPORT_PROJECT: ExportProjectAction,
             ZOOM_CAMERA: ZoomInOutCameraAction,

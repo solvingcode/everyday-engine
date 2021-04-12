@@ -1,7 +1,7 @@
 import {MouseButton} from '../../core/Mouse.js'
-import EventRegistry from '../../flow/event/EventRegistry.js'
 import Runner from '../Runner.js'
 import OnMouseClickEvent from '../../flow/event/native/OnMouseClickEvent.js'
+import World from '../../world/World.js'
 
 export default class EventRunner extends Runner {
 
@@ -9,9 +9,9 @@ export default class EventRunner extends Runner {
      * @param {Mouse} mouse
      */
     execute(mouse) {
-        const eventRegistry = EventRegistry.get()
+        const functionRegistry = World.get().getFunctionRegistry()
         if (mouse.isButtonClicked(MouseButton.LEFT)) {
-            eventRegistry.getClassInstance(OnMouseClickEvent).forEach(event => event.execute())
+            functionRegistry.getClassInstance(OnMouseClickEvent).forEach(event => event.execute(functionRegistry))
         }
     }
 

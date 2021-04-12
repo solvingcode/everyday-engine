@@ -1,9 +1,9 @@
 import Action from '../Action.js'
 import World from '../../../world/World.js'
 
-export default class CompileAssetFlowAction extends Action {
+export default class CompileAssetScriptAction extends Action {
 
-    static STATE = 'ACTION_COMPILE_ASSET_FLOW'
+    static STATE = 'ACTION_COMPILE_ASSET_SCRIPT'
 
     /**
      * @override
@@ -12,9 +12,9 @@ export default class CompileAssetFlowAction extends Action {
         const world = World.get()
         const selectedAssets = world.getAssetsManager().getSelectedAssets()
         selectedAssets.forEach(asset => {
-            const flow = World.get().getFlowManager().findByName(asset.getName())
-            if(flow){
-                flow.compile()
+            const script = World.get().getScriptManager().findByName(asset.getName())
+            if(script){
+                script.compile()
             }
         })
         return true

@@ -1,18 +1,17 @@
-import FunctionRegistry from '../../flow/function/FunctionRegistry.js'
-
 export default class CallProcessor {
 
     /**
      * @param {StackOperation} stackOperation
      * @param {StackRegister} stackRegister
+     * @param {Registry} functionRegistry
      */
-    static run(stackOperation, stackRegister) {
+    static run(stackOperation, stackRegister, functionRegistry) {
         const args = stackOperation.getArgs()
         const functionName = args && args[0]
         if (!functionName) {
             throw new TypeError(`Stack operation invalid (Function not provided)`)
         }
-        const aFunction = FunctionRegistry.get().getInstance(functionName)
+        const aFunction = functionRegistry.getInstance(functionName)
         if (!aFunction) {
             throw new TypeError(`Function "${functionName}" not founded in the registry`)
         }
@@ -24,7 +23,7 @@ export default class CallProcessor {
             }
             aFunction.setInputValue(inputName, value)
         })
-        aFunction.execute()
+        aFunction.execute(functionRegistry)
         stackRegister.pushRet(aFunction.getOutputValue())
     }
 

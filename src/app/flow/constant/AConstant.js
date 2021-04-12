@@ -12,7 +12,7 @@ export default class AConstant extends AStackFunction{
         super('constant')
         this.stack = [new StackOperation(OPERATIONS.PUSH, CONSTANTS.RESULT, value)]
         this.setName(`${this.name}${type}${this.id}`)
-        this.setOutput(type)
+        this.addOutput(type)
     }
 
     createStack() {

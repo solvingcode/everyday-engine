@@ -39,7 +39,7 @@ class Setup extends Loop {
     /**
      * @override
      */
-    async init() {
+    async doInit() {
         Storage.get().reset()
     }
 

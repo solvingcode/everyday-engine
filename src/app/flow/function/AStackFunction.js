@@ -4,19 +4,6 @@ import StackProcessor from '../../operation/StackProcessor.js'
 export default class AStackFunction extends AFunction{
 
     /**
-     * @type {StackOperation[]}
-     */
-    stack
-
-    /**
-     * @param {string} name
-     */
-    constructor(name) {
-        super(name)
-        this.stack = []
-    }
-
-    /**
      * @override
      */
     init() {
@@ -25,10 +12,10 @@ export default class AStackFunction extends AFunction{
     }
 
     /**
-     * @abstract
+     * @override
      */
-    execute(){
-        const stackRegister = StackProcessor.get().run(this.stack)
+    execute(functionRegistry){
+        const stackRegister = StackProcessor.get().run(this.stack, functionRegistry)
         this.setOutputValue(stackRegister.popRet())
     }
 

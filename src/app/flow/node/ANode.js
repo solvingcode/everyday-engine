@@ -1,60 +1,17 @@
-import Maths from '../../utils/Maths.js'
+import ANodeData from '../../project/data/ANodeData.js'
+import NodeInput from '../../pobject/NodeInput.js'
 
 /**
  * @abstract
  */
-export default class ANode{
+export default class ANode extends ANodeData {
 
     /**
-     * @type {number}
+     * @param {number} sourceId
      */
-    id
-
-    /**
-     * @type {AEvent|AFunction}
-     */
-    element
-
-    /**
-     * @type {{sourceNode: ANode, targetId: number}[]}
-     */
-    inputs
-
-    /**
-     * @param {AEvent|AFunction|number|string|boolean} element
-     */
-    constructor(element) {
-        this.id = Maths.generateId()
-        this.element = element
-        this.inputs = []
-    }
-
-    /**
-     * @param {number} id
-     */
-    setId(id){
-        this.id = id
-    }
-
-    /**
-     * @return {number}
-     */
-    getId(){
-        return this.id
-    }
-
-    /**
-     * @return {AEvent|AFunction|number|string|boolean}
-     */
-    getElement(){
-        return this.element
-    }
-
-    /**
-     * @return {{sourceNode: ANode, targetId: number}[]}
-     */
-    getInputs(){
-        return this.inputs
+    constructor(sourceId) {
+        super()
+        this.sourceId = sourceId
     }
 
     /**
@@ -64,8 +21,10 @@ export default class ANode{
     attach(sourceNode, targetId){
         const inputNode = this.getInputNodeAttached(targetId)
         if(!inputNode){
-           const newInputNode = {sourceNode, targetId}
-           this.inputs.push(newInputNode)
+            const newInputNode = new NodeInput()
+            newInputNode.setSourceNodeId(sourceNode.getId())
+            newInputNode.setTargetId(targetId)
+            this.inputs.push(newInputNode)
         }else{
             inputNode.sourceNode = sourceNode
         }
@@ -73,10 +32,17 @@ export default class ANode{
 
     /**
      * @param {number} targetId
-     * @return {{sourceNode: ANode, targetId: number}}
+     * @return {NodeInput}
      */
     getInputNodeAttached(targetId){
-        return this.inputs.find(input => input.targetId === targetId)
+        return this.inputs.find(input => input.getTargetId() === targetId)
+    }
+
+    /**
+     * @param {AFunction|AEvent} source
+     */
+    setSource(source){
+        this.sourceId = source.getId()
     }
 
 }

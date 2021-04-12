@@ -23,6 +23,20 @@ import DynamicAttribute from '../../pobject/DynamicAttribute.js'
 import CameraComponent from '../../component/internal/CameraComponent.js'
 import SelectionUnitInstant from '../../unit/instant/type/internal/edit/SelectionUnitInstant.js'
 import StyleComponent from '../../component/internal/StyleComponent.js'
+import ScriptManager from '../../manager/ScriptManager.js'
+import ClassScript from '../../flow/ClassScript.js'
+import EventNode from '../../flow/node/EventNode.js'
+import FunctionNode from '../../flow/node/FunctionNode.js'
+import ConstantNode from '../../flow/node/ConstantNode.js'
+import AssetScriptXml from '../../asset/types/AssetScriptXml.js'
+import AssetImage from '../../asset/types/AssetImage.js'
+import FunctionRegistry from '../../flow/function/FunctionRegistry.js'
+import AFunction from '../../flow/function/AFunction.js'
+import OnMouseClickEvent from '../../flow/event/native/OnMouseClickEvent.js'
+import LogFunction from '../../flow/function/native/LogFunction.js'
+import AddFunction from '../../flow/function/native/AddFunction.js'
+import AConstant from '../../flow/constant/AConstant.js'
+import AEmptyStackFunction from '../../flow/function/AEmptyStackFunction.js'
 
 /**
  * @class {DataSchema}
@@ -34,13 +48,6 @@ class DataSchema {
     static schema = [
         {id: 10, type: World},
         {id: 20, type: UnitManager},
-        {id: 30, type: EmptyUnit},
-        {id: 40, type: MeshComponent},
-        {id: 50, type: TransformComponent},
-        {id: 60, type: AssetUnitInstant},
-        {id: 70, type: CameraUnitInstant},
-        {id: 80, type: CameraComponent},
-        {id: 90, type: StyleComponent},
         {id: 4, type: Camera},
         {id: 5, type: Physics},
         {id: 16, type: AssetsManager},
@@ -48,7 +55,28 @@ class DataSchema {
         {id: 19, type: MatterEngine},
         {id: 23, type: Folder},
         {id: 24, type: Mesh},
-        {id: 25, type: DynamicAttribute}
+        {id: 25, type: DynamicAttribute},
+        {id: 30, type: EmptyUnit},
+        {id: 40, type: MeshComponent},
+        {id: 50, type: TransformComponent},
+        {id: 60, type: AssetUnitInstant},
+        {id: 70, type: CameraUnitInstant},
+        {id: 80, type: CameraComponent},
+        {id: 90, type: StyleComponent},
+        {id: 100, type: ScriptManager},
+        {id: 110, type: ClassScript},
+        {id: 120, type: EventNode},
+        {id: 130, type: FunctionNode},
+        {id: 140, type: ConstantNode},
+        {id: 150, type: AssetScriptXml},
+        {id: 160, type: AssetImage},
+        {id: 170, type: FunctionRegistry},
+        {id: 180, type: AFunction},
+        {id: 190, type: OnMouseClickEvent},
+        {id: 200, type: LogFunction},
+        {id: 210, type: AddFunction},
+        {id: 220, type: AConstant},
+        {id: 230, type: AEmptyStackFunction}
     ]
 
     static exclude = [

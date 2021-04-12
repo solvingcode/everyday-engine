@@ -1,7 +1,7 @@
 import Parser from '../Parser.js'
-import ClassFlowXmlParser from './class/ClassFlowXmlParser.js'
+import ClassScriptXmlParser from './class/ClassScriptXmlParser.js'
 
-export default class FlowParser extends Parser {
+export default class ScriptParser extends Parser {
 
     /**
      * @param {XMLDocument} data
@@ -11,12 +11,12 @@ export default class FlowParser extends Parser {
             case XMLDocument:
                 const type = data.documentElement.getAttribute('type')
                 if(type === 'class'){
-                    return ClassFlowXmlParser.parse(data)
+                    return ClassScriptXmlParser.parse(data)
                 }else{
-                    throw new TypeError(`Flow data type "${type}" not supported`)
+                    throw new TypeError(`Script data type "${type}" not supported`)
                 }
             default:
-                throw new TypeError(`Flow data format not supported`)
+                throw new TypeError(`Script data format not supported`)
         }
     }
 

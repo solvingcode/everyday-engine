@@ -4,7 +4,7 @@ import World from '../../world/World.js'
 /**
  * @class {AssetImage}
  */
-export default class AssetFlowXml extends AssetType{
+export default class AssetScriptXml extends AssetType{
 
     /**
      * @type {string}
@@ -23,9 +23,9 @@ export default class AssetFlowXml extends AssetType{
         return new Promise(resolve => {
             const parser = new DOMParser()
             this.data = parser.parseFromString(xmlStr, 'application/xml')
-            const flow = World.get().getFlowManager().load(this.data)
-            asset.setName(flow.getName())
-            resolve(flow)
+            const script = World.get().getScriptManager().load(this.data)
+            asset.setName(script.getName())
+            resolve(script)
         })
     }
 

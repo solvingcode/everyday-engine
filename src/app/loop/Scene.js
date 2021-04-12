@@ -18,7 +18,10 @@ class Scene extends Loop {
         this.objectRenderer = new ObjectRenderer()
     }
 
-    async init() {
+    /**
+     * @override
+     */
+    async doInit() {
         //not needed
     }
 

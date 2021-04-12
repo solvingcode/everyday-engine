@@ -18,15 +18,16 @@ export default class StackProcessor {
 
     /**
      * @param {StackOperation[]} stack
+     * @param {FunctionRegistry} functionRegistry
      * @return {StackRegister}
      */
-    run(stack){
+    run(stack, functionRegistry){
         stack.forEach(stackOperation => {
             if(stackOperation instanceof StackOperation){
                 const operation = stackOperation.getOperation()
                 switch (operation) {
                     case OPERATIONS.CALL:
-                        CallProcessor.run(stackOperation, this.stackRegister)
+                        CallProcessor.run(stackOperation, this.stackRegister, functionRegistry)
                         break
                     case OPERATIONS.PUSH:
                         PushProcessor.run(stackOperation, this.stackRegister)

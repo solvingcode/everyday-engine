@@ -16,9 +16,9 @@ class RunGame extends Game {
     /**
      * @override
      */
-    async init() {
+    async doInit() {
         await Storage.get().load(Storage.type.WORLD, EngineWorldData.world, World.get())
-        await super.init()
+        await super.doInit()
     }
 
 }

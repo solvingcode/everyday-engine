@@ -1,24 +1,10 @@
+import AssetTypeData from '../../project/data/AssetTypeData.js'
+
 /**
  * @class {AssetType}
  * @abstract
  */
-export default class AssetType {
-
-    data
-
-    /**
-     * @param {*} data
-     */
-    setData(data){
-        this.data = data
-    }
-
-    /**
-     * @return {*}
-     */
-    getData(){
-        return this.data
-    }
+export default class AssetType extends AssetTypeData{
 
     /**
      * @abstract

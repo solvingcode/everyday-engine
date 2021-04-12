@@ -13,7 +13,8 @@ import TransformComponent from '../component/internal/TransformComponent.js'
 import UnitSelector from '../manager/UnitSelector.js'
 import ExecutorRegistry from '../executor/ExecutorRegistry.js'
 import MeshManager from '../manager/MeshManager.js'
-import FlowManager from '../manager/FlowManager.js'
+import ScriptManager from '../manager/ScriptManager.js'
+import FunctionRegistry from '../flow/function/FunctionRegistry.js'
 
 /**
  * @class {World}
@@ -25,7 +26,8 @@ class World extends WorldData {
         super()
         this.unitManager = new UnitManager()
         this.meshManager = new MeshManager()
-        this.flowManager = new FlowManager()
+        this.functionRegistry = new FunctionRegistry()
+        this.scriptManager = new ScriptManager()
         this.camera = new Camera(new Vector({x: -SCENE_WIDTH / 2, y: -SCENE_HEIGHT / 2}))
         this.physics = new Physics()
         this.assetsManager = new AssetsManager()

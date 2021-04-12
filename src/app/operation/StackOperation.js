@@ -5,17 +5,24 @@ export default class StackOperation{
      */
     operation
     /**
-     * @type{any[]}
+     * @type{string[]}
      */
     args
 
     /**
      * @param {string} operation
-     * @param {any} args
+     * @param {string} args
      */
     constructor(operation, ...args) {
         this.operation = operation
         this.args = args
+    }
+
+    /**
+     * @param {string} operation
+     */
+    setOperation(operation){
+        this.operation = operation
     }
 
     /**
@@ -26,10 +33,24 @@ export default class StackOperation{
     }
 
     /**
-     * @return {*[]}
+     * @return {string[]}
      */
     getArgs(){
         return this.args
+    }
+
+    /**
+     * @param {string[]} args
+     */
+    setArgs(args){
+        this.args = args
+    }
+
+    /**
+     * @param {string[]} args
+     */
+    concatArgs(args){
+        this.setArgs(args)
     }
 
 }

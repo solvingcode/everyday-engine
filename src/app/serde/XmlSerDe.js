@@ -87,7 +87,7 @@ class XmlSerDe extends SerDe {
                     if (subNode) {
                         node.appendChild(subNode)
                     } else {
-                        if (pValue !== null) {
+                        if (pValue !== null && pValue !== undefined) {
                             node.setAttribute(pKey, pValue)
                         }
                     }

@@ -27,8 +27,8 @@ class Game extends Scene {
     /**
      * @override
      */
-    async init() {
-        await super.init()
+    async doInit() {
+        await super.doInit()
         const world = World.get()
         const window = Window.get()
         window.setSize(world.getResolution())

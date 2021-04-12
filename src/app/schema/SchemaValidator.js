@@ -46,13 +46,15 @@ class SchemaValidator {
      * @return {*}
      */
     async validateByPrototype(data, prototype) {
-        let dataValidated
-        if (_.isString(prototype)) {
-            dataValidated = PrimitiveHelper.validate(data, prototype)
-        } else if (prototype.prototype instanceof Data) {
-            dataValidated = DataHelper.validate(data, prototype)
-        } else {
-            dataValidated = new prototype()
+        let dataValidated = null
+        if(data !== null && data !== undefined){
+            if (_.isString(prototype)) {
+                dataValidated = PrimitiveHelper.validate(data, prototype)
+            } else if (prototype.prototype instanceof Data) {
+                dataValidated = DataHelper.validate(data, prototype)
+            } else {
+                dataValidated = new prototype()
+            }
         }
         return dataValidated
     }
@@ -95,7 +97,7 @@ class SchemaValidator {
             const pathParentSchema = this.getPathSchema(Schema.getParentPath(path))
             if (pathParentSchema) {
                 let preParentSchema = PrefSchema[pathParentSchema.prototype] ||
-                    PrefSchema[path.match(/\[(\d+)]/)[1]]
+                    (path.match(/\[(\d+)]/) && PrefSchema[path.match(/\[(\d+)]/)[1]])
                 if (preParentSchema) {
                     const preSchema = preParentSchema[Schema.getPathKey(path).replace(/\[\d+]/, '')]
                     if (preSchema) {

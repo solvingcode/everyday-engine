@@ -2,6 +2,10 @@ import Registry from '../../registry/Registry.js'
 
 export default class FunctionRegistry extends Registry{
 
+    constructor() {
+        super('function')
+    }
+
     /**
      * @param {AFunction[]} registry
      */
@@ -25,16 +29,18 @@ export default class FunctionRegistry extends Registry{
     }
 
     /**
+     * @param {number} id
+     * @return {AFunction}
+     */
+    getInstanceById(id) {
+        return super.getInstanceById(id)
+    }
+
+    /**
      * @return {AFunction[]}
      */
     getInstances() {
         return super.getInstances()
     }
 
-    /**
-     * @return {FunctionRegistry}
-     */
-    static get(){
-        return super.get()
-    }
 }

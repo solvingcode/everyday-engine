@@ -7,7 +7,7 @@ export default class Compiler {
 
     /**
      * @abstract
-     * @param {AFlow} flow
+     * @param {AScript} flow
      * @return {boolean}
      */
     run(flow){

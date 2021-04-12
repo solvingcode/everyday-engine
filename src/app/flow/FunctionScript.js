@@ -1,7 +1,7 @@
 import FunctionCompiler from './compiler/FunctionCompiler.js'
-import AFlow from './AFlow.js'
+import AScript from './AScript.js'
 
-export default class FunctionFlow extends AFlow{
+export default class FunctionScript extends AScript{
 
     /**
      * @override

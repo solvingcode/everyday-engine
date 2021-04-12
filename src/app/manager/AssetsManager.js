@@ -2,7 +2,7 @@ import AssetsManagerData from '../project/data/AssetsManagerData.js'
 import Asset from '../asset/Asset.js'
 import FileHelper from '../utils/FileHelper.js'
 import AssetImage from '../asset/types/AssetImage.js'
-import AssetFlowXml from '../asset/types/AssetFlowXml.js'
+import AssetScriptXml from '../asset/types/AssetScriptXml.js'
 
 /**
  * @class {AssetsManager}
@@ -73,7 +73,7 @@ export default class AssetsManager extends AssetsManagerData {
             case FileHelper.type.IMG_PNG:
                 return AssetImage
             case FileHelper.type.XML:
-                return AssetFlowXml
+                return AssetScriptXml
             default:
                 throw new TypeError(`Asset type "${type}" not supported`)
         }
