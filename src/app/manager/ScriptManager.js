@@ -50,7 +50,7 @@ export default class ScriptManager extends ScriptManagerData {
     }
 
     /**
-     * @param {XMLDocument} data
+     * @param {Document} data
      * @return {AScript}
      */
     load(data){

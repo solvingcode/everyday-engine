@@ -2,20 +2,23 @@ import Data from './Data.js'
 
 export default class AssetTypeData extends Data{
 
-    data
+    /**
+     * @type {string}
+     */
+    dataUrl
 
     /**
-     * @param {*} data
+     * @param {string} dataUrl
      */
-    setData(data){
-        this.data = data
+    async setDataUrl(dataUrl){
+        this.dataUrl = dataUrl
     }
 
     /**
-     * @return {*}
+     * @return {string}
      */
-    getData(){
-        return this.data
+    async getDataUrl(){
+        return this.dataUrl
     }
 
 }

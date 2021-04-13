@@ -15157,7 +15157,7 @@ var UnitSelector = /*#__PURE__*/function () {
     key: "getFirstSelectable",
     value: function getFirstSelectable(world, point) {
       var units = this.getAll(world, point).filter(function (unit) {
-        return !unit.getComponent(_GUIPendingComponent["default"]);
+        return !unit.getComponent(_GUIPendingComponent["default"]) && unit.isVisible();
       });
       return units.length && units[units.length - 1];
     }
@@ -15165,6 +15165,7 @@ var UnitSelector = /*#__PURE__*/function () {
      * Get all units in a specific point (absolute position)
      * @param {World} world
      * @param {Vector} point
+     * @return {Unit[]}
      */
 
   }, {

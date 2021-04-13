@@ -47,6 +47,13 @@ gulp.task('data', () =>
     task(['src/run/data.js'], 'data.js', 'EngineData')
 )
 
+// build style
+gulp.task('style', () =>
+    gulp.src(['src/run/style.css']
+        .map(file => path.join(rootDir, file)))
+        .pipe(gulp.dest(distDir))
+)
+
 //build the static source code of the game (libs and entry point) to bundle file
 gulp.task('bundle', () =>
     gulp.src(['libs.js', 'run.js']
@@ -63,7 +70,7 @@ gulp.task('export', (cb) =>
         uglify(),
         gulp.dest(path.join(rootDir, 'run'))
     ], cb)*/
-    gulp.src(['bundle.js', 'data.js']
+    gulp.src(['bundle.js', 'data.js', 'style.css']
         .map(file => path.join(distDir, file)))
         .pipe(gulp.dest(path.join(rootDir, 'run')))
 )

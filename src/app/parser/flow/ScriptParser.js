@@ -4,7 +4,7 @@ import ClassScriptXmlParser from './class/ClassScriptXmlParser.js'
 export default class ScriptParser extends Parser {
 
     /**
-     * @param {XMLDocument} data
+     * @param {Document} data
      */
     static parse(data){
         switch (data.constructor) {

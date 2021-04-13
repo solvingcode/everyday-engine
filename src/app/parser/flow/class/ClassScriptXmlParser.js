@@ -9,7 +9,7 @@ export default class ClassScriptXmlParser extends Parser {
 
     /**
      * @override
-     * @param {XMLDocument} xmlDocument
+     * @param {Document} xmlDocument
      * @return {AScript}
      */
     static parse(xmlDocument){

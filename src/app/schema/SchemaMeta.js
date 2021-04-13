@@ -6,7 +6,6 @@ import Asset from '../asset/Asset.js'
 import PhysicsEngine from '../physics/engine/PhysicsEngine.js'
 import Folder from '../asset/Folder.js'
 import AssetType from '../asset/types/AssetType.js'
-import AssetTypeData from '../asset/types/AssetTypeData.js'
 import Unit from '../unit/Unit.js'
 import UnitManager from '../manager/UnitManager.js'
 import Component from '../component/Component.js'
@@ -365,22 +364,8 @@ export default {
                                             dataId: {
                                                 type: TYPES.NUMBER
                                             },
-                                            data: {
-                                                type: AssetTypeData,
-                                                meta: {
-                                                    dataId: {
-                                                        type: TYPES.NUMBER
-                                                    },
-                                                    size: {
-                                                        prototype: TYPES.SIZE
-                                                    },
-                                                    position: {
-                                                        prototype: TYPES.VECTOR
-                                                    },
-                                                    dataUrl: {
-                                                        type: TYPES.STRING
-                                                    }
-                                                }
+                                            dataUrl: {
+                                                type: TYPES.STRING
                                             }
                                         }
                                     }

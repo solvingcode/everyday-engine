@@ -11,6 +11,11 @@ export default class AssetScriptXml extends AssetType{
      */
     name
 
+    /**
+     * @type {Document}
+     */
+    data
+
     constructor() {
         super()
         this.data = null
@@ -21,12 +26,40 @@ export default class AssetScriptXml extends AssetType{
      */
     async load(xmlStr, asset) {
         return new Promise(resolve => {
-            const parser = new DOMParser()
-            this.data = parser.parseFromString(xmlStr, 'application/xml')
+            this.setDataUrl(xmlStr)
             const script = World.get().getScriptManager().load(this.data)
             asset.setName(script.getName())
             resolve(script)
         })
+    }
+
+    /**
+     * @param {Document} data
+     */
+    setData(data){
+        this.data = data
+    }
+
+    /**
+     * @return {Document}
+     */
+    getData(){
+        return this.data
+    }
+
+    /**
+     * @override
+     */
+    async setDataUrl(dataUrl) {
+        const parser = new DOMParser()
+        this.data = parser.parseFromString(dataUrl, 'application/xml')
+    }
+
+    /**
+     * @override
+     */
+    getDataUrl() {
+        return (new XMLSerializer()).serializeToString(this.data)
     }
 
 }

@@ -10,7 +10,7 @@
   "scripts": {
     "test": "jest",
     "start": "serve -l 8300",
-    "build": "gulp -f build/config/gulpfile.js libs run data",
+    "build": "gulp -f build/config/gulpfile.js libs run data style",
     "bundle": "gulp -f build/config/gulpfile.js bundle",
     "export": "gulp -f build/config/gulpfile.js export"
   },

@@ -22,7 +22,7 @@ export default class JsProjectExporter extends ProjectExporter {
      * @return {{name: string, data: string}[]}
      */
     async getLibs(){
-        const fileNames = ['bundle.js', 'data.js']
+        const fileNames = ['bundle.js', 'data.js', 'style.css']
         const files = []
         const headers = new Headers()
         headers.append('pragma', 'no-cache')
@@ -47,6 +47,7 @@ export default class JsProjectExporter extends ProjectExporter {
             <html lang="en">
                 <head>
                     <title>Game</title>
+                    <link rel="stylesheet" href="./style.css" />
                 </head>
                 <body>
                     <canvas id="object"></canvas>

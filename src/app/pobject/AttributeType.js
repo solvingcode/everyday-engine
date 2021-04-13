@@ -1,8 +1,8 @@
 import Style from './Style.js'
 import Size from './Size.js'
 import Vector from '../utils/Vector.js'
-import AssetTypeData from '../asset/types/AssetTypeData.js'
 import DynamicAttribute from './DynamicAttribute.js'
+import BlobData from '../project/data/BlobData.js'
 
 export default class AttributeType {
 
@@ -48,7 +48,7 @@ export default class AttributeType {
             case TYPES.RANGE:
                 return 'range'
             case TYPES.MESH:
-                return AssetTypeData
+                return BlobData
             case TYPES.STYLE:
                 return Style
             case TYPES.SIZE:

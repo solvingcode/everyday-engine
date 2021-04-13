@@ -43,7 +43,9 @@ export default class UnitSelector {
      * @return {Unit}
      */
     getFirstSelectable(world, point) {
-        const units = this.getAll(world, point).filter(unit => !unit.getComponent(GUIPendingComponent))
+        const units = this.getAll(world, point).filter(
+            unit => !unit.getComponent(GUIPendingComponent) &&
+            unit.isVisible())
         return units.length && units[units.length - 1]
     }
 
@@ -51,6 +53,7 @@ export default class UnitSelector {
      * Get all units in a specific point (absolute position)
      * @param {World} world
      * @param {Vector} point
+     * @return {Unit[]}
      */
     getAll(world, point) {
         return world.getUnitManager().getUnits().filter((unit) =>
