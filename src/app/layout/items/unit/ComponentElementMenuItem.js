@@ -10,4 +10,13 @@ export default class ComponentElementMenuItem extends ListElementMenuItem{
             new ComponentFormMenuItem(this)
         ]
     }
+
+    /**
+     * @override
+     * Must override the method, else the parent's implementation will erase the items defined in the constructor
+     */
+    setData(data) {
+        this.data = data
+    }
+
 }
