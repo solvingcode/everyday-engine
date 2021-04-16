@@ -3,6 +3,7 @@ body{
     padding: 0;
     font-family: Ubuntu, sans-serif;
     font-size: 11pt;
+    overflow: hidden;
 }
 canvas{
     position: absolute;
@@ -96,6 +97,47 @@ h4{
 
 #app-el-bottom .panel h4::before{
     content: "";
+}
+
+#app-el-top-tab .panel{
+    padding: 5px 0 0 5px;
+}
+
+#app-el-top-tab .tab-list{
+    width: 100%;
+    overflow: hidden;
+}
+
+#app-el-top-tab .tab-item{
+    width: 150px;
+    float: left;
+    position: relative;
+}
+
+#app-el-top-tab .panel h4{
+    padding: 10px 15px 10px 15px;
+    border-radius: 5px 5px 0 0;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+#app-el-top-tab .panel h4 i{
+    float: right;
+    line-height: 1.1rem;
+}
+
+#app-el-top-tab .panel h4::before{
+    content: "";
+}
+
+#app-el-body .body-item.has-content{
+    width: 100%;
+    height: 100vh;
+}
+
+#app-el-body .body-item.has-content .edit-script{
+    width: 100%;
+    height: 100%;
 }
 
 #app-el-bottom .panel h4 i{
@@ -227,7 +269,7 @@ h4{
     overflow: hidden;
 }
 
-#app-el-left, #app-el-top, #app-el-right, #app-el-footer, #app-el-bottom{
+#app-el-left, #app-el-top, #app-el-right, #app-el-footer, #app-el-bottom, #app-el-top-tab, #app-el-body{
     position: absolute;
     z-index: 9999;
     box-sizing: border-box;
@@ -241,7 +283,7 @@ h4{
 
 #app-el-left{
     width: 40px;
-    top: 60px;
+    top: 100px;
     left: 15px;
     border-radius: 5px;
 }
@@ -251,6 +293,21 @@ h4{
     top: 0;
     left: 0;
     width: 100%;
+}
+
+#app-el-top-tab{
+    height: 45px;
+    top: 45px;
+    left: 0;
+    width: 100%;
+    overflow: hidden;
+}
+
+#app-el-body{
+    top: 90px;
+    left: 0;
+    width: 100%;
+    overflow: hidden;
 }
 
 #app-el-right{

@@ -22,7 +22,7 @@ class Shape {
      * Generate the body for the given entity
      * @param {EntityMotion} entity
      * @param {World} world
-     * @return {Body}
+     * @return {ContentMenuItem}
      */
     generate(entity, world) {
         throw new TypeError('"Shape.generate" method must be implemented')
@@ -32,7 +32,7 @@ class Shape {
      * Load the body for the given entity, and update physics
      * @param {Entity} entity
      * @param {World} world
-     * @return {Body}
+     * @return {ContentMenuItem}
      */
     load(entity, world) {
         const body = this.generate(entity, world)
@@ -44,7 +44,7 @@ class Shape {
     /**
      * Get the body physics from the entity
      * @param {Entity} entity
-     * @return {Body | Constraint}
+     * @return {ContentMenuItem | Constraint}
      */
     getBodyFromEntity(entity) {
         return this.physicEngine.getBodyFromEntity(entity)
@@ -60,7 +60,7 @@ class Shape {
     /**
      * Setup the body for the given entity
      * @param {EntityMotion} entity
-     * @param {Matter.Body} body
+     * @param {Matter.ContentMenuItem} body
      */
     setup(entity, body) {
         entity.isControlled() && entity.setCollisionGroup(-1)
@@ -71,7 +71,7 @@ class Shape {
      * Synchronize informations from entity to body
      * Do not apply force to Attach entities
      * @param {EntityMotion | AttachEntity} entity
-     * @param {Body | Constraint} physicEntity
+     * @param {ContentMenuItem | Constraint} physicEntity
      */
     update(entity, physicEntity) {
         if (!(entity instanceof AttachEntity)) {

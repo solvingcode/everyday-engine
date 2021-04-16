@@ -84,7 +84,7 @@ class MatterEngine extends PhysicsEngine {
      * @override
      */
     newGroup() {
-        return Matter.Body.nextGroup(true)
+        return Matter.ContentMenuItem.nextGroup(true)
     }
 
     /**
@@ -137,9 +137,9 @@ class MatterEngine extends PhysicsEngine {
         const {force} = entity.physics
         if (entity.isControlled()) {
             const moveSpeed = 2
-            this.getEngine().Body.setPosition(body, {x: body.position.x + moveSpeed, y: body.position.y})
+            this.getEngine().ContentMenuItem.setPosition(body, {x: body.position.x + moveSpeed, y: body.position.y})
         } else {
-            this.getEngine().Body.applyForce(body, entity.getForcePosition(), force)
+            this.getEngine().ContentMenuItem.applyForce(body, entity.getForcePosition(), force)
         }
     }
 

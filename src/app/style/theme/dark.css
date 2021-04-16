@@ -62,6 +62,38 @@ button.selected, button.hidden.selected, button.locked.selected{
     background-color: #3e3e3e;
 }
 
+#app-el-top-tab .panel.collapsed h4{
+    background-color: #323232;
+}
+
+#app-el-top-tab .tab-item.selected h4{
+    background-color: #222222;
+}
+
+#app-el-top-tab .tab-item h4{
+    background-color: #323232;
+}
+
+#app-el-top-tab .tab-item h4 i{
+    color: #5a5a5a;
+}
+
+#app-el-top-tab .tab-list{
+    background-color: #474747;
+}
+
+#app-el-body .body-item{
+    background-color: #222222;
+}
+
+#app-el-body .body-item.has-content .edit-script{
+    border: 0;
+    color: #f4f4f4;
+    background-color: #222222;
+    outline: none;
+    padding: 20px 30px;
+}
+
 .panel > div{
     background-color: #3e3e3e;
 }

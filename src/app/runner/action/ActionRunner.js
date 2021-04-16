@@ -39,6 +39,8 @@ import AddAssetSceneAction from './assets/AddAssetSceneAction.js'
 import UnitSelector from '../../manager/UnitSelector.js'
 import AddCameraAction from './camera/AddCameraAction.js'
 import CompileAssetScriptAction from './assets/CompileAssetScriptAction.js'
+import EditAssetScriptAction from './assets/EditAssetScriptAction.js'
+import SelectTabAction from './content/SelectTabAction.js'
 
 /**
  * Action Runner class.
@@ -95,6 +97,7 @@ class ActionRunner extends Runner {
             ADD_ASSET: AddAssetAction,
             ADD_ASSET_SCENE: AddAssetSceneAction,
             COMPILE_ASSET_SCRIPT: CompileAssetScriptAction,
+            EDIT_ASSET_SCRIPT: EditAssetScriptAction,
             NEW_PROJECT: NewProjectAction,
             EXPORT_PROJECT: ExportProjectAction,
             ZOOM_CAMERA: ZoomInOutCameraAction,
@@ -103,6 +106,7 @@ class ActionRunner extends Runner {
             FORM_UPDATE: FormUpdateAction,
             COLLAPSE_PANEL: PanelCollapseAction,
             ADD_CAMERA: AddCameraAction,
+            SELECT_TAB: SelectTabAction,
 
             //must be the last action
             HISTORY_PUSH: PushHistoryAction

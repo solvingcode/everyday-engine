@@ -38,7 +38,7 @@ class PhysicsEngine extends PhysicsEngineData {
      * Get the shape for entity.
      * @param {Entity} entity
      * @param {World} world
-     * @return {Body}
+     * @return {ContentMenuItem}
      */
     loadShape(entity, world) {
         throw new TypeError('"loadShape" method must be implemented')

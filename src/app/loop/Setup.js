@@ -12,6 +12,7 @@ import ExecutorRegistry from '../executor/ExecutorRegistry.js'
 import MeshGenerationExecutor from '../executor/type/MeshGenerationExecutor.js'
 import GUISelectionExecutor from '../executor/type/GUISelectionExecutor.js'
 import GUIPropertyExecutor from '../executor/type/GUIPropertyExecutor.js'
+import TabManager from '../manager/TabManager.js'
 
 /**
  * @class {Setup}
@@ -33,6 +34,7 @@ class Setup extends Loop {
             new GUISelectionExecutor(),
             new GUIPropertyExecutor()
         ])
+        TabManager.get().create('Scene')
     }
 
     /**

@@ -37,10 +37,18 @@ class HtmlPanelUI extends ItemUI {
         const name = item.element.props.name
         const title = item.element.props.title
         const displayedTitle = title ? title : name
-        const titleEl = el.querySelector('h4')
+        const titleEl = this.getTitle(el)
         if (titleEl && el.getAttribute('data-name') !== displayedTitle) {
             titleEl.textContent = displayedTitle
         }
+    }
+
+    /**
+     * @param {HTMLElement} el
+     * @return {HTMLElement}
+     */
+    static getTitle(el){
+        return el.querySelector('h4')
     }
 
     /**

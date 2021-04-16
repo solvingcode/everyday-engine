@@ -30,7 +30,7 @@ class ShapeLoader {
      * @param {Entity} entity
      * @param {World} world
      *
-     * @return {Body}
+     * @return {ContentMenuItem}
      */
     load(entity, world) {
         if (!this.mapShapes.hasOwnProperty(entity.shape)) {

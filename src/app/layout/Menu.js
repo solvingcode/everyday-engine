@@ -20,6 +20,8 @@ import RotateMenuItem from './items/edit/RotateMenuItem.js'
 import MoveMenuItem from './items/edit/MoveMenuItem.js'
 import AssetsMenuItem from './items/assets/AssetsMenuItem.js'
 import UnitMenuItem from './items/unit/UnitMenuItem.js'
+import TabListMenuItem from './items/tab/TabListMenuItem.js'
+import ContentMenuItem from './items/content/ContentMenuItem.js'
 
 /**
  * Define all menu items
@@ -48,6 +50,12 @@ class Menu {
             new MoveUpMenuItem(),
             new MoveDownMenuItem(),
             new CameraMenuItem(),
+
+            //TOP TABS
+            new TabListMenuItem(),
+
+            // Body
+            new ContentMenuItem(),
 
             //RIGHT
             new UnitMenuItem(),

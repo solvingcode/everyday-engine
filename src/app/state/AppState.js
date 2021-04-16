@@ -308,6 +308,9 @@ AppState.States = {
     ACTION_COMPILE_ASSET_SCRIPT_STOP: {history: false},
     ACTION_COMPILE_ASSET_SCRIPT_START: {history: false},
     ACTION_COMPILE_ASSET_SCRIPT_PROGRESS: {history: false},
+    ACTION_EDIT_ASSET_SCRIPT_STOP: {history: false},
+    ACTION_EDIT_ASSET_SCRIPT_START: {history: false},
+    ACTION_EDIT_ASSET_SCRIPT_PROGRESS: {history: false},
     ACTION_LOAD_PROJECT_STOP: {history: false},
     ACTION_NEW_PROJECT_START: {history: false},
     ACTION_NEW_PROJECT_PROGRESS: {history: false},
@@ -335,7 +338,10 @@ AppState.States = {
     ACTION_UNLOCK_ITEM_STOP: {history: false},
     ACTION_ADD_CAMERA_START: {history: false},
     ACTION_ADD_CAMERA_PROGRESS: {history: false},
-    ACTION_ADD_CAMERA_STOP: {history: false}
+    ACTION_ADD_CAMERA_STOP: {history: false},
+    ACTION_SELECT_TAB_START: {history: false},
+    ACTION_SELECT_TAB_PROGRESS: {history: false},
+    ACTION_SELECT_TAB_STOP: {history: false}
 }
 
 export default AppState

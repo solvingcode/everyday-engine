@@ -7,6 +7,8 @@ class Layout {
 Layout.zone = {
     LEFT: 'left',
     TOP: 'top',
+    TOP_TAB: 'top-tab',
+    BODY: 'body',
     RIGHT: 'right',
     BOTTOM: 'bottom',
     FOOTER: 'footer'
@@ -17,6 +19,10 @@ Layout.type = {
     ACTION: 'action',
     STYLE: 'style',
     PANEL: 'panel',
+    BODY_CONTAINER: 'body-container',
+    BODY_ITEM: 'body-item',
+    TAB_LIST: 'tab_list',
+    TAB_ITEM: 'tab_item',
     PANEL_ACTION: 'panel_action',
     STYLE_COLOR: 'style_color',
     ENTITY_ELEMENT: 'entity_element',

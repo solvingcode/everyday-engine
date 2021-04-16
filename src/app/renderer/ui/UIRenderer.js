@@ -223,6 +223,38 @@ class UIRenderer {
     }
 
     /**
+     * @abstract
+     * @return {ItemUI}
+     */
+    getTabListUI() {
+        throw new TypeError('"UIRenderer.getTabListUI" method must be implemented')
+    }
+
+    /**
+     * @abstract
+     * @return {ItemUI}
+     */
+    getTabItemUI() {
+        throw new TypeError('"UIRenderer.getTabItemUI" method must be implemented')
+    }
+
+    /**
+     * @abstract
+     * @return {ItemUI}
+     */
+    getBodyUI() {
+        throw new TypeError('"UIRenderer.getBodyUI" method must be implemented')
+    }
+
+    /**
+     * @abstract
+     * @return {ItemUI}
+     */
+    getBodyItemUI() {
+        throw new TypeError('"UIRenderer.getBodyItemUI" method must be implemented')
+    }
+
+    /**
      * Get the UI type of the given menu item
      * @param {MenuItemUI} item
      * @return {ItemUI}
@@ -261,6 +293,14 @@ class UIRenderer {
             return this.getTreeUI()
         } else if (element.type === Layout.type.ASSETS) {
             return this.getAssetsUI()
+        } else if (element.type === Layout.type.TAB_LIST) {
+            return this.getTabListUI()
+        } else if (element.type === Layout.type.TAB_ITEM) {
+            return this.getTabItemUI()
+        } else if (element.type === Layout.type.BODY_CONTAINER) {
+            return this.getBodyUI()
+        } else if (element.type === Layout.type.BODY_ITEM) {
+            return this.getBodyItemUI()
         } else {
             throw new TypeError(`Layout type "${element.type}" not supported!`)
         }

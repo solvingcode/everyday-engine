@@ -18,6 +18,10 @@ import AssetElementButtonUI from './list/AssetElementButtonUI.js'
 import FolderElementButtonUI from './list/FolderElementButtonUI.js'
 import HtmlAssetsUI from './ui/HtmlAssetsUI.js'
 import UnitElementButtonUI from './list/UnitElementButtonUI.js'
+import HtmlTabListUI from './ui/HtmlTabListUI.js'
+import HtmlTabItemUI from './ui/HtmlTabItemUI.js'
+import HtmlBodyUI from './ui/HtmlBodyUI.js'
+import HtmlBodyItemUI from './ui/HtmlBodyItemUI.js'
 
 /**
  * HTML UI Renderer class
@@ -148,6 +152,34 @@ class HtmlUIRenderer extends UIRenderer {
      */
     getAssetsUI() {
         return HtmlAssetsUI
+    }
+
+    /**
+     * @override
+     */
+    getTabListUI() {
+        return HtmlTabListUI
+    }
+
+    /**
+     * @override
+     */
+    getTabItemUI() {
+        return HtmlTabItemUI
+    }
+
+    /**
+     * @override
+     */
+    getBodyUI() {
+        return HtmlBodyUI
+    }
+
+    /**
+     * @override
+     */
+    getBodyItemUI() {
+        return HtmlBodyItemUI
     }
 
     /**
