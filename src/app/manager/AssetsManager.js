@@ -3,6 +3,7 @@ import Asset from '../asset/Asset.js'
 import FileHelper from '../utils/FileHelper.js'
 import AssetImage from '../asset/types/AssetImage.js'
 import AssetScriptXml from '../asset/types/AssetScriptXml.js'
+import Folder from '../asset/Folder.js'
 
 /**
  * @class {AssetsManager}
@@ -10,22 +11,14 @@ import AssetScriptXml from '../asset/types/AssetScriptXml.js'
  */
 export default class AssetsManager extends AssetsManagerData {
 
-    assets
-    folders
-
-    constructor() {
-        super()
-        this.assets = []
-        this.folders = []
-    }
-
     /**
      * @param {string} data
      * @param {Class<AssetType>} type
      * @param {string} name
      */
     async setAsset(data, type, name) {
-        const asset = new Asset({})
+        const folder = this.getSelectedFolder() || this.getRootFolder()
+        const asset = new Asset(folder, {})
         asset.setType(new type())
         asset.setName(name)
         if (await asset.load(data)) {
@@ -36,16 +29,16 @@ export default class AssetsManager extends AssetsManagerData {
     /**
      * @param {File} blob
      */
-    async setAssetByBlob(blob){
+    async setAssetByBlob(blob) {
         return new Promise((resolve, reject) => {
             const reader = new FileReader()
             reader.onload = () => {
                 resolve(reader.result)
             }
             reader.onerror = reject
-            if(this.isAssetImage(blob)){
+            if (this.isAssetImage(blob)) {
                 reader.readAsDataURL(blob)
-            }else{
+            } else {
                 reader.readAsText(blob)
             }
         }).then(data => {
@@ -57,7 +50,7 @@ export default class AssetsManager extends AssetsManagerData {
     /**
      * @param {Blob} blob
      */
-    isAssetImage(blob){
+    isAssetImage(blob) {
         const type = this.getAssetType(blob)
         return type === AssetImage
     }
@@ -66,7 +59,7 @@ export default class AssetsManager extends AssetsManagerData {
      * @param {Blob} blob
      * @return {Class<AssetType>}
      */
-    getAssetType(blob){
+    getAssetType(blob) {
         const type = blob.type
         switch (type) {
             case FileHelper.type.IMG_JPEG:
@@ -94,6 +87,13 @@ export default class AssetsManager extends AssetsManagerData {
     }
 
     /**
+     * @return {Folder}
+     */
+    getSelectedFolder() {
+        return this.getFolders().find(folder => folder.isSelected())
+    }
+
+    /**
      * @return {Asset[]}
      */
     getSelectedAssets() {
@@ -117,10 +117,18 @@ export default class AssetsManager extends AssetsManagerData {
     }
 
     /**
+     * @param {number|null} parentId
+     * @return {Folder | null}
+     */
+    findFolderByParentId(parentId) {
+        return this.getFolders().find(folder => folder.folderId === parentId)
+    }
+
+    /**
      * @param {number|null} folderId
      * @return {Asset[]}
      */
-    findAssetsByFolderId(folderId){
+    findAssetsByFolderId(folderId) {
         return this.getAssets().filter(asset => asset.folderId === folderId)
     }
 
@@ -128,15 +136,76 @@ export default class AssetsManager extends AssetsManagerData {
      * @param {number | null} folderId
      * @return {Folder[]}
      */
-    findFolders(folderId){
+    findFolders(folderId) {
         return this.getFolders().filter(folder => folder.folderId === folderId)
     }
 
     /**
+     * @param {string} name
+     * @param {number | null} folderId
+     * @return {Folder}
+     */
+    findFolderByName(name, folderId) {
+        return this.findFolders(folderId).find(pFolder => pFolder.getName() === name)
+    }
+
+    /**
+     * @return {Folder}
+     */
+    createRootFolder() {
+        const rootFolderExist = this.findFolderByParentId(null)
+        if(!rootFolderExist){
+            const rootFolder = new Folder('Root')
+            this.addFolder(rootFolder)
+            return rootFolder
+        }
+        return rootFolderExist
+    }
+
+    /**
+     * @return {Folder}
+     */
+    getRootFolder() {
+        return this.findFolderByParentId(null)
+    }
+
+    /**
+     * @param {Folder} parentFolder
+     */
+    createFolder(parentFolder) {
+        const actualParentFolder = parentFolder ? parentFolder : this.getRootFolder()
+        const folderName = this.generateUniqFolderName('New Folder', actualParentFolder.getId())
+        this.addFolder(new Folder(folderName, actualParentFolder))
+    }
+
+    /**
+     * @param {string} name
+     * @param {number} parentFolderId
+     * @return {string}
+     */
+    generateUniqFolderName(name, parentFolderId) {
+        let attempt = 0, newName, existFolder
+        do {
+            newName = attempt ? `${name} (${attempt})` : name
+            existFolder = this.findFolderByName(newName, parentFolderId)
+            attempt++
+        } while (existFolder && attempt < FOLDER_NAME_ATTEMPT_MAX)
+        return newName
+    }
+
+    /**
+     * @private
      * @param {Folder} folder
      */
-    addFolder(folder){
-        this.folders.push(folder)
+    addFolder(folder) {
+        const existFolder = this.findFolderByName(folder.getName(), folder.getFolderId())
+        if (!existFolder) {
+            this.folders.push(folder)
+        } else {
+            throw new TypeError(`Cannot add folder ${folder.getName()}: Already exist`)
+        }
     }
 
 }
+
+const FOLDER_NAME_ATTEMPT_MAX = 50

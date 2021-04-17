@@ -138,6 +138,15 @@ class UIRenderer {
 
     /**
      * @abstract
+     * Get the button UI for icons
+     * @return {ItemUI}
+     */
+    getIconTextButtonUI() {
+        throw new TypeError('"UIRenderer.getIconTextButtonUI" method must be implemented')
+    }
+
+    /**
+     * @abstract
      * @return {ItemUI}
      */
     getWrapperUI() {
@@ -287,6 +296,8 @@ class UIRenderer {
             return this.getFormElementUI().getType(item)
         } else if (element.type === Layout.type.ICON) {
             return this.getIconButtonUI()
+        } else if (element.type === Layout.type.ICON_TEXT) {
+            return this.getIconTextButtonUI()
         } else if (element.type === Layout.type.FORM_INLINE) {
             return this.getFormInlineUI()
         } else if (element.type === Layout.type.TREE) {

@@ -1,13 +1,20 @@
 import Maths from '../utils/Maths.js'
 import FolderData from '../project/data/FolderData.js'
 
-export default class Folder extends FolderData{
+export default class Folder extends FolderData {
 
-    constructor(name) {
+    /**
+     * @param {string} name
+     * @param {Folder} parentFolder
+     */
+    constructor(name, parentFolder = null) {
         super()
         this.id = Maths.generateId()
         this.name = name
         this.folderId = null
+        if (parentFolder) {
+            this.folderId = parentFolder.getId()
+        }
         this.selected = false
     }
 

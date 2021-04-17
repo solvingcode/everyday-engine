@@ -1,14 +1,14 @@
-import MenuItem from '../../MenuItem.js'
-import Layout from '../../Layout.js'
-import World from '../../../world/World.js'
-import AssetScriptXml from '../../../asset/types/AssetScriptXml.js'
+import MenuItem from '../../../MenuItem.js'
+import Layout from '../../../Layout.js'
+import World from '../../../../world/World.js'
+import AssetScriptXml from '../../../../asset/types/AssetScriptXml.js'
 
-export default class EditAssetScriptMenuItem extends MenuItem {
+export default class CompileAssetScriptMenuItem extends MenuItem {
     constructor(parent) {
         super({
-            name: 'edit',
-            title: 'Edit',
-            stateCode: 'ACTION_EDIT_ASSET_SCRIPT',
+            name: 'code',
+            title: 'Compile',
+            stateCode: 'ACTION_COMPILE_ASSET_SCRIPT',
             type: Layout.type.ICON,
             zone: parent.zone
         })

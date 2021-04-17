@@ -24,7 +24,7 @@ class SchemaValidator {
         const pathPrototype = this.getPathPrototype(path, parentPathData)
         const pathDynamicPrototypeName = this.getPathDynamicPrototypeName(path, parentPathData)
         const dataValidated = await this.validateByPrototype(data, pathPrototype)
-        if (!_.isString(pathPrototype) && dataValidated) {
+        if (!_.isString(pathPrototype) && dataValidated !== null && dataValidated !== undefined) {
             const props = ObjectHelper.getProperties(data, pathPrototype)
             for (const iProp in props) {
                 const prop = props[iProp]

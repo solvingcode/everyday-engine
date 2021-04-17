@@ -1,7 +1,7 @@
-import MenuItem from '../../MenuItem.js'
-import Layout from '../../Layout.js'
-import World from '../../../world/World.js'
-import AssetImage from '../../../asset/types/AssetImage.js'
+import MenuItem from '../../../MenuItem.js'
+import Layout from '../../../Layout.js'
+import World from '../../../../world/World.js'
+import AssetImage from '../../../../asset/types/AssetImage.js'
 
 export default class AddAssetSceneMenuItem extends MenuItem {
     constructor(parent) {

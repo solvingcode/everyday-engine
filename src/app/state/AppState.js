@@ -344,7 +344,13 @@ AppState.States = {
     ACTION_SELECT_TAB_STOP: {history: false},
     ACTION_CLOSE_TAB_START: {history: false},
     ACTION_CLOSE_TAB_PROGRESS: {history: false},
-    ACTION_CLOSE_TAB_STOP: {history: false}
+    ACTION_CLOSE_TAB_STOP: {history: false},
+    ACTION_ADD_FOLDER_START: {history: false},
+    ACTION_ADD_FOLDER_PROGRESS: {history: false},
+    ACTION_ADD_FOLDER_STOP: {history: false},
+    ACTION_SELECT_FOLDER_START: {history: false},
+    ACTION_SELECT_FOLDER_PROGRESS: {history: false},
+    ACTION_SELECT_FOLDER_STOP: {history: false}
 }
 
 export default AppState

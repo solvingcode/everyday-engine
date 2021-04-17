@@ -22,6 +22,7 @@ import HtmlTabListUI from './ui/HtmlTabListUI.js'
 import HtmlTabItemUI from './ui/HtmlTabItemUI.js'
 import HtmlBodyUI from './ui/HtmlBodyUI.js'
 import HtmlBodyItemUI from './ui/HtmlBodyItemUI.js'
+import IconTextButtonUI from './buttons/IconTextButtonUI.js'
 
 /**
  * HTML UI Renderer class
@@ -47,6 +48,13 @@ class HtmlUIRenderer extends UIRenderer {
      */
     getIconButtonUI() {
         return IconButtonUI
+    }
+
+    /**
+     * @override
+     */
+    getIconTextButtonUI() {
+        return IconTextButtonUI
     }
 
     /**
@@ -239,6 +247,7 @@ class HtmlUIRenderer extends UIRenderer {
         const type = this.getType(item)
         el.setAttribute('id', item.getId())
         el.setAttribute('data-index', index)
+        el.setAttribute('data-parent-index', item.parent ? item.parent.index : 0)
         el.setAttribute('data-name', element.props.name)
         el.setAttribute('data-zone', element.zone)
         type.postCreate(item, el, this)
@@ -325,8 +334,9 @@ class HtmlUIRenderer extends UIRenderer {
         const childs = document.querySelectorAll('[data-index]')
         childs.forEach(node => {
             const index = parseInt(node.getAttribute('data-index'))
+            const parentIndex = parseInt(node.getAttribute('data-parent-index'))
             const item = Menu.get().findItemByZone(index, node.getAttribute('data-zone'))
-            if (!item) {
+            if (!item || (item.parent && item.parent.index !== parentIndex)) {
                 node.remove()
             } else {
                 const {tag} = this.getType(item).getProps()

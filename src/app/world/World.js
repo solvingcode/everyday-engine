@@ -6,7 +6,6 @@ import AssetsManager from '../manager/AssetsManager.js'
 import Window from '../core/Window.js'
 import Size from '../pobject/Size.js'
 import {SCENE_HEIGHT, SCENE_WIDTH} from '../core/Constant.js'
-import Folder from '../asset/Folder.js'
 import UnitManager from '../manager/UnitManager.js'
 import MeshComponent from '../component/internal/MeshComponent.js'
 import TransformComponent from '../component/internal/TransformComponent.js'
@@ -94,7 +93,7 @@ class World extends WorldData {
      * @param {number} id
      * @return {Unit}
      */
-    findUnitById(id){
+    findUnitById(id) {
         return this.getUnitManager().findById(id)
     }
 
@@ -129,7 +128,7 @@ class World extends WorldData {
      * @param {{position: Vector, size: Size}} dragArea
      * @return {Unit[]}
      */
-    selectUnits(dragArea){
+    selectUnits(dragArea) {
         const unitSelector = UnitSelector.get()
         unitSelector.unselectAll(this)
         return unitSelector.select(this, this.getWorldPosition(dragArea.position), dragArea.size)
@@ -139,7 +138,7 @@ class World extends WorldData {
      * @param {Mouse} mouse
      * @return {Unit[]}
      */
-    focusUnits(mouse){
+    focusUnits(mouse) {
         const unitSelector = UnitSelector.get()
         unitSelector.unfocusAll(this)
         const currentScenePosition = new Vector(mouse.currentScenePosition)
@@ -151,7 +150,7 @@ class World extends WorldData {
      * @param {Vector} position
      * @return {Unit[]}
      */
-    findFirstUnitByPosition(position){
+    findFirstUnitByPosition(position) {
         return UnitSelector.get().get(this, position)
     }
 
@@ -163,12 +162,12 @@ class World extends WorldData {
         this.reloadAllUnit()
     }
 
-    reloadAllUnit(){
+    reloadAllUnit() {
         this.getUnitManager().sortUnits()
         this.regenerateAll()
     }
 
-    regenerateAll(){
+    regenerateAll() {
         this.getUnitManager().regenerateAll(this)
     }
 
@@ -179,20 +178,20 @@ class World extends WorldData {
     /**
      * @return {boolean}
      */
-    isShowGrid(){
+    isShowGrid() {
         return this.getShowGrid()
     }
 
     /**
      * @param {boolean} showGrid
      */
-    setShowGrid(showGrid){
+    setShowGrid(showGrid) {
         super.setShowGrid(showGrid)
         this.setGridUnitId(null)
     }
 
-    setupCamera(){
-        if(this.cameraUnitId){
+    setupCamera() {
+        if (this.cameraUnitId) {
             this.getCamera().setup(this.cameraUnitId, this)
         }
     }
@@ -211,24 +210,22 @@ class World extends WorldData {
      * @param {Vector} position
      * @return {Vector}
      */
-    getWorldScalePosition(position){
+    getWorldScalePosition(position) {
         return this.getWorldPosition(this.getCamera().fromCameraScale(position))
     }
 
     /**
      * @return {MeshManager}
      */
-    getMeshManager(){
+    getMeshManager() {
         return this.meshManager
     }
 
     createRootFolder() {
         const assetsManager = this.getAssetsManager()
         let rootFolder = assetsManager.findFolderById(0)
-        if(!rootFolder){
-            rootFolder = new Folder('Root')
-            rootFolder.setId(0)
-            assetsManager.addFolder(rootFolder)
+        if (!rootFolder) {
+            assetsManager.createRootFolder()
         }
     }
 
@@ -249,14 +246,14 @@ class World extends WorldData {
     /**
      * @param {number} id
      */
-    setGridUnitId(id){
+    setGridUnitId(id) {
         this.gridUnitId = id
     }
 
     /**
      * @return {number}
      */
-    getGridUnitId(){
+    getGridUnitId() {
         return this.gridUnitId
     }
 

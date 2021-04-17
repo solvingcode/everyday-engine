@@ -1,7 +1,7 @@
 import Layout from '../../Layout.js'
-import ListSelectElementMenuItem from '../list/ListSelectElementMenuItem.js'
+import ListSelectElementActionsMenuItem from '../list/ListSelectElementActionsMenuItem.js'
 
-export default class UnitElementMenuItem extends ListSelectElementMenuItem {
+export default class UnitElementMenuItem extends ListSelectElementActionsMenuItem {
     constructor(parent, data) {
         super(parent, data, {type: Layout.type.UNIT_ELEMENT})
     }

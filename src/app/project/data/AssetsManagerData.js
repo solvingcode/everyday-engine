@@ -9,6 +9,12 @@ export default class AssetsManagerData extends Data {
     assets
     folders
 
+    constructor() {
+        super()
+        this.assets = []
+        this.folders = []
+    }
+
     /**
      * @return {Asset[]}
      */

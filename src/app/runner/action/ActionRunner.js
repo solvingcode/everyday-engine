@@ -42,6 +42,8 @@ import CompileAssetScriptAction from './assets/CompileAssetScriptAction.js'
 import EditAssetScriptAction from './assets/EditAssetScriptAction.js'
 import SelectTabAction from './content/SelectTabAction.js'
 import CloseTabAction from './content/CloseTabAction.js'
+import AddFolderAction from './assets/AddFolderAction.js'
+import SelectFolderAction from './assets/SelectFolderAction.js'
 
 /**
  * Action Runner class.
@@ -96,6 +98,7 @@ class ActionRunner extends Runner {
             SAVE_PROJECT: SaveProjectAction,
             LOAD_PROJECT: LoadProjectAction,
             ADD_ASSET: AddAssetAction,
+            ADD_FOLDER: AddFolderAction,
             ADD_ASSET_SCENE: AddAssetSceneAction,
             COMPILE_ASSET_SCRIPT: CompileAssetScriptAction,
             EDIT_ASSET_SCRIPT: EditAssetScriptAction,
@@ -109,6 +112,7 @@ class ActionRunner extends Runner {
             ADD_CAMERA: AddCameraAction,
             SELECT_TAB: SelectTabAction,
             CLOSE_TAB: CloseTabAction,
+            SELECT_FOLDER: SelectFolderAction,
 
             //must be the last action
             HISTORY_PUSH: PushHistoryAction

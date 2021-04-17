@@ -73,7 +73,7 @@ class ObjectHelper {
             } else {
                 throw new TypeError(`Method ${concatAttr} not defined for ${object.constructor.name}`)
             }
-        } else if(object) {
+        } else if(object !== null && object !== undefined) {
             const setter = ClassHelper.getSetter(object, property)
             await object[setter](propertyValue)
         }

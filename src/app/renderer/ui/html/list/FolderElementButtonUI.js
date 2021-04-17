@@ -1,22 +1,18 @@
 import ListElementButtonUI from './ListElementButtonUI.js'
-import IconButtonUI from '../buttons/IconButtonUI.js'
 
 export default class FolderElementButtonUI extends ListElementButtonUI {
 
     static props = {
-        tag: 'button',
+        tag: 'div',
         className: 'list-element',
-        prefix: 'list-element-',
-        width: '100%'
+        prefix: 'list-element-'
     }
 
     /**
      * @override
      */
-    static getIcon(item){
-        const attrIconValue = document.createElement('i')
-        attrIconValue.className = [IconButtonUI.props.className, IconButtonUI.getClassName(item)].join(' ')
-        return attrIconValue
+    static getTitle(item){
+        return ''
     }
 
 }

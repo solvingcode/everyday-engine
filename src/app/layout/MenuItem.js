@@ -67,7 +67,7 @@ class MenuItem {
     }
 
     /**
-     * Run the action when the item is trigerred
+     * Run the action when the item is triggered
      */
     run() {
         this.stateCode && this.startState()
@@ -120,7 +120,9 @@ class MenuItem {
      * Stop an action by type (state)
      */
     stopState() {
-        this.stateManager.stopState(this.stateCode, this.id)
+        if(this.stateCode){
+            this.stateManager.stopState(this.stateCode, this.id)
+        }
     }
 
     /**

@@ -1,38 +1,18 @@
+import MenuItem from '../../../MenuItem.js'
 import Layout from '../../../Layout.js'
-import World from '../../../../world/World.js'
-import ListMenuItem from '../../list/ListMenuItem.js'
-import FolderElementFormMenuItem from './FolderElementFormMenuItem.js'
+import FolderListMenuItem from './FolderListMenuItem.js'
 
-export default class FolderTreeMenuItem extends ListMenuItem{
-
-    constructor(parent, props) {
+export default class FolderTreeMenuItem extends MenuItem {
+    constructor(parent) {
         super({
-            zone: Layout.zone.BOTTOM,
-            type: Layout.type.TREE,
-            ...props
+            name: 'tree',
+            stateCode: '',
+            zone: parent.zone,
+            type: Layout.type.WRAPPER
         })
+        this.parent = parent
+        this.items = [
+            new FolderListMenuItem(this)
+        ]
     }
-
-    /**
-     * @override
-     */
-    getListElementFormClass() {
-        return FolderElementFormMenuItem
-    }
-
-    /**
-     * @override
-     */
-    getFormObject() {
-        return World.get().getAssetsManager().findFolders(null)
-    }
-
-    /**
-     * @override
-     */
-    getActions(bindObject){
-        return []
-    }
-
-
 }

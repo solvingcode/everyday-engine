@@ -18,10 +18,11 @@ import SceneMenuItem from './items/scene/SceneMenuItem.js'
 import WorldMenuItem from './items/world/WorldMenuItem.js'
 import RotateMenuItem from './items/edit/RotateMenuItem.js'
 import MoveMenuItem from './items/edit/MoveMenuItem.js'
-import AssetsMenuItem from './items/assets/AssetsMenuItem.js'
+import AssetsMenuItem from './items/assets/file/AssetsMenuItem.js'
 import UnitMenuItem from './items/unit/UnitMenuItem.js'
 import TabListMenuItem from './items/tab/TabListMenuItem.js'
 import ContentMenuItem from './items/content/ContentMenuItem.js'
+import AssetMenuItem from './items/assets/AssetMenuItem.js'
 
 /**
  * Define all menu items
@@ -60,6 +61,7 @@ class Menu {
             //RIGHT
             new UnitMenuItem(),
             new WorldMenuItem(),
+            new AssetMenuItem(),
             new SceneMenuItem(),
 
             //BOTTOM
@@ -110,9 +112,23 @@ class Menu {
      * Find menu item by index and zone
      * @param {Number} index (must start from 0)
      * @param {String} zone
+     * @return {MenuItemUI}
      */
     findItemByZone(index, zone) {
         const itemsZone = this.items.filter(pItem => pItem.element.zone === zone)
+        return itemsZone[index]
+    }
+
+    /**
+     * @param {Number} index (must start from 0)
+     * @param {String} zone
+     * @param {Number} parentIndex (must start from 0)
+     */
+    findItemByZoneAndParent(index, zone, parentIndex){
+        const itemsZone = this.items.filter(pItem =>
+            pItem.element.zone === zone
+            && ((!parentIndex && !pItem.parent) || (pItem.parent && pItem.parent.index === parentIndex))
+        )
         return itemsZone[index]
     }
 

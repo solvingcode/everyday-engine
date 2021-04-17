@@ -1,7 +1,7 @@
-import Layout from '../../Layout.js'
-import FolderTreeMenuItem from './folder/FolderTreeMenuItem.js'
+import Layout from '../../../Layout.js'
 import AssetsListFormMenuItem from './AssetsListFormMenuItem.js'
-import MenuItem from '../../MenuItem.js'
+import MenuItem from '../../../MenuItem.js'
+import FolderTreeMenuItem from '../folder/FolderTreeMenuItem.js'
 
 export default class AssetsWrapperMenuItem extends MenuItem {
     constructor(parent) {

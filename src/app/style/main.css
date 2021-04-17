@@ -168,9 +168,13 @@ h4{
     display: none;
 }
 
-.panel .tree{
+.panel .tree, .panel{
     width: 30%;
     float: left;
+}
+
+.panel .tree .panel > div .panel{
+    padding-left: 10px;
 }
 
 .panel .tree .list-element-img-wrapper{
@@ -185,13 +189,25 @@ h4{
 }
 
 .panel .tree .list-element {
+    box-sizing: border-box;
     width: 100%;
-    height: 30px;
+    padding: 0;
+}
+
+.panel .tree .list-element button{
+    width: 100%;
+    text-align: left;
+}
+
+.panel .tree .list-element i{
+    float: left;
+    line-height: 1.5rem;
+    margin-right: 5px;
 }
 
 .panel .tree .list-element span {
     width: unset;
-    margin: 4px 0;
+    margin: 0;
     text-align: left;
     white-space: nowrap;
     text-overflow: ellipsis;

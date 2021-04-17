@@ -35,6 +35,7 @@ Layout.type = {
     FORM_INLINE: 'form_inline',
     GRAPH: 'graph',
     ICON: 'icon',
+    ICON_TEXT: 'icon-text',
     TREE: 'tree',
     ASSETS: 'assets',
     WRAPPER: 'wrapper',

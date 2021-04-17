@@ -27,13 +27,22 @@ export default class ListElementButtonUI extends ItemUI {
                 imageWrapper.appendChild(icon)
                 el.appendChild(imageWrapper)
             }
-            title.textContent = bind.name
-            title.title = bind.name
+            title.textContent = this.getTitle(item)
+            title.title = this.getTitle(item)
             el.setAttribute('data-list-element-id', bind.getId())
             el.setAttribute('data-list-element-name', bind.getName())
             el.setAttribute('id', item.getId())
             el.appendChild(title)
         }
+    }
+
+    /**
+     * @param {MenuItemUI} item
+     * @return {string}
+     */
+    static getTitle(item){
+        const bind = item.element.getDataBind()
+        return bind.name
     }
 
     /**

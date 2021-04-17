@@ -125,8 +125,24 @@ button.selected, button.hidden.selected, button.locked.selected{
     border-right: 1px solid #323232;
 }
 
+#app-el-bottom .panel .tree .panel{
+    background-color: #3e3e3e;
+}
+
 .panel .tree h4{
     background-color: #3e3e3e !important;
+}
+
+.panel .tree .list-element:hover{
+    background: none;
+}
+
+.panel .tree .list-element:hover{
+    background-color: #4e4e4e;
+}
+
+.panel .tree .list-element.selected:hover{
+    background-color: #3f6093;
 }
 
 .panel-action{
@@ -186,11 +202,11 @@ button.selected, button.hidden.selected, button.locked.selected{
 }
 
 .list-element:hover{
-    background-color: #4e4e4e !important;
+    background-color: #4e4e4e;
 }
 
 .list-element.selected:hover{
-    background-color: #3f6093 !important;
+    background-color: #3f6093;
 }
 
 .list-element{

@@ -1,9 +1,9 @@
-import PanelMenuItem from '../panel/PanelMenuItem.js'
+import MenuItem from '../../MenuItem.js'
 
 /**
  * @property {{bind: Object, list: *[]}} data
  */
-export default class ListElementMenuItem extends PanelMenuItem {
+export default class ListElementMenuItem extends MenuItem {
     constructor(parent, data, props) {
         super({
             name: '',
@@ -19,7 +19,6 @@ export default class ListElementMenuItem extends PanelMenuItem {
      */
     setData(data){
         this.data = data
-        this.items = this.parent.getActions(this.data.bind)
     }
 
     /**

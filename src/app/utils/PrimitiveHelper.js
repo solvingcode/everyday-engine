@@ -9,7 +9,7 @@ export default class PrimitiveHelper{
         let newValue
         switch (type) {
             case 'number':
-                newValue = parseFloat(value) || null
+                newValue = _.isNumber(parseFloat(value)) ? parseFloat(value) : null
                 break
             case 'string':
                 newValue = _.isString(value) ? value : ''

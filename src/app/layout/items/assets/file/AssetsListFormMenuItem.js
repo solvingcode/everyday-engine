@@ -1,7 +1,7 @@
-import ListMenuItem from '../list/ListMenuItem.js'
-import World from '../../../world/World.js'
+import ListMenuItem from '../../list/ListMenuItem.js'
+import World from '../../../../world/World.js'
 import AssetElementFormMenuItem from './AssetElementFormMenuItem.js'
-import Layout from '../../Layout.js'
+import Layout from '../../../Layout.js'
 
 /**
  * @class {AssetsListFormMenuItem}
@@ -27,7 +27,9 @@ export default class AssetsListFormMenuItem extends ListMenuItem {
      * @override
      */
     getFormObject() {
-        return World.get().getAssetsManager().findAssetsByFolderId(null)
+        const assetsManager = World.get().getAssetsManager()
+        const folder = assetsManager.getSelectedFolder() || assetsManager.getRootFolder()
+        return World.get().getAssetsManager().findAssetsByFolderId(folder.getId())
     }
 
     /**

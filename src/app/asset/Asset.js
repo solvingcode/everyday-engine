@@ -6,12 +6,16 @@ import AssetData from '../project/data/AssetData.js'
  */
 export default class Asset extends AssetData{
 
-    constructor(props = {}) {
+    /**
+     * @param {Folder} folder
+     * @param {Object} props
+     */
+    constructor(folder, props = {}) {
         super()
         this.id = Maths.generateId()
         this.name = props.name || 'Asset'
         this.selected = false
-        this.folderId = null
+        this.folderId = folder ? folder.getId() : null
         this.type = null
     }
 

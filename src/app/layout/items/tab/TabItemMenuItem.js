@@ -1,8 +1,8 @@
-import ListCustomElementMenuItem from '../list/ListCustomElementMenuItem.js'
+import ListElementMenuItem from '../list/ListElementMenuItem.js'
 import Layout from '../../Layout.js'
 import TabCloseItemMenuItem from './TabCloseItemMenuItem.js'
 
-export default class TabItemMenuItem extends ListCustomElementMenuItem{
+export default class TabItemMenuItem extends ListElementMenuItem{
 
     constructor(parent, data) {
         super(parent, data, {
