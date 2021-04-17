@@ -8,6 +8,7 @@ import Maths from '../../../utils/Maths.js'
 import ObjectHelper from '../../../utils/ObjectHelper.js'
 import ColorMenuItem from './ColorMenuItem.js'
 import RangeMenuItem from './RangeMenuItem.js'
+import TextareaMenuItem from './TextareaMenuItem.js'
 
 /**
  * Form menu item
@@ -50,7 +51,7 @@ class FormMenuItem extends MenuItem {
     /**
      * @param {*} value
      */
-    postUpdate(value){
+    postUpdate(value) {
     }
 
     /**
@@ -258,6 +259,8 @@ class FormMenuItem extends MenuItem {
                 return ColorMenuItem
             case Layout.form.RANGE:
                 return RangeMenuItem
+            case Layout.form.TEXTAREA:
+                return TextareaMenuItem
             default:
                 throw new TypeError(`Form item "${field.type}" not defined`)
         }

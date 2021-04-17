@@ -3,6 +3,10 @@ import Layout from '../../Layout.js'
 
 export default class ContentItemMenuItem extends MenuItem{
 
+    /**
+     * @param {MenuItem} parent
+     * @param {Content} data
+     */
     constructor(parent, data) {
         super({
             stateCode: '',

@@ -48,6 +48,20 @@ export default class TabManager {
     }
 
     /**
+     * @param {string} name
+     * @param {Content} content
+     * @return {Tab}
+     */
+    createOrActivate(name, content){
+        const existTab = this.findByName(name)
+        if(existTab){
+            this.activate(existTab)
+        }else{
+            this.create(name, content)
+        }
+    }
+
+    /**
      * @param {Tab} tab
      */
     activate(tab) {

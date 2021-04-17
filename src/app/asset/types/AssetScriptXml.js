@@ -27,10 +27,17 @@ export default class AssetScriptXml extends AssetType{
     async load(xmlStr, asset) {
         return new Promise(resolve => {
             this.setDataUrl(xmlStr)
-            const script = World.get().getScriptManager().load(this.data)
+            const script = this.parse()
             asset.setName(script.getName())
             resolve(script)
         })
+    }
+
+    /**
+     * @return {AScript}
+     */
+    parse(){
+        return World.get().getScriptManager().load(this.data)
     }
 
     /**

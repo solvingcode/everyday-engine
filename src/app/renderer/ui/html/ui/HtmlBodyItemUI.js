@@ -1,6 +1,4 @@
 import HtmlPanelUI from './HtmlPanelUI.js'
-import EditScriptContent from '../../../../content/EditScriptContent.js'
-import EditScriptUI from '../components/content/EditScriptUI.js'
 
 export default class HtmlBodyItemUI extends HtmlPanelUI {
 
@@ -16,9 +14,6 @@ export default class HtmlBodyItemUI extends HtmlPanelUI {
         super.postCreate(item, el, uiRenderer)
         const content = item.element.data
         el.setAttribute('content-id', content ? content.getId() : '')
-        if(content){
-            el.appendChild(this.getContentUI(content).getElement(content))
-        }
     }
 
     /**
@@ -30,19 +25,6 @@ export default class HtmlBodyItemUI extends HtmlPanelUI {
         if ((!content && contentId) || (content && content.getId() !== parseInt(contentId))) {
             el.innerHTML = ''
             this.postCreate(item, el, uiRenderer)
-        }
-    }
-
-    /**
-     * @param {Content} content
-     * @return {HTMLElement}
-     */
-    static getContentUI(content) {
-        switch (content.constructor) {
-            case EditScriptContent:
-                return EditScriptUI
-            default:
-                throw new TypeError(`ContentUI: ${data.constructor.name} not supported`)
         }
     }
 

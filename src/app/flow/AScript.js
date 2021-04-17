@@ -20,7 +20,7 @@ export default class AScript extends AScriptData{
         switch(nodeClass){
             case FunctionNode:
             case EventNode:
-                nodeSource = registry.getInstance(value)
+                nodeSource = registry.tryGetInstance(value)
                 break
             case ConstantNode:
                 nodeSource = new AConstant(DynamicAttributeHelper.findTypeOfValue(value), value)
@@ -56,15 +56,16 @@ export default class AScript extends AScriptData{
         return this.nodes.find(node => node.getId() === id)
     }
 
-    /**
-     * @return {boolean}
-     */
     compile(){
         if(this.doCompile()){
             this.setStatus(STATUS.COMPILED)
         }else{
             this.setStatus(STATUS.ERROR)
         }
+    }
+
+    reset(){
+        this.setStatus(STATUS.NEW)
     }
 
     /**

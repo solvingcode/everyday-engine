@@ -48,7 +48,8 @@ Layout.form = {
     DROPDOWN: 'dropdown',
     FILE: 'file',
     COLOR: 'color',
-    RANGE: 'range'
+    RANGE: 'range',
+    TEXTAREA: 'textarea'
 }
 
 export default Layout

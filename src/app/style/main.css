@@ -135,7 +135,7 @@ h4{
     height: 100vh;
 }
 
-#app-el-body .body-item.has-content .edit-script{
+#app-el-body .body-item.has-content textarea{
     width: 100%;
     height: 100%;
 }

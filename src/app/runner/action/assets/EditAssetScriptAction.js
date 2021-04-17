@@ -13,7 +13,7 @@ export default class EditAssetScriptAction extends Action {
     static run() {
         const world = World.get()
         const selectedAsset = world.getAssetsManager().getSelectedAsset()
-        TabManager.get().create(selectedAsset.getName(), new EditScriptContent(selectedAsset))
+        TabManager.get().createOrActivate(selectedAsset.getName(), new EditScriptContent(selectedAsset))
         return true
     }
 
