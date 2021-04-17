@@ -41,6 +41,7 @@ import AddCameraAction from './camera/AddCameraAction.js'
 import CompileAssetScriptAction from './assets/CompileAssetScriptAction.js'
 import EditAssetScriptAction from './assets/EditAssetScriptAction.js'
 import SelectTabAction from './content/SelectTabAction.js'
+import CloseTabAction from './content/CloseTabAction.js'
 
 /**
  * Action Runner class.
@@ -107,6 +108,7 @@ class ActionRunner extends Runner {
             COLLAPSE_PANEL: PanelCollapseAction,
             ADD_CAMERA: AddCameraAction,
             SELECT_TAB: SelectTabAction,
+            CLOSE_TAB: CloseTabAction,
 
             //must be the last action
             HISTORY_PUSH: PushHistoryAction

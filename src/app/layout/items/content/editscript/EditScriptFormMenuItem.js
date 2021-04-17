@@ -34,6 +34,7 @@ export default class EditScriptFormMenuItem extends FormMenuItem {
         const asset = this.getAssetScript()
         const script = asset.getType().parse()
         script.reset()
+        asset.setName(script.getName())
     }
 
     /**

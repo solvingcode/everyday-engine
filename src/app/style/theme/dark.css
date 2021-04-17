@@ -74,8 +74,12 @@ button.selected, button.hidden.selected, button.locked.selected{
     background-color: #323232;
 }
 
-#app-el-top-tab .tab-item h4 i{
+#app-el-top-tab .panel div button{
     color: #5a5a5a;
+}
+
+#app-el-top-tab .panel div button:hover{
+    color: #787878;
 }
 
 #app-el-top-tab .tab-list{

@@ -77,6 +77,19 @@ export default class TabManager {
     /**
      * @param {Tab} tab
      */
+    remove(tab){
+        const indexTab = this.tabs.findIndex(pTab => pTab === tab)
+        if(indexTab >= 0){
+            this.tabs.splice(indexTab, 1)
+            this.activate(this.tabs[indexTab - 1])
+        }else{
+            throw new TypeError(`Cannot remove Tab Id ${tab.getId()} : Not found`)
+        }
+    }
+
+    /**
+     * @param {Tab} tab
+     */
     tryAdd(tab) {
         const existTab = this.findByName(tab.getName())
         if(existTab){

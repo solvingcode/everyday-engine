@@ -1,5 +1,4 @@
 import HtmlPanelUI from './HtmlPanelUI.js'
-import IconUI from '../components/icon/IconUI.js'
 
 export default class HtmlTabItemUI extends HtmlPanelUI {
 
@@ -11,18 +10,9 @@ export default class HtmlTabItemUI extends HtmlPanelUI {
     /**
      * @override
      */
-    static postCreate(item, el, uiRenderer = null) {
-        super.postCreate(item, el, uiRenderer)
-        const closeIcon = IconUI.createIcon('times')
-        this.getTitle(el).appendChild(closeIcon)
-    }
-
-    /**
-     * @override
-     */
-    static getClassName(item){
+    static getClassName(item) {
         const tab = item.element.data.bind
-        if(tab.isSelected()){
+        if (tab.isSelected()) {
             return 'selected'
         }
     }

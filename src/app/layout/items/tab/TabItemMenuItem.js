@@ -1,5 +1,6 @@
 import ListCustomElementMenuItem from '../list/ListCustomElementMenuItem.js'
 import Layout from '../../Layout.js'
+import TabCloseItemMenuItem from './TabCloseItemMenuItem.js'
 
 export default class TabItemMenuItem extends ListCustomElementMenuItem{
 
@@ -10,7 +11,11 @@ export default class TabItemMenuItem extends ListCustomElementMenuItem{
             zone: parent.zone,
             type: Layout.type.TAB_ITEM
         })
-        this.items = []
+        if(data.bind.getContent()){
+            this.items = [
+                new TabCloseItemMenuItem(this, data)
+            ]
+        }
     }
 
 }

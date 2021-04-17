@@ -114,6 +114,10 @@ h4{
     position: relative;
 }
 
+#app-el-top-tab .panel{
+    position: relative;
+}
+
 #app-el-top-tab .panel h4{
     padding: 10px 15px 10px 15px;
     border-radius: 5px 5px 0 0;
@@ -121,9 +125,19 @@ h4{
     box-sizing: border-box;
 }
 
-#app-el-top-tab .panel h4 i{
-    float: right;
-    line-height: 1.1rem;
+#app-el-top-tab .panel div{
+    position: absolute;
+    right: 0;
+    top: 0;
+    background: none;
+    box-sizing: border-box;
+}
+
+#app-el-top-tab .panel div button{
+    width: 30px;
+    height: 30px;
+    background: none;
+    padding: 10px;
 }
 
 #app-el-top-tab .panel h4::before{
