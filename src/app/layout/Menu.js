@@ -23,6 +23,7 @@ import UnitMenuItem from './items/unit/UnitMenuItem.js'
 import TabListMenuItem from './items/tab/TabListMenuItem.js'
 import ContentMenuItem from './items/content/ContentMenuItem.js'
 import AssetMenuItem from './items/assets/AssetMenuItem.js'
+import AddScriptMenuItem from './items/assets/AddScriptMenuItem.js'
 
 /**
  * Define all menu items
@@ -51,6 +52,7 @@ class Menu {
             new MoveUpMenuItem(),
             new MoveDownMenuItem(),
             new CameraMenuItem(),
+            new AddScriptMenuItem(),
 
             //TOP TABS
             new TabListMenuItem(),

@@ -38,6 +38,10 @@ export default class Asset extends AssetData{
         this.selected = value
     }
 
+    open(){
+        this.getType().open(this)
+    }
+
     /**
      * @param {*} data
      * @return {boolean}

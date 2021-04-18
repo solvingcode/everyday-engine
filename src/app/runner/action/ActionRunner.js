@@ -44,6 +44,7 @@ import SelectTabAction from './content/SelectTabAction.js'
 import CloseTabAction from './content/CloseTabAction.js'
 import AddFolderAction from './assets/AddFolderAction.js'
 import SelectFolderAction from './assets/SelectFolderAction.js'
+import AddScriptAction from './assets/AddScriptAction.js'
 
 /**
  * Action Runner class.
@@ -113,6 +114,7 @@ class ActionRunner extends Runner {
             SELECT_TAB: SelectTabAction,
             CLOSE_TAB: CloseTabAction,
             SELECT_FOLDER: SelectFolderAction,
+            ADD_SCRIPT: AddScriptAction,
 
             //must be the last action
             HISTORY_PUSH: PushHistoryAction

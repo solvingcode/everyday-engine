@@ -16,4 +16,12 @@ export default class AssetType extends AssetTypeData{
         throw new TypeError(`${this.constructor.name}.load must be implemented`)
     }
 
+    /**
+     * @abstract
+     * @param {Asset} asset
+     */
+    open(asset){
+        throw new TypeError(`${this.constructor.name}.open must be implemented`)
+    }
+
 }

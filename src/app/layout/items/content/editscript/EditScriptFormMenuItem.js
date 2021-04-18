@@ -32,9 +32,13 @@ export default class EditScriptFormMenuItem extends FormMenuItem {
      */
     postUpdate(value) {
         const asset = this.getAssetScript()
-        const script = asset.getType().parse()
-        script.reset()
-        asset.setName(script.getName())
+        try{
+            const script = asset.getType().parse()
+            script.reset()
+            asset.setName(script.getName())
+        }catch (e) {
+            asset.getType().setError(e.message)
+        }
     }
 
     /**

@@ -350,7 +350,10 @@ AppState.States = {
     ACTION_ADD_FOLDER_STOP: {history: false},
     ACTION_SELECT_FOLDER_START: {history: false},
     ACTION_SELECT_FOLDER_PROGRESS: {history: false},
-    ACTION_SELECT_FOLDER_STOP: {history: false}
+    ACTION_SELECT_FOLDER_STOP: {history: false},
+    ACTION_ADD_SCRIPT_START: {history: false},
+    ACTION_ADD_SCRIPT_PROGRESS: {history: false},
+    ACTION_ADD_SCRIPT_STOP: {history: false}
 }
 
 export default AppState

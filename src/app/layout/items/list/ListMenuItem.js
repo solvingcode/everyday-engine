@@ -22,6 +22,13 @@ class ListMenuItem extends PanelMenuItem {
     }
 
     /**
+     * @return {*[]}
+     */
+    getList(){
+        return this.getFormObject()
+    }
+
+    /**
      * @return {MenuItem[]}
      * @param {*} bindObject
      * @abstract
@@ -43,7 +50,7 @@ class ListMenuItem extends PanelMenuItem {
      */
     update() {
         super.update()
-        const list = this.getFormObject()
+        const list = this.getList()
         this.items = list.map((each, index) => {
             const element = this.items[index]
             const data = {bind: each, list}

@@ -1,5 +1,7 @@
 import AssetType from './AssetType.js'
 import World from '../../world/World.js'
+import TabManager from '../../manager/TabManager.js'
+import EditScriptContent from '../../content/EditScriptContent.js'
 
 /**
  * @class {AssetImage}
@@ -16,6 +18,11 @@ export default class AssetScriptXml extends AssetType{
      */
     data
 
+    /**
+     * @type {string}
+     */
+    error
+
     constructor() {
         super()
         this.data = null
@@ -31,6 +38,13 @@ export default class AssetScriptXml extends AssetType{
             asset.setName(script.getName())
             resolve(script)
         })
+    }
+
+    /**
+     * @override
+     */
+    open(asset) {
+        TabManager.get().createOrActivate(asset.getName(), new EditScriptContent(asset))
     }
 
     /**
@@ -55,11 +69,31 @@ export default class AssetScriptXml extends AssetType{
     }
 
     /**
+     * @param {string} error
+     */
+    setError(error){
+        this.error = error
+    }
+
+    /**
+     * @return {string}
+     */
+    getError(){
+        return this.error
+    }
+
+    /**
      * @override
      */
     async setDataUrl(dataUrl) {
         const parser = new DOMParser()
-        this.data = parser.parseFromString(dataUrl, 'application/xml')
+        const doc = parser.parseFromString(dataUrl, 'application/xml')
+        if(doc.documentElement.tagName === 'html'){
+            this.setError(`Script XML Parser: ${doc.documentElement.textContent}`)
+        }else{
+            this.setError('')
+            this.data = doc
+        }
     }
 
     /**

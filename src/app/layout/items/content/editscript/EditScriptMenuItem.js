@@ -1,5 +1,6 @@
 import ContentItemMenuItem from '../ContentItemMenuItem.js'
 import EditScriptFormMenuItem from './EditScriptFormMenuItem.js'
+import EditScriptErrorMenuItem from './EditScriptErrorMenuItem.js'
 
 export default class EditScriptMenuItem extends ContentItemMenuItem{
 
@@ -10,7 +11,8 @@ export default class EditScriptMenuItem extends ContentItemMenuItem{
     constructor(parent, data) {
         super(parent, data)
         this.items = [
-            new EditScriptFormMenuItem(this)
+            new EditScriptFormMenuItem(this),
+            new EditScriptErrorMenuItem(this)
         ]
     }
 

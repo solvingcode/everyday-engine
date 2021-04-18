@@ -35,6 +35,13 @@ export default class AssetsListFormMenuItem extends ListMenuItem {
     /**
      * @override
      */
+    getList() {
+        return World.get().getAssetsManager().getAssets()
+    }
+
+    /**
+     * @override
+     */
     getActions(bindObject){
         return []
     }

@@ -37,7 +37,6 @@ class HtmlTextUI extends ItemUI {
 
 HtmlTextUI.props = {
     tag: 'div',
-    width: '200px',
     className: 'text'
 }
 

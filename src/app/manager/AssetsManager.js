@@ -12,9 +12,11 @@ import Folder from '../asset/Folder.js'
 export default class AssetsManager extends AssetsManagerData {
 
     /**
+     * @private
      * @param {string} data
      * @param {Class<AssetType>} type
      * @param {string} name
+     * @return {Asset}
      */
     async setAsset(data, type, name) {
         const folder = this.getSelectedFolder() || this.getRootFolder()
@@ -23,7 +25,19 @@ export default class AssetsManager extends AssetsManagerData {
         asset.setName(name)
         if (await asset.load(data)) {
             this.assets.push(asset)
+            return asset
         }
+    }
+
+    /**
+     * @param {string} data
+     * @param {Class<AssetType>} assetType
+     * @param {string} assetName
+     * @param {number} folderId
+     * @return {Asset}
+     */
+    async createAsset(data, assetType, assetName, folderId) {
+        return this.setAsset(data, assetType, assetName)
     }
 
     /**
@@ -46,6 +60,7 @@ export default class AssetsManager extends AssetsManagerData {
             return this.setAsset(data, type, FileHelper.getFilename(blob.name))
         })
     }
+
 
     /**
      * @param {Blob} blob
@@ -109,6 +124,15 @@ export default class AssetsManager extends AssetsManagerData {
     }
 
     /**
+     * @param {string} name
+     * @param {number} folderId
+     * @return {Asset | null}
+     */
+    findAssetByName(name, folderId) {
+        return this.getAssets().find(asset => asset.getName() === name && asset.getFolderId() === folderId)
+    }
+
+    /**
      * @param {number|string} folderId
      * @return {Folder | null}
      */
@@ -154,7 +178,7 @@ export default class AssetsManager extends AssetsManagerData {
      */
     createRootFolder() {
         const rootFolderExist = this.findFolderByParentId(null)
-        if(!rootFolderExist){
+        if (!rootFolderExist) {
             const rootFolder = new Folder('Root')
             this.addFolder(rootFolder)
             return rootFolder
@@ -189,7 +213,22 @@ export default class AssetsManager extends AssetsManagerData {
             newName = attempt ? `${name} (${attempt})` : name
             existFolder = this.findFolderByName(newName, parentFolderId)
             attempt++
-        } while (existFolder && attempt < FOLDER_NAME_ATTEMPT_MAX)
+        } while (existFolder && attempt < NAME_ATTEMPT_MAX)
+        return newName
+    }
+
+    /**
+     * @param {string} name
+     * @param {number} folderId
+     * @return {string}
+     */
+    generateUniqAssetName(name, folderId) {
+        let attempt = 0, newName, existAsset
+        do {
+            newName = attempt ? `${name} (${attempt})` : name
+            existAsset = this.findAssetByName(newName, folderId)
+            attempt++
+        } while (existAsset && attempt < NAME_ATTEMPT_MAX)
         return newName
     }
 
@@ -208,4 +247,4 @@ export default class AssetsManager extends AssetsManagerData {
 
 }
 
-const FOLDER_NAME_ATTEMPT_MAX = 50
+const NAME_ATTEMPT_MAX = 200

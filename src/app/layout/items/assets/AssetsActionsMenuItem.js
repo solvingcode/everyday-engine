@@ -1,10 +1,10 @@
-import Layout from '../../../Layout.js'
-import MenuItem from '../../../MenuItem.js'
-import AddAssetMenuItem from './AddAssetMenuItem.js'
-import AddFolderMenuItem from '../folder/AddFolderMenuItem.js'
-import AddAssetSceneMenuItem from './AddAssetSceneMenuItem.js'
-import CompileAssetScriptMenuItem from './CompileAssetScriptMenuItem.js'
-import EditAssetScriptMenuItem from './EditAssetScriptMenuItem.js'
+import Layout from '../../Layout.js'
+import MenuItem from '../../MenuItem.js'
+import AddAssetMenuItem from './file/AddAssetMenuItem.js'
+import AddFolderMenuItem from './folder/AddFolderMenuItem.js'
+import AddAssetSceneMenuItem from './file/AddAssetSceneMenuItem.js'
+import CompileAssetScriptMenuItem from './file/CompileAssetScriptMenuItem.js'
+import EditAssetScriptMenuItem from './file/EditAssetScriptMenuItem.js'
 
 export default class AssetsActionsMenuItem  extends MenuItem {
     constructor(parent) {

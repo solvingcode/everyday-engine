@@ -145,13 +145,20 @@ h4{
 }
 
 #app-el-body .body-item.has-content{
-    width: 100%;
-    height: 100vh;
+    width: calc(100% - 250px);
+    height: calc(100vh - 340px - 90px);
 }
 
 #app-el-body .body-item.has-content textarea{
     width: 100%;
-    height: 100%;
+    height: calc(100% - 60px);
+    resize: none;
+    padding: 20px 30px;
+}
+
+#app-el-body .body-item.has-content p{
+    width: 100%;
+    box-sizing: border-box;
 }
 
 #app-el-bottom .panel h4 i{
