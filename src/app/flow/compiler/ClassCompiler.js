@@ -7,6 +7,7 @@ import ClassScript from '../ClassScript.js'
 import AFunction from '../function/AFunction.js'
 import AConstant from '../constant/AConstant.js'
 import World from '../../world/World.js'
+import ACondition from '../condition/ACondition.js'
 
 export default class ClassCompiler extends Compiler {
 
@@ -25,9 +26,12 @@ export default class ClassCompiler extends Compiler {
             if (node.getInputs().length) {
                 const stack = []
                 const element = functionRegistry.getInstanceById(node.getSourceId())
+                if (!element) {
+                    throw new TypeError(`Class Compiler Error: cannot find function ${node.getSourceId()}`)
+                }
                 const functionName = this.generateFunctionName(script, node, functionRegistry)
                 const stackFunction = new AEmptyStackFunction(functionName)
-                if(element.getOutput()){
+                if (element.getOutput()) {
                     stackFunction.addOutput(element.getOutput().getAttrType())
                 }
                 node.getInputs().forEach(input => {
@@ -38,8 +42,21 @@ export default class ClassCompiler extends Compiler {
                         if (sourceElement instanceof AEvent) {
                             const eventClass = sourceElement.constructor
                             const newEvent = new eventClass(`${script.getName()}.${sourceElement.getName()}`)
-                            newEvent.setStack([new StackOperation(OPERATIONS.CALL, functionName)])
-                            world.getFunctionRegistry().register(newEvent)
+                            let functionNameCallee = functionName
+                            if (element instanceof ACondition) {
+                                functionNameCallee = `${functionNameCallee}.Block`
+                            }
+                            newEvent.setStack([new StackOperation(OPERATIONS.CALL, functionNameCallee)])
+                            functionRegistry.register(newEvent)
+                        } else if (sourceElement instanceof ACondition) {
+                            const conditionName = this.generateFunctionName(script, sourceNode, functionRegistry)
+                            const newConditionBlock = new AEmptyStackFunction(`${conditionName}.Block`)
+                            newConditionBlock.setStack([
+                                new StackOperation(OPERATIONS.CALL, conditionName),
+                                new StackOperation(OPERATIONS.EXIT, CONSTANTS.RESULT),
+                                new StackOperation(OPERATIONS.CALL, functionName)
+                            ])
+                            functionRegistry.register(newConditionBlock)
                         } else if (sourceElement instanceof AFunction) {
                             const targetInput = element.findInputById(targetId)
                             stack.push(new StackOperation(OPERATIONS.CALL, this.generateFunctionName(script, sourceNode, functionRegistry)))

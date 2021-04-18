@@ -8,7 +8,7 @@ class SimulateStopMenuItem extends MenuItem {
             title: 'Stop the simulation',
             stateCode: 'SIMULATE',
             type: Layout.type.ICON,
-            zone: Layout.zone.LEFT
+            zone: Layout.zone.TOP
         })
     }
 

@@ -4,6 +4,7 @@ import FunctionNode from '../../../flow/node/FunctionNode.js'
 import ConstantNode from '../../../flow/node/ConstantNode.js'
 import ClassScript from '../../../flow/ClassScript.js'
 import World from '../../../world/World.js'
+import ConditionNode from '../../../flow/node/ConditionNode.js'
 
 export default class ClassScriptXmlParser extends Parser {
 
@@ -30,6 +31,8 @@ export default class ClassScriptXmlParser extends Parser {
                     node = script.createNode(functionRegistry, FunctionNode, nodeValue)
                 }else if(nodeType === 'constant'){
                     node = script.createNode(functionRegistry, ConstantNode, nodeValue)
+                }else if(nodeType === 'condition'){
+                    node = script.createNode(functionRegistry, ConditionNode, nodeValue)
                 }else{
                     throw new TypeError(`ClassScriptXmlParser: Node with type "${nodeType}" not supported!`)
                 }

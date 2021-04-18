@@ -4,6 +4,7 @@ import ConstantNode from './node/ConstantNode.js'
 import AConstant from './constant/AConstant.js'
 import DynamicAttributeHelper from '../utils/DynamicAttributeHelper.js'
 import EventNode from './node/EventNode.js'
+import ConditionNode from './node/ConditionNode.js'
 
 /**
  * @abstract
@@ -14,11 +15,13 @@ export default class AScript extends AScriptData{
      * @param {Registry} registry
      * @param {Function} nodeClass
      * @param {string|number|boolean} value
+     * @return {ANode}
      */
     createNode(registry, nodeClass, value){
         let nodeSource
         switch(nodeClass){
             case FunctionNode:
+            case ConditionNode:
             case EventNode:
                 nodeSource = registry.tryGetInstance(value)
                 break

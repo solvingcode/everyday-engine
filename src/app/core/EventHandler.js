@@ -14,13 +14,14 @@ class EventHandler {
      */
     handle(window, runners) {
         const mouse = window.mouse
+        const keyboard = window.keyboard
         const action = Action.get()
         const menu = Menu.get()
         action.reset()
         runners.forEach(runner => {
             const runnerInstance = runner.get()
             if (runnerInstance.isHandle(window)) {
-                action.add(runnerInstance, mouse, menu)
+                action.add(runnerInstance, mouse, menu, keyboard)
             }
         })
         action.run()

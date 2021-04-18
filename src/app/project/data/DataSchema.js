@@ -37,6 +37,10 @@ import LogFunction from '../../flow/function/native/LogFunction.js'
 import AddFunction from '../../flow/function/native/AddFunction.js'
 import AConstant from '../../flow/constant/AConstant.js'
 import AEmptyStackFunction from '../../flow/function/AEmptyStackFunction.js'
+import OnKeyDownEvent from '../../flow/event/native/OnKeyDownEvent.js'
+import TrueCondition from '../../flow/condition/TrueCondition.js'
+import ConditionNode from '../../flow/node/ConditionNode.js'
+import LessThanFunction from '../../flow/function/native/LessThanFunction.js'
 
 /**
  * @class {DataSchema}
@@ -76,7 +80,11 @@ class DataSchema {
         {id: 200, type: LogFunction},
         {id: 210, type: AddFunction},
         {id: 220, type: AConstant},
-        {id: 230, type: AEmptyStackFunction}
+        {id: 230, type: AEmptyStackFunction},
+        {id: 240, type: OnKeyDownEvent},
+        {id: 250, type: TrueCondition},
+        {id: 260, type: ConditionNode},
+        {id: 270, type: LessThanFunction}
     ]
 
     static exclude = [

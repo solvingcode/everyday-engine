@@ -8,7 +8,7 @@ class SimulateStartMenuItem extends MenuItem {
             title: 'Start the simulation',
             stateCode: 'SIMULATE',
             type: Layout.type.ICON,
-            zone: Layout.zone.LEFT
+            zone: Layout.zone.TOP
         })
     }
 }

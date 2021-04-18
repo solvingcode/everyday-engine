@@ -38,8 +38,6 @@ class Menu {
             new MoveMenuItem(),
             new ScaleMenuItem(),
             new RotateMenuItem(),
-            new SimulateStartMenuItem(),
-            new SimulateStopMenuItem(),
 
             //TOP
             new NewProjectMenuItem(),
@@ -53,6 +51,8 @@ class Menu {
             new MoveDownMenuItem(),
             new CameraMenuItem(),
             new AddScriptMenuItem(),
+            new SimulateStartMenuItem(),
+            new SimulateStopMenuItem(),
 
             //TOP TABS
             new TabListMenuItem(),

@@ -34,6 +34,13 @@ class Keyboard {
         let index = this.keys.indexOf(key)
         return index !== -1
     }
+
+    /***
+     * @return {Boolean}
+     */
+    isAnyKeyPressed() {
+        return this.keys.length > 0
+    }
 }
 
 Keyboard.Keys = {
