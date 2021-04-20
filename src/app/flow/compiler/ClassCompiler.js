@@ -21,6 +21,7 @@ export default class ClassCompiler extends Compiler {
         const nodes = script.getNodes()
         const world = World.get()
         const functionRegistry = world.getFunctionRegistry()
+        functionRegistry.removeInstancesByClass(script.getName())
 
         nodes.forEach((node) => {
             if (node.getInputs().length) {

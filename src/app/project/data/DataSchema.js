@@ -41,6 +41,7 @@ import OnKeyDownEvent from '../../flow/event/native/OnKeyDownEvent.js'
 import TrueCondition from '../../flow/condition/TrueCondition.js'
 import ConditionNode from '../../flow/node/ConditionNode.js'
 import LessThanFunction from '../../flow/function/native/LessThanFunction.js'
+import IsKeyDownFunction from '../../flow/function/native/IsKeyDownFunction.js'
 
 /**
  * @class {DataSchema}
@@ -84,7 +85,8 @@ class DataSchema {
         {id: 240, type: OnKeyDownEvent},
         {id: 250, type: TrueCondition},
         {id: 260, type: ConditionNode},
-        {id: 270, type: LessThanFunction}
+        {id: 270, type: LessThanFunction},
+        {id: 280, type: IsKeyDownFunction}
     ]
 
     static exclude = [

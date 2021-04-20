@@ -37,6 +37,21 @@ export default class FunctionRegistry extends Registry{
     }
 
     /**
+     * @param {string} className
+     * @return {AFunction[]}
+     */
+    getInstancesByClass(className) {
+        return this.getInstances().filter(instance => instance.isInstanceOfClass(className))
+    }
+
+    /**
+     * @param {string} className
+     */
+    removeInstancesByClass(className){
+        _.remove(this.getInstances(), (instance) => instance.isInstanceOfClass(className))
+    }
+
+    /**
      * @return {AFunction[]}
      */
     getInstances() {

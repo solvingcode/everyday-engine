@@ -19,6 +19,15 @@ export default class AFunction extends FunctionData{
         throw new TypeError(`${this.constructor.name}.initAttributes must be implemented`)
     }
 
+    /**
+     * @param {string} className
+     * @return {boolean}
+     */
+    isInstanceOfClass(className){
+        const regexName = new RegExp(`^${className}\.`)
+        return !!this.getName().match(regexName)
+    }
+
     init(){
         this.initAttributes()
     }

@@ -2,7 +2,14 @@ import Data from './Data.js'
 
 export default class RegistryData extends Data{
 
+    /**
+     * @protected
+     */
     name
+
+    /**
+     * @protected
+     */
     registry
 
     /**

@@ -5,6 +5,7 @@ import World from '../world/World.js'
 import OnKeyDownEvent from '../flow/event/native/OnKeyDownEvent.js'
 import TrueCondition from '../flow/condition/TrueCondition.js'
 import LessThanFunction from '../flow/function/native/LessThanFunction.js'
+import IsKeyDownFunction from '../flow/function/native/IsKeyDownFunction.js'
 
 class Loop {
 
@@ -28,12 +29,18 @@ class Loop {
     async init(){
         const world = World.get()
         world.getFunctionRegistry().init([
+            // Event
             new OnMouseClickEvent(),
             new OnKeyDownEvent(),
+
+            // Condition
             new TrueCondition(),
+
+            // Function
             new LogFunction(),
             new AddFunction(),
-            new LessThanFunction()
+            new LessThanFunction(),
+            new IsKeyDownFunction()
         ])
         await this.doInit()
     }

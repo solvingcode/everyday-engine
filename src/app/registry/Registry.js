@@ -3,24 +3,24 @@ import RegistryData from '../project/data/RegistryData.js'
 /**
  * @abstract
  */
-export default class Registry extends RegistryData{
+export default class Registry extends RegistryData {
 
     /**
      * @param {*[]} registry
      */
-    init(registry){
+    init(registry) {
         this.registry = registry
     }
 
     /**
      * @param {*} instance
      */
-    register(instance){
+    register(instance) {
         const existInstance = this.getInstance(instance.getName())
-        if(existInstance){
+        if (existInstance) {
             const indexInstance = this.findIndexInstance(existInstance)
             this.registry[indexInstance] = instance
-        }else{
+        } else {
             this.registry.push(instance)
         }
     }
@@ -28,8 +28,8 @@ export default class Registry extends RegistryData{
     /**
      * @param {*} instance
      */
-    tryRegister(instance){
-        if(this.getInstance(instance.getName())){
+    tryRegister(instance) {
+        if (this.getInstance(instance.getName())) {
             throw new TypeError(`${this.name} with name ${instance.getName()} is already registered`)
         }
         this.register(instance)
@@ -39,7 +39,7 @@ export default class Registry extends RegistryData{
      * @param {string} name
      * @return {*}
      */
-    getInstance(name){
+    getInstance(name) {
         return this.registry.find(item => item.getName() === name)
     }
 
@@ -47,9 +47,9 @@ export default class Registry extends RegistryData{
      * @param {string} name
      * @return {*}
      */
-    tryGetInstance(name){
+    tryGetInstance(name) {
         const instance = this.getInstance(name)
-        if(!instance){
+        if (!instance) {
             throw new TypeError(`Instance with name "${name}" not registered`)
         }
         return instance
@@ -59,7 +59,7 @@ export default class Registry extends RegistryData{
      * @param {number} id
      * @return {*}
      */
-    getInstanceById(id){
+    getInstanceById(id) {
         return this.registry.find(item => item.getId() === id)
     }
 
@@ -67,7 +67,7 @@ export default class Registry extends RegistryData{
      * @param {Class} className
      * @return {*[]}
      */
-    getClassInstance(className){
+    getClassInstance(className) {
         return this.registry.filter(item => item instanceof className)
     }
 
@@ -75,14 +75,14 @@ export default class Registry extends RegistryData{
      * @private
      * @param {*} instance
      */
-    findIndexInstance(instance){
+    findIndexInstance(instance) {
         return this.registry.findIndex(item => item === instance)
     }
 
     /**
      * @return {*[]}
      */
-    getInstances(){
+    getInstances() {
         return this.registry
     }
 
