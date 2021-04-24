@@ -39,6 +39,18 @@ export default class AScript extends AScriptData{
 
     /**
      * @param {ANode} node
+     * @param {number} id
+     */
+    updateNodeId(node, id){
+        const existNode = this.findNodeById(id)
+        if(existNode){
+            throw new TypeError(`Script Create Node: Duplicate Node Id "${id}"`)
+        }
+        node.setId(id)
+    }
+
+    /**
+     * @param {ANode} node
      */
     addNode(node) {
         this.nodes.push(node)
@@ -54,6 +66,42 @@ export default class AScript extends AScriptData{
 
     /**
      * @param {number} id
+     */
+    removeInputById(id){
+        const nodeInput = this.getInputs().find(pNodeInput => pNodeInput.getId() === id)
+        const node = this.findNodeById(nodeInput.getNodeId())
+        if(!node){
+            throw new TypeError(`Target Node for edge ID "${id}" not found`)
+        }
+        const nodeInputIndex = node.getInputs().findIndex(pNodeInput => pNodeInput.getId() === id)
+        node.getInputs().splice(nodeInputIndex, 1)
+    }
+
+    /**
+     * @return {ANode[]}
+     */
+    getSelectedNodes(){
+        return this.nodes.filter(node => node.isSelected())
+    }
+
+    /**
+     * @return {NodeInput[]}
+     */
+    getInputs(){
+        return this.getNodes().reduce(
+            (nodeInputs, node) => nodeInputs.concat(node.getInputs()), [])
+    }
+
+    /**
+     * @return {NodeInput[]}
+     */
+    getSelectedEdges(){
+        return this.getInputs().filter(nodeInput => nodeInput.isSelected())
+    }
+
+    /**
+     * @param {number} id
+     * @return {ANode}
      */
     findNodeById(id){
         return this.nodes.find(node => node.getId() === id)

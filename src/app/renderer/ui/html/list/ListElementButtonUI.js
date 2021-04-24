@@ -86,4 +86,10 @@ export default class ListElementButtonUI extends ItemUI {
         this.postCreate(item, el, uiRenderer)
     }
 
+    static props = {
+        tag: 'div',
+        className: 'list-element',
+        prefix: 'list-element-'
+    }
+
 }

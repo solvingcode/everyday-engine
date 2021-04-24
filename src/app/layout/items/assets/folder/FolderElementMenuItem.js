@@ -22,7 +22,7 @@ export default class FolderElementMenuItem extends ListElementMenuItem {
         super.setData(data)
         this.items = [
             new FolderTitleMenuItem(this, data.bind),
-            new FolderListMenuItem(this, parent.props, data.bind.getId())
+            new FolderListMenuItem(this, this.parent.props, data.bind.getId())
         ]
     }
 

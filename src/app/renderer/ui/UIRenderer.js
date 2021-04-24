@@ -79,11 +79,29 @@ class UIRenderer {
 
     /**
      * @abstract
+     * Get all MenuItem at a specific position.
+     * @param {Mouse} mouse
+     * @return {MenuItemUI[]}
+     */
+    getItemsAt(mouse) {
+        throw new TypeError('"UIRenderer.getItemsAt" method must be implemented')
+    }
+
+    /**
+     * @abstract
      * Get the button UI for color
      * @return {ItemUI}
      */
     getColorButtonUI() {
         throw new TypeError('"UIRenderer.getColorButtonUI" method must be implemented')
+    }
+
+    /**
+     * @abstract
+     * @return {ItemUI}
+     */
+    getListElementButtonUI() {
+        throw new TypeError('"UIRenderer.getListElementButtonUI" method must be implemented')
     }
 
     /**
@@ -278,6 +296,8 @@ class UIRenderer {
             return this.getWrapperUI()
         } else if (element.type === Layout.type.STYLE_COLOR) {
             return this.getColorButtonUI()
+        } else if (element.type === Layout.type.LIST_ELEMENT) {
+            return this.getListElementButtonUI()
         } else if (element.type === Layout.type.ENTITY_ELEMENT) {
             return this.getEntityElementButtonUI()
         } else if (element.type === Layout.type.UNIT_ELEMENT) {

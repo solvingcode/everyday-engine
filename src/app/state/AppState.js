@@ -353,7 +353,13 @@ AppState.States = {
     ACTION_SELECT_FOLDER_STOP: {history: false},
     ACTION_ADD_SCRIPT_START: {history: false},
     ACTION_ADD_SCRIPT_PROGRESS: {history: false},
-    ACTION_ADD_SCRIPT_STOP: {history: false}
+    ACTION_ADD_SCRIPT_STOP: {history: false},
+    ACTION_DELETE_SCRIPT_NODE_START: {history: false},
+    ACTION_DELETE_SCRIPT_NODE_PROGRESS: {history: false},
+    ACTION_DELETE_SCRIPT_NODE_STOP: {history: false},
+    ACTION_DELETE_SCRIPT_EDGE_START: {history: false},
+    ACTION_DELETE_SCRIPT_EDGE_PROGRESS: {history: false},
+    ACTION_DELETE_SCRIPT_EDGE_STOP: {history: false}
 }
 
 export default AppState

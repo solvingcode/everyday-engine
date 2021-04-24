@@ -9,9 +9,9 @@ export default class AConstant extends AStackFunction{
      * @param {string} type
      */
     constructor(type, value) {
-        super('constant')
+        super('Constant')
         this.stack = [new StackOperation(OPERATIONS.PUSH, CONSTANTS.RESULT, value)]
-        this.setName(`${this.name}${type}${this.id}`)
+        this.setName(`${value}`)
         this.addOutput(type)
     }
 

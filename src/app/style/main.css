@@ -195,30 +195,33 @@ h4{
     line-height: 1.2rem;
 }
 
-.panel .tree .list-element {
+.panel .tree .list-element, .panel .script-nodes .list-element {
     box-sizing: border-box;
     width: 100%;
     padding: 0;
 }
 
-.panel .tree .list-element button{
+.panel .tree .list-element button, .panel .script-nodes .list-element button{
     width: 100%;
     text-align: left;
 }
 
-.panel .tree .list-element i{
-    float: left;
-    line-height: 1.5rem;
-    margin-right: 5px;
+.panel .tree .list-element i, .panel .script-nodes .list-element i{
+    position: absolute;
+    top: 5px;
+    left: 2px;
 }
 
-.panel .tree .list-element span {
-    width: unset;
+.panel .tree .list-element span , .panel .script-nodes .list-element span {
     margin: 0;
     text-align: left;
     white-space: nowrap;
     text-overflow: ellipsis;
     overflow: hidden;
+    width: 100%;
+    display: block;
+    box-sizing: border-box;
+    padding-left: 20px;
 }
 
 .panel-action{
@@ -320,7 +323,7 @@ h4{
 
 #app-el-left{
     width: 40px;
-    top: 100px;
+    top: 180px;
     left: 15px;
     border-radius: 5px;
 }

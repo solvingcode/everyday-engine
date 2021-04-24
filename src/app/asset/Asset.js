@@ -43,6 +43,13 @@ export default class Asset extends AssetData{
     }
 
     /**
+     * @param {*} source
+     */
+    async generate(source){
+        await this.getType().generate(source, this)
+    }
+
+    /**
      * @param {*} data
      * @return {boolean}
      */

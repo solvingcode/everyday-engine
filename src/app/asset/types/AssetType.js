@@ -18,6 +18,16 @@ export default class AssetType extends AssetTypeData{
 
     /**
      * @abstract
+     * @param {*} source
+     * @param {Asset} asset
+     * @return {Promise}
+     */
+    async generate(source, asset){
+        throw new TypeError(`${this.constructor.name}.generate must be implemented`)
+    }
+
+    /**
+     * @abstract
      * @param {Asset} asset
      */
     open(asset){

@@ -23,6 +23,7 @@ import HtmlTabItemUI from './ui/HtmlTabItemUI.js'
 import HtmlBodyUI from './ui/HtmlBodyUI.js'
 import HtmlBodyItemUI from './ui/HtmlBodyItemUI.js'
 import IconTextButtonUI from './buttons/IconTextButtonUI.js'
+import ListElementButtonUI from './list/ListElementButtonUI.js'
 
 /**
  * HTML UI Renderer class
@@ -118,6 +119,13 @@ class HtmlUIRenderer extends UIRenderer {
      */
     getColorButtonUI() {
         return ColorButtonUI
+    }
+
+    /**
+     * @override
+     */
+    getListElementButtonUI() {
+        return ListElementButtonUI
     }
 
     /**
@@ -323,6 +331,28 @@ class HtmlUIRenderer extends UIRenderer {
         if (index !== null && zone) {
             return this.menu.items.find((item) =>
                 item.index === index && item.element.zone === zone
+            )
+        }
+    }
+
+    /**
+     * @override
+     */
+    getItemsAt(mouse) {
+        const {path} = mouse
+        const targets = path && path.filter(el => el.getAttribute && el.getAttribute('data-index'))
+        const indexZones = []
+        targets.forEach(target => {
+            const index = target && parseInt(target.getAttribute('data-index'))
+            const zone = target && target.getAttribute('data-zone')
+            indexZones.push({index, zone})
+        })
+        if (indexZones.length) {
+            return this.menu.items.filter(item =>
+                indexZones.find(indexZone =>
+                    item.index === indexZone.index &&
+                    item.element.zone === indexZone.zone
+                )
             )
         }
     }

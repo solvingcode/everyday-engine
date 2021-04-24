@@ -45,6 +45,8 @@ import CloseTabAction from './content/CloseTabAction.js'
 import AddFolderAction from './assets/AddFolderAction.js'
 import SelectFolderAction from './assets/SelectFolderAction.js'
 import AddScriptAction from './assets/AddScriptAction.js'
+import DeleteNodeAction from './script/DeleteNodeAction.js'
+import DeleteEdgeAction from './script/DeleteEdgeAction.js'
 
 /**
  * Action Runner class.
@@ -115,6 +117,8 @@ class ActionRunner extends Runner {
             CLOSE_TAB: CloseTabAction,
             SELECT_FOLDER: SelectFolderAction,
             ADD_SCRIPT: AddScriptAction,
+            DELETE_SCRIPT_NODE: DeleteNodeAction,
+            DELETE_SCRIPT_EDGE: DeleteEdgeAction,
 
             //must be the last action
             HISTORY_PUSH: PushHistoryAction

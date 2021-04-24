@@ -1,6 +1,6 @@
-import Layout from '../../../Layout.js'
-import PanelMenuItem from '../../panel/PanelMenuItem.js'
-import AssetsActionsMenuItem from '../AssetsActionsMenuItem.js'
+import Layout from '../../Layout.js'
+import PanelMenuItem from '../panel/PanelMenuItem.js'
+import AssetsActionsMenuItem from './AssetsActionsMenuItem.js'
 import AssetsWrapperMenuItem from './AssetsWrapperMenuItem.js'
 
 export default class AssetsMenuItem extends PanelMenuItem {

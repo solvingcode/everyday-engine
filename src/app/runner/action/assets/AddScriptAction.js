@@ -1,7 +1,8 @@
 import Action from '../Action.js'
 import World from '../../../world/World.js'
 import AssetScriptXml from '../../../asset/types/AssetScriptXml.js'
-import ScriptGenerator from '../../../generator/ScriptGenerator.js'
+import AssetScriptXmlGenerator from '../../../generator/AssetScriptXmlGenerator.js'
+import ClassScript from '../../../flow/ClassScript.js'
 
 export default class AddScriptAction extends Action {
 
@@ -14,9 +15,10 @@ export default class AddScriptAction extends Action {
         const assetsManager = World.get().getAssetsManager()
         const selectedFolder = assetsManager.getSelectedFolder() || assetsManager.getRootFolder()
         const assetName = assetsManager.generateUniqAssetName('New Script', selectedFolder.getId())
+        const flow = new ClassScript(assetName)
         assetsManager
             .createAsset(
-                ScriptGenerator.get().generate(assetName),
+                AssetScriptXmlGenerator.get().generate(flow),
                 AssetScriptXml,
                 assetName,
                 selectedFolder.getId()

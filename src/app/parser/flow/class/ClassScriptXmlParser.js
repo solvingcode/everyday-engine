@@ -23,7 +23,7 @@ export default class ClassScriptXmlParser extends Parser {
             if(element === 'node'){
                 const nodeType = cXmlNode.getAttribute('type')
                 const nodeValue = cXmlNode.getAttribute('value')
-                const nodeId = cXmlNode.getAttribute('id')
+                const nodeId = parseInt(cXmlNode.getAttribute('id'))
                 let node
                 if(nodeType === 'event'){
                     node = script.createNode(functionRegistry, EventNode, nodeValue)
@@ -36,10 +36,10 @@ export default class ClassScriptXmlParser extends Parser {
                 }else{
                     throw new TypeError(`ClassScriptXmlParser: Node with type "${nodeType}" not supported!`)
                 }
-                node.setId(nodeId)
+                script.updateNodeId(node, nodeId)
             }else if(element === 'edge'){
-                const nodeSourceId = cXmlNode.getAttribute('source')
-                const nodeTargetId = cXmlNode.getAttribute('target')
+                const nodeSourceId = parseInt(cXmlNode.getAttribute('source'))
+                const nodeTargetId = parseInt(cXmlNode.getAttribute('target'))
                 const nodeConnection = cXmlNode.getAttribute('connection')
                 const nodeSource = script.findNodeById(nodeSourceId)
                 const nodeTarget = script.findNodeById(nodeTargetId)

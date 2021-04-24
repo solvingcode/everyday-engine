@@ -50,7 +50,7 @@ export default class AssetsManager extends AssetsManagerData {
                 resolve(reader.result)
             }
             reader.onerror = reject
-            if (this.isAssetImage(blob)) {
+            if (this.isBlobImage(blob)) {
                 reader.readAsDataURL(blob)
             } else {
                 reader.readAsText(blob)
@@ -64,10 +64,20 @@ export default class AssetsManager extends AssetsManagerData {
 
     /**
      * @param {Blob} blob
+     * @return {boolean}
      */
-    isAssetImage(blob) {
+    isBlobImage(blob) {
         const type = this.getAssetType(blob)
         return type === AssetImage
+    }
+
+
+    /**
+     * @param {Asset} asset
+     * @return {boolean}
+     */
+    isAssetScript(asset) {
+        return asset && asset.getType() instanceof AssetScriptXml
     }
 
     /**

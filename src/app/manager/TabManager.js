@@ -28,11 +28,27 @@ export default class TabManager {
     }
 
     /**
+     * @return {*}
+     */
+    getSelectedContentData(){
+        const selectedTab = this.getSelected()
+        return selectedTab && selectedTab.getContent() && selectedTab.getContent().getData()
+    }
+
+    /**
      * @param {string} name
      * @return {Tab}
      */
     findByName(name){
         return this.tabs.find(tab => tab.getName() === name)
+    }
+
+    /**
+     * @param {*} data
+     * @return {Tab}
+     */
+    findByData(data){
+        return this.tabs.find(tab => tab.getContent().getData() === data)
     }
 
     /**

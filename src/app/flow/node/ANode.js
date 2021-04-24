@@ -1,10 +1,16 @@
 import ANodeData from '../../project/data/ANodeData.js'
 import NodeInput from '../../pobject/NodeInput.js'
+import ScriptHelper from '../../utils/ScriptHelper.js'
 
 /**
  * @abstract
  */
 export default class ANode extends ANodeData {
+
+    /**
+     * @type {boolean}
+     */
+    selected
 
     /**
      * @param {number} sourceId
@@ -24,6 +30,7 @@ export default class ANode extends ANodeData {
             const newInputNode = new NodeInput()
             newInputNode.setSourceNodeId(sourceNode.getId())
             newInputNode.setTargetId(targetId)
+            newInputNode.setNodeId(this.getId())
             this.inputs.push(newInputNode)
         }else{
             inputNode.sourceNode = sourceNode
@@ -39,10 +46,49 @@ export default class ANode extends ANodeData {
     }
 
     /**
+     * @param {FunctionRegistry} functionRegistry
+     * @param {NodeInput} nodeInput
+     * @return {DynamicAttribute}
+     */
+    getTargetInput(functionRegistry, nodeInput){
+        return functionRegistry.getInstanceById(this.getSourceId())
+            .findInputById(nodeInput.getTargetId())
+    }
+
+    /**
      * @param {AFunction|AEvent} source
      */
     setSource(source){
         this.sourceId = source.getId()
+    }
+
+    /**
+     * @return {string}
+     */
+    getName(){
+        return ScriptHelper.getNodeName(this)
+    }
+
+    /**
+     * @param {boolean} selected
+     */
+    setSelected(selected){
+        this.selected = selected
+    }
+
+    select(){
+        this.setSelected(true)
+    }
+
+    unselect(){
+        this.setSelected(false)
+    }
+
+    /**
+     * @return {boolean}
+     */
+    isSelected(){
+        return this.selected
     }
 
 }

@@ -1,6 +1,7 @@
 import AScript from '../flow/AScript.js'
 import ScriptParser from '../parser/flow/ScriptParser.js'
 import ScriptManagerData from '../project/data/ScriptManagerData.js'
+import TabManager from './TabManager.js'
 
 export default class ScriptManager extends ScriptManagerData {
 
@@ -60,5 +61,13 @@ export default class ScriptManager extends ScriptManagerData {
             return script
         }
         return null
+    }
+
+    /**
+     * @return {AScript}
+     */
+    getSelected(){
+        const assetTab = TabManager.get().getSelectedContentData()
+        return assetTab && this.findByName(assetTab.getName())
     }
 }

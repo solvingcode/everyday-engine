@@ -2,6 +2,7 @@ import AssetType from './AssetType.js'
 import World from '../../world/World.js'
 import TabManager from '../../manager/TabManager.js'
 import EditScriptContent from '../../content/EditScriptContent.js'
+import AssetScriptXmlGenerator from '../../generator/AssetScriptXmlGenerator.js'
 
 /**
  * @class {AssetImage}
@@ -52,6 +53,16 @@ export default class AssetScriptXml extends AssetType{
      */
     parse(){
         return World.get().getScriptManager().load(this.data)
+    }
+
+    /**
+     * @override
+     * @param {AScript} flow
+     * @param {Asset} asset
+     */
+    async generate(flow, asset){
+        const data = AssetScriptXmlGenerator.get().generate(flow)
+        await this.load(data, asset)
     }
 
     /**
