@@ -1,12 +1,12 @@
-/**
- * @abstract
- */
 import EventNode from '../flow/node/EventNode.js'
 import FunctionNode from '../flow/node/FunctionNode.js'
 import ConstantNode from '../flow/node/ConstantNode.js'
 import ConditionNode from '../flow/node/ConditionNode.js'
-import ScriptHelper from '../utils/ScriptHelper.js'
+import NodeHelper from '../utils/NodeHelper.js'
 
+/**
+ * @abstract
+ */
 export default class AssetScriptXmlGenerator {
 
     static instance
@@ -35,14 +35,14 @@ export default class AssetScriptXmlGenerator {
             }
             nodeNode.setAttribute('type', nodeType)
             nodeNode.setAttribute('id', `${node.getId()}`)
-            nodeNode.setAttribute('value', ScriptHelper.getSourceNode(node).getName())
+            nodeNode.setAttribute('value', NodeHelper.getSourceNode(node).getName())
             parentNode.appendChild(nodeNode)
         })
         flow.getNodes().forEach(node => {
             node.getInputs().forEach(input => {
                 if(flow.findNodeById(input.getSourceNodeId())){
                     const edgeNode = root.createElement('edge')
-                    const sourceInput = ScriptHelper.getSourceNode(node).findInputById(input.getTargetId())
+                    const sourceInput = NodeHelper.getSourceNode(node).findInputById(input.getTargetId())
                     edgeNode.setAttribute('source', `${input.getSourceNodeId()}`)
                     edgeNode.setAttribute('target', `${node.getId()}`)
                     edgeNode.setAttribute('connection', sourceInput ? sourceInput.getAttrName(): '')

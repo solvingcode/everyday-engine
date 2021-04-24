@@ -1,6 +1,6 @@
 import ANodeData from '../../project/data/ANodeData.js'
 import NodeInput from '../../pobject/NodeInput.js'
-import ScriptHelper from '../../utils/ScriptHelper.js'
+import NodeHelper from '../../utils/NodeHelper.js'
 
 /**
  * @abstract
@@ -66,7 +66,7 @@ export default class ANode extends ANodeData {
      * @return {string}
      */
     getName(){
-        return ScriptHelper.getNodeName(this)
+        return NodeHelper.getNodeName(this)
     }
 
     /**
@@ -91,4 +91,11 @@ export default class ANode extends ANodeData {
         return this.selected
     }
 
+}
+
+export const NODE_TYPES = {
+    EVENT: 'event',
+    FUNCTION: 'function',
+    CONSTANT: 'constant',
+    CONDITION: 'condition'
 }

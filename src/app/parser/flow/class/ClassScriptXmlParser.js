@@ -1,10 +1,7 @@
 import Parser from '../../Parser.js'
-import EventNode from '../../../flow/node/EventNode.js'
-import FunctionNode from '../../../flow/node/FunctionNode.js'
-import ConstantNode from '../../../flow/node/ConstantNode.js'
 import ClassScript from '../../../flow/ClassScript.js'
 import World from '../../../world/World.js'
-import ConditionNode from '../../../flow/node/ConditionNode.js'
+import ScriptHelper from '../../../utils/ScriptHelper.js'
 
 export default class ClassScriptXmlParser extends Parser {
 
@@ -24,18 +21,7 @@ export default class ClassScriptXmlParser extends Parser {
                 const nodeType = cXmlNode.getAttribute('type')
                 const nodeValue = cXmlNode.getAttribute('value')
                 const nodeId = parseInt(cXmlNode.getAttribute('id'))
-                let node
-                if(nodeType === 'event'){
-                    node = script.createNode(functionRegistry, EventNode, nodeValue)
-                }else if(nodeType === 'function'){
-                    node = script.createNode(functionRegistry, FunctionNode, nodeValue)
-                }else if(nodeType === 'constant'){
-                    node = script.createNode(functionRegistry, ConstantNode, nodeValue)
-                }else if(nodeType === 'condition'){
-                    node = script.createNode(functionRegistry, ConditionNode, nodeValue)
-                }else{
-                    throw new TypeError(`ClassScriptXmlParser: Node with type "${nodeType}" not supported!`)
-                }
+                const node = ScriptHelper.createNode(functionRegistry, script, nodeType, nodeValue)
                 script.updateNodeId(node, nodeId)
             }else if(element === 'edge'){
                 const nodeSourceId = parseInt(cXmlNode.getAttribute('source'))

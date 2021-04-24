@@ -128,7 +128,8 @@ class FormMenuItem extends MenuItem {
     isFieldsUpdated() {
         const actualFields = this.getFields()
         const newFields = this.generateFields()
-        return !!actualFields.find((field, iField) => {
+        return actualFields.length !== newFields.length ||
+            !!actualFields.find((field, iField) => {
             if (_.isArray(field.list)) {
                 const actualValues = field.list.map(elem => `${elem.value}-${elem.label}`)
                 const newValues = newFields[iField].list.map(elem => `${elem.value}-${elem.label}`)

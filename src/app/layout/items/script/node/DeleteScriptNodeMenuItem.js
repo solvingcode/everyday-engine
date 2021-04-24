@@ -2,14 +2,15 @@ import MenuItem from '../../../MenuItem.js'
 import Layout from '../../../Layout.js'
 
 export default class DeleteScriptNodeMenuItem extends MenuItem {
-    constructor(parent) {
+    constructor(parent, node) {
         super({
-            name: 'trash-alt',
+            name: 'times',
             title: 'Delete selected node',
             stateCode: 'ACTION_DELETE_SCRIPT_NODE',
             type: Layout.type.ICON,
             zone: parent.zone
         })
         this.parent = parent
+        this.data = {node}
     }
 }

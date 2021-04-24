@@ -47,6 +47,7 @@ import SelectFolderAction from './assets/SelectFolderAction.js'
 import AddScriptAction from './assets/AddScriptAction.js'
 import DeleteNodeAction from './script/DeleteNodeAction.js'
 import DeleteEdgeAction from './script/DeleteEdgeAction.js'
+import AddNodeAction from './script/AddNodeAction.js'
 
 /**
  * Action Runner class.
@@ -119,6 +120,7 @@ class ActionRunner extends Runner {
             ADD_SCRIPT: AddScriptAction,
             DELETE_SCRIPT_NODE: DeleteNodeAction,
             DELETE_SCRIPT_EDGE: DeleteEdgeAction,
+            ADD_SCRIPT_NODE: AddNodeAction,
 
             //must be the last action
             HISTORY_PUSH: PushHistoryAction

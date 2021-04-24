@@ -1,6 +1,7 @@
 import Layout from '../../../Layout.js'
 import ScriptNodeNameMenuItem from './ScriptNodeNameMenuItem.js'
 import ListSelectElementMenuItem from '../../list/ListSelectElementMenuItem.js'
+import DeleteScriptNodeMenuItem from './DeleteScriptNodeMenuItem.js'
 
 export default class ScriptNodeElementMenuItem extends ListSelectElementMenuItem {
     constructor(parent, data) {
@@ -16,7 +17,8 @@ export default class ScriptNodeElementMenuItem extends ListSelectElementMenuItem
     setData(data) {
         super.setData(data)
         this.items = [
-            new ScriptNodeNameMenuItem(this, data.bind)
+            new ScriptNodeNameMenuItem(this, data.bind),
+            new DeleteScriptNodeMenuItem(this, data.bind)
         ]
     }
 

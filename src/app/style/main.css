@@ -224,6 +224,26 @@ h4{
     padding-left: 20px;
 }
 
+.panel .script-nodes .list-element button.fas{
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: unset;
+}
+.panel .script-nodes .form + button{
+    float: right;
+    width: unset;
+    height: unset;
+    font-size: 11pt;
+    padding: 5px 10px;
+    margin-right: 5px;
+    margin-top: 10px;
+}
+
+.panel .script-nodes .form + button i{
+    margin-right: 5px;
+}
+
 .panel-action{
     width: 100%;
     padding: 0 0 5px 0;

@@ -2,14 +2,15 @@ import MenuItem from '../../../MenuItem.js'
 import Layout from '../../../Layout.js'
 
 export default class DeleteScriptEdgeMenuItem extends MenuItem {
-    constructor(parent) {
+    constructor(parent, nodeInput) {
         super({
-            name: 'trash-alt',
+            name: 'times',
             title: 'Delete selected edge',
             stateCode: 'ACTION_DELETE_SCRIPT_EDGE',
             type: Layout.type.ICON,
             zone: parent.zone
         })
         this.parent = parent
+        this.data = {nodeInput}
     }
 }
