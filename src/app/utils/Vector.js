@@ -85,11 +85,11 @@ class Vector {
      * @return {Vector}
      */
     static add(vectorA, vectorB) {
-        return {
+        return new Vector({
             x: vectorA.x + vectorB.x,
             y: vectorA.y + vectorB.y,
             z: vectorA.z + vectorB.z
-        }
+        })
     }
 
     /**

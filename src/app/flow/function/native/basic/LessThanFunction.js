@@ -1,10 +1,10 @@
-import {TYPES} from '../../../pobject/AttributeType.js'
-import AFunction from '../AFunction.js'
+import {TYPES} from '../../../../pobject/AttributeType.js'
+import AFunction from '../../AFunction.js'
 
-export default class AddFunction extends AFunction{
+export default class LessThanFunction extends AFunction{
 
     constructor() {
-        super('Add')
+        super('LessThan')
     }
 
     /**
@@ -13,7 +13,7 @@ export default class AddFunction extends AFunction{
     initAttributes() {
         this.addInput('value1', TYPES.NUMBER, 0)
         this.addInput('value2', TYPES.NUMBER, 0)
-        this.addOutput(TYPES.NUMBER)
+        this.addOutput(TYPES.BOOLEAN)
     }
 
     /**
@@ -21,7 +21,7 @@ export default class AddFunction extends AFunction{
      */
     execute() {
         this.setOutputValue(
-            parseFloat(this.getInputValue('value1')) +
+            parseFloat(this.getInputValue('value1')) <
             parseFloat(this.getInputValue('value2'))
         )
     }

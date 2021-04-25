@@ -1,6 +1,6 @@
-import {TYPES} from '../../../pobject/AttributeType.js'
-import AFunction from '../AFunction.js'
-import Window from '../../../core/Window.js'
+import {TYPES} from '../../../../pobject/AttributeType.js'
+import AFunction from '../../AFunction.js'
+import Window from '../../../../core/Window.js'
 
 export default class IsKeyDownFunction extends AFunction{
 

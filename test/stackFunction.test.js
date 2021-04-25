@@ -1,5 +1,5 @@
-import LogFunction from '../src/app/flow/function/native/LogFunction.js'
-import AddFunction from '../src/app/flow/function/native/AddFunction.js'
+import LogFunction from '../src/app/flow/function/native/basic/LogFunction.js'
+import AddFunction from '../src/app/flow/function/native/basic/AddFunction.js'
 import {expect} from '@jest/globals'
 import AEmptyStackFunction from '../src/app/flow/function/AEmptyStackFunction.js'
 import StackOperation, {OPERATIONS} from '../src/app/operation/StackOperation.js'
@@ -12,7 +12,7 @@ import FunctionNode from '../src/app/flow/node/FunctionNode.js'
 import ConstantNode from '../src/app/flow/node/ConstantNode.js'
 import World from '../src/app/world/World.js'
 import TrueCondition from '../src/app/flow/condition/TrueCondition.js'
-import LessThanFunction from '../src/app/flow/function/native/LessThanFunction.js'
+import LessThanFunction from '../src/app/flow/function/native/basic/LessThanFunction.js'
 import ConditionNode from '../src/app/flow/node/ConditionNode.js'
 
 test('Execute native function (without output)', function () {

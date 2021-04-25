@@ -9,7 +9,7 @@ export default class AddScriptNodeSubmitMenuItem extends MenuItem {
     constructor(parent, formData) {
         super({
             name: 'check',
-            title: 'Add',
+            title: 'Confirm',
             stateCode: 'ACTION_ADD_SCRIPT_NODE',
             type: Layout.type.ICON_TEXT,
             zone: parent.zone

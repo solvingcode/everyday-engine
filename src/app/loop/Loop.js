@@ -1,11 +1,14 @@
 import OnMouseClickEvent from '../flow/event/native/OnMouseClickEvent.js'
-import LogFunction from '../flow/function/native/LogFunction.js'
-import AddFunction from '../flow/function/native/AddFunction.js'
+import LogFunction from '../flow/function/native/basic/LogFunction.js'
+import AddFunction from '../flow/function/native/basic/AddFunction.js'
 import World from '../world/World.js'
 import OnKeyDownEvent from '../flow/event/native/OnKeyDownEvent.js'
 import TrueCondition from '../flow/condition/TrueCondition.js'
-import LessThanFunction from '../flow/function/native/LessThanFunction.js'
-import IsKeyDownFunction from '../flow/function/native/IsKeyDownFunction.js'
+import LessThanFunction from '../flow/function/native/basic/LessThanFunction.js'
+import IsKeyDownFunction from '../flow/function/native/basic/IsKeyDownFunction.js'
+import GetWorldPositionFunction from '../flow/function/native/unit/GetWorldPositionFunction.js'
+import VectorFunction from '../flow/function/native/structure/VectorFunction.js'
+import SetWorldPositionFunction from '../flow/function/native/unit/SetWorldPositionFunction.js'
 
 class Loop {
 
@@ -40,7 +43,14 @@ class Loop {
             new LogFunction(),
             new AddFunction(),
             new LessThanFunction(),
-            new IsKeyDownFunction()
+            new IsKeyDownFunction(),
+
+            //Unit
+            new GetWorldPositionFunction(),
+            new SetWorldPositionFunction(),
+
+            //Structure
+            new VectorFunction()
         ])
         await this.doInit()
     }

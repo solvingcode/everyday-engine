@@ -33,18 +33,21 @@ import AssetImage from '../../asset/types/AssetImage.js'
 import FunctionRegistry from '../../flow/function/FunctionRegistry.js'
 import AFunction from '../../flow/function/AFunction.js'
 import OnMouseClickEvent from '../../flow/event/native/OnMouseClickEvent.js'
-import LogFunction from '../../flow/function/native/LogFunction.js'
-import AddFunction from '../../flow/function/native/AddFunction.js'
+import LogFunction from '../../flow/function/native/basic/LogFunction.js'
+import AddFunction from '../../flow/function/native/basic/AddFunction.js'
 import AConstant from '../../flow/constant/AConstant.js'
 import AEmptyStackFunction from '../../flow/function/AEmptyStackFunction.js'
 import OnKeyDownEvent from '../../flow/event/native/OnKeyDownEvent.js'
 import TrueCondition from '../../flow/condition/TrueCondition.js'
 import ConditionNode from '../../flow/node/ConditionNode.js'
-import LessThanFunction from '../../flow/function/native/LessThanFunction.js'
-import IsKeyDownFunction from '../../flow/function/native/IsKeyDownFunction.js'
+import LessThanFunction from '../../flow/function/native/basic/LessThanFunction.js'
+import IsKeyDownFunction from '../../flow/function/native/basic/IsKeyDownFunction.js'
 import NodeInput from '../../pobject/NodeInput.js'
 import UnitNode from '../../flow/node/UnitNode.js'
 import AUnit from '../../flow/unit/AUnit.js'
+import GetWorldPositionFunction from '../../flow/function/native/unit/GetWorldPositionFunction.js'
+import VectorFunction from '../../flow/function/native/structure/VectorFunction.js'
+import SetWorldPositionFunction from '../../flow/function/native/unit/SetWorldPositionFunction.js'
 
 /**
  * @class {DataSchema}
@@ -92,7 +95,10 @@ class DataSchema {
         {id: 280, type: IsKeyDownFunction},
         {id: 290, type: NodeInput},
         {id: 300, type: UnitNode},
-        {id: 310, type: AUnit}
+        {id: 310, type: AUnit},
+        {id: 320, type: GetWorldPositionFunction},
+        {id: 330, type: VectorFunction},
+        {id: 340, type: SetWorldPositionFunction}
     ]
 
     static exclude = [

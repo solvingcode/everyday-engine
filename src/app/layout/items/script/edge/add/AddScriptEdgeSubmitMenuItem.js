@@ -9,7 +9,7 @@ export default class AddScriptEdgeSubmitMenuItem extends MenuItem {
     constructor(parent, formData) {
         super({
             name: 'check',
-            title: 'Add',
+            title: 'Confirm',
             stateCode: 'ACTION_ADD_SCRIPT_EDGE',
             type: Layout.type.ICON_TEXT,
             zone: parent.zone
