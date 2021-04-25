@@ -279,8 +279,17 @@ export default {
                                                         type: Array,
                                                         meta: {
                                                             element: {
-                                                                prototype: NodeInput,
+                                                                type: NodeInput,
                                                                 meta: {
+                                                                    dataId: {
+                                                                        type: TYPES.NUMBER
+                                                                    },
+                                                                    id: {
+                                                                        type: TYPES.NUMBER
+                                                                    },
+                                                                    nodeId: {
+                                                                        type: TYPES.NUMBER
+                                                                    },
                                                                     sourceNodeId: {
                                                                         type: TYPES.NUMBER
                                                                     },

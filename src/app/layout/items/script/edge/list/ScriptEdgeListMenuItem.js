@@ -1,8 +1,8 @@
-import World from '../../../../world/World.js'
-import ListMenuItem from '../../list/ListMenuItem.js'
-import ScriptNodeElementMenuItem from './ScriptNodeElementMenuItem.js'
+import World from '../../../../../world/World.js'
+import ListMenuItem from '../../../list/ListMenuItem.js'
+import ScriptEdgeElementMenuItem from './ScriptEdgeElementMenuItem.js'
 
-export default class ScriptNodeListMenuItem extends ListMenuItem{
+export default class ScriptEdgeListMenuItem extends ListMenuItem{
 
     /**
      * @param {MenuItem} parent
@@ -10,6 +10,7 @@ export default class ScriptNodeListMenuItem extends ListMenuItem{
      */
     constructor(parent, props = {}) {
         super({
+            name: '',
             zone: parent.zone,
             ...props
         })
@@ -20,7 +21,7 @@ export default class ScriptNodeListMenuItem extends ListMenuItem{
      * @override
      */
     getListElementFormClass() {
-        return ScriptNodeElementMenuItem
+        return ScriptEdgeElementMenuItem
     }
 
     /**
@@ -28,7 +29,7 @@ export default class ScriptNodeListMenuItem extends ListMenuItem{
      */
     getFormObject() {
         const script = World.get().getScriptManager().getSelected()
-        return script && script.getNodes()
+        return script && script.getInputs()
     }
 
     /**

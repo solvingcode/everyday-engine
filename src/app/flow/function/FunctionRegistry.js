@@ -1,4 +1,7 @@
 import Registry from '../../registry/Registry.js'
+import AEvent from '../event/AEvent.js'
+import AConstant from '../constant/AConstant.js'
+import ACondition from '../condition/ACondition.js'
 
 export default class FunctionRegistry extends Registry{
 
@@ -56,6 +59,39 @@ export default class FunctionRegistry extends Registry{
      */
     getInstances() {
         return super.getInstances()
+    }
+
+    /**
+     * @return {AFunction[]}
+     */
+    getOtherInstances(){
+        return super.getInstances()
+            .filter(instance =>
+                !(instance instanceof AEvent) &&
+                !(instance instanceof AConstant) &&
+                !(instance instanceof ACondition)
+            )
+    }
+
+    /**
+     * @return {AEvent[]}
+     */
+    getEventInstances(){
+        return super.getInstances().filter(instance => instance instanceof AEvent)
+    }
+
+    /**
+     * @return {AConstant[]}
+     */
+    getConstantInstances(){
+        return super.getInstances().filter(instance => instance instanceof AConstant)
+    }
+
+    /**
+     * @return {ACondition[]}
+     */
+    getConditionInstances(){
+        return super.getInstances().filter(instance => instance instanceof ACondition)
     }
 
 }

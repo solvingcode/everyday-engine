@@ -13,7 +13,7 @@ class ObjectHelper {
      */
     static isEqual(object1, object2) {
         return !(Object.getOwnPropertyNames(object1)
-            .find(prop => object1[prop] !== object2[prop]))
+            .find(prop => !object2 || object1[prop] !== object2[prop]))
     }
 
     /**

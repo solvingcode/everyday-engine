@@ -1,5 +1,5 @@
-import Layout from '../../../Layout.js'
-import MenuItem from '../../../MenuItem.js'
+import Layout from '../../../../Layout.js'
+import MenuItem from '../../../../MenuItem.js'
 
 export default class ScriptNodeNameMenuItem extends MenuItem {
     /**

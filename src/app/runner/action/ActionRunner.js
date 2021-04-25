@@ -48,6 +48,7 @@ import AddScriptAction from './assets/AddScriptAction.js'
 import DeleteNodeAction from './script/DeleteNodeAction.js'
 import DeleteEdgeAction from './script/DeleteEdgeAction.js'
 import AddNodeAction from './script/AddNodeAction.js'
+import AddEdgeAction from './script/AddEdgeAction.js'
 
 /**
  * Action Runner class.
@@ -121,6 +122,7 @@ class ActionRunner extends Runner {
             DELETE_SCRIPT_NODE: DeleteNodeAction,
             DELETE_SCRIPT_EDGE: DeleteEdgeAction,
             ADD_SCRIPT_NODE: AddNodeAction,
+            ADD_SCRIPT_EDGE: AddEdgeAction,
 
             //must be the last action
             HISTORY_PUSH: PushHistoryAction

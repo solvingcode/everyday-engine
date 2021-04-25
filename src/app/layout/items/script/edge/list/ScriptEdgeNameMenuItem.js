@@ -1,6 +1,6 @@
-import Layout from '../../../Layout.js'
-import MenuItem from '../../../MenuItem.js'
-import World from '../../../../world/World.js'
+import Layout from '../../../../Layout.js'
+import MenuItem from '../../../../MenuItem.js'
+import World from '../../../../../world/World.js'
 
 export default class ScriptEdgeNameMenuItem extends MenuItem {
     /**

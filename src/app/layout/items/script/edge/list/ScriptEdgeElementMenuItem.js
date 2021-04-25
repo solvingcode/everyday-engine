@@ -1,7 +1,7 @@
-import Layout from '../../../Layout.js'
-import ListSelectElementMenuItem from '../../list/ListSelectElementMenuItem.js'
+import Layout from '../../../../Layout.js'
+import ListSelectElementMenuItem from '../../../list/ListSelectElementMenuItem.js'
 import ScriptEdgeNameMenuItem from './ScriptEdgeNameMenuItem.js'
-import DeleteScriptEdgeMenuItem from './DeleteScriptEdgeMenuItem.js'
+import DeleteScriptEdgeMenuItem from '../delete/DeleteScriptEdgeMenuItem.js'
 
 export default class ScriptEdgeElementMenuItem extends ListSelectElementMenuItem {
     constructor(parent, data) {

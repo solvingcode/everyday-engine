@@ -1,7 +1,7 @@
-import MenuItem from '../../../MenuItem.js'
-import Layout from '../../../Layout.js'
+import MenuItem from '../../../../MenuItem.js'
+import Layout from '../../../../Layout.js'
 
-export default class AddScriptNodeMenuItem extends MenuItem {
+export default class AddScriptNodeSubmitMenuItem extends MenuItem {
     /**
      * @param {MenuItem} parent
      * @param {AddScriptNodeForm} formData

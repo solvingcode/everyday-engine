@@ -100,11 +100,11 @@ class Menu {
         if (item.isValid()) {
             const itemsZone = this.items.filter(pItem => pItem.element.zone === item.zone)
             const existItem = this.items.find(pItem => pItem.element === item)
-            const lastIndex = itemsZone.length
+            const index = item.index
             if (existItem) {
-                existItem.index = itemsZone.findIndex(pItem => pItem.element === item)
+                existItem.index = itemsZone.find(pItem => pItem.element === item).index
             }
-            const resultItem = existItem || new MenuItemUI(item, lastIndex, parent)
+            const resultItem = existItem || new MenuItemUI(item, index, parent)
             !existItem && this.items.push(resultItem)
             if (item.items) {
                 item.items.forEach(pItem => this.prepare(pItem, resultItem))
@@ -120,7 +120,7 @@ class Menu {
      */
     findItemByZone(index, zone) {
         const itemsZone = this.items.filter(pItem => pItem.element.zone === zone)
-        return itemsZone[index]
+        return itemsZone.find(itemZone => itemZone.index === index)
     }
 
     /**

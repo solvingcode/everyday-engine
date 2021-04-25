@@ -1,7 +1,7 @@
 import MenuItem from '../../../MenuItem.js'
 import Layout from '../../../Layout.js'
-import ScriptEdgeListMenuItem from './ScriptEdgeListMenuItem.js'
-import ScriptEdgeActionsMenuItem from './ScriptEdgeActionsMenuItem.js'
+import ScriptEdgeListMenuItem from './list/ScriptEdgeListMenuItem.js'
+import AddScriptEdgeMenuItem from './add/AddScriptEdgeMenuItem.js'
 
 export default class ScriptEdgesMenuItem extends MenuItem {
     constructor(parent) {
@@ -13,7 +13,7 @@ export default class ScriptEdgesMenuItem extends MenuItem {
         })
         this.parent = parent
         this.items = [
-            new ScriptEdgeActionsMenuItem(this),
+            new AddScriptEdgeMenuItem(this),
             new ScriptEdgeListMenuItem(this)
         ]
     }

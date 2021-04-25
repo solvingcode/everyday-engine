@@ -230,7 +230,7 @@ h4{
     right: 0;
     width: unset;
 }
-.panel .script-nodes .form + button{
+.panel .script-nodes div:not(.list-element) > button{
     float: right;
     width: unset;
     height: unset;

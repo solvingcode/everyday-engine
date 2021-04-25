@@ -130,12 +130,15 @@ class FormMenuItem extends MenuItem {
         const newFields = this.generateFields()
         return actualFields.length !== newFields.length ||
             !!actualFields.find((field, iField) => {
-            if (_.isArray(field.list)) {
-                const actualValues = field.list.map(elem => `${elem.value}-${elem.label}`)
-                const newValues = newFields[iField].list.map(elem => `${elem.value}-${elem.label}`)
-                return !ObjectHelper.isEqual(actualValues, newValues)
-            }
-        })
+                if (field.type !== newFields[iField].type) {
+                    throw new TypeError(`Changing field type not supported! (old: ${field.type}, new: ${newFields[iField].type})`)
+                }
+                if (_.isArray(field.list)) {
+                    const actualValues = field.list.map(elem => `${elem.value}-${elem.label}`)
+                    const newValues = newFields[iField].list.map(elem => `${elem.value}-${elem.label}`)
+                    return !ObjectHelper.isEqual(actualValues, newValues)
+                }
+            })
     }
 
     /**

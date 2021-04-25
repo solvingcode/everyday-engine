@@ -33,6 +33,13 @@ export default class AFunction extends FunctionData{
     }
 
     /**
+     * @return {boolean}
+     */
+    isGlobal(){
+        return !this.getName().match(/\./)
+    }
+
+    /**
      * @abstract
      * @param {FunctionRegistry} functionRegistry
      */

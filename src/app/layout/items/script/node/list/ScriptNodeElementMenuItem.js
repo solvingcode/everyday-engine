@@ -1,7 +1,7 @@
-import Layout from '../../../Layout.js'
+import Layout from '../../../../Layout.js'
 import ScriptNodeNameMenuItem from './ScriptNodeNameMenuItem.js'
-import ListSelectElementMenuItem from '../../list/ListSelectElementMenuItem.js'
-import DeleteScriptNodeMenuItem from './DeleteScriptNodeMenuItem.js'
+import ListSelectElementMenuItem from '../../../list/ListSelectElementMenuItem.js'
+import DeleteScriptNodeMenuItem from '../delete/DeleteScriptNodeMenuItem.js'
 
 export default class ScriptNodeElementMenuItem extends ListSelectElementMenuItem {
     constructor(parent, data) {

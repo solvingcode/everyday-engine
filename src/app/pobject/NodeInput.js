@@ -1,104 +1,24 @@
-import Maths from '../utils/Maths.js'
+import NodeInputData from '../project/data/NodeInputData.js'
 
-export default class NodeInput{
-
-    /**
-     * @type {number}
-     */
-    id
-
-    /**
-     * @type {number}
-     */
-    sourceNodeId
-
-    /**
-     * @type {number}
-     */
-    nodeId
-
-    /**
-     * @type {number}
-     */
-    targetId
+export default class NodeInput extends NodeInputData{
 
     /**
      * @type {boolean}
      */
     selected
 
-    constructor() {
-        this.id = Maths.generateId()
-    }
-
-    /**
-     * @param {number} id
-     */
-    setId(id){
-        this.id = id
-    }
-
-    /**
-     * @return {number}
-     */
-    getId(){
-        return this.id
-    }
-
-    /**
-     * @return {string}
-     */
-    getName(){
-        return ''
-    }
-
-    /**
-     * @return {number}
-     */
-    getSourceNodeId(){
-        return this.sourceNodeId
-    }
-
-    /**
-     * @param {number} sourceNodeId
-     */
-    setSourceNodeId(sourceNodeId){
-        this.sourceNodeId = sourceNodeId
-    }
-
-    /**
-     * @return {number}
-     */
-    getNodeId(){
-        return this.nodeId
-    }
-
-    /**
-     * @param {number} nodeId
-     */
-    setNodeId(nodeId){
-        this.nodeId = nodeId
-    }
-
-    /**
-     * @return {number}
-     */
-    getTargetId(){
-        return this.targetId
-    }
-
-    /**
-     * @param {number} targetId
-     */
-    setTargetId(targetId){
-        this.targetId = targetId
-    }
-
     /**
      * @param {boolean} selected
      */
     setSelected(selected){
         this.selected = selected
+    }
+
+    /**
+     * @return {boolean}
+     */
+    getSelected(){
+        return this.selected
     }
 
     select(){
@@ -113,6 +33,7 @@ export default class NodeInput{
      * @return {boolean}
      */
     isSelected(){
-        return this.selected
+        return this.getSelected()
     }
+
 }
