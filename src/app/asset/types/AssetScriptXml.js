@@ -3,6 +3,7 @@ import World from '../../world/World.js'
 import TabManager from '../../manager/TabManager.js'
 import EditScriptContent from '../../content/EditScriptContent.js'
 import AssetScriptXmlGenerator from '../../generator/AssetScriptXmlGenerator.js'
+import EditGraphScriptContent from '../../content/EditGraphScriptContent.js'
 
 /**
  * @class {AssetImage}
@@ -44,8 +45,12 @@ export default class AssetScriptXml extends AssetType{
     /**
      * @override
      */
-    open(asset) {
-        TabManager.get().createOrActivate(asset.getName(), new EditScriptContent(asset))
+    open(asset, options = {asXml: false}) {
+        if(options.asXml){
+            TabManager.get().createOrActivate(asset.getName(), new EditScriptContent(asset))
+        }else{
+            TabManager.get().createOrActivate(asset.getName(), new EditGraphScriptContent(asset))
+        }
     }
 
     /**
