@@ -8,7 +8,7 @@ export default class EditAssetScriptMenuItem extends MenuItem {
         super({
             name: 'edit',
             title: 'Edit',
-            stateCode: 'ACTION_EDIT_ASSET_SCRIPT',
+            stateCode: 'ACTION_EDIT_ASSET_SCRIPT_XML',
             type: Layout.type.ICON,
             zone: parent.zone
         })

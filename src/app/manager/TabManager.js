@@ -116,7 +116,7 @@ export default class TabManager {
 
     reset(){
         this.tabs = []
-        this.create('Scene')
+        this.create('Scene').protected = true
     }
 
     /**

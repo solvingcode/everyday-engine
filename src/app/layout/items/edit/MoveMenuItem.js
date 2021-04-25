@@ -1,5 +1,6 @@
 import MenuItem from '../../MenuItem.js'
 import Layout from '../../Layout.js'
+import TabManager from '../../../manager/TabManager.js'
 
 export default class MoveMenuItem extends MenuItem {
     constructor() {
@@ -11,5 +12,12 @@ export default class MoveMenuItem extends MenuItem {
             type: Layout.type.ICON,
             zone: Layout.zone.LEFT
         })
+    }
+
+    /**
+     * @override
+     */
+    isValid() {
+        return super.isValid() && TabManager.get().getSelected().isProtected()
     }
 }

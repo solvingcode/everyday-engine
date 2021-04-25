@@ -3,18 +3,17 @@ import Camera from '../core/Camera.js'
 import Physics from '../physics/Physics.js'
 import Vector from '../utils/Vector.js'
 import AssetsManager from '../manager/AssetsManager.js'
-import Window from '../core/Window.js'
 import Size from '../pobject/Size.js'
 import {SCENE_HEIGHT, SCENE_WIDTH} from '../core/Constant.js'
 import UnitManager from '../manager/UnitManager.js'
 import MeshComponent from '../component/internal/MeshComponent.js'
 import TransformComponent from '../component/internal/TransformComponent.js'
 import UnitSelector from '../manager/UnitSelector.js'
-import ExecutorRegistry from '../executor/ExecutorRegistry.js'
 import MeshManager from '../manager/MeshManager.js'
 import ScriptManager from '../manager/ScriptManager.js'
 import FunctionRegistry from '../flow/function/FunctionRegistry.js'
 import TabManager from '../manager/TabManager.js'
+import UnitHelper from '../utils/UnitHelper.js'
 
 /**
  * @class {World}
@@ -53,32 +52,7 @@ class World extends WorldData {
      */
     draw(renderer) {
         this.getUnitManager().getUnitsHasComponents([MeshComponent, TransformComponent])
-            .forEach((unit) => this.drawUnit(unit, renderer))
-    }
-
-    /**
-     * @param {UnitData} unit
-     * @param {Renderer} renderer
-     */
-    drawUnit(unit, renderer) {
-        const meshManager = this.getMeshManager()
-        const {size: windowSize} = Window.get()
-        const camera = this.getCamera()
-        const {x: cameraX, y: cameraY} = camera.position
-        const {width: sceneWidth, height: sceneHeight} = camera.fromScaleSize(windowSize)
-        const meshComponent = unit.getComponent(MeshComponent)
-        const transformComponent = unit.getComponent(TransformComponent)
-        const size = meshComponent.getSize()
-        const position = transformComponent.getPosition()
-        const minX = cameraX - size.getWidth()
-        const maxX = cameraX + sceneWidth
-        const minY = cameraY - size.getHeight()
-        const maxY = cameraY + sceneHeight
-        if (minX <= position.getX() && maxX >= position.getX() &&
-            minY <= position.getY() && maxY >= position.getY()) {
-            const mesh = meshManager.get(unit.getId())
-            mesh && renderer.draw(mesh, position)
-        }
+            .forEach((unit) => UnitHelper.drawUnit(unit, this, renderer))
     }
 
     /**
@@ -174,7 +148,6 @@ class World extends WorldData {
     }
 
     update() {
-        ExecutorRegistry.get().execute(this)
     }
 
     /**

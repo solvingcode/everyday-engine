@@ -8,7 +8,7 @@ import TransformComponent from '../../component/internal/TransformComponent.js'
 import GeometryHelper from '../../utils/GeometryHelper.js'
 import Size from '../../pobject/Size.js'
 import ShapeGenerator from '../../generator/ShapeGenerator.js'
-import UnitHelper from '../../unit/UnitHelper.js'
+import UnitHelper from '../../utils/UnitHelper.js'
 import Mesh from '../../core/Mesh.js'
 import Maths from '../../utils/Maths.js'
 import GUIPropertyComponent from '../../component/internal/gui/property/GUIPropertyComponent.js'
@@ -120,8 +120,8 @@ export default class MeshGenerationExecutor extends ComponentExecutor {
             }
             borderSize && context.stroke()
         } else if (fillColor) {
-            context.stroke()
             context.fill()
+            context.stroke()
         } else {
             context.stroke()
         }

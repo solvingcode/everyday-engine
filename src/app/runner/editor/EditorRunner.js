@@ -10,7 +10,7 @@ import RotateAction from '../action/edit/RotateAction.js'
 import {objectCanvas} from '../../core/Context.js'
 import Vector from '../../utils/Vector.js'
 import UnitSelector from '../../manager/UnitSelector.js'
-import UnitHelper from '../../unit/UnitHelper.js'
+import UnitHelper from '../../utils/UnitHelper.js'
 import GUIMoveXComponent from '../../component/internal/gui/move/GUIMoveXComponent.js'
 import Size from '../../pobject/Size.js'
 import GUIMoveYComponent from '../../component/internal/gui/move/GUIMoveYComponent.js'
@@ -37,10 +37,10 @@ import GUIGridYComponent from '../../component/internal/gui/grid/GUIGridYCompone
 import GUIGridXComponent from '../../component/internal/gui/grid/GUIGridXComponent.js'
 import GridYUnitInstant from '../../unit/instant/type/internal/grid/GridYUnitInstant.js'
 
-class WorldRunner extends Runner {
+class EditorRunner extends Runner {
 
     /**
-     * @type {WorldRunner}
+     * @type {EditorRunner}
      */
     static instance = null
 
@@ -247,4 +247,4 @@ class WorldRunner extends Runner {
     }
 }
 
-export default WorldRunner
+export default EditorRunner

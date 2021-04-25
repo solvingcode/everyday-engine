@@ -29,8 +29,9 @@ export default class AssetType extends AssetTypeData{
     /**
      * @abstract
      * @param {Asset} asset
+     * @param {Object} options
      */
-    open(asset){
+    open(asset, options){
         throw new TypeError(`${this.constructor.name}.open must be implemented`)
     }
 

@@ -1,8 +1,9 @@
-import Vertex from '../utils/Vertex.js'
-import Vector from '../utils/Vector.js'
+import Vertex from './Vertex.js'
+import Vector from './Vector.js'
 import MeshComponent from '../component/internal/MeshComponent.js'
 import TransformComponent from '../component/internal/TransformComponent.js'
-import GeometryHelper from '../utils/GeometryHelper.js'
+import GeometryHelper from './GeometryHelper.js'
+import Window from '../core/Window.js'
 
 export default class UnitHelper {
 
@@ -142,6 +143,32 @@ export default class UnitHelper {
      */
     static scaleVertices(camera, vertices){
         return vertices.map(vertex => camera.toCameraScale(vertex))
+    }
+
+    /**
+     * @param {Unit} unit
+     * @param {World} world
+     * @param {Renderer} renderer
+     */
+    static drawUnit(unit, world, renderer){
+        const meshManager = world.getMeshManager()
+        const {size: windowSize} = Window.get()
+        const camera = world.getCamera()
+        const {x: cameraX, y: cameraY} = camera.position
+        const {width: sceneWidth, height: sceneHeight} = camera.fromScaleSize(windowSize)
+        const meshComponent = unit.getComponent(MeshComponent)
+        const transformComponent = unit.getComponent(TransformComponent)
+        const size = meshComponent.getSize()
+        const position = transformComponent.getPosition()
+        const minX = cameraX - size.getWidth()
+        const maxX = cameraX + sceneWidth
+        const minY = cameraY - size.getHeight()
+        const maxY = cameraY + sceneHeight
+        if (minX <= position.getX() && maxX >= position.getX() &&
+            minY <= position.getY() && maxY >= position.getY()) {
+            const mesh = meshManager.get(unit.getId())
+            mesh && renderer.draw(mesh, position)
+        }
     }
 
 }

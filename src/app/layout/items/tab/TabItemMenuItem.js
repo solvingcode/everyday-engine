@@ -12,7 +12,7 @@ export default class TabItemMenuItem extends ListElementMenuItem{
             zone: parent.zone,
             type: Layout.type.TAB_ITEM
         })
-        if(data.bind.getContent()){
+        if(!data.bind.isProtected()){
             this.items = [
                 new TabCloseItemMenuItem(this, data)
             ]

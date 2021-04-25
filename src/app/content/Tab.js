@@ -23,6 +23,11 @@ export default class Tab{
     content
 
     /**
+     * @type {boolean}
+     */
+    protected
+
+    /**
      * @param {string} name
      * @param {Content} content
      */
@@ -30,6 +35,7 @@ export default class Tab{
         this.id = Maths.generateId()
         this.name = name
         this.content = content
+        this.protected = false
     }
 
     /**
@@ -66,6 +72,13 @@ export default class Tab{
 
     unselect(){
         this.selected = false
+    }
+
+    /**
+     * @return {boolean}
+     */
+    isProtected(){
+        return this.protected
     }
 
 }

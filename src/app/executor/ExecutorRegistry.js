@@ -21,14 +21,13 @@ export default class ExecutorRegistry {
     }
 
     /**
-     * @param {World} world
+     * @param {Unit} unit
      */
-    execute(world){
-        const unitManager = world.getUnitManager()
+    execute(unit){
         this.registry.forEach(executor => {
-            unitManager.getUnitsHasComponents(executor.getTargetComponents()).forEach(unit =>
+            if(unit.hasComponents(executor.getTargetComponents())){
                 executor.execute(unit)
-            )
+            }
         })
     }
 

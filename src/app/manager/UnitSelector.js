@@ -1,4 +1,4 @@
-import UnitHelper from '../unit/UnitHelper.js'
+import UnitHelper from '../utils/UnitHelper.js'
 import GUIPendingComponent from '../component/internal/gui/GUIPendingComponent.js'
 
 export default class UnitSelector {

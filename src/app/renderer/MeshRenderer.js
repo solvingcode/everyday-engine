@@ -8,7 +8,7 @@ import Window from '../core/Window.js'
  * Manager the renderer for entities
  * @extends {Renderer}
  */
-class ObjectRenderer extends Renderer {
+class MeshRenderer extends Renderer {
 
     constructor() {
         super()
@@ -65,6 +65,13 @@ class ObjectRenderer extends Renderer {
     add(mesh, position) {
         this.meshes.push({mesh, position})
     }
+
+    /**
+     * @return {MeshRenderer}
+     */
+    static get(){
+        return super.get()
+    }
 }
 
-export default ObjectRenderer
+export default MeshRenderer

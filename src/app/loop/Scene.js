@@ -1,5 +1,5 @@
 import Loop from './Loop.js'
-import ObjectRenderer from '../renderer/ObjectRenderer.js'
+import MeshRenderer from '../renderer/MeshRenderer.js'
 import World from '../world/World.js'
 
 /**
@@ -15,7 +15,7 @@ class Scene extends Loop {
 
     constructor() {
         super()
-        this.objectRenderer = new ObjectRenderer()
+        this.meshRenderer = MeshRenderer.get()
     }
 
     /**
@@ -28,8 +28,7 @@ class Scene extends Loop {
     loop() {
         const world = World.get()
         world.update()
-        world.draw(this.objectRenderer)
-        this.objectRenderer.render(world.getCamera())
+        this.meshRenderer.render(world.getCamera())
     }
 
 }

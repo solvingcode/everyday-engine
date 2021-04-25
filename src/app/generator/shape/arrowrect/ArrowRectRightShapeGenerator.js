@@ -1,5 +1,5 @@
 import ArrowRectShapeGenerator from './ArrowRectShapeGenerator.js'
-import UnitHelper from '../../../unit/UnitHelper.js'
+import UnitHelper from '../../../utils/UnitHelper.js'
 import Vector from '../../../utils/Vector.js'
 
 export default class ArrowRectRightShapeGenerator extends ArrowRectShapeGenerator{

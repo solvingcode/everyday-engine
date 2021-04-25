@@ -2,7 +2,7 @@ import Action from '../Action.js'
 import World from '../../../world/World.js'
 import StateManager from '../../../state/StateManager.js'
 import Vector from '../../../utils/Vector.js'
-import UnitHelper from '../../../unit/UnitHelper.js'
+import UnitHelper from '../../../utils/UnitHelper.js'
 import TransformComponent from '../../../component/internal/TransformComponent.js'
 import MeshComponent from '../../../component/internal/MeshComponent.js'
 

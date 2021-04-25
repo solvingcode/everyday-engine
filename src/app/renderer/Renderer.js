@@ -6,6 +6,11 @@
 class Renderer {
 
     /**
+     * @type {Renderer}
+     */
+    static instance
+
+    /**
      * @abstract
      * @param {Mesh} mesh
      * @param {Vector} position
@@ -28,6 +33,16 @@ class Renderer {
      */
     render(object) {
         throw new TypeError('Renderer.render must be implemented')
+    }
+
+    /**
+     * @return {*}
+     */
+    static get() {
+        if (!this.instance) {
+            this.instance = new this()
+        }
+        return this.instance
     }
 }
 

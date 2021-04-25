@@ -4,6 +4,11 @@ import Style from '../../pobject/Style.js'
 
 export default class StyleComponent extends Component{
 
+
+    constructor() {
+        super('Style')
+    }
+
     /**
      * @override
      */

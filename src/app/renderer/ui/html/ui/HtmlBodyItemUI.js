@@ -32,8 +32,8 @@ export default class HtmlBodyItemUI extends HtmlPanelUI {
      * @override
      */
     static getClassName(item){
-        const content = item.element.data
-        if(content){
+        const hasContent = !!(item.element.items.length)
+        if(hasContent){
             return 'has-content'
         }
     }

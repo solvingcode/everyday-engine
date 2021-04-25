@@ -1,5 +1,5 @@
 import TypeShapeGenerator from '../TypeShapeGenerator.js'
-import UnitHelper from '../../../unit/UnitHelper.js'
+import UnitHelper from '../../../utils/UnitHelper.js'
 
 /**
  * @abstract

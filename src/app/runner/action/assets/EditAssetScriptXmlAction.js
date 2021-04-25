@@ -1,9 +1,9 @@
 import Action from '../Action.js'
 import World from '../../../world/World.js'
 
-export default class EditAssetScriptAction extends Action {
+export default class EditAssetScriptXmlAction extends Action {
 
-    static STATE = 'ACTION_EDIT_ASSET_SCRIPT'
+    static STATE = 'ACTION_EDIT_ASSET_SCRIPT_XML'
 
     /**
      * @override

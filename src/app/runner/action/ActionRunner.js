@@ -39,7 +39,7 @@ import AddAssetSceneAction from './assets/AddAssetSceneAction.js'
 import UnitSelector from '../../manager/UnitSelector.js'
 import AddCameraAction from './camera/AddCameraAction.js'
 import CompileAssetScriptAction from './assets/CompileAssetScriptAction.js'
-import EditAssetScriptAction from './assets/EditAssetScriptAction.js'
+import EditAssetScriptXmlAction from './assets/EditAssetScriptXmlAction.js'
 import SelectTabAction from './content/SelectTabAction.js'
 import CloseTabAction from './content/CloseTabAction.js'
 import AddFolderAction from './assets/AddFolderAction.js'
@@ -106,7 +106,7 @@ class ActionRunner extends Runner {
             ADD_FOLDER: AddFolderAction,
             ADD_ASSET_SCENE: AddAssetSceneAction,
             COMPILE_ASSET_SCRIPT: CompileAssetScriptAction,
-            EDIT_ASSET_SCRIPT: EditAssetScriptAction,
+            EDIT_ASSET_SCRIPT_XML: EditAssetScriptXmlAction,
             NEW_PROJECT: NewProjectAction,
             EXPORT_PROJECT: ExportProjectAction,
             ZOOM_CAMERA: ZoomInOutCameraAction,

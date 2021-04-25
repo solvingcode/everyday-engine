@@ -29,7 +29,10 @@ export default class GUISelectionExecutor extends ComponentExecutor {
                 style.setBorderSize(3)
             }else{
                 style.setColor(styleComponent.getStyle().getColor())
+                style.setFillColor(styleComponent.getStyle().getFillColor())
                 style.setBorderSize(styleComponent.getStyle().getBorderSize())
+                style.setColorOpacity(styleComponent.getStyle().getColorOpacity())
+                style.setFillColorOpacity(styleComponent.getStyle().getFillColorOpacity())
             }
 
             const meshStyle = meshComponent.getStyle()
@@ -37,6 +40,9 @@ export default class GUISelectionExecutor extends ComponentExecutor {
                 meshStyle.getBorderSize() !== style.getBorderSize()) {
                 meshStyle.setColor(style.getColor())
                 meshStyle.setBorderSize(style.getBorderSize())
+                meshStyle.setFillColor(style.getFillColor())
+                meshStyle.setColorOpacity(style.getColorOpacity())
+                meshStyle.setFillColorOpacity(style.getFillColorOpacity())
                 meshComponent.setGenerated(false)
             }
         }
