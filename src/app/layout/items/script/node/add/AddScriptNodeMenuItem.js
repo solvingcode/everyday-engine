@@ -1,16 +1,14 @@
-import Layout from '../../../../Layout.js'
-import MenuItem from '../../../../MenuItem.js'
 import AddScriptNodeSubmitMenuItem from './AddScriptNodeSubmitMenuItem.js'
 import AddScriptNodeFormMenuItem from './AddScriptNodeFormMenuItem.js'
+import PanelMenuItem from '../../../panel/PanelMenuItem.js'
 
-export default class AddScriptNodeMenuItem  extends MenuItem {
+export default class AddScriptNodeMenuItem  extends PanelMenuItem {
     constructor(parent) {
         super({
-            name: 'Nodes',
-            stateCode: '',
-            type: Layout.type.PANEL,
+            name: 'Add node',
             zone: parent.zone
         })
+        this.collapsed = true
         this.parent = parent
         const formData = new AddScriptNodeForm()
         this.items = [

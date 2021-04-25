@@ -3,6 +3,7 @@ import MenuItem from '../../../../MenuItem.js'
 import AddScriptNodeFormTypeMenuItem from './AddScriptNodeFormTypeMenuItem.js'
 import AddScriptNodeFormFunctionMenuItem from './AddScriptNodeFormFunctionMenuItem.js'
 import AddScriptNodeFormConstantMenuItem from './AddScriptNodeFormConstantMenuItem.js'
+import AddScriptNodeFormUnitMenuItem from './AddScriptNodeFormUnitMenuItem.js'
 
 export default class AddScriptNodeFormMenuItem  extends MenuItem {
     /**
@@ -20,7 +21,8 @@ export default class AddScriptNodeFormMenuItem  extends MenuItem {
         this.items = [
             new AddScriptNodeFormTypeMenuItem(this, addNodeForm),
             new AddScriptNodeFormFunctionMenuItem(this, addNodeForm),
-            new AddScriptNodeFormConstantMenuItem(this, addNodeForm)
+            new AddScriptNodeFormConstantMenuItem(this, addNodeForm),
+            new AddScriptNodeFormUnitMenuItem(this, addNodeForm)
         ]
     }
 }

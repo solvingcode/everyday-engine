@@ -20,8 +20,12 @@ export default class AddEdgeAction extends Action {
         const assetTab = TabManager.get().getSelectedContentData()
         const nodeTarget = script.findNodeById(parseInt(formData.getTargetId()))
         const nodeSource = script.findNodeById(parseInt(formData.getSourceId()))
-        nodeTarget.attach(nodeSource, parseInt(formData.getConnection()))
-        assetTab.generate(script)
+        if(nodeTarget && nodeSource){
+            nodeTarget.attach(nodeSource, parseInt(formData.getConnection()))
+            assetTab.generate(script)
+        }else{
+            throw new TypeError(`Cannot add the connection (target or source node are invalids)`)
+        }
         return true
     }
 

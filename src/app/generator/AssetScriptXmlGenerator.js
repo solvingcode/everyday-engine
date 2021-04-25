@@ -1,8 +1,5 @@
-import EventNode from '../flow/node/EventNode.js'
-import FunctionNode from '../flow/node/FunctionNode.js'
-import ConstantNode from '../flow/node/ConstantNode.js'
-import ConditionNode from '../flow/node/ConditionNode.js'
 import NodeHelper from '../utils/NodeHelper.js'
+import ScriptHelper from '../utils/ScriptHelper.js'
 
 /**
  * @abstract
@@ -23,16 +20,7 @@ export default class AssetScriptXmlGenerator {
         parentNode.setAttribute('name', flow.getName())
         flow.getNodes().forEach(node => {
             const nodeNode = root.createElement('node')
-            let nodeType = ''
-            if(node instanceof EventNode){
-                nodeType = 'event'
-            }else if(node instanceof FunctionNode){
-                nodeType = 'function'
-            }else if(node instanceof ConstantNode){
-                nodeType = 'constant'
-            }else if(node instanceof ConditionNode){
-                nodeType = 'condition'
-            }
+            let nodeType = ScriptHelper.getNodeType(node)
             nodeNode.setAttribute('type', nodeType)
             nodeNode.setAttribute('id', `${node.getId()}`)
             nodeNode.setAttribute('value', NodeHelper.getSourceNode(node).getName())

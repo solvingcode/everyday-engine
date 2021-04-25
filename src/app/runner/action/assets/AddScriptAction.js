@@ -22,7 +22,7 @@ export default class AddScriptAction extends Action {
                 AssetScriptXml,
                 assetName,
                 selectedFolder.getId()
-            ).then(asset => asset.open())
+            ).then(asset => asset.open() || asset.select())
         return true
     }
 

@@ -2,6 +2,7 @@ import Registry from '../../registry/Registry.js'
 import AEvent from '../event/AEvent.js'
 import AConstant from '../constant/AConstant.js'
 import ACondition from '../condition/ACondition.js'
+import AUnit from '../unit/AUnit.js'
 
 export default class FunctionRegistry extends Registry{
 
@@ -69,7 +70,8 @@ export default class FunctionRegistry extends Registry{
             .filter(instance =>
                 !(instance instanceof AEvent) &&
                 !(instance instanceof AConstant) &&
-                !(instance instanceof ACondition)
+                !(instance instanceof ACondition) &&
+                !(instance instanceof AUnit)
             )
     }
 

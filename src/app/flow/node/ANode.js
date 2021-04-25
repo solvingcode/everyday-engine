@@ -97,5 +97,6 @@ export const NODE_TYPES = {
     EVENT: 'event',
     FUNCTION: 'function',
     CONSTANT: 'constant',
-    CONDITION: 'condition'
+    CONDITION: 'condition',
+    UNIT: 'unit'
 }

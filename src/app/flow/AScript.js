@@ -5,6 +5,9 @@ import AConstant from './constant/AConstant.js'
 import DynamicAttributeHelper from '../utils/DynamicAttributeHelper.js'
 import EventNode from './node/EventNode.js'
 import ConditionNode from './node/ConditionNode.js'
+import UnitNode from './node/UnitNode.js'
+import AUnit from './unit/AUnit.js'
+import {TYPES} from '../pobject/AttributeType.js'
 
 /**
  * @abstract
@@ -27,6 +30,10 @@ export default class AScript extends AScriptData{
                 break
             case ConstantNode:
                 nodeSource = new AConstant(DynamicAttributeHelper.findTypeOfValue(value), value)
+                registry.register(nodeSource)
+                break
+            case UnitNode:
+                nodeSource = new AUnit(TYPES.NUMBER, value)
                 registry.register(nodeSource)
                 break
             default:

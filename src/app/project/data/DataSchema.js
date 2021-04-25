@@ -43,6 +43,8 @@ import ConditionNode from '../../flow/node/ConditionNode.js'
 import LessThanFunction from '../../flow/function/native/LessThanFunction.js'
 import IsKeyDownFunction from '../../flow/function/native/IsKeyDownFunction.js'
 import NodeInput from '../../pobject/NodeInput.js'
+import UnitNode from '../../flow/node/UnitNode.js'
+import AUnit from '../../flow/unit/AUnit.js'
 
 /**
  * @class {DataSchema}
@@ -88,7 +90,9 @@ class DataSchema {
         {id: 260, type: ConditionNode},
         {id: 270, type: LessThanFunction},
         {id: 280, type: IsKeyDownFunction},
-        {id: 290, type: NodeInput}
+        {id: 290, type: NodeInput},
+        {id: 300, type: UnitNode},
+        {id: 310, type: AUnit}
     ]
 
     static exclude = [

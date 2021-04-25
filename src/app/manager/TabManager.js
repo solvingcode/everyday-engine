@@ -10,7 +10,7 @@ export default class TabManager {
     tabs
 
     constructor() {
-        this.tabs = []
+        this.reset()
     }
 
     /**
@@ -56,7 +56,7 @@ export default class TabManager {
      * @param {Content} content
      * @return {Tab}
      */
-    create(name, content){
+    create(name, content = null){
         const tab = new Tab(name, content)
         this.tryAdd(tab)
         this.activate(tab)
@@ -112,6 +112,11 @@ export default class TabManager {
             throw new TypeError(`Tab with name "${tab.getName()}" already exist!`)
         }
         this.tabs.push(tab)
+    }
+
+    reset(){
+        this.tabs = []
+        this.create('Scene')
     }
 
     /**

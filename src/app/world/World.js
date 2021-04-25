@@ -14,6 +14,7 @@ import ExecutorRegistry from '../executor/ExecutorRegistry.js'
 import MeshManager from '../manager/MeshManager.js'
 import ScriptManager from '../manager/ScriptManager.js'
 import FunctionRegistry from '../flow/function/FunctionRegistry.js'
+import TabManager from '../manager/TabManager.js'
 
 /**
  * @class {World}
@@ -42,6 +43,7 @@ class World extends WorldData {
      */
     init() {
         this.createRootFolder()
+        TabManager.get().reset()
     }
 
     /**
@@ -94,7 +96,7 @@ class World extends WorldData {
      * @return {Unit}
      */
     findUnitById(id) {
-        return this.getUnitManager().findById(id)
+        return this.getUnitManager().findUnitById(id)
     }
 
     /**

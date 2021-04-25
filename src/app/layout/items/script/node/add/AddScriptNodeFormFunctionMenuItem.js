@@ -38,7 +38,7 @@ export default class AddScriptNodeFormFunctionMenuItem extends FormMenuItem {
         return [
             {
                 bind: 'value',
-                label: 'Value',
+                label: 'Function',
                 type: Layout.form.DROPDOWN,
                 list: functions.map(func => (
                     {
@@ -62,6 +62,7 @@ export default class AddScriptNodeFormFunctionMenuItem extends FormMenuItem {
      */
     isValid() {
         const type = this.getFormObject().getType()
-        return super.isValid() && type && this.getFormObject().getType() !== NODE_TYPES.CONSTANT
+        return super.isValid() && type &&
+            [NODE_TYPES.FUNCTION, NODE_TYPES.EVENT, NODE_TYPES.CONDITION].includes(this.getFormObject().getType())
     }
 }

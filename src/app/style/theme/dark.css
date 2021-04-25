@@ -188,6 +188,10 @@ button.selected, button.hidden.selected, button.locked.selected{
     background-color: #b94a48;
 }
 
+.panel .script-nodes div:not(.list-element) > button{
+    background-color: #3f6093;
+}
+
 .color{
     border: 2px solid #4d4d4c;
 }

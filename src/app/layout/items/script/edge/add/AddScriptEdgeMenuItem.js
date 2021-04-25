@@ -1,16 +1,14 @@
-import Layout from '../../../../Layout.js'
-import MenuItem from '../../../../MenuItem.js'
 import AddScriptEdgeSubmitMenuItem from './AddScriptEdgeSubmitMenuItem.js'
 import AddScriptEdgeFormMenuItem from './AddScriptEdgeFormMenuItem.js'
+import PanelMenuItem from '../../../panel/PanelMenuItem.js'
 
-export default class AddScriptEdgeMenuItem  extends MenuItem {
+export default class AddScriptEdgeMenuItem extends PanelMenuItem {
     constructor(parent) {
         super({
-            name: 'Edges',
-            stateCode: '',
-            type: Layout.type.PANEL,
+            name: 'Add connection',
             zone: parent.zone
         })
+        this.collapsed = true
         this.parent = parent
         const formData = new AddScriptEdgeForm()
         this.items = [
