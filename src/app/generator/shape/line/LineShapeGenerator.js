@@ -2,13 +2,15 @@
  * @abstract
  */
 import TypeShapeGenerator from '../TypeShapeGenerator.js'
+import MeshComponent from '../../../component/internal/MeshComponent.js'
 
 export default class LineShapeGenerator extends TypeShapeGenerator{
 
     /**
      * @override
      */
-    draw(meshComponent, transformComponent, dataContext){
+    draw(unit, dataContext){
+        const meshComponent = unit.getComponent(MeshComponent)
         const {context, camera} = dataContext
         const vertices = meshComponent.getShapeVertices()
         const {x: x0, y: y0} = camera.toCameraScale(vertices[0])

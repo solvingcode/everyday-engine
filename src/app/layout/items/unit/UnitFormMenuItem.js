@@ -1,7 +1,7 @@
 import Layout from '../../Layout.js'
 import FormMenuItem from '../form/FormMenuItem.js'
 import World from '../../../world/World.js'
-import UnitSelector from '../../../manager/UnitSelector.js'
+import UnitSelector from '../../../selector/UnitSelector.js'
 
 export default class UnitFormMenuItem extends FormMenuItem {
     /**

@@ -26,12 +26,17 @@ class Setup extends Loop {
      */
     static instance
 
+    /**
+     * Pay attention to the order of runners, because some runners can interrupt/affect the execution of the next runner
+     * Example: SetupExecutorRunner must be before SetupRenderRunner, and MenuRunner will cancel the execution of the
+     * next runners if a menu item was clicked
+     */
     constructor() {
         super()
         this.setupRenderer = SetupRenderer.get()
         this.runners = [
-            SimulateRunner, ActionRunner, EditorRunner, SetupRenderRunner,
-            SetupExecutorRunner, MenuRunner, WindowRunner, DrawerRunner
+            SimulateRunner, ActionRunner, EditorRunner, SetupExecutorRunner,
+            SetupRenderRunner, MenuRunner, WindowRunner, DrawerRunner
         ]
         ExecutorRegistry.get().register([
             new MeshGenerationExecutor(),

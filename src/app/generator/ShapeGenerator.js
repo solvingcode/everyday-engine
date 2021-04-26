@@ -8,6 +8,8 @@ import ArrowRectDownShapeGenerator from './shape/arrowrect/ArrowRectDownShapeGen
 import GridShapeGenerator from './shape/grid/GridShapeGenerator.js'
 import LineShapeGenerator from './shape/line/LineShapeGenerator.js'
 import RectCrossShapeGenerator from './shape/rect/RectCrossShapeGenerator.js'
+import MeshComponent from '../component/internal/MeshComponent.js'
+import NodeShapeGenerator from './shape/node/NodeShapeGenerator.js'
 
 /**
  * @abstract
@@ -18,13 +20,13 @@ export default class ShapeGenerator {
 
     /**
      * @abstract
-     * @param {MeshComponent} meshComponent
-     * @param {TransformComponent} transformComponent
+     * @param {Unit} unit
      * @param {DataContext} dataContext
      */
-    draw(meshComponent, transformComponent, dataContext){
+    draw(unit, dataContext){
+        const meshComponent = unit.getComponent(MeshComponent)
         const type = this.getShapeTypeGenerator(meshComponent.getShape())
-        new type().draw(meshComponent, transformComponent, dataContext)
+        new type().draw(unit, dataContext)
     }
 
     /**
@@ -51,6 +53,8 @@ export default class ShapeGenerator {
                 return GridShapeGenerator
             case PrimitiveShape.LINE:
                 return LineShapeGenerator
+            case PrimitiveShape.NODE:
+                return NodeShapeGenerator
             default:
                 throw new TypeError(`${shape} not supported by ShapeGenerator`)
         }

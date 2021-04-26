@@ -23,16 +23,16 @@ export default class NodeHelper {
     static getNodeName(node){
         const nodeSource = this.getSourceNode(node)
         if(nodeSource instanceof AConstant){
-            return `Constant = ${nodeSource.getName()}`
+            return `${nodeSource.getName()} [Constant]`
         }else if(nodeSource instanceof ACondition){
-            return `Condition = ${nodeSource.getName()}`
+            return `${nodeSource.getName()} [Condition]`
         }else if(nodeSource instanceof AEvent){
-            return `Event = ${nodeSource.getName()}`
+            return `${nodeSource.getName()} [Event]`
         }else if(nodeSource instanceof AUnit){
             const unit = World.get().findUnitById(parseInt(nodeSource.getName()))
-            return `Unit = ${unit.getName()}`
+            return `${unit.getName()} [Unit]`
         }else if(nodeSource instanceof AFunction){
-            return `Function = ${nodeSource.getName()}`
+            return `${nodeSource.getName()} [Function]`
         }else{
             throw new TypeError(`Node source "${nodeSource && nodeSource.constructor.name}" unknown`)
         }

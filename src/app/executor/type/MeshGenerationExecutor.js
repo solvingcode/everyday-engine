@@ -24,14 +24,13 @@ export default class MeshGenerationExecutor extends ComponentExecutor {
      */
     execute(unit) {
         const meshComponent = unit.getComponent(MeshComponent)
-        const transformComponent = unit.getComponent(TransformComponent)
         const propertyComponent = unit.getComponent(GUIPropertyComponent)
         const world = World.get()
         if (!meshComponent.isGenerated()) {
             meshComponent.setVertices(UnitHelper.generateVertices(unit))
             if (!meshComponent.isEnabled() ||
                 !propertyComponent.isVisible() ||
-                !this.generate(unit.getId(), meshComponent, transformComponent, world)) {
+                !this.generate(unit, world)) {
                 world.getMeshManager().clear(unit.getId())
             }
             meshComponent.setGenerated(true)
@@ -40,15 +39,15 @@ export default class MeshGenerationExecutor extends ComponentExecutor {
     }
 
     /**
-     * @param {number} unitId
-     * @param {MeshComponent} meshComponent
-     * @param {TransformComponent} transformComponent
+     * @param {Unit} unit
      * @param {World} world
      */
-    generate(unitId, meshComponent, transformComponent, world) {
-        const dataContext = this.startContext(unitId, meshComponent, transformComponent, world)
+    generate(unit, world) {
+        const meshComponent = unit.getComponent(MeshComponent)
+        const transformComponent = unit.getComponent(TransformComponent)
+        const dataContext = this.startContext(unit.getId(), meshComponent, transformComponent, world)
         if (dataContext) {
-            this.drawContext(meshComponent, transformComponent, dataContext)
+            this.drawContext(unit, dataContext)
             return this.closeContext(meshComponent, transformComponent, dataContext)
         }
     }
@@ -87,12 +86,11 @@ export default class MeshGenerationExecutor extends ComponentExecutor {
     }
 
     /**
-     * @param {MeshComponent} meshComponent
-     * @param {TransformComponent} transformComponent
+     * @param {Unit} unit
      * @param {DataContext} dataContext
      */
-    drawContext(meshComponent, transformComponent, dataContext) {
-        ShapeGenerator.get().draw(meshComponent, transformComponent, dataContext)
+    drawContext(unit, dataContext) {
+        ShapeGenerator.get().draw(unit, dataContext)
     }
 
     /**
@@ -102,7 +100,7 @@ export default class MeshGenerationExecutor extends ComponentExecutor {
      * @return {boolean}
      */
     closeContext(meshComponent, transformComponent, dataContext) {
-        const {fillColor, borderSize} = meshComponent.getStyle()
+        const {fillColor, borderSize, color} = meshComponent.getStyle()
         const {context, scaleSize, world, unitId} = dataContext
         if (meshComponent.getAssetId()) {
             const asset = dataContext.world.getAssetsManager().findAssetById(meshComponent.getAssetId())
@@ -121,7 +119,9 @@ export default class MeshGenerationExecutor extends ComponentExecutor {
             borderSize && context.stroke()
         } else if (fillColor) {
             context.fill()
-            context.stroke()
+            if(color){
+                context.stroke()
+            }
         } else {
             context.stroke()
         }

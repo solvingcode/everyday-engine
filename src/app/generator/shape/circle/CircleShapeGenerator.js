@@ -1,14 +1,14 @@
+import TypeShapeGenerator from '../TypeShapeGenerator.js'
+
 /**
  * @abstract
  */
-import TypeShapeGenerator from '../TypeShapeGenerator.js'
-
 export default class CircleShapeGenerator extends TypeShapeGenerator{
 
     /**
      * @override
      */
-    draw(meshComponent, transformComponent, dataContext){
+    draw(unit, dataContext){
         const {center, context, scaleSize} = dataContext
         const sw = scaleSize.width
         const radiusScale = Math.abs(sw / 2 - 1)

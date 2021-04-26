@@ -1,5 +1,6 @@
 import TypeShapeGenerator from '../TypeShapeGenerator.js'
 import UnitHelper from '../../../utils/UnitHelper.js'
+import MeshComponent from '../../../component/internal/MeshComponent.js'
 
 /**
  * @abstract
@@ -9,7 +10,8 @@ export default class ArrowShapeGenerator extends TypeShapeGenerator{
     /**
      * @override
      */
-    draw(meshComponent, transformComponent, dataContext) {
+    draw(unit, dataContext) {
+        const meshComponent = unit.getComponent(MeshComponent)
         const {context} = dataContext
         const vertices = this.convertVertices(meshComponent.getVertices(), meshComponent.getSize())
         context.beginPath()

@@ -8,7 +8,7 @@ export default class RectCrossShapeGenerator extends TypeShapeGenerator{
     /**
      * @override
      */
-    draw(meshComponent, transformComponent, dataContext){
+    draw(unit, dataContext){
         const {context, scaleSize} = dataContext
         const {width, height} = scaleSize
         context.beginPath()

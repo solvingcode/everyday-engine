@@ -2,7 +2,7 @@ import World from '../../../world/World.js'
 import ListMenuItem from '../list/ListMenuItem.js'
 import Layout from '../../Layout.js'
 import ComponentElementMenuItem from './ComponentElementMenuItem.js'
-import UnitSelector from '../../../manager/UnitSelector.js'
+import UnitSelector from '../../../selector/UnitSelector.js'
 
 export default class ComponentListMenuItem extends ListMenuItem {
 

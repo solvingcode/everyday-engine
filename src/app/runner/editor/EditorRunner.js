@@ -9,7 +9,7 @@ import ScaleAction from '../action/edit/ScaleAction.js'
 import RotateAction from '../action/edit/RotateAction.js'
 import {objectCanvas} from '../../core/Context.js'
 import Vector from '../../utils/Vector.js'
-import UnitSelector from '../../manager/UnitSelector.js'
+import UnitSelector from '../../selector/UnitSelector.js'
 import UnitHelper from '../../utils/UnitHelper.js'
 import GUIMoveXComponent from '../../component/internal/gui/move/GUIMoveXComponent.js'
 import Size from '../../pobject/Size.js'
@@ -59,11 +59,13 @@ class EditorRunner extends Runner {
         const stateManager = StateManager.get()
         if (!stateManager.isRunning() && !stateManager.isFormUpdating()) {
             this.updateMouseWheel(stateManager, mouse)
-            this.handleUnitEvent(stateManager, mouse)
-            this.selectUnits(stateManager, mouse)
-            this.focusUnits(mouse)
-            this.setupEditor(stateManager)
-            this.createGridEntity()
+            if(!World.get().getScriptManager().getSelected()){
+                this.handleUnitEvent(stateManager, mouse)
+                this.selectUnits(stateManager, mouse)
+                this.focusUnits(mouse)
+                this.setupEditor(stateManager)
+                this.createGridEntity()
+            }
         }
     }
 

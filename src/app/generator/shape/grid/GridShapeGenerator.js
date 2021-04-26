@@ -3,13 +3,15 @@
  */
 import TypeShapeGenerator from '../TypeShapeGenerator.js'
 import Size from '../../../pobject/Size.js'
+import MeshComponent from '../../../component/internal/MeshComponent.js'
 
 export default class GridShapeGenerator extends TypeShapeGenerator{
 
     /**
      * @override
      */
-    draw(meshComponent, transformComponent, dataContext){
+    draw(unit, dataContext){
+        const meshComponent = unit.getComponent(MeshComponent)
         const {context, scaleSize} = dataContext
         const sizeScaleRate = scaleSize.width / meshComponent.getSize().getWidth()
         const chunkEachSize = 40 * sizeScaleRate
