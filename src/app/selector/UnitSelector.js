@@ -10,9 +10,17 @@ export default class UnitSelector {
      * @return {Unit[]}
      */
     getSelected(world) {
-        return world.getUnitManager().getUnits().filter((unit) =>
+        return this.getUnits(world).filter((unit) =>
             unit.isSelected() &&
             !unit.getComponent(GUIPendingComponent))
+    }
+
+    /**
+     * @param {World} world
+     * @return {Unit[]}
+     */
+    getUnits(world){
+        return world.getUnitManager().getUnits()
     }
 
     /**
@@ -56,7 +64,7 @@ export default class UnitSelector {
      * @return {Unit[]}
      */
     getAll(world, point) {
-        return world.getUnitManager().getUnits().filter((unit) =>
+        return this.getUnits(world).filter((unit) =>
             UnitHelper.isInside(unit, point)
         )
     }
@@ -69,7 +77,7 @@ export default class UnitSelector {
      * @return {Unit[]}
      */
     getInsideArea(world, point, size) {
-        return world.getUnitManager().getUnits().filter((unit) =>
+        return this.getUnits(world).filter((unit) =>
             UnitHelper.isInsideArea(unit, point, size)
         )
     }
@@ -99,7 +107,7 @@ export default class UnitSelector {
      * @param {World} world
      */
     unselectAll(world) {
-        world.getUnitManager().getUnits().map((unit) => unit.unselect())
+        this.getUnits(world).map((unit) => unit.unselect())
     }
 
     /**
@@ -108,7 +116,7 @@ export default class UnitSelector {
      * @param {World} world
      */
     unfocusAll(world) {
-        world.getUnitManager().getUnits().map((unit) => unit.unfocus())
+        this.getUnits(world).map((unit) => unit.unfocus())
     }
 
     /**

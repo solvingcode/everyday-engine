@@ -2,7 +2,7 @@ import UnitHelper from '../../utils/UnitHelper.js'
 import World from '../../world/World.js'
 import GraphNodeUnitInstant from '../../unit/instant/type/internal/graph/GraphNodeUnitInstant.js'
 import Vector from '../../utils/Vector.js'
-import UnitSelector from '../../selector/UnitSelector.js'
+import ScriptGraphSelector from '../../selector/ScriptGraphSelector.js'
 
 export default class ScriptGraph {
 
@@ -67,15 +67,37 @@ export default class ScriptGraph {
     }
 
     /**
+     * @param {Vector} position
+     * @return {Unit}
+     */
+    findFirstUnitByPosition(position) {
+        return ScriptGraphSelector.get().get(null, position)
+    }
+
+    /**
      * @param {Mouse} mouse
      * @return {Unit[]}
      */
     focusUnits(mouse) {
-        const unitSelector = UnitSelector.get()
-        unitSelector.unfocusAll(this)
+        const unitSelector = ScriptGraphSelector.get()
+        const world = World.get()
+        unitSelector.unfocusAll(null)
         const currentScenePosition = new Vector(mouse.currentScenePosition)
-        const vector3d = this.getCamera().fromCameraScale(currentScenePosition)
-        unitSelector.focus(this, this.getWorldPosition(vector3d))
+        const vector3d = world.getCamera().fromCameraScale(currentScenePosition)
+        unitSelector.focus(null, world.getWorldPosition(vector3d))
+    }
+
+    /**
+     * @param {Mouse} mouse
+     * @return {Unit[]}
+     */
+    selectUnits(mouse) {
+        const unitSelector = ScriptGraphSelector.get()
+        const world = World.get()
+        const currentScenePosition = new Vector(mouse.currentScenePosition)
+        const vector3d = world.getCamera().fromCameraScale(currentScenePosition)
+        unitSelector.unselectAll(null)
+        return unitSelector.select(null, world.getWorldPosition(vector3d), null)
     }
 
     /**

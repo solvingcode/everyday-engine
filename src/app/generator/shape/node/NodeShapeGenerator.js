@@ -1,6 +1,7 @@
 import TypeShapeGenerator from '../TypeShapeGenerator.js'
 import NodeComponent from '../../../component/internal/gui/node/NodeComponent.js'
 import {NODE_TYPES} from '../../../flow/node/ANode.js'
+import GUIPropertyComponent from '../../../component/internal/gui/property/GUIPropertyComponent.js'
 
 /**
  * @abstract
@@ -9,9 +10,11 @@ export default class NodeShapeGenerator extends TypeShapeGenerator {
 
     /**
      * @override
+     * @TODO: need some refactoring
      */
     draw(unit, dataContext) {
         const nodeComponent = unit.getComponent(NodeComponent)
+        const guiPropertyComponent = unit.getComponent(GUIPropertyComponent)
         const title = nodeComponent.getTitle()
         const type = nodeComponent.getType()
         const inputs = nodeComponent.getInputs()
@@ -25,19 +28,20 @@ export default class NodeShapeGenerator extends TypeShapeGenerator {
         const padding = 10
         const boxColor = '#0f1013'
         const baseInputColor = '#ffffff'
+        const colorFocused = '#555555'
         const fontColor = '#ffffff'
         const heightHead = fontSize + padding * 2
         let headColor
         if (type === NODE_TYPES.FUNCTION) {
-            headColor = '#172136'
+            headColor = '#2c3f66'
         } else if (type === NODE_TYPES.EVENT) {
-            headColor = '#361717'
+            headColor = '#5e2222'
         } else if (type === NODE_TYPES.CONSTANT) {
             headColor = '#343030'
         }
 
         // box
-        context.shadowColor = headColor
+        context.shadowColor = guiPropertyComponent.isFocused() ? colorFocused : headColor
         context.shadowBlur = 10
         context.fillStyle = boxColor
         context.strokeStyle = headColor
