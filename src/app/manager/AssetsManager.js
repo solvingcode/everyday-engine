@@ -1,9 +1,10 @@
 import AssetsManagerData from '../project/data/AssetsManagerData.js'
 import Asset from '../asset/Asset.js'
 import FileHelper from '../utils/FileHelper.js'
-import AssetImage from '../asset/types/AssetImage.js'
-import AssetScriptXml from '../asset/types/AssetScriptXml.js'
+import AssetImage from '../asset/types/image/AssetImage.js'
+import AssetScriptXml from '../asset/types/script/AssetScriptXml.js'
 import Folder from '../asset/Folder.js'
+import ClassScript from '../flow/ClassScript.js'
 
 /**
  * @class {AssetsManager}
@@ -38,6 +39,22 @@ export default class AssetsManager extends AssetsManagerData {
      */
     async createAsset(data, assetType, assetName, folderId) {
         return this.setAsset(data, assetType, assetName)
+    }
+
+    /**
+     * @param {Folder} folder
+     * @param {Class<AssetScript>} scriptType
+     * @param {AssetScriptGenerator} scriptGenerator
+     */
+    async createScript(folder, scriptType, scriptGenerator) {
+        const assetName = this.generateUniqAssetName('NewScript', folder.getId())
+        const flow = new ClassScript(assetName)
+        return this.createAsset(
+                scriptGenerator.generate(flow),
+                scriptType,
+                assetName,
+                folder.getId()
+            )
     }
 
     /**
@@ -235,7 +252,7 @@ export default class AssetsManager extends AssetsManagerData {
     generateUniqAssetName(name, folderId) {
         let attempt = 0, newName, existAsset
         do {
-            newName = attempt ? `${name} (${attempt})` : name
+            newName = attempt ? `${name}${attempt}` : name
             existAsset = this.findAssetByName(newName, folderId)
             attempt++
         } while (existAsset && attempt < NAME_ATTEMPT_MAX)

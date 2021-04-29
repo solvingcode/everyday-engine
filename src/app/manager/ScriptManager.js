@@ -51,7 +51,7 @@ export default class ScriptManager extends ScriptManagerData {
     }
 
     /**
-     * @param {Document} data
+     * @param {Document|string} data
      * @return {AScript}
      */
     load(data){
@@ -67,7 +67,14 @@ export default class ScriptManager extends ScriptManagerData {
      * @return {AScript}
      */
     getSelected(){
-        const assetTab = TabManager.get().getSelectedContentData()
+        const assetTab = this.getSelectedAsset()
         return assetTab && this.findByName(assetTab.getName())
+    }
+
+    /**
+     * @return {Asset}
+     */
+    getSelectedAsset(){
+        return TabManager.get().getSelectedContentData()
     }
 }

@@ -96,7 +96,7 @@ button.selected, button.hidden.selected, button.locked.selected{
 
 #app-el-body .body-item.has-content textarea{
     border: 0;
-    color: #f4f4f4;
+    color: #dcdcdc;
     background-color: #222222;
     outline: none;
 }

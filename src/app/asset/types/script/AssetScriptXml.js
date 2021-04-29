@@ -1,29 +1,16 @@
-import AssetType from './AssetType.js'
-import World from '../../world/World.js'
-import TabManager from '../../manager/TabManager.js'
-import EditScriptContent from '../../content/EditScriptContent.js'
-import AssetScriptXmlGenerator from '../../generator/AssetScriptXmlGenerator.js'
-import EditGraphScriptContent from '../../content/EditGraphScriptContent.js'
+import World from '../../../world/World.js'
+import TabManager from '../../../manager/TabManager.js'
+import AssetScriptXmlGenerator from '../../../generator/script/AssetScriptXmlGenerator.js'
+import EditGraphScriptContent from '../../../content/EditGraphScriptContent.js'
+import EditScriptContent from '../../../content/EditScriptContent.js'
+import AssetScript from './AssetScript.js'
 
-/**
- * @class {AssetImage}
- */
-export default class AssetScriptXml extends AssetType{
-
-    /**
-     * @type {string}
-     */
-    name
+export default class AssetScriptXml extends AssetScript{
 
     /**
      * @type {Document}
      */
     data
-
-    /**
-     * @type {string}
-     */
-    error
 
     constructor() {
         super()
@@ -71,6 +58,7 @@ export default class AssetScriptXml extends AssetType{
     }
 
     /**
+     * @override
      * @param {Document} data
      */
     setData(data){
@@ -78,24 +66,11 @@ export default class AssetScriptXml extends AssetType{
     }
 
     /**
+     * @override
      * @return {Document}
      */
     getData(){
         return this.data
-    }
-
-    /**
-     * @param {string} error
-     */
-    setError(error){
-        this.error = error
-    }
-
-    /**
-     * @return {string}
-     */
-    getError(){
-        return this.error
     }
 
     /**

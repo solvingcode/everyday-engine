@@ -74,6 +74,14 @@ class World extends WorldData {
     }
 
     /**
+     * @param {string} name
+     * @return {Unit}
+     */
+    findUnitByName(name) {
+        return this.getUnitManager().findUnitByName(name)
+    }
+
+    /**
      * Add a unit to the world
      * @param {Vector} position
      * @param {Class} type

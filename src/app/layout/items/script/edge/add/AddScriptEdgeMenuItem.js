@@ -1,6 +1,8 @@
 import AddScriptEdgeSubmitMenuItem from './AddScriptEdgeSubmitMenuItem.js'
 import AddScriptEdgeFormMenuItem from './AddScriptEdgeFormMenuItem.js'
 import PanelMenuItem from '../../../panel/PanelMenuItem.js'
+import World from '../../../../../world/World.js'
+import AssetScriptXml from '../../../../../asset/types/script/AssetScriptXml.js'
 
 export default class AddScriptEdgeMenuItem extends PanelMenuItem {
     constructor(parent) {
@@ -15,6 +17,14 @@ export default class AddScriptEdgeMenuItem extends PanelMenuItem {
             new AddScriptEdgeFormMenuItem(this, formData),
             new AddScriptEdgeSubmitMenuItem(this, formData)
         ]
+    }
+
+    /**
+     * @override
+     */
+    isValid() {
+        const asset = World.get().getScriptManager().getSelectedAsset()
+        return super.isValid() && asset && asset.getType() instanceof AssetScriptXml
     }
 }
 

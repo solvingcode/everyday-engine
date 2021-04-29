@@ -113,6 +113,14 @@ export default class AFunction extends FunctionData{
     }
 
     /**
+     * @param {number} index
+     * @return {DynamicAttribute}
+     */
+    findInputByIndex(index){
+        return DynamicAttributeHelper.findByIndex(this.inputs, index)
+    }
+
+    /**
      * @param {string} type
      * @param {*} defaultValue
      */

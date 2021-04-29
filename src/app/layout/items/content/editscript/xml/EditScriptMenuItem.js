@@ -1,4 +1,4 @@
-import ContentItemMenuItem from '../ContentItemMenuItem.js'
+import ContentItemMenuItem from '../../ContentItemMenuItem.js'
 import EditScriptFormMenuItem from './EditScriptFormMenuItem.js'
 import EditScriptErrorMenuItem from './EditScriptErrorMenuItem.js'
 

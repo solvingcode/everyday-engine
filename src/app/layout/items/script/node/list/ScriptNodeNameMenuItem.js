@@ -9,7 +9,7 @@ export default class ScriptNodeNameMenuItem extends MenuItem {
     constructor(parent, node) {
         super({
             name: 'sitemap',
-            title: node.getName(),
+            title: `${node.getName()} [${node.getType()}]`,
             stateCode: '',
             type: Layout.type.ICON_TEXT,
             zone: parent.zone

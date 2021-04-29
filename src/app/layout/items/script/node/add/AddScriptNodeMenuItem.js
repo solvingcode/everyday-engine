@@ -1,6 +1,8 @@
 import AddScriptNodeSubmitMenuItem from './AddScriptNodeSubmitMenuItem.js'
 import AddScriptNodeFormMenuItem from './AddScriptNodeFormMenuItem.js'
 import PanelMenuItem from '../../../panel/PanelMenuItem.js'
+import World from '../../../../../world/World.js'
+import AssetScriptXml from '../../../../../asset/types/script/AssetScriptXml.js'
 
 export default class AddScriptNodeMenuItem  extends PanelMenuItem {
     constructor(parent) {
@@ -15,6 +17,14 @@ export default class AddScriptNodeMenuItem  extends PanelMenuItem {
             new AddScriptNodeFormMenuItem(this, formData),
             new AddScriptNodeSubmitMenuItem(this, formData)
         ]
+    }
+
+    /**
+     * @override
+     */
+    isValid() {
+        const asset = World.get().getScriptManager().getSelectedAsset()
+        return super.isValid() && asset && asset.getType() instanceof AssetScriptXml
     }
 }
 

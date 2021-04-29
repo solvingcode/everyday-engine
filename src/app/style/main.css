@@ -154,6 +154,9 @@ h4{
     height: calc(100% - 60px);
     resize: none;
     padding: 20px 30px;
+    font-size: 16px;
+    letter-spacing: 1px;
+    font-weight: 100;
 }
 
 #app-el-body .body-item.has-content p{

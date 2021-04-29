@@ -1,6 +1,6 @@
-import AssetType from './AssetType.js'
-import Mesh from '../../core/Mesh.js'
-import ImageHelper from '../../utils/ImageHelper.js'
+import AssetType from '../AssetType.js'
+import Mesh from '../../../core/Mesh.js'
+import ImageHelper from '../../../utils/ImageHelper.js'
 
 /**
  * @class {AssetImage}
@@ -52,4 +52,13 @@ export default class AssetImage extends AssetType{
         return ImageHelper.getDataURL(this.data.context.canvas, this.data.getSize())
     }
 
+    async generate(source, asset) {
+        return Promise.resolve(undefined)
+    }
+
+    /**
+     * @override
+     */
+    open(asset, options) {
+    }
 }

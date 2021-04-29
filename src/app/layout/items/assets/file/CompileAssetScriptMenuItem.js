@@ -1,7 +1,7 @@
 import MenuItem from '../../../MenuItem.js'
 import Layout from '../../../Layout.js'
 import World from '../../../../world/World.js'
-import AssetScriptXml from '../../../../asset/types/AssetScriptXml.js'
+import AssetScript from '../../../../asset/types/script/AssetScript.js'
 
 export default class CompileAssetScriptMenuItem extends MenuItem {
     constructor(parent) {
@@ -20,6 +20,6 @@ export default class CompileAssetScriptMenuItem extends MenuItem {
      */
     isValid() {
         const selectedAsset = World.get().getAssetsManager().getSelectedAsset()
-        return super.isValid() && selectedAsset && (selectedAsset.getType() instanceof AssetScriptXml)
+        return super.isValid() && selectedAsset && (selectedAsset.getType() instanceof AssetScript)
     }
 }

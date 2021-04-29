@@ -37,9 +37,7 @@ export default class StackRegister {
      * @return {*}
      */
     pop(name){
-        const value = this.register[name]
-        delete this.register[name]
-        return value
+        return this.register[name]
     }
 
     /**

@@ -1,10 +1,11 @@
 import ListElementButtonUI from './ListElementButtonUI.js'
 import ImageUI from '../components/image/ImageUI.js'
-import AssetImage from '../../../../asset/types/AssetImage.js'
-import AssetScriptXml from '../../../../asset/types/AssetScriptXml.js'
+import AssetImage from '../../../../asset/types/image/AssetImage.js'
+import AssetScriptXml from '../../../../asset/types/script/AssetScriptXml.js'
 import IconUI from '../components/icon/IconUI.js'
 import World from '../../../../world/World.js'
 import {STATUS} from '../../../../project/data/AScriptData.js'
+import AssetScriptCode from '../../../../asset/types/script/AssetScriptCode.js'
 
 export default class AssetElementButtonUI extends ListElementButtonUI {
 
@@ -40,9 +41,10 @@ export default class AssetElementButtonUI extends ListElementButtonUI {
             case AssetImage:
                 return ImageUI.getImage(bind.getType().getData(), {width: imageWidth, height: imageHeight})
             case AssetScriptXml:
+            case AssetScriptCode:
                 return this.getIconScriptAsset(bind)
             default:
-                throw new TypeError(`Asset: No icon founded for "${type.constructor}"`)
+                throw new TypeError(`Asset: No icon founded for "${type.constructor.name}"`)
         }
     }
 

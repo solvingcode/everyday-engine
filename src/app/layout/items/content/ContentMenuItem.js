@@ -2,9 +2,11 @@ import MenuItem from '../../MenuItem.js'
 import Layout from '../../Layout.js'
 import TabManager from '../../../manager/TabManager.js'
 import EditScriptContent from '../../../content/EditScriptContent.js'
-import EditScriptMenuItem from './editscript/EditScriptMenuItem.js'
+import EditScriptMenuItem from './editscript/xml/EditScriptMenuItem.js'
 import EditGraphScriptContent from '../../../content/EditGraphScriptContent.js'
-import EditGraphScriptMenuItem from './editscript/EditGraphScriptMenuItem.js'
+import EditGraphScriptMenuItem from './editscript/graph/EditGraphScriptMenuItem.js'
+import EditScriptCodeContent from '../../../content/EditScriptCodeContent.js'
+import EditScriptCodeMenuItem from './editscript/code/EditScriptCodeMenuItem.js'
 
 export default class ContentMenuItem extends MenuItem {
 
@@ -53,6 +55,8 @@ export default class ContentMenuItem extends MenuItem {
                 return EditScriptMenuItem
             case EditGraphScriptContent:
                 return EditGraphScriptMenuItem
+            case EditScriptCodeContent:
+                return EditScriptCodeMenuItem
             default:
                 throw new TypeError(`ContentMenuItem: ${content.constructor.name} not supported`)
         }

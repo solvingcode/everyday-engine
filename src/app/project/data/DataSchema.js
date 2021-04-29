@@ -28,8 +28,8 @@ import ClassScript from '../../flow/ClassScript.js'
 import EventNode from '../../flow/node/EventNode.js'
 import FunctionNode from '../../flow/node/FunctionNode.js'
 import ConstantNode from '../../flow/node/ConstantNode.js'
-import AssetScriptXml from '../../asset/types/AssetScriptXml.js'
-import AssetImage from '../../asset/types/AssetImage.js'
+import AssetScriptXml from '../../asset/types/script/AssetScriptXml.js'
+import AssetImage from '../../asset/types/image/AssetImage.js'
 import FunctionRegistry from '../../flow/function/FunctionRegistry.js'
 import AFunction from '../../flow/function/AFunction.js'
 import OnMouseClickEvent from '../../flow/event/native/OnMouseClickEvent.js'
@@ -48,6 +48,8 @@ import AUnit from '../../flow/unit/AUnit.js'
 import GetWorldPositionFunction from '../../flow/function/native/unit/GetWorldPositionFunction.js'
 import VectorFunction from '../../flow/function/native/structure/VectorFunction.js'
 import SetWorldPositionFunction from '../../flow/function/native/unit/SetWorldPositionFunction.js'
+import AssetScriptCode from '../../asset/types/script/AssetScriptCode.js'
+import GetUnitFunction from '../../flow/function/native/unit/GetUnitFunction.js'
 
 /**
  * @class {DataSchema}
@@ -98,7 +100,9 @@ class DataSchema {
         {id: 310, type: AUnit},
         {id: 320, type: GetWorldPositionFunction},
         {id: 330, type: VectorFunction},
-        {id: 340, type: SetWorldPositionFunction}
+        {id: 340, type: SetWorldPositionFunction},
+        {id: 350, type: AssetScriptCode},
+        {id: 360, type: GetUnitFunction}
     ]
 
     static exclude = [

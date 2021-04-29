@@ -30,11 +30,16 @@ export default class AScript extends AScriptData{
                 break
             case ConstantNode:
                 nodeSource = new AConstant(DynamicAttributeHelper.findTypeOfValue(value), value)
-                registry.register(nodeSource)
+                const existNodeSource = registry.getInstance(nodeSource.getName())
+                if(existNodeSource){
+                    nodeSource = existNodeSource
+                }else{
+                    registry.tryRegister(nodeSource)
+                }
                 break
             case UnitNode:
                 nodeSource = new AUnit(TYPES.NUMBER, value)
-                registry.register(nodeSource)
+                registry.tryRegister(nodeSource)
                 break
             default:
                 throw new TypeError(`Script Create Node: "${nodeClass.name}" not supported`)
@@ -112,6 +117,14 @@ export default class AScript extends AScriptData{
      */
     findNodeById(id){
         return this.nodes.find(node => node.getId() === id)
+    }
+
+    /**
+     * @param {string} name
+     * @return {ANode}
+     */
+    findNodeByName(name){
+        return this.nodes.find(node => node.getName() === name)
     }
 
     compile(){

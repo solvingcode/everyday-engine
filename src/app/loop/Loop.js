@@ -9,6 +9,7 @@ import IsKeyDownFunction from '../flow/function/native/basic/IsKeyDownFunction.j
 import GetWorldPositionFunction from '../flow/function/native/unit/GetWorldPositionFunction.js'
 import VectorFunction from '../flow/function/native/structure/VectorFunction.js'
 import SetWorldPositionFunction from '../flow/function/native/unit/SetWorldPositionFunction.js'
+import GetUnitFunction from '../flow/function/native/unit/GetUnitFunction.js'
 
 class Loop {
 
@@ -48,6 +49,7 @@ class Loop {
             //Unit
             new GetWorldPositionFunction(),
             new SetWorldPositionFunction(),
+            new GetUnitFunction(),
 
             //Structure
             new VectorFunction()

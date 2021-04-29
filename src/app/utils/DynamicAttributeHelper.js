@@ -90,6 +90,15 @@ export default class DynamicAttributeHelper {
     }
 
     /**
+     * @param {DynamicAttribute[]} target
+     * @param {number} index
+     * @return {DynamicAttribute}
+     */
+    static findByIndex(target, index){
+        return target.find((attribute, attrIndex) => attrIndex === index)
+    }
+
+    /**
      * @param {string|number|boolean} value
      * @return {string}
      */

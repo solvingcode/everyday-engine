@@ -1,7 +1,7 @@
-import MenuItem from '../../../MenuItem.js'
-import Layout from '../../../Layout.js'
+import MenuItem from '../../../../MenuItem.js'
+import Layout from '../../../../Layout.js'
 
-export default class EditScriptErrorMenuItem extends MenuItem {
+export default class EditScriptCodeErrorMenuItem extends MenuItem {
     constructor(parent) {
         super({
             name: '',

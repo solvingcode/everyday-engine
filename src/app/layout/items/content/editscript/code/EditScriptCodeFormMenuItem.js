@@ -1,7 +1,7 @@
-import Layout from '../../../Layout.js'
-import FormMenuItem from '../../form/FormMenuItem.js'
+import Layout from '../../../../Layout.js'
+import FormMenuItem from '../../../form/FormMenuItem.js'
 
-export default class EditScriptFormMenuItem extends FormMenuItem {
+export default class EditScriptCodeFormMenuItem extends FormMenuItem {
     /**
      * @param {MenuItem} parent
      */
@@ -36,6 +36,7 @@ export default class EditScriptFormMenuItem extends FormMenuItem {
             const script = asset.getType().parse()
             script.reset()
             asset.setName(script.getName())
+            asset.getType().setError('')
         }catch (e) {
             asset.getType().setError(e.message)
         }

@@ -1,11 +1,11 @@
 import Action from '../Action.js'
 import World from '../../../world/World.js'
-import AssetScriptXml from '../../../asset/types/script/AssetScriptXml.js'
-import AssetScriptXmlGenerator from '../../../generator/script/AssetScriptXmlGenerator.js'
+import AssetScriptCode from '../../../asset/types/script/AssetScriptCode.js'
+import AssetScriptCodeGenerator from '../../../generator/script/AssetScriptCodeGenerator.js'
 
-export default class AddScriptAction extends Action {
+export default class AddScriptCodeAction extends Action {
 
-    static STATE = 'ACTION_ADD_SCRIPT'
+    static STATE = 'ACTION_ADD_CODE_SCRIPT_CODE'
 
     /**
      * @override
@@ -13,7 +13,7 @@ export default class AddScriptAction extends Action {
     static run() {
         const assetsManager = World.get().getAssetsManager()
         const selectedFolder = assetsManager.getSelectedFolder() || assetsManager.getRootFolder()
-        assetsManager.createScript(selectedFolder, AssetScriptXml, AssetScriptXmlGenerator.get())
+        assetsManager.createScript(selectedFolder, AssetScriptCode, AssetScriptCodeGenerator.get())
             .then(asset => asset.open() || asset.select())
         return true
     }

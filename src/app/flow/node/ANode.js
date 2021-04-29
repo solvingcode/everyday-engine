@@ -70,6 +70,13 @@ export default class ANode extends ANodeData {
     }
 
     /**
+     * @return {string}
+     */
+    getType(){
+        return NodeHelper.getNodeType(this)
+    }
+
+    /**
      * @param {boolean} selected
      */
     setSelected(selected){

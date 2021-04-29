@@ -1,5 +1,5 @@
 import Content from './Content.js'
-import AssetScriptXml from '../asset/types/AssetScriptXml.js'
+import AssetScriptXml from '../asset/types/script/AssetScriptXml.js'
 import ScriptGraph from '../flow/graph/ScriptGraph.js'
 import World from '../world/World.js'
 

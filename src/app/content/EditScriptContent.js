@@ -1,5 +1,5 @@
 import Content from './Content.js'
-import AssetScriptXml from '../asset/types/AssetScriptXml.js'
+import AssetScriptXml from '../asset/types/script/AssetScriptXml.js'
 
 export default class EditScriptContent extends Content{
 

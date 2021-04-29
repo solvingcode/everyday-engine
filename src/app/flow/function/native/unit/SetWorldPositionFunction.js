@@ -22,7 +22,11 @@ export default class SetWorldPositionFunction extends AFunction{
      * @override
      */
     execute() {
-        const unit = World.get().findUnitById(parseInt(this.getInputValue('target')))
+        const target = this.getInputValue('target')
+        const unit = World.get().findUnitById(parseInt(target))
+        if(!unit){
+            throw new TypeError(`SetWorldPosition: ${target} not found`)
+        }
         unit.getComponent(TransformComponent).setPosition(this.getInputValue('vector'))
     }
 }

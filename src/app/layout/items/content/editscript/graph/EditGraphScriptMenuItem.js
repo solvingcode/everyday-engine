@@ -1,4 +1,4 @@
-import ContentItemMenuItem from '../ContentItemMenuItem.js'
+import ContentItemMenuItem from '../../ContentItemMenuItem.js'
 
 export default class EditGraphScriptMenuItem extends ContentItemMenuItem{
 

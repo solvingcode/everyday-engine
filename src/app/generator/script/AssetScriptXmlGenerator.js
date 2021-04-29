@@ -1,14 +1,16 @@
-import NodeHelper from '../utils/NodeHelper.js'
-import ScriptHelper from '../utils/ScriptHelper.js'
+import NodeHelper from '../../utils/NodeHelper.js'
+import ScriptHelper from '../../utils/ScriptHelper.js'
+import AssetScriptGenerator from './AssetScriptGenerator.js'
 
 /**
  * @abstract
  */
-export default class AssetScriptXmlGenerator {
+export default class AssetScriptXmlGenerator extends AssetScriptGenerator{
 
     static instance
 
     /**
+     * @override
      * @param {AScript} flow
      * @return {string}
      */
@@ -46,10 +48,7 @@ export default class AssetScriptXmlGenerator {
      * @return {AssetScriptXmlGenerator}
      */
     static get() {
-        if (!this.instance) {
-            this.instance = new this()
-        }
-        return this.instance
+        return super.get()
     }
 
 }
