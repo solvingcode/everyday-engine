@@ -47,11 +47,17 @@ export default class StackRegister {
         return this.register[CONSTANTS.RESULT]
     }
 
+    delete(name){
+        delete this.register[name]
+    }
+
     /**
      * @return {*}
      */
     popSignal(){
-        return this.pop(CONSTANTS.SIGNAL)
+        const signal = this.pop(CONSTANTS.SIGNAL)
+        this.delete(CONSTANTS.SIGNAL)
+        return signal
     }
 
     /**
