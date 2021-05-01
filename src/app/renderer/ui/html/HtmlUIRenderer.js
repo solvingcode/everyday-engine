@@ -365,7 +365,8 @@ class HtmlUIRenderer extends UIRenderer {
         childs.forEach(node => {
             const index = parseInt(node.getAttribute('data-index'))
             const parentIndex = parseInt(node.getAttribute('data-parent-index'))
-            const item = Menu.get().findItemByZone(index, node.getAttribute('data-zone'))
+            const zone = node.getAttribute('data-zone')
+            const item = Menu.get().findItemByZone(index, zone)
             if (!item || (item.parent && item.parent.index !== parentIndex)) {
                 node.remove()
             } else {

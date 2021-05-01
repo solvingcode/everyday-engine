@@ -2,18 +2,17 @@ import Action from '../Action.js'
 import World from '../../../world/World.js'
 import StateManager from '../../../state/StateManager.js'
 
-export default class SelectFolderAction extends Action {
+export default class SelectAssetAction extends Action {
 
-    static STATE = 'ACTION_SELECT_FOLDER'
+    static STATE = 'ACTION_SELECT_ASSET'
 
     /**
      * @override
      */
     static run() {
-        const {folder} = StateManager.get().getNextProgressData(this.STATE)
-        World.get().getAssetsManager().getFolders().forEach(element => element.unselect())
+        const {bind} = StateManager.get().getNextProgressData(this.STATE)
         World.get().getAssetsManager().getAssets().forEach(element => element.unselect())
-        folder.select()
+        bind.select()
         return true
     }
 

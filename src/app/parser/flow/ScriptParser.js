@@ -21,7 +21,7 @@ export default class ScriptParser extends Parser {
             case String:
                 type = 'class'
                 if(type === 'class'){
-                    return ClassScriptCodeParser.parse(data)
+                    return ClassScriptCodeParser.parse(data.replace(/(<([^>]+)>)/gi, ''))
                 }else{
                     throw new TypeError(`Script data type "${type}" not supported`)
                 }

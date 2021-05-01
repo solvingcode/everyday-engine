@@ -54,10 +54,10 @@ class AssetData extends Data {
     }
 
     /**
-     * @param {number} folderId
+     * @param {number|string} folderId
      */
     setFolderId(folderId){
-        this.folderId = folderId
+        this.folderId = parseInt(folderId)
     }
 
     /**

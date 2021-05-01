@@ -50,7 +50,8 @@ Layout.form = {
     FILE: 'file',
     COLOR: 'color',
     RANGE: 'range',
-    TEXTAREA: 'textarea'
+    TEXTAREA: 'textarea',
+    WYSIWYG: 'wysiwyg'
 }
 
 export default Layout

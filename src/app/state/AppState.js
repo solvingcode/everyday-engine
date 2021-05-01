@@ -149,36 +149,6 @@ class AppState {
     }
 
     /**
-     * Remove all states from the application
-     */
-    removeAllState() {
-        this.state = []
-    }
-
-    /**
-     * Set an uniq state for a specific group (
-     * Remove all state which contains the same prefix
-     * value and add the new state to the same group.
-     * @param {String} stateGroup
-     * @param {String} type
-     */
-    setUniqStateByGroup(stateGroup, type) {
-        const state = `${stateGroup}_${type}`
-        const isHistory = !(this.findStateIndex(state, true).length)
-        this.removeState(stateGroup, false)
-        this.addState(state, isHistory)
-    }
-
-    /**
-     * Set a state.
-     * @param {String} state
-     */
-    setState(state) {
-        const isHistory = !(this.findStateIndex(state, true).length)
-        this.addState(state, isHistory)
-    }
-
-    /**
      * Reset the state of the application
      */
     reset() {
@@ -351,6 +321,9 @@ AppState.States = {
     ACTION_SELECT_FOLDER_START: {history: false},
     ACTION_SELECT_FOLDER_PROGRESS: {history: false},
     ACTION_SELECT_FOLDER_STOP: {history: false},
+    ACTION_SELECT_ASSET_START: {history: false},
+    ACTION_SELECT_ASSET_PROGRESS: {history: false},
+    ACTION_SELECT_ASSET_STOP: {history: false},
     ACTION_ADD_SCRIPT_START: {history: false},
     ACTION_ADD_SCRIPT_PROGRESS: {history: false},
     ACTION_ADD_SCRIPT_STOP: {history: false},
@@ -368,7 +341,13 @@ AppState.States = {
     ACTION_ADD_SCRIPT_NODE_STOP: {history: false},
     ACTION_ADD_SCRIPT_EDGE_START: {history: false},
     ACTION_ADD_SCRIPT_EDGE_PROGRESS: {history: false},
-    ACTION_ADD_SCRIPT_EDGE_STOP: {history: false}
+    ACTION_ADD_SCRIPT_EDGE_STOP: {history: false},
+    ACTION_DELETE_ASSET_START: {history: false},
+    ACTION_DELETE_ASSET_PROGRESS: {history: false},
+    ACTION_DELETE_ASSET_STOP: {history: false},
+    ACTION_DELETE_FOLDER_START: {history: false},
+    ACTION_DELETE_FOLDER_PROGRESS: {history: false},
+    ACTION_DELETE_FOLDER_STOP: {history: false}
 }
 
 export default AppState

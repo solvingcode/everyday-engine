@@ -9,6 +9,7 @@ import ObjectHelper from '../../../utils/ObjectHelper.js'
 import ColorMenuItem from './ColorMenuItem.js'
 import RangeMenuItem from './RangeMenuItem.js'
 import TextareaMenuItem from './TextareaMenuItem.js'
+import WysiwygMenuItem from './WysiwygMenuItem.js'
 
 /**
  * Form menu item
@@ -52,6 +53,14 @@ class FormMenuItem extends MenuItem {
      * @param {*} value
      */
     postUpdate(value) {
+    }
+
+    /**
+     * @param {*} value
+     * @return {boolean}
+     */
+    preUpdate(value){
+        return true
     }
 
     /**
@@ -265,6 +274,8 @@ class FormMenuItem extends MenuItem {
                 return RangeMenuItem
             case Layout.form.TEXTAREA:
                 return TextareaMenuItem
+            case Layout.form.WYSIWYG:
+                return WysiwygMenuItem
             default:
                 throw new TypeError(`Form item "${field.type}" not defined`)
         }

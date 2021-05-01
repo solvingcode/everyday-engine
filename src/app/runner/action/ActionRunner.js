@@ -50,6 +50,9 @@ import DeleteEdgeAction from './script/DeleteEdgeAction.js'
 import AddNodeAction from './script/AddNodeAction.js'
 import AddEdgeAction from './script/AddEdgeAction.js'
 import AddScriptCodeAction from './assets/AddScriptCodeAction.js'
+import SelectAssetAction from './assets/SelectAssetAction.js'
+import DeleteAssetAction from './assets/DeleteAssetAction.js'
+import DeleteFolderAction from './assets/DeleteFolderAction.js'
 
 /**
  * Action Runner class.
@@ -119,6 +122,9 @@ class ActionRunner extends Runner {
             SELECT_TAB: SelectTabAction,
             CLOSE_TAB: CloseTabAction,
             SELECT_FOLDER: SelectFolderAction,
+            SELECT_ASSET: SelectAssetAction,
+            DELETE_FOLDER: DeleteFolderAction,
+            DELETE_ASSET: DeleteAssetAction,
             ADD_SCRIPT: AddScriptAction,
             ADD_CODE_SCRIPT: AddScriptCodeAction,
             DELETE_SCRIPT_NODE: DeleteNodeAction,

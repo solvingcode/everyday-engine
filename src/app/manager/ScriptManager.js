@@ -9,7 +9,7 @@ export default class ScriptManager extends ScriptManagerData {
      * @param {string} name
      * @return {AScript}
      */
-    findByName(name){
+    findByName(name) {
         return this.getScripts().find(script => script.getName() === name)
     }
 
@@ -18,8 +18,8 @@ export default class ScriptManager extends ScriptManagerData {
      * @param {Function} type
      * @return {AScript}
      */
-    create(name, type){
-        if(type.prototype instanceof AScript){
+    create(name, type) {
+        if (type.prototype instanceof AScript) {
             const script = new type(name)
             this.tryAdd(script)
             return script
@@ -29,10 +29,24 @@ export default class ScriptManager extends ScriptManagerData {
 
     /**
      * @param {AScript} script
+     * @param {FunctionRegistry} functionRegistry
+     */
+    delete(script, functionRegistry) {
+        const scriptIndex = this.scripts.findIndex(pScript => pScript === script)
+        if (scriptIndex >= 0) {
+            this.scripts.splice(scriptIndex, 1)
+            script.delete(functionRegistry)
+        } else {
+            throw new TypeError(`Script cannot be deleted ("${script.getName()}" not found)`)
+        }
+    }
+
+    /**
+     * @param {AScript} script
      */
     tryAdd(script) {
         const existScript = this.findByName(script.getName())
-        if(existScript){
+        if (existScript) {
             throw new TypeError(`Script with name "${script.getName()}" already exist!`)
         }
         this.scripts.push(script)
@@ -43,9 +57,9 @@ export default class ScriptManager extends ScriptManagerData {
      */
     add(script) {
         const indexScript = this.scripts.findIndex(pScript => pScript.getName() === script.getName())
-        if(indexScript >= 0){
+        if (indexScript >= 0) {
             this.scripts[indexScript] = script
-        }else{
+        } else {
             this.scripts.push(script)
         }
     }
@@ -54,9 +68,9 @@ export default class ScriptManager extends ScriptManagerData {
      * @param {Document|string} data
      * @return {AScript}
      */
-    load(data){
+    load(data) {
         const script = ScriptParser.parse(data)
-        if(script){
+        if (script) {
             this.add(script)
             return script
         }
@@ -66,7 +80,7 @@ export default class ScriptManager extends ScriptManagerData {
     /**
      * @return {AScript}
      */
-    getSelected(){
+    getSelected() {
         const assetTab = this.getSelectedAsset()
         return assetTab && this.findByName(assetTab.getName())
     }
@@ -74,7 +88,7 @@ export default class ScriptManager extends ScriptManagerData {
     /**
      * @return {Asset}
      */
-    getSelectedAsset(){
+    getSelectedAsset() {
         return TabManager.get().getSelectedContentData()
     }
 }

@@ -50,6 +50,13 @@ export default class AScript extends AScriptData{
     }
 
     /**
+     * @param {FunctionRegistry} functionRegistry
+     */
+    delete(functionRegistry){
+        functionRegistry.removeInstancesByClass(this.getName())
+    }
+
+    /**
      * @param {ANode} node
      * @param {number} id
      */

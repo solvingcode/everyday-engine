@@ -17,13 +17,33 @@ export default class EditAssetFormMenuItem extends FormMenuItem {
      * @override
      */
     generateFields() {
+        const folders = World.get().getAssetsManager().getFolders()
         return [
             {
                 bind: 'name',
                 label: 'Asset',
                 type: Layout.form.TEXT
+            },
+            {
+                bind: 'folderId',
+                label: 'Move to',
+                type: Layout.form.DROPDOWN,
+                list: folders.map(folder => ({
+                    value: folder.getId(),
+                    label: folder.getName()
+                }))
             }
         ]
+    }
+
+    /**
+     * @override
+     */
+    preUpdate(value) {
+        if(!value){
+            throw new TypeError(`Cannot move Asset (target folder is required)`)
+        }
+        return super.preUpdate(value)
     }
 
     /**

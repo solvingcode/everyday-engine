@@ -5,6 +5,8 @@ import AddFolderMenuItem from './folder/AddFolderMenuItem.js'
 import AddAssetSceneMenuItem from './file/AddAssetSceneMenuItem.js'
 import CompileAssetScriptMenuItem from './file/CompileAssetScriptMenuItem.js'
 import EditAssetScriptMenuItem from './file/EditAssetScriptMenuItem.js'
+import DeleteAssetScriptMenuItem from './file/DeleteAssetScriptMenuItem.js'
+import DeleteFolderMenuItem from './folder/DeleteFolderMenuItem.js'
 
 export default class AssetsActionsMenuItem  extends MenuItem {
     constructor(parent) {
@@ -20,7 +22,9 @@ export default class AssetsActionsMenuItem  extends MenuItem {
             new AddFolderMenuItem(this),
             new AddAssetSceneMenuItem(this),
             new CompileAssetScriptMenuItem(this),
-            new EditAssetScriptMenuItem(this)
+            new EditAssetScriptMenuItem(this),
+            new DeleteAssetScriptMenuItem(this),
+            new DeleteFolderMenuItem(this)
         ]
     }
 }

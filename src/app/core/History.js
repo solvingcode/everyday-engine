@@ -1,4 +1,5 @@
-import Storage from './Storage.js'
+import World from '../world/World.js'
+import ObjectHelper from '../utils/ObjectHelper.js'
 
 /**
  * Handle the history of action executed.
@@ -15,38 +16,77 @@ class History {
      */
     static instance = null
 
+    /**
+     * @type {HistoryItem[]}
+     */
+    list
+
+    /**
+     * @type {Object}
+     */
+    dataRecord
+
     constructor() {
         this.list = []
-        this.storage = Storage.get()
+        this.dataRecord = {}
         this.maxList = 10
     }
 
     static get() {
-        if (!History.instance) {
-            History.instance = new History()
+        if (!this.instance) {
+            this.instance = new this()
         }
-        return History.instance
+        return this.instance
+    }
+
+    record(){
+        this.dataRecord = this.getData()
+    }
+
+    save(){
+        const newRecord = this.getData()
+        const result = ObjectHelper.compare(this.dataRecord, newRecord)
+        this.push(result)
     }
 
     /**
-     * Get the last element in the list
-     * @return {Object}
+     * @return {World}
+     */
+    getData(){
+        return _.cloneDeep(World.get())
+    }
+
+    restore(){
+        const result = this.pop()
+        const record = this.getData()
+        if(result){
+            Object.keys(result).forEach(path => {
+                const value = result[path]
+                console.log(path, value)
+            })
+        }
+    }
+
+    /**
+     * @return {HistoryItem}
      */
     pop() {
         return this.list.length && this.list.pop()
     }
 
     /**
-     * Push data into the history
-     * @param {String} type
-     * @param {Object} data
+     * @param {Object} result
      */
-    push(type, data) {
+    push(result) {
         if (this.list.length > this.maxList) {
             this.list.shift()
         }
-        this.list.push(_.cloneDeep(this.storage.update(type, data)))
+        this.list.push(result)
     }
+
+    /**
+     * @typedef {Object} HistoryItem
+     */
 
 }
 

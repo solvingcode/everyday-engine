@@ -6,6 +6,9 @@ import ListSelectElementActionsMenuItem from '../../list/ListSelectElementAction
  */
 export default class AssetElementFormMenuItem extends ListSelectElementActionsMenuItem {
     constructor(parent, data) {
-        super(parent, data, {type: Layout.type.ASSET_ELEMENT})
+        super(parent, data, {
+            stateCode: 'ACTION_SELECT_ASSET',
+            type: Layout.type.ASSET_ELEMENT
+        })
     }
 }

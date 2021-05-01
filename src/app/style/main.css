@@ -159,6 +159,19 @@ h4{
     font-weight: 100;
 }
 
+#app-el-body .body-item.has-content .form-wysiwyg > div{
+    width: 100%;
+    height: calc(100% - 85px);
+    resize: none;
+    padding: 20px 30px;
+    font-size: 16px;
+    letter-spacing: 0.1rem;
+    font-weight: 100;
+    outline: none;
+    box-sizing: border-box;
+    cursor: text;
+}
+
 #app-el-body .body-item.has-content p{
     width: 100%;
     box-sizing: border-box;

@@ -42,6 +42,30 @@ export default class AssetsManager extends AssetsManagerData {
     }
 
     /**
+     * @param {Asset} asset
+     */
+    deleteAsset(asset) {
+        const indexAsset = this.assets.findIndex(pAsset => pAsset === asset)
+        if (indexAsset >= 0) {
+            this.assets.splice(indexAsset, 1)
+        } else {
+            throw new TypeError(`Asset cannot be deleted ("${asset.getName()}" not found)`)
+        }
+    }
+
+    /**
+     * @param {Folder} folder
+     */
+    deleteFolder(folder) {
+        const indexFolder = this.folders.findIndex(pFolder => pFolder === folder)
+        if (indexFolder >= 0) {
+            this.folders.splice(indexFolder, 1)
+        } else {
+            throw new TypeError(`Folder cannot be deleted ("${folder.getName()}" not found)`)
+        }
+    }
+
+    /**
      * @param {Folder} folder
      * @param {Class<AssetScript>} scriptType
      * @param {AssetScriptGenerator} scriptGenerator
@@ -50,11 +74,11 @@ export default class AssetsManager extends AssetsManagerData {
         const assetName = this.generateUniqAssetName('NewScript', folder.getId())
         const flow = new ClassScript(assetName)
         return this.createAsset(
-                scriptGenerator.generate(flow),
-                scriptType,
-                assetName,
-                folder.getId()
-            )
+            scriptGenerator.generate(flow),
+            scriptType,
+            assetName,
+            folder.getId()
+        )
     }
 
     /**
