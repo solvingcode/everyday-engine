@@ -42,10 +42,10 @@ class Storage {
      * Update the storage and validate data
      * @param {string} type
      * @param {Object|Array} data
-     * @param {boolean} serialize
+     * @param {boolean} forGame
      */
-    async updateAndValidate(type, data, serialize = true) {
-        const validData = await SchemaValidator.get().validate(type, data)
+    async updateAndValidate(type, data, forGame = false) {
+        const validData = await SchemaValidator.get().validate(type, data, forGame)
         this.data[type] = _.cloneDeep(validData)
         return this
     }
@@ -57,7 +57,7 @@ class Storage {
      * @param {Object} target
      */
     async load(type, data, target) {
-        await this.updateAndValidate(type, data, false)
+        await this.updateAndValidate(type, data)
         target.set(_.cloneDeep(this.data[type]))
     }
 
@@ -68,6 +68,15 @@ class Storage {
      */
     async save(type, data) {
         await this.updateAndValidate(type, data)
+    }
+
+    /**
+     * Validate and save given data to the storage (for building game)
+     * @param {string} type
+     * @param {Object|Array} data
+     */
+    async saveForGame(type, data) {
+        await this.updateAndValidate(type, data, true)
     }
 
     /**

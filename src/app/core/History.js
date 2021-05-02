@@ -59,7 +59,7 @@ class History {
      * @return {World}
      */
     async getData(){
-        return await SchemaValidator.get().validate(Storage.type.WORLD, World.get())
+        return await SchemaValidator.get().validate(Storage.type.WORLD, World.get(), false)
     }
 
     async restore(){
@@ -77,7 +77,7 @@ class History {
                 await SchemaValidator.get().updateFromPath(world, indexedPath, value.path, value.data)
             }
         }
-        const worldDataValidated = await SchemaValidator.get().validate(Storage.type.WORLD, world)
+        const worldDataValidated = await SchemaValidator.get().validate(Storage.type.WORLD, world, false)
         World.get().set(worldDataValidated)
     }
 

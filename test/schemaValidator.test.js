@@ -10,15 +10,15 @@ import TransformComponent from '../src/app/component/internal/TransformComponent
 
 test('Schema serialization validate Vector', async function () {
     const data = {x: "100", y: "200"}
-    const result = await SchemaValidator.get().validate('world.camera.position', data)
+    const result = await SchemaValidator.get().validate('world.camera.position', data, false)
     expect(result).toStrictEqual(new Vector({x: 100, y: 200}))
 })
 
 test('Schema serialization validate TRUE Boolean', async function () {
     const dataString = "true"
     const dataBoolean = true
-    const resultString = await SchemaValidator.get().validate('world.showGrid', dataString)
-    const resultBoolean = await SchemaValidator.get().validate('world.showGrid', dataBoolean)
+    const resultString = await SchemaValidator.get().validate('world.showGrid', dataString, false)
+    const resultBoolean = await SchemaValidator.get().validate('world.showGrid', dataBoolean, false)
     expect(resultString).toEqual(true)
     expect(resultBoolean).toEqual(true)
 })
@@ -26,8 +26,8 @@ test('Schema serialization validate TRUE Boolean', async function () {
 test('Schema serialization validate FALSE Boolean', async function () {
     const dataString = "test"
     const dataBoolean = false
-    const resultString = await SchemaValidator.get().validate('world.showGrid', dataString)
-    const resultBoolean = await SchemaValidator.get().validate('world.showGrid', dataBoolean)
+    const resultString = await SchemaValidator.get().validate('world.showGrid', dataString, false)
+    const resultBoolean = await SchemaValidator.get().validate('world.showGrid', dataBoolean, false)
     expect(resultString).toEqual(false)
     expect(resultBoolean).toEqual(false)
 })
@@ -65,7 +65,7 @@ test('Schema serialization validate One Dynamic type if null', async function ()
 })
 
 test('Schema validate deserialize units', async function () {
-    const result = await SchemaValidator.get().validate('world.unitManager.units', unitsData)
+    const result = await SchemaValidator.get().validate('world.unitManager.units', unitsData, false)
     expect(result.length).toBe(1)
     expect(result[0].getComponents().length).toBe(4)
     expect(result[0].getComponent(TransformComponent).getPosition()).toStrictEqual(new Vector({x: 100, y: 150}))
@@ -80,12 +80,12 @@ test('Schema validate physics engine', async function () {
     expected.setIsRunning(false)
     expected.setPhysicsEngine(undefined)
     expected.setToRestart(false)
-    const result = await SchemaValidator.get().validate('world.physics', data)
+    const result = await SchemaValidator.get().validate('world.physics', data, false)
     expect(result).toStrictEqual(expected)
 })
 
 test('Schema validate world', async function () {
-    const result = await SchemaValidator.get().validate('world', worldData)
+    const result = await SchemaValidator.get().validate('world', worldData, false)
     const units = result.getUnitManager().getUnits()
     expect(units.length).toBe(1)
     expect(units[0].getComponents().length).toBe(4)

@@ -109,6 +109,9 @@ class DataSchema {
         {id: 360, type: GetUnitFunction}
     ]
 
+    /**
+     * Class to be excluded during serialization
+     */
     static exclude = [
         GUIPropertyComponent,
         MoveXUnitInstant,
@@ -125,6 +128,15 @@ class DataSchema {
     ]
 
     /**
+     * Class to be excluded during serialization for exported game
+     */
+    static excludeGame = [
+        AssetScriptXml,
+        AssetScriptCode,
+        ClassScript
+    ]
+
+    /**
      * @param {Class} type
      * @return {number}
      */
@@ -137,11 +149,13 @@ class DataSchema {
     }
 
     /**
-     * @param {Class} type
+     * @param {*} type
+     * @param {boolean} isForGame
      * @return {boolean}
      */
-    static isExcluded(type){
-        return this.exclude.includes(type)
+    static isExcluded(type, isForGame = false) {
+        return this.exclude.includes(type) ||
+            (isForGame && this.excludeGame.includes(type))
     }
 
     /**

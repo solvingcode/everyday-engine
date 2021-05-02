@@ -17,20 +17,21 @@ class SchemaValidator {
 
     /**
      * @param {string} path
-     * @param {*} data
-     * @param {*} parentPathData
+     * @param {Object|Array} data
+     * @param {boolean} forGame
+     * @param {Object|Array} parentPathData
      * @return {*}
      */
-    async validate(path, data, parentPathData = null) {
+    async validate(path, data, forGame, parentPathData = null) {
         const pathPrototype = this.getPathPrototype(path, parentPathData)
         const pathDynamicPrototypeName = this.getPathDynamicPrototypeName(path, parentPathData)
-        const dataValidated = await this.validateByPrototype(data, pathPrototype)
+        const dataValidated = await this.validateByPrototype(data, pathPrototype, forGame)
         if (!_.isString(pathPrototype) && dataValidated !== null && dataValidated !== undefined) {
             const props = ObjectHelper.getProperties(data, pathPrototype)
             for (const iProp in props) {
                 const prop = props[iProp]
                 const childPath = `${path}.${prop.key}` + (pathDynamicPrototypeName ? `[${pathDynamicPrototypeName}]` : '')
-                const childDataValidated = await this.validate(childPath, await prop.value, data)
+                const childDataValidated = await this.validate(childPath, await prop.value, forGame, data)
                 if (childDataValidated !== null &&
                     childDataValidated !== undefined &&
                     prop.key !== 'dataId') {
@@ -63,7 +64,7 @@ class SchemaValidator {
             const childPath = `${path}.${propData2.key}` + (pathDynamicPrototypeName ? `[${pathDynamicPrototypeName}]` : '')
             const childIndexedPath = `${indexedPath}.${propData2.index !== null ? propData2.index : propData2.key}`
             const childDataCompared = await this.compare(
-                childPath, propData1 ? propData1.value : null, propData2.value, data2, childIndexedPath)
+                childPath, propData1 ? await propData1.value : null, await propData2.value, data2, childIndexedPath)
             if (childDataCompared !== null &&
                 childDataCompared !== undefined) {
                 result = {...result, ...childDataCompared}
@@ -114,15 +115,16 @@ class SchemaValidator {
     /**
      * @param {*} data
      * @param {*} prototype
+     * @param {boolean} forGame
      * @return {*}
      */
-    async validateByPrototype(data, prototype) {
+    async validateByPrototype(data, prototype, forGame) {
         let dataValidated = null
         if(data !== null && data !== undefined){
             if (_.isString(prototype)) {
                 dataValidated = PrimitiveHelper.validate(data, prototype)
             } else if (prototype.prototype instanceof Data) {
-                dataValidated = DataHelper.validate(data, prototype)
+                dataValidated = DataHelper.validate(data, prototype, forGame)
             } else {
                 dataValidated = new prototype()
             }
