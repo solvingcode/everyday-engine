@@ -1,5 +1,6 @@
 import StateManager from '../state/StateManager.js'
-import History from '../core/History.js'
+import ClientError from './type/ClientError.js'
+import SystemError from './type/SystemError.js'
 
 class ExceptionHandler {
 
@@ -17,12 +18,14 @@ class ExceptionHandler {
      * @param {Error} e
      */
     handle(e) {
+        if(!(e instanceof ClientError) && !(e instanceof SystemError)){
+            throw e
+        }
         try {
             StateManager.get().stopAll()
         } catch (error) {
             StateManager.get().reset()
         }
-        History.get().restore()
         this.setLastError(e)
     }
 

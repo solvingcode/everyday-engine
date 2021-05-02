@@ -104,8 +104,7 @@ class SchemaValidator {
                             parentTargetElement[indexedPathElement] = undefined
                         }
                     }else{
-                        const dataValidated = await this.validate(schemaPath, data, parentTargetElement)
-                        await ObjectHelper.setProperty(parentTargetElement, indexedPathElement, dataValidated)
+                        await ObjectHelper.setProperty(parentTargetElement, indexedPathElement, data)
                     }
                 }
             }
