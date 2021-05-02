@@ -17,6 +17,7 @@ class AppState {
     /**
      * Get the state of the application (drawing ellipse,
      * starting/pausing simulation, moving object, ...).
+     * @return {string[]}
      */
     getState() {
         return this.state
@@ -215,13 +216,13 @@ AppState.States = {
     ACTION_UNDO_STOP: {history: false},
     ACTION_MOVE_START: {history: true, cursor: CURSOR.MOVE},
     ACTION_MOVE_PROGRESS: {history: false},
-    ACTION_MOVE_STOP: {history: false},
+    ACTION_MOVE_STOP: {history: true},
     ACTION_SCALE_START: {history: true, cursor: CURSOR.RESIZE},
     ACTION_SCALE_PROGRESS: {history: false},
-    ACTION_SCALE_STOP: {history: false},
+    ACTION_SCALE_STOP: {history: true},
     ACTION_ROTATE_START: {history: true, cursor: CURSOR.MOVE},
     ACTION_ROTATE_PROGRESS: {history: false},
-    ACTION_ROTATE_STOP: {history: false},
+    ACTION_ROTATE_STOP: {history: true},
     ACTION_MOVE_UP_START: {history: true},
     ACTION_MOVE_UP_PROGRESS: {history: false},
     ACTION_MOVE_UP_STOP: {history: false},
@@ -315,9 +316,9 @@ AppState.States = {
     ACTION_CLOSE_TAB_START: {history: false},
     ACTION_CLOSE_TAB_PROGRESS: {history: false},
     ACTION_CLOSE_TAB_STOP: {history: false},
-    ACTION_ADD_FOLDER_START: {history: false},
+    ACTION_ADD_FOLDER_START: {history: true},
     ACTION_ADD_FOLDER_PROGRESS: {history: false},
-    ACTION_ADD_FOLDER_STOP: {history: false},
+    ACTION_ADD_FOLDER_STOP: {history: true},
     ACTION_SELECT_FOLDER_START: {history: false},
     ACTION_SELECT_FOLDER_PROGRESS: {history: false},
     ACTION_SELECT_FOLDER_STOP: {history: false},
@@ -345,9 +346,9 @@ AppState.States = {
     ACTION_DELETE_ASSET_START: {history: false},
     ACTION_DELETE_ASSET_PROGRESS: {history: false},
     ACTION_DELETE_ASSET_STOP: {history: false},
-    ACTION_DELETE_FOLDER_START: {history: false},
+    ACTION_DELETE_FOLDER_START: {history: true},
     ACTION_DELETE_FOLDER_PROGRESS: {history: false},
-    ACTION_DELETE_FOLDER_STOP: {history: false}
+    ACTION_DELETE_FOLDER_STOP: {history: true}
 }
 
 export default AppState

@@ -59,7 +59,7 @@ class EditorRunner extends Runner {
         const stateManager = StateManager.get()
         if (!stateManager.isRunning() && !stateManager.isFormUpdating()) {
             this.updateMouseWheel(stateManager, mouse)
-            if(!World.get().getScriptManager().getSelected()){
+            if (!World.get().getScriptManager().getSelected()) {
                 this.handleUnitEvent(stateManager, mouse)
                 this.selectUnits(stateManager, mouse)
                 this.focusUnits(mouse)
@@ -126,7 +126,9 @@ class EditorRunner extends Runner {
      */
     updateMouseWheel(stateManager, mouse) {
         if (mouse.isButtonPressed(MouseButton.MIDDLE)) {
-            stateManager.startState(MoveCameraAction.STATE, 1)
+            if (!stateManager.isProgress(MoveCameraAction.STATE)) {
+                stateManager.startState(MoveCameraAction.STATE, 1)
+            }
         }
         if (mouse.getMouseWheel().y && mouse.target === objectCanvas) {
             stateManager.startState(ZoomInOutCameraAction.STATE, 1,

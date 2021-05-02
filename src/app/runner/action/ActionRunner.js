@@ -15,7 +15,6 @@ import RotateUpAction from './edit/RotateUpAction.js'
 import StyleColorAction from './edit/StyleColorAction.js'
 import SelectEntityAction from './edit/SelectEntityAction.js'
 import SelectElementAction from './edit/SelectElementAction.js'
-import PushHistoryAction from './history/PushHistoryAction.js'
 import AttachCameraAction from './camera/AttachCameraAction.js'
 import DetachCameraAction from './camera/DetachCameraAction.js'
 import MoveCameraAction from './camera/MoveCameraAction.js'
@@ -130,10 +129,7 @@ class ActionRunner extends Runner {
             DELETE_SCRIPT_NODE: DeleteNodeAction,
             DELETE_SCRIPT_EDGE: DeleteEdgeAction,
             ADD_SCRIPT_NODE: AddNodeAction,
-            ADD_SCRIPT_EDGE: AddEdgeAction,
-
-            //must be the last action
-            HISTORY_PUSH: PushHistoryAction
+            ADD_SCRIPT_EDGE: AddEdgeAction
         }
         const selectedUnits = this.unitSelector.getSelected(World.get())
         Object.entries(typeActions).forEach(typeAction => {
@@ -141,11 +137,9 @@ class ActionRunner extends Runner {
             const action = typeAction[1]
             if (action.shouldStart(type, stateManager)) {
                 stateManager.progressNextState(type)
-            }
-            if (action.shouldProgress(type, stateManager)) {
+            }else if (action.shouldProgress(type, stateManager)) {
                 this.runAction(action, mouse, selectedUnits) && stateManager.stopNextState(type)
-            }
-            if (action.shouldStop(type, stateManager)) {
+            }else if (action.shouldStop(type, stateManager)) {
                 this.stopState(action, mouse, selectedUnits) && stateManager.endNextState(type)
             }
         })

@@ -1,4 +1,5 @@
 import AppState from './AppState.js'
+import History from '../core/History.js'
 
 /**
  * Manage the state of the application
@@ -36,7 +37,7 @@ class StateManager {
      * @param {string} state
      * @return {boolean}
      */
-    isActionState(state){
+    isActionState(state) {
         const catMatch = new RegExp(`^${AppState.Categories.ACTION}`)
         return !!state.match(catMatch)
     }
@@ -45,9 +46,25 @@ class StateManager {
      * @param {string} state
      * @return {boolean}
      */
-    isEditState(state){
+    isEditState(state) {
         const catMatch = new RegExp(`^${AppState.Categories.DRAW}`)
         return !!state.match(catMatch)
+    }
+
+    /**
+     * @param {string} state
+     * @return {boolean}
+     */
+    isStartState(state) {
+        return !!state.match(/_START$/)
+    }
+
+    /**
+     * @param {string} state
+     * @return {boolean}
+     */
+    isStopState(state) {
+        return !!state.match(/_STOP$/)
     }
 
     /**
@@ -89,7 +106,7 @@ class StateManager {
             throw new TypeError('Action id must be defined')
         }
         const state = `${type}_START`
-        this.appState.addState(state)
+        this.addState(state, null)
         this.appState.setDataByTopic(state, [{id, ...data}])
     }
 
@@ -105,8 +122,7 @@ class StateManager {
         }
         const state = `${type}_PROGRESS`
         const data = this.getStartData(type, id)
-        this.appState.addState(state)
-        data && this.appState.setData({[state]: [data]})
+        this.addState(state, data)
         this.removeStartState(type, id)
     }
 
@@ -122,8 +138,7 @@ class StateManager {
         }
         const state = `${type}_STOP`
         const data = this.getProgressData(type, id)
-        this.appState.addState(state)
-        data && this.appState.setData({[state]: [data]})
+        this.addState(state, data)
         this.removeStartState(type, id)
         this.removeProgressState(type, id)
     }
@@ -195,8 +210,30 @@ class StateManager {
      * @param {string} type
      * @return {boolean}
      */
-    hasAnyState(type){
+    hasAnyState(type) {
         return this.isStart(type) || this.isStop(type) || this.isProgress(type)
+    }
+
+    /**
+     * @return {string[]}
+     */
+    getStartStates() {
+        return this.appState.getState().filter(state => this.isStartState(state))
+    }
+
+    /**
+     * @return {string[]}
+     */
+    getStopStates() {
+        return this.appState.getState().filter(state => this.isStop(this.getType(state)))
+    }
+
+    /**
+     * @param {string} state
+     * @return {boolean}
+     */
+    hasHistory(state) {
+        return this.appState.getIsHistory(state)
     }
 
     /**
@@ -210,7 +247,7 @@ class StateManager {
     /**
      * @return {boolean}
      */
-    isFormUpdating(){
+    isFormUpdating() {
         return this.isProgress('ACTION_FORM_UPDATE')
     }
 
@@ -222,8 +259,21 @@ class StateManager {
     addHistory(state) {
         const isHistory = this.appState.getIsHistory(state)
         if (isHistory) {
-            this.startState('ACTION_HISTORY_PUSH', 1)
+            if (this.isStartState(state)) {
+                History.get().record()
+            } else if (this.isStopState(state)) {
+                History.get().save()
+            }
         }
+    }
+
+    /**
+     * @param {string} state
+     * @param {*} data
+     */
+    addState(state, data) {
+        this.appState.addState(state)
+        data && this.appState.setData({[state]: [data]})
     }
 
     /**
@@ -404,7 +454,7 @@ class StateManager {
     /**
      * Search for all action states (Category ACTION) and stop them all
      */
-    stopAllAction(){
+    stopAllAction() {
         const states = this.appState.getState().filter(state =>
             this.hasAnyState(this.getType(state)) && this.isActionState(state))
         this.stopStates(states)
@@ -413,7 +463,7 @@ class StateManager {
     /**
      * @param {string[]} states
      */
-    stopStates(states){
+    stopStates(states) {
         states.forEach(state => {
             const type = this.getType(state)
             type && this.stopNextState(type)

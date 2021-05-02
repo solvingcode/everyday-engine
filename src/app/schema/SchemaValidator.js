@@ -29,7 +29,7 @@ class SchemaValidator {
             for (const iProp in props) {
                 const prop = props[iProp]
                 const childPath = `${path}.${prop.key}` + (pathDynamicPrototypeName ? `[${pathDynamicPrototypeName}]` : '')
-                const childDataValidated = await this.validate(childPath, prop.value, data)
+                const childDataValidated = await this.validate(childPath, await prop.value, data)
                 if (childDataValidated !== null &&
                     childDataValidated !== undefined &&
                     prop.key !== 'dataId') {
@@ -38,6 +38,77 @@ class SchemaValidator {
             }
         }
         return dataValidated
+    }
+
+    /**
+     * @param {string} path
+     * @param {Object} data1
+     * @param {Object} data2
+     * @param {*} parentPathData
+     * @param {string} indexedPath
+     * @TODO: make it more readable
+     *
+     * @return {*}
+     */
+    async compare(path, data1, data2, parentPathData = null, indexedPath = path) {
+        let result = {}
+        const pathPrototype = this.getPathPrototype(path, parentPathData)
+        const pathDynamicPrototypeName = this.getPathDynamicPrototypeName(path, parentPathData)
+        const propsData1 = ObjectHelper.getProperties(await data1, pathPrototype)
+        const propsData2 = ObjectHelper.getProperties(await data2, pathPrototype)
+        for (const iProp in propsData2) {
+            const propData2 = propsData2[iProp]
+            const propData1 = propsData1 ? propsData1[iProp] : null
+            const childPath = `${path}.${propData2.key}` + (pathDynamicPrototypeName ? `[${pathDynamicPrototypeName}]` : '')
+            const childIndexedPath = `${indexedPath}.${propData2.index !== null ? propData2.index : propData2.key}`
+            const childDataCompared = await this.compare(
+                childPath, propData1 ? propData1.value : null, propData2.value, data2, childIndexedPath)
+            if (childDataCompared !== null &&
+                childDataCompared !== undefined) {
+                result = {...result, ...childDataCompared}
+            }
+        }
+        if((data1 && !_.isObject(data2)) || (_.isObject(data2) && !data1)){
+            if (data1 !== data2) {
+                result[indexedPath] = {path, data: await data2}
+            }
+        }
+        return result
+    }
+
+    /**
+     * @param {Object} target
+     * @param {string} indexedPath
+     * @param {string} schemaPath
+     * @param {*} data
+     * @return {*}
+     */
+    async updateFromPath(target, indexedPath, schemaPath, data){
+        const indexedPathSplit = indexedPath.split('.')
+        let targetElement = target
+        let parentTargetElement = null
+        if(indexedPathSplit){
+            indexedPathSplit.splice(0, 1)
+        }
+        for(const iIndexedPath in indexedPathSplit){
+            const indexedPathElement = indexedPathSplit[iIndexedPath]
+            parentTargetElement = targetElement
+            if(targetElement !== null && targetElement !== undefined){
+                targetElement = parentTargetElement[indexedPathElement]
+                if(parseInt(iIndexedPath) === indexedPathSplit.length - 1){
+                    if(data === undefined){
+                        if(_.isArray(targetElement)){
+                            targetElement.splice(parseInt(indexedPathElement), 1)
+                        }else if(targetElement){
+                            parentTargetElement[indexedPathElement] = undefined
+                        }
+                    }else{
+                        const dataValidated = await this.validate(schemaPath, data, parentTargetElement)
+                        await ObjectHelper.setProperty(parentTargetElement, indexedPathElement, dataValidated)
+                    }
+                }
+            }
+        }
     }
 
     /**

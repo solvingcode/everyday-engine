@@ -1,5 +1,6 @@
 import World from '../world/World.js'
-import ObjectHelper from '../utils/ObjectHelper.js'
+import SchemaValidator from '../schema/SchemaValidator.js'
+import Storage from './Storage.js'
 
 /**
  * Handle the history of action executed.
@@ -32,6 +33,9 @@ class History {
         this.maxList = 10
     }
 
+    /**
+     * @return {History}
+     */
     static get() {
         if (!this.instance) {
             this.instance = new this()
@@ -39,32 +43,42 @@ class History {
         return this.instance
     }
 
-    record(){
-        this.dataRecord = this.getData()
+    async record(){
+        this.dataRecord = await this.getData()
     }
 
-    save(){
-        const newRecord = this.getData()
-        const result = ObjectHelper.compare(this.dataRecord, newRecord)
+    async save(){
+        const newRecord = await this.getData()
+        const resultLeftJoin = await SchemaValidator.get().compare(Storage.type.WORLD, this.dataRecord, newRecord)
+        const resultRightJoin = await SchemaValidator.get().compare(Storage.type.WORLD, newRecord, this.dataRecord)
+        const result = {after: resultLeftJoin, before: resultRightJoin}
         this.push(result)
     }
 
     /**
      * @return {World}
      */
-    getData(){
-        return _.cloneDeep(World.get())
+    async getData(){
+        return await SchemaValidator.get().validate(Storage.type.WORLD, World.get())
     }
 
-    restore(){
+    async restore(){
         const result = this.pop()
-        const record = this.getData()
+        const world = await this.getData()
         if(result){
-            Object.keys(result).forEach(path => {
-                const value = result[path]
-                console.log(path, value)
-            })
+            const dataToDelete = result.after
+            const dataToAdd = result.before
+            for(const indexedPath in dataToDelete){
+                const value = dataToDelete[indexedPath]
+                await SchemaValidator.get().updateFromPath(world, indexedPath, value.path, undefined)
+            }
+            for(const indexedPath in dataToAdd){
+                const value = dataToAdd[indexedPath]
+                await SchemaValidator.get().updateFromPath(world, indexedPath, value.path, value.data)
+            }
         }
+        const worldDataValidated = await SchemaValidator.get().validate(Storage.type.WORLD, world)
+        World.get().set(worldDataValidated)
     }
 
     /**
@@ -75,7 +89,7 @@ class History {
     }
 
     /**
-     * @param {Object} result
+     * @param {HistoryItem} result
      */
     push(result) {
         if (this.list.length > this.maxList) {
@@ -85,7 +99,7 @@ class History {
     }
 
     /**
-     * @typedef {Object} HistoryItem
+     * @typedef {{after: {path: string, data: *}, before: {path: string, data: *}}} HistoryItem
      */
 
 }

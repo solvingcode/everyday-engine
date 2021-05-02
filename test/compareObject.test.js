@@ -1,9 +1,13 @@
 import {expect} from '@jest/globals'
-import ObjectHelper from '../src/app/utils/ObjectHelper.js'
+import SchemaValidator from '../src/app/schema/SchemaValidator.js'
+import World from '../src/app/world/World.js'
 
 test('Compare two objects for history', async function () {
-    const object1 = {a: 1, b: {a: 1, e: 5}}
-    const object2 = {a: 2, c: 3, b: {a: 4}}
-    const result = ObjectHelper.compare(object1, object2)
-    console.log(result)
+    const object1 = new World()
+    const object2 = new World()
+    object2.setShowGrid(true)
+    const expectedKeyChanged = ['world.assetsManager.folders.element.id', 'world.showGrid']
+    const result = await SchemaValidator.get().compare('world', object1, object2)
+    expect(Object.keys(result)).toEqual(expectedKeyChanged)
+    expect(result['world.showGrid']).toEqual(true)
 })

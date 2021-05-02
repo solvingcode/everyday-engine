@@ -50,6 +50,10 @@ import VectorFunction from '../../flow/function/native/structure/VectorFunction.
 import SetWorldPositionFunction from '../../flow/function/native/unit/SetWorldPositionFunction.js'
 import AssetScriptCode from '../../asset/types/script/AssetScriptCode.js'
 import GetUnitFunction from '../../flow/function/native/unit/GetUnitFunction.js'
+import ScaleXUnitInstant from '../../unit/instant/type/internal/scale/ScaleXUnitInstant.js'
+import ScaleYUnitInstant from '../../unit/instant/type/internal/scale/ScaleYUnitInstant.js'
+import RotateZUnitInstant from '../../unit/instant/type/internal/rotate/RotateZUnitInstant.js'
+import ScaleFreeUnitInstant from '../../unit/instant/type/internal/scale/ScaleFreeUnitInstant.js'
 
 /**
  * @class {DataSchema}
@@ -113,7 +117,11 @@ class DataSchema {
         GridUnitInstant,
         GridXUnitInstant,
         GridYUnitInstant,
-        SelectionUnitInstant
+        SelectionUnitInstant,
+        ScaleXUnitInstant,
+        ScaleYUnitInstant,
+        ScaleFreeUnitInstant,
+        RotateZUnitInstant
     ]
 
     /**

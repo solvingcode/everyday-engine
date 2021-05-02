@@ -35,26 +35,30 @@ class ObjectHelper {
     /**
      * @param {Object} object
      * @param {Function|ArrayConstructor} prototype
-     * @returns {{key: string, value: *}[]}
+     * @returns {{index: number|null, key: string, value: *}[]}
      */
     static getProperties(object, prototype) {
         if (prototype === Array) {
-            return _.isArray(object) ? object.map(value => ({key: 'element', value})) : []
+            return _.isArray(object) ? object.map((value, index) => ({index, key: 'element', value})) : []
         } else if (_.isObject(object)) {
-            const tempPrototype = new prototype()
-            return Object.getOwnPropertyNames(tempPrototype)
-                .map(prop => {
-                    let value
-                    if (object) {
-                        if (object.constructor === Object) {
-                            value = object[prop]
-                        } else {
-                            const getter = ClassHelper.getGetter(object, prop)
-                            value = object[getter]()
+            try {
+                const tempPrototype = new prototype()
+                return Object.getOwnPropertyNames(tempPrototype)
+                    .map(prop => {
+                        let value
+                        if (object) {
+                            if (object.constructor === Object) {
+                                value = object[prop]
+                            } else {
+                                const getter = ClassHelper.getGetter(object, prop)
+                                value = object[getter]()
+                            }
                         }
-                    }
-                    return {key: prop, value}
-                })
+                        return {key: prop, value, index: null}
+                    })
+            }catch(e){
+                throw new TypeError(`ObjectHelper ("${prototype}") : ${e.message}`)
+            }
         }
     }
 
@@ -77,69 +81,6 @@ class ObjectHelper {
             const setter = ClassHelper.getSetter(object, property)
             await object[setter](propertyValue)
         }
-    }
-
-    /**
-     * @param {Object} object1
-     * @param {Object} object2
-     * @param {string} path
-     *
-     * @return {Object}
-     */
-    static leftJoin(object1, object2, path = '') {
-        let result = {}
-        const propsObject1 = Object.getOwnPropertyNames(object1)
-        if (propsObject1.length) {
-            propsObject1.forEach(propObject1 => {
-                result = _.merge(result,
-                    this.leftJoin(
-                        object1[propObject1],
-                        object2 ? object2[propObject1] : null,
-                        `${path}${path ? '.' : ''}${propObject1}`)
-                )
-            })
-        } else if (object1 !== object2) {
-            result[path] = object2
-        }
-        return result
-    }
-
-    /**
-     * @param {Object} object1
-     * @param {Object} object2
-     * @param {string} path
-     *
-     * @return {Object}
-     */
-    static rightJoin(object1, object2, path = '') {
-        let result = {}
-        const propsObject2 = Object.getOwnPropertyNames(object2)
-        if (propsObject2.length) {
-            propsObject2.forEach(propObject2 => {
-                result = _.merge(result,
-                    this.rightJoin(
-                        object1 ? object1[propObject2] : null,
-                        object2[propObject2],
-                        `${path}${path ? '.' : ''}${propObject2}`)
-                )
-            })
-        } else if (object1 !== object2) {
-            result[path] = object2
-        }
-        return result
-    }
-
-    /**
-     * @param {Object} object1
-     * @param {Object} object2
-     *
-     * @return {Object}
-     */
-    static compare(object1, object2) {
-        return _.merge(
-            this.leftJoin(object1, object2),
-            this.rightJoin(object1, object2)
-        )
     }
 
 }
