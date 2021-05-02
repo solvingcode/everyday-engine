@@ -1,3 +1,5 @@
+import SystemError from '../exception/type/SystemError.js'
+
 /**
  * Runner is a component responsible for deciding what to do when a application state is defined
  * @class {Runner}
@@ -7,7 +9,7 @@ class Runner {
 
     constructor() {
         if (this.constructor === Runner) {
-            throw new TypeError('Abstract class Runner cannot be instantiated directly')
+            throw new SystemError('Abstract class Runner cannot be instantiated directly')
         }
     }
 
@@ -18,7 +20,7 @@ class Runner {
      * @return {boolean}
      */
     isHandle(window) {
-        throw new TypeError('"Runner.isHandle" method must be implemented')
+        throw new SystemError('"Runner.isHandle" method must be implemented')
     }
 
     /**
@@ -26,7 +28,7 @@ class Runner {
      * Execute actions.
      */
     execute(...params) {
-        throw new TypeError('"Runner.execute" method must be implemented')
+        throw new SystemError('"Runner.execute" method must be implemented')
     }
 
     static get() {

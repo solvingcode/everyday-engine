@@ -1,6 +1,7 @@
 import Parser from '../Parser.js'
 import ClassScriptXmlParser from './class/ClassScriptXmlParser.js'
 import ClassScriptCodeParser from './class/ClassScriptCodeParser.js'
+import ClientError from '../../exception/type/ClientError.js'
 
 export default class ScriptParser extends Parser {
 
@@ -16,17 +17,17 @@ export default class ScriptParser extends Parser {
                 if(type === 'class'){
                     return ClassScriptXmlParser.parse(data)
                 }else{
-                    throw new TypeError(`Script data type "${type}" not supported`)
+                    throw new ClientError(`Script data type "${type}" not supported`)
                 }
             case String:
                 type = 'class'
                 if(type === 'class'){
                     return ClassScriptCodeParser.parse(data.replace(/(<([^>]+)>)/gi, ''))
                 }else{
-                    throw new TypeError(`Script data type "${type}" not supported`)
+                    throw new ClientError(`Script data type "${type}" not supported`)
                 }
             default:
-                throw new TypeError(`Script data format not supported (${data.constructor.name} given)`)
+                throw new ClientError(`Script data format not supported (${data.constructor.name} given)`)
         }
     }
 

@@ -1,3 +1,5 @@
+import ClientError from '../exception/type/ClientError.js'
+
 export default class ContentManager {
 
     static instance
@@ -22,7 +24,7 @@ export default class ContentManager {
         if (!this.findByType(type)) {
             this.contents.push(new type())
         } else {
-            throw new TypeError(`Content "${type.name}" exists already`)
+            throw new ClientError(`Content "${type.name}" exists already`)
         }
     }
 

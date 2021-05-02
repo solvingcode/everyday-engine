@@ -1,6 +1,7 @@
 import ComponentData from './ComponentData.js'
 import Data from './Data.js'
 import Maths from '../../utils/Maths.js'
+import ClientError from '../../exception/type/ClientError.js'
 
 export default class UnitData extends Data{
 
@@ -64,7 +65,7 @@ export default class UnitData extends Data{
      */
     getComponent(type){
         if(!(type.prototype instanceof ComponentData)){
-            throw new TypeError(`Component type must be instance of ComponentData (${type.name} given)`)
+            throw new ClientError(`Component type must be instance of ComponentData (${type.name} given)`)
         }
         return this.getComponents().find(component => component instanceof type)
     }
@@ -104,7 +105,7 @@ export default class UnitData extends Data{
         if(!this.getComponent(componentClass)){
             this.components.push(new componentClass())
         }else{
-            throw new TypeError(`Component ${componentClass.name} already created!`)
+            throw new ClientError(`Component ${componentClass.name} already created!`)
         }
     }
 

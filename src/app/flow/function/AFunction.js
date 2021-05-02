@@ -1,6 +1,7 @@
 import DynamicAttributeHelper from '../../utils/DynamicAttributeHelper.js'
 import {CONSTANTS} from '../../operation/StackRegister.js'
 import FunctionData from '../../project/data/FunctionData.js'
+import SystemError from '../../exception/type/SystemError.js'
 
 export default class AFunction extends FunctionData{
 
@@ -16,7 +17,7 @@ export default class AFunction extends FunctionData{
      * @abstract
      */
     initAttributes(){
-        throw new TypeError(`${this.constructor.name}.initAttributes must be implemented`)
+        throw new SystemError(`${this.constructor.name}.initAttributes must be implemented`)
     }
 
     /**
@@ -44,7 +45,7 @@ export default class AFunction extends FunctionData{
      * @param {FunctionRegistry} functionRegistry
      */
     execute(functionRegistry){
-        throw new TypeError(`${this.constructor.name}.execute must be implemented`)
+        throw new SystemError(`${this.constructor.name}.execute must be implemented`)
     }
 
     /**

@@ -1,6 +1,8 @@
 /**
  * @class {FileHelper}
  */
+import ClientError from '../exception/type/ClientError.js'
+
 class FileHelper {
 
     /**
@@ -30,6 +32,8 @@ class FileHelper {
                 reader.onerror = reject
                 reader.readAsText(file)
             })
+        }else{
+            throw new ClientError(`Cannot load project (format not supported "${file.type}")`)
         }
     }
 
@@ -45,7 +49,7 @@ class FileHelper {
 
     /**
      * @param {string} fileId
-     * @return {Blob[]}
+     * @return {File[]}
      */
     static openFileUpload(fileId) {
         let fileInput = document.getElementById(fileId)

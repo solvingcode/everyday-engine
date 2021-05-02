@@ -1,6 +1,7 @@
 import Action from '../Action.js'
 import World from '../../../world/World.js'
 import AssetHelper from '../../../utils/AssetHelper.js'
+import ClientError from '../../../exception/type/ClientError.js'
 
 export default class DeleteFolderAction extends Action {
 
@@ -14,7 +15,7 @@ export default class DeleteFolderAction extends Action {
         const selectedFolder = assetsManager.getSelectedFolder()
         const rootFolder = assetsManager.getRootFolder()
         if (selectedFolder === rootFolder) {
-            throw new TypeError(`Cannot delete root folder`)
+            throw new ClientError(`Cannot delete root folder`)
         }
         const assets = assetsManager.findAssetsByFolderId(selectedFolder.getId())
         assets.forEach(asset => AssetHelper.deleteAsset(asset))

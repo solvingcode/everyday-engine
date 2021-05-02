@@ -5,6 +5,7 @@ import AFunction from '../flow/function/AFunction.js'
 import World from '../world/World.js'
 import AUnit from '../flow/unit/AUnit.js'
 import {NODE_TYPES} from '../flow/node/ANode.js'
+import ClientError from '../exception/type/ClientError.js'
 
 export default class NodeHelper {
 
@@ -35,7 +36,7 @@ export default class NodeHelper {
         }else if(nodeSource instanceof AFunction){
             return `${nodeSource.getName()}`
         }else{
-            throw new TypeError(`Node source "${nodeSource && nodeSource.constructor.name}" unknown`)
+            throw new ClientError(`Node source "${nodeSource && nodeSource.constructor.name}" unknown`)
         }
     }
 
@@ -56,7 +57,7 @@ export default class NodeHelper {
         }else if(nodeSource instanceof AFunction){
             return NODE_TYPES.FUNCTION
         }else{
-            throw new TypeError(`Node source "${nodeSource && nodeSource.constructor.name}" unknown`)
+            throw new ClientError(`Node source "${nodeSource && nodeSource.constructor.name}" unknown`)
         }
     }
 }

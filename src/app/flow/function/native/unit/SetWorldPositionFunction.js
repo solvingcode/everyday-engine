@@ -3,6 +3,7 @@ import AFunction from '../../AFunction.js'
 import World from '../../../../world/World.js'
 import TransformComponent from '../../../../component/internal/TransformComponent.js'
 import Vector from '../../../../utils/Vector.js'
+import ClientError from '../../../../exception/type/ClientError.js'
 
 export default class SetWorldPositionFunction extends AFunction{
 
@@ -25,7 +26,7 @@ export default class SetWorldPositionFunction extends AFunction{
         const target = this.getInputValue('target')
         const unit = World.get().findUnitById(parseInt(target))
         if(!unit){
-            throw new TypeError(`SetWorldPosition: ${target} not found`)
+            throw new ClientError(`SetWorldPosition: ${target} not found`)
         }
         unit.getComponent(TransformComponent).setPosition(this.getInputValue('vector'))
     }

@@ -3,6 +3,7 @@
  */
 import StringHelper from './StringHelper.js'
 import ClassHelper from './ClassHelper.js'
+import SystemError from '../exception/type/SystemError.js'
 
 class ObjectHelper {
 
@@ -57,7 +58,7 @@ class ObjectHelper {
                         return {key: prop, value, index: null}
                     })
             }catch(e){
-                throw new TypeError(`ObjectHelper ("${prototype}") : ${e.message}`)
+                throw new SystemError(`ObjectHelper ("${prototype}") : ${e.message}`)
             }
         }
     }

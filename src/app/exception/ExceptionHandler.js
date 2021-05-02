@@ -1,4 +1,5 @@
 import StateManager from '../state/StateManager.js'
+import History from '../core/History.js'
 
 class ExceptionHandler {
 
@@ -8,18 +9,44 @@ class ExceptionHandler {
     static instance
 
     /**
+     * @type {Error}
+     */
+    lastError
+
+    /**
      * @param {Error} e
      */
     handle(e) {
         try {
             StateManager.get().stopAll()
-        } catch (e) {
+        } catch (error) {
             StateManager.get().reset()
         }
-        if (e instanceof TypeError) {
-            throw e
-        }
-        alert(e.message)
+        History.get().restore()
+        this.setLastError(e)
+    }
+
+    /**
+     * @param {Error} error
+     */
+    setLastError(error){
+        this.lastError = error
+    }
+
+    /**
+     * @return {Error}
+     */
+    getLastError(){
+        return this.lastError
+    }
+
+    /**
+     * @return {Error}
+     */
+    popLastError(){
+        const lastError = this.getLastError()
+        this.setLastError(null)
+        return lastError
     }
 
     /**

@@ -46,7 +46,7 @@ class AppMenuItem extends MenuItem {
      * @override
      */
     isValid() {
-        return true;
+        return true
     }
 }
 

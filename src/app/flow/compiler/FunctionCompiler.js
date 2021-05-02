@@ -4,6 +4,7 @@ import AEmptyStackFunction from '../function/AEmptyStackFunction.js'
 import Compiler from './Compiler.js'
 import FunctionScript from '../FunctionScript.js'
 import World from '../../world/World.js'
+import ClientError from '../../exception/type/ClientError.js'
 
 export default class FunctionCompiler extends Compiler{
 
@@ -12,7 +13,7 @@ export default class FunctionCompiler extends Compiler{
      */
     run(script){
         if(!(script instanceof FunctionScript)){
-            throw new TypeError(`The given script is not correct (must be a Function script)`)
+            throw new ClientError(`The given script is not correct (must be a Function script)`)
         }
         const world = World.get()
         const functionRegistry = world.getFunctionRegistry()

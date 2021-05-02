@@ -1,3 +1,5 @@
+import SystemError from '../exception/type/SystemError.js'
+
 /**
  * @class {ClassHelper}
  */
@@ -17,7 +19,7 @@ class ClassHelper {
             const prefix = 'set'
             setter = `${prefix}${key.charAt(0).toUpperCase() + key.slice(1)}`
             if (typeof object[setter] !== 'function') {
-                throw new TypeError(`${setter} must be implemented for ${object.constructor.name}`)
+                throw new SystemError(`${setter} must be implemented for ${object.constructor.name}`)
             }
         }
         return setter
@@ -38,9 +40,9 @@ class ClassHelper {
             getter = `${prefix}${key.charAt(0).toUpperCase() + key.slice(1)}`
             if (typeof object[getter] !== 'function') {
                 if(object.constructor === String){
-                    throw new TypeError(`${key}: Object was expected, but "${object}" was provided`)
+                    throw new SystemError(`${key}: Object was expected, but "${object}" was provided`)
                 }else{
-                    throw new TypeError(`${key}: ${getter} must be implemented for ${object.constructor.name}`)
+                    throw new SystemError(`${key}: ${getter} must be implemented for ${object.constructor.name}`)
                 }
             }
         }

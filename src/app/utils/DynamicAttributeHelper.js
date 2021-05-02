@@ -1,5 +1,6 @@
 import DynamicAttribute from '../pobject/DynamicAttribute.js'
 import {TYPES} from '../pobject/AttributeType.js'
+import ClientError from '../exception/type/ClientError.js'
 
 export default class DynamicAttributeHelper {
 
@@ -26,7 +27,7 @@ export default class DynamicAttributeHelper {
         if(!this.tryGet(target, name)){
             target.push(this.create(name, type, defaultValue))
         }else{
-            throw new TypeError(`Attribute ${name} already defined`)
+            throw new ClientError(`Attribute ${name} already defined`)
         }
     }
 
@@ -38,7 +39,7 @@ export default class DynamicAttributeHelper {
     static get(target, name){
         const componentAttribute = this.tryGet(target, name)
         if(!componentAttribute){
-            throw new TypeError(`Attribute ${name} not supported`)
+            throw new ClientError(`Attribute ${name} not supported`)
         }
         return componentAttribute
     }

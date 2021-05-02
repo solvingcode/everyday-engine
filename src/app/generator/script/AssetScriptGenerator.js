@@ -1,3 +1,5 @@
+import SystemError from '../../exception/type/SystemError.js'
+
 /**
  * @abstract
  */
@@ -11,7 +13,7 @@ export default class AssetScriptGenerator {
      * @return {string}
      */
     generate(flow){
-        throw new TypeError(`${this.constructor.name}.generate must be implemented`)
+        throw new SystemError(`${this.constructor.name}.generate must be implemented`)
     }
 
     /**

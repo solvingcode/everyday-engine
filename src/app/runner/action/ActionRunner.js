@@ -52,6 +52,7 @@ import AddScriptCodeAction from './assets/AddScriptCodeAction.js'
 import SelectAssetAction from './assets/SelectAssetAction.js'
 import DeleteAssetAction from './assets/DeleteAssetAction.js'
 import DeleteFolderAction from './assets/DeleteFolderAction.js'
+import CloseErrorPopupAction from './window/CloseErrorPopupAction.js'
 
 /**
  * Action Runner class.
@@ -129,12 +130,14 @@ class ActionRunner extends Runner {
             DELETE_SCRIPT_NODE: DeleteNodeAction,
             DELETE_SCRIPT_EDGE: DeleteEdgeAction,
             ADD_SCRIPT_NODE: AddNodeAction,
-            ADD_SCRIPT_EDGE: AddEdgeAction
+            ADD_SCRIPT_EDGE: AddEdgeAction,
+            CLOSE_ERROR_POPUP: CloseErrorPopupAction
         }
         const selectedUnits = this.unitSelector.getSelected(World.get())
-        Object.entries(typeActions).forEach(typeAction => {
-            const type = `ACTION_${typeAction[0]}`
-            const action = typeAction[1]
+        for(const iTypeAction in typeActions){
+            const typeAction = typeActions[iTypeAction]
+            const type = `ACTION_${iTypeAction}`
+            const action = typeAction
             if (action.shouldStart(type, stateManager)) {
                 stateManager.progressNextState(type)
             }else if (action.shouldProgress(type, stateManager)) {
@@ -142,7 +145,7 @@ class ActionRunner extends Runner {
             }else if (action.shouldStop(type, stateManager)) {
                 this.stopState(action, mouse, selectedUnits) && stateManager.endNextState(type)
             }
-        })
+        }
     }
 
     /**

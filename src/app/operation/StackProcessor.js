@@ -3,6 +3,7 @@ import CallProcessor from './processor/CallProcessor.js'
 import StackRegister from './StackRegister.js'
 import PushProcessor from './processor/PushProcessor.js'
 import ExitProcessor from './processor/ExitProcessor.js'
+import SystemError from '../exception/type/SystemError.js'
 
 export default class StackProcessor {
 
@@ -41,10 +42,10 @@ export default class StackProcessor {
                         ExitProcessor.run(stackOperation, this.stackRegister)
                         break
                     default:
-                        throw new TypeError(`Stack operation ${operation} is not supported`)
+                        throw new SystemError(`Stack operation ${operation} is not supported`)
                 }
             }else{
-                throw new TypeError(`Stack operation is not valid`)
+                throw new SystemError(`Stack operation is not valid`)
             }
         }
         return this.stackRegister

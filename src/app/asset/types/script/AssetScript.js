@@ -1,4 +1,5 @@
 import AssetType from '../AssetType.js'
+import SystemError from '../../../exception/type/SystemError.js'
 
 export default class AssetScript extends AssetType{
 
@@ -17,28 +18,28 @@ export default class AssetScript extends AssetType{
      * @return {AScript}
      */
     parse(){
-        throw new TypeError(`${this.constructor.name}.parse must be implemented`)
+        throw new SystemError(`${this.constructor.name}.parse must be implemented`)
     }
 
     /**
      * @abstract
      */
     async generate(source, asset) {
-        throw new TypeError(`${this.constructor.name}.generate must be implemented`)
+        throw new SystemError(`${this.constructor.name}.generate must be implemented`)
     }
 
     /**
      * @abstract
      */
     async load(data, asset) {
-        throw new TypeError(`${this.constructor.name}.load must be implemented`)
+        throw new SystemError(`${this.constructor.name}.load must be implemented`)
     }
 
     /**
      * @abstract
      */
     open(asset, options) {
-        throw new TypeError(`${this.constructor.name}.open must be implemented`)
+        throw new SystemError(`${this.constructor.name}.open must be implemented`)
     }
 
     /**
@@ -59,14 +60,14 @@ export default class AssetScript extends AssetType{
      * @param {*} data
      */
     setData(data){
-        throw new TypeError(`${this.constructor.name}.setData must be implemented`)
+        throw new SystemError(`${this.constructor.name}.setData must be implemented`)
     }
 
     /**
      * @return {*}
      */
     getData(){
-        throw new TypeError(`${this.constructor.name}.getData must be implemented`)
+        throw new SystemError(`${this.constructor.name}.getData must be implemented`)
     }
 
 }

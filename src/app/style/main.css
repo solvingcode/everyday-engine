@@ -147,6 +147,7 @@ h4{
 #app-el-body .body-item.has-content{
     width: calc(100% - 250px);
     height: calc(100vh - 340px - 90px);
+    position: relative;
 }
 
 #app-el-body .body-item.has-content textarea{
@@ -175,6 +176,8 @@ h4{
 #app-el-body .body-item.has-content p{
     width: 100%;
     box-sizing: border-box;
+    position: absolute;
+    bottom: 15px;
 }
 
 #app-el-bottom .panel h4 i{
@@ -349,10 +352,49 @@ h4{
     padding: 0;
 }
 
-#app-el-left, #app-el-top, #app-el-right, #app-el-footer, #app-el-bottom, #app-el-top-tab, #app-el-body{
+#app-el-left, #app-el-top, #app-el-right, #app-el-footer, #app-el-bottom, #app-el-top-tab, #app-el-body, #app-el-window{
     position: absolute;
     z-index: 9999;
     box-sizing: border-box;
+}
+
+#app-el-window {
+    z-index: 9998;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+}
+
+#app-el-window .error-popup{
+    position: absolute;
+    width: 500px;
+    top: 40%;
+    left: 50%;
+    -ms-transform: translate(-50%, -40%);
+    transform: translate(-50%, -40%);
+    box-sizing: border-box;
+}
+
+#app-el-window .error-popup > button:nth-child(1) {
+    width: 100%;
+    text-align: left;
+    padding: 10px;
+}
+
+#app-el-window .error-popup > button i {
+    margin-right: 5px;
+}
+
+#app-el-window .error-popup > button:nth-child(3) {
+    float: right;
+    margin: 0 10px 10px 0;
+    width: 100px;
+}
+
+#app-el-window .error-popup p{
+    padding: 20px;
+    font-size: 16px;
 }
 
 .app-zone-wrapper{

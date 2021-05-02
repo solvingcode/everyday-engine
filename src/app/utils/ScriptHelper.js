@@ -4,6 +4,7 @@ import FunctionNode from '../flow/node/FunctionNode.js'
 import ConstantNode from '../flow/node/ConstantNode.js'
 import ConditionNode from '../flow/node/ConditionNode.js'
 import UnitNode from '../flow/node/UnitNode.js'
+import ClientError from '../exception/type/ClientError.js'
 
 export default class ScriptHelper{
 
@@ -27,7 +28,7 @@ export default class ScriptHelper{
         }else if(nodeType === NODE_TYPES.UNIT){
             node = script.createNode(functionRegistry, UnitNode, nodeValue)
         }else{
-            throw new TypeError(`Script: Node with type "${nodeType}" not supported!`)
+            throw new ClientError(`Script: Node with type "${nodeType}" not supported!`)
         }
         return node
     }
@@ -49,7 +50,7 @@ export default class ScriptHelper{
         }else if(node instanceof UnitNode){
             nodeType = NODE_TYPES.UNIT
         }else{
-            throw new TypeError(`AssetScriptXmlGenerator: ${node.constructor.name} not supported`)
+            throw new ClientError(`AssetScriptXmlGenerator: ${node.constructor.name} not supported`)
         }
         return nodeType
     }

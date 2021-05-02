@@ -1,4 +1,5 @@
 import Data from './Data.js'
+import SystemError from '../../exception/type/SystemError.js'
 
 /**
  * @class {WorldData}
@@ -28,12 +29,12 @@ class WorldData extends Data {
             Object.getOwnPropertyNames(this).map(prop => this[prop] = data[prop])
             this.reload()
         } else {
-            throw new TypeError('Cannot set the new world, data must be instance of World class')
+            throw new SystemError('Cannot set the new world, data must be instance of World class')
         }
     }
 
     reload() {
-        throw new TypeError('World.reload must be implemented!')
+        throw new SystemError('World.reload must be implemented!')
     }
 
     /**

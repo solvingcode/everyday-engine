@@ -4,6 +4,7 @@ import World from '../../../world/World.js'
 import {NODE_TYPES} from '../../../flow/node/ANode.js'
 import ScriptHelper from '../../../utils/ScriptHelper.js'
 import NodeHelper from '../../../utils/NodeHelper.js'
+import ClientError from '../../../exception/type/ClientError.js'
 
 export default class ClassScriptCodeParser extends Parser {
 
@@ -32,10 +33,10 @@ export default class ClassScriptCodeParser extends Parser {
             const nodeSource = script.findNodeById(edge.sourceId)
             const nodeTarget = script.findNodeById(edge.targetId)
             if (!nodeSource) {
-                throw new TypeError(`ClassScriptCodeParser Error: Node ${edge.sourceId} not founded`)
+                throw new ClientError(`ClassScriptCodeParser Error: Node ${edge.sourceId} not founded`)
             }
             if (!nodeTarget) {
-                throw new TypeError(`ClassScriptCodeParser Error: Node ${edge.targetId} not founded`)
+                throw new ClientError(`ClassScriptCodeParser Error: Node ${edge.targetId} not founded`)
             }
             nodeTarget.attach(nodeSource, edge.connectionId)
         })
@@ -114,7 +115,7 @@ export default class ClassScriptCodeParser extends Parser {
                     const sourceNode = script.findNodeByName(sourceName)
                     const connection = inputs[iParam]
                     if (!connection) {
-                        throw new TypeError(`ClassScriptCodeParser: parameter ${index} not found for ${sourceName}`)
+                        throw new ClientError(`ClassScriptCodeParser: parameter ${index} not found for ${sourceName}`)
                     }
                     edges.push({
                         sourceId: sourceNode.getId(),
@@ -142,12 +143,12 @@ export default class ClassScriptCodeParser extends Parser {
                 if (variableParamMatch) {
                     const sourceNodeParser = nodes.find(pNode => pNode.name === nodeParam)
                     if (!sourceNodeParser) {
-                        throw new TypeError(`ClassScriptCodeParser: variable "${nodeParam}" undefined`)
+                        throw new ClientError(`ClassScriptCodeParser: variable "${nodeParam}" undefined`)
                     }
                     const sourceId = sourceNodeParser.id
                     const connection = inputs[iParam]
                     if (!connection) {
-                        throw new TypeError(`ClassScriptCodeParser: parameter ${index} not found for ${sourceNodeParser.name}`)
+                        throw new ClientError(`ClassScriptCodeParser: parameter ${index} not found for ${sourceNodeParser.name}`)
                     }
                     edges.push({
                         sourceId: sourceId,
@@ -183,7 +184,7 @@ export default class ClassScriptCodeParser extends Parser {
                         targetNodeParser = nodes.find(pNode => pNode.instruction === nodeParam)
                     }
                     if (!targetNodeParser) {
-                        throw new TypeError(`ClassScriptCodeParser: instruction "${nodeParam}" undefined`)
+                        throw new ClientError(`ClassScriptCodeParser: instruction "${nodeParam}" undefined`)
                     }
                     const targetId = targetNodeParser.id
                     edges.push({
@@ -214,7 +215,7 @@ export default class ClassScriptCodeParser extends Parser {
                     if(iParam === 0){
                         const sourceNodeParser = nodes.find(pNode => pNode.name === nodeParam)
                         if (!sourceNodeParser) {
-                            throw new TypeError(`ClassScriptCodeParser: variable "${nodeParam}" undefined`)
+                            throw new ClientError(`ClassScriptCodeParser: variable "${nodeParam}" undefined`)
                         }
                         const sourceId = sourceNodeParser.id
                         const connection = inputs[iParam]
@@ -225,7 +226,7 @@ export default class ClassScriptCodeParser extends Parser {
                     }else{
                         const targetNodeParser = nodes.find(pNode => pNode.instruction === nodeParam)
                         if (!targetNodeParser) {
-                            throw new TypeError(`ClassScriptCodeParser: instruction "${nodeParam}" undefined`)
+                            throw new ClientError(`ClassScriptCodeParser: instruction "${nodeParam}" undefined`)
                         }
                         const targetId = targetNodeParser.id
                         edges.push({

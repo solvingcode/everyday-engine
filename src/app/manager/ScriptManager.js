@@ -2,6 +2,8 @@ import AScript from '../flow/AScript.js'
 import ScriptParser from '../parser/flow/ScriptParser.js'
 import ScriptManagerData from '../project/data/ScriptManagerData.js'
 import TabManager from './TabManager.js'
+import SystemError from '../exception/type/SystemError.js'
+import ClientError from '../exception/type/ClientError.js'
 
 export default class ScriptManager extends ScriptManagerData {
 
@@ -24,7 +26,7 @@ export default class ScriptManager extends ScriptManagerData {
             this.tryAdd(script)
             return script
         }
-        throw new TypeError(`Script must be of type AScript!`)
+        throw new SystemError(`Script must be of type AScript!`)
     }
 
     /**
@@ -37,7 +39,7 @@ export default class ScriptManager extends ScriptManagerData {
             this.scripts.splice(scriptIndex, 1)
             script.delete(functionRegistry)
         } else {
-            throw new TypeError(`Script cannot be deleted ("${script.getName()}" not found)`)
+            throw new ClientError(`Script cannot be deleted ("${script.getName()}" not found)`)
         }
     }
 
@@ -47,7 +49,7 @@ export default class ScriptManager extends ScriptManagerData {
     tryAdd(script) {
         const existScript = this.findByName(script.getName())
         if (existScript) {
-            throw new TypeError(`Script with name "${script.getName()}" already exist!`)
+            throw new ClientError(`Script with name "${script.getName()}" already exist!`)
         }
         this.scripts.push(script)
     }

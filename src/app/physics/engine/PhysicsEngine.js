@@ -1,4 +1,5 @@
 import PhysicsEngineData from '../../project/data/PhysicsEngineData.js'
+import SystemError from '../../exception/type/SystemError.js'
 
 /**
  * Physics Engine class
@@ -10,7 +11,7 @@ class PhysicsEngine extends PhysicsEngineData {
     constructor() {
         super()
         if (this.constructor === PhysicsEngine) {
-            throw new TypeError('Abstract class PhysicsEngine cannot be instantiated directly')
+            throw new SystemError('Abstract class PhysicsEngine cannot be instantiated directly')
         }
         this.mapShapeToEntity = []
     }
@@ -19,7 +20,7 @@ class PhysicsEngine extends PhysicsEngineData {
      * Initialize the engine.
      */
     init() {
-        throw new TypeError('"init" method must be implemented')
+        throw new SystemError('"init" method must be implemented')
     }
 
     /**
@@ -41,7 +42,7 @@ class PhysicsEngine extends PhysicsEngineData {
      * @return {ContentMenuItem}
      */
     loadShape(entity, world) {
-        throw new TypeError('"loadShape" method must be implemented')
+        throw new SystemError('"loadShape" method must be implemented')
     }
 
     /**
@@ -49,7 +50,7 @@ class PhysicsEngine extends PhysicsEngineData {
      * @param {Entity} entity
      */
     update(entity) {
-        throw new TypeError('"update" method must be implemented')
+        throw new SystemError('"update" method must be implemented')
     }
 
     /**
@@ -57,14 +58,14 @@ class PhysicsEngine extends PhysicsEngineData {
      * @return {*}
      */
     getEngine() {
-        throw new TypeError('"getEngine" method must be implemented')
+        throw new SystemError('"getEngine" method must be implemented')
     }
 
     /**
      * Run the physics engine.
      */
     run() {
-        throw new TypeError('"run" method must be implemented')
+        throw new SystemError('"run" method must be implemented')
     }
 
     /**

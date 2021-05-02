@@ -10,6 +10,7 @@ import ColorMenuItem from './ColorMenuItem.js'
 import RangeMenuItem from './RangeMenuItem.js'
 import TextareaMenuItem from './TextareaMenuItem.js'
 import WysiwygMenuItem from './WysiwygMenuItem.js'
+import SystemError from '../../../exception/type/SystemError.js'
 
 /**
  * Form menu item
@@ -46,7 +47,7 @@ class FormMenuItem extends MenuItem {
      * @return {FormField[]}
      */
     generateFields() {
-        throw new TypeError('"generateFields" method must be implemented')
+        throw new SystemError('"generateFields" method must be implemented')
     }
 
     /**
@@ -69,7 +70,7 @@ class FormMenuItem extends MenuItem {
      * @return {*}
      */
     getFormObject() {
-        throw new TypeError('"getFormObject" method must be implemented')
+        throw new SystemError('"getFormObject" method must be implemented')
     }
 
     /**
@@ -140,7 +141,7 @@ class FormMenuItem extends MenuItem {
         return actualFields.length !== newFields.length ||
             !!actualFields.find((field, iField) => {
                 if (field.type !== newFields[iField].type) {
-                    throw new TypeError(`Changing field type not supported! (old: ${field.type}, new: ${newFields[iField].type})`)
+                    throw new SystemError(`Changing field type not supported! (old: ${field.type}, new: ${newFields[iField].type})`)
                 }
                 if (_.isArray(field.list)) {
                     const actualValues = field.list.map(elem => `${elem.value}-${elem.label}`)
@@ -277,7 +278,7 @@ class FormMenuItem extends MenuItem {
             case Layout.form.WYSIWYG:
                 return WysiwygMenuItem
             default:
-                throw new TypeError(`Form item "${field.type}" not defined`)
+                throw new SystemError(`Form item "${field.type}" not defined`)
         }
     }
 }

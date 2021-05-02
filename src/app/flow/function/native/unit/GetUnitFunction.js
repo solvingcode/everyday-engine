@@ -1,6 +1,7 @@
 import {TYPES} from '../../../../pobject/AttributeType.js'
 import AFunction from '../../AFunction.js'
 import World from '../../../../world/World.js'
+import ClientError from '../../../../exception/type/ClientError.js'
 
 export default class GetUnitFunction extends AFunction{
 
@@ -23,7 +24,7 @@ export default class GetUnitFunction extends AFunction{
         const name = this.getInputValue('name')
         const unit = World.get().findUnitByName(name)
         if(!unit){
-            throw new TypeError(`GetUnit: ${name} not found`)
+            throw new ClientError(`GetUnit: ${name} not found`)
         }
         this.setOutputValue(unit.getId())
     }

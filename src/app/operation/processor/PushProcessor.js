@@ -1,4 +1,5 @@
 import {CONSTANTS} from '../StackRegister.js'
+import ClientError from '../../exception/type/ClientError.js'
 
 export default class PushProcessor {
 
@@ -9,12 +10,12 @@ export default class PushProcessor {
     static run(stackOperation, stackRegister) {
         const args = stackOperation.getArgs()
         if(args.length !== 2){
-            throw new TypeError(`Push: Inputs invalids (expected: 2, given: ${args.length})`)
+            throw new ClientError(`Push: Inputs invalids (expected: 2, given: ${args.length})`)
         }
         const name = args[0]
         const value = args[1]
         if (!name) {
-            throw new TypeError(`Push operation invalid (Name not provided)`)
+            throw new ClientError(`Push operation invalid (Name not provided)`)
         }
         if(value === CONSTANTS.RESULT){
             stackRegister.push(name, stackRegister.popRet())

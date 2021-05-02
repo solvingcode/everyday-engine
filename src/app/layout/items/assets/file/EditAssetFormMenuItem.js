@@ -1,6 +1,7 @@
 import Layout from '../../../Layout.js'
 import World from '../../../../world/World.js'
 import FormMenuItem from '../../form/FormMenuItem.js'
+import ClientError from '../../../../exception/type/ClientError.js'
 
 export default class EditAssetFormMenuItem extends FormMenuItem {
     constructor(parent) {
@@ -41,7 +42,7 @@ export default class EditAssetFormMenuItem extends FormMenuItem {
      */
     preUpdate(value) {
         if(!value){
-            throw new TypeError(`Cannot move Asset (target folder is required)`)
+            throw new ClientError(`Cannot move Asset (target folder is required)`)
         }
         return super.preUpdate(value)
     }

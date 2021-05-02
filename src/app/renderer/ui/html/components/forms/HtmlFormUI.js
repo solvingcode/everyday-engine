@@ -1,4 +1,5 @@
 import ItemUI from '../../ItemUI.js'
+import SystemError from '../../../../../exception/type/SystemError.js'
 
 class HtmlFormUI extends ItemUI {
 
@@ -52,7 +53,7 @@ class HtmlFormUI extends ItemUI {
      * @param {UIRenderer} uiRenderer
      */
     static postCreateFormItem(item, el, uiRenderer = null){
-        throw new TypeError('HtmlFormUI.postCreateFormItem must be implemented')
+        throw new SystemError('HtmlFormUI.postCreateFormItem must be implemented')
     }
 
     /**
@@ -61,7 +62,7 @@ class HtmlFormUI extends ItemUI {
      * @param {UIRenderer} uiRenderer
      */
     static postUpdateFormItem(item, el, uiRenderer = null){
-        throw new TypeError('HtmlFormUI.postUpdateFormItem must be implemented')
+        throw new SystemError('HtmlFormUI.postUpdateFormItem must be implemented')
     }
 
     /**

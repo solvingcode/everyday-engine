@@ -288,8 +288,10 @@ class HtmlUIRenderer extends UIRenderer {
     getClassName(item) {
         const classNames = []
         const type = this.getType(item)
+        const hasChild = !!(item.element.items && item.element.items.length)
         item.element.isSelected() && classNames.push('selected')
         item.element.isCollapsed() && classNames.push('collapsed')
+        hasChild && classNames.push('has-child')
         classNames.push(type.getProps().className)
         classNames.push(type.getClassName(item))
         return classNames.join(' ')

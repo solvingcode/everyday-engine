@@ -8,6 +8,8 @@ import ConditionNode from './node/ConditionNode.js'
 import UnitNode from './node/UnitNode.js'
 import AUnit from './unit/AUnit.js'
 import {TYPES} from '../pobject/AttributeType.js'
+import ClientError from '../exception/type/ClientError.js'
+import SystemError from '../exception/type/SystemError.js'
 
 /**
  * @abstract
@@ -42,7 +44,7 @@ export default class AScript extends AScriptData{
                 registry.tryRegister(nodeSource)
                 break
             default:
-                throw new TypeError(`Script Create Node: "${nodeClass.name}" not supported`)
+                throw new ClientError(`Script Create Node: "${nodeClass.name}" not supported`)
         }
         const node = new nodeClass(nodeSource.getId())
         this.addNode(node)
@@ -63,7 +65,7 @@ export default class AScript extends AScriptData{
     updateNodeId(node, id){
         const existNode = this.findNodeById(id)
         if(existNode){
-            throw new TypeError(`Script Create Node: Duplicate Node Id "${id}"`)
+            throw new ClientError(`Script Create Node: Duplicate Node Id "${id}"`)
         }
         node.setId(id)
     }
@@ -90,7 +92,7 @@ export default class AScript extends AScriptData{
         const nodeInput = this.getInputs().find(pNodeInput => pNodeInput.getId() === id)
         const node = this.findNodeById(nodeInput.getNodeId())
         if(!node){
-            throw new TypeError(`Target Node for edge ID "${id}" not found`)
+            throw new ClientError(`Target Node for edge ID "${id}" not found`)
         }
         const nodeInputIndex = node.getInputs().findIndex(pNodeInput => pNodeInput.getId() === id)
         node.getInputs().splice(nodeInputIndex, 1)
@@ -152,7 +154,7 @@ export default class AScript extends AScriptData{
      * @return {boolean}
      */
     doCompile(){
-        throw new TypeError(`${this.constructor.name}.doCompile must be implemented`)
+        throw new SystemError(`${this.constructor.name}.doCompile must be implemented`)
     }
 
 }

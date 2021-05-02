@@ -25,6 +25,7 @@ import ContentMenuItem from './items/content/ContentMenuItem.js'
 import AssetMenuItem from './items/assets/AssetMenuItem.js'
 import ScriptMenuItem from './items/script/ScriptMenuItem.js'
 import AddCodeScriptMenuItem from './items/assets/AddCodeScriptMenuItem.js'
+import ErrorPopupMenuItem from './items/error/ErrorPopupMenuItem.js'
 
 /**
  * Define all menu items
@@ -34,6 +35,9 @@ import AddCodeScriptMenuItem from './items/assets/AddCodeScriptMenuItem.js'
 class Menu {
     constructor() {
         this.types = [
+            // Window
+            new ErrorPopupMenuItem(),
+
             //LEFT
             new SelectorMenuItem(),
             new MoveMenuItem(),

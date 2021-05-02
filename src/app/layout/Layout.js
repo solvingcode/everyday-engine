@@ -11,7 +11,8 @@ Layout.zone = {
     BODY: 'body',
     RIGHT: 'right',
     BOTTOM: 'bottom',
-    FOOTER: 'footer'
+    FOOTER: 'footer',
+    WINDOW: 'window'
 }
 
 Layout.type = {

@@ -8,6 +8,8 @@ import AFunction from '../function/AFunction.js'
 import AConstant from '../constant/AConstant.js'
 import World from '../../world/World.js'
 import ACondition from '../condition/ACondition.js'
+import SystemError from '../../exception/type/SystemError.js'
+import ClientError from '../../exception/type/ClientError.js'
 
 export default class ClassCompiler extends Compiler {
 
@@ -16,7 +18,7 @@ export default class ClassCompiler extends Compiler {
      */
     run(script) {
         if (!(script instanceof ClassScript)) {
-            throw new TypeError(`The given flow is not correct (must be a Class flow)`)
+            throw new SystemError(`The given flow is not correct (must be a Class flow)`)
         }
         const nodes = script.getNodes()
         const world = World.get()
@@ -28,7 +30,7 @@ export default class ClassCompiler extends Compiler {
                 const stack = []
                 const element = functionRegistry.getInstanceById(node.getSourceId())
                 if (!element) {
-                    throw new TypeError(`Class Compiler Error: cannot find function ${node.getSourceId()}`)
+                    throw new ClientError(`Class Compiler Error: cannot find function ${node.getSourceId()}`)
                 }
                 const functionName = this.generateFunctionName(script, node, functionRegistry)
                 const stackFunction = new AEmptyStackFunction(functionName)
@@ -67,7 +69,7 @@ export default class ClassCompiler extends Compiler {
                             stack.push(new StackOperation(OPERATIONS.CALL, sourceElement.getName()))
                             stack.push(new StackOperation(OPERATIONS.PUSH, targetInput.getAttrName(), CONSTANTS.RESULT))
                         } else if (element) {
-                            throw new TypeError(`Class compiler: ${element.constructor.name} not supported`)
+                            throw new SystemError(`Class compiler: ${element.constructor.name} not supported`)
                         }
                     }
                 })

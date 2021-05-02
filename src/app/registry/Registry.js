@@ -1,4 +1,5 @@
 import RegistryData from '../project/data/RegistryData.js'
+import ClientError from '../exception/type/ClientError.js'
 
 /**
  * @abstract
@@ -30,7 +31,7 @@ export default class Registry extends RegistryData {
      */
     tryRegister(instance) {
         if (this.getInstance(instance.getName())) {
-            throw new TypeError(`${this.name} with name ${instance.getName()} is already registered`)
+            throw new ClientError(`${this.name} with name ${instance.getName()} is already registered`)
         }
         this.register(instance)
     }
@@ -50,7 +51,7 @@ export default class Registry extends RegistryData {
     tryGetInstance(name) {
         const instance = this.getInstance(name)
         if (!instance) {
-            throw new TypeError(`Instance with name "${name}" not registered`)
+            throw new ClientError(`Instance with name "${name}" not registered`)
         }
         return instance
     }

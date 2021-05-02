@@ -1,3 +1,5 @@
+import SystemError from '../exception/type/SystemError.js'
+
 /**
  * @abstract
  */
@@ -9,7 +11,7 @@ export default class Parser {
      * @return {AScript}
      */
     static parse(data){
-        throw new TypeError(`${this.prototype.name}.parse must be implemented`)
+        throw new SystemError(`${this.prototype.name}.parse must be implemented`)
     }
 
 }

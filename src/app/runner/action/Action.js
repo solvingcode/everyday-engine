@@ -1,3 +1,5 @@
+import SystemError from '../../exception/type/SystemError.js'
+
 /**
  * @abstract
  */
@@ -5,7 +7,7 @@ class Action {
 
     constructor() {
         if (this.constructor === Action) {
-            throw new TypeError('Abstract class Action cannot be instantiated directly')
+            throw new SystemError('Abstract class Action cannot be instantiated directly')
         }
     }
 
@@ -18,7 +20,7 @@ class Action {
      * @return {boolean}
      */
     static run(...params) {
-        throw new TypeError('"run" method must be implemented')
+        throw new SystemError('"run" method must be implemented')
     }
 
     /**

@@ -3,6 +3,7 @@ import Mouse from './Mouse.js'
 import {SCENE_HEIGHT, SCENE_WIDTH} from './Constant.js'
 import Size from '../pobject/Size.js'
 import {objectContext} from './Context.js'
+import ExceptionHandler from '../exception/ExceptionHandler.js'
 
 /**
  * Handle the window event listeners (keyboard, mouse, ...)
@@ -18,6 +19,7 @@ class Window {
 
     constructor() {
         this.keyboard = new Keyboard()
+        this.exceptionHandler = ExceptionHandler.get()
         this.mouse = new Mouse()
         this.size = new Size({width: SCENE_WIDTH, height: SCENE_HEIGHT})
     }
@@ -62,6 +64,10 @@ class Window {
         })
         document.addEventListener('wheel', (event) => {
             this.mouse.setMouseWheel(event.deltaY)
+        })
+        window.addEventListener('unhandledrejection', (e) => {
+            this.exceptionHandler.handle(e.reason)
+            e.preventDefault()
         })
     }
 

@@ -2,6 +2,7 @@ import World from '../world/World.js'
 import Storage from '../core/Storage.js'
 import FileHelper from '../utils/FileHelper.js'
 import JsProjectExporter from './exporter/JsProjectExporter.js'
+import ClientError from '../exception/type/ClientError.js'
 
 class Project {
 
@@ -49,7 +50,7 @@ class Project {
             case Storage.format.WEB:
                 return new JsProjectExporter()
             default:
-                throw new TypeError(`${type} not recognized as export type!`)
+                throw new ClientError(`${type} not recognized as export type!`)
         }
     }
 

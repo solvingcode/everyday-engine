@@ -1,5 +1,6 @@
 import Content from './Content.js'
 import AssetScriptCode from '../asset/types/script/AssetScriptCode.js'
+import SystemError from '../exception/type/SystemError.js'
 
 export default class EditScriptCodeContent extends Content{
 
@@ -8,7 +9,7 @@ export default class EditScriptCodeContent extends Content{
      */
     constructor(data) {
         if(data instanceof AssetScriptCode){
-            throw new TypeError(`Content data must be of type "AssetScriptCode"`)
+            throw new SystemError(`Content data must be of type "AssetScriptCode"`)
         }
         super(data)
     }

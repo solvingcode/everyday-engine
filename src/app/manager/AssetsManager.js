@@ -5,6 +5,7 @@ import AssetImage from '../asset/types/image/AssetImage.js'
 import AssetScriptXml from '../asset/types/script/AssetScriptXml.js'
 import Folder from '../asset/Folder.js'
 import ClassScript from '../flow/ClassScript.js'
+import ClientError from '../exception/type/ClientError.js'
 
 /**
  * @class {AssetsManager}
@@ -84,7 +85,7 @@ export default class AssetsManager extends AssetsManagerData {
     /**
      * @param {File} blob
      */
-    async setAssetByBlob(blob) {
+    setAssetByBlob(blob) {
         return new Promise((resolve, reject) => {
             const reader = new FileReader()
             reader.onload = () => {
@@ -134,7 +135,7 @@ export default class AssetsManager extends AssetsManagerData {
             case FileHelper.type.XML:
                 return AssetScriptXml
             default:
-                throw new TypeError(`Asset type "${type}" not supported`)
+                throw new ClientError(`Asset type "${type}" not supported`)
         }
     }
 

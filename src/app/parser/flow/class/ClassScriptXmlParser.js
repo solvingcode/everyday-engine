@@ -2,6 +2,7 @@ import Parser from '../../Parser.js'
 import ClassScript from '../../../flow/ClassScript.js'
 import World from '../../../world/World.js'
 import ScriptHelper from '../../../utils/ScriptHelper.js'
+import ClientError from '../../../exception/type/ClientError.js'
 
 export default class ClassScriptXmlParser extends Parser {
 
@@ -30,10 +31,10 @@ export default class ClassScriptXmlParser extends Parser {
                 const nodeSource = script.findNodeById(nodeSourceId)
                 const nodeTarget = script.findNodeById(nodeTargetId)
                 if(!nodeSource){
-                    throw new TypeError(`ClassScriptXmlParser Error: Node ${nodeSourceId} not founded`)
+                    throw new ClientError(`ClassScriptXmlParser Error: Node ${nodeSourceId} not founded`)
                 }
                 if(!nodeTarget){
-                    throw new TypeError(`ClassScriptXmlParser Error: Node ${nodeTargetId} not founded`)
+                    throw new ClientError(`ClassScriptXmlParser Error: Node ${nodeTargetId} not founded`)
                 }
                 const inputId = nodeConnection
                     ? functionRegistry.getInstanceById(nodeTarget.getSourceId()).getInputId(nodeConnection)

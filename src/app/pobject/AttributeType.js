@@ -3,6 +3,7 @@ import Size from './Size.js'
 import Vector from '../utils/Vector.js'
 import DynamicAttribute from './DynamicAttribute.js'
 import BlobData from '../project/data/BlobData.js'
+import SystemError from '../exception/type/SystemError.js'
 
 export default class AttributeType {
 
@@ -61,7 +62,7 @@ export default class AttributeType {
                 if(this.isArrayType(prototype)){
                     return Array
                 }
-                throw new TypeError(`AttributeType not supported (${prototype})`)
+                throw new SystemError(`AttributeType not supported (${prototype})`)
         }
     }
 

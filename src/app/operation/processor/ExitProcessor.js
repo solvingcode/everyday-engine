@@ -1,4 +1,5 @@
 import {CONSTANTS} from '../StackRegister.js'
+import ClientError from '../../exception/type/ClientError.js'
 
 export default class ExitProcessor {
 
@@ -9,7 +10,7 @@ export default class ExitProcessor {
     static run(stackOperation, stackRegister) {
         const args = stackOperation.getArgs()
         if(args.length !== 1){
-            throw new TypeError(`Push: Inputs invalids (expected: 1, given: ${args.length})`)
+            throw new ClientError(`Push: Inputs invalids (expected: 1, given: ${args.length})`)
         }
         const name = args[0]
         if(name === CONSTANTS.RESULT){

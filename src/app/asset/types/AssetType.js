@@ -1,4 +1,5 @@
 import AssetTypeData from '../../project/data/AssetTypeData.js'
+import SystemError from '../../exception/type/SystemError.js'
 
 /**
  * @class {AssetType}
@@ -13,7 +14,7 @@ export default class AssetType extends AssetTypeData{
      * @return {Promise}
      */
     async load(data, asset){
-        throw new TypeError(`${this.constructor.name}.load must be implemented`)
+        throw new SystemError(`${this.constructor.name}.load must be implemented`)
     }
 
     /**
@@ -23,7 +24,7 @@ export default class AssetType extends AssetTypeData{
      * @return {Promise}
      */
     async generate(source, asset){
-        throw new TypeError(`${this.constructor.name}.generate must be implemented`)
+        throw new SystemError(`${this.constructor.name}.generate must be implemented`)
     }
 
     /**
@@ -32,7 +33,7 @@ export default class AssetType extends AssetTypeData{
      * @param {Object} options
      */
     open(asset, options){
-        throw new TypeError(`${this.constructor.name}.open must be implemented`)
+        throw new SystemError(`${this.constructor.name}.open must be implemented`)
     }
 
 }

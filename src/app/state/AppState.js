@@ -1,4 +1,5 @@
 import {CURSOR} from '../core/Mouse.js'
+import SystemError from '../exception/type/SystemError.js'
 
 /**
  * @typedef {{code: string, id: number}} StateType
@@ -93,7 +94,7 @@ class AppState {
                 const {cursor} = AppState.States[state]
                 cursor && this.setData({cursor})
             } else {
-                throw new TypeError(`${state} is not recognized as Application State`)
+                throw new SystemError(`${state} is not recognized as Application State`)
             }
         }
     }
@@ -348,7 +349,10 @@ AppState.States = {
     ACTION_DELETE_ASSET_STOP: {history: false},
     ACTION_DELETE_FOLDER_START: {history: true},
     ACTION_DELETE_FOLDER_PROGRESS: {history: false},
-    ACTION_DELETE_FOLDER_STOP: {history: true}
+    ACTION_DELETE_FOLDER_STOP: {history: true},
+    ACTION_CLOSE_ERROR_POPUP_START: {history: false},
+    ACTION_CLOSE_ERROR_POPUP_PROGRESS: {history: false},
+    ACTION_CLOSE_ERROR_POPUP_STOP: {history: false}
 }
 
 export default AppState

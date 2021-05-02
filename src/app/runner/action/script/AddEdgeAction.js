@@ -2,6 +2,7 @@ import Action from '../Action.js'
 import StateManager from '../../../state/StateManager.js'
 import World from '../../../world/World.js'
 import TabManager from '../../../manager/TabManager.js'
+import ClientError from '../../../exception/type/ClientError.js'
 
 export default class AddEdgeAction extends Action {
 
@@ -24,7 +25,7 @@ export default class AddEdgeAction extends Action {
             nodeTarget.attach(nodeSource, parseInt(formData.getConnection()))
             assetTab.generate(script)
         }else{
-            throw new TypeError(`Cannot add the connection (target or source node are invalids)`)
+            throw new ClientError(`Cannot add the connection (target or source node are invalids)`)
         }
         return true
     }

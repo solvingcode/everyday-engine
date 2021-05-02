@@ -1,5 +1,6 @@
 import AFunction from './AFunction.js'
 import StackProcessor from '../../operation/StackProcessor.js'
+import SystemError from '../../exception/type/SystemError.js'
 
 export default class AStackFunction extends AFunction{
 
@@ -23,13 +24,13 @@ export default class AStackFunction extends AFunction{
      * @abstract
      */
     createStack(){
-        throw new TypeError(`${this.constructor.name}.createStack must be implemented`)
+        throw new SystemError(`${this.constructor.name}.createStack must be implemented`)
     }
 
     /**
      * @abstract
      */
     initAttributes() {
-        throw new TypeError(`${this.constructor.name}.initAttributes must be implemented for Native function`)
+        throw new SystemError(`${this.constructor.name}.initAttributes must be implemented for Native function`)
     }
 }

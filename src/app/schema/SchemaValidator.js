@@ -5,6 +5,7 @@ import DataHelper from '../utils/DataHelper.js'
 import AttributeType from '../pobject/AttributeType.js'
 import {PrefSchema} from './SchemaMeta.js'
 import Data from '../project/data/Data.js'
+import SystemError from '../exception/type/SystemError.js'
 
 class SchemaValidator {
 
@@ -141,7 +142,7 @@ class SchemaValidator {
         if (pathSchema) {
             prototype = pathSchema.prototype
         } else {
-            throw new TypeError(`${path} must be defined in the schema`)
+            throw new SystemError(`${path} must be defined in the schema`)
         }
         return AttributeType.extractPrototype(prototype, parentPathData)
     }

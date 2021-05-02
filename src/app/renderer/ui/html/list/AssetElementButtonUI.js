@@ -6,6 +6,7 @@ import IconUI from '../components/icon/IconUI.js'
 import World from '../../../../world/World.js'
 import {STATUS} from '../../../../project/data/AScriptData.js'
 import AssetScriptCode from '../../../../asset/types/script/AssetScriptCode.js'
+import SystemError from '../../../../exception/type/SystemError.js'
 
 export default class AssetElementButtonUI extends ListElementButtonUI {
 
@@ -44,7 +45,7 @@ export default class AssetElementButtonUI extends ListElementButtonUI {
             case AssetScriptCode:
                 return this.getIconScriptAsset(bind)
             default:
-                throw new TypeError(`Asset: No icon founded for "${type.constructor.name}"`)
+                throw new SystemError(`Asset: No icon founded for "${type.constructor.name}"`)
         }
     }
 
@@ -67,7 +68,7 @@ export default class AssetElementButtonUI extends ListElementButtonUI {
                 statusIcon = IconUI.createIcon('times', 'status status-error')
                 break
             default:
-                throw new TypeError(`Script status ${flowStatus} not recognized`)
+                throw new SystemError(`Script status ${scriptStatus} not recognized`)
         }
         const fragment = document.createDocumentFragment()
         fragment.appendChild(IconUI.createIcon('file-code'))

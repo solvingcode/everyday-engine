@@ -6,6 +6,7 @@ import TransformComponent from '../component/internal/TransformComponent.js'
 import Vector from '../utils/Vector.js'
 import GUIPropertyComponent from '../component/internal/gui/property/GUIPropertyComponent.js'
 import Maths from '../utils/Maths.js'
+import ClientError from '../exception/type/ClientError.js'
 
 /**
  * Manage the units, components list (get, add, load, ...)
@@ -73,7 +74,7 @@ export default class UnitManager extends UnitManagerData {
      */
     createUnit(T) {
         if (!(T.prototype instanceof Unit)) {
-            throw new TypeError(`Unit type must be child of Unit class (${type} given)`)
+            throw new ClientError(`Unit type must be child of Unit class (${type} given)`)
         }
         const unit = new T()
         this.addUnit(unit)
@@ -88,7 +89,7 @@ export default class UnitManager extends UnitManagerData {
      */
     createUnitInstant(T, ...props) {
         if (!(T.prototype instanceof Unit)) {
-            throw new TypeError(`Unit type must be child of Unit class (${type} given)`)
+            throw new ClientError(`Unit type must be child of Unit class (${type} given)`)
         }
         const unit = new T()
         unit.instantiate(...props)

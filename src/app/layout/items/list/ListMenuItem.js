@@ -1,5 +1,6 @@
 import PanelMenuItem from '../panel/PanelMenuItem.js'
 import ArrayHelper from '../../../utils/ArrayHelper.js'
+import SystemError from '../../../exception/type/SystemError.js'
 
 /**
  * @class {ListMenuItem}
@@ -18,7 +19,7 @@ class ListMenuItem extends PanelMenuItem {
      * @abstract
      */
     getFormObject() {
-        throw new TypeError('ListMenuItem.getFormObject must be implemented')
+        throw new SystemError('ListMenuItem.getFormObject must be implemented')
     }
 
     /**
@@ -34,7 +35,7 @@ class ListMenuItem extends PanelMenuItem {
      * @abstract
      */
     getActions(bindObject){
-        throw new TypeError('ListMenuItem.getActions must be implemented')
+        throw new SystemError('ListMenuItem.getActions must be implemented')
     }
 
     /**
@@ -42,7 +43,7 @@ class ListMenuItem extends PanelMenuItem {
      * @abstract
      */
     getListElementFormClass(){
-        throw new TypeError(`${this.constructor.name}.getListElementFormClass must be implemented`)
+        throw new SystemError(`${this.constructor.name}.getListElementFormClass must be implemented`)
     }
 
     /**

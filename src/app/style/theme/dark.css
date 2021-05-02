@@ -188,6 +188,18 @@ button.selected, button.hidden.selected, button.locked.selected{
     background-color: #b94a48;
 }
 
+#app-el-window .error-popup{
+    background-color: #333333;
+}
+
+#app-el-window .error-popup > button:nth-child(1) i {
+    color: #b94a48;
+}
+
+#app-el-window .error-popup > button:nth-child(1):hover{
+    background-color: rgba(77, 77, 76, 0.51);
+}
+
 .panel .script-nodes div:not(.list-element) > button{
     background-color: #3f6093;
 }

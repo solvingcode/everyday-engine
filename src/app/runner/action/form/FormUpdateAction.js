@@ -2,6 +2,7 @@ import Action from '../Action.js'
 import Menu from '../../../layout/Menu.js'
 import StateManager from '../../../state/StateManager.js'
 import Layout from '../../../layout/Layout.js'
+import SystemError from '../../../exception/type/SystemError.js'
 
 class FormUpdateAction extends Action {
 
@@ -34,7 +35,7 @@ class FormUpdateAction extends Action {
                 item.parent.postUpdate(formElement.value)
             }
         } else {
-            throw new TypeError(`ElementUI for item ${item.id} cannot be found!`)
+            throw new SystemError(`ElementUI for item ${item.id} cannot be found!`)
         }
         return true
     }

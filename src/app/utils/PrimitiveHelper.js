@@ -1,3 +1,5 @@
+import SystemError from '../exception/type/SystemError.js'
+
 export default class PrimitiveHelper{
 
     /**
@@ -18,7 +20,7 @@ export default class PrimitiveHelper{
                 newValue = value === true || value === 'true'
                 break
             default:
-                throw new TypeError(`Primitive type ${type} not supported`)
+                throw new SystemError(`Primitive type ${type} not supported`)
         }
         return newValue
     }

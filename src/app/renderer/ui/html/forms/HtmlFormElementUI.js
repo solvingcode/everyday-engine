@@ -8,6 +8,7 @@ import HtmlFormColorUI from '../components/forms/HtmlFormColorUI.js'
 import HtmlFormRangeUI from '../components/forms/HtmlFormRangeUI.js'
 import HtmlFormTextareaUI from '../components/forms/HtmlFormTextareaUI.js'
 import HtmlFormWysiwygUI from '../components/forms/HtmlFormWysiwygUI.js'
+import SystemError from '../../../../exception/type/SystemError.js'
 
 class HtmlFormElementUI extends ItemUI {
     /**
@@ -33,7 +34,7 @@ class HtmlFormElementUI extends ItemUI {
         } else if (field === Layout.form.WYSIWYG) {
             return HtmlFormWysiwygUI
         }
-        throw new TypeError(`FormElement type "${field}" not supported!`)
+        throw new SystemError(`FormElement type "${field}" not supported!`)
     }
 }
 
