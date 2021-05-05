@@ -37,7 +37,7 @@ export default class ScriptEditorRunner extends Runner {
     execute(mouse) {
         const stateManager = StateManager.get()
         if (!stateManager.isRunning() && !stateManager.isFormUpdating()) {
-            const script = World.get().getScriptManager().getSelected()
+            const script = World.get().getScriptManager().getSelected(World.get().getTabManager())
             if (script) {
                 this.handleUnitEvent(mouse)
                 this.selectUnits(mouse)

@@ -1,4 +1,3 @@
-import Menu from '../layout/Menu.js'
 import Action from './Action.js'
 
 /**
@@ -16,12 +15,11 @@ class EventHandler {
         const mouse = window.mouse
         const keyboard = window.keyboard
         const action = Action.get()
-        const menu = Menu.get()
         action.reset()
         runners.forEach(runner => {
             const runnerInstance = runner.get()
             if (runnerInstance.isHandle(window)) {
-                action.add(runnerInstance, mouse, menu, keyboard)
+                action.add(runnerInstance, mouse, keyboard)
             }
         })
         action.run()

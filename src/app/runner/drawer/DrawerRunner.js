@@ -9,6 +9,7 @@ import Size from '../../pobject/Size.js'
 import TransformComponent from '../../component/internal/TransformComponent.js'
 import MoveAction from '../action/edit/MoveAction.js'
 import SelectionUnitInstant from '../../unit/instant/type/internal/edit/SelectionUnitInstant.js'
+import Menu from '../../layout/Menu.js'
 
 export default class DrawerRunner extends Runner {
 
@@ -34,11 +35,11 @@ export default class DrawerRunner extends Runner {
     /**
      * @override
      * @param {Mouse} mouse
-     * @param {Menu} menu
      *
      * @var {{[string]: {shape: string, startEvent: any, endEvent: any}}} typeEntity
      */
-    async execute(mouse, menu) {
+    async execute(mouse) {
+        const menu = Menu.get()
         const stateManager = StateManager.get()
         const world = World.get()
         const scenePosition = new Vector(mouse.scenePosition)

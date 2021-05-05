@@ -108,7 +108,7 @@ export default class ClassScriptCodeParser extends Parser {
         if(node.type === NODE_TYPES.FUNCTION){
             node.params.forEach((param, iParam) => {
                 const nodeParam = param.trim()
-                const constantParamMatch = nodeParam.match(/^(\d+)$/) || nodeParam.match(/"([^"]+)"/)
+                const constantParamMatch = nodeParam.match(/^(-?\d+)$/) || nodeParam.match(/"([^"]+)"/)
                 if (constantParamMatch) {
                     const constantParam = constantParamMatch[1]
                     const sourceName = constantParam.replace(/["']/g, '')
@@ -139,7 +139,7 @@ export default class ClassScriptCodeParser extends Parser {
         if(node.type === NODE_TYPES.FUNCTION) {
             node.params.forEach((param, iParam) => {
                 const nodeParam = param.trim()
-                const variableParamMatch = !nodeParam.match(/^\d+$/) && !nodeParam.match(/"[^"]+"/)
+                const variableParamMatch = !nodeParam.match(/^-?\d+$/) && !nodeParam.match(/"[^"]+"/)
                 if (variableParamMatch) {
                     const sourceNodeParser = nodes.find(pNode => pNode.name === nodeParam)
                     if (!sourceNodeParser) {
@@ -246,7 +246,7 @@ export default class ClassScriptCodeParser extends Parser {
      * @return {NodeScriptParser[]}
      */
     static getConstantNodes(code) {
-        const constantRegex = new RegExp('(\\d+|"[^"]*"|\'[^\']*\')', 'g')
+        const constantRegex = new RegExp('(-?\\d+|"[^"]*"|\'[^\']*\')', 'g')
         const constantMatches = code.matchAll(constantRegex)
         return _.uniqWith(Array.from(constantMatches).map(constantMatch => {
             const constant = constantMatch[0].replace(/["']/g, '')

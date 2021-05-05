@@ -1,7 +1,7 @@
 import ListElementMenuItem from '../list/ListElementMenuItem.js'
 import Layout from '../../Layout.js'
 import TabCloseItemMenuItem from './TabCloseItemMenuItem.js'
-import TabManager from '../../../manager/TabManager.js'
+import World from '../../../world/World.js'
 
 export default class TabItemMenuItem extends ListElementMenuItem{
 
@@ -12,6 +12,13 @@ export default class TabItemMenuItem extends ListElementMenuItem{
             zone: parent.zone,
             type: Layout.type.TAB_ITEM
         })
+    }
+
+    /**
+     * @override
+     */
+    setData(data) {
+        super.setData(data)
         if(!data.bind.isProtected()){
             this.items = [
                 new TabCloseItemMenuItem(this, data)
@@ -23,7 +30,7 @@ export default class TabItemMenuItem extends ListElementMenuItem{
      * @return {boolean}
      */
     isValid() {
-        return super.isValid() && !!TabManager.get().findByName(this.data.bind.getName())
+        return super.isValid() && !!World.get().getTabManager().findById(this.data.bind.getId())
     }
 
     /**

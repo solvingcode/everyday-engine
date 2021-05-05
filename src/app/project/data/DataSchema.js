@@ -54,6 +54,10 @@ import ScaleXUnitInstant from '../../unit/instant/type/internal/scale/ScaleXUnit
 import ScaleYUnitInstant from '../../unit/instant/type/internal/scale/ScaleYUnitInstant.js'
 import RotateZUnitInstant from '../../unit/instant/type/internal/rotate/RotateZUnitInstant.js'
 import ScaleFreeUnitInstant from '../../unit/instant/type/internal/scale/ScaleFreeUnitInstant.js'
+import SystemError from '../../exception/type/SystemError.js'
+import TabManager from '../../manager/TabManager.js'
+import Tab from '../../content/Tab.js'
+import EditScriptCodeContent from '../../content/EditScriptCodeContent.js'
 
 /**
  * @class {DataSchema}
@@ -106,7 +110,10 @@ class DataSchema {
         {id: 330, type: VectorFunction},
         {id: 340, type: SetWorldPositionFunction},
         {id: 350, type: AssetScriptCode},
-        {id: 360, type: GetUnitFunction}
+        {id: 360, type: GetUnitFunction},
+        {id: 370, type: TabManager},
+        {id: 380, type: Tab},
+        {id: 390, type: EditScriptCodeContent}
     ]
 
     /**
@@ -133,7 +140,8 @@ class DataSchema {
     static excludeGame = [
         AssetScriptXml,
         AssetScriptCode,
-        ClassScript
+        ClassScript,
+        TabManager
     ]
 
     /**
@@ -143,7 +151,7 @@ class DataSchema {
     static getId(type) {
         const schemaType = this.schema.find(vSchema => vSchema.type === type)
         if (!schemaType) {
-            throw new TypeError(`Type ${type.name} not found in DataSchema!`)
+            throw new SystemError(`Type ${type.name} not found in DataSchema!`)
         }
         return schemaType.id
     }
@@ -168,11 +176,11 @@ class DataSchema {
         if (!dataId) return null
         const schemaType = this.schema.find(vSchema => vSchema.id === dataId)
         if (!schemaType) {
-            throw new TypeError(`ID ${dataId} not found in DataSchema!`)
+            throw new SystemError(`ID ${dataId} not found in DataSchema!`)
         }
         const {type} = schemaType
         if (type !== prototype && !(type.prototype instanceof prototype)) {
-            throw new TypeError(`Type ${type.name} attached to ID ${dataId} not match the given prototype ${prototype.name} !`)
+            throw new SystemError(`Type ${type.name} attached to ID ${dataId} not match the given prototype ${prototype.name} !`)
         }
         return new type()
     }

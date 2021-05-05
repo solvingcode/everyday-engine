@@ -1,7 +1,6 @@
 import AScript from '../flow/AScript.js'
 import ScriptParser from '../parser/flow/ScriptParser.js'
 import ScriptManagerData from '../project/data/ScriptManagerData.js'
-import TabManager from './TabManager.js'
 import SystemError from '../exception/type/SystemError.js'
 import ClientError from '../exception/type/ClientError.js'
 
@@ -80,17 +79,19 @@ export default class ScriptManager extends ScriptManagerData {
     }
 
     /**
+     * @param {TabManager} tabManager
      * @return {AScript}
      */
-    getSelected() {
-        const assetTab = this.getSelectedAsset()
+    getSelected(tabManager) {
+        const assetTab = this.getSelectedAsset(tabManager)
         return assetTab && this.findByName(assetTab.getName())
     }
 
     /**
+     * @param {TabManager} tabManager
      * @return {Asset}
      */
-    getSelectedAsset() {
-        return TabManager.get().getSelectedContentData()
+    getSelectedAsset(tabManager) {
+        return tabManager.getSelectedContentData()
     }
 }

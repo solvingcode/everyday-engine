@@ -1,33 +1,13 @@
-import Maths from '../utils/Maths.js'
+import ContentData from '../project/data/ContentData.js'
+import SystemError from '../exception/type/SystemError.js'
 
-export default class Content {
-
-    /**
-     * @type {number}
-     */
-    id
-    data
-
-    /**
-     * @param {*} data
-     */
-    constructor(data) {
-        this.id = Maths.generateId()
-        this.data = data
-    }
-
-    /**
-     * @return {number}
-     */
-    getId(){
-        return this.id
-    }
+export default class Content extends ContentData{
 
     /**
      * @return {*}
      */
     getData(){
-        return this.data
+        throw new SystemError(`${this.constructor.name} must be implemented`)
     }
 
 }

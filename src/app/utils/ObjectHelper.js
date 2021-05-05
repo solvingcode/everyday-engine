@@ -58,7 +58,7 @@ class ObjectHelper {
                         return {key: prop, value, index: null}
                     })
             }catch(e){
-                throw new SystemError(`ObjectHelper ("${prototype}") : ${e.message}`)
+                throw new SystemError(`ObjectHelper ("${prototype.name}") : ${e.message}`)
             }
         }
     }
@@ -76,7 +76,7 @@ class ObjectHelper {
             if (_.isFunction(object[concatAttr])) {
                 object[concatAttr](propertyValue)
             } else {
-                throw new TypeError(`Method ${concatAttr} not defined for ${object.constructor.name}`)
+                throw new SystemError(`Method ${concatAttr} not defined for ${object.constructor.name}`)
             }
         } else if (object !== null && object !== undefined) {
             const setter = ClassHelper.getSetter(object, property)

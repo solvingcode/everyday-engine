@@ -23,7 +23,7 @@ export default class ScriptMenuItem extends PanelMenuItem {
      * @override
      */
     isValid() {
-        const script = World.get().getScriptManager().getSelected()
+        const script = World.get().getScriptManager().getSelected(World.get().getTabManager())
         return super.isValid() && script
     }
 }

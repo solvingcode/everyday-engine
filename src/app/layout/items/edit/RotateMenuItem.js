@@ -1,6 +1,6 @@
 import MenuItem from '../../MenuItem.js'
 import Layout from '../../Layout.js'
-import TabManager from '../../../manager/TabManager.js'
+import World from '../../../world/World.js'
 
 export default class RotateMenuItem extends MenuItem {
     constructor() {
@@ -18,6 +18,6 @@ export default class RotateMenuItem extends MenuItem {
      * @override
      */
     isValid() {
-        return super.isValid() && TabManager.get().getSelected().isProtected()
+        return super.isValid() && World.get().getTabManager().getSelected().isProtected()
     }
 }

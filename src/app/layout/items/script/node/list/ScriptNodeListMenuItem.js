@@ -28,7 +28,7 @@ export default class ScriptNodeListMenuItem extends ListMenuItem{
      * @override
      */
     getFormObject() {
-        const script = World.get().getScriptManager().getSelected()
+        const script = World.get().getScriptManager().getSelected(World.get().getTabManager())
         return script && script.getNodes()
     }
 

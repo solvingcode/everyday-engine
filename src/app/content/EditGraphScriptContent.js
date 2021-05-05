@@ -13,7 +13,7 @@ export default class EditGraphScriptContent extends Content{
         if(data instanceof AssetScriptXml){
             throw new SystemError(`Content data must be of type "AssetScriptXml"`)
         }
-        super(data)
+        super(data.getId())
         const script = World.get().getScriptManager().findByName(data.getName())
         ScriptGraph.get().init(script)
     }
@@ -22,7 +22,7 @@ export default class EditGraphScriptContent extends Content{
      * @return {Asset}
      */
     getData() {
-        return super.getData()
+        return World.get().getAssetsManager().findAssetById(this.getDataContentId())
     }
 
 }

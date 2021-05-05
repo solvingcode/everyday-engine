@@ -1,7 +1,7 @@
 import Layout from '../../Layout.js'
 import ListMenuItem from '../list/ListMenuItem.js'
 import TabItemMenuItem from './TabItemMenuItem.js'
-import TabManager from '../../../manager/TabManager.js'
+import World from '../../../world/World.js'
 
 export default class TabListMenuItem extends ListMenuItem{
 
@@ -24,7 +24,7 @@ export default class TabListMenuItem extends ListMenuItem{
      * @override
      */
     getFormObject() {
-        return TabManager.get().getTabs()
+        return World.get().getTabManager().getTabs()
     }
 
     /**

@@ -1,26 +1,7 @@
 import Maths from '../utils/Maths.js'
+import TabData from '../project/data/TabData.js'
 
-export default class Tab{
-
-    /**
-     * @type {number}
-     */
-    id
-
-    /**
-     * @type {string}
-     */
-    name
-
-    /**
-     * @type {boolean}
-     */
-    selected
-
-    /**
-     * @type {Content}
-     */
-    content
+export default class Tab extends TabData{
 
     /**
      * @type {boolean}
@@ -32,31 +13,11 @@ export default class Tab{
      * @param {Content} content
      */
     constructor(name, content) {
+        super()
         this.id = Maths.generateId()
         this.name = name
         this.content = content
         this.protected = false
-    }
-
-    /**
-     * @return {number}
-     */
-    getId(){
-        return this.id
-    }
-
-    /**
-     * @return {string}
-     */
-    getName(){
-        return this.name
-    }
-
-    /**
-     * @return {Content}
-     */
-    getContent(){
-        return this.content
     }
 
     /**

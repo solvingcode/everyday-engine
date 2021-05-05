@@ -13,6 +13,7 @@ class WorldData extends Data {
 
     unitManager
     scriptManager
+    tabManager
     functionRegistry
     camera
     physics
@@ -42,6 +43,13 @@ class WorldData extends Data {
      */
     setUnitManager(unitManager) {
         this.unitManager = unitManager
+    }
+
+    /**
+     * @param {TabManagerData} tabManager
+     */
+    setTabManager(tabManager) {
+        this.tabManager = tabManager
     }
 
     /**
@@ -99,6 +107,13 @@ class WorldData extends Data {
      */
     getUnitManager() {
         return this.unitManager
+    }
+
+    /**
+     * @return {TabManager}
+     */
+    getTabManager() {
+        return this.tabManager
     }
 
     /**

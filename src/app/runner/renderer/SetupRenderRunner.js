@@ -21,7 +21,7 @@ export class SetupRenderRunner extends Runner {
      * @override
      */
     execute(mouse) {
-        const script = World.get().getScriptManager().getSelected()
+        const script = World.get().getScriptManager().getSelected(World.get().getTabManager())
         if (!script) {
             World.get().draw(MeshRenderer.get())
         }else{

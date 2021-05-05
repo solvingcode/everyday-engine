@@ -1,6 +1,7 @@
 import Content from './Content.js'
 import AssetScriptCode from '../asset/types/script/AssetScriptCode.js'
 import SystemError from '../exception/type/SystemError.js'
+import World from '../world/World.js'
 
 export default class EditScriptCodeContent extends Content{
 
@@ -11,14 +12,14 @@ export default class EditScriptCodeContent extends Content{
         if(data instanceof AssetScriptCode){
             throw new SystemError(`Content data must be of type "AssetScriptCode"`)
         }
-        super(data)
+        super(data && data.getId())
     }
 
     /**
      * @return {Asset}
      */
     getData() {
-        return super.getData()
+        return World.get().getAssetsManager().findAssetById(this.getDataContentId())
     }
 
 }

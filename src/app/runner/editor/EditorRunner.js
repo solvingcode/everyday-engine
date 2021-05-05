@@ -59,7 +59,7 @@ class EditorRunner extends Runner {
         const stateManager = StateManager.get()
         if (!stateManager.isRunning() && !stateManager.isFormUpdating()) {
             this.updateMouseWheel(stateManager, mouse)
-            if (!World.get().getScriptManager().getSelected()) {
+            if (!World.get().getScriptManager().getSelected(World.get().getTabManager())) {
                 this.handleUnitEvent(stateManager, mouse)
                 this.selectUnits(stateManager, mouse)
                 this.focusUnits(mouse)

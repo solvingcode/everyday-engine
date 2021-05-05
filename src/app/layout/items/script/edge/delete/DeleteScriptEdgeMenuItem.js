@@ -20,7 +20,8 @@ export default class DeleteScriptEdgeMenuItem extends MenuItem {
      * @override
      */
     isValid() {
-        const asset = World.get().getScriptManager().getSelectedAsset()
+        const world = World.get()
+        const asset = world.getScriptManager().getSelectedAsset(world.getTabManager())
         return super.isValid() && asset && asset.getType() instanceof AssetScriptXml
     }
 }

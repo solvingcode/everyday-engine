@@ -1,5 +1,4 @@
 import World from '../../../world/World.js'
-import TabManager from '../../../manager/TabManager.js'
 import AssetScriptXmlGenerator from '../../../generator/script/AssetScriptXmlGenerator.js'
 import EditGraphScriptContent from '../../../content/EditGraphScriptContent.js'
 import EditScriptContent from '../../../content/EditScriptContent.js'
@@ -33,10 +32,11 @@ export default class AssetScriptXml extends AssetScript{
      * @override
      */
     open(asset, options = {asXml: false}) {
+        const tabManager = World.get().getTabManager()
         if(options.asXml){
-            TabManager.get().createOrActivate(asset.getName(), new EditScriptContent(asset))
+            tabManager.createOrActivate(asset.getName(), new EditScriptContent(asset))
         }else{
-            TabManager.get().createOrActivate(asset.getName(), new EditGraphScriptContent(asset))
+            tabManager.createOrActivate(asset.getName(), new EditGraphScriptContent(asset))
         }
     }
 

@@ -8,10 +8,9 @@ export default class EventRunner extends Runner {
 
     /**
      * @param {Mouse} mouse
-     * @param {Menu} menu
      * @param {Keyboard} keyboard
      */
-    execute(mouse, menu, keyboard) {
+    execute(mouse, keyboard) {
         const functionRegistry = World.get().getFunctionRegistry()
         if (mouse.isButtonClicked(MouseButton.LEFT)) {
             functionRegistry.getClassInstance(OnMouseClickEvent).forEach(event => event.execute(functionRegistry))

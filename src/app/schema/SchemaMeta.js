@@ -17,6 +17,9 @@ import NodeInput from '../pobject/NodeInput.js'
 import FunctionRegistry from '../flow/function/FunctionRegistry.js'
 import AFunction from '../flow/function/AFunction.js'
 import StackOperation from '../operation/StackOperation.js'
+import TabManager from '../manager/TabManager.js'
+import Tab from '../content/Tab.js'
+import Content from '../content/Content.js'
 
 /**
  * Define the schema of project data.
@@ -301,6 +304,50 @@ export default {
                                                         }
                                                     }
                                                 }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            tabManager: {
+                type: TabManager,
+                meta: {
+                    dataId: {
+                        type: TYPES.NUMBER
+                    },
+                    tabs: {
+                        type: Array,
+                        meta: {
+                            element: {
+                                type: Tab,
+                                meta: {
+                                    dataId: {
+                                        type: TYPES.NUMBER
+                                    },
+                                    id: {
+                                        type: TYPES.NUMBER
+                                    },
+                                    name: {
+                                        type: TYPES.STRING
+                                    },
+                                    selected: {
+                                        type: TYPES.BOOLEAN
+                                    },
+                                    content: {
+                                        type: Content,
+                                        meta: {
+                                            dataId: {
+                                                type: TYPES.NUMBER
+                                            },
+                                            id: {
+                                                type: TYPES.NUMBER
+                                            },
+                                            dataContentId: {
+                                                type: TYPES.NUMBER
                                             }
                                         }
                                     }

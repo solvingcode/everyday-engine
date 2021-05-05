@@ -1,45 +1,42 @@
 import Tab from '../content/Tab.js'
+import TabManagerData from '../project/data/TabManagerData.js'
+import SystemError from '../exception/type/SystemError.js'
 
-export default class TabManager {
-
-    static instance
-
-    /**
-     * @type {Tab[]}
-     */
-    tabs
+export default class TabManager extends TabManagerData {
 
     constructor() {
-        this.reset()
-    }
-
-    /**
-     * @return {Tab[]}
-     */
-    getTabs(){
-        return this.tabs
+        super()
+        this.tabs = []
     }
 
     /**
      * @return {Tab}
      */
-    getSelected(){
+    getSelected() {
         return this.tabs.find(tab => tab.isSelected())
     }
 
     /**
      * @return {*}
      */
-    getSelectedContentData(){
+    getSelectedContentData() {
         const selectedTab = this.getSelected()
         return selectedTab && selectedTab.getContent() && selectedTab.getContent().getData()
+    }
+
+    /**
+     * @param {number} id
+     * @return {Tab}
+     */
+    findById(id) {
+        return this.tabs.find(tab => tab.getId() === id)
     }
 
     /**
      * @param {string} name
      * @return {Tab}
      */
-    findByName(name){
+    findByName(name) {
         return this.tabs.find(tab => tab.getName() === name)
     }
 
@@ -47,7 +44,7 @@ export default class TabManager {
      * @param {*} data
      * @return {Tab}
      */
-    findByData(data){
+    findByData(data) {
         return this.tabs.find(tab => tab.getContent().getData() === data)
     }
 
@@ -56,7 +53,7 @@ export default class TabManager {
      * @param {Content} content
      * @return {Tab}
      */
-    create(name, content = null){
+    create(name, content = null) {
         const tab = new Tab(name, content)
         this.tryAdd(tab)
         this.activate(tab)
@@ -68,11 +65,11 @@ export default class TabManager {
      * @param {Content} content
      * @return {Tab}
      */
-    createOrActivate(name, content){
+    createOrActivate(name, content) {
         const existTab = this.findByName(name)
-        if(existTab){
+        if (existTab) {
             this.activate(existTab)
-        }else{
+        } else {
             this.create(name, content)
         }
     }
@@ -81,25 +78,27 @@ export default class TabManager {
      * @param {Tab} tab
      */
     activate(tab) {
-        this.tabs.forEach(pTab => pTab.unselect())
-        const existTab = this.findByName(tab.getName())
-        if (existTab) {
-            existTab.select()
-        } else {
-            throw new TypeError(`Tab with name "${tab.getName()}" not found`)
+        if(tab){
+            this.tabs.forEach(pTab => pTab.unselect())
+            const existTab = this.findByName(tab.getName())
+            if (existTab) {
+                existTab.select()
+            } else {
+                throw new SystemError(`Tab with name "${tab.getName()}" not found`)
+            }
         }
     }
 
     /**
      * @param {Tab} tab
      */
-    remove(tab){
+    remove(tab) {
         const indexTab = this.tabs.findIndex(pTab => pTab === tab)
-        if(indexTab >= 0){
+        if (indexTab >= 0) {
             this.tabs.splice(indexTab, 1)
             this.activate(this.tabs[indexTab - 1])
-        }else{
-            throw new TypeError(`Cannot remove Tab Id ${tab.getId()} : Not found`)
+        } else {
+            throw new SystemError(`Cannot remove Tab Id ${tab.getId()} : Not found`)
         }
     }
 
@@ -108,25 +107,19 @@ export default class TabManager {
      */
     tryAdd(tab) {
         const existTab = this.findByName(tab.getName())
-        if(existTab){
-            throw new TypeError(`Tab with name "${tab.getName()}" already exist!`)
+        if (existTab) {
+            throw new SystemError(`Tab with name "${tab.getName()}" already exist!`)
         }
         this.tabs.push(tab)
     }
 
-    reset(){
-        this.tabs = []
-        this.create('Scene').protected = true
-    }
-
-    /**
-     * @return {TabManager}
-     */
-    static get() {
-        if (!this.instance) {
-            this.instance = new this()
+    init() {
+        const scene = this.findByName('Scene')
+        if (scene) {
+            scene.protected = true
+        }else{
+            this.create('Scene').protected = true
         }
-        return this.instance
     }
 
 }

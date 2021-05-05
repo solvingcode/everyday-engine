@@ -24,7 +24,7 @@ export default class AddScriptEdgeFormMenuItem extends FormMenuItem {
      * @override
      */
     generateFields() {
-        const script = World.get().getScriptManager().getSelected()
+        const script = World.get().getScriptManager().getSelected(World.get().getTabManager())
         let sourceNodes = []
         let targetNodes = []
         let connections = []

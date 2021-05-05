@@ -1,5 +1,4 @@
 import World from '../../../world/World.js'
-import TabManager from '../../../manager/TabManager.js'
 import EditGraphScriptContent from '../../../content/EditGraphScriptContent.js'
 import EditScriptCodeContent from '../../../content/EditScriptCodeContent.js'
 import AssetScript from './AssetScript.js'
@@ -23,10 +22,11 @@ export default class AssetScriptCode extends AssetScript{
      * @override
      */
     open(asset, options = {asGraph: false}) {
+        const tabManager = World.get().getTabManager()
         if(options.asGraph){
-            TabManager.get().createOrActivate(asset.getName(), new EditGraphScriptContent(asset))
+            tabManager.createOrActivate(asset.getName(), new EditGraphScriptContent(asset))
         }else{
-            TabManager.get().createOrActivate(asset.getName(), new EditScriptCodeContent(asset))
+            tabManager.createOrActivate(asset.getName(), new EditScriptCodeContent(asset))
         }
     }
 

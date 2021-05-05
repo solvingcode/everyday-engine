@@ -1,6 +1,6 @@
 import Action from '../Action.js'
 import StateManager from '../../../state/StateManager.js'
-import TabManager from '../../../manager/TabManager.js'
+import World from '../../../world/World.js'
 
 export default class SelectTabAction extends Action {
 
@@ -15,7 +15,7 @@ export default class SelectTabAction extends Action {
      */
     static run() {
         const {bind} = StateManager.get().getNextProgressData(this.STATE)
-        TabManager.get().activate(bind)
+        World.get().getTabManager().activate(bind)
         return true
     }
 

@@ -1,7 +1,6 @@
 import Action from '../Action.js'
 import StateManager from '../../../state/StateManager.js'
 import World from '../../../world/World.js'
-import TabManager from '../../../manager/TabManager.js'
 import ClientError from '../../../exception/type/ClientError.js'
 
 export default class AddEdgeAction extends Action {
@@ -17,8 +16,8 @@ export default class AddEdgeAction extends Action {
      */
     static run() {
         const {formData} = StateManager.get().getNextProgressData(this.STATE)
-        const script = World.get().getScriptManager().getSelected()
-        const assetTab = TabManager.get().getSelectedContentData()
+        const script = World.get().getScriptManager().getSelected(World.get().getTabManager())
+        const assetTab = World.get().getTabManager().getSelectedContentData()
         const nodeTarget = script.findNodeById(parseInt(formData.getTargetId()))
         const nodeSource = script.findNodeById(parseInt(formData.getSourceId()))
         if(nodeTarget && nodeSource){

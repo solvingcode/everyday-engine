@@ -1,12 +1,12 @@
 import MenuItem from '../../MenuItem.js'
 import Layout from '../../Layout.js'
-import TabManager from '../../../manager/TabManager.js'
 import EditScriptContent from '../../../content/EditScriptContent.js'
 import EditScriptMenuItem from './editscript/xml/EditScriptMenuItem.js'
 import EditGraphScriptContent from '../../../content/EditGraphScriptContent.js'
 import EditGraphScriptMenuItem from './editscript/graph/EditGraphScriptMenuItem.js'
 import EditScriptCodeContent from '../../../content/EditScriptCodeContent.js'
 import EditScriptCodeMenuItem from './editscript/code/EditScriptCodeMenuItem.js'
+import World from '../../../world/World.js'
 
 export default class ContentMenuItem extends MenuItem {
 
@@ -30,7 +30,7 @@ export default class ContentMenuItem extends MenuItem {
      */
     update() {
         super.update()
-        const selectedTab = TabManager.get().getSelected()
+        const selectedTab = World.get().getTabManager().getSelected()
         const actualContentItem = this.items[0]
         if (selectedTab && (!actualContentItem || actualContentItem.data !== selectedTab.getContent())) {
             const contentTab = selectedTab.getContent()

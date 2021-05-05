@@ -21,7 +21,7 @@ export class SetupExecutorRunner extends Runner {
      * @override
      */
     execute(mouse) {
-        const script = World.get().getScriptManager().getSelected()
+        const script = World.get().getScriptManager().getSelected(World.get().getTabManager())
         let units
         if(script){
             units = ScriptGraph.get().getGraphUnits()
