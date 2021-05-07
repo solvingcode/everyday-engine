@@ -44,13 +44,15 @@ export default class ClassCompiler extends Compiler {
                         const sourceElement = functionRegistry.getInstanceById(sourceNode.getSourceId())
                         if (sourceElement instanceof AEvent) {
                             const eventClass = sourceElement.constructor
-                            const newEvent = new eventClass(`${script.getName()}.${sourceElement.getName()}`)
+                            const eventName = this.generateEventName(script, sourceNode, functionRegistry)
+                            let sourceEvent = functionRegistry.getInstance(eventName) || new eventClass(eventName)
                             let functionNameCallee = functionName
                             if (element instanceof ACondition) {
                                 functionNameCallee = `${functionNameCallee}.Block`
                             }
-                            newEvent.setStack([new StackOperation(OPERATIONS.CALL, functionNameCallee)])
-                            functionRegistry.register(newEvent)
+                            sourceEvent.setStack(sourceEvent.getStack()
+                                .concat([new StackOperation(OPERATIONS.CALL, functionNameCallee)]))
+                            functionRegistry.register(sourceEvent)
                         } else if (sourceElement instanceof ACondition) {
                             const conditionName = this.generateFunctionName(script, sourceNode, functionRegistry)
                             const newConditionBlock = new AEmptyStackFunction(`${conditionName}.Block`)
@@ -96,5 +98,16 @@ export default class ClassCompiler extends Compiler {
         } else {
             return element.getName()
         }
+    }
+
+    /**
+     * @param {AScript} script
+     * @param {ANode} node
+     * @param {FunctionRegistry} functionRegistry
+     * @return {string}
+     */
+    generateEventName(script, node, functionRegistry){
+        const element = functionRegistry.getInstanceById(node.getSourceId())
+        return `${script.getName()}.${element.getName()}`
     }
 }

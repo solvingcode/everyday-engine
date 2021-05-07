@@ -314,8 +314,8 @@ export default class ClassScriptCodeParser extends Parser {
      * @return {NodeScriptParser[]}
      */
     static getEventNodes(code) {
-        const eventRegex = new RegExp(`(?<!${this.KW_NEW})\\s+(\\w+)\\(\\s*\\)\\s*{([^}]*)}`, 'g')
-        const insideBlockRegex = new RegExp('(?<!{[^{]*)([^{}]*)', 'g')
+        const eventRegex = new RegExp(`(?<!${this.KW_NEW})\\s+(\\w+)\\(\\s*\\)\\s*{(((?!\\w+\\(\\s*\\){)[^])*)}`, 'g')
+        const insideBlockRegex = new RegExp('(?<!{[^{}]*)([^{}]*)', 'g')
         const eventMatches = code.matchAll(eventRegex)
         return Array.from(eventMatches).map(eventMatch => {
             const instruction = eventMatch[0].trim()

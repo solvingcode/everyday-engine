@@ -99,7 +99,7 @@ test('Create and compile class flow', function () {
     const nodeAdd = script.createNode(functionRegistry, FunctionNode, 'Add')
     const nodeSetValue1 = script.createNode(functionRegistry, ConstantNode, 20)
     const nodeSetValue2 = script.createNode(functionRegistry, ConstantNode, 30)
-    const nodeEvent = script.createNode(functionRegistry, FunctionNode, 'OnMouseClickEvent')
+    const nodeEvent = script.createNode(functionRegistry, FunctionNode, 'OnMouseClick')
 
     nodeAdd.attach(nodeSetValue1, functionRegistry.getInstanceById(nodeAdd.getSourceId()).getInputId('value1'))
     nodeAdd.attach(nodeSetValue2, functionRegistry.getInstanceById(nodeAdd.getSourceId()).getInputId('value2'))
@@ -108,7 +108,7 @@ test('Create and compile class flow', function () {
 
     script.compile()
 
-    const mouseEventCompiled = functionRegistry.getInstance('classScript.OnMouseClickEvent')
+    const mouseEventCompiled = functionRegistry.getInstance('classScript.OnMouseClick')
     expect(functionRegistry.getInstance('classScript')).toBe(undefined)
     expect(mouseEventCompiled).toBeDefined()
 
@@ -135,7 +135,7 @@ test('Create and compile class script with success condition', function () {
     const nodeSetValue2 = script.createNode(functionRegistry, ConstantNode, 30)
     const nodeSetValue3 = script.createNode(functionRegistry, ConstantNode, 'correct')
     const nodeTrueCondition = script.createNode(functionRegistry, ConditionNode, 'True')
-    const nodeEvent = script.createNode(functionRegistry, FunctionNode, 'OnMouseClickEvent')
+    const nodeEvent = script.createNode(functionRegistry, FunctionNode, 'OnMouseClick')
 
     nodeLessThan.attach(nodeSetValue1, functionRegistry.getInstanceById(nodeLessThan.getSourceId()).getInputId('value1'))
     nodeLessThan.attach(nodeSetValue2, functionRegistry.getInstanceById(nodeLessThan.getSourceId()).getInputId('value2'))
@@ -146,7 +146,7 @@ test('Create and compile class script with success condition', function () {
 
     script.compile()
 
-    const mouseEventCompiled = functionRegistry.getInstance('classScript.OnMouseClickEvent')
+    const mouseEventCompiled = functionRegistry.getInstance('classScript.OnMouseClick')
     expect(functionRegistry.getInstance('classScript')).toBe(undefined)
     expect(mouseEventCompiled).toBeDefined()
 
@@ -173,7 +173,7 @@ test('Create and compile class script with failed condition', function () {
     const nodeSetValue2 = script.createNode(functionRegistry, ConstantNode, 10)
     const nodeSetValue3 = script.createNode(functionRegistry, ConstantNode, 'correct')
     const nodeTrueCondition = script.createNode(functionRegistry, ConditionNode, 'True')
-    const nodeEvent = script.createNode(functionRegistry, FunctionNode, 'OnMouseClickEvent')
+    const nodeEvent = script.createNode(functionRegistry, FunctionNode, 'OnMouseClick')
 
     nodeLessThan.attach(nodeSetValue1, functionRegistry.getInstanceById(nodeLessThan.getSourceId()).getInputId('value1'))
     nodeLessThan.attach(nodeSetValue2, functionRegistry.getInstanceById(nodeLessThan.getSourceId()).getInputId('value2'))
@@ -184,7 +184,7 @@ test('Create and compile class script with failed condition', function () {
 
     script.compile()
 
-    const mouseEventCompiled = functionRegistry.getInstance('classScript.OnMouseClickEvent')
+    const mouseEventCompiled = functionRegistry.getInstance('classScript.OnMouseClick')
     expect(functionRegistry.getInstance('classScript')).toBe(undefined)
     expect(mouseEventCompiled).toBeDefined()
 

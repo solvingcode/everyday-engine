@@ -22,7 +22,10 @@ export default class ScriptParser extends Parser {
             case String:
                 type = 'class'
                 if(type === 'class'){
-                    return ClassScriptCodeParser.parse(data.replace(/(<([^>]+)>)/gi, ''))
+                    const dataStrip = data
+                        .replace(/(<([^>]+)>)/gi, '')
+                        .replace(/&nbsp;/g, '')
+                    return ClassScriptCodeParser.parse(dataStrip)
                 }else{
                     throw new ClientError(`Script data type "${type}" not supported`)
                 }
