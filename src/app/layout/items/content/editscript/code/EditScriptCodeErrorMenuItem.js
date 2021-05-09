@@ -18,7 +18,9 @@ export default class EditScriptCodeErrorMenuItem extends MenuItem {
      */
     update() {
         const asset = this.parent.data.getData()
-        this.text = [asset.getType().getError()]
+        if (asset.getType().getError() !== this.text[0]){
+            this.text = [asset.getType().getError()]
+        }
     }
 
 }

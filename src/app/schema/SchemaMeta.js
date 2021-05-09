@@ -10,10 +10,6 @@ import Unit from '../unit/Unit.js'
 import UnitManager from '../manager/UnitManager.js'
 import Component from '../component/Component.js'
 import {TYPES} from '../pobject/AttributeType.js'
-import ScriptManager from '../manager/ScriptManager.js'
-import AScript from '../flow/AScript.js'
-import ANode from '../flow/node/ANode.js'
-import NodeInput from '../pobject/NodeInput.js'
 import FunctionRegistry from '../flow/function/FunctionRegistry.js'
 import AFunction from '../flow/function/AFunction.js'
 import StackOperation from '../operation/StackOperation.js'
@@ -232,80 +228,6 @@ export default {
                                     },
                                     output: {
                                         prototype: TYPES.DYNAMIC_ATTRIBUTE
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-            },
-            scriptManager: {
-                type: ScriptManager,
-                meta: {
-                    dataId: {
-                        type: TYPES.NUMBER
-                    },
-                    scripts: {
-                        type: Array,
-                        meta: {
-                            element: {
-                                type: AScript,
-                                meta: {
-                                    dataId: {
-                                        type: TYPES.NUMBER
-                                    },
-                                    id: {
-                                        type: TYPES.NUMBER
-                                    },
-                                    name: {
-                                        type: TYPES.STRING
-                                    },
-                                    status: {
-                                        type: TYPES.STRING
-                                    },
-                                    nodes: {
-                                        type: Array,
-                                        meta: {
-                                            element: {
-                                                type: ANode,
-                                                meta: {
-                                                    dataId: {
-                                                        type: TYPES.NUMBER
-                                                    },
-                                                    id: {
-                                                        type: TYPES.NUMBER
-                                                    },
-                                                    sourceId: {
-                                                        type: TYPES.NUMBER
-                                                    },
-                                                    inputs: {
-                                                        type: Array,
-                                                        meta: {
-                                                            element: {
-                                                                type: NodeInput,
-                                                                meta: {
-                                                                    dataId: {
-                                                                        type: TYPES.NUMBER
-                                                                    },
-                                                                    id: {
-                                                                        type: TYPES.NUMBER
-                                                                    },
-                                                                    nodeId: {
-                                                                        type: TYPES.NUMBER
-                                                                    },
-                                                                    sourceNodeId: {
-                                                                        type: TYPES.NUMBER
-                                                                    },
-                                                                    targetId: {
-                                                                        type: TYPES.NUMBER
-                                                                    }
-                                                                }
-                                                            }
-                                                        }
-                                                    }
-                                                }
-                                            }
-                                        }
                                     }
                                 }
                             }

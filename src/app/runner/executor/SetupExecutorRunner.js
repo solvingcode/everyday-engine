@@ -24,7 +24,9 @@ export class SetupExecutorRunner extends Runner {
         const script = World.get().getScriptManager().getSelected(World.get().getTabManager())
         let units
         if(script){
-            units = ScriptGraph.get().getGraphUnits()
+            const graphUnits = ScriptGraph.get().getGraphUnits()
+            const graphEdges = ScriptGraph.get().getGraphEdges()
+            units = [].concat(graphUnits).concat(graphEdges)
         }else{
             units = World.get().getUnitManager().getUnits()
         }

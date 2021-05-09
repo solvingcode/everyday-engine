@@ -1,5 +1,7 @@
 import ImageUI from '../image/ImageUI.js'
 import World from '../../../../../world/World.js'
+import CameraComponent from '../../../../../component/internal/CameraComponent.js'
+import IconUI from '../icon/IconUI.js'
 
 class UnitUI {
 
@@ -10,8 +12,14 @@ class UnitUI {
      * @param {number} version
      */
     static getImage(unit, props, version = 0) {
-        const mesh = World.get().getMeshManager().get(unit.getId())
-        return mesh && ImageUI.getImage(mesh, props, version)
+        if(unit.getComponent(CameraComponent)){
+            const icon = IconUI.createIcon('video')
+            icon.id = `${version}`
+            return icon
+        }else{
+            const mesh = World.get().getMeshManager().get(unit.getId())
+            return mesh && ImageUI.getImage(mesh, props, version)
+        }
     }
 
 }

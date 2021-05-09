@@ -54,6 +54,6 @@ export default class Asset extends AssetData{
      * @return {boolean}
      */
     async load(data) {
-        return this.type.load(data, this);
+        return this.type.load(data, this)
     }
 }

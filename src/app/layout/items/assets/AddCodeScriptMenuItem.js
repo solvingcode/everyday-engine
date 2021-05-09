@@ -6,7 +6,7 @@ export default class AddCodeScriptMenuItem extends MenuItem {
         super({
             id: 1,
             name: 'file-code',
-            title: 'Create script',
+            title: 'Create code script',
             stateCode: 'ACTION_ADD_CODE_SCRIPT',
             type: Layout.type.ICON,
             zone: Layout.zone.TOP

@@ -1,12 +1,22 @@
 import {HTML_ID_PREFIX} from '../../core/Constant.js'
 
-/**
- * @class {MenuItemUI}
- * @property {MenuItem} element
- * @property {MenuItemUI} parent
- * @property {number} version
- */
 class MenuItemUI {
+
+    /**
+     * @type {MenuItem}
+     */
+    element
+
+    /**
+     * @type {number}
+     */
+    version
+
+    /**
+     * @type {MenuItemUI}
+     */
+    parent
+
     constructor(item, index, parent) {
         this.element = item
         this.index = index

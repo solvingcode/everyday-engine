@@ -12,7 +12,6 @@ class WorldData extends Data {
     static instance
 
     unitManager
-    scriptManager
     tabManager
     functionRegistry
     camera
@@ -88,13 +87,6 @@ class WorldData extends Data {
     }
 
     /**
-     * @param {ScriptManager} scriptManager
-     */
-    setScriptManager(scriptManager) {
-        this.scriptManager = scriptManager
-    }
-
-    /**
      * Get the physics manager
      * @return {Physics}
      */
@@ -114,13 +106,6 @@ class WorldData extends Data {
      */
     getTabManager() {
         return this.tabManager
-    }
-
-    /**
-     * @return {ScriptManager}
-     */
-    getScriptManager() {
-        return this.scriptManager
     }
 
     /**

@@ -43,7 +43,7 @@ class Keyboard {
     }
 }
 
-Keyboard.Keys = {
+export const Keys = {
     CTRL: 17
 }
 

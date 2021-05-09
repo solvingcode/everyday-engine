@@ -1,8 +1,7 @@
 import World from '../../../world/World.js'
 import AssetScriptXmlGenerator from '../../../generator/script/AssetScriptXmlGenerator.js'
-import EditGraphScriptContent from '../../../content/EditGraphScriptContent.js'
-import EditScriptContent from '../../../content/EditScriptContent.js'
 import AssetScript from './AssetScript.js'
+import EditGraphScriptContent from '../../../content/EditGraphScriptContent.js'
 
 export default class AssetScriptXml extends AssetScript{
 
@@ -19,25 +18,9 @@ export default class AssetScriptXml extends AssetScript{
     /**
      * @override
      */
-    async load(xmlStr, asset) {
-        return new Promise(resolve => {
-            this.setDataUrl(xmlStr)
-            const script = this.parse()
-            asset.setName(script.getName())
-            resolve(script)
-        })
-    }
-
-    /**
-     * @override
-     */
-    open(asset, options = {asXml: false}) {
+    open(asset) {
         const tabManager = World.get().getTabManager()
-        if(options.asXml){
-            tabManager.createOrActivate(asset.getName(), new EditScriptContent(asset))
-        }else{
-            tabManager.createOrActivate(asset.getName(), new EditGraphScriptContent(asset))
-        }
+        tabManager.createOrActivate(asset.getName(), new EditGraphScriptContent(asset))
     }
 
     /**
@@ -54,7 +37,7 @@ export default class AssetScriptXml extends AssetScript{
      */
     async generate(flow, asset){
         const data = AssetScriptXmlGenerator.get().generate(flow)
-        await this.load(data, asset)
+        await this.setDataUrl(data)
     }
 
     /**

@@ -1,6 +1,7 @@
 import ANodeData from '../../project/data/ANodeData.js'
 import NodeInput from '../../pobject/NodeInput.js'
 import NodeHelper from '../../utils/NodeHelper.js'
+import Vector from '../../utils/Vector.js'
 
 /**
  * @abstract
@@ -13,11 +14,17 @@ export default class ANode extends ANodeData {
     selected
 
     /**
+     * @type {Vector}
+     */
+    position
+
+    /**
      * @param {number} sourceId
      */
     constructor(sourceId) {
         super()
         this.sourceId = sourceId
+        this.position = new Vector()
     }
 
     /**
@@ -96,6 +103,20 @@ export default class ANode extends ANodeData {
      */
     isSelected(){
         return this.selected
+    }
+
+    /**
+     * @param {Vector} position
+     */
+    setPosition(position){
+        this.position = position
+    }
+
+    /**
+     * @return {Vector}
+     */
+    getPosition(){
+        return this.position
     }
 
 }

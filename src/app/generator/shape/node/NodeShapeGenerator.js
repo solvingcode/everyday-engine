@@ -26,11 +26,12 @@ export default class NodeShapeGenerator extends TypeShapeGenerator {
         const sizeInput = 10
         const fontSize = 12
         const padding = 10
+        const heightHead = fontSize + padding * 2
+        const shadowBlur = 10
         const boxColor = '#0f1013'
         const baseInputColor = '#ffffff'
         const colorFocused = '#555555'
         const fontColor = '#ffffff'
-        const heightHead = fontSize + padding * 2
         let headColor
         if (type === NODE_TYPES.FUNCTION) {
             headColor = '#2c3f66'
@@ -38,11 +39,15 @@ export default class NodeShapeGenerator extends TypeShapeGenerator {
             headColor = '#5e2222'
         } else if (type === NODE_TYPES.CONSTANT) {
             headColor = '#343030'
+        } else if (type === NODE_TYPES.CONDITION) {
+            headColor = '#225e31'
+        } else if (type === NODE_TYPES.UNIT) {
+            headColor = '#5e2254'
         }
 
         // box
         context.shadowColor = guiPropertyComponent.isFocused() ? colorFocused : headColor
-        context.shadowBlur = 10
+        context.shadowBlur = shadowBlur
         context.fillStyle = boxColor
         context.strokeStyle = headColor
         context.rect(0, 0, width, height)

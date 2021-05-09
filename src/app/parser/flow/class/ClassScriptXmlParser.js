@@ -3,6 +3,7 @@ import ClassScript from '../../../flow/ClassScript.js'
 import World from '../../../world/World.js'
 import ScriptHelper from '../../../utils/ScriptHelper.js'
 import ClientError from '../../../exception/type/ClientError.js'
+import Vector from '../../../utils/Vector.js'
 
 export default class ClassScriptXmlParser extends Parser {
 
@@ -22,7 +23,10 @@ export default class ClassScriptXmlParser extends Parser {
                 const nodeType = cXmlNode.getAttribute('type')
                 const nodeValue = cXmlNode.getAttribute('value')
                 const nodeId = parseInt(cXmlNode.getAttribute('id'))
+                const positionSplit = cXmlNode.getAttribute('position').split(',')
+                const position = new Vector({x: parseFloat(positionSplit[0]), y: parseFloat(positionSplit[1])})
                 const node = ScriptHelper.createNode(functionRegistry, script, nodeType, nodeValue)
+                node.setPosition(position)
                 script.updateNodeId(node, nodeId)
             }else if(element === 'edge'){
                 const nodeSourceId = parseInt(cXmlNode.getAttribute('source'))

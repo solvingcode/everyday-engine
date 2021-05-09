@@ -58,6 +58,7 @@ import SystemError from '../../exception/type/SystemError.js'
 import TabManager from '../../manager/TabManager.js'
 import Tab from '../../content/Tab.js'
 import EditScriptCodeContent from '../../content/EditScriptCodeContent.js'
+import EditGraphScriptContent from '../../content/EditGraphScriptContent.js'
 
 /**
  * @class {DataSchema}
@@ -113,7 +114,8 @@ class DataSchema {
         {id: 360, type: GetUnitFunction},
         {id: 370, type: TabManager},
         {id: 380, type: Tab},
-        {id: 390, type: EditScriptCodeContent}
+        {id: 390, type: EditScriptCodeContent},
+        {id: 400, type: EditGraphScriptContent}
     ]
 
     /**

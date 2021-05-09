@@ -1,4 +1,5 @@
 import Size from '../pobject/Size.js'
+import Vector from './Vector.js'
 
 export default class GeometryHelper{
 
@@ -28,6 +29,41 @@ export default class GeometryHelper{
             width: Math.ceil(maxX - minX),
             height: Math.ceil(maxY - minY)
         })
+    }
+
+    /**
+     * @param {Vector} vectorA
+     * @param {Vector} vectorB
+     * @return {{position: Vector, size: Size, vertices: Vector[]}}
+     */
+    static getRectByDistance(vectorA, vectorB){
+        const position = new Vector()
+        const dX = vectorB.getX() - vectorA.getX()
+        const dY = vectorB.getY() - vectorA.getY()
+        const width = Math.abs(dX)
+        const height = Math.abs(dY)
+        const size = new Size({width, height})
+        const vertices = [new Vector(), new Vector()]
+        if(dX < 0){
+            position.setX(vectorB.getX())
+            vertices[0].setX(width)
+            vertices[1].setX(0)
+        }else{
+            position.setX(vectorA.getX())
+            vertices[0].setX(0)
+            vertices[1].setX(width)
+        }
+        if(dY < 0){
+            position.setY(vectorB.getY())
+            vertices[0].setY(height)
+            vertices[1].setY(0)
+        }else{
+            position.setY(vectorA.getY())
+            vertices[0].setY(0)
+            vertices[1].setY(height)
+        }
+
+        return {position, size, vertices}
     }
 
 }

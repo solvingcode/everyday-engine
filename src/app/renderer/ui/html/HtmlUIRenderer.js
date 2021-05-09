@@ -270,7 +270,7 @@ class HtmlUIRenderer extends UIRenderer {
         const style = this.getStyle(item)
         const className = this.getClassName(item)
         const type = this.getType(item)
-        if (el.style !== style) {
+        if (el.style.cssText !== style) {
             el.style = style
         }
         if (el.className !== className) {
@@ -300,6 +300,7 @@ class HtmlUIRenderer extends UIRenderer {
     /**
      * Get style from props
      * @param {MenuItemUI} item
+     * @return {string}
      */
     getStyle(item) {
         const type = this.getType(item)

@@ -24,7 +24,7 @@ export default class ScriptParser extends Parser {
                 if(type === 'class'){
                     const dataStrip = data
                         .replace(/(<([^>]+)>)/gi, '')
-                        .replace(/&nbsp;/g, '')
+                        .replace(/&nbsp;/g, ' ')
                     return ClassScriptCodeParser.parse(dataStrip)
                 }else{
                     throw new ClientError(`Script data type "${type}" not supported`)

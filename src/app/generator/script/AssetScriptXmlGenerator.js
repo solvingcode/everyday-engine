@@ -23,8 +23,10 @@ export default class AssetScriptXmlGenerator extends AssetScriptGenerator{
         flow.getNodes().forEach(node => {
             const nodeNode = root.createElement('node')
             let nodeType = ScriptHelper.getNodeType(node)
+            const {x, y} = node.getPosition()
             nodeNode.setAttribute('type', nodeType)
             nodeNode.setAttribute('id', `${node.getId()}`)
+            nodeNode.setAttribute('position', `${x},${y}`)
             nodeNode.setAttribute('value', NodeHelper.getSourceNode(node).getName())
             parentNode.appendChild(nodeNode)
         })

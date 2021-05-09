@@ -21,6 +21,11 @@ import TabManager from '../manager/TabManager.js'
  */
 class World extends WorldData {
 
+    /**
+     * @type {ScriptManager}
+     */
+    scriptManager
+
     constructor() {
         super()
         this.unitManager = new UnitManager()
@@ -44,6 +49,9 @@ class World extends WorldData {
     init() {
         this.createRootFolder()
         this.getTabManager().init()
+        this.getAssetsManager().getScriptAssets().forEach(asset => {
+            asset.getType().parse()
+        })
     }
 
     /**
@@ -203,6 +211,20 @@ class World extends WorldData {
      */
     getMeshManager() {
         return this.meshManager
+    }
+
+    /**
+     * @param {ScriptManager} scriptManager
+     */
+    setScriptManager(scriptManager) {
+        this.scriptManager = scriptManager
+    }
+
+    /**
+     * @return {ScriptManager}
+     */
+    getScriptManager() {
+        return this.scriptManager
     }
 
     createRootFolder() {

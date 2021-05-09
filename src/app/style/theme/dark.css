@@ -188,6 +188,10 @@ button.selected, button.hidden.selected, button.locked.selected{
     background-color: #b94a48;
 }
 
+.units-wrapper .list-element .list-element-img-wrapper i{
+    color: #333333;
+}
+
 #app-el-window .error-popup{
     background-color: #333333;
 }

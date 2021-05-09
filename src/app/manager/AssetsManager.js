@@ -6,6 +6,7 @@ import AssetScriptXml from '../asset/types/script/AssetScriptXml.js'
 import Folder from '../asset/Folder.js'
 import ClassScript from '../flow/ClassScript.js'
 import ClientError from '../exception/type/ClientError.js'
+import AssetScript from '../asset/types/script/AssetScript.js'
 
 /**
  * @class {AssetsManager}
@@ -113,13 +114,19 @@ export default class AssetsManager extends AssetsManagerData {
         return type === AssetImage
     }
 
+    /**
+     * @return {Asset[]}
+     */
+    getScriptAssets(){
+        return this.getAssets().filter(asset => this.isAssetScript(asset))
+    }
 
     /**
      * @param {Asset} asset
      * @return {boolean}
      */
     isAssetScript(asset) {
-        return asset && asset.getType() instanceof AssetScriptXml
+        return asset && asset.getType() instanceof AssetScript
     }
 
     /**

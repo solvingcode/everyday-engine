@@ -5,7 +5,7 @@ export default class AddScriptMenuItem extends MenuItem {
     constructor() {
         super({
             id: 1,
-            name: 'file-code',
+            name: 'project-diagram',
             title: 'Create script',
             stateCode: 'ACTION_ADD_SCRIPT',
             type: Layout.type.ICON,

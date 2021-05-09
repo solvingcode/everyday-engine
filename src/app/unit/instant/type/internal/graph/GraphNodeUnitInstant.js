@@ -26,7 +26,7 @@ export default class GraphNodeUnitInstant extends UnitInstant {
         const padding = 10
         const fontSizeRatio = 1.5
         const sizeInput = 10
-        const width = node.getName().length * fontSize / fontSizeRatio
+        const width = Math.max(node.getName().length * fontSize / fontSizeRatio, 100)
         const height = (nodeSourceInputs.length + 1) * (sizeInput + padding * 2) + (fontSize + padding * 2)
         const size = new Size({width, height})
         transformComponent.setPosition(position)
@@ -35,6 +35,7 @@ export default class GraphNodeUnitInstant extends UnitInstant {
         nodeComponent.setTitle(node.getName())
         nodeComponent.setInputs(nodeSourceInputs.map(input => input.getAttrName()))
         nodeComponent.setType(ScriptHelper.getNodeType(node))
+        nodeComponent.setNodeId(node.getId())
         if(nodeSourceOutput){
             nodeComponent.setOutput(nodeSourceOutput.getAttrName())
         }

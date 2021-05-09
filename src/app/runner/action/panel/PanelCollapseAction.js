@@ -9,8 +9,11 @@ export default class PanelCollapseAction extends Action {
      */
     static run(mouse) {
         const uiRenderer = Menu.get().getUIRenderer()
-        const menuItem = uiRenderer.getItemAt(mouse).element
-        menuItem.setCollapsed(!menuItem.isCollapsed())
+        const menuItem = uiRenderer.getItemAt(mouse)
+        if(menuItem){
+            const {element} = menuItem
+            element.setCollapsed(!element.isCollapsed())
+        }
         return true
     }
 

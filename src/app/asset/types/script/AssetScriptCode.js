@@ -1,5 +1,4 @@
 import World from '../../../world/World.js'
-import EditGraphScriptContent from '../../../content/EditGraphScriptContent.js'
 import EditScriptCodeContent from '../../../content/EditScriptCodeContent.js'
 import AssetScript from './AssetScript.js'
 import AssetScriptCodeGenerator from '../../../generator/script/AssetScriptCodeGenerator.js'
@@ -9,25 +8,9 @@ export default class AssetScriptCode extends AssetScript{
     /**
      * @override
      */
-    async load(code, asset) {
-        return new Promise(resolve => {
-            this.setDataUrl(code)
-            const script = this.parse()
-            asset.setName(script.getName())
-            resolve(script)
-        })
-    }
-
-    /**
-     * @override
-     */
-    open(asset, options = {asGraph: false}) {
+    open(asset) {
         const tabManager = World.get().getTabManager()
-        if(options.asGraph){
-            tabManager.createOrActivate(asset.getName(), new EditGraphScriptContent(asset))
-        }else{
-            tabManager.createOrActivate(asset.getName(), new EditScriptCodeContent(asset))
-        }
+        tabManager.createOrActivate(asset.getName(), new EditScriptCodeContent(asset))
     }
 
     /**
@@ -51,7 +34,7 @@ export default class AssetScriptCode extends AssetScript{
      */
     async generate(flow, asset){
         const data = AssetScriptCodeGenerator.get().generate(flow)
-        await this.load(data, asset)
+        await this.setDataUrl(data)
     }
 
 }

@@ -26,6 +26,7 @@ import AssetMenuItem from './items/assets/AssetMenuItem.js'
 import ScriptMenuItem from './items/script/ScriptMenuItem.js'
 import AddCodeScriptMenuItem from './items/assets/AddCodeScriptMenuItem.js'
 import ErrorPopupMenuItem from './items/error/ErrorPopupMenuItem.js'
+import AddScriptMenuItem from './items/assets/AddScriptMenuItem.js'
 
 /**
  * Define all menu items
@@ -35,7 +36,7 @@ import ErrorPopupMenuItem from './items/error/ErrorPopupMenuItem.js'
 class Menu {
     constructor() {
         this.types = [
-            // Window
+            //Window
             new ErrorPopupMenuItem(),
 
             //LEFT
@@ -56,13 +57,14 @@ class Menu {
             new MoveDownMenuItem(),
             new CameraMenuItem(),
             new AddCodeScriptMenuItem(),
+            new AddScriptMenuItem(),
             new SimulateStartMenuItem(),
             new SimulateStopMenuItem(),
 
             //TOP TABS
             new TabListMenuItem(),
 
-            // Body
+            //Body
             new ContentMenuItem(),
 
             //RIGHT
@@ -132,7 +134,7 @@ class Menu {
      * @param {String} zone
      * @param {Number} parentIndex (must start from 0)
      */
-    findItemByZoneAndParent(index, zone, parentIndex){
+    findItemByZoneAndParent(index, zone, parentIndex) {
         const itemsZone = this.items.filter(pItem =>
             pItem.element.zone === zone
             && ((!parentIndex && !pItem.parent) || (pItem.parent && pItem.parent.index === parentIndex))
@@ -155,27 +157,28 @@ class Menu {
     }
 
     /**
-     * Select item in the menu.
-     * @param {MenuItemUI} menuItem
+     * @param {MenuItemUI[]} menuItems
      */
-    selectItem(menuItem) {
-        for (const iItem in this.items) {
-            const item = this.items[iItem]
-            const {element} = item
-            if (element.isSelected()) {
-                menuItem !== item && element.stop(menuItem.element.stateCode)
+    selectItems(menuItems) {
+        const elementsToStop = this.items.filter(item => item.element.isSelected()).map(menuItem => menuItem.element)
+        const elementsToRun = menuItems.map(menuItem => menuItem.element)
+        elementsToStop.forEach(element => {
+            if (!elementsToRun.includes(element)) {
+                element.stop(menuItems[0].element.stateCode)
             }
-            if (element === menuItem.element) {
+        })
+        elementsToRun.forEach(element => {
+            if (!elementsToStop.includes(element)) {
                 element.run()
             }
-        }
+        })
     }
 
-    stopActionMenuItem(){
+    stopActionMenuItem() {
         for (const iItem in this.items) {
             const item = this.items[iItem]
             const {element} = item
-            if(element.isSelected() && element.isAction()){
+            if (element.isSelected() && element.isAction()) {
                 element.stop()
             }
         }

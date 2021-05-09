@@ -10,7 +10,7 @@ export default class ClassScriptCodeParser extends Parser {
 
     static KW_CLASS = 'class'
     static KW_NEW = 'new'
-    static KW_VAR = 'var'
+    static KW_VAR = 'const'
     static KW_IF = 'if'
 
     /**

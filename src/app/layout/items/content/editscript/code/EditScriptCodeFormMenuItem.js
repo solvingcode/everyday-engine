@@ -22,7 +22,7 @@ export default class EditScriptCodeFormMenuItem extends FormMenuItem {
             {
                 bind: 'dataUrl',
                 label: '',
-                type: Layout.form.WYSIWYG
+                type: Layout.form.TEXTAREA
             }
         ]
     }

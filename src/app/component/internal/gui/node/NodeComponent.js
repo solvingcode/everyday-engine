@@ -5,13 +5,14 @@ export default class NodeComponent extends Component{
 
 
     constructor() {
-        super('Style')
+        super('Node')
     }
 
     /**
      * @override
      */
     initAttributes() {
+        this.add('nodeId', TYPES.NUMBER)
         this.add('title', TYPES.STRING)
         this.add('type', TYPES.STRING)
         this.add('inputs', TYPES.ARRAY_STRING)
@@ -23,6 +24,13 @@ export default class NodeComponent extends Component{
      */
     getFormFields() {
         return []
+    }
+
+    /**
+     * @param {number} nodeId
+     */
+    setNodeId(nodeId) {
+        this.setValue('nodeId', nodeId)
     }
 
     /**
@@ -51,6 +59,13 @@ export default class NodeComponent extends Component{
      */
     setOutput(output) {
         this.setValue('output', output)
+    }
+
+    /**
+     * @return {number}
+     */
+    getNodeId(){
+        return this.getValue('nodeId')
     }
 
     /**

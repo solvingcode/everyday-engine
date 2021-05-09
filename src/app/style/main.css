@@ -352,6 +352,13 @@ h4{
     padding: 0;
 }
 
+.units-wrapper .list-element .list-element-img-wrapper i{
+    font-size: 14px;
+    float: none;
+    margin: auto;
+    line-height: 1.3rem;
+}
+
 #app-el-left, #app-el-top, #app-el-right, #app-el-footer, #app-el-bottom, #app-el-top-tab, #app-el-body, #app-el-window{
     position: absolute;
     z-index: 9999;

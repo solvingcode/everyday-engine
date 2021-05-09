@@ -29,10 +29,15 @@ export default class AssetScript extends AssetType{
     }
 
     /**
-     * @abstract
+     * @override
      */
     async load(data, asset) {
-        throw new SystemError(`${this.constructor.name}.load must be implemented`)
+        return new Promise(resolve => {
+            this.setDataUrl(data)
+            const script = this.parse()
+            asset.setName(script.getName())
+            resolve(script)
+        })
     }
 
     /**

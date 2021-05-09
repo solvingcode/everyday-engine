@@ -129,6 +129,14 @@ export default class AScript extends AScriptData{
     }
 
     /**
+     * @param {number} id
+     * @return {NodeInput}
+     */
+    findNodeInputById(id){
+        return this.getInputs().find(nodeInput => nodeInput.getId() === id)
+    }
+
+    /**
      * @param {string} name
      * @return {ANode}
      */

@@ -7,7 +7,7 @@ export default class Content extends ContentData{
      * @return {*}
      */
     getData(){
-        throw new SystemError(`${this.constructor.name} must be implemented`)
+        throw new SystemError(`${this.constructor.name}.getData must be implemented`)
     }
 
 }
