@@ -6,7 +6,6 @@ import {PrimitiveShape} from '../../../../Unit.js'
 import NodeComponent from '../../../../../component/internal/gui/node/NodeComponent.js'
 import NodeHelper from '../../../../../utils/NodeHelper.js'
 import ScriptHelper from '../../../../../utils/ScriptHelper.js'
-import Size from '../../../../../pobject/Size.js'
 
 export default class GraphNodeUnitInstant extends UnitInstant {
 
@@ -22,13 +21,7 @@ export default class GraphNodeUnitInstant extends UnitInstant {
         const nodeSource = NodeHelper.getSourceNode(node)
         const nodeSourceInputs = nodeSource.getInputs()
         const nodeSourceOutput = nodeSource.getOutput()
-        const fontSize = 12
-        const padding = 10
-        const fontSizeRatio = 1.5
-        const sizeInput = 10
-        const width = Math.max(node.getName().length * fontSize / fontSizeRatio, 100)
-        const height = (nodeSourceInputs.length + 1) * (sizeInput + padding * 2) + (fontSize + padding * 2)
-        const size = new Size({width, height})
+        const size = NodeHelper.getNodeGUISize(node)
         transformComponent.setPosition(position)
         meshComponent.setSize(size)
         meshComponent.setShape(PrimitiveShape.NODE)

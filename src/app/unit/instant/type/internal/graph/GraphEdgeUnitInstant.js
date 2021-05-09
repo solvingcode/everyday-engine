@@ -7,6 +7,8 @@ import NodeInputComponent from '../../../../../component/internal/gui/node/NodeI
 import Style from '../../../../../pobject/Style.js'
 import StyleComponent from '../../../../../component/internal/StyleComponent.js'
 import GeometryHelper from '../../../../../utils/GeometryHelper.js'
+import NodeHelper from '../../../../../utils/NodeHelper.js'
+import Vector from '../../../../../utils/Vector.js'
 
 export default class GraphEdgeUnitInstant extends UnitInstant {
 
@@ -31,13 +33,19 @@ export default class GraphEdgeUnitInstant extends UnitInstant {
 
         const sourceNode = script.findNodeById(nodeInput.getSourceNodeId())
         const targetNode = script.findNodeById(nodeInput.getNodeId())
-        const sourcePosition = sourceNode.getPosition()
-        const targetPosition = targetNode.getPosition()
+        const targetSourceNode = NodeHelper.getSourceNode(targetNode)
+        const targetNodeInputIndex = targetSourceNode.getInputs()
+            .findIndex(input => input.getId() === nodeInput.getTargetId())
+        const sourceNodeSize = NodeHelper.getNodeGUISize(sourceNode)
+        const {position: sourceOutputPosition} = NodeHelper.getNodeGUIOutput(sourceNode.getType(), sourceNodeSize)
+        const {position: targetInputPosition} = NodeHelper.getNodeGUIInput(sourceNode.getType(), targetNodeInputIndex)
+        const sourcePosition = Vector.add(sourceNode.getPosition(), sourceOutputPosition)
+        const targetPosition = Vector.add(targetNode.getPosition(), targetInputPosition)
 
         const {position, size, vertices} = GeometryHelper.getRectByDistance(sourcePosition, targetPosition)
         const style = new Style()
-        style.setColor('#FFFFFF')
-        style.setBorderSize(3)
+        style.setColor('#c4c4c4')
+        style.setBorderSize(2)
 
         nodeInputComponent.setNodeInputId(nodeInput.getId())
         styleComponent.setStyle(style)

@@ -2,6 +2,7 @@ import TypeShapeGenerator from '../TypeShapeGenerator.js'
 import NodeComponent from '../../../component/internal/gui/node/NodeComponent.js'
 import {NODE_TYPES} from '../../../flow/node/ANode.js'
 import GUIPropertyComponent from '../../../component/internal/gui/property/GUIPropertyComponent.js'
+import NodeHelper from '../../../utils/NodeHelper.js'
 
 /**
  * @abstract
@@ -23,27 +24,11 @@ export default class NodeShapeGenerator extends TypeShapeGenerator {
         const {width, height} = scaleSize
 
         //props
-        const sizeInput = 10
-        const fontSize = 12
-        const padding = 10
-        const heightHead = fontSize + padding * 2
-        const shadowBlur = 10
-        const boxColor = '#0f1013'
-        const baseInputColor = '#ffffff'
-        const colorFocused = '#555555'
-        const fontColor = '#ffffff'
-        let headColor
-        if (type === NODE_TYPES.FUNCTION) {
-            headColor = '#2c3f66'
-        } else if (type === NODE_TYPES.EVENT) {
-            headColor = '#5e2222'
-        } else if (type === NODE_TYPES.CONSTANT) {
-            headColor = '#343030'
-        } else if (type === NODE_TYPES.CONDITION) {
-            headColor = '#225e31'
-        } else if (type === NODE_TYPES.UNIT) {
-            headColor = '#5e2254'
-        }
+        const {
+            sizeInput, fontSize, heightHead,
+            shadowBlur, boxColor, baseInputColor,
+            colorFocused, fontColor, headColor, padding
+        } = NodeHelper.getNodeGUIProps(type)
 
         // box
         context.shadowColor = guiPropertyComponent.isFocused() ? colorFocused : headColor
@@ -66,27 +51,26 @@ export default class NodeShapeGenerator extends TypeShapeGenerator {
         context.fillText(title, padding, fontSize + padding)
 
         //base input
-        if(type !== NODE_TYPES.EVENT){
+        if(type !== NODE_TYPES.EVENT && type !== NODE_TYPES.UNIT && type !== NODE_TYPES.CONSTANT){
+            const {position: baseInputPosition} = NodeHelper.getNodeGUIInput(type, -1)
             context.fillStyle = baseInputColor
-            context.fillRect(padding, heightHead + padding, sizeInput, sizeInput)
+            context.fillRect(baseInputPosition.getX(), baseInputPosition.getY(), sizeInput, sizeInput)
         }
 
         //other inputs
         inputs.forEach((input, index) => {
-            const inputX = padding
-            const inputY = heightHead + sizeInput + (padding + sizeInput) * (index + 1)
+            const {position: inputPosition} = NodeHelper.getNodeGUIInput(type, index)
             context.fillStyle = headColor
-            context.fillRect(inputX, inputY, sizeInput, sizeInput)
+            context.fillRect(inputPosition.getX(), inputPosition.getY(), sizeInput, sizeInput)
             context.fillStyle = fontColor
-            context.fillText(input, inputX + sizeInput + padding, inputY + sizeInput)
+            context.fillText(input, inputPosition.getX() + sizeInput + padding, inputPosition.getY() + sizeInput)
         })
 
         //output
         if(output || type === NODE_TYPES.EVENT){
-            const outputX = width - padding - sizeInput
-            const outputY = heightHead + padding
+            const {position: outputPosition} = NodeHelper.getNodeGUIOutput(type, scaleSize)
             context.fillStyle = baseInputColor
-            context.fillRect(outputX, outputY, sizeInput, sizeInput)
+            context.fillRect(outputPosition.getX(), outputPosition.getY(), sizeInput, sizeInput)
         }
 
     }

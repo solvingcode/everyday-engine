@@ -41,7 +41,7 @@ export default class AScript extends AScriptData{
                 break
             case UnitNode:
                 nodeSource = new AUnit(TYPES.NUMBER, value)
-                registry.tryRegister(nodeSource)
+                registry.register(nodeSource)
                 break
             default:
                 throw new ClientError(`Script Create Node: "${nodeClass.name}" not supported`)
