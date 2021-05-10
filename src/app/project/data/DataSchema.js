@@ -59,6 +59,8 @@ import TabManager from '../../manager/TabManager.js'
 import Tab from '../../content/Tab.js'
 import EditScriptCodeContent from '../../content/EditScriptCodeContent.js'
 import EditGraphScriptContent from '../../content/EditGraphScriptContent.js'
+import KeyCodeNode from '../../flow/node/KeyCodeNode.js'
+import AKeyCode from '../../flow/keycode/AKeyCode.js'
 
 /**
  * @class {DataSchema}
@@ -115,7 +117,9 @@ class DataSchema {
         {id: 370, type: TabManager},
         {id: 380, type: Tab},
         {id: 390, type: EditScriptCodeContent},
-        {id: 400, type: EditGraphScriptContent}
+        {id: 400, type: EditGraphScriptContent},
+        {id: 410, type: KeyCodeNode},
+        {id: 420, type: AKeyCode}
     ]
 
     /**

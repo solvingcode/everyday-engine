@@ -58,7 +58,7 @@ export default class NodeShapeGenerator extends TypeShapeGenerator {
         context.fillText(title, padding, fontSize + padding)
 
         //base input
-        if(type !== NODE_TYPES.EVENT && type !== NODE_TYPES.UNIT && type !== NODE_TYPES.CONSTANT){
+        if(type === NODE_TYPES.FUNCTION || type === NODE_TYPES.CONDITION){
             const {position: baseInputPosition} = NodeHelper.getNodeGUIInput(type, -1)
             context.fillStyle = baseInputColor
             context.fillRect(baseInputPosition.getX(), baseInputPosition.getY(), sizeInput, sizeInput)

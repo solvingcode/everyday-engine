@@ -45,6 +45,10 @@ export default class AddScriptNodeFormTypeMenuItem extends FormMenuItem {
                         label: 'Condition'
                     },
                     {
+                        value: NODE_TYPES.KEY_CODE,
+                        label: 'Key Code'
+                    },
+                    {
                         value: NODE_TYPES.UNIT,
                         label: 'Unit'
                     }

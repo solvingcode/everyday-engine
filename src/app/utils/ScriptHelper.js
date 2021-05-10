@@ -5,6 +5,7 @@ import ConstantNode from '../flow/node/ConstantNode.js'
 import ConditionNode from '../flow/node/ConditionNode.js'
 import UnitNode from '../flow/node/UnitNode.js'
 import ClientError from '../exception/type/ClientError.js'
+import KeyCodeNode from '../flow/node/KeyCodeNode.js'
 
 export default class ScriptHelper{
 
@@ -23,6 +24,8 @@ export default class ScriptHelper{
             node = script.createNode(functionRegistry, FunctionNode, nodeValue)
         }else if(nodeType === NODE_TYPES.CONSTANT){
             node = script.createNode(functionRegistry, ConstantNode, nodeValue)
+        }else if(nodeType === NODE_TYPES.KEY_CODE){
+            node = script.createNode(functionRegistry, KeyCodeNode, nodeValue)
         }else if(nodeType === NODE_TYPES.CONDITION){
             node = script.createNode(functionRegistry, ConditionNode, nodeValue)
         }else if(nodeType === NODE_TYPES.UNIT){
@@ -49,6 +52,8 @@ export default class ScriptHelper{
             nodeType = NODE_TYPES.CONDITION
         }else if(node instanceof UnitNode){
             nodeType = NODE_TYPES.UNIT
+        }else if(node instanceof KeyCodeNode){
+            nodeType = NODE_TYPES.KEY_CODE
         }else{
             throw new ClientError(`AssetScriptXmlGenerator: ${node.constructor.name} not supported`)
         }

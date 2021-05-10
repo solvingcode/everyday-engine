@@ -10,6 +10,8 @@ import AUnit from './unit/AUnit.js'
 import {TYPES} from '../pobject/AttributeType.js'
 import ClientError from '../exception/type/ClientError.js'
 import SystemError from '../exception/type/SystemError.js'
+import KeyCodeNode from './node/KeyCodeNode.js'
+import AKeyCode from './keycode/AKeyCode.js'
 
 /**
  * @abstract
@@ -18,7 +20,7 @@ export default class AScript extends AScriptData{
 
     /**
      * @param {Registry} registry
-     * @param {Function} nodeClass
+     * @param {FunctionNode|ConditionNode|EventNode|ConstantNode|KeyCodeNode|UnitNode} nodeClass
      * @param {string|number|boolean} value
      * @return {ANode}
      */
@@ -31,13 +33,13 @@ export default class AScript extends AScriptData{
                 nodeSource = registry.tryGetInstance(value)
                 break
             case ConstantNode:
-                nodeSource = new AConstant(DynamicAttributeHelper.findTypeOfValue(value), value)
-                const existNodeSource = registry.getInstance(nodeSource.getName())
-                if(existNodeSource){
-                    nodeSource = existNodeSource
-                }else{
-                    registry.tryRegister(nodeSource)
+            case KeyCodeNode:
+                if(nodeClass === ConstantNode){
+                    nodeSource = new AConstant(DynamicAttributeHelper.findTypeOfValue(value), value)
+                }else if(nodeClass === KeyCodeNode){
+                    nodeSource = new AKeyCode(value)
                 }
+                registry.register(nodeSource)
                 break
             case UnitNode:
                 nodeSource = new AUnit(TYPES.NUMBER, value)

@@ -126,5 +126,6 @@ export const NODE_TYPES = {
     FUNCTION: 'function',
     CONSTANT: 'constant',
     CONDITION: 'condition',
-    UNIT: 'unit'
+    UNIT: 'unit',
+    KEY_CODE: 'key_code'
 }

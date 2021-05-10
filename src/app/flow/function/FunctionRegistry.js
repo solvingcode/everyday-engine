@@ -3,6 +3,7 @@ import AEvent from '../event/AEvent.js'
 import AConstant from '../constant/AConstant.js'
 import ACondition from '../condition/ACondition.js'
 import AUnit from '../unit/AUnit.js'
+import AKeyCode from '../keycode/AKeyCode.js'
 
 export default class FunctionRegistry extends Registry{
 
@@ -71,7 +72,8 @@ export default class FunctionRegistry extends Registry{
                 !(instance instanceof AEvent) &&
                 !(instance instanceof AConstant) &&
                 !(instance instanceof ACondition) &&
-                !(instance instanceof AUnit)
+                !(instance instanceof AUnit) &&
+                !(instance instanceof AKeyCode)
             )
     }
 
@@ -87,6 +89,13 @@ export default class FunctionRegistry extends Registry{
      */
     getConstantInstances(){
         return super.getInstances().filter(instance => instance instanceof AConstant)
+    }
+
+    /**
+     * @return {AKeyCode[]}
+     */
+    getKeyCodeInstances(){
+        return super.getInstances().filter(instance => instance instanceof AKeyCode)
     }
 
     /**

@@ -10,6 +10,7 @@ import World from '../../world/World.js'
 import ACondition from '../condition/ACondition.js'
 import SystemError from '../../exception/type/SystemError.js'
 import ClientError from '../../exception/type/ClientError.js'
+import AKeyCode from '../keycode/AKeyCode.js'
 
 export default class ClassCompiler extends Compiler {
 
@@ -62,13 +63,15 @@ export default class ClassCompiler extends Compiler {
                                 new StackOperation(OPERATIONS.CALL, functionName)
                             ])
                             functionRegistry.register(newConditionBlock)
-                        } else if (sourceElement instanceof AFunction) {
-                            const targetInput = element.findInputById(targetId)
-                            stack.push(new StackOperation(OPERATIONS.CALL, this.generateFunctionName(script, sourceNode, functionRegistry)))
-                            stack.push(new StackOperation(OPERATIONS.PUSH, targetInput.getAttrName(), CONSTANTS.RESULT))
-                        } else if (sourceElement instanceof AConstant) {
+                        } else if (sourceElement instanceof AConstant || sourceElement instanceof AKeyCode) {
                             const targetInput = element.findInputById(targetId)
                             stack.push(new StackOperation(OPERATIONS.CALL, sourceElement.getName()))
+                            stack.push(new StackOperation(OPERATIONS.PUSH, targetInput.getAttrName(), CONSTANTS.RESULT))
+                        }
+                        // must be the last condition
+                        else if (sourceElement instanceof AFunction) {
+                            const targetInput = element.findInputById(targetId)
+                            stack.push(new StackOperation(OPERATIONS.CALL, this.generateFunctionName(script, sourceNode, functionRegistry)))
                             stack.push(new StackOperation(OPERATIONS.PUSH, targetInput.getAttrName(), CONSTANTS.RESULT))
                         } else if (element) {
                             throw new SystemError(`Class compiler: ${element.constructor.name} not supported`)

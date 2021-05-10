@@ -8,6 +8,7 @@ import {NODE_TYPES} from '../flow/node/ANode.js'
 import ClientError from '../exception/type/ClientError.js'
 import Size from '../pobject/Size.js'
 import Vector from './Vector.js'
+import AKeyCode from '../flow/keycode/AKeyCode.js'
 
 export default class NodeHelper {
 
@@ -27,6 +28,8 @@ export default class NodeHelper {
     static getNodeName(node){
         const nodeSource = this.getSourceNode(node)
         if(nodeSource instanceof AConstant){
+            return `${nodeSource.getName()}`
+        }else if(nodeSource instanceof AKeyCode){
             return `${nodeSource.getName()}`
         }else if(nodeSource instanceof ACondition){
             return `${nodeSource.getName()}`
@@ -50,6 +53,8 @@ export default class NodeHelper {
         const nodeSource = this.getSourceNode(node)
         if(nodeSource instanceof AConstant){
             return NODE_TYPES.CONSTANT
+        }else if(nodeSource instanceof AKeyCode){
+            return NODE_TYPES.KEY_CODE
         }else if(nodeSource instanceof ACondition){
             return NODE_TYPES.CONDITION
         }else if(nodeSource instanceof AEvent){
@@ -97,6 +102,8 @@ export default class NodeHelper {
             headColor = '#225e31'
         } else if (type === NODE_TYPES.UNIT) {
             headColor = '#5e2254'
+        } else if (type === NODE_TYPES.KEY_CODE) {
+            headColor = '#32225e'
         }
         return {
             sizeInput,

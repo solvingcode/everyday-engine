@@ -4,6 +4,7 @@ import AddScriptNodeFormTypeMenuItem from './AddScriptNodeFormTypeMenuItem.js'
 import AddScriptNodeFormFunctionMenuItem from './AddScriptNodeFormFunctionMenuItem.js'
 import AddScriptNodeFormConstantMenuItem from './AddScriptNodeFormConstantMenuItem.js'
 import AddScriptNodeFormUnitMenuItem from './AddScriptNodeFormUnitMenuItem.js'
+import AddScriptNodeFormKeyCodeMenuItem from './AddScriptNodeFormKeyCodeMenuItem.js'
 
 export default class AddScriptNodeFormMenuItem  extends MenuItem {
     /**
@@ -22,7 +23,8 @@ export default class AddScriptNodeFormMenuItem  extends MenuItem {
             new AddScriptNodeFormTypeMenuItem(this, addNodeForm),
             new AddScriptNodeFormFunctionMenuItem(this, addNodeForm),
             new AddScriptNodeFormConstantMenuItem(this, addNodeForm),
-            new AddScriptNodeFormUnitMenuItem(this, addNodeForm)
+            new AddScriptNodeFormUnitMenuItem(this, addNodeForm),
+            new AddScriptNodeFormKeyCodeMenuItem(this, addNodeForm)
         ]
     }
 }

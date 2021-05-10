@@ -43,8 +43,11 @@ class Keyboard {
     }
 }
 
-export const Keys = {
-    CTRL: 17
+export const KeyCode = {
+    Z: 90,
+    S: 83,
+    Q: 65,
+    D: 68
 }
 
 export default Keyboard
