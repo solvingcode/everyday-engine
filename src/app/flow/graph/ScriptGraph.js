@@ -213,7 +213,9 @@ export default class ScriptGraph {
      */
     update(script) {
         if (script) {
-            let updated = this.updateGraphNodes(script) || this.updateGraphEdges(script)
+            let updated = false
+            updated = this.updateGraphNodes(script) || updated
+            updated = this.updateGraphEdges(script) || updated
             if (updated) {
                 this.save(script)
             }
@@ -226,6 +228,11 @@ export default class ScriptGraph {
     save(script) {
         const asset = World.get().getTabManager().getSelectedContentData()
         asset.generate(script)
+    }
+
+    reset(){
+        this.graphEdges = []
+        this.graphUnits = []
     }
 
     /**

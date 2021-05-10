@@ -1,7 +1,6 @@
 import MenuItem from '../../../MenuItem.js'
 import Layout from '../../../Layout.js'
 import AddScriptNodeMenuItem from './add/AddScriptNodeMenuItem.js'
-import ScriptNodeListMenuItem from './list/ScriptNodeListMenuItem.js'
 
 export default class ScriptNodesMenuItem extends MenuItem {
     constructor(parent) {
@@ -13,8 +12,7 @@ export default class ScriptNodesMenuItem extends MenuItem {
         })
         this.parent = parent
         this.items = [
-            new AddScriptNodeMenuItem(this),
-            new ScriptNodeListMenuItem(this)
+            new AddScriptNodeMenuItem(this)
         ]
     }
 }

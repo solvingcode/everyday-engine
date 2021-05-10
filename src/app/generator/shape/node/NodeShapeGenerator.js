@@ -27,14 +27,21 @@ export default class NodeShapeGenerator extends TypeShapeGenerator {
         const {
             sizeInput, fontSize, heightHead,
             shadowBlur, boxColor, baseInputColor,
-            colorFocused, fontColor, headColor, padding
+            colorFocused, fontColor, headColor,
+            padding, selectColor
         } = NodeHelper.getNodeGUIProps(type)
 
         // box
-        context.shadowColor = guiPropertyComponent.isFocused() ? colorFocused : headColor
+        let shadowColor = headColor
+        if(guiPropertyComponent.isFocused()){
+            shadowColor = colorFocused
+        }else if(guiPropertyComponent.isSelected()){
+            shadowColor = selectColor
+        }
+        context.shadowColor = shadowColor
         context.shadowBlur = shadowBlur
         context.fillStyle = boxColor
-        context.strokeStyle = headColor
+        context.strokeStyle = guiPropertyComponent.isSelected() ? selectColor: headColor
         context.rect(0, 0, width, height)
         context.fill()
         context.stroke()

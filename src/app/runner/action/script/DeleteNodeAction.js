@@ -12,7 +12,11 @@ export default class DeleteNodeAction extends Action {
         if(script){
             const nodes = script.getSelectedNodes()
             if(nodes){
-                nodes.forEach(node => script.removeNodeById(node.getId()))
+                nodes.forEach(node => {
+                    const connections = script.getInputs().filter(input => input.getSourceNodeId() === node.getId())
+                    connections.forEach(connection => script.removeInputById(connection.getId()))
+                    script.removeNodeById(node.getId())
+                })
                 assetTab.generate(script)
             }
         }

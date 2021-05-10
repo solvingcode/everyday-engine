@@ -71,7 +71,7 @@ export default class NodeHelper {
      * sizeInput: number, fontSize: number,
      * baseInputColor: string, headColor: string,
      * padding: number, fontColor: string,
-     * fontSizeRatio: number
+     * fontSizeRatio: number, selectColor: string
      * }}
      */
     static getNodeGUIProps(type){
@@ -85,6 +85,7 @@ export default class NodeHelper {
         const baseInputColor = '#ffffff'
         const colorFocused = '#555555'
         const fontColor = '#ffffff'
+        const selectColor = '#d09300'
         let headColor
         if (type === NODE_TYPES.FUNCTION) {
             headColor = '#2c3f66'
@@ -108,7 +109,8 @@ export default class NodeHelper {
             fontColor,
             padding,
             headColor,
-            fontSizeRatio
+            fontSizeRatio,
+            selectColor
         }
     }
 

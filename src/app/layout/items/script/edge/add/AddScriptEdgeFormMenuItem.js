@@ -41,11 +41,13 @@ export default class AddScriptEdgeFormMenuItem extends FormMenuItem {
                 }))
             if(object.getTargetId()){
                 const targetNode = script.findNodeById(parseInt(object.getTargetId()))
-                const sourceInputs = NodeHelper.getSourceNode(targetNode).getInputs()
-                connections = sourceInputs.map(sourceInput => ({
-                    value: sourceInput.getId(),
-                    label: sourceInput.getAttrName()
-                }))
+                if(targetNode){
+                    const sourceInputs = NodeHelper.getSourceNode(targetNode).getInputs()
+                    connections = sourceInputs.map(sourceInput => ({
+                        value: sourceInput.getId(),
+                        label: sourceInput.getAttrName()
+                    }))
+                }
             }
         }
         return [

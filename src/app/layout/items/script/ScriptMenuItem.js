@@ -3,6 +3,7 @@ import PanelMenuItem from '../panel/PanelMenuItem.js'
 import World from '../../../world/World.js'
 import ScriptNodesMenuItem from './node/ScriptNodesMenuItem.js'
 import ScriptEdgesMenuItem from './edge/ScriptEdgesMenuItem.js'
+import ScriptShowMenuItem from './ScriptShowMenuItem.js'
 
 export default class ScriptMenuItem extends PanelMenuItem {
     constructor() {
@@ -12,7 +13,8 @@ export default class ScriptMenuItem extends PanelMenuItem {
         })
         this.items = [
             new ScriptNodesMenuItem(this),
-            new ScriptEdgesMenuItem(this)
+            new ScriptEdgesMenuItem(this),
+            new ScriptShowMenuItem(this)
         ]
     }
 

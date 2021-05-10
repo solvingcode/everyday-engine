@@ -25,7 +25,7 @@ export default class GraphEdgeUnitInstant extends UnitInstant {
      * @param {AScript} script
      * @param {NodeInput} nodeInput
      */
-    update(script, nodeInput){
+    update(script, nodeInput) {
         const transformComponent = this.getComponent(TransformComponent)
         const meshComponent = this.getComponent(MeshComponent)
         const nodeInputComponent = this.getComponent(NodeInputComponent)
@@ -39,9 +39,10 @@ export default class GraphEdgeUnitInstant extends UnitInstant {
         const sourceNodeSize = NodeHelper.getNodeGUISize(sourceNode)
         const {position: sourceOutputPosition} = NodeHelper.getNodeGUIOutput(sourceNode.getType(), sourceNodeSize)
         const {position: targetInputPosition} = NodeHelper.getNodeGUIInput(sourceNode.getType(), targetNodeInputIndex)
-        const sourcePosition = Vector.add(sourceNode.getPosition(), sourceOutputPosition)
-        const targetPosition = Vector.add(targetNode.getPosition(), targetInputPosition)
-
+        const {sizeInput} = NodeHelper.getNodeGUIProps(sourceNode.getType())
+        const centerInputSize = new Vector({x: sizeInput / 2, y: sizeInput / 2})
+        const sourcePosition = Vector.add(sourceNode.getPosition(), Vector.add(sourceOutputPosition, centerInputSize))
+        const targetPosition = Vector.add(targetNode.getPosition(), Vector.add(targetInputPosition, centerInputSize))
         const {position, size, vertices} = GeometryHelper.getRectByDistance(sourcePosition, targetPosition)
         const style = new Style()
         style.setColor('#c4c4c4')

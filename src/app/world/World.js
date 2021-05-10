@@ -14,6 +14,7 @@ import ScriptManager from '../manager/ScriptManager.js'
 import FunctionRegistry from '../flow/function/FunctionRegistry.js'
 import UnitHelper from '../utils/UnitHelper.js'
 import TabManager from '../manager/TabManager.js'
+import ScriptGraph from '../flow/graph/ScriptGraph.js'
 
 /**
  * @class {World}
@@ -49,6 +50,7 @@ class World extends WorldData {
     init() {
         this.createRootFolder()
         this.getTabManager().init()
+        ScriptGraph.get().reset()
         this.getAssetsManager().getScriptAssets().forEach(asset => {
             asset.getType().parse()
         })

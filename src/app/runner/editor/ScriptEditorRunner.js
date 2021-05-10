@@ -5,6 +5,7 @@ import {MouseButton} from '../../core/Mouse.js'
 import ScriptGraph from '../../flow/graph/ScriptGraph.js'
 import TransformComponent from '../../component/internal/TransformComponent.js'
 import Vector from '../../utils/Vector.js'
+import Menu from '../../layout/Menu.js'
 
 export default class ScriptEditorRunner extends Runner {
 
@@ -50,7 +51,8 @@ export default class ScriptEditorRunner extends Runner {
      * @param {Mouse} mouse
      */
     selectUnits(mouse) {
-        if (mouse.isButtonPressed(MouseButton.LEFT)) {
+        const menu = Menu.get()
+        if (mouse.isButtonPressed(MouseButton.LEFT) && !menu.getUIRenderer().getItemAt(mouse)) {
             ScriptGraph.get().selectUnits(mouse)
         }
     }
