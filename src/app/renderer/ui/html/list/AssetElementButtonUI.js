@@ -7,6 +7,7 @@ import World from '../../../../world/World.js'
 import {STATUS} from '../../../../project/data/AScriptData.js'
 import AssetScriptCode from '../../../../asset/types/script/AssetScriptCode.js'
 import SystemError from '../../../../exception/type/SystemError.js'
+import Folder from '../../../../asset/Folder.js'
 
 export default class AssetElementButtonUI extends ListElementButtonUI {
 
@@ -37,16 +38,26 @@ export default class AssetElementButtonUI extends ListElementButtonUI {
     static getIcon(item){
         const bind = item.element.getDataBind()
         const {imageWidth, imageHeight} = this.props
-        const type = bind.getType()
+        const type = bind instanceof Folder ? bind : bind.getType()
         switch (type.constructor) {
             case AssetImage:
                 return ImageUI.getImage(bind.getType().getData(), {width: imageWidth, height: imageHeight})
             case AssetScriptXml:
             case AssetScriptCode:
                 return this.getIconScriptAsset(bind)
+            case Folder:
+                return this.getIconFolderAsset(bind)
             default:
                 throw new SystemError(`Asset: No icon founded for "${type.constructor.name}"`)
         }
+    }
+
+    /**
+     * @param {Folder} bind
+     * @return {HTMLElement|DocumentFragment}
+     */
+    static getIconFolderAsset(bind){
+        return IconUI.createIcon('folder')
     }
 
     /**

@@ -103,7 +103,7 @@ export default class NodeHelper {
         } else if (type === NODE_TYPES.UNIT) {
             headColor = '#5e2254'
         } else if (type === NODE_TYPES.KEY_CODE) {
-            headColor = '#32225e'
+            headColor = '#375e22'
         }
         return {
             sizeInput,

@@ -4,12 +4,18 @@ import Size from '../pobject/Size.js'
 import MeshComponent from '../component/internal/MeshComponent.js'
 import TransformComponent from '../component/internal/TransformComponent.js'
 
-/**
- * @class {Camera}
- * Define the camera
- * @property {Vector} position
- */
 class Camera extends CameraData {
+
+    /**
+     * @type {Camera}
+     */
+    position
+
+    /**
+     * @type {Camera}
+     */
+    initPosition
+
     constructor(position) {
         super()
         this.initPosition = position

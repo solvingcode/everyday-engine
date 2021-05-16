@@ -8,6 +8,7 @@ import TransformComponent from '../../component/internal/TransformComponent.js'
 import ObjectHelper from '../../utils/ObjectHelper.js'
 import NodeInputComponent from '../../component/internal/gui/node/NodeInputComponent.js'
 import GraphEdgeUnitInstant from '../../unit/instant/type/internal/graph/GraphEdgeUnitInstant.js'
+import MeshComponent from '../../component/internal/MeshComponent.js'
 
 export default class ScriptGraph {
 
@@ -233,6 +234,11 @@ export default class ScriptGraph {
     reset(){
         this.graphEdges = []
         this.graphUnits = []
+    }
+
+    regenerateAll(){
+        [].concat(this.graphUnits).concat(this.graphEdges)
+            .forEach(unit => unit.getComponent(MeshComponent).setGenerated(false))
     }
 
     /**

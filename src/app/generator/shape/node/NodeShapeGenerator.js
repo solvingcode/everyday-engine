@@ -20,7 +20,7 @@ export default class NodeShapeGenerator extends TypeShapeGenerator {
         const type = nodeComponent.getType()
         const inputs = nodeComponent.getInputs()
         const output = nodeComponent.getOutput()
-        const {context, scaleSize} = dataContext
+        const {context, scaleSize, camera} = dataContext
         const {width, height} = scaleSize
 
         //props
@@ -31,17 +31,23 @@ export default class NodeShapeGenerator extends TypeShapeGenerator {
             padding, selectColor
         } = NodeHelper.getNodeGUIProps(type)
 
+        //convert props to camera scale
+        const heightHeadScale = camera.toScaleNumber(heightHead)
+        const fontSizeScale = camera.toScaleNumber(fontSize)
+        const paddingScale = camera.toScaleNumber(padding)
+        const sizeInputScale = camera.toScaleNumber(sizeInput)
+
         // box
         let shadowColor = headColor
-        if(guiPropertyComponent.isFocused()){
+        if (guiPropertyComponent.isFocused()) {
             shadowColor = colorFocused
-        }else if(guiPropertyComponent.isSelected()){
+        } else if (guiPropertyComponent.isSelected()) {
             shadowColor = selectColor
         }
         context.shadowColor = shadowColor
         context.shadowBlur = shadowBlur
         context.fillStyle = boxColor
-        context.strokeStyle = guiPropertyComponent.isSelected() ? selectColor: headColor
+        context.strokeStyle = guiPropertyComponent.isSelected() ? selectColor : headColor
         context.rect(0, 0, width, height)
         context.fill()
         context.stroke()
@@ -50,34 +56,39 @@ export default class NodeShapeGenerator extends TypeShapeGenerator {
 
         //box header
         context.fillStyle = headColor
-        context.fillRect(0, 0, width, heightHead)
+        context.fillRect(0, 0, width, heightHeadScale)
 
         //box header title
-        context.font = `${fontSize}px Arial`
+        context.font = `${fontSizeScale}px Arial`
         context.fillStyle = fontColor
-        context.fillText(title, padding, fontSize + padding)
+        context.fillText(title, paddingScale, fontSizeScale + paddingScale)
 
         //base input
-        if(type === NODE_TYPES.FUNCTION || type === NODE_TYPES.CONDITION){
+        if (type === NODE_TYPES.FUNCTION || type === NODE_TYPES.CONDITION) {
             const {position: baseInputPosition} = NodeHelper.getNodeGUIInput(type, -1)
+            const baseInputPositionScale = camera.toCameraScale(baseInputPosition)
             context.fillStyle = baseInputColor
-            context.fillRect(baseInputPosition.getX(), baseInputPosition.getY(), sizeInput, sizeInput)
+            context.fillRect(baseInputPositionScale.getX(), baseInputPositionScale.getY(), sizeInputScale, sizeInputScale)
         }
 
         //other inputs
         inputs.forEach((input, index) => {
             const {position: inputPosition} = NodeHelper.getNodeGUIInput(type, index)
+            const inputPositionScale = camera.toCameraScale(inputPosition)
             context.fillStyle = headColor
-            context.fillRect(inputPosition.getX(), inputPosition.getY(), sizeInput, sizeInput)
+            context.fillRect(inputPositionScale.getX(), inputPositionScale.getY(), sizeInputScale, sizeInputScale)
             context.fillStyle = fontColor
-            context.fillText(input, inputPosition.getX() + sizeInput + padding, inputPosition.getY() + sizeInput)
+            context.fillText(input,
+                inputPositionScale.getX() + sizeInputScale + paddingScale,
+                inputPositionScale.getY() + sizeInputScale)
         })
 
         //output
-        if(output || type === NODE_TYPES.EVENT){
-            const {position: outputPosition} = NodeHelper.getNodeGUIOutput(type, scaleSize)
+        if (output || type === NODE_TYPES.EVENT) {
+            const {position: outputPosition} = NodeHelper.getNodeGUIOutput(type, camera.fromScaleSize(scaleSize))
+            const outputPositionScale = camera.toCameraScale(outputPosition)
             context.fillStyle = baseInputColor
-            context.fillRect(outputPosition.getX(), outputPosition.getY(), sizeInput, sizeInput)
+            context.fillRect(outputPositionScale.getX(), outputPositionScale.getY(), sizeInputScale, sizeInputScale)
         }
 
     }

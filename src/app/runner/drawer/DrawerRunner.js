@@ -35,8 +35,6 @@ export default class DrawerRunner extends Runner {
     /**
      * @override
      * @param {Mouse} mouse
-     *
-     * @var {{[string]: {shape: string, startEvent: any, endEvent: any}}} typeEntity
      */
     async execute(mouse) {
         const menu = Menu.get()
@@ -47,6 +45,9 @@ export default class DrawerRunner extends Runner {
         const position = world.getWorldPosition(vector3d)
         const defaultStartEvent = (pMouse) => pMouse.isButtonPressed(MouseButton.LEFT)
         const defaultEndEvent = (pMouse) => pMouse.isButtonClicked(MouseButton.LEFT)
+        /**
+         * @type {{[string]: {shape: string, startEvent?: Function, endEvent?: Function}}}
+         */
         const typeEntity = {
             SELECT: {
                 shape: PrimitiveShape.RECT
@@ -70,7 +71,7 @@ export default class DrawerRunner extends Runner {
                 this.startDraw(stateManager, type)
             }
             if (stateManager.isProgress(type)) {
-                if(!stateManager.isProgress(MoveAction.STATE)){
+                if (!stateManager.isProgress(MoveAction.STATE)) {
                     this.draw(position, props.shape, mouse)
                 }
                 if (endEvent(mouse)) {
@@ -132,7 +133,7 @@ export default class DrawerRunner extends Runner {
      * @param {Mouse} mouse
      * @param {Vector} dragDistance
      */
-    calculateDragPosition(position, world, mouse, dragDistance){
+    calculateDragPosition(position, world, mouse, dragDistance) {
         let newX = position.x
         let newY = position.y
         if (dragDistance.x <= 0) {

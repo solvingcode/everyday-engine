@@ -352,6 +352,10 @@ h4{
     padding: 0;
 }
 
+.units-wrapper .list-element {
+    height: 35px;
+}
+
 .units-wrapper .list-element .list-element-img-wrapper i{
     font-size: 14px;
     float: none;

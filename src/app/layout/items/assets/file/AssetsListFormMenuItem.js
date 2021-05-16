@@ -28,15 +28,18 @@ export default class AssetsListFormMenuItem extends ListMenuItem {
      */
     getFormObject() {
         const assetsManager = World.get().getAssetsManager()
-        const folder = assetsManager.getSelectedFolder() || assetsManager.getRootFolder()
-        return World.get().getAssetsManager().findAssetsByFolderId(folder.getId())
+        const selectedFolder = assetsManager.getSelectedFolder() || assetsManager.getRootFolder()
+        const folders = assetsManager.findFolders(selectedFolder.getId())
+        const assets = assetsManager.findAssetsByFolderId(selectedFolder.getId())
+        return [].concat(folders).concat(assets)
     }
 
     /**
      * @override
      */
     getList() {
-        return World.get().getAssetsManager().getAssets()
+        const assetsManager = World.get().getAssetsManager()
+        return [].concat(assetsManager.getFolders()).concat(assetsManager.getAssets())
     }
 
     /**
