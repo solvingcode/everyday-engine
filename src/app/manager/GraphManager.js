@@ -169,29 +169,31 @@ export default class GraphManager {
     }
 
     /**
+     * @param {AScript} script
      * @param {Mouse} mouse
      * @return {Unit[]}
      */
-    focusUnits(mouse) {
+    focusUnits(script, mouse) {
         const unitSelector = ScriptGraphSelector.get()
         const world = World.get()
         unitSelector.unfocusAll(world)
         const currentScenePosition = new Vector(mouse.currentScenePosition)
-        const vector3d = world.getCamera().fromCameraScale(currentScenePosition)
-        unitSelector.focus(world, world.getWorldPosition(vector3d))
+        const vector3d = script.getCamera().fromCameraScale(currentScenePosition)
+        unitSelector.focus(world, script.getCamera().fromCanvasCoord(vector3d))
     }
 
     /**
+     * @param {AScript} script
      * @param {Mouse} mouse
      * @return {Unit[]}
      */
-    selectUnits(mouse) {
+    selectUnits(script, mouse) {
         const unitSelector = ScriptGraphSelector.get()
         const world = World.get()
         const currentScenePosition = new Vector(mouse.currentScenePosition)
-        const vector3d = world.getCamera().fromCameraScale(currentScenePosition)
+        const vector3d = script.getCamera().fromCameraScale(currentScenePosition)
         unitSelector.unselectAll(world)
-        return unitSelector.select(world, world.getWorldPosition(vector3d), null)
+        return unitSelector.select(world, script.getCamera().fromCanvasCoord(vector3d), null)
     }
 
     /**
@@ -216,12 +218,12 @@ export default class GraphManager {
         asset.generate(script)
     }
 
-    reset(){
+    reset() {
         this.graphEdges = []
         this.graphUnits = []
     }
 
-    regenerateAll(){
+    regenerateAll() {
         [].concat(this.graphUnits).concat(this.graphEdges)
             .forEach(unit => unit.getComponent(MeshComponent).setGenerated(false))
     }

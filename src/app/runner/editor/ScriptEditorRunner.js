@@ -39,41 +39,45 @@ export default class ScriptEditorRunner extends Runner {
         if (!stateManager.isRunning() && !stateManager.isFormUpdating()) {
             const script = World.get().getScriptManager().getSelected(World.get().getTabManager())
             if (script) {
-                this.handleUnitEvent(mouse)
-                this.selectUnits(mouse)
-                this.focusUnits(mouse)
+                this.handleUnitEvent(script, mouse)
+                this.selectUnits(script, mouse)
+                this.focusUnits(script, mouse)
             }
         }
     }
 
     /**
+     * @param {AScript} script
      * @param {Mouse} mouse
      */
-    selectUnits(mouse) {
+    selectUnits(script, mouse) {
         const menu = Menu.get()
         const world = World.get()
         if (mouse.isButtonPressed(MouseButton.LEFT) && !menu.getUIRenderer().getItemAt(mouse)) {
-            world.getGraphManager().selectUnits(mouse)
+            world.getGraphManager().selectUnits(script, mouse)
         }
     }
 
     /**
+     * @param {AScript} script
      * @param {Mouse} mouse
      */
-    focusUnits(mouse) {
+    focusUnits(script, mouse) {
         const world = World.get()
-        world.getGraphManager().focusUnits(mouse)
+        world.getGraphManager().focusUnits(script, mouse)
     }
 
     /**
+     * @param {AScript} script
      * @param {Mouse} mouse
      */
-    handleUnitEvent(mouse) {
+    handleUnitEvent(script, mouse) {
         if (mouse.isButtonPressed(MouseButton.LEFT)) {
             const world = World.get()
-            const currentScenePosition = world.getCamera().fromCameraScale(mouse.currentScenePosition)
-            const unit = world.getGraphManager().findFirstUnitByPosition(world.getWorldPosition(currentScenePosition))
-            const dragArea = mouse.dragAndDrop(world.getCamera())
+            const camera = script.getCamera()
+            const currentScenePosition = camera.fromCameraScale(mouse.currentScenePosition)
+            const unit = world.getGraphManager().findFirstUnitByPosition(camera.fromCanvasCoord(currentScenePosition))
+            const dragArea = mouse.dragAndDrop(camera)
             if (unit && !this.isMoving) {
                 this.unitMoving = unit
             }

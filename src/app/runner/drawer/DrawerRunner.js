@@ -1,7 +1,6 @@
 import StateManager from '../../state/StateManager.js'
 import Runner from '../Runner.js'
 import {MouseButton} from '../../core/Mouse.js'
-import World from '../../world/World.js'
 import Vector from '../../utils/Vector.js'
 import MeshComponent from '../../component/internal/MeshComponent.js'
 import Size from '../../pobject/Size.js'
@@ -9,7 +8,11 @@ import TransformComponent from '../../component/internal/TransformComponent.js'
 import MoveAction from '../action/edit/MoveAction.js'
 import SelectionUnitInstant from '../../unit/instant/type/internal/edit/SelectionUnitInstant.js'
 import Menu from '../../layout/Menu.js'
+import SystemError from '../../exception/type/SystemError.js'
 
+/**
+ * @abstract
+ */
 export default class DrawerRunner extends Runner {
 
     static instance = null
@@ -22,6 +25,32 @@ export default class DrawerRunner extends Runner {
     constructor() {
         super()
         this.currentUnit = null
+    }
+
+    /**
+     * @abstract
+     * @return {Camera}
+     */
+    getCamera(){
+        throw new SystemError(`${this.constructor.name}.getCamera must be implemented`)
+    }
+
+    /**
+     * @abstract
+     */
+    deleteUnit(){
+        throw new SystemError(`${this.constructor.name}.deleteUnit must be implemented`)
+    }
+
+    /**
+     * @abstract
+     * @param {Class} instance
+     * @param {Vector} position
+     * @param {Size} size
+     * @return {Unit}
+     */
+    createUnit(instance, position, size){
+        throw new SystemError(`${this.constructor.name}.createUnit must be implemented`)
     }
 
     /**
@@ -38,10 +67,10 @@ export default class DrawerRunner extends Runner {
     async execute(mouse) {
         const menu = Menu.get()
         const stateManager = StateManager.get()
-        const world = World.get()
+        const camera = this.getCamera()
         const scenePosition = new Vector(mouse.scenePosition)
-        const vector3d = world.getCamera().fromCameraScale(scenePosition)
-        const position = world.getWorldPosition(vector3d)
+        const vector3d = camera.fromCameraScale(scenePosition)
+        const position = this.getCamera().fromCanvasCoord(vector3d)
         const defaultStartEvent = (pMouse) => pMouse.isButtonPressed(MouseButton.LEFT)
         const defaultEndEvent = (pMouse) => pMouse.isButtonClicked(MouseButton.LEFT)
         /**
@@ -103,7 +132,7 @@ export default class DrawerRunner extends Runner {
      */
     endDraw(stateManager, type) {
         if (this.currentUnit) {
-            World.get().deleteUnit(this.currentUnit)
+            this.deleteUnit()
             this.currentUnit = null
         }
     }
@@ -114,12 +143,11 @@ export default class DrawerRunner extends Runner {
      * @param {Mouse} mouse
      */
     draw(position, instance, mouse) {
-        const world = World.get()
-        const dragDistance = mouse.getDragDistanceCamera(world.getCamera())
-        const newPosition = this.calculateDragPosition(position, world, mouse, dragDistance)
+        const dragDistance = mouse.getDragDistanceCamera(this.getCamera())
+        const newPosition = this.calculateDragPosition(position, mouse, dragDistance)
         const size = new Size({width: Math.abs(dragDistance.x), height: Math.abs(dragDistance.y)})
         if (!this.currentUnit) {
-            this.currentUnit = world.getUnitManager().createUnitInstant(instance, newPosition, size)
+            this.currentUnit = this.createUnit(instance, newPosition, size)
         }
         const transformComponent = this.currentUnit.getComponent(TransformComponent)
         const meshComponent = this.currentUnit.getComponent(MeshComponent)
@@ -130,11 +158,10 @@ export default class DrawerRunner extends Runner {
 
     /**
      * @param {Vector} position
-     * @param {World} world
      * @param {Mouse} mouse
      * @param {Vector} dragDistance
      */
-    calculateDragPosition(position, world, mouse, dragDistance) {
+    calculateDragPosition(position, mouse, dragDistance) {
         let newX = position.x
         let newY = position.y
         if (dragDistance.x <= 0) {
