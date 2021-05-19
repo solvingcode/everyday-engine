@@ -285,9 +285,6 @@ export default {
                     dataId: {
                         type: TYPES.NUMBER
                     },
-                    entityId: {
-                        type: TYPES.NUMBER
-                    },
                     position: {
                         prototype: TYPES.VECTOR
                     }

@@ -22,11 +22,12 @@ export default class ExecutorRegistry {
 
     /**
      * @param {Unit} unit
+     * @param {{camera: Camera}} executionContext
      */
-    execute(unit){
+    execute(unit, executionContext){
         this.registry.forEach(executor => {
             if(unit.hasComponents(executor.getTargetComponents())){
-                executor.execute(unit)
+                executor.execute(unit, executionContext)
             }
         })
     }

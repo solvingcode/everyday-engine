@@ -2,7 +2,6 @@ import Runner from '../Runner.js'
 import StateManager from '../../state/StateManager.js'
 import World from '../../world/World.js'
 import {MouseButton} from '../../core/Mouse.js'
-import ScriptGraph from '../../flow/graph/ScriptGraph.js'
 import TransformComponent from '../../component/internal/TransformComponent.js'
 import Vector from '../../utils/Vector.js'
 import Menu from '../../layout/Menu.js'
@@ -52,8 +51,9 @@ export default class ScriptEditorRunner extends Runner {
      */
     selectUnits(mouse) {
         const menu = Menu.get()
+        const world = World.get()
         if (mouse.isButtonPressed(MouseButton.LEFT) && !menu.getUIRenderer().getItemAt(mouse)) {
-            ScriptGraph.get().selectUnits(mouse)
+            world.getGraphManager().selectUnits(mouse)
         }
     }
 
@@ -61,7 +61,8 @@ export default class ScriptEditorRunner extends Runner {
      * @param {Mouse} mouse
      */
     focusUnits(mouse) {
-        ScriptGraph.get().focusUnits(mouse)
+        const world = World.get()
+        world.getGraphManager().focusUnits(mouse)
     }
 
     /**
@@ -71,7 +72,7 @@ export default class ScriptEditorRunner extends Runner {
         if (mouse.isButtonPressed(MouseButton.LEFT)) {
             const world = World.get()
             const currentScenePosition = world.getCamera().fromCameraScale(mouse.currentScenePosition)
-            const unit = ScriptGraph.get().findFirstUnitByPosition(world.getWorldPosition(currentScenePosition))
+            const unit = world.getGraphManager().findFirstUnitByPosition(world.getWorldPosition(currentScenePosition))
             const dragArea = mouse.dragAndDrop(world.getCamera())
             if (unit && !this.isMoving) {
                 this.unitMoving = unit

@@ -20,9 +20,11 @@ export class GameExecutorRunner extends Runner {
      * @override
      */
     execute(mouse) {
-        const units = World.get().getUnitManager().getUnits()
+        const world = World.get()
+        const units = world.getUnitManager().getUnits()
+        const camera = world.getCamera()
         units.forEach(unit => {
-            ExecutorRegistry.get().execute(unit)
+            ExecutorRegistry.get().execute(unit, {camera})
         })
     }
 

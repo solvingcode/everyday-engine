@@ -14,8 +14,9 @@ class Renderer {
      * @abstract
      * @param {Mesh} mesh
      * @param {Vector} position
+     * @param {Camera} camera
      */
-    draw(mesh, position) {
+    draw(mesh, position, camera) {
         throw new TypeError('Renderer.draw must be implemented')
     }
 

@@ -14,7 +14,7 @@ import ScriptManager from '../manager/ScriptManager.js'
 import FunctionRegistry from '../flow/function/FunctionRegistry.js'
 import UnitHelper from '../utils/UnitHelper.js'
 import TabManager from '../manager/TabManager.js'
-import ScriptGraph from '../flow/graph/ScriptGraph.js'
+import GraphManager from '../manager/GraphManager.js'
 
 /**
  * @class {World}
@@ -27,11 +27,17 @@ class World extends WorldData {
      */
     scriptManager
 
+    /**
+     * @type {GraphManager}
+     */
+    graphManager
+
     constructor() {
         super()
         this.unitManager = new UnitManager()
         this.meshManager = new MeshManager()
         this.tabManager = new TabManager()
+        this.graphManager = new GraphManager()
         this.functionRegistry = new FunctionRegistry()
         this.scriptManager = new ScriptManager()
         this.camera = new Camera(new Vector({x: -SCENE_WIDTH / 2, y: -SCENE_HEIGHT / 2}))
@@ -50,7 +56,7 @@ class World extends WorldData {
     init() {
         this.createRootFolder()
         this.getTabManager().init()
-        ScriptGraph.get().reset()
+        this.getGraphManager().reset()
         this.getAssetsManager().getScriptAssets().forEach(asset => {
             asset.getType().parse()
         })
@@ -63,7 +69,7 @@ class World extends WorldData {
      */
     draw(renderer) {
         this.getUnitManager().getUnitsHasComponents([MeshComponent, TransformComponent])
-            .forEach((unit) => UnitHelper.drawUnit(unit, this, renderer))
+            .forEach((unit) => UnitHelper.drawUnit(unit, this.getCamera(), this.getMeshManager(), renderer))
     }
 
     /**
@@ -213,6 +219,13 @@ class World extends WorldData {
      */
     getMeshManager() {
         return this.meshManager
+    }
+
+    /**
+     * @return {GraphManager}
+     */
+    getGraphManager() {
+        return this.graphManager
     }
 
     /**

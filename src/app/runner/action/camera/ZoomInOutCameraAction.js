@@ -2,7 +2,6 @@ import Action from '../Action.js'
 import World from '../../../world/World.js'
 import Vector from '../../../utils/Vector.js'
 import StateManager from '../../../state/StateManager.js'
-import ScriptGraph from '../../../flow/graph/ScriptGraph.js'
 
 /**
  * Move camera action
@@ -18,7 +17,13 @@ class ZoomInOutCameraAction extends Action {
      */
     static run(mouse) {
         const world = World.get()
-        const camera = world.getCamera()
+        const script = world.getScriptManager().getSelected(world.getTabManager())
+        let camera
+        if (!script) {
+            camera = world.getCamera()
+        } else {
+            camera = script.getCamera()
+        }
         const {deltaY} = StateManager.get().getNextProgressData(this.STATE)
         if (camera) {
             const zoom = deltaY * -0.01
@@ -27,7 +32,7 @@ class ZoomInOutCameraAction extends Action {
                 new Vector({x: 0, y: 0, z: Math.round(zoom * 100) / 100})
             ))
             world.regenerateAll()
-            ScriptGraph.get().regenerateAll()
+            world.getGraphManager().regenerateAll()
         }
         return true
     }

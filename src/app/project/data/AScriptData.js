@@ -24,6 +24,11 @@ export default class AScriptData extends Data{
     status
 
     /**
+     * @type {Camera}
+     */
+    camera
+
+    /**
      * @param {string} name
      */
     constructor(name= '') {
@@ -95,6 +100,20 @@ export default class AScriptData extends Data{
      */
     concatNodes(nodes){
         this.setNodes(nodes)
+    }
+
+    /**
+     * @param {Camera} camera
+     */
+    setCamera(camera){
+        this.camera = camera
+    }
+
+    /**
+     * @return {Camera}
+     */
+    getCamera(){
+        return this.camera
     }
 
 }

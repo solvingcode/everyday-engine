@@ -1,21 +1,16 @@
-import UnitHelper from '../../utils/UnitHelper.js'
-import World from '../../world/World.js'
-import GraphNodeUnitInstant from '../../unit/instant/type/internal/graph/GraphNodeUnitInstant.js'
-import Vector from '../../utils/Vector.js'
-import ScriptGraphSelector from '../../selector/ScriptGraphSelector.js'
-import NodeComponent from '../../component/internal/gui/node/NodeComponent.js'
-import TransformComponent from '../../component/internal/TransformComponent.js'
-import ObjectHelper from '../../utils/ObjectHelper.js'
-import NodeInputComponent from '../../component/internal/gui/node/NodeInputComponent.js'
-import GraphEdgeUnitInstant from '../../unit/instant/type/internal/graph/GraphEdgeUnitInstant.js'
-import MeshComponent from '../../component/internal/MeshComponent.js'
+import UnitHelper from '../utils/UnitHelper.js'
+import World from '../world/World.js'
+import GraphNodeUnitInstant from '../unit/instant/type/internal/graph/GraphNodeUnitInstant.js'
+import Vector from '../utils/Vector.js'
+import ScriptGraphSelector from '../selector/ScriptGraphSelector.js'
+import NodeComponent from '../component/internal/gui/node/NodeComponent.js'
+import TransformComponent from '../component/internal/TransformComponent.js'
+import ObjectHelper from '../utils/ObjectHelper.js'
+import NodeInputComponent from '../component/internal/gui/node/NodeInputComponent.js'
+import GraphEdgeUnitInstant from '../unit/instant/type/internal/graph/GraphEdgeUnitInstant.js'
+import MeshComponent from '../component/internal/MeshComponent.js'
 
-export default class ScriptGraph {
-
-    /**
-     * @type {ScriptGraph}
-     */
-    static instance
+export default class GraphManager {
 
     /**
      * @type {GraphNodeUnitInstant[]}
@@ -26,16 +21,6 @@ export default class ScriptGraph {
      * @type {GraphEdgeUnitInstant[]}
      */
     graphEdges
-
-    /**
-     * @type {AScript}
-     */
-    script
-
-    /**
-     * @type {Asset}
-     */
-    asset
 
     constructor() {
         this.graphUnits = []
@@ -64,10 +49,10 @@ export default class ScriptGraph {
         const world = World.get()
         this.update(script)
         this.graphUnits.forEach(gUnit => {
-            UnitHelper.drawUnit(gUnit, world, renderer)
+            UnitHelper.drawUnit(gUnit, script.getCamera(), world.getMeshManager(), renderer)
         })
         this.graphEdges.forEach(gUnit => {
-            UnitHelper.drawUnit(gUnit, world, renderer)
+            UnitHelper.drawUnit(gUnit, script.getCamera(), world.getMeshManager(), renderer)
         })
     }
 
@@ -180,7 +165,7 @@ export default class ScriptGraph {
      * @return {Unit}
      */
     findFirstUnitByPosition(position) {
-        return ScriptGraphSelector.get().get(null, position)
+        return ScriptGraphSelector.get().get(World.get(), position)
     }
 
     /**
@@ -190,10 +175,10 @@ export default class ScriptGraph {
     focusUnits(mouse) {
         const unitSelector = ScriptGraphSelector.get()
         const world = World.get()
-        unitSelector.unfocusAll(null)
+        unitSelector.unfocusAll(world)
         const currentScenePosition = new Vector(mouse.currentScenePosition)
         const vector3d = world.getCamera().fromCameraScale(currentScenePosition)
-        unitSelector.focus(null, world.getWorldPosition(vector3d))
+        unitSelector.focus(world, world.getWorldPosition(vector3d))
     }
 
     /**
@@ -205,8 +190,8 @@ export default class ScriptGraph {
         const world = World.get()
         const currentScenePosition = new Vector(mouse.currentScenePosition)
         const vector3d = world.getCamera().fromCameraScale(currentScenePosition)
-        unitSelector.unselectAll(null)
-        return unitSelector.select(null, world.getWorldPosition(vector3d), null)
+        unitSelector.unselectAll(world)
+        return unitSelector.select(world, world.getWorldPosition(vector3d), null)
     }
 
     /**
@@ -239,15 +224,5 @@ export default class ScriptGraph {
     regenerateAll(){
         [].concat(this.graphUnits).concat(this.graphEdges)
             .forEach(unit => unit.getComponent(MeshComponent).setGenerated(false))
-    }
-
-    /**
-     * @return {ScriptGraph}
-     */
-    static get() {
-        if (!this.instance) {
-            this.instance = new this()
-        }
-        return this.instance
     }
 }

@@ -22,15 +22,16 @@ export default class MeshGenerationExecutor extends ComponentExecutor {
     /**
      * @override
      */
-    execute(unit) {
+    execute(unit, executionContext) {
         const meshComponent = unit.getComponent(MeshComponent)
         const propertyComponent = unit.getComponent(GUIPropertyComponent)
         const world = World.get()
+        const {camera} = executionContext
         if (!meshComponent.isGenerated()) {
             meshComponent.setVertices(UnitHelper.generateVertices(unit))
             if (!meshComponent.isEnabled() ||
                 !propertyComponent.isVisible() ||
-                !this.generate(unit, world)) {
+                !this.generate(unit, world, camera)) {
                 world.getMeshManager().clear(unit.getId())
             }
             meshComponent.setGenerated(true)
@@ -41,11 +42,12 @@ export default class MeshGenerationExecutor extends ComponentExecutor {
     /**
      * @param {Unit} unit
      * @param {World} world
+     * @param {Camera} camera
      */
-    generate(unit, world) {
+    generate(unit, world, camera) {
         const meshComponent = unit.getComponent(MeshComponent)
         const transformComponent = unit.getComponent(TransformComponent)
-        const dataContext = this.startContext(unit.getId(), meshComponent, transformComponent, world)
+        const dataContext = this.startContext(unit.getId(), meshComponent, transformComponent, world, camera)
         if (dataContext) {
             this.drawContext(unit, dataContext)
             return this.closeContext(meshComponent, transformComponent, dataContext)
@@ -57,10 +59,10 @@ export default class MeshGenerationExecutor extends ComponentExecutor {
      * @param {MeshComponent} meshComponent
      * @param {TransformComponent} transformComponent
      * @param {World} world
+     * @param {Camera} camera
      * @return {DataContext | null}
      */
-    startContext(unitId, meshComponent, transformComponent, world) {
-        const camera = world.getCamera()
+    startContext(unitId, meshComponent, transformComponent, world, camera) {
         const scaleSize = this.getScaleSize(camera, meshComponent, transformComponent)
         const rotation = transformComponent.getRotation()
         const {width, height} = GeometryHelper.getLargestRectangle(rotation, scaleSize)
@@ -80,7 +82,7 @@ export default class MeshGenerationExecutor extends ComponentExecutor {
             context.translate(width / 2, height / 2)
             context.rotate(rotation)
             context.translate(-center.x, -center.y)
-            return new DataContext(unitId, center, context, scaleSize, world.getCamera(), world)
+            return new DataContext(unitId, center, context, scaleSize, camera, world)
         }
         return null
     }

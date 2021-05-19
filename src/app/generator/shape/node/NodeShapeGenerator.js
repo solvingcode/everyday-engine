@@ -39,10 +39,10 @@ export default class NodeShapeGenerator extends TypeShapeGenerator {
 
         // box
         let shadowColor = headColor
-        if (guiPropertyComponent.isFocused()) {
-            shadowColor = colorFocused
-        } else if (guiPropertyComponent.isSelected()) {
+        if (guiPropertyComponent.isSelected()) {
             shadowColor = selectColor
+        } else if (guiPropertyComponent.isFocused()) {
+            shadowColor = colorFocused
         }
         context.shadowColor = shadowColor
         context.shadowBlur = shadowBlur

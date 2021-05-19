@@ -7,12 +7,12 @@ import TransformComponent from '../component/internal/TransformComponent.js'
 class Camera extends CameraData {
 
     /**
-     * @type {Camera}
+     * @type {Vector}
      */
     position
 
     /**
-     * @type {Camera}
+     * @type {Vector}
      */
     initPosition
 

@@ -28,7 +28,7 @@ class Scene extends Loop {
     loop() {
         const world = World.get()
         world.update()
-        this.meshRenderer.render(world.getCamera())
+        this.meshRenderer.render()
     }
 
 }

@@ -3,7 +3,6 @@ import Runner from '../Runner.js'
 import {MouseButton} from '../../core/Mouse.js'
 import World from '../../world/World.js'
 import Vector from '../../utils/Vector.js'
-import {PrimitiveShape} from '../../unit/Unit.js'
 import MeshComponent from '../../component/internal/MeshComponent.js'
 import Size from '../../pobject/Size.js'
 import TransformComponent from '../../component/internal/TransformComponent.js'
@@ -46,44 +45,46 @@ export default class DrawerRunner extends Runner {
         const defaultStartEvent = (pMouse) => pMouse.isButtonPressed(MouseButton.LEFT)
         const defaultEndEvent = (pMouse) => pMouse.isButtonClicked(MouseButton.LEFT)
         /**
-         * @type {{[string]: {shape: string, startEvent?: Function, endEvent?: Function}}}
+         * @type {{[string]: {instance: Class, startEvent?: Function, endEvent?: Function}}}
          */
         const typeEntity = {
             SELECT: {
-                shape: PrimitiveShape.RECT
+                instance: SelectionUnitInstant
             },
             MOVE: {
-                shape: PrimitiveShape.RECT
+                instance: SelectionUnitInstant
             },
             SCALE: {
-                shape: PrimitiveShape.RECT
+                instance: SelectionUnitInstant
             },
             ROTATE: {
-                shape: PrimitiveShape.RECT
+                instance: SelectionUnitInstant
             }
         }
-        Object.entries(typeEntity).forEach(entry => {
-            const type = `DRAW_${entry[0]}`
-            const props = entry[1]
-            const startEvent = props.startEvent || defaultStartEvent
-            const endEvent = props.endEvent || defaultEndEvent
-            if (startEvent(mouse) && stateManager.isStart(type) && this.isPositionValid(mouse, menu)) {
-                this.startDraw(stateManager, type)
-            }
-            if (stateManager.isProgress(type)) {
-                if (!stateManager.isProgress(MoveAction.STATE)) {
-                    this.draw(position, props.shape, mouse)
+        for(const drawType in typeEntity){
+            if(typeEntity.hasOwnProperty(drawType)){
+                const type = `DRAW_${drawType}`
+                const props = typeEntity[drawType]
+                const startEvent = props.startEvent || defaultStartEvent
+                const endEvent = props.endEvent || defaultEndEvent
+                if (startEvent(mouse) && stateManager.isStart(type) && this.isPositionValid(mouse, menu)) {
+                    this.startDraw(stateManager, type)
                 }
-                if (endEvent(mouse)) {
-                    this.endDraw(stateManager, type)
+                if (stateManager.isProgress(type)) {
+                    if (!stateManager.isProgress(MoveAction.STATE)) {
+                        this.draw(position, props.instance, mouse)
+                    }
+                    if (endEvent(mouse)) {
+                        this.endDraw(stateManager, type)
+                        stateManager.endState(type, 1)
+                        stateManager.startState(type, 1)
+                    }
+                }
+                if (stateManager.isStop(type)) {
                     stateManager.endState(type, 1)
-                    stateManager.startState(type, 1)
                 }
             }
-            if (stateManager.isStop(type)) {
-                stateManager.endState(type, 1)
-            }
-        })
+        }
         return false
     }
 
@@ -109,16 +110,16 @@ export default class DrawerRunner extends Runner {
 
     /**
      * @param {Vector} position
-     * @param {string} shape
+     * @param {Class} instance
      * @param {Mouse} mouse
      */
-    draw(position, shape, mouse) {
+    draw(position, instance, mouse) {
         const world = World.get()
         const dragDistance = mouse.getDragDistanceCamera(world.getCamera())
         const newPosition = this.calculateDragPosition(position, world, mouse, dragDistance)
         const size = new Size({width: Math.abs(dragDistance.x), height: Math.abs(dragDistance.y)})
         if (!this.currentUnit) {
-            this.currentUnit = world.getUnitManager().createUnitInstant(SelectionUnitInstant, newPosition, size)
+            this.currentUnit = world.getUnitManager().createUnitInstant(instance, newPosition, size)
         }
         const transformComponent = this.currentUnit.getComponent(TransformComponent)
         const meshComponent = this.currentUnit.getComponent(MeshComponent)

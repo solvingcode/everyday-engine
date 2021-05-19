@@ -1,7 +1,6 @@
 import Runner from '../Runner.js'
 import World from '../../world/World.js'
 import MeshRenderer from '../../renderer/MeshRenderer.js'
-import ScriptGraph from '../../flow/graph/ScriptGraph.js'
 
 export class SetupRenderRunner extends Runner {
 
@@ -21,11 +20,12 @@ export class SetupRenderRunner extends Runner {
      * @override
      */
     execute(mouse) {
-        const script = World.get().getScriptManager().getSelected(World.get().getTabManager())
+        const world = World.get()
+        const script = world.getScriptManager().getSelected(world.getTabManager())
         if (!script) {
-            World.get().draw(MeshRenderer.get())
+            world.draw(MeshRenderer.get())
         }else{
-            ScriptGraph.get().draw(script, MeshRenderer.get())
+            world.getGraphManager().draw(script, MeshRenderer.get())
         }
     }
 

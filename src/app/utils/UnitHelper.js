@@ -147,13 +147,12 @@ export default class UnitHelper {
 
     /**
      * @param {Unit} unit
-     * @param {World} world
+     * @param {Camera} camera
+     * @param {MeshManager} meshManager
      * @param {Renderer} renderer
      */
-    static drawUnit(unit, world, renderer){
-        const meshManager = world.getMeshManager()
+    static drawUnit(unit, camera, meshManager, renderer){
         const {size: windowSize} = Window.get()
-        const camera = world.getCamera()
         const {x: cameraX, y: cameraY} = camera.position
         const {width: sceneWidth, height: sceneHeight} = camera.fromScaleSize(windowSize)
         const meshComponent = unit.getComponent(MeshComponent)
@@ -167,7 +166,7 @@ export default class UnitHelper {
         if (minX <= position.getX() && maxX >= position.getX() &&
             minY <= position.getY() && maxY >= position.getY()) {
             const mesh = meshManager.get(unit.getId())
-            mesh && renderer.draw(mesh, position)
+            mesh && renderer.draw(mesh, position, camera)
         }
     }
 

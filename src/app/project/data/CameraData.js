@@ -7,7 +7,6 @@ import Data from './Data.js'
 class CameraData extends Data {
 
     position
-    entityId
 
     /**
      * @param {Vector} position
@@ -21,20 +20,6 @@ class CameraData extends Data {
      */
     getPosition() {
         return this.position
-    }
-
-    /**
-     * @param {number} entityId
-     */
-    setEntityId(entityId) {
-        this.entityId = entityId
-    }
-
-    /**
-     * @return {number}
-     */
-    getEntityId() {
-        return this.entityId
     }
 
     /**

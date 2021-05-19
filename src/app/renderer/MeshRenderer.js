@@ -28,8 +28,8 @@ class MeshRenderer extends Renderer {
     /**
      * @override
      */
-    draw(mesh, position) {
-        this.add(mesh, position)
+    draw(mesh, position, camera) {
+        this.add(mesh, position, camera)
     }
 
     /**
@@ -43,14 +43,13 @@ class MeshRenderer extends Renderer {
 
     /**
      * Render the meshes to the screen
-     * @param {Camera} camera
      * @todo Optimize this to not delete all meshes (rerender just entities updated)
      */
-    render(camera) {
+    render() {
         this.clear()
         for (let iMesh in this.meshes) {
             if (this.meshes.hasOwnProperty(iMesh)) {
-                const {mesh, position} = this.meshes[iMesh]
+                const {mesh, position, camera} = this.meshes[iMesh]
                 const {x, y} = camera.toCameraScale(camera.toCanvasCoord(position))
                 objectContext.drawImage(mesh.context.canvas, x, y)
             }
@@ -61,9 +60,10 @@ class MeshRenderer extends Renderer {
     /**
      * @param {Mesh} mesh
      * @param {Vector} position
+     * @param {Camera} camera
      */
-    add(mesh, position) {
-        this.meshes.push({mesh, position})
+    add(mesh, position, camera) {
+        this.meshes.push({mesh, position, camera})
     }
 
     /**

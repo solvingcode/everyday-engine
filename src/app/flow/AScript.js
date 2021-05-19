@@ -12,11 +12,19 @@ import ClientError from '../exception/type/ClientError.js'
 import SystemError from '../exception/type/SystemError.js'
 import KeyCodeNode from './node/KeyCodeNode.js'
 import AKeyCode from './keycode/AKeyCode.js'
+import Camera from '../core/Camera.js'
+import Vector from '../utils/Vector.js'
+import {SCENE_HEIGHT, SCENE_WIDTH} from '../core/Constant.js'
 
 /**
  * @abstract
  */
 export default class AScript extends AScriptData{
+
+    constructor(props) {
+        super(props)
+        this.camera = new Camera(new Vector({x: -SCENE_WIDTH / 2, y: -SCENE_HEIGHT / 2}))
+    }
 
     /**
      * @param {Registry} registry

@@ -12,14 +12,26 @@ export default class ClassScriptXmlParser extends Parser {
      * @param {Document} xmlDocument
      * @return {AScript}
      */
-    static parse(xmlDocument){
+    static parse(xmlDocument) {
         const xmlNode = xmlDocument.documentElement
         const name = xmlNode.getAttribute('name')
         const script = new ClassScript(name)
         const functionRegistry = World.get().getFunctionRegistry()
+        const view = xmlNode.getAttribute('view')
+        if (view) {
+            const positionSplit = view.split(',')
+            if (positionSplit.length === 3) {
+                const position = new Vector({
+                    x: parseFloat(positionSplit[0]),
+                    y: parseFloat(positionSplit[1]),
+                    z: parseFloat(positionSplit[2])
+                })
+                script.getCamera().setPosition(position)
+            }
+        }
         xmlNode.childNodes.forEach(cXmlNode => {
             const element = cXmlNode.nodeName
-            if(element === 'node'){
+            if (element === 'node') {
                 const nodeType = cXmlNode.getAttribute('type')
                 const nodeValue = cXmlNode.getAttribute('value')
                 const nodeId = parseInt(cXmlNode.getAttribute('id'))
@@ -28,16 +40,16 @@ export default class ClassScriptXmlParser extends Parser {
                 const node = ScriptHelper.createNode(functionRegistry, script, nodeType, nodeValue)
                 node.setPosition(position)
                 script.updateNodeId(node, nodeId)
-            }else if(element === 'edge'){
+            } else if (element === 'edge') {
                 const nodeSourceId = parseInt(cXmlNode.getAttribute('source'))
                 const nodeTargetId = parseInt(cXmlNode.getAttribute('target'))
                 const nodeConnection = cXmlNode.getAttribute('connection')
                 const nodeSource = script.findNodeById(nodeSourceId)
                 const nodeTarget = script.findNodeById(nodeTargetId)
-                if(!nodeSource){
+                if (!nodeSource) {
                     throw new ClientError(`ClassScriptXmlParser Error: Node ${nodeSourceId} not founded`)
                 }
-                if(!nodeTarget){
+                if (!nodeTarget) {
                     throw new ClientError(`ClassScriptXmlParser Error: Node ${nodeTargetId} not founded`)
                 }
                 const inputId = nodeConnection

@@ -1,4 +1,5 @@
 import SchemaMeta from './SchemaMeta.js'
+import SystemError from '../exception/type/SystemError.js'
 
 /**
  * @class {Schema}
@@ -39,7 +40,7 @@ class Schema {
         if (!_.isString(type) && type !== Array) {
             prototype = this.findDataPrototypeOf(type)
             if (!prototype) {
-                throw new TypeError(`${type.name} must extends Data type class!`)
+                throw new SystemError(`${type.name} must extends Data type class!`)
             }
         }
         return prototype

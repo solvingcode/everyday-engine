@@ -1,5 +1,4 @@
 import UnitSelector from './UnitSelector.js'
-import ScriptGraph from '../flow/graph/ScriptGraph.js'
 
 export default class ScriptGraphSelector extends UnitSelector {
 
@@ -11,7 +10,7 @@ export default class ScriptGraphSelector extends UnitSelector {
      * @return {Unit[]}
      */
     getUnits(world){
-        return ScriptGraph.get().getGraphUnits()
+        return world ? world.getGraphManager().getGraphUnits() : []
     }
 
     /**

@@ -1,7 +1,6 @@
 import Runner from '../Runner.js'
 import World from '../../world/World.js'
 import ExecutorRegistry from '../../executor/ExecutorRegistry.js'
-import ScriptGraph from '../../flow/graph/ScriptGraph.js'
 
 export class SetupExecutorRunner extends Runner {
 
@@ -21,17 +20,21 @@ export class SetupExecutorRunner extends Runner {
      * @override
      */
     execute(mouse) {
-        const script = World.get().getScriptManager().getSelected(World.get().getTabManager())
-        let units
+        const world = World.get()
+        const graphManager = world.getGraphManager()
+        const script = world.getScriptManager().getSelected(world.getTabManager())
+        let units, camera
         if(script){
-            const graphUnits = ScriptGraph.get().getGraphUnits()
-            const graphEdges = ScriptGraph.get().getGraphEdges()
+            const graphUnits = graphManager.getGraphUnits()
+            const graphEdges = graphManager.getGraphEdges()
             units = [].concat(graphUnits).concat(graphEdges)
+            camera = script.getCamera()
         }else{
-            units = World.get().getUnitManager().getUnits()
+            units = world.getUnitManager().getUnits()
+            camera = world.getCamera()
         }
         units.forEach(unit => {
-            ExecutorRegistry.get().execute(unit)
+            ExecutorRegistry.get().execute(unit, {camera})
         })
     }
 
