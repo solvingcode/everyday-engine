@@ -6,7 +6,6 @@ import MeshComponent from '../../component/internal/MeshComponent.js'
 import Size from '../../pobject/Size.js'
 import TransformComponent from '../../component/internal/TransformComponent.js'
 import MoveAction from '../action/edit/MoveAction.js'
-import SelectionUnitInstant from '../../unit/instant/type/internal/edit/SelectionUnitInstant.js'
 import Menu from '../../layout/Menu.js'
 import SystemError from '../../exception/type/SystemError.js'
 
@@ -54,6 +53,14 @@ export default class DrawerRunner extends Runner {
     }
 
     /**
+     * @abstract
+     * @return {{[string]: {instance: Class, startEvent?: Function, endEvent?: Function}}}
+     */
+    getDrawStateTypes(){
+        throw new SystemError(`${this.constructor.name}.getDrawStateTypes must be implemented`)
+    }
+
+    /**
      * @override
      */
     isHandle(window) {
@@ -64,7 +71,7 @@ export default class DrawerRunner extends Runner {
      * @override
      * @param {Mouse} mouse
      */
-    async execute(mouse) {
+    execute(mouse) {
         const menu = Menu.get()
         const stateManager = StateManager.get()
         const camera = this.getCamera()
@@ -73,23 +80,7 @@ export default class DrawerRunner extends Runner {
         const position = this.getCamera().fromCanvasCoord(vector3d)
         const defaultStartEvent = (pMouse) => pMouse.isButtonPressed(MouseButton.LEFT)
         const defaultEndEvent = (pMouse) => pMouse.isButtonClicked(MouseButton.LEFT)
-        /**
-         * @type {{[string]: {instance: Class, startEvent?: Function, endEvent?: Function}}}
-         */
-        const typeEntity = {
-            SELECT: {
-                instance: SelectionUnitInstant
-            },
-            MOVE: {
-                instance: SelectionUnitInstant
-            },
-            SCALE: {
-                instance: SelectionUnitInstant
-            },
-            ROTATE: {
-                instance: SelectionUnitInstant
-            }
-        }
+        const typeEntity = this.getDrawStateTypes()
         for(const drawType in typeEntity){
             if(typeEntity.hasOwnProperty(drawType)){
                 const type = `DRAW_${drawType}`

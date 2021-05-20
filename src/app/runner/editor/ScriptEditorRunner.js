@@ -39,9 +39,9 @@ export default class ScriptEditorRunner extends Runner {
         if (!stateManager.isRunning() && !stateManager.isFormUpdating()) {
             const script = World.get().getScriptManager().getSelected(World.get().getTabManager())
             if (script) {
-                this.handleUnitEvent(script, mouse)
                 this.selectUnits(script, mouse)
                 this.focusUnits(script, mouse)
+                this.handleUnitEvent(script, mouse)
             }
         }
     }
@@ -51,10 +51,15 @@ export default class ScriptEditorRunner extends Runner {
      * @param {Mouse} mouse
      */
     selectUnits(script, mouse) {
-        const menu = Menu.get()
         const world = World.get()
-        if (mouse.isButtonPressed(MouseButton.LEFT) && !menu.getUIRenderer().getItemAt(mouse)) {
-            world.getGraphManager().selectUnits(script, mouse)
+        const camera = script.getCamera()
+        const graphManager = world.getGraphManager()
+        const currentScenePosition = camera.fromCameraScale(mouse.currentScenePosition)
+        const unit = graphManager.findFirstUnitByPosition(camera.fromCanvasCoord(currentScenePosition))
+        if (mouse.isButtonPressed(MouseButton.LEFT) &&
+            this.isPositionValid(mouse) && !this.unitMoving && (!unit || !unit.isSelected())) {
+            const dragArea = mouse.getDragArea(script.getCamera())
+            world.getGraphManager().selectUnits(script, dragArea)
         }
     }
 
@@ -72,24 +77,40 @@ export default class ScriptEditorRunner extends Runner {
      * @param {Mouse} mouse
      */
     handleUnitEvent(script, mouse) {
+        const stateManager = StateManager.get()
         if (mouse.isButtonPressed(MouseButton.LEFT)) {
             const world = World.get()
+            const graphManager = world.getGraphManager()
             const camera = script.getCamera()
             const currentScenePosition = camera.fromCameraScale(mouse.currentScenePosition)
-            const unit = world.getGraphManager().findFirstUnitByPosition(camera.fromCanvasCoord(currentScenePosition))
-            const dragArea = mouse.dragAndDrop(camera)
+            const unit = graphManager.findFirstUnitByPosition(camera.fromCanvasCoord(currentScenePosition))
             if (unit && !this.isMoving) {
                 this.unitMoving = unit
             }
             if (this.unitMoving) {
-                const transformComponent = this.unitMoving.getComponent(TransformComponent)
-                const position = transformComponent.getPosition()
-                transformComponent.setPosition(Vector.add(position, dragArea))
+                const selectedUnits = graphManager.getSelected()
+                const dragArea = mouse.dragAndDrop(camera)
+                selectedUnits.forEach(selectedUnit => {
+                    const transformComponent = selectedUnit.getComponent(TransformComponent)
+                    const position = transformComponent.getPosition()
+                    transformComponent.setPosition(Vector.add(position, dragArea))
+                })
+            }else if(!stateManager.hasAnyState('DRAW_SELECT_GRAPH') && this.isPositionValid(mouse)){
+                stateManager.startState('DRAW_SELECT_GRAPH', 1)
             }
             this.isMoving = true
         } else {
             this.isMoving = false
             this.unitMoving = null
         }
+    }
+
+    /**
+     * @param {Mouse} mouse
+     * @return {boolean}
+     */
+    isPositionValid(mouse) {
+        const menu = Menu.get()
+        return !menu.getUIRenderer().getItemAt(mouse)
     }
 }

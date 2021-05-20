@@ -18,11 +18,9 @@ class EventHandler {
         action.reset()
         runners.forEach(runner => {
             const runnerInstance = runner.get()
-            if (runnerInstance.isHandle(window)) {
-                action.add(runnerInstance, mouse, keyboard)
-            }
+            action.add(runnerInstance, mouse, keyboard)
         })
-        action.run()
+        action.run(window)
     }
 
     static get() {

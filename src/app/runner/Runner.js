@@ -1,4 +1,5 @@
 import SystemError from '../exception/type/SystemError.js'
+import Window from '../core/Window.js'
 
 /**
  * Runner is a component responsible for deciding what to do when a application state is defined
@@ -21,6 +22,15 @@ class Runner {
      */
     isHandle(window) {
         throw new SystemError('"Runner.isHandle" method must be implemented')
+    }
+
+    /**
+     * @param {...any} params
+     */
+    run(...params){
+        if(this.isHandle(Window.get())){
+            this.execute(...params)
+        }
     }
 
     /**

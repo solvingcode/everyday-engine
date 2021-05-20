@@ -16,6 +16,7 @@ import {SetupExecutorRunner} from '../runner/executor/SetupExecutorRunner.js'
 import ScriptEditorRunner from '../runner/editor/ScriptEditorRunner.js'
 import HistoryRunner from '../runner/history/HistoryRunner.js'
 import UnitDrawerRunner from '../runner/drawer/UnitDrawerRunner.js'
+import GraphDrawerRunner from '../runner/drawer/GraphDrawerRunner.js'
 
 /**
  * @class {Setup}
@@ -38,7 +39,7 @@ class Setup extends Loop {
         this.setupRenderer = SetupRenderer.get()
         this.runners = [
             HistoryRunner, SimulateRunner, ActionRunner, EditorRunner, ScriptEditorRunner,
-            SetupExecutorRunner, SetupRenderRunner, MenuRunner, WindowRunner, UnitDrawerRunner
+            SetupExecutorRunner, SetupRenderRunner, MenuRunner, WindowRunner, GraphDrawerRunner, UnitDrawerRunner
         ]
         ExecutorRegistry.get().register([
             new MeshGenerationExecutor(),

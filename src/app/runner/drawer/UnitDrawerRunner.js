@@ -1,7 +1,28 @@
 import World from '../../world/World.js'
 import DrawerRunner from './DrawerRunner.js'
+import SelectionUnitInstant from '../../unit/instant/type/internal/edit/SelectionUnitInstant.js'
 
 export default class UnitDrawerRunner extends DrawerRunner {
+
+    /**
+     * @override
+     */
+    getDrawStateTypes(){
+        return {
+            SELECT: {
+                instance: SelectionUnitInstant
+            },
+            MOVE: {
+                instance: SelectionUnitInstant
+            },
+            SCALE: {
+                instance: SelectionUnitInstant
+            },
+            ROTATE: {
+                instance: SelectionUnitInstant
+            }
+        }
+    }
 
     /**
      * @override

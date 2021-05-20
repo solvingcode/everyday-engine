@@ -30,7 +30,7 @@ class Action {
         for (const iQueue in this.queue) {
             if (this.queue.hasOwnProperty(iQueue)) {
                 const action = this.queue[iQueue]
-                if (action.object.execute(...action.args)) {
+                if (action.object.run(...action.args)) {
                     break;
                 }
             }

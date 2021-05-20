@@ -9,36 +9,41 @@ import ObjectHelper from '../utils/ObjectHelper.js'
 import NodeInputComponent from '../component/internal/gui/node/NodeInputComponent.js'
 import GraphEdgeUnitInstant from '../unit/instant/type/internal/graph/GraphEdgeUnitInstant.js'
 import MeshComponent from '../component/internal/MeshComponent.js'
+import Unit from '../unit/Unit.js'
+import ClientError from '../exception/type/ClientError.js'
 
 export default class GraphManager {
 
     /**
-     * @type {GraphNodeUnitInstant[]}
+     * @type {UnitInstant[]}
      */
-    graphUnits
-
-    /**
-     * @type {GraphEdgeUnitInstant[]}
-     */
-    graphEdges
+    units
 
     constructor() {
-        this.graphUnits = []
-        this.graphEdges = []
+        this.units = []
     }
 
     /**
-     * @return {GraphNodeUnitInstant[]}
+     * @return {UnitInstant[]}
      */
-    getGraphUnits() {
-        return this.graphUnits
+    getUnits() {
+        return this.units
     }
 
     /**
-     * @return {GraphEdgeUnitInstant[]}
+     * @return {UnitInstant[]}
      */
-    getGraphEdges() {
-        return this.graphEdges
+    getGraphUnits(){
+        return this.getUnits()
+            .filter(unit => unit.hasComponents([NodeComponent]))
+    }
+
+    /**
+     * @return {UnitInstant[]}
+     */
+    getGraphEdges(){
+        return this.getUnits()
+            .filter(unit => unit.hasComponents([NodeInputComponent]))
     }
 
     /**
@@ -48,10 +53,7 @@ export default class GraphManager {
     draw(script, renderer) {
         const world = World.get()
         this.update(script)
-        this.graphUnits.forEach(gUnit => {
-            UnitHelper.drawUnit(gUnit, script.getCamera(), world.getMeshManager(), renderer)
-        })
-        this.graphEdges.forEach(gUnit => {
+        this.getUnits().forEach(gUnit => {
             UnitHelper.drawUnit(gUnit, script.getCamera(), world.getMeshManager(), renderer)
         })
     }
@@ -63,7 +65,8 @@ export default class GraphManager {
      */
     updateGraphNodes(script) {
         let updated = false
-        const graphNodeIds = this.getGraphUnits()
+        const units = this.getGraphUnits()
+        const graphNodeIds = units
             .map(graphUnit => graphUnit.getComponent(NodeComponent).getNodeId())
         const nodeIds = script.getNodes().map(node => node.getId())
         script.getNodes().forEach(node => {
@@ -72,7 +75,7 @@ export default class GraphManager {
                 this.createGraphNodeUnit(node)
                 updated = true
             } else {
-                const graphUnit = this.getGraphUnits()
+                const graphUnit = units
                     .find(gUnit => gUnit.getComponent(NodeComponent).getNodeId() === node.getId())
                 const position = graphUnit.getComponent(TransformComponent).getPosition()
                 if (!ObjectHelper.isEqual(node.getPosition(), position)) {
@@ -96,7 +99,8 @@ export default class GraphManager {
      */
     updateGraphEdges(script) {
         let updated = false
-        const graphEdgeIds = this.getGraphEdges()
+        const units = this.getGraphEdges()
+        const graphEdgeIds = units
             .map(graphUnit => graphUnit.getComponent(NodeInputComponent).getNodeInputId())
         const nodeInputIds = script.getInputs().map(nodeInput => nodeInput.getId())
         script.getInputs().forEach(nodeInput => {
@@ -105,7 +109,7 @@ export default class GraphManager {
                 this.createGraphEdgeUnit(script, nodeInput)
                 updated = true
             } else {
-                const graphUnit = this.getGraphEdges()
+                const graphUnit = units
                     .find(gUnit =>
                         gUnit.getComponent(NodeInputComponent).getNodeInputId() === nodeInput.getId())
                 graphUnit.update(script, nodeInput)
@@ -127,7 +131,7 @@ export default class GraphManager {
         const unit = new GraphNodeUnitInstant()
         const position = node.getPosition()
         unit.instantiate(position, node)
-        this.graphUnits.push(unit)
+        this.getUnits().push(unit)
         return unit
     }
 
@@ -138,26 +142,54 @@ export default class GraphManager {
     createGraphEdgeUnit(script, nodeInput) {
         const unit = new GraphEdgeUnitInstant()
         unit.instantiate(script, nodeInput)
-        this.graphEdges.push(unit)
+        this.getUnits().push(unit)
         return unit
+    }
+
+    /**
+     * @template T
+     * @param {Class} T
+     * @param {...any} props
+     * @return {T}
+     */
+    createUnitInstant(T, ...props) {
+        if (!(T.prototype instanceof Unit)) {
+            throw new ClientError(`Unit type must be child of Unit class (${type} given)`)
+        }
+        const unit = new T()
+        unit.instantiate(...props)
+        this.getUnits().push(unit)
+        return unit
+    }
+
+    /**
+     * @param {Unit} unit
+     */
+    deleteUnit(unit) {
+        const index = this.getUnits().findIndex((element) =>
+            element.getId() === unit.getId()
+        )
+        return this.getUnits().splice(index, 1)
     }
 
     /**
      * @param {number} graphNodeId
      */
     deleteGraphNodeUnitByNodeId(graphNodeId) {
-        const index = this.graphUnits
+        const graphUnits = this.getGraphUnits()
+        const index = graphUnits
             .findIndex(graphUnit => graphUnit.getComponent(NodeComponent).getNodeId() === graphNodeId)
-        this.graphUnits.splice(index, 1)
+        graphUnits.splice(index, 1)
     }
 
     /**
      * @param {number} graphEdgeId
      */
     deleteGraphEdgeUnitByNodeId(graphEdgeId) {
-        const index = this.graphEdges
+        const graphEdges = this.getGraphEdges()
+        const index = graphEdges
             .findIndex(graphUnit => graphUnit.getComponent(NodeInputComponent).getNodeInputId() === graphEdgeId)
-        this.graphEdges.splice(index, 1)
+        graphEdges.splice(index, 1)
     }
 
     /**
@@ -184,16 +216,21 @@ export default class GraphManager {
 
     /**
      * @param {AScript} script
-     * @param {Mouse} mouse
+     * @param {{position: Vector, size: Size}} dragArea
      * @return {Unit[]}
      */
-    selectUnits(script, mouse) {
+    selectUnits(script, dragArea) {
         const unitSelector = ScriptGraphSelector.get()
         const world = World.get()
-        const currentScenePosition = new Vector(mouse.currentScenePosition)
-        const vector3d = script.getCamera().fromCameraScale(currentScenePosition)
         unitSelector.unselectAll(world)
-        return unitSelector.select(world, script.getCamera().fromCanvasCoord(vector3d), null)
+        return unitSelector.select(world, script.getCamera().fromCanvasCoord(dragArea.position), dragArea.size)
+    }
+
+    /**
+     * @return {UnitInstant[]}
+     */
+    getSelected(){
+        return this.getGraphUnits().filter(unit => unit.isSelected())
     }
 
     /**
@@ -219,12 +256,10 @@ export default class GraphManager {
     }
 
     reset() {
-        this.graphEdges = []
-        this.graphUnits = []
+        this.units = []
     }
 
     regenerateAll() {
-        [].concat(this.graphUnits).concat(this.graphEdges)
-            .forEach(unit => unit.getComponent(MeshComponent).setGenerated(false))
+        this.getUnits().forEach(unit => unit.getComponent(MeshComponent).setGenerated(false))
     }
 }
