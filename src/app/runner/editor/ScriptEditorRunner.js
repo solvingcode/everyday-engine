@@ -5,6 +5,7 @@ import {MouseButton} from '../../core/Mouse.js'
 import TransformComponent from '../../component/internal/TransformComponent.js'
 import Vector from '../../utils/Vector.js'
 import Menu from '../../layout/Menu.js'
+import ScriptHelper from '../../utils/ScriptHelper.js'
 
 export default class ScriptEditorRunner extends Runner {
 
@@ -22,6 +23,21 @@ export default class ScriptEditorRunner extends Runner {
      * @type {boolean}
      */
     isMoving = false
+
+    /**
+     * @param {{node: ANode, input: DynamicAttribute|null}|undefined}
+     */
+    startNodeInput
+
+    /**
+     * @param {{node: ANode, output: DynamicAttribute|null}|undefined}
+     */
+    startNodeOutput
+
+    /**
+     * @param {ANode}
+     */
+    startNode
 
     /**
      * @override
@@ -51,12 +67,14 @@ export default class ScriptEditorRunner extends Runner {
      * @param {Mouse} mouse
      */
     selectUnits(script, mouse) {
+        const stateManager = StateManager.get()
         const world = World.get()
         const camera = script.getCamera()
         const graphManager = world.getGraphManager()
         const currentScenePosition = camera.fromCameraScale(mouse.currentScenePosition)
         const unit = graphManager.findFirstUnitByPosition(camera.fromCanvasCoord(currentScenePosition))
         if (mouse.isButtonPressed(MouseButton.LEFT) &&
+            !stateManager.hasAnyState('DRAW_NODE_EDGE') &&
             this.isPositionValid(mouse) && !this.unitMoving && (!unit || !unit.isSelected())) {
             const dragArea = mouse.getDragArea(script.getCamera())
             world.getGraphManager().selectUnits(script, dragArea)
@@ -78,15 +96,13 @@ export default class ScriptEditorRunner extends Runner {
      */
     handleUnitEvent(script, mouse) {
         const stateManager = StateManager.get()
+        const world = World.get()
+        const graphManager = world.getGraphManager()
+        const camera = script.getCamera()
+        const currentScenePosition = camera.fromCanvasCoord(camera.fromCameraScale(mouse.currentScenePosition))
         if (mouse.isButtonPressed(MouseButton.LEFT)) {
-            const world = World.get()
-            const graphManager = world.getGraphManager()
-            const camera = script.getCamera()
-            const currentScenePosition = camera.fromCameraScale(mouse.currentScenePosition)
-            const unit = graphManager.findFirstUnitByPosition(camera.fromCanvasCoord(currentScenePosition))
-            if (unit && !this.isMoving) {
-                this.unitMoving = unit
-            }
+            const unit = graphManager.findFirstUnitByPosition(currentScenePosition)
+            //if a unit is already moving
             if (this.unitMoving) {
                 const selectedUnits = graphManager.getSelected()
                 const dragArea = mouse.dragAndDrop(camera)
@@ -95,11 +111,41 @@ export default class ScriptEditorRunner extends Runner {
                     const position = transformComponent.getPosition()
                     transformComponent.setPosition(Vector.add(position, dragArea))
                 })
-            }else if(!stateManager.hasAnyState('DRAW_SELECT_GRAPH') && this.isPositionValid(mouse)){
-                stateManager.startState('DRAW_SELECT_GRAPH', 1)
+            }
+            //otherwise start moving the selected units
+            else if (unit && !this.isMoving && this.isValidPositionForMoving(script, unit, currentScenePosition)) {
+                this.unitMoving = unit
+            }
+            //if the actual position is valid (not outside area of selection)
+            else if (this.isPositionValid(mouse)) {
+                //search if a node input/output is clicked to start drawing edges, else start drawing selection box
+                if (!stateManager.hasAnyState('DRAW_SELECT_GRAPH') &&
+                    !stateManager.hasAnyState('DRAW_NODE_EDGE')) {
+                    this.startNodeInput = ScriptHelper.findNodeInputByPosition(script, unit, currentScenePosition)
+                    this.startNodeOutput = ScriptHelper.findNodeOutputByPosition(script, unit, currentScenePosition)
+                    if (this.startNodeInput !== undefined || this.startNodeOutput !== undefined) {
+                        stateManager.startState('DRAW_NODE_EDGE', 1, {unit: null})
+                    } else {
+                        stateManager.startState('DRAW_SELECT_GRAPH', 1, {unit: null})
+                    }
+                }
             }
             this.isMoving = true
-        } else {
+        }
+        //if drawing node edge is done
+        else if (stateManager.isStop('DRAW_NODE_EDGE')) {
+            const drawState = stateManager.getStopData('DRAW_NODE_EDGE', 1)
+            const drawUnit = drawState && drawState.unit
+            if (drawUnit) {
+                const endUnit = graphManager.findFirstUnitByPosition(currentScenePosition)
+                const endNodeInput = ScriptHelper.findNodeInputByPosition(script, endUnit, currentScenePosition)
+                const endNodeOutput = ScriptHelper.findNodeInputByPosition(script, endUnit, currentScenePosition)
+                const {node: nodeTarget, input: nodeTargetInput} = this.startNodeInput || endNodeInput
+                const {node: nodeSource} = this.startNodeOutput || endNodeOutput
+                nodeTarget.attach(nodeSource, nodeTargetInput ? nodeTargetInput.getId() : null)
+            }
+        }
+        else {
             this.isMoving = false
             this.unitMoving = null
         }
@@ -112,5 +158,16 @@ export default class ScriptEditorRunner extends Runner {
     isPositionValid(mouse) {
         const menu = Menu.get()
         return !menu.getUIRenderer().getItemAt(mouse)
+    }
+
+    /**
+     * @param {AScript} script
+     * @param {Unit} unit
+     * @param {Vector} position
+     * @return {boolean}
+     */
+    isValidPositionForMoving(script, unit, position) {
+        return ScriptHelper.findNodeInputByPosition(script, unit, position) === undefined &&
+            ScriptHelper.findNodeOutputByPosition(script, unit, position) === undefined
     }
 }

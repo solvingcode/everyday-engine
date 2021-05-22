@@ -138,18 +138,18 @@ export default class NodeHelper {
     /**
      * @param {string} type
      * @param {Size} size
-     * @return {{position: Vector}}
+     * @return {{position: Vector, sizeInput: number}}
      */
     static getNodeGUIOutput(type, size){
         const {sizeInput, padding, heightHead} = this.getNodeGUIProps(type)
         const position = new Vector({x: size.getWidth() - padding - sizeInput, y: heightHead + padding})
-        return {position}
+        return {position, sizeInput}
     }
 
     /**
      * @param {string} type
      * @param {number} index
-     * @return {{position: Vector}}
+     * @return {{position: Vector, sizeInput: number}}
      */
     static getNodeGUIInput(type, index){
         const {sizeInput, padding, heightHead} = this.getNodeGUIProps(type)
@@ -157,6 +157,22 @@ export default class NodeHelper {
             x: padding,
             y: heightHead + sizeInput + (padding + sizeInput) * (index + 1)
         })
-        return {position}
+        return {position, sizeInput}
+    }
+
+    /**
+     * @param {string} type
+     * @return {boolean}
+     */
+    static hasBaseInput(type){
+        return type === NODE_TYPES.FUNCTION || type === NODE_TYPES.CONDITION
+    }
+
+    /**
+     * @param {string} type
+     * @return {boolean}
+     */
+    static hasBaseOutput(type){
+        return type === NODE_TYPES.EVENT
     }
 }

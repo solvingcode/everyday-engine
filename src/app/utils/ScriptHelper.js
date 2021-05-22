@@ -6,6 +6,11 @@ import ConditionNode from '../flow/node/ConditionNode.js'
 import UnitNode from '../flow/node/UnitNode.js'
 import ClientError from '../exception/type/ClientError.js'
 import KeyCodeNode from '../flow/node/KeyCodeNode.js'
+import NodeComponent from '../component/internal/gui/node/NodeComponent.js'
+import TransformComponent from '../component/internal/TransformComponent.js'
+import NodeHelper from './NodeHelper.js'
+import Vector from './Vector.js'
+import MeshComponent from '../component/internal/MeshComponent.js'
 
 export default class ScriptHelper{
 
@@ -58,6 +63,64 @@ export default class ScriptHelper{
             throw new ClientError(`AssetScriptXmlGenerator: ${node.constructor.name} not supported`)
         }
         return nodeType
+    }
+
+    /**
+     * undefined if no input found
+     * @param {AScript} script
+     * @param {Unit} unit
+     * @param {Vector} position
+     * @return {{node: ANode, input: DynamicAttribute|null}|undefined}
+     */
+    static findNodeInputByPosition(script, unit, position) {
+        if (unit) {
+            const nodeId = unit.getComponent(NodeComponent).getNodeId()
+            const unitPosition = unit.getComponent(TransformComponent).getPosition()
+            const node = script.findNodeById(nodeId)
+            if (node && NodeHelper.hasBaseInput(node.getType())) {
+                const sourceNode = NodeHelper.getSourceNode(node)
+                const inputs = sourceNode.getInputs()
+                for (let iInput = -1; iInput < inputs.length; iInput++) {
+                    const input = iInput >= 0 ? inputs[iInput] : null
+                    const {position: inputLocalPosition, sizeInput} = NodeHelper.getNodeGUIInput(node.getType(), iInput)
+                    const inputPosition = Vector.add(unitPosition, inputLocalPosition)
+                    if (position.getX() >= inputPosition.getX() && position.getX() <= inputPosition.getX() + sizeInput &&
+                        position.getY() >= inputPosition.getY() && position.getY() <= inputPosition.getY() + sizeInput
+                    ) {
+                        return {node, input}
+                    }
+                }
+            }
+        }
+        return undefined
+    }
+
+    /**
+     * Return null if the input found is the default one, undefined if no input found
+     * @param {AScript} script
+     * @param {Unit} unit
+     * @param {Vector} position
+     * @return {{node: ANode, output: DynamicAttribute|null}|undefined}
+     */
+    static findNodeOutputByPosition(script, unit, position) {
+        if (unit) {
+            const nodeId = unit.getComponent(NodeComponent).getNodeId()
+            const unitPosition = unit.getComponent(TransformComponent).getPosition()
+            const size = unit.getComponent(MeshComponent).getSize()
+            const node = script.findNodeById(nodeId)
+            const sourceNode = NodeHelper.getSourceNode(node)
+            const output = sourceNode.getOutput()
+            if (node && (output || NodeHelper.hasBaseOutput(node.getType()))) {
+                const {position: inputLocalPosition, sizeInput} = NodeHelper.getNodeGUIOutput(node.getType(), size)
+                const outputPosition = Vector.add(unitPosition, inputLocalPosition)
+                if (position.getX() >= outputPosition.getX() && position.getX() <= outputPosition.getX() + sizeInput &&
+                    position.getY() >= outputPosition.getY() && position.getY() <= outputPosition.getY() + sizeInput
+                ) {
+                    return {node, output}
+                }
+            }
+        }
+        return undefined
     }
 
 }

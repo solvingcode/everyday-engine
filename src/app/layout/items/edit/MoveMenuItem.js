@@ -12,6 +12,7 @@ export default class MoveMenuItem extends MenuItem {
             type: Layout.type.ICON,
             zone: Layout.zone.LEFT
         })
+        this.data = {unit: null}
     }
 
     /**

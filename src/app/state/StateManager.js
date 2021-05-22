@@ -280,7 +280,7 @@ class StateManager {
      * Get the start state data
      * @param {string} type
      * @param {number} id
-     * @return {Object|null}
+     * @return {*}
      */
     getStartData(type, id) {
         if (!id) {

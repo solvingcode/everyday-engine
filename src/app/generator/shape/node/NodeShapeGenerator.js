@@ -1,6 +1,5 @@
 import TypeShapeGenerator from '../TypeShapeGenerator.js'
 import NodeComponent from '../../../component/internal/gui/node/NodeComponent.js'
-import {NODE_TYPES} from '../../../flow/node/ANode.js'
 import GUIPropertyComponent from '../../../component/internal/gui/property/GUIPropertyComponent.js'
 import NodeHelper from '../../../utils/NodeHelper.js'
 
@@ -64,7 +63,7 @@ export default class NodeShapeGenerator extends TypeShapeGenerator {
         context.fillText(title, paddingScale, fontSizeScale + paddingScale)
 
         //base input
-        if (type === NODE_TYPES.FUNCTION || type === NODE_TYPES.CONDITION) {
+        if (NodeHelper.hasBaseInput(type)) {
             const {position: baseInputPosition} = NodeHelper.getNodeGUIInput(type, -1)
             const baseInputPositionScale = camera.toCameraScale(baseInputPosition)
             context.fillStyle = baseInputColor
@@ -84,7 +83,7 @@ export default class NodeShapeGenerator extends TypeShapeGenerator {
         })
 
         //output
-        if (output || type === NODE_TYPES.EVENT) {
+        if (output || NodeHelper.hasBaseOutput(type)) {
             const {position: outputPosition} = NodeHelper.getNodeGUIOutput(type, camera.fromScaleSize(scaleSize))
             const outputPositionScale = camera.toCameraScale(outputPosition)
             context.fillStyle = baseInputColor

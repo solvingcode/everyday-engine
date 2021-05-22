@@ -1,6 +1,7 @@
 import World from '../../world/World.js'
 import DrawerRunner from './DrawerRunner.js'
 import SelectionUnitInstant from '../../unit/instant/type/internal/edit/SelectionUnitInstant.js'
+import LineUnitInstant from '../../unit/instant/type/internal/shape/LineUnitInstant.js'
 
 export default class GraphDrawerRunner extends DrawerRunner {
 
@@ -24,7 +25,7 @@ export default class GraphDrawerRunner extends DrawerRunner {
      * @override
      */
     deleteUnit() {
-        World.get().getGraphManager().deleteUnit(this.currentUnit)
+        World.get().getGraphManager().deleteUnit(this.getDrawUnit())
     }
 
     /**
@@ -41,8 +42,18 @@ export default class GraphDrawerRunner extends DrawerRunner {
         return {
             SELECT_GRAPH: {
                 instance: SelectionUnitInstant
+            },
+            NODE_EDGE: {
+                instance: LineUnitInstant
             }
         }
+    }
+
+    /**
+     * @override
+     */
+    hasToRestartDrawState(){
+        return false
     }
 
 }

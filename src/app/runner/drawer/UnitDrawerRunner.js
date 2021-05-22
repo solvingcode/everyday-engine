@@ -35,7 +35,7 @@ export default class UnitDrawerRunner extends DrawerRunner {
      * @override
      */
     deleteUnit() {
-        World.get().deleteUnit(this.currentUnit)
+        World.get().deleteUnit(this.getDrawUnit())
     }
 
     /**
@@ -43,5 +43,12 @@ export default class UnitDrawerRunner extends DrawerRunner {
      */
     createUnit(instance, position, size) {
         return World.get().getUnitManager().createUnitInstant(instance, position, size)
+    }
+
+    /**
+     * @override
+     */
+    hasToRestartDrawState(){
+        return true
     }
 }

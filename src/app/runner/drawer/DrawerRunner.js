@@ -8,6 +8,7 @@ import TransformComponent from '../../component/internal/TransformComponent.js'
 import MoveAction from '../action/edit/MoveAction.js'
 import Menu from '../../layout/Menu.js'
 import SystemError from '../../exception/type/SystemError.js'
+import GeometryHelper from '../../utils/GeometryHelper.js'
 
 /**
  * @abstract
@@ -17,27 +18,26 @@ export default class DrawerRunner extends Runner {
     static instance = null
 
     /**
-     * @type {Unit}
+     * @type {{unit: Unit}}
      */
-    currentUnit
+    drawState
 
     constructor() {
         super()
-        this.currentUnit = null
     }
 
     /**
      * @abstract
      * @return {Camera}
      */
-    getCamera(){
+    getCamera() {
         throw new SystemError(`${this.constructor.name}.getCamera must be implemented`)
     }
 
     /**
      * @abstract
      */
-    deleteUnit(){
+    deleteUnit() {
         throw new SystemError(`${this.constructor.name}.deleteUnit must be implemented`)
     }
 
@@ -48,7 +48,7 @@ export default class DrawerRunner extends Runner {
      * @param {Size} size
      * @return {Unit}
      */
-    createUnit(instance, position, size){
+    createUnit(instance, position, size) {
         throw new SystemError(`${this.constructor.name}.createUnit must be implemented`)
     }
 
@@ -56,8 +56,16 @@ export default class DrawerRunner extends Runner {
      * @abstract
      * @return {{[string]: {instance: Class, startEvent?: Function, endEvent?: Function}}}
      */
-    getDrawStateTypes(){
+    getDrawStateTypes() {
         throw new SystemError(`${this.constructor.name}.getDrawStateTypes must be implemented`)
+    }
+
+    /**
+     * @abstract
+     * @return {boolean}
+     */
+    hasToRestartDrawState(){
+        throw new SystemError(`${this.constructor.name}.hasToRestartDrawState must be implemented`)
     }
 
     /**
@@ -68,6 +76,28 @@ export default class DrawerRunner extends Runner {
     }
 
     /**
+     * @param {Mouse} mouse
+     * @param {Camera} camera
+     * @return {Vector}
+     */
+    getPosition(mouse, camera) {
+        const scenePosition = new Vector(mouse.scenePosition)
+        const vector3d = camera.fromCameraScale(scenePosition)
+        return this.getCamera().fromCanvasCoord(vector3d)
+    }
+
+    /**
+     * @param {Mouse} mouse
+     * @param {Camera} camera
+     * @return {Vector}
+     */
+    getCurrentPosition(mouse, camera) {
+        const currentScenePosition = new Vector(mouse.currentScenePosition)
+        const vector3d = camera.fromCameraScale(currentScenePosition)
+        return this.getCamera().fromCanvasCoord(vector3d)
+    }
+
+    /**
      * @override
      * @param {Mouse} mouse
      */
@@ -75,14 +105,13 @@ export default class DrawerRunner extends Runner {
         const menu = Menu.get()
         const stateManager = StateManager.get()
         const camera = this.getCamera()
-        const scenePosition = new Vector(mouse.scenePosition)
-        const vector3d = camera.fromCameraScale(scenePosition)
-        const position = this.getCamera().fromCanvasCoord(vector3d)
+        const position = this.getPosition(mouse, camera)
+        const currentPosition = this.getCurrentPosition(mouse, camera)
         const defaultStartEvent = (pMouse) => pMouse.isButtonPressed(MouseButton.LEFT)
         const defaultEndEvent = (pMouse) => pMouse.isButtonClicked(MouseButton.LEFT)
         const typeEntity = this.getDrawStateTypes()
-        for(const drawType in typeEntity){
-            if(typeEntity.hasOwnProperty(drawType)){
+        for (const drawType in typeEntity) {
+            if (typeEntity.hasOwnProperty(drawType)) {
                 const type = `DRAW_${drawType}`
                 const props = typeEntity[drawType]
                 const startEvent = props.startEvent || defaultStartEvent
@@ -92,20 +121,47 @@ export default class DrawerRunner extends Runner {
                 }
                 if (stateManager.isProgress(type)) {
                     if (!stateManager.isProgress(MoveAction.STATE)) {
-                        this.draw(position, props.instance, mouse)
+                        this.draw(position, currentPosition, props.instance, mouse)
                     }
                     if (endEvent(mouse)) {
-                        this.endDraw(stateManager, type)
-                        stateManager.endState(type, 1)
-                        stateManager.startState(type, 1)
+                        this.stopDraw(stateManager, type)
+                        if(this.hasToRestartDrawState()){
+                            stateManager.startState(type, 1, {unit: null})
+                        }
                     }
-                }
-                if (stateManager.isStop(type)) {
-                    stateManager.endState(type, 1)
+                } else if (stateManager.isStop(type)) {
+                    this.endDraw(stateManager, type)
                 }
             }
         }
         return false
+    }
+
+    /**
+     * @param {string} type
+     * @return {{unit: Unit}}
+     */
+    getDrawState(type) {
+        const stateManager = StateManager.get()
+        const drawState = stateManager.getProgressData(type, 1) || stateManager.getStopData(type, 1)
+        if(!drawState || !drawState.hasOwnProperty('unit')){
+            throw new SystemError('Cannot start drawing (Unit not initialized)')
+        }
+        return drawState
+    }
+
+    /**
+     * @return {Unit}
+     */
+    getDrawUnit(){
+        return this.drawState.unit
+    }
+
+    /**
+     * @param {Unit} unit
+     */
+    setDrawUnit(unit){
+        this.drawState.unit = unit
     }
 
     /**
@@ -114,7 +170,15 @@ export default class DrawerRunner extends Runner {
      */
     startDraw(stateManager, type) {
         stateManager.progressState(type, 1)
-        this.currentUnit = null
+        this.drawState = this.getDrawState(type)
+    }
+
+    /**
+     * @param {StateManager} stateManager
+     * @param {String} type
+     */
+    stopDraw(stateManager, type) {
+        stateManager.stopState(type, 1)
     }
 
     /**
@@ -122,26 +186,29 @@ export default class DrawerRunner extends Runner {
      * @param {String} type
      */
     endDraw(stateManager, type) {
-        if (this.currentUnit) {
+        if (this.getDrawUnit()) {
             this.deleteUnit()
-            this.currentUnit = null
         }
+        stateManager.endState(type, 1)
     }
 
     /**
      * @param {Vector} position
+     * @param {Vector} currentPosition
      * @param {Class} instance
      * @param {Mouse} mouse
      */
-    draw(position, instance, mouse) {
+    draw(position, currentPosition, instance, mouse) {
         const dragDistance = mouse.getDragDistanceCamera(this.getCamera())
         const newPosition = this.calculateDragPosition(position, mouse, dragDistance)
         const size = new Size({width: Math.abs(dragDistance.x), height: Math.abs(dragDistance.y)})
-        if (!this.currentUnit) {
-            this.currentUnit = this.createUnit(instance, newPosition, size)
+        const {vertices: diagonalVertices} = GeometryHelper.getRectByDistance(position, currentPosition)
+        if (!this.getDrawUnit()) {
+            this.setDrawUnit(this.createUnit(instance, newPosition, size))
         }
-        const transformComponent = this.currentUnit.getComponent(TransformComponent)
-        const meshComponent = this.currentUnit.getComponent(MeshComponent)
+        const transformComponent = this.getDrawUnit().getComponent(TransformComponent)
+        const meshComponent = this.getDrawUnit().getComponent(MeshComponent)
+        meshComponent.setShapeVertices(diagonalVertices)
         transformComponent.setPosition(newPosition)
         meshComponent.setSize(size)
         meshComponent.setGenerated(false)
