@@ -1,6 +1,5 @@
 import WorldData from '../project/data/WorldData.js'
 import Camera from '../core/Camera.js'
-import Physics from '../physics/Physics.js'
 import Vector from '../utils/Vector.js'
 import AssetsManager from '../manager/AssetsManager.js'
 import Size from '../pobject/Size.js'
@@ -11,11 +10,13 @@ import TransformComponent from '../component/internal/TransformComponent.js'
 import UnitSelector from '../selector/UnitSelector.js'
 import MeshManager from '../manager/MeshManager.js'
 import ScriptManager from '../manager/ScriptManager.js'
-import FunctionRegistry from '../flow/function/FunctionRegistry.js'
+import FunctionRegistry from '../registry/FunctionRegistry.js'
 import UnitHelper from '../utils/UnitHelper.js'
 import TabManager from '../manager/TabManager.js'
 import GraphManager from '../manager/GraphManager.js'
 import Preference from '../preference/Preference.js'
+import PhysicsManager from '../manager/PhysicsManager.js'
+import ComponentRegistry from '../registry/ComponentRegistry.js'
 
 /**
  * @class {World}
@@ -33,6 +34,11 @@ class World extends WorldData {
      */
     graphManager
 
+    /**
+     * @type {PhysicsManager}
+     */
+    physicsManager
+
     constructor() {
         super()
         this.unitManager = new UnitManager()
@@ -40,10 +46,11 @@ class World extends WorldData {
         this.tabManager = new TabManager()
         this.graphManager = new GraphManager()
         this.functionRegistry = new FunctionRegistry()
+        this.componentRegistry = new ComponentRegistry()
         this.scriptManager = new ScriptManager()
         this.preference = new Preference()
         this.camera = new Camera(new Vector({x: -SCENE_WIDTH / 2, y: -SCENE_HEIGHT / 2}))
-        this.physics = new Physics()
+        this.physicsManager = new PhysicsManager()
         this.assetsManager = new AssetsManager()
         this.cameraUnitId = null
         this.resolution = new Size({width: SCENE_WIDTH, height: SCENE_HEIGHT})
@@ -59,6 +66,8 @@ class World extends WorldData {
         this.createRootFolder()
         this.getPreference().init()
         this.getTabManager().init()
+        this.getFunctionRegistry().init()
+        this.getComponentRegistry().init()
         this.getGraphManager().reset()
         this.getAssetsManager().getScriptAssets().forEach(asset => {
             asset.getType().parse()
@@ -66,7 +75,6 @@ class World extends WorldData {
     }
 
     /**
-     * Draw the entities.
      * @TODO: To optimize (rerender just entities updated)
      * @param {Renderer} renderer
      */
@@ -229,6 +237,13 @@ class World extends WorldData {
      */
     getGraphManager() {
         return this.graphManager
+    }
+
+    /**
+     * @return {PhysicsManager}
+     */
+    getPhysicsManager(){
+        return this.physicsManager
     }
 
     /**

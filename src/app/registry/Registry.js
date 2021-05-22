@@ -1,5 +1,6 @@
 import RegistryData from '../project/data/RegistryData.js'
 import ClientError from '../exception/type/ClientError.js'
+import SystemError from '../exception/type/SystemError.js'
 
 /**
  * @abstract
@@ -7,10 +8,10 @@ import ClientError from '../exception/type/ClientError.js'
 export default class Registry extends RegistryData {
 
     /**
-     * @param {*[]} registry
+     * @abstract
      */
-    init(registry) {
-        this.registry = registry
+    init() {
+        throw new SystemError(`${this.constructor.name}.init must be implemented`)
     }
 
     /**

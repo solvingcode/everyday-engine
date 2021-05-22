@@ -23,8 +23,6 @@ import LoadProjectAction from './project/LoadProjectAction.js'
 import ExportProjectAction from './project/ExportProjectAction.js'
 import NewProjectAction from './project/NewProjectAction.js'
 import ZoomInOutCameraAction from './camera/ZoomInOutCameraAction.js'
-import PhysicsStaticAction from './physics/PhysicsStaticAction.js'
-import PhysicsNotStaticAction from './physics/PhysicsNotStaticAction.js'
 import FormUpdateAction from './form/FormUpdateAction.js'
 import ScaleAction from './edit/ScaleAction.js'
 import RotateAction from './edit/RotateAction.js'
@@ -54,6 +52,7 @@ import DeleteAssetAction from './assets/DeleteAssetAction.js'
 import DeleteFolderAction from './assets/DeleteFolderAction.js'
 import CloseErrorPopupAction from './window/CloseErrorPopupAction.js'
 import DeleteSelectedNodeAction from './script/DeleteSelectedNodeAction.js'
+import AttachComponentAction from './unit/AttachComponentAction.js'
 
 /**
  * Action Runner class.
@@ -115,8 +114,6 @@ class ActionRunner extends Runner {
             NEW_PROJECT: NewProjectAction,
             EXPORT_PROJECT: ExportProjectAction,
             ZOOM_CAMERA: ZoomInOutCameraAction,
-            PHYSICS_STATIC: PhysicsStaticAction,
-            PHYSICS_NOT_STATIC: PhysicsNotStaticAction,
             FORM_UPDATE: FormUpdateAction,
             COLLAPSE_PANEL: PanelCollapseAction,
             ADD_CAMERA: AddCameraAction,
@@ -133,7 +130,8 @@ class ActionRunner extends Runner {
             DELETE_SCRIPT_EDGE: DeleteEdgeAction,
             ADD_SCRIPT_NODE: AddNodeAction,
             ADD_SCRIPT_EDGE: AddEdgeAction,
-            CLOSE_ERROR_POPUP: CloseErrorPopupAction
+            CLOSE_ERROR_POPUP: CloseErrorPopupAction,
+            ATTACH_COMPONENT: AttachComponentAction,
         }
         const selectedUnits = this.unitSelector.getSelected(World.get())
         for(const iTypeAction in typeActions){

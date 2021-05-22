@@ -204,7 +204,7 @@ button.selected, button.hidden.selected, button.locked.selected{
     background-color: rgba(77, 77, 76, 0.51);
 }
 
-.panel .script-nodes div:not(.list-element) > button{
+.panel .script-nodes div:not(.list-element) > button, .panel .component-add-wrapper button{
     background-color: #3f6093;
 }
 

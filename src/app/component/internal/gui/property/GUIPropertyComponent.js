@@ -137,4 +137,11 @@ export default class GUIPropertyComponent extends Component{
     getFormFields() {
         return []
     }
+
+    /**
+     * @override
+     */
+    isHidden() {
+        return true
+    }
 }

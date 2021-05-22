@@ -1,53 +1,56 @@
 import AttachEntity from '../../entity/types/constraint/AttachEntity.js'
+import SystemError from '../../exception/type/SystemError.js'
 
 /**
- * Shape class
- * Used as interface between an Entity (managed by the app)
+ * @abstract
+ * Used as interface between a Unit (managed by the app)
  * and Body (managed by the Engine).
  * Used to synchronize information between the Body and related Entity
- * @abstract
- *
- * @property {Shape} instance
  */
 class Shape {
 
+    /**
+     * @type {PhysicsEngine}
+     */
+    physicEngine
+
+    /**
+     * @param {PhysicsEngine} physicEngine
+     */
     constructor(physicEngine) {
-        if (this.constructor === Shape) {
-            throw new TypeError('Abstract class Shape cannot be instantiated directly')
-        }
         this.physicEngine = physicEngine
     }
 
     /**
      * Generate the body for the given entity
-     * @param {EntityMotion} entity
+     * @param {Unit} unit
      * @param {World} world
-     * @return {ContentMenuItem}
+     * @return {*}
      */
-    generate(entity, world) {
-        throw new TypeError('"Shape.generate" method must be implemented')
+    generate(unit, world) {
+        throw new SystemError(`${this.constructor.name}.generate method must be implemented`)
     }
 
     /**
-     * Load the body for the given entity, and update physics
-     * @param {Entity} entity
+     * Load the body for the given unit, and update physics
+     * @param {Unit} unit
      * @param {World} world
-     * @return {ContentMenuItem}
+     * @return {*}
      */
-    load(entity, world) {
-        const body = this.generate(entity, world)
-        this.setup(entity, body)
-        this.update(entity, body)
+    load(unit, world) {
+        const body = this.generate(unit, world)
+        this.setup(unit, body)
+        this.update(unit, body)
         return body
     }
 
     /**
      * Get the body physics from the entity
-     * @param {Entity} entity
-     * @return {ContentMenuItem | Constraint}
+     * @param {Unit} unit
+     * @return {*}
      */
-    getBodyFromEntity(entity) {
-        return this.physicEngine.getBodyFromEntity(entity)
+    getBodyFromEntity(unit) {
+        return this.physicEngine.getBodyFromEntity(unit)
     }
 
     /**

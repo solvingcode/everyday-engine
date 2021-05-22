@@ -1,9 +1,22 @@
-import Registry from '../../registry/Registry.js'
-import AEvent from '../event/AEvent.js'
-import AConstant from '../constant/AConstant.js'
-import ACondition from '../condition/ACondition.js'
-import AUnit from '../unit/AUnit.js'
-import AKeyCode from '../keycode/AKeyCode.js'
+import Registry from './Registry.js'
+import AEvent from '../flow/event/AEvent.js'
+import AConstant from '../flow/constant/AConstant.js'
+import ACondition from '../flow/condition/ACondition.js'
+import AUnit from '../flow/unit/AUnit.js'
+import AKeyCode from '../flow/keycode/AKeyCode.js'
+import OnMouseClickEvent from '../flow/event/native/OnMouseClickEvent.js'
+import OnKeyDownEvent from '../flow/event/native/OnKeyDownEvent.js'
+import OnInputXAxisEvent from '../flow/event/native/OnInputXAxisEvent.js'
+import TrueCondition from '../flow/condition/TrueCondition.js'
+import LogFunction from '../flow/function/native/basic/LogFunction.js'
+import AddFunction from '../flow/function/native/basic/AddFunction.js'
+import LessThanFunction from '../flow/function/native/basic/LessThanFunction.js'
+import IsKeyDownFunction from '../flow/function/native/basic/IsKeyDownFunction.js'
+import GetInputXAxisFunction from '../flow/function/native/input/GetInputXAxisFunction.js'
+import GetWorldPositionFunction from '../flow/function/native/unit/GetWorldPositionFunction.js'
+import SetWorldPositionFunction from '../flow/function/native/unit/SetWorldPositionFunction.js'
+import GetUnitFunction from '../flow/function/native/unit/GetUnitFunction.js'
+import VectorFunction from '../flow/function/native/structure/VectorFunction.js'
 
 export default class FunctionRegistry extends Registry{
 
@@ -12,10 +25,33 @@ export default class FunctionRegistry extends Registry{
     }
 
     /**
-     * @param {AFunction[]} registry
+     * @override
      */
-    init(registry){
-        super.init(registry)
+    init(){
+        this.concatRegistry([
+            // Event
+            new OnMouseClickEvent(),
+            new OnKeyDownEvent(),
+            new OnInputXAxisEvent(),
+
+            // Condition
+            new TrueCondition(),
+
+            // Function
+            new LogFunction(),
+            new AddFunction(),
+            new LessThanFunction(),
+            new IsKeyDownFunction(),
+            new GetInputXAxisFunction(),
+
+            //Unit
+            new GetWorldPositionFunction(),
+            new SetWorldPositionFunction(),
+            new GetUnitFunction(),
+
+            //Structure
+            new VectorFunction()
+        ])
     }
 
     /**

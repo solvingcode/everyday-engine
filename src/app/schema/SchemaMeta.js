@@ -1,16 +1,14 @@
 import World from '../world/World.js'
 import AssetsManager from '../manager/AssetsManager.js'
 import Camera from '../core/Camera.js'
-import Physics from '../physics/Physics.js'
 import Asset from '../asset/Asset.js'
-import PhysicsEngine from '../physics/engine/PhysicsEngine.js'
 import Folder from '../asset/Folder.js'
 import AssetType from '../asset/types/AssetType.js'
 import Unit from '../unit/Unit.js'
 import UnitManager from '../manager/UnitManager.js'
 import Component from '../component/Component.js'
 import {TYPES} from '../pobject/AttributeType.js'
-import FunctionRegistry from '../flow/function/FunctionRegistry.js'
+import FunctionRegistry from '../registry/FunctionRegistry.js'
 import AFunction from '../flow/function/AFunction.js'
 import StackOperation from '../operation/StackOperation.js'
 import TabManager from '../manager/TabManager.js'
@@ -19,6 +17,7 @@ import Content from '../content/Content.js'
 import Preference from '../preference/Preference.js'
 import GameInputPreference from '../preference/gameInput/GameInputPreference.js'
 import GameInput from '../preference/gameInput/GameInput.js'
+import ComponentRegistry from '../registry/ComponentRegistry.js'
 
 /**
  * Define the schema of project data.
@@ -186,6 +185,39 @@ export default {
                     }
                 }
             },
+            componentRegistry: {
+                type: ComponentRegistry,
+                meta: {
+                    dataId: {
+                        type: TYPES.NUMBER
+                    },
+                    name: {
+                        type: TYPES.STRING
+                    },
+                    registry: {
+                        type: Array,
+                        meta: {
+                            element: {
+                                type: Component,
+                                meta: {
+                                    dataId: {
+                                        type: TYPES.NUMBER
+                                    },
+                                    id: {
+                                        type: TYPES.NUMBER
+                                    },
+                                    name: {
+                                        type: TYPES.STRING
+                                    },
+                                    attributes: {
+                                        type: TYPES.ARRAY_DYNAMIC_ATTRIBUTE
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
             functionRegistry: {
                 type: FunctionRegistry,
                 meta: {
@@ -328,22 +360,6 @@ export default {
                     },
                     position: {
                         prototype: TYPES.VECTOR
-                    }
-                }
-            },
-            physics: {
-                type: Physics,
-                meta: {
-                    dataId: {
-                        type: TYPES.NUMBER
-                    },
-                    physicsEngine: {
-                        type: PhysicsEngine,
-                        meta: {
-                            dataId: {
-                                type: TYPES.NUMBER
-                            }
-                        }
                     }
                 }
             },

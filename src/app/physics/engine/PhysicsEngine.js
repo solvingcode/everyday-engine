@@ -2,7 +2,6 @@ import PhysicsEngineData from '../../project/data/PhysicsEngineData.js'
 import SystemError from '../../exception/type/SystemError.js'
 
 /**
- * Physics Engine class
  * Used as interface between the application and engine (third party Engine)
  * @abstract
  */
@@ -10,62 +9,60 @@ class PhysicsEngine extends PhysicsEngineData {
 
     constructor() {
         super()
-        if (this.constructor === PhysicsEngine) {
-            throw new SystemError('Abstract class PhysicsEngine cannot be instantiated directly')
-        }
-        this.mapShapeToEntity = []
+        this.mapShapeToUnit = []
     }
 
     /**
-     * Initialize the engine.
+     * @abstract
      */
     init() {
-        throw new SystemError('"init" method must be implemented')
+        throw new SystemError(`${this.constructor.name}.init method must be implemented`)
     }
 
     /**
-     * Add physics to the entity.
-     * @param {Entity} entity
+     * @param {Unit} unit
      * @param {World} world
      */
-    add(entity, world) {
-        this.mapShapeToEntity.push({
-            entityId: entity.id,
-            shape: this.loadShape(entity, world)
+    add(unit, world) {
+        this.mapShapeToUnit.push({
+            unitId: unit.getId(),
+            shape: this.loadShape(unit, world)
         })
     }
 
     /**
-     * Get the shape for entity.
-     * @param {Entity} entity
+     * @abstract
+     * @param {Unit} unit
      * @param {World} world
-     * @return {ContentMenuItem}
+     * @return {*}
      */
-    loadShape(entity, world) {
-        throw new SystemError('"loadShape" method must be implemented')
+    loadShape(unit, world) {
+        throw new SystemError(`${this.constructor.name}.loadShape method must be implemented`)
     }
 
     /**
-     * Update physics of the body from the entity.
-     * @param {Entity} entity
+     * @abstract
+     * @param {Unit} unit
      */
-    update(entity) {
-        throw new SystemError('"update" method must be implemented')
+    update(unit) {
+        throw new SystemError(`${this.constructor.name}.update method must be implemented`)
     }
 
     /**
+     * @abstract
      * Get the Engine (third party)
      * @return {*}
      */
     getEngine() {
-        throw new SystemError('"getEngine" method must be implemented')
+        throw new SystemError(`${this.constructor.name}.getEngine method must be implemented`)
     }
 
     /**
+     * @abstract
      * Run the physics engine.
      */
     run() {
-        throw new SystemError('"run" method must be implemented')
+        throw new SystemError(`${this.constructor.name}.run method must be implemented`)
     }
 
     /**
@@ -73,65 +70,71 @@ class PhysicsEngine extends PhysicsEngineData {
      */
     stop() {
         this.stopEngine()
-        this.mapShapeToEntity = []
+        this.mapShapeToUnit = []
     }
 
     /**
-     * Stop the physics engine.
+     * @abstract
      */
     stopEngine() {
-        throw new TypeError('"stopEngine" method must be implemented')
+        throw new SystemError(`${this.constructor.name}.stopEngine method must be implemented`)
     }
 
     /**
+     * @abstract
      * Update the physics engine.
      */
     updateEngine() {
-        throw new TypeError('"updatEngine" method must be implemented')
+        throw new SystemError(`${this.constructor.name}.updateEngine method must be implemented`)
     }
 
     /**
-     * Get bodies informations (position, ...)
+     * @abstract
+     * Get bodies information (position, ...)
      * @return {*[]}
      */
     getBodies() {
-        throw new TypeError('"getBodies" method must be implemented')
+        throw new SystemError(`${this.constructor.name}.getBodies method must be implemented`)
     }
 
     /**
+     * @abstract
      * Get joints information (position, ...)
      * @return {*[]}
      */
     getJoints() {
-        throw new TypeError('"getJoints" method must be implemented')
+        throw new SystemError(`${this.constructor.name}.getJoints method must be implemented`)
     }
 
     /**
+     * @abstract
      * Create new group of collision
      * @return {*}
      */
     newGroup() {
-        throw new TypeError('"newGroup" method must be implemented')
+        throw new SystemError(`${this.constructor.name}.newGroup method must be implemented`)
     }
 
     /**
-     * Update collision filters for the entity.
-     * @param {Entity} entity
+     * @abstract
+     * @param {Unit} unit
      */
-    updateCollisionFilters(entity) {
-        throw new TypeError('"updateCollisionFilters" method must be implemented')
+    updateCollisionFilters(unit) {
+        throw new SystemError(`${this.constructor.name}.updateCollisionFilters method must be implemented`)
     }
 
     /**
+     * @abstract
      * Update constraint bodies using the given constraint param
-     * @param {Entity} entity
+     * @param {Unit} unit
      * @param {Constraint} constraint
      */
-    updateConstraint(entity, constraint) {
-        throw new TypeError('"updateConstraint" method must be implemented')
+    updateConstraint(unit, constraint) {
+        throw new SystemError(`${this.constructor.name}.updateConstraint method must be implemented`)
     }
 
     /**
+     * @abstract
      * Apply force to the entity
      * @param {Object} body
      * @param {EntityMotion} entity
@@ -141,37 +144,21 @@ class PhysicsEngine extends PhysicsEngineData {
     }
 
     /**
-     * Remove the entity from physics engine
-     * @param {Entity} entity
+     * @param {Unit} unit
      * @abstract
      */
-    removeShape(entity) {
-        throw new TypeError('"removeShape" method must be implemented')
+    removeShape(unit) {
+        throw new SystemError(`${this.constructor.name}.removeShape method must be implemented`)
     }
 
     /**
      * Check if two entity collide
      * @abstract
-     * @param {Number} entityAId
-     * @param {Number} entityBId
+     * @param {Number} unitAId
+     * @param {Number} unitBId
      */
-    isCollide(entityAId, entityBId) {
-        throw new TypeError('"isCollide" method must be implemented')
-    }
-
-    /**
-     * Set the physics manager that loaded the phyiscs engine
-     * @param {Physics} physicsManager
-     */
-    setPhysicsManager(physicsManager) {
-        this.physicsManager = physicsManager
-    }
-
-    /**
-     * Get the physics manager that loaded the phyiscs engine
-     */
-    getPhysicsManager() {
-        return this.physicsManager
+    isCollide(unitAId, unitBId) {
+        throw new SystemError(`${this.constructor.name}.isCollide method must be implemented`)
     }
 
     /**
@@ -184,23 +171,22 @@ class PhysicsEngine extends PhysicsEngineData {
 
     /**
      * Find the shape from the entity
-     * @param {Entity} entity
+     * @param {Unit} unit
      */
-    findShapeFromEntity(entity) {
-        const shapeEntity = this.mapShapeToEntity
-            .find(mShape => mShape.entityId === parseInt(entity.id))
-        return shapeEntity && shapeEntity.shape
+    findShapeFromUnit(unit) {
+        const shapeUnit = this.mapShapeToUnit
+            .find(mShape => mShape.unitId === unit.getId())
+        return shapeUnit && shapeUnit.shape
     }
 
     /**
-     * Update constraint position
      * @abstract
      * @param {World} world
      * @param {Entity} entity
      * @return {boolean}
      */
     updateJointPosition(world, entity) {
-        throw new TypeError('"updateJointPosition" method must be implemented')
+        throw new SystemError(`${this.constructor.name}.updateJointPosition method must be implemented`)
     }
 
 }

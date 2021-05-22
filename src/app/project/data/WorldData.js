@@ -15,8 +15,8 @@ class WorldData extends Data {
     tabManager
     preference
     functionRegistry
+    componentRegistry
     camera
-    physics
     assetsManager
     cameraUnitId
     resolution
@@ -67,17 +67,17 @@ class WorldData extends Data {
     }
 
     /**
+     * @param {ComponentRegistry} componentRegistry
+     */
+    setComponentRegistry(componentRegistry) {
+        this.componentRegistry = componentRegistry
+    }
+
+    /**
      * @param {CameraData} camera
      */
     setCamera(camera) {
         this.camera = camera
-    }
-
-    /**
-     * @param {PhysicsData} physics
-     */
-    setPhysics(physics) {
-        this.physics = physics
     }
 
     /**
@@ -92,14 +92,6 @@ class WorldData extends Data {
      */
     setAssetsManager(assetsManager) {
         this.assetsManager = assetsManager
-    }
-
-    /**
-     * Get the physics manager
-     * @return {Physics}
-     */
-    getPhysics() {
-        return this.physics
     }
 
     /**
@@ -142,6 +134,13 @@ class WorldData extends Data {
      */
     getFunctionRegistry() {
         return this.functionRegistry
+    }
+
+    /**
+     * @return {ComponentRegistry}
+     */
+    getComponentRegistry(){
+        return this.componentRegistry
     }
 
     /**

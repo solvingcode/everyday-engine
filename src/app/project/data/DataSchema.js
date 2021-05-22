@@ -30,7 +30,7 @@ import FunctionNode from '../../flow/node/FunctionNode.js'
 import ConstantNode from '../../flow/node/ConstantNode.js'
 import AssetScriptXml from '../../asset/types/script/AssetScriptXml.js'
 import AssetImage from '../../asset/types/image/AssetImage.js'
-import FunctionRegistry from '../../flow/function/FunctionRegistry.js'
+import FunctionRegistry from '../../registry/FunctionRegistry.js'
 import AFunction from '../../flow/function/AFunction.js'
 import OnMouseClickEvent from '../../flow/event/native/OnMouseClickEvent.js'
 import LogFunction from '../../flow/function/native/basic/LogFunction.js'
@@ -65,6 +65,9 @@ import Preference from '../../preference/Preference.js'
 import GameInputPreference from '../../preference/gameInput/GameInputPreference.js'
 import GameInput from '../../preference/gameInput/GameInput.js'
 import OnInputXAxisEvent from '../../flow/event/native/OnInputXAxisEvent.js'
+import GetInputXAxisFunction from '../../flow/function/native/input/GetInputXAxisFunction.js'
+import ComponentRegistry from '../../registry/ComponentRegistry.js'
+import RigidBodyComponent from '../../component/internal/RigidBodyComponent.js'
 
 /**
  * @class {DataSchema}
@@ -127,7 +130,10 @@ class DataSchema {
         {id: 430, type: Preference},
         {id: 440, type: GameInputPreference},
         {id: 450, type: GameInput},
-        {id: 460, type: OnInputXAxisEvent}
+        {id: 460, type: OnInputXAxisEvent},
+        {id: 470, type: GetInputXAxisFunction},
+        {id: 480, type: ComponentRegistry},
+        {id: 490, type: RigidBodyComponent}
     ]
 
     /**

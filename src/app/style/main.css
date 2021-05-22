@@ -249,7 +249,7 @@ h4{
     right: 0;
     width: unset;
 }
-.panel .script-nodes div:not(.list-element) > button{
+.panel .script-nodes div:not(.list-element) > button, .panel .component-add-wrapper button{
     float: right;
     width: unset;
     height: unset;

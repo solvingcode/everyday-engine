@@ -86,7 +86,7 @@ class MenuItem {
      * @return {boolean}
      */
     isValid() {
-        return (!this.parent || this.parent.items.includes(this))
+        return (!this.parent || (this.parent.isValid() && this.parent.items.includes(this)))
             && !this.stateManager.isRunning()
     }
 
