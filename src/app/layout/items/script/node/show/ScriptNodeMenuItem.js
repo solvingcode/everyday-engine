@@ -29,8 +29,9 @@ export default class ScriptNodeMenuItem extends ListMenuItem {
      * @override
      */
     getFormObject() {
-        const script = World.get().getScriptManager().getSelected(World.get().getTabManager())
-        const selectedGraphUnits = ScriptGraphSelector.get().getSelected(null)
+        const world = World.get()
+        const script = world.getScriptManager().getSelected(World.get().getTabManager())
+        const selectedGraphUnits = ScriptGraphSelector.get().getSelected(world)
         return selectedGraphUnits.map(graphUnit => {
             const nodeId = graphUnit.getComponent(NodeComponent).getNodeId()
             return script.findNodeById(nodeId)

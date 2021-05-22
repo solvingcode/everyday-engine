@@ -27,6 +27,7 @@ import ScriptMenuItem from './items/script/ScriptMenuItem.js'
 import AddCodeScriptMenuItem from './items/assets/AddCodeScriptMenuItem.js'
 import ErrorPopupMenuItem from './items/error/ErrorPopupMenuItem.js'
 import AddScriptMenuItem from './items/assets/AddScriptMenuItem.js'
+import DeleteSelectedNodeMenuItem from './items/script/node/delete/DeleteSelectedNodeMenuItem.js'
 
 /**
  * Define all menu items
@@ -44,6 +45,7 @@ class Menu {
             new MoveMenuItem(),
             new ScaleMenuItem(),
             new RotateMenuItem(),
+            new DeleteSelectedNodeMenuItem(),
 
             //TOP
             new NewProjectMenuItem(),

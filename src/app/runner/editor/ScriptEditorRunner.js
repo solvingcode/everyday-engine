@@ -35,11 +35,6 @@ export default class ScriptEditorRunner extends Runner {
     startNodeOutput
 
     /**
-     * @param {ANode}
-     */
-    startNode
-
-    /**
      * @override
      */
     isHandle(window) {
@@ -140,9 +135,13 @@ export default class ScriptEditorRunner extends Runner {
                 const endUnit = graphManager.findFirstUnitByPosition(currentScenePosition)
                 const endNodeInput = ScriptHelper.findNodeInputByPosition(script, endUnit, currentScenePosition)
                 const endNodeOutput = ScriptHelper.findNodeInputByPosition(script, endUnit, currentScenePosition)
-                const {node: nodeTarget, input: nodeTargetInput} = this.startNodeInput || endNodeInput
-                const {node: nodeSource} = this.startNodeOutput || endNodeOutput
-                nodeTarget.attach(nodeSource, nodeTargetInput ? nodeTargetInput.getId() : null)
+                const nodeTargetInput = this.startNodeInput || endNodeInput
+                const nodeSourceInput = this.startNodeOutput || endNodeOutput
+                if(nodeTargetInput && nodeSourceInput){
+                    nodeTargetInput.node
+                        .attach(nodeSourceInput.node,
+                            nodeTargetInput.input ? nodeTargetInput.input.getId() : null)
+                }
             }
         }
         else {

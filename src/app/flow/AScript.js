@@ -91,8 +91,17 @@ export default class AScript extends AScriptData{
      * @param {number} id
      */
     removeNodeById(id){
+        this.removeConnectionsByNodeId(id)
         const nodeIndex = this.nodes.findIndex(node => node.getId() === id)
         this.nodes.splice(nodeIndex, 1)
+    }
+
+    /**
+     * @param {number} nodeId
+     */
+    removeConnectionsByNodeId(nodeId){
+        const connections = this.getInputs().filter(input => input.getSourceNodeId() === nodeId)
+        connections.forEach(connection => this.removeInputById(connection.getId()))
     }
 
     /**

@@ -53,6 +53,7 @@ import SelectAssetAction from './assets/SelectAssetAction.js'
 import DeleteAssetAction from './assets/DeleteAssetAction.js'
 import DeleteFolderAction from './assets/DeleteFolderAction.js'
 import CloseErrorPopupAction from './window/CloseErrorPopupAction.js'
+import DeleteSelectedNodeAction from './script/DeleteSelectedNodeAction.js'
 
 /**
  * Action Runner class.
@@ -128,6 +129,7 @@ class ActionRunner extends Runner {
             ADD_SCRIPT: AddScriptAction,
             ADD_CODE_SCRIPT: AddScriptCodeAction,
             DELETE_SCRIPT_NODE: DeleteNodeAction,
+            DELETE_SELECTED_NODE: DeleteSelectedNodeAction,
             DELETE_SCRIPT_EDGE: DeleteEdgeAction,
             ADD_SCRIPT_NODE: AddNodeAction,
             ADD_SCRIPT_EDGE: AddEdgeAction,

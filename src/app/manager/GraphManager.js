@@ -176,20 +176,26 @@ export default class GraphManager {
      * @param {number} graphNodeId
      */
     deleteGraphNodeUnitByNodeId(graphNodeId) {
-        const graphUnits = this.getGraphUnits()
-        const index = graphUnits
-            .findIndex(graphUnit => graphUnit.getComponent(NodeComponent).getNodeId() === graphNodeId)
-        graphUnits.splice(index, 1)
+        const units = this.getUnits()
+        const index = units
+            .findIndex(graphUnit => {
+                const nodeComponent = graphUnit.getComponent(NodeComponent)
+                return nodeComponent && nodeComponent.getNodeId() === graphNodeId
+            })
+        units.splice(index, 1)
     }
 
     /**
      * @param {number} graphEdgeId
      */
     deleteGraphEdgeUnitByNodeId(graphEdgeId) {
-        const graphEdges = this.getGraphEdges()
-        const index = graphEdges
-            .findIndex(graphUnit => graphUnit.getComponent(NodeInputComponent).getNodeInputId() === graphEdgeId)
-        graphEdges.splice(index, 1)
+        const units = this.getUnits()
+        const index = units
+            .findIndex(graphUnit => {
+                const nodeInputComponent = graphUnit.getComponent(NodeInputComponent)
+                return nodeInputComponent && nodeInputComponent.getNodeInputId() === graphEdgeId
+            })
+        units.splice(index, 1)
     }
 
     /**
