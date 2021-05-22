@@ -10,6 +10,7 @@ import GetWorldPositionFunction from '../flow/function/native/unit/GetWorldPosit
 import VectorFunction from '../flow/function/native/structure/VectorFunction.js'
 import SetWorldPositionFunction from '../flow/function/native/unit/SetWorldPositionFunction.js'
 import GetUnitFunction from '../flow/function/native/unit/GetUnitFunction.js'
+import OnInputXAxisEvent from '../flow/event/native/OnInputXAxisEvent.js'
 
 class Loop {
 
@@ -36,6 +37,7 @@ class Loop {
             // Event
             new OnMouseClickEvent(),
             new OnKeyDownEvent(),
+            new OnInputXAxisEvent(),
 
             // Condition
             new TrueCondition(),

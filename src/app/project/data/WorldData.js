@@ -13,6 +13,7 @@ class WorldData extends Data {
 
     unitManager
     tabManager
+    preference
     functionRegistry
     camera
     physics
@@ -49,6 +50,13 @@ class WorldData extends Data {
      */
     setTabManager(tabManager) {
         this.tabManager = tabManager
+    }
+
+    /**
+     * @param {Preference} preference
+     */
+    setPreference(preference) {
+        this.preference = preference
     }
 
     /**
@@ -106,6 +114,13 @@ class WorldData extends Data {
      */
     getTabManager() {
         return this.tabManager
+    }
+
+    /**
+     * @return {Preference}
+     */
+    getPreference() {
+        return this.preference
     }
 
     /**

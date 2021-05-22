@@ -7,8 +7,11 @@ export default class DynamicAttribute {
     attrType
     attrValue
 
-    constructor() {
+    constructor(attrName, attrType, attrValue) {
         this.id = Maths.generateId()
+        this.attrName = attrName
+        this.attrType = attrType
+        this.attrValue = attrValue
     }
 
     /**

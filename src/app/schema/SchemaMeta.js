@@ -16,6 +16,9 @@ import StackOperation from '../operation/StackOperation.js'
 import TabManager from '../manager/TabManager.js'
 import Tab from '../content/Tab.js'
 import Content from '../content/Content.js'
+import Preference from '../preference/Preference.js'
+import GameInputPreference from '../preference/gameInput/GameInputPreference.js'
+import GameInput from '../preference/gameInput/GameInput.js'
 
 /**
  * Define the schema of project data.
@@ -270,6 +273,44 @@ export default {
                                             },
                                             dataContentId: {
                                                 type: TYPES.NUMBER
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            preference: {
+                type: Preference,
+                meta: {
+                    dataId: {
+                        type: TYPES.NUMBER
+                    },
+                    gameInput: {
+                        type: GameInputPreference,
+                        meta: {
+                            dataId: {
+                                type: TYPES.NUMBER
+                            },
+                            inputs: {
+                                type: Array,
+                                meta: {
+                                    element: {
+                                        type: GameInput,
+                                        meta: {
+                                            dataId: {
+                                                type: TYPES.NUMBER
+                                            },
+                                            name: {
+                                                type: TYPES.STRING
+                                            },
+                                            key: {
+                                                type: TYPES.STRING
+                                            },
+                                            value: {
+                                                type: TYPES.DYNAMIC_ATTRIBUTE
                                             }
                                         }
                                     }

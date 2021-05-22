@@ -15,6 +15,7 @@ import FunctionRegistry from '../flow/function/FunctionRegistry.js'
 import UnitHelper from '../utils/UnitHelper.js'
 import TabManager from '../manager/TabManager.js'
 import GraphManager from '../manager/GraphManager.js'
+import Preference from '../preference/Preference.js'
 
 /**
  * @class {World}
@@ -40,6 +41,7 @@ class World extends WorldData {
         this.graphManager = new GraphManager()
         this.functionRegistry = new FunctionRegistry()
         this.scriptManager = new ScriptManager()
+        this.preference = new Preference()
         this.camera = new Camera(new Vector({x: -SCENE_WIDTH / 2, y: -SCENE_HEIGHT / 2}))
         this.physics = new Physics()
         this.assetsManager = new AssetsManager()
@@ -51,10 +53,11 @@ class World extends WorldData {
     }
 
     /**
-     * Initialize the world. will erase also world's element from imported project
+     * Initialize the world. can erase also world's element from imported project
      */
     init() {
         this.createRootFolder()
+        this.getPreference().init()
         this.getTabManager().init()
         this.getGraphManager().reset()
         this.getAssetsManager().getScriptAssets().forEach(asset => {

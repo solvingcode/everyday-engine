@@ -61,6 +61,10 @@ import EditScriptCodeContent from '../../content/EditScriptCodeContent.js'
 import EditGraphScriptContent from '../../content/EditGraphScriptContent.js'
 import KeyCodeNode from '../../flow/node/KeyCodeNode.js'
 import AKeyCode from '../../flow/keycode/AKeyCode.js'
+import Preference from '../../preference/Preference.js'
+import GameInputPreference from '../../preference/gameInput/GameInputPreference.js'
+import GameInput from '../../preference/gameInput/GameInput.js'
+import OnInputXAxisEvent from '../../flow/event/native/OnInputXAxisEvent.js'
 
 /**
  * @class {DataSchema}
@@ -119,7 +123,11 @@ class DataSchema {
         {id: 390, type: EditScriptCodeContent},
         {id: 400, type: EditGraphScriptContent},
         {id: 410, type: KeyCodeNode},
-        {id: 420, type: AKeyCode}
+        {id: 420, type: AKeyCode},
+        {id: 430, type: Preference},
+        {id: 440, type: GameInputPreference},
+        {id: 450, type: GameInput},
+        {id: 460, type: OnInputXAxisEvent}
     ]
 
     /**
