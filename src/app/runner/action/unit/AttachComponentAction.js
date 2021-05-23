@@ -23,6 +23,7 @@ export default class AttachComponentAction extends Action {
         const component = componentRegistry.getInstance(formData.getName())
         if(component){
             selectedUnit.createComponent(component.constructor)
+            formData.setName('')
         }else{
             throw new ClientError(`Component "${formData.getName()} not found`)
         }

@@ -6,6 +6,7 @@ import MeshGenerationExecutor from '../executor/type/MeshGenerationExecutor.js'
 import EventRunner from '../runner/event/EventRunner.js'
 import {GameRenderRunner} from '../runner/renderer/GameRenderRunner.js'
 import {GameExecutorRunner} from '../runner/executor/GameExecutorRunner.js'
+import PhysicsExecutor from '../executor/type/PhysicsExecutor.js'
 
 /**
  * @class {Game}
@@ -21,7 +22,8 @@ class Game extends Scene {
     constructor() {
         super()
         ExecutorRegistry.get().register([
-            new MeshGenerationExecutor()
+            new MeshGenerationExecutor(),
+            new PhysicsExecutor()
         ])
         this.runners = [EventRunner, GameRenderRunner, GameExecutorRunner]
     }
@@ -36,6 +38,7 @@ class Game extends Scene {
         window.setSize(world.getResolution())
         world.setupCamera()
         world.regenerateAll()
+        world.getPhysicsManager().init()
     }
 
 }

@@ -15,6 +15,8 @@ export default class PhysicsExecutor extends ComponentExecutor {
         const world = World.get()
         const physicsManager = world.getPhysicsManager()
         physicsManager.addUnit(unit)
+        physicsManager.update(unit)
+        physicsManager.updateEngine()
     }
 
 }

@@ -3,7 +3,6 @@ import Camera from '../../core/Camera.js'
 import Physics from '../../physics/Physics.js'
 import AssetsManager from '../../manager/AssetsManager.js'
 import Asset from '../../asset/Asset.js'
-import MatterEngine from '../../physics/engine/matter/MatterEngine.js'
 import Folder from '../../asset/Folder.js'
 import Mesh from '../../core/Mesh.js'
 import UnitManager from '../../manager/UnitManager.js'
@@ -83,7 +82,6 @@ class DataSchema {
         {id: 5, type: Physics},
         {id: 16, type: AssetsManager},
         {id: 17, type: Asset},
-        {id: 19, type: MatterEngine},
         {id: 23, type: Folder},
         {id: 24, type: Mesh},
         {id: 25, type: DynamicAttribute},

@@ -122,6 +122,20 @@ export default class UnitHelper {
     }
 
     /**
+     * Get current position from center position
+     * @param {Unit} unit
+     * @param {Vector} position
+     * @return {Vector}
+     */
+    static fromCenterPosition(unit, position) {
+        const center = this.getLargeCenter(unit)
+        return new Vector({
+            x: position.x - center.x,
+            y: position.y - center.y
+        })
+    }
+
+    /**
      * Calculate centroid (based on entity's rotation)
      * @param {Unit} unit
      * @return {Vector}
