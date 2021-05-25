@@ -7,6 +7,7 @@ import UnitHelper from '../../../utils/UnitHelper.js'
 import MeshComponent from '../../../component/internal/MeshComponent.js'
 import GUIMoveYComponent from '../../../component/internal/gui/move/GUIMoveYComponent.js'
 import GUIMoveFreeComponent from '../../../component/internal/gui/move/GUIMoveFreeComponent.js'
+import TransformComponent from '../../../component/internal/TransformComponent.js'
 
 class MoveAction extends Action {
 
@@ -30,7 +31,11 @@ class MoveAction extends Action {
         }
 
         if(direction){
-            this.moveUnits(mouse, selectedUnits, direction)
+            if(selectedUnits.length === 1 && UnitHelper.isColliderEditing(selectedUnits[0])){
+                this.moveCollider(mouse, selectedUnits[0], direction)
+            }else{
+                this.moveUnits(mouse, selectedUnits, direction)
+            }
         }
         return false
     }
@@ -43,37 +48,42 @@ class MoveAction extends Action {
     static moveUnits(mouse, selectedUnits, direction){
         const world = World.get()
         const camera = world.getCamera()
-        const instance = MoveAction.get()
-        const dragDistance = mouse.getDragDistanceCamera(camera)
-        const scenePosition = camera.fromCameraScale(mouse.scenePosition)
-        instance.position = World.get().getWorldPosition(scenePosition)
-        instance.relativeEntityPositions = instance.relativeEntityPositions ||
-            selectedUnits.map(unit => UnitHelper.fromAbsolutePosition(unit, instance.position))
-        const targetPoint = new Vector({
-            x: instance.position.x + dragDistance.x * direction.x,
-            y: instance.position.y + dragDistance.y * direction.y
+        const dragArea = mouse.dragAndDrop(camera)
+        const dragAreaDirection = new Vector({
+            x: dragArea.x * direction.x,
+            y: dragArea.y * direction.y
         })
-        selectedUnits.map((unit, index) => {
-            UnitHelper.moveRelativePointTo(unit, instance.relativeEntityPositions[index], targetPoint)
+        selectedUnits.map(unit => {
+            const transformComponent = unit.getComponent(TransformComponent)
+            const position = transformComponent.getPosition()
+            transformComponent.setPosition(Vector.add(position, dragAreaDirection))
         })
+    }
+
+    /**
+     * @param {Mouse} mouse
+     * @param {Unit} unit
+     * @param {Vector} direction
+     */
+    static moveCollider(mouse, unit, direction){
+        const world = World.get()
+        const camera = world.getCamera()
+        const dragArea = mouse.dragAndDrop(camera)
+        const dragAreaDirection = new Vector({
+            x: dragArea.x * direction.x,
+            y: dragArea.y * direction.y
+        })
+        const colliderComponent = UnitHelper.getColliderEditing(unit)
+        const position = colliderComponent.getPosition()
+        colliderComponent.setPosition(Vector.add(position, dragAreaDirection))
     }
 
     /**
      * Stop the move action
      */
     static stop(mouse, selectedUnits) {
-        const instance = MoveAction.get()
-        instance.relativeEntityPositions = null
-        instance.position = null
         selectedUnits.map(unit => unit.getComponent(MeshComponent).setGenerated(false))
         return true
-    }
-
-    static get() {
-        if (!MoveAction.instance) {
-            MoveAction.instance = new MoveAction()
-        }
-        return MoveAction.instance
     }
 
 }

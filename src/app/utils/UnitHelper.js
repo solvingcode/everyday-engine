@@ -4,6 +4,7 @@ import MeshComponent from '../component/internal/MeshComponent.js'
 import TransformComponent from '../component/internal/TransformComponent.js'
 import GeometryHelper from './GeometryHelper.js'
 import Window from '../core/Window.js'
+import ColliderComponent from '../component/internal/ColliderComponent.js'
 
 export default class UnitHelper {
 
@@ -136,6 +137,20 @@ export default class UnitHelper {
     }
 
     /**
+     * Convert current position to center position
+     * @return {Vector}
+     */
+    static toCenterPosition(unit) {
+        const transformComponent = unit.getComponent(TransformComponent)
+        const position = transformComponent.getPosition()
+        const center = this.getLargeCenter(unit)
+        return new Vector({
+            x: position.x + center.x,
+            y: position.y + center.y
+        })
+    }
+
+    /**
      * Calculate centroid (based on entity's rotation)
      * @param {Unit} unit
      * @return {Vector}
@@ -182,6 +197,23 @@ export default class UnitHelper {
             const mesh = meshManager.get(unit.getId())
             mesh && renderer.draw(mesh, position, camera)
         }
+    }
+
+    /**
+     * @param {Unit} unit
+     * @return {boolean}
+     */
+    static isColliderEditing(unit){
+        return !!this.getColliderEditing(unit)
+    }
+
+    /**
+     * @param {Unit} unit
+     * @return {ColliderComponent}
+     */
+    static getColliderEditing(unit){
+        return unit.findComponentsByClass(ColliderComponent)
+            .find(component => component.isEditFlag())
     }
 
 }

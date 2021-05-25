@@ -4,6 +4,7 @@ import GUIPropertyComponent from '../../component/internal/gui/property/GUIPrope
 import Style from '../../pobject/Style.js'
 import GUIPendingComponent from '../../component/internal/gui/GUIPendingComponent.js'
 import StyleComponent from '../../component/internal/StyleComponent.js'
+import UnitHelper from '../../utils/UnitHelper.js'
 
 export default class GUISelectionExecutor extends ComponentExecutor {
 
@@ -19,14 +20,16 @@ export default class GUISelectionExecutor extends ComponentExecutor {
             const meshComponent = unit.getComponent(MeshComponent)
             const propertyComponent = unit.getComponent(GUIPropertyComponent)
             const styleComponent = unit.getComponent(StyleComponent)
+            const isColliderEdit = UnitHelper.isColliderEditing(unit)
             const style = new Style()
 
-            if (propertyComponent.isFocused()) {
+            /*if (propertyComponent.isFocused() && !isColliderEdit) {
                 style.setColor('#FFFFFF')
-                style.setBorderSize(3)
-            }else if (propertyComponent.isSelected()) {
+                style.setBorderSize(2)
+            }else*/
+            if (propertyComponent.isSelected() && !isColliderEdit) {
                 style.setColor('#FFAE00')
-                style.setBorderSize(3)
+                style.setBorderSize(2)
             }else{
                 style.setColor(styleComponent.getStyle().getColor())
                 style.setFillColor(styleComponent.getStyle().getFillColor())

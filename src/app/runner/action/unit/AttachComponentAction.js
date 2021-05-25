@@ -21,11 +21,11 @@ export default class AttachComponentAction extends Action {
         const {formData} = StateManager.get().getNextProgressData(this.STATE)
         const selectedUnit = UnitSelector.get().getFirstSelected(world)
         const component = componentRegistry.getInstance(formData.getName())
-        if(component){
+        if (component) {
             selectedUnit.createComponent(component.constructor)
             formData.setName('')
-        }else{
-            throw new ClientError(`Component "${formData.getName()} not found`)
+        } else {
+            throw new ClientError(`Component "${formData.getName()}" not found`)
         }
         return true
     }

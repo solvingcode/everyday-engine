@@ -1,3 +1,5 @@
+import SystemError from '../../exception/type/SystemError.js'
+
 export default class ComponentExecutor{
 
     static instance
@@ -16,7 +18,7 @@ export default class ComponentExecutor{
      * @param {{camera: Camera}} executionContext
      */
     execute(unit, executionContext){
-        throw new TypeError(`${this.constructor.name}.execute must be implemented`)
+        throw new SystemError(`${this.constructor.name}.execute must be implemented`)
     }
 
     /**

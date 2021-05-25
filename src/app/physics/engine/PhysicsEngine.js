@@ -1,6 +1,6 @@
 import SystemError from '../../exception/type/SystemError.js'
 import {PrimitiveShape} from '../../unit/Unit.js'
-import RectColliderLoader from './loader/RectColliderLoader.js'
+import ColliderComponent from '../../component/internal/ColliderComponent.js'
 
 /**
  * @abstract
@@ -8,9 +8,9 @@ import RectColliderLoader from './loader/RectColliderLoader.js'
 export default class PhysicsEngine {
 
     /**
-     * @type {{unitId: number, rigidBody: *}[]}
+     * @type {{unitId: number, body: *}[]}
      */
-    mapRigidBodyUnit
+    mapBodyUnit
 
     /**
      * @type {Matter}
@@ -18,7 +18,7 @@ export default class PhysicsEngine {
     instance
 
     constructor() {
-        this.mapRigidBodyUnit = []
+        this.mapBodyUnit = []
     }
 
     init(){
@@ -27,39 +27,11 @@ export default class PhysicsEngine {
 
     /**
      * @param {Unit} unit
+     * @param {boolean} isStatic
      */
-    addUnit(unit) {
-        if(!this.findRigidBody(unit)){
-            this.mapRigidBodyUnit.push({
-                unitId: unit.getId(),
-                rigidBody: this.loadRigidBody(unit)
-            })
-        }
-    }
-
-    /**
-     * @param {Unit} unit
-     * @return {*}
-     */
-    loadRigidBody(unit) {
-        const colliderBodies = [].map(colliderComponent =>
-            this.getColliderLoader(colliderComponent).load(unit, colliderComponent))
-        const rigidBody = this.newRigidBody(colliderBodies)
-        this.addToWorld(rigidBody)
-        return rigidBody
-    }
-
-    /**
-     * @param {Component} component
-     * @return {ColliderLoader}
-     */
-    getColliderLoader(component){
-        let shape = component.getShape()
-        switch(shape){
-            case PrimitiveShape.RECT:
-                return RectColliderLoader
-            default:
-                throw new SystemError(`No ColliderLoader configured for "${shape}"`)
+    addBody(unit, isStatic) {
+        if(!this.findBody(unit)){
+            this.saveBody(unit, this.loadBody(unit, isStatic))
         }
     }
 
@@ -67,21 +39,111 @@ export default class PhysicsEngine {
      * @param {Unit} unit
      * @return {Object}
      */
-    findRigidBody(unit){
-        const mapRigidBody = this.mapRigidBodyUnit.find(bodyUnit => bodyUnit.unitId === unit.getId())
-        return mapRigidBody && mapRigidBody.rigidBody
+    findBody(unit){
+        const mapBody = this.mapBodyUnit.find(bodyUnit => bodyUnit.unitId === unit.getId())
+        return mapBody && mapBody.body
     }
 
     /**
      * @abstract
-     * @param {*[]} colliderBodies
+     */
+    update(){
+        throw new SystemError(`${this.constructor.name}.update method must be implemented`)
+    }
+
+    /**
+     * @return {{unitId: number, body: *}[]}
+     */
+    getMapBodyUnit(){
+        return this.mapBodyUnit
+    }
+
+    /**
+     * @private
+     * @param {Unit} unit
+     * @param {*} body
+     */
+    saveBody(unit, body){
+        this.mapBodyUnit.push({
+            unitId: unit.getId(),
+            body: body
+        })
+    }
+
+    /**
+     * @private
+     * @param {Unit} unit
+     * @param {ColliderComponent} colliderComponent
      * @return {*}
      */
-    newRigidBody(colliderBodies){
+    newCollider(unit, colliderComponent){
+        return this.getColliderLoader(colliderComponent).load(unit, colliderComponent)
+    }
+
+    /**
+     * @private
+     * @param {Unit} unit
+     * @param {boolean} isStatic
+     * @return {*}
+     */
+    loadBody(unit, isStatic) {
+        const colliders = unit.findComponentsByClass(ColliderComponent).map(colliderComponent =>
+            this.newCollider(unit, colliderComponent)
+        )
+        const body = this.newBody(unit, {isStatic})
+        this.setColliders(body, colliders)
+        this.addToWorld(body)
+        return body
+    }
+
+    /**
+     * @private
+     * @param {ColliderComponent} component
+     * @return {ColliderLoader}
+     */
+    getColliderLoader(component){
+        let shape = component.getShape()
+        switch(shape){
+            case PrimitiveShape.RECT:
+                return this.getRectColliderLoader(component)
+            default:
+                throw new SystemError(`No ColliderLoader configured for "${shape}"`)
+        }
+    }
+
+    /**
+     * @protected
+     * @abstract
+     * @param {ColliderComponent} colliderComponent
+     * @return {ColliderLoader}
+     */
+    getRectColliderLoader(colliderComponent){
+        throw new SystemError(`${this.constructor.name}.getRectColliderLoader method must be implemented`)
+    }
+
+    /**
+     * @protected
+     * @abstract
+     * @param {*} body
+     * @param {*[]} colliders
+     */
+    setColliders(body, colliders){
+        throw new SystemError(`${this.constructor.name}.attachCollider method must be implemented`)
+    }
+
+    /**
+     * @protected
+     * @abstract
+     * @param {Unit} unit
+     * @param {{isStatic: boolean}} options
+     * @return {*}
+     */
+    newBody(unit, options){
         throw new SystemError(`${this.constructor.name}.newRigidBody method must be implemented`)
     }
 
     /**
+     * @protected
      * @abstract
      * @param {*} rigidBody
      */
@@ -90,26 +152,12 @@ export default class PhysicsEngine {
     }
 
     /**
-     * @abstract
-     * @return {*}
-     */
-    getEngine(unit) {
-        throw new SystemError(`${this.constructor.name}.getEngine method must be implemented`)
-    }
-
-    /**
+     * @protected
      * @abstract
      * @return {*}
      */
     createEngineInstance(){
         throw new SystemError(`${this.constructor.name}.createEngineInstance method must be implemented`)
-    }
-
-    /**
-     * @abstract
-     */
-    update(){
-        throw new SystemError(`${this.constructor.name}.update method must be implemented`)
     }
 
     /**

@@ -72,4 +72,12 @@ export default class Component extends ComponentData{
         return DynamicAttributeHelper.getValue(this.attributes, name)
     }
 
+    enable(){
+        this.setValue('enabled', true)
+    }
+
+    disable(){
+        this.setValue('enabled', false)
+    }
+
 }

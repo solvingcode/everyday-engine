@@ -67,6 +67,8 @@ import OnInputXAxisEvent from '../../flow/event/native/OnInputXAxisEvent.js'
 import GetInputXAxisFunction from '../../flow/function/native/input/GetInputXAxisFunction.js'
 import ComponentRegistry from '../../registry/ComponentRegistry.js'
 import RigidBodyComponent from '../../component/internal/RigidBodyComponent.js'
+import RectColliderComponent from '../../component/internal/RectColliderComponent.js'
+import RectUnitInstant from '../../unit/instant/type/internal/primitive/RectUnitInstant.js'
 
 /**
  * @class {DataSchema}
@@ -131,7 +133,8 @@ class DataSchema {
         {id: 460, type: OnInputXAxisEvent},
         {id: 470, type: GetInputXAxisFunction},
         {id: 480, type: ComponentRegistry},
-        {id: 490, type: RigidBodyComponent}
+        {id: 490, type: RigidBodyComponent},
+        {id: 500, type: RectColliderComponent}
     ]
 
     /**
@@ -149,7 +152,8 @@ class DataSchema {
         ScaleXUnitInstant,
         ScaleYUnitInstant,
         ScaleFreeUnitInstant,
-        RotateZUnitInstant
+        RotateZUnitInstant,
+        RectUnitInstant
     ]
 
     /**

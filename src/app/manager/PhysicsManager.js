@@ -28,9 +28,17 @@ export default class PhysicsManager {
 
     /**
      * @param {Unit} unit
+     * @param {boolean} isStatic
      */
-    addUnit(unit) {
-        this.physicsEngine.addUnit(unit)
+    addBody(unit, isStatic) {
+        this.physicsEngine.addBody(unit, isStatic)
+    }
+
+    /**
+     * @return {{unitId: number, body: *}[]}
+     */
+    getMapBodyUnit(){
+        return this.getPhysicsEngine().getMapBodyUnit()
     }
 
     updateEngine(){
@@ -41,10 +49,10 @@ export default class PhysicsManager {
      * @param {Unit} unit
      */
     update(unit) {
-        const rigidBody = this.physicsEngine.findRigidBody(unit)
-        if(rigidBody){
-            const {x, y} = UnitHelper.fromCenterPosition(unit, new Vector(rigidBody.position))
-            const rotation = rigidBody.angle ? rigidBody.angle % (Math.PI * 2) : 0
+        const body = this.physicsEngine.findBody(unit)
+        if(body){
+            const {x, y} = UnitHelper.fromCenterPosition(unit, new Vector(body.position))
+            const rotation = body.angle ? body.angle % (Math.PI * 2) : 0
             const transformComponent = unit.getComponent(TransformComponent)
             const meshComponent = unit.getComponent(MeshComponent)
             const actualRotation = transformComponent.getRotation()

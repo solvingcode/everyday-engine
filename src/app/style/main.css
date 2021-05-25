@@ -79,6 +79,11 @@ h4{
     margin-left: 2px;
 }
 
+.panel .panel h4{
+    width: 100%;
+    box-sizing: border-box;
+}
+
 .panel h4{
     padding: 10px 10px;
     margin: 0;

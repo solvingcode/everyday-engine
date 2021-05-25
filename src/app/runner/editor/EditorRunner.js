@@ -36,6 +36,12 @@ import GridXUnitInstant from '../../unit/instant/type/internal/grid/GridXUnitIns
 import GUIGridYComponent from '../../component/internal/gui/grid/GUIGridYComponent.js'
 import GUIGridXComponent from '../../component/internal/gui/grid/GUIGridXComponent.js'
 import GridYUnitInstant from '../../unit/instant/type/internal/grid/GridYUnitInstant.js'
+import ColliderComponent from '../../component/internal/ColliderComponent.js'
+import SystemError from '../../exception/type/SystemError.js'
+import Style from '../../pobject/Style.js'
+import {PrimitiveShape} from '../../unit/Unit.js'
+import RectUnitInstant from '../../unit/instant/type/internal/primitive/RectUnitInstant.js'
+import GUIColliderComponent from '../../component/internal/gui/collider/GUIColliderComponent.js'
 
 class EditorRunner extends Runner {
 
@@ -209,6 +215,7 @@ class EditorRunner extends Runner {
 
     /**
      * @param {StateManager} stateManager
+     * @todo: Need some refactoring
      */
     setupEditor(stateManager) {
         const world = World.get()
@@ -216,11 +223,48 @@ class EditorRunner extends Runner {
         const moveComponentClasses = [GUIMoveXComponent, GUIMoveYComponent, GUIMoveFreeComponent]
         const scaleComponentClasses = [GUIScaleXComponent, GUIScaleYComponent, GUIScaleFreeComponent]
         const rotateComponentClasses = [GUIRotateComponent]
-        unitManager.getUnitsHasAnyComponents([].concat(moveComponentClasses, scaleComponentClasses, rotateComponentClasses))
+        const colliderComponentClasses = [GUIColliderComponent]
+
+        //Delete move/scale/rotate tools
+        unitManager.getUnitsHasAnyComponents([]
+            .concat(moveComponentClasses, scaleComponentClasses, rotateComponentClasses, colliderComponentClasses))
             .forEach(unit => unitManager.deleteUnit(unit))
+
+        //get selected units
         const selectedUnits = UnitSelector.get().getSelected(world)
+
+        //find the editor position
         let editorPosition = selectedUnits
             .reduce((position, unit) => UnitHelper.toLargeCenterPosition(unit), null)
+
+        //create collider unit if one unit is selected
+        if (selectedUnits.length === 1) {
+            const selectedUnit = selectedUnits[0]
+            const colliderComponents = selectedUnit.findComponentsByClass(ColliderComponent)
+            const unitPosition = selectedUnit.getComponent(TransformComponent).getPosition()
+            colliderComponents.forEach(colliderComponent => {
+                if (colliderComponent.isEditFlag()) {
+                    const colliderPosition = Vector.add(unitPosition, colliderComponent.getPosition())
+                    const shape = colliderComponent.getShape()
+                    let unitInstantClass
+                    switch (shape) {
+                        case PrimitiveShape.RECT:
+                            unitInstantClass = RectUnitInstant
+                            break
+                        default:
+                            throw new SystemError(`No Unit Instant configured for Collider "${shape}"`)
+                    }
+                    const style = new Style()
+                    style.setColor('#1fa834')
+                    style.setBorderSize(2)
+                    const colliderUnit = unitManager
+                        .createUnitInstant(unitInstantClass, colliderPosition, colliderComponent.getSize(), style)
+                    colliderUnit.createComponents(colliderComponentClasses)
+                    editorPosition = UnitHelper.toLargeCenterPosition(colliderUnit)
+                }
+            })
+        }
+
         if (editorPosition) {
             if (stateManager.hasAnyState('DRAW_MOVE')) {
                 moveComponentClasses.forEach(componentClass => {

@@ -1,4 +1,6 @@
 import PhysicsEngine from '../PhysicsEngine.js'
+import UnitHelper from '../../../utils/UnitHelper.js'
+import MatterRectColliderLoader from './loader/MatterRectColliderLoader.js'
 
 export default class MatterEngine extends PhysicsEngine {
 
@@ -21,12 +23,14 @@ export default class MatterEngine extends PhysicsEngine {
 
     /**
      * @override
-     * @param {Matter.Body[]} colliderBodies
+     * @param {Unit} unit
+     * @param {{isStatic: boolean}} options
      * @return {Matter.Body}
      */
-    newRigidBody(colliderBodies) {
+    newBody(unit, options) {
         return Matter.Body.create({
-            parts: colliderBodies
+            position: UnitHelper.toCenterPosition(unit),
+            isStatic: options.isStatic
         })
     }
 
@@ -43,5 +47,21 @@ export default class MatterEngine extends PhysicsEngine {
      */
     update(){
         Matter.Engine.update(this.getInstance())
+    }
+
+    /**
+     * @override
+     */
+    getRectColliderLoader(colliderComponent) {
+        return MatterRectColliderLoader
+    }
+
+    /**
+     * @override
+     * @param {Matter.Body} body
+     * @param {Matter.Body[]} colliders
+     */
+    setColliders(body, colliders) {
+        Matter.Body.setParts(body, colliders)
     }
 }

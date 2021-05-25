@@ -117,6 +117,7 @@ button.selected, button.hidden.selected, button.locked.selected{
 .panel .panel h4{
     border: none;
     background-color: unset;
+    border-top: 1px solid #4e4e4e;
 }
 
 .panel .panel > div{

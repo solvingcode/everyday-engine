@@ -7,6 +7,7 @@ import GUIScaleFreeComponent from '../../../component/internal/gui/scale/GUIScal
 import GUIScaleXComponent from '../../../component/internal/gui/scale/GUIScaleXComponent.js'
 import GUIScaleYComponent from '../../../component/internal/gui/scale/GUIScaleYComponent.js'
 import MeshComponent from '../../../component/internal/MeshComponent.js'
+import UnitHelper from '../../../utils/UnitHelper.js'
 
 export default class ScaleAction extends Action {
 
@@ -31,7 +32,11 @@ export default class ScaleAction extends Action {
         }
 
         if(direction){
-            this.scaleUnits(mouse, selectedUnits, direction)
+            if(selectedUnits.length === 1 && UnitHelper.isColliderEditing(selectedUnits[0])){
+                this.scaleCollider(mouse, selectedUnits[0], direction)
+            }else {
+                this.scaleUnits(mouse, selectedUnits, direction)
+            }
         }
         return false
     }
@@ -54,6 +59,23 @@ export default class ScaleAction extends Action {
             meshComponent.setSize(new Size({width, height}))
             meshComponent.setGenerated(false)
         })
+    }
+
+    /**
+     * @param {Mouse} mouse
+     * @param {Unit} unit
+     * @param {Vector} direction
+     */
+    static scaleCollider(mouse, unit, direction){
+        const world = World.get()
+        const camera = world.getCamera()
+        const dragDistance = mouse.dragAndDrop(camera)
+        const colliderComponent = UnitHelper.getColliderEditing(unit)
+        const {width: colliderWidth, height: colliderHeight} = colliderComponent.getSize()
+        const ratio = colliderHeight / colliderWidth
+        const width = colliderWidth + dragDistance.x * direction.x
+        const height = colliderHeight + (direction.x ? dragDistance.x * ratio : dragDistance.y) * direction.y
+        colliderComponent.setSize(new Size({width, height}))
     }
 
     /**

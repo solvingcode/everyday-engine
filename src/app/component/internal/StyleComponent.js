@@ -37,4 +37,11 @@ export default class StyleComponent extends Component{
         return this.getValue('style')
     }
 
+    /**
+     * @override
+     */
+    isHidden() {
+        return true
+    }
+
 }

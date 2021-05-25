@@ -71,6 +71,16 @@ export default class UnitData extends Data{
     }
 
     /**
+     * @template T
+     * @param {T} type
+     * @return {T[]}
+     */
+    findComponentsByClass(type){
+        return this.getComponents()
+            .filter(component => component instanceof type)
+    }
+
+    /**
      * @param {ComponentData[]} componentClasses
      * @return {boolean}
      */
@@ -99,14 +109,25 @@ export default class UnitData extends Data{
     }
 
     /**
-     * @param {Class<ComponentData>} componentClass
+     * @param {Class<Component>} componentClass
+     * @return {Component}
      */
     createComponent(componentClass){
         if(!this.getComponent(componentClass)){
-            this.components.push(new componentClass())
+            const component = new componentClass()
+            this.components.push(component)
+            return component
         }else{
             throw new ClientError(`Component ${componentClass.name} already created!`)
         }
+    }
+
+    /**
+     * @param {Class<Component>[]} componentClasses
+     * @return {Component[]}
+     */
+    createComponents(componentClasses){
+        return componentClasses.map(componentClass => this.createComponent(componentClass))
     }
 
     /**

@@ -1,7 +1,7 @@
 import World from '../../world/World.js'
 import DrawerRunner from './DrawerRunner.js'
 import SelectionUnitInstant from '../../unit/instant/type/internal/edit/SelectionUnitInstant.js'
-import LineUnitInstant from '../../unit/instant/type/internal/shape/LineUnitInstant.js'
+import LineUnitInstant from '../../unit/instant/type/internal/primitive/LineUnitInstant.js'
 
 export default class GraphDrawerRunner extends DrawerRunner {
 
