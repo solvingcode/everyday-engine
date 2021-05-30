@@ -25,13 +25,16 @@ export default class MatterEngine extends PhysicsEngine {
      * @override
      * @param {Unit} unit
      * @param {Matter.Body[]} colliders
-     * @param {{isStatic: boolean}} options
+     * @param {RigidBodyOptions} options
      * @return {Matter.Body}
      */
     newBody(unit, colliders, options) {
         const bodyOptions = {
             isStatic: options.isStatic,
             parts: colliders
+        }
+        if(options.freezeRotation){
+            bodyOptions.inertia = Infinity
         }
         return Matter.Body.create(bodyOptions)
     }
@@ -86,5 +89,31 @@ export default class MatterEngine extends PhysicsEngine {
      */
     getBodyPosition(body) {
         return body.position
+    }
+
+    /**
+     * @override
+     * @param {Matter.Body} body
+     * @param {Vector} position
+     * @param {Vector} force
+     */
+    applyForceToBody(body, position, force){
+        Matter.Body.applyForce(body, position, force)
+    }
+
+    /**
+     * @override
+     * @param {Matter.Body} body
+     * @param {Vector} velocity
+     */
+    setVelocityToBody(body, velocity){
+        Matter.Body.setVelocity(body, velocity)
+    }
+
+    /**
+     * @override
+     */
+    getVelocityByBody(body){
+        return body.velocity
     }
 }

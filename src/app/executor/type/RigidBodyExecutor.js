@@ -3,6 +3,7 @@ import World from '../../world/World.js'
 import RigidBodyComponent from '../../component/internal/RigidBodyComponent.js'
 import TransformComponent from '../../component/internal/TransformComponent.js'
 import MeshComponent from '../../component/internal/MeshComponent.js'
+import RigidBodyOptions from '../../pobject/RigidBodyOptions.js'
 
 export default class RigidBodyExecutor extends ComponentExecutor {
 
@@ -16,7 +17,11 @@ export default class RigidBodyExecutor extends ComponentExecutor {
     execute(unit, executionContext) {
         const world = World.get()
         const physicsManager = world.getPhysicsManager()
-        physicsManager.addBody(unit, false)
+        const rigidBodyComponent = unit.getComponent(RigidBodyComponent)
+        const options = new RigidBodyOptions()
+        options.isStatic = false
+        options.freezeRotation = rigidBodyComponent.isFreezeRotation()
+        physicsManager.addBody(unit, options)
     }
 
 }

@@ -248,6 +248,7 @@ export default class GraphManager {
             updated = this.updateGraphNodes(script) || updated
             updated = this.updateGraphEdges(script) || updated
             if (updated) {
+                script.reset()
                 this.save(script)
             }
         }

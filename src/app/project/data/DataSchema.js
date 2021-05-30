@@ -71,6 +71,11 @@ import RectColliderComponent from '../../component/internal/RectColliderComponen
 import RectUnitInstant from '../../unit/instant/type/internal/primitive/RectUnitInstant.js'
 import CircleColliderComponent from '../../component/internal/CircleColliderComponent.js'
 import CircleUnitInstant from '../../unit/instant/type/internal/primitive/CircleUnitInstant.js'
+import MoveXAxisFunction from '../../flow/function/native/physics/MoveXAxisFunction.js'
+import MultiplyFunction from '../../flow/function/native/basic/MultiplyFunction.js'
+import OnInputYAxisEvent from '../../flow/event/native/OnInputYAxisEvent.js'
+import OnInputJumpEvent from '../../flow/event/native/OnInputJumpEvent.js'
+import ApplyForceFunction from '../../flow/function/native/physics/ApplyForceFunction.js'
 
 /**
  * @class {DataSchema}
@@ -137,7 +142,12 @@ class DataSchema {
         {id: 480, type: ComponentRegistry},
         {id: 490, type: RigidBodyComponent},
         {id: 500, type: RectColliderComponent},
-        {id: 510, type: CircleColliderComponent}
+        {id: 510, type: CircleColliderComponent},
+        {id: 520, type: MoveXAxisFunction},
+        {id: 530, type: MultiplyFunction},
+        {id: 540, type: OnInputYAxisEvent},
+        {id: 550, type: OnInputJumpEvent},
+        {id: 560, type: ApplyForceFunction}
     ]
 
     /**

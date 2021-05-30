@@ -27,10 +27,43 @@ export default class PhysicsManager {
 
     /**
      * @param {Unit} unit
-     * @param {boolean} isStatic
+     * @param {RigidBodyOptions} options
      */
-    addBody(unit, isStatic) {
-        this.physicsEngine.addBody(unit, isStatic)
+    addBody(unit, options) {
+        this.physicsEngine.addBody(unit, options)
+    }
+
+    /**
+     * @param {Unit} unit
+     * @param {Vector} position
+     * @param {Vector} force
+     */
+    applyForce(unit, position, force){
+        this.physicsEngine.applyForce(unit, position, force)
+    }
+
+    /**
+     * @param {Unit} unit
+     * @return {Vector}
+     */
+    getVelocity(unit){
+        return this.physicsEngine.getVelocity(unit)
+    }
+
+    /**
+     * @param {Unit} unit
+     * @param {Vector} velocity
+     */
+    setVelocity(unit, velocity){
+        this.physicsEngine.setVelocity(unit, velocity)
+    }
+
+    /**
+     * @param {Unit} unit
+     * @param {number} speed
+     */
+    moveXAxis(unit, speed){
+        this.setVelocity(unit, new Vector({x: speed, y: this.getVelocity(unit).getY()}))
     }
 
     /**

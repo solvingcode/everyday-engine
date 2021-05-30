@@ -3,6 +3,7 @@ import {PrimitiveShape} from '../../unit/Unit.js'
 import ColliderComponent from '../../component/internal/ColliderComponent.js'
 import Vector from '../../utils/Vector.js'
 import UnitHelper from '../../utils/UnitHelper.js'
+import ClientError from '../../exception/type/ClientError.js'
 
 /**
  * @abstract
@@ -29,12 +30,40 @@ export default class PhysicsEngine {
 
     /**
      * @param {Unit} unit
-     * @param {boolean} isStatic
+     * @param {RigidBodyOptions} options
      */
-    addBody(unit, isStatic) {
+    addBody(unit, options) {
         if(!this.findBody(unit)){
-            this.saveBody(unit, this.loadBody(unit, isStatic))
+            this.saveBody(unit, this.loadBody(unit, options))
         }
+    }
+
+    /**
+     * @param {Unit} unit
+     * @param {Vector} position
+     * @param {Vector} force
+     */
+    applyForce(unit, position, force){
+        const body = this.tryFindBody(unit)
+        this.applyForceToBody(body, position, force)
+    }
+
+    /**
+     * @param {Unit} unit
+     * @param {Vector} velocity
+     */
+    setVelocity(unit, velocity){
+        const body = this.tryFindBody(unit)
+        this.setVelocityToBody(body, velocity)
+    }
+
+    /**
+     * @param {Unit} unit
+     * @return {Vector}
+     */
+    getVelocity(unit){
+        const body = this.tryFindBody(unit)
+        return new Vector(this.getVelocityByBody(body))
     }
 
     /**
@@ -44,6 +73,19 @@ export default class PhysicsEngine {
     findBody(unit){
         const mapBody = this.mapBodyUnit.find(bodyUnit => bodyUnit.unitId === unit.getId())
         return mapBody && mapBody.body
+    }
+
+
+    /**
+     * @param {Unit} unit
+     * @return {Object}
+     */
+    tryFindBody(unit){
+        const body = this.findBody(unit)
+        if(!body){
+            throw new ClientError(`Unit ${unit.getName()} must be a rigid body`)
+        }
+        return body
     }
 
     /**
@@ -135,14 +177,14 @@ export default class PhysicsEngine {
     /**
      * @private
      * @param {Unit} unit
-     * @param {boolean} isStatic
+     * @param {RigidBodyOptions} options
      * @return {*}
      */
-    loadBody(unit, isStatic) {
+    loadBody(unit, options) {
         const colliders = unit.findComponentsByClass(ColliderComponent).map(colliderComponent =>
             this.newCollider(unit, colliderComponent)
         )
-        const body = this.newBody(unit, colliders, {isStatic})
+        const body = this.newBody(unit, colliders, options)
         this.addToWorld(body)
         return body
     }
@@ -177,6 +219,27 @@ export default class PhysicsEngine {
     /**
      * @protected
      * @abstract
+     * @param {*} body
+     * @param {Vector} velocity
+     */
+    setVelocityToBody(body, velocity){
+        throw new SystemError(`${this.constructor.name}.setVelocityToBody method must be implemented`)
+    }
+
+    /**
+     * @protected
+     * @abstract
+     * @param {*} body
+     * @param {Vector} position
+     * @param {Vector} force
+     */
+    applyForceToBody(body, position, force){
+        throw new SystemError(`${this.constructor.name}.applyForceToBody method must be implemented`)
+    }
+
+    /**
+     * @protected
+     * @abstract
      * @param {ColliderComponent} colliderComponent
      * @return {ColliderLoader}
      */
@@ -187,9 +250,19 @@ export default class PhysicsEngine {
     /**
      * @protected
      * @abstract
+     * @param {*} body
+     * @return {Vector}
+     */
+    getVelocityByBody(body){
+        throw new SystemError(`${this.constructor.name}.getVelocityByBody method must be implemented`)
+    }
+
+    /**
+     * @protected
+     * @abstract
      * @param {Unit} unit
      * @param {*[]} colliders
-     * @param {{isStatic: boolean}} options
+     * @param {RigidBodyOptions} options
      * @return {*}
      */
     newBody(unit, colliders, options){

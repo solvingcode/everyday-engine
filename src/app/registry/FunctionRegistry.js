@@ -17,6 +17,11 @@ import GetWorldPositionFunction from '../flow/function/native/unit/GetWorldPosit
 import SetWorldPositionFunction from '../flow/function/native/unit/SetWorldPositionFunction.js'
 import GetUnitFunction from '../flow/function/native/unit/GetUnitFunction.js'
 import VectorFunction from '../flow/function/native/structure/VectorFunction.js'
+import MoveXAxisFunction from '../flow/function/native/physics/MoveXAxisFunction.js'
+import MultiplyFunction from '../flow/function/native/basic/MultiplyFunction.js'
+import OnInputYAxisEvent from '../flow/event/native/OnInputYAxisEvent.js'
+import OnInputJumpEvent from '../flow/event/native/OnInputJumpEvent.js'
+import ApplyForceFunction from '../flow/function/native/physics/ApplyForceFunction.js'
 
 export default class FunctionRegistry extends Registry{
 
@@ -33,6 +38,8 @@ export default class FunctionRegistry extends Registry{
             new OnMouseClickEvent(),
             new OnKeyDownEvent(),
             new OnInputXAxisEvent(),
+            new OnInputYAxisEvent(),
+            new OnInputJumpEvent(),
 
             // Condition
             new TrueCondition(),
@@ -43,11 +50,16 @@ export default class FunctionRegistry extends Registry{
             new LessThanFunction(),
             new IsKeyDownFunction(),
             new GetInputXAxisFunction(),
+            new MultiplyFunction(),
 
             //Unit
             new GetWorldPositionFunction(),
             new SetWorldPositionFunction(),
             new GetUnitFunction(),
+
+            //Physics
+            new MoveXAxisFunction(),
+            new ApplyForceFunction(),
 
             //Structure
             new VectorFunction()

@@ -5,6 +5,9 @@ export default class GameInput extends GameInputData{
 }
 
 export const GAME_INPUTS = {
-    RIGHT: 'Right',
-    LEFT: 'Left'
+    RIGHT: 'right',
+    LEFT: 'left',
+    UP: 'up',
+    DOWN: 'down',
+    JUMP: 'jump'
 }

@@ -120,6 +120,10 @@ button.selected, button.hidden.selected, button.locked.selected{
     border-top: 1px solid #4e4e4e;
 }
 
+.panel .panel:first-child h4{
+    border-top: none;
+}
+
 .panel .panel > div{
     border: none;
 }

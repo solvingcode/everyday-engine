@@ -4,6 +4,7 @@ import ColliderComponent from '../../component/internal/ColliderComponent.js'
 import RigidBodyComponent from '../../component/internal/RigidBodyComponent.js'
 import TransformComponent from '../../component/internal/TransformComponent.js'
 import MeshComponent from '../../component/internal/MeshComponent.js'
+import RigidBodyOptions from '../../pobject/RigidBodyOptions.js'
 
 export default class ColliderExecutor extends ComponentExecutor {
 
@@ -18,7 +19,9 @@ export default class ColliderExecutor extends ComponentExecutor {
         const world = World.get()
         const physicsManager = world.getPhysicsManager()
         if(!unit.hasComponents([RigidBodyComponent])){
-            physicsManager.addBody(unit, true)
+            const options = new RigidBodyOptions()
+            options.isStatic = true
+            physicsManager.addBody(unit, options)
         }
     }
 

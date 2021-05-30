@@ -10,7 +10,10 @@ export default class GameInputPreference extends GameInputPreferenceData {
     init() {
         const inputs = [
             new GameInput(GAME_INPUTS.RIGHT, 'D', new DynamicAttribute('value', TYPES.NUMBER, 1)),
-            new GameInput(GAME_INPUTS.LEFT, 'Q', new DynamicAttribute('value', TYPES.NUMBER, -1))
+            new GameInput(GAME_INPUTS.LEFT, 'Q', new DynamicAttribute('value', TYPES.NUMBER, -1)),
+            new GameInput(GAME_INPUTS.UP, 'Z', new DynamicAttribute('value', TYPES.NUMBER, -1)),
+            new GameInput(GAME_INPUTS.DOWN, 'S', new DynamicAttribute('value', TYPES.NUMBER, 1)),
+            new GameInput(GAME_INPUTS.JUMP, 'SPACE', new DynamicAttribute('value', TYPES.NUMBER, 1))
         ]
         this.concatInputs(inputs)
     }

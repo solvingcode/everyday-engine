@@ -9,6 +9,7 @@ import {GameExecutorRunner} from '../runner/executor/GameExecutorRunner.js'
 import RigidBodyExecutor from '../executor/type/RigidBodyExecutor.js'
 import {PhysicsRunner} from '../runner/physics/PhysicsRunner.js'
 import ColliderExecutor from '../executor/type/ColliderExecutor.js'
+import MeshStyleExecutor from '../executor/type/MeshStyleExecutor.js'
 
 /**
  * @class {Game}
@@ -26,7 +27,8 @@ class Game extends Scene {
         ExecutorRegistry.get().register([
             new MeshGenerationExecutor(),
             new RigidBodyExecutor(),
-            new ColliderExecutor()
+            new ColliderExecutor(),
+            new MeshStyleExecutor()
         ])
         this.runners = [EventRunner, GameRenderRunner, GameExecutorRunner, PhysicsRunner]
     }
