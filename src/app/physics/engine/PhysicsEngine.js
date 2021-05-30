@@ -1,6 +1,8 @@
 import SystemError from '../../exception/type/SystemError.js'
 import {PrimitiveShape} from '../../unit/Unit.js'
 import ColliderComponent from '../../component/internal/ColliderComponent.js'
+import Vector from '../../utils/Vector.js'
+import UnitHelper from '../../utils/UnitHelper.js'
 
 /**
  * @abstract
@@ -46,9 +48,59 @@ export default class PhysicsEngine {
 
     /**
      * @abstract
+     * @param {Unit} unitA
+     * @param {Unit} unitB
+     * @return {boolean}
+     */
+    canCollide(unitA, unitB){
+        throw new SystemError(`${this.constructor.name}.canCollide method must be implemented`)
+    }
+
+    /**
+     * @abstract
      */
     update(){
         throw new SystemError(`${this.constructor.name}.update method must be implemented`)
+    }
+
+    /**
+     * @abstract
+     * @param {*} body
+     * @return {*}
+     */
+    getBodyPosition(body){
+        throw new SystemError(`${this.constructor.name}.getBodyPosition method must be implemented`)
+    }
+
+    /**
+     * @abstract
+     * @param {*} body
+     * @return {*[]}
+     */
+    getBodyColliders(body){
+        throw new SystemError(`${this.constructor.name}.getBodyColliders method must be implemented`)
+    }
+
+    /**
+     * @param {Unit} unit
+     * @return {Vector}
+     */
+    getBodyPositionFromCollider(unit){
+        const body = this.findBody(unit)
+        const colliders = this.getBodyColliders(body)
+        const firstColliderIndex = 1
+        let bodyPosition = UnitHelper.fromCenterPosition(unit, new Vector(this.getBodyPosition(body)))
+        if(colliders.length > firstColliderIndex){ // body has colliders (first collider is always the parent body)
+            const firstCollider = colliders[firstColliderIndex]
+            const firstColliderPosition = new Vector(this.getBodyPosition(firstCollider))
+            const colliderComponents = unit.findComponentsByClass(ColliderComponent)
+            const colliderComponentRelated = colliderComponents[firstColliderIndex - 1]
+            const colliderPosition = Vector.add(
+                firstColliderPosition,
+                Vector.multiply(colliderComponentRelated.getPosition(), -1))
+            bodyPosition = UnitHelper.fromColliderCenterPosition(unit, colliderComponentRelated, colliderPosition)
+        }
+        return bodyPosition
     }
 
     /**
@@ -90,8 +142,7 @@ export default class PhysicsEngine {
         const colliders = unit.findComponentsByClass(ColliderComponent).map(colliderComponent =>
             this.newCollider(unit, colliderComponent)
         )
-        const body = this.newBody(unit, {isStatic})
-        this.setColliders(body, colliders)
+        const body = this.newBody(unit, colliders, {isStatic})
         this.addToWorld(body)
         return body
     }
@@ -106,9 +157,21 @@ export default class PhysicsEngine {
         switch(shape){
             case PrimitiveShape.RECT:
                 return this.getRectColliderLoader(component)
+            case PrimitiveShape.CIRCLE:
+                return this.getCircleColliderLoader(component)
             default:
                 throw new SystemError(`No ColliderLoader configured for "${shape}"`)
         }
+    }
+
+    /**
+     * @protected
+     * @abstract
+     * @param {ColliderComponent} colliderComponent
+     * @return {ColliderLoader}
+     */
+    getCircleColliderLoader(colliderComponent){
+        throw new SystemError(`${this.constructor.name}.getCircleColliderLoader method must be implemented`)
     }
 
     /**
@@ -124,21 +187,12 @@ export default class PhysicsEngine {
     /**
      * @protected
      * @abstract
-     * @param {*} body
-     * @param {*[]} colliders
-     */
-    setColliders(body, colliders){
-        throw new SystemError(`${this.constructor.name}.attachCollider method must be implemented`)
-    }
-
-    /**
-     * @protected
-     * @abstract
      * @param {Unit} unit
+     * @param {*[]} colliders
      * @param {{isStatic: boolean}} options
      * @return {*}
      */
-    newBody(unit, options){
+    newBody(unit, colliders, options){
         throw new SystemError(`${this.constructor.name}.newRigidBody method must be implemented`)
     }
 

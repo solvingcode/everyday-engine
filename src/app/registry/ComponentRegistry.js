@@ -1,6 +1,7 @@
 import Registry from './Registry.js'
 import RigidBodyComponent from '../component/internal/RigidBodyComponent.js'
 import RectColliderComponent from '../component/internal/RectColliderComponent.js'
+import CircleColliderComponent from '../component/internal/CircleColliderComponent.js'
 
 export default class ComponentRegistry extends Registry{
 
@@ -14,7 +15,8 @@ export default class ComponentRegistry extends Registry{
     init(){
         this.concatRegistry([
             new RigidBodyComponent(),
-            new RectColliderComponent()
+            new RectColliderComponent(),
+            new CircleColliderComponent()
         ])
     }
 

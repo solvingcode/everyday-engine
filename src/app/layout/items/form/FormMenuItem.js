@@ -121,7 +121,11 @@ class FormMenuItem extends MenuItem {
                 const field = this.fields[iField]
                 const getterString = this.getGetterString(field)
                 try {
-                    if (this.getGetterForObject(field, object)() !== this.getGetterForObject(field, this.object)()) {
+                    const newValue = this.getGetterForObject(field, object)()
+                    const oldValue = this.getGetterForObject(field, this.object)()
+                    if (newValue !== oldValue &&
+                        !isNaN(newValue) && !isNaN(oldValue)
+                    ) {
                         return true
                     }
                 } catch (e) {

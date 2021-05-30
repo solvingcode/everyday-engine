@@ -1,7 +1,7 @@
 import ColliderLoader from '../../ColliderLoader.js'
 import UnitHelper from '../../../../utils/UnitHelper.js'
 
-export default class MatterRectColliderLoader extends ColliderLoader {
+export default class MatterCircleColliderLoader extends ColliderLoader {
 
     /**
      * @override
@@ -12,11 +12,10 @@ export default class MatterRectColliderLoader extends ColliderLoader {
     static load(unit, colliderComponent) {
         const colliderPosition = UnitHelper.toColliderCenterPosition(unit, colliderComponent)
         const colliderSize = UnitHelper.getColliderSize(unit, colliderComponent)
-        return Matter.Bodies.rectangle(
+        return Matter.Bodies.circle(
             colliderPosition.x,
             colliderPosition.y,
-            colliderSize.getWidth(),
-            colliderSize.getHeight()
+            colliderSize.getWidth() / 2
         )
     }
 

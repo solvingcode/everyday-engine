@@ -69,6 +69,8 @@ import ComponentRegistry from '../../registry/ComponentRegistry.js'
 import RigidBodyComponent from '../../component/internal/RigidBodyComponent.js'
 import RectColliderComponent from '../../component/internal/RectColliderComponent.js'
 import RectUnitInstant from '../../unit/instant/type/internal/primitive/RectUnitInstant.js'
+import CircleColliderComponent from '../../component/internal/CircleColliderComponent.js'
+import CircleUnitInstant from '../../unit/instant/type/internal/primitive/CircleUnitInstant.js'
 
 /**
  * @class {DataSchema}
@@ -134,7 +136,8 @@ class DataSchema {
         {id: 470, type: GetInputXAxisFunction},
         {id: 480, type: ComponentRegistry},
         {id: 490, type: RigidBodyComponent},
-        {id: 500, type: RectColliderComponent}
+        {id: 500, type: RectColliderComponent},
+        {id: 510, type: CircleColliderComponent}
     ]
 
     /**
@@ -153,7 +156,8 @@ class DataSchema {
         ScaleYUnitInstant,
         ScaleFreeUnitInstant,
         RotateZUnitInstant,
-        RectUnitInstant
+        RectUnitInstant,
+        CircleUnitInstant
     ]
 
     /**

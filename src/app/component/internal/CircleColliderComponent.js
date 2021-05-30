@@ -2,10 +2,10 @@ import {PrimitiveShape} from '../../unit/Unit.js'
 import ColliderComponent from './ColliderComponent.js'
 import Layout from '../../layout/Layout.js'
 
-export default class RectColliderComponent extends ColliderComponent {
+export default class CircleColliderComponent extends ColliderComponent {
 
     constructor() {
-        super('Rect Collider')
+        super('Circle Collider')
     }
 
     /**
@@ -13,7 +13,7 @@ export default class RectColliderComponent extends ColliderComponent {
      */
     initAttributes() {
         super.initAttributes()
-        this.setShape(PrimitiveShape.RECT)
+        this.setShape(PrimitiveShape.CIRCLE)
     }
 
     /**
@@ -24,13 +24,8 @@ export default class RectColliderComponent extends ColliderComponent {
             ...super.getFormFields(),
             ...[
                 {
-                    bind: 'size.width',
-                    label: 'Width (%)',
-                    type: Layout.form.TEXT
-                },
-                {
-                    bind: 'size.height',
-                    label: 'Height (%)',
+                    bind: 'radius',
+                    label: 'Radius (%)',
                     type: Layout.form.TEXT
                 }
             ]

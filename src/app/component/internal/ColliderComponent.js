@@ -15,7 +15,8 @@ export default class ColliderComponent extends Component{
      */
     initAttributes() {
         this.add('position', TYPES.VECTOR, new Vector())
-        this.add('size', TYPES.SIZE, new Size(0))
+        this.add('size', TYPES.SIZE, new Size(100))
+        this.add('radius', TYPES.NUMBER, 100)
         this.add('editFlag', TYPES.BOOLEAN, false)
         this.add('shape', TYPES.STRING, PrimitiveShape.RECT)
     }
@@ -26,6 +27,11 @@ export default class ColliderComponent extends Component{
     getFormFields() {
         return [
             {
+                bind: 'editFlag',
+                label: 'Edit',
+                type: Layout.form.CHECKBOX
+            },
+            {
                 bind: 'position.x',
                 label: 'Position X',
                 type: Layout.form.TEXT
@@ -34,21 +40,6 @@ export default class ColliderComponent extends Component{
                 bind: 'position.y',
                 label: 'Position Y',
                 type: Layout.form.TEXT
-            },
-            {
-                bind: 'size.width',
-                label: 'Width',
-                type: Layout.form.TEXT
-            },
-            {
-                bind: 'size.height',
-                label: 'Height',
-                type: Layout.form.TEXT
-            },
-            {
-                bind: 'editFlag',
-                label: 'Edit',
-                type: Layout.form.CHECKBOX
             }
         ]
     }
@@ -100,6 +91,20 @@ export default class ColliderComponent extends Component{
      */
     getSize(){
         return this.getValue('size')
+    }
+
+    /**
+     * @param {number} radius
+     */
+    setRadius(radius) {
+        this.setValue('radius', radius)
+    }
+
+    /**
+     * @return {number}
+     */
+    getRadius(){
+        return this.getValue('radius')
     }
 
     /**

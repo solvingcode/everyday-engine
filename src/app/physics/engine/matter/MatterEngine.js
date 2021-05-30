@@ -1,6 +1,6 @@
 import PhysicsEngine from '../PhysicsEngine.js'
-import UnitHelper from '../../../utils/UnitHelper.js'
 import MatterRectColliderLoader from './loader/MatterRectColliderLoader.js'
+import MatterCircleColliderLoader from './loader/MatterCircleColliderLoader.js'
 
 export default class MatterEngine extends PhysicsEngine {
 
@@ -24,14 +24,16 @@ export default class MatterEngine extends PhysicsEngine {
     /**
      * @override
      * @param {Unit} unit
+     * @param {Matter.Body[]} colliders
      * @param {{isStatic: boolean}} options
      * @return {Matter.Body}
      */
-    newBody(unit, options) {
-        return Matter.Body.create({
-            position: UnitHelper.toCenterPosition(unit),
-            isStatic: options.isStatic
-        })
+    newBody(unit, colliders, options) {
+        const bodyOptions = {
+            isStatic: options.isStatic,
+            parts: colliders
+        }
+        return Matter.Body.create(bodyOptions)
     }
 
     /**
@@ -58,10 +60,31 @@ export default class MatterEngine extends PhysicsEngine {
 
     /**
      * @override
-     * @param {Matter.Body} body
-     * @param {Matter.Body[]} colliders
      */
-    setColliders(body, colliders) {
-        Matter.Body.setParts(body, colliders)
+    getCircleColliderLoader(colliderComponent) {
+        return MatterCircleColliderLoader
+    }
+
+    /**
+     * @override
+     */
+    canCollide(unitA, unitB) {
+        const bodyA = this.findBody(unitA)
+        const bodyB = this.findBody(unitB)
+        return Matter.Detector.canCollide(bodyA.collisionFilter, bodyB.collisionFilter)
+    }
+
+    /**
+     * @override
+     */
+    getBodyColliders(body) {
+        return body.parts
+    }
+
+    /**
+     * @override
+     */
+    getBodyPosition(body) {
+        return body.position
     }
 }

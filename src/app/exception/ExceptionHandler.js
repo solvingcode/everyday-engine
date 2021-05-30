@@ -21,11 +21,17 @@ class ExceptionHandler {
         if(!(e instanceof ClientError) && !(e instanceof SystemError)){
             throw e
         }
+        console.warn(e)
+
         try {
             StateManager.get().stopAll()
         } catch (error) {
             StateManager.get().reset()
         }
+
+        //Here Go to the last recovery point
+        //....
+
         this.setLastError(e)
     }
 

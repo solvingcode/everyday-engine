@@ -1,6 +1,5 @@
 import MatterEngine from '../physics/engine/matter/MatterEngine.js'
 import Vector from '../utils/Vector.js'
-import UnitHelper from '../utils/UnitHelper.js'
 import TransformComponent from '../component/internal/TransformComponent.js'
 import MeshComponent from '../component/internal/MeshComponent.js'
 
@@ -51,7 +50,7 @@ export default class PhysicsManager {
     update(unit) {
         const body = this.physicsEngine.findBody(unit)
         if(body){
-            const {x, y} = UnitHelper.fromCenterPosition(unit, new Vector(body.position))
+            const {x, y} = this.physicsEngine.getBodyPositionFromCollider(unit)
             const rotation = body.angle ? body.angle % (Math.PI * 2) : 0
             const transformComponent = unit.getComponent(TransformComponent)
             const meshComponent = unit.getComponent(MeshComponent)

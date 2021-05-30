@@ -42,6 +42,7 @@ import Style from '../../pobject/Style.js'
 import {PrimitiveShape} from '../../unit/Unit.js'
 import RectUnitInstant from '../../unit/instant/type/internal/primitive/RectUnitInstant.js'
 import GUIColliderComponent from '../../component/internal/gui/collider/GUIColliderComponent.js'
+import CircleUnitInstant from '../../unit/instant/type/internal/primitive/CircleUnitInstant.js'
 
 class EditorRunner extends Runner {
 
@@ -251,6 +252,9 @@ class EditorRunner extends Runner {
                         case PrimitiveShape.RECT:
                             unitInstantClass = RectUnitInstant
                             break
+                        case PrimitiveShape.CIRCLE:
+                            unitInstantClass = CircleUnitInstant
+                            break
                         default:
                             throw new SystemError(`No Unit Instant configured for Collider "${shape}"`)
                     }
@@ -258,7 +262,8 @@ class EditorRunner extends Runner {
                     style.setColor('#1fa834')
                     style.setBorderSize(2)
                     const colliderUnit = unitManager
-                        .createUnitInstant(unitInstantClass, colliderPosition, colliderComponent.getSize(), style)
+                        .createUnitInstant(unitInstantClass, colliderPosition,
+                            UnitHelper.getColliderSize(selectedUnit, colliderComponent), style)
                     colliderUnit.createComponents(colliderComponentClasses)
                     editorPosition = UnitHelper.toLargeCenterPosition(colliderUnit)
                 }

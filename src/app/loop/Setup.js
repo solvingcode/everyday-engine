@@ -17,7 +17,6 @@ import ScriptEditorRunner from '../runner/editor/ScriptEditorRunner.js'
 import HistoryRunner from '../runner/history/HistoryRunner.js'
 import UnitDrawerRunner from '../runner/drawer/UnitDrawerRunner.js'
 import GraphDrawerRunner from '../runner/drawer/GraphDrawerRunner.js'
-import GUIColliderExecutor from '../executor/type/GUIColliderExecutor.js'
 
 /**
  * @class {Setup}
@@ -45,8 +44,7 @@ class Setup extends Loop {
         ExecutorRegistry.get().register([
             new MeshGenerationExecutor(),
             new GUISelectionExecutor(),
-            new GUIPropertyExecutor(),
-            new GUIColliderExecutor(),
+            new GUIPropertyExecutor()
         ])
     }
 
