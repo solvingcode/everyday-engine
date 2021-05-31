@@ -22,6 +22,11 @@ import MultiplyFunction from '../flow/function/native/basic/MultiplyFunction.js'
 import OnInputYAxisEvent from '../flow/event/native/OnInputYAxisEvent.js'
 import OnInputJumpEvent from '../flow/event/native/OnInputJumpEvent.js'
 import ApplyForceFunction from '../flow/function/native/physics/ApplyForceFunction.js'
+import GetVelocityXFunction from '../flow/function/native/physics/GetVelocityXFunction.js'
+import GetVelocityYFunction from '../flow/function/native/physics/GetVelocityYFunction.js'
+import GreaterThanFunction from '../flow/function/native/basic/GreaterThanFunction.js'
+import EqualToFunction from '../flow/function/native/basic/EqualToFunction.js'
+import NotEqualToFunction from '../flow/function/native/basic/NotEqualToFunction.js'
 
 export default class FunctionRegistry extends Registry{
 
@@ -48,9 +53,12 @@ export default class FunctionRegistry extends Registry{
             new LogFunction(),
             new AddFunction(),
             new LessThanFunction(),
+            new GreaterThanFunction(),
             new IsKeyDownFunction(),
             new GetInputXAxisFunction(),
             new MultiplyFunction(),
+            new EqualToFunction(),
+            new NotEqualToFunction(),
 
             //Unit
             new GetWorldPositionFunction(),
@@ -60,6 +68,8 @@ export default class FunctionRegistry extends Registry{
             //Physics
             new MoveXAxisFunction(),
             new ApplyForceFunction(),
+            new GetVelocityXFunction(),
+            new GetVelocityYFunction(),
 
             //Structure
             new VectorFunction()

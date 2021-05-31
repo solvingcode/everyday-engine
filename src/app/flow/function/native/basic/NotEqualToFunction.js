@@ -1,10 +1,10 @@
 import {TYPES} from '../../../../pobject/AttributeType.js'
 import AFunction from '../../AFunction.js'
 
-export default class LessThanFunction extends AFunction{
+export default class NotEqualToFunction extends AFunction{
 
     constructor() {
-        super('<')
+        super('!=')
     }
 
     /**
@@ -21,7 +21,7 @@ export default class LessThanFunction extends AFunction{
      */
     execute() {
         this.setOutputValue(
-            parseFloat(this.getInputValue('value1')) <
+            parseFloat(this.getInputValue('value1')) !==
             parseFloat(this.getInputValue('value2'))
         )
     }

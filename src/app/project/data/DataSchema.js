@@ -76,6 +76,11 @@ import MultiplyFunction from '../../flow/function/native/basic/MultiplyFunction.
 import OnInputYAxisEvent from '../../flow/event/native/OnInputYAxisEvent.js'
 import OnInputJumpEvent from '../../flow/event/native/OnInputJumpEvent.js'
 import ApplyForceFunction from '../../flow/function/native/physics/ApplyForceFunction.js'
+import GetVelocityXFunction from '../../flow/function/native/physics/GetVelocityXFunction.js'
+import GetVelocityYFunction from '../../flow/function/native/physics/GetVelocityYFunction.js'
+import GreaterThanFunction from '../../flow/function/native/basic/GreaterThanFunction.js'
+import EqualToFunction from '../../flow/function/native/basic/EqualToFunction.js'
+import NotEqualToFunction from '../../flow/function/native/basic/NotEqualToFunction.js'
 
 /**
  * @class {DataSchema}
@@ -147,7 +152,12 @@ class DataSchema {
         {id: 530, type: MultiplyFunction},
         {id: 540, type: OnInputYAxisEvent},
         {id: 550, type: OnInputJumpEvent},
-        {id: 560, type: ApplyForceFunction}
+        {id: 560, type: ApplyForceFunction},
+        {id: 570, type: GetVelocityXFunction},
+        {id: 580, type: GetVelocityYFunction},
+        {id: 590, type: GreaterThanFunction},
+        {id: 600, type: EqualToFunction},
+        {id: 610, type: NotEqualToFunction}
     ]
 
     /**

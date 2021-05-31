@@ -26,7 +26,7 @@ export default class SetWorldPositionFunction extends AFunction{
         const target = this.getInputValue('target')
         const unit = World.get().findUnitById(parseInt(target))
         if(!unit){
-            throw new ClientError(`SetWorldPosition: ${target} not found`)
+            throw new ClientError(`${this.getName()}: ${target} not found`)
         }
         unit.getComponent(TransformComponent).setPosition(this.getInputValue('vector'))
     }
