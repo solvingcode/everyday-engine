@@ -3,13 +3,13 @@ import World from '../world/World.js'
 import Window from '../core/Window.js'
 import ExecutorRegistry from '../executor/ExecutorRegistry.js'
 import MeshGenerationExecutor from '../executor/type/MeshGenerationExecutor.js'
-import EventRunner from '../runner/event/EventRunner.js'
 import {GameRenderRunner} from '../runner/renderer/GameRenderRunner.js'
 import {GameExecutorRunner} from '../runner/executor/GameExecutorRunner.js'
 import RigidBodyExecutor from '../executor/type/RigidBodyExecutor.js'
 import {PhysicsRunner} from '../runner/physics/PhysicsRunner.js'
 import ColliderExecutor from '../executor/type/ColliderExecutor.js'
 import MeshStyleExecutor from '../executor/type/MeshStyleExecutor.js'
+import ScriptExecutor from '../executor/type/ScriptExecutor.js'
 
 /**
  * @class {Game}
@@ -28,9 +28,10 @@ class Game extends Scene {
             new MeshGenerationExecutor(),
             new RigidBodyExecutor(),
             new ColliderExecutor(),
-            new MeshStyleExecutor()
+            new MeshStyleExecutor(),
+            new ScriptExecutor()
         ])
-        this.runners = [EventRunner, GameRenderRunner, GameExecutorRunner, PhysicsRunner]
+        this.runners = [GameRenderRunner, GameExecutorRunner, PhysicsRunner]
     }
 
     /**

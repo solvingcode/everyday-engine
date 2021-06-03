@@ -109,8 +109,9 @@ export default class UnitData extends Data{
     }
 
     /**
-     * @param {Class<Component>} componentClass
-     * @return {Component}
+     * @template T
+     * @param {T} componentClass
+     * @return {T}
      */
     createComponent(componentClass){
         if(!this.getComponent(componentClass)){

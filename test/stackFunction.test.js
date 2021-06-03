@@ -7,12 +7,9 @@ import {CONSTANTS} from '../src/app/operation/StackRegister.js'
 import {TYPES} from '../src/app/pobject/AttributeType.js'
 import FunctionScript from '../src/app/flow/FunctionScript.js'
 import ClassScript from '../src/app/flow/ClassScript.js'
-import OnMouseClickEvent from '../src/app/flow/event/native/OnMouseClickEvent.js'
 import FunctionNode from '../src/app/flow/node/FunctionNode.js'
 import ConstantNode from '../src/app/flow/node/ConstantNode.js'
 import World from '../src/app/world/World.js'
-import TrueCondition from '../src/app/flow/condition/TrueCondition.js'
-import LessThanFunction from '../src/app/flow/function/native/basic/LessThanFunction.js'
 import ConditionNode from '../src/app/flow/node/ConditionNode.js'
 
 test('Execute native function (without output)', function () {
@@ -33,15 +30,15 @@ test('Execute native function (with output)', function () {
 
 test('Execute stack function (without output)', function () {
     const functionRegistry = World.get().getFunctionRegistry()
-    functionRegistry.init([new LogFunction(), new AddFunction()])
+    functionRegistry.init()
     const func = new AEmptyStackFunction('test')
     func.setInputs([])
     func.setStack([
-        new StackOperation(OPERATIONS.PUSH, 'value1', 20),
-        new StackOperation(OPERATIONS.PUSH, 'value2', 20),
+        new StackOperation(OPERATIONS.PUSH, 'value1', '20'),
+        new StackOperation(OPERATIONS.PUSH, 'value2', '20'),
         new StackOperation(OPERATIONS.CALL, 'Add'),
         new StackOperation(OPERATIONS.PUSH, 'value1', '__result__'),
-        new StackOperation(OPERATIONS.PUSH, 'value2', 60),
+        new StackOperation(OPERATIONS.PUSH, 'value2', '60'),
         new StackOperation(OPERATIONS.CALL, 'Add'),
         new StackOperation(OPERATIONS.PUSH, 'value', '__result__'),
         new StackOperation(OPERATIONS.CALL, 'Log')
@@ -54,15 +51,15 @@ test('Execute stack function (without output)', function () {
 
 test('Execute stack function (with output)', function () {
     const functionRegistry = World.get().getFunctionRegistry()
-    functionRegistry.init([new AddFunction()])
+    functionRegistry.init()
     const func = new AEmptyStackFunction('test')
     func.addOutput(TYPES.NUMBER)
     func.setStack([
-        new StackOperation(OPERATIONS.PUSH, 'value1', 20),
-        new StackOperation(OPERATIONS.PUSH, 'value2', 30),
+        new StackOperation(OPERATIONS.PUSH, 'value1', '20'),
+        new StackOperation(OPERATIONS.PUSH, 'value2', '30'),
         new StackOperation(OPERATIONS.CALL, 'Add'),
         new StackOperation(OPERATIONS.PUSH, 'value1', CONSTANTS.RESULT),
-        new StackOperation(OPERATIONS.PUSH, 'value2', 60),
+        new StackOperation(OPERATIONS.PUSH, 'value2', '60'),
         new StackOperation(OPERATIONS.CALL, 'Add')
     ])
     func.execute(functionRegistry)
@@ -71,7 +68,7 @@ test('Execute stack function (with output)', function () {
 
 test('Create and compile function flow', function () {
     const functionRegistry = World.get().getFunctionRegistry()
-    functionRegistry.init([new AddFunction()])
+    functionRegistry.init()
     const script = new FunctionScript('testScript')
 
     const nodeSetValue1 = script.createNode(functionRegistry, ConstantNode, 20)
@@ -84,14 +81,14 @@ test('Create and compile function flow', function () {
     script.compile()
 
     const compiledFunction = functionRegistry.getInstance('testScript')
-    compiledFunction.execute(functionRegistry)
+    compiledFunction.execute(functionRegistry, null)
     expect(compiledFunction.getOutputValue()).toBe(50)
 })
 
 test('Create and compile class flow', function () {
     const functionRegistry = World.get().getFunctionRegistry()
 
-    functionRegistry.init([new OnMouseClickEvent(), new AddFunction(), new LogFunction()])
+    functionRegistry.init()
 
     const script = new ClassScript('classScript')
 
@@ -113,24 +110,19 @@ test('Create and compile class flow', function () {
     expect(mouseEventCompiled).toBeDefined()
 
     console.log = jest.fn()
-    mouseEventCompiled.execute(functionRegistry)
+    mouseEventCompiled.execute(functionRegistry, null)
     expect(console.log).toHaveBeenCalledWith(50)
 })
 
 test('Create and compile class script with success condition', function () {
     const functionRegistry = World.get().getFunctionRegistry()
 
-    functionRegistry.init([
-        new OnMouseClickEvent(),
-        new LogFunction(),
-        new LessThanFunction(),
-        new TrueCondition()
-    ])
+    functionRegistry.init()
 
     const script = new ClassScript('classScript')
 
     const nodeLog = script.createNode(functionRegistry, FunctionNode, 'Log')
-    const nodeLessThan = script.createNode(functionRegistry, FunctionNode, 'LessThan')
+    const nodeLessThan = script.createNode(functionRegistry, FunctionNode, '<')
     const nodeSetValue1 = script.createNode(functionRegistry, ConstantNode, 20)
     const nodeSetValue2 = script.createNode(functionRegistry, ConstantNode, 30)
     const nodeSetValue3 = script.createNode(functionRegistry, ConstantNode, 'correct')
@@ -151,24 +143,19 @@ test('Create and compile class script with success condition', function () {
     expect(mouseEventCompiled).toBeDefined()
 
     console.log = jest.fn()
-    mouseEventCompiled.execute(functionRegistry)
+    mouseEventCompiled.execute(functionRegistry, null)
     expect(console.log).toHaveBeenCalledWith('correct')
 })
 
 test('Create and compile class script with failed condition', function () {
     const functionRegistry = World.get().getFunctionRegistry()
 
-    functionRegistry.init([
-        new OnMouseClickEvent(),
-        new LogFunction(),
-        new LessThanFunction(),
-        new TrueCondition()
-    ])
+    functionRegistry.init()
 
     const script = new ClassScript('classScript')
 
     const nodeLog = script.createNode(functionRegistry, FunctionNode, 'Log')
-    const nodeLessThan = script.createNode(functionRegistry, FunctionNode, 'LessThan')
+    const nodeLessThan = script.createNode(functionRegistry, FunctionNode, '<')
     const nodeSetValue1 = script.createNode(functionRegistry, ConstantNode, 20)
     const nodeSetValue2 = script.createNode(functionRegistry, ConstantNode, 10)
     const nodeSetValue3 = script.createNode(functionRegistry, ConstantNode, 'correct')
@@ -189,6 +176,6 @@ test('Create and compile class script with failed condition', function () {
     expect(mouseEventCompiled).toBeDefined()
 
     console.log = jest.fn()
-    mouseEventCompiled.execute(functionRegistry)
+    mouseEventCompiled.execute(functionRegistry, null)
     expect(console.log).not.toHaveBeenCalledWith('correct')
 })

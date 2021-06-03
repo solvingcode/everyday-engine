@@ -7,6 +7,7 @@ import CompileAssetScriptMenuItem from './file/CompileAssetScriptMenuItem.js'
 import EditAssetScriptMenuItem from './file/EditAssetScriptMenuItem.js'
 import DeleteAssetScriptMenuItem from './file/DeleteAssetScriptMenuItem.js'
 import DeleteFolderMenuItem from './folder/DeleteFolderMenuItem.js'
+import AttachAssetScriptMenuItem from './file/AttachAssetScriptMenuItem.js'
 
 export default class AssetsActionsMenuItem  extends MenuItem {
     constructor(parent) {
@@ -22,6 +23,7 @@ export default class AssetsActionsMenuItem  extends MenuItem {
             new AddFolderMenuItem(this),
             new AddAssetSceneMenuItem(this),
             new CompileAssetScriptMenuItem(this),
+            new AttachAssetScriptMenuItem(this),
             new EditAssetScriptMenuItem(this),
             new DeleteAssetScriptMenuItem(this),
             new DeleteFolderMenuItem(this)

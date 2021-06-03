@@ -5,9 +5,10 @@ export default class CallProcessor {
     /**
      * @param {StackOperation} stackOperation
      * @param {StackRegister} stackRegister
-     * @param {Registry} functionRegistry
+     * @param {FunctionRegistry} functionRegistry
+     * @param {*} namespace
      */
-    static run(stackOperation, stackRegister, functionRegistry) {
+    static run(stackOperation, stackRegister, functionRegistry, namespace) {
         const args = stackOperation.getArgs()
         const functionName = args && args[0]
         if (!functionName) {
@@ -25,7 +26,7 @@ export default class CallProcessor {
             }
             aFunction.setInputValue(inputName, value)
         })
-        aFunction.execute(functionRegistry)
+        aFunction.execute(functionRegistry, namespace)
         stackRegister.pushRet(aFunction.getOutputValue())
     }
 

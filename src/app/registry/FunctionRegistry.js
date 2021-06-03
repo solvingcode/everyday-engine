@@ -92,6 +92,15 @@ export default class FunctionRegistry extends Registry{
     }
 
     /**
+     * @override
+     * @param {Class} className
+     * @return {AFunction[]}
+     */
+    getClassInstance(className) {
+        return super.getClassInstance(className)
+    }
+
+    /**
      * @param {number} id
      * @return {AFunction}
      */

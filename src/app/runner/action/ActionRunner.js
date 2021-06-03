@@ -53,6 +53,7 @@ import DeleteFolderAction from './assets/DeleteFolderAction.js'
 import CloseErrorPopupAction from './window/CloseErrorPopupAction.js'
 import DeleteSelectedNodeAction from './script/DeleteSelectedNodeAction.js'
 import AttachComponentAction from './unit/AttachComponentAction.js'
+import AttachAssetScriptAction from './assets/AttachAssetScriptAction.js'
 
 /**
  * Action Runner class.
@@ -132,6 +133,7 @@ class ActionRunner extends Runner {
             ADD_SCRIPT_EDGE: AddEdgeAction,
             CLOSE_ERROR_POPUP: CloseErrorPopupAction,
             ATTACH_COMPONENT: AttachComponentAction,
+            ATTACH_ASSET_SCRIPT: AttachAssetScriptAction
         }
         const selectedUnits = this.unitSelector.getSelected(World.get())
         for(const iTypeAction in typeActions){

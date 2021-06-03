@@ -21,9 +21,10 @@ export default class StackProcessor {
     /**
      * @param {StackOperation[]} stack
      * @param {FunctionRegistry} functionRegistry
+     * @param {*} namespace
      * @return {StackRegister}
      */
-    run(stack, functionRegistry){
+    run(stack, functionRegistry, namespace){
         for(const iStackOperation in stack){
             const stackOperation = stack[iStackOperation]
             if(this.stackRegister.popSignal()){
@@ -33,7 +34,7 @@ export default class StackProcessor {
                 const operation = stackOperation.getOperation()
                 switch (operation) {
                     case OPERATIONS.CALL:
-                        CallProcessor.run(stackOperation, this.stackRegister, functionRegistry)
+                        CallProcessor.run(stackOperation, this.stackRegister, functionRegistry, namespace)
                         break
                     case OPERATIONS.PUSH:
                         PushProcessor.run(stackOperation, this.stackRegister)

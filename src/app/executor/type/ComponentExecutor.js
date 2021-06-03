@@ -5,7 +5,7 @@ export default class ComponentExecutor{
     static instance
 
     /**
-     * @private
+     * @protected
      * @param {Component[]} targetComponents
      */
     constructor(targetComponents) {

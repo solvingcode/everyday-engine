@@ -43,8 +43,9 @@ export default class AFunction extends FunctionData{
     /**
      * @abstract
      * @param {FunctionRegistry} functionRegistry
+     * @param {*} namespace
      */
-    execute(functionRegistry){
+    execute(functionRegistry, namespace){
         throw new SystemError(`${this.constructor.name}.execute must be implemented`)
     }
 
