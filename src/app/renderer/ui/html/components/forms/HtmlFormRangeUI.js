@@ -11,31 +11,4 @@ export default class HtmlFormRangeUI extends HtmlFormTextUI {
             suffix: '-field'
         }
     }
-
-    /**
-     * @override
-     */
-    static getCustomAttributes(item){
-        const {props} = item.element
-        const {options} = props
-        const attrs = [
-            {
-                name: 'min',
-                value: options.min
-            },
-            {
-                name: 'max',
-                value: options.max
-            }
-        ]
-
-        if(options.step){
-            attrs.push({
-                name: 'step',
-                value: options.step
-            })
-        }
-
-        return attrs
-    }
 }

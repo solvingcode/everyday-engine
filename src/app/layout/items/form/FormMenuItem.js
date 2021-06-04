@@ -216,7 +216,13 @@ class FormMenuItem extends MenuItem {
         if (field.type !== Layout.form.FILE) {
             return (function (getter, object) {
                 return () => getter.reduce(
-                    (pValue, cValue) => pValue[cValue]()
+                    (pValue, cValue) => {
+                        if(typeof pValue[cValue] === 'function'){
+                            return pValue[cValue]()
+                        }else{
+                            throw new SystemError(`getGetterForObject: ${pValue.constructor.name}.${cValue} is not a function`)
+                        }
+                    }
                     , object)
             })(getterString, bindObject)
         }

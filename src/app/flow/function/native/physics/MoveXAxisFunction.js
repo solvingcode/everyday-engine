@@ -1,7 +1,6 @@
 import {TYPES} from '../../../../pobject/AttributeType.js'
 import AFunction from '../../AFunction.js'
 import World from '../../../../world/World.js'
-import ClientError from '../../../../exception/type/ClientError.js'
 
 export default class MoveXAxisFunction extends AFunction{
 
@@ -13,22 +12,18 @@ export default class MoveXAxisFunction extends AFunction{
      * @override
      */
     initAttributes() {
-        this.addInput('target', TYPES.NUMBER, 0)
+        this.addInput('target', TYPES.UNIT, 0)
         this.addInput('speed', TYPES.NUMBER, 0)
     }
 
     /**
      * @override
      */
-    execute(functionRegistry) {
+    execute(functionRegistry, unit) {
         const world = World.get()
         const physicsManager = world.getPhysicsManager()
         const target = this.getInputValue('target')
         const speed = parseFloat(this.getInputValue('speed'))
-        const unit = world.findUnitById(parseInt(target))
-        if(!unit){
-            throw new ClientError(`${this.getName()}: ${target} not found`)
-        }
-        physicsManager.moveXAxis(unit, speed)
+        physicsManager.moveXAxis(target, speed)
     }
 }

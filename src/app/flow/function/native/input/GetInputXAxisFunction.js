@@ -20,7 +20,7 @@ export default class GetInputXAxisFunction extends AFunction{
     /**
      * @override
      */
-    execute(functionRegistry) {
+    execute(functionRegistry, unit) {
         const keyboard = Window.get().keyboard
         const gameInput = World.get().getPreference().getGameInput()
         let value = 0

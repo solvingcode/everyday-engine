@@ -32,6 +32,42 @@ class HtmlFormTextUI extends HtmlFormUI {
         const formElement = this.getFormElement(item, uiRenderer)
         this.setValue(formElement.element, value())
     }
+
+    /**
+     * @override
+     */
+    static getCustomAttributes(item){
+        const {props} = item.element
+        const options = props.options || {}
+        const attrs = []
+
+        if(options.min !== null){
+            attrs.push({
+                name: 'min',
+                value: options.min
+            })
+        }
+        if(options.max !== null){
+            attrs.push({
+                name: 'max',
+                value: options.max
+            })
+        }
+        if(options.step !== null){
+            attrs.push({
+                name: 'step',
+                value: options.step
+            })
+        }
+        if(options.readonly){
+            attrs.push({
+                name: 'disabled',
+                value: options.readonly
+            })
+        }
+
+        return attrs
+    }
 }
 
 HtmlFormTextUI.props = {

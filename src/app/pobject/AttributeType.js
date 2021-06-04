@@ -46,6 +46,8 @@ export default class AttributeType {
                 return 'boolean'
             case TYPES.NUMBER:
                 return 'number'
+            case TYPES.UNIT:
+                return 'number'
             case TYPES.RANGE:
                 return 'range'
             case TYPES.MESH:
@@ -90,6 +92,7 @@ export const TYPES = {
     STRING: '001',
     BOOLEAN: '003',
     NUMBER: '004',
+    UNIT: '005',
     RANGE: '101',
     STYLE: '202',
     SIZE: '203',
