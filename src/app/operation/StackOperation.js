@@ -59,5 +59,6 @@ export const OPERATIONS = {
     PUSH: 'push',
     GET: 'get',
     CALL: 'call',
-    EXIT: 'exit'
+    EXIT: 'exit',
+    VAR: 'var'
 }

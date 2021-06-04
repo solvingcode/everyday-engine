@@ -16,7 +16,8 @@ export default class ScriptComponent extends Component {
      * @override
      */
     getFormFields() {
-        return [
+        const vars = AssetHelper.getAssetScriptVars(this.getAssetId())
+        const fields = [
             {
                 bind: 'assetId',
                 label: 'Asset',
@@ -26,6 +27,21 @@ export default class ScriptComponent extends Component {
                 }
             }
         ]
+
+        vars.forEach(variable => {
+            if (!this.hasAttribute(variable.getAttrName())) {
+                this.add(variable.getAttrName(), variable.getAttrType())
+            }
+            fields.push(
+                {
+                    bind: variable.getAttrName(),
+                    label: variable.getAttrName(),
+                    type: Layout.form.TEXT,
+                    dynamic: true
+                })
+        })
+
+        return fields
     }
 
     /**
@@ -38,18 +54,28 @@ export default class ScriptComponent extends Component {
     /**
      * @return {number}
      */
-    getAssetId(){
+    getAssetId() {
         return this.getValue('assetId')
+    }
+
+    /**
+     * @override
+     */
+    getValue(name) {
+        return super.getValue(name)
+    }
+
+    /**
+     * @override
+     */
+    setValue(name, value) {
+        return super.setValue(name, value)
     }
 
     /**
      * @param {number} assetId
      */
-    setAssetId(assetId){
+    setAssetId(assetId) {
         this.setValue('assetId', assetId)
-        const vars = AssetHelper.getAssetScriptVars(assetId)
-        vars.forEach(variable => {
-            this.add(variable.getAttrName(), variable.getAttrType())
-        })
     }
 }

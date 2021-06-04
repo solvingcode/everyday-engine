@@ -127,5 +127,6 @@ export const NODE_TYPES = {
     CONSTANT: 'constant',
     CONDITION: 'condition',
     UNIT: 'unit',
-    KEY_CODE: 'key_code'
+    KEY_CODE: 'key_code',
+    VAR_STRING: 'var_string'
 }

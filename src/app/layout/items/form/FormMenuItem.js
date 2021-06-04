@@ -60,7 +60,7 @@ class FormMenuItem extends MenuItem {
      * @param {*} value
      * @return {boolean}
      */
-    preUpdate(value){
+    preUpdate(value) {
         return true
     }
 
@@ -213,18 +213,33 @@ class FormMenuItem extends MenuItem {
      */
     getGetterForObject(field, bindObject) {
         const getterString = this.getGetterString(field)
+        const getterDynamicField = 'getValue'
         if (field.type !== Layout.form.FILE) {
-            return (function (getter, object) {
-                return () => getter.reduce(
-                    (pValue, cValue) => {
-                        if(typeof pValue[cValue] === 'function'){
-                            return pValue[cValue]()
-                        }else{
-                            throw new SystemError(`getGetterForObject: ${pValue.constructor.name}.${cValue} is not a function`)
+            if (!field.dynamic) {
+                return (function (getter, object) {
+                    return () => getter.reduce(
+                        (pValue, cValue) => {
+                            if (typeof pValue[cValue] === 'function') {
+                                return pValue[cValue]()
+                            } else {
+                                throw new SystemError(`getGetterForObject: ${pValue.constructor.name}.${cValue} is not a function`)
+                            }
+                        }
+                        , object)
+                })(getterString, bindObject)
+            } else {
+                return (
+                    function (fieldName, object) {
+                        return () => {
+                            if (typeof object[getterDynamicField] === 'function') {
+                                return object[getterDynamicField](fieldName)
+                            }else{
+                                throw new SystemError(`getGetterForObject: ${object.constructor.name}.getValue is not a function`)
+                            }
                         }
                     }
-                    , object)
-            })(getterString, bindObject)
+                )(field.bind, bindObject)
+            }
         }
         return () => null
     }
@@ -246,12 +261,25 @@ class FormMenuItem extends MenuItem {
      */
     getSetter(field) {
         const setterString = this.getSetterString(field)
-        return (function (setter, self) {
-            return (value) => setter.reduce(
-                (pValue, cValue, iValue) =>
-                    iValue !== setter.length - 1 ? pValue[cValue]() : pValue[cValue](value)
-                , self.bindObject)
-        })(setterString, this)
+        const setterDynamicField = 'setValue'
+        if(!field.dynamic){
+            return (function (setter, self) {
+                return (value) => setter.reduce(
+                    (pValue, cValue, iValue) =>
+                        iValue !== setter.length - 1 ? pValue[cValue]() : pValue[cValue](value)
+                    , self.bindObject)
+            })(setterString, this)
+        }else{
+            return (function (fieldName, object) {
+                return (value) => {
+                    if (typeof object[setterDynamicField] === 'function') {
+                        return object[setterDynamicField](fieldName, value)
+                    }else{
+                        throw new SystemError(`getSetter: ${object.constructor.name}.setValue is not a function`)
+                    }
+                }
+            })(field.bind, this.bindObject)
+        }
     }
 
     /**

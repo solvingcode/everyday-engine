@@ -4,6 +4,7 @@ import StackRegister from './StackRegister.js'
 import PushProcessor from './processor/PushProcessor.js'
 import ExitProcessor from './processor/ExitProcessor.js'
 import SystemError from '../exception/type/SystemError.js'
+import VarProcessor from './processor/VarProcessor.js'
 
 export default class StackProcessor {
 
@@ -35,6 +36,9 @@ export default class StackProcessor {
                 switch (operation) {
                     case OPERATIONS.CALL:
                         CallProcessor.run(stackOperation, this.stackRegister, functionRegistry, unit)
+                        break
+                    case OPERATIONS.VAR:
+                        VarProcessor.run(stackOperation, this.stackRegister, unit)
                         break
                     case OPERATIONS.PUSH:
                         PushProcessor.run(stackOperation, this.stackRegister)

@@ -5,6 +5,7 @@ export default class AEmptyStackFunction extends AStackFunction{
     constructor(name) {
         super(name)
         this.inputs = []
+        this.stack = []
     }
 
     initAttributes(){

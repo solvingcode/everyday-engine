@@ -11,8 +11,9 @@ import TransformComponent from '../component/internal/TransformComponent.js'
 import NodeHelper from './NodeHelper.js'
 import Vector from './Vector.js'
 import MeshComponent from '../component/internal/MeshComponent.js'
+import StringVariableNode from '../flow/node/variable/StringVariableNode.js'
 
-export default class ScriptHelper{
+export default class ScriptHelper {
 
     /**
      * @param {FunctionRegistry} functionRegistry
@@ -21,21 +22,23 @@ export default class ScriptHelper{
      * @param {string} nodeValue
      * @return {ANode}
      */
-    static createNode(functionRegistry, script, nodeType, nodeValue){
+    static createNode(functionRegistry, script, nodeType, nodeValue) {
         let node
-        if(nodeType === NODE_TYPES.EVENT){
+        if (nodeType === NODE_TYPES.EVENT) {
             node = script.createNode(functionRegistry, EventNode, nodeValue)
-        }else if(nodeType === NODE_TYPES.FUNCTION){
+        } else if (nodeType === NODE_TYPES.FUNCTION) {
             node = script.createNode(functionRegistry, FunctionNode, nodeValue)
-        }else if(nodeType === NODE_TYPES.CONSTANT){
+        } else if (nodeType === NODE_TYPES.CONSTANT) {
             node = script.createNode(functionRegistry, ConstantNode, nodeValue)
-        }else if(nodeType === NODE_TYPES.KEY_CODE){
+        } else if (nodeType === NODE_TYPES.KEY_CODE) {
             node = script.createNode(functionRegistry, KeyCodeNode, nodeValue)
-        }else if(nodeType === NODE_TYPES.CONDITION){
+        } else if (nodeType === NODE_TYPES.CONDITION) {
             node = script.createNode(functionRegistry, ConditionNode, nodeValue)
-        }else if(nodeType === NODE_TYPES.UNIT){
+        } else if (nodeType === NODE_TYPES.UNIT) {
             node = script.createNode(functionRegistry, UnitNode, nodeValue)
-        }else{
+        } else if (nodeType === NODE_TYPES.VAR_STRING) {
+            node = script.createNode(functionRegistry, StringVariableNode, nodeValue)
+        } else {
             throw new ClientError(`Script: Node with type "${nodeType}" not supported!`)
         }
         return node
@@ -47,19 +50,21 @@ export default class ScriptHelper{
      */
     static getNodeType(node) {
         let nodeType = ''
-        if(node instanceof EventNode){
+        if (node instanceof EventNode) {
             nodeType = NODE_TYPES.EVENT
-        }else if(node instanceof FunctionNode){
+        } else if (node instanceof FunctionNode) {
             nodeType = NODE_TYPES.FUNCTION
-        }else if(node instanceof ConstantNode){
+        } else if (node instanceof ConstantNode) {
             nodeType = NODE_TYPES.CONSTANT
-        }else if(node instanceof ConditionNode){
+        } else if (node instanceof ConditionNode) {
             nodeType = NODE_TYPES.CONDITION
-        }else if(node instanceof UnitNode){
+        } else if (node instanceof UnitNode) {
             nodeType = NODE_TYPES.UNIT
-        }else if(node instanceof KeyCodeNode){
+        } else if (node instanceof KeyCodeNode) {
             nodeType = NODE_TYPES.KEY_CODE
-        }else{
+        } else if (node instanceof StringVariableNode) {
+            nodeType = NODE_TYPES.VAR_STRING
+        } else {
             throw new ClientError(`AssetScriptXmlGenerator: ${node.constructor.name} not supported`)
         }
         return nodeType

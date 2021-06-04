@@ -15,5 +15,9 @@ export default class FormField{
      * @type {{ value: string|number, label: string }[]}
      */
     list
+    /**
+     * @type {boolean}
+     */
+    dynamic
     options
 }

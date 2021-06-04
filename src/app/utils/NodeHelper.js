@@ -9,6 +9,8 @@ import ClientError from '../exception/type/ClientError.js'
 import Size from '../pobject/Size.js'
 import Vector from './Vector.js'
 import AKeyCode from '../flow/keycode/AKeyCode.js'
+import AVariable from '../flow/variable/AVariable.js'
+import AStringVariable from '../flow/variable/AStringVariable.js'
 
 export default class NodeHelper {
 
@@ -30,6 +32,8 @@ export default class NodeHelper {
         if(nodeSource instanceof AConstant){
             return `${nodeSource.getName()}`
         }else if(nodeSource instanceof AKeyCode){
+            return `${nodeSource.getName()}`
+        }else if(nodeSource instanceof AVariable){
             return `${nodeSource.getName()}`
         }else if(nodeSource instanceof ACondition){
             return `${nodeSource.getName()}`
@@ -63,6 +67,8 @@ export default class NodeHelper {
             return NODE_TYPES.UNIT
         }else if(nodeSource instanceof AFunction){
             return NODE_TYPES.FUNCTION
+        }else if(nodeSource instanceof AStringVariable){
+            return NODE_TYPES.VAR_STRING
         }else{
             throw new ClientError(`Node source "${nodeSource && nodeSource.constructor.name}" unknown`)
         }
@@ -104,6 +110,8 @@ export default class NodeHelper {
             headColor = '#5e2254'
         } else if (type === NODE_TYPES.KEY_CODE) {
             headColor = '#375e22'
+        } else if (type === NODE_TYPES.VAR_STRING) {
+            headColor = '#5e4322'
         }
         return {
             sizeInput,

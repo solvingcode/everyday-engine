@@ -15,6 +15,8 @@ import AKeyCode from './keycode/AKeyCode.js'
 import Camera from '../core/Camera.js'
 import Vector from '../utils/Vector.js'
 import {SCENE_HEIGHT, SCENE_WIDTH} from '../core/Constant.js'
+import StringVariableNode from './node/variable/StringVariableNode.js'
+import AStringVariable from './variable/AStringVariable.js'
 
 /**
  * @abstract
@@ -28,7 +30,7 @@ export default class AScript extends AScriptData{
 
     /**
      * @param {Registry} registry
-     * @param {FunctionNode|ConditionNode|EventNode|ConstantNode|KeyCodeNode|UnitNode} nodeClass
+     * @param {ANode} nodeClass
      * @param {string|number|boolean} value
      * @return {ANode}
      */
@@ -51,6 +53,10 @@ export default class AScript extends AScriptData{
                 break
             case UnitNode:
                 nodeSource = new AUnit(TYPES.NUMBER, value)
+                registry.register(nodeSource)
+                break
+            case StringVariableNode:
+                nodeSource = new AStringVariable(value)
                 registry.register(nodeSource)
                 break
             default:
@@ -145,6 +151,14 @@ export default class AScript extends AScriptData{
      */
     findNodeById(id){
         return this.nodes.find(node => node.getId() === id)
+    }
+
+    /**
+     * @param {ANode} nodeClass
+     * @return {ANode[]}
+     */
+    findNodesByClass(nodeClass){
+        return this.nodes.filter(node => node instanceof nodeClass)
     }
 
     /**

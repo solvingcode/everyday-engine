@@ -11,6 +11,7 @@ import ACondition from '../condition/ACondition.js'
 import SystemError from '../../exception/type/SystemError.js'
 import ClientError from '../../exception/type/ClientError.js'
 import AKeyCode from '../keycode/AKeyCode.js'
+import AVariable from '../variable/AVariable.js'
 
 export default class ClassCompiler extends Compiler {
 
@@ -66,6 +67,10 @@ export default class ClassCompiler extends Compiler {
                         } else if (sourceElement instanceof AConstant || sourceElement instanceof AKeyCode) {
                             const targetInput = element.findInputById(targetId)
                             stack.push(new StackOperation(OPERATIONS.CALL, sourceElement.getName()))
+                            stack.push(new StackOperation(OPERATIONS.PUSH, targetInput.getAttrName(), CONSTANTS.RESULT))
+                        } else if (sourceElement instanceof AVariable) {
+                            const targetInput = element.findInputById(targetId)
+                            stack.push(new StackOperation(OPERATIONS.VAR, sourceElement.getName()))
                             stack.push(new StackOperation(OPERATIONS.PUSH, targetInput.getAttrName(), CONSTANTS.RESULT))
                         }
                         // must be the last condition

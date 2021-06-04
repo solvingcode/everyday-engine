@@ -49,8 +49,8 @@ export default class AddScriptNodeFormTypeMenuItem extends FormMenuItem {
                         label: 'Key Code'
                     },
                     {
-                        value: NODE_TYPES.UNIT,
-                        label: 'Unit'
+                        value: NODE_TYPES.VAR_STRING,
+                        label: 'Variable (string)'
                     }
                 ]
             }

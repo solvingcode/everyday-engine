@@ -27,6 +27,7 @@ import GetVelocityYFunction from '../flow/function/native/physics/GetVelocityYFu
 import GreaterThanFunction from '../flow/function/native/basic/GreaterThanFunction.js'
 import EqualToFunction from '../flow/function/native/basic/EqualToFunction.js'
 import NotEqualToFunction from '../flow/function/native/basic/NotEqualToFunction.js'
+import AVariable from '../flow/variable/AVariable.js'
 
 export default class FunctionRegistry extends Registry{
 
@@ -140,7 +141,8 @@ export default class FunctionRegistry extends Registry{
                 !(instance instanceof AConstant) &&
                 !(instance instanceof ACondition) &&
                 !(instance instanceof AUnit) &&
-                !(instance instanceof AKeyCode)
+                !(instance instanceof AKeyCode) &&
+                !(instance instanceof AVariable)
             )
     }
 
@@ -163,6 +165,13 @@ export default class FunctionRegistry extends Registry{
      */
     getKeyCodeInstances(){
         return super.getInstances().filter(instance => instance instanceof AKeyCode)
+    }
+
+    /**
+     * @return {AVariable[]}
+     */
+    getVariableInstances(){
+        return super.getInstances().filter(instance => instance instanceof AVariable)
     }
 
     /**

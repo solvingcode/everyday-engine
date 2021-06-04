@@ -82,6 +82,7 @@ import GreaterThanFunction from '../../flow/function/native/basic/GreaterThanFun
 import EqualToFunction from '../../flow/function/native/basic/EqualToFunction.js'
 import NotEqualToFunction from '../../flow/function/native/basic/NotEqualToFunction.js'
 import ScriptComponent from '../../component/internal/ScriptComponent.js'
+import AStringVariable from '../../flow/variable/AStringVariable.js'
 
 /**
  * @class {DataSchema}
@@ -159,7 +160,8 @@ class DataSchema {
         {id: 590, type: GreaterThanFunction},
         {id: 600, type: EqualToFunction},
         {id: 610, type: NotEqualToFunction},
-        {id: 620, type: ScriptComponent}
+        {id: 620, type: ScriptComponent},
+        {id: 630, type: AStringVariable}
     ]
 
     /**
