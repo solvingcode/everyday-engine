@@ -28,6 +28,7 @@ import AddCodeScriptMenuItem from './items/assets/AddCodeScriptMenuItem.js'
 import ErrorPopupMenuItem from './items/error/ErrorPopupMenuItem.js'
 import AddScriptMenuItem from './items/assets/AddScriptMenuItem.js'
 import DeleteSelectedNodeMenuItem from './items/script/node/delete/DeleteSelectedNodeMenuItem.js'
+import AddAnimationMenuItem from './items/animation/AddAnimationMenuItem.js'
 
 /**
  * Define all menu items
@@ -60,6 +61,7 @@ class Menu {
             new CameraMenuItem(),
             new AddCodeScriptMenuItem(),
             new AddScriptMenuItem(),
+            new AddAnimationMenuItem(),
             new SimulateStartMenuItem(),
             new SimulateStopMenuItem(),
 

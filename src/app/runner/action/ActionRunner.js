@@ -54,6 +54,9 @@ import CloseErrorPopupAction from './window/CloseErrorPopupAction.js'
 import DeleteSelectedNodeAction from './script/DeleteSelectedNodeAction.js'
 import AttachComponentAction from './unit/AttachComponentAction.js'
 import AttachAssetScriptAction from './assets/AttachAssetScriptAction.js'
+import AddAnimationAction from './animation/AddAnimationAction.js'
+import EditAssetAnimationAction from './assets/EditAssetAnimationAction.js'
+import AttachAssetAnimationAction from './animation/AttachAssetAnimationAction.js'
 
 /**
  * Action Runner class.
@@ -133,7 +136,10 @@ class ActionRunner extends Runner {
             ADD_SCRIPT_EDGE: AddEdgeAction,
             CLOSE_ERROR_POPUP: CloseErrorPopupAction,
             ATTACH_COMPONENT: AttachComponentAction,
-            ATTACH_ASSET_SCRIPT: AttachAssetScriptAction
+            ATTACH_ASSET_SCRIPT: AttachAssetScriptAction,
+            ADD_ANIMATION: AddAnimationAction,
+            EDIT_ASSET_ANIMATION: EditAssetAnimationAction,
+            ATTACH_ASSET_ANIMATION: AttachAssetAnimationAction
         }
         const selectedUnits = this.unitSelector.getSelected(World.get())
         for(const iTypeAction in typeActions){

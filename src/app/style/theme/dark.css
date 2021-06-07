@@ -90,7 +90,7 @@ button.selected, button.hidden.selected, button.locked.selected{
     background-color: #222222;
 }
 
-#app-el-body .body-item div{
+#app-el-body .body-item > div{
     background: none;
 }
 
@@ -114,7 +114,11 @@ button.selected, button.hidden.selected, button.locked.selected{
     border: none;
 }
 
-.panel .panel h4{
+.panel.body-item > div{
+    padding: 0;
+}
+
+.units-wrapper .panel .panel h4, .component-add-wrapper .panel h4{
     border: none;
     background-color: unset;
     border-top: 1px solid #4e4e4e;
@@ -191,6 +195,13 @@ button.selected, button.hidden.selected, button.locked.selected{
 .assets-wrapper .assets-list .list-element .list-element-img-wrapper i.status-error {
     color: #ffffff;
     background-color: #b94a48;
+}
+
+.animation-wrapper .panel:nth-child(1){
+
+}
+.animation-wrapper .panel:nth-child(2){
+  background-color: #323232;
 }
 
 .units-wrapper .list-element .list-element-img-wrapper i{

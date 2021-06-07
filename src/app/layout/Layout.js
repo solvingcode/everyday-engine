@@ -41,7 +41,8 @@ Layout.type = {
     ASSETS: 'assets',
     WRAPPER: 'wrapper',
     FOLDER_ELEMENT: 'folder_element',
-    ASSET_ELEMENT: 'asset_element'
+    ASSET_ELEMENT: 'asset_element',
+    ASSET_VIEW: 'asset_view'
 }
 
 Layout.form = {

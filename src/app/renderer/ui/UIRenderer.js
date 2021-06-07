@@ -282,6 +282,14 @@ class UIRenderer {
     }
 
     /**
+     * @abstract
+     * @return {ItemUI}
+     */
+    getAssetViewUI() {
+        throw new TypeError('"UIRenderer.getAssetViewUI" method must be implemented')
+    }
+
+    /**
      * Get the UI type of the given menu item
      * @param {MenuItemUI} item
      * @return {ItemUI}
@@ -332,6 +340,8 @@ class UIRenderer {
             return this.getBodyUI()
         } else if (element.type === Layout.type.BODY_ITEM) {
             return this.getBodyItemUI()
+        } else if(element.type === Layout.type.ASSET_VIEW){
+            return this.getAssetViewUI()
         } else {
             throw new TypeError(`Layout type "${element.type}" not supported!`)
         }

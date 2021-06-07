@@ -1,12 +1,14 @@
 import MenuItem from '../../MenuItem.js'
 import Layout from '../../Layout.js'
-import EditScriptContent from '../../../content/EditScriptContent.js'
+import EditScriptContent from '../../../content/script/EditScriptContent.js'
 import EditScriptMenuItem from './editscript/xml/EditScriptMenuItem.js'
-import EditGraphScriptContent from '../../../content/EditGraphScriptContent.js'
+import EditGraphScriptContent from '../../../content/script/EditGraphScriptContent.js'
 import EditGraphScriptMenuItem from './editscript/graph/EditGraphScriptMenuItem.js'
-import EditScriptCodeContent from '../../../content/EditScriptCodeContent.js'
+import EditScriptCodeContent from '../../../content/script/EditScriptCodeContent.js'
 import EditScriptCodeMenuItem from './editscript/code/EditScriptCodeMenuItem.js'
 import World from '../../../world/World.js'
+import EditAnimationContent from '../../../content/animation/EditAnimationContent.js'
+import EditAnimationMenuItem from './animation/EditAnimationMenuItem.js'
 
 export default class ContentMenuItem extends MenuItem {
 
@@ -57,6 +59,8 @@ export default class ContentMenuItem extends MenuItem {
                 return EditGraphScriptMenuItem
             case EditScriptCodeContent:
                 return EditScriptCodeMenuItem
+            case EditAnimationContent:
+                return EditAnimationMenuItem
             default:
                 throw new TypeError(`ContentMenuItem: ${content.constructor.name} not supported`)
         }

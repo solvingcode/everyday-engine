@@ -1,5 +1,5 @@
 import World from '../../../world/World.js'
-import EditScriptCodeContent from '../../../content/EditScriptCodeContent.js'
+import EditScriptCodeContent from '../../../content/script/EditScriptCodeContent.js'
 import AssetScript from './AssetScript.js'
 import AssetScriptCodeGenerator from '../../../generator/script/AssetScriptCodeGenerator.js'
 

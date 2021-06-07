@@ -1,7 +1,7 @@
-import Content from './Content.js'
-import World from '../world/World.js'
+import Content from '../Content.js'
+import World from '../../world/World.js'
 
-export default class EditScriptCodeContent extends Content{
+export default class EditGraphScriptContent extends Content{
 
     /**
      * @param {Asset} data

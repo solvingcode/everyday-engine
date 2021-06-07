@@ -19,20 +19,24 @@ export default class ListElementButtonUI extends ItemUI {
     static postCreate(item, el, uiRenderer) {
         const bind = item.element.getDataBind()
         if (bind) {
-            const title = document.createElement('span')
             const icon = this.getIcon(item)
-            if(icon){
+            if (icon) {
                 const imageWrapper = document.createElement('div')
                 imageWrapper.className = 'list-element-img-wrapper'
                 imageWrapper.appendChild(icon)
                 el.appendChild(imageWrapper)
             }
-            title.textContent = this.getTitle(item)
-            title.title = this.getTitle(item)
             el.setAttribute('data-list-element-id', bind.getId())
             el.setAttribute('data-list-element-name', bind.getName())
             el.setAttribute('id', item.getId())
-            el.appendChild(title)
+
+            const titleText = this.getTitle(item)
+            if (titleText) {
+                const title = document.createElement('span')
+                title.textContent = this.getTitle(item)
+                title.title = this.getTitle(item)
+                el.appendChild(title)
+            }
         }
     }
 
@@ -40,16 +44,16 @@ export default class ListElementButtonUI extends ItemUI {
      * @param {MenuItemUI} item
      * @return {string}
      */
-    static getTitle(item){
+    static getTitle(item) {
         const bind = item.element.getDataBind()
-        return bind.name
+        return bind.getName()
     }
 
     /**
      * @param {MenuItemUI} item
      * @return {HTMLElement | null}
      */
-    static getIcon(item){
+    static getIcon(item) {
         return null
     }
 
@@ -57,7 +61,7 @@ export default class ListElementButtonUI extends ItemUI {
      * @param {HTMLElement} el
      * @return {HTMLElement | null}
      */
-    static getIconElement(el){
+    static getIconElement(el) {
         const imgWrapper = el.getElementsByClassName('list-element-img-wrapper')[0]
         return imgWrapper && imgWrapper.childNodes[0]
     }
@@ -81,7 +85,7 @@ export default class ListElementButtonUI extends ItemUI {
      * @param {HTMLElement} el
      * @param {UIRenderer} uiRenderer
      */
-    static update(item, el, uiRenderer){
+    static update(item, el, uiRenderer) {
         el.innerHTML = ''
         this.postCreate(item, el, uiRenderer)
     }

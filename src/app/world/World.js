@@ -17,6 +17,7 @@ import GraphManager from '../manager/GraphManager.js'
 import Preference from '../preference/Preference.js'
 import PhysicsManager from '../manager/PhysicsManager.js'
 import ComponentRegistry from '../registry/ComponentRegistry.js'
+import AnimationManager from '../manager/AnimationManager.js'
 
 /**
  * @class {World}
@@ -28,6 +29,11 @@ class World extends WorldData {
      * @type {ScriptManager}
      */
     scriptManager
+
+    /**
+     * @type {AnimationManager}
+     */
+    animationManager
 
     /**
      * @type {GraphManager}
@@ -48,6 +54,7 @@ class World extends WorldData {
         this.functionRegistry = new FunctionRegistry()
         this.componentRegistry = new ComponentRegistry()
         this.scriptManager = new ScriptManager()
+        this.animationManager = new AnimationManager()
         this.preference = new Preference()
         this.camera = new Camera(new Vector({x: -SCENE_WIDTH / 2, y: -SCENE_HEIGHT / 2}))
         this.physicsManager = new PhysicsManager()
@@ -69,7 +76,7 @@ class World extends WorldData {
         this.getFunctionRegistry().init()
         this.getComponentRegistry().init()
         this.getGraphManager().reset()
-        this.getAssetsManager().getScriptAssets().forEach(asset => {
+        this.getAssetsManager().getParsedAssets().forEach(asset => {
             asset.getType().parse()
         })
     }
@@ -247,10 +254,10 @@ class World extends WorldData {
     }
 
     /**
-     * @param {ScriptManager} scriptManager
+     * @return {AnimationManager}
      */
-    setScriptManager(scriptManager) {
-        this.scriptManager = scriptManager
+    getAnimationManager() {
+        return this.animationManager
     }
 
     /**

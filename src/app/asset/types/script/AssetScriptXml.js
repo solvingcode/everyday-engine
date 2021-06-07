@@ -1,7 +1,7 @@
 import World from '../../../world/World.js'
 import AssetScriptXmlGenerator from '../../../generator/script/AssetScriptXmlGenerator.js'
 import AssetScript from './AssetScript.js'
-import EditGraphScriptContent from '../../../content/EditGraphScriptContent.js'
+import EditGraphScriptContent from '../../../content/script/EditGraphScriptContent.js'
 
 export default class AssetScriptXml extends AssetScript{
 

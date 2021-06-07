@@ -357,6 +357,41 @@ h4{
     padding: 0;
 }
 
+.animation-wrapper{
+    height: 100%;
+}
+
+.animation-wrapper > .panel:nth-child(1){
+    height: 60%;
+}
+.animation-wrapper > .panel:nth-child(2){
+    height: 40%;
+}
+.animation-wrapper > .panel:nth-child(2) div{
+    background: none;
+}
+.animation-wrapper .panel:nth-child(2) .list-element .asset-view{
+    width: 40px;
+    height: 40px;
+    background: none;
+}
+.animation-wrapper .panel:nth-child(2) .list-element .asset-view img{
+    width: 100%;
+}
+.animation-wrapper .panel:nth-child(2) .list-element:hover{
+    background: none;
+}
+.animation-wrapper .panel:nth-child(2) .list-element{
+    box-sizing: border-box;
+    height: 50px;
+    background: none;
+    border-bottom: 1px solid #4d4d4c;
+}
+
+.animation-wrapper .panel:nth-child(2) .list-element .form{
+    margin: 5px 0;
+}
+
 .units-wrapper .list-element {
     height: 35px;
 }

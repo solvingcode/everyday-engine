@@ -24,6 +24,7 @@ import HtmlBodyUI from './ui/HtmlBodyUI.js'
 import HtmlBodyItemUI from './ui/HtmlBodyItemUI.js'
 import IconTextButtonUI from './buttons/IconTextButtonUI.js'
 import ListElementButtonUI from './list/ListElementButtonUI.js'
+import HtmlAssetViewUI from './ui/HtmlAssetViewUI.js'
 
 /**
  * HTML UI Renderer class
@@ -196,6 +197,13 @@ class HtmlUIRenderer extends UIRenderer {
      */
     getBodyItemUI() {
         return HtmlBodyItemUI
+    }
+
+    /**
+     * @override
+     */
+    getAssetViewUI() {
+        return HtmlAssetViewUI
     }
 
     /**

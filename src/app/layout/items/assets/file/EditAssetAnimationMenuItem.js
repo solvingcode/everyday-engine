@@ -1,14 +1,14 @@
 import MenuItem from '../../../MenuItem.js'
 import Layout from '../../../Layout.js'
 import World from '../../../../world/World.js'
-import AssetScript from '../../../../asset/types/script/AssetScript.js'
+import AssetAnimationXml from '../../../../asset/types/animation/AssetAnimationXml.js'
 
-export default class EditAssetScriptMenuItem extends MenuItem {
+export default class EditAssetAnimationMenuItem extends MenuItem {
     constructor(parent) {
         super({
             name: 'edit',
-            title: 'Edit script',
-            stateCode: 'ACTION_EDIT_ASSET_SCRIPT_XML',
+            title: 'Edit animation',
+            stateCode: 'ACTION_EDIT_ASSET_ANIMATION',
             type: Layout.type.ICON,
             zone: parent.zone
         })
@@ -20,6 +20,6 @@ export default class EditAssetScriptMenuItem extends MenuItem {
      */
     isValid() {
         const selectedAsset = World.get().getAssetsManager().getSelectedAsset()
-        return super.isValid() && selectedAsset && (selectedAsset.getType() instanceof AssetScript)
+        return super.isValid() && selectedAsset && (selectedAsset.getType() instanceof AssetAnimationXml)
     }
 }

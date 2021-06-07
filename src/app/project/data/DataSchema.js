@@ -56,8 +56,8 @@ import ScaleFreeUnitInstant from '../../unit/instant/type/internal/scale/ScaleFr
 import SystemError from '../../exception/type/SystemError.js'
 import TabManager from '../../manager/TabManager.js'
 import Tab from '../../content/Tab.js'
-import EditScriptCodeContent from '../../content/EditScriptCodeContent.js'
-import EditGraphScriptContent from '../../content/EditGraphScriptContent.js'
+import EditScriptCodeContent from '../../content/script/EditScriptCodeContent.js'
+import EditGraphScriptContent from '../../content/script/EditGraphScriptContent.js'
 import KeyCodeNode from '../../flow/node/KeyCodeNode.js'
 import AKeyCode from '../../flow/keycode/AKeyCode.js'
 import Preference from '../../preference/Preference.js'
@@ -83,6 +83,8 @@ import EqualToFunction from '../../flow/function/native/basic/EqualToFunction.js
 import NotEqualToFunction from '../../flow/function/native/basic/NotEqualToFunction.js'
 import ScriptComponent from '../../component/internal/ScriptComponent.js'
 import AStringVariable from '../../flow/variable/AStringVariable.js'
+import EditAnimationContent from '../../content/animation/EditAnimationContent.js'
+import AssetAnimationXml from '../../asset/types/animation/AssetAnimationXml.js'
 
 /**
  * @class {DataSchema}
@@ -161,7 +163,9 @@ class DataSchema {
         {id: 600, type: EqualToFunction},
         {id: 610, type: NotEqualToFunction},
         {id: 620, type: ScriptComponent},
-        {id: 630, type: AStringVariable}
+        {id: 630, type: AStringVariable},
+        {id: 640, type: EditAnimationContent},
+        {id: 650, type: AssetAnimationXml}
     ]
 
     /**
@@ -190,6 +194,7 @@ class DataSchema {
     static excludeGame = [
         AssetScriptXml,
         AssetScriptCode,
+        AssetAnimationXml,
         ClassScript,
         TabManager
     ]

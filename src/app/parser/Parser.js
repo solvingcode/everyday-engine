@@ -8,7 +8,7 @@ export default class Parser {
     /**
      * @abstract
      * @param {*} data
-     * @return {AScript}
+     * @return {*}
      */
     static parse(data){
         throw new SystemError(`${this.prototype.name}.parse must be implemented`)

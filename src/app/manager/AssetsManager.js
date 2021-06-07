@@ -7,6 +7,9 @@ import Folder from '../asset/Folder.js'
 import ClassScript from '../flow/ClassScript.js'
 import ClientError from '../exception/type/ClientError.js'
 import AssetScript from '../asset/types/script/AssetScript.js'
+import Animation from '../animation/Animation.js'
+import AssetAnimationXml from '../asset/types/animation/AssetAnimationXml.js'
+import SystemError from '../exception/type/SystemError.js'
 
 /**
  * @class {AssetsManager}
@@ -69,15 +72,31 @@ export default class AssetsManager extends AssetsManagerData {
 
     /**
      * @param {Folder} folder
-     * @param {Class<AssetScript>} scriptType
-     * @param {AssetScriptGenerator} scriptGenerator
+     * @param {Class<AssetScript>} type
+     * @param {AssetScriptGenerator} generator
      */
-    async createScript(folder, scriptType, scriptGenerator) {
+    async createScript(folder, type, generator) {
         const assetName = this.generateUniqAssetName('NewScript', folder.getId())
         const flow = new ClassScript(assetName)
         return this.createAsset(
-            scriptGenerator.generate(flow),
-            scriptType,
+            generator.generate(flow),
+            type,
+            assetName,
+            folder.getId()
+        )
+    }
+
+    /**
+     * @param {Folder} folder
+     * @param {Class<AssetAnimationXml>} type
+     * @param {AssetAnimationXmlGenerator} generator
+     */
+    async createAnimation(folder, type, generator) {
+        const assetName = this.generateUniqAssetName('Animation', folder.getId())
+        const animation = new Animation(assetName)
+        return this.createAsset(
+            generator.generate(animation),
+            type,
             assetName,
             folder.getId()
         )
@@ -117,8 +136,8 @@ export default class AssetsManager extends AssetsManagerData {
     /**
      * @return {Asset[]}
      */
-    getScriptAssets(){
-        return this.getAssets().filter(asset => this.isAssetScript(asset))
+    getParsedAssets() {
+        return this.getAssets().filter(asset => this.isAssetScript(asset) || this.isAssetAnimation(asset))
     }
 
     /**
@@ -127,6 +146,22 @@ export default class AssetsManager extends AssetsManagerData {
      */
     isAssetScript(asset) {
         return asset && asset.getType() instanceof AssetScript
+    }
+
+    /**
+     * @param {Asset} asset
+     * @return {boolean}
+     */
+    isAssetAnimation(asset) {
+        return asset && asset.getType() instanceof AssetAnimationXml
+    }
+
+    /**
+     * @param {Asset} asset
+     * @return {boolean}
+     */
+    isAssetImage(asset) {
+        return asset && asset.getType() instanceof AssetImage
     }
 
     /**
@@ -180,6 +215,18 @@ export default class AssetsManager extends AssetsManagerData {
      */
     findAssetById(assetId) {
         return this.getAssets().find(asset => asset.id === parseInt(assetId))
+    }
+
+    /**
+     * @param {number|string} assetId
+     * @return {Asset}
+     */
+    findAssetImageById(assetId){
+        const asset = this.findAssetById(assetId)
+        if (!asset || !this.isAssetImage(asset)) {
+            throw new SystemError(`No asset image found with ID "${assetId}"`)
+        }
+        return asset
     }
 
     /**

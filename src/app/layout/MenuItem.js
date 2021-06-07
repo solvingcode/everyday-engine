@@ -6,7 +6,7 @@ import Maths from '../utils/Maths.js'
  * @abstract
  *
  * @property {MenuItem|Menu} parent
- * @property {{items: MenuItem[]}} items
+ * @property {MenuItem[]} items
  * @property {MenuItem} element
  * @property {string} stateCode
  * @property {string} zone
@@ -36,10 +36,11 @@ class MenuItem {
         this.stateCode = props.stateCode
         this.collapsed = false
         this.parent = parent
+        this.items = []
     }
 
     /**
-     * @param {{bind: Object, list: *[]}} data
+     * @param {{bind: Object, list?: *[]}} data
      */
     setData(data) {
         throw new TypeError('MenuItem.setData must be implemented')

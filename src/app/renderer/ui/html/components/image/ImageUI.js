@@ -35,6 +35,20 @@ class ImageUI {
 
         return image
     }
+
+    /**
+     * @param {string} dataUrl
+     * @param {number} version
+     * @return {HTMLImageElement}
+     */
+    static getImageFromDataUrl(dataUrl, version){
+        const image = new Image()
+        image.src = dataUrl
+        if(version){
+            image.id = `${version}`
+        }
+        return image
+    }
 }
 
 export default ImageUI

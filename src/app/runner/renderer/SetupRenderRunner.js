@@ -21,11 +21,13 @@ export class SetupRenderRunner extends Runner {
      */
     execute(mouse) {
         const world = World.get()
+        const tabManager = world.getTabManager()
         const script = world.getScriptManager().getSelected(world.getTabManager())
-        if (!script) {
-            world.draw(MeshRenderer.get())
-        }else{
+        const animation = world.getAnimationManager().getSelected(tabManager)
+        if (script) {
             world.getGraphManager().draw(script, MeshRenderer.get())
+        } else if (!animation) {
+            world.draw(MeshRenderer.get())
         }
     }
 
