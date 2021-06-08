@@ -1,28 +1,41 @@
-import PanelMenuItem from '../../panel/PanelMenuItem.js'
 import World from '../../../../world/World.js'
 import AssetImageViewMenuItem from '../../assets/AssetImageViewMenuItem.js'
+import MenuItem from '../../../MenuItem.js'
+import Layout from '../../../Layout.js'
 
-export default class EditAnimationDisplayMenuItem extends PanelMenuItem {
+export default class EditAnimationDisplayMenuItem extends MenuItem {
 
     /**
      * @param {MenuItem} parent
      * @param {Animation} animation
-     * @param {number} time
      */
-    constructor(parent, animation, time = 0) {
+    constructor(parent, animation) {
         super({
-            name: '',
-            zone: parent.zone
+            name: 'asset-view',
+            stateCode: '',
+            zone: parent.zone,
+            type: Layout.type.WRAPPER
         })
-        this.setData({bind: {animation, time}})
+        this.data = {bind: {animation}}
+        this.time = animation.getTime()
+        this.updateDisplay()
     }
 
     /**
      * @override
      */
-    setData(data) {
-        const {animation, time} = data.bind
-        const keyFrame = animation.tryGetAt(time)
+    update() {
+        super.update()
+        const {animation} = this.data.bind
+        if(animation.getTime() !== this.time){
+            this.updateDisplay()
+            this.time = animation.getTime()
+        }
+    }
+
+    updateDisplay(){
+        const {animation} = this.data.bind
+        const keyFrame = animation.tryGetAt(animation.getTime())
         if (keyFrame) {
             const asset = World.get().getAssetsManager().findAssetImageById(keyFrame.getAssetId())
             this.items = [

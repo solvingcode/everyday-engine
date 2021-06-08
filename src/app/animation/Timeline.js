@@ -75,4 +75,12 @@ export default class Timeline {
         return ''
     }
 
+    unselect(){
+        this.setSelected(false)
+    }
+
+    select(){
+        this.setSelected(true)
+    }
+
 }

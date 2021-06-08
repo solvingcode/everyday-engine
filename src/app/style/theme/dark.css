@@ -197,8 +197,8 @@ button.selected, button.hidden.selected, button.locked.selected{
     background-color: #b94a48;
 }
 
-.animation-wrapper .panel:nth-child(1){
-
+.animation-wrapper .panel:nth-child(1) div {
+    background: none;
 }
 .animation-wrapper .panel:nth-child(2) .list-element{
     border-left: 1px solid #4d4d4c;
@@ -214,6 +214,9 @@ button.selected, button.hidden.selected, button.locked.selected{
 }
 .animation-wrapper .panel:nth-child(2) .list-element .text p{
     color: #787878 !important;
+}
+.animation-wrapper .panel:nth-child(2) .list-element.selected{
+    background-color: #2c3545;
 }
 
 .units-wrapper .list-element .list-element-img-wrapper i{

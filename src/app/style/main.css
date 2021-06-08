@@ -72,6 +72,7 @@ h4{
 .panel{
     width: 100%;
     box-sizing: border-box;
+    float: left;
 }
 
 .panel > div{
@@ -366,8 +367,17 @@ h4{
     height: 100%;
 }
 
-.animation-wrapper > .panel:nth-child(1){
+.animation-wrapper > .asset-view{
     height: 60%;
+    position: relative;
+}
+.animation-wrapper > .asset-view img{
+    width: 200px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    -ms-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
 }
 .animation-wrapper > .panel:nth-child(2){
     height: 40%;

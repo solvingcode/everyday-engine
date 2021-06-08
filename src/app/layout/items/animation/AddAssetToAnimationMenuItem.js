@@ -17,8 +17,13 @@ export default class AddAssetToAnimationMenuItem extends MenuItem {
      * @override
      */
     isValid() {
-        const assetsManager = World.get().getAssetsManager()
+        const world = World.get()
+        const assetsManager = world.getAssetsManager()
+        const tabManager = world.getTabManager()
         const selectedAsset = assetsManager.getSelectedAsset()
-        return super.isValid() && selectedAsset && assetsManager.isAssetImage(selectedAsset)
+        const animation = world.getAnimationManager().getSelected(tabManager)
+        return super.isValid() &&
+            selectedAsset && assetsManager.isAssetImage(selectedAsset) &&
+            animation && !!animation.getSelectedTimeline()
     }
 }

@@ -17,6 +17,7 @@ import ScriptEditorRunner from '../runner/editor/ScriptEditorRunner.js'
 import HistoryRunner from '../runner/history/HistoryRunner.js'
 import UnitDrawerRunner from '../runner/drawer/UnitDrawerRunner.js'
 import GraphDrawerRunner from '../runner/drawer/GraphDrawerRunner.js'
+import AnimationEditorRunner from '../runner/editor/AnimationEditorRunner.js'
 
 /**
  * @class {Setup}
@@ -38,7 +39,7 @@ class Setup extends Loop {
         super()
         this.setupRenderer = SetupRenderer.get()
         this.runners = [
-            HistoryRunner, SimulateRunner, ActionRunner, EditorRunner, ScriptEditorRunner,
+            HistoryRunner, SimulateRunner, ActionRunner, EditorRunner, ScriptEditorRunner, AnimationEditorRunner,
             SetupExecutorRunner, SetupRenderRunner, MenuRunner, WindowRunner, GraphDrawerRunner, UnitDrawerRunner
         ]
         ExecutorRegistry.get().register([

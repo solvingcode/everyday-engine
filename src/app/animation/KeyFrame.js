@@ -17,11 +17,6 @@ export default class KeyFrame {
      */
     time
 
-    /**
-     * @type {boolean}
-     */
-    selected
-
     constructor() {
         this.id = Maths.generateId()
     }
@@ -66,27 +61,6 @@ export default class KeyFrame {
      */
     getTime(){
         return this.time
-    }
-
-    /**
-     * @param {boolean} selected
-     */
-    setSelected(selected){
-        this.selected = selected
-    }
-
-    /**
-     * @return {boolean}
-     */
-    getSelected(){
-        return this.selected
-    }
-
-    /**
-     * @return {boolean}
-     */
-    isSelected(){
-        return this.getSelected()
     }
 
     /**

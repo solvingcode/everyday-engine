@@ -35,6 +35,11 @@ export default class Animation {
     timeline
 
     /**
+     * @type {number}
+     */
+    time
+
+    /**
      * @param {string} name
      */
     constructor(name) {
@@ -42,7 +47,9 @@ export default class Animation {
         this.id = Maths.generateId()
         this.frames = []
         this.timeline = []
+        this.samples = 10
         this.playing = false
+        this.time = 0
     }
 
     /**
@@ -89,10 +96,10 @@ export default class Animation {
     }
 
     /**
-     * @param {number} samples
+     * @param {number|string} samples
      */
     setSamples(samples) {
-        this.samples = samples
+        this.samples = parseInt(samples)
         this.updateTimeline()
     }
 
@@ -138,6 +145,7 @@ export default class Animation {
             if (!timeline.getFrame()) {
                 timeline.setFrame(frame)
                 this.frames.push(frame)
+                this.updateTimeline()
             } else {
                 throw new ClientError(`Cannot add frame at "${frame.getTime()}": Frame already exist`)
             }
@@ -147,11 +155,44 @@ export default class Animation {
     }
 
     /**
+     * @param {KeyFrame} frame
+     */
+    deleteFrame(frame){
+        const timeline = this.timeline[frame.getTime()]
+        const frameIndex = this.frames.findIndex(pFrame => pFrame === frame)
+        if (timeline) {
+            if (timeline.getFrame()) {
+                timeline.setFrame(null)
+                this.frames.splice(frameIndex, 1)
+                this.updateTimeline()
+            } else {
+                throw new ClientError(`Cannot delete frame at "${frame.getTime()}": No frame exist`)
+            }
+        } else {
+            throw new ClientError(`Cannot delete frame at "${frame.getTime()}": Out of range`)
+        }
+    }
+
+    /**
      * @param {number} time
      * @return {KeyFrame}
      */
     tryGetAt(time) {
         return this.frames.find(frame => frame.getTime() === time)
+    }
+
+    /**
+     * @return {Timeline}
+     */
+    getSelectedTimeline(){
+        return this.timeline.find(pTimeline => pTimeline.isSelected())
+    }
+
+    /**
+     * @return {number}
+     */
+    getSelectedTime(){
+        return this.timeline.findIndex(pTimeline => pTimeline === this.getSelectedTimeline())
     }
 
     updateTimeline() {
@@ -164,5 +205,19 @@ export default class Animation {
      */
     getTimeline() {
         return this.timeline
+    }
+
+    /**
+     * @return {number}
+     */
+    getTime(){
+        return this.time
+    }
+
+    /**
+     * @param {number} time
+     */
+    setTime(time){
+        this.time = time
     }
 }

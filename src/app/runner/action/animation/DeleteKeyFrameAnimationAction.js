@@ -1,10 +1,9 @@
 import Action from '../Action.js'
 import World from '../../../world/World.js'
-import KeyFrame from '../../../animation/KeyFrame.js'
 
-export default class AttachAssetAnimationAction extends Action {
+export default class DeleteKeyFrameAnimationAction extends Action {
 
-    static STATE = 'ACTION_ATTACH_ASSET_ANIMATION'
+    static STATE = 'ACTION_DELETE_ANIMATION_FRAME'
 
     /**
      * @override
@@ -12,13 +11,10 @@ export default class AttachAssetAnimationAction extends Action {
     static run() {
         const world = World.get()
         const tabManager = world.getTabManager()
-        const selectedAsset = world.getAssetsManager().getSelectedAsset()
         const animationAsset = tabManager.getSelectedContentData()
         const animation = world.getAnimationManager().getSelected(tabManager)
-        const frame = new KeyFrame()
-        frame.setAssetId(selectedAsset.getId())
-        frame.setTime(animation.getSelectedTime())
-        animation.addFrame(frame)
+        const frame = animation.getSelectedTimeline().getFrame()
+        animation.deleteFrame(frame)
         animationAsset.generate(animation)
         return true
     }

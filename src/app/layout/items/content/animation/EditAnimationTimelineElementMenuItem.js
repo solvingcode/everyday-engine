@@ -1,13 +1,12 @@
-import ListElementMenuItem from '../../list/ListElementMenuItem.js'
 import Layout from '../../../Layout.js'
 import AssetImageViewMenuItem from '../../assets/AssetImageViewMenuItem.js'
 import World from '../../../../world/World.js'
 import TextMenuItem from '../../basic/TextMenuItem.js'
+import ListSelectElementMenuItem from '../../list/ListSelectElementMenuItem.js'
 
-export default class EditAnimationTimelineElementMenuItem extends ListElementMenuItem {
+export default class EditAnimationTimelineElementMenuItem extends ListSelectElementMenuItem {
     constructor(parent, data) {
         super(parent, data, {
-            stateCode: '',
             name: 'image',
             type: Layout.type.LIST_ELEMENT
         })
@@ -33,13 +32,6 @@ export default class EditAnimationTimelineElementMenuItem extends ListElementMen
                 new AssetImageViewMenuItem(this, asset)
             )
         }
-    }
-
-    /**
-     * @override
-     */
-    isSelected() {
-        return this.getDataBind().isSelected()
     }
 
 }

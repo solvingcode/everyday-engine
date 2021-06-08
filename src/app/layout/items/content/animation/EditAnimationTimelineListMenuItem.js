@@ -10,6 +10,7 @@ export default class EditAnimationTimelineListMenuItem extends ListMenuItem{
      */
     constructor(parent, animation, time = 0) {
         super({
+            stateCode: '',
             name: '',
             zone: parent.zone
         })

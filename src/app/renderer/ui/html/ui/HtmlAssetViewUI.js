@@ -47,7 +47,7 @@ export default class HtmlAssetViewUI extends ItemUI {
 
     static props = {
         tag: 'div',
-        className: 'panel asset-view'
+        className: 'panel'
     }
 
 }

@@ -379,7 +379,16 @@ AppState.States = {
     ACTION_EDIT_ASSET_ANIMATION_STOP: {history: false},
     ACTION_ATTACH_ASSET_ANIMATION_START: {history: false},
     ACTION_ATTACH_ASSET_ANIMATION_PROGRESS: {history: false},
-    ACTION_ATTACH_ASSET_ANIMATION_STOP: {history: false}
+    ACTION_ATTACH_ASSET_ANIMATION_STOP: {history: false},
+    ACTION_DELETE_ANIMATION_FRAME_START: {history: true},
+    ACTION_DELETE_ANIMATION_FRAME_PROGRESS: {history: false},
+    ACTION_DELETE_ANIMATION_FRAME_STOP: {history: true},
+    ACTION_PLAY_ANIMATION_START: {history: false},
+    ACTION_PLAY_ANIMATION_PROGRESS: {history: false},
+    ACTION_PLAY_ANIMATION_STOP: {history: false},
+    ACTION_STOP_ANIMATION_START: {history: false},
+    ACTION_STOP_ANIMATION_PROGRESS: {history: false},
+    ACTION_STOP_ANIMATION_STOP: {history: false}
 }
 
 export default AppState
