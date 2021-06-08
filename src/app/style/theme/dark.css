@@ -200,8 +200,20 @@ button.selected, button.hidden.selected, button.locked.selected{
 .animation-wrapper .panel:nth-child(1){
 
 }
+.animation-wrapper .panel:nth-child(2) .list-element{
+    border-left: 1px solid #4d4d4c;
+}
+.animation-wrapper .panel:nth-child(2) .animation-form-wrapper{
+    background-color: #3e3e3e;
+}
 .animation-wrapper .panel:nth-child(2){
   background-color: #323232;
+}
+.animation-wrapper .panel:nth-child(2) .animation-form-wrapper > .panel{
+    border-right: 1px solid #4d4d4c;
+}
+.animation-wrapper .panel:nth-child(2) .list-element .text p{
+    color: #787878 !important;
 }
 
 .units-wrapper .list-element .list-element-img-wrapper i{

@@ -1,41 +1,20 @@
-import ListMenuItem from '../../list/ListMenuItem.js'
-import EditAnimationTimelineElementMenuItem from './EditAnimationTimelineElementMenuItem.js'
+import PanelMenuItem from '../../panel/PanelMenuItem.js'
+import EditAnimationFormWrapperMenuItem from './EditAnimationFormWrapperMenuItem.js'
+import EditAnimationTimelineListMenuItem from './EditAnimationTimelineListMenuItem.js'
 
-export default class EditAnimationTimelineMenuItem extends ListMenuItem{
-
+export default class EditAnimationTimelineMenuItem extends PanelMenuItem {
     /**
      * @param {MenuItem} parent
      * @param {Animation} animation
-     * @param {number} time
      */
-    constructor(parent, animation, time = 0) {
+    constructor(parent, animation) {
         super({
             name: 'Animation',
             zone: parent.zone
         })
-        this.data = {animation, time}
-        this.parent = parent
+        this.items = [
+            new EditAnimationFormWrapperMenuItem(this, animation),
+            new EditAnimationTimelineListMenuItem(this, animation)
+        ]
     }
-
-    /**
-     * @override
-     */
-    getListElementFormClass() {
-        return EditAnimationTimelineElementMenuItem
-    }
-
-    /**
-     * @override
-     */
-    getFormObject() {
-        return this.data.animation.getFrames()
-    }
-
-    /**
-     * @override
-     */
-    getActions(bindObject){
-        return []
-    }
-
 }

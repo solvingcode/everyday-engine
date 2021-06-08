@@ -34,8 +34,7 @@ HtmlFormUI.props = {
     tag: 'div',
     className: 'form',
     prefix: 'form-',
-    version: 'form-version',
-    width: '100%'
+    version: 'form-version'
 }
 
 export default HtmlFormUI

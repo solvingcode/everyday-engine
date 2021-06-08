@@ -12,6 +12,7 @@ export default class AssetAnimationXmlGenerator {
         const parentNode = root.createElement('animation')
         parentNode.setAttribute('id', `${animation.getId()}`)
         parentNode.setAttribute('name', animation.getName())
+        parentNode.setAttribute('samples', `${animation.getSamples()}`)
         animation.getFrames().forEach(keyframe => {
             const nodeNode = root.createElement('frame')
             nodeNode.setAttribute('id', `${keyframe.getId()}`)

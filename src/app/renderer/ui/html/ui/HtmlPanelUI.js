@@ -68,7 +68,6 @@ class HtmlPanelUI extends ItemUI {
 
 HtmlPanelUI.props = {
     tag: 'div',
-    width: '100%',
     className: 'panel panel-static'
 }
 

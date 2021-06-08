@@ -69,6 +69,11 @@ h4{
 
 /* panel -- */
 
+.panel{
+    width: 100%;
+    box-sizing: border-box;
+}
+
 .panel > div{
     overflow: auto;
     padding: 5px;
@@ -199,7 +204,7 @@ h4{
     display: none;
 }
 
-.panel .tree, .panel{
+.panel .tree{
     width: 30%;
     float: left;
 }
@@ -374,6 +379,7 @@ h4{
     width: 40px;
     height: 40px;
     background: none;
+    float: left;
 }
 .animation-wrapper .panel:nth-child(2) .list-element .asset-view img{
     width: 100%;
@@ -387,9 +393,58 @@ h4{
     background: none;
     border-bottom: 1px solid #4d4d4c;
 }
+.animation-wrapper .panel:nth-child(2) .animation-form-wrapper{
+    width: 100%;
+    box-sizing: border-box;
+}
+.animation-wrapper .panel:nth-child(2) .animation-form-wrapper .form{
+    float: left;
+    width: unset;
+    padding-left: 5px;
+}
+.animation-wrapper .panel:nth-child(2) .animation-form-wrapper > .panel{
+    float: left;
+    width: unset;
+}
+.animation-wrapper .panel:nth-child(2) .animation-form-wrapper > .panel button{
+    width: 30px;
+    height: 30px;
+    font-size: 12px;
+    margin: 3px 3px 3px 0;
+    background: none;
+}
+.animation-wrapper .panel:nth-child(2) .animation-form-wrapper .form .form-input{
+    float: left;
+    box-sizing: border-box;
+    height: 30px;
+}
+.animation-wrapper .panel:nth-child(2) .animation-form-wrapper .form .form-input label{
+    text-align: left;
+    width: unset;
+    line-height: 23px;
+    display: block;
+    float: left;
+}
 
-.animation-wrapper .panel:nth-child(2) .list-element .form{
-    margin: 5px 0;
+.animation-wrapper .panel:nth-child(2) .list-element{
+    width: 60px;
+    height: 100%;
+    float: left;
+    position: relative;
+    padding-top: 25px;
+}
+
+.animation-wrapper .panel:nth-child(2) .list-element .text{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    padding: 2px 5px;
+}
+
+.animation-wrapper .panel:nth-child(2) .list-element .text p{
+    position: unset !important;
+    padding: 0;
 }
 
 .units-wrapper .list-element {
