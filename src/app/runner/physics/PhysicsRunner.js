@@ -18,7 +18,7 @@ export class PhysicsRunner extends Runner {
     /**
      * @override
      */
-    execute(mouse) {
+    execute() {
         const world = World.get()
         const physicsManager = world.getPhysicsManager()
         physicsManager.getMapBodyUnit().forEach(bodyUnit => {

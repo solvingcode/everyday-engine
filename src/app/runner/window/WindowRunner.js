@@ -12,9 +12,8 @@ class WindowRunner extends Runner {
 
     /**
      * @override
-     * @param {Mouse} mouse
      */
-    execute(mouse) {
+    execute() {
         this.cursor()
     }
 

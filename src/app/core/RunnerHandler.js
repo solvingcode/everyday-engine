@@ -4,23 +4,35 @@ import Action from './Action.js'
  * Handle global events triggered by the user (click , mouse move)
  * and define related action (Runner) to be executed
  */
-class EventHandler {
+class RunnerHandler {
+
+    /**
+     * @type {number}
+     */
+    lastTime
 
     /**
      * Apply actions when event is triggered onto the window (Mouse and Keyboard events, ...)
-     * @param {Window} window
      * @param {Class[]} runners
      */
-    handle(window, runners) {
-        const mouse = window.mouse
-        const keyboard = window.keyboard
+    handle(runners) {
         const action = Action.get()
+        const deltaTime = this.updateDeltaTime()
         action.reset()
         runners.forEach(runner => {
             const runnerInstance = runner.get()
-            action.add(runnerInstance, mouse, keyboard)
+            action.add(runnerInstance, deltaTime)
         })
-        action.run(window)
+        action.run()
+    }
+
+    /**
+     * @return {number}
+     */
+    updateDeltaTime(){
+        const deltaTime = this.lastTime ? (Date.now() - this.lastTime) / 1000 : 0
+        this.lastTime = Date.now()
+        return deltaTime
     }
 
     static get() {
@@ -31,6 +43,6 @@ class EventHandler {
     }
 }
 
-EventHandler.instance = null
+RunnerHandler.instance = null
 
-export default EventHandler
+export default RunnerHandler

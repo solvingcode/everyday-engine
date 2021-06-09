@@ -14,6 +14,7 @@ export default class AnimationParser extends Parser {
             const xmlNode = xmlDocument.documentElement
             const name = xmlNode.getAttribute('name')
             const samples = xmlNode.getAttribute('samples')
+            const lengthSecond = xmlNode.getAttribute('length')
             const animation = new Animation(name)
             const keyframes = []
             xmlNode.childNodes.forEach(cXmlNode => {
@@ -25,12 +26,13 @@ export default class AnimationParser extends Parser {
                     const keyframe = new KeyFrame()
                     keyframe.setId(id)
                     keyframe.setAssetId(parseInt(asset))
-                    keyframe.setTime(parseFloat(time))
+                    keyframe.setTime(parseInt(time))
                     keyframes.push(keyframe)
                 }
             })
             animation.setFrames(keyframes)
             animation.setSamples(parseInt(samples))
+            animation.setLengthSecond(parseInt(lengthSecond))
             return animation
         } else {
             throw new ClientError(`${this.constructor.name}: data must be an XML Document`)

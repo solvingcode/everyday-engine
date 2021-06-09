@@ -33,9 +33,8 @@ class SimulateRunner extends Runner {
 
     /**
      * Execute start/stop simulation
-     * @param {Mouse} mouse
      */
-    execute(mouse) {
+    execute() {
         const stateManager = StateManager.get()
         const storage = Storage.get()
         if (stateManager.isStart(this.STATE)) {

@@ -13,7 +13,7 @@ export default class AddScriptCodeAction extends Action {
     static run() {
         const assetsManager = World.get().getAssetsManager()
         const selectedFolder = assetsManager.getSelectedFolder() || assetsManager.getRootFolder()
-        assetsManager.createScript(selectedFolder, AssetScriptCode, AssetScriptCodeGenerator.get())
+        assetsManager.createClassScript(selectedFolder, AssetScriptCode, AssetScriptCodeGenerator.get())
             .then(asset => asset.open() || asset.select())
         return true
     }

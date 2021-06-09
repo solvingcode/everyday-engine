@@ -40,6 +40,11 @@ export default class Animation {
     time
 
     /**
+     * @type {number}
+     */
+    lengthSecond
+
+    /**
      * @param {string} name
      */
     constructor(name) {
@@ -50,6 +55,7 @@ export default class Animation {
         this.samples = 10
         this.playing = false
         this.time = 0
+        this.lengthSecond = 1
     }
 
     /**
@@ -196,7 +202,7 @@ export default class Animation {
     }
 
     updateTimeline() {
-        const times = [...Array(this.getSamples()).keys()]
+        const times = [...Array(this.getSamples() * this.getLengthSecond()).keys()]
         this.timeline = times.map(time => new Timeline(this.tryGetAt(time)))
     }
 
@@ -220,4 +226,26 @@ export default class Animation {
     setTime(time){
         this.time = time
     }
+
+    /**
+     * @return {number}
+     */
+    getFrameTime(){
+        return Math.floor(this.time)
+    }
+
+    /**
+     * @param {number} lengthSecond
+     */
+    setLengthSecond(lengthSecond) {
+        this.lengthSecond = lengthSecond
+    }
+
+    /**
+     * @return {number}
+     */
+    getLengthSecond() {
+        return this.lengthSecond
+    }
+
 }

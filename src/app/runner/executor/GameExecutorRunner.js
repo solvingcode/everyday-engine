@@ -19,7 +19,7 @@ export class GameExecutorRunner extends Runner {
     /**
      * @override
      */
-    execute(mouse) {
+    execute() {
         const world = World.get()
         const units = world.getUnitManager().getUnits()
         const camera = world.getCamera()

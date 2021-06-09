@@ -1,6 +1,7 @@
 import Runner from '../Runner.js'
 import Menu from '../../layout/Menu.js'
 import {MouseButton} from '../../core/Mouse.js'
+import Window from '../../core/Window.js'
 
 /**
  * Execute actions related to menu items
@@ -22,10 +23,10 @@ class MenuRunner extends Runner {
 
     /**
      * Apply action for the menu.
-     * @param {Mouse} mouse
      * @return {Boolean}
      */
-    execute(mouse) {
+    execute() {
+        const mouse = Window.get().mouse
         const menuItems = this.menu.getUIRenderer().getItemsAt(mouse)
         if (menuItems && menuItems.length) {
             this.menu.selectItems(menuItems)

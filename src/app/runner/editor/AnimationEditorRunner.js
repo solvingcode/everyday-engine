@@ -17,13 +17,16 @@ export default class AnimationEditorRunner extends Runner {
 
     /**
      * @override
+     * @param {number} deltaTime
      */
-    execute(mouse) {
+    execute(deltaTime) {
         const world = World.get()
         const tabManager = world.getTabManager()
         const animation = world.getAnimationManager().getSelected(tabManager)
         if(animation && animation.isPlaying()){
-            animation.setTime((animation.getTime() + 1) % animation.getSamples())
+            const expectedFrameTime = 1 / animation.getSamples()
+            const timeFrame = (animation.getTime() + deltaTime / expectedFrameTime) % animation.getFrames().length
+            animation.setTime(timeFrame)
         }
     }
 }

@@ -6,6 +6,7 @@ import TransformComponent from '../../component/internal/TransformComponent.js'
 import Vector from '../../utils/Vector.js'
 import Menu from '../../layout/Menu.js'
 import ScriptHelper from '../../utils/ScriptHelper.js'
+import Window from '../../core/Window.js'
 
 export default class ScriptEditorRunner extends Runner {
 
@@ -43,9 +44,9 @@ export default class ScriptEditorRunner extends Runner {
 
     /**
      * Execute all world actions (move camera, ...)
-     * @param {Mouse} mouse
      */
-    execute(mouse) {
+    execute() {
+        const mouse = Window.get().mouse
         const stateManager = StateManager.get()
         if (!stateManager.isRunning() && !stateManager.isFormUpdating()) {
             const script = World.get().getScriptManager().getSelected(World.get().getTabManager())

@@ -19,7 +19,7 @@ export class GameRenderRunner extends Runner {
     /**
      * @override
      */
-    execute(mouse) {
+    execute() {
         World.get().draw(MeshRenderer.get())
     }
 

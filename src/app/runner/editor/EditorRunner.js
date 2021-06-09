@@ -60,9 +60,9 @@ class EditorRunner extends Runner {
 
     /**
      * Execute all world actions (move camera, ...)
-     * @param {Mouse} mouse
      */
-    execute(mouse) {
+    execute() {
+        const mouse = Window.get().mouse
         const stateManager = StateManager.get()
         if (!stateManager.isRunning() && !stateManager.isFormUpdating()) {
             this.updateMouseWheel(stateManager, mouse)

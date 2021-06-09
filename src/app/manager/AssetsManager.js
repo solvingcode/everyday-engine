@@ -10,6 +10,7 @@ import AssetScript from '../asset/types/script/AssetScript.js'
 import Animation from '../animation/Animation.js'
 import AssetAnimationXml from '../asset/types/animation/AssetAnimationXml.js'
 import SystemError from '../exception/type/SystemError.js'
+import AnimationScript from '../flow/AnimationScript.js'
 
 /**
  * @class {AssetsManager}
@@ -75,9 +76,25 @@ export default class AssetsManager extends AssetsManagerData {
      * @param {Class<AssetScript>} type
      * @param {AssetScriptGenerator} generator
      */
-    async createScript(folder, type, generator) {
+    async createClassScript(folder, type, generator) {
         const assetName = this.generateUniqAssetName('NewScript', folder.getId())
         const flow = new ClassScript(assetName)
+        return this.createAsset(
+            generator.generate(flow),
+            type,
+            assetName,
+            folder.getId()
+        )
+    }
+
+    /**
+     * @param {Folder} folder
+     * @param {Class<AssetScript>} type
+     * @param {AssetAnimationScriptGenerator} generator
+     */
+    async createAnimationScript(folder, type, generator) {
+        const assetName = this.generateUniqAssetName('NewAnimationScript', folder.getId())
+        const flow = new AnimationScript(assetName)
         return this.createAsset(
             generator.generate(flow),
             type,

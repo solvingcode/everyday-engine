@@ -19,7 +19,7 @@ export class SetupRenderRunner extends Runner {
     /**
      * @override
      */
-    execute(mouse) {
+    execute() {
         const world = World.get()
         const tabManager = world.getTabManager()
         const script = world.getScriptManager().getSelected(world.getTabManager())

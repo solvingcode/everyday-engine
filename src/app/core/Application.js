@@ -1,5 +1,5 @@
 import Window from './Window.js'
-import EventHandler from './EventHandler.js'
+import RunnerHandler from './RunnerHandler.js'
 import ExceptionHandler from '../exception/ExceptionHandler.js'
 
 /**
@@ -8,7 +8,12 @@ import ExceptionHandler from '../exception/ExceptionHandler.js'
 class Application {
 
     /**
-     * @param {Class<Loop>[]} loops
+     * @type {Loop[]}
+     */
+    loops
+
+    /**
+     * @param {Loop[]} loops
      */
     constructor(loops) {
         this.loops = loops
@@ -30,7 +35,7 @@ class Application {
         try {
             this.loops.forEach(loop => {
                 const loopInstance = loop.get()
-                EventHandler.get().handle(Window.get(), loopInstance.getRunners())
+                RunnerHandler.get().handle(loopInstance.getRunners())
                 loopInstance.loop()
             })
         } catch (e) {

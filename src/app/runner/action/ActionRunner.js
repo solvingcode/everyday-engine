@@ -41,7 +41,7 @@ import SelectTabAction from './content/SelectTabAction.js'
 import CloseTabAction from './content/CloseTabAction.js'
 import AddFolderAction from './assets/AddFolderAction.js'
 import SelectFolderAction from './assets/SelectFolderAction.js'
-import AddScriptAction from './assets/AddScriptAction.js'
+import AddClassScriptAction from './assets/AddClassScriptAction.js'
 import DeleteNodeAction from './script/DeleteNodeAction.js'
 import DeleteEdgeAction from './script/DeleteEdgeAction.js'
 import AddNodeAction from './script/AddNodeAction.js'
@@ -60,6 +60,7 @@ import AttachAssetAnimationAction from './animation/AttachAssetAnimationAction.j
 import DeleteKeyFrameAnimationAction from './animation/DeleteKeyFrameAnimationAction.js'
 import PlayAnimationAction from './animation/PlayAnimationAction.js'
 import StopAnimationAction from './animation/StopAnimationAction.js'
+import Window from '../../core/Window.js'
 
 /**
  * Action Runner class.
@@ -83,9 +84,9 @@ class ActionRunner extends Runner {
 
     /**
      * Execute start/stop action
-     * @param {Mouse} mouse
      */
-    execute(mouse) {
+    execute() {
+        const mouse = Window.get().mouse
         const stateManager = StateManager.get()
         const typeActions = {
             DELETE: DeleteAction,
@@ -130,7 +131,7 @@ class ActionRunner extends Runner {
             SELECT_ASSET: SelectAssetAction,
             DELETE_FOLDER: DeleteFolderAction,
             DELETE_ASSET: DeleteAssetAction,
-            ADD_SCRIPT: AddScriptAction,
+            ADD_SCRIPT: AddClassScriptAction,
             ADD_CODE_SCRIPT: AddScriptCodeAction,
             DELETE_SCRIPT_NODE: DeleteNodeAction,
             DELETE_SELECTED_NODE: DeleteSelectedNodeAction,

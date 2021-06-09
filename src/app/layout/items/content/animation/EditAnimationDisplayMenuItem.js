@@ -17,7 +17,7 @@ export default class EditAnimationDisplayMenuItem extends MenuItem {
             type: Layout.type.WRAPPER
         })
         this.data = {bind: {animation}}
-        this.time = animation.getTime()
+        this.time = animation.getFrameTime()
         this.updateDisplay()
     }
 
@@ -27,15 +27,15 @@ export default class EditAnimationDisplayMenuItem extends MenuItem {
     update() {
         super.update()
         const {animation} = this.data.bind
-        if(animation.getTime() !== this.time){
+        if(animation.getFrameTime() !== this.time){
             this.updateDisplay()
-            this.time = animation.getTime()
+            this.time = animation.getFrameTime()
         }
     }
 
     updateDisplay(){
         const {animation} = this.data.bind
-        const keyFrame = animation.tryGetAt(animation.getTime())
+        const keyFrame = animation.tryGetAt(animation.getFrameTime())
         if (keyFrame) {
             const asset = World.get().getAssetsManager().findAssetImageById(keyFrame.getAssetId())
             this.items = [

@@ -20,7 +20,7 @@ export default class ClassCompiler extends Compiler {
      */
     run(script) {
         if (!(script instanceof ClassScript)) {
-            throw new SystemError(`The given flow is not correct (must be a Class flow)`)
+            throw new SystemError(`The given script is not correct (must be a Class script)`)
         }
         const nodes = script.getNodes()
         const world = World.get()

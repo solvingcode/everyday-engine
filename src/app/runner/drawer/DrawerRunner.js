@@ -9,6 +9,7 @@ import MoveAction from '../action/edit/MoveAction.js'
 import Menu from '../../layout/Menu.js'
 import SystemError from '../../exception/type/SystemError.js'
 import GeometryHelper from '../../utils/GeometryHelper.js'
+import Window from '../../core/Window.js'
 
 /**
  * @abstract
@@ -99,9 +100,9 @@ export default class DrawerRunner extends Runner {
 
     /**
      * @override
-     * @param {Mouse} mouse
      */
-    execute(mouse) {
+    execute() {
+        const mouse = Window.get().mouse
         const menu = Menu.get()
         const stateManager = StateManager.get()
         const camera = this.getCamera()

@@ -19,7 +19,7 @@ export default class HistoryRunner extends Runner {
     /**
      * @override
      */
-    execute(mouse) {
+    execute() {
         const stateManager = StateManager.get()
         const stopStatesWithHistory = stateManager.getStopStates().filter(state => stateManager.hasHistory(state))
         const startStatesWithHistory = stateManager.getStartStates().filter(state => stateManager.hasHistory(state))

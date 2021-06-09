@@ -3,7 +3,7 @@ import World from '../../../world/World.js'
 import AssetScriptXml from '../../../asset/types/script/AssetScriptXml.js'
 import AssetScriptXmlGenerator from '../../../generator/script/AssetScriptXmlGenerator.js'
 
-export default class AddScriptAction extends Action {
+export default class AddClassScriptAction extends Action {
 
     static STATE = 'ACTION_ADD_SCRIPT'
 
@@ -13,7 +13,7 @@ export default class AddScriptAction extends Action {
     static run() {
         const assetsManager = World.get().getAssetsManager()
         const selectedFolder = assetsManager.getSelectedFolder() || assetsManager.getRootFolder()
-        assetsManager.createScript(selectedFolder, AssetScriptXml, AssetScriptXmlGenerator.get())
+        assetsManager.createClassScript(selectedFolder, AssetScriptXml, AssetScriptXmlGenerator.get())
             .then(asset => asset.open() || asset.select())
         return true
     }
