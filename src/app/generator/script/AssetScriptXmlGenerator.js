@@ -49,7 +49,7 @@ export default class AssetScriptXmlGenerator extends AssetScriptGenerator {
     }
 
     /**
-     * @return {AssetScriptXmlGenerator}
+     * @return {AssetScriptXmlGenerator|*}
      */
     static get() {
         return super.get()
