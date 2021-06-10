@@ -12,6 +12,7 @@ import NodeHelper from './NodeHelper.js'
 import Vector from './Vector.js'
 import MeshComponent from '../component/internal/MeshComponent.js'
 import StringVariableNode from '../flow/node/variable/StringVariableNode.js'
+import AnimationNode from '../flow/node/AnimationNode.js'
 
 export default class ScriptHelper {
 
@@ -36,6 +37,8 @@ export default class ScriptHelper {
             node = script.createNode(functionRegistry, ConditionNode, nodeValue)
         } else if (nodeType === NODE_TYPES.UNIT) {
             node = script.createNode(functionRegistry, UnitNode, nodeValue)
+        } else if (nodeType === NODE_TYPES.ANIMATION) {
+            node = script.createNode(functionRegistry, AnimationNode, nodeValue)
         } else if (nodeType === NODE_TYPES.VAR_STRING) {
             node = script.createNode(functionRegistry, StringVariableNode, nodeValue)
         } else {
@@ -60,6 +63,8 @@ export default class ScriptHelper {
             nodeType = NODE_TYPES.CONDITION
         } else if (node instanceof UnitNode) {
             nodeType = NODE_TYPES.UNIT
+        } else if (node instanceof AnimationNode) {
+            nodeType = NODE_TYPES.ANIMATION
         } else if (node instanceof KeyCodeNode) {
             nodeType = NODE_TYPES.KEY_CODE
         } else if (node instanceof StringVariableNode) {

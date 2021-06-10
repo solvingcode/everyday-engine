@@ -17,6 +17,8 @@ import Vector from '../utils/Vector.js'
 import {SCENE_HEIGHT, SCENE_WIDTH} from '../core/Constant.js'
 import StringVariableNode from './node/variable/StringVariableNode.js'
 import AStringVariable from './variable/AStringVariable.js'
+import AAnimation from './animation/AAnimation.js'
+import AnimationNode from './node/AnimationNode.js'
 
 /**
  * @abstract
@@ -53,6 +55,10 @@ export default class AScript extends AScriptData{
                 break
             case UnitNode:
                 nodeSource = new AUnit(TYPES.NUMBER, value)
+                registry.register(nodeSource)
+                break
+            case AnimationNode:
+                nodeSource = new AAnimation(TYPES.NUMBER, value)
                 registry.register(nodeSource)
                 break
             case StringVariableNode:

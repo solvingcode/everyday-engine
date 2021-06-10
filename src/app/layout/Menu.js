@@ -24,11 +24,11 @@ import TabListMenuItem from './items/tab/TabListMenuItem.js'
 import ContentMenuItem from './items/content/ContentMenuItem.js'
 import AssetMenuItem from './items/assets/AssetMenuItem.js'
 import ScriptMenuItem from './items/script/ScriptMenuItem.js'
-import AddCodeScriptMenuItem from './items/assets/AddCodeScriptMenuItem.js'
 import ErrorPopupMenuItem from './items/error/ErrorPopupMenuItem.js'
-import AddScriptMenuItem from './items/assets/AddScriptMenuItem.js'
+import AddClassScriptMenuItem from './items/assets/AddClassScriptMenuItem.js'
 import DeleteSelectedNodeMenuItem from './items/script/node/delete/DeleteSelectedNodeMenuItem.js'
 import AddAnimationMenuItem from './items/animation/AddAnimationMenuItem.js'
+import AddAnimationScriptMenuItem from './items/assets/AddAnimationScriptMenuItem.js'
 
 /**
  * Define all menu items
@@ -59,8 +59,8 @@ class Menu {
             new MoveUpMenuItem(),
             new MoveDownMenuItem(),
             new CameraMenuItem(),
-            new AddCodeScriptMenuItem(),
-            new AddScriptMenuItem(),
+            new AddClassScriptMenuItem(),
+            new AddAnimationScriptMenuItem(),
             new AddAnimationMenuItem(),
             new SimulateStartMenuItem(),
             new SimulateStopMenuItem(),

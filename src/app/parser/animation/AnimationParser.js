@@ -12,19 +12,20 @@ export default class AnimationParser extends Parser {
     static parse(xmlDocument) {
         if (xmlDocument.constructor === XMLDocument) {
             const xmlNode = xmlDocument.documentElement
+            const id = parseInt(xmlNode.getAttribute('id'))
             const name = xmlNode.getAttribute('name')
             const samples = xmlNode.getAttribute('samples')
             const lengthSecond = xmlNode.getAttribute('length')
-            const animation = new Animation(name)
+            const animation = new Animation(id, name)
             const keyframes = []
             xmlNode.childNodes.forEach(cXmlNode => {
                 const element = cXmlNode.nodeName
                 if (element === 'frame') {
                     const asset = cXmlNode.getAttribute('asset')
                     const time = cXmlNode.getAttribute('time')
-                    const id = parseInt(cXmlNode.getAttribute('id'))
+                    const frameId = parseInt(cXmlNode.getAttribute('id'))
                     const keyframe = new KeyFrame()
-                    keyframe.setId(id)
+                    keyframe.setId(frameId)
                     keyframe.setAssetId(parseInt(asset))
                     keyframe.setTime(parseInt(time))
                     keyframes.push(keyframe)

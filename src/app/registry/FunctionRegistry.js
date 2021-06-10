@@ -28,6 +28,8 @@ import GreaterThanFunction from '../flow/function/native/basic/GreaterThanFuncti
 import EqualToFunction from '../flow/function/native/basic/EqualToFunction.js'
 import NotEqualToFunction from '../flow/function/native/basic/NotEqualToFunction.js'
 import AVariable from '../flow/variable/AVariable.js'
+import OnAnimationStartEvent from '../flow/event/native/OnAnimationStartEvent.js'
+import AAnimation from '../flow/animation/AAnimation.js'
 
 export default class FunctionRegistry extends Registry{
 
@@ -46,6 +48,7 @@ export default class FunctionRegistry extends Registry{
             new OnInputXAxisEvent(),
             new OnInputYAxisEvent(),
             new OnInputJumpEvent(),
+            new OnAnimationStartEvent(),
 
             // Condition
             new TrueCondition(),
@@ -141,6 +144,7 @@ export default class FunctionRegistry extends Registry{
                 !(instance instanceof AConstant) &&
                 !(instance instanceof ACondition) &&
                 !(instance instanceof AUnit) &&
+                !(instance instanceof AAnimation) &&
                 !(instance instanceof AKeyCode) &&
                 !(instance instanceof AVariable)
             )
@@ -179,6 +183,13 @@ export default class FunctionRegistry extends Registry{
      */
     getConditionInstances(){
         return super.getInstances().filter(instance => instance instanceof ACondition)
+    }
+
+    /**
+     * @return {ACondition[]}
+     */
+    getAnimationInstances(){
+        return super.getInstances().filter(instance => instance instanceof AAnimation)
     }
 
 }

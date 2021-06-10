@@ -1,7 +1,7 @@
 import Action from '../Action.js'
 import World from '../../../world/World.js'
-import AssetScriptXml from '../../../asset/types/script/AssetScriptXml.js'
 import AssetAnimationScriptGenerator from '../../../generator/animation/AssetAnimationScriptGenerator.js'
+import AssetAnimationScriptXml from '../../../asset/types/animation/AssetAnimationScriptXml.js'
 
 export default class AddAnimationScriptAction extends Action {
 
@@ -13,7 +13,7 @@ export default class AddAnimationScriptAction extends Action {
     static run() {
         const assetsManager = World.get().getAssetsManager()
         const selectedFolder = assetsManager.getSelectedFolder() || assetsManager.getRootFolder()
-        assetsManager.createAnimationScript(selectedFolder, AssetScriptXml, AssetAnimationScriptGenerator.get())
+        assetsManager.createAnimationScript(selectedFolder, AssetAnimationScriptXml, AssetAnimationScriptGenerator.get())
             .then(asset => asset.open() || asset.select())
         return true
     }

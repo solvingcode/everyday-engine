@@ -26,6 +26,11 @@ export default class EditAnimationFormMenuItem extends FormMenuItem {
                 bind: 'samples',
                 label: 'Samples',
                 type: Layout.form.TEXT
+            },
+            {
+                bind: 'lengthSecond',
+                label: 'Length (sec)',
+                type: Layout.form.TEXT
             }
         ]
     }

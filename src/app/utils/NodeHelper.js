@@ -11,6 +11,7 @@ import Vector from './Vector.js'
 import AKeyCode from '../flow/keycode/AKeyCode.js'
 import AVariable from '../flow/variable/AVariable.js'
 import AStringVariable from '../flow/variable/AStringVariable.js'
+import AAnimation from '../flow/animation/AAnimation.js'
 
 export default class NodeHelper {
 
@@ -42,6 +43,9 @@ export default class NodeHelper {
         }else if(nodeSource instanceof AUnit){
             const unit = World.get().findUnitById(parseInt(nodeSource.getName()))
             return `${unit.getName()}`
+        }else if(nodeSource instanceof AAnimation){
+            const animation = World.get().getAnimationManager().findById(parseInt(nodeSource.getName()))
+            return `${animation.getName()}`
         }else if(nodeSource instanceof AFunction){
             return `${nodeSource.getName()}`
         }else{
@@ -65,6 +69,8 @@ export default class NodeHelper {
             return NODE_TYPES.EVENT
         }else if(nodeSource instanceof AUnit){
             return NODE_TYPES.UNIT
+        }else if(nodeSource instanceof AAnimation){
+            return NODE_TYPES.ANIMATION
         }else if(nodeSource instanceof AFunction){
             return NODE_TYPES.FUNCTION
         }else if(nodeSource instanceof AStringVariable){
@@ -108,6 +114,8 @@ export default class NodeHelper {
             headColor = '#225e31'
         } else if (type === NODE_TYPES.UNIT) {
             headColor = '#5e2254'
+        } else if (type === NODE_TYPES.ANIMATION) {
+            headColor = '#5e5622'
         } else if (type === NODE_TYPES.KEY_CODE) {
             headColor = '#375e22'
         } else if (type === NODE_TYPES.VAR_STRING) {
@@ -173,7 +181,7 @@ export default class NodeHelper {
      * @return {boolean}
      */
     static hasBaseInput(type){
-        return type === NODE_TYPES.FUNCTION || type === NODE_TYPES.CONDITION
+        return type === NODE_TYPES.FUNCTION || type === NODE_TYPES.CONDITION || type === NODE_TYPES.ANIMATION
     }
 
     /**
@@ -181,6 +189,6 @@ export default class NodeHelper {
      * @return {boolean}
      */
     static hasBaseOutput(type){
-        return type === NODE_TYPES.EVENT
+        return type === NODE_TYPES.EVENT || type === NODE_TYPES.ANIMATION
     }
 }

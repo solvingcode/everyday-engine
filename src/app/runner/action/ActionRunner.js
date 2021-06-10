@@ -61,6 +61,7 @@ import DeleteKeyFrameAnimationAction from './animation/DeleteKeyFrameAnimationAc
 import PlayAnimationAction from './animation/PlayAnimationAction.js'
 import StopAnimationAction from './animation/StopAnimationAction.js'
 import Window from '../../core/Window.js'
+import AddAnimationScriptAction from './assets/AddAnimationScriptAction.js'
 
 /**
  * Action Runner class.
@@ -146,7 +147,8 @@ class ActionRunner extends Runner {
             ATTACH_ASSET_ANIMATION: AttachAssetAnimationAction,
             DELETE_ANIMATION_FRAME: DeleteKeyFrameAnimationAction,
             PLAY_ANIMATION: PlayAnimationAction,
-            STOP_ANIMATION: StopAnimationAction
+            STOP_ANIMATION: StopAnimationAction,
+            ADD_ANIMATION_SCRIPT: AddAnimationScriptAction
         }
         const selectedUnits = this.unitSelector.getSelected(World.get())
         for(const iTypeAction in typeActions){

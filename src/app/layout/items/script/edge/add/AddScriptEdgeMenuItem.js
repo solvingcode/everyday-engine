@@ -3,6 +3,7 @@ import AddScriptEdgeFormMenuItem from './AddScriptEdgeFormMenuItem.js'
 import PanelMenuItem from '../../../panel/PanelMenuItem.js'
 import World from '../../../../../world/World.js'
 import AssetScriptXml from '../../../../../asset/types/script/AssetScriptXml.js'
+import AssetAnimationScriptXml from '../../../../../asset/types/animation/AssetAnimationScriptXml.js'
 
 export default class AddScriptEdgeMenuItem extends PanelMenuItem {
     constructor(parent) {
@@ -25,7 +26,8 @@ export default class AddScriptEdgeMenuItem extends PanelMenuItem {
     isValid() {
         const world = World.get()
         const asset = world.getScriptManager().getSelectedAsset(world.getTabManager())
-        return super.isValid() && asset && asset.getType() instanceof AssetScriptXml
+        return super.isValid() && asset
+            && (asset.getType() instanceof AssetScriptXml || asset.getType() instanceof AssetAnimationScriptXml)
     }
 }
 

@@ -388,7 +388,10 @@ AppState.States = {
     ACTION_PLAY_ANIMATION_STOP: {history: false},
     ACTION_STOP_ANIMATION_START: {history: false},
     ACTION_STOP_ANIMATION_PROGRESS: {history: false},
-    ACTION_STOP_ANIMATION_STOP: {history: false}
+    ACTION_STOP_ANIMATION_STOP: {history: false},
+    ACTION_ADD_ANIMATION_SCRIPT_START: {history: true},
+    ACTION_ADD_ANIMATION_SCRIPT_PROGRESS: {history: false},
+    ACTION_ADD_ANIMATION_SCRIPT_STOP: {history: true}
 }
 
 export default AppState

@@ -1,6 +1,7 @@
 import ClientError from '../exception/type/ClientError.js'
 import Animation from '../animation/Animation.js'
 import AnimationParser from '../parser/animation/AnimationParser.js'
+import Maths from '../utils/Maths.js'
 
 export default class AnimationManager {
 
@@ -14,6 +15,13 @@ export default class AnimationManager {
     }
 
     /**
+     * @return {Animation[]}
+     */
+    getAnimations(){
+        return this.animations
+    }
+
+    /**
      * @param {string} name
      * @return {Animation}
      */
@@ -22,11 +30,19 @@ export default class AnimationManager {
     }
 
     /**
+     * @param {number} id
+     * @return {Animation}
+     */
+    findById(id) {
+        return this.animations.find(animation => animation.getId() === id)
+    }
+
+    /**
      * @param {string} name
      * @return {Animation}
      */
     create(name) {
-        const animation = new Animation(name)
+        const animation = new Animation(Maths.generateId(), name)
         this.tryAdd(animation)
         return animation
     }

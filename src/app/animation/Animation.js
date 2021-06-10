@@ -1,4 +1,3 @@
-import Maths from '../utils/Maths.js'
 import ClientError from '../exception/type/ClientError.js'
 import Timeline from './Timeline.js'
 
@@ -45,11 +44,12 @@ export default class Animation {
     lengthSecond
 
     /**
+     * @param {number} id
      * @param {string} name
      */
-    constructor(name) {
+    constructor(id, name) {
+        this.id = id
         this.name = name
-        this.id = Maths.generateId()
         this.frames = []
         this.timeline = []
         this.samples = 10

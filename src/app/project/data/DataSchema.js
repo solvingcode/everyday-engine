@@ -85,6 +85,10 @@ import ScriptComponent from '../../component/internal/ScriptComponent.js'
 import AStringVariable from '../../flow/variable/AStringVariable.js'
 import EditAnimationContent from '../../content/animation/EditAnimationContent.js'
 import AssetAnimationXml from '../../asset/types/animation/AssetAnimationXml.js'
+import AssetAnimationScriptXml from '../../asset/types/animation/AssetAnimationScriptXml.js'
+import AAnimation from '../../flow/animation/AAnimation.js'
+import OnAnimationStartEvent from '../../flow/event/native/OnAnimationStartEvent.js'
+import AnimationNode from '../../flow/node/AnimationNode.js'
 
 /**
  * @class {DataSchema}
@@ -165,7 +169,11 @@ class DataSchema {
         {id: 620, type: ScriptComponent},
         {id: 630, type: AStringVariable},
         {id: 640, type: EditAnimationContent},
-        {id: 650, type: AssetAnimationXml}
+        {id: 650, type: AssetAnimationXml},
+        {id: 660, type: AssetAnimationScriptXml},
+        {id: 670, type: AAnimation},
+        {id: 680, type: OnAnimationStartEvent},
+        {id: 690, type: AnimationNode}
     ]
 
     /**

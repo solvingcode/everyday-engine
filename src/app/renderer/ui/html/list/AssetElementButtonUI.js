@@ -9,6 +9,7 @@ import AssetScriptCode from '../../../../asset/types/script/AssetScriptCode.js'
 import SystemError from '../../../../exception/type/SystemError.js'
 import Folder from '../../../../asset/Folder.js'
 import AssetAnimationXml from '../../../../asset/types/animation/AssetAnimationXml.js'
+import AssetAnimationScriptXml from '../../../../asset/types/animation/AssetAnimationScriptXml.js'
 
 export default class AssetElementButtonUI extends ListElementButtonUI {
 
@@ -25,7 +26,7 @@ export default class AssetElementButtonUI extends ListElementButtonUI {
     /**
      * @override
      */
-    static postCreate(item, el, uiRenderer){
+    static postCreate(item, el, uiRenderer) {
         super.postCreate(item, el, uiRenderer)
         const bind = item.element.getDataBind()
         const script = World.get().getScriptManager().findByName(bind.getName())
@@ -36,7 +37,7 @@ export default class AssetElementButtonUI extends ListElementButtonUI {
     /**
      * @override
      */
-    static getIcon(item){
+    static getIcon(item) {
         const bind = item.element.getDataBind()
         const {imageWidth, imageHeight} = this.props
         const type = bind instanceof Folder ? bind : bind.getType()
@@ -45,6 +46,7 @@ export default class AssetElementButtonUI extends ListElementButtonUI {
                 return ImageUI.getImage(bind.getType().getData(), {width: imageWidth, height: imageHeight})
             case AssetScriptXml:
             case AssetScriptCode:
+            case AssetAnimationScriptXml:
                 return this.getIconScriptAsset(bind)
             case Folder:
                 return this.getIconFolderAsset(bind)
@@ -59,7 +61,7 @@ export default class AssetElementButtonUI extends ListElementButtonUI {
      * @param {Folder} bind
      * @return {HTMLElement|DocumentFragment}
      */
-    static getIconFolderAsset(bind){
+    static getIconFolderAsset(bind) {
         return IconUI.createIcon('folder')
     }
 
@@ -67,7 +69,7 @@ export default class AssetElementButtonUI extends ListElementButtonUI {
      * @param {Asset} bind
      * @return {HTMLElement|DocumentFragment}
      */
-    static getIconScriptAsset(bind){
+    static getIconScriptAsset(bind) {
         const script = World.get().getScriptManager().findByName(bind.getName())
         let statusIcon
         const scriptStatus = script ? script.getStatus() : STATUS.NEW
@@ -85,7 +87,11 @@ export default class AssetElementButtonUI extends ListElementButtonUI {
                 throw new SystemError(`Script status ${scriptStatus} not recognized`)
         }
         const fragment = document.createDocumentFragment()
-        fragment.appendChild(IconUI.createIcon('file-code'))
+        let fileIcon = 'file-code'
+        if (bind.getType() instanceof AssetAnimationScriptXml) {
+            fileIcon = 'project-diagram'
+        }
+        fragment.appendChild(IconUI.createIcon(fileIcon))
         fragment.appendChild(statusIcon)
         return fragment
     }
@@ -93,13 +99,13 @@ export default class AssetElementButtonUI extends ListElementButtonUI {
     /**
      * @override
      */
-    static postUpdate(item, el, uiRenderer){
+    static postUpdate(item, el, uiRenderer) {
         super.postUpdate(item, el, uiRenderer)
         const bind = item.element.getDataBind()
         const script = World.get().getScriptManager().findByName(bind.getName())
         const scriptStatus = script ? script.getStatus() : STATUS.NEW
         const actualScriptStatus = el.getAttribute(this.props.assetStatus)
-        if(actualScriptStatus !== scriptStatus){
+        if (actualScriptStatus !== scriptStatus) {
             this.update(item, el, uiRenderer)
         }
     }
