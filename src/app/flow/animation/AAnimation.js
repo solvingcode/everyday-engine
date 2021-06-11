@@ -5,10 +5,9 @@ import AnimationComponent from '../../component/internal/AnimationComponent.js'
 export default class AAnimation extends AFunction{
 
     /**
-     * @param {number} value
-     * @param {string} type
+     * @param {string} value
      */
-    constructor(type, value) {
+    constructor(value) {
         super('Animation')
         this.setName(`${value}`)
     }

@@ -19,7 +19,7 @@ export class SetupExecutorRunner extends Runner {
     /**
      * @override
      */
-    execute() {
+    execute(deltaTime) {
         const world = World.get()
         const graphManager = world.getGraphManager()
         const script = world.getScriptManager().getSelected(world.getTabManager())
@@ -32,7 +32,7 @@ export class SetupExecutorRunner extends Runner {
             camera = world.getCamera()
         }
         units.forEach(unit => {
-            ExecutorRegistry.get().execute(unit, {camera})
+            ExecutorRegistry.get().execute(unit, {camera, deltaTime})
         })
     }
 

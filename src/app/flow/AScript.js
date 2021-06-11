@@ -58,7 +58,7 @@ export default class AScript extends AScriptData{
                 registry.register(nodeSource)
                 break
             case AnimationNode:
-                nodeSource = new AAnimation(TYPES.NUMBER, value)
+                nodeSource = new AAnimation(value)
                 registry.register(nodeSource)
                 break
             case StringVariableNode:

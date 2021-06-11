@@ -42,6 +42,7 @@ class Application {
             this.exceptionHandler.handle(e)
         }
         this.window.clear()
+        this.window.update()
         requestAnimationFrame(this.loop)
     }
 

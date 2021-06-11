@@ -89,6 +89,7 @@ import AssetAnimationScriptXml from '../../asset/types/animation/AssetAnimationS
 import AAnimation from '../../flow/animation/AAnimation.js'
 import OnAnimationStartEvent from '../../flow/event/native/OnAnimationStartEvent.js'
 import AnimationNode from '../../flow/node/AnimationNode.js'
+import AnimationComponent from '../../component/internal/AnimationComponent.js'
 
 /**
  * @class {DataSchema}
@@ -173,14 +174,15 @@ class DataSchema {
         {id: 660, type: AssetAnimationScriptXml},
         {id: 670, type: AAnimation},
         {id: 680, type: OnAnimationStartEvent},
-        {id: 690, type: AnimationNode}
+        {id: 690, type: AnimationNode},
+        {id: 700, type: AnimationComponent},
+        {id: 701, type: GUIPropertyComponent}
     ]
 
     /**
      * Class to be excluded during serialization
      */
     static exclude = [
-        GUIPropertyComponent,
         MoveXUnitInstant,
         MoveYUnitInstant,
         MoveFreeUnitInstant,
@@ -200,6 +202,7 @@ class DataSchema {
      * Class to be excluded during serialization for exported game
      */
     static excludeGame = [
+        GUIPropertyComponent,
         AssetScriptXml,
         AssetScriptCode,
         AssetAnimationXml,

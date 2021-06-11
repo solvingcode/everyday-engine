@@ -24,9 +24,7 @@ export default class AnimationEditorRunner extends Runner {
         const tabManager = world.getTabManager()
         const animation = world.getAnimationManager().getSelected(tabManager)
         if(animation && animation.isPlaying()){
-            const expectedFrameTime = 1 / animation.getSamples()
-            const timeFrame = (animation.getTime() + deltaTime / expectedFrameTime) % animation.getFrames().length
-            animation.setTime(timeFrame)
+            animation.play(deltaTime)
         }
     }
 }

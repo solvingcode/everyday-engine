@@ -24,12 +24,13 @@ export default class AssetScriptXmlGenerator extends AssetScriptGenerator {
         parentNode.setAttribute('view', `${x},${y},${z}`)
         flow.getNodes().forEach(node => {
             const nodeNode = root.createElement('node')
+            const sourceNode = NodeHelper.getSourceNode(node)
             let nodeType = ScriptHelper.getNodeType(node)
             const {x: nodePositionX, y: nodePositionY} = node.getPosition()
             nodeNode.setAttribute('type', nodeType)
             nodeNode.setAttribute('id', `${node.getId()}`)
             nodeNode.setAttribute('position', `${nodePositionX},${nodePositionY}`)
-            nodeNode.setAttribute('value', NodeHelper.getSourceNode(node).getName())
+            nodeNode.setAttribute('value', sourceNode.getName())
             parentNode.appendChild(nodeNode)
         })
         flow.getNodes().forEach(node => {

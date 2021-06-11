@@ -1,4 +1,5 @@
 import Action from './Action.js'
+import Window from './Window.js'
 
 /**
  * Handle global events triggered by the user (click , mouse move)
@@ -7,32 +8,18 @@ import Action from './Action.js'
 class RunnerHandler {
 
     /**
-     * @type {number}
-     */
-    lastTime
-
-    /**
      * Apply actions when event is triggered onto the window (Mouse and Keyboard events, ...)
      * @param {Class[]} runners
      */
     handle(runners) {
         const action = Action.get()
-        const deltaTime = this.updateDeltaTime()
+        const deltaTime = Window.get().getDeltaTime()
         action.reset()
         runners.forEach(runner => {
             const runnerInstance = runner.get()
             action.add(runnerInstance, deltaTime)
         })
         action.run()
-    }
-
-    /**
-     * @return {number}
-     */
-    updateDeltaTime(){
-        const deltaTime = this.lastTime ? (Date.now() - this.lastTime) / 1000 : 0
-        this.lastTime = Date.now()
-        return deltaTime
     }
 
     static get() {

@@ -15,7 +15,7 @@ export default class ComponentExecutor{
     /**
      * @override
      * @param {Unit} unit
-     * @param {{camera: Camera}} executionContext
+     * @param {{camera: Camera, deltaTime: number}} executionContext
      */
     execute(unit, executionContext){
         throw new SystemError(`${this.constructor.name}.execute must be implemented`)

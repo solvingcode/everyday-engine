@@ -248,4 +248,15 @@ export default class Animation {
         return this.lengthSecond
     }
 
+    /**
+     * @param {number} deltaTime
+     * @return {KeyFrame}
+     */
+    play(deltaTime){
+        const expectedFrameTime = 1 / this.getSamples()
+        const timeFrame = (this.getTime() + deltaTime / expectedFrameTime) % this.getFrames().length
+        this.setTime(timeFrame || 0)
+        return this.tryGetAt(this.getFrameTime())
+    }
+
 }

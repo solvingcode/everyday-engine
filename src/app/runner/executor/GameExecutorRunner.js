@@ -19,12 +19,12 @@ export class GameExecutorRunner extends Runner {
     /**
      * @override
      */
-    execute() {
+    execute(deltaTime) {
         const world = World.get()
         const units = world.getUnitManager().getUnits()
         const camera = world.getCamera()
         units.forEach(unit => {
-            ExecutorRegistry.get().execute(unit, {camera})
+            ExecutorRegistry.get().execute(unit, {camera, deltaTime})
         })
     }
 

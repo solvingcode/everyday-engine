@@ -17,6 +17,16 @@ class Window {
      */
     static instance = null
 
+    /**
+     * @type {number}
+     */
+    lastUpdTime
+
+    /**
+     * @type {number}
+     */
+    deltaTime
+
     constructor() {
         this.keyboard = new Keyboard()
         this.exceptionHandler = ExceptionHandler.get()
@@ -72,6 +82,13 @@ class Window {
     }
 
     /**
+     * @return {number}
+     */
+    getDeltaTime(){
+        return this.deltaTime
+    }
+
+    /**
      * @param {Size} size
      */
     setSize(size){
@@ -81,6 +98,11 @@ class Window {
 
     clear() {
         this.mouse.clear()
+    }
+
+    update(){
+        this.deltaTime = this.lastUpdTime ? (Date.now() - this.lastUpdTime) / 1000 : 0
+        this.lastUpdTime = Date.now()
     }
 
     /**

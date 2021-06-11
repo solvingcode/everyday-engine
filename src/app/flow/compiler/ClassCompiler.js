@@ -12,6 +12,7 @@ import SystemError from '../../exception/type/SystemError.js'
 import ClientError from '../../exception/type/ClientError.js'
 import AKeyCode from '../keycode/AKeyCode.js'
 import AVariable from '../variable/AVariable.js'
+import AAnimation from '../animation/AAnimation.js'
 
 export default class ClassCompiler extends Compiler {
 
@@ -72,6 +73,16 @@ export default class ClassCompiler extends Compiler {
                             const targetInput = element.findInputById(targetId)
                             stack.push(new StackOperation(OPERATIONS.VAR, sourceElement.getName()))
                             stack.push(new StackOperation(OPERATIONS.PUSH, targetInput.getAttrName(), CONSTANTS.RESULT))
+                        } else if (sourceElement instanceof AAnimation) {
+                            const animationName = this.generateFunctionName(script, sourceNode, functionRegistry)
+                            let sourceAnimation = functionRegistry.getInstance(animationName) || new AEmptyStackFunction(animationName)
+                            let functionNameCallee = functionName
+                            if (element instanceof ACondition) {
+                                functionNameCallee = `${functionNameCallee}.Block`
+                            }
+                            sourceAnimation.setStack(sourceAnimation.getStack()
+                                .concat([new StackOperation(OPERATIONS.CALL, functionNameCallee)]))
+                            functionRegistry.register(sourceAnimation)
                         }
                         // must be the last condition
                         else if (sourceElement instanceof AFunction) {
@@ -114,7 +125,7 @@ export default class ClassCompiler extends Compiler {
      * @param {FunctionRegistry} functionRegistry
      * @return {string}
      */
-    generateEventName(script, node, functionRegistry){
+    generateEventName(script, node, functionRegistry) {
         const element = functionRegistry.getInstanceById(node.getSourceId())
         return `${script.getName()}.${element.getName()}`
     }

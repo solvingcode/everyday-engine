@@ -22,7 +22,7 @@ export default class ExecutorRegistry {
 
     /**
      * @param {Unit} unit
-     * @param {{camera: Camera}} executionContext
+     * @param {{camera: Camera, deltaTime: number}} executionContext
      */
     execute(unit, executionContext){
         this.registry.forEach(executor => {
