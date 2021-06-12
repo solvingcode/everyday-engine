@@ -5,6 +5,7 @@ import ScriptComponent from '../../../component/internal/ScriptComponent.js'
 import AssetScriptXml from '../../../asset/types/script/AssetScriptXml.js'
 import AssetAnimationScriptXml from '../../../asset/types/animation/AssetAnimationScriptXml.js'
 import AnimationComponent from '../../../component/internal/AnimationComponent.js'
+import AssetHelper from '../../../utils/AssetHelper.js'
 
 export default class AttachAssetScriptAction extends Action {
 
@@ -20,8 +21,10 @@ export default class AttachAssetScriptAction extends Action {
         if(selectedAsset.getType() instanceof AssetScriptXml){
             const scriptComponent = selectedUnit.createComponent(ScriptComponent)
             scriptComponent.setAssetId(selectedAsset.getId())
+            scriptComponent.setVarsAttributes(AssetHelper.getAssetScriptVars(selectedAsset.getId()))
         }else if(selectedAsset.getType() instanceof AssetAnimationScriptXml){
             const animationComponent = selectedUnit.createComponent(AnimationComponent)
+            animationComponent.setVarsAttributes(AssetHelper.getAssetScriptVars(selectedAsset.getId()))
             animationComponent.setAssetId(selectedAsset.getId())
         }
         return true

@@ -67,7 +67,7 @@ export default class UnitData extends Data{
         if(!(type.prototype instanceof ComponentData)){
             throw new ClientError(`Component type must be instance of ComponentData (${type.name} given)`)
         }
-        return this.getComponents().find(component => component instanceof type)
+        return this.getComponents().find(component => component.constructor === type)
     }
 
     /**

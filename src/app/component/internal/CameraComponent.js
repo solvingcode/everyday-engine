@@ -18,4 +18,11 @@ export default class CameraComponent extends Component{
      */
     initAttributes() {
     }
+
+    /**
+     * @override
+     */
+    isRemovable() {
+        return false
+    }
 }

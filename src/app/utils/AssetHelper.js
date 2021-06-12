@@ -4,6 +4,8 @@ import SystemError from '../exception/type/SystemError.js'
 import VariableNode from '../flow/node/variable/VariableNode.js'
 import NodeHelper from './NodeHelper.js'
 import DynamicAttribute from '../pobject/DynamicAttribute.js'
+import AssetAnimationScriptXml from '../asset/types/animation/AssetAnimationScriptXml.js'
+import AnimationComponent from '../component/internal/AnimationComponent.js'
 
 export default class AssetHelper {
 
@@ -11,12 +13,22 @@ export default class AssetHelper {
      * @param {Asset} asset
      */
     static deleteAsset(asset) {
-        const scriptManager = World.get().getScriptManager()
-        const assetManager = World.get().getAssetsManager()
+        const world = World.get()
+        const scriptManager = world.getScriptManager()
+        const assetManager = world.getAssetsManager()
         assetManager.deleteAsset(asset)
         if (asset.getType() instanceof AssetScript) {
             const script = scriptManager.findByName(asset.getName())
-            scriptManager.delete(script, World.get().getFunctionRegistry())
+            scriptManager.delete(script, world.getFunctionRegistry())
+        }
+        if (asset.getType() instanceof AssetAnimationScriptXml) {
+            world.getUnitManager().findUnitsByComponents([AnimationComponent])
+                .forEach(unit => {
+                    const animationComponent = unit.getComponent(AnimationComponent)
+                    if(animationComponent.getAssetId() === asset.getId()){
+                        unit.deleteComponent(animationComponent.getId())
+                    }
+                })
         }
     }
 

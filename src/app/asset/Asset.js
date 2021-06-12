@@ -42,6 +42,10 @@ export default class Asset extends AssetData{
         this.getType().open(this)
     }
 
+    export(){
+        this.getType().export(this)
+    }
+
     /**
      * @param {*} source
      */

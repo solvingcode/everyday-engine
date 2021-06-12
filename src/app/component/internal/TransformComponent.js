@@ -102,4 +102,11 @@ export default class TransformComponent extends Component{
     setScale(scale){
         this.setValue('scale', scale)
     }
+
+    /**
+     * @override
+     */
+    isRemovable() {
+        return false
+    }
 }

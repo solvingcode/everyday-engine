@@ -77,7 +77,8 @@ class World extends WorldData {
         this.getComponentRegistry().init()
         this.getGraphManager().reset()
         this.getAssetsManager().getParsedAssets().forEach(asset => {
-            asset.getType().parse()
+            const result = asset.getType().parse()
+            asset.getType().validate(result)
         })
     }
 
@@ -167,7 +168,7 @@ class World extends WorldData {
 
     /**
      * @param {Vector} position
-     * @return {Unit[]}
+     * @return {Unit}
      */
     findFirstUnitByPosition(position) {
         return UnitSelector.get().get(this, position)

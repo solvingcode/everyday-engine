@@ -1,5 +1,6 @@
 import AssetType from '../AssetType.js'
 import SystemError from '../../../exception/type/SystemError.js'
+import ClientError from '../../../exception/type/ClientError.js'
 
 export default class AssetScript extends AssetType{
 
@@ -73,6 +74,15 @@ export default class AssetScript extends AssetType{
      */
     getData(){
         throw new SystemError(`${this.constructor.name}.getData must be implemented`)
+    }
+
+    /**
+     * @abstract
+     * @param {AScript} data
+     * @return {boolean}
+     */
+    validate(data){
+        throw new ClientError(`${this.constructor.name}.validate must be implemented`)
     }
 
 }

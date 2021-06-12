@@ -16,7 +16,7 @@ export default class VarProcessor {
         }
         const name = args[0]
         const scriptComponent = unit.getComponent(ScriptComponent)
-        if (!scriptComponent.hasAttribute(name)) {
+        if (!scriptComponent || !scriptComponent.hasAttribute(name)) {
             throw new SystemError(`${this.constructor.name}: No value bound for variable "${name}"`)
         }
         stackRegister.pushRet(scriptComponent.getValue(name))

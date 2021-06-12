@@ -2,6 +2,8 @@ import World from '../../../world/World.js'
 import AssetScriptXmlGenerator from '../../../generator/script/AssetScriptXmlGenerator.js'
 import AssetScript from './AssetScript.js'
 import EditGraphScriptContent from '../../../content/script/EditGraphScriptContent.js'
+import ScriptHelper from '../../../utils/ScriptHelper.js'
+import FileHelper from '../../../utils/FileHelper.js'
 
 export default class AssetScriptXml extends AssetScript{
 
@@ -32,12 +34,26 @@ export default class AssetScriptXml extends AssetScript{
 
     /**
      * @override
+     */
+    validate(data){
+        return ScriptHelper.validate(data)
+    }
+
+    /**
+     * @override
      * @param {AScript} flow
      * @param {Asset} asset
      */
     async generate(flow, asset){
         const data = AssetScriptXmlGenerator.get().generate(flow)
         await this.setDataUrl(data)
+    }
+
+    /**
+     * @override
+     */
+    export(asset) {
+        FileHelper.save(this.getDataUrl(), FileHelper.type.XML, asset.getName())
     }
 
     /**

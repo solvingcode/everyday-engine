@@ -53,6 +53,7 @@ export default class ComponentData extends Data{
     }
 
     /**
+     * @protected
      * @param {DynamicAttribute[]} attributes
      */
     setAttributes(attributes){

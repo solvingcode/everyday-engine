@@ -133,4 +133,17 @@ export default class ScriptHelper {
         return undefined
     }
 
+    /**
+     * @param {AScript} script
+     * @return {boolean}
+     */
+    static validate(script) {
+        script.getNodes().forEach(node => {
+            const sourceNode = NodeHelper.getSourceNode(node)
+            if (!sourceNode) {
+                script.removeNodeById(node.getId())
+            }
+        })
+    }
+
 }

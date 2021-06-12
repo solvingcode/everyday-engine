@@ -77,4 +77,10 @@ export default class AssetAnimationScriptXml extends AssetScript{
         return (new XMLSerializer()).serializeToString(this.data)
     }
 
+    /**
+     * @override
+     */
+    validate(data) {
+        return true
+    }
 }

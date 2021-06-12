@@ -1,5 +1,6 @@
 import AssetTypeData from '../../project/data/AssetTypeData.js'
 import SystemError from '../../exception/type/SystemError.js'
+import ClientError from '../../exception/type/ClientError.js'
 
 /**
  * @class {AssetType}
@@ -34,6 +35,23 @@ export default class AssetType extends AssetTypeData{
      */
     open(asset, options){
         throw new SystemError(`${this.constructor.name}.open must be implemented`)
+    }
+
+    /**
+     * @abstract
+     * @param {*} data
+     * @return {boolean}
+     */
+    validate(data){
+        throw new ClientError(`${this.constructor.name}.validate must be implemented`)
+    }
+
+    /**
+     * @abstract
+     * @param {Asset} asset
+     */
+    export(asset){
+        throw new SystemError(`${this.constructor.name}.export must be implemented`)
     }
 
 }

@@ -15,11 +15,9 @@ import GUIMoveXComponent from '../../component/internal/gui/move/GUIMoveXCompone
 import Size from '../../pobject/Size.js'
 import GUIMoveYComponent from '../../component/internal/gui/move/GUIMoveYComponent.js'
 import GUIMoveFreeComponent from '../../component/internal/gui/move/GUIMoveFreeComponent.js'
-import GUIMoveComponent from '../../component/internal/gui/move/GUIMoveComponent.js'
 import GUIScaleXComponent from '../../component/internal/gui/scale/GUIScaleXComponent.js'
 import GUIScaleYComponent from '../../component/internal/gui/scale/GUIScaleYComponent.js'
 import GUIScaleFreeComponent from '../../component/internal/gui/scale/GUIScaleFreeComponent.js'
-import GUIScaleComponent from '../../component/internal/gui/scale/GUIScaleComponent.js'
 import GUIRotateComponent from '../../component/internal/gui/rotate/GUIRotateComponent.js'
 import MoveXUnitInstant from '../../unit/instant/type/internal/move/MoveXUnitInstant.js'
 import MoveYUnitInstant from '../../unit/instant/type/internal/move/MoveYUnitInstant.js'
@@ -190,14 +188,14 @@ class EditorRunner extends Runner {
                 const unit = world.findFirstUnitByPosition(world.getWorldPosition(currentScenePosition))
                 const dragArea = mouse.getDragArea(world.getCamera())
                 if (unit && dragArea) {
-                    if (unit.getComponent(GUIMoveComponent)) {
+                    if (unit.hasAnyComponents([GUIMoveXComponent, GUIMoveYComponent, GUIMoveFreeComponent])) {
                         !stateManager.isProgress(MoveAction.STATE) &&
                         stateManager.startState(MoveAction.STATE, 1, {unit})
                     }
-                    if (unit.getComponent(GUIScaleComponent)) {
+                    if (unit.hasAnyComponents([GUIScaleXComponent, GUIScaleYComponent, GUIScaleFreeComponent])) {
                         !stateManager.isProgress(ScaleAction.STATE) &&
                         stateManager.startState(ScaleAction.STATE, 1, {unit})
-                    } else if (unit.getComponent(GUIRotateComponent)) {
+                    } else if (unit.hasComponents([GUIRotateComponent])) {
                         !stateManager.isProgress(RotateAction.STATE) &&
                         stateManager.startState(RotateAction.STATE, 1, {unit})
                     }

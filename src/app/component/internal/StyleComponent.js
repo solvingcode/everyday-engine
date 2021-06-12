@@ -44,4 +44,11 @@ export default class StyleComponent extends Component{
         return true
     }
 
+    /**
+     * @override
+     */
+    isRemovable() {
+        return false
+    }
+
 }

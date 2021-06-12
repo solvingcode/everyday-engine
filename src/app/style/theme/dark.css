@@ -124,6 +124,10 @@ button.selected, button.hidden.selected, button.locked.selected{
     border-top: 1px solid #4e4e4e;
 }
 
+.units-wrapper .panel h4 + div button[data-icon="times"]{
+    background: none;
+}
+
 .panel .panel:first-child h4{
     border-top: none;
 }

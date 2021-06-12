@@ -471,6 +471,20 @@ h4{
     line-height: 1.3rem;
 }
 
+.units-wrapper .panel{
+    position: relative;
+}
+
+.units-wrapper .panel h4 + div button[data-icon="times"]{
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: unset;
+    height: unset;
+    font-size: 14px;
+    padding: 13px 10px;
+}
+
 #app-el-left, #app-el-top, #app-el-right, #app-el-footer, #app-el-bottom, #app-el-top-tab, #app-el-body, #app-el-window{
     position: absolute;
     z-index: 9999;

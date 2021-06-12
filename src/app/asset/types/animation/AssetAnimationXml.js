@@ -108,4 +108,10 @@ export default class AssetAnimationXml extends AssetType{
         return (new XMLSerializer()).serializeToString(this.data)
     }
 
+    /**
+     * @override
+     */
+    validate(data) {
+        return true
+    }
 }

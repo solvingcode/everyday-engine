@@ -88,4 +88,11 @@ export default class Component extends ComponentData{
         this.setValue('enabled', false)
     }
 
+    /**
+     * @return {boolean}
+     */
+    isRemovable(){
+        return true
+    }
+
 }

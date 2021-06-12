@@ -1,6 +1,5 @@
 import Component from '../Component.js'
 import {TYPES} from '../../pobject/AttributeType.js'
-import AssetHelper from '../../utils/AssetHelper.js'
 import Layout from '../../layout/Layout.js'
 
 export default class ScriptComponent extends Component {
@@ -16,7 +15,7 @@ export default class ScriptComponent extends Component {
      * @override
      */
     getFormFields() {
-        const vars = AssetHelper.getAssetScriptVars(this.getAssetId())
+        const attributes = this.getAttributes()
         const fields = [
             {
                 bind: 'assetId',
@@ -28,20 +27,30 @@ export default class ScriptComponent extends Component {
             }
         ]
 
+        attributes.forEach(attr => {
+            if (attr.getAttrName() !== 'assetId') {
+                fields.push(
+                    {
+                        bind: attr.getAttrName(),
+                        label: attr.getAttrName(),
+                        type: Layout.form.TEXT,
+                        dynamic: true
+                    })
+            }
+        })
+
+        return fields
+    }
+
+    /**
+     * @param {DynamicAttribute[]} vars
+     */
+    setVarsAttributes(vars) {
         vars.forEach(variable => {
             if (!this.hasAttribute(variable.getAttrName())) {
                 this.add(variable.getAttrName(), variable.getAttrType())
             }
-            fields.push(
-                {
-                    bind: variable.getAttrName(),
-                    label: variable.getAttrName(),
-                    type: Layout.form.TEXT,
-                    dynamic: true
-                })
         })
-
-        return fields
     }
 
     /**

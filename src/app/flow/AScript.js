@@ -23,7 +23,7 @@ import AnimationNode from './node/AnimationNode.js'
 /**
  * @abstract
  */
-export default class AScript extends AScriptData{
+export default class AScript extends AScriptData {
 
     constructor(props) {
         super(props)
@@ -36,9 +36,10 @@ export default class AScript extends AScriptData{
      * @param {string|number|boolean} value
      * @return {ANode}
      */
-    createNode(registry, nodeClass, value){
+    createNode(registry, nodeClass, value) {
         let nodeSource
-        switch(nodeClass){
+        const nodeName = `${this.getName()}.${value}`
+        switch (nodeClass) {
             case FunctionNode:
             case ConditionNode:
             case EventNode:
@@ -46,9 +47,9 @@ export default class AScript extends AScriptData{
                 break
             case ConstantNode:
             case KeyCodeNode:
-                if(nodeClass === ConstantNode){
+                if (nodeClass === ConstantNode) {
                     nodeSource = new AConstant(DynamicAttributeHelper.findTypeOfValue(value), value)
-                }else if(nodeClass === KeyCodeNode){
+                } else if (nodeClass === KeyCodeNode) {
                     nodeSource = new AKeyCode(value)
                 }
                 registry.register(nodeSource)
@@ -76,7 +77,7 @@ export default class AScript extends AScriptData{
     /**
      * @param {FunctionRegistry} functionRegistry
      */
-    delete(functionRegistry){
+    delete(functionRegistry) {
         functionRegistry.removeInstancesByClass(this.getName())
     }
 
@@ -84,9 +85,9 @@ export default class AScript extends AScriptData{
      * @param {ANode} node
      * @param {number} id
      */
-    updateNodeId(node, id){
+    updateNodeId(node, id) {
         const existNode = this.findNodeById(id)
-        if(existNode){
+        if (existNode) {
             throw new ClientError(`Script Create Node: Duplicate Node Id "${id}"`)
         }
         node.setId(id)
@@ -102,7 +103,7 @@ export default class AScript extends AScriptData{
     /**
      * @param {number} id
      */
-    removeNodeById(id){
+    removeNodeById(id) {
         this.removeConnectionsByNodeId(id)
         const nodeIndex = this.nodes.findIndex(node => node.getId() === id)
         this.nodes.splice(nodeIndex, 1)
@@ -111,7 +112,7 @@ export default class AScript extends AScriptData{
     /**
      * @param {number} nodeId
      */
-    removeConnectionsByNodeId(nodeId){
+    removeConnectionsByNodeId(nodeId) {
         const connections = this.getInputs().filter(input => input.getSourceNodeId() === nodeId)
         connections.forEach(connection => this.removeInputById(connection.getId()))
     }
@@ -119,10 +120,10 @@ export default class AScript extends AScriptData{
     /**
      * @param {number} id
      */
-    removeInputById(id){
+    removeInputById(id) {
         const nodeInput = this.getInputs().find(pNodeInput => pNodeInput.getId() === id)
         const node = this.findNodeById(nodeInput.getNodeId())
-        if(!node){
+        if (!node) {
             throw new ClientError(`Target Node for edge ID "${id}" not found`)
         }
         const nodeInputIndex = node.getInputs().findIndex(pNodeInput => pNodeInput.getId() === id)
@@ -132,14 +133,14 @@ export default class AScript extends AScriptData{
     /**
      * @return {ANode[]}
      */
-    getSelectedNodes(){
+    getSelectedNodes() {
         return this.nodes.filter(node => node.isSelected())
     }
 
     /**
      * @return {NodeInput[]}
      */
-    getInputs(){
+    getInputs() {
         return this.getNodes().reduce(
             (nodeInputs, node) => nodeInputs.concat(node.getInputs()), [])
     }
@@ -147,7 +148,7 @@ export default class AScript extends AScriptData{
     /**
      * @return {NodeInput[]}
      */
-    getSelectedEdges(){
+    getSelectedEdges() {
         return this.getInputs().filter(nodeInput => nodeInput.isSelected())
     }
 
@@ -155,7 +156,7 @@ export default class AScript extends AScriptData{
      * @param {number} id
      * @return {ANode}
      */
-    findNodeById(id){
+    findNodeById(id) {
         return this.nodes.find(node => node.getId() === id)
     }
 
@@ -163,7 +164,7 @@ export default class AScript extends AScriptData{
      * @param {ANode} nodeClass
      * @return {ANode[]}
      */
-    findNodesByClass(nodeClass){
+    findNodesByClass(nodeClass) {
         return this.nodes.filter(node => node instanceof nodeClass)
     }
 
@@ -171,7 +172,7 @@ export default class AScript extends AScriptData{
      * @param {number} id
      * @return {NodeInput}
      */
-    findNodeInputById(id){
+    findNodeInputById(id) {
         return this.getInputs().find(nodeInput => nodeInput.getId() === id)
     }
 
@@ -179,19 +180,19 @@ export default class AScript extends AScriptData{
      * @param {string} name
      * @return {ANode}
      */
-    findNodeByName(name){
+    findNodeByName(name) {
         return this.nodes.find(node => node.getName() === name)
     }
 
-    compile(){
-        if(this.doCompile()){
+    compile() {
+        if (this.doCompile()) {
             this.setStatus(STATUS.COMPILED)
-        }else{
+        } else {
             this.setStatus(STATUS.ERROR)
         }
     }
 
-    reset(){
+    reset() {
         this.setStatus(STATUS.NEW)
     }
 
@@ -200,7 +201,7 @@ export default class AScript extends AScriptData{
      * @private
      * @return {boolean}
      */
-    doCompile(){
+    doCompile() {
         throw new SystemError(`${this.constructor.name}.doCompile must be implemented`)
     }
 

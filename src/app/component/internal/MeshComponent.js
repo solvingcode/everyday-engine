@@ -210,4 +210,11 @@ export default class MeshComponent extends Component{
         return this.getImageRepeat()
     }
 
+    /**
+     * @override
+     */
+    isRemovable() {
+        return false
+    }
+
 }

@@ -1,5 +1,6 @@
 import ListElementActionsMenuItem from '../list/ListElementActionsMenuItem.js'
 import ComponentFormMenuItem from './ComponentFormMenuItem.js'
+import ComponentDeleteMenuItem from './ComponentDeleteMenuItem.js'
 
 export default class ComponentElementMenuItem extends ListElementActionsMenuItem{
     constructor(parent, data) {
@@ -7,6 +8,7 @@ export default class ComponentElementMenuItem extends ListElementActionsMenuItem
             name: data.bind.getName()
         })
         this.items = [
+            new ComponentDeleteMenuItem(this, data),
             new ComponentFormMenuItem(this)
         ]
     }

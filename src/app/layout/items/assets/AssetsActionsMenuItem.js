@@ -10,6 +10,7 @@ import DeleteFolderMenuItem from './folder/DeleteFolderMenuItem.js'
 import AttachAssetScriptMenuItem from './file/AttachAssetScriptMenuItem.js'
 import EditAssetAnimationMenuItem from './file/EditAssetAnimationMenuItem.js'
 import AddAssetToAnimationMenuItem from '../animation/AddAssetToAnimationMenuItem.js'
+import ExportAssetMenuItem from './file/ExportAssetMenuItem.js'
 
 export default class AssetsActionsMenuItem  extends MenuItem {
     constructor(parent) {
@@ -29,6 +30,7 @@ export default class AssetsActionsMenuItem  extends MenuItem {
             new EditAssetScriptMenuItem(this),
             new EditAssetAnimationMenuItem(this),
             new AddAssetToAnimationMenuItem(this),
+            new ExportAssetMenuItem(this),
             new DeleteAssetScriptMenuItem(this),
             new DeleteFolderMenuItem(this)
         ]
