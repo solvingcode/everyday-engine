@@ -58,8 +58,8 @@ export default class ANode extends ANodeData {
      * @return {DynamicAttribute}
      */
     getTargetInput(functionRegistry, nodeInput){
-        return functionRegistry.getInstance(this.getSourceName())
-            .findInputByName(nodeInput.getTargetName())
+        const functionInstance = functionRegistry.getInstance(this.getSourceName())
+        return functionInstance ? functionInstance.findInputByName(nodeInput.getTargetName()) : null
     }
 
     /**

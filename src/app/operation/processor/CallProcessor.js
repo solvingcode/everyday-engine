@@ -36,6 +36,13 @@ export default class CallProcessor {
                     if(!inputValue){
                         throw new ClientError(`${this.constructor.name}: Unit "${value}" not found`)
                     }
+                    break
+                case TYPES.ANIMATION:
+                    inputValue = world.getAnimationManager().findById(parseInt(value))
+                    if(!inputValue){
+                        throw new ClientError(`${this.constructor.name}: Animation "${value}" not found`)
+                    }
+                    break
             }
             aFunction.setInputValue(inputName, inputValue)
         })

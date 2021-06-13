@@ -30,6 +30,7 @@ import NotEqualToFunction from '../flow/function/native/basic/NotEqualToFunction
 import AVariable from '../flow/variable/AVariable.js'
 import OnAnimationStartEvent from '../flow/event/native/OnAnimationStartEvent.js'
 import AAnimation from '../flow/animation/AAnimation.js'
+import ActivateAnimationFunction from '../flow/function/native/animation/ActivateAnimationFunction.js'
 
 export default class FunctionRegistry extends Registry{
 
@@ -68,6 +69,9 @@ export default class FunctionRegistry extends Registry{
             new GetWorldPositionFunction(),
             new SetWorldPositionFunction(),
             new GetUnitFunction(),
+
+            //Animation
+            new ActivateAnimationFunction(),
 
             //Physics
             new MoveXAxisFunction(),

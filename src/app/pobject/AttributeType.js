@@ -48,6 +48,8 @@ export default class AttributeType {
                 return 'number'
             case TYPES.UNIT:
                 return 'number'
+            case TYPES.ANIMATION:
+                return 'number'
             case TYPES.RANGE:
                 return 'range'
             case TYPES.MESH:
@@ -93,6 +95,7 @@ export const TYPES = {
     BOOLEAN: '003',
     NUMBER: '004',
     UNIT: '005',
+    ANIMATION: '006',
     RANGE: '101',
     STYLE: '202',
     SIZE: '203',

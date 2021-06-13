@@ -28,7 +28,7 @@ export default class ClassCompiler extends Compiler {
         const functionRegistry = world.getFunctionRegistry()
         functionRegistry.removeInstancesByClass(script.getName())
 
-        //initialize compiled stack function
+        //compile stack function
         nodes.forEach((node) => {
             const element = NodeHelper.getSourceNode(node)
             if (!element) {
