@@ -19,9 +19,9 @@ export default class NodeInputData extends Data{
     nodeId
 
     /**
-     * @type {number}
+     * @type {string}
      */
-    targetId
+    targetName
 
     constructor() {
         super()
@@ -78,17 +78,17 @@ export default class NodeInputData extends Data{
     }
 
     /**
-     * @return {number}
+     * @return {string}
      */
-    getTargetId(){
-        return this.targetId
+    getTargetName(){
+        return this.targetName
     }
 
     /**
-     * @param {number} targetId
+     * @param {string} targetName
      */
-    setTargetId(targetId){
-        this.targetId = targetId
+    setTargetName(targetName){
+        this.targetName = targetName
     }
 
 }

@@ -52,10 +52,7 @@ export default class ClassScriptXmlParser extends Parser {
                 if (!nodeTarget) {
                     throw new ClientError(`ClassScriptXmlParser Error: Node ${nodeTargetId} not founded`)
                 }
-                const inputId = nodeConnection
-                    ? functionRegistry.getInstanceById(nodeTarget.getSourceId()).getInputId(nodeConnection)
-                    : null
-                nodeTarget.attach(nodeSource, inputId)
+                nodeTarget.attach(nodeSource, nodeConnection)
             }
         })
         return script

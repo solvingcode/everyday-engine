@@ -44,8 +44,10 @@ export default class AFunction extends FunctionData{
      * @abstract
      * @param {FunctionRegistry} functionRegistry
      * @param {Unit} unit
+     * @param {ScriptComponent} scriptComponent
+     * @param {World} world
      */
-    execute(functionRegistry, unit){
+    execute(functionRegistry, unit, scriptComponent, world){
         throw new SystemError(`${this.constructor.name}.execute must be implemented`)
     }
 
@@ -104,6 +106,14 @@ export default class AFunction extends FunctionData{
      */
     getInputId(name){
         return DynamicAttributeHelper.getId(this.inputs, name)
+    }
+
+    /**
+     * @param {string} name
+     * @return {DynamicAttribute}
+     */
+    findInputByName(name){
+        return DynamicAttributeHelper.findByName(this.inputs, name)
     }
 
     /**

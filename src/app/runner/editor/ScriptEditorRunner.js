@@ -141,7 +141,7 @@ export default class ScriptEditorRunner extends Runner {
                 if(nodeTargetInput && nodeSourceInput){
                     nodeTargetInput.node
                         .attach(nodeSourceInput.node,
-                            nodeTargetInput.input ? nodeTargetInput.input.getId() : null)
+                            nodeTargetInput.input ? nodeTargetInput.input.getAttrName() : null)
                 }
             }
         }

@@ -2,6 +2,7 @@ import World from '../../../world/World.js'
 import EditGraphScriptContent from '../../../content/script/EditGraphScriptContent.js'
 import AssetScript from '../script/AssetScript.js'
 import AssetAnimationScriptGenerator from '../../../generator/animation/AssetAnimationScriptGenerator.js'
+import FileHelper from '../../../utils/FileHelper.js'
 
 export default class AssetAnimationScriptXml extends AssetScript{
 
@@ -28,6 +29,13 @@ export default class AssetAnimationScriptXml extends AssetScript{
      */
     parse(){
         return World.get().getScriptManager().load(this.data)
+    }
+
+    /**
+     * @override
+     */
+    export(asset) {
+        FileHelper.save(this.getDataUrl(), FileHelper.type.XML, asset.getName())
     }
 
     /**

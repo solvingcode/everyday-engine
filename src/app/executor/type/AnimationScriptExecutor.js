@@ -29,7 +29,7 @@ export default class AnimationScriptExecutor extends ComponentExecutor {
         }
         functionRegistry.getInstancesByClass(script.getName()).forEach(instance => {
             if (instance instanceof OnAnimationStartEvent) {
-                instance.execute(functionRegistry, unit)
+                instance.execute(functionRegistry, unit, animationComponent, world)
             }
         })
     }

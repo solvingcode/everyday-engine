@@ -9,9 +9,9 @@ export default class ANodeData extends Data{
     id
 
     /**
-     * @type {number}
+     * @type {string}
      */
-    sourceId
+    sourceName
 
     /**
      * @type {NodeInput[]}
@@ -39,17 +39,17 @@ export default class ANodeData extends Data{
     }
 
     /**
-     * @return {number}
+     * @return {string}
      */
-    getSourceId(){
-        return this.sourceId
+    getSourceName(){
+        return this.sourceName
     }
 
     /**
-     * @param {number} sourceId
+     * @param {string} sourceName
      */
-    setSourceId(sourceId){
-        this.sourceId = sourceId
+    setSourceName(sourceName){
+        this.sourceName = sourceName
     }
 
     /**

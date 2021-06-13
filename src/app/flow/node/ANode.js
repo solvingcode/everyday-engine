@@ -1,7 +1,7 @@
 import ANodeData from '../../project/data/ANodeData.js'
 import NodeInput from '../../pobject/NodeInput.js'
-import NodeHelper from '../../utils/NodeHelper.js'
 import Vector from '../../utils/Vector.js'
+import SystemError from '../../exception/type/SystemError.js'
 
 /**
  * @abstract
@@ -19,24 +19,24 @@ export default class ANode extends ANodeData {
     position
 
     /**
-     * @param {number} sourceId
+     * @param {string} sourceName
      */
-    constructor(sourceId) {
+    constructor(sourceName) {
         super()
-        this.sourceId = sourceId
+        this.sourceName = sourceName
         this.position = new Vector()
     }
 
     /**
      * @param {ANode} sourceNode
-     * @param {number|null} targetId
+     * @param {string|null} targetName
      */
-    attach(sourceNode, targetId){
-        const inputNode = this.getInputNodeAttached(targetId)
+    attach(sourceNode, targetName){
+        const inputNode = this.getInputNodeAttached(targetName)
         if(!inputNode){
             const newInputNode = new NodeInput()
             newInputNode.setSourceNodeId(sourceNode.getId())
-            newInputNode.setTargetId(targetId)
+            newInputNode.setTargetName(targetName)
             newInputNode.setNodeId(this.getId())
             this.inputs.push(newInputNode)
         }else{
@@ -45,11 +45,11 @@ export default class ANode extends ANodeData {
     }
 
     /**
-     * @param {number} targetId
+     * @param {string} targetName
      * @return {NodeInput}
      */
-    getInputNodeAttached(targetId){
-        return this.inputs.find(input => input.getTargetId() === targetId)
+    getInputNodeAttached(targetName){
+        return this.inputs.find(input => input.getTargetName() === targetName)
     }
 
     /**
@@ -58,29 +58,23 @@ export default class ANode extends ANodeData {
      * @return {DynamicAttribute}
      */
     getTargetInput(functionRegistry, nodeInput){
-        return functionRegistry.getInstanceById(this.getSourceId())
-            .findInputById(nodeInput.getTargetId())
-    }
-
-    /**
-     * @param {AFunction|AEvent} source
-     */
-    setSource(source){
-        this.sourceId = source.getId()
+        return functionRegistry.getInstance(this.getSourceName())
+            .findInputByName(nodeInput.getTargetName())
     }
 
     /**
      * @return {string}
      */
     getName(){
-        return NodeHelper.getNodeName(this)
+        return this.sourceName
     }
 
     /**
+     * @abstract
      * @return {string}
      */
     getType(){
-        return NodeHelper.getNodeType(this)
+        throw new SystemError(`${this.constructor.name}.getType must be implemented`)
     }
 
     /**

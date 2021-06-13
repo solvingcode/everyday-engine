@@ -11,6 +11,10 @@ import FunctionNode from '../src/app/flow/node/FunctionNode.js'
 import ConstantNode from '../src/app/flow/node/ConstantNode.js'
 import World from '../src/app/world/World.js'
 import ConditionNode from '../src/app/flow/node/ConditionNode.js'
+import OnMouseClickEvent from '../src/app/flow/event/native/OnMouseClickEvent.js'
+import StringVariableNode from '../src/app/flow/node/variable/StringVariableNode.js'
+import ScriptComponent from '../src/app/component/internal/ScriptComponent.js'
+import DynamicAttribute from '../src/app/pobject/DynamicAttribute.js'
 
 test('Execute native function (without output)', function () {
     const log = new LogFunction()
@@ -75,13 +79,13 @@ test('Create and compile function flow', function () {
     const nodeSetValue2 = script.createNode(functionRegistry, ConstantNode, 30)
     const node = script.createNode(functionRegistry, FunctionNode, 'Add')
 
-    node.attach(nodeSetValue1, functionRegistry.getInstanceById(node.getSourceId()).getInputId('value1'))
-    node.attach(nodeSetValue2, functionRegistry.getInstanceById(node.getSourceId()).getInputId('value2'))
+    node.attach(nodeSetValue1, 'value1')
+    node.attach(nodeSetValue2, 'value2')
 
     script.compile()
 
     const compiledFunction = functionRegistry.getInstance('testScript')
-    compiledFunction.execute(functionRegistry, null)
+    compiledFunction.execute(functionRegistry, null, null, World.get())
     expect(compiledFunction.getOutputValue()).toBe(50)
 })
 
@@ -98,19 +102,20 @@ test('Create and compile class flow', function () {
     const nodeSetValue2 = script.createNode(functionRegistry, ConstantNode, 30)
     const nodeEvent = script.createNode(functionRegistry, FunctionNode, 'OnMouseClick')
 
-    nodeAdd.attach(nodeSetValue1, functionRegistry.getInstanceById(nodeAdd.getSourceId()).getInputId('value1'))
-    nodeAdd.attach(nodeSetValue2, functionRegistry.getInstanceById(nodeAdd.getSourceId()).getInputId('value2'))
-    nodeLog.attach(nodeAdd, functionRegistry.getInstanceById(nodeLog.getSourceId()).getInputId('value'))
+    nodeAdd.attach(nodeSetValue1, 'value1')
+    nodeAdd.attach(nodeSetValue2, 'value2')
+    nodeLog.attach(nodeAdd, 'value')
     nodeLog.attach(nodeEvent, null)
 
     script.compile()
 
-    const mouseEventCompiled = functionRegistry.getInstance('classScript.OnMouseClick')
+    const mouseEventCompiled = functionRegistry.getInstance('classScript.OnMouseClick4')
     expect(functionRegistry.getInstance('classScript')).toBe(undefined)
     expect(mouseEventCompiled).toBeDefined()
+    expect(mouseEventCompiled.constructor).toEqual(OnMouseClickEvent)
 
     console.log = jest.fn()
-    mouseEventCompiled.execute(functionRegistry, null)
+    mouseEventCompiled.execute(functionRegistry, null, null, World.get())
     expect(console.log).toHaveBeenCalledWith(50)
 })
 
@@ -129,21 +134,22 @@ test('Create and compile class script with success condition', function () {
     const nodeTrueCondition = script.createNode(functionRegistry, ConditionNode, 'True')
     const nodeEvent = script.createNode(functionRegistry, FunctionNode, 'OnMouseClick')
 
-    nodeLessThan.attach(nodeSetValue1, functionRegistry.getInstanceById(nodeLessThan.getSourceId()).getInputId('value1'))
-    nodeLessThan.attach(nodeSetValue2, functionRegistry.getInstanceById(nodeLessThan.getSourceId()).getInputId('value2'))
-    nodeTrueCondition.attach(nodeLessThan, functionRegistry.getInstanceById(nodeTrueCondition.getSourceId()).getInputId('target'))
-    nodeLog.attach(nodeSetValue3, functionRegistry.getInstanceById(nodeLog.getSourceId()).getInputId('value'))
+    nodeLessThan.attach(nodeSetValue1, 'value1')
+    nodeLessThan.attach(nodeSetValue2, 'value2')
+    nodeTrueCondition.attach(nodeLessThan, 'target')
+    nodeLog.attach(nodeSetValue3, 'value')
     nodeLog.attach(nodeTrueCondition, null)
     nodeTrueCondition.attach(nodeEvent, null)
 
     script.compile()
 
-    const mouseEventCompiled = functionRegistry.getInstance('classScript.OnMouseClick')
+    const mouseEventCompiled = functionRegistry.getInstance('classScript.OnMouseClick6')
     expect(functionRegistry.getInstance('classScript')).toBe(undefined)
     expect(mouseEventCompiled).toBeDefined()
+    expect(mouseEventCompiled.constructor).toEqual(OnMouseClickEvent)
 
     console.log = jest.fn()
-    mouseEventCompiled.execute(functionRegistry, null)
+    mouseEventCompiled.execute(functionRegistry, null, null, World.get())
     expect(console.log).toHaveBeenCalledWith('correct')
 })
 
@@ -162,20 +168,49 @@ test('Create and compile class script with failed condition', function () {
     const nodeTrueCondition = script.createNode(functionRegistry, ConditionNode, 'True')
     const nodeEvent = script.createNode(functionRegistry, FunctionNode, 'OnMouseClick')
 
-    nodeLessThan.attach(nodeSetValue1, functionRegistry.getInstanceById(nodeLessThan.getSourceId()).getInputId('value1'))
-    nodeLessThan.attach(nodeSetValue2, functionRegistry.getInstanceById(nodeLessThan.getSourceId()).getInputId('value2'))
-    nodeTrueCondition.attach(nodeLessThan, functionRegistry.getInstanceById(nodeTrueCondition.getSourceId()).getInputId('target'))
-    nodeLog.attach(nodeSetValue3, functionRegistry.getInstanceById(nodeLog.getSourceId()).getInputId('value'))
+    nodeLessThan.attach(nodeSetValue1, 'value1')
+    nodeLessThan.attach(nodeSetValue2, 'value2')
+    nodeTrueCondition.attach(nodeLessThan, 'target')
+    nodeLog.attach(nodeSetValue3, 'value')
     nodeLog.attach(nodeTrueCondition, null)
     nodeTrueCondition.attach(nodeEvent, null)
 
     script.compile()
 
-    const mouseEventCompiled = functionRegistry.getInstance('classScript.OnMouseClick')
+    const mouseEventCompiled = functionRegistry.getInstance('classScript.OnMouseClick6')
     expect(functionRegistry.getInstance('classScript')).toBe(undefined)
     expect(mouseEventCompiled).toBeDefined()
+    expect(mouseEventCompiled.constructor).toEqual(OnMouseClickEvent)
 
     console.log = jest.fn()
-    mouseEventCompiled.execute(functionRegistry, null)
+    mouseEventCompiled.execute(functionRegistry, null, null, World.get())
     expect(console.log).not.toHaveBeenCalledWith('correct')
+})
+
+test('Create and compile class script with variables', function () {
+    const functionRegistry = World.get().getFunctionRegistry()
+
+    functionRegistry.init()
+
+    const script = new ClassScript('classScript')
+    const scriptComponent = new ScriptComponent()
+    scriptComponent.setVarsAttributes([new DynamicAttribute('text', TYPES.STRING, 'test')])
+
+    const nodeLog = script.createNode(functionRegistry, FunctionNode, 'Log')
+    const nodeVar = script.createNode(functionRegistry, StringVariableNode, 'text')
+    const nodeEvent = script.createNode(functionRegistry, FunctionNode, 'OnMouseClick')
+
+    nodeLog.attach(nodeVar, 'value')
+    nodeLog.attach(nodeEvent, null)
+
+    script.compile()
+
+    const mouseEventCompiled = functionRegistry.getInstance('classScript.OnMouseClick2')
+    expect(functionRegistry.getInstance('classScript')).toBe(undefined)
+    expect(mouseEventCompiled).toBeDefined()
+    expect(mouseEventCompiled.constructor).toEqual(OnMouseClickEvent)
+
+    console.log = jest.fn()
+    mouseEventCompiled.execute(functionRegistry, null, scriptComponent, World.get())
+    expect(console.log).toHaveBeenCalledWith('test')
 })

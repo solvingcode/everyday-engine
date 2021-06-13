@@ -92,6 +92,15 @@ export default class DynamicAttributeHelper {
 
     /**
      * @param {DynamicAttribute[]} target
+     * @param {string} name
+     * @return {DynamicAttribute}
+     */
+    static findByName(target, name){
+        return target.find(attribute => attribute.getAttrName() === name)
+    }
+
+    /**
+     * @param {DynamicAttribute[]} target
      * @param {number} index
      * @return {DynamicAttribute}
      */

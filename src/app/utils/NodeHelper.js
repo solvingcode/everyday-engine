@@ -12,6 +12,15 @@ import AKeyCode from '../flow/keycode/AKeyCode.js'
 import AVariable from '../flow/variable/AVariable.js'
 import AStringVariable from '../flow/variable/AStringVariable.js'
 import AAnimation from '../flow/animation/AAnimation.js'
+import FunctionNode from '../flow/node/FunctionNode.js'
+import ConditionNode from '../flow/node/ConditionNode.js'
+import EventNode from '../flow/node/EventNode.js'
+import ConstantNode from '../flow/node/ConstantNode.js'
+import KeyCodeNode from '../flow/node/KeyCodeNode.js'
+import DynamicAttributeHelper from './DynamicAttributeHelper.js'
+import UnitNode from '../flow/node/UnitNode.js'
+import AnimationNode from '../flow/node/AnimationNode.js'
+import StringVariableNode from '../flow/node/variable/StringVariableNode.js'
 
 export default class NodeHelper {
 
@@ -21,7 +30,25 @@ export default class NodeHelper {
      */
     static getSourceNode(node){
         const functionRegistry = World.get().getFunctionRegistry()
-        return functionRegistry.getInstanceById(node.getSourceId())
+        const sourceName = node.getSourceName()
+        switch (node.constructor) {
+            case FunctionNode:
+            case ConditionNode:
+            case EventNode:
+                return functionRegistry.tryGetInstance(sourceName)
+            case ConstantNode:
+                return new AConstant(DynamicAttributeHelper.findTypeOfValue(sourceName), sourceName)
+            case KeyCodeNode:
+                return new AKeyCode(sourceName)
+            case UnitNode:
+                return new AUnit(sourceName)
+            case AnimationNode:
+                return new AAnimation(sourceName)
+            case StringVariableNode:
+                return new AStringVariable(sourceName)
+            default:
+                throw new ClientError(`Source Node: "${node.constructor.name}" not supported`)
+        }
     }
 
     /**
@@ -144,7 +171,7 @@ export default class NodeHelper {
     static getNodeGUISize(node){
         const nodeSource = this.getSourceNode(node)
         const nodeSourceInputs = nodeSource.getInputs()
-        const type = this.getNodeType(node)
+        const type = node.getType()
         const {fontSize, padding, fontSizeRatio, sizeInput} = this.getNodeGUIProps(type)
         const width = Math.max(node.getName().length * fontSize / fontSizeRatio, 100)
         const height = (nodeSourceInputs.length + 1) * (sizeInput + padding * 2) + (fontSize + padding * 2)

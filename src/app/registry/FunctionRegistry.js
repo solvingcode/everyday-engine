@@ -88,6 +88,21 @@ export default class FunctionRegistry extends Registry{
     }
 
     /**
+     * @param {AFunction} instance
+     */
+    tryRegister(instance){
+        super.tryRegister(instance)
+    }
+
+    /**
+     * @param {string} name
+     * @return {AFunction}
+     */
+    tryGetInstance(name) {
+        return super.tryGetInstance(name)
+    }
+
+    /**
      * @param {string} name
      * @return {AFunction}
      */

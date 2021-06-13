@@ -1,4 +1,3 @@
-import NodeHelper from '../../utils/NodeHelper.js'
 import ScriptHelper from '../../utils/ScriptHelper.js'
 import AssetScriptGenerator from './AssetScriptGenerator.js'
 
@@ -24,23 +23,21 @@ export default class AssetScriptXmlGenerator extends AssetScriptGenerator {
         parentNode.setAttribute('view', `${x},${y},${z}`)
         flow.getNodes().forEach(node => {
             const nodeNode = root.createElement('node')
-            const sourceNode = NodeHelper.getSourceNode(node)
             let nodeType = ScriptHelper.getNodeType(node)
             const {x: nodePositionX, y: nodePositionY} = node.getPosition()
             nodeNode.setAttribute('type', nodeType)
             nodeNode.setAttribute('id', `${node.getId()}`)
             nodeNode.setAttribute('position', `${nodePositionX},${nodePositionY}`)
-            nodeNode.setAttribute('value', sourceNode.getName())
+            nodeNode.setAttribute('value', node.getSourceName())
             parentNode.appendChild(nodeNode)
         })
         flow.getNodes().forEach(node => {
             node.getInputs().forEach(input => {
                 if (flow.findNodeById(input.getSourceNodeId())) {
                     const edgeNode = root.createElement('edge')
-                    const sourceInput = NodeHelper.getSourceNode(node).findInputById(input.getTargetId())
                     edgeNode.setAttribute('source', `${input.getSourceNodeId()}`)
                     edgeNode.setAttribute('target', `${node.getId()}`)
-                    edgeNode.setAttribute('connection', sourceInput ? sourceInput.getAttrName() : '')
+                    edgeNode.setAttribute('connection', input.getTargetName() || '')
                     parentNode.appendChild(edgeNode)
                 }
             })

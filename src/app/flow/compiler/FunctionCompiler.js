@@ -21,10 +21,10 @@ export default class FunctionCompiler extends Compiler{
         const stack = []
         let outputAttribute
         nodes.forEach(targetNode => {
-            const targetNodeSource = functionRegistry.getInstanceById(targetNode.getSourceId())
+            const targetNodeSource = functionRegistry.getInstance(targetNode.getSourceName())
             const targetInputs = targetNodeSource.getInputs()
             targetInputs.forEach(targetInput => {
-                const inputSourceNode = targetNode.getInputNodeAttached(targetInput.getId())
+                const inputSourceNode = targetNode.getInputNodeAttached(targetInput.getAttrName())
                 if(inputSourceNode){
                     const sourceNode = script.findNodeById(inputSourceNode.getSourceNodeId())
                     let element = functionRegistry.getInstanceById(sourceNode.getSourceId())

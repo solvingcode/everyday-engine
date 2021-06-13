@@ -4,10 +4,7 @@ import Layout from '../../layout/Layout.js'
 
 export default class ScriptComponent extends Component {
 
-    /**
-     * @param {Asset} asset
-     */
-    constructor(asset) {
+    constructor() {
         super('Script')
     }
 
@@ -48,7 +45,7 @@ export default class ScriptComponent extends Component {
     setVarsAttributes(vars) {
         vars.forEach(variable => {
             if (!this.hasAttribute(variable.getAttrName())) {
-                this.add(variable.getAttrName(), variable.getAttrType())
+                this.add(variable.getAttrName(), variable.getAttrType(), variable.getAttrValue())
             }
         })
     }

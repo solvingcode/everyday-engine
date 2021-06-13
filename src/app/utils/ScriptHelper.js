@@ -13,6 +13,8 @@ import Vector from './Vector.js'
 import MeshComponent from '../component/internal/MeshComponent.js'
 import StringVariableNode from '../flow/node/variable/StringVariableNode.js'
 import AnimationNode from '../flow/node/AnimationNode.js'
+import AEvent from '../flow/event/AEvent.js'
+import AEmptyStackFunction from '../flow/function/AEmptyStackFunction.js'
 
 export default class ScriptHelper {
 
@@ -144,6 +146,30 @@ export default class ScriptHelper {
                 script.removeNodeById(node.getId())
             }
         })
+    }
+
+    /**
+     * @param {AScript} script
+     * @param {ANode} node
+     * @return {string}
+     */
+    static generateFunctionName(script, node) {
+        const nodeIndex = script.getNodes().findIndex(pNode => pNode === node)
+        return `${script.getName()}.${node.getSourceName()}${nodeIndex}`
+    }
+
+    /**
+     * @param {AScript} script
+     * @param {ANode} node
+     * @return {AFunction}
+     */
+    static createFunction(script, node){
+        const element = NodeHelper.getSourceNode(node)
+        const functionName = this.generateFunctionName(script, node)
+        if(element instanceof AEvent){
+            return new (element.constructor)(functionName)
+        }
+        return new AEmptyStackFunction(functionName)
     }
 
 }

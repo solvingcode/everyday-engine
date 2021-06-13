@@ -11,6 +11,7 @@ import Animation from '../animation/Animation.js'
 import AssetAnimationXml from '../asset/types/animation/AssetAnimationXml.js'
 import SystemError from '../exception/type/SystemError.js'
 import AnimationScript from '../flow/AnimationScript.js'
+import Maths from '../utils/Maths.js'
 
 /**
  * @class {AssetsManager}
@@ -110,7 +111,7 @@ export default class AssetsManager extends AssetsManagerData {
      */
     async createAnimation(folder, type, generator) {
         const assetName = this.generateUniqAssetName('Animation', folder.getId())
-        const animation = new Animation(assetName)
+        const animation = new Animation(Maths.generateId(), assetName)
         return this.createAsset(
             generator.generate(animation),
             type,
@@ -238,7 +239,7 @@ export default class AssetsManager extends AssetsManagerData {
      * @param {number|string} assetId
      * @return {Asset}
      */
-    findAssetImageById(assetId){
+    findAssetImageById(assetId) {
         const asset = this.findAssetById(assetId)
         if (!asset || !this.isAssetImage(asset)) {
             throw new SystemError(`No asset image found with ID "${assetId}"`)

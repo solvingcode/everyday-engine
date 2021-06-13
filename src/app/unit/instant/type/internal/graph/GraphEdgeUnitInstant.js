@@ -35,7 +35,7 @@ export default class GraphEdgeUnitInstant extends UnitInstant {
         if (sourceNode && targetNode) {
             const targetSourceNode = NodeHelper.getSourceNode(targetNode)
             const targetNodeInputIndex = targetSourceNode.getInputs()
-                .findIndex(input => input.getId() === nodeInput.getTargetId())
+                .findIndex(input => input.getAttrName() === nodeInput.getTargetName())
             const sourceNodeSize = NodeHelper.getNodeGUISize(sourceNode)
             const {position: sourceOutputPosition} = NodeHelper.getNodeGUIOutput(sourceNode.getType(), sourceNodeSize)
             const {position: targetInputPosition} = NodeHelper.getNodeGUIInput(sourceNode.getType(), targetNodeInputIndex)

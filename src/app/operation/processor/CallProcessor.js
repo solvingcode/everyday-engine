@@ -1,6 +1,5 @@
 import ClientError from '../../exception/type/ClientError.js'
 import {TYPES} from '../../pobject/AttributeType.js'
-import World from '../../world/World.js'
 
 export default class CallProcessor {
 
@@ -9,8 +8,10 @@ export default class CallProcessor {
      * @param {StackRegister} stackRegister
      * @param {FunctionRegistry} functionRegistry
      * @param {Unit} unit
+     * @param {ScriptComponent} scriptComponent
+     * @param {World} world
      */
-    static run(stackOperation, stackRegister, functionRegistry, unit) {
+    static run(stackOperation, stackRegister, functionRegistry, unit, scriptComponent, world) {
         const args = stackOperation.getArgs()
         const functionName = args && args[0]
         if (!functionName) {
@@ -31,14 +32,14 @@ export default class CallProcessor {
             }
             switch (inputType) {
                 case TYPES.UNIT:
-                    inputValue = value ? World.get().findUnitById(parseInt(value)) : unit
+                    inputValue = value ? world.findUnitById(parseInt(value)) : unit
                     if(!inputValue){
                         throw new ClientError(`${this.constructor.name}: Unit "${value}" not found`)
                     }
             }
             aFunction.setInputValue(inputName, inputValue)
         })
-        aFunction.execute(functionRegistry, unit)
+        aFunction.execute(functionRegistry, unit, scriptComponent, world)
         stackRegister.pushRet(aFunction.getOutputValue())
     }
 
