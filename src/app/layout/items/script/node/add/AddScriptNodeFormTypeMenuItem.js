@@ -37,6 +37,10 @@ export default class AddScriptNodeFormTypeMenuItem extends FormMenuItem {
                         label: 'Animation'
                     },
                     {
+                        value: NODE_TYPES.COMPONENT,
+                        label: 'Component'
+                    },
+                    {
                         value: NODE_TYPES.FUNCTION,
                         label: 'Function'
                     },

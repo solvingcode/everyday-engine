@@ -21,6 +21,8 @@ import DynamicAttributeHelper from './DynamicAttributeHelper.js'
 import UnitNode from '../flow/node/UnitNode.js'
 import AnimationNode from '../flow/node/AnimationNode.js'
 import StringVariableNode from '../flow/node/variable/StringVariableNode.js'
+import ComponentNode from '../flow/node/ComponentNode.js'
+import AComponent from '../flow/component/AComponent.js'
 
 export default class NodeHelper {
 
@@ -46,6 +48,8 @@ export default class NodeHelper {
                 return new AAnimation(sourceName)
             case StringVariableNode:
                 return new AStringVariable(sourceName)
+            case ComponentNode:
+                return new AComponent(sourceName)
             default:
                 throw new ClientError(`Source Node: "${node.constructor.name}" not supported`)
         }
@@ -73,35 +77,10 @@ export default class NodeHelper {
         }else if(nodeSource instanceof AAnimation){
             const animation = World.get().getAnimationManager().findById(parseInt(nodeSource.getName()))
             return `${animation.getName()}`
+        }else if(nodeSource instanceof AComponent){
+            return `${nodeSource.getName()} Component`
         }else if(nodeSource instanceof AFunction){
             return `${nodeSource.getName()}`
-        }else{
-            throw new ClientError(`Node source "${nodeSource && nodeSource.constructor.name}" unknown`)
-        }
-    }
-
-    /**
-     * @param {ANode} node
-     * @return {string}
-     */
-    static getNodeType(node){
-        const nodeSource = this.getSourceNode(node)
-        if(nodeSource instanceof AConstant){
-            return NODE_TYPES.CONSTANT
-        }else if(nodeSource instanceof AKeyCode){
-            return NODE_TYPES.KEY_CODE
-        }else if(nodeSource instanceof ACondition){
-            return NODE_TYPES.CONDITION
-        }else if(nodeSource instanceof AEvent){
-            return NODE_TYPES.EVENT
-        }else if(nodeSource instanceof AUnit){
-            return NODE_TYPES.UNIT
-        }else if(nodeSource instanceof AAnimation){
-            return NODE_TYPES.ANIMATION
-        }else if(nodeSource instanceof AFunction){
-            return NODE_TYPES.FUNCTION
-        }else if(nodeSource instanceof AStringVariable){
-            return NODE_TYPES.VAR_STRING
         }else{
             throw new ClientError(`Node source "${nodeSource && nodeSource.constructor.name}" unknown`)
         }
@@ -147,6 +126,8 @@ export default class NodeHelper {
             headColor = '#375e22'
         } else if (type === NODE_TYPES.VAR_STRING) {
             headColor = '#5e4322'
+        } else if (type === NODE_TYPES.COMPONENT) {
+            headColor = '#5e2254'
         }
         return {
             sizeInput,
@@ -173,7 +154,7 @@ export default class NodeHelper {
         const nodeSourceInputs = nodeSource.getInputs()
         const type = node.getType()
         const {fontSize, padding, fontSizeRatio, sizeInput} = this.getNodeGUIProps(type)
-        const width = Math.max(node.getName().length * fontSize / fontSizeRatio, 100)
+        const width = Math.max(this.getNodeName(node).length * fontSize / fontSizeRatio, 100)
         const height = (nodeSourceInputs.length + 1) * (sizeInput + padding * 2) + (fontSize + padding * 2)
         return new Size({width, height})
     }

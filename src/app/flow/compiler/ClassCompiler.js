@@ -64,8 +64,6 @@ export default class ClassCompiler extends Compiler {
                         new StackOperation(OPERATIONS.VAR, sourceNode.getSourceName()),
                         new StackOperation(OPERATIONS.PUSH, targetInput.getAttrName(), CONSTANTS.RESULT)
                     ])
-                } else if (sourceElement instanceof AAnimation) {
-                    sourceStackFunction.getStack().push(...[new StackOperation(OPERATIONS.CALL, functionName)])
                 }
                 // must be the last condition
                 else if (sourceElement instanceof AFunction) {
@@ -108,7 +106,7 @@ export default class ClassCompiler extends Compiler {
                 const sourceElement = NodeHelper.getSourceNode(sourceNode)
                 const sourceElementName = ScriptHelper.generateFunctionName(script, sourceNode)
                 const sourceStackFunction = functionRegistry.getInstance(sourceElementName)
-                if (sourceElement instanceof ACondition) {
+                if (sourceElement instanceof ACondition || sourceElement instanceof AAnimation) {
                     sourceStackFunction.getStack().push(...[new StackOperation(OPERATIONS.CALL, functionName)])
                 }
             }

@@ -3,11 +3,8 @@ import ScriptComponent from './ScriptComponent.js'
 
 export default class AnimationComponent extends ScriptComponent {
 
-    /**
-     * @param {Asset} asset
-     */
-    constructor(asset) {
-        super(asset)
+    constructor() {
+        super()
         this.setName('Animation')
     }
 

@@ -15,6 +15,7 @@ import StringVariableNode from '../flow/node/variable/StringVariableNode.js'
 import AnimationNode from '../flow/node/AnimationNode.js'
 import AEvent from '../flow/event/AEvent.js'
 import AEmptyStackFunction from '../flow/function/AEmptyStackFunction.js'
+import ComponentNode from '../flow/node/ComponentNode.js'
 
 export default class ScriptHelper {
 
@@ -43,6 +44,8 @@ export default class ScriptHelper {
             node = script.createNode(functionRegistry, AnimationNode, nodeValue)
         } else if (nodeType === NODE_TYPES.VAR_STRING) {
             node = script.createNode(functionRegistry, StringVariableNode, nodeValue)
+        } else if (nodeType === NODE_TYPES.COMPONENT) {
+            node = script.createNode(functionRegistry, ComponentNode, nodeValue)
         } else {
             throw new ClientError(`Script: Node with type "${nodeType}" not supported!`)
         }
@@ -71,6 +74,8 @@ export default class ScriptHelper {
             nodeType = NODE_TYPES.KEY_CODE
         } else if (node instanceof StringVariableNode) {
             nodeType = NODE_TYPES.VAR_STRING
+        } else if (node instanceof ComponentNode) {
+            nodeType = NODE_TYPES.COMPONENT
         } else {
             throw new ClientError(`AssetScriptXmlGenerator: ${node.constructor.name} not supported`)
         }

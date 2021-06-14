@@ -25,7 +25,7 @@ export default class GraphNodeUnitInstant extends UnitInstant {
         transformComponent.setPosition(position)
         meshComponent.setSize(size)
         meshComponent.setShape(PrimitiveShape.NODE)
-        nodeComponent.setTitle(node.getName())
+        nodeComponent.setTitle(NodeHelper.getNodeName(node))
         nodeComponent.setInputs(nodeSourceInputs.map(input => input.getAttrName()))
         nodeComponent.setType(ScriptHelper.getNodeType(node))
         nodeComponent.setNodeId(node.getId())

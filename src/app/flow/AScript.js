@@ -12,6 +12,7 @@ import Vector from '../utils/Vector.js'
 import {SCENE_HEIGHT, SCENE_WIDTH} from '../core/Constant.js'
 import StringVariableNode from './node/variable/StringVariableNode.js'
 import AnimationNode from './node/AnimationNode.js'
+import ComponentNode from './node/ComponentNode.js'
 
 /**
  * @abstract
@@ -42,6 +43,7 @@ export default class AScript extends AScriptData {
             case UnitNode:
             case AnimationNode:
             case StringVariableNode:
+            case ComponentNode:
                 sourceName = value
                 break
             default:

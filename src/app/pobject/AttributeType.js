@@ -50,6 +50,8 @@ export default class AttributeType {
                 return 'number'
             case TYPES.ANIMATION:
                 return 'number'
+            case TYPES.COMPONENT:
+                return 'number'
             case TYPES.RANGE:
                 return 'range'
             case TYPES.MESH:
@@ -96,6 +98,7 @@ export const TYPES = {
     NUMBER: '004',
     UNIT: '005',
     ANIMATION: '006',
+    COMPONENT: '007',
     RANGE: '101',
     STYLE: '202',
     SIZE: '203',

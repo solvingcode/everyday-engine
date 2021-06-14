@@ -29,7 +29,7 @@ export default class AFunction extends FunctionData{
         return !!this.getName().match(regexName)
     }
 
-    init(){
+    init() {
         this.initAttributes()
     }
 

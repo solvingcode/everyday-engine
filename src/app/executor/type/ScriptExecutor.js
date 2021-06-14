@@ -11,6 +11,7 @@ import OnInputJumpEvent from '../../flow/event/native/OnInputJumpEvent.js'
 import Window from '../../core/Window.js'
 import ClientError from '../../exception/type/ClientError.js'
 import AssetHelper from '../../utils/AssetHelper.js'
+import OnUpdateEvent from '../../flow/event/native/OnUpdateEvent.js'
 
 export default class ScriptExecutor extends ComponentExecutor {
 
@@ -48,7 +49,9 @@ export default class ScriptExecutor extends ComponentExecutor {
                 ((keyboard.isKeyPressed(gameInput.getKeyCode(GAME_INPUTS.UP)) ||
                     keyboard.isKeyPressed(gameInput.getKeyCode(GAME_INPUTS.DOWN))) && instance instanceof OnInputYAxisEvent) ||
 
-                (keyboard.isKeyPressed(gameInput.getKeyCode(GAME_INPUTS.JUMP)) && instance instanceof OnInputJumpEvent)
+                (keyboard.isKeyPressed(gameInput.getKeyCode(GAME_INPUTS.JUMP)) && instance instanceof OnInputJumpEvent) ||
+
+                instance instanceof OnUpdateEvent
             ) {
                 instance.execute(functionRegistry, unit, scriptComponent, world)
             }

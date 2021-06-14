@@ -91,6 +91,8 @@ import OnAnimationStartEvent from '../../flow/event/native/OnAnimationStartEvent
 import AnimationNode from '../../flow/node/AnimationNode.js'
 import AnimationComponent from '../../component/internal/AnimationComponent.js'
 import ActivateAnimationFunction from '../../flow/function/native/animation/ActivateAnimationFunction.js'
+import SetFunction from '../../flow/function/native/component/SetFunction.js'
+import OnUpdateEvent from '../../flow/event/native/OnUpdateEvent.js'
 
 /**
  * @class {DataSchema}
@@ -178,7 +180,9 @@ class DataSchema {
         {id: 690, type: AnimationNode},
         {id: 700, type: AnimationComponent},
         {id: 701, type: GUIPropertyComponent},
-        {id: 720, type: ActivateAnimationFunction}
+        {id: 720, type: ActivateAnimationFunction},
+        {id: 730, type: SetFunction},
+        {id: 740, type: OnUpdateEvent}
     ]
 
     /**

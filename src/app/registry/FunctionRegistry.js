@@ -31,6 +31,9 @@ import AVariable from '../flow/variable/AVariable.js'
 import OnAnimationStartEvent from '../flow/event/native/OnAnimationStartEvent.js'
 import AAnimation from '../flow/animation/AAnimation.js'
 import ActivateAnimationFunction from '../flow/function/native/animation/ActivateAnimationFunction.js'
+import AComponent from '../flow/component/AComponent.js'
+import SetFunction from '../flow/function/native/component/SetFunction.js'
+import OnUpdateEvent from '../flow/event/native/OnUpdateEvent.js'
 
 export default class FunctionRegistry extends Registry{
 
@@ -50,6 +53,7 @@ export default class FunctionRegistry extends Registry{
             new OnInputYAxisEvent(),
             new OnInputJumpEvent(),
             new OnAnimationStartEvent(),
+            new OnUpdateEvent(),
 
             // Condition
             new TrueCondition(),
@@ -72,6 +76,9 @@ export default class FunctionRegistry extends Registry{
 
             //Animation
             new ActivateAnimationFunction(),
+
+            //Component
+            new SetFunction(),
 
             //Physics
             new MoveXAxisFunction(),
@@ -165,7 +172,8 @@ export default class FunctionRegistry extends Registry{
                 !(instance instanceof AUnit) &&
                 !(instance instanceof AAnimation) &&
                 !(instance instanceof AKeyCode) &&
-                !(instance instanceof AVariable)
+                !(instance instanceof AVariable) &&
+                !(instance instanceof AComponent)
             )
     }
 
@@ -184,31 +192,10 @@ export default class FunctionRegistry extends Registry{
     }
 
     /**
-     * @return {AKeyCode[]}
-     */
-    getKeyCodeInstances(){
-        return super.getInstances().filter(instance => instance instanceof AKeyCode)
-    }
-
-    /**
-     * @return {AVariable[]}
-     */
-    getVariableInstances(){
-        return super.getInstances().filter(instance => instance instanceof AVariable)
-    }
-
-    /**
      * @return {ACondition[]}
      */
     getConditionInstances(){
         return super.getInstances().filter(instance => instance instanceof ACondition)
-    }
-
-    /**
-     * @return {ACondition[]}
-     */
-    getAnimationInstances(){
-        return super.getInstances().filter(instance => instance instanceof AAnimation)
     }
 
 }
