@@ -50,6 +50,17 @@ export default class PhysicsEngine {
 
     /**
      * @param {Unit} unit
+     * @param {Vector} start
+     * @param {Vector} end
+     * @return {{body: *, bodyA: *, bodyB: *, collided: boolean}[]}
+     */
+    rayCast(unit, start, end){
+        const body = this.tryFindBody(unit)
+        return this.rayCastForBody(body, start, end)
+    }
+
+    /**
+     * @param {Unit} unit
      * @param {Vector} velocity
      */
     setVelocity(unit, velocity){
@@ -235,6 +246,18 @@ export default class PhysicsEngine {
      */
     applyForceToBody(body, position, force){
         throw new SystemError(`${this.constructor.name}.applyForceToBody method must be implemented`)
+    }
+
+    /**
+     * @protected
+     * @abstract
+     * @param {*} body
+     * @param {Vector} start
+     * @param {Vector} end
+     * @return {{body: *, bodyA: *, bodyB: *, collided: boolean}[]}
+     */
+    rayCastForBody(body, start, end){
+        throw new SystemError(`${this.constructor.name}.rayCastForBody method must be implemented`)
     }
 
     /**

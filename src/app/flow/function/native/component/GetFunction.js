@@ -1,10 +1,10 @@
 import {TYPES} from '../../../../pobject/AttributeType.js'
 import AFunction from '../../AFunction.js'
 
-export default class SetFunction extends AFunction{
+export default class GetFunction extends AFunction{
 
     constructor() {
-        super('Set')
+        super('Get')
     }
 
     /**
@@ -13,7 +13,7 @@ export default class SetFunction extends AFunction{
     initAttributes() {
         this.addInput('component', TYPES.COMPONENT, 0)
         this.addInput('attribute', TYPES.STRING)
-        this.addInput('value', TYPES.STRING)
+        this.addOutput(TYPES.ANY)
     }
 
     /**
@@ -22,7 +22,6 @@ export default class SetFunction extends AFunction{
     execute(functionRegistry, unit, scriptComponent, world) {
         const classComponent = this.getInputValue('component')
         const attribute = this.getInputValue('attribute')
-        const value = this.getInputValue('value')
-        unit.getComponent(classComponent).setValue(attribute, value)
+        this.setOutputValue(unit.getComponent(classComponent).getValue(attribute))
     }
 }

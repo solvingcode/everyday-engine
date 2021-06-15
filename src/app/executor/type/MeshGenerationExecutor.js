@@ -65,6 +65,7 @@ export default class MeshGenerationExecutor extends ComponentExecutor {
     startContext(unitId, meshComponent, transformComponent, world, camera) {
         const scaleSize = this.getScaleSize(camera, meshComponent, transformComponent)
         const rotation = transformComponent.getRotation()
+        const scale = transformComponent.getScale()
         const {width, height} = GeometryHelper.getLargestRectangle(rotation, scaleSize)
         if (width > 0 && height > 0) {
             const center = new Vector({x: scaleSize.width / 2, y: scaleSize.height / 2})
@@ -81,6 +82,7 @@ export default class MeshGenerationExecutor extends ComponentExecutor {
             context.lineWidth = borderSize || 1
             context.translate(width / 2, height / 2)
             context.rotate(rotation)
+            context.scale(scale.getX(), scale.getY())
             context.translate(-center.x, -center.y)
             return new DataContext(unitId, center, context, scaleSize, camera, world)
         }

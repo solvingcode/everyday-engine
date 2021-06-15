@@ -40,6 +40,8 @@ export default class AttributeType {
      */
     static mapPrototype(prototype) {
         switch (prototype) {
+            case TYPES.ANY:
+                return 'string'
             case TYPES.STRING:
                 return 'string'
             case TYPES.BOOLEAN:

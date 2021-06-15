@@ -34,6 +34,14 @@ import ActivateAnimationFunction from '../flow/function/native/animation/Activat
 import AComponent from '../flow/component/AComponent.js'
 import SetFunction from '../flow/function/native/component/SetFunction.js'
 import OnUpdateEvent from '../flow/event/native/OnUpdateEvent.js'
+import GetFunction from '../flow/function/native/component/GetFunction.js'
+import GreaterThanOrEqualFunction from '../flow/function/native/basic/GreaterThanOrEqualFunction.js'
+import FalseCondition from '../flow/condition/FalseCondition.js'
+import AndFunction from '../flow/function/native/basic/AndFunction.js'
+import OrFunction from '../flow/function/native/basic/OrFunction.js'
+import NotFunction from '../flow/function/native/basic/NotFunction.js'
+import RoundFunction from '../flow/function/native/basic/RoundFunction.js'
+import IsGroundedFunction from '../flow/function/native/physics/IsGroundedFunction.js'
 
 export default class FunctionRegistry extends Registry{
 
@@ -57,17 +65,23 @@ export default class FunctionRegistry extends Registry{
 
             // Condition
             new TrueCondition(),
+            new FalseCondition(),
 
             // Function
             new LogFunction(),
             new AddFunction(),
             new LessThanFunction(),
             new GreaterThanFunction(),
+            new GreaterThanOrEqualFunction(),
             new IsKeyDownFunction(),
             new GetInputXAxisFunction(),
             new MultiplyFunction(),
             new EqualToFunction(),
             new NotEqualToFunction(),
+            new AndFunction(),
+            new OrFunction(),
+            new NotFunction(),
+            new RoundFunction(),
 
             //Unit
             new GetWorldPositionFunction(),
@@ -79,12 +93,14 @@ export default class FunctionRegistry extends Registry{
 
             //Component
             new SetFunction(),
+            new GetFunction(),
 
             //Physics
             new MoveXAxisFunction(),
             new ApplyForceFunction(),
             new GetVelocityXFunction(),
             new GetVelocityYFunction(),
+            new IsGroundedFunction(),
 
             //Structure
             new VectorFunction()

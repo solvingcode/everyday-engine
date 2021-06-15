@@ -93,6 +93,14 @@ import AnimationComponent from '../../component/internal/AnimationComponent.js'
 import ActivateAnimationFunction from '../../flow/function/native/animation/ActivateAnimationFunction.js'
 import SetFunction from '../../flow/function/native/component/SetFunction.js'
 import OnUpdateEvent from '../../flow/event/native/OnUpdateEvent.js'
+import GetFunction from '../../flow/function/native/component/GetFunction.js'
+import GreaterThanOrEqualFunction from '../../flow/function/native/basic/GreaterThanOrEqualFunction.js'
+import FalseCondition from '../../flow/condition/FalseCondition.js'
+import AndFunction from '../../flow/function/native/basic/AndFunction.js'
+import OrFunction from '../../flow/function/native/basic/OrFunction.js'
+import NotFunction from '../../flow/function/native/basic/NotFunction.js'
+import RoundFunction from '../../flow/function/native/basic/RoundFunction.js'
+import IsGroundedFunction from '../../flow/function/native/physics/IsGroundedFunction.js'
 
 /**
  * @class {DataSchema}
@@ -182,7 +190,15 @@ class DataSchema {
         {id: 701, type: GUIPropertyComponent},
         {id: 720, type: ActivateAnimationFunction},
         {id: 730, type: SetFunction},
-        {id: 740, type: OnUpdateEvent}
+        {id: 740, type: OnUpdateEvent},
+        {id: 750, type: GetFunction},
+        {id: 760, type: GreaterThanOrEqualFunction},
+        {id: 770, type: FalseCondition},
+        {id: 780, type: AndFunction},
+        {id: 790, type: OrFunction},
+        {id: 800, type: NotFunction},
+        {id: 810, type: RoundFunction},
+        {id: 820, type: IsGroundedFunction}
     ]
 
     /**

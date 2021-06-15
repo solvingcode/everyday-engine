@@ -116,4 +116,16 @@ export default class MatterEngine extends PhysicsEngine {
     getVelocityByBody(body){
         return body.velocity
     }
+
+    /**
+     * @override
+     * @param {Matter.Body} body
+     * @param {Vector} start
+     * @param {Vector} end
+     * @return {{body: Matter.Body, bodyA: Matter.Body, bodyB: Matter.Body, collided: boolean}[]}
+     */
+    rayCastForBody(body, start, end) {
+        const bodies = Matter.Composite.allBodies(this.getInstance().world)
+        return Matter.Query.ray(bodies, start, end).filter(collision => collision.parentA !== body)
+    }
 }

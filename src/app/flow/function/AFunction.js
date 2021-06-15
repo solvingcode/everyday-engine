@@ -16,7 +16,7 @@ export default class AFunction extends FunctionData{
     /**
      * @abstract
      */
-    initAttributes(){
+    initAttributes() {
         throw new SystemError(`${this.constructor.name}.initAttributes must be implemented`)
     }
 

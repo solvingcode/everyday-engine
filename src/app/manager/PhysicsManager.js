@@ -14,7 +14,7 @@ export default class PhysicsManager {
         this.physicsEngine = new MatterEngine()
     }
 
-    init(){
+    init() {
         this.physicsEngine.init()
     }
 
@@ -38,15 +38,28 @@ export default class PhysicsManager {
      * @param {Vector} position
      * @param {Vector} force
      */
-    applyForce(unit, position, force){
+    applyForce(unit, position, force) {
         this.physicsEngine.applyForce(unit, position, force)
+    }
+
+    /**
+     * @param {Unit} unit
+     * @param {Vector} start
+     * @param {Vector} end
+     * @return {{body: *, bodyA: *, bodyB: *, collided: boolean}[]}
+     */
+    rayCast(unit, start, end) {
+        const position = unit.getComponent(TransformComponent).getPosition()
+        const size = unit.getComponent(MeshComponent).getSize()
+        const bottomPosition = Vector.add(position, new Vector({x: size.getWidth() / 2, y: size.getHeight()}))
+        return this.physicsEngine.rayCast(unit, Vector.add(bottomPosition, start), Vector.add(bottomPosition, end))
     }
 
     /**
      * @param {Unit} unit
      * @return {Vector}
      */
-    getVelocity(unit){
+    getVelocity(unit) {
         return this.physicsEngine.getVelocity(unit)
     }
 
@@ -54,7 +67,7 @@ export default class PhysicsManager {
      * @param {Unit} unit
      * @param {Vector} velocity
      */
-    setVelocity(unit, velocity){
+    setVelocity(unit, velocity) {
         this.physicsEngine.setVelocity(unit, velocity)
     }
 
@@ -62,18 +75,18 @@ export default class PhysicsManager {
      * @param {Unit} unit
      * @param {number} speed
      */
-    moveXAxis(unit, speed){
+    moveXAxis(unit, speed) {
         this.setVelocity(unit, new Vector({x: speed, y: this.getVelocity(unit).getY()}))
     }
 
     /**
      * @return {{unitId: number, body: *}[]}
      */
-    getMapBodyUnit(){
+    getMapBodyUnit() {
         return this.getPhysicsEngine().getMapBodyUnit()
     }
 
-    updateEngine(){
+    updateEngine() {
         this.physicsEngine.update()
     }
 
@@ -82,7 +95,7 @@ export default class PhysicsManager {
      */
     update(unit) {
         const body = this.physicsEngine.findBody(unit)
-        if(body){
+        if (body) {
             const {x, y} = this.physicsEngine.getBodyPositionFromCollider(unit)
             const rotation = body.angle ? body.angle % (Math.PI * 2) : 0
             const transformComponent = unit.getComponent(TransformComponent)

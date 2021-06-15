@@ -14,7 +14,7 @@ export default class TransformComponent extends Component{
      */
     initAttributes() {
         this.add('position', TYPES.VECTOR, new Vector())
-        this.add('scale', TYPES.VECTOR, new Vector())
+        this.add('scale', TYPES.VECTOR, new Vector({x: 1, y: 1}))
         this.add('rotation', TYPES.NUMBER, 0)
     }
 
