@@ -10,6 +10,7 @@ import OnInputYAxisEvent from '../../flow/event/native/OnInputYAxisEvent.js'
 import OnInputJumpEvent from '../../flow/event/native/OnInputJumpEvent.js'
 import Window from '../../core/Window.js'
 import OnUpdateEvent from '../../flow/event/native/OnUpdateEvent.js'
+import OnInputAttackEvent from '../../flow/event/native/OnInputAttackEvent.js'
 
 export default class ScriptExecutor extends ComponentExecutor {
 
@@ -39,6 +40,8 @@ export default class ScriptExecutor extends ComponentExecutor {
                     keyboard.isKeyPressed(gameInput.getKeyCode(GAME_INPUTS.DOWN))) && instance instanceof OnInputYAxisEvent) ||
 
                 (keyboard.isKeyPressed(gameInput.getKeyCode(GAME_INPUTS.JUMP)) && instance instanceof OnInputJumpEvent) ||
+
+                (keyboard.isKeyPressed(gameInput.getKeyCode(GAME_INPUTS.ATTACK)) && instance instanceof OnInputAttackEvent) ||
 
                 instance instanceof OnUpdateEvent
             ) {

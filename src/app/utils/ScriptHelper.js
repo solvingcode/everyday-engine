@@ -168,13 +168,33 @@ export default class ScriptHelper {
      * @param {ANode} node
      * @return {AFunction}
      */
-    static createFunction(script, node){
+    static createFunction(script, node) {
         const element = NodeHelper.getSourceNode(node)
         const functionName = this.generateFunctionName(script, node)
-        if(element instanceof AEvent){
+        if (element instanceof AEvent) {
             return new (element.constructor)(functionName)
         }
         return new AEmptyStackFunction(functionName)
     }
 
+    /**
+     * @param {AScript} script
+     * @param {ANode} node
+     * @param {string} functionName
+     * @return {boolean}
+     */
+    static isNodeHasPredecessor(script, node, functionName) {
+        const inputs = node.getInputs()
+        for (let iInput in inputs) {
+            const sourceNodeId = inputs[iInput].getSourceNodeId()
+            const sourceNode = script.findNodeById(sourceNodeId)
+            if (
+                sourceNode.getName() === functionName ||
+                this.isNodeHasPredecessor(script, sourceNode, functionName)
+            ) {
+                return true
+            }
+        }
+        return false
+    }
 }

@@ -42,6 +42,8 @@ import OrFunction from '../flow/function/native/basic/OrFunction.js'
 import NotFunction from '../flow/function/native/basic/NotFunction.js'
 import RoundFunction from '../flow/function/native/basic/RoundFunction.js'
 import IsGroundedFunction from '../flow/function/native/physics/IsGroundedFunction.js'
+import OnAnyAnimationStartEvent from '../flow/event/native/OnAnyAnimationStartEvent.js'
+import OnInputAttackEvent from '../flow/event/native/OnInputAttackEvent.js'
 
 export default class FunctionRegistry extends Registry{
 
@@ -61,7 +63,9 @@ export default class FunctionRegistry extends Registry{
             new OnInputYAxisEvent(),
             new OnInputJumpEvent(),
             new OnAnimationStartEvent(),
+            new OnAnyAnimationStartEvent(),
             new OnUpdateEvent(),
+            new OnInputAttackEvent(),
 
             // Condition
             new TrueCondition(),

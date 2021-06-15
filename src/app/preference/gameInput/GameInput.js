@@ -9,5 +9,6 @@ export const GAME_INPUTS = {
     LEFT: 'left',
     UP: 'up',
     DOWN: 'down',
-    JUMP: 'jump'
+    JUMP: 'jump',
+    ATTACK: 'attack'
 }

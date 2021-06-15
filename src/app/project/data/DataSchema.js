@@ -101,6 +101,8 @@ import OrFunction from '../../flow/function/native/basic/OrFunction.js'
 import NotFunction from '../../flow/function/native/basic/NotFunction.js'
 import RoundFunction from '../../flow/function/native/basic/RoundFunction.js'
 import IsGroundedFunction from '../../flow/function/native/physics/IsGroundedFunction.js'
+import OnAnyAnimationStartEvent from '../../flow/event/native/OnAnyAnimationStartEvent.js'
+import OnInputAttackEvent from '../../flow/event/native/OnInputAttackEvent.js'
 
 /**
  * @class {DataSchema}
@@ -198,7 +200,9 @@ class DataSchema {
         {id: 790, type: OrFunction},
         {id: 800, type: NotFunction},
         {id: 810, type: RoundFunction},
-        {id: 820, type: IsGroundedFunction}
+        {id: 820, type: IsGroundedFunction},
+        {id: 830, type: OnAnyAnimationStartEvent},
+        {id: 840, type: OnInputAttackEvent}
     ]
 
     /**

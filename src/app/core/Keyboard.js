@@ -49,7 +49,9 @@ export const KeyCode = {
     A: 65,
     Q: 81,
     D: 68,
-    SPACE: 32
+    SPACE: 32,
+    ENTER: 13,
+    P: 80
 }
 
 export default Keyboard

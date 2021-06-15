@@ -13,7 +13,8 @@ export default class GameInputPreference extends GameInputPreferenceData {
             new GameInput(GAME_INPUTS.LEFT, 'Q', new DynamicAttribute('value', TYPES.NUMBER, -1)),
             new GameInput(GAME_INPUTS.UP, 'Z', new DynamicAttribute('value', TYPES.NUMBER, -1)),
             new GameInput(GAME_INPUTS.DOWN, 'S', new DynamicAttribute('value', TYPES.NUMBER, 1)),
-            new GameInput(GAME_INPUTS.JUMP, 'SPACE', new DynamicAttribute('value', TYPES.NUMBER, 1))
+            new GameInput(GAME_INPUTS.JUMP, 'SPACE', new DynamicAttribute('value', TYPES.NUMBER, 1)),
+            new GameInput(GAME_INPUTS.ATTACK, 'P', new DynamicAttribute('value', TYPES.NUMBER, 1))
         ]
         this.concatInputs(inputs)
     }
