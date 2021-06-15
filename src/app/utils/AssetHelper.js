@@ -25,7 +25,7 @@ export default class AssetHelper {
             world.getUnitManager().findUnitsByComponents([AnimationComponent])
                 .forEach(unit => {
                     const animationComponent = unit.getComponent(AnimationComponent)
-                    if(animationComponent.getAssetId() === asset.getId()){
+                    if(animationComponent.getScript() === asset.getName()){
                         unit.deleteComponent(animationComponent.getId())
                     }
                 })

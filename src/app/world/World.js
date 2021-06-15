@@ -45,6 +45,11 @@ class World extends WorldData {
      */
     physicsManager
 
+    /**
+     * @type {boolean}
+     */
+    initialized
+
     constructor() {
         super()
         this.unitManager = new UnitManager()
@@ -70,6 +75,10 @@ class World extends WorldData {
      * Initialize the world. can erase also world's element from imported project
      */
     init() {
+        this.initialized = false
+    }
+
+    doInit(){
         this.createRootFolder()
         this.getPreference().init()
         this.getTabManager().init()
@@ -80,6 +89,14 @@ class World extends WorldData {
             const result = asset.getType().parse()
             asset.getType().validate(result)
         })
+        this.initialized = true
+    }
+
+    /**
+     * @return {boolean}
+     */
+    isInitialized(){
+        return this.initialized
     }
 
     /**

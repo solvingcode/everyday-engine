@@ -19,7 +19,8 @@ class SelectorMenuItem extends MenuItem {
      * @override
      */
     isValid() {
-        return super.isValid() && World.get().getTabManager().getSelected().isProtected()
+        const selectedTab = World.get().getTabManager().getSelected()
+        return super.isValid() && selectedTab && selectedTab.isProtected()
     }
 }
 

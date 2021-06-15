@@ -12,6 +12,7 @@ import MeshStyleExecutor from '../executor/type/MeshStyleExecutor.js'
 import ScriptExecutor from '../executor/type/ScriptExecutor.js'
 import AnimationScriptExecutor from '../executor/type/AnimationScriptExecutor.js'
 import AnimationMeshExecutor from '../executor/type/AnimationMeshExecutor.js'
+import WorldInitializeRunner from '../runner/world/WorldInitializeRunner.js'
 
 /**
  * @class {Game}
@@ -35,7 +36,7 @@ class Game extends Scene {
             new AnimationScriptExecutor(),
             new AnimationMeshExecutor()
         ])
-        this.runners = [GameRenderRunner, GameExecutorRunner, PhysicsRunner]
+        this.runners = [WorldInitializeRunner, GameRenderRunner, GameExecutorRunner, PhysicsRunner]
     }
 
     /**

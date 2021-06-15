@@ -227,7 +227,7 @@ class DataSchema {
         GUIPropertyComponent,
         AssetScriptXml,
         AssetScriptCode,
-        AssetAnimationXml,
+        AssetAnimationScriptXml,
         ClassScript,
         TabManager
     ]

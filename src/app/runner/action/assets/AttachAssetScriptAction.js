@@ -20,12 +20,12 @@ export default class AttachAssetScriptAction extends Action {
         const selectedUnit = UnitSelector.get().getFirstSelected(world)
         if(selectedAsset.getType() instanceof AssetScriptXml){
             const scriptComponent = selectedUnit.createComponent(ScriptComponent)
-            scriptComponent.setAssetId(selectedAsset.getId())
+            scriptComponent.setScript(selectedAsset.getName())
             scriptComponent.setVarsAttributes(AssetHelper.getAssetScriptVars(selectedAsset.getId()))
         }else if(selectedAsset.getType() instanceof AssetAnimationScriptXml){
             const animationComponent = selectedUnit.createComponent(AnimationComponent)
             animationComponent.setVarsAttributes(AssetHelper.getAssetScriptVars(selectedAsset.getId()))
-            animationComponent.setAssetId(selectedAsset.getId())
+            animationComponent.setScript(selectedAsset.getName())
         }
         return true
     }

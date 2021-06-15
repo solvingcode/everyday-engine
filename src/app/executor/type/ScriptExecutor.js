@@ -9,8 +9,6 @@ import OnInputXAxisEvent from '../../flow/event/native/OnInputXAxisEvent.js'
 import OnInputYAxisEvent from '../../flow/event/native/OnInputYAxisEvent.js'
 import OnInputJumpEvent from '../../flow/event/native/OnInputJumpEvent.js'
 import Window from '../../core/Window.js'
-import ClientError from '../../exception/type/ClientError.js'
-import AssetHelper from '../../utils/AssetHelper.js'
 import OnUpdateEvent from '../../flow/event/native/OnUpdateEvent.js'
 
 export default class ScriptExecutor extends ComponentExecutor {
@@ -28,16 +26,7 @@ export default class ScriptExecutor extends ComponentExecutor {
         const functionRegistry = world.getFunctionRegistry()
         const gameInput = world.getPreference().getGameInput()
         const scriptComponent = unit.getComponent(ScriptComponent)
-        const assetId = scriptComponent.getAssetId()
-        const asset = world.getAssetsManager().findAssetById(assetId)
-        if (!asset) {
-            throw new ClientError(`${this.constructor.name}: No asset found with ID "${assetId}"`)
-        }
-        const script = AssetHelper.getScript(asset)
-        if (!script) {
-            throw new TypeError(`No compiled script found for asset "${asset.getName()}"`)
-        }
-        functionRegistry.getInstancesByClass(script.getName()).forEach(instance => {
+        functionRegistry.getInstancesByClass(scriptComponent.getScript()).forEach(instance => {
             if (
                 (mouse.isButtonClicked(MouseButton.LEFT) && instance instanceof OnMouseClickEvent) ||
 

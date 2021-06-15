@@ -15,8 +15,8 @@ export default class ScriptComponent extends Component {
         const attributes = this.getAttributes()
         const fields = [
             {
-                bind: 'assetId',
-                label: 'Asset',
+                bind: 'script',
+                label: 'Script',
                 type: Layout.form.TEXT,
                 options: {
                     readonly: true
@@ -25,7 +25,7 @@ export default class ScriptComponent extends Component {
         ]
 
         attributes.forEach(attr => {
-            if (attr.getAttrName() !== 'assetId') {
+            if (attr.getAttrName() !== 'script') {
                 fields.push(
                     {
                         bind: attr.getAttrName(),
@@ -54,14 +54,21 @@ export default class ScriptComponent extends Component {
      * @override
      */
     initAttributes() {
-        this.add('assetId', TYPES.NUMBER)
+        this.add('script', TYPES.STRING)
     }
 
     /**
-     * @return {number}
+     * @return {string}
      */
-    getAssetId() {
-        return this.getValue('assetId')
+    getScript() {
+        return this.getValue('script')
+    }
+
+    /**
+     * @param {string} script
+     */
+    setScript(script) {
+        this.setValue('script', script)
     }
 
     /**
@@ -76,12 +83,5 @@ export default class ScriptComponent extends Component {
      */
     setValue(name, value) {
         return super.setValue(name, value)
-    }
-
-    /**
-     * @param {number} assetId
-     */
-    setAssetId(assetId) {
-        this.setValue('assetId', assetId)
     }
 }

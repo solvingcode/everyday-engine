@@ -50,7 +50,7 @@ class JsSerDe extends SerDe {
                         pValue = pKey
                     } else {
                         pValue = data[iData]
-                        pValue = _.isString(pValue) ? `"${pValue}"` : pValue
+                        pValue = _.isString(pValue) ? `"${pValue.replaceAll("\"", "\\\"")}"` : pValue
                     }
                     if (data.constructor === Array) {
                         instr.push(`${varname}[${iData}] = ${pValue};`)

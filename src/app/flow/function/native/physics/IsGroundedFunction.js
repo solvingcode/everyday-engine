@@ -25,9 +25,6 @@ export default class IsGroundedFunction extends AFunction{
         const startVector = new Vector({x: 0, y: 0})
         const endVector = new Vector({x: 0, y: 2})
         const collisions = physicsManager.rayCast(target, startVector, endVector).filter(collision => collision.collided)
-        if(collisions.length){
-             console.log(collisions)
-        }
         this.setOutputValue(!!collisions.length)
     }
 }
