@@ -18,7 +18,7 @@ export default class AnimationMeshExecutor extends ComponentExecutor {
         const animationComponent = unit.getComponent(AnimationComponent)
         const meshComponent = unit.getComponent(MeshComponent)
         const animation = world.getAnimationManager().findById(animationComponent.getAnimation())
-        if(animation){
+        if(animation && animation.isPlaying()){
             const frame = animation.play(deltaTime)
             if(frame){
                 meshComponent.setAssetId(frame.getAssetId())

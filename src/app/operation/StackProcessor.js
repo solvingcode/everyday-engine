@@ -28,13 +28,13 @@ export default class StackProcessor {
      * @param {World} world
      * @return {StackRegister}
      */
-    run(stack, functionRegistry, unit, scriptComponent, world){
-        for(const iStackOperation in stack){
+    run(stack, functionRegistry, unit, scriptComponent, world) {
+
+        let iStackOperation = 0
+        while (iStackOperation < stack.length){
             const stackOperation = stack[iStackOperation]
-            if(this.stackRegister.popSignal()){
-                break
-            }
-            if(stackOperation instanceof StackOperation){
+
+            if (stackOperation instanceof StackOperation) {
                 const operation = stackOperation.getOperation()
                 switch (operation) {
                     case OPERATIONS.CALL:
@@ -52,12 +52,29 @@ export default class StackProcessor {
                     case OPERATIONS.EXIT:
                         ExitProcessor.run(stackOperation, this.stackRegister)
                         break
+                    case OPERATIONS.END_EXIT:
+                        // No action needed
+                        break
                     default:
                         throw new SystemError(`Stack operation ${operation} is not supported`)
                 }
-            }else{
+            } else {
                 throw new SystemError(`Stack operation is not valid`)
             }
+
+            if (this.stackRegister.popSignal()) {
+                const nextEndExistIndex = stack.findIndex((vStack, iStack) =>
+                    iStack > iStackOperation &&
+                    vStack.getOperation() === OPERATIONS.END_EXIT
+                )
+                if (nextEndExistIndex >= 0) {
+                    iStackOperation = nextEndExistIndex
+                }else{
+                    break
+                }
+            }
+
+            iStackOperation++
         }
         return this.stackRegister
     }

@@ -41,6 +41,11 @@ export default class Animation {
     /**
      * @type {number}
      */
+    loopTimes
+
+    /**
+     * @type {number}
+     */
     lengthSecond
 
     /**
@@ -55,6 +60,7 @@ export default class Animation {
         this.samples = 10
         this.playing = false
         this.time = 0
+        this.loopTimes = 0
         this.lengthSecond = 1
     }
 
@@ -114,6 +120,20 @@ export default class Animation {
      */
     getSamples() {
         return this.samples
+    }
+
+    /**
+     * @param {number|string} loopTimes
+     */
+    setLoopTimes(loopTimes) {
+        this.loopTimes = parseInt(loopTimes)
+    }
+
+    /**
+     * @return {number}
+     */
+    getLoopTimes() {
+        return this.loopTimes
     }
 
     /**
@@ -254,7 +274,9 @@ export default class Animation {
      */
     play(deltaTime){
         const expectedFrameTime = 1 / this.getSamples()
-        const timeFrame = (this.getTime() + deltaTime / expectedFrameTime) % this.getFrames().length
+        const newTime = this.getTime() + deltaTime / expectedFrameTime
+        const timeFrame = newTime % this.getFrames().length
+        this.loopTimes += Math.floor(newTime / this.getFrames().length)
         this.setTime(timeFrame || 0)
         return this.tryGetAt(this.getFrameTime())
     }

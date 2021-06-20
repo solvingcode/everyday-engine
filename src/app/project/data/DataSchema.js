@@ -90,7 +90,7 @@ import AAnimation from '../../flow/animation/AAnimation.js'
 import OnAnimationStartEvent from '../../flow/event/native/OnAnimationStartEvent.js'
 import AnimationNode from '../../flow/node/AnimationNode.js'
 import AnimationComponent from '../../component/internal/AnimationComponent.js'
-import ActivateAnimationFunction from '../../flow/function/native/animation/ActivateAnimationFunction.js'
+import StartAnimationFunction from '../../flow/function/native/animation/StartAnimationFunction.js'
 import SetFunction from '../../flow/function/native/component/SetFunction.js'
 import OnUpdateEvent from '../../flow/event/native/OnUpdateEvent.js'
 import GetFunction from '../../flow/function/native/component/GetFunction.js'
@@ -103,6 +103,10 @@ import RoundFunction from '../../flow/function/native/basic/RoundFunction.js'
 import IsGroundedFunction from '../../flow/function/native/physics/IsGroundedFunction.js'
 import OnAnyAnimationStartEvent from '../../flow/event/native/OnAnyAnimationStartEvent.js'
 import OnInputAttackEvent from '../../flow/event/native/OnInputAttackEvent.js'
+import StopAnimationFunction from '../../flow/function/native/animation/StopAnimationFunction.js'
+import IsAnimationPlayingFunction from '../../flow/function/native/animation/IsAnimationPlayingFunction.js'
+import HasCurrentAnimationFunction from '../../flow/function/native/animation/HasCurrentAnimationFunction.js'
+import GetCurrentAnimationFunction from '../../flow/function/native/animation/GetCurrentAnimationFunction.js'
 
 /**
  * @class {DataSchema}
@@ -190,7 +194,7 @@ class DataSchema {
         {id: 690, type: AnimationNode},
         {id: 700, type: AnimationComponent},
         {id: 701, type: GUIPropertyComponent},
-        {id: 720, type: ActivateAnimationFunction},
+        {id: 720, type: StartAnimationFunction},
         {id: 730, type: SetFunction},
         {id: 740, type: OnUpdateEvent},
         {id: 750, type: GetFunction},
@@ -202,7 +206,11 @@ class DataSchema {
         {id: 810, type: RoundFunction},
         {id: 820, type: IsGroundedFunction},
         {id: 830, type: OnAnyAnimationStartEvent},
-        {id: 840, type: OnInputAttackEvent}
+        {id: 840, type: OnInputAttackEvent},
+        {id: 850, type: StopAnimationFunction},
+        {id: 860, type: IsAnimationPlayingFunction},
+        {id: 870, type: HasCurrentAnimationFunction},
+        {id: 880, type: GetCurrentAnimationFunction}
     ]
 
     /**

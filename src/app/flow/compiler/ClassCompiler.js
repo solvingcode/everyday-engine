@@ -14,6 +14,13 @@ import NodeHelper from '../../utils/NodeHelper.js'
 import AStackFunction from '../function/AStackFunction.js'
 import ScriptHelper from '../../utils/ScriptHelper.js'
 import OnAnyAnimationStartEvent from '../event/native/OnAnyAnimationStartEvent.js'
+import StopAnimationFunction from '../function/native/animation/StopAnimationFunction.js'
+import IsAnimationPlayingFunction from '../function/native/animation/IsAnimationPlayingFunction.js'
+import StartAnimationFunction from '../function/native/animation/StartAnimationFunction.js'
+import NotFunction from '../function/native/basic/NotFunction.js'
+import HasCurrentAnimationFunction from '../function/native/animation/HasCurrentAnimationFunction.js'
+import GetCurrentAnimationFunction from '../function/native/animation/GetCurrentAnimationFunction.js'
+import EqualToFunction from '../function/native/basic/EqualToFunction.js'
 
 export default class ClassCompiler extends Compiler {
 
@@ -95,9 +102,26 @@ export default class ClassCompiler extends Compiler {
                 if (element instanceof ACondition) {
                     stackFunction.getStack().push(new StackOperation(OPERATIONS.EXIT, CONSTANTS.RESULT))
                 } else if (element instanceof AAnimation) {
-                    const onAnyAnimation = new OnAnyAnimationStartEvent().getName()
-                    if (!ScriptHelper.isNodeHasPredecessor(script, node, onAnyAnimation)) {
-                        stackFunction.getStack().push(new StackOperation(OPERATIONS.DISPATCH, onAnyAnimation))
+                    const onAnyAnimation = new OnAnyAnimationStartEvent()
+                    const isAnimationPlaying = new IsAnimationPlayingFunction()
+                    const hasCurrentAnimation = new HasCurrentAnimationFunction()
+                    const startAnimation = new StartAnimationFunction()
+                    const not = new NotFunction()
+                    stackFunction.getStack().push(...[
+                        new StackOperation(OPERATIONS.CALL, hasCurrentAnimation.getName()),
+                        new StackOperation(OPERATIONS.PUSH, not.getInputs()[0].getAttrName(), CONSTANTS.RESULT),
+                        new StackOperation(OPERATIONS.CALL, not.getName()),
+                        new StackOperation(OPERATIONS.EXIT, CONSTANTS.RESULT),
+                        new StackOperation(OPERATIONS.PUSH, isAnimationPlaying.getInputs()[0].getAttrName(), element.getName()),
+                        new StackOperation(OPERATIONS.CALL, isAnimationPlaying.getName()),
+                        new StackOperation(OPERATIONS.PUSH, not.getInputs()[0].getAttrName(), CONSTANTS.RESULT),
+                        new StackOperation(OPERATIONS.CALL, not.getName()),
+                        new StackOperation(OPERATIONS.EXIT, CONSTANTS.RESULT),
+                        new StackOperation(OPERATIONS.PUSH, startAnimation.getInputs()[0].getAttrName(), element.getName()),
+                        new StackOperation(OPERATIONS.CALL, startAnimation.getName())
+                    ])
+                    if (!ScriptHelper.isNodeHasPredecessor(script, node, onAnyAnimation.getName())) {
+                        stackFunction.getStack().push(new StackOperation(OPERATIONS.DISPATCH, onAnyAnimation.getName()))
                     }
                 }
             }
@@ -106,13 +130,49 @@ export default class ClassCompiler extends Compiler {
         //complete compiling associations
         script.getInputs().forEach(input => {
             const node = script.findNodeById(input.getNodeId())
+            const element = NodeHelper.getSourceNode(node)
             const functionName = ScriptHelper.generateFunctionName(script, node)
             const sourceNode = script.findNodeById(input.getSourceNodeId())
+            const stackFunction = functionRegistry.getInstance(functionName)
             if (sourceNode) {
                 const sourceElement = NodeHelper.getSourceNode(sourceNode)
                 const sourceElementName = ScriptHelper.generateFunctionName(script, sourceNode)
                 const sourceStackFunction = functionRegistry.getInstance(sourceElementName)
-                if (sourceElement instanceof ACondition || sourceElement instanceof AAnimation) {
+                if (sourceElement instanceof AAnimation) {
+                    if (element instanceof AAnimation) {
+                        const stopAnimation = new StopAnimationFunction()
+                        sourceStackFunction.getStack().push(...[
+                            new StackOperation(OPERATIONS.PUSH, stopAnimation.getInputs()[0].getAttrName(), sourceElement.getName()),
+                            new StackOperation(OPERATIONS.CALL, stopAnimation.getName()),
+                            new StackOperation(OPERATIONS.END_EXIT),
+                            new StackOperation(OPERATIONS.CALL, functionName)
+                        ])
+                    } else if (element instanceof ACondition) {
+                        sourceStackFunction.getStack().push(...[
+                            new StackOperation(OPERATIONS.END_EXIT),
+                            new StackOperation(OPERATIONS.CALL, functionName)
+                        ])
+                    }
+                }else if (sourceElement instanceof ACondition) {
+                    if (element instanceof AAnimation) {
+                        const getCurrentAnimation = new GetCurrentAnimationFunction()
+                        const equalTo = new EqualToFunction()
+                        const not = new NotFunction()
+                        const stopAnimation = new StopAnimationFunction()
+                        stackFunction.getStack().push(...[
+                            new StackOperation(OPERATIONS.CALL, getCurrentAnimation.getName()),
+                            new StackOperation(OPERATIONS.PUSH, equalTo.findInputByName('value1').getAttrName(), CONSTANTS.RESULT),
+                            new StackOperation(OPERATIONS.PUSH, equalTo.findInputByName('value2').getAttrName(), element.getName()),
+                            new StackOperation(OPERATIONS.CALL, equalTo.getName()),
+                            new StackOperation(OPERATIONS.PUSH, not.findInputByName('value').getAttrName(), CONSTANTS.RESULT),
+                            new StackOperation(OPERATIONS.CALL, not.getName()),
+                            new StackOperation(OPERATIONS.EXIT, CONSTANTS.RESULT),
+                            new StackOperation(OPERATIONS.CALL, getCurrentAnimation.getName()),
+                            new StackOperation(OPERATIONS.PUSH, stopAnimation.getInputs()[0].getAttrName(), CONSTANTS.RESULT),
+                            new StackOperation(OPERATIONS.CALL, stopAnimation.getName()),
+                            new StackOperation(OPERATIONS.END_EXIT)
+                        ])
+                    }
                     sourceStackFunction.getStack().push(...[new StackOperation(OPERATIONS.CALL, functionName)])
                 }
             }

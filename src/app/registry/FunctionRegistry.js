@@ -30,7 +30,7 @@ import NotEqualToFunction from '../flow/function/native/basic/NotEqualToFunction
 import AVariable from '../flow/variable/AVariable.js'
 import OnAnimationStartEvent from '../flow/event/native/OnAnimationStartEvent.js'
 import AAnimation from '../flow/animation/AAnimation.js'
-import ActivateAnimationFunction from '../flow/function/native/animation/ActivateAnimationFunction.js'
+import StartAnimationFunction from '../flow/function/native/animation/StartAnimationFunction.js'
 import AComponent from '../flow/component/AComponent.js'
 import SetFunction from '../flow/function/native/component/SetFunction.js'
 import OnUpdateEvent from '../flow/event/native/OnUpdateEvent.js'
@@ -44,6 +44,10 @@ import RoundFunction from '../flow/function/native/basic/RoundFunction.js'
 import IsGroundedFunction from '../flow/function/native/physics/IsGroundedFunction.js'
 import OnAnyAnimationStartEvent from '../flow/event/native/OnAnyAnimationStartEvent.js'
 import OnInputAttackEvent from '../flow/event/native/OnInputAttackEvent.js'
+import StopAnimationFunction from '../flow/function/native/animation/StopAnimationFunction.js'
+import IsAnimationPlayingFunction from '../flow/function/native/animation/IsAnimationPlayingFunction.js'
+import HasCurrentAnimationFunction from '../flow/function/native/animation/HasCurrentAnimationFunction.js'
+import GetCurrentAnimationFunction from '../flow/function/native/animation/GetCurrentAnimationFunction.js'
 
 export default class FunctionRegistry extends Registry{
 
@@ -93,7 +97,11 @@ export default class FunctionRegistry extends Registry{
             new GetUnitFunction(),
 
             //Animation
-            new ActivateAnimationFunction(),
+            new StartAnimationFunction(),
+            new StopAnimationFunction(),
+            new IsAnimationPlayingFunction(),
+            new HasCurrentAnimationFunction(),
+            new GetCurrentAnimationFunction(),
 
             //Component
             new SetFunction(),
