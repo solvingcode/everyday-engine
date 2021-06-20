@@ -23,6 +23,8 @@ import AnimationNode from '../flow/node/AnimationNode.js'
 import StringVariableNode from '../flow/node/variable/StringVariableNode.js'
 import ComponentNode from '../flow/node/ComponentNode.js'
 import AComponent from '../flow/component/AComponent.js'
+import NumberVariableNode from '../flow/node/variable/NumberVariableNode.js'
+import ANumberVariable from '../flow/variable/ANumberVariable.js'
 
 export default class NodeHelper {
 
@@ -48,6 +50,8 @@ export default class NodeHelper {
                 return new AAnimation(sourceName)
             case StringVariableNode:
                 return new AStringVariable(sourceName)
+            case NumberVariableNode:
+                return new ANumberVariable(sourceName)
             case ComponentNode:
                 return new AComponent(sourceName)
             default:

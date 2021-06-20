@@ -109,7 +109,7 @@ test('Create and compile class flow', function () {
 
     script.compile()
 
-    const mouseEventCompiled = functionRegistry.getInstance('classScript.OnMouseClick4')
+    const mouseEventCompiled = functionRegistry.getInstance('classScript.OnMouseClick.4')
     expect(functionRegistry.getInstance('classScript')).toBe(undefined)
     expect(mouseEventCompiled).toBeDefined()
     expect(mouseEventCompiled.constructor).toEqual(OnMouseClickEvent)
@@ -143,7 +143,7 @@ test('Create and compile class script with success condition', function () {
 
     script.compile()
 
-    const mouseEventCompiled = functionRegistry.getInstance('classScript.OnMouseClick6')
+    const mouseEventCompiled = functionRegistry.getInstance('classScript.OnMouseClick.6')
     expect(functionRegistry.getInstance('classScript')).toBe(undefined)
     expect(mouseEventCompiled).toBeDefined()
     expect(mouseEventCompiled.constructor).toEqual(OnMouseClickEvent)
@@ -177,7 +177,7 @@ test('Create and compile class script with failed condition', function () {
 
     script.compile()
 
-    const mouseEventCompiled = functionRegistry.getInstance('classScript.OnMouseClick6')
+    const mouseEventCompiled = functionRegistry.getInstance('classScript.OnMouseClick.6')
     expect(functionRegistry.getInstance('classScript')).toBe(undefined)
     expect(mouseEventCompiled).toBeDefined()
     expect(mouseEventCompiled.constructor).toEqual(OnMouseClickEvent)
@@ -205,7 +205,7 @@ test('Create and compile class script with variables', function () {
 
     script.compile()
 
-    const mouseEventCompiled = functionRegistry.getInstance('classScript.OnMouseClick2')
+    const mouseEventCompiled = functionRegistry.getInstance('classScript.OnMouseClick.2')
     expect(functionRegistry.getInstance('classScript')).toBe(undefined)
     expect(mouseEventCompiled).toBeDefined()
     expect(mouseEventCompiled.constructor).toEqual(OnMouseClickEvent)

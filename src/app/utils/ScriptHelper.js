@@ -16,6 +16,7 @@ import AnimationNode from '../flow/node/AnimationNode.js'
 import AEvent from '../flow/event/AEvent.js'
 import AEmptyStackFunction from '../flow/function/AEmptyStackFunction.js'
 import ComponentNode from '../flow/node/ComponentNode.js'
+import AAnimation from '../flow/animation/AAnimation.js'
 
 export default class ScriptHelper {
 
@@ -160,7 +161,18 @@ export default class ScriptHelper {
      */
     static generateFunctionName(script, node) {
         const nodeIndex = script.getNodes().findIndex(pNode => pNode === node)
-        return `${script.getName()}.${node.getSourceName()}${nodeIndex}`
+        return `${script.getName()}.${node.getSourceName()}.${nodeIndex}`
+    }
+
+    /**
+     * @param {string} className
+     * @param {string} name
+     * @return {string}
+     */
+    static getValueFromFunctionName(className, name){
+        const classRegex = new RegExp(`^${className}\.`)
+        const nameFunction = name.replace(classRegex, '')
+        return nameFunction.replace(/^(.+)\.[0-9]+$/, '$1')
     }
 
     /**
@@ -171,7 +183,7 @@ export default class ScriptHelper {
     static createFunction(script, node) {
         const element = NodeHelper.getSourceNode(node)
         const functionName = this.generateFunctionName(script, node)
-        if (element instanceof AEvent) {
+        if (element instanceof AEvent || element instanceof AAnimation) {
             return new (element.constructor)(functionName)
         }
         return new AEmptyStackFunction(functionName)

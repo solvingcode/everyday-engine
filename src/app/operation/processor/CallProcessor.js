@@ -33,22 +33,25 @@ export default class CallProcessor {
             switch (inputType) {
                 case TYPES.UNIT:
                     inputValue = value ? world.findUnitById(parseInt(value)) : unit
-                    if(!inputValue){
+                    if (!inputValue) {
                         throw new ClientError(`${this.constructor.name}: Unit "${value}" not found`)
                     }
                     break
                 case TYPES.ANIMATION:
                     inputValue = world.getAnimationManager().findById(parseInt(value))
-                    if(!inputValue){
+                    if (!inputValue) {
                         throw new ClientError(`${this.constructor.name}: Animation "${value}" not found`)
                     }
                     break
                 case TYPES.COMPONENT:
                     const component = world.getComponentRegistry().getInstance(value)
-                    if(!component || !component.constructor){
+                    if (!component || !component.constructor) {
                         throw new ClientError(`${this.constructor.name}: Component "${value}" not found`)
                     }
                     inputValue = component.constructor
+                    break
+                case TYPES.NUMBER:
+                    inputValue = parseFloat(value)
                     break
             }
             aFunction.setInputValue(inputName, inputValue)

@@ -123,6 +123,7 @@ export const NODE_TYPES = {
     UNIT: 'unit',
     KEY_CODE: 'key_code',
     VAR_STRING: 'var_string',
+    VAR_NUMBER: 'var_number',
     ANIMATION: 'animation',
     COMPONENT: 'component'
 }

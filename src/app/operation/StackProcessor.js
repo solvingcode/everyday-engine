@@ -6,6 +6,8 @@ import ExitProcessor from './processor/ExitProcessor.js'
 import SystemError from '../exception/type/SystemError.js'
 import VarProcessor from './processor/VarProcessor.js'
 import EventProcessor from './processor/EventProcessor.js'
+import JumpProcessor from './processor/JumpProcessor.js'
+import ClientError from '../exception/type/ClientError.js'
 
 export default class StackProcessor {
 
@@ -34,6 +36,10 @@ export default class StackProcessor {
         while (iStackOperation < stack.length){
             const stackOperation = stack[iStackOperation]
 
+            if (this.stackRegister.popSignal()) {
+                break
+            }
+
             if (stackOperation instanceof StackOperation) {
                 const operation = stackOperation.getOperation()
                 switch (operation) {
@@ -52,7 +58,10 @@ export default class StackProcessor {
                     case OPERATIONS.EXIT:
                         ExitProcessor.run(stackOperation, this.stackRegister)
                         break
-                    case OPERATIONS.END_EXIT:
+                    case OPERATIONS.JUMP:
+                        JumpProcessor.run(stackOperation, this.stackRegister)
+                        break
+                    case OPERATIONS.JUMP_TO:
                         // No action needed
                         break
                     default:
@@ -62,15 +71,17 @@ export default class StackProcessor {
                 throw new SystemError(`Stack operation is not valid`)
             }
 
-            if (this.stackRegister.popSignal()) {
-                const nextEndExistIndex = stack.findIndex((vStack, iStack) =>
+            const jumpTo = this.stackRegister.popJump()
+            if (jumpTo) {
+                const nextJumpToIndex = stack.findIndex((vStack, iStack) =>
                     iStack > iStackOperation &&
-                    vStack.getOperation() === OPERATIONS.END_EXIT
+                    vStack.getOperation() === OPERATIONS.JUMP_TO &&
+                    vStack.getArgs()[0] === jumpTo
                 )
-                if (nextEndExistIndex >= 0) {
-                    iStackOperation = nextEndExistIndex
+                if (nextJumpToIndex >= 0) {
+                    iStackOperation = nextJumpToIndex
                 }else{
-                    break
+                    throw new ClientError(`No "JUMP TO" operation found for "${jumpTo}"`)
                 }
             }
 

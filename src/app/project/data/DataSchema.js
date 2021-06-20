@@ -107,6 +107,7 @@ import StopAnimationFunction from '../../flow/function/native/animation/StopAnim
 import IsAnimationPlayingFunction from '../../flow/function/native/animation/IsAnimationPlayingFunction.js'
 import HasCurrentAnimationFunction from '../../flow/function/native/animation/HasCurrentAnimationFunction.js'
 import GetCurrentAnimationFunction from '../../flow/function/native/animation/GetCurrentAnimationFunction.js'
+import ANumberVariable from '../../flow/variable/ANumberVariable.js'
 
 /**
  * @class {DataSchema}
@@ -210,7 +211,8 @@ class DataSchema {
         {id: 850, type: StopAnimationFunction},
         {id: 860, type: IsAnimationPlayingFunction},
         {id: 870, type: HasCurrentAnimationFunction},
-        {id: 880, type: GetCurrentAnimationFunction}
+        {id: 880, type: GetCurrentAnimationFunction},
+        {id: 890, type: ANumberVariable}
     ]
 
     /**

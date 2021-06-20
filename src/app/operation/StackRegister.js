@@ -34,6 +34,13 @@ export default class StackRegister {
     }
 
     /**
+     * @param {*} value
+     */
+    pushJump(value){
+        this.register[CONSTANTS.JUMP] = value
+    }
+
+    /**
      * @return {*}
      */
     pop(name){
@@ -57,9 +64,14 @@ export default class StackRegister {
      * @return {*}
      */
     popSignal(){
-        const signal = this.pop(CONSTANTS.SIGNAL)
-        this.delete(CONSTANTS.SIGNAL)
-        return signal
+        return this.pop(CONSTANTS.SIGNAL)
+    }
+
+    /**
+     * @return {*}
+     */
+    popJump(){
+        return this.pop(CONSTANTS.JUMP)
     }
 
     /**
@@ -76,5 +88,6 @@ export default class StackRegister {
 
 export const CONSTANTS = {
     RESULT: '__result__',
-    SIGNAL: '__signal__'
+    SIGNAL: '__signal__',
+    JUMP: '__jump__'
 }
