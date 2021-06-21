@@ -19,6 +19,7 @@ import StartAnimationFunction from '../function/native/animation/StartAnimationF
 import GetCurrentAnimationFunction from '../function/native/animation/GetCurrentAnimationFunction.js'
 import IsAnimationPlayingFunction from '../function/native/animation/IsAnimationPlayingFunction.js'
 import NotFunction from '../function/native/basic/NotFunction.js'
+import AReference from '../reference/AReference.js'
 
 export default class ClassCompiler extends Compiler {
 
@@ -145,7 +146,7 @@ export default class ClassCompiler extends Compiler {
                         ])
                     }
                 } else if (sourceElement instanceof ACondition) {
-                    if (element instanceof AAnimation) {
+                    if (element instanceof AAnimation || element instanceof AReference) {
                         const getCurrentAnimation = new GetCurrentAnimationFunction()
                         const stopAnimation = new StopAnimationFunction()
                         sourceStackFunction.getStack().push(...[
