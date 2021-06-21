@@ -48,6 +48,7 @@ import StopAnimationFunction from '../flow/function/native/animation/StopAnimati
 import IsAnimationPlayingFunction from '../flow/function/native/animation/IsAnimationPlayingFunction.js'
 import HasCurrentAnimationFunction from '../flow/function/native/animation/HasCurrentAnimationFunction.js'
 import GetCurrentAnimationFunction from '../flow/function/native/animation/GetCurrentAnimationFunction.js'
+import IsAnimationEndedFunction from '../flow/function/native/animation/IsAnimationEndedFunction.js'
 
 export default class FunctionRegistry extends Registry{
 
@@ -102,6 +103,7 @@ export default class FunctionRegistry extends Registry{
             new IsAnimationPlayingFunction(),
             new HasCurrentAnimationFunction(),
             new GetCurrentAnimationFunction(),
+            new IsAnimationEndedFunction(),
 
             //Component
             new SetFunction(),

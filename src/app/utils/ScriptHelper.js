@@ -18,6 +18,8 @@ import AEmptyStackFunction from '../flow/function/AEmptyStackFunction.js'
 import ComponentNode from '../flow/node/ComponentNode.js'
 import AAnimation from '../flow/animation/AAnimation.js'
 import ReferenceNode from '../flow/node/ReferenceNode.js'
+import SelfNode from '../flow/node/SelfNode.js'
+import ToggleVariableNode from '../flow/node/variable/ToggleVariableNode.js'
 
 export default class ScriptHelper {
 
@@ -42,12 +44,16 @@ export default class ScriptHelper {
             node = script.createNode(functionRegistry, ConditionNode, nodeValue)
         } else if (nodeType === NODE_TYPES.UNIT) {
             node = script.createNode(functionRegistry, UnitNode, nodeValue)
+        } else if (nodeType === NODE_TYPES.SELF) {
+            node = script.createNode(functionRegistry, SelfNode, nodeValue)
         } else if (nodeType === NODE_TYPES.ANIMATION) {
             node = script.createNode(functionRegistry, AnimationNode, nodeValue)
         } else if (nodeType === NODE_TYPES.REFERENCE) {
             node = script.createNode(functionRegistry, ReferenceNode, nodeValue)
         } else if (nodeType === NODE_TYPES.VAR_STRING) {
             node = script.createNode(functionRegistry, StringVariableNode, nodeValue)
+        } else if (nodeType === NODE_TYPES.VAR_TOGGLE) {
+            node = script.createNode(functionRegistry, ToggleVariableNode, nodeValue)
         } else if (nodeType === NODE_TYPES.COMPONENT) {
             node = script.createNode(functionRegistry, ComponentNode, nodeValue)
         } else {
@@ -72,6 +78,8 @@ export default class ScriptHelper {
             nodeType = NODE_TYPES.CONDITION
         } else if (node instanceof UnitNode) {
             nodeType = NODE_TYPES.UNIT
+        } else if (node instanceof SelfNode) {
+            nodeType = NODE_TYPES.SELF
         } else if (node instanceof AnimationNode) {
             nodeType = NODE_TYPES.ANIMATION
         } else if (node instanceof ReferenceNode) {
@@ -80,6 +88,8 @@ export default class ScriptHelper {
             nodeType = NODE_TYPES.KEY_CODE
         } else if (node instanceof StringVariableNode) {
             nodeType = NODE_TYPES.VAR_STRING
+        } else if (node instanceof ToggleVariableNode) {
+            nodeType = NODE_TYPES.VAR_TOGGLE
         } else if (node instanceof ComponentNode) {
             nodeType = NODE_TYPES.COMPONENT
         } else {

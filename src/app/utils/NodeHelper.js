@@ -9,7 +9,6 @@ import ClientError from '../exception/type/ClientError.js'
 import Size from '../pobject/Size.js'
 import Vector from './Vector.js'
 import AKeyCode from '../flow/keycode/AKeyCode.js'
-import AVariable from '../flow/variable/AVariable.js'
 import AStringVariable from '../flow/variable/AStringVariable.js'
 import AAnimation from '../flow/animation/AAnimation.js'
 import FunctionNode from '../flow/node/FunctionNode.js'
@@ -27,6 +26,10 @@ import NumberVariableNode from '../flow/node/variable/NumberVariableNode.js'
 import ANumberVariable from '../flow/variable/ANumberVariable.js'
 import ReferenceNode from '../flow/node/ReferenceNode.js'
 import AReference from '../flow/reference/AReference.js'
+import SelfNode from '../flow/node/SelfNode.js'
+import ASelf from '../flow/unit/ASelf.js'
+import ToggleVariableNode from '../flow/node/variable/ToggleVariableNode.js'
+import AToggleVariable from '../flow/variable/AToggleVariable.js'
 
 export default class NodeHelper {
 
@@ -48,12 +51,16 @@ export default class NodeHelper {
                 return new AKeyCode(sourceName)
             case UnitNode:
                 return new AUnit(sourceName)
+            case SelfNode:
+                return new ASelf(sourceName)
             case AnimationNode:
                 return new AAnimation(sourceName)
             case ReferenceNode:
                 return new AReference(sourceName)
             case StringVariableNode:
                 return new AStringVariable(sourceName)
+            case ToggleVariableNode:
+                return new AToggleVariable(sourceName)
             case NumberVariableNode:
                 return new ANumberVariable(sourceName)
             case ComponentNode:
@@ -73,8 +80,10 @@ export default class NodeHelper {
             return `${nodeSource.getName()}`
         }else if(nodeSource instanceof AKeyCode){
             return `${nodeSource.getName()}`
-        }else if(nodeSource instanceof AVariable){
-            return `${nodeSource.getName()}`
+        }else if(nodeSource instanceof AStringVariable){
+            return `${nodeSource.getName()} (string)`
+        }else if(nodeSource instanceof AToggleVariable){
+            return `${nodeSource.getName()} (toggle)`
         }else if(nodeSource instanceof ACondition){
             return `${nodeSource.getName()}`
         }else if(nodeSource instanceof AEvent){
@@ -132,7 +141,7 @@ export default class NodeHelper {
             headColor = '#5e5622'
         } else if (type === NODE_TYPES.KEY_CODE) {
             headColor = '#375e22'
-        } else if (type === NODE_TYPES.VAR_STRING) {
+        } else if (type === NODE_TYPES.VAR_STRING || type === NODE_TYPES.VAR_TOGGLE) {
             headColor = '#5e4322'
         } else if (type === NODE_TYPES.COMPONENT) {
             headColor = '#5e2254'
@@ -210,6 +219,6 @@ export default class NodeHelper {
      * @return {boolean}
      */
     static hasBaseOutput(type){
-        return type === NODE_TYPES.EVENT || type === NODE_TYPES.ANIMATION
+        return type === NODE_TYPES.EVENT || type === NODE_TYPES.ANIMATION || type === NODE_TYPES.SELF
     }
 }

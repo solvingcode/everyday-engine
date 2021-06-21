@@ -32,7 +32,7 @@ export default class CallProcessor {
             }
             switch (inputType) {
                 case TYPES.UNIT:
-                    inputValue = value ? world.findUnitById(parseInt(value)) : unit
+                    inputValue = world.findUnitById(parseInt(value))
                     if (!inputValue) {
                         throw new ClientError(`${this.constructor.name}: Unit "${value}" not found`)
                     }
@@ -52,6 +52,9 @@ export default class CallProcessor {
                     break
                 case TYPES.NUMBER:
                     inputValue = parseFloat(value)
+                    break
+                case TYPES.BOOLEAN:
+                    inputValue = !!value
                     break
             }
             aFunction.setInputValue(inputName, inputValue)

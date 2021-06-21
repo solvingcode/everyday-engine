@@ -14,6 +14,8 @@ import StringVariableNode from './node/variable/StringVariableNode.js'
 import AnimationNode from './node/AnimationNode.js'
 import ComponentNode from './node/ComponentNode.js'
 import ReferenceNode from './node/ReferenceNode.js'
+import SelfNode from './node/SelfNode.js'
+import ToggleVariableNode from './node/variable/ToggleVariableNode.js'
 
 /**
  * @abstract
@@ -42,9 +44,11 @@ export default class AScript extends AScriptData {
             case ConstantNode:
             case KeyCodeNode:
             case UnitNode:
+            case SelfNode:
             case AnimationNode:
             case ReferenceNode:
             case StringVariableNode:
+            case ToggleVariableNode:
             case ComponentNode:
                 sourceName = value
                 break

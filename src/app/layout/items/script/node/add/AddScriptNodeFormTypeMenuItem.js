@@ -29,6 +29,10 @@ export default class AddScriptNodeFormTypeMenuItem extends FormMenuItem {
                 type: Layout.form.DROPDOWN,
                 list: [
                     {
+                        value: NODE_TYPES.SELF,
+                        label: 'Self'
+                    },
+                    {
                         value: NODE_TYPES.EVENT,
                         label: 'Event'
                     },
@@ -59,6 +63,10 @@ export default class AddScriptNodeFormTypeMenuItem extends FormMenuItem {
                     {
                         value: NODE_TYPES.VAR_STRING,
                         label: 'Variable (string)'
+                    },
+                    {
+                        value: NODE_TYPES.VAR_TOGGLE,
+                        label: 'Variable (Toggle)'
                     },
                     {
                         value: NODE_TYPES.REFERENCE,

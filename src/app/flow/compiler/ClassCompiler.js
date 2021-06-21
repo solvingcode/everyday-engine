@@ -20,6 +20,9 @@ import GetCurrentAnimationFunction from '../function/native/animation/GetCurrent
 import IsAnimationPlayingFunction from '../function/native/animation/IsAnimationPlayingFunction.js'
 import NotFunction from '../function/native/basic/NotFunction.js'
 import AReference from '../reference/AReference.js'
+import ASelf from '../unit/ASelf.js'
+import AToggleVariable from '../variable/AToggleVariable.js'
+import ANativeFunction from '../function/native/ANativeFunction.js'
 
 export default class ClassCompiler extends Compiler {
 
@@ -68,9 +71,28 @@ export default class ClassCompiler extends Compiler {
                 } else if (sourceElement instanceof AVariable) {
                     const targetInput = element.findInputByName(targetName)
                     stackFunction.getStack().push(...[
-                        new StackOperation(OPERATIONS.VAR, sourceNode.getSourceName()),
+                        new StackOperation(OPERATIONS.GET, sourceNode.getSourceName()),
                         new StackOperation(OPERATIONS.PUSH, targetInput.getAttrName(), CONSTANTS.RESULT)
                     ])
+                    if(sourceElement instanceof AToggleVariable){
+                        stackFunction.getStack().push(...[
+                            new StackOperation(OPERATIONS.PUSH, CONSTANTS.RESULT, ''),
+                            new StackOperation(OPERATIONS.SET, sourceNode.getSourceName())
+                        ])
+                    }
+                } else if (sourceElement instanceof ASelf) {
+                    const targetInput = element.findInputByName(targetName)
+                    stackFunction.getStack().push(...[
+                        new StackOperation(OPERATIONS.SELF),
+                        new StackOperation(OPERATIONS.PUSH, targetInput.getAttrName(), CONSTANTS.RESULT)
+                    ])
+                } else if (sourceElement instanceof AAnimation) {
+                    if(element instanceof ANativeFunction){
+                        const targetInput = element.findInputByName(targetName)
+                        stackFunction.getStack().push(...[
+                            new StackOperation(OPERATIONS.PUSH, targetInput.getAttrName(), sourceElement.getName())
+                        ])
+                    }
                 }
                 // must be the last condition
                 else if (sourceElement instanceof AFunction) {

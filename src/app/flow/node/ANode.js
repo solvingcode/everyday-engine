@@ -124,7 +124,9 @@ export const NODE_TYPES = {
     KEY_CODE: 'key_code',
     VAR_STRING: 'var_string',
     VAR_NUMBER: 'var_number',
+    VAR_TOGGLE: 'var_toggle',
     ANIMATION: 'animation',
     COMPONENT: 'component',
-    REFERENCE: 'reference'
+    REFERENCE: 'reference',
+    SELF: 'self'
 }

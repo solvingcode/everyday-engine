@@ -1363,6 +1363,10 @@ var Animation = /*#__PURE__*/function () {
    */
 
   /**
+   * @type {number}
+   */
+
+  /**
    * @param {number} id
    * @param {string} name
    */
@@ -1375,6 +1379,7 @@ var Animation = /*#__PURE__*/function () {
     (0, _defineProperty2["default"])(this, "playing", void 0);
     (0, _defineProperty2["default"])(this, "timeline", void 0);
     (0, _defineProperty2["default"])(this, "time", void 0);
+    (0, _defineProperty2["default"])(this, "loopTimes", void 0);
     (0, _defineProperty2["default"])(this, "lengthSecond", void 0);
     this.id = id;
     this.name = name;
@@ -1383,6 +1388,7 @@ var Animation = /*#__PURE__*/function () {
     this.samples = 10;
     this.playing = false;
     this.time = 0;
+    this.loopTimes = 0;
     this.lengthSecond = 1;
   }
   /**
@@ -1459,6 +1465,24 @@ var Animation = /*#__PURE__*/function () {
     key: "getSamples",
     value: function getSamples() {
       return this.samples;
+    }
+    /**
+     * @param {number|string} loopTimes
+     */
+
+  }, {
+    key: "setLoopTimes",
+    value: function setLoopTimes(loopTimes) {
+      this.loopTimes = parseInt(loopTimes);
+    }
+    /**
+     * @return {number}
+     */
+
+  }, {
+    key: "getLoopTimes",
+    value: function getLoopTimes() {
+      return this.loopTimes;
     }
     /**
      * @param {boolean} playing
@@ -1648,7 +1672,9 @@ var Animation = /*#__PURE__*/function () {
     key: "play",
     value: function play(deltaTime) {
       var expectedFrameTime = 1 / this.getSamples();
-      var timeFrame = (this.getTime() + deltaTime / expectedFrameTime) % this.getFrames().length;
+      var newTime = this.getTime() + deltaTime / expectedFrameTime;
+      var timeFrame = newTime % this.getFrames().length;
+      this.loopTimes += Math.floor(newTime / this.getFrames().length);
       this.setTime(timeFrame || 0);
       return this.tryGetAt(this.getFrameTime());
     }
@@ -1765,7 +1791,7 @@ var KeyFrame = /*#__PURE__*/function () {
 
 exports["default"] = KeyFrame;
 
-},{"../utils/Maths.js":283,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/defineProperty":8,"@babel/runtime/helpers/interopRequireDefault":12}],29:[function(require,module,exports){
+},{"../utils/Maths.js":294,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/defineProperty":8,"@babel/runtime/helpers/interopRequireDefault":12}],29:[function(require,module,exports){
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
@@ -1888,7 +1914,7 @@ var Timeline = /*#__PURE__*/function () {
 
 exports["default"] = Timeline;
 
-},{"../utils/Maths.js":283,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/defineProperty":8,"@babel/runtime/helpers/interopRequireDefault":12}],30:[function(require,module,exports){
+},{"../utils/Maths.js":294,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/defineProperty":8,"@babel/runtime/helpers/interopRequireDefault":12}],30:[function(require,module,exports){
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
@@ -2044,7 +2070,7 @@ var Asset = /*#__PURE__*/function (_AssetData) {
 
 exports["default"] = Asset;
 
-},{"../project/data/AssetData.js":212,"../utils/Maths.js":283,"@babel/runtime/helpers/asyncToGenerator":4,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":18,"@babel/runtime/regenerator":26}],31:[function(require,module,exports){
+},{"../project/data/AssetData.js":224,"../utils/Maths.js":294,"@babel/runtime/helpers/asyncToGenerator":4,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":18,"@babel/runtime/regenerator":26}],31:[function(require,module,exports){
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
@@ -2133,7 +2159,7 @@ var Folder = /*#__PURE__*/function (_FolderData) {
 
 exports["default"] = Folder;
 
-},{"../project/data/FolderData.js":221,"../utils/Maths.js":283,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":18}],32:[function(require,module,exports){
+},{"../project/data/FolderData.js":233,"../utils/Maths.js":294,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":18}],32:[function(require,module,exports){
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
@@ -2281,7 +2307,7 @@ var AssetType = /*#__PURE__*/function (_AssetTypeData) {
 
 exports["default"] = AssetType;
 
-},{"../../exception/type/ClientError.js":75,"../../exception/type/SystemError.js":77,"../../project/data/AssetTypeData.js":213,"@babel/runtime/helpers/asyncToGenerator":4,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":18,"@babel/runtime/regenerator":26}],33:[function(require,module,exports){
+},{"../../exception/type/ClientError.js":75,"../../exception/type/SystemError.js":77,"../../project/data/AssetTypeData.js":225,"@babel/runtime/helpers/asyncToGenerator":4,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":18,"@babel/runtime/regenerator":26}],33:[function(require,module,exports){
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
@@ -2484,7 +2510,7 @@ var AssetAnimationScriptXml = /*#__PURE__*/function (_AssetScript) {
 
 exports["default"] = AssetAnimationScriptXml;
 
-},{"../../../content/script/EditGraphScriptContent.js":60,"../../../generator/animation/AssetAnimationScriptGenerator.js":151,"../../../utils/FileHelper.js":280,"../../../world/World.js":292,"../script/AssetScript.js":36,"@babel/runtime/helpers/assertThisInitialized":3,"@babel/runtime/helpers/asyncToGenerator":4,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/defineProperty":8,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":18,"@babel/runtime/regenerator":26}],34:[function(require,module,exports){
+},{"../../../content/script/EditGraphScriptContent.js":60,"../../../generator/animation/AssetAnimationScriptGenerator.js":161,"../../../utils/FileHelper.js":291,"../../../world/World.js":303,"../script/AssetScript.js":36,"@babel/runtime/helpers/assertThisInitialized":3,"@babel/runtime/helpers/asyncToGenerator":4,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/defineProperty":8,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":18,"@babel/runtime/regenerator":26}],34:[function(require,module,exports){
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
@@ -2747,7 +2773,7 @@ var AssetAnimationXml = /*#__PURE__*/function (_AssetType) {
 
 exports["default"] = AssetAnimationXml;
 
-},{"../../../content/animation/EditAnimationContent.js":59,"../../../generator/animation/AssetAnimationXmlGenerator.js":152,"../../../utils/FileHelper.js":280,"../../../world/World.js":292,"../AssetType.js":32,"@babel/runtime/helpers/assertThisInitialized":3,"@babel/runtime/helpers/asyncToGenerator":4,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/defineProperty":8,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":18,"@babel/runtime/regenerator":26}],35:[function(require,module,exports){
+},{"../../../content/animation/EditAnimationContent.js":59,"../../../generator/animation/AssetAnimationXmlGenerator.js":162,"../../../utils/FileHelper.js":291,"../../../world/World.js":303,"../AssetType.js":32,"@babel/runtime/helpers/assertThisInitialized":3,"@babel/runtime/helpers/asyncToGenerator":4,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/defineProperty":8,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":18,"@babel/runtime/regenerator":26}],35:[function(require,module,exports){
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
@@ -2927,7 +2953,7 @@ var AssetImage = /*#__PURE__*/function (_AssetType) {
 
 exports["default"] = AssetImage;
 
-},{"../../../core/Mesh.js":69,"../../../utils/ImageHelper.js":282,"../AssetType.js":32,"@babel/runtime/helpers/assertThisInitialized":3,"@babel/runtime/helpers/asyncToGenerator":4,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/defineProperty":8,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":18,"@babel/runtime/regenerator":26}],36:[function(require,module,exports){
+},{"../../../core/Mesh.js":69,"../../../utils/ImageHelper.js":293,"../AssetType.js":32,"@babel/runtime/helpers/assertThisInitialized":3,"@babel/runtime/helpers/asyncToGenerator":4,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/defineProperty":8,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":18,"@babel/runtime/regenerator":26}],36:[function(require,module,exports){
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
@@ -3236,7 +3262,7 @@ var AssetScriptCode = /*#__PURE__*/function (_AssetScript) {
 
 exports["default"] = AssetScriptCode;
 
-},{"../../../content/script/EditScriptCodeContent.js":61,"../../../generator/script/AssetScriptCodeGenerator.js":153,"../../../world/World.js":292,"./AssetScript.js":36,"@babel/runtime/helpers/asyncToGenerator":4,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":18,"@babel/runtime/regenerator":26}],38:[function(require,module,exports){
+},{"../../../content/script/EditScriptCodeContent.js":61,"../../../generator/script/AssetScriptCodeGenerator.js":163,"../../../world/World.js":303,"./AssetScript.js":36,"@babel/runtime/helpers/asyncToGenerator":4,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":18,"@babel/runtime/regenerator":26}],38:[function(require,module,exports){
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
@@ -3441,7 +3467,7 @@ var AssetScriptXml = /*#__PURE__*/function (_AssetScript) {
 
 exports["default"] = AssetScriptXml;
 
-},{"../../../content/script/EditGraphScriptContent.js":60,"../../../generator/script/AssetScriptXmlGenerator.js":155,"../../../utils/FileHelper.js":280,"../../../utils/ScriptHelper.js":287,"../../../world/World.js":292,"./AssetScript.js":36,"@babel/runtime/helpers/assertThisInitialized":3,"@babel/runtime/helpers/asyncToGenerator":4,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/defineProperty":8,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":18,"@babel/runtime/regenerator":26}],39:[function(require,module,exports){
+},{"../../../content/script/EditGraphScriptContent.js":60,"../../../generator/script/AssetScriptXmlGenerator.js":165,"../../../utils/FileHelper.js":291,"../../../utils/ScriptHelper.js":298,"../../../world/World.js":303,"./AssetScript.js":36,"@babel/runtime/helpers/assertThisInitialized":3,"@babel/runtime/helpers/asyncToGenerator":4,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/defineProperty":8,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":18,"@babel/runtime/regenerator":26}],39:[function(require,module,exports){
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
@@ -3601,7 +3627,7 @@ var Component = /*#__PURE__*/function (_ComponentData) {
 
 exports["default"] = Component;
 
-},{"../pobject/AttributeType.js":200,"../project/data/ComponentData.js":217,"../utils/DynamicAttributeHelper.js":279,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":18}],40:[function(require,module,exports){
+},{"../pobject/AttributeType.js":212,"../project/data/ComponentData.js":229,"../utils/DynamicAttributeHelper.js":290,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":18}],40:[function(require,module,exports){
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
@@ -3681,7 +3707,7 @@ var AnimationComponent = /*#__PURE__*/function (_ScriptComponent) {
 
 exports["default"] = AnimationComponent;
 
-},{"../../pobject/AttributeType.js":200,"./ScriptComponent.js":47,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/get":9,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":18}],41:[function(require,module,exports){
+},{"../../pobject/AttributeType.js":212,"./ScriptComponent.js":47,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/get":9,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":18}],41:[function(require,module,exports){
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
@@ -3821,7 +3847,7 @@ var CircleColliderComponent = /*#__PURE__*/function (_ColliderComponent) {
 
 exports["default"] = CircleColliderComponent;
 
-},{"../../layout/Layout.js":169,"../../unit/Unit.js":255,"./ColliderComponent.js":43,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/get":9,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":18,"@babel/runtime/helpers/toConsumableArray":21}],43:[function(require,module,exports){
+},{"../../layout/Layout.js":179,"../../unit/Unit.js":267,"./ColliderComponent.js":43,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/get":9,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":18,"@babel/runtime/helpers/toConsumableArray":21}],43:[function(require,module,exports){
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
@@ -4009,7 +4035,7 @@ var ColliderComponent = /*#__PURE__*/function (_Component) {
 
 exports["default"] = ColliderComponent;
 
-},{"../../layout/Layout.js":169,"../../pobject/AttributeType.js":200,"../../pobject/Size.js":205,"../../unit/Unit.js":255,"../../utils/Vector.js":290,"../Component.js":39,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":18}],44:[function(require,module,exports){
+},{"../../layout/Layout.js":179,"../../pobject/AttributeType.js":212,"../../pobject/Size.js":217,"../../unit/Unit.js":267,"../../utils/Vector.js":301,"../Component.js":39,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":18}],44:[function(require,module,exports){
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
@@ -4315,7 +4341,7 @@ var MeshComponent = /*#__PURE__*/function (_Component) {
 
 exports["default"] = MeshComponent;
 
-},{"../../layout/Layout.js":169,"../../pobject/AttributeType.js":200,"../../pobject/Size.js":205,"../../pobject/Style.js":206,"../../unit/Unit.js":255,"../Component.js":39,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":18}],45:[function(require,module,exports){
+},{"../../layout/Layout.js":179,"../../pobject/AttributeType.js":212,"../../pobject/Size.js":217,"../../pobject/Style.js":218,"../../unit/Unit.js":267,"../Component.js":39,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":18}],45:[function(require,module,exports){
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
@@ -4392,7 +4418,7 @@ var RectColliderComponent = /*#__PURE__*/function (_ColliderComponent) {
 
 exports["default"] = RectColliderComponent;
 
-},{"../../layout/Layout.js":169,"../../unit/Unit.js":255,"./ColliderComponent.js":43,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/get":9,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":18,"@babel/runtime/helpers/toConsumableArray":21}],46:[function(require,module,exports){
+},{"../../layout/Layout.js":179,"../../unit/Unit.js":267,"./ColliderComponent.js":43,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/get":9,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":18,"@babel/runtime/helpers/toConsumableArray":21}],46:[function(require,module,exports){
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
@@ -4487,7 +4513,7 @@ var RigidBodyComponent = /*#__PURE__*/function (_Component) {
 
 exports["default"] = RigidBodyComponent;
 
-},{"../../layout/Layout.js":169,"../../pobject/AttributeType.js":200,"../Component.js":39,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":18}],47:[function(require,module,exports){
+},{"../../layout/Layout.js":179,"../../pobject/AttributeType.js":212,"../Component.js":39,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":18}],47:[function(require,module,exports){
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
@@ -4623,7 +4649,7 @@ var ScriptComponent = /*#__PURE__*/function (_Component) {
 
 exports["default"] = ScriptComponent;
 
-},{"../../layout/Layout.js":169,"../../pobject/AttributeType.js":200,"../Component.js":39,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/get":9,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":18}],48:[function(require,module,exports){
+},{"../../layout/Layout.js":179,"../../pobject/AttributeType.js":212,"../Component.js":39,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/get":9,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":18}],48:[function(require,module,exports){
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
@@ -4723,7 +4749,7 @@ var StyleComponent = /*#__PURE__*/function (_Component) {
 
 exports["default"] = StyleComponent;
 
-},{"../../pobject/AttributeType.js":200,"../../pobject/Style.js":206,"../Component.js":39,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":18}],49:[function(require,module,exports){
+},{"../../pobject/AttributeType.js":212,"../../pobject/Style.js":218,"../Component.js":39,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":18}],49:[function(require,module,exports){
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
@@ -4886,7 +4912,7 @@ var TransformComponent = /*#__PURE__*/function (_Component) {
 
 exports["default"] = TransformComponent;
 
-},{"../../layout/Layout.js":169,"../../pobject/AttributeType.js":200,"../../utils/Vector.js":290,"../Component.js":39,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":18}],50:[function(require,module,exports){
+},{"../../layout/Layout.js":179,"../../pobject/AttributeType.js":212,"../../utils/Vector.js":301,"../Component.js":39,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":18}],50:[function(require,module,exports){
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
@@ -5283,7 +5309,7 @@ var NodeComponent = /*#__PURE__*/function (_Component) {
 
 exports["default"] = NodeComponent;
 
-},{"../../../../pobject/AttributeType.js":200,"../../../Component.js":39,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":18}],55:[function(require,module,exports){
+},{"../../../../pobject/AttributeType.js":212,"../../../Component.js":39,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":18}],55:[function(require,module,exports){
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
@@ -5363,7 +5389,7 @@ var NodeInputComponent = /*#__PURE__*/function (_Component) {
 
 exports["default"] = NodeInputComponent;
 
-},{"../../../../pobject/AttributeType.js":200,"../../../Component.js":39,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":18}],56:[function(require,module,exports){
+},{"../../../../pobject/AttributeType.js":212,"../../../Component.js":39,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":18}],56:[function(require,module,exports){
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
@@ -5583,7 +5609,7 @@ var GUIPropertyComponent = /*#__PURE__*/function (_Component) {
 
 exports["default"] = GUIPropertyComponent;
 
-},{"../../../../pobject/AttributeType.js":200,"../../../Component.js":39,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":18}],57:[function(require,module,exports){
+},{"../../../../pobject/AttributeType.js":212,"../../../Component.js":39,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":18}],57:[function(require,module,exports){
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
@@ -5636,7 +5662,7 @@ var Content = /*#__PURE__*/function (_ContentData) {
 
 exports["default"] = Content;
 
-},{"../exception/type/SystemError.js":77,"../project/data/ContentData.js":218,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":18}],58:[function(require,module,exports){
+},{"../exception/type/SystemError.js":77,"../project/data/ContentData.js":230,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":18}],58:[function(require,module,exports){
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
@@ -5728,7 +5754,7 @@ var Tab = /*#__PURE__*/function (_TabData) {
 
 exports["default"] = Tab;
 
-},{"../project/data/TabData.js":230,"../utils/Maths.js":283,"@babel/runtime/helpers/assertThisInitialized":3,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/defineProperty":8,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":18}],59:[function(require,module,exports){
+},{"../project/data/TabData.js":242,"../utils/Maths.js":294,"@babel/runtime/helpers/assertThisInitialized":3,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/defineProperty":8,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":18}],59:[function(require,module,exports){
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
@@ -5784,7 +5810,7 @@ var EditAnimationContent = /*#__PURE__*/function (_Content) {
 
 exports["default"] = EditAnimationContent;
 
-},{"../../world/World.js":292,"../Content.js":57,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":18}],60:[function(require,module,exports){
+},{"../../world/World.js":303,"../Content.js":57,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":18}],60:[function(require,module,exports){
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
@@ -5840,7 +5866,7 @@ var EditGraphScriptContent = /*#__PURE__*/function (_Content) {
 
 exports["default"] = EditGraphScriptContent;
 
-},{"../../world/World.js":292,"../Content.js":57,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":18}],61:[function(require,module,exports){
+},{"../../world/World.js":303,"../Content.js":57,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":18}],61:[function(require,module,exports){
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
@@ -5896,7 +5922,7 @@ var EditScriptCodeContent = /*#__PURE__*/function (_Content) {
 
 exports["default"] = EditScriptCodeContent;
 
-},{"../../world/World.js":292,"../Content.js":57,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":18}],62:[function(require,module,exports){
+},{"../../world/World.js":303,"../Content.js":57,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":18}],62:[function(require,module,exports){
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
@@ -6389,7 +6415,7 @@ var Camera = /*#__PURE__*/function (_CameraData) {
 var _default = Camera;
 exports["default"] = _default;
 
-},{"../component/internal/MeshComponent.js":44,"../component/internal/TransformComponent.js":49,"../pobject/Size.js":205,"../project/data/CameraData.js":216,"../utils/Vector.js":290,"@babel/runtime/helpers/assertThisInitialized":3,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/defineProperty":8,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":18}],65:[function(require,module,exports){
+},{"../component/internal/MeshComponent.js":44,"../component/internal/TransformComponent.js":49,"../pobject/Size.js":217,"../project/data/CameraData.js":228,"../utils/Vector.js":301,"@babel/runtime/helpers/assertThisInitialized":3,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/defineProperty":8,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":18}],65:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -6709,7 +6735,7 @@ var History = /*#__PURE__*/function () {
 var _default = History;
 exports["default"] = _default;
 
-},{"../schema/SchemaValidator.js":247,"../world/World.js":292,"./Storage.js":72,"@babel/runtime/helpers/asyncToGenerator":4,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/defineProperty":8,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/regenerator":26}],68:[function(require,module,exports){
+},{"../schema/SchemaValidator.js":259,"../world/World.js":303,"./Storage.js":72,"@babel/runtime/helpers/asyncToGenerator":4,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/defineProperty":8,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/regenerator":26}],68:[function(require,module,exports){
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
@@ -6786,7 +6812,9 @@ var KeyCode = {
   A: 65,
   Q: 81,
   D: 68,
-  SPACE: 32
+  SPACE: 32,
+  ENTER: 13,
+  P: 80
 };
 exports.KeyCode = KeyCode;
 var _default = Keyboard;
@@ -7071,7 +7099,7 @@ var Mesh = /*#__PURE__*/function (_BlobData) {
 var _default = Mesh;
 exports["default"] = _default;
 
-},{"../pobject/Size.js":205,"../project/data/BlobData.js":215,"../utils/ImageHelper.js":282,"../utils/Vector.js":290,"./Constant.js":65,"@babel/runtime/helpers/asyncToGenerator":4,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":18,"@babel/runtime/regenerator":26}],70:[function(require,module,exports){
+},{"../pobject/Size.js":217,"../project/data/BlobData.js":227,"../utils/ImageHelper.js":293,"../utils/Vector.js":301,"./Constant.js":65,"@babel/runtime/helpers/asyncToGenerator":4,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":18,"@babel/runtime/regenerator":26}],70:[function(require,module,exports){
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
@@ -7397,7 +7425,7 @@ exports.CURSOR = CURSOR;
 var _default = Mouse;
 exports["default"] = _default;
 
-},{"../pobject/Size.js":205,"../utils/Vector.js":290,"./Context.js":66,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/interopRequireDefault":12}],71:[function(require,module,exports){
+},{"../pobject/Size.js":217,"../utils/Vector.js":301,"./Context.js":66,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/interopRequireDefault":12}],71:[function(require,module,exports){
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
@@ -7846,7 +7874,7 @@ Storage.format = {
 var _default = Storage;
 exports["default"] = _default;
 
-},{"../schema/SchemaValidator.js":247,"../serde/JsSerDe.js":250,"../serde/XmlSerDe.js":252,"@babel/runtime/helpers/asyncToGenerator":4,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/defineProperty":8,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/regenerator":26}],73:[function(require,module,exports){
+},{"../schema/SchemaValidator.js":259,"../serde/JsSerDe.js":262,"../serde/XmlSerDe.js":264,"@babel/runtime/helpers/asyncToGenerator":4,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/defineProperty":8,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/regenerator":26}],73:[function(require,module,exports){
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
@@ -8014,7 +8042,7 @@ var Window = /*#__PURE__*/function () {
 var _default = Window;
 exports["default"] = _default;
 
-},{"../exception/ExceptionHandler.js":74,"../pobject/Size.js":205,"./Constant.js":65,"./Context.js":66,"./Keyboard.js":68,"./Mouse.js":70,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/defineProperty":8,"@babel/runtime/helpers/interopRequireDefault":12}],74:[function(require,module,exports){
+},{"../exception/ExceptionHandler.js":74,"../pobject/Size.js":217,"./Constant.js":65,"./Context.js":66,"./Keyboard.js":68,"./Mouse.js":70,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/defineProperty":8,"@babel/runtime/helpers/interopRequireDefault":12}],74:[function(require,module,exports){
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
@@ -8115,7 +8143,7 @@ var ExceptionHandler = /*#__PURE__*/function () {
 var _default = ExceptionHandler;
 exports["default"] = _default;
 
-},{"../state/StateManager.js":254,"./type/ClientError.js":75,"./type/SystemError.js":77,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/defineProperty":8,"@babel/runtime/helpers/interopRequireDefault":12}],75:[function(require,module,exports){
+},{"../state/StateManager.js":266,"./type/ClientError.js":75,"./type/SystemError.js":77,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/defineProperty":8,"@babel/runtime/helpers/interopRequireDefault":12}],75:[function(require,module,exports){
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
@@ -8366,7 +8394,7 @@ var AnimationMeshExecutor = /*#__PURE__*/function (_ComponentExecutor) {
       var meshComponent = unit.getComponent(_MeshComponent["default"]);
       var animation = world.getAnimationManager().findById(animationComponent.getAnimation());
 
-      if (animation) {
+      if (animation && animation.isPlaying()) {
         var frame = animation.play(deltaTime);
 
         if (frame) {
@@ -8381,7 +8409,7 @@ var AnimationMeshExecutor = /*#__PURE__*/function (_ComponentExecutor) {
 
 exports["default"] = AnimationMeshExecutor;
 
-},{"../../component/internal/AnimationComponent.js":40,"../../component/internal/MeshComponent.js":44,"../../world/World.js":292,"./ComponentExecutor.js":82,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":18}],80:[function(require,module,exports){
+},{"../../component/internal/AnimationComponent.js":40,"../../component/internal/MeshComponent.js":44,"../../world/World.js":303,"./ComponentExecutor.js":82,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":18}],80:[function(require,module,exports){
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
@@ -8405,13 +8433,13 @@ var _ComponentExecutor2 = _interopRequireDefault(require("./ComponentExecutor.js
 
 var _World = _interopRequireDefault(require("../../world/World.js"));
 
-var _ClientError = _interopRequireDefault(require("../../exception/type/ClientError.js"));
-
-var _AssetHelper = _interopRequireDefault(require("../../utils/AssetHelper.js"));
-
 var _AnimationComponent = _interopRequireDefault(require("../../component/internal/AnimationComponent.js"));
 
 var _OnAnimationStartEvent = _interopRequireDefault(require("../../flow/event/native/OnAnimationStartEvent.js"));
+
+var _ScriptHelper = _interopRequireDefault(require("../../utils/ScriptHelper.js"));
+
+var _AAnimation = _interopRequireDefault(require("../../flow/animation/AAnimation.js"));
 
 function _createSuper(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct(); return function _createSuperInternal() { var Super = (0, _getPrototypeOf2["default"])(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = (0, _getPrototypeOf2["default"])(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return (0, _possibleConstructorReturn2["default"])(this, result); }; }
 
@@ -8438,9 +8466,17 @@ var AnimationScriptExecutor = /*#__PURE__*/function (_ComponentExecutor) {
 
       var functionRegistry = world.getFunctionRegistry();
       var animationComponent = unit.getComponent(_AnimationComponent["default"]);
-      functionRegistry.getInstancesByClass(animationComponent.getScript()).forEach(function (instance) {
-        if (instance instanceof _OnAnimationStartEvent["default"]) {
+      var animation = animationComponent.getAnimation();
+      var scriptName = animationComponent.getScript();
+      functionRegistry.getInstancesByClass(scriptName).forEach(function (instance) {
+        if (instance instanceof _OnAnimationStartEvent["default"] && !animation) {
           instance.execute(functionRegistry, unit, animationComponent, world);
+        } else if (instance instanceof _AAnimation["default"]) {
+          var animationInstance = parseInt(_ScriptHelper["default"].getValueFromFunctionName(scriptName, instance.getName()));
+
+          if (animationInstance === animation) {
+            instance.execute(functionRegistry, unit, animationComponent, world);
+          }
         }
       });
     }
@@ -8450,7 +8486,7 @@ var AnimationScriptExecutor = /*#__PURE__*/function (_ComponentExecutor) {
 
 exports["default"] = AnimationScriptExecutor;
 
-},{"../../component/internal/AnimationComponent.js":40,"../../exception/type/ClientError.js":75,"../../flow/event/native/OnAnimationStartEvent.js":99,"../../utils/AssetHelper.js":276,"../../world/World.js":292,"./ComponentExecutor.js":82,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":18}],81:[function(require,module,exports){
+},{"../../component/internal/AnimationComponent.js":40,"../../flow/animation/AAnimation.js":90,"../../flow/event/native/OnAnimationStartEvent.js":99,"../../utils/ScriptHelper.js":298,"../../world/World.js":303,"./ComponentExecutor.js":82,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":18}],81:[function(require,module,exports){
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
@@ -8521,7 +8557,7 @@ var ColliderExecutor = /*#__PURE__*/function (_ComponentExecutor) {
 
 exports["default"] = ColliderExecutor;
 
-},{"../../component/internal/MeshComponent.js":44,"../../component/internal/RectColliderComponent.js":45,"../../component/internal/RigidBodyComponent.js":46,"../../component/internal/TransformComponent.js":49,"../../pobject/RigidBodyOptions.js":204,"../../world/World.js":292,"./ComponentExecutor.js":82,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":18}],82:[function(require,module,exports){
+},{"../../component/internal/MeshComponent.js":44,"../../component/internal/RectColliderComponent.js":45,"../../component/internal/RigidBodyComponent.js":46,"../../component/internal/TransformComponent.js":49,"../../pobject/RigidBodyOptions.js":216,"../../world/World.js":303,"./ComponentExecutor.js":82,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":18}],82:[function(require,module,exports){
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
@@ -8869,7 +8905,7 @@ var MeshGenerationExecutor = /*#__PURE__*/function (_ComponentExecutor) {
 
 exports["default"] = MeshGenerationExecutor;
 
-},{"../../component/internal/MeshComponent.js":44,"../../component/internal/TransformComponent.js":49,"../../component/internal/gui/property/GUIPropertyComponent.js":56,"../../core/Constant.js":65,"../../core/Mesh.js":69,"../../generator/ShapeGenerator.js":150,"../../pobject/DataContext.js":201,"../../pobject/Size.js":205,"../../utils/GeometryHelper.js":281,"../../utils/Maths.js":283,"../../utils/UnitHelper.js":289,"../../utils/Vector.js":290,"../../world/World.js":292,"./ComponentExecutor.js":82,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":18}],84:[function(require,module,exports){
+},{"../../component/internal/MeshComponent.js":44,"../../component/internal/TransformComponent.js":49,"../../component/internal/gui/property/GUIPropertyComponent.js":56,"../../core/Constant.js":65,"../../core/Mesh.js":69,"../../generator/ShapeGenerator.js":160,"../../pobject/DataContext.js":213,"../../pobject/Size.js":217,"../../utils/GeometryHelper.js":292,"../../utils/Maths.js":294,"../../utils/UnitHelper.js":300,"../../utils/Vector.js":301,"../../world/World.js":303,"./ComponentExecutor.js":82,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":18}],84:[function(require,module,exports){
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
@@ -9004,7 +9040,7 @@ var RigidBodyExecutor = /*#__PURE__*/function (_ComponentExecutor) {
 
 exports["default"] = RigidBodyExecutor;
 
-},{"../../component/internal/MeshComponent.js":44,"../../component/internal/RigidBodyComponent.js":46,"../../component/internal/TransformComponent.js":49,"../../pobject/RigidBodyOptions.js":204,"../../world/World.js":292,"./ComponentExecutor.js":82,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":18}],86:[function(require,module,exports){
+},{"../../component/internal/MeshComponent.js":44,"../../component/internal/RigidBodyComponent.js":46,"../../component/internal/TransformComponent.js":49,"../../pobject/RigidBodyOptions.js":216,"../../world/World.js":303,"./ComponentExecutor.js":82,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":18}],86:[function(require,module,exports){
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
@@ -9046,11 +9082,9 @@ var _OnInputJumpEvent = _interopRequireDefault(require("../../flow/event/native/
 
 var _Window = _interopRequireDefault(require("../../core/Window.js"));
 
-var _ClientError = _interopRequireDefault(require("../../exception/type/ClientError.js"));
-
-var _AssetHelper = _interopRequireDefault(require("../../utils/AssetHelper.js"));
-
 var _OnUpdateEvent = _interopRequireDefault(require("../../flow/event/native/OnUpdateEvent.js"));
+
+var _OnInputAttackEvent = _interopRequireDefault(require("../../flow/event/native/OnInputAttackEvent.js"));
 
 function _createSuper(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct(); return function _createSuperInternal() { var Super = (0, _getPrototypeOf2["default"])(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = (0, _getPrototypeOf2["default"])(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return (0, _possibleConstructorReturn2["default"])(this, result); }; }
 
@@ -9083,7 +9117,7 @@ var ScriptExecutor = /*#__PURE__*/function (_ComponentExecutor) {
       var gameInput = world.getPreference().getGameInput();
       var scriptComponent = unit.getComponent(_ScriptComponent["default"]);
       functionRegistry.getInstancesByClass(scriptComponent.getScript()).forEach(function (instance) {
-        if (mouse.isButtonClicked(_Mouse.MouseButton.LEFT) && instance instanceof _OnMouseClickEvent["default"] || keyboard.isAnyKeyPressed() && instance instanceof _OnKeyDownEvent["default"] || (keyboard.isKeyPressed(gameInput.getKeyCode(_GameInput.GAME_INPUTS.RIGHT)) || keyboard.isKeyPressed(gameInput.getKeyCode(_GameInput.GAME_INPUTS.LEFT))) && instance instanceof _OnInputXAxisEvent["default"] || (keyboard.isKeyPressed(gameInput.getKeyCode(_GameInput.GAME_INPUTS.UP)) || keyboard.isKeyPressed(gameInput.getKeyCode(_GameInput.GAME_INPUTS.DOWN))) && instance instanceof _OnInputYAxisEvent["default"] || keyboard.isKeyPressed(gameInput.getKeyCode(_GameInput.GAME_INPUTS.JUMP)) && instance instanceof _OnInputJumpEvent["default"] || instance instanceof _OnUpdateEvent["default"]) {
+        if (mouse.isButtonClicked(_Mouse.MouseButton.LEFT) && instance instanceof _OnMouseClickEvent["default"] || keyboard.isAnyKeyPressed() && instance instanceof _OnKeyDownEvent["default"] || (keyboard.isKeyPressed(gameInput.getKeyCode(_GameInput.GAME_INPUTS.RIGHT)) || keyboard.isKeyPressed(gameInput.getKeyCode(_GameInput.GAME_INPUTS.LEFT))) && instance instanceof _OnInputXAxisEvent["default"] || (keyboard.isKeyPressed(gameInput.getKeyCode(_GameInput.GAME_INPUTS.UP)) || keyboard.isKeyPressed(gameInput.getKeyCode(_GameInput.GAME_INPUTS.DOWN))) && instance instanceof _OnInputYAxisEvent["default"] || keyboard.isKeyPressed(gameInput.getKeyCode(_GameInput.GAME_INPUTS.JUMP)) && instance instanceof _OnInputJumpEvent["default"] || keyboard.isKeyPressed(gameInput.getKeyCode(_GameInput.GAME_INPUTS.ATTACK)) && instance instanceof _OnInputAttackEvent["default"] || instance instanceof _OnUpdateEvent["default"]) {
           instance.execute(functionRegistry, unit, scriptComponent, world);
         }
       });
@@ -9094,7 +9128,7 @@ var ScriptExecutor = /*#__PURE__*/function (_ComponentExecutor) {
 
 exports["default"] = ScriptExecutor;
 
-},{"../../component/internal/ScriptComponent.js":47,"../../core/Mouse.js":70,"../../core/Window.js":73,"../../exception/type/ClientError.js":75,"../../flow/event/native/OnInputJumpEvent.js":100,"../../flow/event/native/OnInputXAxisEvent.js":101,"../../flow/event/native/OnInputYAxisEvent.js":102,"../../flow/event/native/OnKeyDownEvent.js":103,"../../flow/event/native/OnMouseClickEvent.js":104,"../../flow/event/native/OnUpdateEvent.js":105,"../../preference/gameInput/GameInput.js":208,"../../utils/AssetHelper.js":276,"../../world/World.js":292,"./ComponentExecutor.js":82,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":18}],87:[function(require,module,exports){
+},{"../../component/internal/ScriptComponent.js":47,"../../core/Mouse.js":70,"../../core/Window.js":73,"../../flow/event/native/OnInputAttackEvent.js":101,"../../flow/event/native/OnInputJumpEvent.js":102,"../../flow/event/native/OnInputXAxisEvent.js":103,"../../flow/event/native/OnInputYAxisEvent.js":104,"../../flow/event/native/OnKeyDownEvent.js":105,"../../flow/event/native/OnMouseClickEvent.js":106,"../../flow/event/native/OnUpdateEvent.js":107,"../../preference/gameInput/GameInput.js":220,"../../world/World.js":303,"./ComponentExecutor.js":82,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":18}],87:[function(require,module,exports){
 "use strict";
 
 var _interopRequireWildcard = require("@babel/runtime/helpers/interopRequireWildcard");
@@ -9146,6 +9180,8 @@ var _AnimationNode = _interopRequireDefault(require("./node/AnimationNode.js"));
 
 var _ComponentNode = _interopRequireDefault(require("./node/ComponentNode.js"));
 
+var _ReferenceNode = _interopRequireDefault(require("./node/ReferenceNode.js"));
+
 function _createSuper(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct(); return function _createSuperInternal() { var Super = (0, _getPrototypeOf2["default"])(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = (0, _getPrototypeOf2["default"])(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return (0, _possibleConstructorReturn2["default"])(this, result); }; }
 
 function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
@@ -9193,6 +9229,7 @@ var AScript = /*#__PURE__*/function (_AScriptData) {
         case _KeyCodeNode["default"]:
         case _UnitNode["default"]:
         case _AnimationNode["default"]:
+        case _ReferenceNode["default"]:
         case _StringVariableNode["default"]:
         case _ComponentNode["default"]:
           sourceName = value;
@@ -9402,7 +9439,7 @@ var AScript = /*#__PURE__*/function (_AScriptData) {
 
 exports["default"] = AScript;
 
-},{"../core/Camera.js":64,"../core/Constant.js":65,"../exception/type/ClientError.js":75,"../exception/type/SystemError.js":77,"../project/data/AScriptData.js":211,"../utils/Vector.js":290,"./node/AnimationNode.js":137,"./node/ComponentNode.js":138,"./node/ConditionNode.js":139,"./node/ConstantNode.js":140,"./node/EventNode.js":141,"./node/FunctionNode.js":142,"./node/KeyCodeNode.js":143,"./node/UnitNode.js":144,"./node/variable/StringVariableNode.js":145,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/interopRequireWildcard":13,"@babel/runtime/helpers/possibleConstructorReturn":18}],88:[function(require,module,exports){
+},{"../core/Camera.js":64,"../core/Constant.js":65,"../exception/type/ClientError.js":75,"../exception/type/SystemError.js":77,"../project/data/AScriptData.js":223,"../utils/Vector.js":301,"./node/AnimationNode.js":143,"./node/ComponentNode.js":144,"./node/ConditionNode.js":145,"./node/ConstantNode.js":146,"./node/EventNode.js":147,"./node/FunctionNode.js":148,"./node/KeyCodeNode.js":149,"./node/ReferenceNode.js":150,"./node/UnitNode.js":151,"./node/variable/StringVariableNode.js":153,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/interopRequireWildcard":13,"@babel/runtime/helpers/possibleConstructorReturn":18}],88:[function(require,module,exports){
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
@@ -9497,8 +9534,6 @@ exports["default"] = ClassScript;
 },{"./AScript.js":87,"./compiler/ClassCompiler.js":91,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":18}],90:[function(require,module,exports){
 "use strict";
 
-var _interopRequireWildcard = require("@babel/runtime/helpers/interopRequireWildcard");
-
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
 
 Object.defineProperty(exports, "__esModule", {
@@ -9508,28 +9543,20 @@ exports["default"] = void 0;
 
 var _classCallCheck2 = _interopRequireDefault(require("@babel/runtime/helpers/classCallCheck"));
 
-var _createClass2 = _interopRequireDefault(require("@babel/runtime/helpers/createClass"));
-
 var _inherits2 = _interopRequireDefault(require("@babel/runtime/helpers/inherits"));
 
 var _possibleConstructorReturn2 = _interopRequireDefault(require("@babel/runtime/helpers/possibleConstructorReturn"));
 
 var _getPrototypeOf2 = _interopRequireDefault(require("@babel/runtime/helpers/getPrototypeOf"));
 
-var _AStackFunction2 = _interopRequireDefault(require("../function/AStackFunction.js"));
-
-var _StackOperation = _interopRequireWildcard(require("../../operation/StackOperation.js"));
-
-var _StackRegister = require("../../operation/StackRegister.js");
-
-var _ActivateAnimationFunction = _interopRequireDefault(require("../function/native/animation/ActivateAnimationFunction.js"));
+var _AEmptyStackFunction2 = _interopRequireDefault(require("../function/AEmptyStackFunction.js"));
 
 function _createSuper(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct(); return function _createSuperInternal() { var Super = (0, _getPrototypeOf2["default"])(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = (0, _getPrototypeOf2["default"])(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return (0, _possibleConstructorReturn2["default"])(this, result); }; }
 
 function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
 
-var AAnimation = /*#__PURE__*/function (_AStackFunction) {
-  (0, _inherits2["default"])(AAnimation, _AStackFunction);
+var AAnimation = /*#__PURE__*/function (_AEmptyStackFunction) {
+  (0, _inherits2["default"])(AAnimation, _AEmptyStackFunction);
 
   var _super = _createSuper(AAnimation);
 
@@ -9537,31 +9564,16 @@ var AAnimation = /*#__PURE__*/function (_AStackFunction) {
    * @param {string} value
    */
   function AAnimation(value) {
-    var _this;
-
     (0, _classCallCheck2["default"])(this, AAnimation);
-    _this = _super.call(this, 'Animation');
-    var activateAnimationFunction = new _ActivateAnimationFunction["default"]();
-    _this.stack = [new _StackOperation["default"](_StackOperation.OPERATIONS.PUSH, _StackRegister.CONSTANTS.RESULT, "".concat(value)), new _StackOperation["default"](_StackOperation.OPERATIONS.PUSH, activateAnimationFunction.getInputs()[0].getAttrName(), _StackRegister.CONSTANTS.RESULT), new _StackOperation["default"](_StackOperation.OPERATIONS.CALL, activateAnimationFunction.getName())];
-
-    _this.setName("".concat(value));
-
-    return _this;
+    return _super.call(this, "".concat(value) || 'Animation');
   }
 
-  (0, _createClass2["default"])(AAnimation, [{
-    key: "createStack",
-    value: function createStack() {}
-  }, {
-    key: "initAttributes",
-    value: function initAttributes() {}
-  }]);
   return AAnimation;
-}(_AStackFunction2["default"]);
+}(_AEmptyStackFunction2["default"]);
 
 exports["default"] = AAnimation;
 
-},{"../../operation/StackOperation.js":182,"../../operation/StackRegister.js":184,"../function/AStackFunction.js":108,"../function/native/animation/ActivateAnimationFunction.js":109,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/interopRequireWildcard":13,"@babel/runtime/helpers/possibleConstructorReturn":18}],91:[function(require,module,exports){
+},{"../function/AEmptyStackFunction.js":108,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":18}],91:[function(require,module,exports){
 "use strict";
 
 var _interopRequireWildcard = require("@babel/runtime/helpers/interopRequireWildcard");
@@ -9614,6 +9626,20 @@ var _NodeHelper = _interopRequireDefault(require("../../utils/NodeHelper.js"));
 var _AStackFunction = _interopRequireDefault(require("../function/AStackFunction.js"));
 
 var _ScriptHelper = _interopRequireDefault(require("../../utils/ScriptHelper.js"));
+
+var _OnAnyAnimationStartEvent = _interopRequireDefault(require("../event/native/OnAnyAnimationStartEvent.js"));
+
+var _StopAnimationFunction = _interopRequireDefault(require("../function/native/animation/StopAnimationFunction.js"));
+
+var _StartAnimationFunction = _interopRequireDefault(require("../function/native/animation/StartAnimationFunction.js"));
+
+var _GetCurrentAnimationFunction = _interopRequireDefault(require("../function/native/animation/GetCurrentAnimationFunction.js"));
+
+var _IsAnimationPlayingFunction = _interopRequireDefault(require("../function/native/animation/IsAnimationPlayingFunction.js"));
+
+var _NotFunction = _interopRequireDefault(require("../function/native/basic/NotFunction.js"));
+
+var _AReference = _interopRequireDefault(require("../reference/AReference.js"));
 
 function _createSuper(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct(); return function _createSuperInternal() { var Super = (0, _getPrototypeOf2["default"])(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = (0, _getPrototypeOf2["default"])(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return (0, _possibleConstructorReturn2["default"])(this, result); }; }
 
@@ -9720,10 +9746,23 @@ var ClassCompiler = /*#__PURE__*/function (_Compiler) {
         if (!(element instanceof _AEvent["default"])) {
           if (functionRegistry.getInstance(element.getName())) {
             stackFunction.getStack().push(new _StackOperation["default"](_StackOperation.OPERATIONS.CALL, element.getName()));
-          } else if (element instanceof _AStackFunction["default"]) {
+          } else if (element instanceof _AAnimation["default"]) {
             var _stackFunction$getSta3;
 
-            (_stackFunction$getSta3 = stackFunction.getStack()).push.apply(_stackFunction$getSta3, (0, _toConsumableArray2["default"])(element.getStack()));
+            var onAnyAnimation = new _OnAnyAnimationStartEvent["default"]();
+            var isAnimationPlaying = new _IsAnimationPlayingFunction["default"]();
+            var startAnimation = new _StartAnimationFunction["default"]();
+            var not = new _NotFunction["default"]();
+
+            (_stackFunction$getSta3 = stackFunction.getStack()).push.apply(_stackFunction$getSta3, [new _StackOperation["default"](_StackOperation.OPERATIONS.PUSH, isAnimationPlaying.getInputs()[0].getAttrName(), element.getName()), new _StackOperation["default"](_StackOperation.OPERATIONS.CALL, isAnimationPlaying.getName()), new _StackOperation["default"](_StackOperation.OPERATIONS.PUSH, not.getInputs()[0].getAttrName(), _StackRegister.CONSTANTS.RESULT), new _StackOperation["default"](_StackOperation.OPERATIONS.CALL, not.getName()), new _StackOperation["default"](_StackOperation.OPERATIONS.JUMP, _StackRegister.CONSTANTS.RESULT, 'start_animation'), new _StackOperation["default"](_StackOperation.OPERATIONS.PUSH, startAnimation.getInputs()[0].getAttrName(), element.getName()), new _StackOperation["default"](_StackOperation.OPERATIONS.CALL, startAnimation.getName()), new _StackOperation["default"](_StackOperation.OPERATIONS.JUMP_TO, 'start_animation')]);
+
+            if (!_ScriptHelper["default"].isNodeHasPredecessor(script, node, onAnyAnimation.getName())) {
+              stackFunction.getStack().push(new _StackOperation["default"](_StackOperation.OPERATIONS.DISPATCH, onAnyAnimation.getName()));
+            }
+          } else if (element instanceof _AStackFunction["default"]) {
+            var _stackFunction$getSta4;
+
+            (_stackFunction$getSta4 = stackFunction.getStack()).push.apply(_stackFunction$getSta4, (0, _toConsumableArray2["default"])(element.getStack()));
           }
 
           if (element instanceof _ACondition["default"]) {
@@ -9734,6 +9773,8 @@ var ClassCompiler = /*#__PURE__*/function (_Compiler) {
 
       script.getInputs().forEach(function (input) {
         var node = script.findNodeById(input.getNodeId());
+
+        var element = _NodeHelper["default"].getSourceNode(node);
 
         var functionName = _ScriptHelper["default"].generateFunctionName(script, node);
 
@@ -9746,10 +9787,32 @@ var ClassCompiler = /*#__PURE__*/function (_Compiler) {
 
           var sourceStackFunction = functionRegistry.getInstance(sourceElementName);
 
-          if (sourceElement instanceof _ACondition["default"] || sourceElement instanceof _AAnimation["default"]) {
-            var _sourceStackFunction$2;
+          if (sourceElement instanceof _AAnimation["default"]) {
+            if (element instanceof _AAnimation["default"]) {
+              var _sourceStackFunction$2;
 
-            (_sourceStackFunction$2 = sourceStackFunction.getStack()).push.apply(_sourceStackFunction$2, [new _StackOperation["default"](_StackOperation.OPERATIONS.CALL, functionName)]);
+              var stopAnimation = new _StopAnimationFunction["default"]();
+
+              (_sourceStackFunction$2 = sourceStackFunction.getStack()).push.apply(_sourceStackFunction$2, [new _StackOperation["default"](_StackOperation.OPERATIONS.PUSH, stopAnimation.getInputs()[0].getAttrName(), sourceElement.getName()), new _StackOperation["default"](_StackOperation.OPERATIONS.CALL, stopAnimation.getName()), new _StackOperation["default"](_StackOperation.OPERATIONS.CALL, functionName)]);
+            } else if (element instanceof _ACondition["default"]) {
+              var _sourceStackFunction$3;
+
+              (_sourceStackFunction$3 = sourceStackFunction.getStack()).push.apply(_sourceStackFunction$3, [new _StackOperation["default"](_StackOperation.OPERATIONS.CALL, functionName)]);
+            }
+          } else if (sourceElement instanceof _ACondition["default"]) {
+            if (element instanceof _AAnimation["default"] || element instanceof _AReference["default"]) {
+              var _sourceStackFunction$4;
+
+              var getCurrentAnimation = new _GetCurrentAnimationFunction["default"]();
+
+              var _stopAnimation = new _StopAnimationFunction["default"]();
+
+              (_sourceStackFunction$4 = sourceStackFunction.getStack()).push.apply(_sourceStackFunction$4, [new _StackOperation["default"](_StackOperation.OPERATIONS.CALL, getCurrentAnimation.getName()), new _StackOperation["default"](_StackOperation.OPERATIONS.PUSH, _stopAnimation.getInputs()[0].getAttrName(), _StackRegister.CONSTANTS.RESULT), new _StackOperation["default"](_StackOperation.OPERATIONS.CALL, _stopAnimation.getName()), new _StackOperation["default"](_StackOperation.OPERATIONS.CALL, functionName)]);
+            } else {
+              var _sourceStackFunction$5;
+
+              (_sourceStackFunction$5 = sourceStackFunction.getStack()).push.apply(_sourceStackFunction$5, [new _StackOperation["default"](_StackOperation.OPERATIONS.CALL, functionName)]);
+            }
           }
         }
       });
@@ -9761,7 +9824,7 @@ var ClassCompiler = /*#__PURE__*/function (_Compiler) {
 
 exports["default"] = ClassCompiler;
 
-},{"../../exception/type/ClientError.js":75,"../../exception/type/SystemError.js":77,"../../operation/StackOperation.js":182,"../../operation/StackRegister.js":184,"../../utils/NodeHelper.js":284,"../../utils/ScriptHelper.js":287,"../../world/World.js":292,"../ClassScript.js":89,"../animation/AAnimation.js":90,"../condition/ACondition.js":94,"../event/AEvent.js":98,"../function/AFunction.js":107,"../function/AStackFunction.js":108,"../variable/AVariable.js":149,"./Compiler.js":92,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/interopRequireWildcard":13,"@babel/runtime/helpers/possibleConstructorReturn":18,"@babel/runtime/helpers/toConsumableArray":21}],92:[function(require,module,exports){
+},{"../../exception/type/ClientError.js":75,"../../exception/type/SystemError.js":77,"../../operation/StackOperation.js":192,"../../operation/StackRegister.js":194,"../../utils/NodeHelper.js":295,"../../utils/ScriptHelper.js":298,"../../world/World.js":303,"../ClassScript.js":89,"../animation/AAnimation.js":90,"../condition/ACondition.js":94,"../event/AEvent.js":98,"../event/native/OnAnyAnimationStartEvent.js":100,"../function/AFunction.js":109,"../function/AStackFunction.js":110,"../function/native/animation/GetCurrentAnimationFunction.js":111,"../function/native/animation/IsAnimationPlayingFunction.js":113,"../function/native/animation/StartAnimationFunction.js":114,"../function/native/animation/StopAnimationFunction.js":115,"../function/native/basic/NotFunction.js":126,"../reference/AReference.js":155,"../variable/AVariable.js":159,"./Compiler.js":92,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/interopRequireWildcard":13,"@babel/runtime/helpers/possibleConstructorReturn":18,"@babel/runtime/helpers/toConsumableArray":21}],92:[function(require,module,exports){
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
@@ -9886,7 +9949,7 @@ var AComponent = /*#__PURE__*/function (_AStackFunction) {
 
 exports["default"] = AComponent;
 
-},{"../../operation/StackOperation.js":182,"../../operation/StackRegister.js":184,"../../pobject/AttributeType.js":200,"../function/AStackFunction.js":108,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/interopRequireWildcard":13,"@babel/runtime/helpers/possibleConstructorReturn":18}],94:[function(require,module,exports){
+},{"../../operation/StackOperation.js":192,"../../operation/StackRegister.js":194,"../../pobject/AttributeType.js":212,"../function/AStackFunction.js":110,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/interopRequireWildcard":13,"@babel/runtime/helpers/possibleConstructorReturn":18}],94:[function(require,module,exports){
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
@@ -9934,7 +9997,7 @@ var ACondition = /*#__PURE__*/function (_AStackFunction) {
 
 exports["default"] = ACondition;
 
-},{"../function/AStackFunction.js":108,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":18}],95:[function(require,module,exports){
+},{"../function/AStackFunction.js":110,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":18}],95:[function(require,module,exports){
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
@@ -9997,7 +10060,7 @@ var FalseCondition = /*#__PURE__*/function (_ACondition) {
 
 exports["default"] = FalseCondition;
 
-},{"../../pobject/AttributeType.js":200,"./ACondition.js":94,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":18}],96:[function(require,module,exports){
+},{"../../pobject/AttributeType.js":212,"./ACondition.js":94,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":18}],96:[function(require,module,exports){
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
@@ -10060,7 +10123,7 @@ var TrueCondition = /*#__PURE__*/function (_ACondition) {
 
 exports["default"] = TrueCondition;
 
-},{"../../pobject/AttributeType.js":200,"./ACondition.js":94,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":18}],97:[function(require,module,exports){
+},{"../../pobject/AttributeType.js":212,"./ACondition.js":94,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":18}],97:[function(require,module,exports){
 "use strict";
 
 var _interopRequireWildcard = require("@babel/runtime/helpers/interopRequireWildcard");
@@ -10127,7 +10190,7 @@ var AConstant = /*#__PURE__*/function (_AStackFunction) {
 
 exports["default"] = AConstant;
 
-},{"../../operation/StackOperation.js":182,"../../operation/StackRegister.js":184,"../function/AStackFunction.js":108,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/interopRequireWildcard":13,"@babel/runtime/helpers/possibleConstructorReturn":18}],98:[function(require,module,exports){
+},{"../../operation/StackOperation.js":192,"../../operation/StackRegister.js":194,"../function/AStackFunction.js":110,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/interopRequireWildcard":13,"@babel/runtime/helpers/possibleConstructorReturn":18}],98:[function(require,module,exports){
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
@@ -10169,7 +10232,7 @@ var AEvent = /*#__PURE__*/function (_AEmptyStackFunction) {
 
 exports["default"] = AEvent;
 
-},{"../function/AEmptyStackFunction.js":106,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":18}],99:[function(require,module,exports){
+},{"../function/AEmptyStackFunction.js":108,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":18}],99:[function(require,module,exports){
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
@@ -10232,6 +10295,84 @@ function _createSuper(Derived) { var hasNativeReflectConstruct = _isNativeReflec
 
 function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
 
+var OnAnyAnimationStartEvent = /*#__PURE__*/function (_AEvent) {
+  (0, _inherits2["default"])(OnAnyAnimationStartEvent, _AEvent);
+
+  var _super = _createSuper(OnAnyAnimationStartEvent);
+
+  function OnAnyAnimationStartEvent(name) {
+    (0, _classCallCheck2["default"])(this, OnAnyAnimationStartEvent);
+    return _super.call(this, name || 'OnAnyAnimationStart');
+  }
+
+  return OnAnyAnimationStartEvent;
+}(_AEvent2["default"]);
+
+exports["default"] = OnAnyAnimationStartEvent;
+
+},{"../AEvent.js":98,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":18}],101:[function(require,module,exports){
+"use strict";
+
+var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports["default"] = void 0;
+
+var _classCallCheck2 = _interopRequireDefault(require("@babel/runtime/helpers/classCallCheck"));
+
+var _inherits2 = _interopRequireDefault(require("@babel/runtime/helpers/inherits"));
+
+var _possibleConstructorReturn2 = _interopRequireDefault(require("@babel/runtime/helpers/possibleConstructorReturn"));
+
+var _getPrototypeOf2 = _interopRequireDefault(require("@babel/runtime/helpers/getPrototypeOf"));
+
+var _AEvent2 = _interopRequireDefault(require("../AEvent.js"));
+
+function _createSuper(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct(); return function _createSuperInternal() { var Super = (0, _getPrototypeOf2["default"])(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = (0, _getPrototypeOf2["default"])(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return (0, _possibleConstructorReturn2["default"])(this, result); }; }
+
+function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
+
+var OnInputAttackEvent = /*#__PURE__*/function (_AEvent) {
+  (0, _inherits2["default"])(OnInputAttackEvent, _AEvent);
+
+  var _super = _createSuper(OnInputAttackEvent);
+
+  function OnInputAttackEvent(name) {
+    (0, _classCallCheck2["default"])(this, OnInputAttackEvent);
+    return _super.call(this, name || 'OnInputAttack');
+  }
+
+  return OnInputAttackEvent;
+}(_AEvent2["default"]);
+
+exports["default"] = OnInputAttackEvent;
+
+},{"../AEvent.js":98,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":18}],102:[function(require,module,exports){
+"use strict";
+
+var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports["default"] = void 0;
+
+var _classCallCheck2 = _interopRequireDefault(require("@babel/runtime/helpers/classCallCheck"));
+
+var _inherits2 = _interopRequireDefault(require("@babel/runtime/helpers/inherits"));
+
+var _possibleConstructorReturn2 = _interopRequireDefault(require("@babel/runtime/helpers/possibleConstructorReturn"));
+
+var _getPrototypeOf2 = _interopRequireDefault(require("@babel/runtime/helpers/getPrototypeOf"));
+
+var _AEvent2 = _interopRequireDefault(require("../AEvent.js"));
+
+function _createSuper(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct(); return function _createSuperInternal() { var Super = (0, _getPrototypeOf2["default"])(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = (0, _getPrototypeOf2["default"])(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return (0, _possibleConstructorReturn2["default"])(this, result); }; }
+
+function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
+
 var OnInputJumpEvent = /*#__PURE__*/function (_AEvent) {
   (0, _inherits2["default"])(OnInputJumpEvent, _AEvent);
 
@@ -10247,7 +10388,7 @@ var OnInputJumpEvent = /*#__PURE__*/function (_AEvent) {
 
 exports["default"] = OnInputJumpEvent;
 
-},{"../AEvent.js":98,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":18}],101:[function(require,module,exports){
+},{"../AEvent.js":98,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":18}],103:[function(require,module,exports){
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
@@ -10286,7 +10427,7 @@ var OnInputXAxisEvent = /*#__PURE__*/function (_AEvent) {
 
 exports["default"] = OnInputXAxisEvent;
 
-},{"../AEvent.js":98,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":18}],102:[function(require,module,exports){
+},{"../AEvent.js":98,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":18}],104:[function(require,module,exports){
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
@@ -10325,7 +10466,7 @@ var OnInputYAxisEvent = /*#__PURE__*/function (_AEvent) {
 
 exports["default"] = OnInputYAxisEvent;
 
-},{"../AEvent.js":98,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":18}],103:[function(require,module,exports){
+},{"../AEvent.js":98,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":18}],105:[function(require,module,exports){
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
@@ -10364,7 +10505,7 @@ var OnKeyDownEvent = /*#__PURE__*/function (_AEvent) {
 
 exports["default"] = OnKeyDownEvent;
 
-},{"../AEvent.js":98,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":18}],104:[function(require,module,exports){
+},{"../AEvent.js":98,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":18}],106:[function(require,module,exports){
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
@@ -10403,7 +10544,7 @@ var OnMouseClickEvent = /*#__PURE__*/function (_AEvent) {
 
 exports["default"] = OnMouseClickEvent;
 
-},{"../AEvent.js":98,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":18}],105:[function(require,module,exports){
+},{"../AEvent.js":98,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":18}],107:[function(require,module,exports){
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
@@ -10442,7 +10583,7 @@ var OnUpdateEvent = /*#__PURE__*/function (_AEvent) {
 
 exports["default"] = OnUpdateEvent;
 
-},{"../AEvent.js":98,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":18}],106:[function(require,module,exports){
+},{"../AEvent.js":98,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":18}],108:[function(require,module,exports){
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
@@ -10513,7 +10654,7 @@ var AEmptyStackFunction = /*#__PURE__*/function (_AStackFunction) {
 
 exports["default"] = AEmptyStackFunction;
 
-},{"./AStackFunction.js":108,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":18}],107:[function(require,module,exports){
+},{"./AStackFunction.js":110,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":18}],109:[function(require,module,exports){
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
@@ -10772,7 +10913,7 @@ var AFunction = /*#__PURE__*/function (_FunctionData) {
 
 exports["default"] = AFunction;
 
-},{"../../exception/type/SystemError.js":77,"../../operation/StackRegister.js":184,"../../project/data/FunctionData.js":222,"../../utils/DynamicAttributeHelper.js":279,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":18}],108:[function(require,module,exports){
+},{"../../exception/type/SystemError.js":77,"../../operation/StackRegister.js":194,"../../project/data/FunctionData.js":234,"../../utils/DynamicAttributeHelper.js":290,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":18}],110:[function(require,module,exports){
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
@@ -10859,7 +11000,7 @@ var AStackFunction = /*#__PURE__*/function (_AFunction) {
 
 exports["default"] = AStackFunction;
 
-},{"../../exception/type/SystemError.js":77,"../../operation/StackProcessor.js":183,"./AFunction.js":107,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/get":9,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":18}],109:[function(require,module,exports){
+},{"../../exception/type/SystemError.js":77,"../../operation/StackProcessor.js":193,"./AFunction.js":109,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/get":9,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":18}],111:[function(require,module,exports){
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
@@ -10889,13 +11030,207 @@ function _createSuper(Derived) { var hasNativeReflectConstruct = _isNativeReflec
 
 function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
 
-var ActivateAnimationFunction = /*#__PURE__*/function (_AFunction) {
-  (0, _inherits2["default"])(ActivateAnimationFunction, _AFunction);
+var GetCurrentAnimationFunction = /*#__PURE__*/function (_AFunction) {
+  (0, _inherits2["default"])(GetCurrentAnimationFunction, _AFunction);
 
-  var _super = _createSuper(ActivateAnimationFunction);
+  var _super = _createSuper(GetCurrentAnimationFunction);
 
-  function ActivateAnimationFunction() {
-    (0, _classCallCheck2["default"])(this, ActivateAnimationFunction);
+  function GetCurrentAnimationFunction() {
+    (0, _classCallCheck2["default"])(this, GetCurrentAnimationFunction);
+    return _super.call(this, 'GetCurrentAnimation');
+  }
+  /**
+   * @override
+   */
+
+
+  (0, _createClass2["default"])(GetCurrentAnimationFunction, [{
+    key: "initAttributes",
+    value: function initAttributes() {
+      this.addOutput(_AttributeType.TYPES.NUMBER);
+    }
+    /**
+     * @override
+     */
+
+  }, {
+    key: "execute",
+    value: function execute(functionRegistry, unit, scriptComponent, world) {
+      var animationComponent = unit.getComponent(_AnimationComponent["default"]);
+      this.setOutputValue(animationComponent && "".concat(animationComponent.getAnimation()));
+    }
+  }]);
+  return GetCurrentAnimationFunction;
+}(_AFunction2["default"]);
+
+exports["default"] = GetCurrentAnimationFunction;
+
+},{"../../../../component/internal/AnimationComponent.js":40,"../../../../pobject/AttributeType.js":212,"../../AFunction.js":109,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":18}],112:[function(require,module,exports){
+"use strict";
+
+var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports["default"] = void 0;
+
+var _classCallCheck2 = _interopRequireDefault(require("@babel/runtime/helpers/classCallCheck"));
+
+var _createClass2 = _interopRequireDefault(require("@babel/runtime/helpers/createClass"));
+
+var _inherits2 = _interopRequireDefault(require("@babel/runtime/helpers/inherits"));
+
+var _possibleConstructorReturn2 = _interopRequireDefault(require("@babel/runtime/helpers/possibleConstructorReturn"));
+
+var _getPrototypeOf2 = _interopRequireDefault(require("@babel/runtime/helpers/getPrototypeOf"));
+
+var _AttributeType = require("../../../../pobject/AttributeType.js");
+
+var _AFunction2 = _interopRequireDefault(require("../../AFunction.js"));
+
+var _AnimationComponent = _interopRequireDefault(require("../../../../component/internal/AnimationComponent.js"));
+
+function _createSuper(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct(); return function _createSuperInternal() { var Super = (0, _getPrototypeOf2["default"])(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = (0, _getPrototypeOf2["default"])(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return (0, _possibleConstructorReturn2["default"])(this, result); }; }
+
+function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
+
+var HasCurrentAnimationFunction = /*#__PURE__*/function (_AFunction) {
+  (0, _inherits2["default"])(HasCurrentAnimationFunction, _AFunction);
+
+  var _super = _createSuper(HasCurrentAnimationFunction);
+
+  function HasCurrentAnimationFunction() {
+    (0, _classCallCheck2["default"])(this, HasCurrentAnimationFunction);
+    return _super.call(this, 'HasCurrentAnimation');
+  }
+  /**
+   * @override
+   */
+
+
+  (0, _createClass2["default"])(HasCurrentAnimationFunction, [{
+    key: "initAttributes",
+    value: function initAttributes() {
+      this.addOutput(_AttributeType.TYPES.BOOLEAN);
+    }
+    /**
+     * @override
+     */
+
+  }, {
+    key: "execute",
+    value: function execute(functionRegistry, unit, scriptComponent, world) {
+      var animationComponent = unit.getComponent(_AnimationComponent["default"]);
+      this.setOutputValue(!!animationComponent && !!animationComponent.getAnimation());
+    }
+  }]);
+  return HasCurrentAnimationFunction;
+}(_AFunction2["default"]);
+
+exports["default"] = HasCurrentAnimationFunction;
+
+},{"../../../../component/internal/AnimationComponent.js":40,"../../../../pobject/AttributeType.js":212,"../../AFunction.js":109,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":18}],113:[function(require,module,exports){
+"use strict";
+
+var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports["default"] = void 0;
+
+var _classCallCheck2 = _interopRequireDefault(require("@babel/runtime/helpers/classCallCheck"));
+
+var _createClass2 = _interopRequireDefault(require("@babel/runtime/helpers/createClass"));
+
+var _inherits2 = _interopRequireDefault(require("@babel/runtime/helpers/inherits"));
+
+var _possibleConstructorReturn2 = _interopRequireDefault(require("@babel/runtime/helpers/possibleConstructorReturn"));
+
+var _getPrototypeOf2 = _interopRequireDefault(require("@babel/runtime/helpers/getPrototypeOf"));
+
+var _AttributeType = require("../../../../pobject/AttributeType.js");
+
+var _AFunction2 = _interopRequireDefault(require("../../AFunction.js"));
+
+function _createSuper(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct(); return function _createSuperInternal() { var Super = (0, _getPrototypeOf2["default"])(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = (0, _getPrototypeOf2["default"])(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return (0, _possibleConstructorReturn2["default"])(this, result); }; }
+
+function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
+
+var IsAnimationPlayingFunction = /*#__PURE__*/function (_AFunction) {
+  (0, _inherits2["default"])(IsAnimationPlayingFunction, _AFunction);
+
+  var _super = _createSuper(IsAnimationPlayingFunction);
+
+  function IsAnimationPlayingFunction() {
+    (0, _classCallCheck2["default"])(this, IsAnimationPlayingFunction);
+    return _super.call(this, 'IsAnimationPlaying');
+  }
+  /**
+   * @override
+   */
+
+
+  (0, _createClass2["default"])(IsAnimationPlayingFunction, [{
+    key: "initAttributes",
+    value: function initAttributes() {
+      this.addInput('target', _AttributeType.TYPES.ANIMATION, 0);
+      this.addOutput(_AttributeType.TYPES.BOOLEAN);
+    }
+    /**
+     * @override
+     */
+
+  }, {
+    key: "execute",
+    value: function execute(functionRegistry, unit, scriptComponent, world) {
+      var animation = this.getInputValue('target');
+      this.setOutputValue(animation.isPlaying());
+    }
+  }]);
+  return IsAnimationPlayingFunction;
+}(_AFunction2["default"]);
+
+exports["default"] = IsAnimationPlayingFunction;
+
+},{"../../../../pobject/AttributeType.js":212,"../../AFunction.js":109,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":18}],114:[function(require,module,exports){
+"use strict";
+
+var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports["default"] = void 0;
+
+var _classCallCheck2 = _interopRequireDefault(require("@babel/runtime/helpers/classCallCheck"));
+
+var _createClass2 = _interopRequireDefault(require("@babel/runtime/helpers/createClass"));
+
+var _inherits2 = _interopRequireDefault(require("@babel/runtime/helpers/inherits"));
+
+var _possibleConstructorReturn2 = _interopRequireDefault(require("@babel/runtime/helpers/possibleConstructorReturn"));
+
+var _getPrototypeOf2 = _interopRequireDefault(require("@babel/runtime/helpers/getPrototypeOf"));
+
+var _AttributeType = require("../../../../pobject/AttributeType.js");
+
+var _AFunction2 = _interopRequireDefault(require("../../AFunction.js"));
+
+var _AnimationComponent = _interopRequireDefault(require("../../../../component/internal/AnimationComponent.js"));
+
+function _createSuper(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct(); return function _createSuperInternal() { var Super = (0, _getPrototypeOf2["default"])(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = (0, _getPrototypeOf2["default"])(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return (0, _possibleConstructorReturn2["default"])(this, result); }; }
+
+function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
+
+var StartAnimationFunction = /*#__PURE__*/function (_AFunction) {
+  (0, _inherits2["default"])(StartAnimationFunction, _AFunction);
+
+  var _super = _createSuper(StartAnimationFunction);
+
+  function StartAnimationFunction() {
+    (0, _classCallCheck2["default"])(this, StartAnimationFunction);
     return _super.call(this, 'ActivateAnimation');
   }
   /**
@@ -10903,7 +11238,7 @@ var ActivateAnimationFunction = /*#__PURE__*/function (_AFunction) {
    */
 
 
-  (0, _createClass2["default"])(ActivateAnimationFunction, [{
+  (0, _createClass2["default"])(StartAnimationFunction, [{
     key: "initAttributes",
     value: function initAttributes() {
       this.addInput('target', _AttributeType.TYPES.ANIMATION, 0);
@@ -10917,15 +11252,87 @@ var ActivateAnimationFunction = /*#__PURE__*/function (_AFunction) {
     value: function execute(functionRegistry, unit, scriptComponent, world) {
       var animation = this.getInputValue('target');
       var animationComponent = unit.getComponent(_AnimationComponent["default"]);
+      animation.setTime(0);
+      animation.setLoopTimes(0);
+      animation.setPlaying(true);
       animationComponent.setAnimation(animation.getId());
     }
   }]);
-  return ActivateAnimationFunction;
+  return StartAnimationFunction;
 }(_AFunction2["default"]);
 
-exports["default"] = ActivateAnimationFunction;
+exports["default"] = StartAnimationFunction;
 
-},{"../../../../component/internal/AnimationComponent.js":40,"../../../../pobject/AttributeType.js":200,"../../AFunction.js":107,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":18}],110:[function(require,module,exports){
+},{"../../../../component/internal/AnimationComponent.js":40,"../../../../pobject/AttributeType.js":212,"../../AFunction.js":109,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":18}],115:[function(require,module,exports){
+"use strict";
+
+var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports["default"] = void 0;
+
+var _classCallCheck2 = _interopRequireDefault(require("@babel/runtime/helpers/classCallCheck"));
+
+var _createClass2 = _interopRequireDefault(require("@babel/runtime/helpers/createClass"));
+
+var _inherits2 = _interopRequireDefault(require("@babel/runtime/helpers/inherits"));
+
+var _possibleConstructorReturn2 = _interopRequireDefault(require("@babel/runtime/helpers/possibleConstructorReturn"));
+
+var _getPrototypeOf2 = _interopRequireDefault(require("@babel/runtime/helpers/getPrototypeOf"));
+
+var _AttributeType = require("../../../../pobject/AttributeType.js");
+
+var _AFunction2 = _interopRequireDefault(require("../../AFunction.js"));
+
+var _AnimationComponent = _interopRequireDefault(require("../../../../component/internal/AnimationComponent.js"));
+
+function _createSuper(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct(); return function _createSuperInternal() { var Super = (0, _getPrototypeOf2["default"])(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = (0, _getPrototypeOf2["default"])(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return (0, _possibleConstructorReturn2["default"])(this, result); }; }
+
+function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
+
+var StopAnimationFunction = /*#__PURE__*/function (_AFunction) {
+  (0, _inherits2["default"])(StopAnimationFunction, _AFunction);
+
+  var _super = _createSuper(StopAnimationFunction);
+
+  function StopAnimationFunction() {
+    (0, _classCallCheck2["default"])(this, StopAnimationFunction);
+    return _super.call(this, 'EndAnimation');
+  }
+  /**
+   * @override
+   */
+
+
+  (0, _createClass2["default"])(StopAnimationFunction, [{
+    key: "initAttributes",
+    value: function initAttributes() {
+      this.addInput('target', _AttributeType.TYPES.ANIMATION, 0);
+    }
+    /**
+     * @override
+     */
+
+  }, {
+    key: "execute",
+    value: function execute(functionRegistry, unit, scriptComponent, world) {
+      var animation = this.getInputValue('target');
+      var animationComponent = unit.getComponent(_AnimationComponent["default"]);
+      animation.setTime(0);
+      animation.setLoopTimes(0);
+      animation.setPlaying(false);
+      animationComponent.setAnimation(null);
+    }
+  }]);
+  return StopAnimationFunction;
+}(_AFunction2["default"]);
+
+exports["default"] = StopAnimationFunction;
+
+},{"../../../../component/internal/AnimationComponent.js":40,"../../../../pobject/AttributeType.js":212,"../../AFunction.js":109,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":18}],116:[function(require,module,exports){
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
@@ -11001,7 +11408,7 @@ var AddFunction = /*#__PURE__*/function (_AFunction) {
 
 exports["default"] = AddFunction;
 
-},{"../../../../pobject/AttributeType.js":200,"../../../../utils/Vector.js":290,"../../AFunction.js":107,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":18}],111:[function(require,module,exports){
+},{"../../../../pobject/AttributeType.js":212,"../../../../utils/Vector.js":301,"../../AFunction.js":109,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":18}],117:[function(require,module,exports){
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
@@ -11065,7 +11472,7 @@ var AndFunction = /*#__PURE__*/function (_AFunction) {
 
 exports["default"] = AndFunction;
 
-},{"../../../../pobject/AttributeType.js":200,"../../AFunction.js":107,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":18}],112:[function(require,module,exports){
+},{"../../../../pobject/AttributeType.js":212,"../../AFunction.js":109,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":18}],118:[function(require,module,exports){
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
@@ -11141,7 +11548,7 @@ var EqualToFunction = /*#__PURE__*/function (_AFunction) {
 
 exports["default"] = EqualToFunction;
 
-},{"../../../../pobject/AttributeType.js":200,"../../../../utils/Vector.js":290,"../../AFunction.js":107,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":18}],113:[function(require,module,exports){
+},{"../../../../pobject/AttributeType.js":212,"../../../../utils/Vector.js":301,"../../AFunction.js":109,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":18}],119:[function(require,module,exports){
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
@@ -11205,7 +11612,7 @@ var GreaterThanFunction = /*#__PURE__*/function (_AFunction) {
 
 exports["default"] = GreaterThanFunction;
 
-},{"../../../../pobject/AttributeType.js":200,"../../AFunction.js":107,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":18}],114:[function(require,module,exports){
+},{"../../../../pobject/AttributeType.js":212,"../../AFunction.js":109,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":18}],120:[function(require,module,exports){
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
@@ -11269,7 +11676,7 @@ var GreaterThanOrEqualFunction = /*#__PURE__*/function (_AFunction) {
 
 exports["default"] = GreaterThanOrEqualFunction;
 
-},{"../../../../pobject/AttributeType.js":200,"../../AFunction.js":107,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":18}],115:[function(require,module,exports){
+},{"../../../../pobject/AttributeType.js":212,"../../AFunction.js":109,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":18}],121:[function(require,module,exports){
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
@@ -11337,7 +11744,7 @@ var IsKeyDownFunction = /*#__PURE__*/function (_AFunction) {
 
 exports["default"] = IsKeyDownFunction;
 
-},{"../../../../core/Window.js":73,"../../../../pobject/AttributeType.js":200,"../../AFunction.js":107,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":18}],116:[function(require,module,exports){
+},{"../../../../core/Window.js":73,"../../../../pobject/AttributeType.js":212,"../../AFunction.js":109,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":18}],122:[function(require,module,exports){
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
@@ -11401,7 +11808,7 @@ var LessThanFunction = /*#__PURE__*/function (_AFunction) {
 
 exports["default"] = LessThanFunction;
 
-},{"../../../../pobject/AttributeType.js":200,"../../AFunction.js":107,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":18}],117:[function(require,module,exports){
+},{"../../../../pobject/AttributeType.js":212,"../../AFunction.js":109,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":18}],123:[function(require,module,exports){
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
@@ -11463,7 +11870,7 @@ var LogFunction = /*#__PURE__*/function (_AFunction) {
 
 exports["default"] = LogFunction;
 
-},{"../../../../pobject/AttributeType.js":200,"../../AFunction.js":107,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":18}],118:[function(require,module,exports){
+},{"../../../../pobject/AttributeType.js":212,"../../AFunction.js":109,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":18}],124:[function(require,module,exports){
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
@@ -11539,7 +11946,7 @@ var MultiplyFunction = /*#__PURE__*/function (_AFunction) {
 
 exports["default"] = MultiplyFunction;
 
-},{"../../../../pobject/AttributeType.js":200,"../../../../utils/Vector.js":290,"../../AFunction.js":107,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":18}],119:[function(require,module,exports){
+},{"../../../../pobject/AttributeType.js":212,"../../../../utils/Vector.js":301,"../../AFunction.js":109,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":18}],125:[function(require,module,exports){
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
@@ -11615,7 +12022,7 @@ var NotEqualToFunction = /*#__PURE__*/function (_AFunction) {
 
 exports["default"] = NotEqualToFunction;
 
-},{"../../../../pobject/AttributeType.js":200,"../../../../utils/Vector.js":290,"../../AFunction.js":107,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":18}],120:[function(require,module,exports){
+},{"../../../../pobject/AttributeType.js":212,"../../../../utils/Vector.js":301,"../../AFunction.js":109,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":18}],126:[function(require,module,exports){
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
@@ -11678,7 +12085,7 @@ var NotFunction = /*#__PURE__*/function (_AFunction) {
 
 exports["default"] = NotFunction;
 
-},{"../../../../pobject/AttributeType.js":200,"../../AFunction.js":107,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":18}],121:[function(require,module,exports){
+},{"../../../../pobject/AttributeType.js":212,"../../AFunction.js":109,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":18}],127:[function(require,module,exports){
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
@@ -11742,7 +12149,7 @@ var OrFunction = /*#__PURE__*/function (_AFunction) {
 
 exports["default"] = OrFunction;
 
-},{"../../../../pobject/AttributeType.js":200,"../../AFunction.js":107,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":18}],122:[function(require,module,exports){
+},{"../../../../pobject/AttributeType.js":212,"../../AFunction.js":109,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":18}],128:[function(require,module,exports){
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
@@ -11808,7 +12215,7 @@ var RoundFunction = /*#__PURE__*/function (_AFunction) {
 
 exports["default"] = RoundFunction;
 
-},{"../../../../pobject/AttributeType.js":200,"../../AFunction.js":107,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":18}],123:[function(require,module,exports){
+},{"../../../../pobject/AttributeType.js":212,"../../AFunction.js":109,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":18}],129:[function(require,module,exports){
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
@@ -11874,7 +12281,7 @@ var GetFunction = /*#__PURE__*/function (_AFunction) {
 
 exports["default"] = GetFunction;
 
-},{"../../../../pobject/AttributeType.js":200,"../../AFunction.js":107,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":18}],124:[function(require,module,exports){
+},{"../../../../pobject/AttributeType.js":212,"../../AFunction.js":109,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":18}],130:[function(require,module,exports){
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
@@ -11941,7 +12348,7 @@ var SetFunction = /*#__PURE__*/function (_AFunction) {
 
 exports["default"] = SetFunction;
 
-},{"../../../../pobject/AttributeType.js":200,"../../AFunction.js":107,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":18}],125:[function(require,module,exports){
+},{"../../../../pobject/AttributeType.js":212,"../../AFunction.js":109,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":18}],131:[function(require,module,exports){
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
@@ -12021,7 +12428,7 @@ var GetInputXAxisFunction = /*#__PURE__*/function (_AFunction) {
 
 exports["default"] = GetInputXAxisFunction;
 
-},{"../../../../core/Window.js":73,"../../../../pobject/AttributeType.js":200,"../../../../preference/gameInput/GameInput.js":208,"../../../../world/World.js":292,"../../AFunction.js":107,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":18}],126:[function(require,module,exports){
+},{"../../../../core/Window.js":73,"../../../../pobject/AttributeType.js":212,"../../../../preference/gameInput/GameInput.js":220,"../../../../world/World.js":303,"../../AFunction.js":109,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":18}],132:[function(require,module,exports){
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
@@ -12095,7 +12502,7 @@ var ApplyForceFunction = /*#__PURE__*/function (_AFunction) {
 
 exports["default"] = ApplyForceFunction;
 
-},{"../../../../pobject/AttributeType.js":200,"../../../../utils/Vector.js":290,"../../../../world/World.js":292,"../../AFunction.js":107,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":18}],127:[function(require,module,exports){
+},{"../../../../pobject/AttributeType.js":212,"../../../../utils/Vector.js":301,"../../../../world/World.js":303,"../../AFunction.js":109,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":18}],133:[function(require,module,exports){
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
@@ -12164,7 +12571,7 @@ var GetVelocityXFunction = /*#__PURE__*/function (_AFunction) {
 
 exports["default"] = GetVelocityXFunction;
 
-},{"../../../../pobject/AttributeType.js":200,"../../../../world/World.js":292,"../../AFunction.js":107,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":18}],128:[function(require,module,exports){
+},{"../../../../pobject/AttributeType.js":212,"../../../../world/World.js":303,"../../AFunction.js":109,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":18}],134:[function(require,module,exports){
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
@@ -12233,7 +12640,7 @@ var GetVelocityYFunction = /*#__PURE__*/function (_AFunction) {
 
 exports["default"] = GetVelocityYFunction;
 
-},{"../../../../pobject/AttributeType.js":200,"../../../../world/World.js":292,"../../AFunction.js":107,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":18}],129:[function(require,module,exports){
+},{"../../../../pobject/AttributeType.js":212,"../../../../world/World.js":303,"../../AFunction.js":109,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":18}],135:[function(require,module,exports){
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
@@ -12311,7 +12718,7 @@ var IsGroundedFunction = /*#__PURE__*/function (_AFunction) {
 
 exports["default"] = IsGroundedFunction;
 
-},{"../../../../pobject/AttributeType.js":200,"../../../../utils/Vector.js":290,"../../AFunction.js":107,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":18}],130:[function(require,module,exports){
+},{"../../../../pobject/AttributeType.js":212,"../../../../utils/Vector.js":301,"../../AFunction.js":109,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":18}],136:[function(require,module,exports){
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
@@ -12381,7 +12788,7 @@ var MoveXAxisFunction = /*#__PURE__*/function (_AFunction) {
 
 exports["default"] = MoveXAxisFunction;
 
-},{"../../../../pobject/AttributeType.js":200,"../../../../world/World.js":292,"../../AFunction.js":107,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":18}],131:[function(require,module,exports){
+},{"../../../../pobject/AttributeType.js":212,"../../../../world/World.js":303,"../../AFunction.js":109,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":18}],137:[function(require,module,exports){
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
@@ -12452,7 +12859,7 @@ var VectorFunction = /*#__PURE__*/function (_AFunction) {
 
 exports["default"] = VectorFunction;
 
-},{"../../../../pobject/AttributeType.js":200,"../../../../utils/Vector.js":290,"../../AFunction.js":107,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":18}],132:[function(require,module,exports){
+},{"../../../../pobject/AttributeType.js":212,"../../../../utils/Vector.js":301,"../../AFunction.js":109,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":18}],138:[function(require,module,exports){
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
@@ -12527,7 +12934,7 @@ var GetUnitFunction = /*#__PURE__*/function (_AFunction) {
 
 exports["default"] = GetUnitFunction;
 
-},{"../../../../exception/type/ClientError.js":75,"../../../../pobject/AttributeType.js":200,"../../../../world/World.js":292,"../../AFunction.js":107,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":18}],133:[function(require,module,exports){
+},{"../../../../exception/type/ClientError.js":75,"../../../../pobject/AttributeType.js":212,"../../../../world/World.js":303,"../../AFunction.js":109,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":18}],139:[function(require,module,exports){
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
@@ -12594,7 +13001,7 @@ var GetWorldPositionFunction = /*#__PURE__*/function (_AFunction) {
 
 exports["default"] = GetWorldPositionFunction;
 
-},{"../../../../component/internal/TransformComponent.js":49,"../../../../pobject/AttributeType.js":200,"../../AFunction.js":107,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":18}],134:[function(require,module,exports){
+},{"../../../../component/internal/TransformComponent.js":49,"../../../../pobject/AttributeType.js":212,"../../AFunction.js":109,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":18}],140:[function(require,module,exports){
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
@@ -12662,7 +13069,7 @@ var SetWorldPositionFunction = /*#__PURE__*/function (_AFunction) {
 
 exports["default"] = SetWorldPositionFunction;
 
-},{"../../../../component/internal/TransformComponent.js":49,"../../../../pobject/AttributeType.js":200,"../../../../utils/Vector.js":290,"../../AFunction.js":107,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":18}],135:[function(require,module,exports){
+},{"../../../../component/internal/TransformComponent.js":49,"../../../../pobject/AttributeType.js":212,"../../../../utils/Vector.js":301,"../../AFunction.js":109,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":18}],141:[function(require,module,exports){
 "use strict";
 
 var _interopRequireWildcard = require("@babel/runtime/helpers/interopRequireWildcard");
@@ -12732,7 +13139,7 @@ var AKeyCode = /*#__PURE__*/function (_AStackFunction) {
 
 exports["default"] = AKeyCode;
 
-},{"../../core/Keyboard.js":68,"../../operation/StackOperation.js":182,"../../operation/StackRegister.js":184,"../../pobject/AttributeType.js":200,"../function/AStackFunction.js":108,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/interopRequireWildcard":13,"@babel/runtime/helpers/possibleConstructorReturn":18}],136:[function(require,module,exports){
+},{"../../core/Keyboard.js":68,"../../operation/StackOperation.js":192,"../../operation/StackRegister.js":194,"../../pobject/AttributeType.js":212,"../function/AStackFunction.js":110,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/interopRequireWildcard":13,"@babel/runtime/helpers/possibleConstructorReturn":18}],142:[function(require,module,exports){
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
@@ -12921,12 +13328,14 @@ var NODE_TYPES = {
   UNIT: 'unit',
   KEY_CODE: 'key_code',
   VAR_STRING: 'var_string',
+  VAR_NUMBER: 'var_number',
   ANIMATION: 'animation',
-  COMPONENT: 'component'
+  COMPONENT: 'component',
+  REFERENCE: 'reference'
 };
 exports.NODE_TYPES = NODE_TYPES;
 
-},{"../../exception/type/SystemError.js":77,"../../pobject/NodeInput.js":203,"../../project/data/ANodeData.js":210,"../../utils/Vector.js":290,"@babel/runtime/helpers/assertThisInitialized":3,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/defineProperty":8,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":18}],137:[function(require,module,exports){
+},{"../../exception/type/SystemError.js":77,"../../pobject/NodeInput.js":215,"../../project/data/ANodeData.js":222,"../../utils/Vector.js":301,"@babel/runtime/helpers/assertThisInitialized":3,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/defineProperty":8,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":18}],143:[function(require,module,exports){
 "use strict";
 
 var _interopRequireWildcard = require("@babel/runtime/helpers/interopRequireWildcard");
@@ -12979,7 +13388,7 @@ var AnimationNode = /*#__PURE__*/function (_ANode) {
 
 exports["default"] = AnimationNode;
 
-},{"./ANode.js":136,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/interopRequireWildcard":13,"@babel/runtime/helpers/possibleConstructorReturn":18}],138:[function(require,module,exports){
+},{"./ANode.js":142,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/interopRequireWildcard":13,"@babel/runtime/helpers/possibleConstructorReturn":18}],144:[function(require,module,exports){
 "use strict";
 
 var _interopRequireWildcard = require("@babel/runtime/helpers/interopRequireWildcard");
@@ -13032,7 +13441,7 @@ var ComponentNode = /*#__PURE__*/function (_ANode) {
 
 exports["default"] = ComponentNode;
 
-},{"./ANode.js":136,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/interopRequireWildcard":13,"@babel/runtime/helpers/possibleConstructorReturn":18}],139:[function(require,module,exports){
+},{"./ANode.js":142,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/interopRequireWildcard":13,"@babel/runtime/helpers/possibleConstructorReturn":18}],145:[function(require,module,exports){
 "use strict";
 
 var _interopRequireWildcard = require("@babel/runtime/helpers/interopRequireWildcard");
@@ -13085,7 +13494,7 @@ var ConditionNode = /*#__PURE__*/function (_ANode) {
 
 exports["default"] = ConditionNode;
 
-},{"./ANode.js":136,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/interopRequireWildcard":13,"@babel/runtime/helpers/possibleConstructorReturn":18}],140:[function(require,module,exports){
+},{"./ANode.js":142,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/interopRequireWildcard":13,"@babel/runtime/helpers/possibleConstructorReturn":18}],146:[function(require,module,exports){
 "use strict";
 
 var _interopRequireWildcard = require("@babel/runtime/helpers/interopRequireWildcard");
@@ -13138,7 +13547,7 @@ var ConstantNode = /*#__PURE__*/function (_ANode) {
 
 exports["default"] = ConstantNode;
 
-},{"./ANode.js":136,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/interopRequireWildcard":13,"@babel/runtime/helpers/possibleConstructorReturn":18}],141:[function(require,module,exports){
+},{"./ANode.js":142,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/interopRequireWildcard":13,"@babel/runtime/helpers/possibleConstructorReturn":18}],147:[function(require,module,exports){
 "use strict";
 
 var _interopRequireWildcard = require("@babel/runtime/helpers/interopRequireWildcard");
@@ -13191,7 +13600,7 @@ var EventNode = /*#__PURE__*/function (_ANode) {
 
 exports["default"] = EventNode;
 
-},{"./ANode.js":136,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/interopRequireWildcard":13,"@babel/runtime/helpers/possibleConstructorReturn":18}],142:[function(require,module,exports){
+},{"./ANode.js":142,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/interopRequireWildcard":13,"@babel/runtime/helpers/possibleConstructorReturn":18}],148:[function(require,module,exports){
 "use strict";
 
 var _interopRequireWildcard = require("@babel/runtime/helpers/interopRequireWildcard");
@@ -13244,7 +13653,7 @@ var FunctionNode = /*#__PURE__*/function (_ANode) {
 
 exports["default"] = FunctionNode;
 
-},{"./ANode.js":136,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/interopRequireWildcard":13,"@babel/runtime/helpers/possibleConstructorReturn":18}],143:[function(require,module,exports){
+},{"./ANode.js":142,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/interopRequireWildcard":13,"@babel/runtime/helpers/possibleConstructorReturn":18}],149:[function(require,module,exports){
 "use strict";
 
 var _interopRequireWildcard = require("@babel/runtime/helpers/interopRequireWildcard");
@@ -13297,7 +13706,60 @@ var KeyCodeNode = /*#__PURE__*/function (_ANode) {
 
 exports["default"] = KeyCodeNode;
 
-},{"./ANode.js":136,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/interopRequireWildcard":13,"@babel/runtime/helpers/possibleConstructorReturn":18}],144:[function(require,module,exports){
+},{"./ANode.js":142,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/interopRequireWildcard":13,"@babel/runtime/helpers/possibleConstructorReturn":18}],150:[function(require,module,exports){
+"use strict";
+
+var _interopRequireWildcard = require("@babel/runtime/helpers/interopRequireWildcard");
+
+var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports["default"] = void 0;
+
+var _classCallCheck2 = _interopRequireDefault(require("@babel/runtime/helpers/classCallCheck"));
+
+var _createClass2 = _interopRequireDefault(require("@babel/runtime/helpers/createClass"));
+
+var _inherits2 = _interopRequireDefault(require("@babel/runtime/helpers/inherits"));
+
+var _possibleConstructorReturn2 = _interopRequireDefault(require("@babel/runtime/helpers/possibleConstructorReturn"));
+
+var _getPrototypeOf2 = _interopRequireDefault(require("@babel/runtime/helpers/getPrototypeOf"));
+
+var _ANode2 = _interopRequireWildcard(require("./ANode.js"));
+
+function _createSuper(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct(); return function _createSuperInternal() { var Super = (0, _getPrototypeOf2["default"])(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = (0, _getPrototypeOf2["default"])(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return (0, _possibleConstructorReturn2["default"])(this, result); }; }
+
+function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
+
+var ReferenceNode = /*#__PURE__*/function (_ANode) {
+  (0, _inherits2["default"])(ReferenceNode, _ANode);
+
+  var _super = _createSuper(ReferenceNode);
+
+  function ReferenceNode() {
+    (0, _classCallCheck2["default"])(this, ReferenceNode);
+    return _super.apply(this, arguments);
+  }
+
+  (0, _createClass2["default"])(ReferenceNode, [{
+    key: "getType",
+
+    /**
+     * @override
+     */
+    value: function getType() {
+      return _ANode2.NODE_TYPES.REFERENCE;
+    }
+  }]);
+  return ReferenceNode;
+}(_ANode2["default"]);
+
+exports["default"] = ReferenceNode;
+
+},{"./ANode.js":142,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/interopRequireWildcard":13,"@babel/runtime/helpers/possibleConstructorReturn":18}],151:[function(require,module,exports){
 "use strict";
 
 var _interopRequireWildcard = require("@babel/runtime/helpers/interopRequireWildcard");
@@ -13350,7 +13812,60 @@ var UnitNode = /*#__PURE__*/function (_ANode) {
 
 exports["default"] = UnitNode;
 
-},{"./ANode.js":136,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/interopRequireWildcard":13,"@babel/runtime/helpers/possibleConstructorReturn":18}],145:[function(require,module,exports){
+},{"./ANode.js":142,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/interopRequireWildcard":13,"@babel/runtime/helpers/possibleConstructorReturn":18}],152:[function(require,module,exports){
+"use strict";
+
+var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports["default"] = void 0;
+
+var _classCallCheck2 = _interopRequireDefault(require("@babel/runtime/helpers/classCallCheck"));
+
+var _createClass2 = _interopRequireDefault(require("@babel/runtime/helpers/createClass"));
+
+var _inherits2 = _interopRequireDefault(require("@babel/runtime/helpers/inherits"));
+
+var _possibleConstructorReturn2 = _interopRequireDefault(require("@babel/runtime/helpers/possibleConstructorReturn"));
+
+var _getPrototypeOf2 = _interopRequireDefault(require("@babel/runtime/helpers/getPrototypeOf"));
+
+var _VariableNode2 = _interopRequireDefault(require("./VariableNode.js"));
+
+var _ANode = require("../ANode.js");
+
+function _createSuper(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct(); return function _createSuperInternal() { var Super = (0, _getPrototypeOf2["default"])(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = (0, _getPrototypeOf2["default"])(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return (0, _possibleConstructorReturn2["default"])(this, result); }; }
+
+function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
+
+var NumberVariableNode = /*#__PURE__*/function (_VariableNode) {
+  (0, _inherits2["default"])(NumberVariableNode, _VariableNode);
+
+  var _super = _createSuper(NumberVariableNode);
+
+  function NumberVariableNode() {
+    (0, _classCallCheck2["default"])(this, NumberVariableNode);
+    return _super.apply(this, arguments);
+  }
+
+  (0, _createClass2["default"])(NumberVariableNode, [{
+    key: "getType",
+
+    /**
+     * @override
+     */
+    value: function getType() {
+      return _ANode.NODE_TYPES.VAR_STRING;
+    }
+  }]);
+  return NumberVariableNode;
+}(_VariableNode2["default"]);
+
+exports["default"] = NumberVariableNode;
+
+},{"../ANode.js":142,"./VariableNode.js":154,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":18}],153:[function(require,module,exports){
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
@@ -13403,7 +13918,7 @@ var StringVariableNode = /*#__PURE__*/function (_VariableNode) {
 
 exports["default"] = StringVariableNode;
 
-},{"../ANode.js":136,"./VariableNode.js":146,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":18}],146:[function(require,module,exports){
+},{"../ANode.js":142,"./VariableNode.js":154,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":18}],154:[function(require,module,exports){
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
@@ -13445,7 +13960,70 @@ var VariableNode = /*#__PURE__*/function (_ANode) {
 
 exports["default"] = VariableNode;
 
-},{"../ANode.js":136,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":18}],147:[function(require,module,exports){
+},{"../ANode.js":142,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":18}],155:[function(require,module,exports){
+"use strict";
+
+var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports["default"] = void 0;
+
+var _classCallCheck2 = _interopRequireDefault(require("@babel/runtime/helpers/classCallCheck"));
+
+var _createClass2 = _interopRequireDefault(require("@babel/runtime/helpers/createClass"));
+
+var _inherits2 = _interopRequireDefault(require("@babel/runtime/helpers/inherits"));
+
+var _possibleConstructorReturn2 = _interopRequireDefault(require("@babel/runtime/helpers/possibleConstructorReturn"));
+
+var _getPrototypeOf2 = _interopRequireDefault(require("@babel/runtime/helpers/getPrototypeOf"));
+
+var _AStackFunction2 = _interopRequireDefault(require("../function/AStackFunction.js"));
+
+var _AttributeType = require("../../pobject/AttributeType.js");
+
+function _createSuper(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct(); return function _createSuperInternal() { var Super = (0, _getPrototypeOf2["default"])(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = (0, _getPrototypeOf2["default"])(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return (0, _possibleConstructorReturn2["default"])(this, result); }; }
+
+function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
+
+var AReference = /*#__PURE__*/function (_AStackFunction) {
+  (0, _inherits2["default"])(AReference, _AStackFunction);
+
+  var _super = _createSuper(AReference);
+
+  /**
+   * @param {string} value
+   */
+  function AReference(value) {
+    (0, _classCallCheck2["default"])(this, AReference);
+    return _super.call(this, "".concat(value) || 'Reference');
+  }
+  /**
+   * @override
+   */
+
+
+  (0, _createClass2["default"])(AReference, [{
+    key: "initAttributes",
+    value: function initAttributes() {
+      this.addInput('target', _AttributeType.TYPES.STRING);
+    }
+    /**
+     * @override
+     */
+
+  }, {
+    key: "createStack",
+    value: function createStack() {}
+  }]);
+  return AReference;
+}(_AStackFunction2["default"]);
+
+exports["default"] = AReference;
+
+},{"../../pobject/AttributeType.js":212,"../function/AStackFunction.js":110,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":18}],156:[function(require,module,exports){
 "use strict";
 
 var _interopRequireWildcard = require("@babel/runtime/helpers/interopRequireWildcard");
@@ -13513,7 +14091,51 @@ var AUnit = /*#__PURE__*/function (_AStackFunction) {
 
 exports["default"] = AUnit;
 
-},{"../../operation/StackOperation.js":182,"../../operation/StackRegister.js":184,"../../pobject/AttributeType.js":200,"../function/AStackFunction.js":108,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/interopRequireWildcard":13,"@babel/runtime/helpers/possibleConstructorReturn":18}],148:[function(require,module,exports){
+},{"../../operation/StackOperation.js":192,"../../operation/StackRegister.js":194,"../../pobject/AttributeType.js":212,"../function/AStackFunction.js":110,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/interopRequireWildcard":13,"@babel/runtime/helpers/possibleConstructorReturn":18}],157:[function(require,module,exports){
+"use strict";
+
+var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports["default"] = void 0;
+
+var _classCallCheck2 = _interopRequireDefault(require("@babel/runtime/helpers/classCallCheck"));
+
+var _inherits2 = _interopRequireDefault(require("@babel/runtime/helpers/inherits"));
+
+var _possibleConstructorReturn2 = _interopRequireDefault(require("@babel/runtime/helpers/possibleConstructorReturn"));
+
+var _getPrototypeOf2 = _interopRequireDefault(require("@babel/runtime/helpers/getPrototypeOf"));
+
+var _AVariable2 = _interopRequireDefault(require("./AVariable.js"));
+
+var _AttributeType = require("../../pobject/AttributeType.js");
+
+function _createSuper(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct(); return function _createSuperInternal() { var Super = (0, _getPrototypeOf2["default"])(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = (0, _getPrototypeOf2["default"])(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return (0, _possibleConstructorReturn2["default"])(this, result); }; }
+
+function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
+
+var ANumberVariable = /*#__PURE__*/function (_AVariable) {
+  (0, _inherits2["default"])(ANumberVariable, _AVariable);
+
+  var _super = _createSuper(ANumberVariable);
+
+  /**
+   * @param {string} name
+   */
+  function ANumberVariable(name) {
+    (0, _classCallCheck2["default"])(this, ANumberVariable);
+    return _super.call(this, _AttributeType.TYPES.NUMBER, name);
+  }
+
+  return ANumberVariable;
+}(_AVariable2["default"]);
+
+exports["default"] = ANumberVariable;
+
+},{"../../pobject/AttributeType.js":212,"./AVariable.js":159,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":18}],158:[function(require,module,exports){
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
@@ -13557,7 +14179,7 @@ var AStringVariable = /*#__PURE__*/function (_AVariable) {
 
 exports["default"] = AStringVariable;
 
-},{"../../pobject/AttributeType.js":200,"./AVariable.js":149,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":18}],149:[function(require,module,exports){
+},{"../../pobject/AttributeType.js":212,"./AVariable.js":159,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":18}],159:[function(require,module,exports){
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
@@ -13611,7 +14233,7 @@ var AVariable = /*#__PURE__*/function (_AEmptyStackFunction) {
 
 exports["default"] = AVariable;
 
-},{"../function/AEmptyStackFunction.js":106,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":18}],150:[function(require,module,exports){
+},{"../function/AEmptyStackFunction.js":108,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":18}],160:[function(require,module,exports){
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
@@ -13735,7 +14357,7 @@ var ShapeGenerator = /*#__PURE__*/function () {
 exports["default"] = ShapeGenerator;
 (0, _defineProperty2["default"])(ShapeGenerator, "instance", void 0);
 
-},{"../component/internal/MeshComponent.js":44,"../unit/Unit.js":255,"./shape/arrow/ArrowDownShapeGenerator.js":157,"./shape/arrow/ArrowRightShapeGenerator.js":158,"./shape/arrowrect/ArrowRectDownShapeGenerator.js":160,"./shape/arrowrect/ArrowRectRightShapeGenerator.js":161,"./shape/circle/CircleShapeGenerator.js":163,"./shape/grid/GridShapeGenerator.js":164,"./shape/line/LineShapeGenerator.js":165,"./shape/node/NodeShapeGenerator.js":166,"./shape/rect/RectCrossShapeGenerator.js":167,"./shape/rect/RectShapeGenerator.js":168,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/defineProperty":8,"@babel/runtime/helpers/interopRequireDefault":12}],151:[function(require,module,exports){
+},{"../component/internal/MeshComponent.js":44,"../unit/Unit.js":267,"./shape/arrow/ArrowDownShapeGenerator.js":167,"./shape/arrow/ArrowRightShapeGenerator.js":168,"./shape/arrowrect/ArrowRectDownShapeGenerator.js":170,"./shape/arrowrect/ArrowRectRightShapeGenerator.js":171,"./shape/circle/CircleShapeGenerator.js":173,"./shape/grid/GridShapeGenerator.js":174,"./shape/line/LineShapeGenerator.js":175,"./shape/node/NodeShapeGenerator.js":176,"./shape/rect/RectCrossShapeGenerator.js":177,"./shape/rect/RectShapeGenerator.js":178,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/defineProperty":8,"@babel/runtime/helpers/interopRequireDefault":12}],161:[function(require,module,exports){
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
@@ -13788,7 +14410,7 @@ var AssetAnimationScriptGenerator = /*#__PURE__*/function (_AssetScriptXmlGenera
 
 exports["default"] = AssetAnimationScriptGenerator;
 
-},{"../script/AssetScriptXmlGenerator.js":155,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/get":9,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":18}],152:[function(require,module,exports){
+},{"../script/AssetScriptXmlGenerator.js":165,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/get":9,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":18}],162:[function(require,module,exports){
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
@@ -13854,7 +14476,7 @@ var AssetAnimationXmlGenerator = /*#__PURE__*/function () {
 exports["default"] = AssetAnimationXmlGenerator;
 (0, _defineProperty2["default"])(AssetAnimationXmlGenerator, "instance", void 0);
 
-},{"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/defineProperty":8,"@babel/runtime/helpers/interopRequireDefault":12}],153:[function(require,module,exports){
+},{"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/defineProperty":8,"@babel/runtime/helpers/interopRequireDefault":12}],163:[function(require,module,exports){
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
@@ -13924,7 +14546,7 @@ var AssetScriptCodeGenerator = /*#__PURE__*/function (_AssetScriptGenerator) {
 exports["default"] = AssetScriptCodeGenerator;
 (0, _defineProperty2["default"])(AssetScriptCodeGenerator, "instance", void 0);
 
-},{"./AssetScriptGenerator.js":154,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/defineProperty":8,"@babel/runtime/helpers/get":9,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":18}],154:[function(require,module,exports){
+},{"./AssetScriptGenerator.js":164,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/defineProperty":8,"@babel/runtime/helpers/get":9,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":18}],164:[function(require,module,exports){
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
@@ -13981,7 +14603,7 @@ var AssetScriptGenerator = /*#__PURE__*/function () {
 exports["default"] = AssetScriptGenerator;
 (0, _defineProperty2["default"])(AssetScriptGenerator, "instance", void 0);
 
-},{"../../exception/type/SystemError.js":77,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/defineProperty":8,"@babel/runtime/helpers/interopRequireDefault":12}],155:[function(require,module,exports){
+},{"../../exception/type/SystemError.js":77,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/defineProperty":8,"@babel/runtime/helpers/interopRequireDefault":12}],165:[function(require,module,exports){
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
@@ -14091,7 +14713,7 @@ var AssetScriptXmlGenerator = /*#__PURE__*/function (_AssetScriptGenerator) {
 exports["default"] = AssetScriptXmlGenerator;
 (0, _defineProperty2["default"])(AssetScriptXmlGenerator, "instance", void 0);
 
-},{"../../utils/ScriptHelper.js":287,"./AssetScriptGenerator.js":154,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/defineProperty":8,"@babel/runtime/helpers/get":9,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":18}],156:[function(require,module,exports){
+},{"../../utils/ScriptHelper.js":298,"./AssetScriptGenerator.js":164,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/defineProperty":8,"@babel/runtime/helpers/get":9,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":18}],166:[function(require,module,exports){
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
@@ -14130,7 +14752,7 @@ var TypeShapeGenerator = /*#__PURE__*/function () {
 
 exports["default"] = TypeShapeGenerator;
 
-},{"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/interopRequireDefault":12}],157:[function(require,module,exports){
+},{"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/interopRequireDefault":12}],167:[function(require,module,exports){
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
@@ -14189,7 +14811,7 @@ var ArrowDownShapeGenerator = /*#__PURE__*/function (_ArrowShapeGenerator) {
 
 exports["default"] = ArrowDownShapeGenerator;
 
-},{"../../../utils/Vector.js":290,"./ArrowShapeGenerator.js":159,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":18}],158:[function(require,module,exports){
+},{"../../../utils/Vector.js":301,"./ArrowShapeGenerator.js":169,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":18}],168:[function(require,module,exports){
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
@@ -14251,7 +14873,7 @@ var ArrowRightShapeGenerator = /*#__PURE__*/function (_ArrowShapeGenerator) {
 
 exports["default"] = ArrowRightShapeGenerator;
 
-},{"../../../utils/Vector.js":290,"./ArrowShapeGenerator.js":159,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":18}],159:[function(require,module,exports){
+},{"../../../utils/Vector.js":301,"./ArrowShapeGenerator.js":169,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":18}],169:[function(require,module,exports){
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
@@ -14378,7 +15000,7 @@ var ArrowShapeGenerator = /*#__PURE__*/function (_TypeShapeGenerator) {
 
 exports["default"] = ArrowShapeGenerator;
 
-},{"../../../component/internal/MeshComponent.js":44,"../../../utils/UnitHelper.js":289,"../TypeShapeGenerator.js":156,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":18}],160:[function(require,module,exports){
+},{"../../../component/internal/MeshComponent.js":44,"../../../utils/UnitHelper.js":300,"../TypeShapeGenerator.js":166,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":18}],170:[function(require,module,exports){
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
@@ -14459,7 +15081,7 @@ var ArrowRectDownShapeGenerator = /*#__PURE__*/function (_ArrowRectShapeGenera) 
 
 exports["default"] = ArrowRectDownShapeGenerator;
 
-},{"../../../utils/UnitHelper.js":289,"../../../utils/Vector.js":290,"./ArrowRectShapeGenerator.js":162,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":18}],161:[function(require,module,exports){
+},{"../../../utils/UnitHelper.js":300,"../../../utils/Vector.js":301,"./ArrowRectShapeGenerator.js":172,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":18}],171:[function(require,module,exports){
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
@@ -14543,7 +15165,7 @@ var ArrowRectRightShapeGenerator = /*#__PURE__*/function (_ArrowRectShapeGenera)
 
 exports["default"] = ArrowRectRightShapeGenerator;
 
-},{"../../../utils/UnitHelper.js":289,"../../../utils/Vector.js":290,"./ArrowRectShapeGenerator.js":162,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":18}],162:[function(require,module,exports){
+},{"../../../utils/UnitHelper.js":300,"../../../utils/Vector.js":301,"./ArrowRectShapeGenerator.js":172,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":18}],172:[function(require,module,exports){
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
@@ -14656,7 +15278,7 @@ var ArrowRectShapeGenerator = /*#__PURE__*/function (_TypeShapeGenerator) {
 
 exports["default"] = ArrowRectShapeGenerator;
 
-},{"../../../component/internal/MeshComponent.js":44,"../../../utils/UnitHelper.js":289,"../TypeShapeGenerator.js":156,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":18}],163:[function(require,module,exports){
+},{"../../../component/internal/MeshComponent.js":44,"../../../utils/UnitHelper.js":300,"../TypeShapeGenerator.js":166,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":18}],173:[function(require,module,exports){
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
@@ -14715,7 +15337,7 @@ var CircleShapeGenerator = /*#__PURE__*/function (_TypeShapeGenerator) {
 
 exports["default"] = CircleShapeGenerator;
 
-},{"../TypeShapeGenerator.js":156,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":18}],164:[function(require,module,exports){
+},{"../TypeShapeGenerator.js":166,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":18}],174:[function(require,module,exports){
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
@@ -14784,7 +15406,7 @@ var GridShapeGenerator = /*#__PURE__*/function (_TypeShapeGenerator) {
 
 exports["default"] = GridShapeGenerator;
 
-},{"../../../component/internal/MeshComponent.js":44,"../../../pobject/Size.js":205,"../TypeShapeGenerator.js":156,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":18}],165:[function(require,module,exports){
+},{"../../../component/internal/MeshComponent.js":44,"../../../pobject/Size.js":217,"../TypeShapeGenerator.js":166,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":18}],175:[function(require,module,exports){
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
@@ -14852,7 +15474,7 @@ var LineShapeGenerator = /*#__PURE__*/function (_TypeShapeGenerator) {
 
 exports["default"] = LineShapeGenerator;
 
-},{"../../../component/internal/MeshComponent.js":44,"../TypeShapeGenerator.js":156,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":18}],166:[function(require,module,exports){
+},{"../../../component/internal/MeshComponent.js":44,"../TypeShapeGenerator.js":166,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":18}],176:[function(require,module,exports){
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
@@ -14997,7 +15619,7 @@ var NodeShapeGenerator = /*#__PURE__*/function (_TypeShapeGenerator) {
 
 exports["default"] = NodeShapeGenerator;
 
-},{"../../../component/internal/gui/node/NodeComponent.js":54,"../../../component/internal/gui/property/GUIPropertyComponent.js":56,"../../../utils/NodeHelper.js":284,"../TypeShapeGenerator.js":156,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":18}],167:[function(require,module,exports){
+},{"../../../component/internal/gui/node/NodeComponent.js":54,"../../../component/internal/gui/property/GUIPropertyComponent.js":56,"../../../utils/NodeHelper.js":295,"../TypeShapeGenerator.js":166,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":18}],177:[function(require,module,exports){
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
@@ -15057,7 +15679,7 @@ var RectCrossShapeGenerator = /*#__PURE__*/function (_TypeShapeGenerator) {
 
 exports["default"] = RectCrossShapeGenerator;
 
-},{"../TypeShapeGenerator.js":156,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":18}],168:[function(require,module,exports){
+},{"../TypeShapeGenerator.js":166,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":18}],178:[function(require,module,exports){
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
@@ -15110,7 +15732,7 @@ var RectShapeGenerator = /*#__PURE__*/function (_TypeShapeGenerator) {
 
 exports["default"] = RectShapeGenerator;
 
-},{"../TypeShapeGenerator.js":156,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":18}],169:[function(require,module,exports){
+},{"../TypeShapeGenerator.js":166,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":18}],179:[function(require,module,exports){
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
@@ -15181,7 +15803,7 @@ Layout.form = {
 var _default = Layout;
 exports["default"] = _default;
 
-},{"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/interopRequireDefault":12}],170:[function(require,module,exports){
+},{"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/interopRequireDefault":12}],180:[function(require,module,exports){
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
@@ -15313,7 +15935,7 @@ var Game = /*#__PURE__*/function (_Scene) {
 var _default = Game;
 exports["default"] = _default;
 
-},{"../core/Window.js":73,"../executor/ExecutorRegistry.js":78,"../executor/type/AnimationMeshExecutor.js":79,"../executor/type/AnimationScriptExecutor.js":80,"../executor/type/ColliderExecutor.js":81,"../executor/type/MeshGenerationExecutor.js":83,"../executor/type/MeshStyleExecutor.js":84,"../executor/type/RigidBodyExecutor.js":85,"../executor/type/ScriptExecutor.js":86,"../runner/executor/GameExecutorRunner.js":241,"../runner/physics/PhysicsRunner.js":242,"../runner/renderer/GameRenderRunner.js":243,"../runner/world/WorldInitializeRunner.js":244,"../world/World.js":292,"./Scene.js":173,"@babel/runtime/helpers/asyncToGenerator":4,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/defineProperty":8,"@babel/runtime/helpers/get":9,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":18,"@babel/runtime/regenerator":26}],171:[function(require,module,exports){
+},{"../core/Window.js":73,"../executor/ExecutorRegistry.js":78,"../executor/type/AnimationMeshExecutor.js":79,"../executor/type/AnimationScriptExecutor.js":80,"../executor/type/ColliderExecutor.js":81,"../executor/type/MeshGenerationExecutor.js":83,"../executor/type/MeshStyleExecutor.js":84,"../executor/type/RigidBodyExecutor.js":85,"../executor/type/ScriptExecutor.js":86,"../runner/executor/GameExecutorRunner.js":253,"../runner/physics/PhysicsRunner.js":254,"../runner/renderer/GameRenderRunner.js":255,"../runner/world/WorldInitializeRunner.js":256,"../world/World.js":303,"./Scene.js":183,"@babel/runtime/helpers/asyncToGenerator":4,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/defineProperty":8,"@babel/runtime/helpers/get":9,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":18,"@babel/runtime/regenerator":26}],181:[function(require,module,exports){
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
@@ -15432,7 +16054,7 @@ var Loop = /*#__PURE__*/function () {
 var _default = Loop;
 exports["default"] = _default;
 
-},{"@babel/runtime/helpers/asyncToGenerator":4,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/defineProperty":8,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/regenerator":26}],172:[function(require,module,exports){
+},{"@babel/runtime/helpers/asyncToGenerator":4,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/defineProperty":8,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/regenerator":26}],182:[function(require,module,exports){
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
@@ -15529,7 +16151,7 @@ var RunGame = /*#__PURE__*/function (_Game) {
 var _default = RunGame;
 exports["default"] = _default;
 
-},{"../core/Storage.js":72,"../world/World.js":292,"./Game.js":170,"@babel/runtime/helpers/asyncToGenerator":4,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/defineProperty":8,"@babel/runtime/helpers/get":9,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":18,"@babel/runtime/regenerator":26}],173:[function(require,module,exports){
+},{"../core/Storage.js":72,"../world/World.js":303,"./Game.js":180,"@babel/runtime/helpers/asyncToGenerator":4,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/defineProperty":8,"@babel/runtime/helpers/get":9,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":18,"@babel/runtime/regenerator":26}],183:[function(require,module,exports){
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
@@ -15627,7 +16249,7 @@ var Scene = /*#__PURE__*/function (_Loop) {
 var _default = Scene;
 exports["default"] = _default;
 
-},{"../renderer/MeshRenderer.js":238,"../world/World.js":292,"./Loop.js":171,"@babel/runtime/helpers/asyncToGenerator":4,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/defineProperty":8,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":18,"@babel/runtime/regenerator":26}],174:[function(require,module,exports){
+},{"../renderer/MeshRenderer.js":250,"../world/World.js":303,"./Loop.js":181,"@babel/runtime/helpers/asyncToGenerator":4,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/defineProperty":8,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":18,"@babel/runtime/regenerator":26}],184:[function(require,module,exports){
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
@@ -15799,7 +16421,7 @@ var AnimationManager = /*#__PURE__*/function () {
 
 exports["default"] = AnimationManager;
 
-},{"../animation/Animation.js":27,"../exception/type/ClientError.js":75,"../parser/animation/AnimationParser.js":190,"../utils/Maths.js":283,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/defineProperty":8,"@babel/runtime/helpers/interopRequireDefault":12}],175:[function(require,module,exports){
+},{"../animation/Animation.js":27,"../exception/type/ClientError.js":75,"../parser/animation/AnimationParser.js":202,"../utils/Maths.js":294,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/defineProperty":8,"@babel/runtime/helpers/interopRequireDefault":12}],185:[function(require,module,exports){
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
@@ -16432,7 +17054,7 @@ var AssetsManager = /*#__PURE__*/function (_AssetsManagerData) {
 exports["default"] = AssetsManager;
 var NAME_ATTEMPT_MAX = 200;
 
-},{"../animation/Animation.js":27,"../asset/Asset.js":30,"../asset/Folder.js":31,"../asset/types/animation/AssetAnimationXml.js":34,"../asset/types/image/AssetImage.js":35,"../asset/types/script/AssetScript.js":36,"../asset/types/script/AssetScriptXml.js":38,"../exception/type/ClientError.js":75,"../exception/type/SystemError.js":77,"../flow/AnimationScript.js":88,"../flow/ClassScript.js":89,"../project/data/AssetsManagerData.js":214,"../utils/FileHelper.js":280,"../utils/Maths.js":283,"@babel/runtime/helpers/asyncToGenerator":4,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":18,"@babel/runtime/regenerator":26}],176:[function(require,module,exports){
+},{"../animation/Animation.js":27,"../asset/Asset.js":30,"../asset/Folder.js":31,"../asset/types/animation/AssetAnimationXml.js":34,"../asset/types/image/AssetImage.js":35,"../asset/types/script/AssetScript.js":36,"../asset/types/script/AssetScriptXml.js":38,"../exception/type/ClientError.js":75,"../exception/type/SystemError.js":77,"../flow/AnimationScript.js":88,"../flow/ClassScript.js":89,"../project/data/AssetsManagerData.js":226,"../utils/FileHelper.js":291,"../utils/Maths.js":294,"@babel/runtime/helpers/asyncToGenerator":4,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":18,"@babel/runtime/regenerator":26}],186:[function(require,module,exports){
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
@@ -16810,7 +17432,7 @@ var GraphManager = /*#__PURE__*/function () {
 
 exports["default"] = GraphManager;
 
-},{"../component/internal/MeshComponent.js":44,"../component/internal/TransformComponent.js":49,"../component/internal/gui/node/NodeComponent.js":54,"../component/internal/gui/node/NodeInputComponent.js":55,"../exception/type/ClientError.js":75,"../selector/ScriptGraphSelector.js":248,"../unit/Unit.js":255,"../unit/instant/type/internal/graph/GraphEdgeUnitInstant.js":261,"../unit/instant/type/internal/graph/GraphNodeUnitInstant.js":262,"../utils/ObjectHelper.js":285,"../utils/UnitHelper.js":289,"../utils/Vector.js":290,"../world/World.js":292,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/defineProperty":8,"@babel/runtime/helpers/interopRequireDefault":12}],177:[function(require,module,exports){
+},{"../component/internal/MeshComponent.js":44,"../component/internal/TransformComponent.js":49,"../component/internal/gui/node/NodeComponent.js":54,"../component/internal/gui/node/NodeInputComponent.js":55,"../exception/type/ClientError.js":75,"../selector/ScriptGraphSelector.js":260,"../unit/Unit.js":267,"../unit/instant/type/internal/graph/GraphEdgeUnitInstant.js":273,"../unit/instant/type/internal/graph/GraphNodeUnitInstant.js":274,"../utils/ObjectHelper.js":296,"../utils/UnitHelper.js":300,"../utils/Vector.js":301,"../world/World.js":303,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/defineProperty":8,"@babel/runtime/helpers/interopRequireDefault":12}],187:[function(require,module,exports){
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
@@ -16887,7 +17509,7 @@ var MeshManager = /*#__PURE__*/function () {
 
 exports["default"] = MeshManager;
 
-},{"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/defineProperty":8,"@babel/runtime/helpers/interopRequireDefault":12}],178:[function(require,module,exports){
+},{"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/defineProperty":8,"@babel/runtime/helpers/interopRequireDefault":12}],188:[function(require,module,exports){
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
@@ -17059,7 +17681,7 @@ var PhysicsManager = /*#__PURE__*/function () {
 
 exports["default"] = PhysicsManager;
 
-},{"../component/internal/MeshComponent.js":44,"../component/internal/TransformComponent.js":49,"../physics/engine/matter/MatterEngine.js":197,"../utils/Vector.js":290,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/defineProperty":8,"@babel/runtime/helpers/interopRequireDefault":12}],179:[function(require,module,exports){
+},{"../component/internal/MeshComponent.js":44,"../component/internal/TransformComponent.js":49,"../physics/engine/matter/MatterEngine.js":209,"../utils/Vector.js":301,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/defineProperty":8,"@babel/runtime/helpers/interopRequireDefault":12}],189:[function(require,module,exports){
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
@@ -17227,7 +17849,7 @@ var ScriptManager = /*#__PURE__*/function (_ScriptManagerData) {
 
 exports["default"] = ScriptManager;
 
-},{"../exception/type/ClientError.js":75,"../exception/type/SystemError.js":77,"../flow/AScript.js":87,"../parser/flow/ScriptParser.js":191,"../project/data/ScriptManagerData.js":229,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":18}],180:[function(require,module,exports){
+},{"../exception/type/ClientError.js":75,"../exception/type/SystemError.js":77,"../flow/AScript.js":87,"../parser/flow/ScriptParser.js":203,"../project/data/ScriptManagerData.js":241,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":18}],190:[function(require,module,exports){
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
@@ -17430,7 +18052,7 @@ var TabManager = /*#__PURE__*/function (_TabManagerData) {
 
 exports["default"] = TabManager;
 
-},{"../content/Tab.js":58,"../exception/type/SystemError.js":77,"../project/data/TabManagerData.js":231,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":18}],181:[function(require,module,exports){
+},{"../content/Tab.js":58,"../exception/type/SystemError.js":77,"../project/data/TabManagerData.js":243,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":18}],191:[function(require,module,exports){
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
@@ -17815,7 +18437,7 @@ var UnitManager = /*#__PURE__*/function (_UnitManagerData) {
 
 exports["default"] = UnitManager;
 
-},{"../component/internal/MeshComponent.js":44,"../component/internal/TransformComponent.js":49,"../component/internal/gui/property/GUIPropertyComponent.js":56,"../exception/type/ClientError.js":75,"../project/data/UnitManagerData.js":233,"../unit/Unit.js":255,"../unit/type/EmptyUnit.js":275,"../utils/Maths.js":283,"../utils/Vector.js":290,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":18}],182:[function(require,module,exports){
+},{"../component/internal/MeshComponent.js":44,"../component/internal/TransformComponent.js":49,"../component/internal/gui/property/GUIPropertyComponent.js":56,"../exception/type/ClientError.js":75,"../project/data/UnitManagerData.js":245,"../unit/Unit.js":267,"../unit/type/EmptyUnit.js":287,"../utils/Maths.js":294,"../utils/Vector.js":301,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":18}],192:[function(require,module,exports){
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
@@ -17912,11 +18534,14 @@ var OPERATIONS = {
   GET: 'get',
   CALL: 'call',
   EXIT: 'exit',
-  VAR: 'var'
+  JUMP: 'jump',
+  JUMP_TO: 'jump_to',
+  VAR: 'var',
+  DISPATCH: 'dispatch'
 };
 exports.OPERATIONS = OPERATIONS;
 
-},{"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/defineProperty":8,"@babel/runtime/helpers/interopRequireDefault":12}],183:[function(require,module,exports){
+},{"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/defineProperty":8,"@babel/runtime/helpers/interopRequireDefault":12}],193:[function(require,module,exports){
 "use strict";
 
 var _interopRequireWildcard = require("@babel/runtime/helpers/interopRequireWildcard");
@@ -17948,6 +18573,12 @@ var _SystemError = _interopRequireDefault(require("../exception/type/SystemError
 
 var _VarProcessor = _interopRequireDefault(require("./processor/VarProcessor.js"));
 
+var _EventProcessor = _interopRequireDefault(require("./processor/EventProcessor.js"));
+
+var _JumpProcessor = _interopRequireDefault(require("./processor/JumpProcessor.js"));
+
+var _ClientError = _interopRequireDefault(require("../exception/type/ClientError.js"));
+
 var StackProcessor = /*#__PURE__*/function () {
   /**
    * @type {StackRegister}
@@ -17970,11 +18601,15 @@ var StackProcessor = /*#__PURE__*/function () {
   (0, _createClass2["default"])(StackProcessor, [{
     key: "run",
     value: function run(stack, functionRegistry, unit, scriptComponent, world) {
-      for (var iStackOperation in stack) {
+      var _this = this;
+
+      var iStackOperation = 0;
+
+      var _loop = function _loop() {
         var stackOperation = stack[iStackOperation];
 
-        if (this.stackRegister.popSignal()) {
-          break;
+        if (_this.stackRegister.popSignal()) {
+          return "break";
         }
 
         if (stackOperation instanceof _StackOperation["default"]) {
@@ -17982,23 +18617,37 @@ var StackProcessor = /*#__PURE__*/function () {
 
           switch (operation) {
             case _StackOperation.OPERATIONS.CALL:
-              _CallProcessor["default"].run(stackOperation, this.stackRegister, functionRegistry, unit, scriptComponent, world);
+              _CallProcessor["default"].run(stackOperation, _this.stackRegister, functionRegistry, unit, scriptComponent, world);
+
+              break;
+
+            case _StackOperation.OPERATIONS.DISPATCH:
+              _EventProcessor["default"].run(stackOperation, _this.stackRegister, functionRegistry, unit, scriptComponent, world);
 
               break;
 
             case _StackOperation.OPERATIONS.VAR:
-              _VarProcessor["default"].run(stackOperation, this.stackRegister, unit, scriptComponent);
+              _VarProcessor["default"].run(stackOperation, _this.stackRegister, unit, scriptComponent);
 
               break;
 
             case _StackOperation.OPERATIONS.PUSH:
-              _PushProcessor["default"].run(stackOperation, this.stackRegister);
+              _PushProcessor["default"].run(stackOperation, _this.stackRegister);
 
               break;
 
             case _StackOperation.OPERATIONS.EXIT:
-              _ExitProcessor["default"].run(stackOperation, this.stackRegister);
+              _ExitProcessor["default"].run(stackOperation, _this.stackRegister);
 
+              break;
+
+            case _StackOperation.OPERATIONS.JUMP:
+              _JumpProcessor["default"].run(stackOperation, _this.stackRegister);
+
+              break;
+
+            case _StackOperation.OPERATIONS.JUMP_TO:
+              // No action needed
               break;
 
             default:
@@ -18007,6 +18656,28 @@ var StackProcessor = /*#__PURE__*/function () {
         } else {
           throw new _SystemError["default"]("Stack operation is not valid");
         }
+
+        var jumpTo = _this.stackRegister.popJump();
+
+        if (jumpTo) {
+          var nextJumpToIndex = stack.findIndex(function (vStack, iStack) {
+            return iStack > iStackOperation && vStack.getOperation() === _StackOperation.OPERATIONS.JUMP_TO && vStack.getArgs()[0] === jumpTo;
+          });
+
+          if (nextJumpToIndex >= 0) {
+            iStackOperation = nextJumpToIndex;
+          } else {
+            throw new _ClientError["default"]("No \"JUMP TO\" operation found for \"".concat(jumpTo, "\""));
+          }
+        }
+
+        iStackOperation++;
+      };
+
+      while (iStackOperation < stack.length) {
+        var _ret = _loop();
+
+        if (_ret === "break") break;
       }
 
       return this.stackRegister;
@@ -18031,7 +18702,7 @@ var StackProcessor = /*#__PURE__*/function () {
 exports["default"] = StackProcessor;
 (0, _defineProperty2["default"])(StackProcessor, "instance", void 0);
 
-},{"../exception/type/SystemError.js":77,"./StackOperation.js":182,"./StackRegister.js":184,"./processor/CallProcessor.js":185,"./processor/ExitProcessor.js":186,"./processor/PushProcessor.js":187,"./processor/VarProcessor.js":188,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/defineProperty":8,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/interopRequireWildcard":13}],184:[function(require,module,exports){
+},{"../exception/type/ClientError.js":75,"../exception/type/SystemError.js":77,"./StackOperation.js":192,"./StackRegister.js":194,"./processor/CallProcessor.js":195,"./processor/EventProcessor.js":196,"./processor/ExitProcessor.js":197,"./processor/JumpProcessor.js":198,"./processor/PushProcessor.js":199,"./processor/VarProcessor.js":200,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/defineProperty":8,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/interopRequireWildcard":13}],194:[function(require,module,exports){
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
@@ -18086,6 +18757,15 @@ var StackRegister = /*#__PURE__*/function () {
       this.register[CONSTANTS.SIGNAL] = value;
     }
     /**
+     * @param {*} value
+     */
+
+  }, {
+    key: "pushJump",
+    value: function pushJump(value) {
+      this.register[CONSTANTS.JUMP] = value;
+    }
+    /**
      * @return {*}
      */
 
@@ -18117,9 +18797,16 @@ var StackRegister = /*#__PURE__*/function () {
   }, {
     key: "popSignal",
     value: function popSignal() {
-      var signal = this.pop(CONSTANTS.SIGNAL);
-      this["delete"](CONSTANTS.SIGNAL);
-      return signal;
+      return this.pop(CONSTANTS.SIGNAL);
+    }
+    /**
+     * @return {*}
+     */
+
+  }, {
+    key: "popJump",
+    value: function popJump() {
+      return this.pop(CONSTANTS.JUMP);
     }
     /**
      * @return {StackRegister}
@@ -18142,11 +18829,12 @@ exports["default"] = StackRegister;
 (0, _defineProperty2["default"])(StackRegister, "instance", void 0);
 var CONSTANTS = {
   RESULT: '__result__',
-  SIGNAL: '__signal__'
+  SIGNAL: '__signal__',
+  JUMP: '__jump__'
 };
 exports.CONSTANTS = CONSTANTS;
 
-},{"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/defineProperty":8,"@babel/runtime/helpers/interopRequireDefault":12}],185:[function(require,module,exports){
+},{"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/defineProperty":8,"@babel/runtime/helpers/interopRequireDefault":12}],195:[function(require,module,exports){
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
@@ -18235,6 +18923,10 @@ var CallProcessor = /*#__PURE__*/function () {
 
             inputValue = component.constructor;
             break;
+
+          case _AttributeType.TYPES.NUMBER:
+            inputValue = parseFloat(value);
+            break;
         }
 
         aFunction.setInputValue(inputName, inputValue);
@@ -18248,7 +18940,70 @@ var CallProcessor = /*#__PURE__*/function () {
 
 exports["default"] = CallProcessor;
 
-},{"../../exception/type/ClientError.js":75,"../../pobject/AttributeType.js":200,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/interopRequireDefault":12}],186:[function(require,module,exports){
+},{"../../exception/type/ClientError.js":75,"../../pobject/AttributeType.js":212,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/interopRequireDefault":12}],196:[function(require,module,exports){
+"use strict";
+
+var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports["default"] = void 0;
+
+var _classCallCheck2 = _interopRequireDefault(require("@babel/runtime/helpers/classCallCheck"));
+
+var _createClass2 = _interopRequireDefault(require("@babel/runtime/helpers/createClass"));
+
+var _ClientError = _interopRequireDefault(require("../../exception/type/ClientError.js"));
+
+var EventProcessor = /*#__PURE__*/function () {
+  function EventProcessor() {
+    (0, _classCallCheck2["default"])(this, EventProcessor);
+  }
+
+  (0, _createClass2["default"])(EventProcessor, null, [{
+    key: "run",
+
+    /**
+     * @param {StackOperation} stackOperation
+     * @param {StackRegister} stackRegister
+     * @param {FunctionRegistry} functionRegistry
+     * @param {Unit} unit
+     * @param {ScriptComponent} scriptComponent
+     * @param {World} world
+     */
+    value: function run(stackOperation, stackRegister, functionRegistry, unit, scriptComponent, world) {
+      var args = stackOperation.getArgs();
+
+      if (args.length !== 1) {
+        throw new _ClientError["default"]("Dispatch: Inputs invalids (expected: 1, given: ".concat(args.length, ")"));
+      }
+
+      var eventName = args && args[0];
+
+      if (!eventName) {
+        throw new _ClientError["default"]("Stack operation invalid (Event not provided)");
+      }
+
+      var aEvent = functionRegistry.getInstance(eventName);
+
+      if (!eventName) {
+        throw new _ClientError["default"]("Event \"".concat(eventName, "\" not founded in the registry"));
+      }
+
+      functionRegistry.getInstancesByClass(scriptComponent.getScript()).forEach(function (instance) {
+        if (instance instanceof aEvent.constructor) {
+          instance.execute(functionRegistry, unit, scriptComponent, world);
+        }
+      });
+    }
+  }]);
+  return EventProcessor;
+}();
+
+exports["default"] = EventProcessor;
+
+},{"../../exception/type/ClientError.js":75,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/interopRequireDefault":12}],197:[function(require,module,exports){
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
@@ -18299,7 +19054,59 @@ var ExitProcessor = /*#__PURE__*/function () {
 
 exports["default"] = ExitProcessor;
 
-},{"../../exception/type/ClientError.js":75,"../StackRegister.js":184,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/interopRequireDefault":12}],187:[function(require,module,exports){
+},{"../../exception/type/ClientError.js":75,"../StackRegister.js":194,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/interopRequireDefault":12}],198:[function(require,module,exports){
+"use strict";
+
+var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports["default"] = void 0;
+
+var _classCallCheck2 = _interopRequireDefault(require("@babel/runtime/helpers/classCallCheck"));
+
+var _createClass2 = _interopRequireDefault(require("@babel/runtime/helpers/createClass"));
+
+var _StackRegister = require("../StackRegister.js");
+
+var _ClientError = _interopRequireDefault(require("../../exception/type/ClientError.js"));
+
+var JumpProcessor = /*#__PURE__*/function () {
+  function JumpProcessor() {
+    (0, _classCallCheck2["default"])(this, JumpProcessor);
+  }
+
+  (0, _createClass2["default"])(JumpProcessor, null, [{
+    key: "run",
+
+    /**
+     * @param {StackOperation} stackOperation
+     * @param {StackRegister} stackRegister
+     */
+    value: function run(stackOperation, stackRegister) {
+      var args = stackOperation.getArgs();
+
+      if (args.length !== 2) {
+        throw new _ClientError["default"]("Jump: Inputs invalids (expected: 2, given: ".concat(args.length, ")"));
+      }
+
+      var name = args[0];
+      var jumpTo = args[1];
+
+      if (name === _StackRegister.CONSTANTS.RESULT) {
+        stackRegister.pushJump(!stackRegister.popRet() ? jumpTo : null);
+      } else {
+        stackRegister.pushJump(!stackRegister.pop(name) ? jumpTo : null);
+      }
+    }
+  }]);
+  return JumpProcessor;
+}();
+
+exports["default"] = JumpProcessor;
+
+},{"../../exception/type/ClientError.js":75,"../StackRegister.js":194,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/interopRequireDefault":12}],199:[function(require,module,exports){
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
@@ -18355,7 +19162,7 @@ var PushProcessor = /*#__PURE__*/function () {
 
 exports["default"] = PushProcessor;
 
-},{"../../exception/type/ClientError.js":75,"../StackRegister.js":184,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/interopRequireDefault":12}],188:[function(require,module,exports){
+},{"../../exception/type/ClientError.js":75,"../StackRegister.js":194,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/interopRequireDefault":12}],200:[function(require,module,exports){
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
@@ -18408,7 +19215,7 @@ var VarProcessor = /*#__PURE__*/function () {
 
 exports["default"] = VarProcessor;
 
-},{"../../exception/type/ClientError.js":75,"../../exception/type/SystemError.js":77,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/interopRequireDefault":12}],189:[function(require,module,exports){
+},{"../../exception/type/ClientError.js":75,"../../exception/type/SystemError.js":77,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/interopRequireDefault":12}],201:[function(require,module,exports){
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
@@ -18449,7 +19256,7 @@ var Parser = /*#__PURE__*/function () {
 
 exports["default"] = Parser;
 
-},{"../exception/type/SystemError.js":77,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/interopRequireDefault":12}],190:[function(require,module,exports){
+},{"../exception/type/SystemError.js":77,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/interopRequireDefault":12}],202:[function(require,module,exports){
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
@@ -18535,7 +19342,7 @@ var AnimationParser = /*#__PURE__*/function (_Parser) {
 
 exports["default"] = AnimationParser;
 
-},{"../../animation/Animation.js":27,"../../animation/KeyFrame.js":28,"../../exception/type/ClientError.js":75,"../Parser.js":189,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":18}],191:[function(require,module,exports){
+},{"../../animation/Animation.js":27,"../../animation/KeyFrame.js":28,"../../exception/type/ClientError.js":75,"../Parser.js":201,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":18}],203:[function(require,module,exports){
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
@@ -18617,7 +19424,7 @@ var ScriptParser = /*#__PURE__*/function (_Parser) {
 
 exports["default"] = ScriptParser;
 
-},{"../../exception/type/ClientError.js":75,"../Parser.js":189,"./class/ClassScriptCodeParser.js":192,"./class/ClassScriptXmlParser.js":193,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":18}],192:[function(require,module,exports){
+},{"../../exception/type/ClientError.js":75,"../Parser.js":201,"./class/ClassScriptCodeParser.js":204,"./class/ClassScriptXmlParser.js":205,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":18}],204:[function(require,module,exports){
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
@@ -19115,7 +19922,7 @@ exports["default"] = ClassScriptCodeParser;
 (0, _defineProperty2["default"])(ClassScriptCodeParser, "KW_VAR", 'const');
 (0, _defineProperty2["default"])(ClassScriptCodeParser, "KW_IF", 'if');
 
-},{"../../../exception/type/ClientError.js":75,"../../../flow/ClassScript.js":89,"../../../flow/node/ANode.js":136,"../../../utils/NodeHelper.js":284,"../../../utils/ScriptHelper.js":287,"../../../world/World.js":292,"../../Parser.js":189,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/defineProperty":8,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":18,"@babel/runtime/helpers/toConsumableArray":21}],193:[function(require,module,exports){
+},{"../../../exception/type/ClientError.js":75,"../../../flow/ClassScript.js":89,"../../../flow/node/ANode.js":142,"../../../utils/NodeHelper.js":295,"../../../utils/ScriptHelper.js":298,"../../../world/World.js":303,"../../Parser.js":201,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/defineProperty":8,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":18,"@babel/runtime/helpers/toConsumableArray":21}],205:[function(require,module,exports){
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
@@ -19236,7 +20043,7 @@ var ClassScriptXmlParser = /*#__PURE__*/function (_Parser) {
 
 exports["default"] = ClassScriptXmlParser;
 
-},{"../../../exception/type/ClientError.js":75,"../../../flow/ClassScript.js":89,"../../../utils/ScriptHelper.js":287,"../../../utils/Vector.js":290,"../../../world/World.js":292,"../../Parser.js":189,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":18}],194:[function(require,module,exports){
+},{"../../../exception/type/ClientError.js":75,"../../../flow/ClassScript.js":89,"../../../utils/ScriptHelper.js":298,"../../../utils/Vector.js":301,"../../../world/World.js":303,"../../Parser.js":201,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":18}],206:[function(require,module,exports){
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
@@ -19630,7 +20437,7 @@ var Physics = /*#__PURE__*/function (_PhysicsData) {
 var _default = Physics;
 exports["default"] = _default;
 
-},{"../exception/type/PhysicError.js":76,"../project/data/PhysicsData.js":226,"../utils/Vector.js":290,"./engine/matter/MatterEngine.js":197,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/defineProperty":8,"@babel/runtime/helpers/get":9,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":18}],195:[function(require,module,exports){
+},{"../exception/type/PhysicError.js":76,"../project/data/PhysicsData.js":238,"../utils/Vector.js":301,"./engine/matter/MatterEngine.js":209,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/defineProperty":8,"@babel/runtime/helpers/get":9,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":18}],207:[function(require,module,exports){
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
@@ -19672,7 +20479,7 @@ var ColliderLoader = /*#__PURE__*/function () {
 
 exports["default"] = ColliderLoader;
 
-},{"../../exception/type/SystemError.js":77,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/interopRequireDefault":12}],196:[function(require,module,exports){
+},{"../../exception/type/SystemError.js":77,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/interopRequireDefault":12}],208:[function(require,module,exports){
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
@@ -20088,7 +20895,7 @@ var PhysicsEngine = /*#__PURE__*/function () {
 
 exports["default"] = PhysicsEngine;
 
-},{"../../component/internal/ColliderComponent.js":43,"../../exception/type/ClientError.js":75,"../../exception/type/SystemError.js":77,"../../unit/Unit.js":255,"../../utils/UnitHelper.js":289,"../../utils/Vector.js":290,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/defineProperty":8,"@babel/runtime/helpers/interopRequireDefault":12}],197:[function(require,module,exports){
+},{"../../component/internal/ColliderComponent.js":43,"../../exception/type/ClientError.js":75,"../../exception/type/SystemError.js":77,"../../unit/Unit.js":267,"../../utils/UnitHelper.js":300,"../../utils/Vector.js":301,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/defineProperty":8,"@babel/runtime/helpers/interopRequireDefault":12}],209:[function(require,module,exports){
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
@@ -20291,7 +21098,7 @@ var MatterEngine = /*#__PURE__*/function (_PhysicsEngine) {
 
 exports["default"] = MatterEngine;
 
-},{"../PhysicsEngine.js":196,"./loader/MatterCircleColliderLoader.js":198,"./loader/MatterRectColliderLoader.js":199,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":18}],198:[function(require,module,exports){
+},{"../PhysicsEngine.js":208,"./loader/MatterCircleColliderLoader.js":210,"./loader/MatterRectColliderLoader.js":211,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":18}],210:[function(require,module,exports){
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
@@ -20351,7 +21158,7 @@ var MatterCircleColliderLoader = /*#__PURE__*/function (_ColliderLoader) {
 
 exports["default"] = MatterCircleColliderLoader;
 
-},{"../../../../utils/UnitHelper.js":289,"../../ColliderLoader.js":195,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":18}],199:[function(require,module,exports){
+},{"../../../../utils/UnitHelper.js":300,"../../ColliderLoader.js":207,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":18}],211:[function(require,module,exports){
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
@@ -20411,7 +21218,7 @@ var MatterRectColliderLoader = /*#__PURE__*/function (_ColliderLoader) {
 
 exports["default"] = MatterRectColliderLoader;
 
-},{"../../../../utils/UnitHelper.js":289,"../../ColliderLoader.js":195,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":18}],200:[function(require,module,exports){
+},{"../../../../utils/UnitHelper.js":300,"../../ColliderLoader.js":207,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":18}],212:[function(require,module,exports){
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
@@ -20577,7 +21384,7 @@ var TYPES = {
 };
 exports.TYPES = TYPES;
 
-},{"../exception/type/SystemError.js":77,"../project/data/BlobData.js":215,"../utils/Vector.js":290,"./DynamicAttribute.js":202,"./Size.js":205,"./Style.js":206,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/interopRequireDefault":12}],201:[function(require,module,exports){
+},{"../exception/type/SystemError.js":77,"../project/data/BlobData.js":227,"../utils/Vector.js":301,"./DynamicAttribute.js":214,"./Size.js":217,"./Style.js":218,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/interopRequireDefault":12}],213:[function(require,module,exports){
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
@@ -20613,7 +21420,7 @@ function DataContext(unitId, center, context, scaleSize, camera, world) {
 
 exports["default"] = DataContext;
 
-},{"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/interopRequireDefault":12}],202:[function(require,module,exports){
+},{"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/interopRequireDefault":12}],214:[function(require,module,exports){
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
@@ -20731,7 +21538,7 @@ var DynamicAttribute = /*#__PURE__*/function () {
 
 exports["default"] = DynamicAttribute;
 
-},{"../utils/Maths.js":283,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/defineProperty":8,"@babel/runtime/helpers/interopRequireDefault":12}],203:[function(require,module,exports){
+},{"../utils/Maths.js":294,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/defineProperty":8,"@babel/runtime/helpers/interopRequireDefault":12}],215:[function(require,module,exports){
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
@@ -20823,7 +21630,7 @@ var NodeInput = /*#__PURE__*/function (_NodeInputData) {
 
 exports["default"] = NodeInput;
 
-},{"../project/data/NodeInputData.js":225,"@babel/runtime/helpers/assertThisInitialized":3,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/defineProperty":8,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":18}],204:[function(require,module,exports){
+},{"../project/data/NodeInputData.js":237,"@babel/runtime/helpers/assertThisInitialized":3,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/defineProperty":8,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":18}],216:[function(require,module,exports){
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
@@ -20845,7 +21652,7 @@ var RigidBodyOptions = function RigidBodyOptions() {
 
 exports["default"] = RigidBodyOptions;
 
-},{"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/defineProperty":8,"@babel/runtime/helpers/interopRequireDefault":12}],205:[function(require,module,exports){
+},{"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/defineProperty":8,"@babel/runtime/helpers/interopRequireDefault":12}],217:[function(require,module,exports){
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
@@ -20928,7 +21735,7 @@ var Size = /*#__PURE__*/function () {
 var _default = Size;
 exports["default"] = _default;
 
-},{"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/typeof":22}],206:[function(require,module,exports){
+},{"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/typeof":22}],218:[function(require,module,exports){
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
@@ -21073,7 +21880,7 @@ var Style = /*#__PURE__*/function () {
 var _default = Style;
 exports["default"] = _default;
 
-},{"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/defineProperty":8,"@babel/runtime/helpers/interopRequireDefault":12}],207:[function(require,module,exports){
+},{"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/defineProperty":8,"@babel/runtime/helpers/interopRequireDefault":12}],219:[function(require,module,exports){
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
@@ -21126,7 +21933,7 @@ var Preference = /*#__PURE__*/function (_PreferenceData) {
 
 exports["default"] = Preference;
 
-},{"../project/data/PreferenceData.js":227,"./gameInput/GameInputPreference.js":209,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":18}],208:[function(require,module,exports){
+},{"../project/data/PreferenceData.js":239,"./gameInput/GameInputPreference.js":221,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":18}],220:[function(require,module,exports){
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
@@ -21169,11 +21976,12 @@ var GAME_INPUTS = {
   LEFT: 'left',
   UP: 'up',
   DOWN: 'down',
-  JUMP: 'jump'
+  JUMP: 'jump',
+  ATTACK: 'attack'
 };
 exports.GAME_INPUTS = GAME_INPUTS;
 
-},{"../../project/data/GameInputData.js":223,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":18}],209:[function(require,module,exports){
+},{"../../project/data/GameInputData.js":235,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":18}],221:[function(require,module,exports){
 "use strict";
 
 var _interopRequireWildcard = require("@babel/runtime/helpers/interopRequireWildcard");
@@ -21224,7 +22032,7 @@ var GameInputPreference = /*#__PURE__*/function (_GameInputPreferenceD) {
   (0, _createClass2["default"])(GameInputPreference, [{
     key: "init",
     value: function init() {
-      var inputs = [new _GameInput["default"](_GameInput.GAME_INPUTS.RIGHT, 'D', new _DynamicAttribute["default"]('value', _AttributeType.TYPES.NUMBER, 1)), new _GameInput["default"](_GameInput.GAME_INPUTS.LEFT, 'Q', new _DynamicAttribute["default"]('value', _AttributeType.TYPES.NUMBER, -1)), new _GameInput["default"](_GameInput.GAME_INPUTS.UP, 'Z', new _DynamicAttribute["default"]('value', _AttributeType.TYPES.NUMBER, -1)), new _GameInput["default"](_GameInput.GAME_INPUTS.DOWN, 'S', new _DynamicAttribute["default"]('value', _AttributeType.TYPES.NUMBER, 1)), new _GameInput["default"](_GameInput.GAME_INPUTS.JUMP, 'SPACE', new _DynamicAttribute["default"]('value', _AttributeType.TYPES.NUMBER, 1))];
+      var inputs = [new _GameInput["default"](_GameInput.GAME_INPUTS.RIGHT, 'D', new _DynamicAttribute["default"]('value', _AttributeType.TYPES.NUMBER, 1)), new _GameInput["default"](_GameInput.GAME_INPUTS.LEFT, 'Q', new _DynamicAttribute["default"]('value', _AttributeType.TYPES.NUMBER, -1)), new _GameInput["default"](_GameInput.GAME_INPUTS.UP, 'Z', new _DynamicAttribute["default"]('value', _AttributeType.TYPES.NUMBER, -1)), new _GameInput["default"](_GameInput.GAME_INPUTS.DOWN, 'S', new _DynamicAttribute["default"]('value', _AttributeType.TYPES.NUMBER, 1)), new _GameInput["default"](_GameInput.GAME_INPUTS.JUMP, 'SPACE', new _DynamicAttribute["default"]('value', _AttributeType.TYPES.NUMBER, 1)), new _GameInput["default"](_GameInput.GAME_INPUTS.ATTACK, 'P', new _DynamicAttribute["default"]('value', _AttributeType.TYPES.NUMBER, 1))];
       this.concatInputs(inputs);
     }
     /**
@@ -21261,7 +22069,7 @@ var GameInputPreference = /*#__PURE__*/function (_GameInputPreferenceD) {
 
 exports["default"] = GameInputPreference;
 
-},{"../../core/Keyboard.js":68,"../../exception/type/ClientError.js":75,"../../pobject/AttributeType.js":200,"../../pobject/DynamicAttribute.js":202,"../../project/data/GameInputPreferenceData.js":224,"./GameInput.js":208,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/interopRequireWildcard":13,"@babel/runtime/helpers/possibleConstructorReturn":18}],210:[function(require,module,exports){
+},{"../../core/Keyboard.js":68,"../../exception/type/ClientError.js":75,"../../pobject/AttributeType.js":212,"../../pobject/DynamicAttribute.js":214,"../../project/data/GameInputPreferenceData.js":236,"./GameInput.js":220,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/interopRequireWildcard":13,"@babel/runtime/helpers/possibleConstructorReturn":18}],222:[function(require,module,exports){
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
@@ -21391,7 +22199,7 @@ var ANodeData = /*#__PURE__*/function (_Data) {
 
 exports["default"] = ANodeData;
 
-},{"../../utils/Maths.js":283,"./Data.js":219,"@babel/runtime/helpers/assertThisInitialized":3,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/defineProperty":8,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":18}],211:[function(require,module,exports){
+},{"../../utils/Maths.js":294,"./Data.js":231,"@babel/runtime/helpers/assertThisInitialized":3,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/defineProperty":8,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":18}],223:[function(require,module,exports){
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
@@ -21580,7 +22388,7 @@ var STATUS = {
 };
 exports.STATUS = STATUS;
 
-},{"../../utils/Maths.js":283,"./Data.js":219,"@babel/runtime/helpers/assertThisInitialized":3,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/defineProperty":8,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":18}],212:[function(require,module,exports){
+},{"../../utils/Maths.js":294,"./Data.js":231,"@babel/runtime/helpers/assertThisInitialized":3,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/defineProperty":8,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":18}],224:[function(require,module,exports){
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
@@ -21715,7 +22523,7 @@ var AssetData = /*#__PURE__*/function (_Data) {
 var _default = AssetData;
 exports["default"] = _default;
 
-},{"./Data.js":219,"@babel/runtime/helpers/assertThisInitialized":3,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/defineProperty":8,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":18}],213:[function(require,module,exports){
+},{"./Data.js":231,"@babel/runtime/helpers/assertThisInitialized":3,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/defineProperty":8,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":18}],225:[function(require,module,exports){
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
@@ -21830,7 +22638,7 @@ var AssetTypeData = /*#__PURE__*/function (_Data) {
 
 exports["default"] = AssetTypeData;
 
-},{"./Data.js":219,"@babel/runtime/helpers/assertThisInitialized":3,"@babel/runtime/helpers/asyncToGenerator":4,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/defineProperty":8,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":18,"@babel/runtime/regenerator":26}],214:[function(require,module,exports){
+},{"./Data.js":231,"@babel/runtime/helpers/assertThisInitialized":3,"@babel/runtime/helpers/asyncToGenerator":4,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/defineProperty":8,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":18,"@babel/runtime/regenerator":26}],226:[function(require,module,exports){
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
@@ -21943,7 +22751,7 @@ var AssetsManagerData = /*#__PURE__*/function (_Data) {
 
 exports["default"] = AssetsManagerData;
 
-},{"./Data.js":219,"@babel/runtime/helpers/assertThisInitialized":3,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/defineProperty":8,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":18}],215:[function(require,module,exports){
+},{"./Data.js":231,"@babel/runtime/helpers/assertThisInitialized":3,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/defineProperty":8,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":18}],227:[function(require,module,exports){
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
@@ -22078,7 +22886,7 @@ var BlobData = /*#__PURE__*/function (_Data) {
 var _default = BlobData;
 exports["default"] = _default;
 
-},{"./Data.js":219,"@babel/runtime/helpers/assertThisInitialized":3,"@babel/runtime/helpers/asyncToGenerator":4,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/defineProperty":8,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":18,"@babel/runtime/regenerator":26}],216:[function(require,module,exports){
+},{"./Data.js":231,"@babel/runtime/helpers/assertThisInitialized":3,"@babel/runtime/helpers/asyncToGenerator":4,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/defineProperty":8,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":18,"@babel/runtime/regenerator":26}],228:[function(require,module,exports){
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
@@ -22210,7 +23018,7 @@ var CameraData = /*#__PURE__*/function (_Data) {
 var _default = CameraData;
 exports["default"] = _default;
 
-},{"./Data.js":219,"@babel/runtime/helpers/assertThisInitialized":3,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/defineProperty":8,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":18}],217:[function(require,module,exports){
+},{"./Data.js":231,"@babel/runtime/helpers/assertThisInitialized":3,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/defineProperty":8,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":18}],229:[function(require,module,exports){
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
@@ -22345,7 +23153,7 @@ var ComponentData = /*#__PURE__*/function (_Data) {
 
 exports["default"] = ComponentData;
 
-},{"../../utils/Maths.js":283,"./Data.js":219,"@babel/runtime/helpers/assertThisInitialized":3,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/defineProperty":8,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":18}],218:[function(require,module,exports){
+},{"../../utils/Maths.js":294,"./Data.js":231,"@babel/runtime/helpers/assertThisInitialized":3,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/defineProperty":8,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":18}],230:[function(require,module,exports){
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
@@ -22447,7 +23255,7 @@ var ContentData = /*#__PURE__*/function (_Data) {
 
 exports["default"] = ContentData;
 
-},{"../../utils/Maths.js":283,"./Data.js":219,"@babel/runtime/helpers/assertThisInitialized":3,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/defineProperty":8,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":18}],219:[function(require,module,exports){
+},{"../../utils/Maths.js":294,"./Data.js":231,"@babel/runtime/helpers/assertThisInitialized":3,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/defineProperty":8,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":18}],231:[function(require,module,exports){
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
@@ -22532,7 +23340,7 @@ var Data = /*#__PURE__*/function () {
 var _default = Data;
 exports["default"] = _default;
 
-},{"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/defineProperty":8,"@babel/runtime/helpers/interopRequireDefault":12}],220:[function(require,module,exports){
+},{"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/defineProperty":8,"@babel/runtime/helpers/interopRequireDefault":12}],232:[function(require,module,exports){
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
@@ -22732,7 +23540,7 @@ var _AnimationNode = _interopRequireDefault(require("../../flow/node/AnimationNo
 
 var _AnimationComponent = _interopRequireDefault(require("../../component/internal/AnimationComponent.js"));
 
-var _ActivateAnimationFunction = _interopRequireDefault(require("../../flow/function/native/animation/ActivateAnimationFunction.js"));
+var _StartAnimationFunction = _interopRequireDefault(require("../../flow/function/native/animation/StartAnimationFunction.js"));
 
 var _SetFunction = _interopRequireDefault(require("../../flow/function/native/component/SetFunction.js"));
 
@@ -22753,6 +23561,24 @@ var _NotFunction = _interopRequireDefault(require("../../flow/function/native/ba
 var _RoundFunction = _interopRequireDefault(require("../../flow/function/native/basic/RoundFunction.js"));
 
 var _IsGroundedFunction = _interopRequireDefault(require("../../flow/function/native/physics/IsGroundedFunction.js"));
+
+var _OnAnyAnimationStartEvent = _interopRequireDefault(require("../../flow/event/native/OnAnyAnimationStartEvent.js"));
+
+var _OnInputAttackEvent = _interopRequireDefault(require("../../flow/event/native/OnInputAttackEvent.js"));
+
+var _StopAnimationFunction = _interopRequireDefault(require("../../flow/function/native/animation/StopAnimationFunction.js"));
+
+var _IsAnimationPlayingFunction = _interopRequireDefault(require("../../flow/function/native/animation/IsAnimationPlayingFunction.js"));
+
+var _HasCurrentAnimationFunction = _interopRequireDefault(require("../../flow/function/native/animation/HasCurrentAnimationFunction.js"));
+
+var _GetCurrentAnimationFunction = _interopRequireDefault(require("../../flow/function/native/animation/GetCurrentAnimationFunction.js"));
+
+var _ANumberVariable = _interopRequireDefault(require("../../flow/variable/ANumberVariable.js"));
+
+var _AReference = _interopRequireDefault(require("../../flow/reference/AReference.js"));
+
+var _ReferenceNode = _interopRequireDefault(require("../../flow/node/ReferenceNode.js"));
 
 /**
  * @class {DataSchema}
@@ -23069,7 +23895,7 @@ var DataSchema = /*#__PURE__*/function () {
   type: _GUIPropertyComponent["default"]
 }, {
   id: 720,
-  type: _ActivateAnimationFunction["default"]
+  type: _StartAnimationFunction["default"]
 }, {
   id: 730,
   type: _SetFunction["default"]
@@ -23100,13 +23926,40 @@ var DataSchema = /*#__PURE__*/function () {
 }, {
   id: 820,
   type: _IsGroundedFunction["default"]
+}, {
+  id: 830,
+  type: _OnAnyAnimationStartEvent["default"]
+}, {
+  id: 840,
+  type: _OnInputAttackEvent["default"]
+}, {
+  id: 850,
+  type: _StopAnimationFunction["default"]
+}, {
+  id: 860,
+  type: _IsAnimationPlayingFunction["default"]
+}, {
+  id: 870,
+  type: _HasCurrentAnimationFunction["default"]
+}, {
+  id: 880,
+  type: _GetCurrentAnimationFunction["default"]
+}, {
+  id: 890,
+  type: _ANumberVariable["default"]
+}, {
+  id: 900,
+  type: _AReference["default"]
+}, {
+  id: 910,
+  type: _ReferenceNode["default"]
 }]);
 (0, _defineProperty2["default"])(DataSchema, "exclude", [_MoveXUnitInstant["default"], _MoveYUnitInstant["default"], _MoveFreeUnitInstant["default"], _GridUnitInstant["default"], _GridXUnitInstant["default"], _GridYUnitInstant["default"], _SelectionUnitInstant["default"], _ScaleXUnitInstant["default"], _ScaleYUnitInstant["default"], _ScaleFreeUnitInstant["default"], _RotateZUnitInstant["default"], _RectUnitInstant["default"], _CircleUnitInstant["default"]]);
-(0, _defineProperty2["default"])(DataSchema, "excludeGame", [_GUIPropertyComponent["default"], _AssetScriptXml["default"], _AssetScriptCode["default"], _AssetAnimationXml["default"], _ClassScript["default"], _TabManager["default"]]);
+(0, _defineProperty2["default"])(DataSchema, "excludeGame", [_GUIPropertyComponent["default"], _AssetScriptXml["default"], _AssetScriptCode["default"], _AssetAnimationScriptXml["default"], _ClassScript["default"], _TabManager["default"]]);
 var _default = DataSchema;
 exports["default"] = _default;
 
-},{"../../asset/Asset.js":30,"../../asset/Folder.js":31,"../../asset/types/animation/AssetAnimationScriptXml.js":33,"../../asset/types/animation/AssetAnimationXml.js":34,"../../asset/types/image/AssetImage.js":35,"../../asset/types/script/AssetScriptCode.js":37,"../../asset/types/script/AssetScriptXml.js":38,"../../component/internal/AnimationComponent.js":40,"../../component/internal/CameraComponent.js":41,"../../component/internal/CircleColliderComponent.js":42,"../../component/internal/MeshComponent.js":44,"../../component/internal/RectColliderComponent.js":45,"../../component/internal/RigidBodyComponent.js":46,"../../component/internal/ScriptComponent.js":47,"../../component/internal/StyleComponent.js":48,"../../component/internal/TransformComponent.js":49,"../../component/internal/gui/property/GUIPropertyComponent.js":56,"../../content/Tab.js":58,"../../content/animation/EditAnimationContent.js":59,"../../content/script/EditGraphScriptContent.js":60,"../../content/script/EditScriptCodeContent.js":61,"../../core/Camera.js":64,"../../core/Mesh.js":69,"../../exception/type/SystemError.js":77,"../../flow/ClassScript.js":89,"../../flow/animation/AAnimation.js":90,"../../flow/condition/FalseCondition.js":95,"../../flow/condition/TrueCondition.js":96,"../../flow/constant/AConstant.js":97,"../../flow/event/native/OnAnimationStartEvent.js":99,"../../flow/event/native/OnInputJumpEvent.js":100,"../../flow/event/native/OnInputXAxisEvent.js":101,"../../flow/event/native/OnInputYAxisEvent.js":102,"../../flow/event/native/OnKeyDownEvent.js":103,"../../flow/event/native/OnMouseClickEvent.js":104,"../../flow/event/native/OnUpdateEvent.js":105,"../../flow/function/AEmptyStackFunction.js":106,"../../flow/function/AFunction.js":107,"../../flow/function/native/animation/ActivateAnimationFunction.js":109,"../../flow/function/native/basic/AddFunction.js":110,"../../flow/function/native/basic/AndFunction.js":111,"../../flow/function/native/basic/EqualToFunction.js":112,"../../flow/function/native/basic/GreaterThanFunction.js":113,"../../flow/function/native/basic/GreaterThanOrEqualFunction.js":114,"../../flow/function/native/basic/IsKeyDownFunction.js":115,"../../flow/function/native/basic/LessThanFunction.js":116,"../../flow/function/native/basic/LogFunction.js":117,"../../flow/function/native/basic/MultiplyFunction.js":118,"../../flow/function/native/basic/NotEqualToFunction.js":119,"../../flow/function/native/basic/NotFunction.js":120,"../../flow/function/native/basic/OrFunction.js":121,"../../flow/function/native/basic/RoundFunction.js":122,"../../flow/function/native/component/GetFunction.js":123,"../../flow/function/native/component/SetFunction.js":124,"../../flow/function/native/input/GetInputXAxisFunction.js":125,"../../flow/function/native/physics/ApplyForceFunction.js":126,"../../flow/function/native/physics/GetVelocityXFunction.js":127,"../../flow/function/native/physics/GetVelocityYFunction.js":128,"../../flow/function/native/physics/IsGroundedFunction.js":129,"../../flow/function/native/physics/MoveXAxisFunction.js":130,"../../flow/function/native/structure/VectorFunction.js":131,"../../flow/function/native/unit/GetUnitFunction.js":132,"../../flow/function/native/unit/GetWorldPositionFunction.js":133,"../../flow/function/native/unit/SetWorldPositionFunction.js":134,"../../flow/keycode/AKeyCode.js":135,"../../flow/node/AnimationNode.js":137,"../../flow/node/ConditionNode.js":139,"../../flow/node/ConstantNode.js":140,"../../flow/node/EventNode.js":141,"../../flow/node/FunctionNode.js":142,"../../flow/node/KeyCodeNode.js":143,"../../flow/node/UnitNode.js":144,"../../flow/unit/AUnit.js":147,"../../flow/variable/AStringVariable.js":148,"../../manager/AssetsManager.js":175,"../../manager/ScriptManager.js":179,"../../manager/TabManager.js":180,"../../manager/UnitManager.js":181,"../../physics/Physics.js":194,"../../pobject/DynamicAttribute.js":202,"../../pobject/NodeInput.js":203,"../../preference/Preference.js":207,"../../preference/gameInput/GameInput.js":208,"../../preference/gameInput/GameInputPreference.js":209,"../../registry/ComponentRegistry.js":235,"../../registry/FunctionRegistry.js":236,"../../unit/instant/type/internal/asset/AssetUnitInstant.js":258,"../../unit/instant/type/internal/camera/CameraUnitInstant.js":259,"../../unit/instant/type/internal/edit/SelectionUnitInstant.js":260,"../../unit/instant/type/internal/grid/GridUnitInstant.js":263,"../../unit/instant/type/internal/grid/GridXUnitInstant.js":264,"../../unit/instant/type/internal/grid/GridYUnitInstant.js":265,"../../unit/instant/type/internal/move/MoveFreeUnitInstant.js":266,"../../unit/instant/type/internal/move/MoveXUnitInstant.js":267,"../../unit/instant/type/internal/move/MoveYUnitInstant.js":268,"../../unit/instant/type/internal/primitive/CircleUnitInstant.js":269,"../../unit/instant/type/internal/primitive/RectUnitInstant.js":270,"../../unit/instant/type/internal/rotate/RotateZUnitInstant.js":271,"../../unit/instant/type/internal/scale/ScaleFreeUnitInstant.js":272,"../../unit/instant/type/internal/scale/ScaleXUnitInstant.js":273,"../../unit/instant/type/internal/scale/ScaleYUnitInstant.js":274,"../../unit/type/EmptyUnit.js":275,"../../world/World.js":292,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/defineProperty":8,"@babel/runtime/helpers/interopRequireDefault":12}],221:[function(require,module,exports){
+},{"../../asset/Asset.js":30,"../../asset/Folder.js":31,"../../asset/types/animation/AssetAnimationScriptXml.js":33,"../../asset/types/animation/AssetAnimationXml.js":34,"../../asset/types/image/AssetImage.js":35,"../../asset/types/script/AssetScriptCode.js":37,"../../asset/types/script/AssetScriptXml.js":38,"../../component/internal/AnimationComponent.js":40,"../../component/internal/CameraComponent.js":41,"../../component/internal/CircleColliderComponent.js":42,"../../component/internal/MeshComponent.js":44,"../../component/internal/RectColliderComponent.js":45,"../../component/internal/RigidBodyComponent.js":46,"../../component/internal/ScriptComponent.js":47,"../../component/internal/StyleComponent.js":48,"../../component/internal/TransformComponent.js":49,"../../component/internal/gui/property/GUIPropertyComponent.js":56,"../../content/Tab.js":58,"../../content/animation/EditAnimationContent.js":59,"../../content/script/EditGraphScriptContent.js":60,"../../content/script/EditScriptCodeContent.js":61,"../../core/Camera.js":64,"../../core/Mesh.js":69,"../../exception/type/SystemError.js":77,"../../flow/ClassScript.js":89,"../../flow/animation/AAnimation.js":90,"../../flow/condition/FalseCondition.js":95,"../../flow/condition/TrueCondition.js":96,"../../flow/constant/AConstant.js":97,"../../flow/event/native/OnAnimationStartEvent.js":99,"../../flow/event/native/OnAnyAnimationStartEvent.js":100,"../../flow/event/native/OnInputAttackEvent.js":101,"../../flow/event/native/OnInputJumpEvent.js":102,"../../flow/event/native/OnInputXAxisEvent.js":103,"../../flow/event/native/OnInputYAxisEvent.js":104,"../../flow/event/native/OnKeyDownEvent.js":105,"../../flow/event/native/OnMouseClickEvent.js":106,"../../flow/event/native/OnUpdateEvent.js":107,"../../flow/function/AEmptyStackFunction.js":108,"../../flow/function/AFunction.js":109,"../../flow/function/native/animation/GetCurrentAnimationFunction.js":111,"../../flow/function/native/animation/HasCurrentAnimationFunction.js":112,"../../flow/function/native/animation/IsAnimationPlayingFunction.js":113,"../../flow/function/native/animation/StartAnimationFunction.js":114,"../../flow/function/native/animation/StopAnimationFunction.js":115,"../../flow/function/native/basic/AddFunction.js":116,"../../flow/function/native/basic/AndFunction.js":117,"../../flow/function/native/basic/EqualToFunction.js":118,"../../flow/function/native/basic/GreaterThanFunction.js":119,"../../flow/function/native/basic/GreaterThanOrEqualFunction.js":120,"../../flow/function/native/basic/IsKeyDownFunction.js":121,"../../flow/function/native/basic/LessThanFunction.js":122,"../../flow/function/native/basic/LogFunction.js":123,"../../flow/function/native/basic/MultiplyFunction.js":124,"../../flow/function/native/basic/NotEqualToFunction.js":125,"../../flow/function/native/basic/NotFunction.js":126,"../../flow/function/native/basic/OrFunction.js":127,"../../flow/function/native/basic/RoundFunction.js":128,"../../flow/function/native/component/GetFunction.js":129,"../../flow/function/native/component/SetFunction.js":130,"../../flow/function/native/input/GetInputXAxisFunction.js":131,"../../flow/function/native/physics/ApplyForceFunction.js":132,"../../flow/function/native/physics/GetVelocityXFunction.js":133,"../../flow/function/native/physics/GetVelocityYFunction.js":134,"../../flow/function/native/physics/IsGroundedFunction.js":135,"../../flow/function/native/physics/MoveXAxisFunction.js":136,"../../flow/function/native/structure/VectorFunction.js":137,"../../flow/function/native/unit/GetUnitFunction.js":138,"../../flow/function/native/unit/GetWorldPositionFunction.js":139,"../../flow/function/native/unit/SetWorldPositionFunction.js":140,"../../flow/keycode/AKeyCode.js":141,"../../flow/node/AnimationNode.js":143,"../../flow/node/ConditionNode.js":145,"../../flow/node/ConstantNode.js":146,"../../flow/node/EventNode.js":147,"../../flow/node/FunctionNode.js":148,"../../flow/node/KeyCodeNode.js":149,"../../flow/node/ReferenceNode.js":150,"../../flow/node/UnitNode.js":151,"../../flow/reference/AReference.js":155,"../../flow/unit/AUnit.js":156,"../../flow/variable/ANumberVariable.js":157,"../../flow/variable/AStringVariable.js":158,"../../manager/AssetsManager.js":185,"../../manager/ScriptManager.js":189,"../../manager/TabManager.js":190,"../../manager/UnitManager.js":191,"../../physics/Physics.js":206,"../../pobject/DynamicAttribute.js":214,"../../pobject/NodeInput.js":215,"../../preference/Preference.js":219,"../../preference/gameInput/GameInput.js":220,"../../preference/gameInput/GameInputPreference.js":221,"../../registry/ComponentRegistry.js":247,"../../registry/FunctionRegistry.js":248,"../../unit/instant/type/internal/asset/AssetUnitInstant.js":270,"../../unit/instant/type/internal/camera/CameraUnitInstant.js":271,"../../unit/instant/type/internal/edit/SelectionUnitInstant.js":272,"../../unit/instant/type/internal/grid/GridUnitInstant.js":275,"../../unit/instant/type/internal/grid/GridXUnitInstant.js":276,"../../unit/instant/type/internal/grid/GridYUnitInstant.js":277,"../../unit/instant/type/internal/move/MoveFreeUnitInstant.js":278,"../../unit/instant/type/internal/move/MoveXUnitInstant.js":279,"../../unit/instant/type/internal/move/MoveYUnitInstant.js":280,"../../unit/instant/type/internal/primitive/CircleUnitInstant.js":281,"../../unit/instant/type/internal/primitive/RectUnitInstant.js":282,"../../unit/instant/type/internal/rotate/RotateZUnitInstant.js":283,"../../unit/instant/type/internal/scale/ScaleFreeUnitInstant.js":284,"../../unit/instant/type/internal/scale/ScaleXUnitInstant.js":285,"../../unit/instant/type/internal/scale/ScaleYUnitInstant.js":286,"../../unit/type/EmptyUnit.js":287,"../../world/World.js":303,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/defineProperty":8,"@babel/runtime/helpers/interopRequireDefault":12}],233:[function(require,module,exports){
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
@@ -23221,7 +24074,7 @@ var FolderData = /*#__PURE__*/function (_Data) {
 
 exports["default"] = FolderData;
 
-},{"./Data.js":219,"@babel/runtime/helpers/assertThisInitialized":3,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/defineProperty":8,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":18}],222:[function(require,module,exports){
+},{"./Data.js":231,"@babel/runtime/helpers/assertThisInitialized":3,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/defineProperty":8,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":18}],234:[function(require,module,exports){
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
@@ -23413,7 +24266,7 @@ var FunctionData = /*#__PURE__*/function (_Data) {
 
 exports["default"] = FunctionData;
 
-},{"../../utils/Maths.js":283,"./Data.js":219,"@babel/runtime/helpers/assertThisInitialized":3,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/defineProperty":8,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":18}],223:[function(require,module,exports){
+},{"../../utils/Maths.js":294,"./Data.js":231,"@babel/runtime/helpers/assertThisInitialized":3,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/defineProperty":8,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":18}],235:[function(require,module,exports){
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
@@ -23539,7 +24392,7 @@ var GameInputData = /*#__PURE__*/function (_Data) {
 
 exports["default"] = GameInputData;
 
-},{"./Data.js":219,"@babel/runtime/helpers/assertThisInitialized":3,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/defineProperty":8,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":18}],224:[function(require,module,exports){
+},{"./Data.js":231,"@babel/runtime/helpers/assertThisInitialized":3,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/defineProperty":8,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":18}],236:[function(require,module,exports){
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
@@ -23622,7 +24475,7 @@ var GameInputPreferenceData = /*#__PURE__*/function (_Data) {
 
 exports["default"] = GameInputPreferenceData;
 
-},{"./Data.js":219,"@babel/runtime/helpers/assertThisInitialized":3,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/defineProperty":8,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":18}],225:[function(require,module,exports){
+},{"./Data.js":231,"@babel/runtime/helpers/assertThisInitialized":3,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/defineProperty":8,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":18}],237:[function(require,module,exports){
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
@@ -23774,7 +24627,7 @@ var NodeInputData = /*#__PURE__*/function (_Data) {
 
 exports["default"] = NodeInputData;
 
-},{"../../utils/Maths.js":283,"./Data.js":219,"@babel/runtime/helpers/assertThisInitialized":3,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/defineProperty":8,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":18}],226:[function(require,module,exports){
+},{"../../utils/Maths.js":294,"./Data.js":231,"@babel/runtime/helpers/assertThisInitialized":3,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/defineProperty":8,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":18}],238:[function(require,module,exports){
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
@@ -23851,7 +24704,7 @@ var PhysicsData = /*#__PURE__*/function (_Data) {
 
 exports["default"] = PhysicsData;
 
-},{"./Data.js":219,"@babel/runtime/helpers/assertThisInitialized":3,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/defineProperty":8,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":18}],227:[function(require,module,exports){
+},{"./Data.js":231,"@babel/runtime/helpers/assertThisInitialized":3,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/defineProperty":8,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":18}],239:[function(require,module,exports){
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
@@ -23924,7 +24777,7 @@ var PreferenceData = /*#__PURE__*/function (_Data) {
 
 exports["default"] = PreferenceData;
 
-},{"./Data.js":219,"@babel/runtime/helpers/assertThisInitialized":3,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/defineProperty":8,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":18}],228:[function(require,module,exports){
+},{"./Data.js":231,"@babel/runtime/helpers/assertThisInitialized":3,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/defineProperty":8,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":18}],240:[function(require,module,exports){
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
@@ -24035,7 +24888,7 @@ var RegistryData = /*#__PURE__*/function (_Data) {
 
 exports["default"] = RegistryData;
 
-},{"./Data.js":219,"@babel/runtime/helpers/assertThisInitialized":3,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/defineProperty":8,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":18}],229:[function(require,module,exports){
+},{"./Data.js":231,"@babel/runtime/helpers/assertThisInitialized":3,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/defineProperty":8,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":18}],241:[function(require,module,exports){
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
@@ -24119,7 +24972,7 @@ var ScriptManagerData = /*#__PURE__*/function (_Data) {
 
 exports["default"] = ScriptManagerData;
 
-},{"./Data.js":219,"@babel/runtime/helpers/assertThisInitialized":3,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/defineProperty":8,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":18}],230:[function(require,module,exports){
+},{"./Data.js":231,"@babel/runtime/helpers/assertThisInitialized":3,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/defineProperty":8,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":18}],242:[function(require,module,exports){
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
@@ -24249,7 +25102,7 @@ var TabData = /*#__PURE__*/function (_Data) {
 
 exports["default"] = TabData;
 
-},{"./Data.js":219,"@babel/runtime/helpers/assertThisInitialized":3,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/defineProperty":8,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":18}],231:[function(require,module,exports){
+},{"./Data.js":231,"@babel/runtime/helpers/assertThisInitialized":3,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/defineProperty":8,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":18}],243:[function(require,module,exports){
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
@@ -24327,7 +25180,7 @@ var TabManagerData = /*#__PURE__*/function (_Data) {
 
 exports["default"] = TabManagerData;
 
-},{"./Data.js":219,"@babel/runtime/helpers/assertThisInitialized":3,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/defineProperty":8,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":18}],232:[function(require,module,exports){
+},{"./Data.js":231,"@babel/runtime/helpers/assertThisInitialized":3,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/defineProperty":8,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":18}],244:[function(require,module,exports){
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
@@ -24572,7 +25425,7 @@ var UnitData = /*#__PURE__*/function (_Data) {
 
 exports["default"] = UnitData;
 
-},{"../../exception/type/ClientError.js":75,"../../utils/Maths.js":283,"./ComponentData.js":217,"./Data.js":219,"@babel/runtime/helpers/assertThisInitialized":3,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/defineProperty":8,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":18}],233:[function(require,module,exports){
+},{"../../exception/type/ClientError.js":75,"../../utils/Maths.js":294,"./ComponentData.js":229,"./Data.js":231,"@babel/runtime/helpers/assertThisInitialized":3,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/defineProperty":8,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":18}],245:[function(require,module,exports){
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
@@ -24657,7 +25510,7 @@ var UnitManagerData = /*#__PURE__*/function (_Data) {
 
 exports["default"] = UnitManagerData;
 
-},{"./Data.js":219,"@babel/runtime/helpers/assertThisInitialized":3,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/defineProperty":8,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":18}],234:[function(require,module,exports){
+},{"./Data.js":231,"@babel/runtime/helpers/assertThisInitialized":3,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/defineProperty":8,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":18}],246:[function(require,module,exports){
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
@@ -24958,7 +25811,7 @@ var WorldData = /*#__PURE__*/function (_Data) {
 var _default = WorldData;
 exports["default"] = _default;
 
-},{"../../exception/type/SystemError.js":77,"./Data.js":219,"@babel/runtime/helpers/assertThisInitialized":3,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/defineProperty":8,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":18}],235:[function(require,module,exports){
+},{"../../exception/type/SystemError.js":77,"./Data.js":231,"@babel/runtime/helpers/assertThisInitialized":3,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/defineProperty":8,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":18}],247:[function(require,module,exports){
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
@@ -25082,7 +25935,7 @@ var ComponentRegistry = /*#__PURE__*/function (_Registry) {
 
 exports["default"] = ComponentRegistry;
 
-},{"../component/internal/AnimationComponent.js":40,"../component/internal/CircleColliderComponent.js":42,"../component/internal/RectColliderComponent.js":45,"../component/internal/RigidBodyComponent.js":46,"../component/internal/TransformComponent.js":49,"./Registry.js":237,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/get":9,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":18}],236:[function(require,module,exports){
+},{"../component/internal/AnimationComponent.js":40,"../component/internal/CircleColliderComponent.js":42,"../component/internal/RectColliderComponent.js":45,"../component/internal/RigidBodyComponent.js":46,"../component/internal/TransformComponent.js":49,"./Registry.js":249,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/get":9,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":18}],248:[function(require,module,exports){
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
@@ -25168,7 +26021,7 @@ var _OnAnimationStartEvent = _interopRequireDefault(require("../flow/event/nativ
 
 var _AAnimation = _interopRequireDefault(require("../flow/animation/AAnimation.js"));
 
-var _ActivateAnimationFunction = _interopRequireDefault(require("../flow/function/native/animation/ActivateAnimationFunction.js"));
+var _StartAnimationFunction = _interopRequireDefault(require("../flow/function/native/animation/StartAnimationFunction.js"));
 
 var _AComponent = _interopRequireDefault(require("../flow/component/AComponent.js"));
 
@@ -25192,6 +26045,18 @@ var _RoundFunction = _interopRequireDefault(require("../flow/function/native/bas
 
 var _IsGroundedFunction = _interopRequireDefault(require("../flow/function/native/physics/IsGroundedFunction.js"));
 
+var _OnAnyAnimationStartEvent = _interopRequireDefault(require("../flow/event/native/OnAnyAnimationStartEvent.js"));
+
+var _OnInputAttackEvent = _interopRequireDefault(require("../flow/event/native/OnInputAttackEvent.js"));
+
+var _StopAnimationFunction = _interopRequireDefault(require("../flow/function/native/animation/StopAnimationFunction.js"));
+
+var _IsAnimationPlayingFunction = _interopRequireDefault(require("../flow/function/native/animation/IsAnimationPlayingFunction.js"));
+
+var _HasCurrentAnimationFunction = _interopRequireDefault(require("../flow/function/native/animation/HasCurrentAnimationFunction.js"));
+
+var _GetCurrentAnimationFunction = _interopRequireDefault(require("../flow/function/native/animation/GetCurrentAnimationFunction.js"));
+
 function _createSuper(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct(); return function _createSuperInternal() { var Super = (0, _getPrototypeOf2["default"])(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = (0, _getPrototypeOf2["default"])(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return (0, _possibleConstructorReturn2["default"])(this, result); }; }
 
 function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
@@ -25214,11 +26079,11 @@ var FunctionRegistry = /*#__PURE__*/function (_Registry) {
     key: "init",
     value: function init() {
       this.concatRegistry([// Event
-      new _OnMouseClickEvent["default"](), new _OnKeyDownEvent["default"](), new _OnInputXAxisEvent["default"](), new _OnInputYAxisEvent["default"](), new _OnInputJumpEvent["default"](), new _OnAnimationStartEvent["default"](), new _OnUpdateEvent["default"](), // Condition
+      new _OnMouseClickEvent["default"](), new _OnKeyDownEvent["default"](), new _OnInputXAxisEvent["default"](), new _OnInputYAxisEvent["default"](), new _OnInputJumpEvent["default"](), new _OnAnimationStartEvent["default"](), new _OnAnyAnimationStartEvent["default"](), new _OnUpdateEvent["default"](), new _OnInputAttackEvent["default"](), // Condition
       new _TrueCondition["default"](), new _FalseCondition["default"](), // Function
       new _LogFunction["default"](), new _AddFunction["default"](), new _LessThanFunction["default"](), new _GreaterThanFunction["default"](), new _GreaterThanOrEqualFunction["default"](), new _IsKeyDownFunction["default"](), new _GetInputXAxisFunction["default"](), new _MultiplyFunction["default"](), new _EqualToFunction["default"](), new _NotEqualToFunction["default"](), new _AndFunction["default"](), new _OrFunction["default"](), new _NotFunction["default"](), new _RoundFunction["default"](), //Unit
       new _GetWorldPositionFunction["default"](), new _SetWorldPositionFunction["default"](), new _GetUnitFunction["default"](), //Animation
-      new _ActivateAnimationFunction["default"](), //Component
+      new _StartAnimationFunction["default"](), new _StopAnimationFunction["default"](), new _IsAnimationPlayingFunction["default"](), new _HasCurrentAnimationFunction["default"](), new _GetCurrentAnimationFunction["default"](), //Component
       new _SetFunction["default"](), new _GetFunction["default"](), //Physics
       new _MoveXAxisFunction["default"](), new _ApplyForceFunction["default"](), new _GetVelocityXFunction["default"](), new _GetVelocityYFunction["default"](), new _IsGroundedFunction["default"](), //Structure
       new _VectorFunction["default"]()]);
@@ -25364,7 +26229,7 @@ var FunctionRegistry = /*#__PURE__*/function (_Registry) {
 
 exports["default"] = FunctionRegistry;
 
-},{"../flow/animation/AAnimation.js":90,"../flow/component/AComponent.js":93,"../flow/condition/ACondition.js":94,"../flow/condition/FalseCondition.js":95,"../flow/condition/TrueCondition.js":96,"../flow/constant/AConstant.js":97,"../flow/event/AEvent.js":98,"../flow/event/native/OnAnimationStartEvent.js":99,"../flow/event/native/OnInputJumpEvent.js":100,"../flow/event/native/OnInputXAxisEvent.js":101,"../flow/event/native/OnInputYAxisEvent.js":102,"../flow/event/native/OnKeyDownEvent.js":103,"../flow/event/native/OnMouseClickEvent.js":104,"../flow/event/native/OnUpdateEvent.js":105,"../flow/function/native/animation/ActivateAnimationFunction.js":109,"../flow/function/native/basic/AddFunction.js":110,"../flow/function/native/basic/AndFunction.js":111,"../flow/function/native/basic/EqualToFunction.js":112,"../flow/function/native/basic/GreaterThanFunction.js":113,"../flow/function/native/basic/GreaterThanOrEqualFunction.js":114,"../flow/function/native/basic/IsKeyDownFunction.js":115,"../flow/function/native/basic/LessThanFunction.js":116,"../flow/function/native/basic/LogFunction.js":117,"../flow/function/native/basic/MultiplyFunction.js":118,"../flow/function/native/basic/NotEqualToFunction.js":119,"../flow/function/native/basic/NotFunction.js":120,"../flow/function/native/basic/OrFunction.js":121,"../flow/function/native/basic/RoundFunction.js":122,"../flow/function/native/component/GetFunction.js":123,"../flow/function/native/component/SetFunction.js":124,"../flow/function/native/input/GetInputXAxisFunction.js":125,"../flow/function/native/physics/ApplyForceFunction.js":126,"../flow/function/native/physics/GetVelocityXFunction.js":127,"../flow/function/native/physics/GetVelocityYFunction.js":128,"../flow/function/native/physics/IsGroundedFunction.js":129,"../flow/function/native/physics/MoveXAxisFunction.js":130,"../flow/function/native/structure/VectorFunction.js":131,"../flow/function/native/unit/GetUnitFunction.js":132,"../flow/function/native/unit/GetWorldPositionFunction.js":133,"../flow/function/native/unit/SetWorldPositionFunction.js":134,"../flow/keycode/AKeyCode.js":135,"../flow/unit/AUnit.js":147,"../flow/variable/AVariable.js":149,"./Registry.js":237,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/get":9,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":18}],237:[function(require,module,exports){
+},{"../flow/animation/AAnimation.js":90,"../flow/component/AComponent.js":93,"../flow/condition/ACondition.js":94,"../flow/condition/FalseCondition.js":95,"../flow/condition/TrueCondition.js":96,"../flow/constant/AConstant.js":97,"../flow/event/AEvent.js":98,"../flow/event/native/OnAnimationStartEvent.js":99,"../flow/event/native/OnAnyAnimationStartEvent.js":100,"../flow/event/native/OnInputAttackEvent.js":101,"../flow/event/native/OnInputJumpEvent.js":102,"../flow/event/native/OnInputXAxisEvent.js":103,"../flow/event/native/OnInputYAxisEvent.js":104,"../flow/event/native/OnKeyDownEvent.js":105,"../flow/event/native/OnMouseClickEvent.js":106,"../flow/event/native/OnUpdateEvent.js":107,"../flow/function/native/animation/GetCurrentAnimationFunction.js":111,"../flow/function/native/animation/HasCurrentAnimationFunction.js":112,"../flow/function/native/animation/IsAnimationPlayingFunction.js":113,"../flow/function/native/animation/StartAnimationFunction.js":114,"../flow/function/native/animation/StopAnimationFunction.js":115,"../flow/function/native/basic/AddFunction.js":116,"../flow/function/native/basic/AndFunction.js":117,"../flow/function/native/basic/EqualToFunction.js":118,"../flow/function/native/basic/GreaterThanFunction.js":119,"../flow/function/native/basic/GreaterThanOrEqualFunction.js":120,"../flow/function/native/basic/IsKeyDownFunction.js":121,"../flow/function/native/basic/LessThanFunction.js":122,"../flow/function/native/basic/LogFunction.js":123,"../flow/function/native/basic/MultiplyFunction.js":124,"../flow/function/native/basic/NotEqualToFunction.js":125,"../flow/function/native/basic/NotFunction.js":126,"../flow/function/native/basic/OrFunction.js":127,"../flow/function/native/basic/RoundFunction.js":128,"../flow/function/native/component/GetFunction.js":129,"../flow/function/native/component/SetFunction.js":130,"../flow/function/native/input/GetInputXAxisFunction.js":131,"../flow/function/native/physics/ApplyForceFunction.js":132,"../flow/function/native/physics/GetVelocityXFunction.js":133,"../flow/function/native/physics/GetVelocityYFunction.js":134,"../flow/function/native/physics/IsGroundedFunction.js":135,"../flow/function/native/physics/MoveXAxisFunction.js":136,"../flow/function/native/structure/VectorFunction.js":137,"../flow/function/native/unit/GetUnitFunction.js":138,"../flow/function/native/unit/GetWorldPositionFunction.js":139,"../flow/function/native/unit/SetWorldPositionFunction.js":140,"../flow/keycode/AKeyCode.js":141,"../flow/unit/AUnit.js":156,"../flow/variable/AVariable.js":159,"./Registry.js":249,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/get":9,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":18}],249:[function(require,module,exports){
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
@@ -25524,7 +26389,7 @@ var Registry = /*#__PURE__*/function (_RegistryData) {
 
 exports["default"] = Registry;
 
-},{"../exception/type/ClientError.js":75,"../exception/type/SystemError.js":77,"../project/data/RegistryData.js":228,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":18}],238:[function(require,module,exports){
+},{"../exception/type/ClientError.js":75,"../exception/type/SystemError.js":77,"../project/data/RegistryData.js":240,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":18}],250:[function(require,module,exports){
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
@@ -25673,7 +26538,7 @@ var MeshRenderer = /*#__PURE__*/function (_Renderer) {
 var _default = MeshRenderer;
 exports["default"] = _default;
 
-},{"../core/Constant.js":65,"../core/Context.js":66,"../core/Window.js":73,"./Renderer.js":239,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/get":9,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":18}],239:[function(require,module,exports){
+},{"../core/Constant.js":65,"../core/Context.js":66,"../core/Window.js":73,"./Renderer.js":251,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/get":9,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":18}],251:[function(require,module,exports){
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
@@ -25756,7 +26621,7 @@ var Renderer = /*#__PURE__*/function () {
 var _default = Renderer;
 exports["default"] = _default;
 
-},{"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/defineProperty":8,"@babel/runtime/helpers/interopRequireDefault":12}],240:[function(require,module,exports){
+},{"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/defineProperty":8,"@babel/runtime/helpers/interopRequireDefault":12}],252:[function(require,module,exports){
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
@@ -25837,7 +26702,7 @@ var Runner = /*#__PURE__*/function () {
 var _default = Runner;
 exports["default"] = _default;
 
-},{"../core/Window.js":73,"../exception/type/SystemError.js":77,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/interopRequireDefault":12}],241:[function(require,module,exports){
+},{"../core/Window.js":73,"../exception/type/SystemError.js":77,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/interopRequireDefault":12}],253:[function(require,module,exports){
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
@@ -25917,7 +26782,7 @@ var GameExecutorRunner = /*#__PURE__*/function (_Runner) {
 exports.GameExecutorRunner = GameExecutorRunner;
 (0, _defineProperty2["default"])(GameExecutorRunner, "instance", null);
 
-},{"../../executor/ExecutorRegistry.js":78,"../../world/World.js":292,"../Runner.js":240,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/defineProperty":8,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":18}],242:[function(require,module,exports){
+},{"../../executor/ExecutorRegistry.js":78,"../../world/World.js":303,"../Runner.js":252,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/defineProperty":8,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":18}],254:[function(require,module,exports){
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
@@ -25993,7 +26858,7 @@ var PhysicsRunner = /*#__PURE__*/function (_Runner) {
 exports.PhysicsRunner = PhysicsRunner;
 (0, _defineProperty2["default"])(PhysicsRunner, "instance", null);
 
-},{"../../world/World.js":292,"../Runner.js":240,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/defineProperty":8,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":18}],243:[function(require,module,exports){
+},{"../../world/World.js":303,"../Runner.js":252,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/defineProperty":8,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":18}],255:[function(require,module,exports){
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
@@ -26064,7 +26929,7 @@ var GameRenderRunner = /*#__PURE__*/function (_Runner) {
 exports.GameRenderRunner = GameRenderRunner;
 (0, _defineProperty2["default"])(GameRenderRunner, "instance", null);
 
-},{"../../renderer/MeshRenderer.js":238,"../../world/World.js":292,"../Runner.js":240,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/defineProperty":8,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":18}],244:[function(require,module,exports){
+},{"../../renderer/MeshRenderer.js":250,"../../world/World.js":303,"../Runner.js":252,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/defineProperty":8,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":18}],256:[function(require,module,exports){
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
@@ -26130,7 +26995,7 @@ var WorldInitializeRunner = /*#__PURE__*/function (_Runner) {
 
 exports["default"] = WorldInitializeRunner;
 
-},{"../../world/World.js":292,"../Runner.js":240,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":18}],245:[function(require,module,exports){
+},{"../../world/World.js":303,"../Runner.js":252,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":18}],257:[function(require,module,exports){
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
@@ -26269,7 +27134,7 @@ var Schema = /*#__PURE__*/function () {
 var _default = Schema;
 exports["default"] = _default;
 
-},{"../exception/type/SystemError.js":77,"./SchemaMeta.js":246,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/interopRequireDefault":12}],246:[function(require,module,exports){
+},{"../exception/type/SystemError.js":77,"./SchemaMeta.js":258,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/interopRequireDefault":12}],258:[function(require,module,exports){
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
@@ -26727,7 +27592,7 @@ var _default = {
 };
 exports["default"] = _default;
 
-},{"../asset/Asset.js":30,"../asset/Folder.js":31,"../asset/types/AssetType.js":32,"../component/Component.js":39,"../content/Content.js":57,"../content/Tab.js":58,"../core/Camera.js":64,"../flow/function/AFunction.js":107,"../manager/AssetsManager.js":175,"../manager/TabManager.js":180,"../manager/UnitManager.js":181,"../operation/StackOperation.js":182,"../pobject/AttributeType.js":200,"../preference/Preference.js":207,"../preference/gameInput/GameInput.js":208,"../preference/gameInput/GameInputPreference.js":209,"../registry/ComponentRegistry.js":235,"../registry/FunctionRegistry.js":236,"../unit/Unit.js":255,"../world/World.js":292,"@babel/runtime/helpers/defineProperty":8,"@babel/runtime/helpers/interopRequireDefault":12}],247:[function(require,module,exports){
+},{"../asset/Asset.js":30,"../asset/Folder.js":31,"../asset/types/AssetType.js":32,"../component/Component.js":39,"../content/Content.js":57,"../content/Tab.js":58,"../core/Camera.js":64,"../flow/function/AFunction.js":109,"../manager/AssetsManager.js":185,"../manager/TabManager.js":190,"../manager/UnitManager.js":191,"../operation/StackOperation.js":192,"../pobject/AttributeType.js":212,"../preference/Preference.js":219,"../preference/gameInput/GameInput.js":220,"../preference/gameInput/GameInputPreference.js":221,"../registry/ComponentRegistry.js":247,"../registry/FunctionRegistry.js":248,"../unit/Unit.js":267,"../world/World.js":303,"@babel/runtime/helpers/defineProperty":8,"@babel/runtime/helpers/interopRequireDefault":12}],259:[function(require,module,exports){
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
@@ -27232,7 +28097,7 @@ var SchemaValidator = /*#__PURE__*/function () {
 var _default = SchemaValidator;
 exports["default"] = _default;
 
-},{"../exception/type/SystemError.js":77,"../pobject/AttributeType.js":200,"../project/data/Data.js":219,"../utils/DataHelper.js":278,"../utils/ObjectHelper.js":285,"../utils/PrimitiveHelper.js":286,"./Schema.js":245,"./SchemaMeta.js":246,"@babel/runtime/helpers/asyncToGenerator":4,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/defineProperty":8,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/regenerator":26}],248:[function(require,module,exports){
+},{"../exception/type/SystemError.js":77,"../pobject/AttributeType.js":212,"../project/data/Data.js":231,"../utils/DataHelper.js":289,"../utils/ObjectHelper.js":296,"../utils/PrimitiveHelper.js":297,"./Schema.js":257,"./SchemaMeta.js":258,"@babel/runtime/helpers/asyncToGenerator":4,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/defineProperty":8,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/regenerator":26}],260:[function(require,module,exports){
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
@@ -27301,7 +28166,7 @@ var ScriptGraphSelector = /*#__PURE__*/function (_UnitSelector) {
 exports["default"] = ScriptGraphSelector;
 (0, _defineProperty2["default"])(ScriptGraphSelector, "instance", void 0);
 
-},{"./UnitSelector.js":249,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/defineProperty":8,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":18}],249:[function(require,module,exports){
+},{"./UnitSelector.js":261,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/defineProperty":8,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":18}],261:[function(require,module,exports){
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
@@ -27506,7 +28371,7 @@ var UnitSelector = /*#__PURE__*/function () {
 exports["default"] = UnitSelector;
 (0, _defineProperty2["default"])(UnitSelector, "instance", void 0);
 
-},{"../component/internal/gui/GUIPendingComponent.js":50,"../utils/UnitHelper.js":289,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/defineProperty":8,"@babel/runtime/helpers/interopRequireDefault":12}],250:[function(require,module,exports){
+},{"../component/internal/gui/GUIPendingComponent.js":50,"../utils/UnitHelper.js":300,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/defineProperty":8,"@babel/runtime/helpers/interopRequireDefault":12}],262:[function(require,module,exports){
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
@@ -27625,7 +28490,7 @@ var JsSerDe = /*#__PURE__*/function (_SerDe) {
 var _default = JsSerDe;
 exports["default"] = _default;
 
-},{"../schema/Schema.js":245,"./SerDe.js":251,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":18}],251:[function(require,module,exports){
+},{"../schema/Schema.js":257,"./SerDe.js":263,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":18}],263:[function(require,module,exports){
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
@@ -27677,7 +28542,7 @@ var SerDe = /*#__PURE__*/function () {
 var _default = SerDe;
 exports["default"] = _default;
 
-},{"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/interopRequireDefault":12}],252:[function(require,module,exports){
+},{"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/interopRequireDefault":12}],264:[function(require,module,exports){
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
@@ -27845,7 +28710,7 @@ var XmlSerDe = /*#__PURE__*/function (_SerDe) {
 var _default = XmlSerDe;
 exports["default"] = _default;
 
-},{"./SerDe.js":251,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/defineProperty":8,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":18}],253:[function(require,module,exports){
+},{"./SerDe.js":263,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/defineProperty":8,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":18}],265:[function(require,module,exports){
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
@@ -28787,7 +29652,7 @@ AppState.States = {
 var _default = AppState;
 exports["default"] = _default;
 
-},{"../core/Mouse.js":70,"../exception/type/SystemError.js":77,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/defineProperty":8,"@babel/runtime/helpers/interopRequireDefault":12}],254:[function(require,module,exports){
+},{"../core/Mouse.js":70,"../exception/type/SystemError.js":77,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/defineProperty":8,"@babel/runtime/helpers/interopRequireDefault":12}],266:[function(require,module,exports){
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
@@ -29414,7 +30279,7 @@ var StateManager = /*#__PURE__*/function () {
 var _default = StateManager;
 exports["default"] = _default;
 
-},{"../core/History.js":67,"./AppState.js":253,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/defineProperty":8,"@babel/runtime/helpers/interopRequireDefault":12}],255:[function(require,module,exports){
+},{"../core/History.js":67,"./AppState.js":265,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/defineProperty":8,"@babel/runtime/helpers/interopRequireDefault":12}],267:[function(require,module,exports){
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
@@ -29528,7 +30393,7 @@ var PrimitiveShape = {
 };
 exports.PrimitiveShape = PrimitiveShape;
 
-},{"../component/internal/gui/property/GUIPropertyComponent.js":56,"../project/data/UnitData.js":232,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":18}],256:[function(require,module,exports){
+},{"../component/internal/gui/property/GUIPropertyComponent.js":56,"../project/data/UnitData.js":244,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":18}],268:[function(require,module,exports){
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
@@ -29594,7 +30459,7 @@ var UnitInstant = /*#__PURE__*/function (_EmptyUnit) {
 
 exports["default"] = UnitInstant;
 
-},{"../type/EmptyUnit.js":275,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":18}],257:[function(require,module,exports){
+},{"../type/EmptyUnit.js":287,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":18}],269:[function(require,module,exports){
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
@@ -29678,7 +30543,7 @@ var TransformUnitInstant = /*#__PURE__*/function (_UnitInstant) {
 
 exports["default"] = TransformUnitInstant;
 
-},{"../../../../component/internal/MeshComponent.js":44,"../../../../component/internal/StyleComponent.js":48,"../../../../component/internal/TransformComponent.js":49,"../../../../component/internal/gui/GUIPendingComponent.js":50,"../../../../component/internal/gui/property/GUIPropertyComponent.js":56,"../../../../utils/Vector.js":290,"../../UnitInstant.js":256,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":18}],258:[function(require,module,exports){
+},{"../../../../component/internal/MeshComponent.js":44,"../../../../component/internal/StyleComponent.js":48,"../../../../component/internal/TransformComponent.js":49,"../../../../component/internal/gui/GUIPendingComponent.js":50,"../../../../component/internal/gui/property/GUIPropertyComponent.js":56,"../../../../utils/Vector.js":301,"../../UnitInstant.js":268,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":18}],270:[function(require,module,exports){
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
@@ -29750,7 +30615,7 @@ var AssetUnitInstant = /*#__PURE__*/function (_UnitInstant) {
 
 exports["default"] = AssetUnitInstant;
 
-},{"../../../../../component/internal/MeshComponent.js":44,"../../../../../component/internal/TransformComponent.js":49,"../../../../../component/internal/gui/property/GUIPropertyComponent.js":56,"../../../UnitInstant.js":256,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":18}],259:[function(require,module,exports){
+},{"../../../../../component/internal/MeshComponent.js":44,"../../../../../component/internal/TransformComponent.js":49,"../../../../../component/internal/gui/property/GUIPropertyComponent.js":56,"../../../UnitInstant.js":268,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":18}],271:[function(require,module,exports){
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
@@ -29837,7 +30702,7 @@ var CameraUnitInstant = /*#__PURE__*/function (_UnitInstant) {
 
 exports["default"] = CameraUnitInstant;
 
-},{"../../../../../component/internal/CameraComponent.js":41,"../../../../../component/internal/MeshComponent.js":44,"../../../../../component/internal/StyleComponent.js":48,"../../../../../component/internal/TransformComponent.js":49,"../../../../../component/internal/gui/property/GUIPropertyComponent.js":56,"../../../../../pobject/Style.js":206,"../../../../Unit.js":255,"../../../UnitInstant.js":256,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":18}],260:[function(require,module,exports){
+},{"../../../../../component/internal/CameraComponent.js":41,"../../../../../component/internal/MeshComponent.js":44,"../../../../../component/internal/StyleComponent.js":48,"../../../../../component/internal/TransformComponent.js":49,"../../../../../component/internal/gui/property/GUIPropertyComponent.js":56,"../../../../../pobject/Style.js":218,"../../../../Unit.js":267,"../../../UnitInstant.js":268,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":18}],272:[function(require,module,exports){
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
@@ -29916,7 +30781,7 @@ var SelectionUnitInstant = /*#__PURE__*/function (_UnitInstant) {
 
 exports["default"] = SelectionUnitInstant;
 
-},{"../../../../../component/internal/MeshComponent.js":44,"../../../../../component/internal/TransformComponent.js":49,"../../../../../component/internal/gui/GUIPendingComponent.js":50,"../../../../../component/internal/gui/property/GUIPropertyComponent.js":56,"../../../../../pobject/Style.js":206,"../../../UnitInstant.js":256,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":18}],261:[function(require,module,exports){
+},{"../../../../../component/internal/MeshComponent.js":44,"../../../../../component/internal/TransformComponent.js":49,"../../../../../component/internal/gui/GUIPendingComponent.js":50,"../../../../../component/internal/gui/property/GUIPropertyComponent.js":56,"../../../../../pobject/Style.js":218,"../../../UnitInstant.js":268,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":18}],273:[function(require,module,exports){
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
@@ -30057,7 +30922,7 @@ var GraphEdgeUnitInstant = /*#__PURE__*/function (_UnitInstant) {
 
 exports["default"] = GraphEdgeUnitInstant;
 
-},{"../../../../../component/internal/MeshComponent.js":44,"../../../../../component/internal/StyleComponent.js":48,"../../../../../component/internal/TransformComponent.js":49,"../../../../../component/internal/gui/node/NodeInputComponent.js":55,"../../../../../component/internal/gui/property/GUIPropertyComponent.js":56,"../../../../../pobject/Style.js":206,"../../../../../utils/GeometryHelper.js":281,"../../../../../utils/NodeHelper.js":284,"../../../../../utils/Vector.js":290,"../../../../Unit.js":255,"../../../UnitInstant.js":256,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":18}],262:[function(require,module,exports){
+},{"../../../../../component/internal/MeshComponent.js":44,"../../../../../component/internal/StyleComponent.js":48,"../../../../../component/internal/TransformComponent.js":49,"../../../../../component/internal/gui/node/NodeInputComponent.js":55,"../../../../../component/internal/gui/property/GUIPropertyComponent.js":56,"../../../../../pobject/Style.js":218,"../../../../../utils/GeometryHelper.js":292,"../../../../../utils/NodeHelper.js":295,"../../../../../utils/Vector.js":301,"../../../../Unit.js":267,"../../../UnitInstant.js":268,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":18}],274:[function(require,module,exports){
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
@@ -30156,7 +31021,7 @@ var GraphNodeUnitInstant = /*#__PURE__*/function (_UnitInstant) {
 
 exports["default"] = GraphNodeUnitInstant;
 
-},{"../../../../../component/internal/MeshComponent.js":44,"../../../../../component/internal/TransformComponent.js":49,"../../../../../component/internal/gui/node/NodeComponent.js":54,"../../../../../component/internal/gui/property/GUIPropertyComponent.js":56,"../../../../../utils/NodeHelper.js":284,"../../../../../utils/ScriptHelper.js":287,"../../../../Unit.js":255,"../../../UnitInstant.js":256,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":18}],263:[function(require,module,exports){
+},{"../../../../../component/internal/MeshComponent.js":44,"../../../../../component/internal/TransformComponent.js":49,"../../../../../component/internal/gui/node/NodeComponent.js":54,"../../../../../component/internal/gui/property/GUIPropertyComponent.js":56,"../../../../../utils/NodeHelper.js":295,"../../../../../utils/ScriptHelper.js":298,"../../../../Unit.js":267,"../../../UnitInstant.js":268,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":18}],275:[function(require,module,exports){
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
@@ -30245,7 +31110,7 @@ var GridUnitInstant = /*#__PURE__*/function (_UnitInstant) {
 
 exports["default"] = GridUnitInstant;
 
-},{"../../../../../component/internal/MeshComponent.js":44,"../../../../../component/internal/StyleComponent.js":48,"../../../../../component/internal/TransformComponent.js":49,"../../../../../component/internal/gui/GUIPendingComponent.js":50,"../../../../../component/internal/gui/grid/GUIGridComponent.js":51,"../../../../../component/internal/gui/property/GUIPropertyComponent.js":56,"../../../../../pobject/Style.js":206,"../../../../../utils/Vector.js":290,"../../../../Unit.js":255,"../../../UnitInstant.js":256,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":18}],264:[function(require,module,exports){
+},{"../../../../../component/internal/MeshComponent.js":44,"../../../../../component/internal/StyleComponent.js":48,"../../../../../component/internal/TransformComponent.js":49,"../../../../../component/internal/gui/GUIPendingComponent.js":50,"../../../../../component/internal/gui/grid/GUIGridComponent.js":51,"../../../../../component/internal/gui/property/GUIPropertyComponent.js":56,"../../../../../pobject/Style.js":218,"../../../../../utils/Vector.js":301,"../../../../Unit.js":267,"../../../UnitInstant.js":268,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":18}],276:[function(require,module,exports){
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
@@ -30332,7 +31197,7 @@ var GridXUnitInstant = /*#__PURE__*/function (_UnitInstant) {
 
 exports["default"] = GridXUnitInstant;
 
-},{"../../../../../component/internal/MeshComponent.js":44,"../../../../../component/internal/TransformComponent.js":49,"../../../../../component/internal/gui/GUIPendingComponent.js":50,"../../../../../component/internal/gui/grid/GUIGridXComponent.js":52,"../../../../../pobject/Style.js":206,"../../../../../utils/Vector.js":290,"../../../../Unit.js":255,"../../../UnitInstant.js":256,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":18}],265:[function(require,module,exports){
+},{"../../../../../component/internal/MeshComponent.js":44,"../../../../../component/internal/TransformComponent.js":49,"../../../../../component/internal/gui/GUIPendingComponent.js":50,"../../../../../component/internal/gui/grid/GUIGridXComponent.js":52,"../../../../../pobject/Style.js":218,"../../../../../utils/Vector.js":301,"../../../../Unit.js":267,"../../../UnitInstant.js":268,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":18}],277:[function(require,module,exports){
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
@@ -30419,7 +31284,7 @@ var GridYUnitInstant = /*#__PURE__*/function (_UnitInstant) {
 
 exports["default"] = GridYUnitInstant;
 
-},{"../../../../../component/internal/MeshComponent.js":44,"../../../../../component/internal/TransformComponent.js":49,"../../../../../component/internal/gui/GUIPendingComponent.js":50,"../../../../../component/internal/gui/grid/GUIGridYComponent.js":53,"../../../../../pobject/Style.js":206,"../../../../../utils/Vector.js":290,"../../../../Unit.js":255,"../../../UnitInstant.js":256,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":18}],266:[function(require,module,exports){
+},{"../../../../../component/internal/MeshComponent.js":44,"../../../../../component/internal/TransformComponent.js":49,"../../../../../component/internal/gui/GUIPendingComponent.js":50,"../../../../../component/internal/gui/grid/GUIGridYComponent.js":53,"../../../../../pobject/Style.js":218,"../../../../../utils/Vector.js":301,"../../../../Unit.js":267,"../../../UnitInstant.js":268,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":18}],278:[function(require,module,exports){
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
@@ -30492,7 +31357,7 @@ var MoveFreeUnitInstant = /*#__PURE__*/function (_TransformUnitInstant) {
 
 exports["default"] = MoveFreeUnitInstant;
 
-},{"../../../../../pobject/Size.js":205,"../../../../../pobject/Style.js":206,"../../../../../utils/Vector.js":290,"../../../../Unit.js":255,"../TransformUnitInstant.js":257,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/get":9,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":18}],267:[function(require,module,exports){
+},{"../../../../../pobject/Size.js":217,"../../../../../pobject/Style.js":218,"../../../../../utils/Vector.js":301,"../../../../Unit.js":267,"../TransformUnitInstant.js":269,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/get":9,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":18}],279:[function(require,module,exports){
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
@@ -30565,7 +31430,7 @@ var MoveXUnitInstant = /*#__PURE__*/function (_TransformUnitInstant) {
 
 exports["default"] = MoveXUnitInstant;
 
-},{"../../../../../pobject/Size.js":205,"../../../../../pobject/Style.js":206,"../../../../../utils/Vector.js":290,"../../../../Unit.js":255,"../TransformUnitInstant.js":257,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/get":9,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":18}],268:[function(require,module,exports){
+},{"../../../../../pobject/Size.js":217,"../../../../../pobject/Style.js":218,"../../../../../utils/Vector.js":301,"../../../../Unit.js":267,"../TransformUnitInstant.js":269,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/get":9,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":18}],280:[function(require,module,exports){
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
@@ -30638,7 +31503,7 @@ var MoveYUnitInstant = /*#__PURE__*/function (_TransformUnitInstant) {
 
 exports["default"] = MoveYUnitInstant;
 
-},{"../../../../../pobject/Size.js":205,"../../../../../pobject/Style.js":206,"../../../../../utils/Vector.js":290,"../../../../Unit.js":255,"../TransformUnitInstant.js":257,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/get":9,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":18}],269:[function(require,module,exports){
+},{"../../../../../pobject/Size.js":217,"../../../../../pobject/Style.js":218,"../../../../../utils/Vector.js":301,"../../../../Unit.js":267,"../TransformUnitInstant.js":269,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/get":9,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":18}],281:[function(require,module,exports){
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
@@ -30719,7 +31584,7 @@ var CircleUnitInstant = /*#__PURE__*/function (_UnitInstant) {
 
 exports["default"] = CircleUnitInstant;
 
-},{"../../../../../component/internal/MeshComponent.js":44,"../../../../../component/internal/TransformComponent.js":49,"../../../../../component/internal/gui/GUIPendingComponent.js":50,"../../../../../component/internal/gui/property/GUIPropertyComponent.js":56,"../../../../../pobject/Style.js":206,"../../../../Unit.js":255,"../../../UnitInstant.js":256,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":18}],270:[function(require,module,exports){
+},{"../../../../../component/internal/MeshComponent.js":44,"../../../../../component/internal/TransformComponent.js":49,"../../../../../component/internal/gui/GUIPendingComponent.js":50,"../../../../../component/internal/gui/property/GUIPropertyComponent.js":56,"../../../../../pobject/Style.js":218,"../../../../Unit.js":267,"../../../UnitInstant.js":268,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":18}],282:[function(require,module,exports){
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
@@ -30800,7 +31665,7 @@ var RectUnitInstant = /*#__PURE__*/function (_UnitInstant) {
 
 exports["default"] = RectUnitInstant;
 
-},{"../../../../../component/internal/MeshComponent.js":44,"../../../../../component/internal/TransformComponent.js":49,"../../../../../component/internal/gui/GUIPendingComponent.js":50,"../../../../../component/internal/gui/property/GUIPropertyComponent.js":56,"../../../../../pobject/Style.js":206,"../../../../Unit.js":255,"../../../UnitInstant.js":256,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":18}],271:[function(require,module,exports){
+},{"../../../../../component/internal/MeshComponent.js":44,"../../../../../component/internal/TransformComponent.js":49,"../../../../../component/internal/gui/GUIPendingComponent.js":50,"../../../../../component/internal/gui/property/GUIPropertyComponent.js":56,"../../../../../pobject/Style.js":218,"../../../../Unit.js":267,"../../../UnitInstant.js":268,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":18}],283:[function(require,module,exports){
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
@@ -30873,7 +31738,7 @@ var RotateZUnitInstant = /*#__PURE__*/function (_TransformUnitInstant) {
 
 exports["default"] = RotateZUnitInstant;
 
-},{"../../../../../pobject/Size.js":205,"../../../../../pobject/Style.js":206,"../../../../../utils/Vector.js":290,"../../../../Unit.js":255,"../TransformUnitInstant.js":257,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/get":9,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":18}],272:[function(require,module,exports){
+},{"../../../../../pobject/Size.js":217,"../../../../../pobject/Style.js":218,"../../../../../utils/Vector.js":301,"../../../../Unit.js":267,"../TransformUnitInstant.js":269,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/get":9,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":18}],284:[function(require,module,exports){
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
@@ -30946,7 +31811,7 @@ var ScaleFreeUnitInstant = /*#__PURE__*/function (_TransformUnitInstant) {
 
 exports["default"] = ScaleFreeUnitInstant;
 
-},{"../../../../../pobject/Size.js":205,"../../../../../pobject/Style.js":206,"../../../../../utils/Vector.js":290,"../../../../Unit.js":255,"../TransformUnitInstant.js":257,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/get":9,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":18}],273:[function(require,module,exports){
+},{"../../../../../pobject/Size.js":217,"../../../../../pobject/Style.js":218,"../../../../../utils/Vector.js":301,"../../../../Unit.js":267,"../TransformUnitInstant.js":269,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/get":9,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":18}],285:[function(require,module,exports){
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
@@ -31019,7 +31884,7 @@ var ScaleXUnitInstant = /*#__PURE__*/function (_TransformUnitInstant) {
 
 exports["default"] = ScaleXUnitInstant;
 
-},{"../../../../../pobject/Size.js":205,"../../../../../pobject/Style.js":206,"../../../../../utils/Vector.js":290,"../../../../Unit.js":255,"../TransformUnitInstant.js":257,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/get":9,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":18}],274:[function(require,module,exports){
+},{"../../../../../pobject/Size.js":217,"../../../../../pobject/Style.js":218,"../../../../../utils/Vector.js":301,"../../../../Unit.js":267,"../TransformUnitInstant.js":269,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/get":9,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":18}],286:[function(require,module,exports){
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
@@ -31092,7 +31957,7 @@ var ScaleYUnitInstant = /*#__PURE__*/function (_TransformUnitInstant) {
 
 exports["default"] = ScaleYUnitInstant;
 
-},{"../../../../../pobject/Size.js":205,"../../../../../pobject/Style.js":206,"../../../../../utils/Vector.js":290,"../../../../Unit.js":255,"../TransformUnitInstant.js":257,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/get":9,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":18}],275:[function(require,module,exports){
+},{"../../../../../pobject/Size.js":217,"../../../../../pobject/Style.js":218,"../../../../../utils/Vector.js":301,"../../../../Unit.js":267,"../TransformUnitInstant.js":269,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/get":9,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":18}],287:[function(require,module,exports){
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
@@ -31139,121 +32004,7 @@ var EmptyUnit = /*#__PURE__*/function (_Unit) {
 
 exports["default"] = EmptyUnit;
 
-},{"../../component/internal/MeshComponent.js":44,"../../component/internal/StyleComponent.js":48,"../../component/internal/TransformComponent.js":49,"../../component/internal/gui/property/GUIPropertyComponent.js":56,"../Unit.js":255,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":18}],276:[function(require,module,exports){
-"use strict";
-
-var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports["default"] = void 0;
-
-var _classCallCheck2 = _interopRequireDefault(require("@babel/runtime/helpers/classCallCheck"));
-
-var _createClass2 = _interopRequireDefault(require("@babel/runtime/helpers/createClass"));
-
-var _AssetScript = _interopRequireDefault(require("../asset/types/script/AssetScript.js"));
-
-var _World = _interopRequireDefault(require("../world/World.js"));
-
-var _SystemError = _interopRequireDefault(require("../exception/type/SystemError.js"));
-
-var _VariableNode = _interopRequireDefault(require("../flow/node/variable/VariableNode.js"));
-
-var _NodeHelper = _interopRequireDefault(require("./NodeHelper.js"));
-
-var _DynamicAttribute = _interopRequireDefault(require("../pobject/DynamicAttribute.js"));
-
-var _AssetAnimationScriptXml = _interopRequireDefault(require("../asset/types/animation/AssetAnimationScriptXml.js"));
-
-var _AnimationComponent = _interopRequireDefault(require("../component/internal/AnimationComponent.js"));
-
-var AssetHelper = /*#__PURE__*/function () {
-  function AssetHelper() {
-    (0, _classCallCheck2["default"])(this, AssetHelper);
-  }
-
-  (0, _createClass2["default"])(AssetHelper, null, [{
-    key: "deleteAsset",
-
-    /**
-     * @param {Asset} asset
-     */
-    value: function deleteAsset(asset) {
-      var world = _World["default"].get();
-
-      var scriptManager = world.getScriptManager();
-      var assetManager = world.getAssetsManager();
-      assetManager.deleteAsset(asset);
-
-      if (asset.getType() instanceof _AssetScript["default"]) {
-        var script = scriptManager.findByName(asset.getName());
-        scriptManager["delete"](script, world.getFunctionRegistry());
-      }
-
-      if (asset.getType() instanceof _AssetAnimationScriptXml["default"]) {
-        world.getUnitManager().findUnitsByComponents([_AnimationComponent["default"]]).forEach(function (unit) {
-          var animationComponent = unit.getComponent(_AnimationComponent["default"]);
-
-          if (animationComponent.getScript() === asset.getName()) {
-            unit.deleteComponent(animationComponent.getId());
-          }
-        });
-      }
-    }
-    /**
-     * @param {number} assetId
-     * @return {DynamicAttribute[]}
-     */
-
-  }, {
-    key: "getAssetScriptVars",
-    value: function getAssetScriptVars(assetId) {
-      var assetManager = _World["default"].get().getAssetsManager();
-
-      var asset = assetManager.findAssetById(assetId);
-
-      if (!asset) {
-        throw new _SystemError["default"]("Asset not found \"".concat(assetId, "\""));
-      }
-
-      var script = this.getScript(asset);
-
-      if (!script) {
-        throw new TypeError("No compiled script found for asset \"".concat(asset.getName(), "\""));
-      }
-
-      var nodes = script.findNodesByClass(_VariableNode["default"]);
-      return nodes.map(function (node) {
-        var sourceNode = _NodeHelper["default"].getSourceNode(node);
-
-        return new _DynamicAttribute["default"](sourceNode.getName(), sourceNode.getOutput().getAttrType());
-      });
-    }
-    /**
-     * @param {Asset} asset
-     * @return {AScript}
-     */
-
-  }, {
-    key: "getScript",
-    value: function getScript(asset) {
-      if (asset.getType() instanceof _AssetScript["default"]) {
-        var scriptManager = _World["default"].get().getScriptManager();
-
-        return scriptManager.findByName(asset.getName());
-      }
-
-      throw new _SystemError["default"]("Asset \"".concat(asset.getName(), "\" is not a script"));
-    }
-  }]);
-  return AssetHelper;
-}();
-
-exports["default"] = AssetHelper;
-
-},{"../asset/types/animation/AssetAnimationScriptXml.js":33,"../asset/types/script/AssetScript.js":36,"../component/internal/AnimationComponent.js":40,"../exception/type/SystemError.js":77,"../flow/node/variable/VariableNode.js":146,"../pobject/DynamicAttribute.js":202,"../world/World.js":292,"./NodeHelper.js":284,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/interopRequireDefault":12}],277:[function(require,module,exports){
+},{"../../component/internal/MeshComponent.js":44,"../../component/internal/StyleComponent.js":48,"../../component/internal/TransformComponent.js":49,"../../component/internal/gui/property/GUIPropertyComponent.js":56,"../Unit.js":267,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":18}],288:[function(require,module,exports){
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
@@ -31338,7 +32089,7 @@ var ClassHelper = /*#__PURE__*/function () {
 var _default = ClassHelper;
 exports["default"] = _default;
 
-},{"../exception/type/SystemError.js":77,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/interopRequireDefault":12}],278:[function(require,module,exports){
+},{"../exception/type/SystemError.js":77,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/interopRequireDefault":12}],289:[function(require,module,exports){
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
@@ -31392,7 +32143,7 @@ var DataHelper = /*#__PURE__*/function () {
 
 exports["default"] = DataHelper;
 
-},{"../project/data/DataSchema.js":220,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/interopRequireDefault":12}],279:[function(require,module,exports){
+},{"../project/data/DataSchema.js":232,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/interopRequireDefault":12}],290:[function(require,module,exports){
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
@@ -31578,7 +32329,7 @@ var DynamicAttributeHelper = /*#__PURE__*/function () {
 
 exports["default"] = DynamicAttributeHelper;
 
-},{"../exception/type/ClientError.js":75,"../pobject/AttributeType.js":200,"../pobject/DynamicAttribute.js":202,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/interopRequireDefault":12}],280:[function(require,module,exports){
+},{"../exception/type/ClientError.js":75,"../pobject/AttributeType.js":212,"../pobject/DynamicAttribute.js":214,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/interopRequireDefault":12}],291:[function(require,module,exports){
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
@@ -31717,7 +32468,7 @@ var FileHelper = /*#__PURE__*/function () {
 var _default = FileHelper;
 exports["default"] = _default;
 
-},{"../exception/type/ClientError.js":75,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/defineProperty":8,"@babel/runtime/helpers/interopRequireDefault":12}],281:[function(require,module,exports){
+},{"../exception/type/ClientError.js":75,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/defineProperty":8,"@babel/runtime/helpers/interopRequireDefault":12}],292:[function(require,module,exports){
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
@@ -31841,7 +32592,7 @@ var GeometryHelper = /*#__PURE__*/function () {
 
 exports["default"] = GeometryHelper;
 
-},{"../pobject/Size.js":205,"./Vector.js":290,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/interopRequireDefault":12}],282:[function(require,module,exports){
+},{"../pobject/Size.js":217,"./Vector.js":301,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/interopRequireDefault":12}],293:[function(require,module,exports){
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
@@ -31896,7 +32647,7 @@ var ImageHelper = /*#__PURE__*/function () {
 var _default = ImageHelper;
 exports["default"] = _default;
 
-},{"../core/Constant.js":65,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/interopRequireDefault":12}],283:[function(require,module,exports){
+},{"../core/Constant.js":65,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/interopRequireDefault":12}],294:[function(require,module,exports){
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
@@ -31979,7 +32730,7 @@ var Maths = /*#__PURE__*/function () {
 var _default = Maths;
 exports["default"] = _default;
 
-},{"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/interopRequireDefault":12}],284:[function(require,module,exports){
+},{"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/interopRequireDefault":12}],295:[function(require,module,exports){
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
@@ -32043,6 +32794,14 @@ var _ComponentNode = _interopRequireDefault(require("../flow/node/ComponentNode.
 
 var _AComponent = _interopRequireDefault(require("../flow/component/AComponent.js"));
 
+var _NumberVariableNode = _interopRequireDefault(require("../flow/node/variable/NumberVariableNode.js"));
+
+var _ANumberVariable = _interopRequireDefault(require("../flow/variable/ANumberVariable.js"));
+
+var _ReferenceNode = _interopRequireDefault(require("../flow/node/ReferenceNode.js"));
+
+var _AReference = _interopRequireDefault(require("../flow/reference/AReference.js"));
+
 var NodeHelper = /*#__PURE__*/function () {
   function NodeHelper() {
     (0, _classCallCheck2["default"])(this, NodeHelper);
@@ -32078,8 +32837,14 @@ var NodeHelper = /*#__PURE__*/function () {
         case _AnimationNode["default"]:
           return new _AAnimation["default"](sourceName);
 
+        case _ReferenceNode["default"]:
+          return new _AReference["default"](sourceName);
+
         case _StringVariableNode["default"]:
           return new _AStringVariable["default"](sourceName);
+
+        case _NumberVariableNode["default"]:
+          return new _ANumberVariable["default"](sourceName);
 
         case _ComponentNode["default"]:
           return new _AComponent["default"](sourceName);
@@ -32170,6 +32935,8 @@ var NodeHelper = /*#__PURE__*/function () {
         headColor = '#5e4322';
       } else if (type === _ANode.NODE_TYPES.COMPONENT) {
         headColor = '#5e2254';
+      } else if (type === _ANode.NODE_TYPES.REFERENCE) {
+        headColor = '#22445e';
       }
 
       return {
@@ -32266,7 +33033,7 @@ var NodeHelper = /*#__PURE__*/function () {
   }, {
     key: "hasBaseInput",
     value: function hasBaseInput(type) {
-      return type === _ANode.NODE_TYPES.FUNCTION || type === _ANode.NODE_TYPES.CONDITION || type === _ANode.NODE_TYPES.ANIMATION;
+      return type === _ANode.NODE_TYPES.FUNCTION || type === _ANode.NODE_TYPES.CONDITION || type === _ANode.NODE_TYPES.ANIMATION || type === _ANode.NODE_TYPES.REFERENCE;
     }
     /**
      * @param {string} type
@@ -32284,7 +33051,7 @@ var NodeHelper = /*#__PURE__*/function () {
 
 exports["default"] = NodeHelper;
 
-},{"../exception/type/ClientError.js":75,"../flow/animation/AAnimation.js":90,"../flow/component/AComponent.js":93,"../flow/condition/ACondition.js":94,"../flow/constant/AConstant.js":97,"../flow/event/AEvent.js":98,"../flow/function/AFunction.js":107,"../flow/keycode/AKeyCode.js":135,"../flow/node/ANode.js":136,"../flow/node/AnimationNode.js":137,"../flow/node/ComponentNode.js":138,"../flow/node/ConditionNode.js":139,"../flow/node/ConstantNode.js":140,"../flow/node/EventNode.js":141,"../flow/node/FunctionNode.js":142,"../flow/node/KeyCodeNode.js":143,"../flow/node/UnitNode.js":144,"../flow/node/variable/StringVariableNode.js":145,"../flow/unit/AUnit.js":147,"../flow/variable/AStringVariable.js":148,"../flow/variable/AVariable.js":149,"../pobject/Size.js":205,"../world/World.js":292,"./DynamicAttributeHelper.js":279,"./Vector.js":290,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/interopRequireDefault":12}],285:[function(require,module,exports){
+},{"../exception/type/ClientError.js":75,"../flow/animation/AAnimation.js":90,"../flow/component/AComponent.js":93,"../flow/condition/ACondition.js":94,"../flow/constant/AConstant.js":97,"../flow/event/AEvent.js":98,"../flow/function/AFunction.js":109,"../flow/keycode/AKeyCode.js":141,"../flow/node/ANode.js":142,"../flow/node/AnimationNode.js":143,"../flow/node/ComponentNode.js":144,"../flow/node/ConditionNode.js":145,"../flow/node/ConstantNode.js":146,"../flow/node/EventNode.js":147,"../flow/node/FunctionNode.js":148,"../flow/node/KeyCodeNode.js":149,"../flow/node/ReferenceNode.js":150,"../flow/node/UnitNode.js":151,"../flow/node/variable/NumberVariableNode.js":152,"../flow/node/variable/StringVariableNode.js":153,"../flow/reference/AReference.js":155,"../flow/unit/AUnit.js":156,"../flow/variable/ANumberVariable.js":157,"../flow/variable/AStringVariable.js":158,"../flow/variable/AVariable.js":159,"../pobject/Size.js":217,"../world/World.js":303,"./DynamicAttributeHelper.js":290,"./Vector.js":301,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/interopRequireDefault":12}],296:[function(require,module,exports){
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
@@ -32473,7 +33240,7 @@ var ObjectHelper = /*#__PURE__*/function () {
 var _default = ObjectHelper;
 exports["default"] = _default;
 
-},{"../exception/type/SystemError.js":77,"./ClassHelper.js":277,"./StringHelper.js":288,"@babel/runtime/helpers/asyncToGenerator":4,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/regenerator":26}],286:[function(require,module,exports){
+},{"../exception/type/SystemError.js":77,"./ClassHelper.js":288,"./StringHelper.js":299,"@babel/runtime/helpers/asyncToGenerator":4,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/regenerator":26}],297:[function(require,module,exports){
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
@@ -32530,7 +33297,7 @@ var PrimitiveHelper = /*#__PURE__*/function () {
 
 exports["default"] = PrimitiveHelper;
 
-},{"../exception/type/SystemError.js":77,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/interopRequireDefault":12}],287:[function(require,module,exports){
+},{"../exception/type/SystemError.js":77,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/interopRequireDefault":12}],298:[function(require,module,exports){
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
@@ -32580,6 +33347,10 @@ var _AEmptyStackFunction = _interopRequireDefault(require("../flow/function/AEmp
 
 var _ComponentNode = _interopRequireDefault(require("../flow/node/ComponentNode.js"));
 
+var _AAnimation = _interopRequireDefault(require("../flow/animation/AAnimation.js"));
+
+var _ReferenceNode = _interopRequireDefault(require("../flow/node/ReferenceNode.js"));
+
 var ScriptHelper = /*#__PURE__*/function () {
   function ScriptHelper() {
     (0, _classCallCheck2["default"])(this, ScriptHelper);
@@ -32612,6 +33383,8 @@ var ScriptHelper = /*#__PURE__*/function () {
         node = script.createNode(functionRegistry, _UnitNode["default"], nodeValue);
       } else if (nodeType === _ANode.NODE_TYPES.ANIMATION) {
         node = script.createNode(functionRegistry, _AnimationNode["default"], nodeValue);
+      } else if (nodeType === _ANode.NODE_TYPES.REFERENCE) {
+        node = script.createNode(functionRegistry, _ReferenceNode["default"], nodeValue);
       } else if (nodeType === _ANode.NODE_TYPES.VAR_STRING) {
         node = script.createNode(functionRegistry, _StringVariableNode["default"], nodeValue);
       } else if (nodeType === _ANode.NODE_TYPES.COMPONENT) {
@@ -32644,6 +33417,8 @@ var ScriptHelper = /*#__PURE__*/function () {
         nodeType = _ANode.NODE_TYPES.UNIT;
       } else if (node instanceof _AnimationNode["default"]) {
         nodeType = _ANode.NODE_TYPES.ANIMATION;
+      } else if (node instanceof _ReferenceNode["default"]) {
+        nodeType = _ANode.NODE_TYPES.REFERENCE;
       } else if (node instanceof _KeyCodeNode["default"]) {
         nodeType = _ANode.NODE_TYPES.KEY_CODE;
       } else if (node instanceof _StringVariableNode["default"]) {
@@ -32765,7 +33540,20 @@ var ScriptHelper = /*#__PURE__*/function () {
       var nodeIndex = script.getNodes().findIndex(function (pNode) {
         return pNode === node;
       });
-      return "".concat(script.getName(), ".").concat(node.getSourceName()).concat(nodeIndex);
+      return "".concat(script.getName(), ".").concat(node.getSourceName(), ".").concat(nodeIndex);
+    }
+    /**
+     * @param {string} className
+     * @param {string} name
+     * @return {string}
+     */
+
+  }, {
+    key: "getValueFromFunctionName",
+    value: function getValueFromFunctionName(className, name) {
+      var classRegex = new RegExp("^".concat(className, "."));
+      var nameFunction = name.replace(classRegex, '');
+      return nameFunction.replace(/^(.+)\.[0-9]+$/, '$1');
     }
     /**
      * @param {AScript} script
@@ -32780,11 +33568,34 @@ var ScriptHelper = /*#__PURE__*/function () {
 
       var functionName = this.generateFunctionName(script, node);
 
-      if (element instanceof _AEvent["default"]) {
+      if (element instanceof _AEvent["default"] || element instanceof _AAnimation["default"]) {
         return new element.constructor(functionName);
       }
 
       return new _AEmptyStackFunction["default"](functionName);
+    }
+    /**
+     * @param {AScript} script
+     * @param {ANode} node
+     * @param {string} functionName
+     * @return {boolean}
+     */
+
+  }, {
+    key: "isNodeHasPredecessor",
+    value: function isNodeHasPredecessor(script, node, functionName) {
+      var inputs = node.getInputs();
+
+      for (var iInput in inputs) {
+        var sourceNodeId = inputs[iInput].getSourceNodeId();
+        var sourceNode = script.findNodeById(sourceNodeId);
+
+        if (sourceNode.getName() === functionName || this.isNodeHasPredecessor(script, sourceNode, functionName)) {
+          return true;
+        }
+      }
+
+      return false;
     }
   }]);
   return ScriptHelper;
@@ -32792,7 +33603,7 @@ var ScriptHelper = /*#__PURE__*/function () {
 
 exports["default"] = ScriptHelper;
 
-},{"../component/internal/MeshComponent.js":44,"../component/internal/TransformComponent.js":49,"../component/internal/gui/node/NodeComponent.js":54,"../exception/type/ClientError.js":75,"../flow/event/AEvent.js":98,"../flow/function/AEmptyStackFunction.js":106,"../flow/node/ANode.js":136,"../flow/node/AnimationNode.js":137,"../flow/node/ComponentNode.js":138,"../flow/node/ConditionNode.js":139,"../flow/node/ConstantNode.js":140,"../flow/node/EventNode.js":141,"../flow/node/FunctionNode.js":142,"../flow/node/KeyCodeNode.js":143,"../flow/node/UnitNode.js":144,"../flow/node/variable/StringVariableNode.js":145,"./NodeHelper.js":284,"./Vector.js":290,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/interopRequireDefault":12}],288:[function(require,module,exports){
+},{"../component/internal/MeshComponent.js":44,"../component/internal/TransformComponent.js":49,"../component/internal/gui/node/NodeComponent.js":54,"../exception/type/ClientError.js":75,"../flow/animation/AAnimation.js":90,"../flow/event/AEvent.js":98,"../flow/function/AEmptyStackFunction.js":108,"../flow/node/ANode.js":142,"../flow/node/AnimationNode.js":143,"../flow/node/ComponentNode.js":144,"../flow/node/ConditionNode.js":145,"../flow/node/ConstantNode.js":146,"../flow/node/EventNode.js":147,"../flow/node/FunctionNode.js":148,"../flow/node/KeyCodeNode.js":149,"../flow/node/ReferenceNode.js":150,"../flow/node/UnitNode.js":151,"../flow/node/variable/StringVariableNode.js":153,"./NodeHelper.js":295,"./Vector.js":301,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/interopRequireDefault":12}],299:[function(require,module,exports){
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
@@ -32827,7 +33638,7 @@ var StringHelper = /*#__PURE__*/function () {
 
 exports["default"] = StringHelper;
 
-},{"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/interopRequireDefault":12}],289:[function(require,module,exports){
+},{"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/interopRequireDefault":12}],300:[function(require,module,exports){
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
@@ -33214,7 +34025,7 @@ var UnitHelper = /*#__PURE__*/function () {
 
 exports["default"] = UnitHelper;
 
-},{"../component/internal/CircleColliderComponent.js":42,"../component/internal/ColliderComponent.js":43,"../component/internal/MeshComponent.js":44,"../component/internal/RectColliderComponent.js":45,"../component/internal/TransformComponent.js":49,"../core/Window.js":73,"../pobject/Size.js":205,"./GeometryHelper.js":281,"./Vector.js":290,"./Vertex.js":291,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/interopRequireDefault":12}],290:[function(require,module,exports){
+},{"../component/internal/CircleColliderComponent.js":42,"../component/internal/ColliderComponent.js":43,"../component/internal/MeshComponent.js":44,"../component/internal/RectColliderComponent.js":45,"../component/internal/TransformComponent.js":49,"../core/Window.js":73,"../pobject/Size.js":217,"./GeometryHelper.js":292,"./Vector.js":301,"./Vertex.js":302,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/interopRequireDefault":12}],301:[function(require,module,exports){
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
@@ -33418,7 +34229,7 @@ var Vector = /*#__PURE__*/function () {
 var _default = Vector;
 exports["default"] = _default;
 
-},{"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/interopRequireDefault":12}],291:[function(require,module,exports){
+},{"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/interopRequireDefault":12}],302:[function(require,module,exports){
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
@@ -33550,7 +34361,7 @@ var Vertex = /*#__PURE__*/function () {
 var _default = Vertex;
 exports["default"] = _default;
 
-},{"./Vector.js":290,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/interopRequireDefault":12}],292:[function(require,module,exports){
+},{"./Vector.js":301,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/interopRequireDefault":12}],303:[function(require,module,exports){
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
@@ -34017,7 +34828,7 @@ var World = /*#__PURE__*/function (_WorldData) {
 var _default = World;
 exports["default"] = _default;
 
-},{"../component/internal/MeshComponent.js":44,"../component/internal/TransformComponent.js":49,"../core/Camera.js":64,"../core/Constant.js":65,"../manager/AnimationManager.js":174,"../manager/AssetsManager.js":175,"../manager/GraphManager.js":176,"../manager/MeshManager.js":177,"../manager/PhysicsManager.js":178,"../manager/ScriptManager.js":179,"../manager/TabManager.js":180,"../manager/UnitManager.js":181,"../pobject/Size.js":205,"../preference/Preference.js":207,"../project/data/WorldData.js":234,"../registry/ComponentRegistry.js":235,"../registry/FunctionRegistry.js":236,"../selector/UnitSelector.js":249,"../utils/UnitHelper.js":289,"../utils/Vector.js":290,"@babel/runtime/helpers/assertThisInitialized":3,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/defineProperty":8,"@babel/runtime/helpers/get":9,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":18}],293:[function(require,module,exports){
+},{"../component/internal/MeshComponent.js":44,"../component/internal/TransformComponent.js":49,"../core/Camera.js":64,"../core/Constant.js":65,"../manager/AnimationManager.js":184,"../manager/AssetsManager.js":185,"../manager/GraphManager.js":186,"../manager/MeshManager.js":187,"../manager/PhysicsManager.js":188,"../manager/ScriptManager.js":189,"../manager/TabManager.js":190,"../manager/UnitManager.js":191,"../pobject/Size.js":217,"../preference/Preference.js":219,"../project/data/WorldData.js":246,"../registry/ComponentRegistry.js":247,"../registry/FunctionRegistry.js":248,"../selector/UnitSelector.js":261,"../utils/UnitHelper.js":300,"../utils/Vector.js":301,"@babel/runtime/helpers/assertThisInitialized":3,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/defineProperty":8,"@babel/runtime/helpers/get":9,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":18}],304:[function(require,module,exports){
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
@@ -34028,4 +34839,4 @@ var _RunGame = _interopRequireDefault(require("../app/loop/RunGame.js"));
 
 new _Application["default"]([_RunGame["default"]]).start();
 
-},{"../app/core/Application.js":63,"../app/loop/RunGame.js":172,"@babel/runtime/helpers/interopRequireDefault":12}]},{},[293]);
+},{"../app/core/Application.js":63,"../app/loop/RunGame.js":182,"@babel/runtime/helpers/interopRequireDefault":12}]},{},[304]);

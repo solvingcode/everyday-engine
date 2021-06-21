@@ -4,10 +4,12 @@ import StackRegister from './StackRegister.js'
 import PushProcessor from './processor/PushProcessor.js'
 import ExitProcessor from './processor/ExitProcessor.js'
 import SystemError from '../exception/type/SystemError.js'
-import VarProcessor from './processor/VarProcessor.js'
+import GetProcessor from './processor/GetProcessor.js'
 import EventProcessor from './processor/EventProcessor.js'
 import JumpProcessor from './processor/JumpProcessor.js'
 import ClientError from '../exception/type/ClientError.js'
+import SelfProcessor from './processor/SelfProcessor.js'
+import SetProcessor from './processor/SetProcessor.js'
 
 export default class StackProcessor {
 
@@ -49,8 +51,14 @@ export default class StackProcessor {
                     case OPERATIONS.DISPATCH:
                         EventProcessor.run(stackOperation, this.stackRegister, functionRegistry, unit, scriptComponent, world)
                         break
-                    case OPERATIONS.VAR:
-                        VarProcessor.run(stackOperation, this.stackRegister, unit, scriptComponent)
+                    case OPERATIONS.GET:
+                        GetProcessor.run(stackOperation, this.stackRegister, unit, scriptComponent)
+                        break
+                    case OPERATIONS.SET:
+                        SetProcessor.run(stackOperation, this.stackRegister, unit, scriptComponent)
+                        break
+                    case OPERATIONS.SELF:
+                        SelfProcessor.run(stackOperation, this.stackRegister, unit)
                         break
                     case OPERATIONS.PUSH:
                         PushProcessor.run(stackOperation, this.stackRegister)

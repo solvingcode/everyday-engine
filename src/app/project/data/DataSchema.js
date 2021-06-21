@@ -110,6 +110,11 @@ import GetCurrentAnimationFunction from '../../flow/function/native/animation/Ge
 import ANumberVariable from '../../flow/variable/ANumberVariable.js'
 import AReference from '../../flow/reference/AReference.js'
 import ReferenceNode from '../../flow/node/ReferenceNode.js'
+import ASelf from '../../flow/unit/ASelf.js'
+import SelfNode from '../../flow/node/SelfNode.js'
+import IsAnimationEndedFunction from '../../flow/function/native/animation/IsAnimationEndedFunction.js'
+import AToggleVariable from '../../flow/variable/AToggleVariable.js'
+import ToggleVariableNode from '../../flow/node/variable/ToggleVariableNode.js'
 
 /**
  * @class {DataSchema}
@@ -216,7 +221,12 @@ class DataSchema {
         {id: 880, type: GetCurrentAnimationFunction},
         {id: 890, type: ANumberVariable},
         {id: 900, type: AReference},
-        {id: 910, type: ReferenceNode}
+        {id: 910, type: ReferenceNode},
+        {id: 920, type: ASelf},
+        {id: 930, type: SelfNode},
+        {id: 940, type: IsAnimationEndedFunction},
+        {id: 950, type: AToggleVariable},
+        {id: 960, type: ToggleVariableNode}
     ]
 
     /**

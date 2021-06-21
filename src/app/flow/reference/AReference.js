@@ -7,7 +7,7 @@ export default class AReference extends AStackFunction{
      * @param {string} value
      */
     constructor(value) {
-        super(`${value}` || 'Reference')
+        super('Reference')
     }
 
     /**

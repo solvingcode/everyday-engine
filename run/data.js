@@ -1184,7 +1184,10 @@ var OPERATIONS = {
   GET: 'get',
   CALL: 'call',
   EXIT: 'exit',
-  VAR: 'var'
+  JUMP: 'jump',
+  JUMP_TO: 'jump_to',
+  VAR: 'var',
+  DISPATCH: 'dispatch'
 };
 exports.OPERATIONS = OPERATIONS;
 
