@@ -46,6 +46,14 @@ export default class AssetHelper {
         if (!script) {
             throw new TypeError(`No compiled script found for asset "${asset.getName()}"`)
         }
+        return this.getScriptVars(script)
+    }
+
+    /**
+     * @param {AScript} script
+     * @return {DynamicAttribute[]}
+     */
+    static getScriptVars(script){
         const nodes = script.findNodesByClass(VariableNode)
         return nodes.map(node => {
             const sourceNode = NodeHelper.getSourceNode(node)

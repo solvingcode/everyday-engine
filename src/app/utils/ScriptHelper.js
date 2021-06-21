@@ -17,6 +17,7 @@ import AEvent from '../flow/event/AEvent.js'
 import AEmptyStackFunction from '../flow/function/AEmptyStackFunction.js'
 import ComponentNode from '../flow/node/ComponentNode.js'
 import AAnimation from '../flow/animation/AAnimation.js'
+import ReferenceNode from '../flow/node/ReferenceNode.js'
 
 export default class ScriptHelper {
 
@@ -43,6 +44,8 @@ export default class ScriptHelper {
             node = script.createNode(functionRegistry, UnitNode, nodeValue)
         } else if (nodeType === NODE_TYPES.ANIMATION) {
             node = script.createNode(functionRegistry, AnimationNode, nodeValue)
+        } else if (nodeType === NODE_TYPES.REFERENCE) {
+            node = script.createNode(functionRegistry, ReferenceNode, nodeValue)
         } else if (nodeType === NODE_TYPES.VAR_STRING) {
             node = script.createNode(functionRegistry, StringVariableNode, nodeValue)
         } else if (nodeType === NODE_TYPES.COMPONENT) {
@@ -71,6 +74,8 @@ export default class ScriptHelper {
             nodeType = NODE_TYPES.UNIT
         } else if (node instanceof AnimationNode) {
             nodeType = NODE_TYPES.ANIMATION
+        } else if (node instanceof ReferenceNode) {
+            nodeType = NODE_TYPES.REFERENCE
         } else if (node instanceof KeyCodeNode) {
             nodeType = NODE_TYPES.KEY_CODE
         } else if (node instanceof StringVariableNode) {

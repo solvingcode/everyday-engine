@@ -108,6 +108,8 @@ import IsAnimationPlayingFunction from '../../flow/function/native/animation/IsA
 import HasCurrentAnimationFunction from '../../flow/function/native/animation/HasCurrentAnimationFunction.js'
 import GetCurrentAnimationFunction from '../../flow/function/native/animation/GetCurrentAnimationFunction.js'
 import ANumberVariable from '../../flow/variable/ANumberVariable.js'
+import AReference from '../../flow/reference/AReference.js'
+import ReferenceNode from '../../flow/node/ReferenceNode.js'
 
 /**
  * @class {DataSchema}
@@ -212,7 +214,9 @@ class DataSchema {
         {id: 860, type: IsAnimationPlayingFunction},
         {id: 870, type: HasCurrentAnimationFunction},
         {id: 880, type: GetCurrentAnimationFunction},
-        {id: 890, type: ANumberVariable}
+        {id: 890, type: ANumberVariable},
+        {id: 900, type: AReference},
+        {id: 910, type: ReferenceNode}
     ]
 
     /**

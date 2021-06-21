@@ -59,6 +59,10 @@ export default class AddScriptNodeFormTypeMenuItem extends FormMenuItem {
                     {
                         value: NODE_TYPES.VAR_STRING,
                         label: 'Variable (string)'
+                    },
+                    {
+                        value: NODE_TYPES.REFERENCE,
+                        label: 'Reference'
                     }
                 ]
             }

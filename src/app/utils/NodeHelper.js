@@ -25,6 +25,8 @@ import ComponentNode from '../flow/node/ComponentNode.js'
 import AComponent from '../flow/component/AComponent.js'
 import NumberVariableNode from '../flow/node/variable/NumberVariableNode.js'
 import ANumberVariable from '../flow/variable/ANumberVariable.js'
+import ReferenceNode from '../flow/node/ReferenceNode.js'
+import AReference from '../flow/reference/AReference.js'
 
 export default class NodeHelper {
 
@@ -48,6 +50,8 @@ export default class NodeHelper {
                 return new AUnit(sourceName)
             case AnimationNode:
                 return new AAnimation(sourceName)
+            case ReferenceNode:
+                return new AReference(sourceName)
             case StringVariableNode:
                 return new AStringVariable(sourceName)
             case NumberVariableNode:
@@ -132,6 +136,8 @@ export default class NodeHelper {
             headColor = '#5e4322'
         } else if (type === NODE_TYPES.COMPONENT) {
             headColor = '#5e2254'
+        } else if (type === NODE_TYPES.REFERENCE) {
+            headColor = '#22445e'
         }
         return {
             sizeInput,
@@ -193,7 +199,10 @@ export default class NodeHelper {
      * @return {boolean}
      */
     static hasBaseInput(type){
-        return type === NODE_TYPES.FUNCTION || type === NODE_TYPES.CONDITION || type === NODE_TYPES.ANIMATION
+        return type === NODE_TYPES.FUNCTION ||
+            type === NODE_TYPES.CONDITION ||
+            type === NODE_TYPES.ANIMATION ||
+            type === NODE_TYPES.REFERENCE
     }
 
     /**

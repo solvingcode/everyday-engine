@@ -13,6 +13,7 @@ import {SCENE_HEIGHT, SCENE_WIDTH} from '../core/Constant.js'
 import StringVariableNode from './node/variable/StringVariableNode.js'
 import AnimationNode from './node/AnimationNode.js'
 import ComponentNode from './node/ComponentNode.js'
+import ReferenceNode from './node/ReferenceNode.js'
 
 /**
  * @abstract
@@ -42,6 +43,7 @@ export default class AScript extends AScriptData {
             case KeyCodeNode:
             case UnitNode:
             case AnimationNode:
+            case ReferenceNode:
             case StringVariableNode:
             case ComponentNode:
                 sourceName = value

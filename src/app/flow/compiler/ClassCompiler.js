@@ -17,6 +17,8 @@ import OnAnyAnimationStartEvent from '../event/native/OnAnyAnimationStartEvent.j
 import StopAnimationFunction from '../function/native/animation/StopAnimationFunction.js'
 import StartAnimationFunction from '../function/native/animation/StartAnimationFunction.js'
 import GetCurrentAnimationFunction from '../function/native/animation/GetCurrentAnimationFunction.js'
+import IsAnimationPlayingFunction from '../function/native/animation/IsAnimationPlayingFunction.js'
+import NotFunction from '../function/native/basic/NotFunction.js'
 
 export default class ClassCompiler extends Compiler {
 
@@ -92,6 +94,24 @@ export default class ClassCompiler extends Compiler {
             if (!(element instanceof AEvent)) {
                 if (functionRegistry.getInstance(element.getName())) {
                     stackFunction.getStack().push(new StackOperation(OPERATIONS.CALL, element.getName()))
+                } else if(element instanceof AAnimation){
+                    const onAnyAnimation = new OnAnyAnimationStartEvent()
+                    const isAnimationPlaying = new IsAnimationPlayingFunction()
+                    const startAnimation = new StartAnimationFunction()
+                    const not = new NotFunction()
+                    stackFunction.getStack().push(...[
+                        new StackOperation(OPERATIONS.PUSH, isAnimationPlaying.getInputs()[0].getAttrName(), element.getName()),
+                        new StackOperation(OPERATIONS.CALL, isAnimationPlaying.getName()),
+                        new StackOperation(OPERATIONS.PUSH, not.getInputs()[0].getAttrName(), CONSTANTS.RESULT),
+                        new StackOperation(OPERATIONS.CALL, not.getName()),
+                        new StackOperation(OPERATIONS.JUMP, CONSTANTS.RESULT, 'start_animation'),
+                        new StackOperation(OPERATIONS.PUSH, startAnimation.getInputs()[0].getAttrName(), element.getName()),
+                        new StackOperation(OPERATIONS.CALL, startAnimation.getName()),
+                        new StackOperation(OPERATIONS.JUMP_TO, 'start_animation')
+                    ])
+                    if (!ScriptHelper.isNodeHasPredecessor(script, node, onAnyAnimation.getName())) {
+                        stackFunction.getStack().push(new StackOperation(OPERATIONS.DISPATCH, onAnyAnimation.getName()))
+                    }
                 } else if (element instanceof AStackFunction) {
                     stackFunction.getStack().push(...element.getStack())
                 }
@@ -111,32 +131,14 @@ export default class ClassCompiler extends Compiler {
                 const sourceElement = NodeHelper.getSourceNode(sourceNode)
                 const sourceElementName = ScriptHelper.generateFunctionName(script, sourceNode)
                 const sourceStackFunction = functionRegistry.getInstance(sourceElementName)
-                if (sourceElement instanceof AEvent) {
-                    if (element instanceof AAnimation) {
-                        const startAnimation = new StartAnimationFunction()
-                        const onAnyAnimation = new OnAnyAnimationStartEvent()
-                        sourceStackFunction.getStack().push(...[
-                            new StackOperation(OPERATIONS.PUSH, startAnimation.getInputs()[0].getAttrName(), element.getName()),
-                            new StackOperation(OPERATIONS.CALL, startAnimation.getName())
-                        ])
-                        if (!ScriptHelper.isNodeHasPredecessor(script, node, onAnyAnimation.getName())) {
-                            sourceStackFunction.getStack().push(new StackOperation(OPERATIONS.DISPATCH, onAnyAnimation.getName()))
-                        }
-                    }
-                }else if (sourceElement instanceof AAnimation) {
+                if (sourceElement instanceof AAnimation) {
                     if (element instanceof AAnimation) {
                         const stopAnimation = new StopAnimationFunction()
-                        const startAnimation = new StartAnimationFunction()
-                        const onAnyAnimation = new OnAnyAnimationStartEvent()
                         sourceStackFunction.getStack().push(...[
                             new StackOperation(OPERATIONS.PUSH, stopAnimation.getInputs()[0].getAttrName(), sourceElement.getName()),
                             new StackOperation(OPERATIONS.CALL, stopAnimation.getName()),
-                            new StackOperation(OPERATIONS.PUSH, startAnimation.getInputs()[0].getAttrName(), element.getName()),
-                            new StackOperation(OPERATIONS.CALL, startAnimation.getName())
+                            new StackOperation(OPERATIONS.CALL, functionName)
                         ])
-                        if (!ScriptHelper.isNodeHasPredecessor(script, node, onAnyAnimation.getName())) {
-                            sourceStackFunction.getStack().push(new StackOperation(OPERATIONS.DISPATCH, onAnyAnimation.getName()))
-                        }
                     } else if (element instanceof ACondition) {
                         sourceStackFunction.getStack().push(...[
                             new StackOperation(OPERATIONS.CALL, functionName)
@@ -146,18 +148,12 @@ export default class ClassCompiler extends Compiler {
                     if (element instanceof AAnimation) {
                         const getCurrentAnimation = new GetCurrentAnimationFunction()
                         const stopAnimation = new StopAnimationFunction()
-                        const startAnimation = new StartAnimationFunction()
-                        const onAnyAnimation = new OnAnyAnimationStartEvent()
                         sourceStackFunction.getStack().push(...[
                             new StackOperation(OPERATIONS.CALL, getCurrentAnimation.getName()),
                             new StackOperation(OPERATIONS.PUSH, stopAnimation.getInputs()[0].getAttrName(), CONSTANTS.RESULT),
                             new StackOperation(OPERATIONS.CALL, stopAnimation.getName()),
-                            new StackOperation(OPERATIONS.PUSH, startAnimation.getInputs()[0].getAttrName(), element.getName()),
-                            new StackOperation(OPERATIONS.CALL, startAnimation.getName())
+                            new StackOperation(OPERATIONS.CALL, functionName)
                         ])
-                        if (!ScriptHelper.isNodeHasPredecessor(script, node, onAnyAnimation.getName())) {
-                            sourceStackFunction.getStack().push(new StackOperation(OPERATIONS.DISPATCH, onAnyAnimation.getName()))
-                        }
                     } else {
                         sourceStackFunction.getStack().push(...[new StackOperation(OPERATIONS.CALL, functionName)])
                     }

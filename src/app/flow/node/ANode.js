@@ -125,5 +125,6 @@ export const NODE_TYPES = {
     VAR_STRING: 'var_string',
     VAR_NUMBER: 'var_number',
     ANIMATION: 'animation',
-    COMPONENT: 'component'
+    COMPONENT: 'component',
+    REFERENCE: 'reference'
 }

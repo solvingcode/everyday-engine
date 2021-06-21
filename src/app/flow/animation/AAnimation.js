@@ -9,8 +9,4 @@ export default class AAnimation extends AEmptyStackFunction{
         super(`${value}` || 'Animation')
     }
 
-    execute(functionRegistry, unit, scriptComponent, world) {
-        super.execute(functionRegistry, unit, scriptComponent, world)
-    }
-
 }
