@@ -98,6 +98,7 @@ class Window {
 
     clear() {
         this.mouse.clear()
+        this.keyboard.clear()
     }
 
     update(){

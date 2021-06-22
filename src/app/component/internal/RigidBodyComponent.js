@@ -13,6 +13,7 @@ export default class RigidBodyComponent extends Component{
      */
     initAttributes() {
         this.add('freezeRotation', TYPES.BOOLEAN, false)
+        this.add('frictionOnGround', TYPES.BOOLEAN, false)
     }
 
     /**
@@ -37,6 +38,27 @@ export default class RigidBodyComponent extends Component{
     }
 
     /**
+     * @param {boolean} frictionOnGround
+     */
+    setFrictionOnGround(frictionOnGround) {
+        this.setValue('frictionOnGround', frictionOnGround)
+    }
+
+    /**
+     * @return {boolean}
+     */
+    getFrictionOnGround(){
+        return this.getValue('frictionOnGround')
+    }
+
+    /**
+     * @return {boolean}
+     */
+    isFrictionOnGround(){
+        return this.getFrictionOnGround()
+    }
+
+    /**
      * @override
      */
     getFormFields() {
@@ -44,6 +66,11 @@ export default class RigidBodyComponent extends Component{
             {
                 bind: 'freezeRotation',
                 label: 'Freeze Rotation',
+                type: Layout.form.CHECKBOX
+            },
+            {
+                bind: 'frictionOnGround',
+                label: 'Friction on ground',
                 type: Layout.form.CHECKBOX
             }
         ]

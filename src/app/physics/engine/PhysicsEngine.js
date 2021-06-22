@@ -70,6 +70,15 @@ export default class PhysicsEngine {
 
     /**
      * @param {Unit} unit
+     * @param {number} friction
+     */
+    setFriction(unit, friction){
+        const body = this.tryFindBody(unit)
+        this.setFrictionToBody(body, friction)
+    }
+
+    /**
+     * @param {Unit} unit
      * @return {Vector}
      */
     getVelocity(unit){
@@ -235,6 +244,16 @@ export default class PhysicsEngine {
      */
     setVelocityToBody(body, velocity){
         throw new SystemError(`${this.constructor.name}.setVelocityToBody method must be implemented`)
+    }
+
+    /**
+     * @protected
+     * @abstract
+     * @param {*} body
+     * @param {number} friction
+     */
+    setFrictionToBody(body, friction){
+        throw new SystemError(`${this.constructor.name}.setFrictionToBody method must be implemented`)
     }
 
     /**

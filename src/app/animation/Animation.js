@@ -273,7 +273,7 @@ export default class Animation {
      * @return {KeyFrame}
      */
     play(deltaTime){
-        const expectedFrameTime = 1 / this.getSamples()
+        const expectedFrameTime = this.getLengthSecond() / this.getSamples()
         const newTime = this.getTime() + deltaTime / expectedFrameTime
         const timeFrame = newTime % this.getFrames().length
         this.loopTimes += Math.floor(newTime / this.getFrames().length)

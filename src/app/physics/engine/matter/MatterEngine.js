@@ -31,7 +31,8 @@ export default class MatterEngine extends PhysicsEngine {
     newBody(unit, colliders, options) {
         const bodyOptions = {
             isStatic: options.isStatic,
-            parts: colliders
+            parts: colliders,
+            friction: 0
         }
         if(options.freezeRotation){
             bodyOptions.inertia = Infinity
@@ -108,6 +109,13 @@ export default class MatterEngine extends PhysicsEngine {
      */
     setVelocityToBody(body, velocity){
         Matter.Body.setVelocity(body, velocity)
+    }
+
+    /**
+     * @override
+     */
+    setFrictionToBody(body, friction){
+        body.friction = friction
     }
 
     /**

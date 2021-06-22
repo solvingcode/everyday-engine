@@ -4,7 +4,8 @@
  */
 class Keyboard {
     constructor() {
-        this.keys = []
+        this.keysPressed = []
+        this.keysReleased = []
     }
 
     /**
@@ -12,7 +13,7 @@ class Keyboard {
      */
     setKeyPressed(key) {
         if (!this.isKeyPressed(key)) {
-            this.keys.push(key)
+            this.keysPressed.push(key)
         }
     }
 
@@ -21,8 +22,9 @@ class Keyboard {
      */
     setKeyReleased(key) {
         if (this.isKeyPressed(key)) {
-            let index = this.keys.indexOf(key)
-            this.keys.splice(index, 1)
+            let index = this.keysPressed.indexOf(key)
+            this.keysPressed.splice(index, 1)
+            this.keysReleased.push(key)
         }
     }
 
@@ -31,7 +33,16 @@ class Keyboard {
      * @return {Boolean}
      */
     isKeyPressed(key) {
-        let index = this.keys.indexOf(key)
+        let index = this.keysPressed.indexOf(key)
+        return index !== -1
+    }
+
+    /**
+     * @param {number} key
+     * @return {Boolean}
+     */
+    isKeyReleased(key) {
+        let index = this.keysReleased.indexOf(key)
         return index !== -1
     }
 
@@ -39,7 +50,11 @@ class Keyboard {
      * @return {Boolean}
      */
     isAnyKeyPressed() {
-        return this.keys.length > 0
+        return this.keysPressed.length > 0
+    }
+
+    clear(){
+        this.keysReleased = []
     }
 }
 

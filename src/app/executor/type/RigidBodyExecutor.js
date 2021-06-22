@@ -22,6 +22,13 @@ export default class RigidBodyExecutor extends ComponentExecutor {
         options.isStatic = false
         options.freezeRotation = rigidBodyComponent.isFreezeRotation()
         physicsManager.addBody(unit, options)
+        if(rigidBodyComponent.isFrictionOnGround()){
+            if(physicsManager.isGrounded(unit)){
+                physicsManager.setFriction(unit, 1)
+            }else{
+                physicsManager.setFriction(unit, 0)
+            }
+        }
     }
 
 }

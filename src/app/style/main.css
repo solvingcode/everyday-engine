@@ -211,6 +211,7 @@ h4{
 .panel .tree{
     width: 30%;
     float: left;
+    overflow: auto;
 }
 
 .panel .tree .panel > div .panel{

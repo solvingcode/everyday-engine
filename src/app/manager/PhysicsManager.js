@@ -57,6 +57,25 @@ export default class PhysicsManager {
 
     /**
      * @param {Unit} unit
+     * @return {boolean}
+     */
+    isGrounded(unit){
+        const startVector = new Vector({x: 0, y: 0})
+        const endVector = new Vector({x: 0, y: 1})
+        const collisions = this.rayCast(unit, startVector, endVector).filter(collision => collision.collided)
+        return !!collisions.length
+    }
+
+    /**
+     * @param {Unit} unit
+     * @param {number} friction
+     */
+    setFriction(unit, friction){
+        this.physicsEngine.setFriction(unit, friction)
+    }
+
+    /**
+     * @param {Unit} unit
      * @return {Vector}
      */
     getVelocity(unit) {
