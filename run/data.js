@@ -1182,12 +1182,13 @@ exports["default"] = StackOperation;
 var OPERATIONS = {
   PUSH: 'push',
   GET: 'get',
+  SET: 'set',
   CALL: 'call',
   EXIT: 'exit',
   JUMP: 'jump',
   JUMP_TO: 'jump_to',
-  VAR: 'var',
-  DISPATCH: 'dispatch'
+  DISPATCH: 'dispatch',
+  SELF: 'self'
 };
 exports.OPERATIONS = OPERATIONS;
 

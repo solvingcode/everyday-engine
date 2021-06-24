@@ -51,6 +51,13 @@ class FormMenuItem extends MenuItem {
     }
 
     /**
+     * @return {*}
+     */
+    getPreUpdateData(){
+        return this.object
+    }
+
+    /**
      * @param {*} value
      */
     postUpdate(value) {

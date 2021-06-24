@@ -16,7 +16,10 @@ canvas{
 #root{
     z-index: 2;
 }
-
+*:not(input, textarea){
+    -moz-user-select: none;
+    -webkit-user-select: none;
+}
 /* button -- */
 
 button{
@@ -474,6 +477,11 @@ h4{
 
 .units-wrapper .panel{
     position: relative;
+}
+
+.units-wrapper .panel:nth-child(1){
+    max-height: 300px;
+    overflow: auto;
 }
 
 .units-wrapper .panel h4 + div button[data-icon="times"]{
