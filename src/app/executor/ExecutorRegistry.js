@@ -26,7 +26,7 @@ export default class ExecutorRegistry {
      */
     execute(unit, executionContext){
         this.registry.forEach(executor => {
-            if(unit.hasComponents(executor.getTargetComponents())){
+            if(unit.hasComponentsByClasses(executor.getTargetComponents())){
                 executor.execute(unit, executionContext)
             }
         })

@@ -65,8 +65,12 @@ export default class AddScriptNodeFormTypeMenuItem extends FormMenuItem {
                         label: 'Variable (string)'
                     },
                     {
+                        value: NODE_TYPES.VAR_BOOLEAN,
+                        label: 'Variable (boolean)'
+                    },
+                    {
                         value: NODE_TYPES.VAR_TOGGLE,
-                        label: 'Variable (Toggle)'
+                        label: 'Variable (toggle)'
                     },
                     {
                         value: NODE_TYPES.REFERENCE,

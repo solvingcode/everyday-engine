@@ -30,6 +30,8 @@ import SelfNode from '../flow/node/SelfNode.js'
 import ASelf from '../flow/unit/ASelf.js'
 import ToggleVariableNode from '../flow/node/variable/ToggleVariableNode.js'
 import AToggleVariable from '../flow/variable/AToggleVariable.js'
+import BooleanVariableNode from '../flow/node/variable/BooleanVariableNode.js'
+import ABooleanVariable from '../flow/variable/ABooleanVariable.js'
 
 export default class NodeHelper {
 
@@ -59,6 +61,8 @@ export default class NodeHelper {
                 return new AReference(sourceName)
             case StringVariableNode:
                 return new AStringVariable(sourceName)
+            case BooleanVariableNode:
+                return new ABooleanVariable(sourceName)
             case ToggleVariableNode:
                 return new AToggleVariable(sourceName)
             case NumberVariableNode:
@@ -141,7 +145,7 @@ export default class NodeHelper {
             headColor = '#5e5622'
         } else if (type === NODE_TYPES.KEY_CODE) {
             headColor = '#375e22'
-        } else if (type === NODE_TYPES.VAR_STRING || type === NODE_TYPES.VAR_TOGGLE) {
+        } else if (type === NODE_TYPES.VAR_STRING || type === NODE_TYPES.VAR_TOGGLE || type === NODE_TYPES.VAR_BOOLEAN) {
             headColor = '#5e4322'
         } else if (type === NODE_TYPES.COMPONENT) {
             headColor = '#5e2254'

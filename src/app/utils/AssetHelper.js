@@ -6,6 +6,7 @@ import NodeHelper from './NodeHelper.js'
 import DynamicAttribute from '../pobject/DynamicAttribute.js'
 import AssetAnimationScriptXml from '../asset/types/animation/AssetAnimationScriptXml.js'
 import AnimationComponent from '../component/internal/AnimationComponent.js'
+import ClientError from '../exception/type/ClientError.js'
 
 export default class AssetHelper {
 
@@ -44,7 +45,7 @@ export default class AssetHelper {
         }
         const script = this.getScript(asset)
         if (!script) {
-            throw new TypeError(`No compiled script found for asset "${asset.getName()}"`)
+            throw new ClientError(`No compiled script found for asset "${asset.getName()}"`)
         }
         return this.getScriptVars(script)
     }

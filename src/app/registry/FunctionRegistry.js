@@ -49,6 +49,7 @@ import IsAnimationPlayingFunction from '../flow/function/native/animation/IsAnim
 import HasCurrentAnimationFunction from '../flow/function/native/animation/HasCurrentAnimationFunction.js'
 import GetCurrentAnimationFunction from '../flow/function/native/animation/GetCurrentAnimationFunction.js'
 import IsAnimationEndedFunction from '../flow/function/native/animation/IsAnimationEndedFunction.js'
+import GetInputYAxisFunction from '../flow/function/native/input/GetInputYAxisFunction.js'
 
 export default class FunctionRegistry extends Registry{
 
@@ -84,6 +85,7 @@ export default class FunctionRegistry extends Registry{
             new GreaterThanOrEqualFunction(),
             new IsKeyDownFunction(),
             new GetInputXAxisFunction(),
+            new GetInputYAxisFunction(),
             new MultiplyFunction(),
             new EqualToFunction(),
             new NotEqualToFunction(),

@@ -32,4 +32,14 @@ export default class CircleColliderComponent extends ColliderComponent {
         ]
     }
 
+    /**
+     * @override
+     */
+    setSize(size){
+        const actualSize = this.getSize()
+        const actualRadius = this.getRadius()
+        this.setRadius(actualRadius * size.getWidth() / actualSize.getWidth())
+        super.setSize(size)
+    }
+
 }

@@ -23,12 +23,25 @@ export default class MatterEngine extends PhysicsEngine {
 
     /**
      * @override
-     * @param {Unit} unit
+     */
+    deleteBody(body) {
+        Matter.World.remove(this.getInstance().world, body)
+    }
+
+    /**
+     * @override
+     */
+    addColliderBody(body, collider) {
+        Matter.Body.setParts(body, [...body.parts, collider])
+    }
+
+    /**
+     * @override
      * @param {Matter.Body[]} colliders
      * @param {RigidBodyOptions} options
      * @return {Matter.Body}
      */
-    newBody(unit, colliders, options) {
+    newBody(colliders, options) {
         const bodyOptions = {
             isStatic: options.isStatic,
             parts: colliders,

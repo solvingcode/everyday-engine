@@ -39,7 +39,7 @@ export default class ScriptExecutor extends ComponentExecutor {
                 ((keyboard.isKeyPressed(gameInput.getKeyCode(GAME_INPUTS.UP)) ||
                     keyboard.isKeyPressed(gameInput.getKeyCode(GAME_INPUTS.DOWN))) && instance instanceof OnInputYAxisEvent) ||
 
-                (keyboard.isKeyPressed(gameInput.getKeyCode(GAME_INPUTS.JUMP)) && instance instanceof OnInputJumpEvent) ||
+                (keyboard.isKeyReleased(gameInput.getKeyCode(GAME_INPUTS.JUMP)) && instance instanceof OnInputJumpEvent) ||
 
                 (keyboard.isKeyReleased(gameInput.getKeyCode(GAME_INPUTS.ATTACK)) && instance instanceof OnInputAttackEvent) ||
 

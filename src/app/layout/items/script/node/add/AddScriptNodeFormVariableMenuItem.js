@@ -2,7 +2,7 @@ import FormMenuItem from '../../../form/FormMenuItem.js'
 import Layout from '../../../../Layout.js'
 import {NODE_TYPES} from '../../../../../flow/node/ANode.js'
 
-export default class AddScriptNodeFormVarStringMenuItem extends FormMenuItem {
+export default class AddScriptNodeFormVariableMenuItem extends FormMenuItem {
     /**
      * @param {MenuItem} parent
      * @param {AddScriptNodeForm} addNodeForm
@@ -39,6 +39,8 @@ export default class AddScriptNodeFormVarStringMenuItem extends FormMenuItem {
     }
 
     isValid() {
-        return super.isValid() && this.getFormObject().getType() === NODE_TYPES.VAR_STRING
+        const type = this.getFormObject().getType()
+        return super.isValid()
+            && (type === NODE_TYPES.VAR_STRING || type === NODE_TYPES.VAR_NUMBER || type === NODE_TYPES.VAR_BOOLEAN)
     }
 }

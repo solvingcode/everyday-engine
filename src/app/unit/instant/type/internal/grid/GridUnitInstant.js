@@ -33,7 +33,7 @@ export default class GridUnitInstant extends UnitInstant {
      * @override
      */
     setup() {
-        this.getComponent(GUIPropertyComponent).setRank(0)
+        this.getComponent(GUIPropertyComponent).setRank(100)
     }
 
 }

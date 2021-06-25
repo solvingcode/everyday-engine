@@ -1,5 +1,7 @@
 import Action from '../Action.js'
 import World from '../../../world/World.js'
+import AssetScript from '../../../asset/types/script/AssetScript.js'
+import ClientError from '../../../exception/type/ClientError.js'
 
 export default class CompileAssetScriptAction extends Action {
 
@@ -12,9 +14,13 @@ export default class CompileAssetScriptAction extends Action {
         const world = World.get()
         const selectedAssets = world.getAssetsManager().getSelectedAssets()
         selectedAssets.forEach(asset => {
-            const script = World.get().getScriptManager().findByName(asset.getName())
-            if(script){
-                script.compile()
+            if (asset.getType() instanceof AssetScript) {
+                const script = World.get().getScriptManager().findByName(asset.getName())
+                if (script) {
+                    script.compile()
+                } else {
+                    throw new ClientError(`Compile script asset: Asset "${asset.getName()}" is not parsed`)
+                }
             }
         })
         return true

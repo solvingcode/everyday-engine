@@ -4,12 +4,12 @@ import RigidBodyComponent from '../../component/internal/RigidBodyComponent.js'
 import TransformComponent from '../../component/internal/TransformComponent.js'
 import MeshComponent from '../../component/internal/MeshComponent.js'
 import RigidBodyOptions from '../../pobject/RigidBodyOptions.js'
-import RectColliderComponent from '../../component/internal/RectColliderComponent.js'
+import ColliderComponent from '../../component/internal/ColliderComponent.js'
 
 export default class ColliderExecutor extends ComponentExecutor {
 
     constructor() {
-        super([TransformComponent, MeshComponent, RectColliderComponent])
+        super([TransformComponent, MeshComponent, ColliderComponent])
     }
 
     /**

@@ -6,6 +6,7 @@ import GUIGridXComponent from '../../../../../component/internal/gui/grid/GUIGri
 import {PrimitiveShape} from '../../../../Unit.js'
 import TransformComponent from '../../../../../component/internal/TransformComponent.js'
 import Style from '../../../../../pobject/Style.js'
+import GUIPropertyComponent from '../../../../../component/internal/gui/property/GUIPropertyComponent.js'
 
 export default class GridXUnitInstant extends UnitInstant {
 
@@ -32,6 +33,7 @@ export default class GridXUnitInstant extends UnitInstant {
      * @override
      */
     setup() {
+        this.getComponent(GUIPropertyComponent).setRank(100)
     }
 
 }

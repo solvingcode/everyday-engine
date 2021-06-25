@@ -16,6 +16,7 @@ import ComponentNode from './node/ComponentNode.js'
 import ReferenceNode from './node/ReferenceNode.js'
 import SelfNode from './node/SelfNode.js'
 import ToggleVariableNode from './node/variable/ToggleVariableNode.js'
+import BooleanVariableNode from './node/variable/BooleanVariableNode.js'
 
 /**
  * @abstract
@@ -49,6 +50,7 @@ export default class AScript extends AScriptData {
             case ReferenceNode:
             case StringVariableNode:
             case ToggleVariableNode:
+            case BooleanVariableNode:
             case ComponentNode:
                 sourceName = value
                 break

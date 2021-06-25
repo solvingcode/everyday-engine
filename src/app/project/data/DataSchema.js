@@ -115,6 +115,8 @@ import SelfNode from '../../flow/node/SelfNode.js'
 import IsAnimationEndedFunction from '../../flow/function/native/animation/IsAnimationEndedFunction.js'
 import AToggleVariable from '../../flow/variable/AToggleVariable.js'
 import ToggleVariableNode from '../../flow/node/variable/ToggleVariableNode.js'
+import GetInputYAxisFunction from '../../flow/function/native/input/GetInputYAxisFunction.js'
+import ABooleanVariable from '../../flow/variable/ABooleanVariable.js'
 
 /**
  * @class {DataSchema}
@@ -226,7 +228,9 @@ class DataSchema {
         {id: 930, type: SelfNode},
         {id: 940, type: IsAnimationEndedFunction},
         {id: 950, type: AToggleVariable},
-        {id: 960, type: ToggleVariableNode}
+        {id: 960, type: ToggleVariableNode},
+        {id: 970, type: GetInputYAxisFunction},
+        {id: 980, type: ABooleanVariable}
     ]
 
     /**

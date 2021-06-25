@@ -7,7 +7,7 @@ import Window from '../../../../core/Window.js'
 export default class GetInputYAxisFunction extends AFunction{
 
     constructor() {
-        super('GetInputXAxis')
+        super('GetInputYAxis')
     }
 
     /**

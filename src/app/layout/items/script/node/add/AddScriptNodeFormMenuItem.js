@@ -5,11 +5,10 @@ import AddScriptNodeFormFunctionMenuItem from './AddScriptNodeFormFunctionMenuIt
 import AddScriptNodeFormConstantMenuItem from './AddScriptNodeFormConstantMenuItem.js'
 import AddScriptNodeFormUnitMenuItem from './AddScriptNodeFormUnitMenuItem.js'
 import AddScriptNodeFormKeyCodeMenuItem from './AddScriptNodeFormKeyCodeMenuItem.js'
-import AddScriptNodeFormVarStringMenuItem from './AddScriptNodeFormVarStringMenuItem.js'
+import AddScriptNodeFormVariableMenuItem from './AddScriptNodeFormVariableMenuItem.js'
 import World from '../../../../../world/World.js'
 import AddScriptNodeFormAnimationMenuItem from './AddScriptNodeFormAnimationMenuItem.js'
 import AddScriptNodeFormComponentMenuItem from './AddScriptNodeFormComponentMenuItem.js'
-import AddScriptNodeFormVarToggleMenuItem from './AddScriptNodeFormVarToggleMenuItem.js'
 
 export default class AddScriptNodeFormMenuItem  extends MenuItem {
     /**
@@ -32,8 +31,7 @@ export default class AddScriptNodeFormMenuItem  extends MenuItem {
             new AddScriptNodeFormConstantMenuItem(this, addNodeForm),
             new AddScriptNodeFormUnitMenuItem(this, addNodeForm),
             new AddScriptNodeFormKeyCodeMenuItem(this, addNodeForm),
-            new AddScriptNodeFormVarStringMenuItem(this, addNodeForm),
-            new AddScriptNodeFormVarToggleMenuItem(this, addNodeForm)
+            new AddScriptNodeFormVariableMenuItem(this, addNodeForm)
         ]
     }
 

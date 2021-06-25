@@ -3,6 +3,7 @@ import World from '../../../../world/World.js'
 import FormMenuItem from '../../form/FormMenuItem.js'
 import ClientError from '../../../../exception/type/ClientError.js'
 import AssetAnimationXml from '../../../../asset/types/animation/AssetAnimationXml.js'
+import AssetScript from '../../../../asset/types/script/AssetScript.js'
 
 export default class EditAssetFormMenuItem extends FormMenuItem {
     constructor(parent) {
@@ -53,10 +54,19 @@ export default class EditAssetFormMenuItem extends FormMenuItem {
      */
     postUpdate(value) {
         const selectedAsset = this.getPreUpdateData()
-        if(selectedAsset && selectedAsset.getType() instanceof AssetAnimationXml){
-            const animation = World.get().getAnimationManager().findByName(selectedAsset.getName())
-            if(animation){
-                animation.setName(value)
+        if(selectedAsset){
+            if(selectedAsset.getType() instanceof AssetAnimationXml){
+                const animation = World.get().getAnimationManager().findByName(selectedAsset.getName())
+                if(animation){
+                    animation.setName(value)
+                }
+            }else if(selectedAsset.getType() instanceof AssetScript){
+                const script = World.get().getScriptManager().findByName(selectedAsset.getName())
+                if(script){
+                    script.setName(value)
+                } else {
+                    throw new ClientError(`Rename script asset: Asset "${selectedAsset.getName()}" is not parsed`)
+                }
             }
         }
         super.postUpdate(value)

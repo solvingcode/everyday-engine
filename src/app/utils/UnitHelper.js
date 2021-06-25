@@ -192,17 +192,22 @@ export default class UnitHelper {
      * @return {Size}
      */
     static getColliderSize(unit, colliderComponent) {
-        let colliderSizeRelated = new Size(0)
-        if (colliderComponent instanceof RectColliderComponent) {
-            colliderSizeRelated = colliderComponent.getSize()
-        } else if (colliderComponent instanceof CircleColliderComponent) {
-            colliderSizeRelated = new Size(colliderComponent.getRadius())
-        }
+        let resultSize = new Size(0)
         const unitSize = unit.getComponent(MeshComponent).getSize()
-        return new Size({
-            width: unitSize.getWidth() * colliderSizeRelated.getWidth() / 100,
-            height: unitSize.getHeight() * colliderSizeRelated.getHeight() / 100
-        })
+        if (colliderComponent instanceof RectColliderComponent) {
+            const colliderSizeRelated = colliderComponent.getSize()
+            resultSize = new Size({
+                width: unitSize.getWidth() * colliderSizeRelated.getWidth() / 100,
+                height: unitSize.getHeight() * colliderSizeRelated.getHeight() / 100
+            })
+        } else if (colliderComponent instanceof CircleColliderComponent) {
+            const colliderSizeRelated = new Size(colliderComponent.getRadius())
+            resultSize = new Size({
+                width: unitSize.getWidth() * colliderSizeRelated.getWidth() / 100,
+                height: unitSize.getWidth() * colliderSizeRelated.getHeight() / 100
+            })
+        }
+        return resultSize
     }
 
     /**

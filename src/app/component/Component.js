@@ -89,6 +89,27 @@ export default class Component extends ComponentData{
     }
 
     /**
+     * @param {boolean} enabled
+     */
+    setEnabled(enabled){
+        this.setValue('enabled', enabled)
+    }
+
+    /**
+     * @return {boolean}
+     */
+    getEnabled(){
+        return this.getValue('enabled')
+    }
+
+    /**
+     * @return {boolean}
+     */
+    isEnabled(){
+        return this.getEnabled()
+    }
+
+    /**
      * @return {boolean}
      */
     isRemovable(){
