@@ -67,6 +67,14 @@ export default class AssetAnimationXml extends AssetType{
 
     /**
      * @override
+     */
+    rename(newName){
+        World.get().getAnimationManager().rename(this.data, newName)
+        this.parse()
+    }
+
+    /**
+     * @override
      * @param {Document} data
      */
     setData(data){

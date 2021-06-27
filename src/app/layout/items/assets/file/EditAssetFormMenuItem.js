@@ -43,7 +43,7 @@ export default class EditAssetFormMenuItem extends FormMenuItem {
      * @override
      */
     preUpdate(value) {
-        if(!value){
+        if (!value) {
             throw new ClientError(`Cannot move Asset (target folder is required)`)
         }
         return super.preUpdate(value)
@@ -54,19 +54,9 @@ export default class EditAssetFormMenuItem extends FormMenuItem {
      */
     postUpdate(value) {
         const selectedAsset = this.getPreUpdateData()
-        if(selectedAsset){
-            if(selectedAsset.getType() instanceof AssetAnimationXml){
-                const animation = World.get().getAnimationManager().findByName(selectedAsset.getName())
-                if(animation){
-                    animation.setName(value)
-                }
-            }else if(selectedAsset.getType() instanceof AssetScript){
-                const script = World.get().getScriptManager().findByName(selectedAsset.getName())
-                if(script){
-                    script.setName(value)
-                } else {
-                    throw new ClientError(`Rename script asset: Asset "${selectedAsset.getName()}" is not parsed`)
-                }
+        if (selectedAsset) {
+            if (selectedAsset.getType() instanceof AssetAnimationXml || selectedAsset.getType() instanceof AssetScript) {
+                selectedAsset.rename(value)
             }
         }
         super.postUpdate(value)

@@ -47,6 +47,13 @@ export default class Asset extends AssetData{
     }
 
     /**
+     * @param {string} newName
+     */
+    rename(newName){
+        this.getType().rename(newName)
+    }
+
+    /**
      * @param {*} source
      */
     async generate(source){

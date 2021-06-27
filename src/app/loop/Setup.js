@@ -14,7 +14,6 @@ import GUIPropertyExecutor from '../executor/type/GUIPropertyExecutor.js'
 import {SetupRenderRunner} from '../runner/renderer/SetupRenderRunner.js'
 import {SetupExecutorRunner} from '../runner/executor/SetupExecutorRunner.js'
 import ScriptEditorRunner from '../runner/editor/ScriptEditorRunner.js'
-import HistoryRunner from '../runner/history/HistoryRunner.js'
 import UnitDrawerRunner from '../runner/drawer/UnitDrawerRunner.js'
 import GraphDrawerRunner from '../runner/drawer/GraphDrawerRunner.js'
 import AnimationEditorRunner from '../runner/editor/AnimationEditorRunner.js'
@@ -40,7 +39,7 @@ class Setup extends Loop {
         super()
         this.setupRenderer = SetupRenderer.get()
         this.runners = [
-            WorldInitializeRunner, HistoryRunner, SimulateRunner, ActionRunner, EditorRunner, ScriptEditorRunner,
+            WorldInitializeRunner, /*HistoryRunner,*/ SimulateRunner, ActionRunner, EditorRunner, ScriptEditorRunner,
             AnimationEditorRunner, SetupExecutorRunner, SetupRenderRunner, MenuRunner, WindowRunner, GraphDrawerRunner,
             UnitDrawerRunner
         ]

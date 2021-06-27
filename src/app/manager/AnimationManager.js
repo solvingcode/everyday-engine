@@ -96,6 +96,14 @@ export default class AnimationManager {
     }
 
     /**
+     * @param {Document} data
+     * @param {string} newName
+     */
+    rename(data, newName){
+        AnimationParser.rename(data, newName)
+    }
+
+    /**
      * @param {TabManager} tabManager
      * @return {Animation}
      */

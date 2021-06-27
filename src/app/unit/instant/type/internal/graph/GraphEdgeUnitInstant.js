@@ -9,6 +9,7 @@ import StyleComponent from '../../../../../component/internal/StyleComponent.js'
 import GeometryHelper from '../../../../../utils/GeometryHelper.js'
 import NodeHelper from '../../../../../utils/NodeHelper.js'
 import Vector from '../../../../../utils/Vector.js'
+import ArrayHelper from '../../../../../utils/ArrayHelper.js'
 
 export default class GraphEdgeUnitInstant extends UnitInstant {
 
@@ -51,10 +52,17 @@ export default class GraphEdgeUnitInstant extends UnitInstant {
             nodeInputComponent.setNodeInputId(nodeInput.getId())
             styleComponent.setStyle(style)
             transformComponent.setPosition(position)
-            meshComponent.setShape(PrimitiveShape.LINE)
-            meshComponent.setShapeVertices(vertices)
-            meshComponent.setSize(size)
-            meshComponent.setGenerated(false)
+            if (
+                meshComponent.getShape() !== PrimitiveShape.LINE ||
+                !ArrayHelper.isEqual(meshComponent.getShapeVertices(), vertices) ||
+                meshComponent.getSize().getWidth() !== size.getWidth() ||
+                meshComponent.getSize().getHeight() !== size.getHeight()
+            ) {
+                meshComponent.setShape(PrimitiveShape.LINE)
+                meshComponent.setShapeVertices(vertices)
+                meshComponent.setSize(size)
+                meshComponent.setGenerated(false)
+            }
         }
     }
 

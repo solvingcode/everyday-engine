@@ -37,6 +37,15 @@ button:hover, button.locked:hover, button.hidden:hover{
     background-color: #333333;
 }
 
+button.hidden{
+    background-color: #dddddd;
+    color: #999999;
+}
+
+button.locked{
+    background-color: #ffe7ff;
+}
+
 button.selected, button.hidden.selected, button.locked.selected{
     background-color: #395889;
 }
@@ -139,6 +148,10 @@ button.selected, button.hidden.selected, button.locked.selected{
 .panel .tree{
     background-color: #3e3e3e;
     border-right: 1px solid #323232;
+}
+
+.panel .tree .list-element-img-wrapper{
+    background-color: unset;
 }
 
 #app-el-bottom .panel .tree .panel{
@@ -297,4 +310,8 @@ button.selected, button.hidden.selected, button.locked.selected{
 
 ::-webkit-scrollbar-thumb {
     background-color: #555554;
+}
+
+h4{
+    background-color: #cccccc;
 }

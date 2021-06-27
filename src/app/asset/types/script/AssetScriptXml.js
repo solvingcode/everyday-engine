@@ -52,6 +52,14 @@ export default class AssetScriptXml extends AssetScript{
     /**
      * @override
      */
+    rename(newName){
+        World.get().getScriptManager().rename(this.data, newName)
+        this.parse()
+    }
+
+    /**
+     * @override
+     */
     export(asset) {
         FileHelper.save(this.getDataUrl(), FileHelper.type.XML, asset.getName())
     }

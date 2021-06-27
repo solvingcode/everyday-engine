@@ -40,4 +40,13 @@ export default class AnimationParser extends Parser {
         }
     }
 
+    /**
+     * @param {Document} xmlDocument
+     * @param {string} newName
+     */
+    static rename(xmlDocument, newName) {
+        const xmlNode = xmlDocument.documentElement
+        xmlNode.setAttribute('name', newName)
+    }
+
 }

@@ -4,6 +4,7 @@ import UnitListMenuItem from './UnitListMenuItem.js'
 import UnitFormMenuItem from './UnitFormMenuItem.js'
 import ComponentListMenuItem from './ComponentListMenuItem.js'
 import ComponentAddWrapperMenuItem from './ComponentAddWrapperMenuItem.js'
+import World from '../../../world/World.js'
 
 export default class UnitsWrapperMenuItem extends MenuItem {
     constructor(parent) {
@@ -19,5 +20,13 @@ export default class UnitsWrapperMenuItem extends MenuItem {
             new ComponentListMenuItem(this),
             new ComponentAddWrapperMenuItem(this)
         ]
+    }
+
+    /**
+     * @override
+     */
+    isValid() {
+        const selectedTab = World.get().getTabManager().getSelected()
+        return super.isValid() && selectedTab && selectedTab.isProtected()
     }
 }

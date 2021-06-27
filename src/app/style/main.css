@@ -27,21 +27,8 @@ button{
     position: relative;
 }
 
-button:hover, button.locked:hover, button.hidden:hover{
-    background-color: #caddf0;
-}
-
 button:focus{
     outline: none;
-}
-
-button.hidden{
-    background-color: #dddddd;
-    color: #999999;
-}
-
-button.locked{
-    background-color: #ffe7ff;
 }
 
 button[data-icon]{
@@ -65,7 +52,6 @@ button[data-icon]{
 h4{
     margin: 0;
     padding: 10px;
-    background-color: #cccccc;
 }
 
 /* -- title */
@@ -222,7 +208,6 @@ h4{
 }
 
 .panel .tree .list-element-img-wrapper{
-    background-color: unset;
     width: 20px !important;
     height: 20px !important;
     float: left !important;

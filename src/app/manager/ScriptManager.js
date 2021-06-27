@@ -79,6 +79,14 @@ export default class ScriptManager extends ScriptManagerData {
     }
 
     /**
+     * @param {Document} data
+     * @param {string} newName
+     */
+    rename(data, newName){
+        ScriptParser.rename(data, newName)
+    }
+
+    /**
      * @param {TabManager} tabManager
      * @return {AScript}
      */
