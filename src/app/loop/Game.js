@@ -13,6 +13,7 @@ import ScriptExecutor from '../executor/type/ScriptExecutor.js'
 import AnimationScriptExecutor from '../executor/type/AnimationScriptExecutor.js'
 import AnimationMeshExecutor from '../executor/type/AnimationMeshExecutor.js'
 import WorldInitializeRunner from '../runner/world/WorldInitializeRunner.js'
+import ColliderDebugRunner from '../runner/debug/ColliderDebugRunner.js'
 
 /**
  * @class {Game}
@@ -27,6 +28,7 @@ class Game extends Scene {
 
     constructor() {
         super()
+        this.runners = [WorldInitializeRunner, ColliderDebugRunner, GameExecutorRunner, GameRenderRunner, PhysicsRunner]
         ExecutorRegistry.get().register([
             new MeshGenerationExecutor(),
             new RigidBodyExecutor(),
@@ -36,7 +38,6 @@ class Game extends Scene {
             new AnimationScriptExecutor(),
             new AnimationMeshExecutor()
         ])
-        this.runners = [WorldInitializeRunner, GameRenderRunner, GameExecutorRunner, PhysicsRunner]
     }
 
     /**

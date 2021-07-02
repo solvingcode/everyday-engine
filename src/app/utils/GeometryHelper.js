@@ -1,5 +1,6 @@
 import Size from '../pobject/Size.js'
 import Vector from './Vector.js'
+import Vertex from './Vertex.js'
 
 export default class GeometryHelper{
 
@@ -64,6 +65,81 @@ export default class GeometryHelper{
         }
 
         return {position, size, vertices}
+    }
+
+    /**
+     * @param {Vector} position
+     * @param {number} rotation
+     * @param {Size} size
+     * @return {Vector}
+     */
+    static toCenterPosition(position, rotation, size){
+        const center = this.getLargeCenterFromRotationSize(rotation, size)
+        return new Vector({
+            x: position.x + center.x,
+            y: position.y + center.y
+        })
+    }
+
+    /**
+     * @param {Vector} position
+     * @param {number} rotation
+     * @param {Size} size
+     * @return {Vector}
+     */
+    static fromCenterPosition(position, rotation, size) {
+        const center = this.getLargeCenterFromRotationSize(rotation, size)
+        return new Vector({
+            x: position.x - center.x,
+            y: position.y - center.y
+        })
+    }
+
+    /**
+     * @param {number} rotation
+     * @param {Size} size
+     * @return {Vector}
+     */
+    static getLargeCenterFromRotationSize(rotation, size) {
+        const gSize = this.getLargestRectangle(rotation, size)
+        return new Vector({
+            x: gSize.width / 2,
+            y: gSize.height / 2
+        })
+    }
+
+    /**
+     * @param {Size} size
+     * @return {Vector[]}
+     */
+    static loadVertices(size) {
+        const {width, height} = size
+        return [
+            new Vector({x: 0, y: 0}),
+            new Vector({x: width, y: 0}),
+            new Vector({x: width, y: height}),
+            new Vector({x: 0, y: height})
+        ]
+    }
+
+    /**
+     * @param {Vector[]} vertices
+     * @param {number} rotation
+     * @param {Size} size
+     * @param {Vector} rotateCenter
+     * @return {Vector[]}
+     */
+    static rotateVertices(vertices, rotation, size, rotateCenter = new Vector()) {
+        const {width: mWidth, height: mHeight} = this.getLargestRectangle(rotation || 0, size)
+        const center = new Vector({x: size.width / 2, y: size.height / 2})
+        const mCenter = new Vector({x: mWidth / 2, y: mHeight / 2})
+
+        let newVertices = vertices
+        newVertices = Vertex.translate(newVertices, center, -1)
+        newVertices = Vertex.rotate(newVertices, rotation || 0, rotateCenter)
+        newVertices = Vertex.translate(newVertices, mCenter)
+
+        return newVertices
     }
 
 }

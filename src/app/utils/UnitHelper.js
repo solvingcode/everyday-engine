@@ -8,6 +8,12 @@ import ColliderComponent from '../component/internal/ColliderComponent.js'
 import Size from '../pobject/Size.js'
 import RectColliderComponent from '../component/internal/RectColliderComponent.js'
 import CircleColliderComponent from '../component/internal/CircleColliderComponent.js'
+import {PrimitiveShape} from '../unit/Unit.js'
+import RectUnitInstant from '../unit/instant/type/internal/primitive/RectUnitInstant.js'
+import CircleUnitInstant from '../unit/instant/type/internal/primitive/CircleUnitInstant.js'
+import SystemError from '../exception/type/SystemError.js'
+import Style from '../pobject/Style.js'
+import GUIColliderComponent from '../component/internal/gui/collider/GUIColliderComponent.js'
 
 export default class UnitHelper {
 
@@ -51,21 +57,6 @@ export default class UnitHelper {
     }
 
     /**
-     * Move the unit by distance related to a given point.
-     * Move also attached entities
-     * @param {Unit} unit
-     * @param {Vector} point relative position
-     * @param {Vector} target absolute position
-     */
-    static moveRelativePointTo(unit, point, target) {
-        const transformComponent = unit.getComponent(TransformComponent)
-        const position = transformComponent.getPosition()
-        const diffDistance = new Vector({x: target.x - position.x - point.x, y: target.y - position.y - point.y})
-        const newPosition = new Vector({x: position.x + diffDistance.x, y: position.y + diffDistance.y, z: position.z})
-        transformComponent.setPosition(newPosition)
-    }
-
-    /**
      * Generate vertices (relative coordinates)
      * @param {Unit} unit
      * @return {Vector[]}
@@ -73,42 +64,8 @@ export default class UnitHelper {
     static generateVertices(unit) {
         const meshComponent = unit.getComponent(MeshComponent)
         const transformComponent = unit.getComponent(TransformComponent)
-        const vertices = this.loadVertices(meshComponent.getSize())
-        return this.rotateVertices(vertices, transformComponent.getRotation(), meshComponent.getSize())
-    }
-
-    /**
-     * @param {Size} size
-     * @return {Vector[]}
-     */
-    static loadVertices(size) {
-        const {width, height} = size
-        return [
-            new Vector({x: 0, y: 0}),
-            new Vector({x: width, y: 0}),
-            new Vector({x: width, y: height}),
-            new Vector({x: 0, y: height})
-        ]
-    }
-
-    /**
-     * @param {Vector[]} vertices
-     * @param {number} rotation
-     * @param {Size} size
-     * @param {Vector} rotateCenter
-     * @return {Vector[]}
-     */
-    static rotateVertices(vertices, rotation, size, rotateCenter = new Vector()) {
-        const {width: mWidth, height: mHeight} = GeometryHelper.getLargestRectangle(rotation || 0, size)
-        const center = new Vector({x: size.width / 2, y: size.height / 2})
-        const mCenter = new Vector({x: mWidth / 2, y: mHeight / 2})
-
-        let newVertices = vertices
-        newVertices = Vertex.translate(newVertices, center, -1)
-        newVertices = Vertex.rotate(newVertices, rotation || 0, rotateCenter)
-        newVertices = Vertex.translate(newVertices, mCenter)
-
-        return newVertices
+        const vertices = GeometryHelper.loadVertices(meshComponent.getSize())
+        return GeometryHelper.rotateVertices(vertices, transformComponent.getRotation(), meshComponent.getSize())
     }
 
     /**
@@ -154,35 +111,21 @@ export default class UnitHelper {
     }
 
     /**
-     * Get current position from center position
      * @param {Unit} unit
      * @param {ColliderComponent} colliderComponent
-     * @param {Vector} position
+     * @param {Vector} unitPosition
+     * @param {number} colliderRotation
      * @return {Vector}
      */
-    static fromColliderCenterPosition(unit, colliderComponent, position) {
+    static toColliderCenterPosition(unit, colliderComponent, unitPosition, colliderRotation) {
         const transformComponent = unit.getComponent(TransformComponent)
-        const center = this.getLargeCenterFromRotationSize(transformComponent.getRotation(),
+        const unitRotation = transformComponent.getRotation()
+        const position = Vector.add(unitPosition, colliderComponent.getPosition())
+        const center = GeometryHelper.getLargeCenterFromRotationSize(unitRotation,
             this.getColliderSize(unit, colliderComponent))
         return new Vector({
-            x: position.x - center.x,
-            y: position.y - center.y
-        })
-    }
-
-    /**
-     * @param {Unit} unit
-     * @param {ColliderComponent} colliderComponent
-     * @return {Vector}
-     */
-    static toColliderCenterPosition(unit, colliderComponent) {
-        const transformComponent = unit.getComponent(TransformComponent)
-        const colliderPosition = Vector.add(transformComponent.getPosition(), colliderComponent.getPosition())
-        const center = this.getLargeCenterFromRotationSize(transformComponent.getRotation(),
-            this.getColliderSize(unit, colliderComponent))
-        return new Vector({
-            x: colliderPosition.x + center.x,
-            y: colliderPosition.y + center.y
+            x: position.x + center.x,
+            y: position.y + center.y
         })
     }
 
@@ -218,20 +161,7 @@ export default class UnitHelper {
     static getLargeCenterByUnit(unit) {
         const transformComponent = unit.getComponent(TransformComponent)
         const meshComponent = unit.getComponent(MeshComponent)
-        return this.getLargeCenterFromRotationSize(transformComponent.getRotation(), meshComponent.getSize())
-    }
-
-    /**
-     * @param {number} rotation
-     * @param {Size} size
-     * @return {Vector}
-     */
-    static getLargeCenterFromRotationSize(rotation, size) {
-        const gSize = GeometryHelper.getLargestRectangle(rotation, size)
-        return new Vector({
-            x: gSize.width / 2,
-            y: gSize.height / 2
-        })
+        return GeometryHelper.getLargeCenterFromRotationSize(transformComponent.getRotation(), meshComponent.getSize())
     }
 
     /**
@@ -283,5 +213,71 @@ export default class UnitHelper {
     static getColliderEditing(unit) {
         return unit.findComponentsByClass(ColliderComponent)
             .find(component => component.isEditFlag())
+    }
+
+    /**
+     * @param {Size} unitSize
+     * @param {Size} colliderSize
+     * @param {number} unitRotation
+     * @param {Vector} colliderRelativePosition
+     * @return {Vector}
+     */
+    static GetCorrectionVector(unitSize, colliderSize, unitRotation, colliderRelativePosition){
+        const unitVertices = GeometryHelper.loadVertices(unitSize)
+        const colliderVertices = GeometryHelper.loadVertices(colliderSize)
+            .map(colliderVertex => Vector.subtract(colliderVertex, colliderRelativePosition))
+        const initDiff = Vector.subtract(colliderVertices[0], unitVertices[0])
+        const unitVerticesRotated = GeometryHelper.rotateVertices(unitVertices, unitRotation, unitSize)
+        const colliderVerticesRotated = GeometryHelper.rotateVertices(colliderVertices, unitRotation, colliderSize)
+        const rotatedDiff = Vector.subtract(colliderVerticesRotated[0], unitVerticesRotated[0])
+        return Vector.subtract(initDiff, rotatedDiff)
+    }
+
+    /**
+     * @param {Unit} unit
+     * @param {World} world
+     * @return {Unit[]}
+     */
+    static createGUICollider(unit, world) {
+        const unitManager = world.getUnitManager()
+        const colliderComponents = unit.findComponentsByClass(ColliderComponent)
+        const unitPosition = unit.getComponent(TransformComponent).getPosition()
+        const unitRotation = unit.getComponent(TransformComponent).getRotation()
+        const unitSize = unit.getComponent(MeshComponent).getSize()
+        const colliderUnits = []
+        colliderComponents.forEach(colliderComponent => {
+            if (colliderComponent.isEditFlag()) {
+                const colliderRelativePosition = colliderComponent.getPosition()
+                const colliderPosition = Vector.add(unitPosition, colliderRelativePosition)
+                const colliderSize = UnitHelper.getColliderSize(unit, colliderComponent)
+                const colliderRotation = unitRotation
+                const correctionVector = this.GetCorrectionVector(unitSize, colliderSize, unitRotation, colliderRelativePosition)
+                const colliderCorrectedPosition = Vector.add(colliderPosition, correctionVector)
+
+                const shape = colliderComponent.getShape()
+                let unitInstantClass
+                switch (shape) {
+                    case PrimitiveShape.RECT:
+                        unitInstantClass = RectUnitInstant
+                        break
+                    case PrimitiveShape.CIRCLE:
+                        unitInstantClass = CircleUnitInstant
+                        break
+                    default:
+                        throw new SystemError(`No Unit Instant configured for Collider "${shape}"`)
+                }
+
+                const style = new Style()
+                style.setColor('#1fa834')
+                style.setBorderSize(2)
+
+                const colliderUnit = unitManager
+                    .createUnitInstant(unitInstantClass, colliderCorrectedPosition, colliderSize, style)
+                colliderUnit.createComponents([GUIColliderComponent])
+                colliderUnit.getComponent(TransformComponent).setRotation(colliderRotation)
+                colliderUnits.push(colliderUnit)
+            }
+        })
+        return colliderUnits
     }
 }

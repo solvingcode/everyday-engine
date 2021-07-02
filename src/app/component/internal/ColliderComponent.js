@@ -19,6 +19,7 @@ export default class ColliderComponent extends Component{
         this.add('radius', TYPES.NUMBER, 100)
         this.add('editFlag', TYPES.BOOLEAN, false)
         this.add('shape', TYPES.STRING, PrimitiveShape.RECT)
+        this.add('rotation', TYPES.NUMBER, 0)
     }
 
     /**
@@ -32,6 +33,11 @@ export default class ColliderComponent extends Component{
                 type: Layout.form.CHECKBOX
             },
             {
+                bind: 'enabled',
+                label: 'Enabled',
+                type: Layout.form.CHECKBOX
+            },
+            {
                 bind: 'position.x',
                 label: 'Position X',
                 type: Layout.form.TEXT
@@ -39,6 +45,11 @@ export default class ColliderComponent extends Component{
             {
                 bind: 'position.y',
                 label: 'Position Y',
+                type: Layout.form.TEXT
+            },
+            {
+                bind: 'rotation',
+                label: 'Rotation',
                 type: Layout.form.TEXT
             }
         ]
@@ -56,6 +67,20 @@ export default class ColliderComponent extends Component{
      */
     getPosition(){
         return this.getValue('position')
+    }
+
+    /**
+     * @param {number} rotation
+     */
+    setRotation(rotation) {
+        this.setValue('rotation', rotation)
+    }
+
+    /**
+     * @return {number}
+     */
+    getRotation(){
+        return this.getValue('rotation')
     }
 
     /**

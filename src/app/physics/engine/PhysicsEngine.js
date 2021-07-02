@@ -162,32 +162,19 @@ export default class PhysicsEngine {
     /**
      * @abstract
      * @param {*} body
+     * @return {*}
+     */
+    getBodyRotation(body) {
+        throw new SystemError(`${this.constructor.name}.getBodyRotation method must be implemented`)
+    }
+
+    /**
+     * @abstract
+     * @param {*} body
      * @return {*[]}
      */
     getBodyColliders(body) {
         throw new SystemError(`${this.constructor.name}.getBodyColliders method must be implemented`)
-    }
-
-    /**
-     * @param {Unit} unit
-     * @return {Vector}
-     */
-    getBodyPositionFromCollider(unit) {
-        const body = this.findBody(unit)
-        const colliders = this.getBodyColliders(body)
-        const firstColliderIndex = 1
-        let bodyPosition = UnitHelper.fromCenterPosition(unit, new Vector(this.getBodyPosition(body)))
-        if (colliders.length > firstColliderIndex) { // body has colliders (first collider is always the parent body)
-            const firstCollider = colliders[firstColliderIndex]
-            const firstColliderPosition = new Vector(this.getBodyPosition(firstCollider))
-            const colliderComponents = unit.findComponentsByClass(ColliderComponent)
-            const colliderComponentRelated = colliderComponents[firstColliderIndex - 1]
-            const colliderPosition = Vector.add(
-                firstColliderPosition,
-                Vector.multiply(colliderComponentRelated.getPosition(), -1))
-            bodyPosition = UnitHelper.fromColliderCenterPosition(unit, colliderComponentRelated, colliderPosition)
-        }
-        return bodyPosition
     }
 
     /**
@@ -315,7 +302,8 @@ export default class PhysicsEngine {
      */
     createBody(unit, options, colliderComponents){
         const colliders = colliderComponents.map(colliderComponent => this.newCollider(unit, colliderComponent))
-        const body = this.newBody(_.cloneDeep(colliders), options)
+        const position = UnitHelper.toCenterPosition(unit)
+        const body = this.newBody(position, _.cloneDeep(colliders), options)
         this.addToWorld(body)
         this.saveBody(unit, body)
         this.saveColliders(unit, colliderComponents, colliders)
@@ -414,11 +402,12 @@ export default class PhysicsEngine {
     /**
      * @protected
      * @abstract
+     * @param {Vector} position
      * @param {*[]} colliders
      * @param {RigidBodyOptions} options
      * @return {*}
      */
-    newBody(colliders, options) {
+    newBody(position, colliders, options) {
         throw new SystemError(`${this.constructor.name}.newRigidBody method must be implemented`)
     }
 

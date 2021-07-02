@@ -93,6 +93,19 @@ class Vector {
     }
 
     /**
+     * @param {Vector} vectorA
+     * @param {Vector} vectorB
+     * @return {Vector}
+     */
+    static subtract(vectorA, vectorB) {
+        return new Vector({
+            x: vectorA.x - vectorB.x,
+            y: vectorA.y - vectorB.y,
+            z: vectorA.z - vectorB.z
+        })
+    }
+
+    /**
      * @param {Vector} vector
      * @param {number} value
      * @return {Vector}

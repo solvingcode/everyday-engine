@@ -51,7 +51,7 @@ export default class TransformComponent extends Component{
             {
                 bind: 'rotation',
                 label: 'Rotation (rad)',
-                type: Layout.form.RANGE,
+                type: Layout.form.TEXT,
                 options: {
                     min: 0,
                     max: Math.PI,
@@ -83,10 +83,10 @@ export default class TransformComponent extends Component{
     }
 
     /**
-     * @param {number} rotation
+     * @param {number|string} rotation
      */
     setRotation(rotation){
-        this.setValue('rotation', rotation)
+        this.setValue('rotation', parseFloat(rotation))
     }
 
     /**

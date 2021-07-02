@@ -37,17 +37,18 @@ export default class MatterEngine extends PhysicsEngine {
 
     /**
      * @override
-     * @param {Matter.Body[]} colliders
-     * @param {RigidBodyOptions} options
-     * @return {Matter.Body}
      */
-    newBody(colliders, options) {
+    newBody(position, colliders, options) {
         const bodyOptions = {
             isStatic: options.isStatic,
+            isSensor: !colliders.length,
             parts: colliders,
-            friction: 0
+            //friction: 0
         }
-        if(options.freezeRotation){
+        if (!colliders.length) {
+            bodyOptions.position = position
+        }
+        if (options.freezeRotation) {
             bodyOptions.inertia = Infinity
         }
         return Matter.Body.create(bodyOptions)
@@ -64,7 +65,7 @@ export default class MatterEngine extends PhysicsEngine {
     /**
      * @override
      */
-    update(){
+    update() {
         Matter.Engine.update(this.getInstance())
     }
 
@@ -95,7 +96,7 @@ export default class MatterEngine extends PhysicsEngine {
      * @override
      */
     getBodyColliders(body) {
-        return body.parts
+        return body.parts.filter((_, index) => index !== 0)
     }
 
     /**
@@ -107,11 +108,18 @@ export default class MatterEngine extends PhysicsEngine {
 
     /**
      * @override
+     */
+    getBodyRotation(body) {
+        return body.angle ? body.angle % (Math.PI * 2) : 0
+    }
+
+    /**
+     * @override
      * @param {Matter.Body} body
      * @param {Vector} position
      * @param {Vector} force
      */
-    applyForceToBody(body, position, force){
+    applyForceToBody(body, position, force) {
         Matter.Body.applyForce(body, position, force)
     }
 
@@ -120,21 +128,21 @@ export default class MatterEngine extends PhysicsEngine {
      * @param {Matter.Body} body
      * @param {Vector} velocity
      */
-    setVelocityToBody(body, velocity){
+    setVelocityToBody(body, velocity) {
         Matter.Body.setVelocity(body, velocity)
     }
 
     /**
      * @override
      */
-    setFrictionToBody(body, friction){
+    setFrictionToBody(body, friction) {
         body.friction = friction
     }
 
     /**
      * @override
      */
-    getVelocityByBody(body){
+    getVelocityByBody(body) {
         return body.velocity
     }
 
