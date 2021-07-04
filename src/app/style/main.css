@@ -591,6 +591,7 @@ h4{
     position: relative;
     width: 100%;
     overflow: hidden;
+    box-sizing: border-box;
 }
 
 .list-element .list-element-img-wrapper{

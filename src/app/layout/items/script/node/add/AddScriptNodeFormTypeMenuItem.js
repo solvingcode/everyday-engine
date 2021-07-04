@@ -47,11 +47,11 @@ export default class AddScriptNodeFormTypeMenuItem extends FormMenuItem {
                     {
                         value: NODE_TYPES.FUNCTION,
                         label: 'Function'
-                    },
+                    }/*,
                     {
                         value: NODE_TYPES.CONSTANT,
                         label: 'Constant'
-                    },
+                    }*/,
                     {
                         value: NODE_TYPES.CONDITION,
                         label: 'Condition'

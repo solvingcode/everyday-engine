@@ -64,6 +64,7 @@ import Window from '../../core/Window.js'
 import AddAnimationScriptAction from './assets/AddAnimationScriptAction.js'
 import ExportAssetAction from './assets/ExportAssetAction.js'
 import DeleteComponentAction from './unit/DeleteComponentAction.js'
+import AddNodeInputAction from './script/AddNodeInputAction.js'
 
 /**
  * Action Runner class.
@@ -141,6 +142,7 @@ class ActionRunner extends Runner {
             DELETE_SCRIPT_EDGE: DeleteEdgeAction,
             ADD_SCRIPT_NODE: AddNodeAction,
             ADD_SCRIPT_EDGE: AddEdgeAction,
+            ADD_SCRIPT_NODE_INPUT: AddNodeInputAction,
             CLOSE_ERROR_POPUP: CloseErrorPopupAction,
             ATTACH_COMPONENT: AttachComponentAction,
             ATTACH_ASSET_SCRIPT: AttachAssetScriptAction,

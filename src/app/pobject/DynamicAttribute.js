@@ -43,6 +43,13 @@ export default class DynamicAttribute {
     }
 
     /**
+     * @return {string}
+     */
+    getName(){
+        return ''
+    }
+
+    /**
      * @param {string} type
      */
     setAttrType(type){

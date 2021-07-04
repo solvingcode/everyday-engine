@@ -64,7 +64,7 @@ export default class PhysicsManager {
      */
     isGrounded(unit) {
         const startVector = new Vector({x: 0, y: 0})
-        const endVector = new Vector({x: 0, y: 1})
+        const endVector = new Vector({x: 0, y: 5})
         const collisions = this.rayCast(unit, startVector, endVector).filter(collision => collision.collided)
         return !!collisions.length
     }
@@ -147,14 +147,16 @@ export default class PhysicsManager {
             if(firstColliderComponent){
                 const firstColliderRelativePosition = firstColliderComponent.getPosition()
                 const bodyCollider = this.physicsEngine.getBodyColliders(body)[0]
-                const bodyColliderPosition = new Vector(this.physicsEngine.getBodyPosition(bodyCollider))
-                const actualColliderSize = UnitHelper.getColliderSize(unit, firstColliderComponent)
-                const unitColliderPosition = GeometryHelper.fromCenterPosition(bodyColliderPosition, bodyRotationRounded, actualColliderSize)
-                const newUnitPosition = Vector.subtract(unitColliderPosition, firstColliderRelativePosition)
+                if(bodyCollider){
+                    const bodyColliderPosition = new Vector(this.physicsEngine.getBodyPosition(bodyCollider))
+                    const actualColliderSize = UnitHelper.getColliderSize(unit, firstColliderComponent)
+                    const unitColliderPosition = GeometryHelper.fromCenterPosition(bodyColliderPosition, bodyRotationRounded, actualColliderSize)
+                    const newUnitPosition = Vector.subtract(unitColliderPosition, firstColliderRelativePosition)
 
-                const correctionVector = UnitHelper.GetCorrectionVector(actualUnitSize, actualColliderSize,
-                    bodyRotationRounded, firstColliderRelativePosition)
-                newPosition = Vector.subtract(newUnitPosition, correctionVector)
+                    const correctionVector = UnitHelper.GetCorrectionVector(actualUnitSize, actualColliderSize,
+                        bodyRotationRounded, firstColliderRelativePosition)
+                    newPosition = Vector.subtract(newUnitPosition, correctionVector)
+                }
             }
 
             transformComponent.setPosition(newPosition)

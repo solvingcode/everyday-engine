@@ -11,6 +11,7 @@ import GraphEdgeUnitInstant from '../unit/instant/type/internal/graph/GraphEdgeU
 import MeshComponent from '../component/internal/MeshComponent.js'
 import Unit from '../unit/Unit.js'
 import ClientError from '../exception/type/ClientError.js'
+import ConstantNode from '../flow/node/ConstantNode.js'
 
 export default class GraphManager {
 
@@ -33,7 +34,7 @@ export default class GraphManager {
     /**
      * @return {UnitInstant[]}
      */
-    getGraphUnits(){
+    getGraphUnits() {
         return this.getUnits()
             .filter(unit => unit.hasComponents([NodeComponent]))
     }
@@ -41,7 +42,7 @@ export default class GraphManager {
     /**
      * @return {UnitInstant[]}
      */
-    getGraphEdges(){
+    getGraphEdges() {
         return this.getUnits()
             .filter(unit => unit.hasComponents([NodeInputComponent]))
     }
@@ -66,13 +67,14 @@ export default class GraphManager {
     updateGraphNodes(script) {
         let updated = false
         const units = this.getGraphUnits()
+        const nodes = script.getNodes()
         const graphNodeIds = units
             .map(graphUnit => graphUnit.getComponent(NodeComponent).getNodeId())
-        const nodeIds = script.getNodes().map(node => node.getId())
-        script.getNodes().forEach(node => {
+        const nodeIds = nodes.map(node => node.getId())
+        nodes.forEach(node => {
             const isGraphUnitExist = graphNodeIds.includes(node.getId())
             if (!isGraphUnitExist) {
-                this.createGraphNodeUnit(node)
+                this.createGraphNodeUnit(node, script)
                 updated = true
             } else {
                 const graphUnit = units
@@ -82,6 +84,7 @@ export default class GraphManager {
                     node.setPosition(position)
                     updated = true
                 }
+                graphUnit.update(node.getPosition(), node, script)
             }
         })
         graphNodeIds.forEach(graphNodeId => {
@@ -126,11 +129,15 @@ export default class GraphManager {
 
     /**
      * @param {ANode} node
+     * @param {AScript} script
      */
-    createGraphNodeUnit(node) {
+    createGraphNodeUnit(node, script) {
         const unit = new GraphNodeUnitInstant()
         const position = node.getPosition()
-        unit.instantiate(position, node)
+        unit.instantiate(position, node, script)
+        if (node instanceof ConstantNode) {
+            unit.getComponent(MeshComponent).setEnabled(false)
+        }
         this.getUnits().push(unit)
         return unit
     }
@@ -142,6 +149,9 @@ export default class GraphManager {
     createGraphEdgeUnit(script, nodeInput) {
         const unit = new GraphEdgeUnitInstant()
         unit.instantiate(script, nodeInput)
+        if (script.findNodeById(nodeInput.getSourceNodeId()) instanceof ConstantNode) {
+            unit.getComponent(MeshComponent).setEnabled(false)
+        }
         this.getUnits().push(unit)
         return unit
     }
@@ -235,7 +245,7 @@ export default class GraphManager {
     /**
      * @return {UnitInstant[]}
      */
-    getSelected(){
+    getSelected() {
         return this.getGraphUnits().filter(unit => unit.isSelected())
     }
 

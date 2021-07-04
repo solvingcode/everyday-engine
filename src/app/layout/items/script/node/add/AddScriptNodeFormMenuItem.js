@@ -2,7 +2,6 @@ import Layout from '../../../../Layout.js'
 import MenuItem from '../../../../MenuItem.js'
 import AddScriptNodeFormTypeMenuItem from './AddScriptNodeFormTypeMenuItem.js'
 import AddScriptNodeFormFunctionMenuItem from './AddScriptNodeFormFunctionMenuItem.js'
-import AddScriptNodeFormConstantMenuItem from './AddScriptNodeFormConstantMenuItem.js'
 import AddScriptNodeFormUnitMenuItem from './AddScriptNodeFormUnitMenuItem.js'
 import AddScriptNodeFormKeyCodeMenuItem from './AddScriptNodeFormKeyCodeMenuItem.js'
 import AddScriptNodeFormVariableMenuItem from './AddScriptNodeFormVariableMenuItem.js'
@@ -28,7 +27,7 @@ export default class AddScriptNodeFormMenuItem  extends MenuItem {
             new AddScriptNodeFormAnimationMenuItem(this, addNodeForm),
             new AddScriptNodeFormComponentMenuItem(this, addNodeForm),
             new AddScriptNodeFormFunctionMenuItem(this, addNodeForm),
-            new AddScriptNodeFormConstantMenuItem(this, addNodeForm),
+            // new AddScriptNodeFormConstantMenuItem(this, addNodeForm),
             new AddScriptNodeFormUnitMenuItem(this, addNodeForm),
             new AddScriptNodeFormKeyCodeMenuItem(this, addNodeForm),
             new AddScriptNodeFormVariableMenuItem(this, addNodeForm)
