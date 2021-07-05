@@ -31,7 +31,7 @@ export default class ScriptHelper {
      * @param {string} nodeValue
      * @return {ANode}
      */
-    static createNode(functionRegistry, script, nodeType, nodeValue) {
+    static createNode(functionRegistry, script, nodeType, nodeValue = '') {
         let node
         if (nodeType === NODE_TYPES.EVENT) {
             node = script.createNode(functionRegistry, EventNode, nodeValue)

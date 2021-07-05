@@ -6,6 +6,7 @@ import ScriptGraphSelector from '../../../selector/ScriptGraphSelector.js'
 import NodeComponent from '../../../component/internal/gui/node/NodeComponent.js'
 import ScriptHelper from '../../../utils/ScriptHelper.js'
 import {NODE_TYPES} from '../../../flow/node/ANode.js'
+import {TYPES} from '../../../pobject/AttributeType.js'
 
 export default class AddNodeInputAction extends Action {
 
@@ -30,11 +31,18 @@ export default class AddNodeInputAction extends Action {
         const node = script.findNodeById(nodeId)
 
         const functionRegistry = World.get().getFunctionRegistry()
-        const nodeSource = ScriptHelper.createNode(functionRegistry, script, NODE_TYPES.CONSTANT, formData.getValue())
-        if(node){
+
+        let nodeSource
+        if (formData.getAttribute().getAttrType() === TYPES.UNIT) {
+            nodeSource = ScriptHelper.createNode(functionRegistry, script, NODE_TYPES.SELF)
+        } else {
+            nodeSource = ScriptHelper.createNode(functionRegistry, script, NODE_TYPES.CONSTANT, formData.getValue())
+        }
+
+        if (node) {
             node.attach(nodeSource, formData.getAttribute().getAttrName())
             assetTab.generate(script)
-        }else{
+        } else {
             throw new ClientError(`Cannot add the connection (target are invalid)`)
         }
         return true

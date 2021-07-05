@@ -32,6 +32,8 @@ import ToggleVariableNode from '../flow/node/variable/ToggleVariableNode.js'
 import AToggleVariable from '../flow/variable/AToggleVariable.js'
 import BooleanVariableNode from '../flow/node/variable/BooleanVariableNode.js'
 import ABooleanVariable from '../flow/variable/ABooleanVariable.js'
+import DynamicAttribute from '../pobject/DynamicAttribute.js'
+import {TYPES} from '../pobject/AttributeType.js'
 
 export default class NodeHelper {
 
@@ -39,7 +41,7 @@ export default class NodeHelper {
      * @param {ANode} node
      * @return {AFunction}
      */
-    static getSourceNode(node){
+    static getSourceNode(node) {
         const functionRegistry = World.get().getFunctionRegistry()
         const sourceName = node.getSourceName()
         switch (node.constructor) {
@@ -78,31 +80,31 @@ export default class NodeHelper {
      * @param {ANode} node
      * @return {string}
      */
-    static getNodeName(node){
+    static getNodeName(node) {
         const nodeSource = this.getSourceNode(node)
-        if(nodeSource instanceof AConstant){
+        if (nodeSource instanceof AConstant) {
             return `${nodeSource.getName()}`
-        }else if(nodeSource instanceof AKeyCode){
+        } else if (nodeSource instanceof AKeyCode) {
             return `${nodeSource.getName()}`
-        }else if(nodeSource instanceof AStringVariable){
+        } else if (nodeSource instanceof AStringVariable) {
             return `${nodeSource.getName()} (string)`
-        }else if(nodeSource instanceof AToggleVariable){
+        } else if (nodeSource instanceof AToggleVariable) {
             return `${nodeSource.getName()} (toggle)`
-        }else if(nodeSource instanceof ACondition){
+        } else if (nodeSource instanceof ACondition) {
             return `${nodeSource.getName()}`
-        }else if(nodeSource instanceof AEvent){
+        } else if (nodeSource instanceof AEvent) {
             return `${nodeSource.getName()}`
-        }else if(nodeSource instanceof AUnit){
+        } else if (nodeSource instanceof AUnit) {
             const unit = World.get().findUnitById(parseInt(nodeSource.getName()))
             return `${unit.getName()}`
-        }else if(nodeSource instanceof AAnimation){
+        } else if (nodeSource instanceof AAnimation) {
             const animation = World.get().getAnimationManager().findById(parseInt(nodeSource.getName()))
             return `${animation.getName()}`
-        }else if(nodeSource instanceof AComponent){
+        } else if (nodeSource instanceof AComponent) {
             return `${nodeSource.getName()} Component`
-        }else if(nodeSource instanceof AFunction){
+        } else if (nodeSource instanceof AFunction) {
             return `${nodeSource.getName()}`
-        }else{
+        } else {
             throw new ClientError(`Node source "${nodeSource && nodeSource.constructor.name}" unknown`)
         }
     }
@@ -118,7 +120,7 @@ export default class NodeHelper {
      * fontSizeRatio: number, selectColor: string
      * }}
      */
-    static getNodeGUIProps(type){
+    static getNodeGUIProps(type) {
         const sizeInput = 10
         const fontSize = 12
         const fontSizeRatio = 1.5
@@ -170,14 +172,17 @@ export default class NodeHelper {
 
     /**
      * @param {ANode} node
+     * @param {AScript} script
      * @return {Size}
      */
-    static getNodeGUISize(node){
+    static getNodeGUISize(node, script) {
         const nodeSource = this.getSourceNode(node)
         const nodeSourceInputs = nodeSource.getInputs()
         const type = node.getType()
         const {fontSize, padding, fontSizeRatio, sizeInput} = this.getNodeGUIProps(type)
-        const width = Math.max(this.getNodeName(node).length * fontSize / fontSizeRatio, 100)
+        const nodeInputTextLengths = this.getNodeGUIInputs(node, script)
+            .concat(this.getNodeName(node)).map(text => text.length)
+        const width = Math.max(Math.max(...nodeInputTextLengths) * fontSize / fontSizeRatio, 100)
         const height = (nodeSourceInputs.length + 1) * (sizeInput + padding * 2) + (fontSize + padding * 2)
         return new Size({width, height})
     }
@@ -187,7 +192,7 @@ export default class NodeHelper {
      * @param {Size} size
      * @return {{position: Vector, sizeInput: number}}
      */
-    static getNodeGUIOutput(type, size){
+    static getNodeGUIOutput(type, size) {
         const {sizeInput, padding, heightHead} = this.getNodeGUIProps(type)
         const position = new Vector({x: size.getWidth() - padding - sizeInput, y: heightHead + padding})
         return {position, sizeInput}
@@ -198,7 +203,7 @@ export default class NodeHelper {
      * @param {number} index
      * @return {{position: Vector, sizeInput: number}}
      */
-    static getNodeGUIInput(type, index){
+    static getNodeGUIInput(type, index) {
         const {sizeInput, padding, heightHead} = this.getNodeGUIProps(type)
         const position = new Vector({
             x: padding,
@@ -208,10 +213,52 @@ export default class NodeHelper {
     }
 
     /**
+     * @param {ANode} node
+     * @param {AScript} script
+     * @return {DynamicAttribute[]}
+     */
+    static getNodeGUIConstantInputs(node, script) {
+        return node.getInputs().map(input => {
+            const sourceNode = script.findNodeById(input.getSourceNodeId())
+            if (this.isHidden(sourceNode)) {
+                return new DynamicAttribute(
+                    input.getTargetName(),
+                    TYPES.STRING,
+                    sourceNode && sourceNode.getName()
+                )
+            }
+            return null
+        }).filter(input => input)
+    }
+
+    /**
+     * @param {ANode} node
+     * @return {boolean}
+     */
+    static isHidden(node) {
+        return node instanceof ConstantNode || node instanceof SelfNode
+    }
+
+    /**
+     * @param {ANode} node
+     * @param {AScript} script
+     * @return {string[]}
+     */
+    static getNodeGUIInputs(node, script) {
+        const nodeConstantInputs = this.getNodeGUIConstantInputs(node, script)
+        const nodeSource = this.getSourceNode(node)
+        const inputs = nodeSource.getInputs()
+        return inputs.map(input => {
+            const nodeInput = nodeConstantInputs.find(pInput => pInput.getAttrName() === input.getAttrName())
+            return `${input.getAttrName()}${nodeInput ? ` [${nodeInput.getAttrValue()}]` : ''}`
+        })
+    }
+
+    /**
      * @param {string} type
      * @return {boolean}
      */
-    static hasBaseInput(type){
+    static hasBaseInput(type) {
         return type === NODE_TYPES.FUNCTION ||
             type === NODE_TYPES.CONDITION ||
             type === NODE_TYPES.ANIMATION ||
@@ -222,7 +269,7 @@ export default class NodeHelper {
      * @param {string} type
      * @return {boolean}
      */
-    static hasBaseOutput(type){
+    static hasBaseOutput(type) {
         return type === NODE_TYPES.EVENT || type === NODE_TYPES.ANIMATION || type === NODE_TYPES.SELF
     }
 }

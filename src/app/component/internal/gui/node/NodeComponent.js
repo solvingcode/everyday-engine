@@ -15,9 +15,8 @@ export default class NodeComponent extends Component{
         this.add('nodeId', TYPES.NUMBER)
         this.add('title', TYPES.STRING)
         this.add('type', TYPES.STRING)
-        this.add('inputs', TYPES.ARRAY_STRING)
+        this.add('inputs', TYPES.ARRAY_STRING, [])
         this.add('output', TYPES.STRING)
-        this.add('nodeInputs', TYPES.ARRAY_DYNAMIC_ATTRIBUTE, [])
     }
 
     /**
@@ -56,13 +55,6 @@ export default class NodeComponent extends Component{
     }
 
     /**
-     * @param {DynamicAttribute[]} nodeInputs
-     */
-    setNodeInputs(nodeInputs) {
-        this.setValue('nodeInputs', nodeInputs)
-    }
-
-    /**
      * @param {string} output
      */
     setOutput(output) {
@@ -95,13 +87,6 @@ export default class NodeComponent extends Component{
      */
     getInputs(){
         return this.getValue('inputs')
-    }
-
-    /**
-     * @return {DynamicAttribute[]}
-     */
-    getNodeInputs() {
-        return this.getValue('nodeInputs')
     }
 
     /**

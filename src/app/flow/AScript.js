@@ -45,7 +45,6 @@ export default class AScript extends AScriptData {
             case ConstantNode:
             case KeyCodeNode:
             case UnitNode:
-            case SelfNode:
             case AnimationNode:
             case ReferenceNode:
             case StringVariableNode:
@@ -53,6 +52,9 @@ export default class AScript extends AScriptData {
             case BooleanVariableNode:
             case ComponentNode:
                 sourceName = value
+                break
+            case SelfNode:
+                sourceName = 'Self'
                 break
             default:
                 throw new ClientError(`Script Create Node: "${nodeClass.name}" not supported`)

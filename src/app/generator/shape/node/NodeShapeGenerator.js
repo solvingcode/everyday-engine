@@ -18,7 +18,6 @@ export default class NodeShapeGenerator extends TypeShapeGenerator {
         const title = nodeComponent.getTitle()
         const type = nodeComponent.getType()
         const inputs = nodeComponent.getInputs()
-        const nodeInputs = nodeComponent.getNodeInputs()
         const output = nodeComponent.getOutput()
         const {context, scaleSize, camera} = dataContext
         const {width, height} = scaleSize
@@ -75,12 +74,10 @@ export default class NodeShapeGenerator extends TypeShapeGenerator {
         inputs.forEach((input, index) => {
             const {position: inputPosition} = NodeHelper.getNodeGUIInput(type, index)
             const inputPositionScale = camera.toCameraScale(inputPosition)
-            const nodeInput = nodeInputs.find(pInput => pInput.getAttrName() === input)
-            const inputText = `${input}${nodeInput ? ` [${nodeInput.getAttrValue()}]` : ''}`
             context.fillStyle = headColor
             context.fillRect(inputPositionScale.getX(), inputPositionScale.getY(), sizeInputScale, sizeInputScale)
             context.fillStyle = fontColor
-            context.fillText(inputText,
+            context.fillText(input,
                 inputPositionScale.getX() + sizeInputScale + paddingScale,
                 inputPositionScale.getY() + sizeInputScale)
         })

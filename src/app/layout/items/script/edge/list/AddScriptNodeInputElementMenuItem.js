@@ -68,4 +68,14 @@ export class AddScriptNodeInputForm {
         return this.value
     }
 
+    /**
+     * @return {boolean}
+     */
+    isValue() {
+        if (this.value === '0') {
+            return false
+        }
+        return !!this.value
+    }
+
 }

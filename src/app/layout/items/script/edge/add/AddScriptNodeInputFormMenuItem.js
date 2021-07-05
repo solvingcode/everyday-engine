@@ -1,5 +1,6 @@
 import Layout from '../../../../Layout.js'
 import FormMenuItem from '../../../form/FormMenuItem.js'
+import {TYPES} from '../../../../../pobject/AttributeType.js'
 
 export default class AddScriptNodeInputFormMenuItem extends FormMenuItem {
 
@@ -24,6 +25,15 @@ export default class AddScriptNodeInputFormMenuItem extends FormMenuItem {
     generateFields() {
         const form = this.getFormObject()
         if (form) {
+            if (form.getAttribute().getAttrType() === TYPES.UNIT) {
+                return [
+                    {
+                        bind: 'value',
+                        label: `${form.getAttribute().getAttrName()} (Self) `,
+                        type: Layout.form.CHECKBOX
+                    }
+                ]
+            }
             return [
                 {
                     bind: 'value',

@@ -11,7 +11,7 @@ import GraphEdgeUnitInstant from '../unit/instant/type/internal/graph/GraphEdgeU
 import MeshComponent from '../component/internal/MeshComponent.js'
 import Unit from '../unit/Unit.js'
 import ClientError from '../exception/type/ClientError.js'
-import ConstantNode from '../flow/node/ConstantNode.js'
+import NodeHelper from '../utils/NodeHelper.js'
 
 export default class GraphManager {
 
@@ -135,7 +135,7 @@ export default class GraphManager {
         const unit = new GraphNodeUnitInstant()
         const position = node.getPosition()
         unit.instantiate(position, node, script)
-        if (node instanceof ConstantNode) {
+        if (NodeHelper.isHidden(node)) {
             unit.getComponent(MeshComponent).setEnabled(false)
         }
         this.getUnits().push(unit)
@@ -149,7 +149,7 @@ export default class GraphManager {
     createGraphEdgeUnit(script, nodeInput) {
         const unit = new GraphEdgeUnitInstant()
         unit.instantiate(script, nodeInput)
-        if (script.findNodeById(nodeInput.getSourceNodeId()) instanceof ConstantNode) {
+        if (NodeHelper.isHidden(script.findNodeById(nodeInput.getSourceNodeId()))) {
             unit.getComponent(MeshComponent).setEnabled(false)
         }
         this.getUnits().push(unit)

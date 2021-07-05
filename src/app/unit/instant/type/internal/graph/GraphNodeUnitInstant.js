@@ -6,9 +6,6 @@ import {PrimitiveShape} from '../../../../Unit.js'
 import NodeComponent from '../../../../../component/internal/gui/node/NodeComponent.js'
 import NodeHelper from '../../../../../utils/NodeHelper.js'
 import ScriptHelper from '../../../../../utils/ScriptHelper.js'
-import DynamicAttribute from '../../../../../pobject/DynamicAttribute.js'
-import {TYPES} from '../../../../../pobject/AttributeType.js'
-import ConstantNode from '../../../../../flow/node/ConstantNode.js'
 import ArrayHelper from '../../../../../utils/ArrayHelper.js'
 
 export default class GraphNodeUnitInstant extends UnitInstant {
@@ -33,36 +30,21 @@ export default class GraphNodeUnitInstant extends UnitInstant {
         const meshComponent = this.getComponent(MeshComponent)
         const nodeComponent = this.getComponent(NodeComponent)
         const nodeSource = NodeHelper.getSourceNode(node)
-        const actualNodeInputs = nodeComponent.getNodeInputs()
-        const nodeInputs = node.getInputs().map(input => {
-            const sourceNode = script.findNodeById(input.getSourceNodeId())
-            if (sourceNode instanceof ConstantNode) {
-                return new DynamicAttribute(
-                    input.getTargetName(),
-                    TYPES.STRING,
-                    sourceNode && sourceNode.getName()
-                )
-            }
-            return null
-        }).filter(input => input)
-        const nodeSourceInputs = nodeSource.getInputs()
+        const actualNodeInputs = nodeComponent.getInputs()
+        const nodeInputs = NodeHelper.getNodeGUIInputs(node, script)
         const nodeSourceOutput = nodeSource.getOutput()
-        const size = NodeHelper.getNodeGUISize(node)
+        const size = NodeHelper.getNodeGUISize(node, script)
         transformComponent.setPosition(position)
         meshComponent.setSize(size)
         meshComponent.setShape(PrimitiveShape.NODE)
         nodeComponent.setTitle(NodeHelper.getNodeName(node))
-        nodeComponent.setInputs(nodeSourceInputs.map(input => input.getAttrName()))
+        nodeComponent.setInputs(nodeInputs)
         nodeComponent.setType(ScriptHelper.getNodeType(node))
         nodeComponent.setNodeId(node.getId())
-        nodeComponent.setNodeInputs(nodeInputs)
         if (nodeSourceOutput) {
             nodeComponent.setOutput(nodeSourceOutput.getAttrName())
         }
-        if (!ArrayHelper.isEqual(
-            actualNodeInputs,
-            nodeInputs,
-            (oldValue, newValue) =>  oldValue.getAttrValue() === newValue.getAttrValue())) {
+        if (!ArrayHelper.isEqual(actualNodeInputs, nodeInputs)) {
             meshComponent.setGenerated(false)
         }
     }
