@@ -62,6 +62,13 @@ class MenuItem {
     }
 
     /**
+     * @return {boolean}
+     */
+    isEditing(){
+        return false
+    }
+
+    /**
      * @param {boolean} collapsed
      */
     setCollapsed(collapsed) {
@@ -98,7 +105,7 @@ class MenuItem {
     stop(sourceState = '') {
         this.stopState()
         if (sourceState && this.stateManager.isActionState(sourceState)) {
-            if (this.stateManager.isEditState(this.stateCode)) {
+            if (this.stateManager.isDrawState(this.stateCode)) {
                 this.startState()
             }
         }

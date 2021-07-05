@@ -19,12 +19,27 @@ class InputMenuItem extends MenuItem {
             stateCode: 'ACTION_FORM_UPDATE',
             zone: parent.zone,
             type: Layout.type.FORM_ELEMENT,
+            isEditing: false,
             ...props
         })
         this.parent = parent
         this.event = this.callbackExecute(event)
         this.value = this.callbackExecute(value)
         this.data = {event, item: this}
+    }
+
+    /**
+     * @param {boolean} isEditing
+     */
+    setIsEditing(isEditing){
+        this.props.isEditing = isEditing
+    }
+
+    /**
+     * @return {boolean}
+     */
+    isEditing(){
+        return this.props.isEditing
     }
 
     /**

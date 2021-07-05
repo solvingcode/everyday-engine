@@ -46,7 +46,7 @@ class StateManager {
      * @param {string} state
      * @return {boolean}
      */
-    isEditState(state) {
+    isDrawState(state) {
         const catMatch = new RegExp(`^${AppState.Categories.DRAW}`)
         return !!state.match(catMatch)
     }

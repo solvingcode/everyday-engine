@@ -3,6 +3,7 @@ import StateManager from '../../../state/StateManager.js'
 import World from '../../../world/World.js'
 import ScriptHelper from '../../../utils/ScriptHelper.js'
 import Vector from '../../../utils/Vector.js'
+import Window from '../../../core/Window.js'
 
 export default class AddNodeAction extends Action {
 
@@ -21,7 +22,10 @@ export default class AddNodeAction extends Action {
         const functionRegistry = World.get().getFunctionRegistry()
         const assetTab = World.get().getTabManager().getSelectedContentData()
         const node = ScriptHelper.createNode(functionRegistry, script, formData.type, formData.value)
-        const scriptGraphPosition = script.getCamera().getPosition()
+        const sizeWindow = Window.get().getSize()
+        const scriptGraphPosition = Vector.add(
+            script.getCamera().getPosition(),
+            new Vector({x: sizeWindow.getWidth() / 2, y: sizeWindow.getHeight() / 2}))
         if(scriptGraphPosition){
             node.setPosition(new Vector({x: scriptGraphPosition.getX(), y: scriptGraphPosition.getY()}))
         }

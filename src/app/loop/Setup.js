@@ -18,6 +18,7 @@ import UnitDrawerRunner from '../runner/drawer/UnitDrawerRunner.js'
 import GraphDrawerRunner from '../runner/drawer/GraphDrawerRunner.js'
 import AnimationEditorRunner from '../runner/editor/AnimationEditorRunner.js'
 import WorldInitializeRunner from '../runner/world/WorldInitializeRunner.js'
+import FormRunner from '../runner/form/FormRunner.js'
 
 /**
  * @class {Setup}
@@ -32,16 +33,15 @@ class Setup extends Loop {
 
     /**
      * Pay attention to the order of runners, because some runners can interrupt/affect the execution of the next runner
-     * Example: SetupExecutorRunner must be before SetupRenderRunner, and MenuRunner will cancel the execution of the
-     * next runners if a menu item was clicked
+     * Example: SetupExecutorRunner must be before SetupRenderRunner
      */
     constructor() {
         super()
         this.setupRenderer = SetupRenderer.get()
         this.runners = [
             WorldInitializeRunner, /*HistoryRunner,*/ SimulateRunner, ActionRunner, EditorRunner, ScriptEditorRunner,
-            AnimationEditorRunner, SetupExecutorRunner, SetupRenderRunner, MenuRunner, WindowRunner, GraphDrawerRunner,
-            UnitDrawerRunner
+            AnimationEditorRunner, MenuRunner, SetupExecutorRunner, SetupRenderRunner, WindowRunner, GraphDrawerRunner,
+            UnitDrawerRunner, FormRunner
         ]
         ExecutorRegistry.get().register([
             new MeshGenerationExecutor(),

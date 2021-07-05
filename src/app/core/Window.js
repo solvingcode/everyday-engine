@@ -96,6 +96,13 @@ class Window {
         this.initCanvas()
     }
 
+    /**
+     * @return {Size}
+     */
+    getSize(){
+        return this.size
+    }
+
     clear() {
         this.mouse.clear()
         this.keyboard.clear()

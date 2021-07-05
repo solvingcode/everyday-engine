@@ -703,6 +703,16 @@ i.static-entity::before{
     padding: 5px;
 }
 
+.form .form-element-editing input[type=text]{
+    cursor: text;
+    outline: -webkit-focus-ring-color auto 1px !important;
+    outline-offset: 0;
+}
+
+.form input[type=text]:focus{
+    outline: none;
+}
+
 .form .form-input input[type=checkbox]{
     margin: 3px 10px 3px 0;
 }

@@ -17,6 +17,7 @@ class FormUpdateAction extends Action {
      */
     static run() {
         const {item} = StateManager.get().getNextProgressData(this.STATE)
+        item.setIsEditing(true)
         return this.isInstantField(item.field)
     }
 
@@ -28,6 +29,7 @@ class FormUpdateAction extends Action {
         const menu = Menu.get()
         const menuItemUI = menu.findItemByElement(item)
         const uiRenderer = menu.getUIRenderer()
+        item.setIsEditing(false)
         if (menuItemUI) {
             const formElement = uiRenderer.getType(menuItemUI).getFormElement(menuItemUI, uiRenderer)
             if(item.parent.preUpdate(formElement.value)){

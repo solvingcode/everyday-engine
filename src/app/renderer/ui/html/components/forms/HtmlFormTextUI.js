@@ -27,6 +27,19 @@ class HtmlFormTextUI extends HtmlFormUI {
     /**
      * @override
      */
+    static postUpdate(item, el, uiRenderer){
+        super.postUpdate(item, el, uiRenderer)
+        const focusedElement = this.getFocused(el)
+        if (!item.element.isEditing() && focusedElement) {
+            focusedElement.blur()
+        } else if (item.element.isEditing() && !focusedElement) {
+            this.getFormElementFrom(el).focus()
+        }
+    }
+
+    /**
+     * @override
+     */
     static postUpdateFormItem(item, el, uiRenderer) {
         const {value} = item.element
         const formElement = this.getFormElement(item, uiRenderer)

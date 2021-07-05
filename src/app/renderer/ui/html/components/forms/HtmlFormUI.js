@@ -40,7 +40,7 @@ class HtmlFormUI extends ItemUI {
      * @param {HTMLElement} el
      * @param {UIRenderer} uiRenderer
      */
-    static addCustomAttributes(item, el, uiRenderer){
+    static addCustomAttributes(item, el, uiRenderer) {
         this.getCustomAttributes(item).forEach(({name, value}) => {
             const formElement = this.getFormElementFrom(el)
             formElement.setAttribute(name, value)
@@ -52,7 +52,7 @@ class HtmlFormUI extends ItemUI {
      * @param {HTMLElement} el
      * @param {UIRenderer} uiRenderer
      */
-    static postCreateFormItem(item, el, uiRenderer = null){
+    static postCreateFormItem(item, el, uiRenderer = null) {
         throw new SystemError('HtmlFormUI.postCreateFormItem must be implemented')
     }
 
@@ -61,7 +61,7 @@ class HtmlFormUI extends ItemUI {
      * @param {HTMLElement} el
      * @param {UIRenderer} uiRenderer
      */
-    static postUpdateFormItem(item, el, uiRenderer = null){
+    static postUpdateFormItem(item, el, uiRenderer = null) {
         throw new SystemError('HtmlFormUI.postUpdateFormItem must be implemented')
     }
 
@@ -80,7 +80,7 @@ class HtmlFormUI extends ItemUI {
      * @param {HTMLElement} el
      * @return {HTMLElement}
      */
-    static getFormElementFrom(el){
+    static getFormElementFrom(el) {
         const {inputProps} = this.props
         const elId = `${el.id}-${inputProps.suffix}`
         return el.querySelector(`#${elId}`)
@@ -99,7 +99,7 @@ class HtmlFormUI extends ItemUI {
      * @param {HTMLElement | HTMLInputElement} formElement
      * @param {string | boolean} value
      */
-    static setValue(formElement, value){
+    static setValue(formElement, value) {
         formElement.value = value
     }
 
@@ -107,8 +107,34 @@ class HtmlFormUI extends ItemUI {
      * @param {MenuItemUI} item
      * @return {{name: string, value: *}[]}
      */
-    static getCustomAttributes(item){
+    static getCustomAttributes(item) {
         return []
+    }
+
+    /**
+     * @override
+     */
+    static getClassName(item) {
+        return item.element.isEditing() ? 'form-element-editing' : ''
+    }
+
+    /**
+     * @param {HTMLElement} el
+     * @return {HTMLElement}
+     */
+    static getFocused(el) {
+        let focusedElement = null
+        if (el === document.activeElement) {
+            focusedElement = el
+        } else {
+            el.childNodes.forEach(childNode => {
+                if (childNode === document.activeElement) {
+                    focusedElement = childNode
+                    return null
+                }
+            })
+        }
+        return focusedElement
     }
 
 }

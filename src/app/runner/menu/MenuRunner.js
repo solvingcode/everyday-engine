@@ -33,7 +33,6 @@ class MenuRunner extends Runner {
         } else {
             this.menu.stopActionMenuItem()
         }
-        return !!(menuItems && menuItems.length)
     }
 }
 
