@@ -7,6 +7,8 @@ import DynamicAttribute from '../pobject/DynamicAttribute.js'
 import AssetAnimationScriptXml from '../asset/types/animation/AssetAnimationScriptXml.js'
 import AnimationComponent from '../component/internal/AnimationComponent.js'
 import ClientError from '../exception/type/ClientError.js'
+import AssetScriptXml from '../asset/types/script/AssetScriptXml.js'
+import ScriptComponent from '../component/internal/ScriptComponent.js'
 
 export default class AssetHelper {
 
@@ -72,6 +74,24 @@ export default class AssetHelper {
             return scriptManager.findByName(asset.getName())
         }
         throw new SystemError(`Asset "${asset.getName()}" is not a script`)
+    }
+
+    /**
+     * @param {Unit} unit
+     * @param {Asset} asset
+     */
+    static attachAssetScriptToUnit(unit, asset) {
+        if(asset.getType() instanceof AssetScriptXml){
+            const scriptComponent = unit.createComponent(ScriptComponent)
+            scriptComponent.setScript(asset.getName())
+            scriptComponent.setVarsAttributes(AssetHelper.getAssetScriptVars(asset.getId()))
+        }else if(asset.getType() instanceof AssetAnimationScriptXml){
+            const animationComponent = unit.createComponent(AnimationComponent)
+            animationComponent.setVarsAttributes(AssetHelper.getAssetScriptVars(asset.getId()))
+            animationComponent.setScript(asset.getName())
+        }else{
+            throw new ClientError(`Cannot attach asset "${asset.getType().constructor.name}" : Type not supported`)
+        }
     }
 
 }

@@ -123,4 +123,42 @@ export default class DynamicAttributeHelper {
         return TYPES.ANY
     }
 
+    /**
+     * @param {string} value
+     * @param {string} type
+     * @param {World} world
+     * @return {*}
+     */
+    static getValueByType(value, type, world){
+        let newValue = value
+        switch (type) {
+            case TYPES.UNIT:
+                newValue = world.findUnitById(parseInt(value))
+                if (!newValue) {
+                    throw new ClientError(`${this.constructor.name}: Unit "${value}" not found`)
+                }
+                break
+            case TYPES.ANIMATION:
+                newValue = world.getAnimationManager().findById(parseInt(value))
+                if (!newValue) {
+                    throw new ClientError(`${this.constructor.name}: Animation "${value}" not found`)
+                }
+                break
+            case TYPES.COMPONENT:
+                const component = world.getComponentRegistry().getInstance(value)
+                if (!component || !component.constructor) {
+                    throw new ClientError(`${this.constructor.name}: Component "${value}" not found`)
+                }
+                newValue = component.constructor
+                break
+            case TYPES.NUMBER:
+                newValue = parseFloat(value)
+                break
+            case TYPES.BOOLEAN:
+                newValue = value === 'true' || value === '1' || value === true
+                break
+        }
+        return newValue
+    }
+
 }

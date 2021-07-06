@@ -2,6 +2,9 @@ import AssetType from '../AssetType.js'
 import SystemError from '../../../exception/type/SystemError.js'
 import ClientError from '../../../exception/type/ClientError.js'
 
+/**
+ * @abstract
+ */
 export default class AssetScript extends AssetType{
 
     /**
@@ -60,6 +63,13 @@ export default class AssetScript extends AssetType{
      */
     getError(){
         return this.error
+    }
+
+    /**
+     * @return {string}
+     */
+    getName(){
+        return this.name
     }
 
     /**

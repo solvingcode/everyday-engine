@@ -65,10 +65,10 @@ export default class NodeHelper {
                 return new AStringVariable(sourceName)
             case BooleanVariableNode:
                 return new ABooleanVariable(sourceName)
-            case ToggleVariableNode:
-                return new AToggleVariable(sourceName)
             case NumberVariableNode:
                 return new ANumberVariable(sourceName)
+            case ToggleVariableNode:
+                return new AToggleVariable(sourceName)
             case ComponentNode:
                 return new AComponent(sourceName)
             default:
@@ -147,7 +147,10 @@ export default class NodeHelper {
             headColor = '#5e5622'
         } else if (type === NODE_TYPES.KEY_CODE) {
             headColor = '#375e22'
-        } else if (type === NODE_TYPES.VAR_STRING || type === NODE_TYPES.VAR_TOGGLE || type === NODE_TYPES.VAR_BOOLEAN) {
+        } else if (type === NODE_TYPES.VAR_STRING ||
+            type === NODE_TYPES.VAR_TOGGLE ||
+            type === NODE_TYPES.VAR_BOOLEAN ||
+            type === NODE_TYPES.VAR_NUMBER) {
             headColor = '#5e4322'
         } else if (type === NODE_TYPES.COMPONENT) {
             headColor = '#5e2254'

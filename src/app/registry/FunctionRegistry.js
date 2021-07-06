@@ -50,6 +50,7 @@ import HasCurrentAnimationFunction from '../flow/function/native/animation/HasCu
 import GetCurrentAnimationFunction from '../flow/function/native/animation/GetCurrentAnimationFunction.js'
 import IsAnimationEndedFunction from '../flow/function/native/animation/IsAnimationEndedFunction.js'
 import GetInputYAxisFunction from '../flow/function/native/input/GetInputYAxisFunction.js'
+import ScaleMeshFunction from '../flow/function/native/mesh/ScaleMeshFunction.js'
 
 export default class FunctionRegistry extends Registry{
 
@@ -117,6 +118,7 @@ export default class FunctionRegistry extends Registry{
             new GetVelocityXFunction(),
             new GetVelocityYFunction(),
             new IsGroundedFunction(),
+            new ScaleMeshFunction(),
 
             //Structure
             new VectorFunction()

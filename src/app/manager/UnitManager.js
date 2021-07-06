@@ -7,6 +7,7 @@ import Vector from '../utils/Vector.js'
 import GUIPropertyComponent from '../component/internal/gui/property/GUIPropertyComponent.js'
 import Maths from '../utils/Maths.js'
 import ClientError from '../exception/type/ClientError.js'
+import ScriptComponent from '../component/internal/ScriptComponent.js'
 
 /**
  * Manage the units, components list (get, add, load, ...)
@@ -85,6 +86,24 @@ export default class UnitManager extends UnitManagerData {
         return this.units.filter((element) =>
             element.hasComponentsByClasses(componentClasses)
         )
+    }
+
+    /**
+     * @param {AScript} script
+     * @return {Unit[]}
+     */
+    findUnitsAttachedToScript(script){
+        return this.units.filter(unit => this.findComponentAttachedToScript(unit, script))
+    }
+
+    /**
+     * @param {Unit} unit
+     * @param {AScript} script
+     * @return {Component}
+     */
+    findComponentAttachedToScript(unit, script){
+        const scriptComponents = unit.findComponentsByClass(ScriptComponent)
+        return scriptComponents.find(scriptComponent => scriptComponent.getScript() === script.getName())
     }
 
     /**

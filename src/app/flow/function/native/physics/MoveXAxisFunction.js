@@ -14,6 +14,7 @@ export default class MoveXAxisFunction extends AFunction{
     initAttributes() {
         this.addInput('target', TYPES.UNIT, 0)
         this.addInput('speed', TYPES.NUMBER, 0)
+        this.addInput('direction', TYPES.NUMBER, 0)
     }
 
     /**
@@ -24,6 +25,7 @@ export default class MoveXAxisFunction extends AFunction{
         const physicsManager = world.getPhysicsManager()
         const target = this.getInputValue('target')
         const speed = parseFloat(this.getInputValue('speed'))
-        physicsManager.moveXAxis(target, speed)
+        const direction = parseFloat(this.getInputValue('direction'))
+        physicsManager.moveXAxis(target, speed * direction)
     }
 }

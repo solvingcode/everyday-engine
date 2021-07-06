@@ -27,7 +27,6 @@ export default class AddScriptNodeFormMenuItem  extends MenuItem {
             new AddScriptNodeFormAnimationMenuItem(this, addNodeForm),
             new AddScriptNodeFormComponentMenuItem(this, addNodeForm),
             new AddScriptNodeFormFunctionMenuItem(this, addNodeForm),
-            // new AddScriptNodeFormConstantMenuItem(this, addNodeForm),
             new AddScriptNodeFormUnitMenuItem(this, addNodeForm),
             new AddScriptNodeFormKeyCodeMenuItem(this, addNodeForm),
             new AddScriptNodeFormVariableMenuItem(this, addNodeForm)
