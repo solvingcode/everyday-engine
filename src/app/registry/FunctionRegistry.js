@@ -51,6 +51,7 @@ import GetCurrentAnimationFunction from '../flow/function/native/animation/GetCu
 import IsAnimationEndedFunction from '../flow/function/native/animation/IsAnimationEndedFunction.js'
 import GetInputYAxisFunction from '../flow/function/native/input/GetInputYAxisFunction.js'
 import ScaleMeshFunction from '../flow/function/native/mesh/ScaleMeshFunction.js'
+import AbsFunction from '../flow/function/native/basic/AbsFunction.js'
 
 export default class FunctionRegistry extends Registry{
 
@@ -94,6 +95,7 @@ export default class FunctionRegistry extends Registry{
             new OrFunction(),
             new NotFunction(),
             new RoundFunction(),
+            new AbsFunction(),
 
             //Unit
             new GetWorldPositionFunction(),

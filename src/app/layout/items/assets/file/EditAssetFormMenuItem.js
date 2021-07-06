@@ -56,7 +56,8 @@ export default class EditAssetFormMenuItem extends FormMenuItem {
         const selectedAsset = this.getPreUpdateData()
         if (selectedAsset) {
             if (selectedAsset.getType() instanceof AssetAnimationXml || selectedAsset.getType() instanceof AssetScript) {
-                selectedAsset.rename(value)
+                const oldName = selectedAsset.getName()
+                selectedAsset.rename(oldName, value)
             }
         }
         super.postUpdate(value)

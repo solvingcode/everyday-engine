@@ -56,9 +56,10 @@ export default class AssetType extends AssetTypeData{
 
     /**
      * @abstract
+     * @param {string} oldName
      * @param {string} newName
      */
-    rename(newName){
+    rename(oldName, newName){
         throw new SystemError(`${this.constructor.name}.rename must be implemented`)
     }
 

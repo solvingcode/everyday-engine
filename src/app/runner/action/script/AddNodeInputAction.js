@@ -7,6 +7,7 @@ import NodeComponent from '../../../component/internal/gui/node/NodeComponent.js
 import ScriptHelper from '../../../utils/ScriptHelper.js'
 import {NODE_TYPES} from '../../../flow/node/ANode.js'
 import {TYPES} from '../../../pobject/AttributeType.js'
+import ComponentNode from '../../../flow/node/ComponentNode.js'
 
 export default class AddNodeInputAction extends Action {
 
@@ -35,6 +36,8 @@ export default class AddNodeInputAction extends Action {
         let nodeSource
         if (formData.getAttribute().getAttrType() === TYPES.UNIT) {
             nodeSource = ScriptHelper.createNode(functionRegistry, script, NODE_TYPES.SELF)
+        }else if (formData.getAttribute().getAttrType() === TYPES.COMPONENT) {
+            nodeSource = script.createNode(functionRegistry, ComponentNode, formData.getValue())
         } else {
             nodeSource = ScriptHelper.createNode(functionRegistry, script, NODE_TYPES.CONSTANT, formData.getValue())
         }

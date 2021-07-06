@@ -64,7 +64,7 @@ export default class PhysicsManager {
      */
     isGrounded(unit) {
         const startVector = new Vector({x: 0, y: 0})
-        const endVector = new Vector({x: 0, y: 5})
+        const endVector = new Vector({x: 0, y: 1})
         const collisions = this.rayCast(unit, startVector, endVector).filter(collision => collision.collided)
         return !!collisions.length
     }

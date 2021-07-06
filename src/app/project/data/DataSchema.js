@@ -118,6 +118,7 @@ import ToggleVariableNode from '../../flow/node/variable/ToggleVariableNode.js'
 import GetInputYAxisFunction from '../../flow/function/native/input/GetInputYAxisFunction.js'
 import ABooleanVariable from '../../flow/variable/ABooleanVariable.js'
 import ScaleMeshFunction from '../../flow/function/native/mesh/ScaleMeshFunction.js'
+import AbsFunction from '../../flow/function/native/basic/AbsFunction.js'
 
 /**
  * @class {DataSchema}
@@ -232,7 +233,8 @@ class DataSchema {
         {id: 960, type: ToggleVariableNode},
         {id: 970, type: GetInputYAxisFunction},
         {id: 980, type: ABooleanVariable},
-        {id: 990, type: ScaleMeshFunction}
+        {id: 990, type: ScaleMeshFunction},
+        {id: 1000, type: AbsFunction}
     ]
 
     /**

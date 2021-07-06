@@ -4,7 +4,7 @@ import AssetAnimationXmlGenerator from '../../../generator/animation/AssetAnimat
 import EditAnimationContent from '../../../content/animation/EditAnimationContent.js'
 import FileHelper from '../../../utils/FileHelper.js'
 
-export default class AssetAnimationXml extends AssetType{
+export default class AssetAnimationXml extends AssetType {
 
     /**
      * @type {Document}
@@ -44,7 +44,7 @@ export default class AssetAnimationXml extends AssetType{
     /**
      * @return {Animation}
      */
-    parse(){
+    parse() {
         return World.get().getAnimationManager().load(this.data)
     }
 
@@ -60,7 +60,7 @@ export default class AssetAnimationXml extends AssetType{
      * @param {Animation} animation
      * @param {Asset} asset
      */
-    async generate(animation, asset){
+    async generate(animation, asset) {
         const data = AssetAnimationXmlGenerator.get().generate(animation)
         await this.setDataUrl(data)
     }
@@ -68,8 +68,13 @@ export default class AssetAnimationXml extends AssetType{
     /**
      * @override
      */
-    rename(newName){
-        World.get().getAnimationManager().rename(this.data, newName)
+    rename(oldName, newName) {
+        const animationManager = World.get().getAnimationManager()
+        const oldAnimation = animationManager.findByName(oldName)
+        if (oldAnimation) {
+            animationManager.delete(oldAnimation)
+        }
+        animationManager.rename(this.data, newName)
         this.parse()
     }
 
@@ -77,7 +82,7 @@ export default class AssetAnimationXml extends AssetType{
      * @override
      * @param {Document} data
      */
-    setData(data){
+    setData(data) {
         this.data = data
     }
 
@@ -85,21 +90,21 @@ export default class AssetAnimationXml extends AssetType{
      * @override
      * @return {Document}
      */
-    getData(){
+    getData() {
         return this.data
     }
 
     /**
      * @param {string} error
      */
-    setError(error){
+    setError(error) {
         this.error = error
     }
 
     /**
      * @return {string}
      */
-    getError(){
+    getError() {
         return this.error
     }
 
@@ -109,9 +114,9 @@ export default class AssetAnimationXml extends AssetType{
     async setDataUrl(dataUrl) {
         const parser = new DOMParser()
         const doc = parser.parseFromString(dataUrl, 'application/xml')
-        if(doc.documentElement.tagName === 'html'){
+        if (doc.documentElement.tagName === 'html') {
             this.setError(`Animation XML Parser: ${doc.documentElement.textContent}`)
-        }else{
+        } else {
             this.setError('')
             this.data = doc
         }

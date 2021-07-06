@@ -1,6 +1,7 @@
 import Layout from '../../../../Layout.js'
 import FormMenuItem from '../../../form/FormMenuItem.js'
 import {TYPES} from '../../../../../pobject/AttributeType.js'
+import World from '../../../../../world/World.js'
 
 export default class AddScriptNodeInputFormMenuItem extends FormMenuItem {
 
@@ -31,6 +32,21 @@ export default class AddScriptNodeInputFormMenuItem extends FormMenuItem {
                         bind: 'value',
                         label: `${form.getAttribute().getAttrName()} (Self) `,
                         type: Layout.form.CHECKBOX
+                    }
+                ]
+            }
+            if (form.getAttribute().getAttrType() === TYPES.COMPONENT) {
+                const components = World.get().getComponentRegistry().getInstances()
+                    .map(component => ({
+                        value: component.getName(),
+                        label: component.getName()
+                    }))
+                return [
+                    {
+                        bind: 'value',
+                        label: form.getAttribute().getAttrName(),
+                        type: Layout.form.DROPDOWN,
+                        list: components
                     }
                 ]
             }

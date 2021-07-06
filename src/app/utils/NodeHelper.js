@@ -239,7 +239,7 @@ export default class NodeHelper {
      * @return {boolean}
      */
     static isHidden(node) {
-        return node instanceof ConstantNode || node instanceof SelfNode
+        return node instanceof ConstantNode || node instanceof SelfNode || node instanceof ComponentNode
     }
 
     /**
