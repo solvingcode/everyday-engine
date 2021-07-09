@@ -1260,6 +1260,15 @@ var DynamicAttribute = /*#__PURE__*/function () {
       return this.attrName;
     }
     /**
+     * @return {string}
+     */
+
+  }, {
+    key: "getName",
+    value: function getName() {
+      return '';
+    }
+    /**
      * @param {string} type
      */
 
@@ -3778,6 +3787,24 @@ var UnitData = /*#__PURE__*/function (_Data) {
      */
 
   }, {
+    key: "hasComponentsByClasses",
+    value: function hasComponentsByClasses(componentClasses) {
+      for (var iComponentClass in componentClasses) {
+        var componentClass = componentClasses[iComponentClass];
+
+        if (componentClasses.hasOwnProperty(iComponentClass) && !this.findComponentsByClass(componentClass).length) {
+          return false;
+        }
+      }
+
+      return true;
+    }
+    /**
+     * @param {ComponentData[]} componentClasses
+     * @return {boolean}
+     */
+
+  }, {
     key: "hasComponents",
     value: function hasComponents(componentClasses) {
       for (var iComponentClass in componentClasses) {
@@ -3785,6 +3812,28 @@ var UnitData = /*#__PURE__*/function (_Data) {
 
         if (componentClasses.hasOwnProperty(iComponentClass) && !this.getComponent(componentClass)) {
           return false;
+        }
+      }
+
+      return true;
+    }
+    /**
+     * @param {ComponentData[]} componentClasses
+     * @return {boolean}
+     */
+
+  }, {
+    key: "hasEnabledComponents",
+    value: function hasEnabledComponents(componentClasses) {
+      for (var iComponentClass in componentClasses) {
+        var componentClass = componentClasses[iComponentClass];
+
+        if (componentClasses.hasOwnProperty(iComponentClass)) {
+          var component = this.getComponent(componentClass);
+
+          if (!component || !component.isEnabled()) {
+            return false;
+          }
         }
       }
 
@@ -4481,6 +4530,21 @@ var Vector = /*#__PURE__*/function () {
         x: vectorA.x + vectorB.x,
         y: vectorA.y + vectorB.y,
         z: vectorA.z + vectorB.z
+      });
+    }
+    /**
+     * @param {Vector} vectorA
+     * @param {Vector} vectorB
+     * @return {Vector}
+     */
+
+  }, {
+    key: "subtract",
+    value: function subtract(vectorA, vectorB) {
+      return new Vector({
+        x: vectorA.x - vectorB.x,
+        y: vectorA.y - vectorB.y,
+        z: vectorA.z - vectorB.z
       });
     }
     /**

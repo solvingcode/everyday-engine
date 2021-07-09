@@ -48,6 +48,13 @@ export default class ComponentData extends Data{
     /**
      * @return {boolean}
      */
+    isUnique(){
+        return true
+    }
+
+    /**
+     * @return {boolean}
+     */
     isHidden(){
         return false
     }

@@ -12,6 +12,7 @@ import UnitHelper from '../../utils/UnitHelper.js'
 import Mesh from '../../core/Mesh.js'
 import Maths from '../../utils/Maths.js'
 import GUIPropertyComponent from '../../component/internal/gui/property/GUIPropertyComponent.js'
+import ImageHelper from '../../utils/ImageHelper.js'
 
 export default class MeshGenerationExecutor extends ComponentExecutor {
 
@@ -65,7 +66,6 @@ export default class MeshGenerationExecutor extends ComponentExecutor {
     startContext(unitId, meshComponent, transformComponent, world, camera) {
         const scaleSize = this.getScaleSize(camera, meshComponent, transformComponent)
         const rotation = transformComponent.getRotation()
-        const scale = transformComponent.getScale()
         const {width, height} = GeometryHelper.getLargestRectangle(rotation, scaleSize)
         if (width > 0 && height > 0) {
             const center = new Vector({x: scaleSize.width / 2, y: scaleSize.height / 2})
@@ -82,7 +82,6 @@ export default class MeshGenerationExecutor extends ComponentExecutor {
             context.lineWidth = borderSize || 1
             context.translate(width / 2, height / 2)
             context.rotate(rotation)
-            context.scale(scale.getX(), scale.getY())
             context.translate(-center.x, -center.y)
             return new DataContext(unitId, center, context, scaleSize, camera, world)
         }
@@ -105,7 +104,7 @@ export default class MeshGenerationExecutor extends ComponentExecutor {
      */
     closeContext(meshComponent, transformComponent, dataContext) {
         const {fillColor, borderSize, color} = meshComponent.getStyle()
-        const {context, scaleSize, world, unitId} = dataContext
+        const {context, scaleSize, world, unitId, camera} = dataContext
         if (meshComponent.getAssetId()) {
             const asset = dataContext.world.getAssetsManager().findAssetById(meshComponent.getAssetId())
             if (fillColor) {
@@ -113,17 +112,23 @@ export default class MeshGenerationExecutor extends ComponentExecutor {
                 context.globalCompositeOperation = 'destination-over'
             }
             context.clip()
+            const transformScale = transformComponent.getScale()
             const canvasBg = asset.getType().getData().context.canvas
             if (meshComponent.isImageRepeat()) {
-                context.fillStyle = context.createPattern(canvasBg, 'repeat')
+                const canvasCameraScale = camera.toScaleSize(new Size({width: canvasBg.width, height: canvasBg.height}))
+                const canvasBgScaled = ImageHelper.resizeCanvasBySize(canvasBg, canvasCameraScale)
+                context.fillStyle = context.createPattern(
+                    ImageHelper.scaleCanvas(canvasBgScaled, transformScale),
+                    'repeat')
                 context.fill()
             } else {
-                context.drawImage(canvasBg, 0, 0, scaleSize.width, scaleSize.height)
+                context.drawImage(ImageHelper.scaleCanvas(canvasBg, transformScale),
+                    0, 0, scaleSize.width, scaleSize.height)
             }
             borderSize && context.stroke()
         } else if (fillColor) {
             context.fill()
-            if(color){
+            if (color) {
                 context.stroke()
             }
         } else {
@@ -153,8 +158,8 @@ export default class MeshGenerationExecutor extends ComponentExecutor {
         const sw = context.canvas.width, sh = context.canvas.height
         if (sw && sh) {
             let mesh = meshManager.get(unitId)
-            if(!mesh){
-               mesh = new Mesh()
+            if (!mesh) {
+                mesh = new Mesh()
             }
             mesh.clear(new Size({width: sw, height: sh}))
             mesh.context = context

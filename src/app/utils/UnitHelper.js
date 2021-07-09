@@ -132,6 +132,16 @@ export default class UnitHelper {
     /**
      * @param {Unit} unit
      * @param {ColliderComponent} colliderComponent
+     * @return {Vector}
+     */
+    static getColliderPosition(unit, colliderComponent){
+        const unitPosition = unit.getComponent(TransformComponent).getPosition()
+        return Vector.add(unitPosition, colliderComponent.getPosition())
+    }
+
+    /**
+     * @param {Unit} unit
+     * @param {ColliderComponent} colliderComponent
      * @return {Size}
      */
     static getColliderSize(unit, colliderComponent) {
@@ -241,6 +251,7 @@ export default class UnitHelper {
     static createGUICollider(unit, world) {
         const unitManager = world.getUnitManager()
         const colliderComponents = unit.findComponentsByClass(ColliderComponent)
+            .filter(colliderComponent => colliderComponent.isEnabled())
         const unitPosition = unit.getComponent(TransformComponent).getPosition()
         const unitRotation = unit.getComponent(TransformComponent).getRotation()
         const unitSize = unit.getComponent(MeshComponent).getSize()

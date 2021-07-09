@@ -26,27 +26,28 @@ export default class ScriptExecutor extends ComponentExecutor {
         const world = World.get()
         const functionRegistry = world.getFunctionRegistry()
         const gameInput = world.getPreference().getGameInput()
-        const scriptComponent = unit.getComponent(ScriptComponent)
-        functionRegistry.getInstancesByClass(scriptComponent.getScript()).forEach(instance => {
-            if (
-                (mouse.isButtonClicked(MouseButton.LEFT) && instance instanceof OnMouseClickEvent) ||
+        unit.findComponentsByClass(ScriptComponent).forEach(scriptComponent => {
+            functionRegistry.getInstancesByClass(scriptComponent.getScript()).forEach(instance => {
+                if (
+                    (mouse.isButtonClicked(MouseButton.LEFT) && instance instanceof OnMouseClickEvent) ||
 
-                (keyboard.isAnyKeyPressed() && instance instanceof OnKeyDownEvent) ||
+                    (keyboard.isAnyKeyPressed() && instance instanceof OnKeyDownEvent) ||
 
-                ((keyboard.isKeyPressed(gameInput.getKeyCode(GAME_INPUTS.RIGHT)) ||
-                    keyboard.isKeyPressed(gameInput.getKeyCode(GAME_INPUTS.LEFT))) && instance instanceof OnInputXAxisEvent) ||
+                    ((keyboard.isKeyPressed(gameInput.getKeyCode(GAME_INPUTS.RIGHT)) ||
+                        keyboard.isKeyPressed(gameInput.getKeyCode(GAME_INPUTS.LEFT))) && instance instanceof OnInputXAxisEvent) ||
 
-                ((keyboard.isKeyPressed(gameInput.getKeyCode(GAME_INPUTS.UP)) ||
-                    keyboard.isKeyPressed(gameInput.getKeyCode(GAME_INPUTS.DOWN))) && instance instanceof OnInputYAxisEvent) ||
+                    ((keyboard.isKeyPressed(gameInput.getKeyCode(GAME_INPUTS.UP)) ||
+                        keyboard.isKeyPressed(gameInput.getKeyCode(GAME_INPUTS.DOWN))) && instance instanceof OnInputYAxisEvent) ||
 
-                (keyboard.isKeyReleased(gameInput.getKeyCode(GAME_INPUTS.JUMP)) && instance instanceof OnInputJumpEvent) ||
+                    (keyboard.isKeyReleased(gameInput.getKeyCode(GAME_INPUTS.JUMP)) && instance instanceof OnInputJumpEvent) ||
 
-                (keyboard.isKeyReleased(gameInput.getKeyCode(GAME_INPUTS.ATTACK)) && instance instanceof OnInputAttackEvent) ||
+                    (keyboard.isKeyReleased(gameInput.getKeyCode(GAME_INPUTS.ATTACK)) && instance instanceof OnInputAttackEvent) ||
 
-                instance instanceof OnUpdateEvent
-            ) {
-                instance.execute(functionRegistry, unit, scriptComponent, world)
-            }
+                    instance instanceof OnUpdateEvent
+                ) {
+                    instance.execute(functionRegistry, unit, scriptComponent, world)
+                }
+            })
         })
     }
 

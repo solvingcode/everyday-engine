@@ -13,7 +13,7 @@ export default class RigidBodyComponent extends Component{
      */
     initAttributes() {
         this.add('freezeRotation', TYPES.BOOLEAN, false)
-        this.add('frictionOnGround', TYPES.BOOLEAN, false)
+        this.add('friction', TYPES.NUMBER, 0)
     }
 
     /**
@@ -38,24 +38,17 @@ export default class RigidBodyComponent extends Component{
     }
 
     /**
-     * @param {boolean} frictionOnGround
+     * @param {number} friction
      */
-    setFrictionOnGround(frictionOnGround) {
-        this.setValue('frictionOnGround', frictionOnGround)
+    setFriction(friction) {
+        this.setValue('friction', friction)
     }
 
     /**
-     * @return {boolean}
+     * @return {number}
      */
-    getFrictionOnGround(){
-        return this.getValue('frictionOnGround')
-    }
-
-    /**
-     * @return {boolean}
-     */
-    isFrictionOnGround(){
-        return this.getFrictionOnGround()
+    getFriction(){
+        return this.getValue('friction')
     }
 
     /**
@@ -69,9 +62,9 @@ export default class RigidBodyComponent extends Component{
                 type: Layout.form.CHECKBOX
             },
             {
-                bind: 'frictionOnGround',
-                label: 'Friction on ground',
-                type: Layout.form.CHECKBOX
+                bind: 'friction',
+                label: 'Friction',
+                type: Layout.form.TEXT
             }
         ]
     }

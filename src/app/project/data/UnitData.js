@@ -3,7 +3,7 @@ import Data from './Data.js'
 import Maths from '../../utils/Maths.js'
 import ClientError from '../../exception/type/ClientError.js'
 
-export default class UnitData extends Data{
+export default class UnitData extends Data {
 
     id
     name
@@ -19,42 +19,42 @@ export default class UnitData extends Data{
     /**
      * @param {number} id
      */
-    setId(id){
+    setId(id) {
         this.id = id
     }
 
     /**
      * @return {number}
      */
-    getId(){
+    getId() {
         return this.id
     }
 
     /**
      * @param {string} name
      */
-    setName(name){
+    setName(name) {
         this.name = name
     }
 
     /**
      * @return {string}
      */
-    getName(){
+    getName() {
         return this.name
     }
 
     /**
      * @param {ComponentData[]} components
      */
-    setComponents(components){
+    setComponents(components) {
         this.components = components
     }
 
     /**
      * @return {ComponentData[]}
      */
-    getComponents(){
+    getComponents() {
         return this.components
     }
 
@@ -63,9 +63,12 @@ export default class UnitData extends Data{
      * @param {T} type
      * @return {T}
      */
-    getComponent(type){
-        if(!(type.prototype instanceof ComponentData)){
+    getComponent(type) {
+        if (!(type.prototype instanceof ComponentData)) {
             throw new ClientError(`Component type must be instance of ComponentData (${type.name} given)`)
+        }
+        if (!type.prototype.isUnique()) {
+            throw new ClientError(`Component type ${type.name} is not unique (use findComponentsByClass instead)`)
         }
         return this.getComponents().find(component => component.constructor === type)
     }
@@ -75,7 +78,7 @@ export default class UnitData extends Data{
      * @param {T} type
      * @return {T[]}
      */
-    findComponentsByClass(type){
+    findComponentsByClass(type) {
         return this.getComponents()
             .filter(component => component instanceof type)
     }
@@ -84,10 +87,10 @@ export default class UnitData extends Data{
      * @param {ComponentData[]} componentClasses
      * @return {boolean}
      */
-    hasComponentsByClasses(componentClasses){
-        for (const iComponentClass in componentClasses){
+    hasComponentsByClasses(componentClasses) {
+        for (const iComponentClass in componentClasses) {
             const componentClass = componentClasses[iComponentClass]
-            if(componentClasses.hasOwnProperty(iComponentClass) && !this.findComponentsByClass(componentClass).length){
+            if (componentClasses.hasOwnProperty(iComponentClass) && !this.findComponentsByClass(componentClass).length) {
                 return false
             }
         }
@@ -98,10 +101,10 @@ export default class UnitData extends Data{
      * @param {ComponentData[]} componentClasses
      * @return {boolean}
      */
-    hasComponents(componentClasses){
-        for (const iComponentClass in componentClasses){
+    hasComponents(componentClasses) {
+        for (const iComponentClass in componentClasses) {
             const componentClass = componentClasses[iComponentClass]
-            if(componentClasses.hasOwnProperty(iComponentClass) && !this.getComponent(componentClass)){
+            if (componentClasses.hasOwnProperty(iComponentClass) && !this.getComponent(componentClass)) {
                 return false
             }
         }
@@ -112,12 +115,12 @@ export default class UnitData extends Data{
      * @param {ComponentData[]} componentClasses
      * @return {boolean}
      */
-    hasEnabledComponents(componentClasses){
-        for (const iComponentClass in componentClasses){
+    hasEnabledComponents(componentClasses) {
+        for (const iComponentClass in componentClasses) {
             const componentClass = componentClasses[iComponentClass]
-            if(componentClasses.hasOwnProperty(iComponentClass)){
+            if (componentClasses.hasOwnProperty(iComponentClass)) {
                 const component = this.getComponent(componentClass)
-                if(!component || !component.isEnabled()){
+                if (!component || !component.isEnabled()) {
                     return false
                 }
             }
@@ -129,10 +132,10 @@ export default class UnitData extends Data{
      * @param {ComponentData[]} componentClasses
      * @return {boolean}
      */
-    hasAnyComponents(componentClasses){
-        for (const iComponentClass in componentClasses){
+    hasAnyComponents(componentClasses) {
+        for (const iComponentClass in componentClasses) {
             const componentClass = componentClasses[iComponentClass]
-            if(componentClasses.hasOwnProperty(iComponentClass) && this.getComponent(componentClass)){
+            if (componentClasses.hasOwnProperty(iComponentClass) && this.getComponent(componentClass)) {
                 return true
             }
         }
@@ -144,12 +147,12 @@ export default class UnitData extends Data{
      * @param {T} componentClass
      * @return {T}
      */
-    createComponent(componentClass){
-        if(!this.getComponent(componentClass)){
+    createComponent(componentClass) {
+        if (!componentClass.prototype.isUnique() || !this.getComponent(componentClass)) {
             const component = new componentClass()
             this.components.push(component)
             return component
-        }else{
+        } else {
             throw new ClientError(`Component ${componentClass.name} already created!`)
         }
     }
@@ -158,14 +161,14 @@ export default class UnitData extends Data{
      * @param {Class<Component>[]} componentClasses
      * @return {Component[]}
      */
-    createComponents(componentClasses){
+    createComponents(componentClasses) {
         return componentClasses.map(componentClass => this.createComponent(componentClass))
     }
 
     /**
      * @param {number} componentId
      */
-    deleteComponent(componentId){
+    deleteComponent(componentId) {
         const iComponent = this.findIndexComponentById(componentId)
         this.components.splice(iComponent, 1)
     }
@@ -174,14 +177,14 @@ export default class UnitData extends Data{
      * @param {number} componentId
      * @return {number}
      */
-    findIndexComponentById(componentId){
+    findIndexComponentById(componentId) {
         return this.components.findIndex(component => component.id === componentId)
     }
 
     /**
      * @param {ComponentData[]} components
      */
-    concatComponents(components){
+    concatComponents(components) {
         this.concat(
             this.components,
             components,

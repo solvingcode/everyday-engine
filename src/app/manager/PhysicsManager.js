@@ -47,25 +47,28 @@ export default class PhysicsManager {
 
     /**
      * @param {Unit} unit
+     * @param {ColliderComponent} colliderComponent
      * @param {Vector} start
      * @param {Vector} end
      * @return {{body: *, bodyA: *, bodyB: *, collided: boolean}[]}
      */
-    rayCast(unit, start, end) {
-        const position = unit.getComponent(TransformComponent).getPosition()
-        const size = unit.getComponent(MeshComponent).getSize()
+    rayCast(unit, colliderComponent, start, end) {
+        const position = UnitHelper.getColliderPosition(unit, colliderComponent)
+        const size = UnitHelper.getColliderSize(unit, colliderComponent)
         const bottomPosition = Vector.add(position, new Vector({x: size.getWidth() / 2, y: size.getHeight()}))
         return this.physicsEngine.rayCast(unit, Vector.add(bottomPosition, start), Vector.add(bottomPosition, end))
     }
 
     /**
      * @param {Unit} unit
+     * @param {ColliderComponent} colliderComponent
      * @return {boolean}
      */
-    isGrounded(unit) {
+    isGrounded(unit, colliderComponent) {
         const startVector = new Vector({x: 0, y: 0})
         const endVector = new Vector({x: 0, y: 1})
-        const collisions = this.rayCast(unit, startVector, endVector).filter(collision => collision.collided)
+        const collisions = this.rayCast(unit, colliderComponent, startVector, endVector)
+            .filter(collision => collision.collided)
         return !!collisions.length
     }
 

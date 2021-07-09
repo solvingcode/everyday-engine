@@ -11,6 +11,13 @@ export default class ScriptComponent extends Component {
     /**
      * @override
      */
+    isUnique() {
+        return false
+    }
+
+    /**
+     * @override
+     */
     getFormFields() {
         const attributes = this.getAttributes()
         const fields = [

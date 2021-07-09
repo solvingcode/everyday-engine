@@ -11,6 +11,13 @@ export default class AnimationComponent extends ScriptComponent {
     /**
      * @override
      */
+    isUnique() {
+        return true
+    }
+
+    /**
+     * @override
+     */
     initAttributes() {
         super.initAttributes()
         this.add('animation', TYPES.NUMBER)
