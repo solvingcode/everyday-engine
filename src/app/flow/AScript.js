@@ -176,6 +176,15 @@ export default class AScript extends AScriptData {
         return this.nodes.find(node => node.getName() === name)
     }
 
+    /**
+     * @param {string} name
+     * @param {ANode} nodeClass
+     * @return {ANode}
+     */
+    findNodeByNameClass(name, nodeClass) {
+        return this.nodes.find(node => node.getName() === name && node instanceof nodeClass)
+    }
+
     compile() {
         if (this.doCompile()) {
             this.setStatus(STATUS.COMPILED)

@@ -22,4 +22,11 @@ export default class ScriptNodeElementMenuItem extends ListSelectElementMenuItem
         ]
     }
 
+    /**
+     * @override
+     */
+    getName() {
+        return ''
+    }
+
 }

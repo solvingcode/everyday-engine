@@ -45,8 +45,7 @@ export default class ListElementButtonUI extends ItemUI {
      * @return {string}
      */
     static getTitle(item) {
-        const bind = item.element.getDataBind()
-        return bind.getName()
+        return item.element.getName()
     }
 
     /**

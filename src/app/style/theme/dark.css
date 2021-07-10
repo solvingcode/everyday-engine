@@ -301,6 +301,10 @@ button.selected, button.hidden.selected, button.locked.selected{
     background-color: #404040;
 }
 
+.units-wrapper .list-element:not(.selected):nth-child(2n):hover {
+    background-color: #4e4e4e;
+}
+
 .list-element .list-element-img-wrapper{
     background-color: #f4f4f4;
 }

@@ -12,7 +12,7 @@ export default class AddScriptNodeInputListMenuItem extends ListMenuItem {
      */
     constructor(parent) {
         super({
-            name: 'Constant values',
+            name: 'Default values',
             zone: parent.zone
         })
         this.parent = parent

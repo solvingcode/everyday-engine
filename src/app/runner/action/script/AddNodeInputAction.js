@@ -8,6 +8,7 @@ import ScriptHelper from '../../../utils/ScriptHelper.js'
 import {NODE_TYPES} from '../../../flow/node/ANode.js'
 import {TYPES} from '../../../pobject/AttributeType.js'
 import ComponentNode from '../../../flow/node/ComponentNode.js'
+import VariableNode from '../../../flow/node/variable/VariableNode.js'
 
 export default class AddNodeInputAction extends Action {
 
@@ -34,12 +35,22 @@ export default class AddNodeInputAction extends Action {
         const functionRegistry = World.get().getFunctionRegistry()
 
         let nodeSource
+        const value = formData.getValue()
         if (formData.getAttribute().getAttrType() === TYPES.UNIT) {
             nodeSource = ScriptHelper.createNode(functionRegistry, script, NODE_TYPES.SELF)
-        }else if (formData.getAttribute().getAttrType() === TYPES.COMPONENT) {
-            nodeSource = script.createNode(functionRegistry, ComponentNode, formData.getValue())
+        } else if (formData.getAttribute().getAttrType() === TYPES.COMPONENT) {
+            nodeSource = script.createNode(functionRegistry, ComponentNode, value)
         } else {
-            nodeSource = ScriptHelper.createNode(functionRegistry, script, NODE_TYPES.CONSTANT, formData.getValue())
+            const varRegex = new RegExp('^var:([^:]+)$', 'i')
+            let variableValue
+            if (value.match(varRegex)) {
+                variableValue = value.replace(varRegex, '$1')
+            }
+            if (variableValue) {
+                nodeSource = script.findNodeByNameClass(variableValue, VariableNode)
+            } else {
+                nodeSource = ScriptHelper.createNode(functionRegistry, script, NODE_TYPES.CONSTANT, value)
+            }
         }
 
         if (node) {

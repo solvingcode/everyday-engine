@@ -35,4 +35,11 @@ export default class ListElementActionsMenuItem extends PanelMenuItem {
     getDataBind() {
         return this.data.bind
     }
+
+    /**
+     * @return {string}
+     */
+    getName(){
+        return this.getDataBind().getName()
+    }
 }

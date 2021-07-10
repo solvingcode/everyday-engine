@@ -234,4 +234,11 @@ export default class FunctionRegistry extends Registry{
         return super.getInstances().filter(instance => instance instanceof ACondition)
     }
 
+    /**
+     * @return {AVariable[]}
+     */
+    getVariableInstances(){
+        return super.getInstances().filter(instance => instance instanceof AVariable)
+    }
+
 }

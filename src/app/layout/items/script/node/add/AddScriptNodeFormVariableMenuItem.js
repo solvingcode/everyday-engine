@@ -41,6 +41,9 @@ export default class AddScriptNodeFormVariableMenuItem extends FormMenuItem {
     isValid() {
         const type = this.getFormObject().getType()
         return super.isValid()
-            && (type === NODE_TYPES.VAR_STRING || type === NODE_TYPES.VAR_NUMBER || type === NODE_TYPES.VAR_BOOLEAN)
+            && (type === NODE_TYPES.VAR_STRING ||
+                type === NODE_TYPES.VAR_NUMBER ||
+                type === NODE_TYPES.VAR_BOOLEAN ||
+                type === NODE_TYPES.VAR_TOGGLE)
     }
 }

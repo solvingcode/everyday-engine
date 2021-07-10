@@ -121,7 +121,7 @@ export default class DrawerRunner extends Runner {
                     this.startDraw(stateManager, type)
                 }
                 if (stateManager.isProgress(type)) {
-                    if (!stateManager.isProgress(MoveAction.STATE)) {
+                    if (!stateManager.isProgress(MoveAction.STATE) && startEvent(mouse)) {
                         this.draw(position, currentPosition, props.instance, mouse)
                     }
                     if (endEvent(mouse)) {

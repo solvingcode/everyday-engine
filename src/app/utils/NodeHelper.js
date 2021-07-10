@@ -34,6 +34,8 @@ import BooleanVariableNode from '../flow/node/variable/BooleanVariableNode.js'
 import ABooleanVariable from '../flow/variable/ABooleanVariable.js'
 import DynamicAttribute from '../pobject/DynamicAttribute.js'
 import {TYPES} from '../pobject/AttributeType.js'
+import VariableNode from '../flow/node/variable/VariableNode.js'
+import AVariable from '../flow/variable/AVariable.js'
 
 export default class NodeHelper {
 
@@ -86,10 +88,8 @@ export default class NodeHelper {
             return `${nodeSource.getName()}`
         } else if (nodeSource instanceof AKeyCode) {
             return `${nodeSource.getName()}`
-        } else if (nodeSource instanceof AStringVariable) {
-            return `${nodeSource.getName()} (string)`
-        } else if (nodeSource instanceof AToggleVariable) {
-            return `${nodeSource.getName()} (toggle)`
+        } else if (nodeSource instanceof AVariable) {
+            return `${nodeSource.getName()}(var)`
         } else if (nodeSource instanceof ACondition) {
             return `${nodeSource.getName()}`
         } else if (nodeSource instanceof AEvent) {
@@ -227,7 +227,7 @@ export default class NodeHelper {
                 return new DynamicAttribute(
                     input.getTargetName(),
                     TYPES.STRING,
-                    sourceNode && sourceNode.getName()
+                    sourceNode && this.getNodeName(sourceNode)
                 )
             }
             return null
@@ -239,7 +239,10 @@ export default class NodeHelper {
      * @return {boolean}
      */
     static isHidden(node) {
-        return node instanceof ConstantNode || node instanceof SelfNode || node instanceof ComponentNode
+        return node instanceof ConstantNode ||
+            node instanceof SelfNode ||
+            node instanceof ComponentNode ||
+            node instanceof VariableNode
     }
 
     /**

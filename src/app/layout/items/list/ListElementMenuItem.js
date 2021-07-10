@@ -34,4 +34,11 @@ export default class ListElementMenuItem extends MenuItem {
     getDataBind() {
         return this.data.bind
     }
+
+    /**
+     * @return {string}
+     */
+    getName(){
+        return this.getDataBind().getName()
+    }
 }
