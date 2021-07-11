@@ -222,7 +222,7 @@ class FormMenuItem extends MenuItem {
         const getterString = this.getGetterString(field)
         const getterDynamicField = 'getValue'
         if (field.type !== Layout.form.FILE) {
-            if (!field.dynamic) {
+            if (!field.dynamicAttribute) {
                 return (function (getter, object) {
                     return () => getter.reduce(
                         (pValue, cValue) => {
@@ -269,7 +269,7 @@ class FormMenuItem extends MenuItem {
     getSetter(field) {
         const setterString = this.getSetterString(field)
         const setterDynamicField = 'setValue'
-        if(!field.dynamic){
+        if(!field.dynamicAttribute){
             return (function (setter, self) {
                 return (value) => setter.reduce(
                     (pValue, cValue, iValue) =>

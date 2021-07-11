@@ -1,4 +1,5 @@
 import UnitSelector from './UnitSelector.js'
+import MeshComponent from '../component/internal/MeshComponent.js'
 
 export default class ScriptGraphSelector extends UnitSelector {
 
@@ -10,7 +11,8 @@ export default class ScriptGraphSelector extends UnitSelector {
      * @return {Unit[]}
      */
     getUnits(world){
-        return world ? world.getGraphManager().getGraphUnits() : []
+        return world ? world.getGraphManager().getGraphUnits()
+            .filter(unit => unit.getComponent(MeshComponent).isEnabled()) : []
     }
 
     /**

@@ -8,6 +8,7 @@ import GUIPropertyComponent from '../component/internal/gui/property/GUIProperty
 import Maths from '../utils/Maths.js'
 import ClientError from '../exception/type/ClientError.js'
 import ScriptComponent from '../component/internal/ScriptComponent.js'
+import CommonUtil from '../utils/CommonUtil.js'
 
 /**
  * Manage the units, components list (get, add, load, ...)
@@ -92,7 +93,7 @@ export default class UnitManager extends UnitManagerData {
      * @param {AScript} script
      * @return {Unit[]}
      */
-    findUnitsAttachedToScript(script){
+    findUnitsAttachedToScript(script) {
         return this.units.filter(unit => this.findComponentAttachedToScript(unit, script))
     }
 
@@ -101,9 +102,24 @@ export default class UnitManager extends UnitManagerData {
      * @param {AScript} script
      * @return {Component}
      */
-    findComponentAttachedToScript(unit, script){
+    findComponentAttachedToScript(unit, script) {
         const scriptComponents = unit.findComponentsByClass(ScriptComponent)
         return scriptComponents.find(scriptComponent => scriptComponent.getScript() === script.getName())
+    }
+
+    /**
+     * @param {number} componentId
+     * @return {Component}
+     */
+    findComponentById(componentId) {
+        for (const iUnit in this.units) {
+            const unit = this.units[iUnit]
+            const component = unit.findComponentById(componentId)
+            if (component) {
+                return component
+            }
+        }
+        return null
     }
 
     /**
@@ -155,7 +171,9 @@ export default class UnitManager extends UnitManagerData {
      * @param {Unit} unit
      */
     addUnit(unit) {
-        this.setupName(unit)
+        CommonUtil.setupName(unit, unit.getName(),
+            (name) => unit.setName(name), (name) => this.findUnitByName(name))
+
         const rank = unit.getComponent(GUIPropertyComponent).getRank()
         const indexBiggerRank = this.units.findIndex(pUnit => pUnit.getComponent(GUIPropertyComponent).getRank() > rank)
         if (indexBiggerRank >= 0) {

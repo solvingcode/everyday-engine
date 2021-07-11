@@ -36,6 +36,8 @@ import DynamicAttribute from '../pobject/DynamicAttribute.js'
 import {TYPES} from '../pobject/AttributeType.js'
 import VariableNode from '../flow/node/variable/VariableNode.js'
 import AVariable from '../flow/variable/AVariable.js'
+import ComponentVariableNode from '../flow/node/variable/ComponentVariableNode.js'
+import AComponentVariable from '../flow/variable/AComponentVariable.js'
 
 export default class NodeHelper {
 
@@ -69,6 +71,8 @@ export default class NodeHelper {
                 return new ABooleanVariable(sourceName)
             case NumberVariableNode:
                 return new ANumberVariable(sourceName)
+            case ComponentVariableNode:
+                return new AComponentVariable(sourceName)
             case ToggleVariableNode:
                 return new AToggleVariable(sourceName)
             case ComponentNode:
@@ -89,7 +93,7 @@ export default class NodeHelper {
         } else if (nodeSource instanceof AKeyCode) {
             return `${nodeSource.getName()}`
         } else if (nodeSource instanceof AVariable) {
-            return `${nodeSource.getName()}(var)`
+            return `${nodeSource.getName()} (var)`
         } else if (nodeSource instanceof ACondition) {
             return `${nodeSource.getName()}`
         } else if (nodeSource instanceof AEvent) {
@@ -101,7 +105,7 @@ export default class NodeHelper {
             const animation = World.get().getAnimationManager().findById(parseInt(nodeSource.getName()))
             return `${animation.getName()}`
         } else if (nodeSource instanceof AComponent) {
-            return `${nodeSource.getName()} Component`
+            return `${nodeSource.getName()}`
         } else if (nodeSource instanceof AFunction) {
             return `${nodeSource.getName()}`
         } else {
@@ -256,7 +260,7 @@ export default class NodeHelper {
         const inputs = nodeSource.getInputs()
         return inputs.map(input => {
             const nodeInput = nodeConstantInputs.find(pInput => pInput.getAttrName() === input.getAttrName())
-            return `${input.getAttrName()}${nodeInput ? ` [${nodeInput.getAttrValue()}]` : ''}`
+            return `${input.getAttrName()}${nodeInput ? ` = ${nodeInput.getAttrValue()}` : ''}`
         })
     }
 

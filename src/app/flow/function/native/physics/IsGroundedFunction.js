@@ -12,7 +12,7 @@ export default class IsGroundedFunction extends AFunction{
      */
     initAttributes() {
         this.addInput('target', TYPES.UNIT, 0)
-        this.addInput('component', TYPES.COMPONENT, 0)
+        this.addInput('component', TYPES.COMPONENT_INSTANCE, 0)
         this.addOutput(TYPES.BOOLEAN)
     }
 
@@ -22,7 +22,7 @@ export default class IsGroundedFunction extends AFunction{
     execute(functionRegistry, unit, scriptComponent, world) {
         const physicsManager = world.getPhysicsManager()
         const target = this.getInputValue('target')
-        const colliderComponent = unit.getComponent(this.getInputValue('component'))
+        const colliderComponent = this.getInputValue('component')
         this.setOutputValue(physicsManager.isGrounded(target, colliderComponent))
     }
 }

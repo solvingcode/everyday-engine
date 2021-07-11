@@ -53,7 +53,7 @@ export default class AddNodeInputAction extends Action {
             }
         }
 
-        if (node) {
+        if (node && nodeSource) {
             node.attach(nodeSource, formData.getAttribute().getAttrName())
             assetTab.generate(script)
         } else {

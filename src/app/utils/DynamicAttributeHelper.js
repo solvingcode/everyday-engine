@@ -1,6 +1,7 @@
 import DynamicAttribute from '../pobject/DynamicAttribute.js'
 import {TYPES} from '../pobject/AttributeType.js'
 import ClientError from '../exception/type/ClientError.js'
+import Layout from '../layout/Layout.js'
 
 export default class DynamicAttributeHelper {
 
@@ -9,7 +10,7 @@ export default class DynamicAttributeHelper {
      * @param {string} type
      * @param {*} defaultValue
      */
-    static create(name, type, defaultValue = null){
+    static create(name, type, defaultValue = null) {
         const componentAttribute = new DynamicAttribute()
         componentAttribute.setAttrName(name)
         componentAttribute.setAttrType(type)
@@ -23,10 +24,10 @@ export default class DynamicAttributeHelper {
      * @param {string} type
      * @param {*} defaultValue
      */
-    static add(target, name, type, defaultValue = null){
-        if(!this.tryGet(target, name)){
+    static add(target, name, type, defaultValue = null) {
+        if (!this.tryGet(target, name)) {
             target.push(this.create(name, type, defaultValue))
-        }else{
+        } else {
             throw new ClientError(`Attribute ${name} already defined`)
         }
     }
@@ -36,9 +37,9 @@ export default class DynamicAttributeHelper {
      * @param {string} name
      * @return {DynamicAttribute}
      */
-    static get(target, name){
+    static get(target, name) {
         const componentAttribute = this.tryGet(target, name)
-        if(!componentAttribute){
+        if (!componentAttribute) {
             throw new ClientError(`Attribute ${name} not supported`)
         }
         return componentAttribute
@@ -49,7 +50,7 @@ export default class DynamicAttributeHelper {
      * @param {string} name
      * @return {DynamicAttribute}
      */
-    static tryGet(target, name){
+    static tryGet(target, name) {
         return target.find(attribute => attribute.getAttrName() === name)
     }
 
@@ -58,7 +59,7 @@ export default class DynamicAttributeHelper {
      * @param {string} name
      * @param {*} value
      */
-    static setValue(target, name, value){
+    static setValue(target, name, value) {
         let attribute = this.get(target, name)
         attribute.setAttrValue(value)
     }
@@ -68,7 +69,7 @@ export default class DynamicAttributeHelper {
      * @param {string} name
      * @return {*}
      */
-    static getValue(target, name){
+    static getValue(target, name) {
         return this.get(target, name).getAttrValue()
     }
 
@@ -77,7 +78,7 @@ export default class DynamicAttributeHelper {
      * @param {string} name
      * @return {number}
      */
-    static getId(target, name){
+    static getId(target, name) {
         return this.get(target, name).getId()
     }
 
@@ -86,7 +87,7 @@ export default class DynamicAttributeHelper {
      * @param {number} id
      * @return {DynamicAttribute}
      */
-    static findById(target, id){
+    static findById(target, id) {
         return target.find(attribute => attribute.getId() === id)
     }
 
@@ -95,7 +96,7 @@ export default class DynamicAttributeHelper {
      * @param {string} name
      * @return {DynamicAttribute}
      */
-    static findByName(target, name){
+    static findByName(target, name) {
         return target.find(attribute => attribute.getAttrName() === name)
     }
 
@@ -104,7 +105,7 @@ export default class DynamicAttributeHelper {
      * @param {number} index
      * @return {DynamicAttribute}
      */
-    static findByIndex(target, index){
+    static findByIndex(target, index) {
         return target.find((attribute, attrIndex) => attrIndex === index)
     }
 
@@ -112,15 +113,79 @@ export default class DynamicAttributeHelper {
      * @param {string|number|boolean} value
      * @return {string}
      */
-    static findTypeOfValue(value){
-        if(_.isString(value)){
+    static findTypeOfValue(value) {
+        if (_.isString(value)) {
             return TYPES.STRING
-        }else if(_.isNumber(value)){
+        } else if (_.isNumber(value)) {
             return TYPES.NUMBER
-        }else if(_.isBoolean(value)){
+        } else if (_.isBoolean(value)) {
             return TYPES.BOOLEAN
         }
         return TYPES.ANY
+    }
+
+    /**
+     * @param {World} world
+     * @param {UnitSelector} unitSelector
+     * @param {DynamicAttribute} attribute
+     * @param {boolean} isListInstances
+     * @param {string|null} pBindName
+     */
+    static getFormFields(world, unitSelector, attribute, isListInstances = true, pBindName = null) {
+        const bindName = pBindName || attribute.getAttrName()
+        const dynamicAttribute = !pBindName
+        let formField
+        if (attribute.getAttrType() === TYPES.UNIT) {
+            formField = {
+                bind: bindName,
+                label: `${attribute.getAttrName()} (Self) `,
+                type: Layout.form.CHECKBOX,
+                dynamicAttribute
+            }
+        }else if (attribute.getAttrType() === TYPES.COMPONENT) {
+            const components = world.getComponentRegistry().getInstances()
+                .map(component => ({
+                    value: component.getName(),
+                    label: component.getName()
+                }))
+            formField = {
+                bind: bindName,
+                label: attribute.getAttrName(),
+                type: Layout.form.DROPDOWN,
+                list: components,
+                dynamicAttribute
+            }
+        }else if (attribute.getAttrType() === TYPES.COMPONENT_INSTANCE && isListInstances) {
+            const selectedUnit = unitSelector.getFirstSelected(world)
+            const componentInstances = selectedUnit.getComponents()
+                .filter(component => !component.isHidden() && !component.isUnique())
+                .map(component => ({
+                    value: component.getId(),
+                    label: component.getName()
+                }))
+            formField = {
+                bind: bindName,
+                label: attribute.getAttrName(),
+                type: Layout.form.DROPDOWN,
+                list: componentInstances,
+                dynamicAttribute
+            }
+        }else if (attribute.getAttrType() === TYPES.BOOLEAN) {
+            formField = {
+                bind: bindName,
+                label: `${attribute.getAttrName()} `,
+                type: Layout.form.CHECKBOX,
+                dynamicAttribute
+            }
+        }else{
+            formField = {
+                bind: bindName,
+                label: attribute.getAttrName(),
+                type: Layout.form.TEXT,
+                dynamicAttribute
+            }
+        }
+        return formField
     }
 
     /**
@@ -129,7 +194,7 @@ export default class DynamicAttributeHelper {
      * @param {World} world
      * @return {*}
      */
-    static getValueByType(value, type, world){
+    static getValueByType(value, type, world) {
         let newValue = value
         switch (type) {
             case TYPES.UNIT:
@@ -150,6 +215,13 @@ export default class DynamicAttributeHelper {
                     throw new ClientError(`${this.constructor.name}: Component "${value}" not found`)
                 }
                 newValue = component.constructor
+                break
+            case TYPES.COMPONENT_INSTANCE:
+                const componentInstance = world.getUnitManager().findComponentById(parseInt(value))
+                if (!componentInstance) {
+                    throw new ClientError(`${this.constructor.name}: Component Instance "${value}" not found`)
+                }
+                newValue = componentInstance
                 break
             case TYPES.NUMBER:
                 newValue = parseFloat(value)

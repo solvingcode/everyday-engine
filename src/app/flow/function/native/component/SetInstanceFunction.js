@@ -2,31 +2,30 @@ import {TYPES} from '../../../../pobject/AttributeType.js'
 import AFunction from '../../AFunction.js'
 import DynamicAttributeHelper from '../../../../utils/DynamicAttributeHelper.js'
 
-export default class GetFunction extends AFunction{
+export default class SetInstanceFunction extends AFunction{
 
     constructor() {
-        super('Get')
+        super('SetInstance')
     }
 
     /**
      * @override
      */
     initAttributes() {
-        this.addInput('component', TYPES.COMPONENT, 0)
+        this.addInput('component', TYPES.COMPONENT_INSTANCE, 0)
         this.addInput('attribute', TYPES.STRING)
-        this.addOutput(TYPES.ANY)
+        this.addInput('value', TYPES.STRING)
     }
 
     /**
      * @override
      */
     execute(functionRegistry, unit, scriptComponent, world) {
-        const classComponent = this.getInputValue('component')
+        const component = this.getInputValue('component')
         const attribute = this.getInputValue('attribute')
-        const component = unit.getComponent(classComponent)
+        const value = this.getInputValue('value')
         const componentAttribute = component.get(attribute)
-        const value = component.getValue(attribute)
-        const outputValue = DynamicAttributeHelper.getValueByType(value, componentAttribute.getAttrType(), world)
-        this.setOutputValue(outputValue)
+        const newValue = DynamicAttributeHelper.getValueByType(value, componentAttribute.getAttrType(), world)
+        component.setValue(attribute, newValue)
     }
 }

@@ -28,6 +28,11 @@ export default class ColliderComponent extends Component{
     getFormFields() {
         return [
             {
+                bind: 'name',
+                label: 'Name',
+                type: Layout.form.TEXT
+            },
+            {
                 bind: 'editFlag',
                 label: 'Edit',
                 type: Layout.form.CHECKBOX
@@ -144,6 +149,13 @@ export default class ColliderComponent extends Component{
      */
     getShape(){
         return this.getValue('shape')
+    }
+
+    /**
+     * @override
+     */
+    isUnique(){
+        return false
     }
 
 }

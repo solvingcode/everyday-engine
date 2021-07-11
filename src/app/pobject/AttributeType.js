@@ -53,6 +53,8 @@ export default class AttributeType {
             case TYPES.ANIMATION:
                 return 'number'
             case TYPES.COMPONENT:
+                return 'string'
+            case TYPES.COMPONENT_INSTANCE:
                 return 'number'
             case TYPES.RANGE:
                 return 'range'
@@ -101,6 +103,7 @@ export const TYPES = {
     UNIT: '005',
     ANIMATION: '006',
     COMPONENT: '007',
+    COMPONENT_INSTANCE: '008',
     RANGE: '101',
     STYLE: '202',
     SIZE: '203',

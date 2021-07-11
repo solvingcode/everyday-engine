@@ -2,6 +2,7 @@ import ComponentData from './ComponentData.js'
 import Data from './Data.js'
 import Maths from '../../utils/Maths.js'
 import ClientError from '../../exception/type/ClientError.js'
+import CommonUtil from '../../utils/CommonUtil.js'
 
 export default class UnitData extends Data {
 
@@ -150,6 +151,10 @@ export default class UnitData extends Data {
     createComponent(componentClass) {
         if (!componentClass.prototype.isUnique() || !this.getComponent(componentClass)) {
             const component = new componentClass()
+
+            CommonUtil.setupName(component, component.getName(),
+                (name) => component.setName(name), (name) => this.findComponentByName(name))
+
             this.components.push(component)
             return component
         } else {
@@ -158,7 +163,7 @@ export default class UnitData extends Data {
     }
 
     /**
-     * @param {Class<Component>[]} componentClasses
+     * @param {Component[]} componentClasses
      * @return {Component[]}
      */
     createComponents(componentClasses) {
@@ -179,6 +184,22 @@ export default class UnitData extends Data {
      */
     findIndexComponentById(componentId) {
         return this.components.findIndex(component => component.id === componentId)
+    }
+
+    /**
+     * @param {number} componentId
+     * @return {Component}
+     */
+    findComponentById(componentId) {
+        return this.components.find(component => component.id === componentId)
+    }
+
+    /**
+     * @param {string} name
+     * @return {Component}
+     */
+    findComponentByName(name) {
+        return this.components.find(component => component.getName() === name)
     }
 
     /**

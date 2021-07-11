@@ -1,6 +1,8 @@
 import Component from '../Component.js'
 import {TYPES} from '../../pobject/AttributeType.js'
-import Layout from '../../layout/Layout.js'
+import DynamicAttributeHelper from '../../utils/DynamicAttributeHelper.js'
+import World from '../../world/World.js'
+import UnitSelector from '../../selector/UnitSelector.js'
 
 export default class ScriptComponent extends Component {
 
@@ -20,26 +22,11 @@ export default class ScriptComponent extends Component {
      */
     getFormFields() {
         const attributes = this.getAttributes()
-        const fields = [
-            {
-                bind: 'script',
-                label: 'Script',
-                type: Layout.form.TEXT,
-                options: {
-                    readonly: true
-                }
-            }
-        ]
+        const fields = []
 
         attributes.forEach(attr => {
             if (attr.getAttrName() !== 'script') {
-                fields.push(
-                    {
-                        bind: attr.getAttrName(),
-                        label: attr.getAttrName(),
-                        type: Layout.form.TEXT,
-                        dynamic: true
-                    })
+                fields.push(DynamicAttributeHelper.getFormFields(World.get(), UnitSelector.get(), attr))
             }
         })
 

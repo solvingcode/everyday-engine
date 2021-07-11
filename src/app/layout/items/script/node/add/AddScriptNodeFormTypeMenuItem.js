@@ -73,6 +73,10 @@ export default class AddScriptNodeFormTypeMenuItem extends FormMenuItem {
                         label: 'Variable (toggle)'
                     },
                     {
+                        value: NODE_TYPES.VAR_COMPONENT,
+                        label: 'Variable (component)'
+                    },
+                    {
                         value: NODE_TYPES.REFERENCE,
                         label: 'Reference'
                     }

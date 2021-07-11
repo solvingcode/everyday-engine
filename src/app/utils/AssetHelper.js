@@ -83,10 +83,12 @@ export default class AssetHelper {
     static attachAssetScriptToUnit(unit, asset) {
         if(asset.getType() instanceof AssetScriptXml){
             const scriptComponent = unit.createComponent(ScriptComponent)
+            scriptComponent.setName(`Script ${asset.getName()}`)
             scriptComponent.setScript(asset.getName())
             scriptComponent.setVarsAttributes(AssetHelper.getAssetScriptVars(asset.getId()))
         }else if(asset.getType() instanceof AssetAnimationScriptXml){
             const animationComponent = unit.createComponent(AnimationComponent)
+            animationComponent.setName(`Animation ${asset.getName()}`)
             animationComponent.setVarsAttributes(AssetHelper.getAssetScriptVars(asset.getId()))
             animationComponent.setScript(asset.getName())
         }else{

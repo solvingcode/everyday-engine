@@ -52,6 +52,8 @@ import IsAnimationEndedFunction from '../flow/function/native/animation/IsAnimat
 import GetInputYAxisFunction from '../flow/function/native/input/GetInputYAxisFunction.js'
 import ScaleMeshFunction from '../flow/function/native/mesh/ScaleMeshFunction.js'
 import AbsFunction from '../flow/function/native/basic/AbsFunction.js'
+import GetInstanceFunction from '../flow/function/native/component/GetInstanceFunction.js'
+import SetInstanceFunction from '../flow/function/native/component/SetInstanceFunction.js'
 
 export default class FunctionRegistry extends Registry{
 
@@ -113,6 +115,8 @@ export default class FunctionRegistry extends Registry{
             //Component
             new SetFunction(),
             new GetFunction(),
+            new GetInstanceFunction(),
+            new SetInstanceFunction(),
 
             //Physics
             new MoveXAxisFunction(),

@@ -22,6 +22,7 @@ import SelfNode from '../flow/node/SelfNode.js'
 import ToggleVariableNode from '../flow/node/variable/ToggleVariableNode.js'
 import BooleanVariableNode from '../flow/node/variable/BooleanVariableNode.js'
 import NumberVariableNode from '../flow/node/variable/NumberVariableNode.js'
+import ComponentVariableNode from '../flow/node/variable/ComponentVariableNode.js'
 
 export default class ScriptHelper {
 
@@ -56,6 +57,8 @@ export default class ScriptHelper {
             node = script.createNode(functionRegistry, StringVariableNode, nodeValue)
         } else if (nodeType === NODE_TYPES.VAR_NUMBER) {
             node = script.createNode(functionRegistry, NumberVariableNode, nodeValue)
+        } else if (nodeType === NODE_TYPES.VAR_COMPONENT) {
+            node = script.createNode(functionRegistry, ComponentVariableNode, nodeValue)
         } else if (nodeType === NODE_TYPES.VAR_BOOLEAN) {
             node = script.createNode(functionRegistry, BooleanVariableNode, nodeValue)
         } else if (nodeType === NODE_TYPES.VAR_TOGGLE) {
@@ -96,6 +99,8 @@ export default class ScriptHelper {
             nodeType = NODE_TYPES.VAR_STRING
         } else if (node instanceof NumberVariableNode) {
             nodeType = NODE_TYPES.VAR_NUMBER
+        } else if (node instanceof ComponentVariableNode) {
+            nodeType = NODE_TYPES.VAR_COMPONENT
         } else if (node instanceof BooleanVariableNode) {
             nodeType = NODE_TYPES.VAR_BOOLEAN
         } else if (node instanceof ToggleVariableNode) {

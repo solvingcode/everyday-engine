@@ -119,6 +119,9 @@ import GetInputYAxisFunction from '../../flow/function/native/input/GetInputYAxi
 import ABooleanVariable from '../../flow/variable/ABooleanVariable.js'
 import ScaleMeshFunction from '../../flow/function/native/mesh/ScaleMeshFunction.js'
 import AbsFunction from '../../flow/function/native/basic/AbsFunction.js'
+import AComponentVariable from '../../flow/variable/AComponentVariable.js'
+import GetInstanceFunction from '../../flow/function/native/component/GetInstanceFunction.js'
+import SetInstanceFunction from '../../flow/function/native/component/SetInstanceFunction.js'
 
 /**
  * @class {DataSchema}
@@ -234,7 +237,10 @@ class DataSchema {
         {id: 970, type: GetInputYAxisFunction},
         {id: 980, type: ABooleanVariable},
         {id: 990, type: ScaleMeshFunction},
-        {id: 1000, type: AbsFunction}
+        {id: 1000, type: AbsFunction},
+        {id: 1010, type: AComponentVariable},
+        {id: 1020, type: GetInstanceFunction},
+        {id: 1030, type: SetInstanceFunction}
     ]
 
     /**

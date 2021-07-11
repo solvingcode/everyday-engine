@@ -18,6 +18,6 @@ export default class FormField{
     /**
      * @type {boolean}
      */
-    dynamic
+    dynamicAttribute
     options
 }
