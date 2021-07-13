@@ -125,6 +125,13 @@ export default class PhysicsManager {
     /**
      * @param {Unit} unit
      */
+    deleteUnit(unit){
+        this.physicsEngine.deleteUnit(unit)
+    }
+
+    /**
+     * @param {Unit} unit
+     */
     updateUnit(unit) {
         const body = this.physicsEngine.findBody(unit)
         if (body) {
@@ -148,7 +155,7 @@ export default class PhysicsManager {
                 .filter(colliderComponent => colliderComponent.isEnabled())
             const firstColliderComponent = colliderComponents[0]
             if(firstColliderComponent){
-                const firstColliderRelativePosition = firstColliderComponent.getPosition()
+                const firstColliderRelativePosition = UnitHelper.getColliderRelativePosition(unit, firstColliderComponent)
                 const bodyCollider = this.physicsEngine.getBodyColliders(body)[0]
                 if(bodyCollider){
                     const bodyColliderPosition = new Vector(this.physicsEngine.getBodyPosition(bodyCollider))

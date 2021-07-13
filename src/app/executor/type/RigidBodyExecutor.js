@@ -19,10 +19,14 @@ export default class RigidBodyExecutor extends ComponentExecutor {
         const physicsManager = world.getPhysicsManager()
         const rigidBodyComponent = unit.getComponent(RigidBodyComponent)
         const options = new RigidBodyOptions()
+        if (!rigidBodyComponent.isCreated()) {
+            physicsManager.deleteUnit(unit)
+        }
         options.isStatic = false
         options.freezeRotation = rigidBodyComponent.isFreezeRotation()
         physicsManager.addBody(unit, options)
         physicsManager.setFriction(unit, rigidBodyComponent.getFriction())
+        rigidBodyComponent.setCreated(true)
     }
 
 }

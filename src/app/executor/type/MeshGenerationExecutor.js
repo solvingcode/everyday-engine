@@ -123,7 +123,7 @@ export default class MeshGenerationExecutor extends ComponentExecutor {
                 context.fill()
             } else {
                 context.drawImage(ImageHelper.scaleCanvas(canvasBg, transformScale),
-                    0, 0, scaleSize.width, scaleSize.height)
+                    0, 0, scaleSize.width * Math.abs(transformScale.getX()), scaleSize.height * Math.abs(transformScale.getY()))
             }
             borderSize && context.stroke()
         } else if (fillColor) {

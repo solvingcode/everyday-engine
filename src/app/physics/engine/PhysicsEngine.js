@@ -191,12 +191,12 @@ export default class PhysicsEngine {
      */
     saveBody(unit, body) {
         const existMapBody = this.mapBodyUnit.find(mapBody => mapBody.unitId === unit.getId())
-        if(!existMapBody){
+        if (!existMapBody) {
             this.mapBodyUnit.push({
                 unitId: unit.getId(),
                 body: body
             })
-        }else{
+        } else {
             existMapBody.body = body
         }
     }
@@ -229,7 +229,7 @@ export default class PhysicsEngine {
      * @param {ColliderComponent[]} colliderComponents
      * @param {*[]} colliders
      */
-    saveColliders(unit, colliderComponents, colliders){
+    saveColliders(unit, colliderComponents, colliders) {
         colliderComponents.forEach((colliderComponent, iColliderComponent) =>
             this.saveCollider(unit, colliderComponent, colliders[iColliderComponent]))
     }
@@ -270,9 +270,8 @@ export default class PhysicsEngine {
                     updateBody = true
                 }
             })
-            if(updateBody){
-                this.deleteBody(existBody)
-                this.deleteColliders(unit)
+            if (updateBody) {
+                this.deleteUnit(unit)
                 this.createBody(unit, options, colliderComponents)
             }
         }
@@ -300,13 +299,24 @@ export default class PhysicsEngine {
      * @param {RigidBodyOptions} options
      * @param {ColliderComponent[]} colliderComponents
      */
-    createBody(unit, options, colliderComponents){
+    createBody(unit, options, colliderComponents) {
         const colliders = colliderComponents.map(colliderComponent => this.newCollider(unit, colliderComponent))
         const position = UnitHelper.toCenterPosition(unit)
         const body = this.newBody(position, _.cloneDeep(colliders), options)
         this.addToWorld(body)
         this.saveBody(unit, body)
         this.saveColliders(unit, colliderComponents, colliders)
+    }
+
+    /**
+     * @param {Unit} unit
+     */
+    deleteUnit(unit) {
+        const body = this.findBody(unit)
+        if (body) {
+            this.deleteBody(body)
+            this.deleteColliders(unit)
+        }
     }
 
     /**

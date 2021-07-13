@@ -14,6 +14,7 @@ export default class RigidBodyComponent extends Component{
     initAttributes() {
         this.add('freezeRotation', TYPES.BOOLEAN, false)
         this.add('friction', TYPES.NUMBER, 0)
+        this.add('created', TYPES.BOOLEAN, false)
     }
 
     /**
@@ -35,6 +36,27 @@ export default class RigidBodyComponent extends Component{
      */
     isFreezeRotation(){
         return this.getFreezeRotation()
+    }
+
+    /**
+     * @param {boolean} created
+     */
+    setCreated(created) {
+        this.setValue('created', created)
+    }
+
+    /**
+     * @return {boolean}
+     */
+    getCreated(){
+        return this.getValue('created')
+    }
+
+    /**
+     * @return {boolean}
+     */
+    isCreated(){
+        return this.getCreated()
     }
 
     /**
