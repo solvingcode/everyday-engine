@@ -10,7 +10,7 @@ export default class MatterRectColliderLoader extends ColliderLoader {
      * @param {ColliderComponent} colliderComponent
      * @return {Matter.Body}
      */
-    static load(unit, colliderComponent) {
+    static loadCollider(unit, colliderComponent) {
         const transformComponent = unit.getComponent(TransformComponent)
         const colliderPosition = UnitHelper.toColliderCenterPosition(unit, colliderComponent,
             transformComponent.getPosition(), colliderComponent.getRotation())

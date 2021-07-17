@@ -127,6 +127,7 @@ export const NODE_TYPES = {
     VAR_TOGGLE: 'var_toggle',
     VAR_BOOLEAN: 'var_bool',
     VAR_COMPONENT: 'var_component',
+    VAR_MASK_GROUP: 'var_mask_group',
     ANIMATION: 'animation',
     COMPONENT: 'component',
     REFERENCE: 'reference',

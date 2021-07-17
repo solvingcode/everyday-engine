@@ -19,6 +19,7 @@ import ToggleVariableNode from './node/variable/ToggleVariableNode.js'
 import BooleanVariableNode from './node/variable/BooleanVariableNode.js'
 import NumberVariableNode from './node/variable/NumberVariableNode.js'
 import ComponentVariableNode from './node/variable/ComponentVariableNode.js'
+import MaskGroupVariableNode from './node/variable/MaskGroupVariableNode.js'
 
 /**
  * @abstract
@@ -54,6 +55,7 @@ export default class AScript extends AScriptData {
             case BooleanVariableNode:
             case NumberVariableNode:
             case ComponentVariableNode:
+            case MaskGroupVariableNode:
             case ComponentNode:
                 sourceName = value
                 break

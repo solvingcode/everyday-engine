@@ -117,8 +117,9 @@ export default class MeshGenerationExecutor extends ComponentExecutor {
             if (meshComponent.isImageRepeat()) {
                 const canvasCameraScale = camera.toScaleSize(new Size({width: canvasBg.width, height: canvasBg.height}))
                 const canvasBgScaled = ImageHelper.resizeCanvasBySize(canvasBg, canvasCameraScale)
+                const imageScale = meshComponent.getImageScale()
                 context.fillStyle = context.createPattern(
-                    ImageHelper.scaleCanvas(canvasBgScaled, transformScale),
+                    ImageHelper.scaleCanvas(canvasBgScaled, imageScale),
                     'repeat')
                 context.fill()
             } else {

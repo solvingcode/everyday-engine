@@ -73,6 +73,25 @@ export default class PhysicsManager {
     }
 
     /**
+     * @param {World} world
+     * @param {Unit} unit
+     * @param {ColliderComponent} colliderComponent
+     * @param {MaskGroup} maskGroup
+     * @return {ColliderComponent[]}
+     */
+    getAllCollision(world, unit, colliderComponent, maskGroup){
+        const maskGroupUnits = world.getUnitManager().findUnitsByMaskGroup(maskGroup)
+        const sourceColliderUnit = { unit, colliderComponent }
+        const targetColliderUnits = []
+        maskGroupUnits.forEach(maskGroupUnit => {
+            maskGroupUnit.findComponentsByClass(ColliderComponent).forEach(maskColliderComponent => {
+                targetColliderUnits.push({unit: maskGroupUnit, colliderComponent: maskColliderComponent})
+            })
+        })
+        return this.physicsEngine.getAllCollision(sourceColliderUnit, targetColliderUnits)
+    }
+
+    /**
      * @param {Unit} unit
      * @param {number} friction
      */
@@ -102,13 +121,6 @@ export default class PhysicsManager {
      */
     moveXAxis(unit, speed) {
         this.setVelocity(unit, new Vector({x: speed, y: this.getVelocity(unit).getY()}))
-    }
-
-    /**
-     * @return {{unitId: number, body: *}[]}
-     */
-    getMapBodyUnit() {
-        return this.getPhysicsEngine().getMapBodyUnit()
     }
 
     updateEngine() {

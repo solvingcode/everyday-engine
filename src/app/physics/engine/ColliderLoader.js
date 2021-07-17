@@ -6,13 +6,29 @@ import SystemError from '../../exception/type/SystemError.js'
 export default class ColliderLoader {
 
     /**
-     * @abstract
      * @param {Unit} unit
      * @param {ColliderComponent} colliderComponent
      * @return {*}
      */
     static load(unit, colliderComponent){
-        throw new SystemError(`${this.constructor.name}.load method must be implemented`)
+        const bodyCollider = this.loadCollider(unit, colliderComponent)
+        if(bodyCollider){
+            if(colliderComponent.isTrigger()){
+                bodyCollider.isSensor = true
+            }
+            bodyCollider.label = colliderComponent.getId()
+        }
+        return bodyCollider
+    }
+
+    /**
+     * @abstract
+     * @param {Unit} unit
+     * @param {ColliderComponent} colliderComponent
+     * @return {*}
+     */
+    static loadCollider(unit, colliderComponent){
+        throw new SystemError(`${this.constructor.name}.loadCollider method must be implemented`)
     }
 
 }

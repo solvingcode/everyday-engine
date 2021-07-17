@@ -122,6 +122,10 @@ import AbsFunction from '../../flow/function/native/basic/AbsFunction.js'
 import AComponentVariable from '../../flow/variable/AComponentVariable.js'
 import GetInstanceFunction from '../../flow/function/native/component/GetInstanceFunction.js'
 import SetInstanceFunction from '../../flow/function/native/component/SetInstanceFunction.js'
+import MaskGroupPreference from '../../preference/maskgroup/MaskGroupPreference.js'
+import GetAllCollisionFunction from '../../flow/function/native/physics/GetAllCollisionFunction.js'
+import AMaskGroupVariable from '../../flow/variable/AMaskGroupVariable.js'
+import MaskGroup from '../../preference/maskgroup/MaskGroup.js'
 
 /**
  * @class {DataSchema}
@@ -240,7 +244,11 @@ class DataSchema {
         {id: 1000, type: AbsFunction},
         {id: 1010, type: AComponentVariable},
         {id: 1020, type: GetInstanceFunction},
-        {id: 1030, type: SetInstanceFunction}
+        {id: 1030, type: SetInstanceFunction},
+        {id: 1040, type: MaskGroupPreference},
+        {id: 1050, type: GetAllCollisionFunction},
+        {id: 1060, type: AMaskGroupVariable},
+        {id: 1070, type: MaskGroup}
     ]
 
     /**

@@ -38,6 +38,8 @@ import VariableNode from '../flow/node/variable/VariableNode.js'
 import AVariable from '../flow/variable/AVariable.js'
 import ComponentVariableNode from '../flow/node/variable/ComponentVariableNode.js'
 import AComponentVariable from '../flow/variable/AComponentVariable.js'
+import MaskGroupVariableNode from '../flow/node/variable/MaskGroupVariableNode.js'
+import AMaskGroupVariable from '../flow/variable/AMaskGroupVariable.js'
 
 export default class NodeHelper {
 
@@ -73,6 +75,8 @@ export default class NodeHelper {
                 return new ANumberVariable(sourceName)
             case ComponentVariableNode:
                 return new AComponentVariable(sourceName)
+            case MaskGroupVariableNode:
+                return new AMaskGroupVariable(sourceName)
             case ToggleVariableNode:
                 return new AToggleVariable(sourceName)
             case ComponentNode:

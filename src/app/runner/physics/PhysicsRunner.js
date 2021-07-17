@@ -1,5 +1,7 @@
 import Runner from '../Runner.js'
 import World from '../../world/World.js'
+import RigidBodyComponent from '../../component/internal/RigidBodyComponent.js'
+import ColliderComponent from '../../component/internal/ColliderComponent.js'
 
 export class PhysicsRunner extends Runner {
 
@@ -21,10 +23,9 @@ export class PhysicsRunner extends Runner {
     execute() {
         const world = World.get()
         const physicsManager = world.getPhysicsManager()
-        physicsManager.getMapBodyUnit().forEach(bodyUnit => {
-            const unit = world.getUnitManager().findUnitById(bodyUnit.unitId)
-            physicsManager.update(unit)
-        })
+        world.getUnitManager()
+            .findUnitsByAnyComponentClasses([RigidBodyComponent, ColliderComponent])
+            .forEach(unit => physicsManager.update(unit))
         physicsManager.updateEngine()
     }
 

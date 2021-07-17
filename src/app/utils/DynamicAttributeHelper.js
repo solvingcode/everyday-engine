@@ -170,6 +170,20 @@ export default class DynamicAttributeHelper {
                 list: componentInstances,
                 dynamicAttribute
             }
+        }else if (attribute.getAttrType() === TYPES.MASK_GROUP_INSTANCE && isListInstances) {
+            const listMaskGroups = world
+                .getPreference().getMaskGroup().getMasks()
+                .map(maskGroup => ({
+                    value: maskGroup.getId(),
+                    label: maskGroup.getName()
+                }))
+            formField = {
+                bind: bindName,
+                label: attribute.getAttrName(),
+                type: Layout.form.DROPDOWN,
+                list: listMaskGroups,
+                dynamicAttribute
+            }
         }else if (attribute.getAttrType() === TYPES.BOOLEAN) {
             formField = {
                 bind: bindName,
@@ -222,6 +236,13 @@ export default class DynamicAttributeHelper {
                     throw new ClientError(`${this.constructor.name}: Component Instance "${value}" not found`)
                 }
                 newValue = componentInstance
+                break
+            case TYPES.MASK_GROUP_INSTANCE:
+                const maskGroupInstance = world.getPreference().getMaskGroup().find(parseInt(value))
+                if (!maskGroupInstance) {
+                    throw new ClientError(`${this.constructor.name}: Mask Group Instance "${value}" not found`)
+                }
+                newValue = maskGroupInstance
                 break
             case TYPES.NUMBER:
                 newValue = parseFloat(value)

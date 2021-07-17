@@ -18,6 +18,7 @@ export default class ColliderComponent extends Component{
         this.add('size', TYPES.SIZE, new Size(100))
         this.add('radius', TYPES.NUMBER, 100)
         this.add('editFlag', TYPES.BOOLEAN, false)
+        this.add('trigger', TYPES.BOOLEAN, false)
         this.add('shape', TYPES.STRING, PrimitiveShape.RECT)
         this.add('rotation', TYPES.NUMBER, 0)
     }
@@ -40,6 +41,11 @@ export default class ColliderComponent extends Component{
             {
                 bind: 'enabled',
                 label: 'Enabled',
+                type: Layout.form.CHECKBOX
+            },
+            {
+                bind: 'trigger',
+                label: 'Is trigger',
                 type: Layout.form.CHECKBOX
             },
             {
@@ -107,6 +113,27 @@ export default class ColliderComponent extends Component{
      */
     isEditFlag(){
         return this.getEditFlag()
+    }
+
+    /**
+     * @param {boolean} trigger
+     */
+    setTrigger(trigger) {
+        this.setValue('trigger', trigger)
+    }
+
+    /**
+     * @return {boolean}
+     */
+    getTrigger(){
+        return this.getValue('trigger')
+    }
+
+    /**
+     * @return {boolean}
+     */
+    isTrigger(){
+        return this.getTrigger()
     }
 
     /**

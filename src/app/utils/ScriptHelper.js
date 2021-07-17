@@ -23,6 +23,7 @@ import ToggleVariableNode from '../flow/node/variable/ToggleVariableNode.js'
 import BooleanVariableNode from '../flow/node/variable/BooleanVariableNode.js'
 import NumberVariableNode from '../flow/node/variable/NumberVariableNode.js'
 import ComponentVariableNode from '../flow/node/variable/ComponentVariableNode.js'
+import MaskGroupVariableNode from '../flow/node/variable/MaskGroupVariableNode.js'
 
 export default class ScriptHelper {
 
@@ -59,6 +60,8 @@ export default class ScriptHelper {
             node = script.createNode(functionRegistry, NumberVariableNode, nodeValue)
         } else if (nodeType === NODE_TYPES.VAR_COMPONENT) {
             node = script.createNode(functionRegistry, ComponentVariableNode, nodeValue)
+        } else if (nodeType === NODE_TYPES.VAR_MASK_GROUP) {
+            node = script.createNode(functionRegistry, MaskGroupVariableNode, nodeValue)
         } else if (nodeType === NODE_TYPES.VAR_BOOLEAN) {
             node = script.createNode(functionRegistry, BooleanVariableNode, nodeValue)
         } else if (nodeType === NODE_TYPES.VAR_TOGGLE) {
@@ -101,6 +104,8 @@ export default class ScriptHelper {
             nodeType = NODE_TYPES.VAR_NUMBER
         } else if (node instanceof ComponentVariableNode) {
             nodeType = NODE_TYPES.VAR_COMPONENT
+        } else if (node instanceof MaskGroupVariableNode) {
+            nodeType = NODE_TYPES.VAR_MASK_GROUP
         } else if (node instanceof BooleanVariableNode) {
             nodeType = NODE_TYPES.VAR_BOOLEAN
         } else if (node instanceof ToggleVariableNode) {

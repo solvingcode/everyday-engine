@@ -31,18 +31,12 @@ export default class MatterEngine extends PhysicsEngine {
     /**
      * @override
      */
-    addColliderBody(body, collider) {
-        Matter.Body.setParts(body, [...body.parts, collider])
-    }
-
-    /**
-     * @override
-     */
-    newBody(position, colliders, options) {
+    newBody(unit, position, colliders, options) {
         const bodyOptions = {
+            label: unit.getId(),
             isStatic: options.isStatic,
             isSensor: !colliders.length,
-            parts: colliders,
+            parts: colliders
             //friction: 0
         }
         if (!colliders.length) {
@@ -90,6 +84,13 @@ export default class MatterEngine extends PhysicsEngine {
         const bodyA = this.findBody(unitA)
         const bodyB = this.findBody(unitB)
         return Matter.Detector.canCollide(bodyA.collisionFilter, bodyB.collisionFilter)
+    }
+
+    /**
+     * @override
+     */
+    detectCollisions(sourceBodyCollider, targetBodyColliders) {
+        return Matter.Query.collides(sourceBodyCollider, targetBodyColliders)
     }
 
     /**
@@ -154,7 +155,62 @@ export default class MatterEngine extends PhysicsEngine {
      * @return {{body: Matter.Body, bodyA: Matter.Body, bodyB: Matter.Body, collided: boolean}[]}
      */
     rayCastForBody(body, start, end) {
-        const bodies = Matter.Composite.allBodies(this.getInstance().world)
-        return Matter.Query.ray(bodies, start, end).filter(collision => collision.parentA !== body)
+        return Matter.Query.ray(this.getBodies(), start, end).filter(collision => collision.parentA !== body)
+    }
+
+    /**
+     * @return {*[]}
+     */
+    getBodies(){
+        return Matter.Composite.allBodies(this.getInstance().world)
+    }
+
+    /**
+     * @override
+     */
+    findBody(unit) {
+        return this.getBodies().find(body => body.label === unit.getId())
+    }
+
+    /**
+     * @override
+     */
+    findBodyCollider(unit, colliderComponent) {
+        const body = this.findBody(unit)
+        return this.getBodyColliders(body).find(pBody => pBody.label === colliderComponent.getId())
+    }
+
+    /**
+     * @override
+     */
+    findColliders(unit) {
+        const body = this.findBody(unit)
+        return this.getBodyColliders(body)
+    }
+
+    /**
+     * @override
+     */
+    hasAllColliders(unit, colliderComponents) {
+        const colliderComponentIds = colliderComponents.map(colliderComponent => colliderComponent.getId())
+        const actualColliders = this.findColliders(unit)
+        return actualColliders.every(collider => colliderComponentIds.includes(collider.label))
+    }
+
+    /**
+     * @override
+     */
+    hasDeprecatedColliders(unit, colliderComponents) {
+        const actualColliders = this.findColliders(unit)
+        return colliderComponents.some(colliderComponent => !actualColliders
+            .find(collider => collider.label === colliderComponent.getId()))
+    }
+
+    /**
+     * @override
+     */
+    isCollisionHasCollider(collision, colliderComponent) {
+        const colliderComponentId = colliderComponent.getId()
+        return colliderComponentId === collision.bodyA.label || colliderComponentId === collision.bodyB.label
     }
 }

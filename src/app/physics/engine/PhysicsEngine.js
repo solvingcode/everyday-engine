@@ -11,24 +11,9 @@ import ClientError from '../../exception/type/ClientError.js'
 export default class PhysicsEngine {
 
     /**
-     * @type {{unitId: number, body: *}[]}
-     */
-    mapBodyUnit
-
-    /**
-     * @type {{unitId: number, componentId: number, body: *}[]}
-     */
-    mapBodyCollider
-
-    /**
      * @type {Matter}
      */
     instance
-
-    constructor() {
-        this.mapBodyUnit = []
-        this.mapBodyCollider = []
-    }
 
     init() {
         this.instance = this.createEngineInstance()
@@ -91,34 +76,31 @@ export default class PhysicsEngine {
     }
 
     /**
+     * @abstract
      * @param {Unit} unit
      * @return {Object}
      */
     findBody(unit) {
-        const mapBody = this.mapBodyUnit.find(bodyUnit => bodyUnit.unitId === unit.getId())
-        return mapBody && mapBody.body
+        throw new SystemError(`${this.constructor.name}.findBody method must be implemented`)
     }
 
     /**
+     * @abstract
      * @param {Unit} unit
      * @param {ColliderComponent} colliderComponent
      * @return {{unitId: number, componentId: number, body: *}}
      */
-    findCollider(unit, colliderComponent) {
-        return this.mapBodyCollider.find(bodyCollider =>
-            bodyCollider.componentId === colliderComponent.getId() &&
-            bodyCollider.unitId === unit.getId()
-        )
+    findBodyCollider(unit, colliderComponent) {
+        throw new SystemError(`${this.constructor.name}.findBodyCollider method must be implemented`)
     }
 
     /**
+     * @abstract
      * @param {Unit} unit
      * @return {{unitId: number, componentId: number, body: *}[]}
      */
     findColliders(unit) {
-        return this.mapBodyCollider.filter(bodyCollider =>
-            bodyCollider.unitId === unit.getId()
-        )
+        throw new SystemError(`${this.constructor.name}.findColliders method must be implemented`)
     }
 
     /**
@@ -141,6 +123,15 @@ export default class PhysicsEngine {
      */
     canCollide(unitA, unitB) {
         throw new SystemError(`${this.constructor.name}.canCollide method must be implemented`)
+    }
+
+    /**
+     * @param {*} sourceBodyCollider
+     * @param {*[]} targetBodyColliders
+     * @return {*[]}
+     */
+    detectCollisions(sourceBodyCollider, targetBodyColliders) {
+        throw new SystemError(`${this.constructor.name}.detectCollisions method must be implemented`)
     }
 
     /**
@@ -178,63 +169,6 @@ export default class PhysicsEngine {
     }
 
     /**
-     * @return {{unitId: number, body: *}[]}
-     */
-    getMapBodyUnit() {
-        return this.mapBodyUnit
-    }
-
-    /**
-     * @private
-     * @param {Unit} unit
-     * @param {*} body
-     */
-    saveBody(unit, body) {
-        const existMapBody = this.mapBodyUnit.find(mapBody => mapBody.unitId === unit.getId())
-        if (!existMapBody) {
-            this.mapBodyUnit.push({
-                unitId: unit.getId(),
-                body: body
-            })
-        } else {
-            existMapBody.body = body
-        }
-    }
-
-    /**
-     * @private
-     * @param {Unit} unit
-     */
-    deleteColliders(unit) {
-        _.remove(this.mapBodyCollider, mapCollider => mapCollider.unitId === unit.getId())
-    }
-
-    /**
-     * @private
-     * @param {Unit} unit
-     * @param {ColliderComponent} colliderComponent
-     * @param {*} body
-     */
-    saveCollider(unit, colliderComponent, body) {
-        this.mapBodyCollider.push({
-            unitId: unit.getId(),
-            componentId: colliderComponent.getId(),
-            body
-        })
-    }
-
-    /**
-     * @private
-     * @param {Unit} unit
-     * @param {ColliderComponent[]} colliderComponents
-     * @param {*[]} colliders
-     */
-    saveColliders(unit, colliderComponents, colliders) {
-        colliderComponents.forEach((colliderComponent, iColliderComponent) =>
-            this.saveCollider(unit, colliderComponent, colliders[iColliderComponent]))
-    }
-
-    /**
      * @private
      * @param {Unit} unit
      * @param {ColliderComponent} colliderComponent
@@ -253,23 +187,12 @@ export default class PhysicsEngine {
     loadBody(unit, options) {
         const colliderComponents = unit.findComponentsByClass(ColliderComponent)
             .filter(colliderComponent => colliderComponent.isEnabled())
-        const colliderComponentIds = colliderComponents.map(colliderComponent => colliderComponent.getId())
         const existBody = this.findBody(unit)
         if (!existBody) {
             this.createBody(unit, options, colliderComponents)
         } else {
-            let updateBody = false
-            const actualColliders = this.findColliders(unit)
-            actualColliders.forEach(collider => {
-                if (!colliderComponentIds.includes(collider.componentId)) {
-                    updateBody = true
-                }
-            })
-            colliderComponents.forEach(colliderComponent => {
-                if (!actualColliders.find(collider => collider.componentId === colliderComponent.getId())) {
-                    updateBody = true
-                }
-            })
+            const updateBody = this.hasDeprecatedColliders(unit, colliderComponents) ||
+                !this.hasAllColliders(unit, colliderComponents)
             if (updateBody) {
                 this.deleteUnit(unit)
                 this.createBody(unit, options, colliderComponents)
@@ -302,10 +225,8 @@ export default class PhysicsEngine {
     createBody(unit, options, colliderComponents) {
         const colliders = colliderComponents.map(colliderComponent => this.newCollider(unit, colliderComponent))
         const position = UnitHelper.toCenterPosition(unit)
-        const body = this.newBody(position, _.cloneDeep(colliders), options)
+        const body = this.newBody(unit, position, _.cloneDeep(colliders), options)
         this.addToWorld(body)
-        this.saveBody(unit, body)
-        this.saveColliders(unit, colliderComponents, colliders)
     }
 
     /**
@@ -315,8 +236,26 @@ export default class PhysicsEngine {
         const body = this.findBody(unit)
         if (body) {
             this.deleteBody(body)
-            this.deleteColliders(unit)
         }
+    }
+
+    /**
+     * @param {{unit: Unit, colliderComponent: ColliderComponent}} sourceColliderUnit
+     * @param {{unit: Unit, colliderComponent: ColliderComponent}[]} targetColliderUnits
+     * @return {ColliderComponent[]}
+     */
+    getAllCollision(sourceColliderUnit, targetColliderUnits){
+        const targetBodyColliders = targetColliderUnits.map(targetColliderUnit => {
+            return this.findBodyCollider(targetColliderUnit.unit, targetColliderUnit.colliderComponent)
+        }).filter(bodyCollider => bodyCollider)
+        const sourceBodyCollider = this.findBodyCollider(sourceColliderUnit.unit, sourceColliderUnit.colliderComponent)
+        const collisions = this.detectCollisions(sourceBodyCollider, targetBodyColliders)
+        return collisions.map(collision => {
+            const colliderUnit = targetColliderUnits.find(targetColliderUnit => {
+                return this.isCollisionHasCollider(collision, targetColliderUnit.colliderComponent)
+            })
+            return colliderUnit.colliderComponent
+        })
     }
 
     /**
@@ -325,15 +264,6 @@ export default class PhysicsEngine {
      */
     deleteBody(body) {
         throw new SystemError(`${this.constructor.name}.deleteColliderBody method must be implemented`)
-    }
-
-    /**
-     * @abstract
-     * @param {*} body
-     * @param {*} collider
-     */
-    addColliderBody(body, collider) {
-        throw new SystemError(`${this.constructor.name}.addColliderBody method must be implemented`)
     }
 
     /**
@@ -412,12 +342,13 @@ export default class PhysicsEngine {
     /**
      * @protected
      * @abstract
+     * @param {Unit} unit
      * @param {Vector} position
      * @param {*[]} colliders
      * @param {RigidBodyOptions} options
      * @return {*}
      */
-    newBody(position, colliders, options) {
+    newBody(unit, position, colliders, options) {
         throw new SystemError(`${this.constructor.name}.newRigidBody method must be implemented`)
     }
 
@@ -437,6 +368,36 @@ export default class PhysicsEngine {
      */
     createEngineInstance() {
         throw new SystemError(`${this.constructor.name}.createEngineInstance method must be implemented`)
+    }
+
+    /**
+     * @abstract
+     * @param {Unit} unit
+     * @param {ColliderComponent[]} colliderComponents
+     * @return {boolean}
+     */
+    hasDeprecatedColliders(unit, colliderComponents) {
+        throw new SystemError(`${this.constructor.name}.hasDeprecatedColliders method must be implemented`)
+    }
+
+    /**
+     * @abstract
+     * @param {Unit} unit
+     * @param {ColliderComponent[]} colliderComponents
+     * @return {boolean}
+     */
+    hasAllColliders(unit, colliderComponents) {
+        throw new SystemError(`${this.constructor.name}.hasAllColliders method must be implemented`)
+    }
+
+    /**
+     * @abstract
+     * @param {*} collision
+     * @param {ColliderComponent} colliderComponent
+     * @return {boolean}
+     */
+    isCollisionHasCollider(collision, colliderComponent) {
+        throw new SystemError(`${this.constructor.name}.isCollisionHasCollider method must be implemented`)
     }
 
     /**

@@ -77,6 +77,10 @@ export default class AddScriptNodeFormTypeMenuItem extends FormMenuItem {
                         label: 'Variable (component)'
                     },
                     {
+                        value: NODE_TYPES.VAR_MASK_GROUP,
+                        label: 'Variable (Mask Group)'
+                    },
+                    {
                         value: NODE_TYPES.REFERENCE,
                         label: 'Reference'
                     }

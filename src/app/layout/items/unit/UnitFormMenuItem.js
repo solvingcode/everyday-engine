@@ -20,11 +20,23 @@ export default class UnitFormMenuItem extends FormMenuItem {
      * @override
      */
     generateFields() {
+        const listMaskGroup = World.get()
+            .getPreference().getMaskGroup().getMasks()
+            .map(maskGroup => ({
+                value: maskGroup.getId(),
+                label: maskGroup.getName()
+            }))
         return [
             {
                 bind: 'name',
                 label: 'Name',
                 type: Layout.form.TEXT
+            },
+            {
+                bind: 'maskGroupId',
+                label: 'Mask Group',
+                type: Layout.form.DROPDOWN,
+                list: listMaskGroup
             }
         ]
     }

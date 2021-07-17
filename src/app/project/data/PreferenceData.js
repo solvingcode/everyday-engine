@@ -8,6 +8,11 @@ export default class PreferenceData extends Data{
     gameInput
 
     /**
+     * @type {MaskGroupPreference}
+     */
+    maskGroup
+
+    /**
      * @param {GameInputPreference} gameInput
      */
     setGameInput(gameInput){
@@ -19,6 +24,20 @@ export default class PreferenceData extends Data{
      */
     getGameInput(){
         return this.gameInput
+    }
+
+    /**
+     * @param {MaskGroupPreference} maskGroup
+     */
+    setMaskGroup(maskGroup){
+        this.maskGroup = maskGroup
+    }
+
+    /**
+     * @return {MaskGroupPreference}
+     */
+    getMaskGroup(){
+        return this.maskGroup
     }
 
 }

@@ -54,6 +54,7 @@ import ScaleMeshFunction from '../flow/function/native/mesh/ScaleMeshFunction.js
 import AbsFunction from '../flow/function/native/basic/AbsFunction.js'
 import GetInstanceFunction from '../flow/function/native/component/GetInstanceFunction.js'
 import SetInstanceFunction from '../flow/function/native/component/SetInstanceFunction.js'
+import GetAllCollisionFunction from '../flow/function/native/physics/GetAllCollisionFunction.js'
 
 export default class FunctionRegistry extends Registry{
 
@@ -125,6 +126,7 @@ export default class FunctionRegistry extends Registry{
             new GetVelocityYFunction(),
             new IsGroundedFunction(),
             new ScaleMeshFunction(),
+            new GetAllCollisionFunction(),
 
             //Structure
             new VectorFunction()

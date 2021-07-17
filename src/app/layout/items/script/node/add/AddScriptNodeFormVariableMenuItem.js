@@ -45,6 +45,7 @@ export default class AddScriptNodeFormVariableMenuItem extends FormMenuItem {
                 type === NODE_TYPES.VAR_NUMBER ||
                 type === NODE_TYPES.VAR_BOOLEAN ||
                 type === NODE_TYPES.VAR_TOGGLE ||
-                type === NODE_TYPES.VAR_COMPONENT)
+                type === NODE_TYPES.VAR_COMPONENT ||
+                type === NODE_TYPES.VAR_MASK_GROUP)
     }
 }

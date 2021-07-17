@@ -6,8 +6,21 @@ import CommonUtil from '../../utils/CommonUtil.js'
 
 export default class UnitData extends Data {
 
+    /**
+     * @type {number}
+     */
     id
+    /**
+     * @type {string}
+     */
     name
+    /**
+     * @type {number}
+     */
+    maskGroupId
+    /**
+     * @type {ComponentData[]}
+     */
     components
 
     constructor(name) {
@@ -29,6 +42,20 @@ export default class UnitData extends Data {
      */
     getId() {
         return this.id
+    }
+
+    /**
+     * @param {number} maskGroupId
+     */
+    setMaskGroupId(maskGroupId) {
+        this.maskGroupId = maskGroupId
+    }
+
+    /**
+     * @return {number}
+     */
+    getMaskGroupId() {
+        return this.maskGroupId
     }
 
     /**
@@ -96,6 +123,20 @@ export default class UnitData extends Data {
             }
         }
         return true
+    }
+
+    /**
+     * @param {ComponentData[]} componentClasses
+     * @return {boolean}
+     */
+    hasAnyComponentsByClasses(componentClasses) {
+        for (const iComponentClass in componentClasses) {
+            const componentClass = componentClasses[iComponentClass]
+            if (componentClasses.hasOwnProperty(iComponentClass) && this.findComponentsByClass(componentClass).length) {
+                return true
+            }
+        }
+        return false
     }
 
     /**

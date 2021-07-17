@@ -18,6 +18,8 @@ import Preference from '../preference/Preference.js'
 import GameInputPreference from '../preference/gameInput/GameInputPreference.js'
 import GameInput from '../preference/gameInput/GameInput.js'
 import ComponentRegistry from '../registry/ComponentRegistry.js'
+import MaskGroupPreference from '../preference/maskgroup/MaskGroupPreference.js'
+import MaskGroup from '../preference/maskgroup/MaskGroup.js'
 
 /**
  * Define the schema of project data.
@@ -103,6 +105,11 @@ export const PrefSchema = {
             type: TYPES.VECTOR
         }
     },
+    [TYPES.ARRAY_COMPONENT_INSTANCE]: {
+        element: {
+            type: TYPES.COMPONENT_INSTANCE
+        }
+    },
     [TYPES.ARRAY_NUMBER]: {
         element: {
             type: TYPES.NUMBER
@@ -152,6 +159,9 @@ export default {
                                         type: TYPES.NUMBER
                                     },
                                     id: {
+                                        type: TYPES.NUMBER
+                                    },
+                                    maskGroupId: {
                                         type: TYPES.NUMBER
                                     },
                                     name: {
@@ -343,6 +353,33 @@ export default {
                                             },
                                             value: {
                                                 type: TYPES.DYNAMIC_ATTRIBUTE
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    maskGroup: {
+                        type: MaskGroupPreference,
+                        meta: {
+                            dataId: {
+                                type: TYPES.NUMBER
+                            },
+                            masks: {
+                                type: Array,
+                                meta: {
+                                    element: {
+                                        type: MaskGroup,
+                                        meta: {
+                                            dataId: {
+                                                type: TYPES.NUMBER
+                                            },
+                                            id: {
+                                                type: TYPES.NUMBER
+                                            },
+                                            name: {
+                                                type: TYPES.STRING
                                             }
                                         }
                                     }

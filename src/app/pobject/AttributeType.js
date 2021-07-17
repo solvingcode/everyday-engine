@@ -56,6 +56,8 @@ export default class AttributeType {
                 return 'string'
             case TYPES.COMPONENT_INSTANCE:
                 return 'number'
+            case TYPES.MASK_GROUP_INSTANCE:
+                return 'number'
             case TYPES.RANGE:
                 return 'range'
             case TYPES.MESH:
@@ -104,6 +106,7 @@ export const TYPES = {
     ANIMATION: '006',
     COMPONENT: '007',
     COMPONENT_INSTANCE: '008',
+    MASK_GROUP_INSTANCE: '009',
     RANGE: '101',
     STYLE: '202',
     SIZE: '203',
@@ -113,5 +116,6 @@ export const TYPES = {
     ARRAY_NUMBER: '302',
     ARRAY_VECTOR: '303',
     ARRAY_DYNAMIC_ATTRIBUTE: '304',
+    ARRAY_COMPONENT_INSTANCE: '305',
     MESH: '501'
 }

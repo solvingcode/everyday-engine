@@ -4,6 +4,7 @@ import Layout from '../../layout/Layout.js'
 import Size from '../../pobject/Size.js'
 import {PrimitiveShape} from '../../unit/Unit.js'
 import {TYPES} from '../../pobject/AttributeType.js'
+import Vector from '../../utils/Vector.js'
 
 export default class MeshComponent extends Component{
 
@@ -23,6 +24,7 @@ export default class MeshComponent extends Component{
         this.add('generated', TYPES.BOOLEAN, false)
         this.add('assetId', TYPES.NUMBER)
         this.add('imageRepeat', TYPES.BOOLEAN, false)
+        this.add('imageScale', TYPES.VECTOR, new Vector({x: 1, y: 1}))
         this.add('version', TYPES.NUMBER, 0)
     }
 
@@ -45,6 +47,16 @@ export default class MeshComponent extends Component{
                 bind: 'imageRepeat',
                 label: 'Repeat texture',
                 type: Layout.form.CHECKBOX
+            },
+            {
+                bind: 'imageScale.x',
+                label: 'Image Scale X',
+                type: Layout.form.TEXT
+            },
+            {
+                bind: 'imageScale.y',
+                label: 'Image Scale Y',
+                type: Layout.form.TEXT
             }
         ]
     }
@@ -187,6 +199,20 @@ export default class MeshComponent extends Component{
      */
     isImageRepeat(){
         return this.getImageRepeat()
+    }
+
+    /**
+     * @return {Vector}
+     */
+    getImageScale(){
+        return this.getValue('imageScale')
+    }
+
+    /**
+     * @param {Vector} imageScale
+     */
+    setImageScale(imageScale){
+        this.setValue('imageScale', imageScale)
     }
 
     /**
