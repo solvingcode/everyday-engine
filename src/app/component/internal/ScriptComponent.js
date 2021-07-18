@@ -78,4 +78,11 @@ export default class ScriptComponent extends Component {
     setValue(name, value) {
         return super.setValue(name, value)
     }
+
+    /**
+     * @override
+     */
+    getType(name) {
+        return super.getType(name)
+    }
 }

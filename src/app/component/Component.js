@@ -73,6 +73,15 @@ export default class Component extends ComponentData{
     }
 
     /**
+     * @protected
+     * @param {string} name
+     * @return {*}
+     */
+    getType(name){
+        return DynamicAttributeHelper.getType(this.attributes, name)
+    }
+
+    /**
      * @param {string} name
      * @return {boolean}
      */

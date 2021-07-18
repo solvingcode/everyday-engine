@@ -62,6 +62,10 @@ import IsArrayEmptyFunction from '../flow/function/native/array/IsArrayEmptyFunc
 import GetUnitByComponentFunction from '../flow/function/native/component/GetUnitByComponentFunction.js'
 import GetComponentFunction from '../flow/function/native/unit/GetComponentFunction.js'
 import SubtractFunction from '../flow/function/native/basic/SubtractFunction.js'
+import GetTimeFunction from '../flow/function/native/time/GetTimeFunction.js'
+import GetVarFunction from '../flow/function/native/component/GetVarFunction.js'
+import SetVarFunction from '../flow/function/native/component/SetVarFunction.js'
+import DivideFunction from '../flow/function/native/basic/DivideFunction.js'
 
 export default class FunctionRegistry extends Registry{
 
@@ -107,6 +111,7 @@ export default class FunctionRegistry extends Registry{
             new RoundFunction(),
             new AbsFunction(),
             new SubtractFunction(),
+            new DivideFunction(),
 
             //Loop
             new ALoop(),
@@ -131,12 +136,17 @@ export default class FunctionRegistry extends Registry{
             new GetInstanceFunction(),
             new SetInstanceFunction(),
             new GetUnitByComponentFunction(),
+            new GetVarFunction(),
+            new SetVarFunction(),
 
             //Object
             new GetValueFunction(),
 
             //Array
             new IsArrayEmptyFunction(),
+
+            //Time
+            new GetTimeFunction(),
 
             //Physics
             new MoveXAxisFunction(),

@@ -4,7 +4,7 @@ import AssetData from '../project/data/AssetData.js'
 /**
  * @class {Asset}
  */
-export default class Asset extends AssetData{
+export default class Asset extends AssetData {
 
     /**
      * @param {Folder} folder
@@ -38,26 +38,40 @@ export default class Asset extends AssetData{
         this.selected = value
     }
 
-    open(){
+    open() {
         this.getType().open(this)
     }
 
-    export(){
+    export() {
         this.getType().export(this)
+    }
+
+    /**
+     * @override
+     */
+    setName(name) {
+        const oldName = this.getName()
+        super.setName(name)
+        if (oldName !== name) {
+            const assetType = this.getType()
+            if (assetType) {
+                assetType.rename(oldName, name)
+            }
+        }
     }
 
     /**
      * @param {string} oldName
      * @param {string} newName
      */
-    rename(oldName, newName){
+    rename(oldName, newName) {
         this.getType().rename(oldName, newName)
     }
 
     /**
      * @param {*} source
      */
-    async generate(source){
+    async generate(source) {
         await this.getType().generate(source, this)
     }
 

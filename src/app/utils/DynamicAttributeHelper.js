@@ -77,6 +77,15 @@ export default class DynamicAttributeHelper {
     /**
      * @param {DynamicAttribute[]} target
      * @param {string} name
+     * @return {*}
+     */
+    static getType(target, name) {
+        return this.get(target, name).getAttrType()
+    }
+
+    /**
+     * @param {DynamicAttribute[]} target
+     * @param {string} name
      * @return {number}
      */
     static getId(target, name) {

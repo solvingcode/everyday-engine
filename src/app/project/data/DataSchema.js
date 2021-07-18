@@ -133,6 +133,10 @@ import IsArrayEmptyFunction from '../../flow/function/native/array/IsArrayEmptyF
 import GetUnitByComponentFunction from '../../flow/function/native/component/GetUnitByComponentFunction.js'
 import GetComponentFunction from '../../flow/function/native/unit/GetComponentFunction.js'
 import SubtractFunction from '../../flow/function/native/basic/SubtractFunction.js'
+import GetTimeFunction from '../../flow/function/native/time/GetTimeFunction.js'
+import GetVarFunction from '../../flow/function/native/component/GetVarFunction.js'
+import SetVarFunction from '../../flow/function/native/component/SetVarFunction.js'
+import DivideFunction from '../../flow/function/native/basic/DivideFunction.js'
 
 /**
  * @class {DataSchema}
@@ -262,7 +266,11 @@ class DataSchema {
         {id: 1100, type: IsArrayEmptyFunction},
         {id: 1110, type: GetUnitByComponentFunction},
         {id: 1120, type: GetComponentFunction},
-        {id: 1130, type: SubtractFunction}
+        {id: 1130, type: SubtractFunction},
+        {id: 1140, type: GetTimeFunction},
+        {id: 1150, type: GetVarFunction},
+        {id: 1160, type: SetVarFunction},
+        {id: 1170, type: DivideFunction}
     ]
 
     /**

@@ -53,8 +53,7 @@ export default class AssetScriptXml extends AssetScript{
      * @override
      */
     rename(oldName, newName){
-        World.get().getScriptManager().rename(this.data, newName)
-        this.parse()
+        World.get().getScriptManager().rename(this.data, oldName, newName)
     }
 
     /**

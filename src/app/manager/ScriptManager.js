@@ -80,10 +80,13 @@ export default class ScriptManager extends ScriptManagerData {
 
     /**
      * @param {Document} data
+     * @param {string} oldName
      * @param {string} newName
      */
-    rename(data, newName){
+    rename(data, oldName, newName){
         ScriptParser.rename(data, newName)
+        const script = this.findByName(oldName)
+        script.setName(newName)
     }
 
     /**

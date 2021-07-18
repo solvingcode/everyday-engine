@@ -2,8 +2,6 @@ import Layout from '../../../Layout.js'
 import World from '../../../../world/World.js'
 import FormMenuItem from '../../form/FormMenuItem.js'
 import ClientError from '../../../../exception/type/ClientError.js'
-import AssetAnimationXml from '../../../../asset/types/animation/AssetAnimationXml.js'
-import AssetScript from '../../../../asset/types/script/AssetScript.js'
 
 export default class EditAssetFormMenuItem extends FormMenuItem {
     constructor(parent) {
@@ -47,20 +45,6 @@ export default class EditAssetFormMenuItem extends FormMenuItem {
             throw new ClientError(`Cannot move Asset (target folder is required)`)
         }
         return super.preUpdate(value)
-    }
-
-    /**
-     * @override
-     */
-    postUpdate(value) {
-        const selectedAsset = this.getPreUpdateData()
-        if (selectedAsset) {
-            if (selectedAsset.getType() instanceof AssetAnimationXml || selectedAsset.getType() instanceof AssetScript) {
-                const oldName = selectedAsset.getName()
-                selectedAsset.rename(oldName, value)
-            }
-        }
-        super.postUpdate(value)
     }
 
     /**
