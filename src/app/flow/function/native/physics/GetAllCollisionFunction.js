@@ -28,6 +28,6 @@ export default class GetAllCollisionFunction extends AFunction{
         const unit = this.getInputValue('target')
         const maskGroup = this.getInputValue('maskGroup')
         const colliderComponents = physicsManager.getAllCollision(world, unit, colliderComponent, maskGroup)
-        this.setOutputValue(colliderComponents)
+        this.setOutputValue(colliderComponents.map(pColliderComponent => pColliderComponent.getId()))
     }
 }

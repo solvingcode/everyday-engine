@@ -25,7 +25,7 @@ export default class SetFunction extends AFunction{
         const attribute = this.getInputValue('attribute')
         const value = this.getInputValue('value')
         const componentAttribute = unit.getComponent(classComponent).get(attribute)
-        const newValue = DynamicAttributeHelper.getValueByType(value, componentAttribute.getAttrType(), world)
+        const newValue = DynamicAttributeHelper.getValueByType(value, componentAttribute.getAttrType(), world, unit, scriptComponent)
         unit.getComponent(classComponent).setValue(attribute, newValue)
     }
 }

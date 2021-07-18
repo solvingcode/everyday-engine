@@ -41,10 +41,10 @@ test('Execute stack function (without output)', function () {
     func.setStack([
         new StackOperation(OPERATIONS.PUSH, 'value1', '20'),
         new StackOperation(OPERATIONS.PUSH, 'value2', '20'),
-        new StackOperation(OPERATIONS.CALL, 'Add'),
+        new StackOperation(OPERATIONS.CALL, '+'),
         new StackOperation(OPERATIONS.PUSH, 'value1', '__result__'),
         new StackOperation(OPERATIONS.PUSH, 'value2', '60'),
-        new StackOperation(OPERATIONS.CALL, 'Add'),
+        new StackOperation(OPERATIONS.CALL, '+'),
         new StackOperation(OPERATIONS.PUSH, 'value', '__result__'),
         new StackOperation(OPERATIONS.CALL, 'Log')
     ])
@@ -62,10 +62,10 @@ test('Execute stack function (with output)', function () {
     func.setStack([
         new StackOperation(OPERATIONS.PUSH, 'value1', '20'),
         new StackOperation(OPERATIONS.PUSH, 'value2', '30'),
-        new StackOperation(OPERATIONS.CALL, 'Add'),
+        new StackOperation(OPERATIONS.CALL, '+'),
         new StackOperation(OPERATIONS.PUSH, 'value1', CONSTANTS.RESULT),
         new StackOperation(OPERATIONS.PUSH, 'value2', '60'),
-        new StackOperation(OPERATIONS.CALL, 'Add')
+        new StackOperation(OPERATIONS.CALL, '+')
     ])
     func.execute(functionRegistry)
     expect(func.getOutputValue()).toBe(110)
@@ -78,7 +78,7 @@ test('Create and compile function flow', function () {
 
     const nodeSetValue1 = script.createNode(functionRegistry, ConstantNode, 20)
     const nodeSetValue2 = script.createNode(functionRegistry, ConstantNode, 30)
-    const node = script.createNode(functionRegistry, FunctionNode, 'Add')
+    const node = script.createNode(functionRegistry, FunctionNode, '+')
 
     node.attach(nodeSetValue1, 'value1')
     node.attach(nodeSetValue2, 'value2')
@@ -98,7 +98,7 @@ test('Create and compile class flow', function () {
     const script = new ClassScript('classScript')
 
     const nodeLog = script.createNode(functionRegistry, FunctionNode, 'Log')
-    const nodeAdd = script.createNode(functionRegistry, FunctionNode, 'Add')
+    const nodeAdd = script.createNode(functionRegistry, FunctionNode, '+')
     const nodeSetValue1 = script.createNode(functionRegistry, ConstantNode, 20)
     const nodeSetValue2 = script.createNode(functionRegistry, ConstantNode, 30)
     const nodeEvent = script.createNode(functionRegistry, FunctionNode, 'OnMouseClick')

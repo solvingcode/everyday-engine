@@ -26,7 +26,7 @@ export default class GetFunction extends AFunction{
         const component = unit.getComponent(classComponent)
         const componentAttribute = component.get(attribute)
         const value = component.getValue(attribute)
-        const outputValue = DynamicAttributeHelper.getValueByType(value, componentAttribute.getAttrType(), world)
+        const outputValue = DynamicAttributeHelper.getValueByType(value, componentAttribute.getAttrType(), world, unit, scriptComponent)
         this.setOutputValue(outputValue)
     }
 }

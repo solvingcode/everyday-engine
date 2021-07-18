@@ -24,7 +24,7 @@ export default class GetValueFunction extends AFunction{
         const attributes = this.getInputValue('attributes')
         const name = this.getInputValue('name')
         const attribute = DynamicAttributeHelper.get(attributes, name)
-        const outputValue = DynamicAttributeHelper.getValueByType(attribute.getAttrValue(), attribute.getAttrType(), world)
+        const outputValue = DynamicAttributeHelper.getValueByType(attribute.getAttrValue(), attribute.getAttrType(), world, unit, scriptComponent)
         this.setOutputValue(outputValue)
     }
 }

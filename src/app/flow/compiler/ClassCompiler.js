@@ -86,7 +86,7 @@ export default class ClassCompiler extends Compiler {
                 } else if (sourceElement instanceof ASelf) {
                     const targetInput = element.findInputByName(targetName)
                     stackFunction.getStack().push(...[
-                        new StackOperation(OPERATIONS.SELF),
+                        new StackOperation(OPERATIONS.SELF, targetInput.getAttrType()),
                         new StackOperation(OPERATIONS.PUSH, targetInput.getAttrName(), CONSTANTS.RESULT)
                     ])
                 } else if (sourceElement instanceof AAnimation) {

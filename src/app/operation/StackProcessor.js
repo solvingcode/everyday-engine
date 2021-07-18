@@ -25,6 +25,7 @@ export default class StackProcessor {
     }
 
     /**
+     * @param {string} functionName
      * @param {StackOperation[]} stack
      * @param {FunctionRegistry} functionRegistry
      * @param {Unit} unit
@@ -32,13 +33,13 @@ export default class StackProcessor {
      * @param {World} world
      * @return {StackRegister}
      */
-    run(stack, functionRegistry, unit, scriptComponent, world) {
+    run(functionName, stack, functionRegistry, unit, scriptComponent, world) {
 
         let iStackOperation = 0
-        while (iStackOperation < stack.length){
+        while (iStackOperation < stack.length) {
             const stackOperation = stack[iStackOperation]
 
-            if (this.stackRegister.popSignal()) {
+            if (this.stackRegister.popSignal(functionName)) {
                 break
             }
 
@@ -46,28 +47,28 @@ export default class StackProcessor {
                 const operation = stackOperation.getOperation()
                 switch (operation) {
                     case OPERATIONS.CALL:
-                        CallProcessor.run(stackOperation, this.stackRegister, functionRegistry, unit, scriptComponent, world)
+                        CallProcessor.run(functionName, stackOperation, this.stackRegister, functionRegistry, unit, scriptComponent, world)
                         break
                     case OPERATIONS.DISPATCH:
                         EventProcessor.run(stackOperation, this.stackRegister, functionRegistry, unit, scriptComponent, world)
                         break
                     case OPERATIONS.GET:
-                        GetProcessor.run(stackOperation, this.stackRegister, unit, scriptComponent)
+                        GetProcessor.run(functionName, stackOperation, this.stackRegister, unit, scriptComponent)
                         break
                     case OPERATIONS.SET:
-                        SetProcessor.run(stackOperation, this.stackRegister, unit, scriptComponent)
+                        SetProcessor.run(functionName, stackOperation, this.stackRegister, unit, scriptComponent)
                         break
                     case OPERATIONS.SELF:
-                        SelfProcessor.run(stackOperation, this.stackRegister, unit)
+                        SelfProcessor.run(functionName, stackOperation, this.stackRegister, unit, scriptComponent)
                         break
                     case OPERATIONS.PUSH:
-                        PushProcessor.run(stackOperation, this.stackRegister)
+                        PushProcessor.run(functionName, stackOperation, this.stackRegister)
                         break
                     case OPERATIONS.EXIT:
-                        ExitProcessor.run(stackOperation, this.stackRegister)
+                        ExitProcessor.run(functionName, stackOperation, this.stackRegister)
                         break
                     case OPERATIONS.JUMP:
-                        JumpProcessor.run(stackOperation, this.stackRegister)
+                        JumpProcessor.run(functionName, stackOperation, this.stackRegister)
                         break
                     case OPERATIONS.JUMP_TO:
                         // No action needed
@@ -79,7 +80,7 @@ export default class StackProcessor {
                 throw new SystemError(`Stack operation is not valid`)
             }
 
-            const jumpTo = this.stackRegister.popJump()
+            const jumpTo = this.stackRegister.popJump(functionName)
             if (jumpTo) {
                 const nextJumpToIndex = stack.findIndex((vStack) =>
                     vStack.getOperation() === OPERATIONS.JUMP_TO &&
@@ -87,7 +88,7 @@ export default class StackProcessor {
                 )
                 if (nextJumpToIndex >= 0) {
                     iStackOperation = nextJumpToIndex
-                }else{
+                } else {
                     throw new ClientError(`No "JUMP TO" operation found for "${jumpTo}"`)
                 }
             }

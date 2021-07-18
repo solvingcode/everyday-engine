@@ -130,6 +130,9 @@ import ALoop from '../../flow/loop/ALoop.js'
 import ArrayFunction from '../../flow/function/native/structure/ArrayFunction.js'
 import GetValueFunction from '../../flow/function/native/object/GetValueFunction.js'
 import IsArrayEmptyFunction from '../../flow/function/native/array/IsArrayEmptyFunction.js'
+import GetUnitByComponentFunction from '../../flow/function/native/component/GetUnitByComponentFunction.js'
+import GetComponentFunction from '../../flow/function/native/unit/GetComponentFunction.js'
+import SubtractFunction from '../../flow/function/native/basic/SubtractFunction.js'
 
 /**
  * @class {DataSchema}
@@ -256,7 +259,10 @@ class DataSchema {
         {id: 1080, type: ALoop},
         {id: 1090, type: ArrayFunction},
         {id: 1100, type: GetValueFunction},
-        {id: 1100, type: IsArrayEmptyFunction}
+        {id: 1100, type: IsArrayEmptyFunction},
+        {id: 1110, type: GetUnitByComponentFunction},
+        {id: 1120, type: GetComponentFunction},
+        {id: 1130, type: SubtractFunction}
     ]
 
     /**

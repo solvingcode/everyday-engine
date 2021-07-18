@@ -4,12 +4,13 @@ import SystemError from '../../exception/type/SystemError.js'
 export default class SetProcessor {
 
     /**
+     * @param {string} functionName
      * @param {StackOperation} stackOperation
      * @param {StackRegister} stackRegister
      * @param {Unit} unit
      * @param {ScriptComponent} scriptComponent
      */
-    static run(stackOperation, stackRegister, unit, scriptComponent) {
+    static run(functionName, stackOperation, stackRegister, unit, scriptComponent) {
         const args = stackOperation.getArgs()
         if (args.length !== 1) {
             throw new ClientError(`Set: Inputs invalids (expected: 1, given: ${args.length})`)
@@ -18,7 +19,7 @@ export default class SetProcessor {
         if (!scriptComponent || !scriptComponent.hasAttribute(name)) {
             throw new SystemError(`${this.constructor.name}: No value bound for variable "${name}"`)
         }
-        scriptComponent.setValue(name, stackRegister.popRet())
+        scriptComponent.setValue(name, stackRegister.popRet(functionName))
     }
 
 }

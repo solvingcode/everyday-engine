@@ -25,7 +25,7 @@ export default class GetInstanceFunction extends AFunction{
         const attribute = this.getInputValue('attribute')
         const componentAttribute = component.get(attribute)
         const value = component.getValue(attribute)
-        const outputValue = DynamicAttributeHelper.getValueByType(value, componentAttribute.getAttrType(), world)
+        const outputValue = DynamicAttributeHelper.getValueByType(value, componentAttribute.getAttrType(), world, unit, scriptComponent)
         this.setOutputValue(outputValue)
     }
 }

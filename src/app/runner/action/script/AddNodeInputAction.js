@@ -7,7 +7,6 @@ import NodeComponent from '../../../component/internal/gui/node/NodeComponent.js
 import ScriptHelper from '../../../utils/ScriptHelper.js'
 import {NODE_TYPES} from '../../../flow/node/ANode.js'
 import {TYPES} from '../../../pobject/AttributeType.js'
-import ComponentNode from '../../../flow/node/ComponentNode.js'
 import VariableNode from '../../../flow/node/variable/VariableNode.js'
 
 export default class AddNodeInputAction extends Action {
@@ -39,7 +38,9 @@ export default class AddNodeInputAction extends Action {
         if (formData.getAttribute().getAttrType() === TYPES.UNIT) {
             nodeSource = ScriptHelper.createNode(functionRegistry, script, NODE_TYPES.SELF)
         } else if (formData.getAttribute().getAttrType() === TYPES.COMPONENT) {
-            nodeSource = script.createNode(functionRegistry, ComponentNode, value)
+            nodeSource = ScriptHelper.createNode(functionRegistry, script, NODE_TYPES.COMPONENT, value)
+        } else if (formData.getAttribute().getAttrType() === TYPES.COMPONENT_INSTANCE && value === '[self]') {
+            nodeSource = ScriptHelper.createNode(functionRegistry, script, NODE_TYPES.SELF)
         } else {
             const varRegex = new RegExp('^var:([^:]+)$', 'i')
             let variableValue

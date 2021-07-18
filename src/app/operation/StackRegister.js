@@ -12,69 +12,81 @@ export default class StackRegister {
     }
 
     /**
+     * @param {string} functionName
      * @param {string} name
      * @param {*} value
      */
-    push(name, value) {
-        this.register[name] = value
+    push(functionName, name, value) {
+        this.register[this.getScopeName(functionName, name)] = value
     }
 
     /**
+     * @param {string} functionName
      * @param {*} value
      */
-    pushRet(value) {
-        this.register[CONSTANTS.RESULT] = value
+    pushRet(functionName, value) {
+        this.register[this.getScopeName(functionName, CONSTANTS.RESULT)] = value
     }
 
     /**
+     * @param {string} functionName
      * @param {*} value
      */
-    pushSignal(value) {
-        this.register[CONSTANTS.SIGNAL] = value
+    pushSignal(functionName, value) {
+        this.register[this.getScopeName(functionName, CONSTANTS.SIGNAL)] = value
     }
 
     /**
+     * @param {string} functionName
      * @param {*} value
      */
-    pushJump(value) {
-        this.register[CONSTANTS.JUMP] = value
+    pushJump(functionName, value) {
+        this.register[this.getScopeName(functionName, CONSTANTS.JUMP)] = value
     }
 
     /**
+     * @param {string} functionName
      * @param {string} name
      * @return {*}
      */
-    pop(name) {
-        const value = this.register[name]
+    pop(functionName, name) {
+        const value = this.register[this.getScopeName(functionName, name)]
         if (!this.isMemory(name)) {
-            this.delete(name)
+            this.delete(functionName, name)
         }
         return value
     }
 
     /**
+     * @param {string} functionName
      * @return {*}
      */
-    popRet() {
-        return this.register[CONSTANTS.RESULT]
-    }
-
-    delete(name) {
-        delete this.register[name]
+    popRet(functionName) {
+        return this.register[this.getScopeName(functionName, CONSTANTS.RESULT)]
     }
 
     /**
-     * @return {*}
+     * @param {string} functionName
+     * @param {string} name
      */
-    popSignal() {
-        return this.pop(CONSTANTS.SIGNAL)
+    delete(functionName, name) {
+        delete this.register[this.getScopeName(functionName, name)]
     }
 
     /**
+     * @param {string} functionName
      * @return {*}
      */
-    popJump() {
-        return this.pop(CONSTANTS.JUMP)
+    popSignal(functionName) {
+        return this.pop(functionName, CONSTANTS.SIGNAL)
+    }
+
+    /**
+     * @param {string} functionName
+     * @return {*}
+     */
+    popJump(functionName) {
+        return this.pop(functionName, CONSTANTS.JUMP)
     }
 
     /**
@@ -83,6 +95,18 @@ export default class StackRegister {
      */
     isMemory(name){
         return !!`${name}`.match(/^\[MEM].*/)
+    }
+
+    /**
+     * @param {string} functionName
+     * @param {string} name
+     * @return {string}
+     */
+    getScopeName(functionName, name){
+        if(name === CONSTANTS.RESULT || name === CONSTANTS.JUMP || name === CONSTANTS.SIGNAL || this.isMemory(name)){
+            return name
+        }
+        return functionName ? `${functionName}.${name}` : name
     }
 
     /**

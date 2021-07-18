@@ -185,7 +185,7 @@ export default class DynamicAttributeHelper {
                 list: listMaskGroups,
                 dynamicAttribute
             }
-        } else if (attribute.getAttrType() === TYPES.BOOLEAN) {
+        } else if (attribute.getAttrType() === TYPES.BOOLEAN && isListInstances) {
             formField = {
                 bind: bindName,
                 label: `${attribute.getAttrName()} `,
@@ -207,9 +207,11 @@ export default class DynamicAttributeHelper {
      * @param {string} value
      * @param {string} type
      * @param {World} world
+     * @param {Unit} unit
+     * @param {ScriptComponent} scriptComponent
      * @return {*}
      */
-    static getValueByType(value, type, world) {
+    static getValueByType(value, type, world, unit, scriptComponent) {
         let newValue = value
         switch (type) {
             case TYPES.UNIT:
@@ -232,7 +234,9 @@ export default class DynamicAttributeHelper {
                 newValue = component.constructor
                 break
             case TYPES.COMPONENT_INSTANCE:
-                const componentInstance = world.getUnitManager().findComponentById(parseInt(value))
+                const componentInstance = value === '[self]'
+                    ? scriptComponent
+                    : world.getUnitManager().findComponentById(parseInt(value))
                 if (!componentInstance) {
                     throw new ClientError(`${this.constructor.name}: Component Instance "${value}" not found`)
                 }

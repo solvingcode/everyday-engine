@@ -56,7 +56,7 @@ export default class UnitManager extends UnitManagerData {
      * @param {MaskGroup} maskGroup
      * @return {Unit[]}
      */
-    findUnitsByMaskGroup(maskGroup){
+    findUnitsByMaskGroup(maskGroup) {
         return this.units.filter(unit => unit.getMaskGroupId() === maskGroup.getId())
     }
 
@@ -113,6 +113,14 @@ export default class UnitManager extends UnitManagerData {
      */
     findUnitsAttachedToScript(script) {
         return this.units.filter(unit => this.findComponentAttachedToScript(unit, script))
+    }
+
+    /**
+     * @param {Component} component
+     * @return {Unit}
+     */
+    findUnitByComponent(component) {
+        return this.units.find(unit => unit.findComponentById(component.id))
     }
 
     /**

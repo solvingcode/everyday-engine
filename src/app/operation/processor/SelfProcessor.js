@@ -1,18 +1,28 @@
 import ClientError from '../../exception/type/ClientError.js'
+import {TYPES} from '../../pobject/AttributeType.js'
 
 export default class SelfProcessor {
 
     /**
+     * @param {string} functionName
      * @param {StackOperation} stackOperation
      * @param {StackRegister} stackRegister
      * @param {Unit} unit
+     * @param {ScriptComponent} scriptComponent
      */
-    static run(stackOperation, stackRegister, unit) {
+    static run(functionName, stackOperation, stackRegister, unit, scriptComponent) {
         const args = stackOperation.getArgs()
-        if (args.length !== 0) {
-            throw new ClientError(`Self: Inputs invalids (expected: 0, given: ${args.length})`)
+        if (args.length !== 1) {
+            throw new ClientError(`Self: Inputs invalids (expected: 1, given: ${args.length})`)
         }
-        stackRegister.pushRet(unit.getId())
+        const type = args[0]
+        if (type === TYPES.UNIT) {
+            stackRegister.pushRet(functionName, unit.getId())
+        } else if (type === TYPES.COMPONENT_INSTANCE) {
+            stackRegister.pushRet(functionName, scriptComponent.getId())
+        } else {
+            throw new ClientError(`Self: Input type "${type}" not supported`)
+        }
     }
 
 }

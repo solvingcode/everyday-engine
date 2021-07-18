@@ -59,6 +59,9 @@ import ALoop from '../flow/loop/ALoop.js'
 import ArrayFunction from '../flow/function/native/structure/ArrayFunction.js'
 import GetValueFunction from '../flow/function/native/object/GetValueFunction.js'
 import IsArrayEmptyFunction from '../flow/function/native/array/IsArrayEmptyFunction.js'
+import GetUnitByComponentFunction from '../flow/function/native/component/GetUnitByComponentFunction.js'
+import GetComponentFunction from '../flow/function/native/unit/GetComponentFunction.js'
+import SubtractFunction from '../flow/function/native/basic/SubtractFunction.js'
 
 export default class FunctionRegistry extends Registry{
 
@@ -103,6 +106,7 @@ export default class FunctionRegistry extends Registry{
             new NotFunction(),
             new RoundFunction(),
             new AbsFunction(),
+            new SubtractFunction(),
 
             //Loop
             new ALoop(),
@@ -111,6 +115,7 @@ export default class FunctionRegistry extends Registry{
             new GetWorldPositionFunction(),
             new SetWorldPositionFunction(),
             new GetUnitFunction(),
+            new GetComponentFunction(),
 
             //Animation
             new StartAnimationFunction(),
@@ -125,6 +130,7 @@ export default class FunctionRegistry extends Registry{
             new GetFunction(),
             new GetInstanceFunction(),
             new SetInstanceFunction(),
+            new GetUnitByComponentFunction(),
 
             //Object
             new GetValueFunction(),

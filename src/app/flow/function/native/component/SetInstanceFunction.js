@@ -25,7 +25,7 @@ export default class SetInstanceFunction extends AFunction{
         const attribute = this.getInputValue('attribute')
         const value = this.getInputValue('value')
         const componentAttribute = component.get(attribute)
-        const newValue = DynamicAttributeHelper.getValueByType(value, componentAttribute.getAttrType(), world)
+        const newValue = DynamicAttributeHelper.getValueByType(value, componentAttribute.getAttrType(), world, unit, scriptComponent)
         component.setValue(attribute, newValue)
     }
 }
