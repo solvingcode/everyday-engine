@@ -15,63 +15,74 @@ export default class StackRegister {
      * @param {string} name
      * @param {*} value
      */
-    push(name, value){
+    push(name, value) {
         this.register[name] = value
     }
 
     /**
      * @param {*} value
      */
-    pushRet(value){
+    pushRet(value) {
         this.register[CONSTANTS.RESULT] = value
     }
 
     /**
      * @param {*} value
      */
-    pushSignal(value){
+    pushSignal(value) {
         this.register[CONSTANTS.SIGNAL] = value
     }
 
     /**
      * @param {*} value
      */
-    pushJump(value){
+    pushJump(value) {
         this.register[CONSTANTS.JUMP] = value
     }
 
     /**
+     * @param {string} name
      * @return {*}
      */
-    pop(name){
+    pop(name) {
         const value = this.register[name]
-        this.delete(name)
+        if (!this.isMemory(name)) {
+            this.delete(name)
+        }
         return value
     }
 
     /**
      * @return {*}
      */
-    popRet(){
+    popRet() {
         return this.register[CONSTANTS.RESULT]
     }
 
-    delete(name){
+    delete(name) {
         delete this.register[name]
     }
 
     /**
      * @return {*}
      */
-    popSignal(){
+    popSignal() {
         return this.pop(CONSTANTS.SIGNAL)
     }
 
     /**
      * @return {*}
      */
-    popJump(){
+    popJump() {
         return this.pop(CONSTANTS.JUMP)
+    }
+
+    /**
+     * @param {string} name
+     * @return {boolean}
+     */
+    isMemory(name){
+        return !!`${name}`.match(/^\[MEM].*/)
     }
 
     /**

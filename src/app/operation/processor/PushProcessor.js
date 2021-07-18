@@ -9,7 +9,7 @@ export default class PushProcessor {
      */
     static run(stackOperation, stackRegister) {
         const args = stackOperation.getArgs()
-        if(args.length !== 2){
+        if (args.length !== 2) {
             throw new ClientError(`Push: Inputs invalids (expected: 2, given: ${args.length})`)
         }
         const name = args[0]
@@ -17,9 +17,11 @@ export default class PushProcessor {
         if (!name) {
             throw new ClientError(`Push operation invalid (Name not provided)`)
         }
-        if(value === CONSTANTS.RESULT){
+        if (value === CONSTANTS.RESULT) {
             stackRegister.push(name, stackRegister.popRet())
-        }else{
+        } else if (stackRegister.isMemory(value)) {
+            stackRegister.push(name, stackRegister.pop(value))
+        } else {
             stackRegister.push(name, value)
         }
     }

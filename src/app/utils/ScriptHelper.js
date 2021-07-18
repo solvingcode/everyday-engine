@@ -24,6 +24,7 @@ import BooleanVariableNode from '../flow/node/variable/BooleanVariableNode.js'
 import NumberVariableNode from '../flow/node/variable/NumberVariableNode.js'
 import ComponentVariableNode from '../flow/node/variable/ComponentVariableNode.js'
 import MaskGroupVariableNode from '../flow/node/variable/MaskGroupVariableNode.js'
+import LoopNode from '../flow/node/LoopNode.js'
 
 export default class ScriptHelper {
 
@@ -46,6 +47,8 @@ export default class ScriptHelper {
             node = script.createNode(functionRegistry, KeyCodeNode, nodeValue)
         } else if (nodeType === NODE_TYPES.CONDITION) {
             node = script.createNode(functionRegistry, ConditionNode, nodeValue)
+        } else if (nodeType === NODE_TYPES.LOOP) {
+            node = script.createNode(functionRegistry, LoopNode, nodeValue)
         } else if (nodeType === NODE_TYPES.UNIT) {
             node = script.createNode(functionRegistry, UnitNode, nodeValue)
         } else if (nodeType === NODE_TYPES.SELF) {
@@ -88,6 +91,8 @@ export default class ScriptHelper {
             nodeType = NODE_TYPES.CONSTANT
         } else if (node instanceof ConditionNode) {
             nodeType = NODE_TYPES.CONDITION
+        } else if (node instanceof LoopNode) {
+            nodeType = NODE_TYPES.LOOP
         } else if (node instanceof UnitNode) {
             nodeType = NODE_TYPES.UNIT
         } else if (node instanceof SelfNode) {

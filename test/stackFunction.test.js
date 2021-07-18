@@ -15,6 +15,7 @@ import OnMouseClickEvent from '../src/app/flow/event/native/OnMouseClickEvent.js
 import StringVariableNode from '../src/app/flow/node/variable/StringVariableNode.js'
 import ScriptComponent from '../src/app/component/internal/ScriptComponent.js'
 import DynamicAttribute from '../src/app/pobject/DynamicAttribute.js'
+import LoopNode from '../src/app/flow/node/LoopNode.js'
 
 test('Execute native function (without output)', function () {
     const log = new LogFunction()
@@ -213,4 +214,40 @@ test('Create and compile class script with variables', function () {
     console.log = jest.fn()
     mouseEventCompiled.execute(functionRegistry, null, scriptComponent, World.get())
     expect(console.log).toHaveBeenCalledWith('test')
+})
+
+test('Create and compile class script with loop', function () {
+    const functionRegistry = World.get().getFunctionRegistry()
+
+    functionRegistry.init()
+
+    const script = new ClassScript('classScript')
+    const scriptComponent = new ScriptComponent()
+
+    const nodeLog = script.createNode(functionRegistry, FunctionNode, 'Log')
+    const nodeLoop = script.createNode(functionRegistry, LoopNode, 'Loop')
+    const nodeEvent = script.createNode(functionRegistry, FunctionNode, 'OnMouseClick')
+    const nodeArray = script.createNode(functionRegistry, FunctionNode, 'Array')
+    const nodeLength = script.createNode(functionRegistry, ConstantNode, 10)
+    const nodeAttributeName = script.createNode(functionRegistry, ConstantNode, "index")
+    const nodeGetValue = script.createNode(functionRegistry, FunctionNode, 'GetValue')
+
+    nodeArray.attach(nodeLength, 'length')
+    nodeLoop.attach(nodeArray, 'array')
+    nodeLoop.attach(nodeEvent, null)
+    nodeGetValue.attach(nodeLoop, 'attributes')
+    nodeGetValue.attach(nodeAttributeName, 'name')
+    nodeLog.attach(nodeGetValue, 'value')
+    nodeLog.attach(nodeLoop, null)
+
+    script.compile()
+
+    const mouseEventCompiled = functionRegistry.getInstance('classScript.OnMouseClick.2')
+    expect(functionRegistry.getInstance('classScript')).toBe(undefined)
+    expect(mouseEventCompiled).toBeDefined()
+    expect(mouseEventCompiled.constructor).toEqual(OnMouseClickEvent)
+
+    console.log = jest.fn()
+    mouseEventCompiled.execute(functionRegistry, null, scriptComponent, World.get())
+    expect(console.log).toHaveBeenCalledWith(10)
 })

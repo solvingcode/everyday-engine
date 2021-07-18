@@ -23,6 +23,9 @@ import AReference from '../reference/AReference.js'
 import ASelf from '../unit/ASelf.js'
 import AToggleVariable from '../variable/AToggleVariable.js'
 import ANativeFunction from '../function/native/ANativeFunction.js'
+import ALoop from '../loop/ALoop.js'
+import GetValueFunction from '../function/native/object/GetValueFunction.js'
+import IsArrayEmptyFunction from '../function/native/array/IsArrayEmptyFunction.js'
 
 export default class ClassCompiler extends Compiler {
 
@@ -74,7 +77,7 @@ export default class ClassCompiler extends Compiler {
                         new StackOperation(OPERATIONS.GET, sourceNode.getSourceName()),
                         new StackOperation(OPERATIONS.PUSH, targetInput.getAttrName(), CONSTANTS.RESULT)
                     ])
-                    if(sourceElement instanceof AToggleVariable){
+                    if (sourceElement instanceof AToggleVariable) {
                         stackFunction.getStack().push(...[
                             new StackOperation(OPERATIONS.PUSH, CONSTANTS.RESULT, ''),
                             new StackOperation(OPERATIONS.SET, sourceNode.getSourceName())
@@ -87,10 +90,17 @@ export default class ClassCompiler extends Compiler {
                         new StackOperation(OPERATIONS.PUSH, targetInput.getAttrName(), CONSTANTS.RESULT)
                     ])
                 } else if (sourceElement instanceof AAnimation) {
-                    if(element instanceof ANativeFunction){
+                    if (element instanceof ANativeFunction) {
                         const targetInput = element.findInputByName(targetName)
                         stackFunction.getStack().push(...[
                             new StackOperation(OPERATIONS.PUSH, targetInput.getAttrName(), sourceElement.getName())
+                        ])
+                    }
+                } else if (sourceElement instanceof ALoop) {
+                    const targetInput = element.findInputByName(targetName)
+                    if (targetInput) {
+                        stackFunction.getStack().push(...[
+                            new StackOperation(OPERATIONS.PUSH, targetInput.getAttrName(), '[MEM]attributes')
                         ])
                     }
                 }
@@ -116,8 +126,23 @@ export default class ClassCompiler extends Compiler {
             const stackFunction = functionRegistry.getInstance(functionName)
             if (!(element instanceof AEvent)) {
                 if (functionRegistry.getInstance(element.getName())) {
-                    stackFunction.getStack().push(new StackOperation(OPERATIONS.CALL, element.getName()))
-                } else if(element instanceof AAnimation){
+                    if (element instanceof ALoop) {
+                        const isArrayEmpty = new IsArrayEmptyFunction()
+                        stackFunction.getStack().push(...[
+                            new StackOperation(OPERATIONS.PUSH, '[MEM]array', CONSTANTS.RESULT),
+                            new StackOperation(OPERATIONS.PUSH, 'array', CONSTANTS.RESULT),
+                            new StackOperation(OPERATIONS.CALL, isArrayEmpty.getName()),
+                            new StackOperation(OPERATIONS.EXIT, CONSTANTS.RESULT),
+                            new StackOperation(OPERATIONS.PUSH, 'index', '0'),
+                            new StackOperation(OPERATIONS.JUMP_TO, 'start_loop'),
+                            new StackOperation(OPERATIONS.PUSH, 'array', '[MEM]array'),
+                            new StackOperation(OPERATIONS.CALL, element.getName()),
+                            new StackOperation(OPERATIONS.PUSH, '[MEM]attributes', CONSTANTS.RESULT)
+                        ])
+                    }else{
+                        stackFunction.getStack().push(new StackOperation(OPERATIONS.CALL, element.getName()))
+                    }
+                } else if (element instanceof AAnimation) {
                     const onAnyAnimation = new OnAnyAnimationStartEvent()
                     const isAnimationPlaying = new IsAnimationPlayingFunction()
                     const startAnimation = new StartAnimationFunction()
@@ -150,6 +175,7 @@ export default class ClassCompiler extends Compiler {
             const element = NodeHelper.getSourceNode(node)
             const functionName = ScriptHelper.generateFunctionName(script, node)
             const sourceNode = script.findNodeById(input.getSourceNodeId())
+            const targetName = input.getTargetName()
             if (sourceNode) {
                 const sourceElement = NodeHelper.getSourceNode(sourceNode)
                 const sourceElementName = ScriptHelper.generateFunctionName(script, sourceNode)
@@ -179,6 +205,22 @@ export default class ClassCompiler extends Compiler {
                         ])
                     } else {
                         sourceStackFunction.getStack().push(...[new StackOperation(OPERATIONS.CALL, functionName)])
+                    }
+                } else if (sourceElement instanceof ALoop) {
+                    const getValueFunction = new GetValueFunction()
+                    const targetInput = element.findInputByName(targetName)
+                    if (!targetInput) {
+                        sourceStackFunction.getStack().push(...[
+                            new StackOperation(OPERATIONS.CALL, functionName),
+                            new StackOperation(OPERATIONS.PUSH, 'attributes', '[MEM]attributes'),
+                            new StackOperation(OPERATIONS.PUSH, 'name', 'index'),
+                            new StackOperation(OPERATIONS.CALL, getValueFunction.getName()),
+                            new StackOperation(OPERATIONS.PUSH, 'attributes', '[MEM]attributes'),
+                            new StackOperation(OPERATIONS.PUSH, 'index', CONSTANTS.RESULT),
+                            new StackOperation(OPERATIONS.PUSH, 'name', 'ended'),
+                            new StackOperation(OPERATIONS.CALL, getValueFunction.getName()),
+                            new StackOperation(OPERATIONS.JUMP, CONSTANTS.RESULT, 'start_loop')
+                        ])
                     }
                 }
             }

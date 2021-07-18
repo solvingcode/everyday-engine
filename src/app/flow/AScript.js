@@ -20,6 +20,7 @@ import BooleanVariableNode from './node/variable/BooleanVariableNode.js'
 import NumberVariableNode from './node/variable/NumberVariableNode.js'
 import ComponentVariableNode from './node/variable/ComponentVariableNode.js'
 import MaskGroupVariableNode from './node/variable/MaskGroupVariableNode.js'
+import LoopNode from './node/LoopNode.js'
 
 /**
  * @abstract
@@ -50,6 +51,7 @@ export default class AScript extends AScriptData {
             case UnitNode:
             case AnimationNode:
             case ReferenceNode:
+            case LoopNode:
             case StringVariableNode:
             case ToggleVariableNode:
             case BooleanVariableNode:

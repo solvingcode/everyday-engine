@@ -120,6 +120,7 @@ export const NODE_TYPES = {
     FUNCTION: 'function',
     CONSTANT: 'constant',
     CONDITION: 'condition',
+    LOOP: 'loop',
     UNIT: 'unit',
     KEY_CODE: 'key_code',
     VAR_STRING: 'var_string',

@@ -40,6 +40,8 @@ import ComponentVariableNode from '../flow/node/variable/ComponentVariableNode.j
 import AComponentVariable from '../flow/variable/AComponentVariable.js'
 import MaskGroupVariableNode from '../flow/node/variable/MaskGroupVariableNode.js'
 import AMaskGroupVariable from '../flow/variable/AMaskGroupVariable.js'
+import LoopNode from '../flow/node/LoopNode.js'
+import ALoop from '../flow/loop/ALoop.js'
 
 export default class NodeHelper {
 
@@ -67,6 +69,8 @@ export default class NodeHelper {
                 return new AAnimation(sourceName)
             case ReferenceNode:
                 return new AReference(sourceName)
+            case LoopNode:
+                return new ALoop(sourceName)
             case StringVariableNode:
                 return new AStringVariable(sourceName)
             case BooleanVariableNode:
@@ -99,6 +103,8 @@ export default class NodeHelper {
         } else if (nodeSource instanceof AVariable) {
             return `${nodeSource.getName()} (var)`
         } else if (nodeSource instanceof ACondition) {
+            return `${nodeSource.getName()}`
+        } else if (nodeSource instanceof ALoop) {
             return `${nodeSource.getName()}`
         } else if (nodeSource instanceof AEvent) {
             return `${nodeSource.getName()}`
@@ -149,6 +155,8 @@ export default class NodeHelper {
             headColor = '#343030'
         } else if (type === NODE_TYPES.CONDITION) {
             headColor = '#225e31'
+        } else if (type === NODE_TYPES.LOOP) {
+            headColor = '#225e50'
         } else if (type === NODE_TYPES.UNIT) {
             headColor = '#5e2254'
         } else if (type === NODE_TYPES.ANIMATION) {
@@ -274,6 +282,7 @@ export default class NodeHelper {
      */
     static hasBaseInput(type) {
         return type === NODE_TYPES.FUNCTION ||
+            type === NODE_TYPES.LOOP ||
             type === NODE_TYPES.CONDITION ||
             type === NODE_TYPES.ANIMATION ||
             type === NODE_TYPES.REFERENCE

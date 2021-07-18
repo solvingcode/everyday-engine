@@ -81,8 +81,7 @@ export default class StackProcessor {
 
             const jumpTo = this.stackRegister.popJump()
             if (jumpTo) {
-                const nextJumpToIndex = stack.findIndex((vStack, iStack) =>
-                    iStack > iStackOperation &&
+                const nextJumpToIndex = stack.findIndex((vStack) =>
                     vStack.getOperation() === OPERATIONS.JUMP_TO &&
                     vStack.getArgs()[0] === jumpTo
                 )

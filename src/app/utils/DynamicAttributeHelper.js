@@ -2,6 +2,7 @@ import DynamicAttribute from '../pobject/DynamicAttribute.js'
 import {TYPES} from '../pobject/AttributeType.js'
 import ClientError from '../exception/type/ClientError.js'
 import Layout from '../layout/Layout.js'
+import Component from '../component/Component.js'
 
 export default class DynamicAttributeHelper {
 
@@ -142,7 +143,7 @@ export default class DynamicAttributeHelper {
                 type: Layout.form.CHECKBOX,
                 dynamicAttribute
             }
-        }else if (attribute.getAttrType() === TYPES.COMPONENT) {
+        } else if (attribute.getAttrType() === TYPES.COMPONENT) {
             const components = world.getComponentRegistry().getInstances()
                 .map(component => ({
                     value: component.getName(),
@@ -155,7 +156,7 @@ export default class DynamicAttributeHelper {
                 list: components,
                 dynamicAttribute
             }
-        }else if (attribute.getAttrType() === TYPES.COMPONENT_INSTANCE && isListInstances) {
+        } else if (attribute.getAttrType() === TYPES.COMPONENT_INSTANCE && isListInstances) {
             const selectedUnit = unitSelector.getFirstSelected(world)
             const componentInstances = selectedUnit.getComponents()
                 .filter(component => !component.isHidden() && !component.isUnique())
@@ -170,7 +171,7 @@ export default class DynamicAttributeHelper {
                 list: componentInstances,
                 dynamicAttribute
             }
-        }else if (attribute.getAttrType() === TYPES.MASK_GROUP_INSTANCE && isListInstances) {
+        } else if (attribute.getAttrType() === TYPES.MASK_GROUP_INSTANCE && isListInstances) {
             const listMaskGroups = world
                 .getPreference().getMaskGroup().getMasks()
                 .map(maskGroup => ({
@@ -184,14 +185,14 @@ export default class DynamicAttributeHelper {
                 list: listMaskGroups,
                 dynamicAttribute
             }
-        }else if (attribute.getAttrType() === TYPES.BOOLEAN) {
+        } else if (attribute.getAttrType() === TYPES.BOOLEAN) {
             formField = {
                 bind: bindName,
                 label: `${attribute.getAttrName()} `,
                 type: Layout.form.CHECKBOX,
                 dynamicAttribute
             }
-        }else{
+        } else {
             formField = {
                 bind: bindName,
                 label: attribute.getAttrName(),
@@ -243,6 +244,30 @@ export default class DynamicAttributeHelper {
                     throw new ClientError(`${this.constructor.name}: Mask Group Instance "${value}" not found`)
                 }
                 newValue = maskGroupInstance
+                break
+            case TYPES.ARRAY_ANY:
+                if (!_.isArray(value)) {
+                    throw new ClientError(`${this.constructor.name}: "${value}" is not an array`)
+                }
+                newValue = value
+                break
+            case TYPES.ARRAY_COMPONENT_INSTANCE:
+                if (!_.isArray(value) || !value.every(eArray => eArray instanceof Component)) {
+                    throw new ClientError(`${this.constructor.name}: "${value}" is not an array`)
+                }
+                newValue = value
+                break
+            case TYPES.ARRAY_DYNAMIC_ATTRIBUTE:
+                if (!_.isArray(value) || !value.every(eArray => eArray instanceof DynamicAttribute)) {
+                    throw new ClientError(`${this.constructor.name}: "${value}" is not an array of DynamicAttribute`)
+                }
+                newValue = value
+                break
+            case TYPES.DYNAMIC_ATTRIBUTE:
+                if (!(value instanceof DynamicAttribute)) {
+                    throw new ClientError(`${this.constructor.name}: "${value}" is not a DynamicAttribute`)
+                }
+                newValue = value
                 break
             case TYPES.NUMBER:
                 newValue = parseFloat(value)

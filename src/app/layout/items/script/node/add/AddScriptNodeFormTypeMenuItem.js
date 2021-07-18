@@ -49,6 +49,10 @@ export default class AddScriptNodeFormTypeMenuItem extends FormMenuItem {
                         label: 'Function'
                     },
                     {
+                        value: NODE_TYPES.LOOP,
+                        label: 'Loop'
+                    },
+                    {
                         value: NODE_TYPES.CONDITION,
                         label: 'Condition'
                     },

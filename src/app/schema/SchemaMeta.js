@@ -110,6 +110,11 @@ export const PrefSchema = {
             type: TYPES.COMPONENT_INSTANCE
         }
     },
+    [TYPES.ARRAY_ANY]: {
+        element: {
+            type: TYPES.ANY
+        }
+    },
     [TYPES.ARRAY_NUMBER]: {
         element: {
             type: TYPES.NUMBER

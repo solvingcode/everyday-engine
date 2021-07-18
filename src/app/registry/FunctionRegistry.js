@@ -55,6 +55,10 @@ import AbsFunction from '../flow/function/native/basic/AbsFunction.js'
 import GetInstanceFunction from '../flow/function/native/component/GetInstanceFunction.js'
 import SetInstanceFunction from '../flow/function/native/component/SetInstanceFunction.js'
 import GetAllCollisionFunction from '../flow/function/native/physics/GetAllCollisionFunction.js'
+import ALoop from '../flow/loop/ALoop.js'
+import ArrayFunction from '../flow/function/native/structure/ArrayFunction.js'
+import GetValueFunction from '../flow/function/native/object/GetValueFunction.js'
+import IsArrayEmptyFunction from '../flow/function/native/array/IsArrayEmptyFunction.js'
 
 export default class FunctionRegistry extends Registry{
 
@@ -100,6 +104,9 @@ export default class FunctionRegistry extends Registry{
             new RoundFunction(),
             new AbsFunction(),
 
+            //Loop
+            new ALoop(),
+
             //Unit
             new GetWorldPositionFunction(),
             new SetWorldPositionFunction(),
@@ -119,6 +126,12 @@ export default class FunctionRegistry extends Registry{
             new GetInstanceFunction(),
             new SetInstanceFunction(),
 
+            //Object
+            new GetValueFunction(),
+
+            //Array
+            new IsArrayEmptyFunction(),
+
             //Physics
             new MoveXAxisFunction(),
             new ApplyForceFunction(),
@@ -129,7 +142,8 @@ export default class FunctionRegistry extends Registry{
             new GetAllCollisionFunction(),
 
             //Structure
-            new VectorFunction()
+            new VectorFunction(),
+            new ArrayFunction()
         ])
     }
 
@@ -211,6 +225,7 @@ export default class FunctionRegistry extends Registry{
                 !(instance instanceof AEvent) &&
                 !(instance instanceof AConstant) &&
                 !(instance instanceof ACondition) &&
+                !(instance instanceof ALoop) &&
                 !(instance instanceof AUnit) &&
                 !(instance instanceof AAnimation) &&
                 !(instance instanceof AKeyCode) &&

@@ -1,7 +1,8 @@
 import Data from './Data.js'
 import MaskGroup from '../../preference/maskgroup/MaskGroup.js'
+import ClientError from '../../exception/type/ClientError.js'
 
-export default class MaskGroupPreferenceData extends Data{
+export default class MaskGroupPreferenceData extends Data {
 
     /**
      * @type {MaskGroup[]}
@@ -16,7 +17,7 @@ export default class MaskGroupPreferenceData extends Data{
     /**
      * @param {MaskGroup[]} masks
      */
-    setMasks(masks){
+    setMasks(masks) {
         this.masks = masks
     }
 
@@ -24,7 +25,29 @@ export default class MaskGroupPreferenceData extends Data{
      * @param {string} name
      * @return {MaskGroup}
      */
-    addMask(name){
+    addMask(name) {
+        if (this.findByName(name)) {
+            throw new ClientError(`Mask Group "${name}" already created`)
+        }
+        return this.add(name)
+    }
+
+    /**
+     * @param {string} name
+     * @return {MaskGroup}
+     */
+    tryAddMask(name) {
+        if (!this.findByName(name)) {
+            return this.add(name)
+        }
+    }
+
+    /**
+     * @private
+     * @param {string} name
+     * @return {MaskGroup}
+     */
+    add(name){
         const maskGroup = new MaskGroup(name)
         this.masks.push(maskGroup)
         return maskGroup
@@ -34,14 +57,22 @@ export default class MaskGroupPreferenceData extends Data{
      * @param {number} id
      * @return {MaskGroup}
      */
-    find(id){
+    find(id) {
         return this.masks.find(mask => mask.getId() === id)
+    }
+
+    /**
+     * @param {string} name
+     * @return {MaskGroup}
+     */
+    findByName(name) {
+        return this.masks.find(mask => mask.getName() === name)
     }
 
     /**
      * @return {MaskGroup[]}
      */
-    getMasks(){
+    getMasks() {
         return this.masks
     }
 

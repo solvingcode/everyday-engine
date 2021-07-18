@@ -126,6 +126,10 @@ import MaskGroupPreference from '../../preference/maskgroup/MaskGroupPreference.
 import GetAllCollisionFunction from '../../flow/function/native/physics/GetAllCollisionFunction.js'
 import AMaskGroupVariable from '../../flow/variable/AMaskGroupVariable.js'
 import MaskGroup from '../../preference/maskgroup/MaskGroup.js'
+import ALoop from '../../flow/loop/ALoop.js'
+import ArrayFunction from '../../flow/function/native/structure/ArrayFunction.js'
+import GetValueFunction from '../../flow/function/native/object/GetValueFunction.js'
+import IsArrayEmptyFunction from '../../flow/function/native/array/IsArrayEmptyFunction.js'
 
 /**
  * @class {DataSchema}
@@ -248,7 +252,11 @@ class DataSchema {
         {id: 1040, type: MaskGroupPreference},
         {id: 1050, type: GetAllCollisionFunction},
         {id: 1060, type: AMaskGroupVariable},
-        {id: 1070, type: MaskGroup}
+        {id: 1070, type: MaskGroup},
+        {id: 1080, type: ALoop},
+        {id: 1090, type: ArrayFunction},
+        {id: 1100, type: GetValueFunction},
+        {id: 1100, type: IsArrayEmptyFunction}
     ]
 
     /**
