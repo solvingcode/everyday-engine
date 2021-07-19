@@ -32,12 +32,12 @@ class Schema {
 
     /**
      * Get the prototype from the given type
-     * @param {Class|string} type
+     * @param {Class|number} type
      * @return {Class|string|null}
      */
     static getPrototypeOf(type) {
         let prototype = type
-        if (!_.isString(type) && type !== Array) {
+        if (!_.isNumber(type) && !_.isString(type) && type !== Array) {
             prototype = this.findDataPrototypeOf(type)
             if (!prototype) {
                 throw new SystemError(`${type.name} must extends Data type class!`)

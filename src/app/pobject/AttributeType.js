@@ -8,12 +8,12 @@ import SystemError from '../exception/type/SystemError.js'
 export default class AttributeType {
 
     /**
-     * @param {string} prototype
+     * @param {number|string} prototype
      * @param {Object} parentPathData
-     * @return {string|Class}
+     * @return {number|Class}
      */
     static extractPrototype(prototype, parentPathData) {
-        if (_.isString(prototype)) {
+        if (_.isString(prototype) || _.isNumber(prototype)) {
             const dynamicPrototype = this.extractDynamicPrototypeName(prototype, parentPathData)
             return this.mapPrototype(dynamicPrototype || prototype)
         }
@@ -21,16 +21,16 @@ export default class AttributeType {
     }
 
     /**
-     * @param {string} prototype
+     * @param {number|string} prototype
      * @param {Object} parentPathData
-     * @return {string|null}
+     * @return {number}
      */
     static extractDynamicPrototypeName(prototype, parentPathData){
         if (_.isObject(parentPathData)) {
-            const dynamicTypeRegex = /^\[([a-zA-Z]+)]$/.exec(prototype)
+            const dynamicTypeRegex = _.isString(prototype) && /^\[([a-zA-Z]+)]$/.exec(prototype)
             const dynamicType = dynamicTypeRegex && dynamicTypeRegex[1]
             if (dynamicType) {
-                return parentPathData[dynamicType]
+                return parseInt(parentPathData[dynamicType])
             }
         }
     }
@@ -79,44 +79,72 @@ export default class AttributeType {
     }
 
     /**
-     * @param {string} type
+     * @param {number} type
      * @return {boolean}
      */
     static isArrayType(type){
-        return _.isString(type) && !!type.match(/^3[0-9]+$/)
+        return this.has(type, TYPES.ARRAY)
+    }
+
+    /**
+     * @param {number} type
+     * @return {number}
+     */
+    static getArrayElementType(type){
+        for(const maskType in TYPES){
+            const mask = TYPES[maskType]
+            if(mask !== TYPES.ARRAY && this.has(type, mask)){
+                return mask
+            }
+        }
+    }
+
+    /**
+     * @param {number|string} type
+     * @param {number} typeMask
+     * @return {boolean}
+     */
+    static has(type, typeMask){
+        return (parseInt(type) & typeMask) === typeMask
+    }
+
+    /**
+     * @param {number|string} type
+     * @param {number} typeMask
+     * @return {boolean}
+     */
+    static is(type, typeMask){
+        return parseInt(type) === typeMask
     }
 
 }
 
 /**
+ * [category][type for each category]
+ * [000000][00000000000000000000]
  * Define attribute types :
- * 0XX: Primitive
- * 1XX: Advanced Primitive
- * 2XX: Simple Object
- * 3XX: Arrays
- * 5XX: Advanced Object (Blob, ...)
+ * 000001: Primitive
+ * 000010: Advanced Primitive
+ * 000100: Simple Object
+ * 001000: Arrays
+ * 010000: Advanced Object (Blob, ...)
  * @type {Object}
  */
 export const TYPES = {
-    ANY: '000',
-    STRING: '001',
-    BOOLEAN: '003',
-    NUMBER: '004',
-    UNIT: '005',
-    ANIMATION: '006',
-    COMPONENT: '007',
-    COMPONENT_INSTANCE: '008',
-    MASK_GROUP_INSTANCE: '009',
-    RANGE: '101',
-    STYLE: '202',
-    SIZE: '203',
-    VECTOR: '204',
-    DYNAMIC_ATTRIBUTE: '205',
-    ARRAY_STRING: '301',
-    ARRAY_NUMBER: '302',
-    ARRAY_VECTOR: '303',
-    ARRAY_DYNAMIC_ATTRIBUTE: '304',
-    ARRAY_COMPONENT_INSTANCE: '305',
-    ARRAY_ANY: '306',
-    MESH: '501'
+    ANY:                            0b00000100000000000000000001,
+    STRING:                         0b00000100000000000000000010,
+    BOOLEAN:                        0b00000100000000000000000100,
+    NUMBER:                         0b00000100000000000000001000,
+    UNIT:                           0b00000100000000000000010000,
+    ANIMATION:                      0b00000100000000000000100000,
+    COMPONENT:                      0b00000100000000000001000000,
+    COMPONENT_INSTANCE:             0b00000100000000000010000000,
+    MASK_GROUP_INSTANCE:            0b00000100000000000100000000,
+    RANGE:                          0b00001000000000000000000001,
+    STYLE:                          0b00010000000000000000000010,
+    SIZE:                           0b00010000000000000000000100,
+    VECTOR:                         0b00010000000000000000001000,
+    DYNAMIC_ATTRIBUTE:              0b00010000000000000000010000,
+    ARRAY:                          0b00100000000000000000000000,
+    MESH:                           0b01000000000000000000000001
 }

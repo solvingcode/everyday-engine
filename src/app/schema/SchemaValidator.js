@@ -70,7 +70,7 @@ class SchemaValidator {
                 result = {...result, ...childDataCompared}
             }
         }
-        if((data1 && !_.isObject(data2)) || (_.isObject(data2) && !data1)){
+        if ((data1 && !_.isObject(data2)) || (_.isObject(data2) && !data1)) {
             if (data1 !== data2) {
                 result[indexedPath] = {path, data: await data2}
             }
@@ -85,26 +85,26 @@ class SchemaValidator {
      * @param {*} data
      * @return {*}
      */
-    async updateFromPath(target, indexedPath, schemaPath, data){
+    async updateFromPath(target, indexedPath, schemaPath, data) {
         const indexedPathSplit = indexedPath.split('.')
         let targetElement = target
         let parentTargetElement = null
-        if(indexedPathSplit){
+        if (indexedPathSplit) {
             indexedPathSplit.splice(0, 1)
         }
-        for(const iIndexedPath in indexedPathSplit){
+        for (const iIndexedPath in indexedPathSplit) {
             const indexedPathElement = indexedPathSplit[iIndexedPath]
             parentTargetElement = targetElement
-            if(targetElement !== null && targetElement !== undefined){
+            if (targetElement !== null && targetElement !== undefined) {
                 targetElement = parentTargetElement[indexedPathElement]
-                if(parseInt(iIndexedPath) === indexedPathSplit.length - 1){
-                    if(data === undefined){
-                        if(_.isArray(targetElement)){
+                if (parseInt(iIndexedPath) === indexedPathSplit.length - 1) {
+                    if (data === undefined) {
+                        if (_.isArray(targetElement)) {
                             targetElement.splice(parseInt(indexedPathElement), 1)
-                        }else if(targetElement){
+                        } else if (targetElement) {
                             parentTargetElement[indexedPathElement] = undefined
                         }
-                    }else{
+                    } else {
                         await ObjectHelper.setProperty(parentTargetElement, indexedPathElement, data)
                     }
                 }
@@ -120,8 +120,8 @@ class SchemaValidator {
      */
     async validateByPrototype(data, prototype, forGame) {
         let dataValidated = null
-        if(data !== null && data !== undefined){
-            if (_.isString(prototype)) {
+        if (data !== null && data !== undefined) {
+            if (_.isString(prototype) || _.isNumber(prototype)) {
                 dataValidated = PrimitiveHelper.validate(data, prototype)
             } else if (prototype.prototype instanceof Data) {
                 dataValidated = DataHelper.validate(data, prototype, forGame)
@@ -169,8 +169,7 @@ class SchemaValidator {
         if (!pathSchema) {
             const pathParentSchema = this.getPathSchema(Schema.getParentPath(path))
             if (pathParentSchema) {
-                let preParentSchema = PrefSchema[pathParentSchema.prototype] ||
-                    (path.match(/\[(\d+)]/) && PrefSchema[path.match(/\[(\d+)]/)[1]])
+                let preParentSchema = this.getPreParentSchema(path, pathParentSchema.prototype)
                 if (preParentSchema) {
                     const preSchema = preParentSchema[Schema.getPathKey(path).replace(/\[\d+]/, '')]
                     if (preSchema) {
@@ -183,6 +182,35 @@ class SchemaValidator {
             }
         }
         return pathSchema
+    }
+
+    /**
+     * @param {string} path
+     * @param {*} prototype
+     * @return {*}
+     */
+    getPreParentSchema(path, prototype) {
+        if (AttributeType.isArrayType(prototype)) {
+            return {
+                element: {
+                    type: AttributeType.getArrayElementType(prototype)
+                }
+            }
+        }
+        const preDefinedPrototype = PrefSchema[prototype]
+        if (preDefinedPrototype) {
+            return preDefinedPrototype
+        }
+        const dynamicType = parseInt(path.match(/\[(\d+)]/)[1])
+        if (AttributeType.isArrayType(dynamicType)) {
+            return {
+                element: {
+                    type: AttributeType.getArrayElementType(dynamicType)
+                }
+            }
+        } else {
+            return PrefSchema[dynamicType]
+        }
     }
 
     /**

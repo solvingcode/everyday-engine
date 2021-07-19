@@ -12,7 +12,7 @@ export default class GetValueFunction extends AFunction{
      * @override
      */
     initAttributes() {
-        this.addInput('attributes', TYPES.ARRAY_DYNAMIC_ATTRIBUTE, [])
+        this.addInput('attributes', TYPES.ARRAY | TYPES.DYNAMIC_ATTRIBUTE, [])
         this.addInput('name', TYPES.STRING)
         this.addOutput(TYPES.ANY)
     }

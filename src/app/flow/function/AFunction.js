@@ -54,7 +54,7 @@ export default class AFunction extends FunctionData{
     /**
      * @protected
      * @param {string} name
-     * @param {string} type
+     * @param {number} type
      * @param {*} defaultValue
      */
     addInput(name, type, defaultValue = null){
@@ -133,7 +133,7 @@ export default class AFunction extends FunctionData{
     }
 
     /**
-     * @param {string} type
+     * @param {number} type
      * @param {*} defaultValue
      */
     addOutput(type, defaultValue = null){

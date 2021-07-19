@@ -2,16 +2,33 @@ import Maths from '../utils/Maths.js'
 
 export default class DynamicAttribute {
 
+    /**
+     * @type {number}
+     */
     id
+    /**
+     * @type {string}
+     */
     attrName
+    /**
+     * @type {number}
+     */
     attrType
+    /**
+     * @type {*}
+     */
     attrValue
 
+    /**
+     * @param {string} attrName
+     * @param {number|string} attrType
+     * @param {*} attrValue
+     */
     constructor(attrName, attrType, attrValue) {
         this.id = Maths.generateId()
-        this.attrName = attrName
-        this.attrType = attrType
-        this.attrValue = attrValue
+        this.setAttrName(attrName)
+        this.setAttrType(attrType)
+        this.setAttrValue(attrValue)
     }
 
     /**
@@ -50,14 +67,14 @@ export default class DynamicAttribute {
     }
 
     /**
-     * @param {string} type
+     * @param {string|number} type
      */
     setAttrType(type){
-        this.attrType = type
+        this.attrType = parseInt(type)
     }
 
     /**
-     * @return {string}
+     * @return {number}
      */
     getAttrType(){
         return this.attrType

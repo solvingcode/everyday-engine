@@ -61,4 +61,11 @@ export default class AssetImage extends AssetType{
      */
     open(asset, options) {
     }
+
+    /**
+     * @override
+     */
+    rename(oldName, newName) {
+    }
+
 }

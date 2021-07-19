@@ -1,5 +1,5 @@
 import ClientError from '../../exception/type/ClientError.js'
-import {TYPES} from '../../pobject/AttributeType.js'
+import AttributeType, {TYPES} from '../../pobject/AttributeType.js'
 
 export default class SelfProcessor {
 
@@ -16,9 +16,9 @@ export default class SelfProcessor {
             throw new ClientError(`Self: Inputs invalids (expected: 1, given: ${args.length})`)
         }
         const type = args[0]
-        if (type === TYPES.UNIT) {
+        if (AttributeType.is(type, TYPES.UNIT)) {
             stackRegister.pushRet(functionName, unit.getId())
-        } else if (type === TYPES.COMPONENT_INSTANCE) {
+        } else if (AttributeType.is(type, TYPES.COMPONENT_INSTANCE)) {
             stackRegister.pushRet(functionName, scriptComponent.getId())
         } else {
             throw new ClientError(`Self: Input type "${type}" not supported`)

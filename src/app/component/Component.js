@@ -38,7 +38,7 @@ export default class Component extends ComponentData{
     /**
      * @protected
      * @param {string} name
-     * @param {string} type
+     * @param {number} type
      * @param {*} defaultValue
      */
     add(name, type, defaultValue = null){

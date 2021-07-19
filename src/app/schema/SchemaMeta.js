@@ -94,40 +94,10 @@ export const PrefSchema = {
             type: TYPES.STRING
         },
         attrType: {
-            type: TYPES.STRING
+            type: TYPES.NUMBER
         },
         attrValue: {
             type: '[attrType]'
-        }
-    },
-    [TYPES.ARRAY_VECTOR]: {
-        element: {
-            type: TYPES.VECTOR
-        }
-    },
-    [TYPES.ARRAY_COMPONENT_INSTANCE]: {
-        element: {
-            type: TYPES.COMPONENT_INSTANCE
-        }
-    },
-    [TYPES.ARRAY_ANY]: {
-        element: {
-            type: TYPES.ANY
-        }
-    },
-    [TYPES.ARRAY_NUMBER]: {
-        element: {
-            type: TYPES.NUMBER
-        }
-    },
-    [TYPES.ARRAY_STRING]: {
-        element: {
-            type: TYPES.STRING
-        }
-    },
-    [TYPES.ARRAY_DYNAMIC_ATTRIBUTE]: {
-        element: {
-            type: TYPES.DYNAMIC_ATTRIBUTE
         }
     }
 }
@@ -188,7 +158,7 @@ export default {
                                                         type: TYPES.STRING
                                                     },
                                                     attributes: {
-                                                        type: TYPES.ARRAY_DYNAMIC_ATTRIBUTE
+                                                        type: TYPES.ARRAY | TYPES.DYNAMIC_ATTRIBUTE
                                                     }
                                                 }
                                             }
@@ -225,7 +195,7 @@ export default {
                                         type: TYPES.STRING
                                     },
                                     attributes: {
-                                        type: TYPES.ARRAY_DYNAMIC_ATTRIBUTE
+                                        type: TYPES.ARRAY | TYPES.DYNAMIC_ATTRIBUTE
                                     }
                                 }
                             }
@@ -267,14 +237,14 @@ export default {
                                                         type: TYPES.STRING
                                                     },
                                                     args: {
-                                                        type: TYPES.ARRAY_STRING
+                                                        type: TYPES.ARRAY | TYPES.STRING
                                                     }
                                                 }
                                             }
                                         }
                                     },
                                     inputs: {
-                                        type: TYPES.ARRAY_DYNAMIC_ATTRIBUTE
+                                        type: TYPES.ARRAY | TYPES.DYNAMIC_ATTRIBUTE
                                     },
                                     output: {
                                         prototype: TYPES.DYNAMIC_ATTRIBUTE

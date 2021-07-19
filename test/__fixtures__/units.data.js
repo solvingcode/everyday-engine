@@ -1,3 +1,5 @@
+import {TYPES} from '../../src/app/pobject/AttributeType.js'
+
 export default [{
     "dataId": 60,
     "id": 1617151391794,
@@ -10,7 +12,7 @@ export default [{
             "attributes": [
                 {
                     "attrName": "position",
-                    "attrType": "204",
+                    "attrType": TYPES.VECTOR,
                     "attrValue": {
                         "x": 100,
                         "y": 150,

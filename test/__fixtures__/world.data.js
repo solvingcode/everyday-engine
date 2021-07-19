@@ -1,3 +1,5 @@
+import {TYPES} from '../../src/app/pobject/AttributeType.js'
+
 export default {
     'dataId': 10,
     'unitManager': {
@@ -15,12 +17,12 @@ export default {
                         'attributes': [
                             {
                                 'attrName': 'shape',
-                                'attrType': '001',
+                                'attrType': TYPES.STRING,
                                 'attrValue': 'rect'
                             },
                             {
                                 'attrName': 'style',
-                                'attrType': '202',
+                                'attrType': TYPES.STYLE,
                                 'attrValue': {
                                     'colorOpacity': 1,
                                     'fillColorOpacity': 1
@@ -28,7 +30,7 @@ export default {
                             },
                             {
                                 'attrName': 'size',
-                                'attrType': '203',
+                                'attrType': TYPES.SIZE,
                                 'attrValue': {
                                     'width': 1280,
                                     'height': 720
@@ -36,7 +38,7 @@ export default {
                             },
                             {
                                 'attrName': 'vertices',
-                                'attrType': '303',
+                                'attrType': TYPES.ARRAY | TYPES.VECTOR,
                                 'attrValue': [
                                     {
                                         'x': 0,
@@ -62,27 +64,27 @@ export default {
                             },
                             {
                                 'attrName': 'shapeVertices',
-                                'attrType': '303',
+                                'attrType': TYPES.ARRAY | TYPES.VECTOR,
                                 'attrValue': []
                             },
                             {
                                 'attrName': 'generated',
-                                'attrType': '003',
+                                'attrType': TYPES.BOOLEAN,
                                 'attrValue': true
                             },
                             {
                                 'attrName': 'assetId',
-                                'attrType': '004',
+                                'attrType': TYPES.NUMBER,
                                 'attrValue': 1617505275722
                             },
                             {
                                 'attrName': 'imageRepeat',
-                                'attrType': '003',
+                                'attrType': TYPES.BOOLEAN,
                                 'attrValue': false
                             },
                             {
                                 'attrName': 'enabled',
-                                'attrType': '003',
+                                'attrType': TYPES.BOOLEAN,
                                 'attrValue': true
                             }
                         ]
@@ -94,7 +96,7 @@ export default {
                         'attributes': [
                             {
                                 'attrName': 'position',
-                                'attrType': '204',
+                                'attrType': TYPES.VECTOR,
                                 'attrValue': {
                                     'x': 150,
                                     'y': 80,
@@ -103,7 +105,7 @@ export default {
                             },
                             {
                                 'attrName': 'scale',
-                                'attrType': '204',
+                                'attrType': TYPES.VECTOR,
                                 'attrValue': {
                                     'x': 0,
                                     'y': 0,
@@ -112,7 +114,7 @@ export default {
                             },
                             {
                                 'attrName': 'rotation',
-                                'attrType': '004',
+                                'attrType': TYPES.NUMBER,
                                 'attrValue': 0
                             }
                         ]

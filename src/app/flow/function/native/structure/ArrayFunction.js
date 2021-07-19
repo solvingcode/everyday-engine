@@ -12,7 +12,7 @@ export default class ArrayFunction extends AFunction{
      */
     initAttributes() {
         this.addInput('length', TYPES.NUMBER, 0)
-        this.addOutput(TYPES.ARRAY_ANY)
+        this.addOutput(TYPES.ARRAY | TYPES.ANY)
     }
 
     /**

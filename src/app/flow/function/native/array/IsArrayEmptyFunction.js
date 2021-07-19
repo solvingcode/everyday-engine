@@ -11,7 +11,7 @@ export default class isArrayEmptyFunction extends AFunction{
      * @override
      */
     initAttributes() {
-        this.addInput('array', TYPES.ARRAY_ANY, [])
+        this.addInput('array', TYPES.ARRAY | TYPES.ANY, [])
         this.addOutput(TYPES.BOOLEAN)
     }
 

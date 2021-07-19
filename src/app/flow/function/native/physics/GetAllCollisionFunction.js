@@ -15,7 +15,7 @@ export default class GetAllCollisionFunction extends AFunction{
         this.addInput('target', TYPES.UNIT)
         this.addInput('collider', TYPES.COMPONENT_INSTANCE)
         this.addInput('maskGroup', TYPES.MASK_GROUP_INSTANCE)
-        this.addOutput(TYPES.ARRAY_COMPONENT_INSTANCE)
+        this.addOutput(TYPES.ARRAY | TYPES.COMPONENT_INSTANCE)
     }
 
     /**

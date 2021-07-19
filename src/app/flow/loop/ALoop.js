@@ -13,8 +13,8 @@ export default class ALoop extends AFunction{
      */
     initAttributes() {
         this.addInput('index', TYPES.NUMBER, 0)
-        this.addInput('array', TYPES.ARRAY_ANY, false)
-        this.addOutput(TYPES.ARRAY_DYNAMIC_ATTRIBUTE)
+        this.addInput('array', TYPES.ARRAY | TYPES.ANY, false)
+        this.addOutput(TYPES.ARRAY | TYPES.DYNAMIC_ATTRIBUTE)
     }
 
     /**

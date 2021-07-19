@@ -15,7 +15,7 @@ export default class NodeComponent extends Component{
         this.add('nodeId', TYPES.NUMBER)
         this.add('title', TYPES.STRING)
         this.add('type', TYPES.STRING)
-        this.add('inputs', TYPES.ARRAY_STRING, [])
+        this.add('inputs', TYPES.ARRAY | TYPES.STRING, [])
         this.add('output', TYPES.STRING)
     }
 

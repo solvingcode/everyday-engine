@@ -8,21 +8,17 @@ export default class DynamicAttributeHelper {
 
     /**
      * @param {string} name
-     * @param {string} type
+     * @param {number} type
      * @param {*} defaultValue
      */
     static create(name, type, defaultValue = null) {
-        const componentAttribute = new DynamicAttribute()
-        componentAttribute.setAttrName(name)
-        componentAttribute.setAttrType(type)
-        componentAttribute.setAttrValue(defaultValue)
-        return componentAttribute
+        return new DynamicAttribute(name, type, defaultValue)
     }
 
     /**
      * @param {DynamicAttribute[]} target
      * @param {string} name
-     * @param {string} type
+     * @param {number} type
      * @param {*} defaultValue
      */
     static add(target, name, type, defaultValue = null) {
@@ -77,7 +73,7 @@ export default class DynamicAttributeHelper {
     /**
      * @param {DynamicAttribute[]} target
      * @param {string} name
-     * @return {*}
+     * @return {number}
      */
     static getType(target, name) {
         return this.get(target, name).getAttrType()
@@ -121,7 +117,7 @@ export default class DynamicAttributeHelper {
 
     /**
      * @param {string|number|boolean} value
-     * @return {string}
+     * @return {number}
      */
     static findTypeOfValue(value) {
         if (_.isString(value)) {
@@ -213,7 +209,7 @@ export default class DynamicAttributeHelper {
     }
 
     /**
-     * @param {string} value
+     * @param {*} value
      * @param {string} type
      * @param {World} world
      * @param {Unit} unit
@@ -258,19 +254,19 @@ export default class DynamicAttributeHelper {
                 }
                 newValue = maskGroupInstance
                 break
-            case TYPES.ARRAY_ANY:
+            case TYPES.ARRAY | TYPES.ANY:
                 if (!_.isArray(value)) {
                     throw new ClientError(`${this.constructor.name}: "${value}" is not an array`)
                 }
                 newValue = value
                 break
-            case TYPES.ARRAY_COMPONENT_INSTANCE:
+            case TYPES.ARRAY | TYPES.COMPONENT_INSTANCE:
                 if (!_.isArray(value) || !value.every(eArray => eArray instanceof Component)) {
                     throw new ClientError(`${this.constructor.name}: "${value}" is not an array`)
                 }
                 newValue = value
                 break
-            case TYPES.ARRAY_DYNAMIC_ATTRIBUTE:
+            case TYPES.ARRAY | TYPES.DYNAMIC_ATTRIBUTE:
                 if (!_.isArray(value) || !value.every(eArray => eArray instanceof DynamicAttribute)) {
                     throw new ClientError(`${this.constructor.name}: "${value}" is not an array of DynamicAttribute`)
                 }
