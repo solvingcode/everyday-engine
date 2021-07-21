@@ -25,6 +25,9 @@ export default class MeshComponent extends Component{
         this.add('assetId', TYPES.NUMBER)
         this.add('imageRepeat', TYPES.BOOLEAN, false)
         this.add('imageScale', TYPES.VECTOR, new Vector({x: 1, y: 1}))
+        this.add('imagePosition', TYPES.VECTOR, new Vector())
+        this.add('imageRepeatAreaMin', TYPES.VECTOR, new Vector())
+        this.add('imageRepeatAreaMax', TYPES.VECTOR, new Vector())
         this.add('version', TYPES.NUMBER, 0)
     }
 
@@ -56,6 +59,36 @@ export default class MeshComponent extends Component{
             {
                 bind: 'imageScale.y',
                 label: 'Image Scale Y',
+                type: Layout.form.TEXT
+            },
+            {
+                bind: 'imagePosition.x',
+                label: 'Image Position X',
+                type: Layout.form.TEXT
+            },
+            {
+                bind: 'imagePosition.y',
+                label: 'Image Position Y',
+                type: Layout.form.TEXT
+            },
+            {
+                bind: 'imageRepeatAreaMin.x',
+                label: 'Image Repeat Area MinX',
+                type: Layout.form.TEXT
+            },
+            {
+                bind: 'imageRepeatAreaMin.y',
+                label: 'Image Repeat Area MinY',
+                type: Layout.form.TEXT
+            },
+            {
+                bind: 'imageRepeatAreaMax.x',
+                label: 'Image Repeat Area MaxX',
+                type: Layout.form.TEXT
+            },
+            {
+                bind: 'imageRepeatAreaMax.y',
+                label: 'Image Repeat Area MaxY',
                 type: Layout.form.TEXT
             }
         ]
@@ -213,6 +246,48 @@ export default class MeshComponent extends Component{
      */
     setImageScale(imageScale){
         this.setValue('imageScale', imageScale)
+    }
+
+    /**
+     * @return {Vector}
+     */
+    getImagePosition(){
+        return this.getValue('imagePosition')
+    }
+
+    /**
+     * @param {Vector} imagePosition
+     */
+    setImagePosition(imagePosition){
+        this.setValue('imagePosition', imagePosition)
+    }
+
+    /**
+     * @return {Vector}
+     */
+    getImageRepeatAreaMin(){
+        return this.getValue('imageRepeatAreaMin')
+    }
+
+    /**
+     * @param {Vector} imageRepeatAreaMin
+     */
+    setImageRepeatAreaMin(imageRepeatAreaMin){
+        this.setValue('imageRepeatAreaMin', imageRepeatAreaMin)
+    }
+
+    /**
+     * @return {Vector}
+     */
+    getImageRepeatAreaMax(){
+        return this.getValue('imageRepeatAreaMax')
+    }
+
+    /**
+     * @param {Vector} imageRepeatAreaMax
+     */
+    setImageRepeatAreaMax(imageRepeatAreaMax){
+        this.setValue('imageRepeatAreaMax', imageRepeatAreaMax)
     }
 
     /**

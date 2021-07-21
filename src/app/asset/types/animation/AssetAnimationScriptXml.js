@@ -42,8 +42,9 @@ export default class AssetAnimationScriptXml extends AssetScript{
      * @override
      */
     rename(oldName, newName){
-        World.get().getScriptManager().rename(this.data, newName)
-        this.parse()
+        if(this.data) {
+            World.get().getScriptManager().rename(this.data, oldName, newName)
+        }
     }
 
     /**

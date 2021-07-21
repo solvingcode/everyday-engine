@@ -66,6 +66,8 @@ import GetTimeFunction from '../flow/function/native/time/GetTimeFunction.js'
 import GetVarFunction from '../flow/function/native/component/GetVarFunction.js'
 import SetVarFunction from '../flow/function/native/component/SetVarFunction.js'
 import DivideFunction from '../flow/function/native/basic/DivideFunction.js'
+import AddVectorFunction from '../flow/function/native/basic/AddVectorFunction.js'
+import IsUpdateTimeFunction from '../flow/function/native/time/IsUpdateTimeFunction.js'
 
 export default class FunctionRegistry extends Registry{
 
@@ -112,6 +114,7 @@ export default class FunctionRegistry extends Registry{
             new AbsFunction(),
             new SubtractFunction(),
             new DivideFunction(),
+            new AddVectorFunction(),
 
             //Loop
             new ALoop(),
@@ -147,6 +150,7 @@ export default class FunctionRegistry extends Registry{
 
             //Time
             new GetTimeFunction(),
+            new IsUpdateTimeFunction(),
 
             //Physics
             new MoveXAxisFunction(),

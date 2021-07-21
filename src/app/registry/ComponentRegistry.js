@@ -4,6 +4,7 @@ import RectColliderComponent from '../component/internal/RectColliderComponent.j
 import CircleColliderComponent from '../component/internal/CircleColliderComponent.js'
 import AnimationComponent from '../component/internal/AnimationComponent.js'
 import TransformComponent from '../component/internal/TransformComponent.js'
+import MeshComponent from '../component/internal/MeshComponent.js'
 
 export default class ComponentRegistry extends Registry{
 
@@ -20,7 +21,8 @@ export default class ComponentRegistry extends Registry{
             new RectColliderComponent(),
             new CircleColliderComponent(),
             new AnimationComponent(),
-            new TransformComponent()
+            new TransformComponent(),
+            new MeshComponent()
         ])
     }
 

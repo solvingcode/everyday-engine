@@ -104,6 +104,7 @@ export default class MeshGenerationExecutor extends ComponentExecutor {
      */
     closeContext(meshComponent, transformComponent, dataContext) {
         const {fillColor, borderSize, color} = meshComponent.getStyle()
+        const meshSize = meshComponent.getSize()
         const {context, scaleSize, world, unitId, camera} = dataContext
         if (meshComponent.getAssetId()) {
             const asset = dataContext.world.getAssetsManager().findAssetById(meshComponent.getAssetId())
@@ -115,13 +116,14 @@ export default class MeshGenerationExecutor extends ComponentExecutor {
             const transformScale = transformComponent.getScale()
             const canvasBg = asset.getType().getData().context.canvas
             if (meshComponent.isImageRepeat()) {
-                const canvasCameraScale = camera.toScaleSize(new Size({width: canvasBg.width, height: canvasBg.height}))
-                const canvasBgScaled = ImageHelper.resizeCanvasBySize(canvasBg, canvasCameraScale)
                 const imageScale = meshComponent.getImageScale()
-                context.fillStyle = context.createPattern(
-                    ImageHelper.scaleCanvas(canvasBgScaled, imageScale),
-                    'repeat')
-                context.fill()
+                const imagePosition = meshComponent.getImagePosition()
+                const imageRepeatAreaMin = meshComponent.getImageRepeatAreaMin()
+                const imageRepeatAreaMax = meshComponent.getImageRepeatAreaMax()
+                const canvasBgRepeat = ImageHelper.generateImageRepeat(canvasBg, meshSize, imageScale, imagePosition, imageRepeatAreaMin, imageRepeatAreaMax)
+                const canvasCameraScale = camera.toScaleSize(new Size({width: canvasBgRepeat.width, height: canvasBgRepeat.height}))
+                const canvasBgScaled = ImageHelper.resizeCanvasBySize(canvasBgRepeat, canvasCameraScale)
+                context.drawImage(canvasBgScaled, 0, 0, scaleSize.width, scaleSize.height)
             } else {
                 context.drawImage(ImageHelper.scaleCanvas(canvasBg, transformScale),
                     0, 0, scaleSize.width * Math.abs(transformScale.getX()), scaleSize.height * Math.abs(transformScale.getY()))

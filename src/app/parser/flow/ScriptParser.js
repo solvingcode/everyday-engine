@@ -39,18 +39,20 @@ export default class ScriptParser extends Parser {
      * @param {string} newName
      */
     static rename(data, newName) {
-        switch (data.constructor) {
-            case XMLDocument:
-                const type = data.documentElement.getAttribute('type')
-                if(type === 'class'){
-                    const xmlNode = data.documentElement
-                    xmlNode.setAttribute('name', newName)
-                }else{
-                    throw new ClientError(`Script data type "${type}" not supported`)
-                }
-                break
-            default:
-                throw new ClientError(`Script data format not supported (${data.constructor.name} given)`)
+        if(data){
+            switch (data.constructor) {
+                case XMLDocument:
+                    const type = data.documentElement.getAttribute('type')
+                    if(type === 'class'){
+                        const xmlNode = data.documentElement
+                        xmlNode.setAttribute('name', newName)
+                    }else{
+                        throw new ClientError(`Script data type "${type}" not supported`)
+                    }
+                    break
+                default:
+                    throw new ClientError(`Script data format not supported (${data.constructor.name} given)`)
+            }
         }
     }
 

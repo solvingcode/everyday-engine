@@ -46,6 +46,7 @@ export default class AFunction extends FunctionData{
      * @param {Unit} unit
      * @param {ScriptComponent} scriptComponent
      * @param {World} world
+     * @return {void}
      */
     execute(functionRegistry, unit, scriptComponent, world){
         throw new SystemError(`${this.constructor.name}.execute must be implemented`)

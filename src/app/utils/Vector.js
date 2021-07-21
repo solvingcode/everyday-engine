@@ -128,6 +128,19 @@ class Vector {
     }
 
     /**
+     * @param {Vector} vectorA
+     * @param {Vector} vectorB
+     * @return {Vector}
+     */
+    static linearDivide(vectorA, vectorB){
+        return new Vector({
+            x: vectorB.x ? vectorA.x / vectorB.x : 0,
+            y: vectorB.y ? vectorA.y / vectorB.y : 0,
+            z: vectorB.z ? vectorA.z / vectorB.z : 0
+        })
+    }
+
+    /**
      * @param {Vector} vector
      * @param {number} value
      * @return {Vector}

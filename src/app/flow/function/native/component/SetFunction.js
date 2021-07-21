@@ -1,6 +1,7 @@
 import {TYPES} from '../../../../pobject/AttributeType.js'
 import AFunction from '../../AFunction.js'
 import DynamicAttributeHelper from '../../../../utils/DynamicAttributeHelper.js'
+import MeshComponent from '../../../../component/internal/MeshComponent.js'
 
 export default class SetFunction extends AFunction{
 
@@ -26,6 +27,10 @@ export default class SetFunction extends AFunction{
         const value = this.getInputValue('value')
         const componentAttribute = unit.getComponent(classComponent).get(attribute)
         const newValue = DynamicAttributeHelper.getValueByType(value, componentAttribute.getAttrType(), world, unit, scriptComponent)
-        unit.getComponent(classComponent).setValue(attribute, newValue)
+        const component = unit.getComponent(classComponent)
+        component.setValue(attribute, newValue)
+        if(classComponent === MeshComponent){
+            component.setGenerated(false)
+        }
     }
 }

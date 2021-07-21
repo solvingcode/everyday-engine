@@ -137,6 +137,8 @@ import GetTimeFunction from '../../flow/function/native/time/GetTimeFunction.js'
 import GetVarFunction from '../../flow/function/native/component/GetVarFunction.js'
 import SetVarFunction from '../../flow/function/native/component/SetVarFunction.js'
 import DivideFunction from '../../flow/function/native/basic/DivideFunction.js'
+import AddVectorFunction from '../../flow/function/native/basic/AddVectorFunction.js'
+import IsUpdateTimeFunction from '../../flow/function/native/time/IsUpdateTimeFunction.js'
 
 /**
  * @class {DataSchema}
@@ -270,7 +272,9 @@ class DataSchema {
         {id: 1140, type: GetTimeFunction},
         {id: 1150, type: GetVarFunction},
         {id: 1160, type: SetVarFunction},
-        {id: 1170, type: DivideFunction}
+        {id: 1170, type: DivideFunction},
+        {id: 1180, type: AddVectorFunction},
+        {id: 1190, type: IsUpdateTimeFunction}
     ]
 
     /**

@@ -69,13 +69,15 @@ export default class AssetAnimationXml extends AssetType {
      * @override
      */
     rename(oldName, newName) {
-        const animationManager = World.get().getAnimationManager()
-        const oldAnimation = animationManager.findByName(oldName)
-        if (oldAnimation) {
-            animationManager.delete(oldAnimation)
+        if(this.data){
+            const animationManager = World.get().getAnimationManager()
+            const oldAnimation = animationManager.findByName(oldName)
+            if (oldAnimation) {
+                animationManager.delete(oldAnimation)
+            }
+            animationManager.rename(this.data, newName)
+            this.parse()
         }
-        animationManager.rename(this.data, newName)
-        this.parse()
     }
 
     /**
