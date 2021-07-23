@@ -65,6 +65,7 @@ import AddAnimationScriptAction from './assets/AddAnimationScriptAction.js'
 import ExportAssetAction from './assets/ExportAssetAction.js'
 import DeleteComponentAction from './unit/DeleteComponentAction.js'
 import AddNodeInputAction from './script/AddNodeInputAction.js'
+import SelectTimelineAction from './animation/SelectTimelineAction.js'
 
 /**
  * Action Runner class.
@@ -154,7 +155,8 @@ class ActionRunner extends Runner {
             STOP_ANIMATION: StopAnimationAction,
             ADD_ANIMATION_SCRIPT: AddAnimationScriptAction,
             EXPORT_ASSET: ExportAssetAction,
-            DELETE_COMPONENT: DeleteComponentAction
+            DELETE_COMPONENT: DeleteComponentAction,
+            SELECT_LIST_TIMELINE: SelectTimelineAction
         }
         const selectedUnits = this.unitSelector.getSelected(World.get())
         for(const iTypeAction in typeActions){

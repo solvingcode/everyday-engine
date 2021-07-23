@@ -88,6 +88,28 @@ export default class UnitManager extends UnitManagerData {
     }
 
     /**
+     * @param {Asset} asset
+     * @return {Unit[]}
+     */
+    findUnitsByAsset(asset) {
+        return this.units.filter((unit) => {
+            const meshComponent = unit.getComponent(MeshComponent)
+            if (meshComponent) {
+                return meshComponent.getAssetId() === asset.getId()
+            }
+        })
+    }
+
+    /**
+     * @param {Asset} asset
+     */
+    deleteUnitsByAsset(asset){
+        this.findUnitsByAsset(asset).forEach((unit) => {
+            this.deleteUnit(unit)
+        })
+    }
+
+    /**
      * @param {Component[]} componentClasses
      * @return {Unit[]}
      */

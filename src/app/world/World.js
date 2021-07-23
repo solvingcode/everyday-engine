@@ -321,6 +321,9 @@ class World extends WorldData {
         return this.gridUnitId
     }
 
+    /**
+     * @return {World}
+     */
     static get() {
         if (!this.instance) {
             this.instance = new this()

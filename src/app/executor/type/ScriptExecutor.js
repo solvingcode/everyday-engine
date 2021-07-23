@@ -26,7 +26,9 @@ export default class ScriptExecutor extends ComponentExecutor {
         const world = World.get()
         const functionRegistry = world.getFunctionRegistry()
         const gameInput = world.getPreference().getGameInput()
-        unit.findComponentsByClass(ScriptComponent).forEach(scriptComponent => {
+        unit.findComponentsByClass(ScriptComponent)
+            .filter(scriptComponent => scriptComponent.isEnabled())
+            .forEach(scriptComponent => {
             functionRegistry.getInstancesByClass(scriptComponent.getScript()).forEach(instance => {
                 if (
                     (mouse.isButtonClicked(MouseButton.LEFT) && instance instanceof OnMouseClickEvent) ||

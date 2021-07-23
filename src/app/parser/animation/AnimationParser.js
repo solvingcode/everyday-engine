@@ -33,7 +33,7 @@ export default class AnimationParser extends Parser {
             })
             animation.setFrames(keyframes)
             animation.setSamples(parseInt(samples))
-            animation.setLengthSecond(parseInt(lengthSecond))
+            animation.setLengthSecond(parseFloat(lengthSecond))
             return animation
         } else {
             throw new ClientError(`${this.constructor.name}: data must be an XML Document`)

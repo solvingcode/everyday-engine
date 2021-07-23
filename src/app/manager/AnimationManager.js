@@ -38,6 +38,33 @@ export default class AnimationManager {
     }
 
     /**
+     * @param {Timeline} timeline
+     * @return {Animation}
+     */
+    findByTimeline(timeline) {
+        return this.animations.find(animation => animation.getTimeline().find(pTimeline => pTimeline === timeline))
+    }
+
+    /**
+     * @param {Asset} asset
+     * @return {Animation[]}
+     */
+    findAnimationsByAsset(asset) {
+        return this.animations.filter(animation => animation.getFrames().find(frame => frame.getAssetId() === asset.getId()))
+    }
+
+    /**
+     * @param {Asset} asset
+     * @return {Animation[]}
+     */
+    deleteFrameByAsset(asset) {
+        this.animations.forEach(animation => {
+            const frame = animation.getFrames().find(pFrame => pFrame.getAssetId() === asset.getId())
+            animation.deleteFrame(frame)
+        })
+    }
+
+    /**
      * @param {string} name
      * @return {Animation}
      */

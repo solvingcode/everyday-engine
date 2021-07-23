@@ -183,7 +183,7 @@ export default class Animation {
     /**
      * @param {KeyFrame} frame
      */
-    deleteFrame(frame){
+    deleteFrame(frame) {
         const timeline = this.timeline[frame.getTime()]
         const frameIndex = this.frames.findIndex(pFrame => pFrame === frame)
         if (timeline) {
@@ -210,20 +210,34 @@ export default class Animation {
     /**
      * @return {Timeline}
      */
-    getSelectedTimeline(){
+    getSelectedTimeline() {
         return this.timeline.find(pTimeline => pTimeline.isSelected())
     }
 
     /**
      * @return {number}
      */
-    getSelectedTime(){
+    getSelectedTime() {
         return this.timeline.findIndex(pTimeline => pTimeline === this.getSelectedTimeline())
     }
 
     updateTimeline() {
-        const times = [...Array(this.getSamples() * this.getLengthSecond()).keys()]
+        const times = [...Array(Math.ceil(this.getSamples() * this.getLengthSecond())).keys()]
         this.timeline = times.map(time => new Timeline(this.tryGetAt(time)))
+    }
+
+    /**
+     * @param {number} frameTime
+     */
+    selectTimeline(frameTime) {
+        this.timeline.forEach(pTimeline => {
+            const frame = pTimeline.getFrame()
+            if (frame && frame.getTime() === frameTime) {
+                pTimeline.select()
+            } else {
+                pTimeline.unselect()
+            }
+        })
     }
 
     /**
@@ -236,21 +250,21 @@ export default class Animation {
     /**
      * @return {number}
      */
-    getTime(){
+    getTime() {
         return this.time
     }
 
     /**
      * @param {number} time
      */
-    setTime(time){
+    setTime(time) {
         this.time = time
     }
 
     /**
      * @return {number}
      */
-    getFrameTime(){
+    getFrameTime() {
         return Math.floor(this.time)
     }
 
@@ -269,15 +283,28 @@ export default class Animation {
     }
 
     /**
+     * @return {number}
+     */
+    getNextTimeFrame(){
+        const newTime = this.getTime() + 1
+        return newTime % this.getFrames().length
+    }
+
+    goToNextTimeFrame(){
+        this.setTime(this.getNextTimeFrame())
+    }
+
+    /**
      * @param {number} deltaTime
      * @return {KeyFrame}
      */
-    play(deltaTime){
+    play(deltaTime) {
         const expectedFrameTime = this.getLengthSecond() / this.getSamples()
         const newTime = this.getTime() + deltaTime / expectedFrameTime
         const timeFrame = newTime % this.getFrames().length
         this.loopTimes += Math.floor(newTime / this.getFrames().length)
         this.setTime(timeFrame || 0)
+        this.selectTimeline(this.getFrameTime())
         return this.tryGetAt(this.getFrameTime())
     }
 

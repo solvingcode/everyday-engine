@@ -9,6 +9,7 @@ import AnimationComponent from '../component/internal/AnimationComponent.js'
 import ClientError from '../exception/type/ClientError.js'
 import AssetScriptXml from '../asset/types/script/AssetScriptXml.js'
 import ScriptComponent from '../component/internal/ScriptComponent.js'
+import AssetImage from '../asset/types/image/AssetImage.js'
 
 export default class AssetHelper {
 
@@ -32,6 +33,19 @@ export default class AssetHelper {
                         unit.deleteComponent(animationComponent.getId())
                     }
                 })
+        }else if (asset.getType() instanceof AssetScriptXml) {
+            world.getUnitManager().findUnitsByComponents([ScriptComponent])
+                .forEach(unit => {
+                    const scriptComponents = unit.findComponentsByClass(ScriptComponent)
+                    scriptComponents.forEach(scriptComponent => {
+                        if(scriptComponent.getScript() === asset.getName()){
+                            unit.deleteComponent(scriptComponent.getId())
+                        }
+                    })
+                })
+        }else if(asset.getType() instanceof AssetImage){
+            world.getUnitManager().deleteUnitsByAsset(asset)
+            world.getAnimationManager().deleteFrameByAsset(asset)
         }
     }
 
