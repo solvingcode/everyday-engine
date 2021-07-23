@@ -2,10 +2,7 @@ import {CANVAS_CONTEXT_TYPE} from '../core/Constant.js'
 import Vector from './Vector.js'
 import Size from '../pobject/Size.js'
 
-/**
- * @class {ImageHelper}
- */
-class ImageHelper {
+export default class ImageHelper {
 
     /**
      * @param {OffscreenCanvas} canvas
@@ -68,13 +65,14 @@ class ImageHelper {
      * @param {OffscreenCanvas} canvas
      * @param {Vector} pointA
      * @param {Vector} pointB
+     * @param {Vector} scale
      * @return {OffscreenCanvas}
      */
-    static cropCanvas(canvas, pointA, pointB) {
+    static cropCanvas(canvas, pointA, pointB, scale = null) {
         const width = pointB.getX() - pointA.getX()
         const height = pointB.getY() - pointA.getY()
 
-        if(width > 0 && height > 0){
+        if (width > 0 && height > 0) {
             const canvasEl = new OffscreenCanvas(width, height)
             const contextEl = canvasEl.getContext(CANVAS_CONTEXT_TYPE)
             contextEl.drawImage(canvas,
@@ -83,11 +81,70 @@ class ImageHelper {
                 0, 0,
                 width, height
             )
-
-            return canvasEl
+            if (scale) {
+                return this.scaleCanvas(canvasEl, scale)
+            } else {
+                return canvasEl
+            }
         }
 
         return null
+    }
+
+    /**
+     * @param {OffscreenCanvas} canvas
+     * @param {Size} size
+     * @param {Vector} imageScale
+     * @param {Vector} imagePosition
+     * @param {Vector} minPosition
+     * @param {Vector} maxPosition
+     * @param {{pointA: {area: AREA, position: Vector}, pointB: {area: AREA, position: Vector}}} part
+     * @return {OffscreenCanvas}
+     */
+    static generateImagePartRepeat(canvas, size, imageScale, imagePosition, minPosition, maxPosition, part) {
+        const {pointA, pointB} = part
+
+        const canvasCrop = this.cropCanvas(canvas, minPosition, maxPosition, imageScale)
+
+        const repeatPointA = this.getImagePositionFromPoint(pointA, size, imageScale)
+        const repeatPointB = this.getImagePositionFromPoint(pointB, size, imageScale)
+        const sizePartRepeated = new Size({
+            width: repeatPointB.getX() - repeatPointA.getX(),
+            height: repeatPointB.getY() - repeatPointA.getY()
+        })
+        const canvasRepeat = canvasCrop ? new OffscreenCanvas(
+            sizePartRepeated.getWidth(), sizePartRepeated.getHeight()) : null
+
+        if (canvasRepeat) {
+            const contextRepeat = canvasRepeat.getContext(CANVAS_CONTEXT_TYPE)
+            contextRepeat.fillStyle = contextRepeat.createPattern(canvasCrop, 'repeat')
+            contextRepeat.rect(0, 0, sizePartRepeated.getWidth(), sizePartRepeated.getHeight())
+            contextRepeat.translate(imagePosition.getX(), imagePosition.getY())
+            contextRepeat.fill()
+            contextRepeat.translate(-imagePosition.getX(), -imagePosition.getY())
+        }
+
+        return canvasRepeat
+    }
+
+    /**
+     * @param {{area: AREA, position: Vector}} point
+     * @param {Size} size
+     * @param {Vector} scale
+     * @return {Vector}
+     */
+    static getImagePositionFromPoint(point, size, scale = new Vector({x: 1, y: 1})){
+        const {area, position} = point
+        let imagePosition = Vector.linearMultiply(position, scale)
+        const isBottom = area & AREA.BOTTOM
+        const isRight = area & AREA.RIGHT
+        if(isBottom){
+            imagePosition.setY(size.height - imagePosition.getY())
+        }
+        if(isRight){
+            imagePosition.setX(size.width - imagePosition.getX())
+        }
+        return imagePosition
     }
 
     /**
@@ -104,56 +161,96 @@ class ImageHelper {
         const {width: canvasWidth, height: canvasHeight} = canvas
         const {width, height} = size
 
-        //left side image
-        const leftSideCanvasCrop = this.cropCanvas(canvas,
-            new Vector(),
-            new Vector({x: imageRepeatAreaMin.getX(), y: canvasHeight}))
-        const leftSideCanvas = leftSideCanvasCrop ? ImageHelper.scaleCanvas(leftSideCanvasCrop, imageScale) : null
-
-        //middle side image
-        const middleSideCanvasCrop = this.cropCanvas(canvas,
-            new Vector({x: imageRepeatAreaMin.getX()}),
-            new Vector({x: canvasWidth - imageRepeatAreaMax.getX(), y: canvasHeight}))
-        const middleSideCanvas = ImageHelper.scaleCanvas(middleSideCanvasCrop, imageScale)
-        const sizeMiddlePartRepeated = new Size({
-            width: width - (imageRepeatAreaMin.getX() + imageRepeatAreaMax.getX()),
-            height: height
-        })
-        const canvasMiddleRepeat = middleSideCanvas ? new OffscreenCanvas(
-            sizeMiddlePartRepeated.getWidth(), sizeMiddlePartRepeated.getHeight()) : null
-        if(canvasMiddleRepeat){
-            const contextMiddleRepeat = canvasMiddleRepeat.getContext(CANVAS_CONTEXT_TYPE)
-            contextMiddleRepeat.fillStyle = contextMiddleRepeat.createPattern(middleSideCanvas, 'repeat')
-            contextMiddleRepeat.rect(0, 0, sizeMiddlePartRepeated.getWidth(), sizeMiddlePartRepeated.getHeight())
-            contextMiddleRepeat.translate(imagePosition.getX(), imagePosition.getY())
-            contextMiddleRepeat.fill()
-            contextMiddleRepeat.translate(-imagePosition.getX(), -imagePosition.getY())
+        const points = {
+            A: {area: AREA.LEFT | AREA.TOP, position: new Vector()},
+            B: {area: AREA.LEFT | AREA.TOP, position: new Vector({x: imageRepeatAreaMin.getX()})},
+            C: {area: AREA.LEFT | AREA.TOP, position: new Vector({y: imageRepeatAreaMin.getY()})},
+            D: {area: AREA.LEFT | AREA.TOP, position: imageRepeatAreaMin},
+            E: {area: AREA.LEFT | AREA.BOTTOM, position: new Vector({y: imageRepeatAreaMax.getY()})},
+            F: {area: AREA.LEFT | AREA.BOTTOM, position: new Vector({x: imageRepeatAreaMin.getX(), y: imageRepeatAreaMax.getY()})},
+            G: {area: AREA.LEFT | AREA.BOTTOM, position: new Vector()},
+            H: {area: AREA.LEFT | AREA.BOTTOM, position: new Vector({x: imageRepeatAreaMin.getX()})},
+            I: {area: AREA.RIGHT | AREA.TOP, position: new Vector({x: imageRepeatAreaMax.getX()})},
+            J: {area: AREA.RIGHT | AREA.TOP, position: new Vector({x: imageRepeatAreaMax.getX(), y: imageRepeatAreaMin.getY()})},
+            K: {area: AREA.RIGHT | AREA.TOP, position: new Vector({y: imageRepeatAreaMin.getY()})},
+            L: {area: AREA.RIGHT | AREA.BOTTOM, position: new Vector({x: imageRepeatAreaMax.getX(), y: imageRepeatAreaMax.getY()})},
+            M: {area: AREA.RIGHT | AREA.BOTTOM, position: new Vector({y: imageRepeatAreaMax.getY()})},
+            N: {area: AREA.RIGHT | AREA.BOTTOM, position: new Vector({x: imageRepeatAreaMax.getX()})},
+            O: {area: AREA.RIGHT | AREA.BOTTOM, position: new Vector()}
         }
 
-        //right side image
-        const rightSideCanvasCrop = this.cropCanvas(canvas,
-            new Vector({x: canvasWidth - imageRepeatAreaMax.getX()}),
-            new Vector({x: canvasWidth, y: canvasHeight}))
-        const rightSideCanvas = rightSideCanvasCrop ? ImageHelper.scaleCanvas(rightSideCanvasCrop, imageScale): null
+        const imageCanvasParts = {
+            left: {
+                repeat: true,
+                pointA: points.C,
+                pointB: points.F
+            },
+            right: {
+                repeat: true,
+                pointA: points.J,
+                pointB: points.M
+            },
+            middle: {
+                repeat: true,
+                pointA: points.D,
+                pointB: points.L
+            },
+            top: {
+                repeat: true,
+                pointA: points.B,
+                pointB: points.J
+            },
+            bottom: {
+                repeat: true,
+                pointA: points.F,
+                pointB: points.N
+            },
+            leftTop: {
+                pointA: points.A,
+                pointB: points.D
+            },
+            leftBottom: {
+                pointA: points.E,
+                pointB: points.H
+            },
+            rightTop: {
+                pointA: points.I,
+                pointB: points.K
+            },
+            rightBottom: {
+                pointA: points.L,
+                pointB: points.O
+            }
+        }
 
-        //Combine left/middle/right sides
         const canvasEl = new OffscreenCanvas(width, height)
         const contextEl = canvasEl.getContext(CANVAS_CONTEXT_TYPE)
-        if(leftSideCanvas){
-            contextEl.drawImage(leftSideCanvas,
-                0, 0, leftSideCanvas.width, leftSideCanvas.height)
-        }
-        if(canvasMiddleRepeat){
-            contextEl.drawImage(canvasMiddleRepeat,
-                imageRepeatAreaMin.getX() * imageScale.getX(), 0, canvasMiddleRepeat.width, canvasMiddleRepeat.height)
-        }
-        if(rightSideCanvas){
-            contextEl.drawImage(rightSideCanvas,
-                width - imageRepeatAreaMax.getX() * imageScale.getX(), 0, rightSideCanvas.width, rightSideCanvas.height)
+        for (const kPart in imageCanvasParts) {
+            const part = imageCanvasParts[kPart]
+            let partCanvas
+            const createPointA = this.getImagePositionFromPoint(part.pointA,
+                new Size({width: canvasWidth, height: canvasHeight}))
+            const createPointB = this.getImagePositionFromPoint(part.pointB,
+                new Size({width: canvasWidth, height: canvasHeight}))
+            if (!part.repeat) {
+                partCanvas = this.cropCanvas(canvas, createPointA, createPointB, imageScale)
+            } else {
+                partCanvas = this.generateImagePartRepeat(canvas, size, imageScale, imagePosition, createPointA, createPointB, part)
+            }
+
+            if (partCanvas) {
+                const drawPointA = this.getImagePositionFromPoint(part.pointA, size, imageScale)
+                contextEl.drawImage(partCanvas, drawPointA.getX(), drawPointA.getY(), partCanvas.width, partCanvas.height)
+            }
         }
 
         return canvasEl
     }
 }
 
-export default ImageHelper
+export const AREA = {
+    LEFT: 0b0001,
+    RIGHT: 0b0010,
+    TOP: 0b0100,
+    BOTTOM: 0b1000
+}
