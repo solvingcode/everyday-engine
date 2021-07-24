@@ -18,18 +18,20 @@ export default class AnimationScriptExecutor extends ComponentExecutor {
         const world = World.get()
         const functionRegistry = world.getFunctionRegistry()
         const animationComponent = unit.getComponent(AnimationComponent)
-        const animation = animationComponent.getAnimation()
-        const scriptName = animationComponent.getScript()
-        functionRegistry.getInstancesByClass(scriptName).forEach(instance => {
-            if (instance instanceof OnAnimationStartEvent && !animation) {
-                instance.execute(functionRegistry, unit, animationComponent, world)
-            } else if (instance instanceof AAnimation) {
-                const animationInstance = parseInt(ScriptHelper.getValueFromFunctionName(scriptName, instance.getName()))
-                if (animationInstance === animation) {
+        if(animationComponent.isEnabled()){
+            const animation = animationComponent.getAnimation()
+            const scriptName = animationComponent.getScript()
+            functionRegistry.getInstancesByClass(scriptName).forEach(instance => {
+                if (instance instanceof OnAnimationStartEvent && !animation) {
                     instance.execute(functionRegistry, unit, animationComponent, world)
+                } else if (instance instanceof AAnimation) {
+                    const animationInstance = parseInt(ScriptHelper.getValueFromFunctionName(scriptName, instance.getName()))
+                    if (animationInstance === animation) {
+                        instance.execute(functionRegistry, unit, animationComponent, world)
+                    }
                 }
-            }
-        })
+            })
+        }
     }
 
 }

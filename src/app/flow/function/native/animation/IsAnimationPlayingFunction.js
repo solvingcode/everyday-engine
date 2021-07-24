@@ -1,5 +1,6 @@
 import {TYPES} from '../../../../pobject/AttributeType.js'
 import AFunction from '../../AFunction.js'
+import AnimationComponent from '../../../../component/internal/AnimationComponent.js'
 
 export default class IsAnimationPlayingFunction extends AFunction {
 
@@ -20,8 +21,9 @@ export default class IsAnimationPlayingFunction extends AFunction {
      */
     execute(functionRegistry, unit, scriptComponent, world) {
         const animation = this.getInputValue('target')
+        const animationComponent = unit.getComponent(AnimationComponent)
         this.setOutputValue(
-            animation.isPlaying()
+            animation.getId() === animationComponent.getAnimation()
         )
     }
 }

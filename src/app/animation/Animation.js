@@ -265,7 +265,15 @@ export default class Animation {
      * @return {number}
      */
     getFrameTime() {
-        return Math.floor(this.time)
+        return this.getFrameTimeAt(this.time)
+    }
+
+    /**
+     * @param {number} time
+     * @return {number}
+     */
+    getFrameTimeAt(time){
+        return Math.floor(time)
     }
 
     /**
@@ -286,7 +294,15 @@ export default class Animation {
      * @return {number}
      */
     getNextTimeFrame(){
-        const newTime = this.getTime() + 1
+        return this.getNextTimeFrameAt(this.getTime())
+    }
+
+    /**
+     * @param {number} time
+     * @return {number}
+     */
+    getNextTimeFrameAt(time){
+        const newTime = time + 1
         return newTime % this.getFrames().length
     }
 
@@ -296,16 +312,31 @@ export default class Animation {
 
     /**
      * @param {number} deltaTime
+     * @param {number} time
+     * @return {{time: number, loopTimes: number, frame: KeyFrame}}
+     */
+    playAt(deltaTime, time){
+        const expectedFrameTime = this.getLengthSecond() / this.getSamples()
+        const newTime = time + deltaTime / expectedFrameTime
+        const timeFrame = newTime % this.getFrames().length
+        const loopTimes = Math.floor(newTime / this.getFrames().length)
+        return {
+            time: timeFrame || 0,
+            loopTimes,
+            frame: this.tryGetAt(this.getFrameTimeAt(time))
+        }
+    }
+
+    /**
+     * @param {number} deltaTime
      * @return {KeyFrame}
      */
     play(deltaTime) {
-        const expectedFrameTime = this.getLengthSecond() / this.getSamples()
-        const newTime = this.getTime() + deltaTime / expectedFrameTime
-        const timeFrame = newTime % this.getFrames().length
-        this.loopTimes += Math.floor(newTime / this.getFrames().length)
-        this.setTime(timeFrame || 0)
+        const playInfo = this.playAt(deltaTime, this.getTime())
+        this.loopTimes += playInfo.loopTimes
+        this.setTime(playInfo.time)
         this.selectTimeline(this.getFrameTime())
-        return this.tryGetAt(this.getFrameTime())
+        return playInfo.frame
     }
 
 }

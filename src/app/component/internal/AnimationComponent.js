@@ -21,6 +21,8 @@ export default class AnimationComponent extends ScriptComponent {
     initAttributes() {
         super.initAttributes()
         this.add('animation', TYPES.NUMBER)
+        this.add('time', TYPES.NUMBER)
+        this.add('loopTimes', TYPES.NUMBER)
     }
 
     /**
@@ -35,5 +37,33 @@ export default class AnimationComponent extends ScriptComponent {
      */
     setAnimation(animation) {
         this.setValue('animation', animation)
+    }
+
+    /**
+     * @return {number}
+     */
+    getTime() {
+        return this.getValue('time')
+    }
+
+    /**
+     * @param {number} time
+     */
+    setTime(time) {
+        this.setValue('time', time)
+    }
+
+    /**
+     * @return {number}
+     */
+    getLoopTimes() {
+        return this.getValue('loopTimes')
+    }
+
+    /**
+     * @param {number} loopTimes
+     */
+    setLoopTimes(loopTimes) {
+        this.setValue('loopTimes', loopTimes)
     }
 }
