@@ -5,6 +5,7 @@ import MeshComponent from '../component/internal/MeshComponent.js'
 import ColliderComponent from '../component/internal/ColliderComponent.js'
 import UnitHelper from '../utils/UnitHelper.js'
 import GeometryHelper from '../utils/GeometryHelper.js'
+import RigidBodyComponent from '../component/internal/RigidBodyComponent.js'
 
 export default class PhysicsManager {
 
@@ -150,9 +151,11 @@ export default class PhysicsManager {
             // unit component
             const transformComponent = unit.getComponent(TransformComponent)
             const meshComponent = unit.getComponent(MeshComponent)
+            const rigidBodyComponent = unit.getComponent(RigidBodyComponent)
 
             // unit/body info
             const bodyRotation = this.physicsEngine.getBodyRotation(body)
+            const bodyVelocity = this.physicsEngine.getVelocity(unit)
             const bodyPosition = new Vector(this.physicsEngine.getBodyPosition(body))
             const actualUnitRotation = transformComponent.getRotation()
             const actualUnitSize = meshComponent.getSize()
@@ -179,6 +182,14 @@ export default class PhysicsManager {
                         bodyRotationRounded, firstColliderRelativePosition)
                     newPosition = Vector.subtract(newUnitPosition, correctionVector)
                 }
+            }
+
+            //save velocity
+            colliderComponents.forEach(colliderComponent => {
+                colliderComponent.setVelocity(bodyVelocity)
+            })
+            if(rigidBodyComponent){
+                rigidBodyComponent.setVelocity(bodyVelocity)
             }
 
             transformComponent.setPosition(newPosition)

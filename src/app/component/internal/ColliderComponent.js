@@ -21,6 +21,7 @@ export default class ColliderComponent extends Component{
         this.add('trigger', TYPES.BOOLEAN, false)
         this.add('shape', TYPES.STRING, PrimitiveShape.RECT)
         this.add('rotation', TYPES.NUMBER, 0)
+        this.add('velocity', TYPES.VECTOR, new Vector())
     }
 
     /**
@@ -177,6 +178,21 @@ export default class ColliderComponent extends Component{
     getShape(){
         return this.getValue('shape')
     }
+
+    /**
+     * @param {Vector} velocity
+     */
+    setVelocity(velocity) {
+        this.setValue('velocity', velocity)
+    }
+
+    /**
+     * @return {Vector}
+     */
+    getVelocity(){
+        return this.getValue('velocity')
+    }
+
 
     /**
      * @override

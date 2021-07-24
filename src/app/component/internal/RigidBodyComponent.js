@@ -1,6 +1,7 @@
 import Component from '../Component.js'
 import {TYPES} from '../../pobject/AttributeType.js'
 import Layout from '../../layout/Layout.js'
+import Vector from '../../utils/Vector.js'
 
 export default class RigidBodyComponent extends Component{
 
@@ -15,6 +16,7 @@ export default class RigidBodyComponent extends Component{
         this.add('freezeRotation', TYPES.BOOLEAN, false)
         this.add('friction', TYPES.NUMBER, 0)
         this.add('created', TYPES.BOOLEAN, false)
+        this.add('velocity', TYPES.VECTOR, new Vector())
     }
 
     /**
@@ -71,6 +73,20 @@ export default class RigidBodyComponent extends Component{
      */
     getFriction(){
         return this.getValue('friction')
+    }
+
+    /**
+     * @param {Vector} velocity
+     */
+    setVelocity(velocity) {
+        this.setValue('velocity', velocity)
+    }
+
+    /**
+     * @return {Vector}
+     */
+    getVelocity(){
+        return this.getValue('velocity')
     }
 
     /**

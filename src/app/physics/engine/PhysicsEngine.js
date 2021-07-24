@@ -226,6 +226,7 @@ export default class PhysicsEngine {
         const colliders = colliderComponents.map(colliderComponent => this.newCollider(unit, colliderComponent))
         const position = UnitHelper.toCenterPosition(unit)
         const body = this.newBody(unit, position, _.cloneDeep(colliders), options)
+        this.setVelocityToBody(body, options.velocity)
         this.addToWorld(body)
     }
 

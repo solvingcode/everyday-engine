@@ -17,6 +17,7 @@ export default class ColliderLoader {
                 bodyCollider.isSensor = true
             }
             bodyCollider.label = colliderComponent.getId()
+            bodyCollider.velocity = colliderComponent.getVelocity()
         }
         return bodyCollider
     }

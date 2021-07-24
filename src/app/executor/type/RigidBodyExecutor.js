@@ -24,6 +24,7 @@ export default class RigidBodyExecutor extends ComponentExecutor {
         }
         options.isStatic = false
         options.freezeRotation = rigidBodyComponent.isFreezeRotation()
+        options.velocity = rigidBodyComponent.getVelocity()
         physicsManager.addBody(unit, options)
         physicsManager.setFriction(unit, rigidBodyComponent.getFriction())
         rigidBodyComponent.setCreated(true)
