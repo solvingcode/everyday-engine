@@ -10,6 +10,7 @@ import LineShapeGenerator from './shape/line/LineShapeGenerator.js'
 import RectCrossShapeGenerator from './shape/rect/RectCrossShapeGenerator.js'
 import MeshComponent from '../component/internal/MeshComponent.js'
 import NodeShapeGenerator from './shape/node/NodeShapeGenerator.js'
+import CameraShapeGenerator from './shape/camera/CameraShapeGenerator.js'
 
 /**
  * @abstract
@@ -39,6 +40,8 @@ export default class ShapeGenerator {
                 return RectShapeGenerator
             case PrimitiveShape.RECT_CROSS:
                 return RectCrossShapeGenerator
+            case PrimitiveShape.CAMERA:
+                return CameraShapeGenerator
             case PrimitiveShape.ARROW_RIGHT:
                 return ArrowRightShapeGenerator
             case PrimitiveShape.ARROW_DOWN:

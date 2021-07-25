@@ -1,6 +1,7 @@
 import Component from '../Component.js'
+import {TYPES} from '../../pobject/AttributeType.js'
 
-export default class CameraComponent extends Component{
+export default class CameraComponent extends Component {
 
     constructor() {
         super('Camera')
@@ -9,14 +10,22 @@ export default class CameraComponent extends Component{
     /**
      * @override
      */
-    getFormFields() {
-        return []
+    initAttributes() {
+        this.add('unitFollow', TYPES.UNIT)
     }
 
     /**
-     * @override
+     * @return {number}
      */
-    initAttributes() {
+    getUnitFollow() {
+        return this.getValue('unitFollow')
+    }
+
+    /**
+     * @param {number} unitFollow
+     */
+    setUnitFollow(unitFollow) {
+        this.setValue('unitFollow', unitFollow)
     }
 
     /**

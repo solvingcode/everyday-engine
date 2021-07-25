@@ -174,6 +174,7 @@ class Camera extends CameraData {
         this.update(unitPosition)
         this.setScale(scale)
         meshComponent.setEnabled(false)
+        world.regenerateAll()
     }
 
     /**

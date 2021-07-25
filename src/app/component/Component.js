@@ -1,6 +1,7 @@
 import ComponentData from '../project/data/ComponentData.js'
 import {TYPES} from '../pobject/AttributeType.js'
 import DynamicAttributeHelper from '../utils/DynamicAttributeHelper.js'
+import SystemError from '../exception/type/SystemError.js'
 
 /**
  * @abstract
@@ -13,11 +14,29 @@ export default class Component extends ComponentData{
     }
 
     /**
-     * @abstract
+     * @param {World} world
+     * @param {UnitSelector} unitSelector
      * @return {FormField[]}
      */
-    getFormFields(){
-        throw new TypeError(`${this.constructor.name}.getFormFields must be implement`)
+    getFormFields(world, unitSelector) {
+        const attributes = this.getAttributes()
+        const fields = []
+        const excludeFields = this.getExcludeFields()
+
+        attributes.forEach(attr => {
+            if (!excludeFields.includes(attr.getAttrName())) {
+                fields.push(DynamicAttributeHelper.getFormFields(world, unitSelector, attr))
+            }
+        })
+
+        return fields
+    }
+
+    /**
+     * @return {string[]}
+     */
+    getExcludeFields(){
+        return []
     }
 
     /**
@@ -32,7 +51,7 @@ export default class Component extends ComponentData{
      * @abstract
      */
     initAttributes(){
-        throw new TypeError(`${this.constructor.name}.initAttributes must be implement`)
+        throw new SystemError(`${this.constructor.name}.initAttributes must be implement`)
     }
 
     /**

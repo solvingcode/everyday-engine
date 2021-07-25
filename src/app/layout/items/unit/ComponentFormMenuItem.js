@@ -22,7 +22,7 @@ export default class ComponentFormMenuItem extends FormMenuItem {
      * @override
      */
     generateFields() {
-        return this.getFormObject().getFormFields()
+        return this.getFormObject().getFormFields(World.get(), UnitSelector.get())
     }
 
     /**

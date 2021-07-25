@@ -59,6 +59,10 @@ class Keyboard {
 }
 
 export const KeyCode = {
+    UP: 38,
+    DOWN: 40,
+    LEFT: 37,
+    RIGHT: 39,
     Z: 90,
     S: 83,
     A: 65,

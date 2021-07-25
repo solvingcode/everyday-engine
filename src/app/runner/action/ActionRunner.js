@@ -66,6 +66,7 @@ import ExportAssetAction from './assets/ExportAssetAction.js'
 import DeleteComponentAction from './unit/DeleteComponentAction.js'
 import AddNodeInputAction from './script/AddNodeInputAction.js'
 import SelectTimelineAction from './animation/SelectTimelineAction.js'
+import MoveUnitAction from './edit/MoveUnitAction.js'
 
 /**
  * Action Runner class.
@@ -98,6 +99,7 @@ class ActionRunner extends Runner {
             DUPLICATE: DuplicateAction,
             UNDO: UndoAction,
             MOVE: MoveAction,
+            UNIT_MOVE: MoveUnitAction,
             SCALE: ScaleAction,
             ROTATE: RotateAction,
             MOVE_UP: MoveUpAction,

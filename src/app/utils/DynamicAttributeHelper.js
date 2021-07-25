@@ -142,11 +142,26 @@ export default class DynamicAttributeHelper {
         const dynamicAttribute = !pBindName
         let formField
         if (attribute.getAttrType() === TYPES.UNIT) {
-            formField = {
-                bind: bindName,
-                label: `${attribute.getAttrName()} (Self) `,
-                type: Layout.form.CHECKBOX,
-                dynamicAttribute
+            if(isListInstances){
+                const units = world.getUnitManager().getUnits()
+                    .map(unit => ({
+                        value: unit.getId(),
+                        label: unit.getName()
+                    }))
+                formField = {
+                    bind: bindName,
+                    label: attribute.getAttrName(),
+                    type: Layout.form.DROPDOWN,
+                    list: units,
+                    dynamicAttribute
+                }
+            }else{
+                formField = {
+                    bind: bindName,
+                    label: `${attribute.getAttrName()} (Self) `,
+                    type: Layout.form.CHECKBOX,
+                    dynamicAttribute
+                }
             }
         } else if (attribute.getAttrType() === TYPES.COMPONENT) {
             const components = world.getComponentRegistry().getInstances()

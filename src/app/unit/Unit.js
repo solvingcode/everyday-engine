@@ -59,5 +59,6 @@ export const PrimitiveShape = {
     ARROW_RECT_DOWN: 'arrow_rect_down',
     GRID: 'grid',
     RECT_CROSS: 'rect_cross',
-    NODE: 'node'
+    NODE: 'node',
+    CAMERA: 'camera'
 }

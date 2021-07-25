@@ -403,7 +403,10 @@ AppState.States = {
     ACTION_DELETE_COMPONENT_STOP: {history: false},
     ACTION_SELECT_LIST_TIMELINE_START: {history: false},
     ACTION_SELECT_LIST_TIMELINE_PROGRESS: {history: false},
-    ACTION_SELECT_LIST_TIMELINE_STOP: {history: false}
+    ACTION_SELECT_LIST_TIMELINE_STOP: {history: false},
+    ACTION_UNIT_MOVE_START: {history: false},
+    ACTION_UNIT_MOVE_PROGRESS: {history: false},
+    ACTION_UNIT_MOVE_STOP: {history: false}
 }
 
 export default AppState

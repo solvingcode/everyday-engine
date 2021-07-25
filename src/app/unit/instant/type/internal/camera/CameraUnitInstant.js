@@ -26,7 +26,7 @@ export default class CameraUnitInstant extends UnitInstant {
         styleComponent.setStyle(style)
         transformComponent.setPosition(position)
         meshComponent.setSize(size)
-        meshComponent.setShape(PrimitiveShape.RECT_CROSS)
+        meshComponent.setShape(PrimitiveShape.CAMERA)
     }
 
     /**

@@ -6,10 +6,10 @@ import GridFormMenuItem from './GridFormMenuItem.js'
 /**
  * Menu responsible for managing scene properties
  */
-class SceneMenuItem extends PanelMenuItem {
+class MainCameraMenuItem extends PanelMenuItem {
     constructor() {
         super({
-            name: 'Scene',
+            name: 'Camera',
             zone: Layout.zone.RIGHT
         })
         this.items = [
@@ -19,4 +19,4 @@ class SceneMenuItem extends PanelMenuItem {
     }
 }
 
-export default SceneMenuItem
+export default MainCameraMenuItem

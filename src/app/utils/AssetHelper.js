@@ -34,7 +34,7 @@ export default class AssetHelper {
                     }
                 })
         }else if (asset.getType() instanceof AssetScriptXml) {
-            world.getUnitManager().findUnitsByComponents([ScriptComponent])
+            world.getUnitManager().findUnitsByComponentClasses([ScriptComponent])
                 .forEach(unit => {
                     const scriptComponents = unit.findComponentsByClass(ScriptComponent)
                     scriptComponents.forEach(scriptComponent => {

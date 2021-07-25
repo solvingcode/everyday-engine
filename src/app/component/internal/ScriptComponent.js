@@ -1,8 +1,5 @@
 import Component from '../Component.js'
 import {TYPES} from '../../pobject/AttributeType.js'
-import DynamicAttributeHelper from '../../utils/DynamicAttributeHelper.js'
-import World from '../../world/World.js'
-import UnitSelector from '../../selector/UnitSelector.js'
 
 export default class ScriptComponent extends Component {
 
@@ -20,17 +17,8 @@ export default class ScriptComponent extends Component {
     /**
      * @override
      */
-    getFormFields() {
-        const attributes = this.getAttributes()
-        const fields = []
-
-        attributes.forEach(attr => {
-            if (attr.getAttrName() !== 'script') {
-                fields.push(DynamicAttributeHelper.getFormFields(World.get(), UnitSelector.get(), attr))
-            }
-        })
-
-        return fields
+    getExcludeFields() {
+        return ['script']
     }
 
     /**

@@ -338,4 +338,40 @@ export default class UnitHelper {
         })
         return colliderUnits
     }
+
+    /**
+     * @param {World} world
+     * @param {Unit} unit
+     * @param {number} step
+     * @param {Vector} direction
+     */
+    static moveUnit(world, unit, step, direction){
+        const camera = world.getCamera()
+        const stepScale = camera.fromScaleNumber(step)
+        const moveDirection = new Vector({
+            x: stepScale * direction.x,
+            y: stepScale * direction.y
+        })
+        const transformComponent = unit.getComponent(TransformComponent)
+        const position = transformComponent.getPosition()
+        transformComponent.setPosition(Vector.add(position, moveDirection))
+    }
+
+    /**
+     * @param {World} world
+     * @param {Unit} unit
+     * @param {number} step
+     * @param {Vector} direction
+     */
+    static moveCollider(world, unit, step, direction){
+        const camera = world.getCamera()
+        const stepScale = camera.fromScaleNumber(step)
+        const moveDirection = new Vector({
+            x: stepScale * direction.x,
+            y: stepScale * direction.y
+        })
+        const colliderComponent = UnitHelper.getColliderEditing(unit)
+        const position = colliderComponent.getPosition()
+        colliderComponent.setPosition(Vector.add(position, moveDirection))
+    }
 }
