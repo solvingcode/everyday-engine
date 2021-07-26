@@ -45,6 +45,20 @@ class Maths {
         const c = (1 - Math.cos(t * 3.1415927)) * .5
         return (1. - c) * a + c * b
     }
+
+    /**
+     * @param {number[]} intervalOutputs
+     * @param {number[]} intervalInputs
+     * @param {number} input
+     * @param {number} outOfRange
+     * @return {number}
+     */
+    static fromInterval(intervalOutputs, intervalInputs, input, outOfRange = 0) {
+        if(input < intervalInputs[0] || input > intervalInputs[1]){
+            return outOfRange
+        }
+        return intervalOutputs[0] + (input / (intervalInputs[1] - intervalInputs[0])) * (intervalOutputs[1] - intervalOutputs[0])
+    }
 }
 
 export default Maths

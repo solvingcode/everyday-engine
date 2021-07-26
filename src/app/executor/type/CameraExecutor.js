@@ -5,6 +5,7 @@ import CameraComponent from '../../component/internal/CameraComponent.js'
 import Vector from '../../utils/Vector.js'
 import MeshComponent from '../../component/internal/MeshComponent.js'
 import ObjectHelper from '../../utils/ObjectHelper.js'
+import Maths from '../../utils/Maths.js'
 
 export default class CameraExecutor extends ComponentExecutor {
 
@@ -13,6 +14,7 @@ export default class CameraExecutor extends ComponentExecutor {
     }
 
     /**
+     * @todo: need some refactoring
      * @override
      */
     execute(unit, executionContext) {
@@ -21,8 +23,18 @@ export default class CameraExecutor extends ComponentExecutor {
         const transformComponent = unit.getComponent(TransformComponent)
         const meshComponent = unit.getComponent(MeshComponent)
         const unitFollow = world.getUnitManager().findUnitById(cameraComponent.getUnitFollow())
-        if(unitFollow){
+        if (unitFollow) {
+            const maxSmoothing = 0.01
+            const minSmoothing = 0.1
+            const minSmoothInput = 1
+            const maxSmoothInput = 10
+
             const deadZone = cameraComponent.getDeadZone()
+            const smoothing = cameraComponent.getSmoothing()
+            const delayTime = cameraComponent.getDelayTime()
+            const delaySmoothing = cameraComponent.getDelaySmoothing()
+            const lastLookDistance = cameraComponent.getLookDistance()
+            const lastUnitFollowPosition = cameraComponent.getLastUnitFollowPosition()
 
             const unitFollowPosition = unitFollow.getComponent(TransformComponent).getPosition()
             const sizeCamera = meshComponent.getSize()
@@ -34,21 +46,49 @@ export default class CameraExecutor extends ComponentExecutor {
             const newCameraPosition = new Vector(lastCameraPosition)
 
             //calculate tracking point
+            const maxDelay = 200
             const cameraPositionAttachedToUnit = Vector.add(Vector.subtract(unitFollowPosition, centerCamera), centerUnitFollow)
             const trackPoint = Vector.subtract(cameraPositionAttachedToUnit,
                 new Vector({x: lastCameraPosition.getX(), y: lastCameraPosition.getY()}))
+            const moveUnitDistance = Vector.subtract(unitFollowPosition, lastUnitFollowPosition)
+            const newDelaySmoothing = new Vector({
+                x: Maths.fromInterval(
+                    [maxSmoothing, minSmoothing], [minSmoothInput, maxSmoothInput],
+                    maxSmoothInput - delaySmoothing.getX()),
+                y: Maths.fromInterval(
+                    [maxSmoothing, minSmoothing], [minSmoothInput, maxSmoothInput],
+                    maxSmoothInput - delaySmoothing.getY())
+            })
+            let maxLookDistance = Vector.linearMultiply(moveUnitDistance, Vector.multiply(delayTime, maxDelay))
+            let lookDistance = Vector.add(lastLookDistance, maxLookDistance)
+            if(lookDistance > maxLookDistance){
+                lookDistance = maxLookDistance
+            }
+            const smoothLookDistance = Vector.linearMultiply(lookDistance, newDelaySmoothing)
+            lookDistance = Vector.subtract(lookDistance, smoothLookDistance)
+            const trackPointDelayed = Vector.add(trackPoint, smoothLookDistance)
 
             //move camera
-            if(Math.abs(trackPoint.getX()) >= deadZone.getWidth() / 2){
-                const distanceX = (Math.abs(trackPoint.getX()) - deadZone.getWidth() / 2) * (Math.abs(trackPoint.getX()) / trackPoint.getX())
-                newCameraPosition.setX(newCameraPosition.getX() + distanceX)
+            if (Math.abs(trackPointDelayed.getX()) >= deadZone.getWidth() / 2) {
+                const distanceX = (Math.abs(trackPointDelayed.getX()) - deadZone.getWidth() / 2) * (Math.abs(trackPointDelayed.getX()) / trackPointDelayed.getX())
+                const distanceXSmoothing = distanceX * Maths.fromInterval(
+                    [maxSmoothing, minSmoothing], [minSmoothInput, maxSmoothInput], maxSmoothInput - smoothing.getX())
+                newCameraPosition.setX(newCameraPosition.getX() + distanceXSmoothing)
+            }
+            if (Math.abs(trackPointDelayed.getY()) >= deadZone.getHeight() / 2) {
+                const distanceY = (Math.abs(trackPointDelayed.getY()) - deadZone.getHeight() / 2) * (Math.abs(trackPointDelayed.getY()) / trackPointDelayed.getY())
+                const distanceYSmoothing = distanceY * Maths.fromInterval(
+                    [maxSmoothing, minSmoothing], [minSmoothInput, maxSmoothInput], maxSmoothInput - smoothing.getY())
+                newCameraPosition.setY(newCameraPosition.getY() + distanceYSmoothing)
             }
 
-            if(!ObjectHelper.isEqual(transformComponent.getPosition(), newCameraPosition) ||
-                !ObjectHelper.isEqual(cameraComponent.getTrackPoint(), trackPoint)){
+            if (!ObjectHelper.isEqual(transformComponent.getPosition(), newCameraPosition) ||
+                !ObjectHelper.isEqual(cameraComponent.getTrackPoint(), trackPointDelayed)) {
                 transformComponent.getPosition().setX(newCameraPosition.getX())
                 transformComponent.getPosition().setY(newCameraPosition.getY())
-                cameraComponent.setTrackPoint(trackPoint)
+                cameraComponent.setTrackPoint(trackPointDelayed)
+                cameraComponent.setLastUnitFollowPosition(unitFollowPosition)
+                cameraComponent.setLookDistance(lookDistance)
                 meshComponent.setGenerated(false)
             }
         }

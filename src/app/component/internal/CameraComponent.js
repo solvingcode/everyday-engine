@@ -13,9 +13,14 @@ export default class CameraComponent extends Component {
      * @override
      */
     initAttributes() {
+        this.add('unitFollow', TYPES.UNIT)
         this.add('trackPoint', TYPES.VECTOR, new Vector())
         this.add('deadZone', TYPES.SIZE, new Size(0))
-        this.add('unitFollow', TYPES.UNIT)
+        this.add('smoothing', TYPES.VECTOR, new Vector())
+        this.add('delayTime', TYPES.VECTOR, new Vector())
+        this.add('delaySmoothing', TYPES.VECTOR, new Vector())
+        this.add('lastUnitFollowPosition', TYPES.VECTOR, new Vector())
+        this.add('lookDistance', TYPES.VECTOR, new Vector())
     }
 
     /**
@@ -58,6 +63,76 @@ export default class CameraComponent extends Component {
      */
     setDeadZone(deadZone) {
         this.setValue('deadZone', deadZone)
+    }
+
+    /**
+     * @return {Vector}
+     */
+    getSmoothing() {
+        return this.getValue('smoothing')
+    }
+
+    /**
+     * @param {Vector} smoothing
+     */
+    setSmoothing(smoothing) {
+        this.setValue('smoothing', smoothing)
+    }
+
+    /**
+     * @return {Vector}
+     */
+    getDelayTime() {
+        return this.getValue('delayTime')
+    }
+
+    /**
+     * @param {Vector} delayTime
+     */
+    setDelayTime(delayTime) {
+        this.setValue('delayTime', delayTime)
+    }
+
+    /**
+     * @return {Vector}
+     */
+    getDelaySmoothing() {
+        return this.getValue('delaySmoothing')
+    }
+
+    /**
+     * @param {Vector} delaySmoothing
+     */
+    setDelaySmoothing(delaySmoothing) {
+        this.setValue('delaySmoothing', delaySmoothing)
+    }
+
+    /**
+     * @return {Vector}
+     */
+    getLastUnitFollowPosition() {
+        return this.getValue('lastUnitFollowPosition')
+    }
+
+    /**
+     * @param {Vector} lastUnitFollowPosition
+     */
+    setLastUnitFollowPosition(lastUnitFollowPosition) {
+        this.setValue('lastUnitFollowPosition', lastUnitFollowPosition)
+    }
+
+    /**
+     * @return {Vector}
+     */
+    getLookDistance() {
+        return this.getValue('lookDistance')
+    }
+
+    /**
+     * @param {Vector} lookDistance
+     */
+    setLookDistance(lookDistance) {
+        this.setValue('lookDistance', lookDistance)
     }
 
     /**
