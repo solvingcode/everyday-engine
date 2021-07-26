@@ -15,6 +15,7 @@ import AnimationMeshExecutor from '../executor/type/AnimationMeshExecutor.js'
 import WorldInitializeRunner from '../runner/world/WorldInitializeRunner.js'
 import ColliderDebugRunner from '../runner/debug/ColliderDebugRunner.js'
 import CameraRunner from '../runner/camera/CameraRunner.js'
+import CameraExecutor from '../executor/type/CameraExecutor.js'
 
 /**
  * @class {Game}
@@ -37,7 +38,8 @@ class Game extends Scene {
             new MeshStyleExecutor(),
             new ScriptExecutor(),
             new AnimationScriptExecutor(),
-            new AnimationMeshExecutor()
+            new AnimationMeshExecutor(),
+            new CameraExecutor()
         ])
     }
 

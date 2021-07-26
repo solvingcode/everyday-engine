@@ -20,6 +20,7 @@ import AnimationEditorRunner from '../runner/editor/AnimationEditorRunner.js'
 import WorldInitializeRunner from '../runner/world/WorldInitializeRunner.js'
 import FormRunner from '../runner/form/FormRunner.js'
 import MoveUnitRunner from '../runner/editor/MoveUnitRunner.js'
+import CameraExecutor from '../executor/type/CameraExecutor.js'
 
 /**
  * @class {Setup}
@@ -47,7 +48,8 @@ class Setup extends Loop {
         ExecutorRegistry.get().register([
             new MeshGenerationExecutor(),
             new GUISelectionExecutor(),
-            new GUIPropertyExecutor()
+            new GUIPropertyExecutor(),
+            new CameraExecutor()
         ])
     }
 

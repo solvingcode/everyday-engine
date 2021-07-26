@@ -18,7 +18,7 @@ export default class CameraUnitInstant extends UnitInstant {
         this.setName('Camera')
         const style = new Style()
         style.setColor('#AAAAAA')
-        style.setBorderSize(3)
+        style.setBorderSize(1)
         this.createComponent(CameraComponent)
         const meshComponent = this.getComponent(MeshComponent)
         const transformComponent = this.getComponent(TransformComponent)

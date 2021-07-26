@@ -136,6 +136,7 @@ export default class DynamicAttributeHelper {
      * @param {DynamicAttribute} attribute
      * @param {boolean} isListInstances
      * @param {string|null} pBindName
+     * @return {FormField[]}
      */
     static getFormFields(world, unitSelector, attribute, isListInstances = true, pBindName = null) {
         const bindName = pBindName || attribute.getAttrName()
@@ -148,20 +149,20 @@ export default class DynamicAttributeHelper {
                         value: unit.getId(),
                         label: unit.getName()
                     }))
-                formField = {
+                formField = [{
                     bind: bindName,
                     label: attribute.getAttrName(),
                     type: Layout.form.DROPDOWN,
                     list: units,
                     dynamicAttribute
-                }
+                }]
             }else{
-                formField = {
+                formField = [{
                     bind: bindName,
                     label: `${attribute.getAttrName()} (Self) `,
                     type: Layout.form.CHECKBOX,
                     dynamicAttribute
-                }
+                }]
             }
         } else if (attribute.getAttrType() === TYPES.COMPONENT) {
             const components = world.getComponentRegistry().getInstances()
@@ -169,13 +170,13 @@ export default class DynamicAttributeHelper {
                     value: component.getName(),
                     label: component.getName()
                 }))
-            formField = {
+            formField = [{
                 bind: bindName,
                 label: attribute.getAttrName(),
                 type: Layout.form.DROPDOWN,
                 list: components,
                 dynamicAttribute
-            }
+            }]
         } else if (attribute.getAttrType() === TYPES.COMPONENT_INSTANCE && isListInstances) {
             const selectedUnit = unitSelector.getFirstSelected(world)
             const componentInstances = selectedUnit.getComponents()
@@ -184,13 +185,13 @@ export default class DynamicAttributeHelper {
                     value: component.getId(),
                     label: component.getName()
                 }))
-            formField = {
+            formField = [{
                 bind: bindName,
                 label: attribute.getAttrName(),
                 type: Layout.form.DROPDOWN,
                 list: componentInstances,
                 dynamicAttribute
-            }
+            }]
         } else if (attribute.getAttrType() === TYPES.MASK_GROUP_INSTANCE && isListInstances) {
             const listMaskGroups = world
                 .getPreference().getMaskGroup().getMasks()
@@ -198,27 +199,57 @@ export default class DynamicAttributeHelper {
                     value: maskGroup.getId(),
                     label: maskGroup.getName()
                 }))
-            formField = {
+            formField = [{
                 bind: bindName,
                 label: attribute.getAttrName(),
                 type: Layout.form.DROPDOWN,
                 list: listMaskGroups,
                 dynamicAttribute
-            }
+            }]
         } else if (attribute.getAttrType() === TYPES.BOOLEAN && isListInstances) {
-            formField = {
+            formField = [{
                 bind: bindName,
                 label: `${attribute.getAttrName()} `,
                 type: Layout.form.CHECKBOX,
                 dynamicAttribute
-            }
-        } else {
-            formField = {
+            }]
+        } else if (attribute.getAttrType() === TYPES.VECTOR && isListInstances) {
+            formField = [
+                {
+                    bind: `${bindName}.x`,
+                    label: `${attribute.getAttrName()} X`,
+                    type: Layout.form.TEXT,
+                    dynamicAttribute
+                },
+                {
+                    bind: `${bindName}.y`,
+                    label: `${attribute.getAttrName()} Y`,
+                    type: Layout.form.TEXT,
+                    dynamicAttribute
+                }
+            ]
+        } else if (attribute.getAttrType() === TYPES.SIZE && isListInstances) {
+            formField = [
+                {
+                    bind: `${bindName}.width`,
+                    label: `${attribute.getAttrName()} Width`,
+                    type: Layout.form.TEXT,
+                    dynamicAttribute
+                },
+                {
+                    bind: `${bindName}.height`,
+                    label: `${attribute.getAttrName()} Height`,
+                    type: Layout.form.TEXT,
+                    dynamicAttribute
+                }
+            ]
+        }else {
+            formField = [{
                 bind: bindName,
                 label: attribute.getAttrName(),
                 type: Layout.form.TEXT,
                 dynamicAttribute
-            }
+            }]
         }
         return formField
     }

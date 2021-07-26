@@ -27,7 +27,7 @@ export default class AddScriptNodeInputFormMenuItem extends FormMenuItem {
     generateFields() {
         const form = this.getFormObject()
         if (form) {
-            return [DynamicAttributeHelper.getFormFields(
+            return [...DynamicAttributeHelper.getFormFields(
                 World.get(), UnitSelector.get(), form.getAttribute(), false, 'value')]
         }
         return []

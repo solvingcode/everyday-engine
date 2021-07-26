@@ -4,6 +4,7 @@ import MeshComponent from '../../../component/internal/MeshComponent.js'
 import TransformComponent from '../../../component/internal/TransformComponent.js'
 import UnitSelector from '../../../selector/UnitSelector.js'
 import World from '../../../world/World.js'
+import CameraComponent from '../../../component/internal/CameraComponent.js'
 
 export default class ComponentFormMenuItem extends FormMenuItem {
     /**
@@ -31,7 +32,8 @@ export default class ComponentFormMenuItem extends FormMenuItem {
     postUpdate(value) {
         const formObject = this.getFormObject()
         if (formObject instanceof MeshComponent ||
-            formObject instanceof TransformComponent) {
+            formObject instanceof TransformComponent||
+            formObject instanceof CameraComponent) {
             const selectedUnit = UnitSelector.get().getFirstSelected(World.get())
             selectedUnit.getComponent(MeshComponent).setGenerated(false)
         }

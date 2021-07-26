@@ -232,6 +232,10 @@ class World extends WorldData {
         }
     }
 
+    disableGuides(){
+        this.getCamera().disableGuides(this)
+    }
+
     /**
      * Get the world position of a given screen position
      * @param {Vector} position

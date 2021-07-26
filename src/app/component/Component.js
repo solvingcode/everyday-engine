@@ -25,7 +25,7 @@ export default class Component extends ComponentData{
 
         attributes.forEach(attr => {
             if (!excludeFields.includes(attr.getAttrName())) {
-                fields.push(DynamicAttributeHelper.getFormFields(world, unitSelector, attr))
+                fields.push(...DynamicAttributeHelper.getFormFields(world, unitSelector, attr))
             }
         })
 

@@ -2,6 +2,7 @@ import Runner from '../Runner.js'
 import World from '../../world/World.js'
 import CameraComponent from '../../component/internal/CameraComponent.js'
 import CameraHelper from '../../utils/CameraHelper.js'
+import TransformComponent from '../../component/internal/TransformComponent.js'
 
 export default class CameraRunner extends Runner {
 
@@ -23,7 +24,8 @@ export default class CameraRunner extends Runner {
             const cameraComponent = cameraUnit.getComponent(CameraComponent)
             const unitFollow = world.getUnitManager().findUnitById(cameraComponent.getUnitFollow())
             if(unitFollow){
-                CameraHelper.follow(camera, unitFollow)
+                const transformComponent = cameraUnit.getComponent(TransformComponent)
+                CameraHelper.follow(camera, transformComponent.getPosition())
             }
         }
     }

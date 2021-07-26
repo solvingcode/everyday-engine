@@ -179,6 +179,6 @@ export default class MeshGenerationExecutor extends ComponentExecutor {
      * @return {Size}
      */
     getScaleSize(camera, meshComponent, transformComponent) {
-        return camera.toScaleSize(meshComponent.getSize(), transformComponent.getPosition())
+        return camera.toScaleSize(meshComponent.getSize())
     }
 }

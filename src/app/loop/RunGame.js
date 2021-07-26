@@ -18,6 +18,7 @@ class RunGame extends Game {
      */
     async doInit() {
         await Storage.get().load(Storage.type.WORLD, EngineWorldData.world, World.get())
+        World.get().disableGuides()
         await super.doInit()
     }
 

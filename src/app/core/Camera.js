@@ -173,8 +173,16 @@ class Camera extends CameraData {
         const unitPosition = unit.getComponent(TransformComponent).getPosition()
         this.update(unitPosition)
         this.setScale(scale)
-        meshComponent.setEnabled(false)
         world.regenerateAll()
+    }
+
+    /**
+     * @param {World} world
+     */
+    disableGuides(world){
+        const unit = this.getUnit(world.getUnitManager())
+        const meshComponent = unit.getComponent(MeshComponent)
+        meshComponent.setEnabled(false)
     }
 
     /**
