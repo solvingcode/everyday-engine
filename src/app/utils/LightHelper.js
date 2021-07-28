@@ -5,6 +5,7 @@ import {CANVAS_CONTEXT_TYPE} from '../core/Constant.js'
 import Vector from './Vector.js'
 import TransformComponent from '../component/internal/TransformComponent.js'
 import Color from './Color.js'
+import GeometryHelper from './GeometryHelper.js'
 
 export default class LightHelper {
 
@@ -33,41 +34,48 @@ export default class LightHelper {
         const sw = scaleSize.width * outerRadius / 100
         const radiusScale = Math.abs(sw / 2 - 1)
         const lightPosition = transformComponent.getPosition()
+        const lightRotation = transformComponent.getRotation()
         const globalColorRgba = Color.hexToRgba(globalColor, globalIntensity)
         const lightColorRgba = Color.hexToRgba(lightColor, lightIntensity)
 
         //calculate position to put the light
         const positionStartLight = camera.toCameraScale(Vector.subtract(lightPosition, positionToLight))
-        const centerLight = Vector.add(positionStartLight, center)
 
         //create canvas
         const canvas = new OffscreenCanvas(sizeToLight.width, sizeToLight.height)
         const context = canvas.getContext(CANVAS_CONTEXT_TYPE)
 
-        //gradient lighting
-        const gradientLight = context.createRadialGradient(
-            centerLight.x, centerLight.y, 0, centerLight.x, centerLight.y, radiusScale)
-        gradientLight.addColorStop(0, lightColorRgba)
-        gradientLight.addColorStop(innerRadius / 100, lightColorRgba)
-        gradientLight.addColorStop(1, Color.hexToRgba(lightColor, 0))
-
         context.fillStyle = globalColorRgba
         context.fillRect(0, 0, sizeToLight.width, sizeToLight.height)
 
         //arc light + light bounds
-        context.beginPath()
-        context.moveTo(centerLight.x, centerLight.y)
-        context.lineTo(sw, radiusScale)
-        context.moveTo(centerLight.x, centerLight.y)
-        context.lineTo(centerLight.x + Math.cos(outerAngle) * radiusScale, centerLight.y + Math.cos(Math.PI / 2 - outerAngle) * radiusScale)
-        context.moveTo(centerLight.x, centerLight.y)
-        context.arc(centerLight.x, centerLight.y, radiusScale, 0, outerAngle)
-        context.closePath()
+        const {width: largeWidth, height: largeHeight} = GeometryHelper.getLargestRectangle(lightRotation, scaleSize)
+        const lightCanvas = new OffscreenCanvas(largeWidth, largeHeight)
+        const lightContext = lightCanvas.getContext(CANVAS_CONTEXT_TYPE)
+        lightContext.translate(largeWidth / 2, largeHeight / 2)
+        lightContext.rotate(lightRotation)
+        lightContext.translate(-center.x, -center.y)
+        lightContext.beginPath()
+        lightContext.moveTo(center.x, center.y)
+        lightContext.lineTo(sw, radiusScale)
+        lightContext.moveTo(center.x, center.y)
+        lightContext.lineTo(center.x + Math.cos(outerAngle) * radiusScale, center.y + Math.cos(Math.PI / 2 - outerAngle) * radiusScale)
+        lightContext.moveTo(center.x, center.y)
+        lightContext.arc(center.x, center.y, radiusScale, 0, outerAngle)
+        lightContext.closePath()
+
+        //gradient lighting
+        const gradientLight = lightContext.createRadialGradient(
+            center.x, center.y, 0, center.x, center.y, radiusScale)
+        gradientLight.addColorStop(0, lightColorRgba)
+        gradientLight.addColorStop(innerRadius / 100, lightColorRgba)
+        gradientLight.addColorStop(1, Color.hexToRgba(lightColor, 0))
+        lightContext.fillStyle = gradientLight
+        lightContext.fill()
 
         //fill gradient light
         context.globalCompositeOperation = 'destination-out'
-        context.fillStyle = gradientLight
-        context.fill()
+        context.drawImage(lightCanvas, positionStartLight.x, positionStartLight.y, lightCanvas.width, lightCanvas.height)
 
         return canvas
     }
