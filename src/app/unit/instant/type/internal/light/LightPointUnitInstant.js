@@ -8,7 +8,7 @@ import StyleComponent from '../../../../../component/internal/StyleComponent.js'
 import LightPointComponent from '../../../../../component/internal/LightPointComponent.js'
 import ClientError from '../../../../../exception/type/ClientError.js'
 
-export default class LightUnitInstant extends UnitInstant {
+export default class LightPointUnitInstant extends UnitInstant {
 
     /**
      * @override
@@ -17,7 +17,7 @@ export default class LightUnitInstant extends UnitInstant {
      * @param {string} type
      */
     instantiate(position, size, type) {
-        this.setName('Light')
+        this.setName('Light Point')
         const style = new Style()
         style.setColor('#e5fc14')
         style.setBorderSize(1)

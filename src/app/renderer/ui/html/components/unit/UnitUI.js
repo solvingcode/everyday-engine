@@ -2,6 +2,7 @@ import ImageUI from '../image/ImageUI.js'
 import World from '../../../../../world/World.js'
 import CameraComponent from '../../../../../component/internal/CameraComponent.js'
 import IconUI from '../icon/IconUI.js'
+import LightComponent from '../../../../../component/internal/LightComponent.js'
 
 class UnitUI {
 
@@ -14,6 +15,10 @@ class UnitUI {
     static getImage(unit, props, version = 0) {
         if(unit.getComponent(CameraComponent)){
             const icon = IconUI.createIcon('video')
+            icon.id = `${version}`
+            return icon
+        }else if(unit.hasComponentsByClasses([LightComponent])){
+            const icon = IconUI.createIcon('lightbulb')
             icon.id = `${version}`
             return icon
         }else{

@@ -68,6 +68,7 @@ import AddNodeInputAction from './script/AddNodeInputAction.js'
 import SelectTimelineAction from './animation/SelectTimelineAction.js'
 import MoveUnitAction from './edit/MoveUnitAction.js'
 import AddLightPointAction from './light/AddLightPointAction.js'
+import AddLightGlobalAction from './light/AddLightGlobalAction.js'
 
 /**
  * Action Runner class.
@@ -134,6 +135,7 @@ class ActionRunner extends Runner {
             COLLAPSE_PANEL: PanelCollapseAction,
             ADD_CAMERA: AddCameraAction,
             ADD_LIGHT_POINT: AddLightPointAction,
+            ADD_LIGHT_GLOBAL: AddLightGlobalAction,
             SELECT_TAB: SelectTabAction,
             CLOSE_TAB: CloseTabAction,
             SELECT_FOLDER: SelectFolderAction,

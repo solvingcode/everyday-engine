@@ -11,6 +11,7 @@ export default class LightPointComponent extends LightComponent{
      * @override
      */
     initAttributes() {
+        super.initAttributes()
         this.add('innerAngle', TYPES.NUMBER, 360)
         this.add('outerAngle', TYPES.NUMBER, 360)
         this.add('innerRadius', TYPES.NUMBER, 0)

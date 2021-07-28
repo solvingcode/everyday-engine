@@ -1,6 +1,7 @@
 import Material from './Material.js'
 import LightHelper from '../utils/LightHelper.js'
-import LightComponent from '../component/internal/LightComponent.js'
+import LightPointComponent from '../component/internal/LightPointComponent.js'
+import LightGlobalComponent from '../component/internal/LightGlobalComponent.js'
 
 export default class LightMaterial extends Material {
 
@@ -13,8 +14,17 @@ export default class LightMaterial extends Material {
      */
     generate(canvas, dataContext, meshComponent, transformComponent) {
         const {context, scaleSize, world, camera} = dataContext
-        world.getUnitManager().findUnitsByComponentClasses([LightComponent]).forEach(unitLight => {
-            const lightCanvas = LightHelper.getPoint(unitLight, camera, transformComponent.getPosition(), scaleSize)
+        const unitManager = world.getUnitManager()
+        const lightGlobalUnits = unitManager.findUnitsByComponents([LightGlobalComponent])
+        let globalIntensity = 3
+        let globalColor = '#000000'
+        if (lightGlobalUnits.length) {
+            const lightGlobalComponent = lightGlobalUnits[0].getComponent(LightGlobalComponent)
+            globalIntensity = lightGlobalComponent.getIntensity()
+            globalColor = lightGlobalComponent.getColor()
+        }
+        unitManager.findUnitsByComponentClasses([LightPointComponent]).forEach(unitLight => {
+            const lightCanvas = LightHelper.getPoint(unitLight, camera, transformComponent.getPosition(), scaleSize, globalIntensity, globalColor)
             const globalCompositeOperation = context.globalCompositeOperation
             context.globalCompositeOperation = 'source-atop'
             context.drawImage(lightCanvas, 0, 0, scaleSize.width, scaleSize.height)

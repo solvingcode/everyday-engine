@@ -338,9 +338,12 @@ export default class UnitManager extends UnitManagerData {
      * @param {World} world
      */
     regenerateAll(world) {
-        this.units.forEach(unit =>
-            unit.getComponent(MeshComponent).setGenerated(false)
-        )
+        this.units.forEach(unit => {
+            const meshComponent = unit.getComponent(MeshComponent)
+            if(meshComponent){
+                meshComponent.setGenerated(false)
+            }
+        })
     }
 
     /**

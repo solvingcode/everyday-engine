@@ -4,6 +4,7 @@ import MeshComponent from '../component/internal/MeshComponent.js'
 import {CANVAS_CONTEXT_TYPE} from '../core/Constant.js'
 import Vector from './Vector.js'
 import TransformComponent from '../component/internal/TransformComponent.js'
+import Color from './Color.js'
 
 export default class LightHelper {
 
@@ -12,22 +13,28 @@ export default class LightHelper {
      * @param {Camera} camera
      * @param {Vector} positionToLight absolute position
      * @param {Size} sizeToLight
+     * @param {number} globalIntensity
+     * @param {string} globalColor
      *
      * @return {OffscreenCanvas}
      */
-    static getPoint(unit, camera, positionToLight, sizeToLight){
+    static getPoint(unit, camera, positionToLight, sizeToLight, globalIntensity, globalColor){
         //init properties
         const meshComponent = unit.getComponent(MeshComponent)
         const transformComponent = unit.getComponent(TransformComponent)
         const lightComponent = unit.getComponent(LightPointComponent)
         const outerAngle = Maths.fromDegree(lightComponent.getOuterAngle())
-        const innerAngle = Maths.fromDegree(lightComponent.getInnerAngle())
         const outerRadius = lightComponent.getOuterRadius()
+        const innerRadius = lightComponent.getInnerRadius()
+        const lightColor = lightComponent.getColor()
+        const lightIntensity = lightComponent.getIntensity()
         const scaleSize = camera.toScaleSize(meshComponent.getSize())
         const center = new Vector({x: scaleSize.width / 2, y: scaleSize.height / 2})
         const sw = scaleSize.width * outerRadius / 100
         const radiusScale = Math.abs(sw / 2 - 1)
         const lightPosition = transformComponent.getPosition()
+        const globalColorRgba = Color.hexToRgba(globalColor, globalIntensity)
+        const lightColorRgba = Color.hexToRgba(lightColor, lightIntensity)
 
         //calculate position to put the light
         const positionStartLight = camera.toCameraScale(Vector.subtract(lightPosition, positionToLight))
@@ -40,10 +47,11 @@ export default class LightHelper {
         //gradient lighting
         const gradientLight = context.createRadialGradient(
             centerLight.x, centerLight.y, 0, centerLight.x, centerLight.y, radiusScale)
-        gradientLight.addColorStop(0, 'rgba(255, 255, 255, 1)')
-        gradientLight.addColorStop(1, 'rgba(0, 0, 0, 0)')
+        gradientLight.addColorStop(0, lightColorRgba)
+        gradientLight.addColorStop(innerRadius / 100, lightColorRgba)
+        gradientLight.addColorStop(1, Color.hexToRgba(lightColor, 0))
 
-        context.fillStyle = '#000000'
+        context.fillStyle = globalColorRgba
         context.fillRect(0, 0, sizeToLight.width, sizeToLight.height)
 
         //arc light + light bounds

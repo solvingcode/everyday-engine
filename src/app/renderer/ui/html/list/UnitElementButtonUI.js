@@ -18,7 +18,8 @@ export default class UnitElementButtonUI extends ListElementButtonUI {
      */
     static getIcon(item){
         const bind = item.element.getDataBind()
-        const meshVersion = bind.getComponent(MeshComponent).getVersion()
+        const meshComponent = bind.getComponent(MeshComponent)
+        const meshVersion = meshComponent ? bind.getComponent(MeshComponent).getVersion() : 0
         const {imageWidth, imageHeight} = this.props
         return UnitUI.getImage(bind, {width: imageWidth, height: imageHeight}, meshVersion)
     }
@@ -29,7 +30,8 @@ export default class UnitElementButtonUI extends ListElementButtonUI {
     static postUpdate(item, el, uiRenderer){
         super.postUpdate(item, el, uiRenderer)
         const bind = item.element.getDataBind()
-        const meshVersion = bind.getComponent(MeshComponent).getVersion()
+        const meshComponent = bind.getComponent(MeshComponent)
+        const meshVersion = meshComponent ? bind.getComponent(MeshComponent).getVersion() : 0
         const iconElement = this.getIconElement(el)
         if(!iconElement || parseInt(iconElement.id) !== meshVersion){
             this.update(item, el, uiRenderer)

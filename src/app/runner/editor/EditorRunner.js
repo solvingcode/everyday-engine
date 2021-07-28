@@ -35,6 +35,7 @@ import GUIGridYComponent from '../../component/internal/gui/grid/GUIGridYCompone
 import GUIGridXComponent from '../../component/internal/gui/grid/GUIGridXComponent.js'
 import GridYUnitInstant from '../../unit/instant/type/internal/grid/GridYUnitInstant.js'
 import GUIColliderComponent from '../../component/internal/gui/collider/GUIColliderComponent.js'
+import EmptyUnit from '../../unit/type/EmptyUnit.js'
 
 class EditorRunner extends Runner {
 
@@ -224,7 +225,7 @@ class EditorRunner extends Runner {
             .forEach(unit => unitManager.deleteUnit(unit))
 
         //get selected units
-        const selectedUnits = UnitSelector.get().getSelected(world)
+        const selectedUnits = UnitSelector.get().getSelected(world).filter(unit => unit instanceof EmptyUnit)
 
         //find the editor position
         let editorPosition = selectedUnits

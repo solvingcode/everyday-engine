@@ -11,6 +11,7 @@ import RangeMenuItem from './RangeMenuItem.js'
 import TextareaMenuItem from './TextareaMenuItem.js'
 import WysiwygMenuItem from './WysiwygMenuItem.js'
 import SystemError from '../../../exception/type/SystemError.js'
+import ClientError from '../../../exception/type/ClientError.js'
 
 /**
  * Form menu item
@@ -136,7 +137,7 @@ class FormMenuItem extends MenuItem {
                         return true
                     }
                 } catch (e) {
-                    throw new ReferenceError(`Error comparing ${getterString} for ${object.constructor.name}`)
+                    throw new ClientError(`Error comparing ${getterString} for ${object.constructor.name}`)
                 }
             }
         }

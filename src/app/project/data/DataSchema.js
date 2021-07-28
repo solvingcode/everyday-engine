@@ -141,9 +141,11 @@ import AddVectorFunction from '../../flow/function/native/basic/AddVectorFunctio
 import IsUpdateTimeFunction from '../../flow/function/native/time/IsUpdateTimeFunction.js'
 import MaterialRegistry from '../../registry/MaterialRegistry.js'
 import DefaultMaterial from '../../material/DefaultMaterial.js'
-import LightUnitInstant from '../../unit/instant/type/internal/light/LightUnitInstant.js'
+import LightPointUnitInstant from '../../unit/instant/type/internal/light/LightPointUnitInstant.js'
 import LightPointComponent from '../../component/internal/LightPointComponent.js'
 import LightMaterial from '../../material/LightMaterial.js'
+import LightGlobalUnitInstant from '../../unit/instant/type/internal/light/LightGlobalUnitInstant.js'
+import LightGlobalComponent from '../../component/internal/LightGlobalComponent.js'
 
 /**
  * @class {DataSchema}
@@ -282,9 +284,11 @@ class DataSchema {
         {id: 1190, type: IsUpdateTimeFunction},
         {id: 1200, type: MaterialRegistry},
         {id: 1210, type: DefaultMaterial},
-        {id: 1220, type: LightUnitInstant},
+        {id: 1220, type: LightPointUnitInstant},
         {id: 1230, type: LightPointComponent},
-        {id: 1240, type: LightMaterial}
+        {id: 1240, type: LightMaterial},
+        {id: 1250, type: LightGlobalUnitInstant},
+        {id: 1260, type: LightGlobalComponent}
     ]
 
     /**
