@@ -15,6 +15,7 @@ export default class AssetUnitInstant extends UnitInstant {
         const transformComponent = this.getComponent(TransformComponent)
         meshComponent.setSize(_.cloneDeep(asset.getType().getData().size))
         meshComponent.setAssetId(asset.getId())
+        meshComponent.setMaterial('default')
         transformComponent.setPosition(position)
     }
 

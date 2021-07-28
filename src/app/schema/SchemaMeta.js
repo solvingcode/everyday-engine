@@ -20,6 +20,8 @@ import GameInput from '../preference/gameInput/GameInput.js'
 import ComponentRegistry from '../registry/ComponentRegistry.js'
 import MaskGroupPreference from '../preference/maskgroup/MaskGroupPreference.js'
 import MaskGroup from '../preference/maskgroup/MaskGroup.js'
+import MaterialRegistry from '../registry/MaterialRegistry.js'
+import Material from '../material/Material.js'
 
 /**
  * Define the schema of project data.
@@ -196,6 +198,36 @@ export default {
                                     },
                                     attributes: {
                                         type: TYPES.ARRAY | TYPES.DYNAMIC_ATTRIBUTE
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            materialRegistry: {
+                type: MaterialRegistry,
+                meta: {
+                    dataId: {
+                        type: TYPES.NUMBER
+                    },
+                    name: {
+                        type: TYPES.STRING
+                    },
+                    registry: {
+                        type: Array,
+                        meta: {
+                            element: {
+                                type: Material,
+                                meta: {
+                                    dataId: {
+                                        type: TYPES.NUMBER
+                                    },
+                                    id: {
+                                        type: TYPES.NUMBER
+                                    },
+                                    name: {
+                                        type: TYPES.STRING
                                     }
                                 }
                             }

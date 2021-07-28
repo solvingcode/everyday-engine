@@ -177,6 +177,19 @@ export default class DynamicAttributeHelper {
                 list: components,
                 dynamicAttribute
             }]
+        } else if (attribute.getAttrType() === TYPES.MATERIAL) {
+            const materials = world.getMaterialRegistry().getInstances()
+                .map(material => ({
+                    value: material.getName(),
+                    label: material.getName()
+                }))
+            formField = [{
+                bind: bindName,
+                label: attribute.getAttrName(),
+                type: Layout.form.DROPDOWN,
+                list: materials,
+                dynamicAttribute
+            }]
         } else if (attribute.getAttrType() === TYPES.COMPONENT_INSTANCE && isListInstances) {
             const selectedUnit = unitSelector.getFirstSelected(world)
             const componentInstances = selectedUnit.getComponents()

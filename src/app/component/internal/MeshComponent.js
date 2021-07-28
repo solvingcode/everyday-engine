@@ -1,6 +1,5 @@
 import Component from '../Component.js'
 import Style from '../../pobject/Style.js'
-import Layout from '../../layout/Layout.js'
 import Size from '../../pobject/Size.js'
 import {PrimitiveShape} from '../../unit/Unit.js'
 import {TYPES} from '../../pobject/AttributeType.js'
@@ -29,69 +28,14 @@ export default class MeshComponent extends Component{
         this.add('imageRepeatAreaMin', TYPES.VECTOR, new Vector())
         this.add('imageRepeatAreaMax', TYPES.VECTOR, new Vector())
         this.add('version', TYPES.NUMBER, 0)
+        this.add('material', TYPES.MATERIAL, 'default')
     }
 
     /**
      * @override
      */
-    getFormFields() {
-        return [
-            {
-                bind: 'size.width',
-                label: 'Width',
-                type: Layout.form.TEXT
-            },
-            {
-                bind: 'size.height',
-                label: 'Height',
-                type: Layout.form.TEXT
-            },
-            {
-                bind: 'imageRepeat',
-                label: 'Repeat texture',
-                type: Layout.form.CHECKBOX
-            },
-            {
-                bind: 'imageScale.x',
-                label: 'Image Scale X',
-                type: Layout.form.TEXT
-            },
-            {
-                bind: 'imageScale.y',
-                label: 'Image Scale Y',
-                type: Layout.form.TEXT
-            },
-            {
-                bind: 'imagePosition.x',
-                label: 'Image Position X',
-                type: Layout.form.TEXT
-            },
-            {
-                bind: 'imagePosition.y',
-                label: 'Image Position Y',
-                type: Layout.form.TEXT
-            },
-            {
-                bind: 'imageRepeatAreaMin.x',
-                label: 'Image Repeat Area MinX',
-                type: Layout.form.TEXT
-            },
-            {
-                bind: 'imageRepeatAreaMin.y',
-                label: 'Image Repeat Area MinY',
-                type: Layout.form.TEXT
-            },
-            {
-                bind: 'imageRepeatAreaMax.x',
-                label: 'Image Repeat Area MaxX',
-                type: Layout.form.TEXT
-            },
-            {
-                bind: 'imageRepeatAreaMax.y',
-                label: 'Image Repeat Area MaxY',
-                type: Layout.form.TEXT
-            }
-        ]
+    getExcludeFields() {
+        return ['generated', 'shape', 'shapeVertices', 'vertices', 'version', 'style']
     }
 
     /**
@@ -288,6 +232,20 @@ export default class MeshComponent extends Component{
      */
     setImageRepeatAreaMax(imageRepeatAreaMax){
         this.setValue('imageRepeatAreaMax', imageRepeatAreaMax)
+    }
+
+    /**
+     * @return {string}
+     */
+    getMaterial(){
+        return this.getValue('material')
+    }
+
+    /**
+     * @param {string} material
+     */
+    setMaterial(material){
+        this.setValue('material', material)
     }
 
     /**

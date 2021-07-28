@@ -9,7 +9,7 @@ export default class UnitFormMenuItem extends FormMenuItem {
      */
     constructor(parent) {
         super({
-            name: '',
+            name: 'Properties',
             stateCode: '',
             type: Layout.type.FORM,
             zone: parent.zone

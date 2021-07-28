@@ -54,6 +54,8 @@ export default class AttributeType {
                 return 'number'
             case TYPES.COMPONENT:
                 return 'string'
+            case TYPES.MATERIAL:
+                return 'string'
             case TYPES.COMPONENT_INSTANCE:
                 return 'number'
             case TYPES.MASK_GROUP_INSTANCE:
@@ -140,6 +142,7 @@ export const TYPES = {
     COMPONENT:                      0b00000100000000000001000000,
     COMPONENT_INSTANCE:             0b00000100000000000010000000,
     MASK_GROUP_INSTANCE:            0b00000100000000000100000000,
+    MATERIAL:                       0b00000100000000001000000000,
     RANGE:                          0b00001000000000000000000001,
     STYLE:                          0b00010000000000000000000010,
     SIZE:                           0b00010000000000000000000100,

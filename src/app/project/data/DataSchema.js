@@ -139,6 +139,11 @@ import SetVarFunction from '../../flow/function/native/component/SetVarFunction.
 import DivideFunction from '../../flow/function/native/basic/DivideFunction.js'
 import AddVectorFunction from '../../flow/function/native/basic/AddVectorFunction.js'
 import IsUpdateTimeFunction from '../../flow/function/native/time/IsUpdateTimeFunction.js'
+import MaterialRegistry from '../../registry/MaterialRegistry.js'
+import DefaultMaterial from '../../material/DefaultMaterial.js'
+import LightUnitInstant from '../../unit/instant/type/internal/light/LightUnitInstant.js'
+import LightPointComponent from '../../component/internal/LightPointComponent.js'
+import LightMaterial from '../../material/LightMaterial.js'
 
 /**
  * @class {DataSchema}
@@ -274,7 +279,12 @@ class DataSchema {
         {id: 1160, type: SetVarFunction},
         {id: 1170, type: DivideFunction},
         {id: 1180, type: AddVectorFunction},
-        {id: 1190, type: IsUpdateTimeFunction}
+        {id: 1190, type: IsUpdateTimeFunction},
+        {id: 1200, type: MaterialRegistry},
+        {id: 1210, type: DefaultMaterial},
+        {id: 1220, type: LightUnitInstant},
+        {id: 1230, type: LightPointComponent},
+        {id: 1240, type: LightMaterial}
     ]
 
     /**

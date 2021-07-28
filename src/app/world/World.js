@@ -18,6 +18,7 @@ import Preference from '../preference/Preference.js'
 import PhysicsManager from '../manager/PhysicsManager.js'
 import ComponentRegistry from '../registry/ComponentRegistry.js'
 import AnimationManager from '../manager/AnimationManager.js'
+import MaterialRegistry from '../registry/MaterialRegistry.js'
 
 /**
  * @class {World}
@@ -58,6 +59,7 @@ class World extends WorldData {
         this.graphManager = new GraphManager()
         this.functionRegistry = new FunctionRegistry()
         this.componentRegistry = new ComponentRegistry()
+        this.materialRegistry = new MaterialRegistry()
         this.scriptManager = new ScriptManager()
         this.animationManager = new AnimationManager()
         this.preference = new Preference()
@@ -84,6 +86,7 @@ class World extends WorldData {
         this.getTabManager().init()
         this.getFunctionRegistry().init()
         this.getComponentRegistry().init()
+        this.getMaterialRegistry().init()
         this.getGraphManager().reset()
         this.getAssetsManager().getParsedAssets().forEach(asset => {
             const result = asset.getType().parse()

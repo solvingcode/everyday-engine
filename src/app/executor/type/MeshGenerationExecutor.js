@@ -103,31 +103,26 @@ export default class MeshGenerationExecutor extends ComponentExecutor {
      * @return {boolean}
      */
     closeContext(meshComponent, transformComponent, dataContext) {
-        const {fillColor, borderSize, color} = meshComponent.getStyle()
-        const meshSize = meshComponent.getSize()
-        const {context, scaleSize, world, unitId, camera} = dataContext
+        const {fillColor, color, borderSize} = meshComponent.getStyle()
+        const {context, world, unitId, scaleSize} = dataContext
         if (meshComponent.getAssetId()) {
-            const asset = dataContext.world.getAssetsManager().findAssetById(meshComponent.getAssetId())
             if (fillColor) {
                 context.fill()
                 context.globalCompositeOperation = 'destination-over'
             }
             context.clip()
-            const transformScale = transformComponent.getScale()
+            const asset = world.getAssetsManager().findAssetById(meshComponent.getAssetId())
             const canvasBg = asset.getType().getData().context.canvas
             if (meshComponent.isImageRepeat()) {
-                const imageScale = meshComponent.getImageScale()
-                const imagePosition = meshComponent.getImagePosition()
-                const imageRepeatAreaMin = meshComponent.getImageRepeatAreaMin()
-                const imageRepeatAreaMax = meshComponent.getImageRepeatAreaMax()
-                const canvasBgRepeat = ImageHelper.generateImageRepeat(canvasBg, meshSize, imageScale, imagePosition, imageRepeatAreaMin, imageRepeatAreaMax)
-                const canvasCameraScale = camera.toScaleSize(new Size({width: canvasBgRepeat.width, height: canvasBgRepeat.height}))
-                const canvasBgScaled = ImageHelper.resizeCanvasBySize(canvasBgRepeat, canvasCameraScale)
+                const canvasBgScaled = UnitHelper.generateImageRepeat(canvasBg, dataContext, meshComponent)
                 context.drawImage(canvasBgScaled, 0, 0, scaleSize.width, scaleSize.height)
             } else {
+                const transformScale = transformComponent.getScale()
                 context.drawImage(ImageHelper.scaleCanvas(canvasBg, transformScale),
                     0, 0, scaleSize.width * Math.abs(transformScale.getX()), scaleSize.height * Math.abs(transformScale.getY()))
             }
+            this.getMaterial(world, meshComponent.getMaterial())
+                .generate(canvasBg, dataContext, meshComponent, transformComponent)
             borderSize && context.stroke()
         } else if (fillColor) {
             context.fill()
@@ -138,6 +133,15 @@ export default class MeshGenerationExecutor extends ComponentExecutor {
             context.stroke()
         }
         return this.updateMeshFromContext(unitId, world.getMeshManager(), context)
+    }
+
+    /**
+     * @param {World} world
+     * @param {string} material
+     * @return {Material}
+     */
+    getMaterial(world, material){
+        return world.getMaterialRegistry().getInstance(material)
     }
 
     /**

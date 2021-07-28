@@ -16,6 +16,7 @@ class WorldData extends Data {
     preference
     functionRegistry
     componentRegistry
+    materialRegistry
     camera
     assetsManager
     cameraUnitId
@@ -71,6 +72,13 @@ class WorldData extends Data {
      */
     setComponentRegistry(componentRegistry) {
         this.componentRegistry = componentRegistry
+    }
+
+    /**
+     * @param {MaterialRegistry} materialRegistry
+     */
+    setMaterialRegistry(materialRegistry) {
+        this.materialRegistry = materialRegistry
     }
 
     /**
@@ -141,6 +149,13 @@ class WorldData extends Data {
      */
     getComponentRegistry(){
         return this.componentRegistry
+    }
+
+    /**
+     * @return {MaterialRegistry}
+     */
+    getMaterialRegistry(){
+        return this.materialRegistry
     }
 
     /**

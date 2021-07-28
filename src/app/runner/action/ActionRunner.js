@@ -67,6 +67,7 @@ import DeleteComponentAction from './unit/DeleteComponentAction.js'
 import AddNodeInputAction from './script/AddNodeInputAction.js'
 import SelectTimelineAction from './animation/SelectTimelineAction.js'
 import MoveUnitAction from './edit/MoveUnitAction.js'
+import AddLightPointAction from './light/AddLightPointAction.js'
 
 /**
  * Action Runner class.
@@ -132,6 +133,7 @@ class ActionRunner extends Runner {
             FORM_UPDATE: FormUpdateAction,
             COLLAPSE_PANEL: PanelCollapseAction,
             ADD_CAMERA: AddCameraAction,
+            ADD_LIGHT_POINT: AddLightPointAction,
             SELECT_TAB: SelectTabAction,
             CLOSE_TAB: CloseTabAction,
             SELECT_FOLDER: SelectFolderAction,

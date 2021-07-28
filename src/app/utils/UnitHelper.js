@@ -14,6 +14,7 @@ import CircleUnitInstant from '../unit/instant/type/internal/primitive/CircleUni
 import SystemError from '../exception/type/SystemError.js'
 import Style from '../pobject/Style.js'
 import GUIColliderComponent from '../component/internal/gui/collider/GUIColliderComponent.js'
+import ImageHelper from './ImageHelper.js'
 
 export default class UnitHelper {
 
@@ -373,5 +374,22 @@ export default class UnitHelper {
         const colliderComponent = UnitHelper.getColliderEditing(unit)
         const position = colliderComponent.getPosition()
         colliderComponent.setPosition(Vector.add(position, moveDirection))
+    }
+
+    /**
+     * @param {OffscreenCanvas} canvas
+     * @param {DataContext} dataContext
+     * @param {MeshComponent} meshComponent
+     */
+    static generateImageRepeat(canvas, dataContext, meshComponent){
+        const {camera} = dataContext
+        const meshSize = meshComponent.getSize()
+        const imageScale = meshComponent.getImageScale()
+        const imagePosition = meshComponent.getImagePosition()
+        const imageRepeatAreaMin = meshComponent.getImageRepeatAreaMin()
+        const imageRepeatAreaMax = meshComponent.getImageRepeatAreaMax()
+        const canvasBgRepeat = ImageHelper.generateImageRepeat(canvas, meshSize, imageScale, imagePosition, imageRepeatAreaMin, imageRepeatAreaMax)
+        const canvasCameraScale = camera.toScaleSize(new Size({width: canvasBgRepeat.width, height: canvasBgRepeat.height}))
+        return ImageHelper.resizeCanvasBySize(canvasBgRepeat, canvasCameraScale)
     }
 }

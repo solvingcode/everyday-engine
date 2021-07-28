@@ -29,6 +29,7 @@ import AddClassScriptMenuItem from './items/assets/AddClassScriptMenuItem.js'
 import DeleteSelectedNodeMenuItem from './items/script/node/delete/DeleteSelectedNodeMenuItem.js'
 import AddAnimationMenuItem from './items/animation/AddAnimationMenuItem.js'
 import AddAnimationScriptMenuItem from './items/assets/AddAnimationScriptMenuItem.js'
+import LightPointMenuItem from './items/edit/LightPointMenuItem.js'
 
 /**
  * Define all menu items
@@ -59,6 +60,7 @@ class Menu {
             new MoveUpMenuItem(),
             new MoveDownMenuItem(),
             new CameraMenuItem(),
+            new LightPointMenuItem(),
             new AddClassScriptMenuItem(),
             new AddAnimationScriptMenuItem(),
             new AddAnimationMenuItem(),
