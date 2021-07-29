@@ -5,6 +5,7 @@ import Vector from '../../../utils/Vector.js'
 import UnitHelper from '../../../utils/UnitHelper.js'
 import TransformComponent from '../../../component/internal/TransformComponent.js'
 import MeshComponent from '../../../component/internal/MeshComponent.js'
+import LightComponent from '../../../component/internal/LightComponent.js'
 
 export default class RotateAction extends Action {
 
@@ -36,6 +37,9 @@ export default class RotateAction extends Action {
         const vectorEnd = UnitHelper.fromAbsolutePosition(rotateUnit, currentScenePosition)
         const angleRadian = Vector.angle(vectorStart, vectorEnd)
         selectedUnits.map((unit) => {
+            if(unit.hasComponentsByClasses([LightComponent])){
+                unit.findComponentByClass(LightComponent).setGenerated(false)
+            }
             const transformComponent = unit.getComponent(TransformComponent)
             const rotation = transformComponent.getRotation() + angleRadian
             transformComponent.setRotation(rotation)

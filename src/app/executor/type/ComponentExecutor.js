@@ -15,7 +15,7 @@ export default class ComponentExecutor{
     /**
      * @override
      * @param {Unit} unit
-     * @param {{camera: Camera, deltaTime: number}} executionContext
+     * @param {{camera: Camera, lights: Unit[], deltaTime: number}} executionContext
      * @return {void}
      */
     execute(unit, executionContext){

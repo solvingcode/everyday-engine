@@ -15,6 +15,7 @@ export default class LightComponent extends Component{
     initAttributes() {
         this.add('intensity', TYPES.NUMBER, 0.5)
         this.add('color', TYPES.STRING, '#000000')
+        this.add('generated', TYPES.BOOLEAN, false)
     }
 
     /**
@@ -43,6 +44,27 @@ export default class LightComponent extends Component{
      */
     setColor(color){
         this.setValue('color', color)
+    }
+
+    /**
+     * @param {boolean} generated
+     */
+    setGenerated(generated){
+        this.setValue('generated', generated)
+    }
+
+    /**
+     * @return {boolean}
+     */
+    getGenerated(){
+        return this.getValue('generated')
+    }
+
+    /**
+     * @return {boolean}
+     */
+    isGenerated(){
+        return this.getGenerated()
     }
 
 }

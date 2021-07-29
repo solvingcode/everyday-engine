@@ -8,6 +8,7 @@ import MeshComponent from '../../../component/internal/MeshComponent.js'
 import GUIMoveYComponent from '../../../component/internal/gui/move/GUIMoveYComponent.js'
 import GUIMoveFreeComponent from '../../../component/internal/gui/move/GUIMoveFreeComponent.js'
 import TransformComponent from '../../../component/internal/TransformComponent.js'
+import LightComponent from '../../../component/internal/LightComponent.js'
 
 class MoveAction extends Action {
 
@@ -54,6 +55,9 @@ class MoveAction extends Action {
             y: dragArea.y * direction.y
         })
         selectedUnits.map(unit => {
+            if(unit.hasComponentsByClasses([LightComponent])){
+                unit.findComponentByClass(LightComponent).setGenerated(false)
+            }
             const transformComponent = unit.getComponent(TransformComponent)
             const position = transformComponent.getPosition()
             transformComponent.setPosition(Vector.add(position, dragAreaDirection))

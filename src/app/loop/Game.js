@@ -16,6 +16,8 @@ import WorldInitializeRunner from '../runner/world/WorldInitializeRunner.js'
 import ColliderDebugRunner from '../runner/debug/ColliderDebugRunner.js'
 import CameraRunner from '../runner/camera/CameraRunner.js'
 import CameraExecutor from '../executor/type/CameraExecutor.js'
+import LightExecutor from '../executor/type/LightExecutor.js'
+import LightRunner from '../runner/light/LightRunner.js'
 
 /**
  * @class {Game}
@@ -30,7 +32,7 @@ class Game extends Scene {
 
     constructor() {
         super()
-        this.runners = [WorldInitializeRunner, ColliderDebugRunner, GameExecutorRunner, GameRenderRunner, PhysicsRunner, CameraRunner]
+        this.runners = [WorldInitializeRunner, ColliderDebugRunner, GameExecutorRunner, GameRenderRunner, PhysicsRunner, CameraRunner, LightRunner]
         ExecutorRegistry.get().register([
             new MeshGenerationExecutor(),
             new RigidBodyExecutor(),
@@ -39,7 +41,8 @@ class Game extends Scene {
             new ScriptExecutor(),
             new AnimationScriptExecutor(),
             new AnimationMeshExecutor(),
-            new CameraExecutor()
+            new CameraExecutor(),
+            new LightExecutor()
         ])
     }
 

@@ -19,6 +19,7 @@ import PhysicsManager from '../manager/PhysicsManager.js'
 import ComponentRegistry from '../registry/ComponentRegistry.js'
 import AnimationManager from '../manager/AnimationManager.js'
 import MaterialRegistry from '../registry/MaterialRegistry.js'
+import LightComponent from '../component/internal/LightComponent.js'
 
 /**
  * @class {World}
@@ -237,6 +238,9 @@ class World extends WorldData {
 
     disableGuides(){
         this.getCamera().disableGuides(this)
+        this.getUnitManager()
+            .getUnitsHasComponentClasses([LightComponent, MeshComponent])
+            .forEach(unit => unit.getComponent(MeshComponent).setEnabled(false))
     }
 
     /**
@@ -326,6 +330,18 @@ class World extends WorldData {
      */
     getGridUnitId() {
         return this.gridUnitId
+    }
+
+    /**
+     * @return {Unit[]}
+     */
+    getLightsNotGenerated(){
+        return this.getUnitManager()
+            .getUnitsHasComponentClasses([LightComponent])
+            .filter(unit => {
+                const lightComponent = unit.findComponentsByClass(LightComponent)[0]
+                return !lightComponent.isGenerated()
+            })
     }
 
     /**

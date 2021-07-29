@@ -8,6 +8,7 @@ import GUIScaleXComponent from '../../../component/internal/gui/scale/GUIScaleXC
 import GUIScaleYComponent from '../../../component/internal/gui/scale/GUIScaleYComponent.js'
 import MeshComponent from '../../../component/internal/MeshComponent.js'
 import UnitHelper from '../../../utils/UnitHelper.js'
+import LightComponent from '../../../component/internal/LightComponent.js'
 
 export default class ScaleAction extends Action {
 
@@ -51,6 +52,9 @@ export default class ScaleAction extends Action {
         const camera = world.getCamera()
         const dragDistance = mouse.dragAndDrop(camera)
         selectedUnits.map((unit) => {
+            if(unit.hasComponentsByClasses([LightComponent])){
+                unit.findComponentByClass(LightComponent).setGenerated(false)
+            }
             const meshComponent = unit.getComponent(MeshComponent)
             const {width: meshWidth, height: meshHeight} = meshComponent.getSize()
             const ratio = meshHeight / meshWidth

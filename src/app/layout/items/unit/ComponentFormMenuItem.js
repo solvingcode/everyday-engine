@@ -5,6 +5,7 @@ import TransformComponent from '../../../component/internal/TransformComponent.j
 import UnitSelector from '../../../selector/UnitSelector.js'
 import World from '../../../world/World.js'
 import CameraComponent from '../../../component/internal/CameraComponent.js'
+import LightComponent from '../../../component/internal/LightComponent.js'
 
 export default class ComponentFormMenuItem extends FormMenuItem {
     /**
@@ -36,6 +37,8 @@ export default class ComponentFormMenuItem extends FormMenuItem {
             formObject instanceof CameraComponent) {
             const selectedUnit = UnitSelector.get().getFirstSelected(World.get())
             selectedUnit.getComponent(MeshComponent).setGenerated(false)
+        } else if(formObject instanceof LightComponent){
+            formObject.setGenerated(false)
         }
     }
 

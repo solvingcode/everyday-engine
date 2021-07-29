@@ -35,8 +35,8 @@ export default class LightHelper {
         const radiusScale = Math.abs(sw / 2 - 1)
         const lightPosition = transformComponent.getPosition()
         const lightRotation = transformComponent.getRotation()
-        const globalColorRgba = Color.hexToRgba(globalColor, globalIntensity)
-        const lightColorRgba = Color.hexToRgba(lightColor, lightIntensity)
+        const globalColorRgba = Color.hexToRgb(globalColor, globalIntensity)
+        const lightColorRgba = Color.hexToRgb(lightColor, lightIntensity)
 
         //calculate position to put the light
         const positionStartLight = camera.toCameraScale(Vector.subtract(lightPosition, positionToLight))
@@ -69,12 +69,11 @@ export default class LightHelper {
             center.x, center.y, 0, center.x, center.y, radiusScale)
         gradientLight.addColorStop(0, lightColorRgba)
         gradientLight.addColorStop(innerRadius / 100, lightColorRgba)
-        gradientLight.addColorStop(1, Color.hexToRgba(lightColor, 0))
+        gradientLight.addColorStop(1, globalColorRgba)
         lightContext.fillStyle = gradientLight
         lightContext.fill()
 
         //fill gradient light
-        context.globalCompositeOperation = 'destination-out'
         context.drawImage(lightCanvas, positionStartLight.x, positionStartLight.y, lightCanvas.width, lightCanvas.height)
 
         return canvas

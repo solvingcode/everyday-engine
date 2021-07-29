@@ -104,6 +104,16 @@ export default class UnitData extends Data {
     /**
      * @template T
      * @param {T} type
+     * @return {T}
+     */
+    findComponentByClass(type) {
+        return this.getComponents()
+            .find(component => component instanceof type)
+    }
+
+    /**
+     * @template T
+     * @param {T} type
      * @return {T[]}
      */
     findComponentsByClass(type) {

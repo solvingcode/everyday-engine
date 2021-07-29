@@ -4,6 +4,7 @@ import Size from '../../pobject/Size.js'
 import {PrimitiveShape} from '../../unit/Unit.js'
 import {TYPES} from '../../pobject/AttributeType.js'
 import Vector from '../../utils/Vector.js'
+import MaterialType from '../../material/MaterialType.js'
 
 export default class MeshComponent extends Component{
 
@@ -28,7 +29,7 @@ export default class MeshComponent extends Component{
         this.add('imageRepeatAreaMin', TYPES.VECTOR, new Vector())
         this.add('imageRepeatAreaMax', TYPES.VECTOR, new Vector())
         this.add('version', TYPES.NUMBER, 0)
-        this.add('material', TYPES.MATERIAL, 'default')
+        this.add('material', TYPES.MATERIAL, MaterialType.DEFAULT)
     }
 
     /**

@@ -21,6 +21,8 @@ import WorldInitializeRunner from '../runner/world/WorldInitializeRunner.js'
 import FormRunner from '../runner/form/FormRunner.js'
 import MoveUnitRunner from '../runner/editor/MoveUnitRunner.js'
 import CameraExecutor from '../executor/type/CameraExecutor.js'
+import LightExecutor from '../executor/type/LightExecutor.js'
+import LightRunner from '../runner/light/LightRunner.js'
 
 /**
  * @class {Setup}
@@ -43,13 +45,14 @@ class Setup extends Loop {
         this.runners = [
             WorldInitializeRunner, /*HistoryRunner,*/ SimulateRunner, ActionRunner, EditorRunner, ScriptEditorRunner,
             AnimationEditorRunner, MenuRunner, SetupExecutorRunner, SetupRenderRunner, WindowRunner, GraphDrawerRunner,
-            UnitDrawerRunner, FormRunner, MoveUnitRunner
+            UnitDrawerRunner, FormRunner, MoveUnitRunner, LightRunner
         ]
         ExecutorRegistry.get().register([
             new MeshGenerationExecutor(),
             new GUISelectionExecutor(),
             new GUIPropertyExecutor(),
-            new CameraExecutor()
+            new CameraExecutor(),
+            new LightExecutor()
         ])
     }
 

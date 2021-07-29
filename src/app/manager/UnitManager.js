@@ -299,6 +299,14 @@ export default class UnitManager extends UnitManagerData {
 
     /**
      * @param {Component[]} componentClasses
+     * @return {Unit[]}
+     */
+    getUnitsHasComponentClasses(componentClasses) {
+        return this.getUnits().filter(unit => unit.hasComponentsByClasses(componentClasses))
+    }
+
+    /**
+     * @param {Component[]} componentClasses
      * @return {Unit}
      */
     getOneUnitHasComponents(componentClasses) {

@@ -23,6 +23,7 @@ export class SetupExecutorRunner extends Runner {
         const world = World.get()
         const graphManager = world.getGraphManager()
         const script = world.getScriptManager().getSelected(world.getTabManager())
+        const lights = world.getLightsNotGenerated()
         let units, camera
         if(script){
             units = graphManager.getUnits()
@@ -32,7 +33,7 @@ export class SetupExecutorRunner extends Runner {
             camera = world.getCamera()
         }
         units.forEach(unit => {
-            ExecutorRegistry.get().execute(unit, {camera, deltaTime})
+            ExecutorRegistry.get().execute(unit, {camera, deltaTime, lights})
         })
     }
 

@@ -15,18 +15,55 @@ class Color {
     /**
      * @param {string} hex
      * @param {number} opacity
-     * @return {string|null}
+     * @return {{r: number, g: number, b: number, a: number}}
      */
-    static hexToRgba(hex, opacity = 1){
+    static getColorRgba(hex, opacity){
         const colors = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex)
-        const colorRgba = colors ? {
+        return colors ? {
             r: parseInt(colors[1], 16),
             g: parseInt(colors[2], 16),
             b: parseInt(colors[3], 16),
             a: opacity
         } : null
+    }
+
+    /**
+     * @param {string} hex
+     * @param {number} opacity
+     * @return {string|null}
+     */
+    static hexToRgba(hex, opacity = 1){
+        const colorRgba = this.getColorRgba(hex, opacity)
         if(colorRgba){
             return `rgba(${colorRgba.r}, ${colorRgba.g}, ${colorRgba.b}, ${colorRgba.a})`
+        }
+        return null
+    }
+
+    /**
+     * @param {string} hex
+     * @param {number} opacity
+     * @return {string|null}
+     */
+    static hexToRgb(hex, opacity = 1){
+        const colorRgba = this.getColorRgba(hex, opacity)
+        if(colorRgba){
+            const normalizeRgba = {
+                r: colorRgba.r / 255,
+                g: colorRgba.g / 255,
+                b: colorRgba.b / 255
+            }
+            const normalizeBg = {
+                r: 0 / 255,
+                g: 0 / 255,
+                b: 0 / 255
+            }
+            const colorRgb = {
+                r: Math.round((((1 - colorRgba.a) * normalizeBg.r) + (colorRgba.a * normalizeRgba.r)) * 255),
+                g: Math.round((((1 - colorRgba.a) * normalizeBg.g) + (colorRgba.a * normalizeRgba.g)) * 255),
+                b: Math.round((((1 - colorRgba.a) * normalizeBg.b) + (colorRgba.a * normalizeRgba.b)) * 255)
+            }
+            return `rgb(${colorRgb.r}, ${colorRgb.g}, ${colorRgb.b})`
         }
         return null
     }
