@@ -114,8 +114,6 @@ export default class LightHelper {
         context.lineTo(outerLightBound[1].x, outerLightBound[1].y)
         context.moveTo(innerLightBound[0].x, innerLightBound[0].y)
         context.lineTo(innerLightBound[1].x, innerLightBound[1].y)
-        context.moveTo(innerLightBound[0].x, innerLightBound[0].y)
-        context.arc(outerLightBound[0].x, outerLightBound[0].y, radius, Math.PI * 2 - angle / 2, 0)
         context.closePath()
     }
 

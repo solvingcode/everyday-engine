@@ -1,6 +1,7 @@
 import TypeShapeGenerator from '../TypeShapeGenerator.js'
 import LightPointComponent from '../../../component/internal/LightPointComponent.js'
 import Maths from '../../../utils/Maths.js'
+import LightHelper from '../../../utils/LightHelper.js'
 
 /**
  * @abstract
@@ -19,21 +20,15 @@ export default class LightPointShapeGenerator extends TypeShapeGenerator {
         const sw = scaleSize.width * outerRadius / 100
         const radiusScale = Math.abs(sw / 2 - 1)
 
-        //outer light bounds
-        context.beginPath()
-        context.moveTo(center.x, center.y)
-        context.lineTo(center.x + Math.cos(outerAngle / 2) * radiusScale, center.y - Math.cos(Math.PI / 2 - outerAngle / 2) * radiusScale)
-        context.moveTo(center.x, center.y)
-        context.lineTo(center.x + Math.cos(outerAngle / 2) * radiusScale, center.y + Math.cos(Math.PI / 2 - outerAngle / 2) * radiusScale)
-        context.moveTo(center.x, center.y)
-        context.arc(center.x, center.y, radiusScale, outerAngle / 2, Math.PI * 2 - outerAngle / 2)
-        //inner light bound
-        context.moveTo(center.x, center.y)
-        context.lineTo(center.x + Math.cos(innerAngle / 2) * radiusScale, center.y - Math.cos(Math.PI / 2 - innerAngle / 2) * radiusScale)
-        context.moveTo(center.x, center.y)
-        context.lineTo(center.x + Math.cos(innerAngle / 2) * radiusScale, center.y + Math.cos(Math.PI / 2 - innerAngle / 2) * radiusScale)
-        context.closePath()
+        //calculate light boundaries
+        const outerLightBounds = LightHelper.getLightBounds(center, outerAngle, radiusScale)
+        const innerLightBounds = LightHelper.getLightBounds(center, innerAngle, radiusScale)
 
+        LightHelper.drawOuterLightBounds(context, outerLightBounds, radiusScale, outerAngle)
+        context.stroke()
+        LightHelper.drawInnerLightBounds(context, outerLightBounds.first, innerLightBounds.first, radiusScale, innerAngle)
+        context.stroke()
+        LightHelper.drawInnerLightBounds(context, outerLightBounds.second, innerLightBounds.second, radiusScale, innerAngle)
         context.stroke()
 
         //circle bulb
