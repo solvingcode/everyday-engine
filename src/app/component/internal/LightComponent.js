@@ -14,7 +14,7 @@ export default class LightComponent extends Component{
      */
     initAttributes() {
         this.add('intensity', TYPES.NUMBER, 0.5)
-        this.add('color', TYPES.STRING, '#000000')
+        this.add('color', TYPES.STRING, '#FFFFFF')
         this.add('generated', TYPES.BOOLEAN, false)
     }
 

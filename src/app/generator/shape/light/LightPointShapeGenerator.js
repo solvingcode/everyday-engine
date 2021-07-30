@@ -12,21 +12,26 @@ export default class LightPointShapeGenerator extends TypeShapeGenerator {
      */
     draw(unit, dataContext) {
         const lightComponent = unit.getComponent(LightPointComponent)
-        const outerAngle = Maths.fromDegree(lightComponent.getOuterAngle())
-        const innerAngle = Maths.fromDegree(lightComponent.getInnerAngle())
+        const outerAngle = Math.PI * 2 - Maths.fromDegree(lightComponent.getOuterAngle())
+        const innerAngle = Math.PI * 2 - Maths.fromDegree(lightComponent.getInnerAngle())
         const outerRadius = lightComponent.getOuterRadius()
         const {center, context, scaleSize, camera} = dataContext
         const sw = scaleSize.width * outerRadius / 100
         const radiusScale = Math.abs(sw / 2 - 1)
 
-        //arc light + light bounds
+        //outer light bounds
         context.beginPath()
         context.moveTo(center.x, center.y)
-        context.lineTo(sw, radiusScale)
+        context.lineTo(center.x + Math.cos(outerAngle / 2) * radiusScale, center.y - Math.cos(Math.PI / 2 - outerAngle / 2) * radiusScale)
         context.moveTo(center.x, center.y)
-        context.lineTo(center.x + Math.cos(outerAngle) * radiusScale, center.y + Math.cos(Math.PI / 2 - outerAngle) * radiusScale)
+        context.lineTo(center.x + Math.cos(outerAngle / 2) * radiusScale, center.y + Math.cos(Math.PI / 2 - outerAngle / 2) * radiusScale)
         context.moveTo(center.x, center.y)
-        context.arc(center.x, center.y, radiusScale, 0, outerAngle)
+        context.arc(center.x, center.y, radiusScale, outerAngle / 2, Math.PI * 2 - outerAngle / 2)
+        //inner light bound
+        context.moveTo(center.x, center.y)
+        context.lineTo(center.x + Math.cos(innerAngle / 2) * radiusScale, center.y - Math.cos(Math.PI / 2 - innerAngle / 2) * radiusScale)
+        context.moveTo(center.x, center.y)
+        context.lineTo(center.x + Math.cos(innerAngle / 2) * radiusScale, center.y + Math.cos(Math.PI / 2 - innerAngle / 2) * radiusScale)
         context.closePath()
 
         context.stroke()

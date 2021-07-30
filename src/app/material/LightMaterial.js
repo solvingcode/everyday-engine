@@ -4,6 +4,7 @@ import LightPointComponent from '../component/internal/LightPointComponent.js'
 import LightGlobalComponent from '../component/internal/LightGlobalComponent.js'
 import {CANVAS_CONTEXT_TYPE} from '../core/Constant.js'
 import MaterialType from './MaterialType.js'
+import Color from '../utils/Color.js'
 
 export default class LightMaterial extends Material {
 
@@ -25,19 +26,32 @@ export default class LightMaterial extends Material {
             globalIntensity = lightGlobalComponent.getIntensity()
             globalColor = lightGlobalComponent.getColor()
         }
+        const globalColorRgba = Color.hexToRgb(globalColor, globalIntensity)
+
+        const canvasLightContainer = new OffscreenCanvas(scaleSize.width, scaleSize.height)
+        const contextLightContainer = canvasLightContainer.getContext(CANVAS_CONTEXT_TYPE)
+        contextLightContainer.fillStyle = globalColorRgba
+        contextLightContainer.fillRect(0, 0, scaleSize.width, scaleSize.height)
+
+        const canvasLights = new OffscreenCanvas(scaleSize.width, scaleSize.height)
+        const contextLights = canvasLights.getContext(CANVAS_CONTEXT_TYPE)
+        contextLights.globalCompositeOperation = 'lighter'
         unitManager.findUnitsByComponentClasses([LightPointComponent]).forEach(unitLight => {
             const lightCanvas = LightHelper.getPoint(unitLight, camera, transformComponent.getPosition(), scaleSize, globalIntensity, globalColor)
-
-            const lightCanvasSourceAtop = this.copyCanvas(context.canvas)
-            const lightContextSourceAtop = lightCanvasSourceAtop.getContext(CANVAS_CONTEXT_TYPE)
-            lightContextSourceAtop.globalCompositeOperation = 'source-atop'
-            lightContextSourceAtop.drawImage(lightCanvas, 0, 0, scaleSize.width, scaleSize.height)
-
-            const globalCompositeOperation = context.globalCompositeOperation
-            context.globalCompositeOperation = 'multiply'
-            context.drawImage(lightCanvasSourceAtop, 0, 0, scaleSize.width, scaleSize.height)
-            context.globalCompositeOperation = globalCompositeOperation
+            contextLights.drawImage(lightCanvas, 0, 0, scaleSize.width, scaleSize.height)
         })
+
+        contextLightContainer.drawImage(canvasLights, 0, 0, scaleSize.width, scaleSize.height)
+
+        const lightCanvasSourceAtop = this.copyCanvas(context.canvas)
+        const lightContextSourceAtop = lightCanvasSourceAtop.getContext(CANVAS_CONTEXT_TYPE)
+        lightContextSourceAtop.globalCompositeOperation = 'source-atop'
+        lightContextSourceAtop.drawImage(canvasLightContainer, 0, 0, scaleSize.width, scaleSize.height)
+
+        const globalCompositeOperation = context.globalCompositeOperation
+        context.globalCompositeOperation = 'multiply'
+        context.drawImage(lightCanvasSourceAtop, 0, 0, scaleSize.width, scaleSize.height)
+        context.globalCompositeOperation = globalCompositeOperation
     }
 
     /**

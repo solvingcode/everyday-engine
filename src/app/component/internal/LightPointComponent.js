@@ -74,4 +74,19 @@ export default class LightPointComponent extends LightComponent{
         this.setValue('outerRadius', outerRadius)
     }
 
+    /**
+     * @override
+     */
+    setValue(name, value) {
+        let validValue = value
+        if(name === 'innerAngle'){
+            const outerAngle = this.getOuterAngle()
+            validValue = outerAngle > parseInt(value) ? value : outerAngle
+        }else if(name === 'outerAngle'){
+            const innerAngle = this.getInnerAngle()
+            validValue = parseInt(value) > innerAngle ? value : innerAngle
+        }
+        super.setValue(name, validValue)
+    }
+
 }
