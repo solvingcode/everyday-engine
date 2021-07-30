@@ -43,11 +43,9 @@ export default class LightHelper {
         //calculate position to put the light
         const positionStartLight = camera.toCameraScale(Vector.subtract(lightPosition, positionToLight))
 
-        //create canvas
         const canvas = new OffscreenCanvas(sizeToLight.width, sizeToLight.height)
         const context = canvas.getContext(CANVAS_CONTEXT_TYPE)
 
-        //arc light + light bounds
         const {width: largeWidth, height: largeHeight} = GeometryHelper.getLargestRectangle(lightRotation, scaleSize)
         const lightCanvas = new OffscreenCanvas(largeWidth, largeHeight)
         const lightContext = lightCanvas.getContext(CANVAS_CONTEXT_TYPE)
@@ -55,102 +53,135 @@ export default class LightHelper {
         lightContext.rotate(lightRotation)
         lightContext.translate(-center.x, -center.y)
 
-        //outer angle light
-        const outerBoundOne = [center, new Vector({x: center.x + Math.cos(outerAngle / 2) * radiusScale, y: center.y - Math.cos(Math.PI / 2 - outerAngle / 2) * radiusScale})]
-        const outerBoundTwo = [center, new Vector({x: center.x + Math.cos(outerAngle / 2) * radiusScale, y: center.y + Math.cos(Math.PI / 2 - outerAngle / 2) * radiusScale})]
-        lightContext.beginPath()
-        lightContext.moveTo(outerBoundOne[0].x, outerBoundOne[0].y)
-        lightContext.lineTo(outerBoundOne[1].x, outerBoundOne[1].y)
-        lightContext.moveTo(outerBoundTwo[0].x, outerBoundTwo[0].y)
-        lightContext.lineTo(outerBoundTwo[1].x, outerBoundTwo[1].y)
-        lightContext.moveTo(center.x, center.y)
-        lightContext.arc(center.x, center.y, radiusScale, outerAngle / 2, Math.PI * 2 - outerAngle / 2)
-        lightContext.closePath()
+        //calculate light boundaries
+        const outerLightBounds = this.getLightBounds(center, outerAngle, radiusScale)
+        const innerLightBounds = this.getLightBounds(center, innerAngle, radiusScale)
 
-        //gradient lighting outer
-        const gradientOuterLight = lightContext.createRadialGradient(
-            center.x, center.y, 0, center.x, center.y, radiusScale)
-        gradientOuterLight.addColorStop(0, lightColorRgba)
-        gradientOuterLight.addColorStop(innerRadius / 100, lightColorRgba)
-        gradientOuterLight.addColorStop(1, globalColorRgba)
-        lightContext.fillStyle = gradientOuterLight
-        lightContext.fill()
+        //outer angle light
+        this.drawOuterLightBounds(lightContext, outerLightBounds, radiusScale, outerAngle)
+        this.drawOuterLight(lightContext, center, radiusScale, innerRadius, lightColorRgba, globalColorRgba)
 
         //inner angle light
-        const innerBoundOne = [center, new Vector({x: center.x + Math.cos(innerAngle / 2) * radiusScale, y: center.y - Math.cos(Math.PI / 2 - innerAngle / 2) * radiusScale})]
-        const innerBoundTwo = [center, new Vector({x: center.x + Math.cos(innerAngle / 2) * radiusScale, y: center.y + Math.cos(Math.PI / 2 - innerAngle / 2) * radiusScale})]
+        //this.drawInnerLightBounds(lightContext, outerLightBounds.first, innerLightBounds.first, radiusScale, innerAngle)
+        this.drawInnerLight(lightContext, outerLightBounds.first, innerLightBounds.first, false)
+        this.drawInnerLight(lightContext, outerLightBounds.second, innerLightBounds.second, true)
 
-        const globalCompositeOperation = lightContext.globalCompositeOperation
-        lightContext.globalCompositeOperation = 'destination-out'
-        //gradient lighting inner
-        const middleOuterBoundOne = Vector.divide(Vector.add(outerBoundOne[0], outerBoundOne[1]), 2)
-        const middleInnerBoundOne = Vector.divide(Vector.add(innerBoundOne[0], innerBoundOne[1]), 2)
-        const distanceOne = Math.sqrt(Math.pow(middleInnerBoundOne.x - middleOuterBoundOne.x, 2) + Math.pow(middleInnerBoundOne.y - middleOuterBoundOne.y, 2))
-        const angleOne = Math.atan2(outerBoundOne[1].y - outerBoundOne[0].y, outerBoundOne[1].x - outerBoundOne[0].x)
-        const normalPointOne = new Vector({
-            x: middleOuterBoundOne.x + Math.sin(angleOne) * distanceOne,
-            y: middleOuterBoundOne.y - Math.cos(angleOne) * distanceOne
-        })
-
-        /*const debugPath = new Path2D()
-        debugPath.moveTo(middleOuterBoundOne.x, middleOuterBoundOne.y)
-        debugPath.lineTo(normalPoint.x, normalPoint.y)
-        lightContext.strokeStyle = '#ffffff'
-        lightContext.stroke(debugPath)*/
-
-        const gradientInnerLightOne = lightContext.createLinearGradient(
-            middleOuterBoundOne.x, middleOuterBoundOne.y, normalPointOne.x, normalPointOne.y)
-        gradientInnerLightOne.addColorStop(0, '#FFFFFF')
-        gradientInnerLightOne.addColorStop(1, 'rgba(0, 0, 0, 0)')
-        lightContext.fillStyle = gradientInnerLightOne
-
-        const innerPathOne = new Path2D()
-        innerPathOne.moveTo(outerBoundOne[0].x, outerBoundOne[0].y)
-        innerPathOne.lineTo(outerBoundOne[1].x, outerBoundOne[1].y)
-        innerPathOne.moveTo(innerBoundOne[0].x, innerBoundOne[0].y)
-        innerPathOne.lineTo(innerBoundOne[1].x, innerBoundOne[1].y)
-        innerPathOne.moveTo(outerBoundOne[0].x, outerBoundOne[0].y)
-        innerPathOne.arc(outerBoundOne[0].x, outerBoundOne[0].y, radiusScale, Math.PI * 2 - innerAngle / 2, 0)
-        //lightContext.stroke(innerPathOne)
-        lightContext.fill()
-
-        const middleOuterBoundTwo = Vector.divide(Vector.add(outerBoundTwo[0], outerBoundTwo[1]), 2)
-        const middleInnerBoundTwo = Vector.divide(Vector.add(innerBoundTwo[0], innerBoundTwo[1]), 2)
-
-        const distanceTwo = Math.sqrt(Math.pow(middleInnerBoundTwo.x - middleOuterBoundTwo.x, 2) + Math.pow(middleInnerBoundTwo.y - middleOuterBoundTwo.y, 2))
-        const angleTwo = Math.atan2(outerBoundTwo[1].y - outerBoundTwo[0].y, outerBoundTwo[1].x - outerBoundTwo[0].x)
-        const normalPointTwo = new Vector({
-            x: middleOuterBoundTwo.x - Math.sin(angleTwo) * distanceTwo,
-            y: middleOuterBoundTwo.y + Math.cos(angleTwo) * distanceTwo
-        })
-
-        /*const debugPath = new Path2D()
-        debugPath.moveTo(middleOuterBoundTwo.x, middleOuterBoundTwo.y)
-        debugPath.lineTo(normalPointTwo.x, normalPointTwo.y)
-        lightContext.strokeStyle = '#ffffff'
-        lightContext.stroke(debugPath)*/
-
-        const gradientInnerLightTwo = lightContext.createLinearGradient(
-            middleOuterBoundTwo.x, middleOuterBoundTwo.y, normalPointTwo.x, normalPointTwo.y)
-        gradientInnerLightTwo.addColorStop(0, '#FFFFFF')
-        gradientInnerLightTwo.addColorStop(1, 'rgba(0, 0, 0, 0)')
-        lightContext.fillStyle = gradientInnerLightTwo
-        const innerPathTwo = new Path2D()
-        innerPathTwo.moveTo(outerBoundTwo[0].x, outerBoundTwo[0].y)
-        innerPathTwo.lineTo(outerBoundTwo[1].x, outerBoundTwo[1].y)
-        innerPathTwo.moveTo(innerBoundTwo[0].x, innerBoundTwo[0].y)
-        innerPathTwo.lineTo(innerBoundTwo[1].x, innerBoundTwo[1].y)
-        innerPathTwo.moveTo(outerBoundTwo[0].x, outerBoundTwo[0].y)
-        innerPathTwo.arc(outerBoundTwo[0].x, outerBoundTwo[0].y, radiusScale, 0, innerAngle / 2)
-        //lightContext.stroke(innerPathTwo)
-        lightContext.fill()
-
-        lightContext.globalCompositeOperation = globalCompositeOperation
-
-        //fill gradient light
+        //put the light to start position of the light
         context.drawImage(lightCanvas, positionStartLight.x, positionStartLight.y, lightCanvas.width, lightCanvas.height)
 
         return canvas
     }
 
+    /**
+     * @param {Vector} center
+     * @param {number} angle
+     * @param {number} radius
+     * @return {{first: [Vector, Vector], second: [Vector, Vector]}}
+     */
+    static getLightBounds(center, angle, radius) {
+        const boundFirst = [center, new Vector({x: center.x + Math.cos(angle / 2) * radius, y: center.y - Math.cos(Math.PI / 2 - angle / 2) * radius})]
+        const boundSecond = [center, new Vector({x: center.x + Math.cos(angle / 2) * radius, y: center.y + Math.cos(Math.PI / 2 - angle / 2) * radius})]
+        return {first: boundFirst, second: boundSecond}
+    }
+
+    /**
+     * @param {OffscreenCanvasRenderingContext2D} context
+     * @param {{first: [Vector, Vector], second: [Vector, Vector]}} lightBounds
+     * @param {number} radius
+     * @param {number} angle
+     */
+    static drawOuterLightBounds(context, lightBounds, radius, angle) {
+        context.beginPath()
+        context.moveTo(lightBounds.first[0].x, lightBounds.first[0].y)
+        context.lineTo(lightBounds.first[1].x, lightBounds.first[1].y)
+        context.moveTo(lightBounds.second[0].x, lightBounds.second[0].y)
+        context.lineTo(lightBounds.second[1].x, lightBounds.second[1].y)
+        context.moveTo(lightBounds.first[0].x, lightBounds.first[0].y)
+        context.arc(lightBounds.first[0].x, lightBounds.first[0].y, radius, angle / 2, Math.PI * 2 - angle / 2)
+        context.closePath()
+    }
+
+    /**
+     * @param {OffscreenCanvasRenderingContext2D} context
+     * @param {[Vector, Vector]} outerLightBound
+     * @param {[Vector, Vector]} innerLightBound
+     * @param {number} radius
+     * @param {number} angle
+     */
+    static drawInnerLightBounds(context, outerLightBound, innerLightBound, radius, angle) {
+        context.beginPath()
+        context.moveTo(outerLightBound[0].x, outerLightBound[0].y)
+        context.lineTo(outerLightBound[1].x, outerLightBound[1].y)
+        context.moveTo(innerLightBound[0].x, innerLightBound[0].y)
+        context.lineTo(innerLightBound[1].x, innerLightBound[1].y)
+        context.moveTo(innerLightBound[0].x, innerLightBound[0].y)
+        context.arc(outerLightBound[0].x, outerLightBound[0].y, radius, Math.PI * 2 - angle / 2, 0)
+        context.closePath()
+    }
+
+    /**
+     * @param {[Vector, Vector]} line1
+     * @param {[Vector, Vector]} line2
+     * @param {boolean} reverse
+     * @return {[Vector, Vector]}
+     */
+    static getNormalLightLine(line1, line2, reverse = false) {
+        const middleLine1 = Vector.divide(Vector.add(line1[0], line1[1]), 2)
+        const middleLine2 = Vector.divide(Vector.add(line2[0], line2[1]), 2)
+        const distance = Math.sqrt(Math.pow(middleLine2.x - middleLine1.x, 2) + Math.pow(middleLine2.y - middleLine1.y, 2))
+        const angle = Math.atan2(line1[1].y - line1[0].y, line1[1].x - line1[0].x)
+        return [
+            middleLine1,
+            new Vector({
+                x: middleLine1.x + Math.sin(angle) * distance * (reverse ? -1 : 1),
+                y: middleLine1.y - Math.cos(angle) * distance * (reverse ? -1 : 1)
+            })
+        ]
+    }
+
+    /**
+     * @param {OffscreenCanvasRenderingContext2D} context
+     * @param {Vector} center
+     * @param {number} radius
+     * @param {number} innerRadius
+     * @param {string} lightColor
+     * @param {string} darkColor
+     * @return {undefined}
+     */
+    static drawOuterLight(context, center, radius, innerRadius, lightColor, darkColor) {
+        const gradientOuterLight = context.createRadialGradient(
+            center.x, center.y, 0, center.x, center.y, radius)
+        gradientOuterLight.addColorStop(0, lightColor)
+        gradientOuterLight.addColorStop(innerRadius / 100, lightColor)
+        gradientOuterLight.addColorStop(1, darkColor)
+        context.fillStyle = gradientOuterLight
+        context.fill()
+    }
+
+    /**
+     * @param {OffscreenCanvasRenderingContext2D} context
+     * @param {[Vector, Vector]} outerLightBound
+     * @param {[Vector, Vector]} innerLightBound
+     * @param {boolean} reverse
+     * @param {boolean} debug
+     */
+    static drawInnerLight(context, outerLightBound, innerLightBound, reverse, debug= false) {
+        const normalLightLine = this.getNormalLightLine(outerLightBound, innerLightBound, reverse)
+        const gradientInnerLightOne = context.createLinearGradient(
+            normalLightLine[0].x, normalLightLine[0].y, normalLightLine[1].x, normalLightLine[1].y)
+        gradientInnerLightOne.addColorStop(0, '#FFFFFF')
+        gradientInnerLightOne.addColorStop(1, 'rgba(0, 0, 0, 0)')
+        context.fillStyle = gradientInnerLightOne
+        const globalCompositeOperation = context.globalCompositeOperation
+        context.globalCompositeOperation = 'destination-out'
+        context.fill()
+        context.globalCompositeOperation = globalCompositeOperation
+        if(debug){
+            const debugPath = new Path2D()
+            debugPath.moveTo(normalLightLine[0].x, normalLightLine[0].y)
+            debugPath.lineTo(normalLightLine[1].x, normalLightLine[1].y)
+            context.strokeStyle = '#ff0000'
+            context.stroke(debugPath)
+        }
+    }
 }
