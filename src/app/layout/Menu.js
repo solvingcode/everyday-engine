@@ -166,11 +166,10 @@ class Menu {
 
     /**
      * @param {MenuItemUI[]} menuItems
-     * @param {Window} window
      */
-    selectItems(menuItems, window) {
+    selectItems(menuItems) {
         const elementsToStop = this.items
-            .filter(item => item.element.isSelected() && item.element.isHandle(window)).map(menuItem => menuItem.element)
+            .filter(item => item.element.isSelected()).map(menuItem => menuItem.element)
         const elementsToRun = menuItems.map(menuItem => menuItem.element)
         elementsToStop.forEach(element => {
             if (!elementsToRun.includes(element)) {

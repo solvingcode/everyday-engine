@@ -366,6 +366,7 @@ class HtmlUIRenderer extends UIRenderer {
                 )
             )
         }
+        return []
     }
 
     /**

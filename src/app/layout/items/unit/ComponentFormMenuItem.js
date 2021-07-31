@@ -32,13 +32,14 @@ export default class ComponentFormMenuItem extends FormMenuItem {
      */
     postUpdate(value) {
         const formObject = this.getFormObject()
+        const selectedUnit = UnitSelector.get().getFirstSelected(World.get())
         if (formObject instanceof MeshComponent ||
             formObject instanceof TransformComponent||
             formObject instanceof CameraComponent) {
-            const selectedUnit = UnitSelector.get().getFirstSelected(World.get())
             selectedUnit.getComponent(MeshComponent).setGenerated(false)
         } else if(formObject instanceof LightComponent){
             formObject.setGenerated(false)
+            selectedUnit.getComponent(MeshComponent).setGenerated(false)
         }
     }
 

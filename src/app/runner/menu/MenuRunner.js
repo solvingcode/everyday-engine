@@ -18,7 +18,8 @@ class MenuRunner extends Runner {
      * @override
      */
     isHandle(window) {
-        return window.mouse.isButtonPressed(MouseButton.LEFT)
+        return window.mouse.isButtonPressed(MouseButton.LEFT) ||
+            window.mouse.isButtonClicked(MouseButton.LEFT)
     }
 
     /**
@@ -29,8 +30,9 @@ class MenuRunner extends Runner {
         const window = Window.get()
         const mouse = Window.get().mouse
         const menuItems = this.menu.getUIRenderer().getItemsAt(mouse)
+            .filter(menuItem => menuItem.element.isHandle(window))
         if (menuItems && menuItems.length) {
-            this.menu.selectItems(menuItems, window)
+            this.menu.selectItems(menuItems)
         } else {
             this.menu.stopActionMenuItem()
         }

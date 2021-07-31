@@ -158,6 +158,15 @@ class Vector {
     }
 
     /**
+     * @param {Vector} vectorA
+     * @param {Vector} vectorB
+     * @return {number}
+     */
+    static distance(vectorA, vectorB){
+        return Math.sqrt(Math.pow(vectorB.x - vectorA.x, 2) + Math.pow(vectorB.y - vectorA.y, 2))
+    }
+
+    /**
      * @param {Vector} vector
      */
     static normalize(vector){

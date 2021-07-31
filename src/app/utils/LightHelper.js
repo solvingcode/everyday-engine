@@ -62,9 +62,7 @@ export default class LightHelper {
         this.drawOuterLight(lightContext, center, radiusScale, innerRadius, lightColorRgba, globalColorRgba)
 
         //inner angle light
-        //this.drawInnerLightBounds(lightContext, outerLightBounds.first, innerLightBounds.first, radiusScale, innerAngle)
-        this.drawInnerLight(lightContext, outerLightBounds.first, innerLightBounds.first, false)
-        this.drawInnerLight(lightContext, outerLightBounds.second, innerLightBounds.second, true)
+        this.drawInnerLight(lightContext, outerLightBounds, innerLightBounds, radiusScale, true)
 
         //put the light to start position of the light
         context.drawImage(lightCanvas, positionStartLight.x, positionStartLight.y, lightCanvas.width, lightCanvas.height)
@@ -102,19 +100,36 @@ export default class LightHelper {
     }
 
     /**
-     * @param {OffscreenCanvasRenderingContext2D} context
+     * @param {OffscreenCanvasRenderingContext2D|Path2D} context
      * @param {[Vector, Vector]} outerLightBound
      * @param {[Vector, Vector]} innerLightBound
      * @param {number} radius
-     * @param {number} angle
+     * @param {boolean} drawArc
      */
-    static drawInnerLightBounds(context, outerLightBound, innerLightBound, radius, angle) {
-        context.beginPath()
-        context.moveTo(outerLightBound[0].x, outerLightBound[0].y)
-        context.lineTo(outerLightBound[1].x, outerLightBound[1].y)
-        context.moveTo(innerLightBound[0].x, innerLightBound[0].y)
-        context.lineTo(innerLightBound[1].x, innerLightBound[1].y)
-        context.closePath()
+    static drawInnerLightBounds(context, outerLightBound, innerLightBound, radius, drawArc = true) {
+        if(context instanceof OffscreenCanvasRenderingContext2D){
+            context.beginPath()
+        }
+        if(!drawArc){
+            context.moveTo(outerLightBound[0].x, outerLightBound[0].y)
+            context.lineTo(outerLightBound[1].x, outerLightBound[1].y)
+            context.moveTo(innerLightBound[0].x, innerLightBound[0].y)
+            context.lineTo(innerLightBound[1].x, innerLightBound[1].y)
+        }else{
+            const normalOuterLightBound = Vector.subtract(outerLightBound[1], outerLightBound[0])
+            const normalInnerLightBound = Vector.subtract(innerLightBound[1], innerLightBound[0])
+            const angleBounds = Vector.angle(normalOuterLightBound, normalInnerLightBound)
+            const angle = Vector.angle(new Vector(), normalInnerLightBound)
+            const angleA = Math.PI * 2 + angle
+            const angleB = angleA - angleBounds
+            const startAngle = Math.sign(angleBounds) > 0 ? angleB : angleA
+            const endAngle = Math.sign(angleBounds) > 0 ? angleA : angleB
+            context.moveTo(outerLightBound[0].x, outerLightBound[0].y)
+            context.arc(outerLightBound[0].x, outerLightBound[0].y, radius, startAngle, endAngle)
+        }
+        if(context instanceof OffscreenCanvasRenderingContext2D){
+            context.closePath()
+        }
     }
 
     /**
@@ -158,21 +173,38 @@ export default class LightHelper {
 
     /**
      * @param {OffscreenCanvasRenderingContext2D} context
+     * @param {{first: [Vector, Vector], second: [Vector, Vector]}} outerLightBounds
+     * @param {{first: [Vector, Vector], second: [Vector, Vector]}} innerLightBounds
+     * @param {number} radius
+     * @param {boolean} debug
+     */
+    static drawInnerLight(context, outerLightBounds, innerLightBounds, radius, debug= false) {
+        this.drawInnerLightSide(context, outerLightBounds.first, innerLightBounds.first, radius, false, debug)
+        this.drawInnerLightSide(context, outerLightBounds.second, innerLightBounds.second, radius, true, debug)
+    }
+
+    /**
+     * @param {OffscreenCanvasRenderingContext2D} context
      * @param {[Vector, Vector]} outerLightBound
      * @param {[Vector, Vector]} innerLightBound
+     * @param {number} radius
      * @param {boolean} reverse
      * @param {boolean} debug
      */
-    static drawInnerLight(context, outerLightBound, innerLightBound, reverse, debug= false) {
+    static drawInnerLightSide(context, outerLightBound, innerLightBound, radius, reverse, debug= false) {
         const normalLightLine = this.getNormalLightLine(outerLightBound, innerLightBound, reverse)
         const gradientInnerLightOne = context.createLinearGradient(
             normalLightLine[0].x, normalLightLine[0].y, normalLightLine[1].x, normalLightLine[1].y)
         gradientInnerLightOne.addColorStop(0, '#FFFFFF')
         gradientInnerLightOne.addColorStop(1, 'rgba(0, 0, 0, 0)')
+
+        const pathLight = new Path2D()
+        this.drawInnerLightBounds(pathLight, outerLightBound, innerLightBound, radius)
+
         context.fillStyle = gradientInnerLightOne
         const globalCompositeOperation = context.globalCompositeOperation
         context.globalCompositeOperation = 'destination-out'
-        context.fill()
+        context.fill(pathLight)
         context.globalCompositeOperation = globalCompositeOperation
         if(debug){
             const debugPath = new Path2D()

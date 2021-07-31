@@ -26,9 +26,9 @@ export default class LightPointShapeGenerator extends TypeShapeGenerator {
 
         LightHelper.drawOuterLightBounds(context, outerLightBounds, radiusScale, outerAngle)
         context.stroke()
-        LightHelper.drawInnerLightBounds(context, outerLightBounds.first, innerLightBounds.first, radiusScale, innerAngle)
+        LightHelper.drawInnerLightBounds(context, outerLightBounds.first, innerLightBounds.first, radiusScale)
         context.stroke()
-        LightHelper.drawInnerLightBounds(context, outerLightBounds.second, innerLightBounds.second, radiusScale, innerAngle)
+        LightHelper.drawInnerLightBounds(context, outerLightBounds.second, innerLightBounds.second, radiusScale)
         context.stroke()
 
         //circle bulb
