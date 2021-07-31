@@ -1,5 +1,6 @@
 import StateManager from '../state/StateManager.js'
 import Maths from '../utils/Maths.js'
+import {MouseButton} from '../core/Mouse.js'
 
 /**
  * Define an item in the menu
@@ -52,6 +53,13 @@ class MenuItem {
      */
     isSelected() {
         return this.stateCode && this.hasState(this.stateCode, this.id)
+    }
+
+    /**
+     * @param {Window} window
+     */
+    isHandle(window){
+        return window.mouse.isButtonClicked(MouseButton.LEFT)
     }
 
     /**

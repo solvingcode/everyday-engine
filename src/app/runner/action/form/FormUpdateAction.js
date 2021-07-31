@@ -64,7 +64,6 @@ class FormUpdateAction extends Action {
             Layout.form.TEXT,
             Layout.form.TEXTAREA,
             Layout.form.COLOR,
-            Layout.form.RANGE,
             Layout.form.FILE,
             Layout.form.WYSIWYG
         ].includes(field)
