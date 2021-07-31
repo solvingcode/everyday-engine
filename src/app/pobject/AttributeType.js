@@ -63,7 +63,7 @@ export default class AttributeType {
             case TYPES.MASK_GROUP_INSTANCE:
                 return 'number'
             case TYPES.RANGE:
-                return 'range'
+                return 'number'
             case TYPES.MESH:
                 return BlobData
             case TYPES.STYLE:

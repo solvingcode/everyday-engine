@@ -13,8 +13,8 @@ export default class LightComponent extends Component{
      * @override
      */
     initAttributes() {
-        this.add('intensity', TYPES.NUMBER, 0.5)
-        this.add('color', TYPES.STRING, '#FFFFFF')
+        this.add('intensity', TYPES.RANGE, 0.5, [0, 1, 0.01])
+        this.add('color', TYPES.COLOR, '#FFFFFF')
         this.add('generated', TYPES.BOOLEAN, false)
     }
 

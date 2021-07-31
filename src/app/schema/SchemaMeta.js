@@ -98,6 +98,9 @@ export const PrefSchema = {
         attrType: {
             type: TYPES.NUMBER
         },
+        attrRule: {
+            type: TYPES.ANY
+        },
         attrValue: {
             type: '[attrType]'
         }

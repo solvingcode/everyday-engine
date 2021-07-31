@@ -81,7 +81,8 @@ export default class ComponentData extends Data{
         this.concat(
             this.attributes,
             attributes,
-            (tItem, sItem) => tItem.getAttrName() === sItem.getAttrName()
+            (tItem, sItem) => tItem.getAttrName() === sItem.getAttrName(),
+            (attribute) => ['attrRule', 'attrType'].includes(attribute)
         )
     }
 

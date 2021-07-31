@@ -29,7 +29,7 @@ export default class GUISelectionExecutor extends ComponentExecutor {
             }else*/
             if (propertyComponent.isSelected() && !isColliderEdit) {
                 style.setColor('#FFAE00')
-                style.setBorderSize(2)
+                style.setBorderSize(1)
             }else{
                 style.setColor(styleComponent.getStyle().getColor())
                 style.setFillColor(styleComponent.getStyle().getFillColor())

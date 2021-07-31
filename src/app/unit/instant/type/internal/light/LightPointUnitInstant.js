@@ -19,7 +19,7 @@ export default class LightPointUnitInstant extends UnitInstant {
     instantiate(position, size, type) {
         this.setName('Light Point')
         const style = new Style()
-        style.setColor('#e5fc14')
+        style.setColor('#a5af4b')
         style.setBorderSize(1)
         if (type === PrimitiveShape.LIGHT_POINT) {
             this.createComponent(LightPointComponent)

@@ -25,7 +25,7 @@ class Data {
      * Exportable data will be added to the exported object (ex: world)
      * @return {boolean}
      */
-    isExportable(){
+    isExportable() {
         return true
     }
 
@@ -33,14 +33,24 @@ class Data {
      * @param {Object[]} target
      * @param {Object[]} source
      * @param {Function} criteria
+     * @param {Function} exclude
      */
-    concat(target, source, criteria){
-        if(target && source){
+    concat(target, source, criteria, exclude) {
+        if (target && source) {
             source.forEach((sItem) => {
                 const existIndex = target.findIndex(tItem => criteria(tItem, sItem))
-                if(existIndex >= 0){
-                    target[existIndex] = _.cloneDeep(sItem)
-                }else{
+                if (existIndex >= 0) {
+                    if (exclude) {
+                        const currentTarget = target[existIndex]
+                        for (const attribute in currentTarget) {
+                            if (!exclude(attribute)) {
+                                currentTarget[attribute] = _.cloneDeep(sItem[attribute])
+                            }
+                        }
+                    } else {
+                        target[existIndex] = _.cloneDeep(sItem)
+                    }
+                } else {
                     target.push(_.cloneDeep(sItem))
                 }
             })

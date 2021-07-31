@@ -59,9 +59,10 @@ export default class Component extends ComponentData{
      * @param {string} name
      * @param {number} type
      * @param {*} defaultValue
+     * @param {*} rule
      */
-    add(name, type, defaultValue = null){
-        DynamicAttributeHelper.add(this.attributes, name, type, defaultValue)
+    add(name, type, defaultValue = null, rule = null){
+        DynamicAttributeHelper.add(this.attributes, name, type, defaultValue, rule)
     }
 
     /**

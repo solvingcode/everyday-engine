@@ -10,9 +10,10 @@ export default class DynamicAttributeHelper {
      * @param {string} name
      * @param {number} type
      * @param {*} defaultValue
+     * @param {*} rule
      */
-    static create(name, type, defaultValue = null) {
-        return new DynamicAttribute(name, type, defaultValue)
+    static create(name, type, defaultValue = null, rule = null) {
+        return new DynamicAttribute(name, type, defaultValue, rule)
     }
 
     /**
@@ -20,10 +21,11 @@ export default class DynamicAttributeHelper {
      * @param {string} name
      * @param {number} type
      * @param {*} defaultValue
+     * @param {*} rule
      */
-    static add(target, name, type, defaultValue = null) {
+    static add(target, name, type, defaultValue = null, rule = null) {
         if (!this.tryGet(target, name)) {
-            target.push(this.create(name, type, defaultValue))
+            target.push(this.create(name, type, defaultValue, rule))
         } else {
             throw new ClientError(`Attribute ${name} already defined`)
         }
@@ -77,6 +79,15 @@ export default class DynamicAttributeHelper {
      */
     static getType(target, name) {
         return this.get(target, name).getAttrType()
+    }
+
+    /**
+     * @param {DynamicAttribute[]} target
+     * @param {string} name
+     * @return {*}
+     */
+    static getRule(target, name) {
+        return this.get(target, name).getAttrRule()
     }
 
     /**
@@ -226,6 +237,26 @@ export default class DynamicAttributeHelper {
                 type: Layout.form.CHECKBOX,
                 dynamicAttribute
             }]
+        } else if (attribute.getAttrType() === TYPES.COLOR && isListInstances) {
+            formField = [{
+                bind: bindName,
+                label: `${attribute.getAttrName()} `,
+                type: Layout.form.COLOR,
+                dynamicAttribute
+            }]
+        } else if (attribute.getAttrType() === TYPES.RANGE && isListInstances) {
+            const rule = attribute.getAttrRule()
+            formField = [{
+                bind: bindName,
+                label: `${attribute.getAttrName()} `,
+                type: Layout.form.RANGE,
+                options: {
+                    min: rule[0],
+                    max: rule[1],
+                    step: rule[2]
+                },
+                dynamicAttribute
+            }]
         } else if (attribute.getAttrType() === TYPES.VECTOR && isListInstances) {
             formField = [
                 {
@@ -338,6 +369,9 @@ export default class DynamicAttributeHelper {
                 newValue = value
                 break
             case TYPES.NUMBER:
+                newValue = parseFloat(value)
+                break
+            case TYPES.RANGE:
                 newValue = parseFloat(value)
                 break
             case TYPES.BOOLEAN:
