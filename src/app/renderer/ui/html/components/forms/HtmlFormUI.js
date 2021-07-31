@@ -13,13 +13,37 @@ class HtmlFormUI extends ItemUI {
     }
 
     /**
+     * @param {MenuItemUI} item
+     * @param {HTMLElement} el
+     * @param {UIRenderer} uiRenderer
+     */
+    static createFormItem(item, el, uiRenderer = null) {
+        const {props} = item.element
+        const {inputProps} = this.props
+        const formEl = document.createElement(inputProps.tag)
+        if (inputProps.type) {
+            formEl.type = inputProps.type
+        }
+        formEl.id = `${el.id}-${inputProps.suffix}`
+        if (props.name) {
+            const labelEl = document.createElement('label')
+            labelEl.textContent = props.name
+            labelEl.setAttribute('title', props.name)
+            labelEl.htmlFor = formEl.id
+            el.appendChild(labelEl)
+        }
+        el.appendChild(formEl)
+    }
+
+    /**
      * @override
      */
     static postCreate(item, el, uiRenderer = null) {
         const {version} = item.element
         el.setAttribute(HtmlFormUI.props.version, version)
-        this.postCreateFormItem(item, el, uiRenderer)
+        this.createFormItem(item, el, uiRenderer)
         this.addCustomAttributes(item, el, uiRenderer)
+        this.postCreateFormItem(item, el, uiRenderer)
     }
 
     /**

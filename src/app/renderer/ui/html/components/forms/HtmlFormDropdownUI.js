@@ -5,17 +5,8 @@ class HtmlFormDropdownUI extends HtmlFormUI {
      * @override
      */
     static postCreateFormItem(item, el, uiRenderer) {
-        const {props} = item.element
-        const {inputProps} = this.props
-        const formEl = document.createElement(inputProps.tag)
+        const formEl = this.getFormElementFrom(el)
         this.createOptions(item, formEl)
-        formEl.id = `${el.id}-${inputProps.suffix}`
-        const labelEl = document.createElement('label')
-        labelEl.textContent = props.name
-        labelEl.setAttribute('title', props.name)
-        labelEl.htmlFor = formEl.id
-        el.appendChild(labelEl)
-        el.appendChild(formEl)
     }
 
     /**

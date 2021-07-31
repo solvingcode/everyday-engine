@@ -12,6 +12,8 @@ import TextareaMenuItem from './TextareaMenuItem.js'
 import WysiwygMenuItem from './WysiwygMenuItem.js'
 import SystemError from '../../../exception/type/SystemError.js'
 import ClientError from '../../../exception/type/ClientError.js'
+import DynamicAttributeHelper from '../../../utils/DynamicAttributeHelper.js'
+import World from '../../../world/World.js'
 
 /**
  * Form menu item
@@ -109,9 +111,8 @@ class FormMenuItem extends MenuItem {
      * Update the form
      */
     updateForm() {
-        this.items = []
-        this.buildFormItems()
         this.version = Maths.generateId()
+        this.buildFormItems()
         this.items.forEach(item => item.version = this.version)
     }
 
@@ -188,8 +189,8 @@ class FormMenuItem extends MenuItem {
      * Build form items
      */
     buildFormItems() {
-        this.items = this.items.concat(
-            this.fields.map(field => {
+        const newItems = this.fields
+            .map(field => {
                 const getter = this.getGetter(field)
                 const setter = this.getSetter(field)
                 const typeMenuItem = this.getMenuItem(field)
@@ -203,7 +204,23 @@ class FormMenuItem extends MenuItem {
                     setter
                 )
             })
-        )
+        this.items.forEach((item, iItem) => {
+            const newItem = newItems.find(pItem => pItem.props.name === item.props.name)
+            if(newItem){
+                const {index, name} = item
+                item = newItem
+                if(newItem.name === name){
+                    item.index = index
+                }
+            }else{
+                this.items.splice(iItem, 1)
+            }
+        })
+        newItems.forEach(newItem => {
+            if(!this.items.find(item => item.props.name === newItem.props.name)){
+                this.items.push(newItem)
+            }
+        })
     }
 
     /**
@@ -260,6 +277,7 @@ class FormMenuItem extends MenuItem {
         const setterString = this.getSetterString(field)
         const setterDynamicField = 'setValue'
         const getterDynamicField = 'getValue'
+        const getterDynamicFieldType = 'getType'
         return (function (setter, fieldNames, self) {
             return (value) => setter.reduce(
                 (pValue, cValue, iValue) => {
@@ -268,7 +286,10 @@ class FormMenuItem extends MenuItem {
                         if(iValue !== setter.length - 1){
                             return pValue[getterDynamicField](fieldName)
                         }else{
-                            return pValue[setterDynamicField](fieldName, value)
+                            const validValue = DynamicAttributeHelper.getValueByType(
+                                value, pValue[getterDynamicFieldType](fieldName),
+                                World.get(), null, null)
+                            return pValue[setterDynamicField](fieldName, validValue)
                         }
                     }else{
                         if(iValue !== setter.length - 1){
