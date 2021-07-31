@@ -76,7 +76,7 @@ class FormUpdateAction extends Action {
      */
     static isAtChangeField(field) {
         return [
-            Layout.form.COLOR, Layout.form.RANGE
+            Layout.form.COLOR
         ].includes(field)
     }
 

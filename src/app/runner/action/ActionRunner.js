@@ -171,10 +171,10 @@ class ActionRunner extends Runner {
             const action = typeAction
             if (action.shouldStart(type, stateManager)) {
                 stateManager.progressNextState(type)
-            }else if (action.shouldProgress(type, stateManager)) {
-                this.runAction(action, mouse, selectedUnits) && stateManager.stopNextState(type)
             }else if (action.shouldStop(type, stateManager)) {
                 this.stopState(action, mouse, selectedUnits) && stateManager.endNextState(type)
+            }else if (action.shouldProgress(type, stateManager)) {
+                this.runAction(action, mouse, selectedUnits) && stateManager.stopNextState(type)
             }
         }
     }

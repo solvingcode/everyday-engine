@@ -189,13 +189,15 @@ class FormMenuItem extends MenuItem {
      * Build form items
      */
     buildFormItems() {
-        const newItems = this.fields
+        this.items = this.fields
             .map(field => {
+                const existItem = this.items.find(item => item.props.name === field.label)
                 const getter = this.getGetter(field)
                 const setter = this.getSetter(field)
                 const typeMenuItem = this.getMenuItem(field)
                 return new typeMenuItem(this,
                     {
+                        index: existItem && existItem.index,
                         name: field.label,
                         list: field.list || [],
                         options: field.options
@@ -204,23 +206,6 @@ class FormMenuItem extends MenuItem {
                     setter
                 )
             })
-        this.items.forEach((item, iItem) => {
-            const newItem = newItems.find(pItem => pItem.props.name === item.props.name)
-            if(newItem){
-                const {index, name} = item
-                item = newItem
-                if(newItem.name === name){
-                    item.index = index
-                }
-            }else{
-                this.items.splice(iItem, 1)
-            }
-        })
-        newItems.forEach(newItem => {
-            if(!this.items.find(item => item.props.name === newItem.props.name)){
-                this.items.push(newItem)
-            }
-        })
     }
 
     /**

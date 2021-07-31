@@ -62,7 +62,7 @@ export default class LightHelper {
         this.drawOuterLight(lightContext, center, radiusScale, innerRadius, lightColorRgba, globalColorRgba)
 
         //inner angle light
-        this.drawInnerLight(lightContext, outerLightBounds, innerLightBounds, radiusScale, true)
+        this.drawInnerLight(lightContext, outerLightBounds, innerLightBounds, radiusScale)
 
         //put the light to start position of the light
         context.drawImage(lightCanvas, positionStartLight.x, positionStartLight.y, lightCanvas.width, lightCanvas.height)

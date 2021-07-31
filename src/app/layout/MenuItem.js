@@ -33,7 +33,7 @@ class MenuItem {
         this.data = {}
         this.menu = null
         this.id = props.id || Maths.generateId()
-        this.index = Maths.generateId()
+        this.index = props.index || Maths.generateId()
         this.stateCode = props.stateCode
         this.collapsed = false
         this.parent = parent
