@@ -262,13 +262,13 @@ export default class DynamicAttributeHelper {
                 {
                     bind: `${bindName}.x`,
                     label: `${attribute.getAttrName()} X`,
-                    type: Layout.form.TEXT,
+                    type: Layout.form.NUMBER,
                     dynamicAttribute
                 },
                 {
                     bind: `${bindName}.y`,
                     label: `${attribute.getAttrName()} Y`,
-                    type: Layout.form.TEXT,
+                    type: Layout.form.NUMBER,
                     dynamicAttribute
                 }
             ]
@@ -277,16 +277,23 @@ export default class DynamicAttributeHelper {
                 {
                     bind: `${bindName}.width`,
                     label: `${attribute.getAttrName()} Width`,
-                    type: Layout.form.TEXT,
+                    type: Layout.form.NUMBER,
                     dynamicAttribute
                 },
                 {
                     bind: `${bindName}.height`,
                     label: `${attribute.getAttrName()} Height`,
-                    type: Layout.form.TEXT,
+                    type: Layout.form.NUMBER,
                     dynamicAttribute
                 }
             ]
+        } else if (attribute.getAttrType() === TYPES.NUMBER && isListInstances) {
+            formField = [{
+                bind: bindName,
+                label: attribute.getAttrName(),
+                type: Layout.form.NUMBER,
+                dynamicAttribute
+            }]
         }else {
             formField = [{
                 bind: bindName,

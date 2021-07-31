@@ -24,17 +24,17 @@ class PositionFormMenuItem extends FormMenuItem {
             {
                 bind: 'positionX',
                 label: 'X',
-                type: Layout.form.TEXT
+                type: Layout.form.NUMBER
             },
             {
                 bind: 'positionY',
                 label: 'Y',
-                type: Layout.form.TEXT
+                type: Layout.form.NUMBER
             },
             {
                 bind: 'positionZ',
                 label: 'Z',
-                type: Layout.form.TEXT
+                type: Layout.form.NUMBER
             }
         ]
     }

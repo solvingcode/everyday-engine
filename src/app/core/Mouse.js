@@ -10,6 +10,7 @@ class Mouse {
         this.keydowns = []
         this.keyclicks = []
         this.keydbclicks = []
+        this.mouseWheelMove = false
         this.position = new Vector()
         this.scenePosition = new Vector()
         this.target = null
@@ -89,6 +90,7 @@ class Mouse {
      */
     setMouseWheel(deltaY) {
         this.mouseWheel.y = deltaY
+        this.mouseWheelMove = true
         this.target = this.getTarget(event)
     }
 
@@ -183,6 +185,13 @@ class Mouse {
     }
 
     /**
+     * @return {Boolean}
+     */
+    isMouseWheelMove() {
+        return this.mouseWheelMove
+    }
+
+    /**
      * @return {{y: number}}
      */
     getMouseWheel() {
@@ -212,6 +221,7 @@ class Mouse {
 
     clear() {
         this.clearKeyClicked()
+        this.mouseWheelMove = false
         this.mouseWheel.y = 0
     }
 }

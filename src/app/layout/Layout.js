@@ -48,6 +48,7 @@ Layout.type = {
 Layout.form = {
     CHECKBOX: 'checkbox',
     TEXT: 'text',
+    NUMBER: 'number',
     DROPDOWN: 'dropdown',
     FILE: 'file',
     COLOR: 'color',

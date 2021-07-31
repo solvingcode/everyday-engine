@@ -24,12 +24,12 @@ export default class ResolutionFormMenuItem extends FormMenuItem {
             {
                 bind: 'resolution.width',
                 label: 'Width',
-                type: Layout.form.TEXT
+                type: Layout.form.NUMBER
             },
             {
                 bind: 'resolution.height',
                 label: 'Height',
-                type: Layout.form.TEXT
+                type: Layout.form.NUMBER
             }
         ]
     }

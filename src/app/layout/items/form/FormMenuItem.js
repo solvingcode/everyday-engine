@@ -14,6 +14,7 @@ import SystemError from '../../../exception/type/SystemError.js'
 import ClientError from '../../../exception/type/ClientError.js'
 import DynamicAttributeHelper from '../../../utils/DynamicAttributeHelper.js'
 import World from '../../../world/World.js'
+import NumberMenuItem from './NumberMenuItem.js'
 
 /**
  * Form menu item
@@ -200,7 +201,8 @@ class FormMenuItem extends MenuItem {
                         index: existItem && existItem.index,
                         name: field.label,
                         list: field.list || [],
-                        options: field.options
+                        options: field.options,
+                        isEditing: existItem && existItem.isEditing()
                     },
                     getter,
                     setter
@@ -317,6 +319,8 @@ class FormMenuItem extends MenuItem {
                 return ColorMenuItem
             case Layout.form.RANGE:
                 return RangeMenuItem
+            case Layout.form.NUMBER:
+                return NumberMenuItem
             case Layout.form.TEXTAREA:
                 return TextareaMenuItem
             case Layout.form.WYSIWYG:

@@ -703,13 +703,13 @@ i.static-entity::before{
     padding: 5px;
 }
 
-.form .form-element-editing input[type=text]{
+.form .form-element-editing input[type=text], .form .form-element-editing input[type=number]{
     cursor: text;
     outline: -webkit-focus-ring-color auto 1px !important;
     outline-offset: 0;
 }
 
-.form input[type=text]:focus{
+.form input[type=text]:focus, .form input[type=number]:focus{
     outline: none;
 }
 
@@ -727,7 +727,7 @@ i.static-entity::before{
     overflow: hidden;
 }
 
-.form input[type=text], .form input[type=file]{
+.form input[type=text], .form input[type=file], .form input[type=number]{
     border-radius: 2px;
     padding: 3px;
     width: 60%;

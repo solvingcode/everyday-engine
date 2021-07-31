@@ -19,7 +19,8 @@ class MenuRunner extends Runner {
      */
     isHandle(window) {
         return window.mouse.isButtonPressed(MouseButton.LEFT) ||
-            window.mouse.isButtonClicked(MouseButton.LEFT)
+            window.mouse.isButtonClicked(MouseButton.LEFT) ||
+            window.mouse.isMouseWheelMove()
     }
 
     /**

@@ -264,15 +264,15 @@ button.selected, button.hidden.selected, button.locked.selected{
     border: 2px solid #555555;
 }
 
-.form .form-element-editing input[type=text], .form .form-element-editing select{
+.form .form-element-editing input[type=text], .form .form-element-editing input[type=number], .form .form-element-editing select{
     background-color: #323232 !important;
 }
 
-.form input[type=text]:hover, .form select:hover{
+.form input[type=text]:hover, .form select:hover, .form input[type=number]:hover{
     background-color: #505050;
 }
 
-.form input[type=text]{
+.form input[type=text], .form input[type=number]{
     border: 1px solid #5a5a5a;
     background-color: #3e3e3e;
     color: #f4f4f4;

@@ -62,6 +62,7 @@ class FormUpdateAction extends Action {
     static isInstantField(field) {
         return ![
             Layout.form.TEXT,
+            Layout.form.NUMBER,
             Layout.form.TEXTAREA,
             Layout.form.COLOR,
             Layout.form.FILE,
@@ -76,7 +77,7 @@ class FormUpdateAction extends Action {
      */
     static isAtChangeField(field) {
         return [
-            Layout.form.COLOR
+            Layout.form.COLOR, Layout.form.NUMBER
         ].includes(field)
     }
 
@@ -87,11 +88,14 @@ class FormUpdateAction extends Action {
     static isFieldChanged(item) {
         const menu = Menu.get()
         const menuItemUI = menu.findItemByElement(item)
-        const uiRenderer = menu.getUIRenderer()
-        const formElement = uiRenderer.getType(menuItemUI).getFormElement(menuItemUI, uiRenderer)
-        const oldValue = item.value()
-        const newValue = formElement.value
-        return oldValue !== newValue
+        if(menuItemUI){
+            const uiRenderer = menu.getUIRenderer()
+            const formElement = uiRenderer.getType(menuItemUI).getFormElement(menuItemUI, uiRenderer)
+            const oldValue = item.value()
+            const newValue = formElement.value
+            return oldValue !== newValue
+        }
+        return false
     }
 }
 
