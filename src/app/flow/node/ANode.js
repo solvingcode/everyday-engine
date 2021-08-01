@@ -129,8 +129,10 @@ export const NODE_TYPES = {
     VAR_BOOLEAN: 'var_bool',
     VAR_COMPONENT: 'var_component',
     VAR_MASK_GROUP: 'var_mask_group',
+    VAR_AUDIO: 'var_audio',
     ANIMATION: 'animation',
     COMPONENT: 'component',
     REFERENCE: 'reference',
-    SELF: 'self'
+    SELF: 'self',
+    AUDIO: 'audio'
 }

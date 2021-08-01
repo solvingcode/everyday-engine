@@ -12,8 +12,6 @@ import TextareaMenuItem from './TextareaMenuItem.js'
 import WysiwygMenuItem from './WysiwygMenuItem.js'
 import SystemError from '../../../exception/type/SystemError.js'
 import ClientError from '../../../exception/type/ClientError.js'
-import DynamicAttributeHelper from '../../../utils/DynamicAttributeHelper.js'
-import World from '../../../world/World.js'
 import NumberMenuItem from './NumberMenuItem.js'
 
 /**
@@ -264,7 +262,6 @@ class FormMenuItem extends MenuItem {
         const setterString = this.getSetterString(field)
         const setterDynamicField = 'setValue'
         const getterDynamicField = 'getValue'
-        const getterDynamicFieldType = 'getType'
         return (function (setter, fieldNames, self) {
             return (value) => setter.reduce(
                 (pValue, cValue, iValue) => {
@@ -273,10 +270,7 @@ class FormMenuItem extends MenuItem {
                         if(iValue !== setter.length - 1){
                             return pValue[getterDynamicField](fieldName)
                         }else{
-                            const validValue = DynamicAttributeHelper.getValueByType(
-                                value, pValue[getterDynamicFieldType](fieldName),
-                                World.get(), null, null)
-                            return pValue[setterDynamicField](fieldName, validValue)
+                            return pValue[setterDynamicField](fieldName, value)
                         }
                     }else{
                         if(iValue !== setter.length - 1){

@@ -10,6 +10,7 @@ import SystemError from '../../../../exception/type/SystemError.js'
 import Folder from '../../../../asset/Folder.js'
 import AssetAnimationXml from '../../../../asset/types/animation/AssetAnimationXml.js'
 import AssetAnimationScriptXml from '../../../../asset/types/animation/AssetAnimationScriptXml.js'
+import AssetAudio from '../../../../asset/types/Audio/AssetAudio.js'
 
 export default class AssetElementButtonUI extends ListElementButtonUI {
 
@@ -52,6 +53,8 @@ export default class AssetElementButtonUI extends ListElementButtonUI {
                 return this.getIconFolderAsset(bind)
             case AssetAnimationXml:
                 return IconUI.createIcon('photo-video')
+            case AssetAudio:
+                return IconUI.createIcon('file-audio')
             default:
                 throw new SystemError(`Asset: No icon founded for "${type.constructor.name}"`)
         }

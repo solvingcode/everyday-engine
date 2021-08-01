@@ -19,6 +19,13 @@ export default class MaterialRegistry extends Registry{
     }
 
     /**
+     * @return {Material}
+     */
+    getDefault(){
+        return this.getInstances()[0]
+    }
+
+    /**
      * @param {Material} instance
      */
     register(instance) {
@@ -30,6 +37,9 @@ export default class MaterialRegistry extends Registry{
      * @return {Material}
      */
     getInstance(name) {
+        if(!name){
+            return this.getDefault()
+        }
         return super.getInstance(name)
     }
 

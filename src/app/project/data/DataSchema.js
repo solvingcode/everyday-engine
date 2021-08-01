@@ -146,6 +146,8 @@ import LightPointComponent from '../../component/internal/LightPointComponent.js
 import LightMaterial from '../../material/LightMaterial.js'
 import LightGlobalUnitInstant from '../../unit/instant/type/internal/light/LightGlobalUnitInstant.js'
 import LightGlobalComponent from '../../component/internal/LightGlobalComponent.js'
+import AssetAudio from '../../asset/types/Audio/AssetAudio.js'
+import PlayAudioFunction from '../../flow/function/native/audio/PlayAudioFunction.js'
 
 /**
  * @class {DataSchema}
@@ -288,7 +290,9 @@ class DataSchema {
         {id: 1230, type: LightPointComponent},
         {id: 1240, type: LightMaterial},
         {id: 1250, type: LightGlobalUnitInstant},
-        {id: 1260, type: LightGlobalComponent}
+        {id: 1260, type: LightGlobalComponent},
+        {id: 1270, type: AssetAudio},
+        {id: 1280, type: PlayAudioFunction}
     ]
 
     /**

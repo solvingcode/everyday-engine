@@ -89,7 +89,8 @@ class FileHelper {
         BIN: 'application/octet-binary;charset=utf-8',
         ZIP: 'application/zip',
         IMG_JPEG: 'image/jpeg',
-        IMG_PNG: 'image/png'
+        IMG_PNG: 'image/png',
+        WAV: 'audio/wav'
     }
 
 }

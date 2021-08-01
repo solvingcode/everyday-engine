@@ -25,6 +25,7 @@ import NumberVariableNode from '../flow/node/variable/NumberVariableNode.js'
 import ComponentVariableNode from '../flow/node/variable/ComponentVariableNode.js'
 import MaskGroupVariableNode from '../flow/node/variable/MaskGroupVariableNode.js'
 import LoopNode from '../flow/node/LoopNode.js'
+import AudioVariableNode from '../flow/node/variable/AudioVariableNode.js'
 
 export default class ScriptHelper {
 
@@ -67,6 +68,8 @@ export default class ScriptHelper {
             node = script.createNode(functionRegistry, MaskGroupVariableNode, nodeValue)
         } else if (nodeType === NODE_TYPES.VAR_BOOLEAN) {
             node = script.createNode(functionRegistry, BooleanVariableNode, nodeValue)
+        } else if (nodeType === NODE_TYPES.VAR_AUDIO) {
+            node = script.createNode(functionRegistry, AudioVariableNode, nodeValue)
         } else if (nodeType === NODE_TYPES.VAR_TOGGLE) {
             node = script.createNode(functionRegistry, ToggleVariableNode, nodeValue)
         } else if (nodeType === NODE_TYPES.COMPONENT) {
@@ -113,6 +116,8 @@ export default class ScriptHelper {
             nodeType = NODE_TYPES.VAR_MASK_GROUP
         } else if (node instanceof BooleanVariableNode) {
             nodeType = NODE_TYPES.VAR_BOOLEAN
+        } else if (node instanceof AudioVariableNode) {
+            nodeType = NODE_TYPES.VAR_AUDIO
         } else if (node instanceof ToggleVariableNode) {
             nodeType = NODE_TYPES.VAR_TOGGLE
         } else if (node instanceof ComponentNode) {

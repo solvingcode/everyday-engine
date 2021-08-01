@@ -230,6 +230,19 @@ export default class DynamicAttributeHelper {
                 list: listMaskGroups,
                 dynamicAttribute
             }]
+        } else if (attribute.getAttrType() === TYPES.AUDIO && isListInstances) {
+            const listAudios = world.getAssetsManager().getAudioAssets()
+                .map(audio => ({
+                    value: audio.getId(),
+                    label: audio.getName()
+                }))
+            formField = [{
+                bind: bindName,
+                label: attribute.getAttrName(),
+                type: Layout.form.DROPDOWN,
+                list: listAudios,
+                dynamicAttribute
+            }]
         } else if (attribute.getAttrType() === TYPES.BOOLEAN && isListInstances) {
             formField = [{
                 bind: bindName,
@@ -350,6 +363,13 @@ export default class DynamicAttributeHelper {
                     throw new ClientError(`${this.constructor.name}: Mask Group Instance "${value}" not found`)
                 }
                 newValue = maskGroupInstance
+                break
+            case TYPES.AUDIO:
+                const audio = world.getAssetsManager().findAssetAudioById(value)
+                if (!audio) {
+                    throw new ClientError(`${this.constructor.name}: Audio "${value}" not found`)
+                }
+                newValue = audio.getType()
                 break
             case TYPES.ARRAY | TYPES.ANY:
                 if (!_.isArray(value)) {

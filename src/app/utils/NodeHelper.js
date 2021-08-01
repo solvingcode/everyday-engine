@@ -42,6 +42,8 @@ import MaskGroupVariableNode from '../flow/node/variable/MaskGroupVariableNode.j
 import AMaskGroupVariable from '../flow/variable/AMaskGroupVariable.js'
 import LoopNode from '../flow/node/LoopNode.js'
 import ALoop from '../flow/loop/ALoop.js'
+import AudioVariableNode from '../flow/node/variable/AudioVariableNode.js'
+import AAudioVariable from '../flow/variable/AAudioVariable.js'
 
 export default class NodeHelper {
 
@@ -75,6 +77,8 @@ export default class NodeHelper {
                 return new AStringVariable(sourceName)
             case BooleanVariableNode:
                 return new ABooleanVariable(sourceName)
+            case AudioVariableNode:
+                return new AAudioVariable(sourceName)
             case NumberVariableNode:
                 return new ANumberVariable(sourceName)
             case ComponentVariableNode:

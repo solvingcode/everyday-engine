@@ -12,6 +12,7 @@ import AssetAnimationXml from '../asset/types/animation/AssetAnimationXml.js'
 import SystemError from '../exception/type/SystemError.js'
 import AnimationScript from '../flow/AnimationScript.js'
 import Maths from '../utils/Maths.js'
+import AssetAudio from '../asset/types/Audio/AssetAudio.js'
 
 /**
  * @class {AssetsManager}
@@ -130,7 +131,7 @@ export default class AssetsManager extends AssetsManagerData {
                 resolve(reader.result)
             }
             reader.onerror = reject
-            if (this.isBlobImage(blob)) {
+            if (this.isBlobImage(blob) || this.isBlobAudio(blob)) {
                 reader.readAsDataURL(blob)
             } else {
                 reader.readAsText(blob)
@@ -140,7 +141,6 @@ export default class AssetsManager extends AssetsManagerData {
             return this.setAsset(data, type, FileHelper.getFilename(blob.name))
         })
     }
-
 
     /**
      * @param {Blob} blob
@@ -152,10 +152,26 @@ export default class AssetsManager extends AssetsManagerData {
     }
 
     /**
+     * @param {Blob} blob
+     * @return {boolean}
+     */
+    isBlobAudio(blob) {
+        const type = this.getAssetType(blob)
+        return type === AssetAudio
+    }
+
+    /**
      * @return {Asset[]}
      */
     getParsedAssets() {
         return this.getAssets().filter(asset => this.isAssetScript(asset) || this.isAssetAnimation(asset))
+    }
+
+    /**
+     * @return {Asset[]}
+     */
+    getAudioAssets(){
+        return this.getAssets().filter(asset => this.isAssetAudio(asset))
     }
 
     /**
@@ -183,6 +199,14 @@ export default class AssetsManager extends AssetsManagerData {
     }
 
     /**
+     * @param {Asset} asset
+     * @return {boolean}
+     */
+    isAssetAudio(asset) {
+        return asset && asset.getType() instanceof AssetAudio
+    }
+
+    /**
      * @param {Blob} blob
      * @return {Class<AssetType>}
      */
@@ -194,6 +218,8 @@ export default class AssetsManager extends AssetsManagerData {
                 return AssetImage
             case FileHelper.type.XML:
                 return AssetScriptXml
+            case FileHelper.type.WAV:
+                return AssetAudio
             default:
                 throw new ClientError(`Asset type "${type}" not supported`)
         }
@@ -243,6 +269,18 @@ export default class AssetsManager extends AssetsManagerData {
         const asset = this.findAssetById(assetId)
         if (!asset || !this.isAssetImage(asset)) {
             throw new SystemError(`No asset image found with ID "${assetId}"`)
+        }
+        return asset
+    }
+
+    /**
+     * @param {number|string} assetId
+     * @return {Asset}
+     */
+    findAssetAudioById(assetId) {
+        const asset = this.findAssetById(assetId)
+        if (!asset || !this.isAssetAudio(asset)) {
+            throw new SystemError(`No asset audio found with ID "${assetId}"`)
         }
         return asset
     }

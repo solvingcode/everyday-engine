@@ -60,6 +60,8 @@ export default class AttributeType {
                 return 'string'
             case TYPES.COMPONENT_INSTANCE:
                 return 'number'
+            case TYPES.AUDIO:
+                return 'number'
             case TYPES.MASK_GROUP_INSTANCE:
                 return 'number'
             case TYPES.RANGE:
@@ -146,6 +148,7 @@ export const TYPES = {
     MASK_GROUP_INSTANCE:            0b00000100000000000100000000,
     MATERIAL:                       0b00000100000000001000000000,
     COLOR:                          0b00000100000000010000000000,
+    AUDIO:                          0b00000100000000100000000000,
     RANGE:                          0b00001000000000000000000001,
     STYLE:                          0b00010000000000000000000010,
     SIZE:                           0b00010000000000000000000100,
