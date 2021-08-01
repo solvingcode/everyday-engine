@@ -5,6 +5,7 @@ import LightGlobalComponent from '../component/internal/LightGlobalComponent.js'
 import {CANVAS_CONTEXT_TYPE} from '../core/Constant.js'
 import MaterialType from './MaterialType.js'
 import Color from '../utils/Color.js'
+import ImageHelper from '../utils/ImageHelper.js'
 
 export default class LightMaterial extends Material {
 
@@ -43,7 +44,7 @@ export default class LightMaterial extends Material {
 
         contextLightContainer.drawImage(canvasLights, 0, 0, scaleSize.width, scaleSize.height)
 
-        const lightCanvasSourceAtop = this.copyCanvas(context.canvas)
+        const lightCanvasSourceAtop = ImageHelper.copyCanvas(context.canvas)
         const lightContextSourceAtop = lightCanvasSourceAtop.getContext(CANVAS_CONTEXT_TYPE)
         lightContextSourceAtop.globalCompositeOperation = 'source-atop'
         lightContextSourceAtop.drawImage(canvasLightContainer, 0, 0, scaleSize.width, scaleSize.height)
@@ -52,16 +53,5 @@ export default class LightMaterial extends Material {
         context.globalCompositeOperation = 'multiply'
         context.drawImage(lightCanvasSourceAtop, 0, 0, scaleSize.width, scaleSize.height)
         context.globalCompositeOperation = globalCompositeOperation
-    }
-
-    /**
-     * @param {OffscreenCanvas} canvas
-     * @return {OffscreenCanvas}
-     */
-    copyCanvas(canvas){
-        const canvasCopy = new OffscreenCanvas(canvas.width, canvas.height)
-        const contextCopy = canvasCopy.getContext(CANVAS_CONTEXT_TYPE)
-        contextCopy.drawImage(canvas, 0, 0, canvas.width, canvas.height)
-        return canvasCopy
     }
 }

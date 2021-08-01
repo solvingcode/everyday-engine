@@ -59,6 +59,13 @@ class Maths {
         }
         return intervalOutputs[0] + (input / (intervalInputs[1] - intervalInputs[0])) * (intervalOutputs[1] - intervalOutputs[0])
     }
+
+    /**
+     * @param {number} intensityParam
+     */
+    static getIntensity(intensityParam){
+        return 1/(1 + 0.045 * intensityParam + 0.0075 * intensityParam ** 2)
+    }
 }
 
 export default Maths

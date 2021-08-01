@@ -13,7 +13,6 @@ export default class LightComponent extends Component{
      * @override
      */
     initAttributes() {
-        this.add('opacity', TYPES.RANGE, 0, [0, 1, 0.001])
         this.add('intensity', TYPES.NUMBER, 1)
         this.add('color', TYPES.COLOR, '#FFFFFF')
         this.add('generated', TYPES.BOOLEAN, false)
@@ -31,20 +30,6 @@ export default class LightComponent extends Component{
      */
     setIntensity(intensity){
         this.setValue('intensity', intensity)
-    }
-
-    /**
-     * @return {number}
-     */
-    getOpacity(){
-        return this.getValue('opacity')
-    }
-
-    /**
-     * @param {number} opacity
-     */
-    setOpacity(opacity){
-        this.setValue('opacity', opacity)
     }
 
     /**

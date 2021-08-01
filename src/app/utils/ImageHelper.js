@@ -246,6 +246,17 @@ export default class ImageHelper {
 
         return canvasEl
     }
+
+    /**
+     * @param {OffscreenCanvas} canvas
+     * @return {OffscreenCanvas}
+     */
+    static copyCanvas(canvas){
+        const canvasCopy = new OffscreenCanvas(canvas.width, canvas.height)
+        const contextCopy = canvasCopy.getContext(CANVAS_CONTEXT_TYPE)
+        contextCopy.drawImage(canvas, 0, 0, canvas.width, canvas.height)
+        return canvasCopy
+    }
 }
 
 export const AREA = {

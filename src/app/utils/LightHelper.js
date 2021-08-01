@@ -30,7 +30,7 @@ export default class LightHelper {
         const outerRadius = lightComponent.getOuterRadius()
         const innerRadius = lightComponent.getInnerRadius()
         const lightColor = lightComponent.getColor()
-        const lightIntensity = lightComponent.getIntensity()
+        const lightIntensity = Math.max(lightComponent.getIntensity(), 0.01)
         const scaleSize = camera.toScaleSize(meshComponent.getSize())
         const center = new Vector({x: scaleSize.width / 2, y: scaleSize.height / 2})
         const sw = scaleSize.width * outerRadius / 100
@@ -38,7 +38,7 @@ export default class LightHelper {
         const lightPosition = transformComponent.getPosition()
         const lightRotation = transformComponent.getRotation()
         const globalColorRgba = Color.hexToRgb(globalColor, globalIntensity)
-        const lightColorRgba = Color.hexToRgb(lightColor, lightIntensity)
+        const lightColorRgba = Color.hexToRgb(lightColor, 1)
 
         //calculate position to put the light
         const positionStartLight = camera.toCameraScale(Vector.subtract(lightPosition, positionToLight))
@@ -59,7 +59,7 @@ export default class LightHelper {
 
         //outer angle light
         this.drawOuterLightBounds(lightContext, outerLightBounds, radiusScale, outerAngle)
-        this.drawOuterLight(lightContext, center, radiusScale, innerRadius, lightColorRgba, globalColorRgba)
+        this.drawOuterLight(lightContext, center, radiusScale, innerRadius, lightColorRgba, lightIntensity, globalColorRgba)
 
         //inner angle light
         this.drawInnerLight(lightContext, outerLightBounds, innerLightBounds, radiusScale)
@@ -158,10 +158,13 @@ export default class LightHelper {
      * @param {number} radius
      * @param {number} innerRadius
      * @param {string} lightColor
+     * @param {number} lightIntensity
      * @param {string} darkColor
      * @return {undefined}
      */
-    static drawOuterLight(context, center, radius, innerRadius, lightColor, darkColor) {
+    static drawOuterLight(context, center, radius, innerRadius, lightColor, lightIntensity, darkColor) {
+        const intensityLight = Maths.getIntensity(lightIntensity)
+        const distanceLight = Maths.fromInterval([0, 1000], [0, 1], intensityLight)
         const gradientOuterLight = context.createRadialGradient(
             center.x, center.y, 0, center.x, center.y, radius)
         gradientOuterLight.addColorStop(0, lightColor)

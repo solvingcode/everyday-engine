@@ -13,6 +13,16 @@ class Color {
     }
 
     /**
+     * @param {string} rgb
+     * @param {number} opacity
+     * @return {string}
+     */
+    static rgbToRgba(rgb, opacity){
+        const colors = /^rgb\(([0-9 ]+),([0-9 ]+),([0-9 ]+)\)$/i.exec(rgb)
+        return `rgba(${colors[1]},${colors[2]},${colors[3]},${opacity})`
+    }
+
+    /**
      * @param {string} hex
      * @param {number} opacity
      * @return {{r: number, g: number, b: number, a: number}}

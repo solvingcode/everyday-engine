@@ -39,7 +39,10 @@ export default class ComponentFormMenuItem extends FormMenuItem {
             selectedUnit.getComponent(MeshComponent).setGenerated(false)
         } else if(formObject instanceof LightComponent){
             formObject.setGenerated(false)
-            selectedUnit.getComponent(MeshComponent).setGenerated(false)
+            const meshComponent = selectedUnit.getComponent(MeshComponent)
+            if(meshComponent){
+                meshComponent.setGenerated(false)
+            }
         }
     }
 
