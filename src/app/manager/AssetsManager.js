@@ -220,6 +220,8 @@ export default class AssetsManager extends AssetsManagerData {
                 return AssetScriptXml
             case FileHelper.type.WAV:
                 return AssetAudio
+            case FileHelper.type.MPEG:
+                return AssetAudio
             default:
                 throw new ClientError(`Asset type "${type}" not supported`)
         }

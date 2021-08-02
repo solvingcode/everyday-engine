@@ -3,12 +3,12 @@ import Layout from '../../../Layout.js'
 import World from '../../../../world/World.js'
 import AssetAudio from '../../../../asset/types/Audio/AssetAudio.js'
 
-export default class PlayAssetAudioMenuItem extends MenuItem {
+export default class StopAssetAudioMenuItem extends MenuItem {
     constructor(parent) {
         super({
-            name: 'play-circle',
-            title: 'Play audio',
-            stateCode: 'ACTION_PLAY_ASSET_AUDIO',
+            name: 'stop-circle',
+            title: 'Stop audio',
+            stateCode: 'ACTION_STOP_ASSET_AUDIO',
             type: Layout.type.ICON,
             zone: parent.zone
         })
@@ -21,6 +21,6 @@ export default class PlayAssetAudioMenuItem extends MenuItem {
     isValid() {
         const selectedAsset = World.get().getAssetsManager().getSelectedAsset()
         return super.isValid() && selectedAsset &&
-            (selectedAsset.getType() instanceof AssetAudio) && !selectedAsset.getType().isPlaying()
+            (selectedAsset.getType() instanceof AssetAudio) && selectedAsset.getType().isPlaying()
     }
 }

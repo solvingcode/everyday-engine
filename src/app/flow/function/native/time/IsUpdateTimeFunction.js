@@ -24,7 +24,10 @@ export default class IsUpdateTimeFunction extends AFunction{
         const updateRate = this.getInputValue('updateRate')
         const nexTimeUpdate = scriptComponent.getValue(nextTimeVariable)
         const timeNow = Date.now()
-        scriptComponent.setValue(nextTimeVariable, timeNow + updateRate)
-        this.setOutputValue(timeNow > nexTimeUpdate)
+        const isUpdate = timeNow > nexTimeUpdate
+        if(isUpdate || !nexTimeUpdate){
+            scriptComponent.setValue(nextTimeVariable, timeNow + updateRate)
+        }
+        this.setOutputValue(isUpdate)
     }
 }

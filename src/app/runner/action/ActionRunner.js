@@ -70,6 +70,7 @@ import MoveUnitAction from './edit/MoveUnitAction.js'
 import AddLightPointAction from './light/AddLightPointAction.js'
 import AddLightGlobalAction from './light/AddLightGlobalAction.js'
 import PlayAssetAudioAction from './assets/PlayAssetAudioAction.js'
+import StopAssetAudioAction from './assets/StopAssetAudioAction.js'
 
 /**
  * Action Runner class.
@@ -164,7 +165,8 @@ class ActionRunner extends Runner {
             EXPORT_ASSET: ExportAssetAction,
             DELETE_COMPONENT: DeleteComponentAction,
             SELECT_LIST_TIMELINE: SelectTimelineAction,
-            PLAY_ASSET_AUDIO: PlayAssetAudioAction
+            PLAY_ASSET_AUDIO: PlayAssetAudioAction,
+            STOP_ASSET_AUDIO: StopAssetAudioAction
         }
         const selectedUnits = this.unitSelector.getSelected(World.get())
         for(const iTypeAction in typeActions){

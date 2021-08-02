@@ -69,6 +69,7 @@ import DivideFunction from '../flow/function/native/basic/DivideFunction.js'
 import AddVectorFunction from '../flow/function/native/basic/AddVectorFunction.js'
 import IsUpdateTimeFunction from '../flow/function/native/time/IsUpdateTimeFunction.js'
 import PlayAudioFunction from '../flow/function/native/audio/PlayAudioFunction.js'
+import IsAudioPlayingFunction from '../flow/function/native/audio/IsAudioPlayingFunction.js'
 
 export default class FunctionRegistry extends Registry{
 
@@ -145,6 +146,7 @@ export default class FunctionRegistry extends Registry{
 
             //Audio
             new PlayAudioFunction(),
+            new IsAudioPlayingFunction(),
 
             //Object
             new GetValueFunction(),

@@ -90,7 +90,8 @@ class FileHelper {
         ZIP: 'application/zip',
         IMG_JPEG: 'image/jpeg',
         IMG_PNG: 'image/png',
-        WAV: 'audio/wav'
+        WAV: 'audio/wav',
+        MPEG: 'audio/mpeg'
     }
 
 }

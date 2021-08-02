@@ -42,6 +42,22 @@ export default class AssetAudio extends AssetType{
     }
 
     /**
+     * @return {boolean}
+     */
+    isPlaying(){
+        return !this.getData().paused
+    }
+
+    play(){
+        this.getData().play()
+    }
+
+    stop(){
+        this.getData().pause()
+        this.getData().currentTime = 0
+    }
+
+    /**
      * @override
      */
     open(asset, options) {
