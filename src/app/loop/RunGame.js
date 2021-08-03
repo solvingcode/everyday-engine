@@ -9,7 +9,7 @@ import Storage from '../core/Storage.js'
 class RunGame extends Game {
 
     /**
-     * @type {PreviewGame}
+     * @type {RunGame}
      */
     static instance
 
@@ -18,8 +18,8 @@ class RunGame extends Game {
      */
     async doInit() {
         await Storage.get().load(Storage.type.WORLD, EngineWorldData.world, World.get())
-        World.get().disableGuides()
         await super.doInit()
+        World.get().disableGuides()
     }
 
 }

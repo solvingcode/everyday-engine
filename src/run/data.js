@@ -25,3 +25,4 @@ export {default as GameInputPreferenceData} from '../app/project/data/GameInputP
 export {default as GameInputData} from '../app/project/data/GameInputData.js'
 export {default as MaskGroupPreferenceData} from '../app/project/data/MaskGroupPreferenceData.js'
 export {default as MaskGroupData} from '../app/project/data/MaskGroupData.js'
+export {default as MaterialData} from '../app/project/data/MaterialData.js'
