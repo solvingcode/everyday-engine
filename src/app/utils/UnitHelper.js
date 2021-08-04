@@ -15,6 +15,8 @@ import SystemError from '../exception/type/SystemError.js'
 import Style from '../pobject/Style.js'
 import GUIColliderComponent from '../component/internal/gui/collider/GUIColliderComponent.js'
 import ImageHelper from './ImageHelper.js'
+import CameraComponent from '../component/internal/CameraComponent.js'
+import LightComponent from '../component/internal/LightComponent.js'
 
 export default class UnitHelper {
 
@@ -391,5 +393,21 @@ export default class UnitHelper {
         const canvasBgRepeat = ImageHelper.generateImageRepeat(canvas, meshSize, imageScale, imagePosition, imageRepeatAreaMin, imageRepeatAreaMax)
         const canvasCameraScale = camera.toScaleSize(new Size({width: canvasBgRepeat.width, height: canvasBgRepeat.height}))
         return ImageHelper.resizeCanvasBySize(canvasBgRepeat, canvasCameraScale)
+    }
+
+    /**
+     * @param {Unit} unit
+     * @return {string}
+     */
+    static getIconName(unit){
+        let icon
+        if (unit.getComponent(CameraComponent)) {
+            icon = 'video'
+        } else if (unit.hasComponentsByClasses([LightComponent])) {
+            icon = 'lightbulb'
+        } else {
+            icon = 'vector-square'
+        }
+        return icon
     }
 }

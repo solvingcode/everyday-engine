@@ -29,6 +29,7 @@ Layout.type = {
     ENTITY_ELEMENT: 'entity_element',
     UNIT_ELEMENT: 'unit_element',
     LAYER_ACTION: 'layer_action',
+    LAYER_ELEMENT: 'layer_element',
     LIST_ELEMENT: 'list_element',
     TEXT: 'text',
     FORM: 'form',

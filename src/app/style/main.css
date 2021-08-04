@@ -197,8 +197,12 @@ h4{
     display: none;
 }
 
+.assets-wrapper .tree{
+    width: 30% !important;
+}
+
 .panel .tree{
-    width: 30%;
+    width: 100%;
     float: left;
     overflow: auto;
 }
@@ -465,7 +469,6 @@ h4{
 }
 
 .units-wrapper .panel:nth-child(1){
-    max-height: 300px;
     overflow: auto;
 }
 

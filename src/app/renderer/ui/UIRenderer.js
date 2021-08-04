@@ -138,6 +138,14 @@ class UIRenderer {
 
     /**
      * @abstract
+     * @return {ItemUI}
+     */
+    getLayerElementButtonUI() {
+        throw new TypeError('"UIRenderer.getLayerElementButtonUI" method must be implemented')
+    }
+
+    /**
+     * @abstract
      * Get the button UI for default
      * @return {ItemUI}
      */
@@ -312,6 +320,8 @@ class UIRenderer {
             return this.getUnitElementButtonUI()
         } else if (element.type === Layout.type.FOLDER_ELEMENT) {
             return this.getFolderElementButtonUI()
+        } else if (element.type === Layout.type.LAYER_ELEMENT) {
+            return this.getLayerElementButtonUI()
         } else if (element.type === Layout.type.ASSET_ELEMENT) {
             return this.getAssetElementButtonUI()
         } else if (element.type === Layout.type.TEXT) {

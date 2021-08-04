@@ -71,6 +71,7 @@ import AddLightPointAction from './light/AddLightPointAction.js'
 import AddLightGlobalAction from './light/AddLightGlobalAction.js'
 import PlayAssetAudioAction from './assets/PlayAssetAudioAction.js'
 import StopAssetAudioAction from './assets/StopAssetAudioAction.js'
+import SelectLayerAction from './edit/SelectLayerAction.js'
 
 /**
  * Action Runner class.
@@ -142,6 +143,7 @@ class ActionRunner extends Runner {
             CLOSE_TAB: CloseTabAction,
             SELECT_FOLDER: SelectFolderAction,
             SELECT_ASSET: SelectAssetAction,
+            SELECT_LAYER_ELEMENT: SelectLayerAction,
             DELETE_FOLDER: DeleteFolderAction,
             DELETE_ASSET: DeleteAssetAction,
             ADD_SCRIPT: AddClassScriptAction,
