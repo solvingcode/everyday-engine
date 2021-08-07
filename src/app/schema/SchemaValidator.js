@@ -201,15 +201,18 @@ class SchemaValidator {
         if (preDefinedPrototype) {
             return preDefinedPrototype
         }
-        const dynamicType = parseInt(path.match(/\[(\d+)]/)[1])
-        if (AttributeType.isArrayType(dynamicType)) {
-            return {
-                element: {
-                    type: AttributeType.getArrayElementType(dynamicType)
+        const dynamicTypeMatch = path.match(/\[(\d+)]/)
+        if(dynamicTypeMatch){
+            const dynamicType = parseInt(path.match(/\[(\d+)]/)[1])
+            if (AttributeType.isArrayType(dynamicType)) {
+                return {
+                    element: {
+                        type: AttributeType.getArrayElementType(dynamicType)
+                    }
                 }
+            } else {
+                return PrefSchema[dynamicType]
             }
-        } else {
-            return PrefSchema[dynamicType]
         }
     }
 

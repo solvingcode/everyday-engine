@@ -1,7 +1,7 @@
 'use strict'
 
 import Application from './core/Application.js'
-import Scene from './loop/Scene.js'
-import Setup from './loop/Setup.js'
+import SceneLoop from './loop/SceneLoop.js'
+import SetupLoop from './loop/SetupLoop.js'
 
-new Application([Setup, Scene]).start()
+new Application([SetupLoop, SceneLoop]).start()

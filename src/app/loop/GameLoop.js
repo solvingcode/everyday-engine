@@ -1,4 +1,4 @@
-import Scene from './Scene.js'
+import SceneLoop from './SceneLoop.js'
 import World from '../world/World.js'
 import Window from '../core/Window.js'
 import ExecutorRegistry from '../executor/ExecutorRegistry.js'
@@ -18,21 +18,25 @@ import CameraRunner from '../runner/camera/CameraRunner.js'
 import CameraExecutor from '../executor/type/CameraExecutor.js'
 import LightExecutor from '../executor/type/LightExecutor.js'
 import LightRunner from '../runner/light/LightRunner.js'
+import SceneRunner from '../runner/scene/SceneRunner.js'
 
 /**
- * @class {Game}
+ * @class {GameLoop}
  * @extends {Loop}
  */
-class Game extends Scene {
+class GameLoop extends SceneLoop {
 
     /**
-     * @type {Game}
+     * @type {GameLoop}
      */
     static instance
 
     constructor() {
         super()
-        this.runners = [WorldInitializeRunner, ColliderDebugRunner, GameExecutorRunner, GameRenderRunner, PhysicsRunner, CameraRunner, LightRunner]
+        this.runners = [
+            WorldInitializeRunner, SceneRunner, ColliderDebugRunner,
+            GameExecutorRunner, GameRenderRunner, PhysicsRunner,
+            CameraRunner, LightRunner]
         ExecutorRegistry.get().register([
             new MeshGenerationExecutor(),
             new RigidBodyExecutor(),
@@ -54,11 +58,9 @@ class Game extends Scene {
         const world = World.get()
         const window = Window.get()
         window.setSize(world.getResolution())
-        world.setupCamera()
-        world.regenerateAll()
         world.getPhysicsManager().init()
     }
 
 }
 
-export default Game
+export default GameLoop

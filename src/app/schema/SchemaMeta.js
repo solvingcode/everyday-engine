@@ -22,6 +22,8 @@ import MaskGroupPreference from '../preference/maskgroup/MaskGroupPreference.js'
 import MaskGroup from '../preference/maskgroup/MaskGroup.js'
 import MaterialRegistry from '../registry/MaterialRegistry.js'
 import Material from '../material/Material.js'
+import SceneManager from '../manager/SceneManager.js'
+import Scene from '../scene/Scene.js'
 
 /**
  * Define the schema of project data.
@@ -117,63 +119,8 @@ export default {
             mouseConstraintId: {
                 type: TYPES.NUMBER
             },
-            cameraUnitId: {
-                type: TYPES.NUMBER
-            },
             showGrid: {
                 type: TYPES.BOOLEAN
-            },
-            unitManager: {
-                type: UnitManager,
-                meta: {
-                    dataId: {
-                        type: TYPES.NUMBER
-                    },
-                    units: {
-                        type: Array,
-                        meta: {
-                            element: {
-                                type: Unit,
-                                meta: {
-                                    dataId: {
-                                        type: TYPES.NUMBER
-                                    },
-                                    id: {
-                                        type: TYPES.NUMBER
-                                    },
-                                    maskGroupId: {
-                                        type: TYPES.NUMBER
-                                    },
-                                    name: {
-                                        type: TYPES.STRING
-                                    },
-                                    components: {
-                                        type: Array,
-                                        meta: {
-                                            element: {
-                                                type: Component,
-                                                meta: {
-                                                    dataId: {
-                                                        type: TYPES.NUMBER
-                                                    },
-                                                    id: {
-                                                        type: TYPES.NUMBER
-                                                    },
-                                                    name: {
-                                                        type: TYPES.STRING
-                                                    },
-                                                    attributes: {
-                                                        type: TYPES.ARRAY | TYPES.DYNAMIC_ATTRIBUTE
-                                                    }
-                                                }
-                                            }
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
             },
             componentRegistry: {
                 type: ComponentRegistry,
@@ -334,6 +281,94 @@ export default {
                     }
                 }
             },
+            sceneManager: {
+                type: SceneManager,
+                meta: {
+                    dataId: {
+                        type: TYPES.NUMBER
+                    },
+                    scenes: {
+                        type: Array,
+                        meta: {
+                            element: {
+                                type: Scene,
+                                meta: {
+                                    dataId: {
+                                        type: TYPES.NUMBER
+                                    },
+                                    id: {
+                                        type: TYPES.NUMBER
+                                    },
+                                    name: {
+                                        type: TYPES.STRING
+                                    },
+                                    active: {
+                                        type: TYPES.BOOLEAN
+                                    },
+                                    included: {
+                                        type: TYPES.BOOLEAN
+                                    },
+                                    unitManager: {
+                                        type: UnitManager,
+                                        meta: {
+                                            dataId: {
+                                                type: TYPES.NUMBER
+                                            },
+                                            units: {
+                                                type: Array,
+                                                meta: {
+                                                    element: {
+                                                        type: Unit,
+                                                        meta: {
+                                                            dataId: {
+                                                                type: TYPES.NUMBER
+                                                            },
+                                                            id: {
+                                                                type: TYPES.NUMBER
+                                                            },
+                                                            maskGroupId: {
+                                                                type: TYPES.NUMBER
+                                                            },
+                                                            unitParentId: {
+                                                                type: TYPES.NUMBER
+                                                            },
+                                                            name: {
+                                                                type: TYPES.STRING
+                                                            },
+                                                            components: {
+                                                                type: Array,
+                                                                meta: {
+                                                                    element: {
+                                                                        type: Component,
+                                                                        meta: {
+                                                                            dataId: {
+                                                                                type: TYPES.NUMBER
+                                                                            },
+                                                                            id: {
+                                                                                type: TYPES.NUMBER
+                                                                            },
+                                                                            name: {
+                                                                                type: TYPES.STRING
+                                                                            },
+                                                                            attributes: {
+                                                                                type: TYPES.ARRAY | TYPES.DYNAMIC_ATTRIBUTE
+                                                                            }
+                                                                        }
+                                                                    }
+                                                                }
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
             preference: {
                 type: Preference,
                 meta: {
@@ -403,6 +438,9 @@ export default {
                 type: Camera,
                 meta: {
                     dataId: {
+                        type: TYPES.NUMBER
+                    },
+                    cameraUnitId: {
                         type: TYPES.NUMBER
                     },
                     position: {

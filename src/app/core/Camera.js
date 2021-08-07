@@ -9,11 +9,6 @@ class Camera extends CameraData {
     /**
      * @type {Vector}
      */
-    position
-
-    /**
-     * @type {Vector}
-     */
     initPosition
 
     constructor(position) {
@@ -21,7 +16,6 @@ class Camera extends CameraData {
         this.initPosition = position
         this.position = this.initPosition
         this.scaleFactor = 0.2
-        this.cameraUnitId = null
     }
 
     /**
@@ -100,7 +94,7 @@ class Camera extends CameraData {
      * @param {Vector} position
      * @return {number}
      */
-    getScale(position){
+    getScale(position= new Vector()){
         const {cameraViewZ} = this.getCameraView()
         const distanceZ = cameraViewZ - (position.z || 0)
         return 1 + distanceZ * this.scaleFactor

@@ -1,11 +1,11 @@
-import PanelMenuItem from '../panel/PanelMenuItem.js'
+import ListElementMenuItem from './ListElementMenuItem.js'
 
 /**
  * @property {{bind: Object, list: *[]}} data
  */
-export default class ListElementActionsMenuItem extends PanelMenuItem {
+export default class ListElementActionsMenuItem extends ListElementMenuItem {
     constructor(parent, data, props) {
-        super({
+        super(parent, data, {
             name: '',
             zone: parent.zone,
             ...props
@@ -18,28 +18,7 @@ export default class ListElementActionsMenuItem extends PanelMenuItem {
      * @override
      */
     setData(data){
-        this.data = data
+        super.setData(data)
         this.items = this.parent.getActions(this.data.bind)
-    }
-
-    /**
-     * @override
-     */
-    isValid() {
-        return super.isValid() && this.parent.getFormObject().includes(this.getDataBind())
-    }
-
-    /**
-     * @return {Object}
-     */
-    getDataBind() {
-        return this.data.bind
-    }
-
-    /**
-     * @return {string}
-     */
-    getName(){
-        return this.getDataBind().getName()
     }
 }

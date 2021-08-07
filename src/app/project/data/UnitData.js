@@ -19,6 +19,10 @@ export default class UnitData extends Data {
      */
     maskGroupId
     /**
+     * @type {number|null}
+     */
+    unitParentId
+    /**
      * @type {ComponentData[]}
      */
     components
@@ -28,6 +32,7 @@ export default class UnitData extends Data {
         this.id = Maths.generateId()
         this.name = name || 'Custom Component'
         this.components = []
+        this.unitParentId = null
     }
 
     /**
@@ -70,6 +75,20 @@ export default class UnitData extends Data {
      */
     getName() {
         return this.name
+    }
+
+    /**
+     * @param {number} unitParentId
+     */
+    setUnitParentId(unitParentId) {
+        this.unitParentId = unitParentId
+    }
+
+    /**
+     * @return {number}
+     */
+    getUnitParentId() {
+        return this.unitParentId
     }
 
     /**

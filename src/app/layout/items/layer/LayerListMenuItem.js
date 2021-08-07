@@ -3,6 +3,8 @@ import Layout from '../../Layout.js'
 import LayerElementMenuItem from './LayerElementMenuItem.js'
 import World from '../../../world/World.js'
 import GUIPendingComponent from '../../../component/internal/gui/GUIPendingComponent.js'
+import HideItemMenuItem from '../action/HideItemMenuItem.js'
+import ShowItemMenuItem from '../action/ShowItemMenuItem.js'
 
 export default class LayerListMenuItem extends ListMenuItem{
 
@@ -31,15 +33,19 @@ export default class LayerListMenuItem extends ListMenuItem{
      * @override
      */
     getFormObject() {
-        return !this.data ?
-            World.get().getUnitManager().getUnits().filter(unit => !unit.getComponent(GUIPendingComponent)) : []
+        return World.get().getUnitManager().findChildUnits(this.data)
+            .filter(unit => !unit.getComponent(GUIPendingComponent))
     }
 
     /**
      * @override
+     * @param {Unit} bindObject
      */
     getActions(bindObject){
-        return []
+        return [
+            new HideItemMenuItem(bindObject),
+            new ShowItemMenuItem(bindObject)
+        ]
     }
 
 }

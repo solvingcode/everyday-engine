@@ -1,4 +1,5 @@
 import ItemUI from '../ItemUI.js'
+import IconUI from '../components/icon/IconUI.js'
 
 /**
  * @class {ListElementButtonUI}
@@ -53,7 +54,8 @@ export default class ListElementButtonUI extends ItemUI {
      * @return {HTMLElement | null}
      */
     static getIcon(item) {
-        return null
+        const icon = item.element.getIcon()
+        return icon && IconUI.createIcon(icon)
     }
 
     /**

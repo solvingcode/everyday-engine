@@ -20,6 +20,8 @@ import ComponentRegistry from '../registry/ComponentRegistry.js'
 import AnimationManager from '../manager/AnimationManager.js'
 import MaterialRegistry from '../registry/MaterialRegistry.js'
 import LightComponent from '../component/internal/LightComponent.js'
+import {SceneLoadMode} from '../scene/Scene.js'
+import SceneManager from '../manager/SceneManager.js'
 
 /**
  * @class {World}
@@ -48,6 +50,11 @@ class World extends WorldData {
     physicsManager
 
     /**
+     * @type {UnitManager}
+     */
+    unitManager
+
+    /**
      * @type {boolean}
      */
     initialized
@@ -67,7 +74,7 @@ class World extends WorldData {
         this.camera = new Camera(new Vector({x: -SCENE_WIDTH / 2, y: -SCENE_HEIGHT / 2}))
         this.physicsManager = new PhysicsManager()
         this.assetsManager = new AssetsManager()
-        this.cameraUnitId = null
+        this.sceneManager = new SceneManager()
         this.resolution = new Size({width: SCENE_WIDTH, height: SCENE_HEIGHT})
         this.gridUnitId = null
         this.showGrid = false
@@ -81,10 +88,11 @@ class World extends WorldData {
         this.initialized = false
     }
 
-    doInit(){
+    doInit() {
         this.createRootFolder()
         this.getPreference().init()
         this.getTabManager().init()
+        this.getSceneManager().init()
         this.getFunctionRegistry().init()
         this.getComponentRegistry().init()
         this.getMaterialRegistry().init()
@@ -99,7 +107,7 @@ class World extends WorldData {
     /**
      * @return {boolean}
      */
-    isInitialized(){
+    isInitialized() {
         return this.initialized
     }
 
@@ -136,26 +144,6 @@ class World extends WorldData {
      */
     findUnitByName(name) {
         return this.getUnitManager().findUnitByName(name)
-    }
-
-    /**
-     * Add a unit to the world
-     * @param {Vector} position
-     * @param {Class} type
-     */
-    addUnit(position, type) {
-        const unit = this.getUnitManager().createUnit(type)
-        unit.getComponent(TransformComponent).setPosition(position)
-    }
-
-    /**
-     * @param {number} unitId
-     */
-    removeUnitById(unitId) {
-        const unit = this.getUnitManager().findById(unitId)
-        if (unit) {
-            this.getUnitManager().deleteUnit(unit)
-        }
     }
 
     /**
@@ -196,7 +184,26 @@ class World extends WorldData {
     }
 
     /**
-     * Force the regeneration of all entities (regenerate meshes)
+     * @param {Scene} scene
+     * @param {string} mode
+     */
+    loadScene(scene, mode) {
+        if (mode !== SceneLoadMode.APPEND) {
+            this.getUnitManager().deleteAll()
+        }
+        this.getUnitManager().getUnits().push(...scene.getUnitManager().getUnits())
+        this.regenerateAll()
+    }
+
+    /**
+     * @param {Scene} scene
+     */
+    unLoadScene(scene) {
+        scene.getUnitManager().getUnits().forEach(unit => this.getUnitManager().deleteUnit(unit))
+    }
+
+    /**
+     * Force the regeneration of all units (regenerate meshes)
      */
     reload() {
         this.init()
@@ -230,13 +237,7 @@ class World extends WorldData {
         this.setGridUnitId(null)
     }
 
-    setupCamera() {
-        if (this.cameraUnitId) {
-            this.getCamera().setup(this.cameraUnitId, this)
-        }
-    }
-
-    disableGuides(){
+    disableGuides() {
         this.getCamera().disableGuides(this)
         this.getUnitManager()
             .getUnitsHasComponentClasses([LightComponent, MeshComponent])
@@ -278,7 +279,7 @@ class World extends WorldData {
     /**
      * @return {PhysicsManager}
      */
-    getPhysicsManager(){
+    getPhysicsManager() {
         return this.physicsManager
     }
 
@@ -335,13 +336,27 @@ class World extends WorldData {
     /**
      * @return {Unit[]}
      */
-    getLightsNotGenerated(){
+    getLightsNotGenerated() {
         return this.getUnitManager()
             .getUnitsHasComponentClasses([LightComponent])
             .filter(unit => {
                 const lightComponent = unit.findComponentsByClass(LightComponent)[0]
                 return !lightComponent.isGenerated()
             })
+    }
+
+    /**
+     * @param {UnitManager} unitManager
+     */
+    setUnitManager(unitManager) {
+        this.unitManager = unitManager
+    }
+
+    /**
+     * @return {UnitManager}
+     */
+    getUnitManager() {
+        return this.unitManager
     }
 
     /**

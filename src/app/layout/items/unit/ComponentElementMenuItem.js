@@ -1,8 +1,8 @@
-import ListElementActionsMenuItem from '../list/ListElementActionsMenuItem.js'
 import ComponentFormMenuItem from './ComponentFormMenuItem.js'
 import ComponentDeleteMenuItem from './ComponentDeleteMenuItem.js'
+import ListElementPanelMenuItem from '../list/ListElementPanelMenuItem.js'
 
-export default class ComponentElementMenuItem extends ListElementActionsMenuItem{
+export default class ComponentElementMenuItem extends ListElementPanelMenuItem{
     constructor(parent, data) {
         super(parent, data, {
             name: data.bind.getName()

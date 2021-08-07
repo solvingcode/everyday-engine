@@ -1,4 +1,4 @@
 import Application from '/src/app/core/Application.js'
-import PreviewGame from '/src/app/loop/PreviewGame.js'
+import PreviewGameLoop from '/src/app/loop/PreviewGameLoop.js'
 
-new Application([PreviewGame]).start()
+new Application([PreviewGameLoop]).start()

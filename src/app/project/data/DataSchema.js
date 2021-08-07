@@ -149,6 +149,8 @@ import LightGlobalComponent from '../../component/internal/LightGlobalComponent.
 import AssetAudio from '../../asset/types/Audio/AssetAudio.js'
 import PlayAudioFunction from '../../flow/function/native/audio/PlayAudioFunction.js'
 import IsAudioPlayingFunction from '../../flow/function/native/audio/IsAudioPlayingFunction.js'
+import SceneManager from '../../manager/SceneManager.js'
+import Scene from '../../scene/Scene.js'
 
 /**
  * @class {DataSchema}
@@ -294,7 +296,9 @@ class DataSchema {
         {id: 1260, type: LightGlobalComponent},
         {id: 1270, type: AssetAudio},
         {id: 1280, type: PlayAudioFunction},
-        {id: 1290, type: IsAudioPlayingFunction}
+        {id: 1290, type: IsAudioPlayingFunction},
+        {id: 1300, type: SceneManager},
+        {id: 1310, type: Scene}
     ]
 
     /**

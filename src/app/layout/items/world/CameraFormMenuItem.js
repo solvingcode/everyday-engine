@@ -26,7 +26,7 @@ export default class CameraFormMenuItem extends FormMenuItem {
 
         return [
             {
-                bind: 'cameraUnitId',
+                bind: 'camera.cameraUnitId',
                 label: 'Camera',
                 type: Layout.form.DROPDOWN,
                 list: cameraUnits

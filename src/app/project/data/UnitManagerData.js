@@ -24,6 +24,10 @@ export default class UnitManagerData extends Data {
         return this.units
     }
 
+    deleteAll(){
+        this.units = []
+    }
+
     /**
      * @param {Unit[]} units
      */

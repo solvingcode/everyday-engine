@@ -421,7 +421,10 @@ AppState.States = {
     ACTION_PLAY_ASSET_AUDIO_STOP: {history: false},
     ACTION_STOP_ASSET_AUDIO_START: {history: false},
     ACTION_STOP_ASSET_AUDIO_PROGRESS: {history: false},
-    ACTION_STOP_ASSET_AUDIO_STOP: {history: false}
+    ACTION_STOP_ASSET_AUDIO_STOP: {history: false},
+    ACTION_LOAD_SCENE_START: {history: true},
+    ACTION_LOAD_SCENE_PROGRESS: {history: false},
+    ACTION_LOAD_SCENE_STOP: {history: true}
 }
 
 export default AppState

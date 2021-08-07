@@ -11,7 +11,6 @@ class WorldData extends Data {
 
     static instance
 
-    unitManager
     tabManager
     preference
     functionRegistry
@@ -19,7 +18,7 @@ class WorldData extends Data {
     materialRegistry
     camera
     assetsManager
-    cameraUnitId
+    sceneManager
     resolution
     showGrid
 
@@ -37,13 +36,6 @@ class WorldData extends Data {
 
     reload() {
         throw new SystemError('World.reload must be implemented!')
-    }
-
-    /**
-     * @param {UnitManagerData} unitManager
-     */
-    setUnitManager(unitManager) {
-        this.unitManager = unitManager
     }
 
     /**
@@ -103,10 +95,10 @@ class WorldData extends Data {
     }
 
     /**
-     * @return {UnitManager}
+     * @param {SceneManagerData} sceneManager
      */
-    getUnitManager() {
-        return this.unitManager
+    setSceneManager(sceneManager) {
+        this.sceneManager = sceneManager
     }
 
     /**
@@ -138,6 +130,13 @@ class WorldData extends Data {
     }
 
     /**
+     * @return {SceneManager}
+     */
+    getSceneManager() {
+        return this.sceneManager
+    }
+
+    /**
      * @return {FunctionRegistry}
      */
     getFunctionRegistry() {
@@ -156,20 +155,6 @@ class WorldData extends Data {
      */
     getMaterialRegistry(){
         return this.materialRegistry
-    }
-
-    /**
-     * @return {number}
-     */
-    getCameraUnitId(){
-        return this.cameraUnitId
-    }
-
-    /**
-     * @param {number} id
-     */
-    setCameraUnitId(id){
-        this.cameraUnitId = id
     }
 
     /**

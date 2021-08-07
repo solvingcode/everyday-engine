@@ -1,15 +1,15 @@
-import Game from './Game.js'
+import GameLoop from './GameLoop.js'
 import World from '../world/World.js'
 import Storage from '../core/Storage.js'
 
 /**
- * @class {PreviewGame}
- * @extends {Game}
+ * @class {PreviewGameLoop}
+ * @extends {GameLoop}
  */
-class PreviewGame extends Game {
+class PreviewGameLoop extends GameLoop {
 
     /**
-     * @type {PreviewGame}
+     * @type {PreviewGameLoop}
      */
     static instance
 
@@ -23,4 +23,4 @@ class PreviewGame extends Game {
 
 }
 
-export default PreviewGame
+export default PreviewGameLoop

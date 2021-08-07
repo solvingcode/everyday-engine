@@ -3,13 +3,13 @@ import MeshRenderer from '../renderer/MeshRenderer.js'
 import World from '../world/World.js'
 
 /**
- * @class {Scene}
+ * @class {SceneLoop}
  * @extends {Loop}
  */
-class Scene extends Loop {
+class SceneLoop extends Loop {
 
     /**
-     * @type {Scene}
+     * @type {SceneLoop}
      */
     static instance
 
@@ -33,4 +33,4 @@ class Scene extends Loop {
 
 }
 
-export default Scene
+export default SceneLoop

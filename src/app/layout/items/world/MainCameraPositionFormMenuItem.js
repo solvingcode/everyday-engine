@@ -5,7 +5,7 @@ import FormMenuItem from '../form/FormMenuItem.js'
 /**
  * Form properties
  */
-class PositionFormMenuItem extends FormMenuItem {
+class MainCameraPositionFormMenuItem extends FormMenuItem {
     constructor(parent) {
         super({
             name: '',
@@ -47,4 +47,4 @@ class PositionFormMenuItem extends FormMenuItem {
     }
 }
 
-export default PositionFormMenuItem
+export default MainCameraPositionFormMenuItem

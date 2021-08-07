@@ -6,7 +6,14 @@ import Data from './Data.js'
  */
 class CameraData extends Data {
 
+    /**
+     * @type {Vector}
+     */
     position
+    /**
+     * @type {number}
+     */
+    cameraUnitId
 
     /**
      * @param {Vector} position
@@ -62,6 +69,20 @@ class CameraData extends Data {
      */
     getPositionZ() {
         return this.position.z
+    }
+
+    /**
+     * @return {number}
+     */
+    getCameraUnitId(){
+        return this.cameraUnitId
+    }
+
+    /**
+     * @param {number} id
+     */
+    setCameraUnitId(id){
+        this.cameraUnitId = id
     }
 
 }

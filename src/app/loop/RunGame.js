@@ -1,12 +1,12 @@
-import Game from './Game.js'
+import GameLoop from './GameLoop.js'
 import World from '../world/World.js'
 import Storage from '../core/Storage.js'
 
 /**
  * @class {RunGame}
- * @extends {Game}
+ * @extends {GameLoop}
  */
-class RunGame extends Game {
+class RunGame extends GameLoop {
 
     /**
      * @type {RunGame}

@@ -14,7 +14,7 @@ import MoveUpMenuItem from './items/action/MoveUpMenuItem.js'
 import MoveDownMenuItem from './items/action/MoveDownMenuItem.js'
 import MenuItemUI from '../renderer/ui/MenuItemUI.js'
 import AppMenuItem from './items/app/AppMenuItem.js'
-import MainCameraMenuItem from './items/scene/MainCameraMenuItem.js'
+import MainCameraMenuItem from './items/world/MainCameraMenuItem.js'
 import WorldMenuItem from './items/world/WorldMenuItem.js'
 import RotateMenuItem from './items/edit/RotateMenuItem.js'
 import MoveMenuItem from './items/edit/MoveMenuItem.js'
@@ -31,6 +31,7 @@ import AddAnimationScriptMenuItem from './items/assets/AddAnimationScriptMenuIte
 import LightPointMenuItem from './items/edit/LightPointMenuItem.js'
 import LightGlobalMenuItem from './items/edit/LightGlobalMenuItem.js'
 import LayerMenuItem from './items/layer/LayerMenuItem.js'
+import SceneMenuItem from './items/scene/SceneMenuItem.js'
 
 /**
  * Define all menu items
@@ -77,6 +78,7 @@ class Menu {
 
             //RIGHT
             new LayerMenuItem(),
+            new SceneMenuItem(),
             new WorldMenuItem(),
             new AssetMenuItem(),
             new MainCameraMenuItem(),

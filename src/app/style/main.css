@@ -234,7 +234,7 @@ h4{
 
 .panel .tree .list-element i, .panel .script-nodes .list-element i{
     position: absolute;
-    top: 5px;
+    top: 3px;
     left: 2px;
 }
 
@@ -590,7 +590,7 @@ h4{
 /* list element -- */
 
 .list-element{
-    padding: 5px;
+    padding: 2px;
     position: relative;
     width: 100%;
     overflow: hidden;
@@ -605,15 +605,15 @@ h4{
     margin: 0;
     padding: 2px;
     position: absolute;
-    top: 5px;
-    left: 5px;
+    top: 0;
+    left: 0;
 }
 
 .list-element span{
     width: 100%;
     float: left;
     display: block;
-    margin: 5px 5px 5px 10px;
+    margin: 0;
     text-align: left;
     white-space: nowrap;
     text-overflow: ellipsis;
@@ -623,23 +623,25 @@ h4{
 }
 
 .list-element i{
-    float: right;
-    margin-right: 0.5rem;
+    position: absolute;
+    top: 3px;
+    left: 2px;
 }
 
 .list-element button{
     background: none;
     font-size: 14px;
-    width: 25px;
-    height: 25px;
+    width: 100%;
+    height: 20px;
     float: right;
-    line-height: 1.5rem;
+    line-height: 1rem;
 }
 
 .list-element button.fas{
     position: absolute;
-    top: 5px;
-    right: 5px;
+    top: 0;
+    right: 0;
+    width: unset;
 }
 
 .list-element button:hover{

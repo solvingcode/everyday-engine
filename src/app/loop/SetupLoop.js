@@ -23,15 +23,16 @@ import MoveUnitRunner from '../runner/editor/MoveUnitRunner.js'
 import CameraExecutor from '../executor/type/CameraExecutor.js'
 import LightExecutor from '../executor/type/LightExecutor.js'
 import LightRunner from '../runner/light/LightRunner.js'
+import SceneRunner from '../runner/scene/SceneRunner.js'
 
 /**
- * @class {Setup}
+ * @class {SetupLoop}
  * @extends {Loop}
  */
-class Setup extends Loop {
+class SetupLoop extends Loop {
 
     /**
-     * @type {Setup}
+     * @type {SetupLoop}
      */
     static instance
 
@@ -45,7 +46,7 @@ class Setup extends Loop {
         this.runners = [
             WorldInitializeRunner, /*HistoryRunner,*/ SimulateRunner, ActionRunner, EditorRunner, ScriptEditorRunner,
             AnimationEditorRunner, MenuRunner, SetupExecutorRunner, SetupRenderRunner, WindowRunner, GraphDrawerRunner,
-            UnitDrawerRunner, FormRunner, MoveUnitRunner, LightRunner
+            UnitDrawerRunner, FormRunner, MoveUnitRunner, LightRunner, SceneRunner
         ]
         ExecutorRegistry.get().register([
             new MeshGenerationExecutor(),
@@ -74,4 +75,4 @@ class Setup extends Loop {
 
 }
 
-export default Setup
+export default SetupLoop

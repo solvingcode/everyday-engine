@@ -1,4 +1,4 @@
-import PositionFormMenuItem from './PositionFormMenuItem.js'
+import MainCameraPositionFormMenuItem from './MainCameraPositionFormMenuItem.js'
 import Layout from '../../Layout.js'
 import PanelMenuItem from '../panel/PanelMenuItem.js'
 import GridFormMenuItem from './GridFormMenuItem.js'
@@ -13,7 +13,7 @@ class MainCameraMenuItem extends PanelMenuItem {
             zone: Layout.zone.RIGHT
         })
         this.items = [
-            new PositionFormMenuItem(this),
+            new MainCameraPositionFormMenuItem(this),
             new GridFormMenuItem(this)
         ]
     }
