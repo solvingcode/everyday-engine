@@ -15,4 +15,12 @@ export default class SceneElementMenuItem extends ListSelectElementActionsMenuIt
     getIcon() {
         return 'layer-group'
     }
+
+    /**
+     * @override
+     */
+    getName() {
+        const scene = this.getDataBind()
+        return `${scene.getName()}${scene.isLoaded() ? ' [loaded]' : ''}`
+    }
 }

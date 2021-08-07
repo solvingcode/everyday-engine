@@ -2,7 +2,6 @@ import CameraData from '../project/data/CameraData.js'
 import Vector from '../utils/Vector.js'
 import Size from '../pobject/Size.js'
 import MeshComponent from '../component/internal/MeshComponent.js'
-import TransformComponent from '../component/internal/TransformComponent.js'
 
 class Camera extends CameraData {
 
@@ -150,24 +149,6 @@ class Camera extends CameraData {
      */
     fromScaleNumber(value, position = new Vector()){
         return value / this.getScale(position)
-    }
-
-    /**
-     * @param {number} cameraUnitId
-     * @param {World} world
-     */
-    setup(cameraUnitId, world){
-        this.cameraUnitId = cameraUnitId
-        const unit = this.getUnit(world.getUnitManager())
-        if(!unit){
-            throw new TypeError(`Error Setup camera (Unit ID: ${cameraUnitId})`)
-        }
-        const meshComponent = unit.getComponent(MeshComponent)
-        const scale = world.getResolution().getWidth() / meshComponent.getSize().getWidth()
-        const unitPosition = unit.getComponent(TransformComponent).getPosition()
-        this.update(unitPosition)
-        this.setScale(scale)
-        world.regenerateAll()
     }
 
     /**
