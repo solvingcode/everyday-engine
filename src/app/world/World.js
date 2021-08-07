@@ -4,7 +4,6 @@ import Vector from '../utils/Vector.js'
 import AssetsManager from '../manager/AssetsManager.js'
 import Size from '../pobject/Size.js'
 import {SCENE_HEIGHT, SCENE_WIDTH} from '../core/Constant.js'
-import UnitManager from '../manager/UnitManager.js'
 import MeshComponent from '../component/internal/MeshComponent.js'
 import TransformComponent from '../component/internal/TransformComponent.js'
 import UnitSelector from '../selector/UnitSelector.js'
@@ -22,6 +21,8 @@ import MaterialRegistry from '../registry/MaterialRegistry.js'
 import LightComponent from '../component/internal/LightComponent.js'
 import {SceneLoadMode} from '../scene/Scene.js'
 import SceneManager from '../manager/SceneManager.js'
+import ClientError from '../exception/type/ClientError.js'
+import SceneUnitManager from '../manager/SceneUnitManager.js'
 
 /**
  * @class {World}
@@ -50,7 +51,7 @@ class World extends WorldData {
     physicsManager
 
     /**
-     * @type {UnitManager}
+     * @type {SceneUnitManager}
      */
     unitManager
 
@@ -61,7 +62,7 @@ class World extends WorldData {
 
     constructor() {
         super()
-        this.unitManager = new UnitManager()
+        this.unitManager = new SceneUnitManager(this)
         this.meshManager = new MeshManager()
         this.tabManager = new TabManager()
         this.graphManager = new GraphManager()
@@ -353,10 +354,42 @@ class World extends WorldData {
     }
 
     /**
-     * @return {UnitManager}
+     * @return {SceneUnitManager}
      */
     getUnitManager() {
         return this.unitManager
+    }
+
+    /**
+     * @return {UnitManager}
+     */
+    getActiveUnitManager() {
+        const activeScene = this.getSceneManager().getActive()
+        if (activeScene) {
+            return activeScene.getUnitManager()
+        }else{
+            throw new ClientError(`At least on scene must be activated`)
+        }
+    }
+
+    /**
+     * @param {Unit} unit
+     * @return {UnitManager}
+     */
+    getSceneUnitManager(unit){
+        const scene = this.findSceneByUnit(unit)
+        if(scene){
+            return scene.getUnitManager()
+        }
+        throw new ClientError(`No scene contains Unit (ID: ${unit.getId()})`)
+    }
+
+    /**
+     * @param {Unit} unit
+     * @return {Scene}
+     */
+    findSceneByUnit(unit){
+        return this.getSceneManager().findSceneByUnit(unit)
     }
 
     /**

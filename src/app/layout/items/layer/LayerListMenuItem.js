@@ -5,20 +5,21 @@ import World from '../../../world/World.js'
 import GUIPendingComponent from '../../../component/internal/gui/GUIPendingComponent.js'
 import HideItemMenuItem from '../action/HideItemMenuItem.js'
 import ShowItemMenuItem from '../action/ShowItemMenuItem.js'
+import Scene from '../../../scene/Scene.js'
 
-export default class LayerListMenuItem extends ListMenuItem{
+export default class LayerListMenuItem extends ListMenuItem {
 
     /**
      * @param {MenuItem} parent
      * @param {Object} props
-     * @param {Unit} unit
+     * @param {Unit|Scene} parentObject
      */
-    constructor(parent, props = {}, unit = null) {
+    constructor(parent, props = {}, parentObject = null) {
         super({
             zone: Layout.zone.RIGHT,
             ...props
         })
-        this.data = unit
+        this.data = parentObject
         this.parent = parent
     }
 
@@ -33,15 +34,25 @@ export default class LayerListMenuItem extends ListMenuItem{
      * @override
      */
     getFormObject() {
-        return World.get().getUnitManager().findChildUnits(this.data)
-            .filter(unit => !unit.getComponent(GUIPendingComponent))
+        const world = World.get()
+        if (!this.data) {
+            return world.getSceneManager().getIncluded()
+        } else {
+            if (this.data instanceof Scene) {
+                return world.getUnitManager().findUnitsInScene(this.data)
+                    .filter(unit => !unit.getComponent(GUIPendingComponent))
+            } else {
+                return world.getUnitManager().findChildUnits(this.data)
+                    .filter(unit => !unit.getComponent(GUIPendingComponent))
+            }
+        }
     }
 
     /**
      * @override
      * @param {Unit} bindObject
      */
-    getActions(bindObject){
+    getActions(bindObject) {
         return [
             new HideItemMenuItem(bindObject),
             new ShowItemMenuItem(bindObject)

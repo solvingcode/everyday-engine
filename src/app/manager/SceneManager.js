@@ -19,6 +19,21 @@ export default class SceneManager extends SceneManagerData {
     /**
      * @return {Scene[]}
      */
+    getIncluded(){
+        return this.scenes.filter(scene => scene.isIncluded())
+    }
+
+    /**
+     * @param {Unit} unit
+     * @return {Scene}
+     */
+    findSceneByUnit(unit){
+        return this.scenes.find(pScene => pScene.getUnitManager().findUnitById(unit.getId()))
+    }
+
+    /**
+     * @return {Scene[]}
+     */
     getLoaded() {
         return this.scenes.filter(scene => scene.isLoaded())
     }
@@ -164,6 +179,7 @@ export default class SceneManager extends SceneManagerData {
     init() {
         if (!this.scenes.length) {
             const scene = this.create('Scene')
+            scene.setIncluded(true)
             this.activate(scene)
         }
     }

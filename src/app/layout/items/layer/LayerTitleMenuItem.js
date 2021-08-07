@@ -1,29 +1,29 @@
 import MenuItem from '../../MenuItem.js'
 import Layout from '../../Layout.js'
-import UnitHelper from '../../../utils/UnitHelper.js'
+import IconHelper from '../../../utils/IconHelper.js'
 
 export default class LayerTitleMenuItem extends MenuItem {
     /**
      * @param {MenuItem} parent
-     * @param {Unit} unit
+     * @param {Unit|Scene} object
      */
-    constructor(parent, unit) {
+    constructor(parent, object) {
         super({
-            name: UnitHelper.getIconName(unit),
-            title: unit.getName(),
+            name: IconHelper.getIconName(object),
+            title: object.getName(),
             stateCode: 'ACTION_SELECT_LAYER_ELEMENT',
             type: Layout.type.ICON_TEXT,
             zone: parent.zone
         })
         this.parent = parent
-        this.data = {unit}
+        this.data = {object}
     }
 
     update() {
         super.update()
-        const unitName = this.data.unit.getName()
-        if(this.props.title !== unitName){
-            this.props.title = unitName
+        const objectName = this.data.object.getName()
+        if(this.props.title !== objectName){
+            this.props.title = objectName
         }
     }
 }

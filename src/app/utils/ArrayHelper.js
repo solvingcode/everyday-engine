@@ -30,4 +30,15 @@ export default class ArrayHelper {
         return true
     }
 
+    /**
+     * @param {*[]} array
+     * @param {number} indexA
+     * @param {number} indexB
+     */
+    static permute(array, indexA, indexB){
+        const elementB = array[indexB]
+        array[indexB] = array[indexA]
+        array[indexA] = elementB
+    }
+
 }

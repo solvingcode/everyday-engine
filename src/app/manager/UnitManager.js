@@ -9,6 +9,7 @@ import Maths from '../utils/Maths.js'
 import ClientError from '../exception/type/ClientError.js'
 import ScriptComponent from '../component/internal/ScriptComponent.js'
 import CommonUtil from '../utils/CommonUtil.js'
+import ArrayHelper from '../utils/ArrayHelper.js'
 
 /**
  * Manage the units, components list (get, add, load, ...)
@@ -43,6 +44,14 @@ export default class UnitManager extends UnitManagerData {
     }
 
     /**
+     * @param {Unit} unit
+     * @return {boolean}
+     */
+    hasUnit(unit){
+        return !!this.units.find(pUnit => pUnit === unit)
+    }
+
+    /**
      * @param {string} name
      * @return {Unit}
      */
@@ -58,23 +67,6 @@ export default class UnitManager extends UnitManagerData {
      */
     findUnitsByMaskGroup(maskGroup) {
         return this.units.filter(unit => unit.getMaskGroupId() === maskGroup.getId())
-    }
-
-    /**
-     * @param {Class} type
-     * @return {Unit[]}
-     */
-    findUnitsByType(type) {
-        return this.units.filter(element => element instanceof type)
-    }
-
-    /**
-     * @param {Class} type
-     * @return {Unit}
-     */
-    findFirstUnitByType(type) {
-        const result = this.findUnitsByType(type)
-        return result && result[0]
     }
 
     /**
@@ -263,20 +255,11 @@ export default class UnitManager extends UnitManagerData {
 
     /**
      * @param {Unit} unit
-     * @param {number} targetIndex
-     */
-    moveUnitToIndex(unit, targetIndex) {
-        this.deleteUnit(unit)
-        this.units.splice(targetIndex, 0, unit)
-    }
-
-    /**
-     * @param {Unit} unit
      */
     moveUnitUp(unit) {
         const index = this.getIndexOfUnit(unit)
         if (index > 0) {
-            this.moveUnitToIndex(unit, index - 1)
+            ArrayHelper.permute(this.units, index, index - 1)
         }
     }
 
@@ -286,7 +269,7 @@ export default class UnitManager extends UnitManagerData {
     moveUnitDown(unit) {
         const index = this.getIndexOfUnit(unit)
         if (index < this.units.length - 1) {
-            this.moveUnitToIndex(unit, index + 1)
+            ArrayHelper.permute(this.units, index, index + 1)
         }
     }
 
