@@ -16,6 +16,7 @@ Layout.zone = {
 }
 
 Layout.type = {
+    BUTTON: 'button',
     DRAW: 'draw',
     ACTION: 'action',
     STYLE: 'style',
@@ -43,7 +44,8 @@ Layout.type = {
     WRAPPER: 'wrapper',
     FOLDER_ELEMENT: 'folder_element',
     ASSET_ELEMENT: 'asset_element',
-    ASSET_VIEW: 'asset_view'
+    ASSET_VIEW: 'asset_view',
+    LIST_OPTION: 'list_option'
 }
 
 Layout.form = {

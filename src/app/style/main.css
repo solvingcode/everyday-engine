@@ -472,6 +472,27 @@ h4{
     overflow: auto;
 }
 
+.options-popup{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    box-sizing: border-box;
+    padding: 3px;
+}
+
+.options-popup .option-actions-wrapper{
+    padding: 0;
+    width: unset;
+}
+
+.options-popup .option-actions-wrapper button{
+    padding: 5px;
+    width: 100%;
+    text-align: left;
+}
+
 .units-wrapper .panel h4 + div button[data-icon="times"]{
     position: absolute;
     top: 0;
@@ -489,11 +510,14 @@ h4{
 }
 
 #app-el-window {
-    z-index: 9998;
-    width: 100%;
-    height: 100%;
+    z-index: 99999;
     top: 0;
     left: 0;
+}
+
+#app-el-window.has-child{
+    width: 100%;
+    height: 100%;
 }
 
 #app-el-window .error-popup{

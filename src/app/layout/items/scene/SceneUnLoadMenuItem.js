@@ -1,19 +1,19 @@
 import MenuItem from '../../MenuItem.js'
 import Layout from '../../Layout.js'
 
-export default class SceneLoadMenuItem extends MenuItem {
+export default class SceneUnLoadMenuItem extends MenuItem {
 
     /**
      * @param {Scene} scene
      */
     constructor(scene) {
         super({
-            name: 'Load scene',
-            stateCode: 'ACTION_LOAD_SCENE',
+            name: 'Unload scene',
+            stateCode: 'ACTION_UNLOAD_SCENE',
             type: Layout.type.BUTTON,
             zone: Layout.zone.WINDOW
         })
-        this.text = ['Load scene']
+        this.text = ['Unload scene']
         this.data = {scene}
     }
 
@@ -21,7 +21,7 @@ export default class SceneLoadMenuItem extends MenuItem {
      * @override
      */
     isValid() {
-        return super.isValid() && !this.data.scene.isIncluded()
+        return super.isValid() && this.data.scene.isIncluded()
     }
 
 }

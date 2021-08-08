@@ -73,6 +73,8 @@ import PlayAssetAudioAction from './assets/PlayAssetAudioAction.js'
 import StopAssetAudioAction from './assets/StopAssetAudioAction.js'
 import SelectLayerAction from './edit/SelectLayerAction.js'
 import LoadSceneAction from './scene/LoadSceneAction.js'
+import OpenOptionAction from './option/OpenOptionAction.js'
+import UnLoadSceneAction from './scene/UnLoadSceneAction.js'
 
 /**
  * Action Runner class.
@@ -170,7 +172,9 @@ class ActionRunner extends Runner {
             SELECT_LIST_TIMELINE: SelectTimelineAction,
             PLAY_ASSET_AUDIO: PlayAssetAudioAction,
             STOP_ASSET_AUDIO: StopAssetAudioAction,
-            LOAD_SCENE: LoadSceneAction
+            LOAD_SCENE: LoadSceneAction,
+            UNLOAD_SCENE: UnLoadSceneAction,
+            OPEN_OPTION: OpenOptionAction
         }
         const selectedUnits = this.unitSelector.getSelected(World.get())
         for(const iTypeAction in typeActions){

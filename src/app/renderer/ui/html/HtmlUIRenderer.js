@@ -26,6 +26,8 @@ import IconTextButtonUI from './buttons/IconTextButtonUI.js'
 import ListElementButtonUI from './list/ListElementButtonUI.js'
 import HtmlAssetViewUI from './ui/HtmlAssetViewUI.js'
 import LayerElementButtonUI from './list/LayerElementButtonUI.js'
+import Vector from '../../../utils/Vector.js'
+import Layout from '../../../layout/Layout.js'
 
 /**
  * HTML UI Renderer class
@@ -355,6 +357,27 @@ class HtmlUIRenderer extends UIRenderer {
     }
 
     /**
+     * @param {MenuItemUI} item
+     * @return {HTMLElement}
+     */
+    getHtmlElement(item) {
+        const id = item.getId()
+        return document.getElementById(id)
+    }
+
+    /**
+     * @override
+     */
+    getPosition(item) {
+        const htmlElement = this.getHtmlElement(item)
+        const boundClient = htmlElement.getBoundingClientRect()
+        return new Vector({
+            x: boundClient.left,
+            y: boundClient.bottom
+        })
+    }
+
+    /**
      * @override
      */
     getItemsAt(mouse) {
@@ -386,7 +409,7 @@ class HtmlUIRenderer extends UIRenderer {
             const index = parseInt(node.getAttribute('data-index'))
             const parentIndex = parseInt(node.getAttribute('data-parent-index'))
             const zone = node.getAttribute('data-zone')
-            const item = Menu.get().findItemByZone(index, zone)
+            const item = Menu.get().findItemByZoneAndIndex(index, zone)
             if (!item || (item.parent && item.parent.index !== parentIndex)) {
                 node.remove()
             } else {
@@ -397,6 +420,25 @@ class HtmlUIRenderer extends UIRenderer {
                 }
             }
         })
+        this.updateZones()
+    }
+
+    updateZones() {
+        for (const iZone in Layout.zone) {
+            if (Layout.zone.hasOwnProperty(iZone)) {
+                const zone = Layout.zone[iZone]
+                const id = `${HTML_ID_PREFIX}${zone}`
+                const zoneDiv = document.getElementById(id)
+                const hasChild = !!Menu.get().findItemsByZone(zone).filter(item => item.element.isValid()).length
+                if (zoneDiv) {
+                    if (hasChild) {
+                        zoneDiv.className = 'has-child'
+                    } else {
+                        zoneDiv.className = ''
+                    }
+                }
+            }
+        }
     }
 }
 

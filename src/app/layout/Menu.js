@@ -32,6 +32,7 @@ import LightPointMenuItem from './items/edit/LightPointMenuItem.js'
 import LightGlobalMenuItem from './items/edit/LightGlobalMenuItem.js'
 import LayerMenuItem from './items/layer/LayerMenuItem.js'
 import SceneMenuItem from './items/scene/SceneMenuItem.js'
+import OptionsPopupMenuItem from './items/option/OptionsPopupMenuItem.js'
 
 /**
  * Define all menu items
@@ -43,6 +44,7 @@ class Menu {
         this.types = [
             //Window
             new ErrorPopupMenuItem(),
+            new OptionsPopupMenuItem(),
 
             //LEFT
             new SelectorMenuItem(),
@@ -129,12 +131,21 @@ class Menu {
     }
 
     /**
+     * Find menu item by zone
+     * @param {String} zone
+     * @return {MenuItemUI[]}
+     */
+    findItemsByZone(zone) {
+        return this.items.filter(pItem => pItem.element.zone === zone)
+    }
+
+    /**
      * Find menu item by index and zone
      * @param {Number} index (must start from 0)
      * @param {String} zone
      * @return {MenuItemUI}
      */
-    findItemByZone(index, zone) {
+    findItemByZoneAndIndex(index, zone) {
         const itemsZone = this.items.filter(pItem => pItem.element.zone === zone)
         return itemsZone.find(itemZone => itemZone.index === index)
     }

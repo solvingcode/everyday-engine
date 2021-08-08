@@ -179,6 +179,10 @@ button.selected, button.hidden.selected, button.locked.selected{
 }
 
 .panel .tree .list-element.selected{
+    background: none;
+}
+
+.panel .tree .list-element.selected > button{
     background-color: #395889;
 }
 
@@ -242,6 +246,19 @@ button.selected, button.hidden.selected, button.locked.selected{
 
 .units-wrapper .list-element .list-element-img-wrapper i{
     color: #333333;
+}
+
+.options-popup .option-actions-wrapper .panel div{
+    background: none;
+}
+
+.options-popup .option-actions-wrapper{
+    background-color: #3e3e3e;
+    border: 1px solid #cccccc;
+}
+
+.options-popup .option-actions-wrapper button:not(:last-child){
+    border-bottom: 1px solid #cccccc;
 }
 
 #app-el-window .error-popup{

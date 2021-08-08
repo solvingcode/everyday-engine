@@ -79,6 +79,15 @@ class UIRenderer {
 
     /**
      * @abstract
+     * @param {MenuItemUI} item
+     * @return {Vector}
+     */
+    getPosition(item) {
+        throw new TypeError('"UIRenderer.getPosition" method must be implemented')
+    }
+
+    /**
+     * @abstract
      * Get all MenuItem at a specific position.
      * @param {Mouse} mouse
      * @return {MenuItemUI[]}
@@ -352,6 +361,8 @@ class UIRenderer {
             return this.getBodyItemUI()
         } else if(element.type === Layout.type.ASSET_VIEW){
             return this.getAssetViewUI()
+        } else if(element.type === Layout.type.BUTTON){
+            return this.getDefaultButtonUI()
         } else {
             throw new TypeError(`Layout type "${element.type}" not supported!`)
         }

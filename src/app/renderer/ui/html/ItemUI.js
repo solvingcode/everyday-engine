@@ -37,6 +37,15 @@ class ItemUI {
      * @param {MenuItemUI} item
      */
     static getStyle(item) {
+        const {position, size} = item.element
+        if (position) {
+            return {
+                x0: position.x,
+                y0: position.y,
+                width: size.width,
+                height: size.height
+            }
+        }
     }
 
     /**

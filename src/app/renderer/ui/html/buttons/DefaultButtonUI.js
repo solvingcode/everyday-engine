@@ -30,9 +30,7 @@ class DefaultButtonUI extends ItemUI {
 
 DefaultButtonUI.props = {
     tag: 'button',
-    prefix: 'default-button-',
-    width: '85px',
-    height: '40px'
+    prefix: 'default-button-'
 }
 
 export default DefaultButtonUI
