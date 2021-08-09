@@ -24,7 +24,7 @@ export default class SceneUnitManager extends UnitManager {
      * @param {Unit} unit
      * @return {UnitManager}
      */
-    getUnitManagerByUnit(unit){
+    getSceneManagerByUnit(unit){
         return this.world.getSceneUnitManager(unit)
     }
 
@@ -48,7 +48,7 @@ export default class SceneUnitManager extends UnitManager {
      */
     deleteUnit(unit) {
         super.deleteUnit(unit)
-        return this.getUnitManagerByUnit(unit).deleteUnit(unit)
+        return this.getSceneManagerByUnit(unit).deleteUnit(unit)
     }
 
     /**
@@ -56,7 +56,7 @@ export default class SceneUnitManager extends UnitManager {
      */
     moveUnitUp(unit) {
         super.moveUnitUp(unit)
-        this.getUnitManagerByUnit(unit).moveUnitUp(unit)
+        this.getSceneManagerByUnit(unit).moveUnitUp(unit)
     }
 
     /**
@@ -64,7 +64,7 @@ export default class SceneUnitManager extends UnitManager {
      */
     moveUnitDown(unit) {
         super.moveUnitDown(unit)
-        this.getUnitManagerByUnit(unit).moveUnitDown(unit)
+        this.getSceneManagerByUnit(unit).moveUnitDown(unit)
     }
 
     /**
@@ -73,7 +73,7 @@ export default class SceneUnitManager extends UnitManager {
      */
     clone(unit) {
         super.clone(unit)
-        this.getUnitManagerByUnit(unit).clone(unit)
+        this.getSceneManagerByUnit(unit).clone(unit)
     }
 
     /**

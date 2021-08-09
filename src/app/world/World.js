@@ -196,11 +196,10 @@ class World extends WorldData {
         this.regenerateAll()
     }
 
-    /**
-     * @param {Scene} scene
-     */
-    unLoadScene(scene) {
-        scene.getUnitManager().getUnits().forEach(unit => this.getUnitManager().deleteUnit(unit))
+
+    unloadAllScene(){
+        this.getSceneManager().unloadAll()
+        this.getUnitManager().units = []
     }
 
     /**

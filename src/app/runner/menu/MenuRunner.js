@@ -34,9 +34,10 @@ class MenuRunner extends Runner {
             .filter(menuItem => menuItem.element.isHandle(window))
         if (menuItems && menuItems.length) {
             this.menu.selectItems(menuItems)
-        } else {
-            this.menu.stopActionMenuItem()
         }
+        /*else {
+            this.menu.stopActionMenuItem()
+        }*/
     }
 }
 

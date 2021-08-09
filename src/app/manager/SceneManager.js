@@ -149,20 +149,8 @@ export default class SceneManager extends SceneManagerData {
         }
     }
 
-    /**
-     * @param {World} world
-     * @param {Scene} scene
-     */
-    unLoad(world, scene) {
-        if (scene) {
-            const exist = this.findByName(scene.getName())
-            if (exist) {
-                exist.setLoaded(false)
-                world.unLoadScene(scene)
-            } else {
-                throw new SystemError(`Scene with name "${scene.getName()}" not found`)
-            }
-        }
+    unloadAll(){
+        this.scenes.forEach(scene => scene.setLoaded(false))
     }
 
     /**

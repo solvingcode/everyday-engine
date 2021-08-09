@@ -16,8 +16,17 @@ export default class SceneRunner extends Runner {
     execute() {
         const world = World.get()
         const sceneManager = world.getSceneManager()
-        sceneManager.getUnLoading().forEach(scene => sceneManager.unLoad(world, scene))
-        sceneManager.getLoading().forEach(scene => sceneManager.load(world, scene))
+        const unLoadingScenes = sceneManager.getUnLoading()
+        const loadingScenes = sceneManager.getLoading()
+
+        if(unLoadingScenes.length){
+            world.unloadAllScene()
+        }
+        loadingScenes.forEach(scene => sceneManager.load(world, scene))
+
+        if(unLoadingScenes.length || loadingScenes.length){
+            world.regenerateAll()
+        }
     }
 
 }
