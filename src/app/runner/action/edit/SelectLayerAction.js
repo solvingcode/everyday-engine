@@ -2,7 +2,6 @@ import Action from '../Action.js'
 import World from '../../../world/World.js'
 import StateManager from '../../../state/StateManager.js'
 import UnitSelector from '../../../selector/UnitSelector.js'
-import Unit from '../../../unit/Unit.js'
 
 export default class SelectLayerAction extends Action {
 
@@ -12,11 +11,11 @@ export default class SelectLayerAction extends Action {
      * @override
      */
     static run() {
-        const {object} = StateManager.get().getNextProgressData(this.STATE)
-        if (object instanceof Unit) {
-            UnitSelector.get().unselectAll(World.get())
-            object.select()
-        }
+        const world = World.get()
+        const {bind} = StateManager.get().getNextProgressData(this.STATE)
+        world.getSceneManager().unSelectAll()
+        UnitSelector.get().unselectAll(World.get())
+        bind.select()
         return true
     }
 

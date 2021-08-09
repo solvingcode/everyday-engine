@@ -14,7 +14,7 @@ export default class AddLightPointAction extends Action {
      */
     static run() {
         const world = World.get()
-        world.getUnitManager().createUnitInstant(LightPointUnitInstant, new Vector(), new Size(200), PrimitiveShape.LIGHT_POINT)
+        world.createUnitInstant(LightPointUnitInstant, new Vector(), new Size(200), PrimitiveShape.LIGHT_POINT)
         return true
     }
 

@@ -98,15 +98,15 @@ class EditorRunner extends Runner {
 
                     const unitGridExist = unitManager.getUnitsHasComponents([GUIGridComponent])
                         .find(unit => unit.getComponent(TransformComponent).getPosition().equals(positionChunk))
-                    const unitGrid = unitGridExist || unitManager.createUnitInstant(GridUnitInstant, positionChunk, sizeChunk)
+                    const unitGrid = unitGridExist || world.createUnitInstant(GridUnitInstant, positionChunk, sizeChunk)
 
                     const unitGridXExist = unitManager.getUnitsHasComponents([GUIGridXComponent])
                         .find(unit => unit.getComponent(TransformComponent).getPosition().equals(positionChunk))
-                    const unitGridX = unitGridXExist || unitManager.createUnitInstant(GridXUnitInstant, positionChunk, sizeChunk)
+                    const unitGridX = unitGridXExist || world.createUnitInstant(GridXUnitInstant, positionChunk, sizeChunk)
 
                     const unitGridYExist = unitManager.getUnitsHasComponents([GUIGridYComponent])
                         .find(unit => unit.getComponent(TransformComponent).getPosition().equals(positionChunk))
-                    const unitGridY = unitGridYExist || unitManager.createUnitInstant(GridYUnitInstant, positionChunk, sizeChunk)
+                    const unitGridY = unitGridYExist || world.createUnitInstant(GridYUnitInstant, positionChunk, sizeChunk)
 
                     chunkIds = chunkIds.concat([unitGrid.getId(), unitGridX.getId(), unitGridY.getId()])
                 })
@@ -244,26 +244,26 @@ class EditorRunner extends Runner {
             if (stateManager.hasAnyState('DRAW_MOVE')) {
                 moveComponentClasses.forEach(componentClass => {
                     if (componentClass === GUIMoveXComponent) {
-                        unitManager.createUnitInstant(MoveXUnitInstant, componentClass, editorPosition)
+                        world.createUnitInstant(MoveXUnitInstant, componentClass, editorPosition)
                     } else if (componentClass === GUIMoveYComponent) {
-                        unitManager.createUnitInstant(MoveYUnitInstant, componentClass, editorPosition)
+                        world.createUnitInstant(MoveYUnitInstant, componentClass, editorPosition)
                     } else if (componentClass === GUIMoveFreeComponent) {
-                        unitManager.createUnitInstant(MoveFreeUnitInstant, componentClass, editorPosition)
+                        world.createUnitInstant(MoveFreeUnitInstant, componentClass, editorPosition)
                     }
                 })
             } else if (stateManager.hasAnyState('DRAW_SCALE')) {
                 scaleComponentClasses.forEach(componentClass => {
                     if (componentClass === GUIScaleXComponent) {
-                        unitManager.createUnitInstant(ScaleXUnitInstant, componentClass, editorPosition)
+                        world.createUnitInstant(ScaleXUnitInstant, componentClass, editorPosition)
                     } else if (componentClass === GUIScaleYComponent) {
-                        unitManager.createUnitInstant(ScaleYUnitInstant, componentClass, editorPosition)
+                        world.createUnitInstant(ScaleYUnitInstant, componentClass, editorPosition)
                     } else if (componentClass === GUIScaleFreeComponent) {
-                        unitManager.createUnitInstant(ScaleFreeUnitInstant, componentClass, editorPosition)
+                        world.createUnitInstant(ScaleFreeUnitInstant, componentClass, editorPosition)
                     }
                 })
             } else if (stateManager.hasAnyState('DRAW_ROTATE')) {
                 rotateComponentClasses.forEach(componentClass => {
-                    unitManager.createUnitInstant(RotateZUnitInstant, componentClass, editorPosition)
+                    world.createUnitInstant(RotateZUnitInstant, componentClass, editorPosition)
                 })
             }
         }

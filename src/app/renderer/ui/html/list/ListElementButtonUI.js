@@ -18,14 +18,20 @@ export default class ListElementButtonUI extends ItemUI {
      * @override
      */
     static postCreate(item, el, uiRenderer) {
-        const bind = item.element.getDataBind()
+        const {element} = item
+        const bind = element.getDataBind()
         if (bind) {
+            let container = el
+            if(element.isButton()){
+                container = document.createElement('button')
+                el.appendChild(container)
+            }
             const icon = this.getIcon(item)
             if (icon) {
                 const imageWrapper = document.createElement('div')
                 imageWrapper.className = 'list-element-img-wrapper'
                 imageWrapper.appendChild(icon)
-                el.appendChild(imageWrapper)
+                container.appendChild(imageWrapper)
             }
             el.setAttribute('data-list-element-id', bind.getId())
             el.setAttribute('data-list-element-name', bind.getName())
@@ -36,7 +42,7 @@ export default class ListElementButtonUI extends ItemUI {
                 const title = document.createElement('span')
                 title.textContent = this.getTitle(item)
                 title.title = this.getTitle(item)
-                el.appendChild(title)
+                container.appendChild(title)
             }
         }
     }

@@ -300,7 +300,6 @@ export default class UnitHelper {
      * @return {Unit[]}
      */
     static createGUICollider(unit, world) {
-        const unitManager = world.getUnitManager()
         const colliderComponents = unit.findComponentsByClass(ColliderComponent)
             .filter(colliderComponent => colliderComponent.isEnabled())
         const unitScale = unit.getComponent(TransformComponent).getScale()
@@ -329,7 +328,7 @@ export default class UnitHelper {
                 style.setColor('#1fa834')
                 style.setBorderSize(2)
 
-                const colliderUnit = unitManager
+                const colliderUnit = world
                     .createUnitInstant(unitInstantClass, colliderCorrectedPosition, colliderSize, style)
                 colliderUnit.createComponents([GUIColliderComponent])
                 colliderUnit.getComponent(TransformComponent).setRotation(colliderRotation)

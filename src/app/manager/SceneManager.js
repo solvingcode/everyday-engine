@@ -17,6 +17,13 @@ export default class SceneManager extends SceneManagerData {
     }
 
     /**
+     * @return {Scene}
+     */
+    getSelected() {
+        return this.scenes.find(scene => scene.isSelected())
+    }
+
+    /**
      * @return {Scene[]}
      */
     getIncluded(){
@@ -151,6 +158,10 @@ export default class SceneManager extends SceneManagerData {
 
     unloadAll(){
         this.scenes.forEach(scene => scene.setLoaded(false))
+    }
+
+    unSelectAll(){
+        this.scenes.forEach(scene => scene.setSelected(false))
     }
 
     /**

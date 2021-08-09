@@ -12,7 +12,7 @@ export default class AddCameraAction extends Action {
      */
     static run() {
         const world = World.get()
-        world.getUnitManager().createUnitInstant(CameraUnitInstant, new Vector(), world.getResolution())
+        world.createUnitInstant(CameraUnitInstant, new Vector(), world.getResolution())
         return true
     }
 

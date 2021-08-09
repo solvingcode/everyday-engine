@@ -1,5 +1,6 @@
 import MenuItem from '../../MenuItem.js'
 import Layout from '../../Layout.js'
+import Unit from '../../../unit/Unit.js'
 
 export default class HideItemMenuItem extends MenuItem {
 
@@ -8,10 +9,9 @@ export default class HideItemMenuItem extends MenuItem {
      */
     constructor(unit) {
         super({
-            name: 'eye-slash',
-            title: 'Hide',
+            name: 'Hide',
             stateCode: 'ACTION_HIDE_ITEM',
-            type: Layout.type.ICON,
+            type: Layout.type.BUTTON,
             zone: Layout.zone.TOP
         })
         this.data = {unit}
@@ -21,6 +21,7 @@ export default class HideItemMenuItem extends MenuItem {
      * @override
      */
     isValid() {
-        return super.isValid() && this.data.unit.isVisible()
+        const unit = this.data.unit
+        return super.isValid() && unit instanceof Unit && unit.isVisible()
     }
 }

@@ -42,7 +42,7 @@ export default class UnitDrawerRunner extends DrawerRunner {
      * @override
      */
     createUnit(instance, position, size) {
-        return World.get().getUnitManager().createUnitInstant(instance, position, size)
+        return World.get().createUnitInstant(instance, position, size)
     }
 
     /**

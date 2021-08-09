@@ -14,7 +14,7 @@ export default class AddAssetSceneAction extends Action {
         const world = World.get()
         const selectedAssets = world.getAssetsManager().getSelectedAssets()
         selectedAssets.forEach(asset => {
-            world.getUnitManager().createUnitInstant(AssetUnitInstant, new Vector(), asset)
+            world.createUnitInstant(AssetUnitInstant, new Vector(), asset)
         })
         return true
     }

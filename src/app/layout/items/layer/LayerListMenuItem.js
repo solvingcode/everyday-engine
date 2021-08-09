@@ -3,9 +3,10 @@ import Layout from '../../Layout.js'
 import LayerElementMenuItem from './LayerElementMenuItem.js'
 import World from '../../../world/World.js'
 import GUIPendingComponent from '../../../component/internal/gui/GUIPendingComponent.js'
-import HideItemMenuItem from '../action/HideItemMenuItem.js'
-import ShowItemMenuItem from '../action/ShowItemMenuItem.js'
 import Scene from '../../../scene/Scene.js'
+import OptionActionsButtonMenuItem from '../option/OptionActionsButtonMenuItem.js'
+import LayerActionsMenuItem from './LayerActionsMenuItem.js'
+import SceneActionsMenuItem from '../scene/SceneActionsMenuItem.js'
 
 export default class LayerListMenuItem extends ListMenuItem {
 
@@ -40,7 +41,7 @@ export default class LayerListMenuItem extends ListMenuItem {
         } else {
             if (this.data instanceof Scene) {
                 return world.getUnitManager().findUnitsInScene(this.data)
-                    .filter(unit => !unit.getComponent(GUIPendingComponent))
+                    .filter(unit => !unit.getComponent(GUIPendingComponent) && !unit.getUnitParentId())
             } else {
                 return world.getUnitManager().findChildUnits(this.data)
                     .filter(unit => !unit.getComponent(GUIPendingComponent))
@@ -50,13 +51,18 @@ export default class LayerListMenuItem extends ListMenuItem {
 
     /**
      * @override
-     * @param {Unit} bindObject
+     * @param {Scene|Unit} bindObject
      */
-    getActions(bindObject) {
-        return [
-            new HideItemMenuItem(bindObject),
-            new ShowItemMenuItem(bindObject)
-        ]
+    getActions(bindObject){
+        if(bindObject instanceof Scene){
+            return [
+                new OptionActionsButtonMenuItem(SceneActionsMenuItem, bindObject)
+            ]
+        }else{
+            return [
+                new OptionActionsButtonMenuItem(LayerActionsMenuItem, bindObject)
+            ]
+        }
     }
 
 }

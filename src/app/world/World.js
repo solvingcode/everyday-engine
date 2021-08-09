@@ -196,6 +196,16 @@ class World extends WorldData {
         this.regenerateAll()
     }
 
+    /**
+     * @template T
+     * @param {Class} T
+     * @param {...any} props
+     * @return {T}
+     */
+    createUnitInstant(T, ...props) {
+        const selectedUnit = this.getUnitManager().getSelected()
+        return this.getUnitManager().createUnitInstant(T, selectedUnit, ...props)
+    }
 
     unloadAllScene(){
         this.getSceneManager().unloadAll()

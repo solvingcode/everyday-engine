@@ -1,5 +1,6 @@
 import MenuItem from '../../MenuItem.js'
 import Layout from '../../Layout.js'
+import Unit from '../../../unit/Unit.js'
 
 /**
  * @class {ShowItemMenuItem}
@@ -11,10 +12,9 @@ export default class ShowItemMenuItem extends MenuItem {
      */
     constructor(unit) {
         super({
-            name: 'eye',
-            title: 'Show',
+            name: 'Show',
             stateCode: 'ACTION_SHOW_ITEM',
-            type: Layout.type.ICON,
+            type: Layout.type.BUTTON,
             zone: Layout.zone.TOP
         })
         this.data = {unit}
@@ -24,6 +24,7 @@ export default class ShowItemMenuItem extends MenuItem {
      * @override
      */
     isValid() {
-        return super.isValid() && !this.data.unit.isVisible()
+        const unit = this.data.unit
+        return super.isValid() && unit instanceof Unit && !unit.isVisible()
     }
 }

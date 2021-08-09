@@ -147,7 +147,6 @@ button.selected, button.hidden.selected, button.locked.selected{
 
 .panel .tree{
     background-color: #3e3e3e;
-    border-right: 1px solid #323232;
 }
 
 .panel .tree .list-element-img-wrapper{

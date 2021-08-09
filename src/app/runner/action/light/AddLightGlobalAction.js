@@ -11,7 +11,7 @@ export default class AddLightGlobalAction extends Action {
      */
     static run() {
         const world = World.get()
-        world.getUnitManager().createUnitInstant(LightGlobalUnitInstant)
+        world.createUnitInstant(LightGlobalUnitInstant)
         return true
     }
 

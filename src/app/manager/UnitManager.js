@@ -1,9 +1,6 @@
 import Unit from '../unit/Unit.js'
 import UnitManagerData from '../project/data/UnitManagerData.js'
 import MeshComponent from '../component/internal/MeshComponent.js'
-import EmptyUnit from '../unit/type/EmptyUnit.js'
-import TransformComponent from '../component/internal/TransformComponent.js'
-import Vector from '../utils/Vector.js'
 import GUIPropertyComponent from '../component/internal/gui/property/GUIPropertyComponent.js'
 import Maths from '../utils/Maths.js'
 import ClientError from '../exception/type/ClientError.js'
@@ -34,6 +31,13 @@ export default class UnitManager extends UnitManagerData {
     }
 
     /**
+     * @return {Unit}
+     */
+    getSelected(){
+        return this.units.find(unit => unit.isSelected())
+    }
+
+    /**
      * @param {number} unitId
      * @return {Unit}
      */
@@ -47,7 +51,7 @@ export default class UnitManager extends UnitManagerData {
      * @param {Unit} unit
      * @return {boolean}
      */
-    hasUnit(unit){
+    hasUnit(unit) {
         return !!this.units.find(pUnit => pUnit === unit)
     }
 
@@ -95,7 +99,7 @@ export default class UnitManager extends UnitManagerData {
     /**
      * @param {Asset} asset
      */
-    deleteUnitsByAsset(asset){
+    deleteUnitsByAsset(asset) {
         this.findUnitsByAsset(asset).forEach((unit) => {
             this.deleteUnit(unit)
         })
@@ -166,7 +170,7 @@ export default class UnitManager extends UnitManagerData {
      * @param {Unit} parentUnit
      * @return {Unit[]}
      */
-    findChildUnits(parentUnit){
+    findChildUnits(parentUnit) {
         const parentUnitId = parentUnit && parentUnit.getId()
         return this.units.filter(unit => unit.getUnitParentId() === parentUnitId)
     }
@@ -174,13 +178,14 @@ export default class UnitManager extends UnitManagerData {
     /**
      * @template T
      * @param {Class} T
+     * @param {Unit} parentUnit
      * @return {T}
      */
-    createUnit(T) {
+    createUnit(T, parentUnit) {
         if (!(T.prototype instanceof Unit)) {
             throw new ClientError(`Unit type must be child of Unit class (${type} given)`)
         }
-        const unit = new T()
+        const unit = this.newUnit(T, parentUnit)
         this.addUnit(unit)
         return unit
     }
@@ -188,31 +193,34 @@ export default class UnitManager extends UnitManagerData {
     /**
      * @template T
      * @param {Class} T
-     * @param {...any} props
+     * @param {Unit} parentUnit
      * @return {T}
      */
-    createUnitInstant(T, ...props) {
+    newUnit(T, parentUnit) {
         if (!(T.prototype instanceof Unit)) {
             throw new ClientError(`Unit type must be child of Unit class (${type} given)`)
         }
         const unit = new T()
-        unit.instantiate(...props)
-        this.addUnit(unit)
+        if (parentUnit) {
+            unit.setUnitParentId(parentUnit.getId())
+        }
         return unit
     }
 
     /**
-     * @param {string} shape
-     * @param {Vector} position
-     * @return {Unit}
+     * @template T
+     * @param {Class} T
+     * @param {Unit} parentUnit
+     * @param {...any} props
+     * @return {T}
      */
-    createPrimitiveUnit(shape, position) {
-        const unit = this.createUnit(EmptyUnit)
-        unit.setName(shape)
-        const transformComponent = unit.getComponent(TransformComponent)
-        const meshComponent = unit.getComponent(MeshComponent)
-        transformComponent.setPosition(new Vector(_.cloneDeep(position)))
-        meshComponent.setShape(shape)
+    createUnitInstant(T, parentUnit, ...props) {
+        if (!(T.prototype instanceof Unit)) {
+            throw new ClientError(`Unit type must be child of Unit class (${type} given)`)
+        }
+        const unit = this.newUnit(T, parentUnit)
+        unit.instantiate(...props)
+        this.addUnit(unit)
         return unit
     }
 
@@ -242,6 +250,8 @@ export default class UnitManager extends UnitManagerData {
      * @param {Unit} unit
      */
     deleteUnit(unit) {
+        const unitChilds = this.findChildUnits(unit)
+        unitChilds.forEach(cUnit => this.deleteUnit(cUnit))
         return this.units.splice(this.getIndexOfUnit(unit), 1)
     }
 
@@ -340,7 +350,7 @@ export default class UnitManager extends UnitManagerData {
     regenerateAll(world) {
         this.units.forEach(unit => {
             const meshComponent = unit.getComponent(MeshComponent)
-            if(meshComponent){
+            if (meshComponent) {
                 meshComponent.setGenerated(false)
             }
         })

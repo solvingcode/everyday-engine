@@ -1,13 +1,14 @@
-import ListElementMenuItem from '../list/ListElementMenuItem.js'
 import Layout from '../../Layout.js'
+import ListSelectElementActionsMenuItem from '../list/ListSelectElementActionsMenuItem.js'
+import IconHelper from '../../../utils/IconHelper.js'
 import LayerListMenuItem from './LayerListMenuItem.js'
-import LayerTitleMenuItem from './LayerTitleMenuItem.js'
 
-export default class LayerElementMenuItem extends ListElementMenuItem {
+export default class LayerElementMenuItem extends ListSelectElementActionsMenuItem {
     constructor(parent, data) {
         super(parent, data, {
-            stateCode: '',
-            type: Layout.type.LAYER_ELEMENT
+            name: '',
+            stateCode: 'ACTION_SELECT_LAYER_ELEMENT',
+            type: Layout.type.LIST_ELEMENT
         })
     }
 
@@ -16,17 +17,23 @@ export default class LayerElementMenuItem extends ListElementMenuItem {
      */
     setData(data) {
         super.setData(data)
-        this.items = [
-            new LayerTitleMenuItem(this, data.bind),
+        this.items = this.items.concat([
             new LayerListMenuItem(this, this.parent.props, data.bind)
-        ]
+        ])
     }
 
     /**
      * @override
      */
-    isSelected() {
-        return this.getDataBind().isSelected()
+    getIcon() {
+        return IconHelper.getIconName(this.getDataBind())
+    }
+
+    /**
+     * @override
+     */
+    isButton() {
+        return true
     }
 
 }

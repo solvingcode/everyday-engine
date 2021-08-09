@@ -203,31 +203,19 @@ h4{
 
 .panel .tree{
     width: 100%;
-    float: left;
-    overflow: auto;
 }
 
 .panel .tree .panel > div .panel{
     padding-left: 10px;
 }
 
-.panel .tree .list-element-img-wrapper{
-    width: 20px !important;
-    height: 20px !important;
-    float: left !important;
-}
-
-.panel .tree .list-element-img-wrapper i{
-    line-height: 1.2rem;
-}
-
-.panel .tree .list-element, .panel .script-nodes .list-element {
+.panel .script-nodes .list-element {
     box-sizing: border-box;
     width: 100%;
     padding: 0;
 }
 
-.panel .tree .list-element button, .panel .script-nodes .list-element button{
+.panel .script-nodes .list-element button{
     width: 100%;
     text-align: left;
 }
@@ -236,6 +224,15 @@ h4{
     position: absolute;
     top: 3px;
     left: 2px;
+}
+
+.list-element button{
+    padding: 0;
+    margin: 0;
+}
+
+.list-element button.fas{
+    padding: 0 4px;
 }
 
 .panel .tree .list-element span , .panel .script-nodes .list-element span {
@@ -302,6 +299,8 @@ h4{
 .assets-wrapper .tree{
     height: 100%;
     box-sizing: border-box;
+    float: left;
+    overflow: auto;
 }
 
 .assets-wrapper .assets-list .list-element{
@@ -614,7 +613,7 @@ h4{
 /* list element -- */
 
 .list-element{
-    padding: 2px;
+    padding: 0;
     position: relative;
     width: 100%;
     overflow: hidden;

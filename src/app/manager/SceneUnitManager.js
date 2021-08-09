@@ -36,11 +36,20 @@ export default class SceneUnitManager extends UnitManager {
     }
 
     /**
+     * @return {UnitManager}
+     */
+    getSelectedUnitManager(){
+        const selectedScene = this.world.getSceneManager().getSelected()
+        return selectedScene && selectedScene.getUnitManager()
+    }
+
+    /**
      * @param {Unit} unit
      */
     addUnit(unit) {
         super.addUnit(unit)
-        this.getActiveUnitManager().addUnit(unit)
+        const targetUnitManager = this.getSelectedUnitManager() || this.getActiveUnitManager()
+        targetUnitManager.addUnit(unit)
     }
 
     /**

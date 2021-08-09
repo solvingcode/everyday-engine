@@ -48,4 +48,11 @@ export default class ListElementMenuItem extends MenuItem {
     getIcon(){
         return null
     }
+
+    /**
+     * @return {boolean}
+     */
+    isButton(){
+        return false
+    }
 }
