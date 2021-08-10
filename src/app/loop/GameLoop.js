@@ -19,6 +19,7 @@ import CameraExecutor from '../executor/type/CameraExecutor.js'
 import LightExecutor from '../executor/type/LightExecutor.js'
 import LightRunner from '../runner/light/LightRunner.js'
 import SceneRunner from '../runner/scene/SceneRunner.js'
+import TransformExecutor from '../executor/type/TransformExecutor.js'
 
 /**
  * @class {GameLoop}
@@ -38,6 +39,7 @@ class GameLoop extends SceneLoop {
             GameExecutorRunner, GameRenderRunner, PhysicsRunner,
             CameraRunner, LightRunner]
         ExecutorRegistry.get().register([
+            new TransformExecutor(),
             new MeshGenerationExecutor(),
             new RigidBodyExecutor(),
             new ColliderExecutor(),

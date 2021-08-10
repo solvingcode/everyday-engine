@@ -176,6 +176,15 @@ export default class UnitManager extends UnitManagerData {
     }
 
     /**
+     * @param {Unit} childUnit
+     * @return {Unit}
+     */
+    findParentUnit(childUnit){
+        const parentUnitId = childUnit.getUnitParentId()
+        return parentUnitId && this.findUnitById(parentUnitId)
+    }
+
+    /**
      * @template T
      * @param {Class} T
      * @param {Unit} parentUnit
