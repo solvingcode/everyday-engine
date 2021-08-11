@@ -33,7 +33,7 @@ export default class UnitManager extends UnitManagerData {
     /**
      * @return {Unit}
      */
-    getSelected(){
+    getSelected() {
         return this.units.find(unit => unit.isSelected())
     }
 
@@ -44,6 +44,26 @@ export default class UnitManager extends UnitManagerData {
     findUnitById(unitId) {
         return this.units.find((element) =>
             element.getId() === unitId
+        )
+    }
+
+    /**
+     * @param {Unit} type
+     * @return {Unit[]}
+     */
+    findUnitsByType(type) {
+        return this.units.filter((element) =>
+            element instanceof type
+        )
+    }
+
+    /**
+     * @param {Unit} type
+     * @return {Unit}
+     */
+    findUnitByType(type) {
+        return this.units.find((element) =>
+            element instanceof type
         )
     }
 
@@ -179,7 +199,7 @@ export default class UnitManager extends UnitManagerData {
      * @param {Unit} childUnit
      * @return {Unit}
      */
-    findParentUnit(childUnit){
+    findParentUnit(childUnit) {
         const parentUnitId = childUnit.getUnitParentId()
         return parentUnitId && this.findUnitById(parentUnitId)
     }

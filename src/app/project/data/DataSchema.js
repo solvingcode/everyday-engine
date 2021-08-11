@@ -151,6 +151,7 @@ import PlayAudioFunction from '../../flow/function/native/audio/PlayAudioFunctio
 import IsAudioPlayingFunction from '../../flow/function/native/audio/IsAudioPlayingFunction.js'
 import SceneManager from '../../manager/SceneManager.js'
 import Scene from '../../scene/Scene.js'
+import FlipScaleFunction from '../../flow/function/native/transform/FlipScaleFunction.js'
 
 /**
  * @class {DataSchema}
@@ -298,7 +299,8 @@ class DataSchema {
         {id: 1280, type: PlayAudioFunction},
         {id: 1290, type: IsAudioPlayingFunction},
         {id: 1300, type: SceneManager},
-        {id: 1310, type: Scene}
+        {id: 1310, type: Scene},
+        {id: 1320, type: FlipScaleFunction}
     ]
 
     /**

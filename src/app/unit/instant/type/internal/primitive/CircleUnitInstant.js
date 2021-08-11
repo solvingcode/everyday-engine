@@ -5,6 +5,7 @@ import GUIPendingComponent from '../../../../../component/internal/gui/GUIPendin
 import Style from '../../../../../pobject/Style.js'
 import GUIPropertyComponent from '../../../../../component/internal/gui/property/GUIPropertyComponent.js'
 import {PrimitiveShape} from '../../../../Unit.js'
+import TransformHelper from '../../../../../utils/TransformHelper.js'
 
 export default class CircleUnitInstant extends UnitInstant {
 
@@ -18,7 +19,7 @@ export default class CircleUnitInstant extends UnitInstant {
         const transformComponent = this.getComponent(TransformComponent)
         const meshComponent = this.getComponent(MeshComponent)
         transformComponent.setPosition(position)
-        meshComponent.setSize(size)
+        transformComponent.setScale(TransformHelper.getScaleFromSize(size))
         meshComponent.setShape(PrimitiveShape.CIRCLE)
         meshComponent.setStyle(style)
     }

@@ -6,9 +6,9 @@ import Size from '../../../pobject/Size.js'
 import GUIScaleFreeComponent from '../../../component/internal/gui/scale/GUIScaleFreeComponent.js'
 import GUIScaleXComponent from '../../../component/internal/gui/scale/GUIScaleXComponent.js'
 import GUIScaleYComponent from '../../../component/internal/gui/scale/GUIScaleYComponent.js'
-import MeshComponent from '../../../component/internal/MeshComponent.js'
 import UnitHelper from '../../../utils/UnitHelper.js'
 import LightComponent from '../../../component/internal/LightComponent.js'
+import TransformComponent from '../../../component/internal/TransformComponent.js'
 
 export default class ScaleAction extends Action {
 
@@ -55,13 +55,13 @@ export default class ScaleAction extends Action {
             if(unit.hasComponentsByClasses([LightComponent])){
                 unit.findComponentByClass(LightComponent).setGenerated(false)
             }
-            const meshComponent = unit.getComponent(MeshComponent)
-            const {width: meshWidth, height: meshHeight} = meshComponent.getSize()
-            const ratio = meshHeight / meshWidth
-            const width = meshComponent.getSize().getWidth() + dragDistance.x * direction.x
-            const height = meshComponent.getSize().getHeight() + (direction.x ? dragDistance.x * ratio : dragDistance.y) * direction.y
-            meshComponent.setSize(new Size({width, height}))
-            meshComponent.setGenerated(false)
+            const transformComponent = unit.getComponent(TransformComponent)
+            const {x: scaleX, y: scaleY} = transformComponent.getScale()
+            const ratio = scaleY / scaleX
+            transformComponent.setScale(new Vector({
+                x: scaleX + dragDistance.x * direction.x,
+                y: scaleX + (direction.x ? dragDistance.x * ratio : dragDistance.y) * direction.y
+            }))
         })
     }
 
@@ -86,7 +86,6 @@ export default class ScaleAction extends Action {
      * Stop the move action
      */
     static stop(mouse, selectedUnits) {
-        selectedUnits.map(unit => unit.getComponent(MeshComponent).setGenerated(false))
         return true
     }
 

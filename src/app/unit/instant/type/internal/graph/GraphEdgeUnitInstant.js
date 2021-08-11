@@ -10,6 +10,7 @@ import GeometryHelper from '../../../../../utils/GeometryHelper.js'
 import NodeHelper from '../../../../../utils/NodeHelper.js'
 import Vector from '../../../../../utils/Vector.js'
 import ArrayHelper from '../../../../../utils/ArrayHelper.js'
+import TransformHelper from '../../../../../utils/TransformHelper.js'
 
 export default class GraphEdgeUnitInstant extends UnitInstant {
 
@@ -60,7 +61,7 @@ export default class GraphEdgeUnitInstant extends UnitInstant {
             ) {
                 meshComponent.setShape(PrimitiveShape.LINE)
                 meshComponent.setShapeVertices(vertices)
-                meshComponent.setSize(size)
+                transformComponent.setScale(TransformHelper.getScaleFromSize(size))
                 meshComponent.setGenerated(false)
             }
         }

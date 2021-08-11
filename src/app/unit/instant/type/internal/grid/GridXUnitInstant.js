@@ -7,6 +7,7 @@ import {PrimitiveShape} from '../../../../Unit.js'
 import TransformComponent from '../../../../../component/internal/TransformComponent.js'
 import Style from '../../../../../pobject/Style.js'
 import GUIPropertyComponent from '../../../../../component/internal/gui/property/GUIPropertyComponent.js'
+import TransformHelper from '../../../../../utils/TransformHelper.js'
 
 export default class GridXUnitInstant extends UnitInstant {
 
@@ -25,7 +26,7 @@ export default class GridXUnitInstant extends UnitInstant {
         style.setBorderSize(3)
         meshComponent.setShape(PrimitiveShape.LINE)
         meshComponent.setShapeVertices([new Vector(), new Vector({x: size.getWidth(), y: 0})])
-        meshComponent.setSize(size)
+        transformComponent.setScale(TransformHelper.getScaleFromSize(size))
         meshComponent.setStyle(style)
     }
 

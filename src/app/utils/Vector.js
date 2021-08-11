@@ -168,6 +168,7 @@ class Vector {
 
     /**
      * @param {Vector} vector
+     * @return {Vector}
      */
     static normalize(vector){
         return this.divide(vector, this.length(vector))
@@ -181,6 +182,17 @@ class Vector {
     static angle(vectorA, vectorB){
         const signedAngleRadian = Math.atan2(vectorB.y, vectorB.x) - Math.atan2(vectorA.y, vectorA.x)
         return signedAngleRadian || 0
+    }
+
+    /**
+     * @param {Vector} vector
+     * @return {Vector}
+     */
+    static abs(vector){
+        return new Vector({
+            x: Math.abs(vector.x),
+            y: Math.abs(vector.y)
+        })
     }
 }
 

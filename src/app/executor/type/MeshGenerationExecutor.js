@@ -13,6 +13,7 @@ import Mesh from '../../core/Mesh.js'
 import Maths from '../../utils/Maths.js'
 import GUIPropertyComponent from '../../component/internal/gui/property/GUIPropertyComponent.js'
 import ImageHelper from '../../utils/ImageHelper.js'
+import TransformHelper from '../../utils/TransformHelper.js'
 
 export default class MeshGenerationExecutor extends ComponentExecutor {
 
@@ -117,9 +118,9 @@ export default class MeshGenerationExecutor extends ComponentExecutor {
                 const canvasBgScaled = UnitHelper.generateImageRepeat(canvasBg, dataContext, meshComponent)
                 context.drawImage(canvasBgScaled, 0, 0, scaleSize.width, scaleSize.height)
             } else {
-                const transformScale = transformComponent.getScale()
-                context.drawImage(ImageHelper.scaleCanvas(canvasBg, transformScale),
-                    0, 0, scaleSize.width * Math.abs(transformScale.getX()), scaleSize.height * Math.abs(transformScale.getY()))
+                const directionScale = TransformHelper.getScaleDirection(transformComponent.getScale())
+                context.drawImage(ImageHelper.scaleCanvas(canvasBg, directionScale),
+                    0, 0, scaleSize.width, scaleSize.height)
             }
             this.getMaterial(world, meshComponent.getMaterial())
                 .generate(canvasBg, dataContext, meshComponent, transformComponent)

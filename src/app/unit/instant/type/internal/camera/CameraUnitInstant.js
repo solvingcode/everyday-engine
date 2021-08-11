@@ -6,6 +6,7 @@ import Style from '../../../../../pobject/Style.js'
 import {PrimitiveShape} from '../../../../Unit.js'
 import CameraComponent from '../../../../../component/internal/CameraComponent.js'
 import StyleComponent from '../../../../../component/internal/StyleComponent.js'
+import TransformHelper from '../../../../../utils/TransformHelper.js'
 
 export default class CameraUnitInstant extends UnitInstant {
 
@@ -25,7 +26,7 @@ export default class CameraUnitInstant extends UnitInstant {
         const styleComponent = this.getComponent(StyleComponent)
         styleComponent.setStyle(style)
         transformComponent.setPosition(position)
-        meshComponent.setSize(size)
+        transformComponent.setScale(TransformHelper.getScaleFromSize(size))
         meshComponent.setShape(PrimitiveShape.CAMERA)
     }
 

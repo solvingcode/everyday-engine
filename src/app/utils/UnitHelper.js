@@ -15,6 +15,7 @@ import SystemError from '../exception/type/SystemError.js'
 import Style from '../pobject/Style.js'
 import GUIColliderComponent from '../component/internal/gui/collider/GUIColliderComponent.js'
 import ImageHelper from './ImageHelper.js'
+import TransformHelper from './TransformHelper.js'
 
 export default class UnitHelper {
 
@@ -271,7 +272,7 @@ export default class UnitHelper {
      */
     static getColliderRelativePosition(unit, colliderComponent) {
         const colliderSize = this.getColliderSize(unit, colliderComponent)
-        const transformScale = unit.getComponent(TransformComponent).getScale()
+        const transformScale = TransformHelper.getScaleDirection(unit.getComponent(TransformComponent).getScale())
 
         const colliderVectorSize = new Vector({
             x: colliderSize.getWidth(),

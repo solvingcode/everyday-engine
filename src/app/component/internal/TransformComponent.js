@@ -14,9 +14,11 @@ export default class TransformComponent extends Component{
     initAttributes() {
         this.add('position', TYPES.VECTOR, new Vector())
         this.add('localPosition', TYPES.VECTOR, new Vector())
+        this.add('localScale', TYPES.VECTOR, new Vector({x: 1, y: 1}))
         this.add('scale', TYPES.VECTOR, new Vector({x: 1, y: 1}))
         this.add('rotation', TYPES.RANGE, 0, [0, Math.PI, 0.001])
         this.add('positionUpdated', TYPES.BOOLEAN, true)
+        this.add('scaleUpdated', TYPES.BOOLEAN, true)
     }
 
     /**
@@ -31,7 +33,7 @@ export default class TransformComponent extends Component{
      */
     setPosition(position){
         this.setValue('position', position)
-        this.setValue('positionUpdated', true)
+        this.setPositionUpdated(true)
     }
 
     /**
@@ -60,6 +62,7 @@ export default class TransformComponent extends Component{
      */
     setScale(scale){
         this.setValue('scale', scale)
+        this.setScaleUpdated(true)
     }
 
     /**
@@ -77,6 +80,20 @@ export default class TransformComponent extends Component{
     }
 
     /**
+     * @return {Vector}
+     */
+    getLocalScale(){
+        return this.getValue('localScale')
+    }
+
+    /**
+     * @param {Vector} localScale
+     */
+    setLocalScale(localScale){
+        this.setValue('localScale', localScale)
+    }
+
+    /**
      * @return {boolean}
      */
     getPositionUpdated(){
@@ -88,6 +105,20 @@ export default class TransformComponent extends Component{
      */
     setPositionUpdated(positionUpdated){
         this.setValue('positionUpdated', positionUpdated)
+    }
+
+    /**
+     * @return {boolean}
+     */
+    getScaleUpdated(){
+        return this.getValue('scaleUpdated')
+    }
+
+    /**
+     * @param {boolean} scaleUpdated
+     */
+    setScaleUpdated(scaleUpdated){
+        this.setValue('scaleUpdated', scaleUpdated)
     }
 
     /**

@@ -7,3 +7,5 @@ export const CANVAS_CONTEXT_TYPE = '2d'
 export const STYLE_THEME = 'dark'
 
 export const PREVIEW_URL = '/src/preview/'
+
+export const SCALE_FACTOR = 10

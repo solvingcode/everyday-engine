@@ -3,14 +3,14 @@ import Size from '../../../../../pobject/Size.js'
 import Style from '../../../../../pobject/Style.js'
 import {PrimitiveShape} from '../../../../Unit.js'
 import TransformUnitInstant from '../TransformUnitInstant.js'
+import GUIScaleYComponent from '../../../../../component/internal/gui/scale/GUIScaleYComponent.js'
 
 export default class ScaleYUnitInstant extends TransformUnitInstant {
 
     /**
-     * @param {Class} moveComponentClass
      * @param {Vector} position
      */
-    instantiate(moveComponentClass, position) {
+    instantiate(position) {
         const size = new Size({width: 30, height: 100})
         const style = new Style()
         style.setColor('#0000FF')
@@ -19,7 +19,7 @@ export default class ScaleYUnitInstant extends TransformUnitInstant {
         const movePosition = new Vector()
         movePosition.setX(position.getX() - size.getWidth() / 2)
         movePosition.setY(position.getY())
-        super.instantiate(moveComponentClass, size, style, shape, movePosition)
+        super.instantiate(GUIScaleYComponent, size, style, shape, movePosition)
     }
 
 }

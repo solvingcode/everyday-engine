@@ -19,6 +19,7 @@ export default class MeshComponent extends Component{
         this.add('shape', TYPES.STRING, PrimitiveShape.RECT)
         this.add('style', TYPES.STYLE, new Style())
         this.add('size', TYPES.SIZE, new Size(0))
+        this.add('material', TYPES.MATERIAL, MaterialType.DEFAULT)
         this.add('vertices', TYPES.ARRAY | TYPES.VECTOR, [])
         this.add('shapeVertices',TYPES.ARRAY | TYPES.VECTOR, [])
         this.add('generated', TYPES.BOOLEAN, false)
@@ -29,14 +30,13 @@ export default class MeshComponent extends Component{
         this.add('imageRepeatAreaMin', TYPES.VECTOR, new Vector())
         this.add('imageRepeatAreaMax', TYPES.VECTOR, new Vector())
         this.add('version', TYPES.NUMBER, 0)
-        this.add('material', TYPES.MATERIAL, MaterialType.DEFAULT)
     }
 
     /**
      * @override
      */
     getExcludeFields() {
-        return ['generated', 'shape', 'shapeVertices', 'vertices', 'version', 'style']
+        return ['generated', 'shape', 'shapeVertices', 'vertices', 'version', 'style', 'size']
     }
 
     /**

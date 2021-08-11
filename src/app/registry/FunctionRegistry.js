@@ -70,6 +70,7 @@ import AddVectorFunction from '../flow/function/native/basic/AddVectorFunction.j
 import IsUpdateTimeFunction from '../flow/function/native/time/IsUpdateTimeFunction.js'
 import PlayAudioFunction from '../flow/function/native/audio/PlayAudioFunction.js'
 import IsAudioPlayingFunction from '../flow/function/native/audio/IsAudioPlayingFunction.js'
+import FlipScaleFunction from '../flow/function/native/transform/FlipScaleFunction.js'
 
 export default class FunctionRegistry extends Registry{
 
@@ -166,6 +167,9 @@ export default class FunctionRegistry extends Registry{
             new IsGroundedFunction(),
             new ScaleMeshFunction(),
             new GetAllCollisionFunction(),
+
+            //Transform
+            new FlipScaleFunction(),
 
             //Structure
             new VectorFunction(),

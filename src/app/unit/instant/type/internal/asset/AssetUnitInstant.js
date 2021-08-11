@@ -2,6 +2,7 @@ import UnitInstant from '../../../UnitInstant.js'
 import TransformComponent from '../../../../../component/internal/TransformComponent.js'
 import MeshComponent from '../../../../../component/internal/MeshComponent.js'
 import GUIPropertyComponent from '../../../../../component/internal/gui/property/GUIPropertyComponent.js'
+import TransformHelper from '../../../../../utils/TransformHelper.js'
 
 export default class AssetUnitInstant extends UnitInstant {
 
@@ -13,7 +14,7 @@ export default class AssetUnitInstant extends UnitInstant {
         this.setName(asset.getName())
         const meshComponent = this.getComponent(MeshComponent)
         const transformComponent = this.getComponent(TransformComponent)
-        meshComponent.setSize(_.cloneDeep(asset.getType().getData().size))
+        transformComponent.setScale(TransformHelper.getScaleFromSize(asset.getType().getData().size))
         meshComponent.setAssetId(asset.getId())
         meshComponent.setMaterial('default')
         transformComponent.setPosition(position)

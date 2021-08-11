@@ -10,6 +10,7 @@ import Menu from '../../layout/Menu.js'
 import SystemError from '../../exception/type/SystemError.js'
 import GeometryHelper from '../../utils/GeometryHelper.js'
 import Window from '../../core/Window.js'
+import TransformHelper from '../../utils/TransformHelper.js'
 
 /**
  * @abstract
@@ -211,7 +212,7 @@ export default class DrawerRunner extends Runner {
         const meshComponent = this.getDrawUnit().getComponent(MeshComponent)
         meshComponent.setShapeVertices(diagonalVertices)
         transformComponent.setPosition(newPosition)
-        meshComponent.setSize(size)
+        transformComponent.setScale(TransformHelper.getScaleFromSize(size))
         meshComponent.setGenerated(false)
     }
 

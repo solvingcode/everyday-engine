@@ -7,6 +7,7 @@ import NodeComponent from '../../../../../component/internal/gui/node/NodeCompon
 import NodeHelper from '../../../../../utils/NodeHelper.js'
 import ScriptHelper from '../../../../../utils/ScriptHelper.js'
 import ArrayHelper from '../../../../../utils/ArrayHelper.js'
+import TransformHelper from '../../../../../utils/TransformHelper.js'
 
 export default class GraphNodeUnitInstant extends UnitInstant {
 
@@ -35,7 +36,7 @@ export default class GraphNodeUnitInstant extends UnitInstant {
         const nodeSourceOutput = nodeSource.getOutput()
         const size = NodeHelper.getNodeGUISize(node, script)
         transformComponent.setPosition(position)
-        meshComponent.setSize(size)
+        transformComponent.setScale(TransformHelper.getScaleFromSize(size))
         meshComponent.setShape(PrimitiveShape.NODE)
         nodeComponent.setTitle(NodeHelper.getNodeName(node))
         nodeComponent.setInputs(nodeInputs)

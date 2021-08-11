@@ -214,14 +214,11 @@ class EditorRunner extends Runner {
     setupEditor(stateManager) {
         const world = World.get()
         const unitManager = world.getUnitManager()
-        const moveComponentClasses = [GUIMoveXComponent, GUIMoveYComponent, GUIMoveFreeComponent]
-        const scaleComponentClasses = [GUIScaleXComponent, GUIScaleYComponent, GUIScaleFreeComponent]
-        const rotateComponentClasses = [GUIRotateComponent]
         const colliderComponentClasses = [GUIColliderComponent]
 
         //Delete move/scale/rotate tools
         unitManager.getUnitsHasAnyComponents([]
-            .concat(moveComponentClasses, scaleComponentClasses, rotateComponentClasses, colliderComponentClasses))
+            .concat(colliderComponentClasses))
             .forEach(unit => unitManager.deleteUnit(unit))
 
         //get selected units
@@ -235,37 +232,29 @@ class EditorRunner extends Runner {
         if (selectedUnits.length === 1) {
             const selectedUnit = selectedUnits[0]
             const colliderUnits = UnitHelper.createGUICollider(selectedUnit, world)
-            if(colliderUnits.length){
+            if (colliderUnits.length) {
                 editorPosition = UnitHelper.toLargeCenterPosition(colliderUnits[0])
             }
         }
 
-        if (editorPosition) {
-            if (stateManager.hasAnyState('DRAW_MOVE')) {
-                moveComponentClasses.forEach(componentClass => {
-                    if (componentClass === GUIMoveXComponent) {
-                        world.createUnitInstant(MoveXUnitInstant, componentClass, editorPosition)
-                    } else if (componentClass === GUIMoveYComponent) {
-                        world.createUnitInstant(MoveYUnitInstant, componentClass, editorPosition)
-                    } else if (componentClass === GUIMoveFreeComponent) {
-                        world.createUnitInstant(MoveFreeUnitInstant, componentClass, editorPosition)
-                    }
-                })
-            } else if (stateManager.hasAnyState('DRAW_SCALE')) {
-                scaleComponentClasses.forEach(componentClass => {
-                    if (componentClass === GUIScaleXComponent) {
-                        world.createUnitInstant(ScaleXUnitInstant, componentClass, editorPosition)
-                    } else if (componentClass === GUIScaleYComponent) {
-                        world.createUnitInstant(ScaleYUnitInstant, componentClass, editorPosition)
-                    } else if (componentClass === GUIScaleFreeComponent) {
-                        world.createUnitInstant(ScaleFreeUnitInstant, componentClass, editorPosition)
-                    }
-                })
-            } else if (stateManager.hasAnyState('DRAW_ROTATE')) {
-                rotateComponentClasses.forEach(componentClass => {
-                    world.createUnitInstant(RotateZUnitInstant, componentClass, editorPosition)
-                })
-            }
+        const editorComponents = {
+            DRAW_MOVE: [MoveXUnitInstant, MoveYUnitInstant, MoveFreeUnitInstant],
+            DRAW_SCALE: [ScaleXUnitInstant, ScaleYUnitInstant, ScaleFreeUnitInstant],
+            DRAW_ROTATE: [RotateZUnitInstant]
+        }
+        for (const action in editorComponents) {
+            const unitInstants = editorComponents[action]
+            unitInstants.forEach(unitInstantClass => {
+                const unitExist = unitManager.findUnitByType(unitInstantClass)
+                if (stateManager.hasAnyState(action) && !unitExist && editorPosition) {
+                    world.createUnitInstant(unitInstantClass, editorPosition)
+                } else if (unitExist && (
+                        !stateManager.hasAnyState(action) ||
+                        (selectedUnits.length && unitExist.getUnitParentId() !== selectedUnits[0].getId())
+                )) {
+                    unitManager.deleteUnit(unitExist)
+                }
+            })
         }
     }
 }

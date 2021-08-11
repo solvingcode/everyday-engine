@@ -8,6 +8,7 @@ import GUIPendingComponent from '../../../../../component/internal/gui/GUIPendin
 import Vector from '../../../../../utils/Vector.js'
 import Style from '../../../../../pobject/Style.js'
 import StyleComponent from '../../../../../component/internal/StyleComponent.js'
+import TransformHelper from '../../../../../utils/TransformHelper.js'
 
 export default class GridUnitInstant extends UnitInstant {
 
@@ -26,7 +27,7 @@ export default class GridUnitInstant extends UnitInstant {
         style.setColor('#3e3e3e')
         this.getComponent(StyleComponent).setStyle(style)
         this.getComponent(MeshComponent).setStyle(style)
-        this.getComponent(MeshComponent).setSize(size)
+        transformComponent.setScale(TransformHelper.getScaleFromSize(size))
     }
 
     /**

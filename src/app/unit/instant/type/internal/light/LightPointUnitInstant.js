@@ -7,6 +7,7 @@ import {PrimitiveShape} from '../../../../Unit.js'
 import StyleComponent from '../../../../../component/internal/StyleComponent.js'
 import LightPointComponent from '../../../../../component/internal/LightPointComponent.js'
 import ClientError from '../../../../../exception/type/ClientError.js'
+import TransformHelper from '../../../../../utils/TransformHelper.js'
 
 export default class LightPointUnitInstant extends UnitInstant {
 
@@ -31,7 +32,7 @@ export default class LightPointUnitInstant extends UnitInstant {
         const styleComponent = this.getComponent(StyleComponent)
         styleComponent.setStyle(style)
         transformComponent.setPosition(position)
-        meshComponent.setSize(size)
+        transformComponent.setScale(TransformHelper.getScaleFromSize(size))
         meshComponent.setShape(type)
     }
 

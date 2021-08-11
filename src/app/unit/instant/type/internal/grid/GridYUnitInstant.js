@@ -7,6 +7,7 @@ import TransformComponent from '../../../../../component/internal/TransformCompo
 import Style from '../../../../../pobject/Style.js'
 import GUIGridYComponent from '../../../../../component/internal/gui/grid/GUIGridYComponent.js'
 import GUIPropertyComponent from '../../../../../component/internal/gui/property/GUIPropertyComponent.js'
+import TransformHelper from '../../../../../utils/TransformHelper.js'
 
 export default class GridYUnitInstant extends UnitInstant {
 
@@ -25,7 +26,7 @@ export default class GridYUnitInstant extends UnitInstant {
         style.setBorderSize(3)
         meshComponent.setShape(PrimitiveShape.LINE)
         meshComponent.setShapeVertices([new Vector(), new Vector({x: 0, y: size.getHeight()})])
-        meshComponent.setSize(size)
+        transformComponent.setScale(TransformHelper.getScaleFromSize(size))
         meshComponent.setStyle(style)
     }
 
