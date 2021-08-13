@@ -6,6 +6,7 @@ import GUIPendingComponent from '../../../../component/internal/gui/GUIPendingCo
 import GUIPropertyComponent from '../../../../component/internal/gui/property/GUIPropertyComponent.js'
 import StyleComponent from '../../../../component/internal/StyleComponent.js'
 import TransformHelper from '../../../../utils/TransformHelper.js'
+import SystemError from '../../../../exception/type/SystemError.js'
 
 export default class TransformUnitInstant extends UnitInstant {
 
@@ -26,6 +27,16 @@ export default class TransformUnitInstant extends UnitInstant {
         meshComponent.setShape(shape)
         this.getComponent(StyleComponent).setStyle(style)
         this.getComponent(MeshComponent).setStyle(style)
+    }
+
+    /**
+     * @abstract
+     * @param {Vector} position
+     * @param {Size} size
+     * @return {Vector}
+     */
+    getTransformPosition(position, size){
+        throw new SystemError(`${this.constructor.name}.getTransformPosition must be implemented`)
     }
 
     /**

@@ -250,7 +250,8 @@ class EditorRunner extends Runner {
                     world.createUnitInstant(unitInstantClass, editorPosition)
                 } else if (unitExist && (
                         !stateManager.hasAnyState(action) ||
-                        (selectedUnits.length && unitExist.getUnitParentId() !== selectedUnits[0].getId())
+                        (selectedUnits.length && unitExist.getUnitParentId() !== selectedUnits[0].getId()) ||
+                        !selectedUnits.length
                 )) {
                     unitManager.deleteUnit(unitExist)
                 }

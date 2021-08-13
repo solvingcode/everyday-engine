@@ -16,10 +16,17 @@ export default class MoveYUnitInstant extends TransformUnitInstant {
         style.setColor('#0000FF')
         style.setBorderSize(4)
         const shape = PrimitiveShape.ARROW_DOWN
+        super.instantiate(GUIMoveYComponent, size, style, shape, this.getTransformPosition(position, size))
+    }
+
+    /**
+     * @override
+     */
+    getTransformPosition(position, size){
         const movePosition = new Vector()
         movePosition.setX(position.getX() - size.getWidth() / 2)
         movePosition.setY(position.getY())
-        super.instantiate(GUIMoveYComponent, size, style, shape, movePosition)
+        return movePosition
     }
 
 }

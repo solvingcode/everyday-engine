@@ -16,10 +16,17 @@ export default class ScaleFreeUnitInstant extends TransformUnitInstant {
         style.setColor('#CCCCCC')
         style.setBorderSize(2)
         const shape = PrimitiveShape.CIRCLE
+        super.instantiate(GUIScaleFreeComponent, size, style, shape, this.getTransformPosition(position, size))
+    }
+
+    /**
+     * @override
+     */
+    getTransformPosition(position, size){
         const movePosition = new Vector()
         movePosition.setX(position.getX() - size.getWidth() / 2)
         movePosition.setY(position.getY() - size.getHeight() / 2)
-        super.instantiate(GUIScaleFreeComponent, size, style, shape, movePosition)
+        return movePosition
     }
 
 }

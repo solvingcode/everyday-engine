@@ -19,6 +19,14 @@ export default class TransformComponent extends Component{
         this.add('rotation', TYPES.RANGE, 0, [0, Math.PI, 0.001])
         this.add('positionUpdated', TYPES.BOOLEAN, true)
         this.add('scaleUpdated', TYPES.BOOLEAN, true)
+        this.add('localPositionUpdated', TYPES.BOOLEAN, false)
+    }
+
+    /**
+     * @override
+     */
+    getExcludeFields() {
+        return ['positionUpdated', 'scaleUpdated', 'localPositionUpdated']
     }
 
     /**
@@ -77,6 +85,7 @@ export default class TransformComponent extends Component{
      */
     setLocalPosition(localPosition){
         this.setValue('localPosition', localPosition)
+        this.setLocalPositionUpdated(true)
     }
 
     /**
@@ -105,6 +114,20 @@ export default class TransformComponent extends Component{
      */
     setPositionUpdated(positionUpdated){
         this.setValue('positionUpdated', positionUpdated)
+    }
+
+    /**
+     * @return {boolean}
+     */
+    getLocalPositionUpdated(){
+        return this.getValue('localPositionUpdated')
+    }
+
+    /**
+     * @param {boolean} localPositionUpdated
+     */
+    setLocalPositionUpdated(localPositionUpdated){
+        this.setValue('localPositionUpdated', localPositionUpdated)
     }
 
     /**
