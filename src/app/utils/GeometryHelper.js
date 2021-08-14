@@ -1,6 +1,7 @@
 import Size from '../pobject/Size.js'
 import Vector from './Vector.js'
 import Vertex from './Vertex.js'
+import TransformHelper from './TransformHelper.js'
 
 export default class GeometryHelper{
 
@@ -106,6 +107,15 @@ export default class GeometryHelper{
             x: gSize.width / 2,
             y: gSize.height / 2
         })
+    }
+
+    /**
+     * @param {number} rotation
+     * @param {Vector} scale
+     * @return {Vector}
+     */
+    static getLargeCenterFromRotationScale(rotation, scale) {
+        return this.getLargeCenterFromRotationSize(rotation, TransformHelper.getSizeFromScale(scale))
     }
 
     /**

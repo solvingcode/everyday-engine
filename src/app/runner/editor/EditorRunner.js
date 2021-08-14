@@ -214,28 +214,27 @@ class EditorRunner extends Runner {
     setupEditor(stateManager) {
         const world = World.get()
         const unitManager = world.getUnitManager()
-        const colliderComponentClasses = [GUIColliderComponent]
-
-        //Delete move/scale/rotate tools
-        unitManager.getUnitsHasAnyComponents([]
-            .concat(colliderComponentClasses))
-            .forEach(unit => unitManager.deleteUnit(unit))
 
         //get selected units
         const selectedUnits = UnitSelector.get().getSelected(world).filter(unit => unit instanceof EmptyUnit)
-
-        //find the editor position
-        let editorPosition = selectedUnits
-            .reduce((position, unit) => UnitHelper.toLargeCenterPosition(unit), null)
+        let parentUnit = selectedUnits[0]
 
         //create collider unit if one unit is selected
         if (selectedUnits.length === 1) {
             const selectedUnit = selectedUnits[0]
+            const exitGUIColliders = unitManager.getUnitsHasComponents([GUIColliderComponent])
+            unitManager.deleteUnits(exitGUIColliders
+                .filter(unit => unit.getComponent(GUIColliderComponent).getUnitId() !== selectedUnit.getId()))
             const colliderUnits = UnitHelper.createGUICollider(selectedUnit, world)
             if (colliderUnits.length) {
-                editorPosition = UnitHelper.toLargeCenterPosition(colliderUnits[0])
+                parentUnit = colliderUnits[0]
             }
+        }else{
+            unitManager.deleteUnitsByComponents([GUIColliderComponent])
         }
+
+        //find the editor position
+        const editorPosition = parentUnit && UnitHelper.toLargeCenterPosition(parentUnit)
 
         const editorComponents = {
             DRAW_MOVE: [MoveXUnitInstant, MoveYUnitInstant, MoveFreeUnitInstant],
@@ -247,11 +246,11 @@ class EditorRunner extends Runner {
             unitInstants.forEach(unitInstantClass => {
                 const unitExist = unitManager.findUnitByType(unitInstantClass)
                 if (stateManager.hasAnyState(action) && !unitExist && editorPosition) {
-                    world.createUnitInstant(unitInstantClass, editorPosition)
+                    world.createChildUnitInstant(unitInstantClass, parentUnit, editorPosition)
                 } else if (unitExist && (
                         !stateManager.hasAnyState(action) ||
-                        (selectedUnits.length && unitExist.getUnitParentId() !== selectedUnits[0].getId()) ||
-                        !selectedUnits.length
+                        (parentUnit && unitExist.getUnitParentId() !== parentUnit.getId()) ||
+                        !parentUnit
                 )) {
                     unitManager.deleteUnit(unitExist)
                 }

@@ -285,11 +285,25 @@ export default class UnitManager extends UnitManagerData {
     }
 
     /**
+     * @param {Unit[]} units
+     */
+    deleteUnits(units) {
+        units.forEach(unit => this.deleteUnit(unit))
+    }
+
+    /**
      * @param {number} unitId
      */
     deleteUnitById(unitId) {
         const unit = this.findUnitById(unitId)
         this.deleteUnit(unit)
+    }
+
+    /**
+     * @param {Component[]} componentClasses
+     */
+    deleteUnitsByComponents(componentClasses) {
+        this.getUnitsHasComponents(componentClasses).forEach(unit => this.deleteUnit(unit))
     }
 
     /**

@@ -207,6 +207,17 @@ class World extends WorldData {
         return this.getUnitManager().createUnitInstant(T, selectedUnit, ...props)
     }
 
+    /**
+     * @template T
+     * @param {Class} T
+     * @param {Unit} parentUnit
+     * @param {...any} props
+     * @return {T}
+     */
+    createChildUnitInstant(T, parentUnit, ...props) {
+        return this.getUnitManager().createUnitInstant(T, parentUnit, ...props)
+    }
+
     unloadAllScene(){
         this.getSceneManager().unloadAll()
         this.getUnitManager().units = []

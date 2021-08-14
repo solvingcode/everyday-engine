@@ -16,6 +16,7 @@ import Style from '../pobject/Style.js'
 import GUIColliderComponent from '../component/internal/gui/collider/GUIColliderComponent.js'
 import ImageHelper from './ImageHelper.js'
 import TransformHelper from './TransformHelper.js'
+import ObjectHelper from './ObjectHelper.js'
 
 export default class UnitHelper {
 
@@ -180,8 +181,7 @@ export default class UnitHelper {
      */
     static getLargeCenterByUnit(unit) {
         const transformComponent = unit.getComponent(TransformComponent)
-        const meshComponent = unit.getComponent(MeshComponent)
-        return GeometryHelper.getLargeCenterFromRotationSize(transformComponent.getRotation(), meshComponent.getSize())
+        return GeometryHelper.getLargeCenterFromRotationScale(transformComponent.getRotation(), transformComponent.getScale())
     }
 
     /**
@@ -303,15 +303,16 @@ export default class UnitHelper {
     static createGUICollider(unit, world) {
         const colliderComponents = unit.findComponentsByClass(ColliderComponent)
             .filter(colliderComponent => colliderComponent.isEnabled())
-        const unitScale = unit.getComponent(TransformComponent).getScale()
         const unitRotation = unit.getComponent(TransformComponent).getRotation()
         const colliderUnits = []
+        const unitManager = world.getUnitManager()
         colliderComponents.forEach(colliderComponent => {
-            if (colliderComponent.isEditFlag()) {
-                const colliderSize = UnitHelper.getColliderSize(unit, colliderComponent)
-                const colliderRotation = unitRotation
-                const colliderCorrectedPosition = this.getColliderPosition(unit, colliderComponent)
-
+            const existGUICollider = unitManager.getUnitsHasComponents([GUIColliderComponent])
+                .find(guiCollider => guiCollider.getComponent(GUIColliderComponent).getComponentId() === colliderComponent.getId())
+            const colliderSize = UnitHelper.getColliderSize(unit, colliderComponent)
+            const colliderRotation = unitRotation
+            const colliderCorrectedPosition = this.getColliderPosition(unit, colliderComponent)
+            if (colliderComponent.isEditFlag() && !existGUICollider) {
                 const shape = colliderComponent.getShape()
                 let unitInstantClass
                 switch (shape) {
@@ -332,9 +333,21 @@ export default class UnitHelper {
                 const colliderUnit = world
                     .createUnitInstant(unitInstantClass, colliderCorrectedPosition, colliderSize, style)
                 colliderUnit.createComponents([GUIColliderComponent])
+                colliderUnit.getComponent(GUIColliderComponent).setComponentId(colliderComponent.getId())
+                colliderUnit.getComponent(GUIColliderComponent).setUnitId(unit.getId())
                 colliderUnit.getComponent(TransformComponent).setRotation(colliderRotation)
-                colliderUnit.getComponent(TransformComponent).setScale(_.clone(unitScale))
                 colliderUnits.push(colliderUnit)
+            } else if (existGUICollider && !colliderComponent.isEditFlag()) {
+                unitManager.deleteUnit(existGUICollider)
+            } else if (existGUICollider) {
+                const transformComponent = existGUICollider.getComponent(TransformComponent)
+                if (!ObjectHelper.isEqual(transformComponent.getPosition(), colliderCorrectedPosition)) {
+                    transformComponent.setPosition(colliderCorrectedPosition)
+                }
+                if (!ObjectHelper.isEqual(transformComponent.getScale(), TransformHelper.getScaleFromSize(colliderSize))) {
+                    transformComponent.setScale(TransformHelper.getScaleFromSize(colliderSize))
+                }
+                colliderUnits.push(existGUICollider)
             }
         })
         return colliderUnits
@@ -346,7 +359,7 @@ export default class UnitHelper {
      * @param {number} step
      * @param {Vector} direction
      */
-    static moveUnit(world, unit, step, direction){
+    static moveUnit(world, unit, step, direction) {
         const camera = world.getCamera()
         const stepScale = camera.fromScaleNumber(step)
         const moveDirection = new Vector({
@@ -364,7 +377,7 @@ export default class UnitHelper {
      * @param {number} step
      * @param {Vector} direction
      */
-    static moveCollider(world, unit, step, direction){
+    static moveCollider(world, unit, step, direction) {
         const camera = world.getCamera()
         const stepScale = camera.fromScaleNumber(step)
         const moveDirection = new Vector({
@@ -381,7 +394,7 @@ export default class UnitHelper {
      * @param {DataContext} dataContext
      * @param {MeshComponent} meshComponent
      */
-    static generateImageRepeat(canvas, dataContext, meshComponent){
+    static generateImageRepeat(canvas, dataContext, meshComponent) {
         const {camera} = dataContext
         const meshSize = meshComponent.getSize()
         const imageScale = meshComponent.getImageScale()
@@ -389,7 +402,10 @@ export default class UnitHelper {
         const imageRepeatAreaMin = meshComponent.getImageRepeatAreaMin()
         const imageRepeatAreaMax = meshComponent.getImageRepeatAreaMax()
         const canvasBgRepeat = ImageHelper.generateImageRepeat(canvas, meshSize, imageScale, imagePosition, imageRepeatAreaMin, imageRepeatAreaMax)
-        const canvasCameraScale = camera.toScaleSize(new Size({width: canvasBgRepeat.width, height: canvasBgRepeat.height}))
+        const canvasCameraScale = camera.toScaleSize(new Size({
+            width: canvasBgRepeat.width,
+            height: canvasBgRepeat.height
+        }))
         return ImageHelper.resizeCanvasBySize(canvasBgRepeat, canvasCameraScale)
     }
 

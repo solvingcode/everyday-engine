@@ -38,8 +38,10 @@ export default class TransformMeshExecutor extends ComponentExecutor {
         const childUnits = unitManager.findChildUnits(unit)
         childUnits.forEach(cUnit => {
             const childTransformComponent = cUnit.getComponent(TransformComponent)
-            const childLocalPosition = childTransformComponent.getLocalPosition()
-            childTransformComponent.setPosition(Vector.add(position, childLocalPosition))
+            if(!childTransformComponent.getPositionUpdated()){
+                const childLocalPosition = childTransformComponent.getLocalPosition()
+                childTransformComponent.setPosition(Vector.add(position, childLocalPosition))
+            }
         })
         const parentUnit = unitManager.findParentUnit(unit)
         if (parentUnit) {
@@ -85,15 +87,17 @@ export default class TransformMeshExecutor extends ComponentExecutor {
         const childUnits = unitManager.findChildUnits(unit)
         childUnits.forEach(cUnit => {
             const childTransformComponent = cUnit.getComponent(TransformComponent)
-            const childMeshComponent = cUnit.getComponent(MeshComponent)
-            const childLocalScale = childTransformComponent.getLocalScale()
-            const newChildScale = Vector.linearMultiply(scale, childLocalScale)
-            const childLocalPosition = childTransformComponent.getLocalPosition()
-            const childScale = childTransformComponent.getScale()
-            childTransformComponent.setScale(newChildScale)
-            childTransformComponent.setLocalPosition(Vector.linearMultiply(childLocalPosition, Vector.linearDivide(newChildScale, childScale)))
-            childMeshComponent.setSize(TransformHelper.getSizeFromScale(newChildScale))
-            childMeshComponent.setGenerated(false)
+            if(!childTransformComponent.getScaleUpdated()){
+                const childMeshComponent = cUnit.getComponent(MeshComponent)
+                const childLocalScale = childTransformComponent.getLocalScale()
+                const newChildScale = Vector.linearMultiply(scale, childLocalScale)
+                const childLocalPosition = childTransformComponent.getLocalPosition()
+                const childScale = childTransformComponent.getScale()
+                childTransformComponent.setScale(newChildScale)
+                childTransformComponent.setLocalPosition(Vector.linearMultiply(childLocalPosition, Vector.linearDivide(newChildScale, childScale)))
+                childMeshComponent.setSize(TransformHelper.getSizeFromScale(newChildScale))
+                childMeshComponent.setGenerated(false)
+            }
         })
         const parentUnit = unitManager.findParentUnit(unit)
         if (parentUnit) {
