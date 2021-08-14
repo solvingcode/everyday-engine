@@ -16,17 +16,19 @@ export default class TransformComponent extends Component{
         this.add('localPosition', TYPES.VECTOR, new Vector())
         this.add('localScale', TYPES.VECTOR, new Vector({x: 1, y: 1}))
         this.add('scale', TYPES.VECTOR, new Vector({x: 1, y: 1}))
-        this.add('rotation', TYPES.RANGE, 0, [0, Math.PI, 0.001])
+        this.add('rotation', TYPES.RANGE, 0, [0, Math.PI * 2, 0.001])
+        this.add('localRotation', TYPES.RANGE, 0, [0, Math.PI * 2, 0.001])
         this.add('positionUpdated', TYPES.BOOLEAN, true)
         this.add('scaleUpdated', TYPES.BOOLEAN, true)
         this.add('localPositionUpdated', TYPES.BOOLEAN, false)
+        this.add('rotationUpdated', TYPES.BOOLEAN, true)
     }
 
     /**
      * @override
      */
     getExcludeFields() {
-        return ['positionUpdated', 'scaleUpdated', 'localPositionUpdated']
+        return ['positionUpdated', 'scaleUpdated', 'localPositionUpdated', 'rotationUpdated']
     }
 
     /**
@@ -56,6 +58,21 @@ export default class TransformComponent extends Component{
      */
     setRotation(rotation){
         this.setValue('rotation', parseFloat(rotation))
+        this.setRotationUpdated(true)
+    }
+
+    /**
+     * @return {number}
+     */
+    getLocalRotation(){
+        return this.getValue('localRotation')
+    }
+
+    /**
+     * @param {number|string} localRotation
+     */
+    setLocalRotation(localRotation){
+        this.setValue('localRotation', parseFloat(localRotation))
     }
 
     /**
@@ -142,6 +159,20 @@ export default class TransformComponent extends Component{
      */
     setScaleUpdated(scaleUpdated){
         this.setValue('scaleUpdated', scaleUpdated)
+    }
+
+    /**
+     * @return {boolean}
+     */
+    getRotationUpdated(){
+        return this.getValue('rotationUpdated')
+    }
+
+    /**
+     * @param {boolean} rotationUpdated
+     */
+    setRotationUpdated(rotationUpdated){
+        this.setValue('rotationUpdated', rotationUpdated)
     }
 
     /**

@@ -152,4 +152,27 @@ export default class GeometryHelper{
         return newVertices
     }
 
+    /**
+     * @param {Vector} point
+     * @param {number} angle
+     * @param {Vector} origin
+     * @return {Vector}
+     */
+    static rotatePoint(point, angle, origin){
+        const rotatedPoint = _.cloneDeep(point)
+        const sinAngle = Math.sin(angle)
+        const cosAngle = Math.cos(angle)
+
+        rotatedPoint.x -= origin.x
+        rotatedPoint.y -= origin.y
+
+        const rotateX = rotatedPoint.x * cosAngle - rotatedPoint.y * sinAngle
+        const rotateY = rotatedPoint.x * sinAngle + rotatedPoint.y * cosAngle
+
+        rotatedPoint.x = rotateX + origin.x
+        rotatedPoint.y = rotateY + origin.y
+
+        return rotatedPoint
+    }
+
 }
