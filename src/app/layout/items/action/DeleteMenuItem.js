@@ -4,10 +4,9 @@ import Layout from '../../Layout.js'
 class DeleteMenuItem extends MenuItem {
     constructor() {
         super({
-            name: 'trash-alt',
-            title: 'Delete',
+            name: 'Delete',
             stateCode: 'ACTION_DELETE',
-            type: Layout.type.ICON,
+            type: Layout.type.BUTTON,
             zone: Layout.zone.TOP
         })
     }

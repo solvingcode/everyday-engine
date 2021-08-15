@@ -5,10 +5,9 @@ export default class AddAnimationScriptMenuItem extends MenuItem {
     constructor() {
         super({
             id: 1,
-            name: 'project-diagram',
-            title: 'Create animation script',
+            name: 'Create animation script',
             stateCode: 'ACTION_ADD_ANIMATION_SCRIPT',
-            type: Layout.type.ICON,
+            type: Layout.type.BUTTON,
             zone: Layout.zone.TOP
         })
     }

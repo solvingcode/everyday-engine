@@ -253,11 +253,12 @@ button.selected, button.hidden.selected, button.locked.selected{
 
 .options-popup .option-actions-wrapper{
     background-color: #3e3e3e;
-    border: 1px solid #cccccc;
+    border: 1px solid #5c5c5c;
+    box-shadow: 2px 2px 2px #3e3e3e;
 }
 
 .options-popup .option-actions-wrapper button:not(:last-child){
-    border-bottom: 1px solid #cccccc;
+    /*border-bottom: 1px solid #cccccc;*/
 }
 
 #app-el-window .error-popup{

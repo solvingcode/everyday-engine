@@ -75,6 +75,7 @@ import SelectLayerAction from './edit/SelectLayerAction.js'
 import LoadSceneAction from './scene/LoadSceneAction.js'
 import OpenOptionAction from './option/OpenOptionAction.js'
 import UnLoadSceneAction from './scene/UnLoadSceneAction.js'
+import AddUIContainerAction from './ui/AddUIContainerAction.js'
 
 /**
  * Action Runner class.
@@ -174,7 +175,8 @@ class ActionRunner extends Runner {
             STOP_ASSET_AUDIO: StopAssetAudioAction,
             LOAD_SCENE: LoadSceneAction,
             UNLOAD_SCENE: UnLoadSceneAction,
-            OPEN_OPTION: OpenOptionAction
+            OPEN_OPTION: OpenOptionAction,
+            ADD_UI_CONTAINER: AddUIContainerAction
         }
         const selectedUnits = this.unitSelector.getSelected(World.get())
         for(const iTypeAction in typeActions){

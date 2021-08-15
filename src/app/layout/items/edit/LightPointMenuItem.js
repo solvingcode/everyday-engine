@@ -5,10 +5,9 @@ export default class LightPointMenuItem extends MenuItem {
     constructor() {
         super({
             id: 1,
-            name: 'lightbulb',
-            title: 'Add light point',
+            name: 'Light Point',
             stateCode: 'ACTION_ADD_LIGHT_POINT',
-            type: Layout.type.ICON,
+            type: Layout.type.BUTTON,
             zone: Layout.zone.TOP
         })
     }

@@ -1,17 +1,7 @@
 import SelectorMenuItem from './items/edit/SelectorMenuItem.js'
-import CameraMenuItem from './items/edit/CameraMenuItem.js'
 import ScaleMenuItem from './items/edit/ScaleMenuItem.js'
-import NewProjectMenuItem from './items/project/NewProjectMenuItem.js'
-import SaveProjectMenuItem from './items/project/SaveProjectMenuItem.js'
-import LoadProjectMenuItem from './items/project/LoadProjectMenuItem.js'
-import ExportProjectMenuItem from './items/project/ExportProjectMenuItem.js'
 import SimulateStartMenuItem from './items/action/SimulateStartMenuItem.js'
 import SimulateStopMenuItem from './items/action/SimulateStopMenuItem.js'
-import DeleteMenuItem from './items/action/DeleteMenuItem.js'
-import DuplicateMenuItem from './items/action/DuplicateMenuItem.js'
-import UndoMenuItem from './items/action/UndoMenuItem.js'
-import MoveUpMenuItem from './items/action/MoveUpMenuItem.js'
-import MoveDownMenuItem from './items/action/MoveDownMenuItem.js'
 import MenuItemUI from '../renderer/ui/MenuItemUI.js'
 import AppMenuItem from './items/app/AppMenuItem.js'
 import MainCameraMenuItem from './items/world/MainCameraMenuItem.js'
@@ -24,15 +14,11 @@ import ContentMenuItem from './items/content/ContentMenuItem.js'
 import AssetMenuItem from './items/assets/AssetMenuItem.js'
 import ScriptMenuItem from './items/script/ScriptMenuItem.js'
 import ErrorPopupMenuItem from './items/error/ErrorPopupMenuItem.js'
-import AddClassScriptMenuItem from './items/assets/AddClassScriptMenuItem.js'
 import DeleteSelectedNodeMenuItem from './items/script/node/delete/DeleteSelectedNodeMenuItem.js'
-import AddAnimationMenuItem from './items/animation/AddAnimationMenuItem.js'
-import AddAnimationScriptMenuItem from './items/assets/AddAnimationScriptMenuItem.js'
-import LightPointMenuItem from './items/edit/LightPointMenuItem.js'
-import LightGlobalMenuItem from './items/edit/LightGlobalMenuItem.js'
 import LayerMenuItem from './items/layer/LayerMenuItem.js'
 import SceneMenuItem from './items/scene/SceneMenuItem.js'
 import OptionsPopupMenuItem from './items/option/OptionsPopupMenuItem.js'
+import TopMenuItem from './items/topmenu/TopMenuItem.js'
 
 /**
  * Define all menu items
@@ -53,22 +39,10 @@ class Menu {
             new RotateMenuItem(),
             new DeleteSelectedNodeMenuItem(),
 
+            //TOP MENU
+            new TopMenuItem(),
+
             //TOP
-            new NewProjectMenuItem(),
-            new LoadProjectMenuItem(),
-            new SaveProjectMenuItem(),
-            new ExportProjectMenuItem(),
-            new DeleteMenuItem(),
-            new DuplicateMenuItem(),
-            new UndoMenuItem(),
-            new MoveUpMenuItem(),
-            new MoveDownMenuItem(),
-            new CameraMenuItem(),
-            new LightPointMenuItem(),
-            new LightGlobalMenuItem(),
-            new AddClassScriptMenuItem(),
-            new AddAnimationScriptMenuItem(),
-            new AddAnimationMenuItem(),
             new SimulateStartMenuItem(),
             new SimulateStopMenuItem(),
 

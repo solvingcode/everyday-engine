@@ -4,10 +4,9 @@ import Layout from '../../Layout.js'
 class UndoMenuItem extends MenuItem {
     constructor() {
         super({
-            name: 'reply',
-            title: 'Undo',
+            name: 'Undo',
             stateCode: 'ACTION_UNDO',
-            type: Layout.type.ICON,
+            type: Layout.type.BUTTON,
             zone: Layout.zone.TOP
         })
     }

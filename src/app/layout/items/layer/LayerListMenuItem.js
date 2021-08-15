@@ -4,7 +4,7 @@ import LayerElementMenuItem from './LayerElementMenuItem.js'
 import World from '../../../world/World.js'
 import GUIPendingComponent from '../../../component/internal/gui/GUIPendingComponent.js'
 import Scene from '../../../scene/Scene.js'
-import OptionActionsButtonMenuItem from '../option/OptionActionsButtonMenuItem.js'
+import OptionActionsButtonEllipsisMenuItem from '../option/OptionActionsButtonEllipsisMenuItem.js'
 import LayerActionsMenuItem from './LayerActionsMenuItem.js'
 import SceneActionsMenuItem from '../scene/SceneActionsMenuItem.js'
 
@@ -56,11 +56,11 @@ export default class LayerListMenuItem extends ListMenuItem {
     getActions(bindObject){
         if(bindObject instanceof Scene){
             return [
-                new OptionActionsButtonMenuItem(SceneActionsMenuItem, bindObject)
+                new OptionActionsButtonEllipsisMenuItem(SceneActionsMenuItem, bindObject)
             ]
         }else{
             return [
-                new OptionActionsButtonMenuItem(LayerActionsMenuItem, bindObject)
+                new OptionActionsButtonEllipsisMenuItem(LayerActionsMenuItem, bindObject)
             ]
         }
     }

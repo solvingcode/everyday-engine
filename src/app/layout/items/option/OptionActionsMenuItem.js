@@ -12,7 +12,7 @@ export default class OptionActionsMenuItem extends MenuItem {
             name: 'option-actions-wrapper',
             stateCode: '',
             zone: Layout.zone.WINDOW,
-            type: Layout.type.WRAPPER
+            type: Layout.type.LIST
         })
         this.items = actions
         this.position = position

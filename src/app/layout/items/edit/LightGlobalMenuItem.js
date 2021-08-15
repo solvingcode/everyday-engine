@@ -5,10 +5,9 @@ export default class LightGlobalMenuItem extends MenuItem {
     constructor() {
         super({
             id: 1,
-            name: 'sun',
-            title: 'Add light global',
+            name: 'Light Global',
             stateCode: 'ACTION_ADD_LIGHT_GLOBAL',
-            type: Layout.type.ICON,
+            type: Layout.type.BUTTON,
             zone: Layout.zone.TOP
         })
     }

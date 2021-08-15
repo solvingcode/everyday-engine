@@ -26,6 +26,16 @@ class DefaultButtonUI extends ItemUI {
             el.textContent = name
         }
     }
+
+    /**
+     * @override
+     */
+    static getClassName(item) {
+        const {data} = item.element
+        if(data.optionActionsMenuItem){
+            return 'option-actions-trigger'
+        }
+    }
 }
 
 DefaultButtonUI.props = {

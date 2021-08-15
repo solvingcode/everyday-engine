@@ -7,10 +7,9 @@ import Layout from '../../Layout.js'
 class MoveDownMenuItem extends MenuItem {
     constructor() {
         super({
-            name: 'arrow-down',
-            title: 'Move down',
+            name: 'Move down',
             stateCode: 'ACTION_MOVE_DOWN',
-            type: Layout.type.ICON,
+            type: Layout.type.BUTTON,
             zone: Layout.zone.TOP
         })
     }

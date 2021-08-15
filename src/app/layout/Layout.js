@@ -7,6 +7,7 @@ class Layout {
 Layout.zone = {
     LEFT: 'left',
     TOP: 'top',
+    TOP_MENU: 'top-menu',
     TOP_TAB: 'top-tab',
     BODY: 'body',
     RIGHT: 'right',
@@ -31,6 +32,7 @@ Layout.type = {
     UNIT_ELEMENT: 'unit_element',
     LAYER_ACTION: 'layer_action',
     LAYER_ELEMENT: 'layer_element',
+    LIST: 'list',
     LIST_ELEMENT: 'list_element',
     TEXT: 'text',
     FORM: 'form',

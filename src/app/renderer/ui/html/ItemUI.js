@@ -9,6 +9,7 @@ class ItemUI {
      * Draw the menu item
      * @param {MenuItemUI} item
      * @param {UIRenderer} uiRenderer
+     * @return {void}
      */
     static draw(item, uiRenderer) {
         throw new TypeError('ItemUI.draw must be implemented!')
@@ -74,9 +75,10 @@ class ItemUI {
     /**
      * Get HTML element body
      * @param {HTMLElement} el
+     * @param {MenuItemUI} menuItem
      * @return {HTMLElement}
      */
-    static getBody(el) {
+    static getBody(el, menuItem) {
         return el
     }
 }

@@ -5,10 +5,9 @@ export default class AddAnimationMenuItem extends MenuItem {
     constructor() {
         super({
             id: 1,
-            name: 'photo-video',
-            title: 'Add animation',
+            name: 'Animation',
             stateCode: 'ACTION_ADD_ANIMATION',
-            type: Layout.type.ICON,
+            type: Layout.type.BUTTON,
             zone: Layout.zone.TOP
         })
     }

@@ -7,10 +7,9 @@ import Layout from '../../Layout.js'
 class LoadProjectMenuItem extends MenuItem {
     constructor() {
         super({
-            name: 'file-upload',
-            title: 'Load project',
+            name: 'Load project',
             stateCode: 'ACTION_LOAD_PROJECT',
-            type: Layout.type.ICON,
+            type: Layout.type.BUTTON,
             zone: Layout.zone.TOP
         })
     }

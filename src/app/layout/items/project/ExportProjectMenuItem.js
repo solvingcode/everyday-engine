@@ -7,10 +7,9 @@ import Layout from '../../Layout.js'
 class ExportProjectMenuItem extends MenuItem {
     constructor() {
         super({
-            name: 'file-export',
-            title: 'Export project',
+            name: 'Export project',
             stateCode: 'ACTION_EXPORT_PROJECT',
-            type: Layout.type.ICON,
+            type: Layout.type.BUTTON,
             zone: Layout.zone.TOP
         })
     }

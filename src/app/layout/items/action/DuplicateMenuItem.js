@@ -4,10 +4,9 @@ import Layout from '../../Layout.js'
 class DuplicateMenuItem extends MenuItem {
     constructor() {
         super({
-            name: 'copy',
-            title: 'Duplicate',
+            name: 'Duplicate',
             stateCode: 'ACTION_DUPLICATE',
-            type: Layout.type.ICON,
+            type: Layout.type.BUTTON,
             zone: Layout.zone.TOP
         })
     }

@@ -28,6 +28,8 @@ import HtmlAssetViewUI from './ui/HtmlAssetViewUI.js'
 import LayerElementButtonUI from './list/LayerElementButtonUI.js'
 import Vector from '../../../utils/Vector.js'
 import Layout from '../../../layout/Layout.js'
+import Size from '../../../pobject/Size.js'
+import HtmlListUI from './ui/HtmlListUI.js'
 
 /**
  * HTML UI Renderer class
@@ -67,6 +69,13 @@ class HtmlUIRenderer extends UIRenderer {
      */
     getWrapperUI() {
         return HtmlWrapperUI
+    }
+
+    /**
+     * @override
+     */
+    getListUI() {
+        return HtmlListUI
     }
 
     /**
@@ -241,7 +250,7 @@ class HtmlUIRenderer extends UIRenderer {
         const {element} = item
         const type = this.getType(item)
         const tag = type.getProps().tag
-        const parentHTML = item.parent && this.getBody(item.parent)
+        const parentHTML = item.parent && this.getBody(item.parent, item)
         const zoneDiv = parentHTML || this.getZoneDiv(element.zone)
         const id = item.getId()
         const existEl = document.getElementById(id)
@@ -258,9 +267,9 @@ class HtmlUIRenderer extends UIRenderer {
     /**
      * @override
      */
-    getBody(item) {
+    getBody(item, childItem) {
         const type = this.getType(item)
-        return type.getBody(this.getElement(item))
+        return type.getBody(this.getElement(item), childItem)
     }
 
     /**
@@ -372,8 +381,20 @@ class HtmlUIRenderer extends UIRenderer {
         const htmlElement = this.getHtmlElement(item)
         const boundClient = htmlElement.getBoundingClientRect()
         return new Vector({
-            x: boundClient.left,
-            y: boundClient.bottom
+            x: boundClient.x,
+            y: boundClient.y
+        })
+    }
+
+    /**
+     * @override
+     */
+    getSize(item) {
+        const htmlElement = this.getHtmlElement(item)
+        const boundClient = htmlElement.getBoundingClientRect()
+        return new Size({
+            width: boundClient.width,
+            height: boundClient.height
         })
     }
 

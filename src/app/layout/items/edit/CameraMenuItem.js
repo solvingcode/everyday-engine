@@ -5,10 +5,9 @@ class CameraMenuItem extends MenuItem {
     constructor() {
         super({
             id: 1,
-            name: 'video',
-            title: 'Add camera',
+            name: 'Camera',
             stateCode: 'ACTION_ADD_CAMERA',
-            type: Layout.type.ICON,
+            type: Layout.type.BUTTON,
             zone: Layout.zone.TOP
         })
     }

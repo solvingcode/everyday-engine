@@ -54,9 +54,10 @@ class UIRenderer {
      * Get the body of a menu item
      * Used to define where to append child elements
      * @param {MenuItemUI} menuItem
+     * @param {MenuItemUI} childMenuItem
      * @return {HTMLElement}
      */
-    getBody(menuItem) {
+    getBody(menuItem, childMenuItem) {
         throw new TypeError('"UIRenderer.getBody" method must be implemented')
     }
 
@@ -85,6 +86,16 @@ class UIRenderer {
     getPosition(item) {
         throw new TypeError('"UIRenderer.getPosition" method must be implemented')
     }
+
+    /**
+     * @abstract
+     * @param {MenuItemUI} item
+     * @return {Size}
+     */
+    getSize(item) {
+        throw new TypeError('"UIRenderer.getSize" method must be implemented')
+    }
+
 
     /**
      * @abstract
@@ -186,6 +197,14 @@ class UIRenderer {
      */
     getWrapperUI() {
         throw new TypeError('"UIRenderer.getWrapperUI" method must be implemented')
+    }
+
+    /**
+     * @abstract
+     * @return {ItemUI}
+     */
+    getListUI() {
+        throw new TypeError('"UIRenderer.getListUI" method must be implemented')
     }
 
     /**
@@ -319,6 +338,8 @@ class UIRenderer {
             return this.getPanelActionUI()
         } else if (element.type === Layout.type.WRAPPER) {
             return this.getWrapperUI()
+        } else if (element.type === Layout.type.LIST) {
+            return this.getListUI()
         } else if (element.type === Layout.type.STYLE_COLOR) {
             return this.getColorButtonUI()
         } else if (element.type === Layout.type.LIST_ELEMENT) {

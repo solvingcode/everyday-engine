@@ -14,9 +14,9 @@ export default class OptionsPopupMenuItem extends MenuItem {
     }
 
     update() {
-        const menu = OptionsMenuManager.get().getMenu()
-        if (this.items[0] !== menu) {
-            this.items = [menu]
+        const menus = OptionsMenuManager.get().getMenus()
+        if (this.items !== menus) {
+            this.items = menus
         }
     }
 
@@ -24,6 +24,6 @@ export default class OptionsPopupMenuItem extends MenuItem {
      * @override
      */
     isValid() {
-        return !!OptionsMenuManager.get().getMenu()
+        return !!OptionsMenuManager.get().getMenus().length
     }
 }

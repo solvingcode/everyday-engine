@@ -3,26 +3,43 @@ export default class OptionsMenuManager {
     static instance
 
     /**
-     * @type {OptionActionsMenuItem}
+     * @type {OptionActionsMenuItem[]}
      */
-    menu
+    menus
 
-    /**
-     * @return {OptionActionsMenuItem}
-     */
-    getMenu(){
-        return this.menu
+    constructor() {
+        this.menus = []
     }
 
     /**
-     * @param {OptionActionsMenuItem} menu
+     * @param {Function} classType
+     * @return {OptionActionsMenuItem}
      */
-    setMenu(menu){
-        this.menu = menu
+    getMenu(classType){
+        return this.menus.find(menuItem => menuItem instanceof classType)
+    }
+
+    /**
+     * @param {OptionActionsMenuItem} menuItem
+     */
+    setMenu(menuItem){
+        if(!this.getMenu(menuItem.constructor)){
+            this.menus.push(menuItem)
+        }else{
+            const index = this.menus.findIndex(pMenuItem => pMenuItem instanceof menuItem.constructor)
+            this.menus[index] = menuItem
+        }
+    }
+
+    /**
+     * @return {OptionActionsMenuItem[]}
+     */
+    getMenus(){
+        return this.menus
     }
 
     clear(){
-        this.menu = null
+        this.menus = []
     }
 
     /**

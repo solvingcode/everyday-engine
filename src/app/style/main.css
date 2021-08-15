@@ -32,9 +32,9 @@ button:focus{
 }
 
 button[data-icon]{
-    width: 45px;
-    height: 45px;
-    font-size: 18px;
+    width: 35px;
+    height: 35px;
+    font-size: 14px;
 }
 
 #app-el-left button[data-icon]:nth-child(1){
@@ -471,6 +471,27 @@ h4{
     overflow: auto;
 }
 
+#app-el-top-menu .panel{
+    height: 100%;
+}
+
+#app-el-top-menu .panel > div{
+    padding: 0;
+}
+
+#app-el-top-menu .list-element{
+    width: unset;
+    float: left;
+    height: 100%;
+}
+
+#app-el-top-menu .list-element button{
+    box-sizing: border-box;
+    padding: 5px;
+    min-width: 40px;
+    height: 100%;
+}
+
 .options-popup{
     position: absolute;
     top: 0;
@@ -483,13 +504,29 @@ h4{
 
 .options-popup .option-actions-wrapper{
     padding: 0;
+    margin: 0;
     width: unset;
 }
 
 .options-popup .option-actions-wrapper button{
-    padding: 5px;
+    padding: 5px 20px;
     width: 100%;
     text-align: left;
+    white-space: nowrap;
+}
+
+.options-popup .option-actions-wrapper li .option-actions-trigger{
+    position: relative;
+}
+
+.options-popup .option-actions-wrapper li .option-actions-trigger:after{
+    display: inline;
+    font-family: "Font Awesome 5 Free", sans-serif;
+    content: "\f0da";
+    position: absolute;
+    right: 10px;
+    top: 5px;
+    font-weight: 900;
 }
 
 .units-wrapper .panel h4 + div button[data-icon="times"]{
@@ -502,7 +539,7 @@ h4{
     padding: 13px 10px;
 }
 
-#app-el-left, #app-el-top, #app-el-right, #app-el-footer, #app-el-bottom, #app-el-top-tab, #app-el-body, #app-el-window{
+#app-el-left, #app-el-top, #app-el-right, #app-el-footer, #app-el-bottom, #app-el-top-tab, #app-el-body, #app-el-window, #app-el-top-menu{
     position: absolute;
     z-index: 9999;
     box-sizing: border-box;
@@ -563,23 +600,30 @@ h4{
     border-radius: 5px;
 }
 
-#app-el-top{
-    height: 45px;
+#app-el-top-menu{
+    height: 30px;
     top: 0;
+    left: 0;
+    width: 100%;
+}
+
+#app-el-top{
+    height: 35px;
+    top: 30px;
     left: 0;
     width: 100%;
 }
 
 #app-el-top-tab{
     height: 45px;
-    top: 45px;
+    top: 65px;
     left: 0;
     width: 100%;
     overflow: hidden;
 }
 
 #app-el-body{
-    top: 90px;
+    top: 120px;
     left: 0;
     width: 100%;
     overflow: hidden;
@@ -587,10 +631,10 @@ h4{
 
 #app-el-right{
     width: 250px;
-    top: 45px;
+    top: 65px;
     left: calc(100% - 250px);
     padding: 0 1px;
-    height: calc(100% - 85px);
+    height: calc(100% - 105px);
     overflow-y: auto;
 }
 
