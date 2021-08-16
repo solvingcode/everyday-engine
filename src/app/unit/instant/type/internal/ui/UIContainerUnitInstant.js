@@ -1,7 +1,8 @@
-import UnitBehaviorInstant from '../../../UnitBehaviorInstant.js'
-import UIContainerComponent from '../../../../../component/internal/UIContainerComponent.js'
+import UIContainerComponent from '../../../../../component/internal/ui/UIContainerComponent.js'
+import TransformUnit from '../../../../type/TransformUnit.js'
+import GUIPropertyComponent from '../../../../../component/internal/gui/property/GUIPropertyComponent.js'
 
-export default class UIContainerUnitInstant extends UnitBehaviorInstant {
+export default class UIContainerUnitInstant extends TransformUnit {
 
     /**
      * @override
@@ -15,6 +16,7 @@ export default class UIContainerUnitInstant extends UnitBehaviorInstant {
      * @override
      */
     setup() {
+        this.getComponent(GUIPropertyComponent).setRank(60)
     }
 
 }

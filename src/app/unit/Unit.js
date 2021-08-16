@@ -31,6 +31,13 @@ export default class Unit extends UnitData{
         return this.getComponent(GUIPropertyComponent).isVisible()
     }
 
+    /**
+     * @return {boolean}
+     */
+    isLocked(){
+        return this.getComponent(GUIPropertyComponent).isLocked()
+    }
+
     select(){
         this.getComponent(GUIPropertyComponent).setSelected(true)
     }

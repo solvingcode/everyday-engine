@@ -72,6 +72,13 @@ class MenuItem {
     /**
      * @return {boolean}
      */
+    isEnabled() {
+        return true
+    }
+
+    /**
+     * @return {boolean}
+     */
     isEditing(){
         return false
     }

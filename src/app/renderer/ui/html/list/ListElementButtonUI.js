@@ -36,6 +36,7 @@ export default class ListElementButtonUI extends ItemUI {
             el.setAttribute('data-list-element-id', bind.getId())
             el.setAttribute('data-list-element-name', bind.getName())
             el.setAttribute('id', item.getId())
+            el.setAttribute('order', `${this.getOrder(el)}`)
 
             const titleText = this.getTitle(item)
             if (titleText) {
@@ -45,6 +46,14 @@ export default class ListElementButtonUI extends ItemUI {
                 container.appendChild(title)
             }
         }
+    }
+
+    /**
+     * @param {HTMLElement} el
+     * @return {number}
+     */
+    static getOrder(el){
+        return 0
     }
 
     /**

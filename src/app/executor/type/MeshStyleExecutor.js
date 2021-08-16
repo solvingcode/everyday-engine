@@ -18,6 +18,9 @@ export default class MeshStyleExecutor extends ComponentExecutor {
 
         const meshStyle = meshComponent.getStyle()
         if (meshStyle.getColor() !== style.getColor() ||
+            meshStyle.getFillColor() !== style.getFillColor() ||
+            meshStyle.getColorOpacity() !== style.getColorOpacity() ||
+            meshStyle.getFillColorOpacity() !== style.getFillColorOpacity() ||
             meshStyle.getBorderSize() !== style.getBorderSize()) {
             meshStyle.setColor(style.getColor())
             meshStyle.setBorderSize(style.getBorderSize())

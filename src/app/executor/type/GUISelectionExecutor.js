@@ -1,7 +1,6 @@
 import ComponentExecutor from './ComponentExecutor.js'
 import MeshComponent from '../../component/internal/MeshComponent.js'
 import GUIPropertyComponent from '../../component/internal/gui/property/GUIPropertyComponent.js'
-import Style from '../../pobject/Style.js'
 import GUIPendingComponent from '../../component/internal/gui/GUIPendingComponent.js'
 import StyleComponent from '../../component/internal/StyleComponent.js'
 import UnitHelper from '../../utils/UnitHelper.js'
@@ -21,7 +20,7 @@ export default class GUISelectionExecutor extends ComponentExecutor {
             const propertyComponent = unit.getComponent(GUIPropertyComponent)
             const styleComponent = unit.getComponent(StyleComponent)
             const isColliderEdit = UnitHelper.isColliderEditing(unit)
-            const style = new Style()
+            const style = _.cloneDeep(styleComponent.getStyle())
 
             /*if (propertyComponent.isFocused() && !isColliderEdit) {
                 style.setColor('#FFFFFF')
@@ -30,16 +29,13 @@ export default class GUISelectionExecutor extends ComponentExecutor {
             if (propertyComponent.isSelected() && !isColliderEdit) {
                 style.setColor('#FFAE00')
                 style.setBorderSize(1)
-            }else{
-                style.setColor(styleComponent.getStyle().getColor())
-                style.setFillColor(styleComponent.getStyle().getFillColor())
-                style.setBorderSize(styleComponent.getStyle().getBorderSize())
-                style.setColorOpacity(styleComponent.getStyle().getColorOpacity())
-                style.setFillColorOpacity(styleComponent.getStyle().getFillColorOpacity())
             }
 
             const meshStyle = meshComponent.getStyle()
             if (meshStyle.getColor() !== style.getColor() ||
+                meshStyle.getFillColor() !== style.getFillColor() ||
+                meshStyle.getColorOpacity() !== style.getColorOpacity() ||
+                meshStyle.getFillColorOpacity() !== style.getFillColorOpacity() ||
                 meshStyle.getBorderSize() !== style.getBorderSize()) {
                 meshStyle.setColor(style.getColor())
                 meshStyle.setBorderSize(style.getBorderSize())

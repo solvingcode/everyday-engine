@@ -6,7 +6,7 @@ import MeshComponent from '../../component/internal/MeshComponent.js'
 import TransformHelper from '../../utils/TransformHelper.js'
 import GeometryHelper from '../../utils/GeometryHelper.js'
 
-export default class TransformMeshExecutor extends ComponentExecutor {
+export default class MeshExecutor extends ComponentExecutor {
 
     constructor() {
         super([TransformComponent, MeshComponent])
@@ -21,63 +21,9 @@ export default class TransformMeshExecutor extends ComponentExecutor {
         if (transformComponent.getScaleUpdated()) {
             this.updateScale(unit, transformComponent, meshComponent)
         }
-        if (transformComponent.getPositionUpdated()) {
-            this.updatePosition(unit, transformComponent)
-        }
-        if (transformComponent.getLocalPositionUpdated()) {
-            this.updateLocalPosition(unit, transformComponent)
-        }
         if (transformComponent.getRotationUpdated()) {
             this.updateRotation(unit, transformComponent, meshComponent)
         }
-    }
-
-    /**
-     * @param {Unit} unit
-     * @param {TransformComponent} transformComponent
-     */
-    updatePosition(unit, transformComponent) {
-        const unitManager = World.get().getUnitManager()
-        const position = transformComponent.getPosition()
-        const childUnits = unitManager.findChildUnits(unit)
-        childUnits.forEach(cUnit => {
-            const childTransformComponent = cUnit.getComponent(TransformComponent)
-            if(!childTransformComponent.getPositionUpdated()){
-                const childLocalPosition = childTransformComponent.getLocalPosition()
-                childTransformComponent.setPosition(Vector.add(position, childLocalPosition))
-            }
-        })
-        const parentUnit = unitManager.findParentUnit(unit)
-        if (parentUnit) {
-            const parentTransformComponent = parentUnit.getComponent(TransformComponent)
-            const parentPosition = parentTransformComponent.getPosition()
-            transformComponent.setLocalPosition(Vector.subtract(position, parentPosition))
-        }
-        transformComponent.setPositionUpdated(false)
-        transformComponent.setLocalPositionUpdated(false)
-    }
-
-    /**
-     * @param {Unit} unit
-     * @param {TransformComponent} transformComponent
-     */
-    updateLocalPosition(unit, transformComponent) {
-        const unitManager = World.get().getUnitManager()
-        const localPosition = transformComponent.getLocalPosition()
-        const parentUnit = unitManager.findParentUnit(unit)
-        const childUnits = unitManager.findChildUnits(unit)
-        childUnits.forEach(cUnit => {
-            cUnit.getComponent(TransformComponent).setLocalPositionUpdated(true)
-        })
-        if (parentUnit) {
-            const parentTransformComponent = parentUnit.getComponent(TransformComponent)
-            const parentPosition = parentTransformComponent.getPosition()
-            transformComponent.setPosition(Vector.add(localPosition, parentPosition))
-        } else {
-            transformComponent.setPosition(localPosition)
-        }
-        transformComponent.setPositionUpdated(false)
-        transformComponent.setLocalPositionUpdated(false)
     }
 
     /**

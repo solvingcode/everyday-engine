@@ -5,7 +5,7 @@ export default class UIContainerMenuItem extends MenuItem {
     constructor() {
         super({
             id: 1,
-            name: 'UI Container',
+            name: 'Container',
             stateCode: 'ACTION_ADD_UI_CONTAINER',
             type: Layout.type.BUTTON,
             zone: Layout.zone.TOP

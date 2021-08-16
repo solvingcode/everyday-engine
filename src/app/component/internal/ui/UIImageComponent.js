@@ -1,9 +1,9 @@
-import Component from '../Component.js'
+import Component from '../../Component.js'
 
-export default class UIContainerComponent extends Component {
+export default class UIImageComponent extends Component {
 
     constructor() {
-        super('UIContainer')
+        super('UI Image')
     }
 
     /**

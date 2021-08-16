@@ -36,6 +36,13 @@ export default class ListElementMenuItem extends MenuItem {
     }
 
     /**
+     * @return {number}
+     */
+    getDataIndex(){
+        return this.data.list.findIndex(element => element === this.data.bind)
+    }
+
+    /**
      * @return {string}
      */
     getName(){

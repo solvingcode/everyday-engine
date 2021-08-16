@@ -33,8 +33,16 @@ button{
     color: #d9d9d9;
 }
 
-button:hover, button.locked:hover, button.hidden:hover{
+button:not(.disabled):not(.selected):hover, button.locked:hover, button.hidden:hover{
     background-color: #333333;
+}
+
+button.selected:hover{
+    background-color: #3f6093;
+}
+
+button.disabled{
+    color: #767676;
 }
 
 button.hidden{
@@ -147,6 +155,11 @@ button.selected, button.hidden.selected, button.locked.selected{
 
 .panel .tree{
     background-color: #3e3e3e;
+}
+
+.tree > .panel{
+    border-bottom: 1px solid #4e4e4e;
+    padding-bottom: 5px;
 }
 
 .panel .tree .list-element-img-wrapper{

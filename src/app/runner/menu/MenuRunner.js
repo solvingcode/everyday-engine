@@ -31,7 +31,7 @@ class MenuRunner extends Runner {
         const window = Window.get()
         const mouse = Window.get().mouse
         const menuItems = this.menu.getUIRenderer().getItemsAt(mouse)
-            .filter(menuItem => menuItem.element.isHandle(window))
+            .filter(menuItem => menuItem.element.isHandle(window) && menuItem.element.isEnabled())
         if (menuItems && menuItems.length) {
             this.menu.selectItems(menuItems)
         }

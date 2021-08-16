@@ -76,6 +76,8 @@ import LoadSceneAction from './scene/LoadSceneAction.js'
 import OpenOptionAction from './option/OpenOptionAction.js'
 import UnLoadSceneAction from './scene/UnLoadSceneAction.js'
 import AddUIContainerAction from './ui/AddUIContainerAction.js'
+import AddUIImageAction from './ui/AddUIImageAction.js'
+import AlignViewAction from './edit/AlignViewAction.js'
 
 /**
  * Action Runner class.
@@ -176,7 +178,9 @@ class ActionRunner extends Runner {
             LOAD_SCENE: LoadSceneAction,
             UNLOAD_SCENE: UnLoadSceneAction,
             OPEN_OPTION: OpenOptionAction,
-            ADD_UI_CONTAINER: AddUIContainerAction
+            ADD_UI_CONTAINER: AddUIContainerAction,
+            ADD_UI_IMAGE: AddUIImageAction,
+            ALIGN_VIEW: AlignViewAction
         }
         const selectedUnits = this.unitSelector.getSelected(World.get())
         for(const iTypeAction in typeActions){

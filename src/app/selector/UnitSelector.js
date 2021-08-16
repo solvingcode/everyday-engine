@@ -55,7 +55,7 @@ export default class UnitSelector {
     getFirstSelectable(world, point) {
         const units = this.getAll(world, point).filter(
             unit => !unit.getComponent(GUIPendingComponent) &&
-            unit.isVisible())
+            unit.isVisible() && !unit.isLocked())
         return units.length && units[units.length - 1]
     }
 

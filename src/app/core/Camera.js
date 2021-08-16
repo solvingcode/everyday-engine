@@ -162,6 +162,7 @@ class Camera extends CameraData {
 
     /**
      * @param {UnitManager} unitManager
+     * @return {Unit}
      */
     getUnit(unitManager) {
         return unitManager.findUnitById(this.cameraUnitId)

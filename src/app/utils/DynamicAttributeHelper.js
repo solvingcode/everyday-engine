@@ -300,6 +300,54 @@ export default class DynamicAttributeHelper {
                     dynamicAttribute
                 }
             ]
+        } else if (attribute.getAttrType() === TYPES.STYLE && isListInstances) {
+            formField = [
+                {
+                    bind: `${bindName}.color`,
+                    label: `Border Color`,
+                    type: Layout.form.COLOR,
+                    dynamicAttribute
+                },
+                {
+                    bind: `${bindName}.colorOpacity`,
+                    label: `Border opacity`,
+                    type: Layout.form.RANGE,
+                    options: {
+                        min: 0,
+                        max: 1,
+                        step: 0.01
+                    },
+                    dynamicAttribute
+                },
+                {
+                    bind: `${bindName}.fillColor`,
+                    label: `Fill Color`,
+                    type: Layout.form.COLOR,
+                    dynamicAttribute
+                },
+                {
+                    bind: `${bindName}.fillColorOpacity`,
+                    label: `Fill opacity`,
+                    type: Layout.form.RANGE,
+                    options: {
+                        min: 0,
+                        max: 1,
+                        step: 0.01
+                    },
+                    dynamicAttribute
+                },
+                {
+                    bind: `${bindName}.opacity`,
+                    label: `Opacity`,
+                    type: Layout.form.RANGE,
+                    options: {
+                        min: 0,
+                        max: 1,
+                        step: 0.01
+                    },
+                    dynamicAttribute
+                }
+            ]
         } else if (attribute.getAttrType() === TYPES.NUMBER && isListInstances) {
             formField = [{
                 bind: bindName,

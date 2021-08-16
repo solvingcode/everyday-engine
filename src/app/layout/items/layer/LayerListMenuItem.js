@@ -5,7 +5,6 @@ import World from '../../../world/World.js'
 import GUIPendingComponent from '../../../component/internal/gui/GUIPendingComponent.js'
 import Scene from '../../../scene/Scene.js'
 import OptionActionsButtonEllipsisMenuItem from '../option/OptionActionsButtonEllipsisMenuItem.js'
-import LayerActionsMenuItem from './LayerActionsMenuItem.js'
 import SceneActionsMenuItem from '../scene/SceneActionsMenuItem.js'
 
 export default class LayerListMenuItem extends ListMenuItem {
@@ -58,11 +57,8 @@ export default class LayerListMenuItem extends ListMenuItem {
             return [
                 new OptionActionsButtonEllipsisMenuItem(SceneActionsMenuItem, bindObject)
             ]
-        }else{
-            return [
-                new OptionActionsButtonEllipsisMenuItem(LayerActionsMenuItem, bindObject)
-            ]
         }
+        return []
     }
 
 }

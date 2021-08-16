@@ -1,19 +1,26 @@
 import MenuItem from '../../MenuItem.js'
 import Layout from '../../Layout.js'
+import World from '../../../world/World.js'
+import GUIPropertyComponent from '../../../component/internal/gui/property/GUIPropertyComponent.js'
 
 /**
  * Lock entities for modification (move, attach, ...)
  */
-class LockMenuItem extends MenuItem {
+export default class LockMenuItem extends MenuItem {
     constructor() {
         super({
-            name: 'lock',
-            title: 'Lock',
+            name: 'Lock',
             stateCode: 'ACTION_LOCK',
-            type: Layout.type.ICON,
+            type: Layout.type.BUTTON,
             zone: Layout.zone.TOP
         })
     }
-}
 
-export default LockMenuItem
+    /**
+     * @override
+     */
+    isEnabled() {
+        const selectedUnit = World.get().getUnitManager().getSelected()
+        return selectedUnit && !selectedUnit.getComponent(GUIPropertyComponent).isLocked()
+    }
+}

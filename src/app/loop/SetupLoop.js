@@ -24,7 +24,9 @@ import CameraExecutor from '../executor/type/CameraExecutor.js'
 import LightExecutor from '../executor/type/LightExecutor.js'
 import LightRunner from '../runner/light/LightRunner.js'
 import SceneRunner from '../runner/scene/SceneRunner.js'
-import TransformMeshExecutor from '../executor/type/TransformMeshExecutor.js'
+import TransformExecutor from '../executor/type/TransformExecutor.js'
+import UIContainerExecutor from '../executor/type/UIContainerExecutor.js'
+import MeshExecutor from '../executor/type/MeshExecutor.js'
 
 /**
  * @class {SetupLoop}
@@ -50,12 +52,14 @@ class SetupLoop extends Loop {
             UnitDrawerRunner, FormRunner, MoveUnitRunner, LightRunner, SceneRunner
         ]
         ExecutorRegistry.get().register([
-            new TransformMeshExecutor(),
+            new CameraExecutor(),
+            new UIContainerExecutor(),
+            new MeshExecutor(),
+            new TransformExecutor(),
             new MeshGenerationExecutor(),
             new GUISelectionExecutor(),
             new GUIPropertyExecutor(),
-            new CameraExecutor(),
-            new LightExecutor()
+            new LightExecutor(),
         ])
     }
 

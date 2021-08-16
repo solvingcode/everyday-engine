@@ -152,6 +152,10 @@ import IsAudioPlayingFunction from '../../flow/function/native/audio/IsAudioPlay
 import SceneManager from '../../manager/SceneManager.js'
 import Scene from '../../scene/Scene.js'
 import FlipScaleFunction from '../../flow/function/native/transform/FlipScaleFunction.js'
+import UIContainerUnitInstant from '../../unit/instant/type/internal/ui/UIContainerUnitInstant.js'
+import UIImageUnitInstant from '../../unit/instant/type/internal/ui/UIImageUnitInstant.js'
+import UIContainerComponent from '../../component/internal/ui/UIContainerComponent.js'
+import UIImageComponent from '../../component/internal/ui/UIImageComponent.js'
 
 /**
  * @class {DataSchema}
@@ -300,7 +304,11 @@ class DataSchema {
         {id: 1290, type: IsAudioPlayingFunction},
         {id: 1300, type: SceneManager},
         {id: 1310, type: Scene},
-        {id: 1320, type: FlipScaleFunction}
+        {id: 1320, type: FlipScaleFunction},
+        {id: 1330, type: UIContainerUnitInstant},
+        {id: 1340, type: UIImageUnitInstant},
+        {id: 1350, type: UIContainerComponent},
+        {id: 1360, type: UIImageComponent}
     ]
 
     /**

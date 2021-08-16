@@ -430,7 +430,16 @@ AppState.States = {
     ACTION_OPEN_OPTION_STOP: {history: false},
     ACTION_UNLOAD_SCENE_START: {history: true},
     ACTION_UNLOAD_SCENE_PROGRESS: {history: false},
-    ACTION_UNLOAD_SCENE_STOP: {history: true}
+    ACTION_UNLOAD_SCENE_STOP: {history: true},
+    ACTION_ADD_UI_CONTAINER_START: {history: true},
+    ACTION_ADD_UI_CONTAINER_PROGRESS: {history: false},
+    ACTION_ADD_UI_CONTAINER_STOP: {history: true},
+    ACTION_ADD_UI_IMAGE_START: {history: true},
+    ACTION_ADD_UI_IMAGE_PROGRESS: {history: false},
+    ACTION_ADD_UI_IMAGE_STOP: {history: true},
+    ACTION_ALIGN_VIEW_START: {history: true},
+    ACTION_ALIGN_VIEW_PROGRESS: {history: false},
+    ACTION_ALIGN_VIEW_STOP: {history: true}
 }
 
 export default AppState

@@ -14,6 +14,7 @@ import Maths from '../../utils/Maths.js'
 import GUIPropertyComponent from '../../component/internal/gui/property/GUIPropertyComponent.js'
 import ImageHelper from '../../utils/ImageHelper.js'
 import TransformHelper from '../../utils/TransformHelper.js'
+import Color from '../../utils/Color.js'
 
 export default class MeshGenerationExecutor extends ComponentExecutor {
 
@@ -72,10 +73,10 @@ export default class MeshGenerationExecutor extends ComponentExecutor {
             const center = new Vector({x: scaleSize.width / 2, y: scaleSize.height / 2})
             const canvas = new OffscreenCanvas(width, height)
             const context = canvas.getContext(CANVAS_CONTEXT_TYPE)
-            const {opacity, borderSize, fillColor, color} = meshComponent.getStyle()
-            context.strokeStyle = color
+            const {opacity, borderSize, fillColor, color, fillColorOpacity, colorOpacity} = meshComponent.getStyle()
+            context.strokeStyle = Color.hexToRgba(color, colorOpacity)
             if (fillColor) {
-                context.fillStyle = fillColor
+                context.fillStyle = Color.hexToRgba(fillColor, fillColorOpacity)
             }
             if (_.isNumber(opacity)) {
                 context.globalAlpha = opacity

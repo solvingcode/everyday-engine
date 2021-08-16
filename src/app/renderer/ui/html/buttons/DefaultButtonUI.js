@@ -32,9 +32,14 @@ class DefaultButtonUI extends ItemUI {
      */
     static getClassName(item) {
         const {data} = item.element
-        if(data.optionActionsMenuItem){
-            return 'option-actions-trigger'
+        const classNames = []
+        if (data.optionActionsMenuItem) {
+            classNames.push('option-actions-trigger')
         }
+        if (!item.element.isEnabled()) {
+            classNames.push('disabled')
+        }
+        return classNames.join(' ')
     }
 }
 

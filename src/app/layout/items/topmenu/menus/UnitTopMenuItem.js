@@ -5,6 +5,8 @@ import LightGlobalMenuItem from '../../edit/LightGlobalMenuItem.js'
 import AddAnimationMenuItem from '../../animation/AddAnimationMenuItem.js'
 import OptionActionsButtonMenuItem from '../../option/OptionActionsButtonMenuItem.js'
 import UITopMenuItem from './UITopMenuItem.js'
+import AlignViewMenuItem from '../../edit/AlignViewMenuItem.js'
+import VisibilityTopMenuItem from './VisibilityTopMenuItem.js'
 
 export default class UnitTopMenuItem extends OptionActionsMenuItem {
     constructor(bindObject, position, size) {
@@ -13,7 +15,9 @@ export default class UnitTopMenuItem extends OptionActionsMenuItem {
             new LightPointMenuItem(),
             new LightGlobalMenuItem(),
             new AddAnimationMenuItem(),
-            new OptionActionsButtonMenuItem('UI', UITopMenuItem, null, true)
+            new OptionActionsButtonMenuItem('UI', UITopMenuItem, null, true),
+            new OptionActionsButtonMenuItem('Visibility', VisibilityTopMenuItem, null, true),
+            new AlignViewMenuItem()
             ], position, size
         )
     }

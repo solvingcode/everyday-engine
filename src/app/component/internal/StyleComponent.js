@@ -17,13 +17,6 @@ export default class StyleComponent extends Component{
     }
 
     /**
-     * @override
-     */
-    getFormFields() {
-        return []
-    }
-
-    /**
      * @param {Style} style
      */
     setStyle(style) {
@@ -35,13 +28,6 @@ export default class StyleComponent extends Component{
      */
     getStyle(){
         return this.getValue('style')
-    }
-
-    /**
-     * @override
-     */
-    isHidden() {
-        return true
     }
 
     /**
