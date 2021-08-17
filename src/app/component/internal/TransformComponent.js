@@ -15,6 +15,7 @@ export default class TransformComponent extends Component {
     initAttributes() {
         this.add('position', TYPES.VECTOR, new Vector())
         this.add('localPosition', TYPES.VECTOR, new Vector())
+        this.add('screenPosition', TYPES.VECTOR, new Vector())
         this.add('localScale', TYPES.VECTOR, new Vector({x: 1, y: 1}))
         this.add('scale', TYPES.VECTOR, new Vector({x: 1, y: 1}))
         this.add('rotation', TYPES.RANGE, 0, [0, Math.PI * 2, 0.001])
@@ -29,7 +30,7 @@ export default class TransformComponent extends Component {
      * @override
      */
     getExcludeFields() {
-        return ['positionUpdated', 'scaleUpdated', 'localPositionUpdated', 'rotationUpdated']
+        return ['positionUpdated', 'scaleUpdated', 'localPositionUpdated', 'rotationUpdated', 'screenPosition']
     }
 
     /**
@@ -112,6 +113,20 @@ export default class TransformComponent extends Component {
             this.setLocalPositionUpdated(true)
         }
         this.setValue('localPosition', localPosition)
+    }
+
+    /**
+     * @return {Vector}
+     */
+    getScreenPosition() {
+        return this.getValue('screenPosition')
+    }
+
+    /**
+     * @param {Vector} screenPosition
+     */
+    setScreenPosition(screenPosition) {
+        this.setValue('screenPosition', screenPosition)
     }
 
     /**

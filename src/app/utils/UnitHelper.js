@@ -213,8 +213,9 @@ export default class UnitHelper {
         const maxY = cameraY + sceneHeight
         if (minX <= position.getX() && maxX >= position.getX() &&
             minY <= position.getY() && maxY >= position.getY()) {
+            const positionToCameraView = camera.toCameraScale(camera.toCanvasCoord(position))
             const mesh = meshManager.get(unit.getId())
-            mesh && renderer.draw(mesh, position, camera)
+            mesh && renderer.draw(mesh, positionToCameraView)
         }
     }
 

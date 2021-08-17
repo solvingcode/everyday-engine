@@ -5,7 +5,7 @@ import ExecutorRegistry from '../../executor/ExecutorRegistry.js'
 export class SetupExecutorRunner extends Runner {
 
     /**
-     * @type {GameRenderRunner}
+     * @type {SetupExecutorRunner}
      */
     static instance = null
 

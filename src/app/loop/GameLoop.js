@@ -3,7 +3,6 @@ import World from '../world/World.js'
 import Window from '../core/Window.js'
 import ExecutorRegistry from '../executor/ExecutorRegistry.js'
 import MeshGenerationExecutor from '../executor/type/MeshGenerationExecutor.js'
-import {GameRenderRunner} from '../runner/renderer/GameRenderRunner.js'
 import {GameExecutorRunner} from '../runner/executor/GameExecutorRunner.js'
 import RigidBodyExecutor from '../executor/type/RigidBodyExecutor.js'
 import {PhysicsRunner} from '../runner/physics/PhysicsRunner.js'
@@ -20,8 +19,9 @@ import LightExecutor from '../executor/type/LightExecutor.js'
 import LightRunner from '../runner/light/LightRunner.js'
 import SceneRunner from '../runner/scene/SceneRunner.js'
 import TransformExecutor from '../executor/type/TransformExecutor.js'
-import UIContainerExecutor from '../executor/type/UIContainerExecutor.js'
 import MeshExecutor from '../executor/type/MeshExecutor.js'
+import MeshRendererExecutor from '../executor/type/MeshRendererExecutor.js'
+import ScreenTransformExecutor from '../executor/type/ScreenTransformExecutor.js'
 
 /**
  * @class {GameLoop}
@@ -38,11 +38,9 @@ class GameLoop extends SceneLoop {
         super()
         this.runners = [
             WorldInitializeRunner, SceneRunner, ColliderDebugRunner,
-            CameraRunner, GameExecutorRunner, GameRenderRunner,
-            PhysicsRunner, LightRunner]
+            CameraRunner, GameExecutorRunner, PhysicsRunner, LightRunner]
         ExecutorRegistry.get().register([
             new CameraExecutor(),
-            new UIContainerExecutor(),
             new MeshExecutor(),
             new TransformExecutor(),
             new MeshGenerationExecutor(),
@@ -52,7 +50,9 @@ class GameLoop extends SceneLoop {
             new ScriptExecutor(),
             new AnimationScriptExecutor(),
             new AnimationMeshExecutor(),
-            new LightExecutor()
+            new LightExecutor(),
+            new ScreenTransformExecutor(),
+            new MeshRendererExecutor()
         ])
     }
 
