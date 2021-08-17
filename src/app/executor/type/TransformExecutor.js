@@ -25,7 +25,6 @@ export default class TransformExecutor extends ComponentExecutor {
     /**
      * @param {Unit} unit
      * @param {TransformComponent} transformComponent
-     * @todo: update all childs recursilvly
      */
     updatePosition(unit, transformComponent) {
         const unitManager = World.get().getUnitManager()
@@ -37,6 +36,7 @@ export default class TransformExecutor extends ComponentExecutor {
                 const childLocalPosition = childTransformComponent.getLocalPosition()
                 childTransformComponent.setPosition(Vector.add(position, childLocalPosition))
                 childTransformComponent.setPositionUpdated(false) // block updating localPosition of childs
+                this.updatePosition(cUnit, childTransformComponent)
             }
         })
         const parentUnit = unitManager.findParentUnit(unit)
@@ -59,7 +59,8 @@ export default class TransformExecutor extends ComponentExecutor {
         const parentUnit = unitManager.findParentUnit(unit)
         const childUnits = unitManager.findChildUnits(unit)
         childUnits.forEach(cUnit => {
-            cUnit.getComponent(TransformComponent).setLocalPositionUpdated(true)
+            const childTransformComponent = cUnit.getComponent(TransformComponent)
+            this.updateLocalPosition(cUnit, childTransformComponent)
         })
         if (parentUnit) {
             const parentTransformComponent = parentUnit.getComponent(TransformComponent)

@@ -439,7 +439,10 @@ AppState.States = {
     ACTION_ADD_UI_IMAGE_STOP: {history: true},
     ACTION_ALIGN_VIEW_START: {history: true},
     ACTION_ALIGN_VIEW_PROGRESS: {history: false},
-    ACTION_ALIGN_VIEW_STOP: {history: true}
+    ACTION_ALIGN_VIEW_STOP: {history: true},
+    ACTION_ADD_UI_TEXT_START: {history: true},
+    ACTION_ADD_UI_TEXT_PROGRESS: {history: false},
+    ACTION_ADD_UI_TEXT_STOP: {history: true},
 }
 
 export default AppState

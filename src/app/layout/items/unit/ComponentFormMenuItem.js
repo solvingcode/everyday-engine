@@ -7,6 +7,7 @@ import World from '../../../world/World.js'
 import CameraComponent from '../../../component/internal/CameraComponent.js'
 import LightComponent from '../../../component/internal/LightComponent.js'
 import StyleComponent from '../../../component/internal/StyleComponent.js'
+import UITextComponent from '../../../component/internal/ui/UITextComponent.js'
 
 export default class ComponentFormMenuItem extends FormMenuItem {
     /**
@@ -37,7 +38,8 @@ export default class ComponentFormMenuItem extends FormMenuItem {
         if (formObject instanceof MeshComponent ||
             formObject instanceof TransformComponent ||
             formObject instanceof CameraComponent ||
-            formObject instanceof StyleComponent) {
+            formObject instanceof StyleComponent  ||
+            formObject instanceof UITextComponent) {
             selectedUnit.getComponent(MeshComponent).setGenerated(false)
         } else if(formObject instanceof LightComponent){
             formObject.setGenerated(false)

@@ -12,6 +12,7 @@ import MeshComponent from '../component/internal/MeshComponent.js'
 import NodeShapeGenerator from './shape/node/NodeShapeGenerator.js'
 import CameraShapeGenerator from './shape/camera/CameraShapeGenerator.js'
 import LightPointShapeGenerator from './shape/light/LightPointShapeGenerator.js'
+import TextShapeGenerator from './shape/text/TextShapeGenerator.js'
 
 /**
  * @abstract
@@ -61,6 +62,8 @@ export default class ShapeGenerator {
                 return LineShapeGenerator
             case PrimitiveShape.NODE:
                 return NodeShapeGenerator
+            case PrimitiveShape.TEXT:
+                return TextShapeGenerator
             default:
                 throw new TypeError(`${shape} not supported by ShapeGenerator`)
         }
