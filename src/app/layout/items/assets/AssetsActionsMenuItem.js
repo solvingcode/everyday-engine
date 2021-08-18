@@ -13,6 +13,7 @@ import AddAssetToAnimationMenuItem from '../animation/AddAssetToAnimationMenuIte
 import ExportAssetMenuItem from './file/ExportAssetMenuItem.js'
 import PlayAssetAudioMenuItem from './file/PlayAssetAudioMenuItem.js'
 import StopAssetAudioMenuItem from './file/StopAssetAudioMenuItem.js'
+import AttachAssetImageMenuItem from './file/AttachAssetImageMenuItem.js'
 
 export default class AssetsActionsMenuItem  extends MenuItem {
     constructor(parent) {
@@ -36,7 +37,8 @@ export default class AssetsActionsMenuItem  extends MenuItem {
             new DeleteAssetScriptMenuItem(this),
             new DeleteFolderMenuItem(this),
             new PlayAssetAudioMenuItem(this),
-            new StopAssetAudioMenuItem(this)
+            new StopAssetAudioMenuItem(this),
+            new AttachAssetImageMenuItem(this)
         ]
     }
 }

@@ -79,6 +79,7 @@ import AddUIContainerAction from './ui/AddUIContainerAction.js'
 import AddUIImageAction from './ui/AddUIImageAction.js'
 import AlignViewAction from './edit/AlignViewAction.js'
 import AddUITextAction from './ui/AddUITextAction.js'
+import AttachAssetImageAction from './assets/AttachAssetImageAction.js'
 
 /**
  * Action Runner class.
@@ -164,6 +165,7 @@ class ActionRunner extends Runner {
             CLOSE_ERROR_POPUP: CloseErrorPopupAction,
             ATTACH_COMPONENT: AttachComponentAction,
             ATTACH_ASSET_SCRIPT: AttachAssetScriptAction,
+            ATTACH_ASSET_IMAGE: AttachAssetImageAction,
             ADD_ANIMATION: AddAnimationAction,
             EDIT_ASSET_ANIMATION: EditAssetAnimationAction,
             ATTACH_ASSET_ANIMATION: AttachAssetAnimationAction,

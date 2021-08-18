@@ -234,6 +234,10 @@ button.selected, button.hidden.selected, button.locked.selected{
     background-color: #b94a48;
 }
 
+.assets-wrapper .assets-list .list-element:not(.disabled):not(.selected):hover {
+    background-color: #4e4e4e;
+}
+
 .animation-wrapper .panel:nth-child(1) div {
     background: none;
 }
