@@ -7,10 +7,12 @@ import OptionActionsButtonMenuItem from '../../option/OptionActionsButtonMenuIte
 import UITopMenuItem from './UITopMenuItem.js'
 import AlignViewMenuItem from '../../edit/AlignViewMenuItem.js'
 import VisibilityTopMenuItem from './VisibilityTopMenuItem.js'
+import AddSceneMenuItem from '../../scene/AddSceneMenuItem.js'
 
 export default class UnitTopMenuItem extends OptionActionsMenuItem {
     constructor(bindObject, position, size) {
         super([
+            new AddSceneMenuItem(),
             new CameraMenuItem(),
             new LightPointMenuItem(),
             new LightGlobalMenuItem(),

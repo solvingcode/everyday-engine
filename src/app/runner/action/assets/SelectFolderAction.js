@@ -10,10 +10,10 @@ export default class SelectFolderAction extends Action {
      * @override
      */
     static run() {
-        const {folder} = StateManager.get().getNextProgressData(this.STATE)
+        const {bind} = StateManager.get().getNextProgressData(this.STATE)
         World.get().getAssetsManager().getFolders().forEach(element => element.unselect())
         World.get().getAssetsManager().getAssets().forEach(element => element.unselect())
-        folder.select()
+        bind.select()
         return true
     }
 

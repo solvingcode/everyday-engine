@@ -81,7 +81,7 @@ export default class MeshGenerationExecutor extends ComponentExecutor {
             if (_.isNumber(opacity)) {
                 context.globalAlpha = opacity
             }
-            context.lineWidth = borderSize || 1
+            context.lineWidth = camera.toScaleNumber(borderSize || 1)
             context.translate(width / 2, height / 2)
             context.rotate(rotation)
             context.translate(-center.x, -center.y)

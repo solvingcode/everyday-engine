@@ -83,6 +83,14 @@ export default class ListElementButtonUI extends ItemUI {
     }
 
     /**
+     * @param {HTMLElement} el
+     * @return {HTMLElement | null}
+     */
+    static getTitleElement(el){
+        return el.getElementsByTagName('span')[0]
+    }
+
+    /**
      * @override
      */
     static postUpdate(item, el, uiRenderer) {
@@ -90,7 +98,9 @@ export default class ListElementButtonUI extends ItemUI {
         if (bind) {
             const bindId = el.getAttribute('data-list-element-id')
             const bindName = el.getAttribute('data-list-element-name')
-            if (parseInt(bindId) !== bind.getId() || bindName !== bind.getName()) {
+            const titleElement = this.getTitleElement(el)
+            const title = (titleElement && titleElement.innerText) || ''
+            if (parseInt(bindId) !== bind.getId() || bindName !== bind.getName() || this.getTitle(item) !== title) {
                 this.update(item, el, uiRenderer)
             }
         }

@@ -303,6 +303,17 @@ export default class DynamicAttributeHelper {
         } else if (attribute.getAttrType() === TYPES.STYLE && isListInstances) {
             formField = [
                 {
+                    bind: `${bindName}.borderSize`,
+                    label: `BorderSize`,
+                    type: Layout.form.RANGE,
+                    options: {
+                        min: 0,
+                        max: 20,
+                        step: 1
+                    },
+                    dynamicAttribute
+                },
+                {
                     bind: `${bindName}.color`,
                     label: `Border Color`,
                     type: Layout.form.COLOR,

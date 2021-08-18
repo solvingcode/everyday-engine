@@ -1,7 +1,7 @@
 export default class CommonUtil {
 
     /**
-     * @param {Unit|Component} object
+     * @param {Unit|Component|Scene} object
      * @param {string} initialName
      * @param {Function} setName
      * @param {Function} findByName

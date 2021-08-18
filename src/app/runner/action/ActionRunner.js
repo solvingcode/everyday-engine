@@ -80,6 +80,7 @@ import AddUIImageAction from './ui/AddUIImageAction.js'
 import AlignViewAction from './edit/AlignViewAction.js'
 import AddUITextAction from './ui/AddUITextAction.js'
 import AttachAssetImageAction from './assets/AttachAssetImageAction.js'
+import AddSceneAction from './scene/AddSceneAction.js'
 
 /**
  * Action Runner class.
@@ -184,7 +185,8 @@ class ActionRunner extends Runner {
             ADD_UI_CONTAINER: AddUIContainerAction,
             ADD_UI_IMAGE: AddUIImageAction,
             ADD_UI_TEXT: AddUITextAction,
-            ALIGN_VIEW: AlignViewAction
+            ALIGN_VIEW: AlignViewAction,
+            ADD_SCENE: AddSceneAction
         }
         const selectedUnits = this.unitSelector.getSelected(World.get())
         for(const iTypeAction in typeActions){

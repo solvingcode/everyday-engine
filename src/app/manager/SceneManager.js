@@ -1,6 +1,7 @@
 import SystemError from '../exception/type/SystemError.js'
 import SceneManagerData from '../project/data/SceneManagerData.js'
 import Scene, {SceneLoadMode} from '../scene/Scene.js'
+import CommonUtil from '../utils/CommonUtil.js'
 
 export default class SceneManager extends SceneManagerData {
 
@@ -75,12 +76,23 @@ export default class SceneManager extends SceneManagerData {
         return this.scenes.find(scene => scene.getName() === name)
     }
 
+
+    /**
+     * @param {string} name
+     * @return {Scene}
+     */
+    newScene(name){
+        return new Scene(name)
+    }
+
     /**
      * @param {string} name
      * @return {Scene}
      */
     create(name) {
-        const scene = new Scene(name)
+        const scene = this.newScene(name)
+        CommonUtil.setupName(scene, scene.getName(),
+            (pName) => scene.setName(pName), (pName) => this.findByName(pName))
         this.tryAdd(scene)
         return scene
     }
@@ -144,12 +156,12 @@ export default class SceneManager extends SceneManagerData {
      * @param {Scene} scene
      * @param {string} mode
      */
-    load(world, scene, mode= SceneLoadMode.DEFAULT) {
+    load(world, scene, mode = SceneLoadMode.DEFAULT) {
         if (scene) {
             const exist = this.findByName(scene.getName())
             if (exist) {
-                exist.setLoaded(true)
                 world.loadScene(scene, mode)
+                exist.setLoaded(true)
             } else {
                 throw new SystemError(`Scene with name "${scene.getName()}" not found`)
             }

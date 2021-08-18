@@ -190,7 +190,8 @@ class World extends WorldData {
      */
     loadScene(scene, mode) {
         if (mode !== SceneLoadMode.APPEND) {
-            this.getUnitManager().deleteAll()
+            this.getSceneManager().getScenes()
+                .filter(pScene => pScene !== scene).forEach(pScene => pScene.setIncluded(false))
         }
         this.getUnitManager().getUnits().push(...scene.getUnitManager().getUnits())
         this.regenerateAll()

@@ -1,7 +1,6 @@
 import Layout from '../../../Layout.js'
 import FolderListMenuItem from './FolderListMenuItem.js'
 import ListElementMenuItem from '../../list/ListElementMenuItem.js'
-import FolderTitleMenuItem from './FolderTitleMenuItem.js'
 
 /**
  * @class {FolderElementMenuItem}
@@ -9,19 +8,17 @@ import FolderTitleMenuItem from './FolderTitleMenuItem.js'
 export default class FolderElementMenuItem extends ListElementMenuItem {
     constructor(parent, data) {
         super(parent, data, {
-            stateCode: '',
-            name: 'folder',
-            type: Layout.type.FOLDER_ELEMENT
+            name: '',
+            stateCode: 'ACTION_SELECT_FOLDER',
+            type: Layout.type.LIST_ELEMENT
         })
     }
-
     /**
      * @override
      */
     setData(data) {
         super.setData(data)
         this.items = [
-            new FolderTitleMenuItem(this, data.bind),
             new FolderListMenuItem(this, this.parent.props, data.bind.getId())
         ]
     }
@@ -29,8 +26,22 @@ export default class FolderElementMenuItem extends ListElementMenuItem {
     /**
      * @override
      */
+    getIcon() {
+        return 'folder'
+    }
+
+    /**
+     * @override
+     */
     isSelected() {
         return this.getDataBind().isSelected()
+    }
+
+    /**
+     * @override
+     */
+    isButton() {
+        return true
     }
 
 }
