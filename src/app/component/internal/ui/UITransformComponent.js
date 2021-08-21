@@ -1,16 +1,9 @@
 import Component from '../../Component.js'
 
-export default class UIComponent extends Component {
+export default class UITransformComponent extends Component {
 
     constructor() {
-        super('UI')
-    }
-
-    /**
-     * @override
-     */
-    isUnique() {
-        return true
+        super('UI Transform')
     }
 
     /**
@@ -23,7 +16,7 @@ export default class UIComponent extends Component {
      * @override
      */
     isHidden() {
-        return true
+        return false
     }
 
 }

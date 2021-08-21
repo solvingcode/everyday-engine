@@ -3,7 +3,7 @@ import TransformComponent from '../../component/internal/TransformComponent.js'
 import World from '../../world/World.js'
 import UIContainerComponent from '../../component/internal/ui/UIContainerComponent.js'
 import Vector from '../../utils/Vector.js'
-import UIComponent from '../../component/internal/ui/UIComponent.js'
+import UIElementComponent from '../../component/internal/ui/UIElementComponent.js'
 
 export default class ScreenTransformExecutor extends ComponentExecutor {
 
@@ -20,7 +20,7 @@ export default class ScreenTransformExecutor extends ComponentExecutor {
         const position = transformComponent.getPosition()
         let screenPosition = camera.toCanvasCoord(position)
         const uiContainerComponent = unit.getComponent(UIContainerComponent)
-        const uiComponent = unit.getComponent(UIComponent)
+        const uiComponent = unit.getComponent(UIElementComponent)
         if(uiContainerComponent){
             screenPosition = new Vector({x: 0, y: 0})
             transformComponent.setPosition(screenPosition)

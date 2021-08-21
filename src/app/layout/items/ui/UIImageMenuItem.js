@@ -2,6 +2,7 @@ import MenuItem from '../../MenuItem.js'
 import Layout from '../../Layout.js'
 import World from '../../../world/World.js'
 import UIContainerUnitInstant from '../../../unit/instant/type/internal/ui/UIContainerUnitInstant.js'
+import UIImageUnitInstant from '../../../unit/instant/type/internal/ui/UIImageUnitInstant.js'
 
 export default class UIImageMenuItem extends MenuItem {
     constructor() {
@@ -19,6 +20,6 @@ export default class UIImageMenuItem extends MenuItem {
      */
     isEnabled() {
         const selectedUnit = World.get().getUnitManager().getSelected()
-        return selectedUnit instanceof UIContainerUnitInstant
+        return selectedUnit instanceof UIContainerUnitInstant || selectedUnit instanceof UIImageUnitInstant
     }
 }

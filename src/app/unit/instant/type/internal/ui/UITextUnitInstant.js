@@ -1,26 +1,23 @@
-import UnitInstant from '../../../UnitInstant.js'
-import GUIPropertyComponent from '../../../../../component/internal/gui/property/GUIPropertyComponent.js'
 import UITextComponent from '../../../../../component/internal/ui/UITextComponent.js'
 import MeshComponent from '../../../../../component/internal/MeshComponent.js'
 import {PrimitiveShape} from '../../../../Unit.js'
-import UIComponent from '../../../../../component/internal/ui/UIComponent.js'
+import UIUnitInstant from './UIUnitInstant.js'
 
-export default class UITextUnitInstant extends UnitInstant {
+export default class UITextUnitInstant extends UIUnitInstant {
 
     /**
      * @override
      */
     instantiate() {
+        super.instantiate()
         this.setName('UI Text')
-        this.createComponent(UIComponent)
-        this.createComponent(UITextComponent)
     }
 
     /**
      * @override
      */
     setup() {
-        this.getComponent(GUIPropertyComponent).setRank(60)
+        super.setup()
         this.getComponent(MeshComponent).setShape(PrimitiveShape.TEXT)
     }
 

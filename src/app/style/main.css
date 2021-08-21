@@ -630,9 +630,9 @@ h4{
 }
 
 #app-el-right{
-    width: 250px;
+    width: 300px;
     top: 65px;
-    left: calc(100% - 250px);
+    left: calc(100% - 300px);
     padding: 0 1px;
     height: calc(100% - 105px);
     overflow-y: auto;
@@ -648,7 +648,7 @@ h4{
 #app-el-bottom{
     bottom: 40px;
     left: 0;
-    width: calc(100% - 250px);
+    width: calc(100% - 300px);
     height: 300px;
 }
 

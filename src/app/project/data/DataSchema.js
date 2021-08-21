@@ -158,7 +158,8 @@ import UIContainerComponent from '../../component/internal/ui/UIContainerCompone
 import UIImageComponent from '../../component/internal/ui/UIImageComponent.js'
 import UITextComponent from '../../component/internal/ui/UITextComponent.js'
 import UITextUnitInstant from '../../unit/instant/type/internal/ui/UITextUnitInstant.js'
-import UIComponent from '../../component/internal/ui/UIComponent.js'
+import UIElementComponent from '../../component/internal/ui/UIElementComponent.js'
+import UITransformComponent from '../../component/internal/ui/UITransformComponent.js'
 
 /**
  * @class {DataSchema}
@@ -314,7 +315,8 @@ class DataSchema {
         {id: 1360, type: UIImageComponent},
         {id: 1370, type: UITextComponent},
         {id: 1380, type: UITextUnitInstant},
-        {id: 1390, type: UIComponent}
+        {id: 1390, type: UIElementComponent},
+        {id: 1400, type: UITransformComponent}
     ]
 
     /**
