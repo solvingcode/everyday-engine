@@ -20,17 +20,18 @@ export default class TransformComponent extends Component {
         this.add('scale', TYPES.VECTOR, new Vector({x: 1, y: 1}))
         this.add('rotation', TYPES.RANGE, 0, [0, Math.PI * 2, 0.001])
         this.add('localRotation', TYPES.RANGE, 0, [0, Math.PI * 2, 0.001])
-        this.add('positionUpdated', TYPES.BOOLEAN, true)
-        this.add('scaleUpdated', TYPES.BOOLEAN, true)
-        this.add('localPositionUpdated', TYPES.BOOLEAN, false)
-        this.add('rotationUpdated', TYPES.BOOLEAN, true)
+        this.add('lastScale', TYPES.VECTOR, new Vector())
+        this.add('lastLocalScale', TYPES.VECTOR, new Vector())
+        this.add('lastPosition', TYPES.VECTOR, new Vector())
+        this.add('lastLocalPosition', TYPES.VECTOR, new Vector())
+        this.add('lastRotation', TYPES.VECTOR, new Vector())
     }
 
     /**
      * @override
      */
     getExcludeFields() {
-        return ['positionUpdated', 'scaleUpdated', 'localPositionUpdated', 'rotationUpdated', 'screenPosition']
+        return ['lastPosition', 'lastScale', 'lastLocalPosition', 'lastRotation', 'screenPosition']
     }
 
     /**
@@ -44,10 +45,21 @@ export default class TransformComponent extends Component {
      * @param {Vector} position
      */
     setPosition(position) {
-        if (!ObjectHelper.isEqual(this.getPosition(), position)) {
-            this.setPositionUpdated(true)
-        }
         this.setValue('position', position)
+    }
+
+    /**
+     * @return {Vector}
+     */
+    getLastPosition() {
+        return this.getValue('lastPosition')
+    }
+
+    /**
+     * @param {Vector} position
+     */
+    setLastPosition(position) {
+        this.setValue('lastPosition', position)
     }
 
     /**
@@ -61,10 +73,21 @@ export default class TransformComponent extends Component {
      * @param {number|string} rotation
      */
     setRotation(rotation) {
-        if (this.getRotation() !== parseFloat(rotation)) {
-            this.setRotationUpdated(true)
-        }
         this.setValue('rotation', parseFloat(rotation))
+    }
+
+    /**
+     * @return {number}
+     */
+    getLastRotation() {
+        return this.getValue('lastRotation')
+    }
+
+    /**
+     * @param {number|string} rotation
+     */
+    setLastRotation(rotation) {
+        this.setValue('lastRotation', parseFloat(rotation))
     }
 
     /**
@@ -92,10 +115,35 @@ export default class TransformComponent extends Component {
      * @param {Vector} scale
      */
     setScale(scale) {
-        if (!ObjectHelper.isEqual(this.getScale(), scale)) {
-            this.setScaleUpdated(true)
-        }
         this.setValue('scale', scale)
+    }
+
+    /**
+     * @return {Vector}
+     */
+    getLastScale() {
+        return this.getValue('lastScale')
+    }
+
+    /**
+     * @param {Vector} scale
+     */
+    setLastScale(scale) {
+        this.setValue('lastScale', scale)
+    }
+
+    /**
+     * @return {Vector}
+     */
+    getLastLocalScale() {
+        return this.getValue('lastLocalScale')
+    }
+
+    /**
+     * @param {Vector} scale
+     */
+    setLastLocalScale(scale) {
+        this.setValue('lastLocalScale', scale)
     }
 
     /**
@@ -109,10 +157,21 @@ export default class TransformComponent extends Component {
      * @param {Vector} localPosition
      */
     setLocalPosition(localPosition) {
-        if (!ObjectHelper.isEqual(this.getLocalPosition(), localPosition)) {
-            this.setLocalPositionUpdated(true)
-        }
         this.setValue('localPosition', localPosition)
+    }
+
+    /**
+     * @return {Vector}
+     */
+    getLastLocalPosition() {
+        return this.getValue('lastLocalPosition')
+    }
+
+    /**
+     * @param {Vector} localPosition
+     */
+    setLastLocalPosition(localPosition) {
+        this.setValue('lastLocalPosition', localPosition)
     }
 
     /**
@@ -147,56 +206,35 @@ export default class TransformComponent extends Component {
      * @return {boolean}
      */
     getPositionUpdated() {
-        return this.getValue('positionUpdated')
-    }
-
-    /**
-     * @param {boolean} positionUpdated
-     */
-    setPositionUpdated(positionUpdated) {
-        this.setValue('positionUpdated', positionUpdated)
+        return !ObjectHelper.isEqual(this.getPosition(), this.getLastPosition())
     }
 
     /**
      * @return {boolean}
      */
     getLocalPositionUpdated() {
-        return this.getValue('localPositionUpdated')
-    }
-
-    /**
-     * @param {boolean} localPositionUpdated
-     */
-    setLocalPositionUpdated(localPositionUpdated) {
-        this.setValue('localPositionUpdated', localPositionUpdated)
+        return !ObjectHelper.isEqual(this.getLocalPosition(), this.getLastLocalPosition())
     }
 
     /**
      * @return {boolean}
      */
     getScaleUpdated() {
-        return this.getValue('scaleUpdated')
+        return !ObjectHelper.isEqual(this.getScale(), this.getLastScale())
     }
 
     /**
-     * @param {boolean} scaleUpdated
+     * @return {boolean}
      */
-    setScaleUpdated(scaleUpdated) {
-        this.setValue('scaleUpdated', scaleUpdated)
+    getLocalScaleUpdated() {
+        return !ObjectHelper.isEqual(this.getLocalScale(), this.getLastLocalScale())
     }
 
     /**
      * @return {boolean}
      */
     getRotationUpdated() {
-        return this.getValue('rotationUpdated')
-    }
-
-    /**
-     * @param {boolean} rotationUpdated
-     */
-    setRotationUpdated(rotationUpdated) {
-        this.setValue('rotationUpdated', rotationUpdated)
+        return this.getRotation() !== this.getLastRotation()
     }
 
     /**

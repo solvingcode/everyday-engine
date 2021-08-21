@@ -7,6 +7,7 @@ import ClientError from '../exception/type/ClientError.js'
 import ScriptComponent from '../component/internal/ScriptComponent.js'
 import CommonUtil from '../utils/CommonUtil.js'
 import ArrayHelper from '../utils/ArrayHelper.js'
+import CameraComponent from '../component/internal/CameraComponent.js'
 
 /**
  * Manage the units, components list (get, add, load, ...)
@@ -45,6 +46,13 @@ export default class UnitManager extends UnitManagerData {
         return this.units.find((element) =>
             element.getId() === unitId
         )
+    }
+
+    /**
+     * @return {Unit}
+     */
+    findActiveCameraUnit(){
+        return this.findUnitByComponentClass(CameraComponent)
     }
 
     /**
@@ -159,6 +167,14 @@ export default class UnitManager extends UnitManagerData {
      */
     findUnitByComponent(component) {
         return this.units.find(unit => unit.findComponentById(component.id))
+    }
+
+    /**
+     * @param {Component} componentClass
+     * @return {Unit}
+     */
+    findUnitByComponentClass(componentClass) {
+        return this.units.find(unit => unit.getComponent(componentClass))
     }
 
     /**

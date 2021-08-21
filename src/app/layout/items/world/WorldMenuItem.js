@@ -1,5 +1,4 @@
 import Layout from '../../Layout.js'
-import CameraFormMenuItem from './CameraFormMenuItem.js'
 import PanelMenuItem from '../panel/PanelMenuItem.js'
 import ResolutionFormMenuItem from './ResolutionFormMenuItem.js'
 
@@ -13,7 +12,6 @@ export default class WorldMenuItem extends PanelMenuItem {
             zone: Layout.zone.RIGHT
         })
         this.items = [
-            new CameraFormMenuItem(this),
             new ResolutionFormMenuItem(this)
         ]
     }

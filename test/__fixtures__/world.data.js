@@ -135,8 +135,7 @@ export default {
             'y': -490.5,
             'z': 0
         },
-        'scaleFactor': 0.2,
-        'cameraUnitId': null
+        'scaleFactor': 0.2
     },
     'physics': {
         'dataId': 5,
@@ -144,7 +143,6 @@ export default {
         'isRunning': false,
         'types': {}
     },
-    'cameraUnitId': null,
     'resolution': {
         'width': 1848,
         'height': 981

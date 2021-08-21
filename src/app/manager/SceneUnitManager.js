@@ -48,7 +48,9 @@ export default class SceneUnitManager extends UnitManager {
      */
     addUnit(unit) {
         super.addUnit(unit)
-        const targetUnitManager = this.getSelectedUnitManager() || this.getActiveUnitManager()
+        const parentUnit = this.world.getUnitManager().findParentUnit(unit)
+        const targetUnitManager = (parentUnit && this.getSceneManagerByUnit(parentUnit)) ||
+            this.getSelectedUnitManager() || this.getActiveUnitManager()
         targetUnitManager.addUnit(unit)
     }
 

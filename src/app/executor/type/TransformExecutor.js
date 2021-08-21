@@ -35,7 +35,7 @@ export default class TransformExecutor extends ComponentExecutor {
             if(!childTransformComponent.getPositionUpdated()){
                 const childLocalPosition = childTransformComponent.getLocalPosition()
                 childTransformComponent.setPosition(Vector.add(position, childLocalPosition))
-                childTransformComponent.setPositionUpdated(false) // block updating localPosition of childs
+                childTransformComponent.setLastPosition(childTransformComponent.getPosition()) // block updating localPosition of childs
                 this.updatePosition(cUnit, childTransformComponent)
             }
         })
@@ -45,8 +45,8 @@ export default class TransformExecutor extends ComponentExecutor {
             const parentPosition = parentTransformComponent.getPosition()
             transformComponent.setLocalPosition(Vector.subtract(position, parentPosition))
         }
-        transformComponent.setPositionUpdated(false)
-        transformComponent.setLocalPositionUpdated(false)
+        transformComponent.setLastPosition(transformComponent.getPosition())
+        transformComponent.setLastLocalPosition(transformComponent.getLocalPosition())
     }
 
     /**
@@ -69,7 +69,7 @@ export default class TransformExecutor extends ComponentExecutor {
         } else {
             transformComponent.setPosition(localPosition)
         }
-        transformComponent.setPositionUpdated(false)
-        transformComponent.setLocalPositionUpdated(false)
+        transformComponent.setLastPosition(transformComponent.getPosition())
+        transformComponent.setLastLocalPosition(transformComponent.getLocalPosition())
     }
 }

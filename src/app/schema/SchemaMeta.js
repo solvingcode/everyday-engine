@@ -440,9 +440,6 @@ export default {
                     dataId: {
                         type: TYPES.NUMBER
                     },
-                    cameraUnitId: {
-                        type: TYPES.NUMBER
-                    },
                     position: {
                         prototype: TYPES.VECTOR
                     }

@@ -20,11 +20,16 @@ export default class UIContainerExecutor extends ComponentExecutor {
         const cameraUnit = camera.getUnit(world.getUnitManager())
         if(cameraUnit){
             const cameraPosition = cameraUnit.getComponent(TransformComponent).getPosition()
+            const cameraScale = cameraUnit.getComponent(TransformComponent).getScale()
             const transformComponent = unit.getComponent(TransformComponent)
             const position = transformComponent.getPosition()
-            const newPosition = new Vector({x: parseInt(cameraPosition.getX()), y: parseInt(cameraPosition.getY())})
+            const scale = transformComponent.getScale()
+            const newPosition = new Vector({x: cameraPosition.getX(), y: cameraPosition.getY()})
             if (!ObjectHelper.isEqual(position, newPosition)) {
                 transformComponent.setPosition(newPosition)
+            }
+            if (!ObjectHelper.isEqual(cameraScale, scale)) {
+                transformComponent.setScale(_.cloneDeep(cameraScale))
             }
         }
     }

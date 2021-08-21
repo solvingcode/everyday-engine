@@ -21,6 +21,9 @@ export default class MeshExecutor extends ComponentExecutor {
         if (transformComponent.getScaleUpdated()) {
             this.updateScale(unit, transformComponent, meshComponent)
         }
+        if (transformComponent.getLocalScaleUpdated()) {
+            this.updateLocalScale(unit, transformComponent, meshComponent)
+        }
         if (transformComponent.getRotationUpdated()) {
             this.updateRotation(unit, transformComponent, meshComponent)
         }
@@ -55,10 +58,38 @@ export default class MeshExecutor extends ComponentExecutor {
             const parentScale = parentTransformComponent.getScale()
             const newLocalScale = Vector.linearDivide(scale, parentScale)
             transformComponent.setLocalScale(newLocalScale)
+        }else{
+            transformComponent.setLocalScale(scale)
         }
         meshComponent.setSize(TransformHelper.getSizeFromScale(scale))
         meshComponent.setGenerated(false)
-        transformComponent.setScaleUpdated(false)
+        transformComponent.setLastScale(transformComponent.getScale())
+    }
+
+    /**
+     * @param {Unit} unit
+     * @param {TransformComponent} transformComponent
+     * @param {MeshComponent} meshComponent
+     */
+    updateLocalScale(unit, transformComponent, meshComponent) {
+        const unitManager = World.get().getUnitManager()
+        const localScale = transformComponent.getLocalScale()
+        const parentUnit = unitManager.findParentUnit(unit)
+        const childUnits = unitManager.findChildUnits(unit)
+        childUnits.forEach(cUnit => {
+            const childMeshComponent = cUnit.getComponent(MeshComponent)
+            const childTransformComponent = cUnit.getComponent(TransformComponent)
+            this.updateLocalScale(cUnit, childTransformComponent, childMeshComponent)
+        })
+        if (parentUnit) {
+            const parentTransformComponent = parentUnit.getComponent(TransformComponent)
+            const parentScale = parentTransformComponent.getScale()
+            const newScale = Vector.linearMultiply(localScale, parentScale)
+            transformComponent.setScale(newScale)
+        } else {
+            transformComponent.setScale(localScale)
+        }
+        transformComponent.setLastLocalScale(transformComponent.getLocalScale())
     }
 
     /**
@@ -90,6 +121,6 @@ export default class MeshExecutor extends ComponentExecutor {
             transformComponent.setLocalRotation(rotation - parentRotation)
         }
         meshComponent.setGenerated(false)
-        transformComponent.setRotationUpdated(false)
+        transformComponent.setLastRotation(transformComponent.getRotation())
     }
 }
