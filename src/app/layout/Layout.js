@@ -59,7 +59,8 @@ Layout.form = {
     COLOR: 'color',
     RANGE: 'range',
     TEXTAREA: 'textarea',
-    WYSIWYG: 'wysiwyg'
+    WYSIWYG: 'wysiwyg',
+    MULTI_BUTTON: 'multi_button'
 }
 
 export default Layout

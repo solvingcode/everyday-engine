@@ -815,6 +815,16 @@ i.static-entity::before{
     width: 60%;
 }
 
+.form .form-list-button{
+    display: inline;
+    width: 60%;
+}
+
+.form .form-list-button button {
+    padding: 5px 10px;
+    margin-right: 5px
+}
+
 .form.form-inline .form-input{
     float: left;
 }

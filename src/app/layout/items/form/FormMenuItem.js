@@ -13,6 +13,7 @@ import WysiwygMenuItem from './WysiwygMenuItem.js'
 import SystemError from '../../../exception/type/SystemError.js'
 import ClientError from '../../../exception/type/ClientError.js'
 import NumberMenuItem from './NumberMenuItem.js'
+import MultiButtonMenuItem from './MultiButtonMenuItem.js'
 
 /**
  * Form menu item
@@ -131,7 +132,7 @@ class FormMenuItem extends MenuItem {
                 try {
                     const newValue = this.getGetterForObject(field, object)()
                     const oldValue = this.getGetterForObject(field, this.object)()
-                    if (newValue !== oldValue &&
+                    if (!_.isEqual(newValue, oldValue) &&
                         !isNaN(newValue) && !isNaN(oldValue)
                     ) {
                         return true
@@ -319,6 +320,8 @@ class FormMenuItem extends MenuItem {
                 return TextareaMenuItem
             case Layout.form.WYSIWYG:
                 return WysiwygMenuItem
+            case Layout.form.MULTI_BUTTON:
+                return MultiButtonMenuItem
             default:
                 throw new SystemError(`Form item "${field.type}" not defined`)
         }

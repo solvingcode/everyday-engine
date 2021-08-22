@@ -22,6 +22,7 @@ export default class UITextComponent extends Component {
         this.add('fontSize', TYPES.NUMBER, 12)
         this.add('textAlign', TYPES.LIST, null, ['left', 'center', 'right'])
         this.add('verticalAlign', TYPES.LIST, null, ['top', 'middle', 'bottom'])
+        this.add('textStyle', TYPES.ARRAY | TYPES.LIST, null, ['bold', 'italic'])
         this.add('fontFamily', TYPES.FONT)
     }
 
@@ -93,6 +94,20 @@ export default class UITextComponent extends Component {
      */
     setFontFamily(fontFamily) {
         this.setValue('fontFamily', fontFamily)
+    }
+
+    /**
+     * @return {string[]}
+     */
+    getTextStyle() {
+        return this.getValue('textStyle')
+    }
+
+    /**
+     * @param {string[]} textStyle
+     */
+    setTextStyle(textStyle) {
+        this.setValue('textStyle', textStyle)
     }
 
 }

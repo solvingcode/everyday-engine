@@ -10,6 +10,7 @@ import HtmlFormTextareaUI from '../components/forms/HtmlFormTextareaUI.js'
 import HtmlFormWysiwygUI from '../components/forms/HtmlFormWysiwygUI.js'
 import SystemError from '../../../../exception/type/SystemError.js'
 import HtmlFormNumberUI from '../components/forms/HtmlFormNumberUI.js'
+import HtmlFormMultiButtonUI from '../components/forms/HtmlFormMultiButtonUI.js'
 
 class HtmlFormElementUI extends ItemUI {
     /**
@@ -24,6 +25,8 @@ class HtmlFormElementUI extends ItemUI {
             return HtmlFormTextUI
         } else if (field === Layout.form.DROPDOWN) {
             return HtmlFormDropdownUI
+        } else if (field === Layout.form.MULTI_BUTTON) {
+            return HtmlFormMultiButtonUI
         } else if (field === Layout.form.FILE) {
             return HtmlFormFileUI
         } else if (field === Layout.form.COLOR) {

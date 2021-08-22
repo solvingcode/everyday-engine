@@ -24,6 +24,9 @@ class HtmlFormUI extends ItemUI {
         if (inputProps.type) {
             formEl.type = inputProps.type
         }
+        if(inputProps.tagClassName){
+            formEl.className = inputProps.tagClassName
+        }
         formEl.id = `${el.id}-${inputProps.suffix}`
         if (props.name) {
             const labelEl = document.createElement('label')
@@ -113,7 +116,7 @@ class HtmlFormUI extends ItemUI {
     /**
      * Get HTML value form element
      * @param {HTMLElement | HTMLInputElement} formElement
-     * @return {string | boolean}
+     * @return {string | boolean | string[]}
      */
     static getValue(formElement) {
         return formElement.value

@@ -382,6 +382,16 @@ export default class DynamicAttributeHelper {
                 list,
                 dynamicAttribute
             }]
+        } else if (attribute.getAttrType() === (TYPES.ARRAY|TYPES.LIST) && isListInstances) {
+            const rule = attribute.getAttrRule()
+            const list = rule.map(eRule => ({value: eRule, label: eRule}))
+            formField = [{
+                bind: bindName,
+                label: attribute.getAttrName(),
+                type: Layout.form.MULTI_BUTTON,
+                list,
+                dynamicAttribute
+            }]
         } else if (attribute.getAttrType() === TYPES.NUMBER && isListInstances) {
             formField = [{
                 bind: bindName,

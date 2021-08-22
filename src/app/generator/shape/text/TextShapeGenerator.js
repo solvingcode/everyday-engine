@@ -16,6 +16,7 @@ export default class TextShapeGenerator extends TypeShapeGenerator {
         const uiTextComponent = unit.getComponent(UITextComponent)
         const textAlign = uiTextComponent.getTextAlign()
         const verticalAlign = uiTextComponent.getVerticalAlign()
+        const textStyle = uiTextComponent.getTextStyle()
         const fontFamilyAsset = uiTextComponent.getFontFamily() && assetManager.findAssetFontById(uiTextComponent.getFontFamily())
         const fontFamily = (fontFamilyAsset && fontFamilyAsset.getName()) || 'Arial'
         const {width, height} = scaleSize
@@ -24,6 +25,7 @@ export default class TextShapeGenerator extends TypeShapeGenerator {
         const fontSizeScale = camera.toScaleNumber(fontSize)
         let xPos = 0
         let yPos = height / 2
+        const fontProps = [...(textStyle || []), `${fontSizeScale}px`, fontFamily]
 
         if(textAlign){
             switch (textAlign){
@@ -59,7 +61,7 @@ export default class TextShapeGenerator extends TypeShapeGenerator {
             }
         }
 
-        context.font = `${fontSizeScale}px ${fontFamily}`
+        context.font = fontProps.join(' ')
         context.fillText(text, xPos, yPos)
     }
 
