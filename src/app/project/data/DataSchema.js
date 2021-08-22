@@ -160,6 +160,7 @@ import UITextComponent from '../../component/internal/ui/UITextComponent.js'
 import UITextUnitInstant from '../../unit/instant/type/internal/ui/UITextUnitInstant.js'
 import UIElementComponent from '../../component/internal/ui/UIElementComponent.js'
 import UITransformComponent from '../../component/internal/ui/UITransformComponent.js'
+import AssetFont from '../../asset/types/font/AssetFont.js'
 
 /**
  * @class {DataSchema}
@@ -316,7 +317,8 @@ class DataSchema {
         {id: 1370, type: UITextComponent},
         {id: 1380, type: UITextUnitInstant},
         {id: 1390, type: UIElementComponent},
-        {id: 1400, type: UITransformComponent}
+        {id: 1400, type: UITransformComponent},
+        {id: 1410, type: AssetFont}
     ]
 
     /**

@@ -243,6 +243,19 @@ export default class DynamicAttributeHelper {
                 list: listAudios,
                 dynamicAttribute
             }]
+        } else if (attribute.getAttrType() === TYPES.FONT && isListInstances) {
+            const listFonts = world.getAssetsManager().getFontAssets()
+                .map(font => ({
+                    value: font.getId(),
+                    label: font.getName()
+                }))
+            formField = [{
+                bind: bindName,
+                label: attribute.getAttrName(),
+                type: Layout.form.DROPDOWN,
+                list: listFonts,
+                dynamicAttribute
+            }]
         } else if (attribute.getAttrType() === TYPES.BOOLEAN && isListInstances) {
             formField = [{
                 bind: bindName,
@@ -359,6 +372,16 @@ export default class DynamicAttributeHelper {
                     dynamicAttribute
                 }
             ]
+        } else if (attribute.getAttrType() === TYPES.LIST && isListInstances) {
+            const rule = attribute.getAttrRule()
+            const list = rule.map(eRule => ({value: eRule, label: eRule}))
+            formField = [{
+                bind: bindName,
+                label: attribute.getAttrName(),
+                type: Layout.form.DROPDOWN,
+                list,
+                dynamicAttribute
+            }]
         } else if (attribute.getAttrType() === TYPES.NUMBER && isListInstances) {
             formField = [{
                 bind: bindName,
@@ -429,6 +452,13 @@ export default class DynamicAttributeHelper {
                     throw new ClientError(`${this.constructor.name}: Audio "${value}" not found`)
                 }
                 newValue = audio.getType()
+                break
+            case TYPES.FONT:
+                const font = world.getAssetsManager().findAssetFontById(value)
+                if (!font) {
+                    throw new ClientError(`${this.constructor.name}: Font "${value}" not found`)
+                }
+                newValue = font.getType()
                 break
             case TYPES.ARRAY | TYPES.ANY:
                 if (!_.isArray(value)) {

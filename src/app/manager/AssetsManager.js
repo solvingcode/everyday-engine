@@ -13,6 +13,7 @@ import SystemError from '../exception/type/SystemError.js'
 import AnimationScript from '../flow/AnimationScript.js'
 import Maths from '../utils/Maths.js'
 import AssetAudio from '../asset/types/Audio/AssetAudio.js'
+import AssetFont from '../asset/types/font/AssetFont.js'
 
 /**
  * @class {AssetsManager}
@@ -131,7 +132,7 @@ export default class AssetsManager extends AssetsManagerData {
                 resolve(reader.result)
             }
             reader.onerror = reject
-            if (this.isBlobImage(blob) || this.isBlobAudio(blob)) {
+            if (this.isBlobImage(blob) || this.isBlobAudio(blob) || this.isBlobFont(blob)) {
                 reader.readAsDataURL(blob)
             } else {
                 reader.readAsText(blob)
@@ -161,6 +162,15 @@ export default class AssetsManager extends AssetsManagerData {
     }
 
     /**
+     * @param {Blob} blob
+     * @return {boolean}
+     */
+    isBlobFont(blob) {
+        const type = this.getAssetType(blob)
+        return type === AssetFont
+    }
+
+    /**
      * @return {Asset[]}
      */
     getParsedAssets() {
@@ -172,6 +182,13 @@ export default class AssetsManager extends AssetsManagerData {
      */
     getAudioAssets(){
         return this.getAssets().filter(asset => this.isAssetAudio(asset))
+    }
+
+    /**
+     * @return {Asset[]}
+     */
+    getFontAssets(){
+        return this.getAssets().filter(asset => this.isAssetFont(asset))
     }
 
     /**
@@ -207,6 +224,14 @@ export default class AssetsManager extends AssetsManagerData {
     }
 
     /**
+     * @param {Asset} asset
+     * @return {boolean}
+     */
+    isAssetFont(asset) {
+        return asset && asset.getType() instanceof AssetFont
+    }
+
+    /**
      * @param {Blob} blob
      * @return {Class<AssetType>}
      */
@@ -220,6 +245,8 @@ export default class AssetsManager extends AssetsManagerData {
                 return AssetScriptXml
             case FileHelper.type.WAV:
                 return AssetAudio
+            case FileHelper.type.TTF:
+                return AssetFont
             case FileHelper.type.MPEG:
                 return AssetAudio
             default:
@@ -283,6 +310,18 @@ export default class AssetsManager extends AssetsManagerData {
         const asset = this.findAssetById(assetId)
         if (!asset || !this.isAssetAudio(asset)) {
             throw new SystemError(`No asset audio found with ID "${assetId}"`)
+        }
+        return asset
+    }
+
+    /**
+     * @param {number|string} assetId
+     * @return {Asset}
+     */
+    findAssetFontById(assetId) {
+        const asset = this.findAssetById(assetId)
+        if (!asset || !this.isAssetFont(asset)) {
+            throw new SystemError(`No asset font found with ID "${assetId}"`)
         }
         return asset
     }

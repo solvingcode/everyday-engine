@@ -36,6 +36,7 @@ import GUIGridXComponent from '../../component/internal/gui/grid/GUIGridXCompone
 import GridYUnitInstant from '../../unit/instant/type/internal/grid/GridYUnitInstant.js'
 import GUIColliderComponent from '../../component/internal/gui/collider/GUIColliderComponent.js'
 import EmptyUnit from '../../unit/type/EmptyUnit.js'
+import GUISelectorComponent from '../../component/internal/gui/selector/GUISelectorComponent.js'
 
 class EditorRunner extends Runner {
 
@@ -209,17 +210,22 @@ class EditorRunner extends Runner {
 
     /**
      * @param {StateManager} stateManager
-     * @todo: Need some refactoring
      */
     setupEditor(stateManager) {
         const world = World.get()
-        const unitManager = world.getUnitManager()
-
-        //get selected units
         const selectedUnits = UnitSelector.get().getSelected(world).filter(unit => unit instanceof EmptyUnit)
-        let parentUnit = selectedUnits[0]
+        const targetUnit = this.setupColliderEditor(selectedUnits) || selectedUnits[0]
+        this.setupTransformEditor(stateManager, targetUnit)
+        this.setupSelectorEditor(selectedUnits)
+    }
 
-        //create collider unit if one unit is selected
+    /**
+     * @param {Unit[]} selectedUnits
+     * @return {Unit}
+     */
+    setupColliderEditor(selectedUnits) {
+        const world = World.get()
+        const unitManager = world.getUnitManager()
         if (selectedUnits.length === 1) {
             const selectedUnit = selectedUnits[0]
             const exitGUIColliders = unitManager.getUnitsHasComponents([GUIColliderComponent])
@@ -227,14 +233,22 @@ class EditorRunner extends Runner {
                 .filter(unit => unit.getComponent(GUIColliderComponent).getUnitId() !== selectedUnit.getId()))
             const colliderUnits = UnitHelper.createGUICollider(selectedUnit, world)
             if (colliderUnits.length) {
-                parentUnit = colliderUnits[0]
+                return colliderUnits[0]
             }
         }else{
             unitManager.deleteUnitsByComponents([GUIColliderComponent])
         }
+    }
 
-        //find the editor position
-        const editorPosition = parentUnit && UnitHelper.toLargeCenterPosition(parentUnit)
+    /**
+     * @param {StateManager} stateManager
+     * @param {Unit} targetUnit
+     */
+    setupTransformEditor(stateManager, targetUnit) {
+        const world = World.get()
+        const unitManager = world.getUnitManager()
+
+        const editorPosition = targetUnit && UnitHelper.toLargeCenterPosition(targetUnit)
 
         const editorComponents = {
             DRAW_MOVE: [MoveXUnitInstant, MoveYUnitInstant, MoveFreeUnitInstant],
@@ -246,15 +260,38 @@ class EditorRunner extends Runner {
             unitInstants.forEach(unitInstantClass => {
                 const unitExist = unitManager.findUnitByType(unitInstantClass)
                 if (stateManager.hasAnyState(action) && !unitExist && editorPosition) {
-                    world.createChildUnitInstant(unitInstantClass, parentUnit, editorPosition)
+                    world.createChildUnitInstant(unitInstantClass, targetUnit, editorPosition)
                 } else if (unitExist && (
-                        !stateManager.hasAnyState(action) ||
-                        (parentUnit && unitExist.getUnitParentId() !== parentUnit.getId()) ||
-                        !parentUnit
+                    !stateManager.hasAnyState(action) ||
+                    (targetUnit && unitExist.getUnitParentId() !== targetUnit.getId()) ||
+                    !targetUnit
                 )) {
                     unitManager.deleteUnit(unitExist)
                 }
             })
+        }
+    }
+
+    /**
+     * @param {Unit[]} selectedUnits
+     */
+    setupSelectorEditor(selectedUnits) {
+        const world = World.get()
+        const unitManager = world.getUnitManager()
+        if (selectedUnits.length === 1) {
+            const selectedUnitIds = selectedUnits.map(unit => unit.getId())
+            const exitGUISelectors = unitManager.getUnitsHasComponents([GUISelectorComponent])
+            unitManager.deleteUnits(exitGUISelectors
+                .filter(unit => !selectedUnitIds.includes(unit.getComponent(GUISelectorComponent).getUnitId())))
+            selectedUnits.forEach(selectedUnit => {
+                const existGUISelector = exitGUISelectors
+                    .find(guiUnit => guiUnit.getComponent(GUISelectorComponent).getUnitId() === selectedUnit.getId())
+                if(!existGUISelector){
+                    UnitHelper.createGUISelector(selectedUnit, world)
+                }
+            })
+        }else{
+            unitManager.deleteUnitsByComponents([GUISelectorComponent])
         }
     }
 }

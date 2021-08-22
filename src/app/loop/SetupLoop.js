@@ -9,7 +9,6 @@ import EditorRunner from '../runner/editor/EditorRunner.js'
 import Storage from '../core/Storage.js'
 import ExecutorRegistry from '../executor/ExecutorRegistry.js'
 import MeshGenerationExecutor from '../executor/type/MeshGenerationExecutor.js'
-import GUISelectionExecutor from '../executor/type/GUISelectionExecutor.js'
 import GUIPropertyExecutor from '../executor/type/GUIPropertyExecutor.js'
 import {SetupRenderRunner} from '../runner/renderer/SetupRenderRunner.js'
 import {SetupExecutorRunner} from '../runner/executor/SetupExecutorRunner.js'
@@ -57,7 +56,6 @@ class SetupLoop extends Loop {
             new MeshExecutor(),
             new TransformExecutor(),
             new MeshGenerationExecutor(),
-            new GUISelectionExecutor(),
             new GUIPropertyExecutor(),
             new LightExecutor(),
         ])

@@ -91,7 +91,8 @@ class FileHelper {
         IMG_JPEG: 'image/jpeg',
         IMG_PNG: 'image/png',
         WAV: 'audio/wav',
-        MPEG: 'audio/mpeg'
+        MPEG: 'audio/mpeg',
+        TTF: 'font/ttf'
     }
 
 }

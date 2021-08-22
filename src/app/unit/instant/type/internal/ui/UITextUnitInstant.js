@@ -11,6 +11,7 @@ export default class UITextUnitInstant extends UIUnitInstant {
     instantiate() {
         super.instantiate()
         this.setName('UI Text')
+        this.createComponent(UITextComponent)
     }
 
     /**

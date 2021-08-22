@@ -11,6 +11,7 @@ import Folder from '../../../../asset/Folder.js'
 import AssetAnimationXml from '../../../../asset/types/animation/AssetAnimationXml.js'
 import AssetAnimationScriptXml from '../../../../asset/types/animation/AssetAnimationScriptXml.js'
 import AssetAudio from '../../../../asset/types/Audio/AssetAudio.js'
+import AssetFont from '../../../../asset/types/font/AssetFont.js'
 
 export default class AssetElementButtonUI extends ListElementButtonUI {
 
@@ -55,6 +56,8 @@ export default class AssetElementButtonUI extends ListElementButtonUI {
                 return IconUI.createIcon('photo-video')
             case AssetAudio:
                 return IconUI.createIcon('file-audio')
+            case AssetFont:
+                return IconUI.createIcon('font')
             default:
                 throw new SystemError(`Asset: No icon founded for "${type.constructor.name}"`)
         }

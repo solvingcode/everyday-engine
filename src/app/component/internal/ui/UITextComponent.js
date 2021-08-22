@@ -20,6 +20,9 @@ export default class UITextComponent extends Component {
     initAttributes() {
         this.add('text', TYPES.STRING)
         this.add('fontSize', TYPES.NUMBER, 12)
+        this.add('textAlign', TYPES.LIST, null, ['left', 'center', 'right'])
+        this.add('verticalAlign', TYPES.LIST, null, ['top', 'middle', 'bottom'])
+        this.add('fontFamily', TYPES.FONT)
     }
 
     /**
@@ -48,6 +51,48 @@ export default class UITextComponent extends Component {
      */
     setFontSize(fontSize) {
         this.setValue('fontSize', fontSize)
+    }
+
+    /**
+     * @return {string}
+     */
+    getTextAlign() {
+        return this.getValue('textAlign')
+    }
+
+    /**
+     * @param {string} textAlign
+     */
+    setTextAlign(textAlign) {
+        this.setValue('textAlign', textAlign)
+    }
+
+    /**
+     * @return {string}
+     */
+    getVerticalAlign() {
+        return this.getValue('verticalAlign')
+    }
+
+    /**
+     * @param {string} verticalAlign
+     */
+    setVerticalAlign(verticalAlign) {
+        this.setValue('verticalAlign', verticalAlign)
+    }
+
+    /**
+     * @return {number}
+     */
+    getFontFamily() {
+        return this.getValue('fontFamily')
+    }
+
+    /**
+     * @param {number} fontFamily
+     */
+    setFontFamily(fontFamily) {
+        this.setValue('fontFamily', fontFamily)
     }
 
 }

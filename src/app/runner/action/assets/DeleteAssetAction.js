@@ -15,7 +15,10 @@ export default class DeleteAssetAction extends Action {
         const unitManager = World.get().getUnitManager()
         const selectedAsset = assetManager.getSelectedAsset()
         const attachedUnits = unitManager.getUnits()
-            .filter(unit => unit.getComponent(MeshComponent).getAssetId() === selectedAsset.getId())
+            .filter(unit => {
+                const meshComponent = unit.getComponent(MeshComponent)
+                return meshComponent && meshComponent.getAssetId() === selectedAsset.getId()
+            })
         AssetHelper.deleteAsset(selectedAsset)
         attachedUnits.forEach(unit => unitManager.deleteUnit(unit))
         return true

@@ -17,6 +17,7 @@ import GUIColliderComponent from '../component/internal/gui/collider/GUICollider
 import ImageHelper from './ImageHelper.js'
 import TransformHelper from './TransformHelper.js'
 import ObjectHelper from './ObjectHelper.js'
+import GUISelectorComponent from '../component/internal/gui/selector/GUISelectorComponent.js'
 
 export default class UnitHelper {
 
@@ -352,6 +353,28 @@ export default class UnitHelper {
             }
         })
         return colliderUnits
+    }
+
+    /**
+     * @param {Unit} unit
+     * @param {World} world
+     * @return {Unit[]}
+     */
+    static createGUISelector(unit, world) {
+        const transformComponent = unit.getComponent(TransformComponent)
+        const position = transformComponent.getPosition()
+        const scale = transformComponent.getScale()
+        const rotation = transformComponent.getRotation()
+
+        const style = new Style()
+        style.setColor('#ffe600')
+        style.setBorderSize(2)
+
+        const selectorUnit = world
+            .createUnitInstant(RectUnitInstant, position, TransformHelper.getSizeFromScale(scale), style)
+        selectorUnit.createComponents([GUISelectorComponent])
+        selectorUnit.getComponent(GUISelectorComponent).setUnitId(unit.getId())
+        selectorUnit.getComponent(TransformComponent).setRotation(rotation)
     }
 
     /**
