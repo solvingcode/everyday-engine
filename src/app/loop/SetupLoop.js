@@ -26,6 +26,7 @@ import SceneRunner from '../runner/scene/SceneRunner.js'
 import TransformExecutor from '../executor/type/TransformExecutor.js'
 import UIContainerExecutor from '../executor/type/UIContainerExecutor.js'
 import MeshExecutor from '../executor/type/MeshExecutor.js'
+import MeshStyleExecutor from '../executor/type/MeshStyleExecutor.js'
 
 /**
  * @class {SetupLoop}
@@ -56,6 +57,7 @@ class SetupLoop extends Loop {
             new MeshExecutor(),
             new TransformExecutor(),
             new MeshGenerationExecutor(),
+            new MeshStyleExecutor(),
             new GUIPropertyExecutor(),
             new LightExecutor(),
         ])

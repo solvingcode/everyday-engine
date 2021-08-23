@@ -134,6 +134,15 @@ export default class UnitManager extends UnitManagerData {
     }
 
     /**
+     * @param {Asset} asset
+     */
+    emptyUnitsByAsset(asset) {
+        this.findUnitsByAsset(asset).forEach((unit) => {
+            unit.getComponent(MeshComponent).setAssetId(null)
+        })
+    }
+
+    /**
      * @param {Component[]} componentClasses
      * @return {Unit[]}
      */

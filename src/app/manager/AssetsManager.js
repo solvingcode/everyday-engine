@@ -14,6 +14,7 @@ import AnimationScript from '../flow/AnimationScript.js'
 import Maths from '../utils/Maths.js'
 import AssetAudio from '../asset/types/Audio/AssetAudio.js'
 import AssetFont from '../asset/types/font/AssetFont.js'
+import AssetGradientColorXml from '../asset/types/color/AssetGradientColorXml.js'
 
 /**
  * @class {AssetsManager}
@@ -138,7 +139,7 @@ export default class AssetsManager extends AssetsManagerData {
                 reader.readAsText(blob)
             }
         }).then(data => {
-            const type = this.getAssetType(blob)
+            const type = this.getAssetType(blob, data)
             return this.setAsset(data, type, FileHelper.getFilename(blob.name))
         })
     }
@@ -148,8 +149,7 @@ export default class AssetsManager extends AssetsManagerData {
      * @return {boolean}
      */
     isBlobImage(blob) {
-        const type = this.getAssetType(blob)
-        return type === AssetImage
+        return blob.type === FileHelper.type.IMG_JPEG || blob.type === FileHelper.type.IMG_PNG
     }
 
     /**
@@ -157,8 +157,7 @@ export default class AssetsManager extends AssetsManagerData {
      * @return {boolean}
      */
     isBlobAudio(blob) {
-        const type = this.getAssetType(blob)
-        return type === AssetAudio
+        return blob.type === FileHelper.type.WAV || blob.type === FileHelper.type.MPEG
     }
 
     /**
@@ -166,8 +165,15 @@ export default class AssetsManager extends AssetsManagerData {
      * @return {boolean}
      */
     isBlobFont(blob) {
-        const type = this.getAssetType(blob)
-        return type === AssetFont
+        return blob.type === FileHelper.type.TTF
+    }
+
+    /**
+     * @param {Blob} blob
+     * @return {boolean}
+     */
+    isBlobXml(blob) {
+        return blob.type === FileHelper.type.XML
     }
 
     /**
@@ -180,14 +186,21 @@ export default class AssetsManager extends AssetsManagerData {
     /**
      * @return {Asset[]}
      */
-    getAudioAssets(){
+    getAudioAssets() {
         return this.getAssets().filter(asset => this.isAssetAudio(asset))
     }
 
     /**
      * @return {Asset[]}
      */
-    getFontAssets(){
+    getColorAssets() {
+        return this.getAssets().filter(asset => this.isAssetColor(asset))
+    }
+
+    /**
+     * @return {Asset[]}
+     */
+    getFontAssets() {
         return this.getAssets().filter(asset => this.isAssetFont(asset))
     }
 
@@ -227,30 +240,56 @@ export default class AssetsManager extends AssetsManagerData {
      * @param {Asset} asset
      * @return {boolean}
      */
+    isAssetColor(asset) {
+        return asset && asset.getType() instanceof AssetGradientColorXml
+    }
+
+    /**
+     * @param {Asset} asset
+     * @return {boolean}
+     */
     isAssetFont(asset) {
         return asset && asset.getType() instanceof AssetFont
     }
 
     /**
      * @param {Blob} blob
+     * @param {string} data
      * @return {Class<AssetType>}
      */
-    getAssetType(blob) {
-        const type = blob.type
-        switch (type) {
-            case FileHelper.type.IMG_JPEG:
-            case FileHelper.type.IMG_PNG:
-                return AssetImage
-            case FileHelper.type.XML:
+    getAssetType(blob, data) {
+        if (this.isBlobImage(blob)) {
+            return AssetImage
+        } else if (this.isBlobXml(blob)) {
+            return this.getAssetXmlType(data)
+        } else if (this.isBlobAudio(blob)) {
+            return AssetAudio
+        } else if (this.isBlobFont(blob)) {
+            return AssetFont
+        } else {
+            throw new ClientError(`Asset type "${blob.type}" not supported`)
+        }
+    }
+
+    /**
+     * @param {string} data
+     * @return {Class<AssetType>}
+     */
+    getAssetXmlType(data) {
+        const parser = new DOMParser()
+        const doc = parser.parseFromString(data, 'application/xml')
+        const tagName = doc.documentElement.tagName
+        switch (tagName) {
+            case 'flow':
                 return AssetScriptXml
-            case FileHelper.type.WAV:
-                return AssetAudio
-            case FileHelper.type.TTF:
-                return AssetFont
-            case FileHelper.type.MPEG:
-                return AssetAudio
+            case 'color':
+                return AssetGradientColorXml
+            case 'animation':
+                return AssetAnimationXml
+            case 'html':
+                throw new ClientError(`Asset XML : ${doc.documentElement.textContent}`)
             default:
-                throw new ClientError(`Asset type "${type}" not supported`)
+                throw new ClientError(`Asset XML Type "${tagName}" not supported`)
         }
     }
 

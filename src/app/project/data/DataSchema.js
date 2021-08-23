@@ -161,6 +161,7 @@ import UITextUnitInstant from '../../unit/instant/type/internal/ui/UITextUnitIns
 import UIElementComponent from '../../component/internal/ui/UIElementComponent.js'
 import UITransformComponent from '../../component/internal/ui/UITransformComponent.js'
 import AssetFont from '../../asset/types/font/AssetFont.js'
+import AssetGradientColorXml from '../../asset/types/color/AssetGradientColorXml.js'
 
 /**
  * @class {DataSchema}
@@ -318,7 +319,8 @@ class DataSchema {
         {id: 1380, type: UITextUnitInstant},
         {id: 1390, type: UIElementComponent},
         {id: 1400, type: UITransformComponent},
-        {id: 1410, type: AssetFont}
+        {id: 1410, type: AssetFont},
+        {id: 1420, type: AssetGradientColorXml}
     ]
 
     /**

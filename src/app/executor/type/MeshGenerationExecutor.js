@@ -73,10 +73,28 @@ export default class MeshGenerationExecutor extends ComponentExecutor {
             const center = new Vector({x: scaleSize.width / 2, y: scaleSize.height / 2})
             const canvas = new OffscreenCanvas(width, height)
             const context = canvas.getContext(CANVAS_CONTEXT_TYPE)
-            const {opacity, borderSize, fillColor, color, fillColorOpacity, colorOpacity} = meshComponent.getStyle()
+            const {opacity, borderSize, fillColor,
+                color, fillColorOpacity, colorOpacity,
+                shadowColor, shadowPosition, shadowBlur,
+                gradientColorAssetId} = meshComponent.getStyle()
             context.strokeStyle = Color.hexToRgba(color, colorOpacity)
-            if (fillColor) {
+            const gradientColorAsset = world.getAssetsManager().findAssetById(gradientColorAssetId)
+            if(gradientColorAsset){
+                const gradientColor = gradientColorAsset.getType().getData()
+                const linearGradient = context.createLinearGradient(
+                    scaleSize.width / 2, 0, scaleSize.width / 2, scaleSize.height)
+                gradientColor.getColors().forEach(colorStop => {
+                    linearGradient.addColorStop(colorStop.getOffset(), colorStop.getColor())
+                })
+                context.fillStyle = linearGradient
+            }else if (fillColor) {
                 context.fillStyle = Color.hexToRgba(fillColor, fillColorOpacity)
+            }
+            if(shadowColor){
+                context.shadowColor = shadowColor
+                context.shadowBlur = camera.toScaleNumber(shadowBlur)
+                context.shadowOffsetX = camera.toScaleNumber(shadowPosition.getX())
+                context.shadowOffsetY = camera.toScaleNumber(shadowPosition.getY())
             }
             if (_.isNumber(opacity)) {
                 context.globalAlpha = opacity
@@ -105,10 +123,10 @@ export default class MeshGenerationExecutor extends ComponentExecutor {
      * @return {boolean}
      */
     closeContext(meshComponent, transformComponent, dataContext) {
-        const {fillColor, color, borderSize} = meshComponent.getStyle()
+        const {fillColor, color, borderSize, gradientColorAssetId} = meshComponent.getStyle()
         const {context, world, unitId, scaleSize} = dataContext
         if (meshComponent.getAssetId()) {
-            if (fillColor) {
+            if (fillColor || gradientColorAssetId) {
                 context.fill()
                 context.globalCompositeOperation = 'destination-over'
             }
@@ -126,7 +144,7 @@ export default class MeshGenerationExecutor extends ComponentExecutor {
             this.getMaterial(world, meshComponent.getMaterial())
                 .generate(canvasBg, dataContext, meshComponent, transformComponent)
             borderSize && context.stroke()
-        } else if (fillColor) {
+        } else if (fillColor || gradientColorAssetId) {
             context.fill()
             if (color) {
                 context.stroke()

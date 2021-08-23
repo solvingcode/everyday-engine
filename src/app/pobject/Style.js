@@ -1,7 +1,9 @@
 /**
  * @class {Style}
  */
-class Style {
+import Vector from '../utils/Vector.js'
+
+export default class Style {
 
     color
     colorOpacity = 1
@@ -9,6 +11,10 @@ class Style {
     fillColorOpacity = 1
     opacity
     borderSize
+    shadowColor
+    shadowPosition = new Vector()
+    shadowBlur = 0
+    gradientColorAssetId
 
     /**
      * @param {string} color
@@ -94,6 +100,60 @@ class Style {
         return this.borderSize
     }
 
-}
+    /**
+     * @param {string} color
+     */
+    setShadowColor(color) {
+        this.shadowColor = color
+    }
 
-export default Style
+    /**
+     * @return {string}
+     */
+    getShadowColor() {
+        return this.shadowColor
+    }
+
+    /**
+     * @param {Vector} position
+     */
+    setShadowPosition(position) {
+        this.shadowPosition = position
+    }
+
+    /**
+     * @return {Vector}
+     */
+    getShadowPosition() {
+        return this.shadowPosition
+    }
+
+    /**
+     * @param {number} shadowBlur
+     */
+    setShadowBlur(shadowBlur) {
+        this.shadowBlur = shadowBlur
+    }
+
+    /**
+     * @return {number}
+     */
+    getShadowBlur() {
+        return this.shadowBlur
+    }
+
+    /**
+     * @param {number} assetId
+     */
+    setGradientColorAssetId(assetId) {
+        this.gradientColorAssetId = assetId
+    }
+
+    /**
+     * @return {number}
+     */
+    getGradientColorAssetId() {
+        return this.gradientColorAssetId
+    }
+
+}

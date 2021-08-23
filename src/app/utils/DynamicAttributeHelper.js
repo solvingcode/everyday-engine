@@ -314,6 +314,11 @@ export default class DynamicAttributeHelper {
                 }
             ]
         } else if (attribute.getAttrType() === TYPES.STYLE && isListInstances) {
+            const listColors = world.getAssetsManager().getColorAssets()
+                .map(color => ({
+                    value: color.getId(),
+                    label: color.getName()
+                }))
             formField = [
                 {
                     bind: `${bindName}.borderSize`,
@@ -350,6 +355,13 @@ export default class DynamicAttributeHelper {
                     dynamicAttribute
                 },
                 {
+                    bind: `${bindName}.gradientColorAssetId`,
+                    label: 'Fill Gradient color',
+                    type: Layout.form.DROPDOWN,
+                    list: listColors,
+                    dynamicAttribute
+                },
+                {
                     bind: `${bindName}.fillColorOpacity`,
                     label: `Fill opacity`,
                     type: Layout.form.RANGE,
@@ -369,6 +381,30 @@ export default class DynamicAttributeHelper {
                         max: 1,
                         step: 0.01
                     },
+                    dynamicAttribute
+                },
+                {
+                    bind: `${bindName}.shadowColor`,
+                    label: `Shadow Color`,
+                    type: Layout.form.COLOR,
+                    dynamicAttribute
+                },
+                {
+                    bind: `${bindName}.shadowPosition.x`,
+                    label: `Shadow OffsetX`,
+                    type: Layout.form.NUMBER,
+                    dynamicAttribute
+                },
+                {
+                    bind: `${bindName}.shadowPosition.y`,
+                    label: `Shadow OffsetY`,
+                    type: Layout.form.NUMBER,
+                    dynamicAttribute
+                },
+                {
+                    bind: `${bindName}.shadowBlur`,
+                    label: `Shadow blur`,
+                    type: Layout.form.NUMBER,
                     dynamicAttribute
                 }
             ]

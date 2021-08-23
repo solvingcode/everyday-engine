@@ -80,6 +80,9 @@ export const PrefSchema = {
         fillColor: {
             type: TYPES.STRING
         },
+        gradientColorAssetId: {
+            type: TYPES.NUMBER
+        },
         fillColorOpacity: {
             type: TYPES.NUMBER
         },
@@ -87,6 +90,15 @@ export const PrefSchema = {
             type: TYPES.NUMBER
         },
         opacity: {
+            type: TYPES.NUMBER
+        },
+        shadowColor: {
+            type: TYPES.STRING
+        },
+        shadowPosition: {
+            type: TYPES.VECTOR
+        },
+        shadowBlur: {
             type: TYPES.NUMBER
         }
     },
