@@ -37,6 +37,8 @@ import GridYUnitInstant from '../../unit/instant/type/internal/grid/GridYUnitIns
 import GUIColliderComponent from '../../component/internal/gui/collider/GUIColliderComponent.js'
 import EmptyUnit from '../../unit/type/EmptyUnit.js'
 import GUISelectorComponent from '../../component/internal/gui/selector/GUISelectorComponent.js'
+import GUIAnchorComponent from '../../component/internal/gui/anchor/GUIAnchorComponent.js'
+import UITransformComponent from '../../component/internal/ui/UITransformComponent.js'
 
 class EditorRunner extends Runner {
 
@@ -217,6 +219,7 @@ class EditorRunner extends Runner {
         const targetUnit = this.setupColliderEditor(selectedUnits) || selectedUnits[0]
         this.setupTransformEditor(stateManager, targetUnit)
         this.setupSelectorEditor(selectedUnits)
+        this.setupAnchorEditor(selectedUnits)
     }
 
     /**
@@ -292,6 +295,27 @@ class EditorRunner extends Runner {
             })
         }else{
             unitManager.deleteUnitsByComponents([GUISelectorComponent])
+        }
+    }
+
+    /**
+     * @param {Unit[]} selectedUnits
+     */
+    setupAnchorEditor(selectedUnits) {
+        const world = World.get()
+        const unitManager = world.getUnitManager()
+        if (selectedUnits.length === 1) {
+            const selectedUnit = selectedUnits[0]
+            if(selectedUnit.getComponent(UITransformComponent)){
+                const exitGUIAnchors = unitManager.getUnitsHasComponents([GUIAnchorComponent])
+                unitManager.deleteUnits(exitGUIAnchors
+                    .filter(unit => unit.getComponent(GUIAnchorComponent).getUnitId() !== selectedUnit.getId()))
+                UnitHelper.createGUIAnchor(selectedUnit, world)
+            }else{
+                unitManager.deleteUnitsByComponents([GUIAnchorComponent])
+            }
+        }else{
+            unitManager.deleteUnitsByComponents([GUIAnchorComponent])
         }
     }
 }

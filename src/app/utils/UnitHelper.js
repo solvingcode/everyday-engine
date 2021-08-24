@@ -18,6 +18,8 @@ import ImageHelper from './ImageHelper.js'
 import TransformHelper from './TransformHelper.js'
 import ObjectHelper from './ObjectHelper.js'
 import GUISelectorComponent from '../component/internal/gui/selector/GUISelectorComponent.js'
+import UITransformComponent from '../component/internal/ui/UITransformComponent.js'
+import GUIAnchorComponent from '../component/internal/gui/anchor/GUIAnchorComponent.js'
 
 export default class UnitHelper {
 
@@ -375,6 +377,76 @@ export default class UnitHelper {
         selectorUnit.createComponents([GUISelectorComponent])
         selectorUnit.getComponent(GUISelectorComponent).setUnitId(unit.getId())
         selectorUnit.getComponent(TransformComponent).setRotation(rotation)
+    }
+
+    /**
+     * @param {Unit} unit
+     * @param {World} world
+     * @return {Unit[]}
+     */
+    static createGUIAnchor(unit, world) {
+        const unitManager = world.getUnitManager()
+        const anchorSize = this.getSizeAnchor()
+
+        const style = new Style()
+        style.setFillColor('#00ffea')
+        style.setColor('#000000')
+        style.setBorderSize(1)
+
+        const anchors = this.getAnchors(world, unit)
+
+        anchors.forEach((anchorPosition, index) => {
+            const existGUIAnchor = unitManager.getUnitsHasComponents([GUIAnchorComponent])
+                .find(guiAnchor => guiAnchor.getComponent(GUIAnchorComponent).getOffset() === index + 1 &&
+                    guiAnchor.getComponent(GUIAnchorComponent).getUnitId() === unit.getId()
+                )
+            if(!existGUIAnchor){
+                const anchorUnit = world.createUnitInstant(RectUnitInstant, anchorPosition, new Size(anchorSize), style)
+                anchorUnit.createComponents([GUIAnchorComponent])
+                anchorUnit.getComponent(GUIAnchorComponent).setUnitId(unit.getId())
+                anchorUnit.getComponent(GUIAnchorComponent).setOffset(index + 1)
+            }else{
+                const transformComponent = existGUIAnchor.getComponent(TransformComponent)
+                if (!ObjectHelper.isEqual(transformComponent.getPosition(), anchorPosition)) {
+                    transformComponent.setPosition(anchorPosition)
+                }
+            }
+        })
+    }
+
+    /**
+     * @return {number}
+     */
+    static getSizeAnchor(){
+        return 20
+    }
+
+    /**
+     * @param {World} world
+     * @param {Unit} unit
+     * @return [Vector, Vector, Vector, Vector]
+     */
+    static getAnchors(world, unit){
+        const unitManager = world.getUnitManager()
+        const uiTransformComponent = unit.getComponent(UITransformComponent)
+        const parentUnit = unitManager.findParentUnit(unit)
+        const parentTransformComponent = parentUnit.getComponent(TransformComponent)
+        const parentPosition = parentTransformComponent.getPosition()
+        const parentScale = parentTransformComponent.getScale()
+        const parentSize = TransformHelper.getSizeFromScale(parentScale)
+        const anchorSize = this.getSizeAnchor()
+        const anchorMin = uiTransformComponent.getAnchorMin()
+        const anchorMax = uiTransformComponent.getAnchorMax()
+        return [
+            Vector.add(parentPosition, new Vector({
+                x: anchorMin.getX() * parentSize.getWidth() - anchorSize, y: anchorMin.getY() * parentSize.getHeight() - anchorSize})),
+            Vector.add(parentPosition, new Vector({
+                x: anchorMax.getX() * parentSize.getWidth(), y: (1 - anchorMax.getY()) * parentSize.getHeight() - anchorSize})),
+            Vector.add(parentPosition, new Vector({
+                x: anchorMax.getX() * parentSize.getWidth(), y: anchorMax.getY() * parentSize.getHeight()})),
+            Vector.add(parentPosition, new Vector({
+                x: anchorMin.getX() * parentSize.getWidth() - anchorSize, y: (1 - anchorMin.getY()) * parentSize.getHeight()}))
+        ]
     }
 
     /**

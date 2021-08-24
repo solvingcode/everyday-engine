@@ -22,6 +22,7 @@ import TransformExecutor from '../executor/type/TransformExecutor.js'
 import MeshExecutor from '../executor/type/MeshExecutor.js'
 import MeshRendererExecutor from '../executor/type/MeshRendererExecutor.js'
 import ScreenTransformExecutor from '../executor/type/ScreenTransformExecutor.js'
+import UITransformExecutor from '../executor/type/UITransformExecutor.js'
 
 /**
  * @class {GameLoop}
@@ -43,6 +44,7 @@ class GameLoop extends SceneLoop {
             new CameraExecutor(),
             new MeshExecutor(),
             new TransformExecutor(),
+            new UITransformExecutor(),
             new MeshGenerationExecutor(),
             new RigidBodyExecutor(),
             new ColliderExecutor(),
