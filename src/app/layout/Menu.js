@@ -170,6 +170,14 @@ class Menu {
         })
     }
 
+    /**
+     * @param {MenuItemUI} startMenuItem
+     * @param {MenuItemUI} endMenuItem
+     */
+    dragItems(startMenuItem, endMenuItem){
+        endMenuItem.element.drag(startMenuItem.element.getDataBind())
+    }
+
     stopActionMenuItem() {
         for (const iItem in this.items) {
             const item = this.items[iItem]

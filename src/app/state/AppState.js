@@ -451,7 +451,10 @@ AppState.States = {
     ACTION_ATTACH_ASSET_IMAGE_STOP: {history: true},
     ACTION_ADD_SCENE_START: {history: true},
     ACTION_ADD_SCENE_PROGRESS: {history: false},
-    ACTION_ADD_SCENE_STOP: {history: true}
+    ACTION_ADD_SCENE_STOP: {history: true},
+    ACTION_ATTACH_LAYER_ELEMENT_START: {history: true},
+    ACTION_ATTACH_LAYER_ELEMENT_PROGRESS: {history: false},
+    ACTION_ATTACH_LAYER_ELEMENT_STOP: {history: true}
 }
 
 export default AppState

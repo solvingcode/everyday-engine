@@ -30,14 +30,29 @@ class MenuRunner extends Runner {
     execute() {
         const window = Window.get()
         const mouse = Window.get().mouse
-        const menuItems = this.menu.getUIRenderer().getItemsAt(mouse)
-            .filter(menuItem => menuItem.element.isHandle(window) && menuItem.element.isEnabled())
-        if (menuItems && menuItems.length) {
-            this.menu.selectItems(menuItems)
+        const {path, pathEnd} = mouse
+        let selectItem = true
+        if (mouse.isMouseDrag()) {
+            const menuDragStartItem = this.menu.getUIRenderer().getItemsAt(path)
+                .reverse()
+                .find(menuItem => menuItem.element.isDraggable() && menuItem.element.isEnabled())
+            if (menuDragStartItem) {
+                const menuDragEndItem = this.menu.getUIRenderer().getItemsAt(pathEnd)
+                    .reverse()
+                    .find(menuItem => !!menuItem.element.getDragStateCode() && menuItem.element.isEnabled())
+                if (menuDragEndItem && menuDragStartItem !== menuDragEndItem) {
+                    this.menu.dragItems(menuDragStartItem, menuDragEndItem)
+                    selectItem = false
+                }
+            }
         }
-        /*else {
-            this.menu.stopActionMenuItem()
-        }*/
+        if(selectItem){
+            const menuItems = this.menu.getUIRenderer().getItemsAt(path)
+                .filter(menuItem => menuItem.element.isHandle(window) && menuItem.element.isEnabled())
+            if (menuItems && menuItems.length) {
+                this.menu.selectItems(menuItems)
+            }
+        }
     }
 }
 

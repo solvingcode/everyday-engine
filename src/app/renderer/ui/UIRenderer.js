@@ -100,10 +100,10 @@ class UIRenderer {
     /**
      * @abstract
      * Get all MenuItem at a specific position.
-     * @param {Mouse} mouse
+     * @param {*} path
      * @return {MenuItemUI[]}
      */
-    getItemsAt(mouse) {
+    getItemsAt(path) {
         throw new TypeError('"UIRenderer.getItemsAt" method must be implemented')
     }
 

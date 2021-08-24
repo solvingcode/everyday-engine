@@ -35,6 +35,7 @@ class MenuItem {
         this.id = props.id || Maths.generateId()
         this.index = props.index || Maths.generateId()
         this.stateCode = props.stateCode
+        this.dragStateCode = props.dragStateCode
         this.collapsed = false
         this.parent = parent
         this.items = []
@@ -45,6 +46,13 @@ class MenuItem {
      */
     setData(data) {
         throw new TypeError('MenuItem.setData must be implemented')
+    }
+
+    /**
+     * @return {Object}
+     */
+    getDataBind() {
+        return this.data
     }
 
     /**
@@ -60,6 +68,20 @@ class MenuItem {
      */
     isHandle(window){
         return window.mouse.isButtonClicked(MouseButton.LEFT)
+    }
+
+    /**
+     * @return {boolean}
+     */
+    isDraggable(){
+        return false
+    }
+
+    /**
+     * @return {string|null}
+     */
+    getDragStateCode(){
+        return this.dragStateCode
     }
 
     /**
@@ -95,6 +117,14 @@ class MenuItem {
      */
     run() {
         this.stateCode && this.startState()
+    }
+
+    /**
+     * Run the action when the item receive a dragged item
+     * @param {*} data
+     */
+    drag(data) {
+        this.dragStateCode && this.dragState(data)
     }
 
     /**
@@ -138,6 +168,14 @@ class MenuItem {
      */
     startState() {
         this.stateManager.startState(this.stateCode, this.id, this.data)
+    }
+
+    /**
+     * Start a drag action by type and data (state)
+     * @param {*} data
+     */
+    dragState(data) {
+        this.stateManager.startState(this.dragStateCode, this.id, {start: data, end: this.getDataBind()})
     }
 
     /**

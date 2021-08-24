@@ -82,6 +82,7 @@ import AddUITextAction from './ui/AddUITextAction.js'
 import AttachAssetImageAction from './assets/AttachAssetImageAction.js'
 import AddSceneAction from './scene/AddSceneAction.js'
 import AddUIButtonAction from './ui/AddUIButtonAction.js'
+import AttachLayerElementAction from './layer/AttachLayerElementAction.js'
 
 /**
  * Action Runner class.
@@ -188,7 +189,8 @@ class ActionRunner extends Runner {
             ADD_UI_BUTTON: AddUIButtonAction,
             ADD_UI_TEXT: AddUITextAction,
             ALIGN_VIEW: AlignViewAction,
-            ADD_SCENE: AddSceneAction
+            ADD_SCENE: AddSceneAction,
+            ATTACH_LAYER_ELEMENT: AttachLayerElementAction
         }
         const selectedUnits = this.unitSelector.getSelected(World.get())
         for(const iTypeAction in typeActions){

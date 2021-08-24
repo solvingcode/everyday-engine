@@ -8,6 +8,7 @@ export default class LayerElementMenuItem extends ListSelectElementActionsMenuIt
         super(parent, data, {
             name: '',
             stateCode: 'ACTION_SELECT_LAYER_ELEMENT',
+            dragStateCode: 'ACTION_ATTACH_LAYER_ELEMENT',
             type: Layout.type.LIST_ELEMENT
         })
     }
@@ -33,6 +34,13 @@ export default class LayerElementMenuItem extends ListSelectElementActionsMenuIt
      * @override
      */
     isButton() {
+        return true
+    }
+
+    /**
+     * @override
+     */
+    isDraggable(){
         return true
     }
 

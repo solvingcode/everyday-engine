@@ -63,7 +63,7 @@ export default class MeshExecutor extends ComponentExecutor {
         }
         meshComponent.setSize(TransformHelper.getSizeFromScale(scale))
         meshComponent.setGenerated(false)
-        transformComponent.setLastScale(transformComponent.getScale())
+        transformComponent.setLastScale(_.cloneDeep(transformComponent.getScale()))
     }
 
     /**
@@ -89,7 +89,7 @@ export default class MeshExecutor extends ComponentExecutor {
         } else {
             transformComponent.setScale(localScale)
         }
-        transformComponent.setLastLocalScale(transformComponent.getLocalScale())
+        transformComponent.setLastLocalScale(_.cloneDeep(transformComponent.getLocalScale()))
     }
 
     /**

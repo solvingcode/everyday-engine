@@ -11,6 +11,7 @@ class Mouse {
         this.keyclicks = []
         this.keydbclicks = []
         this.mouseWheelMove = false
+        this.mouseDrag = false
         this.position = new Vector()
         this.scenePosition = new Vector()
         this.target = null
@@ -18,6 +19,8 @@ class Mouse {
         this.currentScenePosition = new Vector()
         this.lastPosition = this.currentPosition
         this.mouseWheel = {y: 0}
+        this.path = null
+        this.pathEnd = null
     }
 
     /**
@@ -54,6 +57,7 @@ class Mouse {
         this.position = this.getPosition(event)
         this.target = this.getTarget(event)
         this.path = this.getPath(event)
+        this.pathEnd = null
         this.scenePosition = this.toSceneCoord(this.position)
     }
 
@@ -82,6 +86,7 @@ class Mouse {
         if (this.isButtonPressed(key)) {
             let index = this.keydowns.indexOf(key)
             this.keydowns.splice(index, 1)
+            this.pathEnd = this.getPath(event)
         }
     }
 
@@ -208,10 +213,18 @@ class Mouse {
         return new Vector({x: x - sceneCanvasX, y: y - sceneCanvasY})
     }
 
+    /**
+     * @return {boolean}
+     */
+    isMouseDrag(){
+        return this.mouseDrag
+    }
+
     setMouseMove() {
         this.lastPosition = this.currentPosition
         this.currentPosition = this.getPosition(event)
         this.currentScenePosition = this.toSceneCoord(this.currentPosition)
+        this.mouseDrag = this.isButtonPressed(MouseButton.LEFT)
     }
 
     clearKeyClicked() {

@@ -47,9 +47,10 @@ export default class UITransformExecutor extends ComponentExecutor {
             const actualAnchorLeftTop = uiTransformComponent.getAnchorLeftTop()
             const actualAnchorRightBottom = uiTransformComponent.getAnchorRightBottom()
             const anchorAbsPositions = UnitHelper.getAnchors(world, unit)
-            const size = unit.getComponent(MeshComponent).getSize()
+            const scale = unit.getComponent(TransformComponent).getScale()
             const position = unit.getComponent(TransformComponent).getPosition()
-            const vertices = GeometryHelper.loadVertices(size).map(vertex => Vector.add(vertex, position))
+            const vertices = GeometryHelper.loadVertices(TransformHelper.getSizeFromScale(scale))
+                .map(vertex => Vector.add(vertex, position))
             const anchorLeftTop = Vector.subtract(anchorAbsPositions[indexLeftTop], vertices[indexLeftTop])
             const anchorRightBottom = Vector.subtract(anchorAbsPositions[indexRightBottom], vertices[indexRightBottom])
             if(!_.isEqual(actualAnchorLeftTop, anchorLeftTop)){
@@ -58,8 +59,8 @@ export default class UITransformExecutor extends ComponentExecutor {
             if(!_.isEqual(actualAnchorRightBottom, anchorRightBottom)){
                 uiTransformComponent.setAnchorRightBottom(anchorRightBottom)
             }
-            uiTransformComponent.setLastAnchorMin(anchorMin)
-            uiTransformComponent.setLastAnchorMax(anchorMax)
+            uiTransformComponent.setLastAnchorMin(_.cloneDeep(anchorMin))
+            uiTransformComponent.setLastAnchorMax(_.cloneDeep(anchorMax))
         }
     }
 
@@ -90,10 +91,10 @@ export default class UITransformExecutor extends ComponentExecutor {
             }))
 
             if(!_.isEqual(position, newPosition)){
-                transformComponent.setPosition(newPosition)
+                transformComponent.setPosition(_.cloneDeep(newPosition))
             }
             if(!_.isEqual(scale, newScale)){
-                transformComponent.setScale(newScale)
+                transformComponent.setScale(_.cloneDeep(newScale))
             }
         }
     }

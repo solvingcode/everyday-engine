@@ -146,10 +146,10 @@ export default class MeshGenerationExecutor extends ComponentExecutor {
             borderSize && context.stroke()
         } else if (fillColor || gradientColorAssetId) {
             context.fill()
-            if (color) {
+            if (color && borderSize) {
                 context.stroke()
             }
-        } else {
+        } else if(borderSize) {
             context.stroke()
         }
         return this.updateMeshFromContext(unitId, world.getMeshManager(), context)

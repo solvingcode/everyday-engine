@@ -401,9 +401,8 @@ class HtmlUIRenderer extends UIRenderer {
     /**
      * @override
      */
-    getItemsAt(mouse) {
-        const {path} = mouse
-        const targets = path && path.filter(el => el.getAttribute && el.getAttribute('data-index'))
+    getItemsAt(path) {
+        const targets = (path && path.filter(el => el.getAttribute && el.getAttribute('data-index'))) || []
         const indexZones = []
         targets.forEach(target => {
             const index = target && parseInt(target.getAttribute('data-index'))

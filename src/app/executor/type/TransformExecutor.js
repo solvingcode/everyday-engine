@@ -30,23 +30,23 @@ export default class TransformExecutor extends ComponentExecutor {
         const unitManager = World.get().getUnitManager()
         const position = transformComponent.getPosition()
         const childUnits = unitManager.findChildUnits(unit)
-        childUnits.forEach(cUnit => {
-            const childTransformComponent = cUnit.getComponent(TransformComponent)
-            if(!childTransformComponent.getPositionUpdated()){
-                const childLocalPosition = childTransformComponent.getLocalPosition()
-                childTransformComponent.setPosition(Vector.add(position, childLocalPosition))
-                childTransformComponent.setLastPosition(childTransformComponent.getPosition()) // block updating localPosition of childs
-                this.updatePosition(cUnit, childTransformComponent)
-            }
-        })
         const parentUnit = unitManager.findParentUnit(unit)
         if (parentUnit) {
             const parentTransformComponent = parentUnit.getComponent(TransformComponent)
             const parentPosition = parentTransformComponent.getPosition()
             transformComponent.setLocalPosition(Vector.subtract(position, parentPosition))
         }
-        transformComponent.setLastPosition(transformComponent.getPosition())
-        transformComponent.setLastLocalPosition(transformComponent.getLocalPosition())
+        transformComponent.setLastPosition(_.cloneDeep(transformComponent.getPosition()))
+        transformComponent.setLastLocalPosition(_.cloneDeep(transformComponent.getLocalPosition()))
+        childUnits.forEach(cUnit => {
+            const childTransformComponent = cUnit.getComponent(TransformComponent)
+            if(!childTransformComponent.getPositionUpdated()){
+                const childLocalPosition = childTransformComponent.getLocalPosition()
+                childTransformComponent.setPosition(Vector.add(position, childLocalPosition))
+                childTransformComponent.setLastPosition(_.cloneDeep(childTransformComponent.getPosition())) // block updating localPosition of childs
+                this.updatePosition(cUnit, childTransformComponent)
+            }
+        })
     }
 
     /**
@@ -58,18 +58,18 @@ export default class TransformExecutor extends ComponentExecutor {
         const localPosition = transformComponent.getLocalPosition()
         const parentUnit = unitManager.findParentUnit(unit)
         const childUnits = unitManager.findChildUnits(unit)
-        childUnits.forEach(cUnit => {
-            const childTransformComponent = cUnit.getComponent(TransformComponent)
-            this.updateLocalPosition(cUnit, childTransformComponent)
-        })
         if (parentUnit) {
             const parentTransformComponent = parentUnit.getComponent(TransformComponent)
             const parentPosition = parentTransformComponent.getPosition()
             transformComponent.setPosition(Vector.add(localPosition, parentPosition))
         } else {
-            transformComponent.setPosition(localPosition)
+            transformComponent.setPosition(_.cloneDeep(localPosition))
         }
-        transformComponent.setLastPosition(transformComponent.getPosition())
-        transformComponent.setLastLocalPosition(transformComponent.getLocalPosition())
+        transformComponent.setLastPosition(_.cloneDeep(transformComponent.getPosition()))
+        transformComponent.setLastLocalPosition(_.cloneDeep(transformComponent.getLocalPosition()))
+        childUnits.forEach(cUnit => {
+            const childTransformComponent = cUnit.getComponent(TransformComponent)
+            this.updateLocalPosition(cUnit, childTransformComponent)
+        })
     }
 }

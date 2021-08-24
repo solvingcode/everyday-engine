@@ -1,7 +1,6 @@
 import Component from '../Component.js'
 import Vector from '../../utils/Vector.js'
 import {TYPES} from '../../pobject/AttributeType.js'
-import ObjectHelper from '../../utils/ObjectHelper.js'
 
 export default class TransformComponent extends Component {
 
@@ -31,7 +30,7 @@ export default class TransformComponent extends Component {
      * @override
      */
     getExcludeFields() {
-        return ['lastPosition', 'lastScale', 'lastLocalPosition', 'lastRotation', 'screenPosition']
+        return ['lastPosition', 'lastScale', 'lastLocalScale', 'lastLocalPosition', 'lastRotation', 'screenPosition']
     }
 
     /**
@@ -45,7 +44,7 @@ export default class TransformComponent extends Component {
      * @param {Vector} position
      */
     setPosition(position) {
-        this.setValue('position', position)
+        this.setValue('position', _.cloneDeep(position))
     }
 
     /**
@@ -59,7 +58,7 @@ export default class TransformComponent extends Component {
      * @param {Vector} position
      */
     setLastPosition(position) {
-        this.setValue('lastPosition', position)
+        this.setValue('lastPosition', _.cloneDeep(position))
     }
 
     /**
@@ -115,7 +114,7 @@ export default class TransformComponent extends Component {
      * @param {Vector} scale
      */
     setScale(scale) {
-        this.setValue('scale', scale)
+        this.setValue('scale', _.cloneDeep(scale))
     }
 
     /**
@@ -129,7 +128,7 @@ export default class TransformComponent extends Component {
      * @param {Vector} scale
      */
     setLastScale(scale) {
-        this.setValue('lastScale', scale)
+        this.setValue('lastScale', _.cloneDeep(scale))
     }
 
     /**
@@ -143,7 +142,7 @@ export default class TransformComponent extends Component {
      * @param {Vector} scale
      */
     setLastLocalScale(scale) {
-        this.setValue('lastLocalScale', scale)
+        this.setValue('lastLocalScale', _.cloneDeep(scale))
     }
 
     /**
@@ -157,7 +156,7 @@ export default class TransformComponent extends Component {
      * @param {Vector} localPosition
      */
     setLocalPosition(localPosition) {
-        this.setValue('localPosition', localPosition)
+        this.setValue('localPosition', _.cloneDeep(localPosition))
     }
 
     /**
@@ -171,7 +170,7 @@ export default class TransformComponent extends Component {
      * @param {Vector} localPosition
      */
     setLastLocalPosition(localPosition) {
-        this.setValue('lastLocalPosition', localPosition)
+        this.setValue('lastLocalPosition', _.cloneDeep(localPosition))
     }
 
     /**
@@ -185,7 +184,7 @@ export default class TransformComponent extends Component {
      * @param {Vector} screenPosition
      */
     setScreenPosition(screenPosition) {
-        this.setValue('screenPosition', screenPosition)
+        this.setValue('screenPosition', _.cloneDeep(screenPosition))
     }
 
     /**
@@ -199,35 +198,35 @@ export default class TransformComponent extends Component {
      * @param {Vector} localScale
      */
     setLocalScale(localScale) {
-        this.setValue('localScale', localScale)
+        this.setValue('localScale', _.cloneDeep(localScale))
     }
 
     /**
      * @return {boolean}
      */
     getPositionUpdated() {
-        return !ObjectHelper.isEqual(this.getPosition(), this.getLastPosition())
+        return !_.isEqual(this.getPosition(), this.getLastPosition())
     }
 
     /**
      * @return {boolean}
      */
     getLocalPositionUpdated() {
-        return !ObjectHelper.isEqual(this.getLocalPosition(), this.getLastLocalPosition())
+        return !_.isEqual(this.getLocalPosition(), this.getLastLocalPosition())
     }
 
     /**
      * @return {boolean}
      */
     getScaleUpdated() {
-        return !ObjectHelper.isEqual(this.getScale(), this.getLastScale())
+        return !_.isEqual(this.getScale(), this.getLastScale())
     }
 
     /**
      * @return {boolean}
      */
     getLocalScaleUpdated() {
-        return !ObjectHelper.isEqual(this.getLocalScale(), this.getLastLocalScale())
+        return !_.isEqual(this.getLocalScale(), this.getLastLocalScale())
     }
 
     /**
