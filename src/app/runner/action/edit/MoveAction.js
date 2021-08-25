@@ -9,6 +9,7 @@ import GUIMoveYComponent from '../../../component/internal/gui/move/GUIMoveYComp
 import GUIMoveFreeComponent from '../../../component/internal/gui/move/GUIMoveFreeComponent.js'
 import TransformComponent from '../../../component/internal/TransformComponent.js'
 import LightComponent from '../../../component/internal/LightComponent.js'
+import UITransformComponent from '../../../component/internal/ui/UITransformComponent.js'
 
 class MoveAction extends Action {
 
@@ -59,8 +60,13 @@ class MoveAction extends Action {
                 unit.findComponentByClass(LightComponent).setGenerated(false)
             }
             const transformComponent = unit.getComponent(TransformComponent)
+            const uiTransformComponent = unit.getComponent(UITransformComponent)
             const position = transformComponent.getPosition()
             transformComponent.setPosition(Vector.add(position, dragAreaDirection))
+            if(uiTransformComponent){
+                uiTransformComponent.setLastAnchorMin(null)
+                uiTransformComponent.setLastAnchorMax(null)
+            }
         })
     }
 

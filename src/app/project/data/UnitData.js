@@ -158,6 +158,22 @@ export default class UnitData extends Data {
      * @param {ComponentData[]} componentClasses
      * @return {boolean}
      */
+    hasEnabledComponentsByClasses(componentClasses) {
+        for (const iComponentClass in componentClasses) {
+            const componentClass = componentClasses[iComponentClass]
+            const componentsFound = this.findComponentsByClass(componentClass)
+            const hasComponentNotEnabled = componentsFound.find(component => !component.isEnabled())
+            if (componentClasses.hasOwnProperty(iComponentClass) && (!componentsFound.length || hasComponentNotEnabled)) {
+                return false
+            }
+        }
+        return true
+    }
+
+    /**
+     * @param {ComponentData[]} componentClasses
+     * @return {boolean}
+     */
     hasAnyComponentsByClasses(componentClasses) {
         for (const iComponentClass in componentClasses) {
             const componentClass = componentClasses[iComponentClass]

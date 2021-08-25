@@ -83,6 +83,7 @@ import AttachAssetImageAction from './assets/AttachAssetImageAction.js'
 import AddSceneAction from './scene/AddSceneAction.js'
 import AddUIButtonAction from './ui/AddUIButtonAction.js'
 import AttachLayerElementAction from './layer/AttachLayerElementAction.js'
+import AlignParentAction from './edit/AlignParentAction.js'
 
 /**
  * Action Runner class.
@@ -189,6 +190,7 @@ class ActionRunner extends Runner {
             ADD_UI_BUTTON: AddUIButtonAction,
             ADD_UI_TEXT: AddUITextAction,
             ALIGN_VIEW: AlignViewAction,
+            ALIGN_PARENT: AlignParentAction,
             ADD_SCENE: AddSceneAction,
             ATTACH_LAYER_ELEMENT: AttachLayerElementAction
         }

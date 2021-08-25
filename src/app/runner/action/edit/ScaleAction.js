@@ -11,6 +11,7 @@ import UnitHelper from '../../../utils/UnitHelper.js'
 import LightComponent from '../../../component/internal/LightComponent.js'
 import TransformComponent from '../../../component/internal/TransformComponent.js'
 import TransformHelper from '../../../utils/TransformHelper.js'
+import UITransformComponent from '../../../component/internal/ui/UITransformComponent.js'
 
 export default class ScaleAction extends Action {
 
@@ -59,12 +60,17 @@ export default class ScaleAction extends Action {
             }
             const meshComponent = unit.getComponent(MeshComponent)
             const transformComponent = unit.getComponent(TransformComponent)
+            const uiTransformComponent = unit.getComponent(UITransformComponent)
             const {width: meshWidth, height: meshHeight} = meshComponent.getSize()
             const ratio = meshHeight / meshWidth
             const width = meshComponent.getSize().getWidth() + dragDistance.x * direction.x
             const height = meshComponent.getSize().getHeight() + (direction.x ? dragDistance.x * ratio : dragDistance.y) * direction.y
             transformComponent.setScale(TransformHelper.getScaleFromSize(new Size({width, height})))
             meshComponent.setGenerated(false)
+            if(uiTransformComponent){
+                uiTransformComponent.setLastAnchorMin(null)
+                uiTransformComponent.setLastAnchorMax(null)
+            }
         })
     }
 

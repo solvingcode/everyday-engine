@@ -8,6 +8,7 @@ import UITopMenuItem from './UITopMenuItem.js'
 import AlignViewMenuItem from '../../edit/AlignViewMenuItem.js'
 import VisibilityTopMenuItem from './VisibilityTopMenuItem.js'
 import AddSceneMenuItem from '../../scene/AddSceneMenuItem.js'
+import AlignParentMenuItem from '../../edit/AlignParentMenuItem.js'
 
 export default class UnitTopMenuItem extends OptionActionsMenuItem {
     constructor(bindObject, position, size) {
@@ -19,7 +20,8 @@ export default class UnitTopMenuItem extends OptionActionsMenuItem {
             new AddAnimationMenuItem(),
             new OptionActionsButtonMenuItem('UI', UITopMenuItem, null, true),
             new OptionActionsButtonMenuItem('Visibility', VisibilityTopMenuItem, null, true),
-            new AlignViewMenuItem()
+            new AlignViewMenuItem(),
+            new AlignParentMenuItem()
             ], position, size
         )
     }
