@@ -271,7 +271,7 @@ export default class DynamicAttributeHelper {
                 dynamicAttribute
             }]
         } else if (attribute.getAttrType() === TYPES.RANGE && isListInstances) {
-            const rule = attribute.getAttrRule()
+            const rule = attribute.getAttrRule() || []
             formField = [{
                 bind: bindName,
                 label: `${attribute.getAttrName()} `,

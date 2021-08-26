@@ -11,9 +11,23 @@ export default class UITransformComponent extends Component {
     /**
      * @override
      */
+    isUnique() {
+        return true
+    }
+
+    /**
+     * @override
+     */
+    isRemovable() {
+        return false
+    }
+
+    /**
+     * @override
+     */
     initAttributes() {
-        this.add('anchorMin', TYPES.VECTOR, new Vector())
-        this.add('anchorMax', TYPES.VECTOR, new Vector())
+        this.add('anchorMin', TYPES.VECTOR, new Vector({x: 0.5, y: 0.5}))
+        this.add('anchorMax', TYPES.VECTOR, new Vector({x: 0.5, y: 0.5}))
         this.add('anchorLeftTop', TYPES.VECTOR, new Vector())
         this.add('anchorRightBottom', TYPES.VECTOR, new Vector())
         this.add('lastAnchorMin', TYPES.VECTOR, new Vector())

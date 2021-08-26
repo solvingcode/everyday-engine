@@ -28,6 +28,7 @@ import UIContainerExecutor from '../executor/type/UIContainerExecutor.js'
 import MeshExecutor from '../executor/type/MeshExecutor.js'
 import MeshStyleExecutor from '../executor/type/MeshStyleExecutor.js'
 import UITransformExecutor from '../executor/type/UITransformExecutor.js'
+import UIButtonStyleExecutor from '../executor/type/UIButtonStyleExecutor.js'
 
 /**
  * @class {SetupLoop}
@@ -62,6 +63,7 @@ class SetupLoop extends Loop {
             new MeshStyleExecutor(),
             new GUIPropertyExecutor(),
             new LightExecutor(),
+            new UIButtonStyleExecutor()
         ])
     }
 

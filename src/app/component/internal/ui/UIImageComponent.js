@@ -16,6 +16,13 @@ export default class UIImageComponent extends Component {
     /**
      * @override
      */
+    isRemovable() {
+        return false
+    }
+
+    /**
+     * @override
+     */
     initAttributes() {
     }
 

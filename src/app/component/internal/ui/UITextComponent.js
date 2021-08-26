@@ -17,6 +17,13 @@ export default class UITextComponent extends Component {
     /**
      * @override
      */
+    isRemovable() {
+        return false
+    }
+
+    /**
+     * @override
+     */
     initAttributes() {
         this.add('text', TYPES.STRING)
         this.add('fontSize', TYPES.NUMBER, 12)

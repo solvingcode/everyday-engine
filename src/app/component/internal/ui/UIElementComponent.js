@@ -16,6 +16,13 @@ export default class UIElementComponent extends Component {
     /**
      * @override
      */
+    isRemovable() {
+        return false
+    }
+
+    /**
+     * @override
+     */
     initAttributes() {
     }
 

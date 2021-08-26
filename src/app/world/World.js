@@ -132,6 +132,16 @@ class World extends WorldData {
     }
 
     /**
+     * Get the unit from world coordinate
+     * @param {Vector} position canvas coordinates (window)
+     * @return {Unit[]}
+     */
+    findAllUnit(position) {
+        const unitSelector = UnitSelector.get()
+        return unitSelector.getAll(this, this.getWorldPosition(position))
+    }
+
+    /**
      * @param {number} id
      * @return {Unit}
      */

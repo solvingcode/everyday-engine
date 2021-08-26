@@ -394,13 +394,19 @@ export default class UnitManager extends UnitManagerData {
 
     /**
      * @param {Unit} unit
+     * @param {Unit} parentUnit
      * @return {Unit}
      */
-    clone(unit) {
+    clone(unit, parentUnit = null) {
         const cloneUnit = _.cloneDeep(unit)
         cloneUnit.setName(`Clone of ${unit.getName()}`)
         cloneUnit.setId(Maths.generateId())
+        parentUnit && cloneUnit.setUnitParentId(parentUnit.getId())
+        cloneUnit.getComponents().forEach(component => component.setId(Maths.generateId()))
         this.addUnit(cloneUnit)
+        this.findChildUnits(unit).forEach(cUnit => {
+            this.clone(cUnit, cloneUnit)
+        })
         return cloneUnit
     }
 

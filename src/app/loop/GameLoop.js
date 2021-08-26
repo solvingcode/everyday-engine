@@ -23,6 +23,7 @@ import MeshExecutor from '../executor/type/MeshExecutor.js'
 import MeshRendererExecutor from '../executor/type/MeshRendererExecutor.js'
 import ScreenTransformExecutor from '../executor/type/ScreenTransformExecutor.js'
 import UITransformExecutor from '../executor/type/UITransformExecutor.js'
+import UIButtonInteractionExecutor from '../executor/type/UIButtonInteractionExecutor.js'
 
 /**
  * @class {GameLoop}
@@ -45,6 +46,7 @@ class GameLoop extends SceneLoop {
             new MeshExecutor(),
             new TransformExecutor(),
             new UITransformExecutor(),
+            new UIButtonInteractionExecutor(),
             new MeshGenerationExecutor(),
             new RigidBodyExecutor(),
             new ColliderExecutor(),

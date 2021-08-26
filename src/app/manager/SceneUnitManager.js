@@ -79,15 +79,6 @@ export default class SceneUnitManager extends UnitManager {
     }
 
     /**
-     * @param {Unit} unit
-     * @return {Unit}
-     */
-    clone(unit) {
-        super.clone(unit)
-        this.getSceneManagerByUnit(unit).clone(unit)
-    }
-
-    /**
      * @param {Scene} scene
      * @return {Unit[]}
      */

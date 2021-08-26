@@ -33,6 +33,16 @@ export default class UnitHelper {
     }
 
     /**
+     * @param {World} world
+     * @param {Unit} unit
+     * @param {Vector} point canvas coordinates (window)
+     * @return {boolean}
+     */
+    static isInsideWindowPosition(world, unit, point){
+        return this.isInside(unit, world.getWorldPosition(point))
+    }
+
+    /**
      * @param {Unit} unit
      * @param {Vector} point
      * @param {Size} size

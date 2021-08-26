@@ -16,6 +16,13 @@ export default class UIContainerComponent extends Component {
     /**
      * @override
      */
+    isRemovable() {
+        return false
+    }
+
+    /**
+     * @override
+     */
     initAttributes() {
     }
 
