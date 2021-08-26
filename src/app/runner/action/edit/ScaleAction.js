@@ -12,6 +12,8 @@ import LightComponent from '../../../component/internal/LightComponent.js'
 import TransformComponent from '../../../component/internal/TransformComponent.js'
 import TransformHelper from '../../../utils/TransformHelper.js'
 import UITransformComponent from '../../../component/internal/ui/UITransformComponent.js'
+import Window from '../../../core/Window.js'
+import {KeyCode} from '../../../core/Keyboard.js'
 
 export default class ScaleAction extends Action {
 
@@ -27,18 +29,18 @@ export default class ScaleAction extends Action {
         const {unit} = StateManager.get().getNextProgressData(this.STATE)
         let direction
 
-        if(unit.getComponent(GUIScaleFreeComponent)){
+        if (unit.getComponent(GUIScaleFreeComponent)) {
             direction = new Vector({x: 1, y: 1})
-        }else if(unit.getComponent(GUIScaleXComponent)){
+        } else if (unit.getComponent(GUIScaleXComponent)) {
             direction = new Vector({x: 1, y: 0})
-        }else if(unit.getComponent(GUIScaleYComponent)){
+        } else if (unit.getComponent(GUIScaleYComponent)) {
             direction = new Vector({x: 0, y: 1})
         }
 
-        if(direction){
-            if(selectedUnits.length === 1 && UnitHelper.isColliderEditing(selectedUnits[0])){
+        if (direction) {
+            if (selectedUnits.length === 1 && UnitHelper.isColliderEditing(selectedUnits[0])) {
                 this.scaleCollider(mouse, selectedUnits[0], direction)
-            }else {
+            } else {
                 this.scaleUnits(mouse, selectedUnits, direction)
             }
         }
@@ -50,24 +52,33 @@ export default class ScaleAction extends Action {
      * @param {Unit[]} selectedUnits
      * @param {Vector} direction
      */
-    static scaleUnits(mouse, selectedUnits, direction){
+    static scaleUnits(mouse, selectedUnits, direction) {
         const world = World.get()
+        const {keyboard} = Window.get()
         const camera = world.getCamera()
         const dragDistance = mouse.dragAndDrop(camera)
         selectedUnits.map((unit) => {
-            if(unit.hasComponentsByClasses([LightComponent])){
+            if (unit.hasComponentsByClasses([LightComponent])) {
                 unit.findComponentByClass(LightComponent).setGenerated(false)
             }
             const meshComponent = unit.getComponent(MeshComponent)
             const transformComponent = unit.getComponent(TransformComponent)
             const uiTransformComponent = unit.getComponent(UITransformComponent)
             const {width: meshWidth, height: meshHeight} = meshComponent.getSize()
+            const position = transformComponent.getPosition()
             const ratio = meshHeight / meshWidth
-            const width = meshComponent.getSize().getWidth() + dragDistance.x * direction.x
-            const height = meshComponent.getSize().getHeight() + (direction.x ? dragDistance.x * ratio : dragDistance.y) * direction.y
+            const dragVector = new Vector({
+                x: dragDistance.x * direction.x,
+                y: (direction.x ? dragDistance.x * ratio : dragDistance.y) * direction.y
+            })
+            const width = meshComponent.getSize().getWidth() + dragVector.x
+            const height = meshComponent.getSize().getHeight() + dragVector.y
             transformComponent.setScale(TransformHelper.getScaleFromSize(new Size({width, height})))
+            if (keyboard.isKeyPressed(KeyCode.SHIFT)) {
+                transformComponent.setPosition(Vector.add(position, Vector.multiply(dragVector, -1/2)))
+            }
             meshComponent.setGenerated(false)
-            if(uiTransformComponent){
+            if (uiTransformComponent) {
                 uiTransformComponent.setLastAnchorMin(null)
                 uiTransformComponent.setLastAnchorMax(null)
             }
@@ -79,7 +90,7 @@ export default class ScaleAction extends Action {
      * @param {Unit} unit
      * @param {Vector} direction
      */
-    static scaleCollider(mouse, unit, direction){
+    static scaleCollider(mouse, unit, direction) {
         const world = World.get()
         const camera = world.getCamera()
         const dragDistance = mouse.dragAndDrop(camera)

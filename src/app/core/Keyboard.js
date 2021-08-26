@@ -70,7 +70,11 @@ export const KeyCode = {
     D: 68,
     SPACE: 32,
     ENTER: 13,
-    P: 80
+    P: 80,
+
+    //Not ascii code
+    SHIFT: 10001,
+    CTRL: 10002
 }
 
 export default Keyboard

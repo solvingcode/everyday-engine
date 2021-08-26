@@ -1,4 +1,4 @@
-import Keyboard from './Keyboard.js'
+import Keyboard, {KeyCode} from './Keyboard.js'
 import Mouse from './Mouse.js'
 import {SCENE_HEIGHT, SCENE_WIDTH} from './Constant.js'
 import Size from '../pobject/Size.js'
@@ -46,7 +46,12 @@ class Window {
 
     initEvents() {
         document.addEventListener('keydown', (event) => {
-            const key = event.keyCode
+            let key = event.keyCode
+            if(event.shiftKey){
+                key = KeyCode.SHIFT
+            }else if(event.ctrlKey){
+                key = KeyCode.CTRL
+            }
             this.keyboard.setKeyPressed(key)
         })
         document.addEventListener('keyup', (event) => {
