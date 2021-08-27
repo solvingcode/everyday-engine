@@ -164,6 +164,7 @@ import AssetFont from '../../asset/types/font/AssetFont.js'
 import AssetGradientColorXml from '../../asset/types/color/AssetGradientColorXml.js'
 import UIButtonUnitInstant from '../../unit/instant/type/internal/ui/UIButtonUnitInstant.js'
 import UIButtonComponent from '../../component/internal/ui/UIButtonComponent.js'
+import UIEmptyUnitInstant from '../../unit/instant/type/internal/ui/UIEmptyUnitInstant.js'
 
 /**
  * @class {DataSchema}
@@ -324,7 +325,8 @@ class DataSchema {
         {id: 1410, type: AssetFont},
         {id: 1420, type: AssetGradientColorXml},
         {id: 1430, type: UIButtonUnitInstant},
-        {id: 1440, type: UIButtonComponent}
+        {id: 1440, type: UIButtonComponent},
+        {id: 1450, type: UIEmptyUnitInstant}
     ]
 
     /**

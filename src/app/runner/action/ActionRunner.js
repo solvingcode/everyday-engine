@@ -26,7 +26,6 @@ import ZoomInOutCameraAction from './camera/ZoomInOutCameraAction.js'
 import FormUpdateAction from './form/FormUpdateAction.js'
 import ScaleAction from './edit/ScaleAction.js'
 import RotateAction from './edit/RotateAction.js'
-import PanelCollapseAction from './panel/PanelCollapseAction.js'
 import HideItemAction from './edit/HideItemAction.js'
 import ShowItemAction from './edit/ShowItemAction.js'
 import LockItemAction from './edit/LockItemAction.js'
@@ -84,6 +83,7 @@ import AddSceneAction from './scene/AddSceneAction.js'
 import AddUIButtonAction from './ui/AddUIButtonAction.js'
 import AttachLayerElementAction from './layer/AttachLayerElementAction.js'
 import AlignParentAction from './edit/AlignParentAction.js'
+import AddUIEmptyAction from './ui/AddUIEmptyAction.js'
 
 /**
  * Action Runner class.
@@ -147,7 +147,6 @@ class ActionRunner extends Runner {
             EXPORT_PROJECT: ExportProjectAction,
             ZOOM_CAMERA: ZoomInOutCameraAction,
             FORM_UPDATE: FormUpdateAction,
-            COLLAPSE_PANEL: PanelCollapseAction,
             ADD_CAMERA: AddCameraAction,
             ADD_LIGHT_POINT: AddLightPointAction,
             ADD_LIGHT_GLOBAL: AddLightGlobalAction,
@@ -192,7 +191,8 @@ class ActionRunner extends Runner {
             ALIGN_VIEW: AlignViewAction,
             ALIGN_PARENT: AlignParentAction,
             ADD_SCENE: AddSceneAction,
-            ATTACH_LAYER_ELEMENT: AttachLayerElementAction
+            ATTACH_LAYER_ELEMENT: AttachLayerElementAction,
+            ADD_UI_EMPTY: AddUIEmptyAction
         }
         const selectedUnits = this.unitSelector.getSelected(World.get())
         for(const iTypeAction in typeActions){

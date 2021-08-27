@@ -51,7 +51,7 @@ export default class UnitManager extends UnitManagerData {
     /**
      * @return {Unit}
      */
-    findActiveCameraUnit(){
+    findActiveCameraUnit() {
         return this.findUnitByComponentClass(CameraComponent)
     }
 
@@ -307,6 +307,20 @@ export default class UnitManager extends UnitManagerData {
         const unitChilds = this.findChildUnits(unit)
         unitChilds.forEach(cUnit => this.deleteUnit(cUnit))
         return this.units.splice(this.getIndexOfUnit(unit), 1)
+    }
+
+    /**
+     * @param {Unit} unit
+     * @param {boolean} visible
+     */
+    setVisibilityUnit(unit, visible) {
+        const unitChilds = this.findChildUnits(unit)
+        unitChilds.forEach(cUnit => this.setVisibilityUnit(cUnit, visible))
+        const meshComponent = unit.getComponent(MeshComponent)
+        unit.getComponent(GUIPropertyComponent).setVisible(visible)
+        if (meshComponent) {
+            meshComponent.setGenerated(false)
+        }
     }
 
     /**

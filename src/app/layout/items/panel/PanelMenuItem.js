@@ -5,10 +5,11 @@ export default class PanelMenuItem extends MenuItem{
 
     constructor(props) {
         super({
-            stateCode: 'ACTION_COLLAPSE_PANEL',
+            stateCode: '',
             type: Layout.type.PANEL,
             ...props
         })
+        this.data = {bind: this}
     }
 
 }

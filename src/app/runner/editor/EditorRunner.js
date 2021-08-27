@@ -215,8 +215,9 @@ class EditorRunner extends Runner {
      */
     setupEditor(stateManager) {
         const world = World.get()
-        const selectedUnits = UnitSelector.get().getSelected(world).filter(unit => unit instanceof EmptyUnit)
-        const targetUnit = this.setupColliderEditor(selectedUnits) || selectedUnits[0]
+        const selectedUnits = UnitSelector.get().getSelected(world)
+        const selectedUnitsWithMesh = selectedUnits.filter(unit => unit instanceof EmptyUnit)
+        const targetUnit = this.setupColliderEditor(selectedUnitsWithMesh) || selectedUnits[0]
         this.setupTransformEditor(stateManager, targetUnit)
         this.setupSelectorEditor(selectedUnits)
         this.setupAnchorEditor(selectedUnits)

@@ -83,6 +83,8 @@ h4{
     padding: 10px 10px;
     margin: 0;
     display: inline-block;
+    box-sizing: border-box;
+    width: 100%;
 }
 
 .panel h4::before{
@@ -183,6 +185,10 @@ h4{
     bottom: 15px;
 }
 
+#app-el-bottom .panel h4{
+    width: auto;
+}
+
 #app-el-bottom .panel h4 i{
     float: left;
     margin-right: 5px;
@@ -245,6 +251,51 @@ h4{
     display: block;
     box-sizing: border-box;
     padding-left: 20px;
+}
+
+.panel .tree .list-element {
+    position: relative;
+}
+
+.panel .tree .list-element button {
+    padding-left: 20px;
+}
+
+.panel .tree .list-element .list-element-img-wrapper{
+    left: 20px;
+}
+
+.panel .tree .list-element .list-element-collapse-el{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 20px;
+    height: 20px;
+}
+
+.panel .tree .list-element.has-child.collapsed > .list-element-collapse-el:after{
+    content: "\f0da";
+    line-height: 20px;
+}
+
+.panel .tree .list-element.has-child > .list-element-collapse-el:after{
+    content: "\f0dd";
+}
+
+.panel .tree .list-element.has-child.collapsed .panel{
+    display: none;
+}
+
+.panel .tree .list-element.has-child .list-element-collapse-el:after{
+    display: block;
+    font-family: "Font Awesome 5 Free", sans-serif;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    font-weight: 900;
+    text-align: center;
 }
 
 .panel .script-nodes .list-element button.fas{

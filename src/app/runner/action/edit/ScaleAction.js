@@ -64,20 +64,24 @@ export default class ScaleAction extends Action {
             const meshComponent = unit.getComponent(MeshComponent)
             const transformComponent = unit.getComponent(TransformComponent)
             const uiTransformComponent = unit.getComponent(UITransformComponent)
-            const {width: meshWidth, height: meshHeight} = meshComponent.getSize()
+            const {width: meshWidth, height: meshHeight} = TransformHelper.getSizeFromScale(transformComponent.getScale())
             const position = transformComponent.getPosition()
             const ratio = meshHeight / meshWidth
             const dragVector = new Vector({
                 x: dragDistance.x * direction.x,
                 y: (direction.x ? dragDistance.x * ratio : dragDistance.y) * direction.y
             })
-            const width = meshComponent.getSize().getWidth() + dragVector.x
-            const height = meshComponent.getSize().getHeight() + dragVector.y
-            transformComponent.setScale(TransformHelper.getScaleFromSize(new Size({width, height})))
+            const width = meshWidth + dragVector.x
+            const height = meshHeight + dragVector.y
+            const newSize = new Size({width, height})
+            transformComponent.setScale(TransformHelper.getScaleFromSize(newSize))
             if (keyboard.isKeyPressed(KeyCode.SHIFT)) {
                 transformComponent.setPosition(Vector.add(position, Vector.multiply(dragVector, -1/2)))
             }
-            meshComponent.setGenerated(false)
+            if(meshComponent){
+                meshComponent.setSize(newSize)
+                meshComponent.setGenerated(false)
+            }
             if (uiTransformComponent) {
                 uiTransformComponent.setLastAnchorMin(null)
                 uiTransformComponent.setLastAnchorMax(null)
@@ -100,14 +104,6 @@ export default class ScaleAction extends Action {
         const width = colliderWidth + dragDistance.x * direction.x
         const height = colliderHeight + (direction.x ? dragDistance.x * ratio : dragDistance.y) * direction.y
         colliderComponent.setSize(new Size({width, height}))
-    }
-
-    /**
-     * Stop the move action
-     */
-    static stop(mouse, selectedUnits) {
-        selectedUnits.map(unit => unit.getComponent(MeshComponent).setGenerated(false))
-        return true
     }
 
 }

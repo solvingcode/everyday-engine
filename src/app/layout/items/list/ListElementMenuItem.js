@@ -62,4 +62,11 @@ export default class ListElementMenuItem extends MenuItem {
     isButton(){
         return false
     }
+
+    /**
+     * @return {boolean}
+     */
+    isCollapsable(){
+        return false
+    }
 }

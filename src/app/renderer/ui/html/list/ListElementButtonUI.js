@@ -22,7 +22,7 @@ export default class ListElementButtonUI extends ItemUI {
         const bind = element.getDataBind()
         if (bind) {
             let container = el
-            if(element.isButton()){
+            if (element.isButton()) {
                 container = document.createElement('button')
                 el.appendChild(container)
             }
@@ -38,6 +38,14 @@ export default class ListElementButtonUI extends ItemUI {
             el.setAttribute('id', item.getId())
             el.setAttribute('order', `${this.getOrder(el)}`)
 
+            const isCollapsable = item.element.isCollapsable()
+            if (isCollapsable) {
+                const collapseEl = document.createElement('div')
+                collapseEl.className = 'list-element-collapse-el'
+                collapseEl.onclick = () => element.setCollapsed(!element.isCollapsed())
+                el.appendChild(collapseEl)
+            }
+
             const titleText = this.getTitle(item)
             if (titleText) {
                 const title = document.createElement('span')
@@ -52,7 +60,7 @@ export default class ListElementButtonUI extends ItemUI {
      * @param {HTMLElement} el
      * @return {number}
      */
-    static getOrder(el){
+    static getOrder(el) {
         return 0
     }
 
@@ -86,7 +94,7 @@ export default class ListElementButtonUI extends ItemUI {
      * @param {HTMLElement} el
      * @return {HTMLElement | null}
      */
-    static getTitleElement(el){
+    static getTitleElement(el) {
         return el.getElementsByTagName('span')[0]
     }
 
@@ -114,6 +122,14 @@ export default class ListElementButtonUI extends ItemUI {
     static update(item, el, uiRenderer) {
         el.innerHTML = ''
         this.postCreate(item, el, uiRenderer)
+    }
+
+    /**
+     * @override
+     */
+    static hasChild(item){
+        const items = item.element.items
+        return !!(items && items[0] && items[0].items && items[0].items.length)
     }
 
     static props = {

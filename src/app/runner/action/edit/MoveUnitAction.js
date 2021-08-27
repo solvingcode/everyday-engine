@@ -2,7 +2,6 @@ import Action from '../Action.js'
 import World from '../../../world/World.js'
 import StateManager from '../../../state/StateManager.js'
 import UnitHelper from '../../../utils/UnitHelper.js'
-import MeshComponent from '../../../component/internal/MeshComponent.js'
 
 export default class MoveUnitAction extends Action {
 
@@ -24,15 +23,6 @@ export default class MoveUnitAction extends Action {
                 }
             })
         }
-        return true
-    }
-
-    /**
-     * @override
-     */
-    static stop(mouse) {
-        const {units} = StateManager.get().getNextStopData(this.STATE)
-        units.map(unit => unit.getComponent(MeshComponent).setGenerated(false))
         return true
     }
 

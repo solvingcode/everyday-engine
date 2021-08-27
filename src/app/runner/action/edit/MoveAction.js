@@ -4,7 +4,6 @@ import StateManager from '../../../state/StateManager.js'
 import Vector from '../../../utils/Vector.js'
 import GUIMoveXComponent from '../../../component/internal/gui/move/GUIMoveXComponent.js'
 import UnitHelper from '../../../utils/UnitHelper.js'
-import MeshComponent from '../../../component/internal/MeshComponent.js'
 import GUIMoveYComponent from '../../../component/internal/gui/move/GUIMoveYComponent.js'
 import GUIMoveFreeComponent from '../../../component/internal/gui/move/GUIMoveFreeComponent.js'
 import TransformComponent from '../../../component/internal/TransformComponent.js'
@@ -86,14 +85,6 @@ class MoveAction extends Action {
         const colliderComponent = UnitHelper.getColliderEditing(unit)
         const position = colliderComponent.getPosition()
         colliderComponent.setPosition(Vector.add(position, dragAreaDirection))
-    }
-
-    /**
-     * Stop the move action
-     */
-    static stop(mouse, selectedUnits) {
-        selectedUnits.map(unit => unit.getComponent(MeshComponent).setGenerated(false))
-        return true
     }
 
 }

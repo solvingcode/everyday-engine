@@ -44,4 +44,11 @@ export default class LayerElementMenuItem extends ListSelectElementActionsMenuIt
         return true
     }
 
+    /**
+     * @override
+     */
+    isCollapsable(){
+        return true
+    }
+
 }
