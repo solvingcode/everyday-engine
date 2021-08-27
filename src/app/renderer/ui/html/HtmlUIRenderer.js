@@ -282,10 +282,17 @@ class HtmlUIRenderer extends UIRenderer {
         const type = this.getType(item)
         el.setAttribute('id', item.getId())
         el.setAttribute('data-index', index)
+        el.setAttribute('data-root-el', 'true')
         el.setAttribute('data-parent-index', item.parent ? item.parent.index : 0)
         el.setAttribute('data-name', element.props.name)
         el.setAttribute('data-zone', element.zone)
         type.postCreate(item, el, this)
+        const triggerEl = type.getTriggerClickElement(item, el)
+        if(triggerEl !== el){
+            triggerEl.setAttribute('data-index', el.getAttribute('data-index'))
+            triggerEl.setAttribute('data-zone', el.getAttribute('data-zone'))
+        }
+        triggerEl.setAttribute('data-index-trigger-click', 'true')
     }
 
     /**
@@ -364,7 +371,8 @@ class HtmlUIRenderer extends UIRenderer {
      */
     getItemAt(mouse) {
         const {path} = mouse
-        const target = path && path.find(el => el.getAttribute && el.getAttribute('data-index'))
+        const target = path && path.find(el => el.getAttribute &&
+            el.getAttribute('data-index') && el.getAttribute('data-index-trigger-click'))
         const index = target && parseInt(target.getAttribute('data-index'))
         const zone = target && target.getAttribute('data-zone')
         if (index !== null && zone) {
@@ -411,7 +419,8 @@ class HtmlUIRenderer extends UIRenderer {
      * @override
      */
     getItemsAt(path) {
-        const targets = (path && path.filter(el => el.getAttribute && el.getAttribute('data-index'))) || []
+        const targets = (path && path.filter(el => el.getAttribute &&
+            el.getAttribute('data-index') && el.getAttribute('data-index-trigger-click'))) || []
         const indexZones = []
         targets.forEach(target => {
             const index = target && parseInt(target.getAttribute('data-index'))
@@ -433,7 +442,7 @@ class HtmlUIRenderer extends UIRenderer {
      * Clean HTML element and all childs
      */
     clean() {
-        const childs = document.querySelectorAll('[data-index]')
+        const childs = document.querySelectorAll('[data-index][data-root-el]')
         childs.forEach(node => {
             const index = parseInt(node.getAttribute('data-index'))
             const parentIndex = parseInt(node.getAttribute('data-parent-index'))

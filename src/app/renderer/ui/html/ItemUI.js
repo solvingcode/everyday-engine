@@ -65,6 +65,15 @@ class ItemUI {
     }
 
     /**
+     * @param {MenuItemUI} item
+     * @param {HTMLElement} el
+     * @return {HTMLElement}
+     */
+    static getTriggerClickElement(item, el){
+        return el
+    }
+
+    /**
      * Clean HTML element and all childs
      * @param {MenuItemUI} item
      * @param {HTMLElement} el

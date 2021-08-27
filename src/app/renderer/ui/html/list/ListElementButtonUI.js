@@ -57,6 +57,17 @@ export default class ListElementButtonUI extends ItemUI {
     }
 
     /**
+     * @override
+     */
+    static getTriggerClickElement(item, el){
+        if (item.element.isButton()) {
+            return el.getElementsByTagName('button')[0]
+        }else{
+            return super.getTriggerClickElement(item, el)
+        }
+    }
+
+    /**
      * @param {HTMLElement} el
      * @return {number}
      */
