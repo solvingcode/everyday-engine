@@ -101,6 +101,13 @@ class MenuItem {
     /**
      * @return {boolean}
      */
+    isReadOnly(){
+        return false
+    }
+
+    /**
+     * @return {boolean}
+     */
     isEditing(){
         return false
     }

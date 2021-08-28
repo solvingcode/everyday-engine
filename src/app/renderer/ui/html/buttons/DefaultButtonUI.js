@@ -36,9 +36,6 @@ class DefaultButtonUI extends ItemUI {
         if (data.optionActionsMenuItem) {
             classNames.push('option-actions-trigger')
         }
-        if (!item.element.isEnabled()) {
-            classNames.push('disabled')
-        }
         return classNames.join(' ')
     }
 }

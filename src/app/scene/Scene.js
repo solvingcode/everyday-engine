@@ -21,6 +21,13 @@ export default class Scene extends SceneData {
     /**
      * @return {boolean}
      */
+    isEnabled(){
+        return true
+    }
+
+    /**
+     * @return {boolean}
+     */
     isUnLoading(){
         return !this.included && this.loaded
     }

@@ -338,6 +338,9 @@ export default {
                                                             id: {
                                                                 type: TYPES.NUMBER
                                                             },
+                                                            enabled: {
+                                                                type: TYPES.BOOLEAN
+                                                            },
                                                             maskGroupId: {
                                                                 type: TYPES.NUMBER
                                                             },

@@ -29,7 +29,7 @@ export class SetupExecutorRunner extends Runner {
             units = graphManager.getUnits()
             camera = script.getCamera()
         }else{
-            units = world.getUnitManager().getUnits()
+            units = world.getUnitManager().getEnabledUnits()
             camera = world.getCamera()
         }
         units.forEach(unit => {

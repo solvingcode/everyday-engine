@@ -301,6 +301,13 @@ export default class UnitManager extends UnitManagerData {
     }
 
     /**
+     * @return {Unit[]}
+     */
+    getEnabledUnits(){
+        return this.getUnits().filter(unit => unit.isEnabled())
+    }
+
+    /**
      * @param {Unit} unit
      */
     deleteUnit(unit) {
@@ -317,7 +324,7 @@ export default class UnitManager extends UnitManagerData {
         const unitChilds = this.findChildUnits(unit)
         unitChilds.forEach(cUnit => this.setVisibilityUnit(cUnit, visible))
         const meshComponent = unit.getComponent(MeshComponent)
-        unit.getComponent(GUIPropertyComponent).setVisible(visible)
+        unit.setEnabled(visible)
         if (meshComponent) {
             meshComponent.setGenerated(false)
         }

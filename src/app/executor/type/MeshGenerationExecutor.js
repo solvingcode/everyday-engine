@@ -11,7 +11,6 @@ import ShapeGenerator from '../../generator/ShapeGenerator.js'
 import UnitHelper from '../../utils/UnitHelper.js'
 import Mesh from '../../core/Mesh.js'
 import Maths from '../../utils/Maths.js'
-import GUIPropertyComponent from '../../component/internal/gui/property/GUIPropertyComponent.js'
 import ImageHelper from '../../utils/ImageHelper.js'
 import TransformHelper from '../../utils/TransformHelper.js'
 import Color from '../../utils/Color.js'
@@ -27,13 +26,12 @@ export default class MeshGenerationExecutor extends ComponentExecutor {
      */
     execute(unit, executionContext) {
         const meshComponent = unit.getComponent(MeshComponent)
-        const propertyComponent = unit.getComponent(GUIPropertyComponent)
         const world = World.get()
         const {camera} = executionContext
         if (!meshComponent.isGenerated()) {
             meshComponent.setVertices(UnitHelper.generateVertices(unit))
             if (!meshComponent.isEnabled() ||
-                !propertyComponent.isVisible() ||
+                !unit.isVisible() ||
                 !this.generate(unit, world, camera)) {
                 world.getMeshManager().clear(unit.getId())
             }

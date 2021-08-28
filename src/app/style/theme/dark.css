@@ -178,12 +178,16 @@ button.selected, button.hidden.selected, button.locked.selected{
     background: none;
 }
 
-.panel .tree .list-element:not(.selected):nth-child(2n) {
+.panel .tree .list-element:not(.disabled):not(.selected):nth-child(2n) {
     background-color: #404040;
 }
 
-.panel .tree .list-element button:hover{
+.panel .tree .list-element:not(.disabled) button:hover{
     background-color: #4e4e4e;
+}
+
+.panel .tree .list-element.disabled button, .panel .tree .list-element.readonly button{
+    color: #767676;
 }
 
 .panel .tree .list-element.selected > button:hover{
@@ -357,6 +361,10 @@ button.selected, button.hidden.selected, button.locked.selected{
 
 .list-element i{
     color: #d2d2d2;
+}
+
+.list-element.disabled i, .list-element.readonly i{
+    color: #767676;
 }
 
 ::-webkit-scrollbar-track {

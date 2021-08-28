@@ -1,7 +1,6 @@
 import MenuItem from '../../MenuItem.js'
 import Layout from '../../Layout.js'
 import World from '../../../world/World.js'
-import GUIPropertyComponent from '../../../component/internal/gui/property/GUIPropertyComponent.js'
 
 /**
  * Hide selected entities
@@ -21,6 +20,6 @@ export default class HideMenuItem extends MenuItem {
      */
     isEnabled() {
         const selectedUnit = World.get().getUnitManager().getSelected()
-        return selectedUnit && selectedUnit.getComponent(GUIPropertyComponent).isVisible()
+        return selectedUnit && selectedUnit.isVisible()
     }
 }

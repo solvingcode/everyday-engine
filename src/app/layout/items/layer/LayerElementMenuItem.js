@@ -40,6 +40,13 @@ export default class LayerElementMenuItem extends ListSelectElementActionsMenuIt
     /**
      * @override
      */
+    isReadOnly(){
+        return !this.getDataBind().isEnabled()
+    }
+
+    /**
+     * @override
+     */
     isDraggable(){
         return true
     }

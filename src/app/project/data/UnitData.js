@@ -26,6 +26,10 @@ export default class UnitData extends Data {
      * @type {ComponentData[]}
      */
     components
+    /**
+     * @type {boolean}
+     */
+    enabled
 
     constructor(name) {
         super()
@@ -33,6 +37,7 @@ export default class UnitData extends Data {
         this.name = name || 'Custom Component'
         this.components = []
         this.unitParentId = null
+        this.enabled = true
     }
 
     /**
@@ -103,6 +108,20 @@ export default class UnitData extends Data {
      */
     getComponents() {
         return this.components
+    }
+
+    /**
+     * @param {boolean} enabled
+     */
+    setEnabled(enabled){
+        this.enabled = enabled
+    }
+
+    /**
+     * @return {boolean}
+     */
+    getEnabled(){
+        return this.enabled
     }
 
     /**

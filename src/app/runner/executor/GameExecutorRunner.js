@@ -21,7 +21,7 @@ export class GameExecutorRunner extends Runner {
      */
     execute(deltaTime) {
         const world = World.get()
-        const units = world.getUnitManager().getUnits()
+        const units = world.getUnitManager().getEnabledUnits()
         const camera = world.getCamera()
         const lights = world.getLightsNotGenerated()
         units.forEach(unit => {

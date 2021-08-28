@@ -118,7 +118,8 @@ class World extends WorldData {
      */
     draw(renderer) {
         this.getUnitManager().getUnitsHasComponents([MeshComponent, TransformComponent])
-            .forEach((unit) => UnitHelper.drawUnit(unit, this.getCamera(), this.getMeshManager(), renderer))
+            .forEach((unit) => unit.isEnabled() &&
+                UnitHelper.drawUnit(unit, this.getCamera(), this.getMeshManager(), renderer))
     }
 
     /**

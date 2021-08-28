@@ -28,7 +28,14 @@ export default class Unit extends UnitData{
      * @return {boolean}
      */
     isVisible(){
-        return this.getComponent(GUIPropertyComponent).isVisible()
+        return this.isEnabled()
+    }
+
+    /**
+     * @return {boolean}
+     */
+    isEnabled(){
+        return this.getEnabled()
     }
 
     /**
