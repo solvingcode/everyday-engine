@@ -1,10 +1,7 @@
-import MenuItem from '../../MenuItem.js'
 import Layout from '../../Layout.js'
-import World from '../../../world/World.js'
-import UIContainerUnitInstant from '../../../unit/instant/type/internal/ui/UIContainerUnitInstant.js'
-import UIImageUnitInstant from '../../../unit/instant/type/internal/ui/UIImageUnitInstant.js'
+import UIElementMenuItem from './UIElementMenuItem.js'
 
-export default class UIButtonMenuItem extends MenuItem {
+export default class UIButtonMenuItem extends UIElementMenuItem {
     constructor() {
         super({
             id: 1,
@@ -13,13 +10,5 @@ export default class UIButtonMenuItem extends MenuItem {
             type: Layout.type.BUTTON,
             zone: Layout.zone.TOP
         })
-    }
-
-    /**
-     * @override
-     */
-    isEnabled() {
-        const selectedUnit = World.get().getUnitManager().getSelected()
-        return selectedUnit instanceof UIContainerUnitInstant || selectedUnit instanceof UIImageUnitInstant
     }
 }

@@ -4,7 +4,7 @@ import MeshComponent from '../../component/internal/MeshComponent.js'
 import TransformComponent from '../../component/internal/TransformComponent.js'
 import StyleComponent from '../../component/internal/StyleComponent.js'
 
-export default class EmptyUnit extends Unit{
+export default class MeshUnit extends Unit{
 
     constructor() {
         super([GUIPropertyComponent, MeshComponent, TransformComponent, StyleComponent])

@@ -16,7 +16,7 @@ export default class TransformComponent extends Component {
         this.add('localPosition', TYPES.VECTOR, new Vector())
         this.add('screenPosition', TYPES.VECTOR, new Vector())
         this.add('localScale', TYPES.VECTOR, new Vector())
-        this.add('scale', TYPES.VECTOR, new Vector({x: 1, y: 1}))
+        this.add('scale', TYPES.VECTOR, new Vector())
         this.add('rotation', TYPES.RANGE, 0, [0, Math.PI * 2, 0.001])
         this.add('localRotation', TYPES.RANGE, 0, [0, Math.PI * 2, 0.001])
         this.add('lastScale', TYPES.VECTOR, new Vector())

@@ -26,8 +26,8 @@ class HtmlPanelUI extends ItemUI {
                 const attrIconValue = document.createElement('i')
                 attrIconValue.className = [IconButtonUI.props.className, IconButtonUI.getClassName(item)].join(' ')
                 titleEl.appendChild(attrIconValue)
-                titleEl.onclick = () => element.setCollapsed(!element.isCollapsed())
             }
+            titleEl.onclick = () => element.setCollapsed(!element.isCollapsed())
             el.appendChild(titleEl)
         }
     }

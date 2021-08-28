@@ -1,7 +1,7 @@
-import MenuItem from '../../MenuItem.js'
 import Layout from '../../Layout.js'
+import UIElementMenuItem from './UIElementMenuItem.js'
 
-export default class UIEmptyMenuItem extends MenuItem {
+export default class UIEmptyMenuItem extends UIElementMenuItem {
     constructor() {
         super({
             id: 1,

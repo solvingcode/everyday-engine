@@ -257,11 +257,11 @@ h4{
     position: relative;
 }
 
-.panel .tree .list-element button {
+.panel .tree .list-element.has-child button {
     padding-left: 20px;
 }
 
-.panel .tree .list-element .list-element-img-wrapper{
+.panel .tree .list-element.has-child .list-element-img-wrapper{
     left: 20px;
 }
 

@@ -35,7 +35,7 @@ import GUIGridYComponent from '../../component/internal/gui/grid/GUIGridYCompone
 import GUIGridXComponent from '../../component/internal/gui/grid/GUIGridXComponent.js'
 import GridYUnitInstant from '../../unit/instant/type/internal/grid/GridYUnitInstant.js'
 import GUIColliderComponent from '../../component/internal/gui/collider/GUIColliderComponent.js'
-import EmptyUnit from '../../unit/type/EmptyUnit.js'
+import MeshUnit from '../../unit/type/MeshUnit.js'
 import GUISelectorComponent from '../../component/internal/gui/selector/GUISelectorComponent.js'
 import GUIAnchorComponent from '../../component/internal/gui/anchor/GUIAnchorComponent.js'
 import UITransformComponent from '../../component/internal/ui/UITransformComponent.js'
@@ -216,7 +216,7 @@ class EditorRunner extends Runner {
     setupEditor(stateManager) {
         const world = World.get()
         const selectedUnits = UnitSelector.get().getSelected(world)
-        const selectedUnitsWithMesh = selectedUnits.filter(unit => unit instanceof EmptyUnit)
+        const selectedUnitsWithMesh = selectedUnits.filter(unit => unit instanceof MeshUnit)
         const targetUnit = this.setupColliderEditor(selectedUnitsWithMesh) || selectedUnits[0]
         this.setupTransformEditor(stateManager, targetUnit)
         this.setupSelectorEditor(selectedUnits)

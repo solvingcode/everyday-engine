@@ -38,7 +38,6 @@ export default class UIButtonInteractionExecutor extends ComponentExecutor {
         }
 
         if (fillColor !== style.getFillColor() || fillColorOpacity !== style.getFillColorOpacity()) {
-            console.log(`change color ${unit.getName()} - ${fillColorOpacity} - ${style.getFillColorOpacity()}`)
             style.setFillColor(fillColor)
             style.setFillColorOpacity(fillColorOpacity)
         }

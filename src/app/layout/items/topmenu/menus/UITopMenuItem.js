@@ -4,6 +4,7 @@ import UIImageMenuItem from '../../ui/UIImageMenuItem.js'
 import UITextMenuItem from '../../ui/UITextMenuItem.js'
 import UIButtonMenuItem from '../../ui/UIButtonMenuItem.js'
 import UIEmptyMenuItem from '../../ui/UIEmptyMenuItem.js'
+import UISliderMenuItem from '../../ui/UISliderMenuItem.js'
 
 export default class UITopMenuItem extends OptionActionsMenuItem {
     constructor(bindObject, position, size) {
@@ -12,7 +13,8 @@ export default class UITopMenuItem extends OptionActionsMenuItem {
             new UIImageMenuItem(),
             new UITextMenuItem(),
             new UIButtonMenuItem(),
-            new UIEmptyMenuItem()
+            new UIEmptyMenuItem(),
+            new UISliderMenuItem()
             ], position, size
         )
     }

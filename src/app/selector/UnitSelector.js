@@ -1,6 +1,6 @@
 import UnitHelper from '../utils/UnitHelper.js'
 import GUIPendingComponent from '../component/internal/gui/GUIPendingComponent.js'
-import EmptyUnit from '../unit/type/EmptyUnit.js'
+import MeshUnit from '../unit/type/MeshUnit.js'
 import MeshComponent from '../component/internal/MeshComponent.js'
 
 export default class UnitSelector {
@@ -82,7 +82,7 @@ export default class UnitSelector {
      */
     getInsideArea(world, point, size) {
         return this.getUnits(world).filter((unit) =>
-            unit instanceof EmptyUnit && UnitHelper.isInsideArea(unit, point, size)
+            unit instanceof MeshUnit && UnitHelper.isInsideArea(unit, point, size)
         )
     }
 

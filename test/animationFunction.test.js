@@ -5,7 +5,7 @@ import Animation from '../src/app/animation/Animation.js'
 import AnimationNode from '../src/app/flow/node/AnimationNode.js'
 import OnAnimationStartEvent from '../src/app/flow/event/native/OnAnimationStartEvent.js'
 import AnimationScript from '../src/app/flow/AnimationScript.js'
-import EmptyUnit from '../src/app/unit/type/EmptyUnit.js'
+import MeshUnit from '../src/app/unit/type/MeshUnit.js'
 import AnimationComponent from '../src/app/component/internal/AnimationComponent.js'
 import AnimationScriptExecutor from '../src/app/executor/type/AnimationScriptExecutor.js'
 import AnimationMeshExecutor from '../src/app/executor/type/AnimationMeshExecutor.js'
@@ -21,7 +21,7 @@ test('Create and compile animation when (startEvent -> animation)', function () 
     const world = World.get()
     const functionRegistry = world.getFunctionRegistry()
     const animationManager = world.getAnimationManager()
-    const unit = new EmptyUnit()
+    const unit = new MeshUnit()
     const animationComponent = unit.createComponent(AnimationComponent)
 
     functionRegistry.init()
@@ -52,7 +52,7 @@ test('Create and compile animation when (startEvent -> animation1 -> animation2)
     const world = World.get()
     const functionRegistry = world.getFunctionRegistry()
     const animationManager = world.getAnimationManager()
-    const unit = new EmptyUnit()
+    const unit = new MeshUnit()
     const animationComponent = unit.createComponent(AnimationComponent)
 
     functionRegistry.init()
@@ -103,7 +103,7 @@ test('Create and compile animation when (startEvent -> animation1 -> condition -
     const world = World.get()
     const functionRegistry = world.getFunctionRegistry()
     const animationManager = world.getAnimationManager()
-    const unit = new EmptyUnit()
+    const unit = new MeshUnit()
     const animationComponent = unit.createComponent(AnimationComponent)
 
     functionRegistry.init()
@@ -203,7 +203,7 @@ test('Create and compile animation when (startEvent -> animation1 -> condition -
     const world = World.get()
     const functionRegistry = world.getFunctionRegistry()
     const animationManager = world.getAnimationManager()
-    const unit = new EmptyUnit()
+    const unit = new MeshUnit()
     const animationComponent = unit.createComponent(AnimationComponent)
 
     functionRegistry.init()
@@ -312,7 +312,7 @@ test('Create and compile animation when (startEvent -> animation1 -> anyStartEve
     const world = World.get()
     const functionRegistry = world.getFunctionRegistry()
     const animationManager = world.getAnimationManager()
-    const unit = new EmptyUnit()
+    const unit = new MeshUnit()
     const animationComponent = unit.createComponent(AnimationComponent)
 
     functionRegistry.init()

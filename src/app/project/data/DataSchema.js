@@ -6,7 +6,7 @@ import Asset from '../../asset/Asset.js'
 import Folder from '../../asset/Folder.js'
 import Mesh from '../../core/Mesh.js'
 import UnitManager from '../../manager/UnitManager.js'
-import EmptyUnit from '../../unit/type/EmptyUnit.js'
+import MeshUnit from '../../unit/type/MeshUnit.js'
 import GUIPropertyComponent from '../../component/internal/gui/property/GUIPropertyComponent.js'
 import MeshComponent from '../../component/internal/MeshComponent.js'
 import TransformComponent from '../../component/internal/TransformComponent.js'
@@ -165,6 +165,12 @@ import AssetGradientColorXml from '../../asset/types/color/AssetGradientColorXml
 import UIButtonUnitInstant from '../../unit/instant/type/internal/ui/UIButtonUnitInstant.js'
 import UIButtonComponent from '../../component/internal/ui/UIButtonComponent.js'
 import UIEmptyUnitInstant from '../../unit/instant/type/internal/ui/UIEmptyUnitInstant.js'
+import UISliderFillUnitInstant from '../../unit/instant/type/internal/ui/slider/UISliderFillUnitInstant.js'
+import UISliderHandleUnitInstant from '../../unit/instant/type/internal/ui/slider/UISliderHandleUnitInstant.js'
+import UISliderUnitInstant from '../../unit/instant/type/internal/ui/slider/UISliderUnitInstant.js'
+import UISliderComponent from '../../component/internal/ui/slider/UISliderComponent.js'
+import UISliderFillComponent from '../../component/internal/ui/slider/UISliderFillComponent.js'
+import UISliderHandleComponent from '../../component/internal/ui/slider/UISliderHandleComponent.js'
 
 /**
  * @class {DataSchema}
@@ -183,7 +189,7 @@ class DataSchema {
         {id: 23, type: Folder},
         {id: 24, type: Mesh},
         {id: 25, type: DynamicAttribute},
-        {id: 30, type: EmptyUnit},
+        {id: 30, type: MeshUnit},
         {id: 40, type: MeshComponent},
         {id: 50, type: TransformComponent},
         {id: 60, type: AssetUnitInstant},
@@ -326,7 +332,13 @@ class DataSchema {
         {id: 1420, type: AssetGradientColorXml},
         {id: 1430, type: UIButtonUnitInstant},
         {id: 1440, type: UIButtonComponent},
-        {id: 1450, type: UIEmptyUnitInstant}
+        {id: 1450, type: UIEmptyUnitInstant},
+        {id: 1460, type: UISliderUnitInstant},
+        {id: 1470, type: UISliderFillUnitInstant},
+        {id: 1480, type: UISliderHandleUnitInstant},
+        {id: 1490, type: UISliderComponent},
+        {id: 1500, type: UISliderFillComponent},
+        {id: 1510, type: UISliderHandleComponent}
     ]
 
     /**

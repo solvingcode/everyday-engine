@@ -84,6 +84,7 @@ import AddUIButtonAction from './ui/AddUIButtonAction.js'
 import AttachLayerElementAction from './layer/AttachLayerElementAction.js'
 import AlignParentAction from './edit/AlignParentAction.js'
 import AddUIEmptyAction from './ui/AddUIEmptyAction.js'
+import AddUISliderAction from './ui/AddUISliderAction.js'
 
 /**
  * Action Runner class.
@@ -192,7 +193,8 @@ class ActionRunner extends Runner {
             ALIGN_PARENT: AlignParentAction,
             ADD_SCENE: AddSceneAction,
             ATTACH_LAYER_ELEMENT: AttachLayerElementAction,
-            ADD_UI_EMPTY: AddUIEmptyAction
+            ADD_UI_EMPTY: AddUIEmptyAction,
+            ADD_UI_SLIDER: AddUISliderAction
         }
         const selectedUnits = this.unitSelector.getSelected(World.get())
         for(const iTypeAction in typeActions){
