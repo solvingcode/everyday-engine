@@ -37,7 +37,7 @@ export default class AddScriptNodeInputListMenuItem extends ListMenuItem {
      */
     getFormObject() {
         const world = World.get()
-        const script = world.getScriptManager().getSelected(world.getTabManager())
+        const script = world.getScriptManager().getFunctionSelected(world.getTabManager())
         const selectedGraphUnits = ScriptGraphSelector.get().getSelected(world)
         const selectedGraphUnit = selectedGraphUnits[0]
         const nodeId = selectedGraphUnit.getComponent(NodeComponent).getNodeId()

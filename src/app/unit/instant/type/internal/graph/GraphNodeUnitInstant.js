@@ -14,7 +14,7 @@ export default class GraphNodeUnitInstant extends UnitInstant {
     /**
      * @param {Vector} position
      * @param {ANode} node
-     * @param {AScript} script
+     * @param {AScriptFunction} script
      */
     instantiate(position, node, script) {
         this.createComponent(NodeComponent)
@@ -24,7 +24,7 @@ export default class GraphNodeUnitInstant extends UnitInstant {
     /**
      * @param {Vector} position
      * @param {ANode} node
-     * @param {AScript} script
+     * @param {AScriptFunction} script
      */
     update(position, node, script) {
         const transformComponent = this.getComponent(TransformComponent)

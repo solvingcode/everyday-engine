@@ -9,7 +9,7 @@ export default class GraphDrawerRunner extends DrawerRunner {
      * @override
      */
     isHandle(window) {
-        const script = World.get().getScriptManager().getSelected(World.get().getTabManager())
+        const script = World.get().getScriptManager().getFunctionSelected(World.get().getTabManager())
         return super.isHandle(window) && script
     }
 
@@ -17,7 +17,7 @@ export default class GraphDrawerRunner extends DrawerRunner {
      * @override
      */
     getCamera(){
-        const script = World.get().getScriptManager().getSelected(World.get().getTabManager())
+        const script = World.get().getScriptManager().getFunctionSelected(World.get().getTabManager())
         return script && script.getCamera()
     }
 

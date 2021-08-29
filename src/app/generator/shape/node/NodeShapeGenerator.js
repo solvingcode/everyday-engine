@@ -1,6 +1,5 @@
 import TypeShapeGenerator from '../TypeShapeGenerator.js'
 import NodeComponent from '../../../component/internal/gui/node/NodeComponent.js'
-import GUIPropertyComponent from '../../../component/internal/gui/property/GUIPropertyComponent.js'
 import NodeHelper from '../../../utils/NodeHelper.js'
 
 /**
@@ -14,7 +13,6 @@ export default class NodeShapeGenerator extends TypeShapeGenerator {
      */
     draw(unit, dataContext) {
         const nodeComponent = unit.getComponent(NodeComponent)
-        const guiPropertyComponent = unit.getComponent(GUIPropertyComponent)
         const title = nodeComponent.getTitle()
         const type = nodeComponent.getType()
         const inputs = nodeComponent.getInputs()
@@ -26,8 +24,7 @@ export default class NodeShapeGenerator extends TypeShapeGenerator {
         const {
             sizeInput, fontSize, heightHead,
             shadowBlur, boxColor, baseInputColor,
-            colorFocused, fontColor, headColor,
-            padding, selectColor
+            fontColor, headColor, padding
         } = NodeHelper.getNodeGUIProps(type)
 
         //convert props to camera scale
@@ -37,16 +34,10 @@ export default class NodeShapeGenerator extends TypeShapeGenerator {
         const sizeInputScale = camera.toScaleNumber(sizeInput)
 
         // box
-        let shadowColor = headColor
-        if (guiPropertyComponent.isSelected()) {
-            shadowColor = selectColor
-        } else if (guiPropertyComponent.isFocused()) {
-            shadowColor = colorFocused
-        }
-        context.shadowColor = shadowColor
+        context.shadowColor = headColor
         context.shadowBlur = shadowBlur
         context.fillStyle = boxColor
-        context.strokeStyle = guiPropertyComponent.isSelected() ? selectColor : headColor
+        context.strokeStyle = headColor
         context.rect(0, 0, width, height)
         context.fill()
         context.stroke()

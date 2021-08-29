@@ -7,8 +7,7 @@ export default class DeleteNodeAction extends Action {
      * @override
      */
     static run(mouse) {
-        const script = World.get().getScriptManager().getSelected(World.get().getTabManager())
-        const assetTab = World.get().getTabManager().getSelectedContentData()
+        const script = World.get().getScriptManager().getFunctionSelected(World.get().getTabManager())
         if(script){
             const nodes = script.getSelectedNodes()
             if(nodes){
@@ -17,7 +16,7 @@ export default class DeleteNodeAction extends Action {
                     connections.forEach(connection => script.removeInputById(connection.getId()))
                     script.removeNodeById(node.getId())
                 })
-                assetTab.generate(script)
+                script.setUpdated(true)
             }
         }
         return true

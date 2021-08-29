@@ -11,6 +11,7 @@ import OnInputJumpEvent from '../../flow/event/native/OnInputJumpEvent.js'
 import Window from '../../core/Window.js'
 import OnUpdateEvent from '../../flow/event/native/OnUpdateEvent.js'
 import OnInputAttackEvent from '../../flow/event/native/OnInputAttackEvent.js'
+import {MAIN_FUNCTION} from '../../flow/AScriptFunction.js'
 
 export default class ScriptExecutor extends ComponentExecutor {
 
@@ -29,28 +30,29 @@ export default class ScriptExecutor extends ComponentExecutor {
         unit.findComponentsByClass(ScriptComponent)
             .filter(scriptComponent => scriptComponent.isEnabled())
             .forEach(scriptComponent => {
-            functionRegistry.getInstancesByClass(scriptComponent.getScript()).forEach(instance => {
-                if (
-                    (mouse.isButtonClicked(MouseButton.LEFT) && instance instanceof OnMouseClickEvent) ||
+                const mainFunction = `${scriptComponent.getScript()}.${MAIN_FUNCTION}`
+                functionRegistry.getInstancesByClass(mainFunction).forEach(instance => {
+                    if (
+                        (mouse.isButtonClicked(MouseButton.LEFT) && instance instanceof OnMouseClickEvent) ||
 
-                    (keyboard.isAnyKeyPressed() && instance instanceof OnKeyDownEvent) ||
+                        (keyboard.isAnyKeyPressed() && instance instanceof OnKeyDownEvent) ||
 
-                    ((keyboard.isKeyPressed(gameInput.getKeyCode(GAME_INPUTS.RIGHT)) ||
-                        keyboard.isKeyPressed(gameInput.getKeyCode(GAME_INPUTS.LEFT))) && instance instanceof OnInputXAxisEvent) ||
+                        ((keyboard.isKeyPressed(gameInput.getKeyCode(GAME_INPUTS.RIGHT)) ||
+                            keyboard.isKeyPressed(gameInput.getKeyCode(GAME_INPUTS.LEFT))) && instance instanceof OnInputXAxisEvent) ||
 
-                    ((keyboard.isKeyPressed(gameInput.getKeyCode(GAME_INPUTS.UP)) ||
-                        keyboard.isKeyPressed(gameInput.getKeyCode(GAME_INPUTS.DOWN))) && instance instanceof OnInputYAxisEvent) ||
+                        ((keyboard.isKeyPressed(gameInput.getKeyCode(GAME_INPUTS.UP)) ||
+                            keyboard.isKeyPressed(gameInput.getKeyCode(GAME_INPUTS.DOWN))) && instance instanceof OnInputYAxisEvent) ||
 
-                    (keyboard.isKeyReleased(gameInput.getKeyCode(GAME_INPUTS.JUMP)) && instance instanceof OnInputJumpEvent) ||
+                        (keyboard.isKeyReleased(gameInput.getKeyCode(GAME_INPUTS.JUMP)) && instance instanceof OnInputJumpEvent) ||
 
-                    (keyboard.isKeyReleased(gameInput.getKeyCode(GAME_INPUTS.ATTACK)) && instance instanceof OnInputAttackEvent) ||
+                        (keyboard.isKeyReleased(gameInput.getKeyCode(GAME_INPUTS.ATTACK)) && instance instanceof OnInputAttackEvent) ||
 
-                    instance instanceof OnUpdateEvent
-                ) {
-                    instance.execute(functionRegistry, unit, scriptComponent, world)
-                }
+                        instance instanceof OnUpdateEvent
+                    ) {
+                        instance.execute(functionRegistry, unit, scriptComponent, world)
+                    }
+                })
             })
-        })
     }
 
 }

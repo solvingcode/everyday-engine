@@ -1,7 +1,7 @@
 import Data from './Data.js'
 import Maths from '../../utils/Maths.js'
 
-export default class AScriptData extends Data{
+export default class AScriptFunctionData extends Data{
 
     /**
      * @type {number}
@@ -9,19 +9,24 @@ export default class AScriptData extends Data{
     id
 
     /**
+     * @type {ANode[]}
+     */
+    nodes
+
+    /**
      * @type {string}
      */
     name
 
     /**
-     * @param {AScriptFunctionData[]}
+     * @type {Camera}
      */
-    functions
+    camera
 
     /**
-     * @type {string}
+     * @type {boolean}
      */
-    status
+    selected
 
     /**
      * @param {string} name
@@ -30,8 +35,8 @@ export default class AScriptData extends Data{
         super()
         this.id = Maths.generateId()
         this.name = name
-        this.status = STATUS.NEW
-        this.functions = []
+        this.nodes = []
+        this.selected = false
     }
 
     /**
@@ -63,44 +68,52 @@ export default class AScriptData extends Data{
     }
 
     /**
-     * @return {AScriptFunction[]}
+     * @return {ANode[]}
      */
-    getFunctions(){
-        return this.functions
+    getNodes(){
+        return this.nodes
     }
 
     /**
-     * @param {AScriptFunction[]} functions
+     * @param {ANode[]} nodes
      */
-    setFunctions(functions){
-        this.functions = functions
+    setNodes(nodes){
+        this.nodes = nodes
     }
 
     /**
-     * @param {AScriptFunction[]} functions
+     * @param {ANode[]} nodes
      */
-    concatFunctions(functions){
-        this.setFunctions(functions)
+    concatNodes(nodes){
+        this.setNodes(nodes)
     }
 
     /**
-     * @param {string} status
+     * @param {Camera} camera
      */
-    setStatus(status){
-        this.status = status
+    setCamera(camera){
+        this.camera = camera
     }
 
     /**
-     * @return {string}
+     * @return {Camera}
      */
-    getStatus(){
-        return this.status
+    getCamera(){
+        return this.camera
     }
 
-}
+    /**
+     * @param {boolean} selected
+     */
+    setSelected(selected){
+        this.selected = selected
+    }
 
-export const STATUS = {
-    NEW: '',
-    COMPILED: 'compiled',
-    ERROR: 'error'
+    /**
+     * @return {boolean}
+     */
+    getSelected(){
+        return this.selected
+    }
+
 }

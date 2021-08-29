@@ -22,7 +22,7 @@ export class SetupRenderRunner extends Runner {
     execute() {
         const world = World.get()
         const tabManager = world.getTabManager()
-        const script = world.getScriptManager().getSelected(world.getTabManager())
+        const script = world.getScriptManager().getFunctionSelected(world.getTabManager())
         const animation = world.getAnimationManager().getSelected(tabManager)
         if (script) {
             world.getGraphManager().draw(script, MeshRenderer.get())

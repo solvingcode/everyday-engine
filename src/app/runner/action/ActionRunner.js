@@ -85,6 +85,7 @@ import AttachLayerElementAction from './layer/AttachLayerElementAction.js'
 import AlignParentAction from './edit/AlignParentAction.js'
 import AddUIEmptyAction from './ui/AddUIEmptyAction.js'
 import AddUISliderAction from './ui/AddUISliderAction.js'
+import AddFunctionAction from './script/AddFunctionAction.js'
 
 /**
  * Action Runner class.
@@ -164,6 +165,7 @@ class ActionRunner extends Runner {
             DELETE_SELECTED_NODE: DeleteSelectedNodeAction,
             DELETE_SCRIPT_EDGE: DeleteEdgeAction,
             ADD_SCRIPT_NODE: AddNodeAction,
+            ADD_SCRIPT_FUNCTION: AddFunctionAction,
             ADD_SCRIPT_EDGE: AddEdgeAction,
             ADD_SCRIPT_NODE_INPUT: AddNodeInputAction,
             CLOSE_ERROR_POPUP: CloseErrorPopupAction,

@@ -15,7 +15,7 @@ import TransformHelper from '../../../../../utils/TransformHelper.js'
 export default class GraphEdgeUnitInstant extends UnitInstant {
 
     /**
-     * @param {AScript} script
+     * @param {AScriptFunction} script
      * @param {NodeInput} nodeInput
      */
     instantiate(script, nodeInput) {
@@ -24,7 +24,7 @@ export default class GraphEdgeUnitInstant extends UnitInstant {
     }
 
     /**
-     * @param {AScript} script
+     * @param {AScriptFunction} script
      * @param {NodeInput} nodeInput
      */
     update(script, nodeInput) {

@@ -195,7 +195,7 @@ export default class NodeHelper {
 
     /**
      * @param {ANode} node
-     * @param {AScript} script
+     * @param {AScriptFunction} script
      * @return {Size}
      */
     static getNodeGUISize(node, script) {
@@ -237,7 +237,7 @@ export default class NodeHelper {
 
     /**
      * @param {ANode} node
-     * @param {AScript} script
+     * @param {AScriptFunction} script
      * @return {DynamicAttribute[]}
      */
     static getNodeGUIConstantInputs(node, script) {
@@ -267,7 +267,7 @@ export default class NodeHelper {
 
     /**
      * @param {ANode} node
-     * @param {AScript} script
+     * @param {AScriptFunction} script
      * @return {string[]}
      */
     static getNodeGUIInputs(node, script) {

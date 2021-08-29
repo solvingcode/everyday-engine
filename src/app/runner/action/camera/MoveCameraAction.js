@@ -16,7 +16,7 @@ class MoveCameraAction extends Action {
      */
     static run(mouse) {
         const world = World.get()
-        const script = world.getScriptManager().getSelected(world.getTabManager())
+        const script = world.getScriptManager().getFunctionSelected(world.getTabManager())
         let camera
         if (!script) {
             camera = world.getCamera()

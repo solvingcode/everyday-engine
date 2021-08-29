@@ -1,8 +1,8 @@
 import World from '../../../../../world/World.js'
 import ListMenuItem from '../../../list/ListMenuItem.js'
-import ScriptEdgeElementMenuItem from './ScriptEdgeElementMenuItem.js'
+import ScriptFunctionElementMenuItem from './ScriptFunctionElementMenuItem.js'
 
-export default class ScriptEdgeListMenuItem extends ListMenuItem{
+export default class ScriptFunctionListMenuItem extends ListMenuItem{
 
     /**
      * @param {MenuItem} parent
@@ -21,15 +21,15 @@ export default class ScriptEdgeListMenuItem extends ListMenuItem{
      * @override
      */
     getListElementFormClass() {
-        return ScriptEdgeElementMenuItem
+        return ScriptFunctionElementMenuItem
     }
 
     /**
      * @override
      */
     getFormObject() {
-        const script = World.get().getScriptManager().getFunctionSelected(World.get().getTabManager())
-        return script && script.getInputs()
+        const script = World.get().getScriptManager().getSelected(World.get().getTabManager())
+        return script && script.getFunctions()
     }
 
     /**

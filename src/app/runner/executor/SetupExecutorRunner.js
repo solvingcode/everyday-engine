@@ -22,12 +22,14 @@ export class SetupExecutorRunner extends Runner {
     execute(deltaTime) {
         const world = World.get()
         const graphManager = world.getGraphManager()
-        const script = world.getScriptManager().getSelected(world.getTabManager())
+        const scriptManager = world.getScriptManager()
+        const scriptFunction = scriptManager.getFunctionSelected(world.getTabManager())
+        const scriptClass = scriptManager.getSelected(world.getTabManager())
         const lights = world.getLightsNotGenerated()
         let units, camera
-        if(script){
+        if(scriptClass){
             units = graphManager.getUnits()
-            camera = script.getCamera()
+            camera = scriptFunction && scriptFunction.getCamera()
         }else{
             units = world.getUnitManager().getEnabledUnits()
             camera = world.getCamera()

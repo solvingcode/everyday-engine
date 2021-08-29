@@ -29,7 +29,7 @@ export default class DynamicAttribute {
      * @param {*} attrValue
      * @param {*} attrRule
      */
-    constructor(attrName, attrType, attrValue, attrRule) {
+    constructor(attrName, attrType, attrValue = null, attrRule = null) {
         this.id = Maths.generateId()
         this.setAttrName(attrName)
         this.setAttrType(attrType)

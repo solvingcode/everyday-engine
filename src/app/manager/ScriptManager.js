@@ -83,7 +83,7 @@ export default class ScriptManager extends ScriptManagerData {
      * @param {string} oldName
      * @param {string} newName
      */
-    rename(data, oldName, newName){
+    rename(data, oldName, newName) {
         ScriptParser.rename(data, newName)
         const script = this.findByName(oldName)
         script.setName(newName)
@@ -96,6 +96,17 @@ export default class ScriptManager extends ScriptManagerData {
     getSelected(tabManager) {
         const assetTab = this.getSelectedAsset(tabManager)
         return assetTab && this.findByName(assetTab.getName())
+    }
+
+    /**
+     * @param {TabManager} tabManager
+     * @return {AScriptFunction}
+     */
+    getFunctionSelected(tabManager) {
+        const script = this.getSelected(tabManager)
+        if (script) {
+            return script.getSelected()
+        }
     }
 
     /**

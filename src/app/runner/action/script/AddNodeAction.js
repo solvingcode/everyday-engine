@@ -18,9 +18,8 @@ export default class AddNodeAction extends Action {
      */
     static run() {
         const {formData} = StateManager.get().getNextProgressData(this.STATE)
-        const script = World.get().getScriptManager().getSelected(World.get().getTabManager())
+        const script = World.get().getScriptManager().getFunctionSelected(World.get().getTabManager())
         const functionRegistry = World.get().getFunctionRegistry()
-        const assetTab = World.get().getTabManager().getSelectedContentData()
         const node = ScriptHelper.createNode(functionRegistry, script, formData.type, formData.value)
         const sizeWindow = Window.get().getSize()
         const scriptGraphPosition = Vector.add(
@@ -29,7 +28,7 @@ export default class AddNodeAction extends Action {
         if(scriptGraphPosition){
             node.setPosition(new Vector({x: scriptGraphPosition.getX(), y: scriptGraphPosition.getY()}))
         }
-        assetTab.generate(script)
+        script.setUpdated(true)
         return true
     }
 

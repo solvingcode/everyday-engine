@@ -26,12 +26,13 @@ import ComponentVariableNode from '../flow/node/variable/ComponentVariableNode.j
 import MaskGroupVariableNode from '../flow/node/variable/MaskGroupVariableNode.js'
 import LoopNode from '../flow/node/LoopNode.js'
 import AudioVariableNode from '../flow/node/variable/AudioVariableNode.js'
+import FunctionScript from '../flow/FunctionScript.js'
 
 export default class ScriptHelper {
 
     /**
      * @param {FunctionRegistry} functionRegistry
-     * @param {AScript} script
+     * @param {AScriptFunction} script
      * @param {string} nodeType
      * @param {string} nodeValue
      * @return {ANode}
@@ -130,7 +131,7 @@ export default class ScriptHelper {
 
     /**
      * undefined if no input found
-     * @param {AScript} script
+     * @param {AScriptFunction} script
      * @param {Unit} unit
      * @param {Vector} position
      * @return {{node: ANode, input: DynamicAttribute|null}|undefined}
@@ -160,7 +161,7 @@ export default class ScriptHelper {
 
     /**
      * Return null if the input found is the default one, undefined if no input found
-     * @param {AScript} script
+     * @param {AScriptFunction} script
      * @param {Unit} unit
      * @param {Vector} position
      * @return {{node: ANode, output: DynamicAttribute|null}|undefined}
@@ -187,7 +188,7 @@ export default class ScriptHelper {
     }
 
     /**
-     * @param {AScript} script
+     * @param {AScriptFunction} script
      * @return {boolean}
      */
     static validate(script) {
@@ -201,12 +202,13 @@ export default class ScriptHelper {
 
     /**
      * @param {AScript} script
+     * @param {AScriptFunction} scriptFunction
      * @param {ANode} node
      * @return {string}
      */
-    static generateFunctionName(script, node) {
-        const nodeIndex = script.getNodes().findIndex(pNode => pNode === node)
-        return `${script.getName()}.${node.getSourceName()}.${nodeIndex}`
+    static generateFunctionName(script, scriptFunction, node) {
+        const nodeIndex = scriptFunction.getNodes().findIndex(pNode => pNode === node)
+        return `${script.getName()}.${scriptFunction.getName()}.${node.getSourceName()}.${nodeIndex}`
     }
 
     /**
@@ -222,12 +224,13 @@ export default class ScriptHelper {
 
     /**
      * @param {AScript} script
+     * @param {AScriptFunction} scriptFunction
      * @param {ANode} node
      * @return {AFunction}
      */
-    static createFunction(script, node) {
+    static createStackFunction(script, scriptFunction, node) {
         const element = NodeHelper.getSourceNode(node)
-        const functionName = this.generateFunctionName(script, node)
+        const functionName = this.generateFunctionName(script, scriptFunction, node)
         if (element instanceof AEvent || element instanceof AAnimation) {
             return new (element.constructor)(functionName)
         }
@@ -236,6 +239,16 @@ export default class ScriptHelper {
 
     /**
      * @param {AScript} script
+     * @param {string} functionName
+     * @return {AFunction}
+     */
+    static createFunction(script, functionName) {
+        const scriptFunction = new FunctionScript(functionName)
+        script.addFunction(scriptFunction)
+    }
+
+    /**
+     * @param {AScriptFunction} script
      * @param {ANode} node
      * @param {string} functionName
      * @return {boolean}

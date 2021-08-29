@@ -182,7 +182,7 @@ button.selected, button.hidden.selected, button.locked.selected{
     background-color: #404040;
 }
 
-.panel .tree .list-element:not(.disabled) button:hover{
+.panel .tree .list-element:not(.disabled) button:hover, .panel .script-nodes .list-element:not(.disabled) button:hover{
     background-color: #4e4e4e;
 }
 
@@ -190,7 +190,7 @@ button.selected, button.hidden.selected, button.locked.selected{
     color: #767676;
 }
 
-.panel .tree .list-element.selected > button:hover{
+.panel .tree .list-element.selected > button:hover, .panel .script-nodes .list-element.selected > button:hover{
     background-color: #3f6093;
 }
 

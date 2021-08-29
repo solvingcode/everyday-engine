@@ -3,6 +3,7 @@ import ListMenuItem from '../../../list/ListMenuItem.js'
 import ScriptEdgeElementMenuItem from '../list/ScriptEdgeElementMenuItem.js'
 import ScriptGraphSelector from '../../../../../selector/ScriptGraphSelector.js'
 import NodeComponent from '../../../../../component/internal/gui/node/NodeComponent.js'
+import DeleteScriptEdgeMenuItem from '../delete/DeleteScriptEdgeMenuItem.js'
 
 export default class ScriptEdgeMenuItem extends ListMenuItem{
 
@@ -31,7 +32,7 @@ export default class ScriptEdgeMenuItem extends ListMenuItem{
      */
     getFormObject() {
         const world = World.get()
-        const script = world.getScriptManager().getSelected(World.get().getTabManager())
+        const script = world.getScriptManager().getFunctionSelected(World.get().getTabManager())
         const selectedGraphUnits = ScriptGraphSelector.get().getSelected(world)
         return selectedGraphUnits.reduce((list, graphUnit) => {
             const nodeId = graphUnit.getComponent(NodeComponent).getNodeId()
@@ -44,7 +45,9 @@ export default class ScriptEdgeMenuItem extends ListMenuItem{
      * @override
      */
     getActions(bindObject){
-        return []
+        return [
+            new DeleteScriptEdgeMenuItem(this, bindObject)
+        ]
     }
 
 }

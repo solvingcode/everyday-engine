@@ -16,13 +16,12 @@ export default class AddEdgeAction extends Action {
      */
     static run() {
         const {formData} = StateManager.get().getNextProgressData(this.STATE)
-        const script = World.get().getScriptManager().getSelected(World.get().getTabManager())
-        const assetTab = World.get().getTabManager().getSelectedContentData()
+        const script = World.get().getScriptManager().getFunctionSelected(World.get().getTabManager())
         const nodeTarget = script.findNodeById(parseInt(formData.getTargetId()))
         const nodeSource = script.findNodeById(parseInt(formData.getSourceId()))
         if(nodeTarget && nodeSource){
             nodeTarget.attach(nodeSource, formData.getConnection())
-            assetTab.generate(script)
+            script.setUpdated(true)
         }else{
             throw new ClientError(`Cannot add the connection (target or source node are invalids)`)
         }

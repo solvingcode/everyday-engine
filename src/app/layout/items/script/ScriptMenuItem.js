@@ -5,6 +5,7 @@ import ScriptNodesMenuItem from './node/ScriptNodesMenuItem.js'
 import ScriptEdgesMenuItem from './edge/ScriptEdgesMenuItem.js'
 import ScriptShowMenuItem from './ScriptShowMenuItem.js'
 import AddScriptNodeInputListMenuItem from './edge/list/AddScriptNodeInputListMenuItem.js'
+import ScriptFunctionsMenuItem from './function/ScriptFunctionsMenuItem.js'
 
 export default class ScriptMenuItem extends PanelMenuItem {
     constructor() {
@@ -15,6 +16,7 @@ export default class ScriptMenuItem extends PanelMenuItem {
         this.items = [
             new ScriptNodesMenuItem(this),
             new ScriptEdgesMenuItem(this),
+            new ScriptFunctionsMenuItem(this),
             new ScriptShowMenuItem(this),
             new AddScriptNodeInputListMenuItem(this)
         ]
@@ -24,7 +26,7 @@ export default class ScriptMenuItem extends PanelMenuItem {
      * @override
      */
     isValid() {
-        const script = World.get().getScriptManager().getSelected(World.get().getTabManager())
+        const script = World.get().getScriptManager().getFunctionSelected(World.get().getTabManager())
         return super.isValid() && script
     }
 }

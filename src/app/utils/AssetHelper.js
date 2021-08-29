@@ -71,11 +71,15 @@ export default class AssetHelper {
      * @return {DynamicAttribute[]}
      */
     static getScriptVars(script){
-        const nodes = script.findNodesByClass(VariableNode)
-        return nodes.map(node => {
-            const sourceNode = NodeHelper.getSourceNode(node)
-            return new DynamicAttribute(sourceNode.getName(), sourceNode.getOutput().getAttrType())
-        })
+        const functionScript = script.getMainFunction()
+        if(functionScript){
+            const nodes = functionScript.findNodesByClass(VariableNode)
+            return nodes.map(node => {
+                const sourceNode = NodeHelper.getSourceNode(node)
+                return new DynamicAttribute(sourceNode.getName(), sourceNode.getOutput().getAttrType())
+            })
+        }
+        return []
     }
 
     /**

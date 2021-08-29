@@ -1,13 +1,5 @@
-import FunctionCompiler from './compiler/FunctionCompiler.js'
-import AScript from './AScript.js'
+import AScriptFunction from './AScriptFunction.js'
 
-export default class FunctionScript extends AScript{
-
-    /**
-     * @override
-     */
-    doCompile(){
-        return FunctionCompiler.get().run(this)
-    }
+export default class FunctionScript extends AScriptFunction{
 
 }

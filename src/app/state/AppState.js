@@ -464,6 +464,9 @@ AppState.States = {
     ACTION_ADD_UI_SLIDER_START: {history: true},
     ACTION_ADD_UI_SLIDER_PROGRESS: {history: false},
     ACTION_ADD_UI_SLIDER_STOP: {history: true},
+    ACTION_ADD_SCRIPT_FUNCTION_START: {history: false},
+    ACTION_ADD_SCRIPT_FUNCTION_PROGRESS: {history: false},
+    ACTION_ADD_SCRIPT_FUNCTION_STOP: {history: false},
 }
 
 export default AppState

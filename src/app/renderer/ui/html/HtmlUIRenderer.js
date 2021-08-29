@@ -323,8 +323,12 @@ class HtmlUIRenderer extends UIRenderer {
         const classNames = []
         const type = this.getType(item)
         const hasChild = this.hasChild(item)
-        item.element.isSelected() && classNames.push('selected')
-        item.element.isCollapsed() && classNames.push('collapsed')
+        if(item.element.isSelected()){
+            classNames.push('selected')
+        }
+        if(item.element.isCollapsed() || item.element.isReadOnly()){
+            classNames.push('collapsed')
+        }
         !item.element.isEnabled() && classNames.push('disabled')
         item.element.isReadOnly() && classNames.push('readonly')
         hasChild && classNames.push('has-child')

@@ -23,8 +23,7 @@ export default class AddNodeInputAction extends Action {
     static run() {
         const world = World.get()
         const {formData} = StateManager.get().getNextProgressData(this.STATE)
-        const script = World.get().getScriptManager().getSelected(World.get().getTabManager())
-        const assetTab = World.get().getTabManager().getSelectedContentData()
+        const script = World.get().getScriptManager().getFunctionSelected(World.get().getTabManager())
 
         const selectedGraphUnits = ScriptGraphSelector.get().getSelected(world)
         const selectedGraphUnit = selectedGraphUnits[0]
@@ -56,7 +55,7 @@ export default class AddNodeInputAction extends Action {
 
         if (node && nodeSource) {
             node.attach(nodeSource, formData.getAttribute().getAttrName())
-            assetTab.generate(script)
+            script.setUpdated(true)
         } else {
             throw new ClientError(`Cannot add the connection (target are invalid)`)
         }

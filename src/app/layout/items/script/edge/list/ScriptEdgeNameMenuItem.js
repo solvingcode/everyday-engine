@@ -9,7 +9,7 @@ export default class ScriptEdgeNameMenuItem extends MenuItem {
      */
     constructor(parent, nodeInput) {
         const functionRegistry = World.get().getFunctionRegistry()
-        const script = World.get().getScriptManager().getSelected(World.get().getTabManager())
+        const script = World.get().getScriptManager().getFunctionSelected(World.get().getTabManager())
         const sourceNode = script.findNodeById(nodeInput.getSourceNodeId())
         const targetNode = script.findNodeById(nodeInput.getNodeId())
         const targetInput = targetNode.getTargetInput(functionRegistry, nodeInput)

@@ -48,7 +48,7 @@ export default class GraphManager {
     }
 
     /**
-     * @param {AScript} script
+     * @param {AScriptFunction} script
      * @param {MeshRenderer} renderer
      */
     draw(script, renderer) {
@@ -60,7 +60,7 @@ export default class GraphManager {
     }
 
     /**
-     * @param {AScript} script
+     * @param {AScriptFunction} script
      * @return {boolean}
      * @todo To be revisited
      */
@@ -97,7 +97,7 @@ export default class GraphManager {
     }
 
     /**
-     * @param {AScript} script
+     * @param {AScriptFunction} script
      * @return {boolean}
      */
     updateGraphEdges(script) {
@@ -129,7 +129,7 @@ export default class GraphManager {
 
     /**
      * @param {ANode} node
-     * @param {AScript} script
+     * @param {AScriptFunction} script
      */
     createGraphNodeUnit(node, script) {
         const unit = new GraphNodeUnitInstant()
@@ -143,7 +143,7 @@ export default class GraphManager {
     }
 
     /**
-     * @param {AScript} script
+     * @param {AScriptFunction} script
      * @param {NodeInput} nodeInput
      */
     createGraphEdgeUnit(script, nodeInput) {
@@ -217,7 +217,7 @@ export default class GraphManager {
     }
 
     /**
-     * @param {AScript} script
+     * @param {AScriptFunction} script
      * @param {Mouse} mouse
      * @return {Unit[]}
      */
@@ -231,7 +231,7 @@ export default class GraphManager {
     }
 
     /**
-     * @param {AScript} script
+     * @param {AScriptFunction} script
      * @param {{position: Vector, size: Size}} dragArea
      * @return {Unit[]}
      */
@@ -250,26 +250,15 @@ export default class GraphManager {
     }
 
     /**
-     * @param {AScript} script
+     * @param {AScriptFunction} script
      */
     update(script) {
         if (script) {
             let updated = false
             updated = this.updateGraphNodes(script) || updated
             updated = this.updateGraphEdges(script) || updated
-            if (updated) {
-                script.reset()
-                this.save(script)
-            }
+            script.setUpdated(updated)
         }
-    }
-
-    /**
-     * @param {AScript} script
-     */
-    save(script) {
-        const asset = World.get().getTabManager().getSelectedContentData()
-        asset.generate(script)
     }
 
     reset() {

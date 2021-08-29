@@ -10,7 +10,7 @@ export default class DeleteSelectedNodeAction extends Action {
      */
     static run(mouse) {
         const world = World.get()
-        const script = world.getScriptManager().getSelected(world.getTabManager())
+        const script = world.getScriptManager().getFunctionSelected(world.getTabManager())
         const selectedGraphUnits = ScriptGraphSelector.get().getSelected(world)
         selectedGraphUnits.forEach(selectedGraphUnit => {
             const nodeId = selectedGraphUnit.getComponent(NodeComponent).getNodeId()
