@@ -29,6 +29,7 @@ import ACustomFunction from '../function/custom/ACustomFunction.js'
 import FunctionInputNode from '../node/FunctionInputNode.js'
 import FunctionOutputNode from '../node/FunctionOutputNode.js'
 import AFunctionInput from '../io/AFunctionInput.js'
+import AFunctionOutput from '../io/AFunctionOutput.js'
 
 export default class ClassCompiler extends Compiler {
 
@@ -114,6 +115,15 @@ export default class ClassCompiler extends Compiler {
                             stackFunction.getStack().push(...[
                                 new StackOperation(OPERATIONS.PUSH, targetInput.getAttrName(),
                                     `[MEM]${scriptFunctionName}.${attribute.getAttrName()}`)
+                            ])
+                        }
+                    } else if(sourceElement instanceof ACustomFunction){
+                        const targetInput = element.findInputByName(targetName)
+                        if (targetInput) {
+                            stackFunction.getStack().push(...[
+                                new StackOperation(OPERATIONS.CALL, sourceElementName),
+                                new StackOperation(OPERATIONS.PUSH, targetInput.getAttrName(),
+                                    `[MEM]${sourceElement.getName()}.${CONSTANTS.RESULT}`)
                             ])
                         }
                     }
@@ -202,7 +212,12 @@ export default class ClassCompiler extends Compiler {
                     const sourceElement = NodeHelper.getSourceNode(sourceNode, world)
                     const sourceElementName = ScriptHelper.generateFunctionName(script, scriptFunction, sourceNode, world)
                     const sourceStackFunction = functionRegistry.getInstance(sourceElementName)
-                    if (sourceElement instanceof AAnimation) {
+                    if(element instanceof AFunctionOutput){
+                        sourceStackFunction.getStack().push(...[
+                            new StackOperation(OPERATIONS.PUSH,
+                                `[MEM]${scriptFunctionName}.${CONSTANTS.RESULT}`, CONSTANTS.RESULT)
+                        ])
+                    }else if (sourceElement instanceof AAnimation) {
                         if (element instanceof AAnimation) {
                             const stopAnimation = new StopAnimationFunction()
                             sourceStackFunction.getStack().push(...[
@@ -250,8 +265,9 @@ export default class ClassCompiler extends Compiler {
                 const nodeInputs = scriptFunction.findNodesByClass(FunctionInputNode)
                 const nodeOutputs = scriptFunction.findNodesByClass(FunctionOutputNode)
                 const functionInputs = nodeInputs.map(nodeInput => NodeHelper.getAttributeFromNodeFunctionInput(nodeInput, world))
-                const functionOutput = !!nodeOutputs.length ? NodeHelper.getAttributeFromNodeFunctionInput(nodeOutputs[0], world) : null
+                const functionOutput = !!nodeOutputs.length ? NodeHelper.getAttributeFromNodeFunctionOutput(nodeOutputs[0], world) : null
                 const stackScriptFunction = new ACustomFunction(scriptFunctionName, functionInputs, functionOutput)
+                stackScriptFunction.setAccess(scriptFunction.getAccess())
                 stackScriptFunction.setStack([
                     new StackOperation(OPERATIONS.CALL, `${scriptFunctionName}.OnCall`)
                 ])

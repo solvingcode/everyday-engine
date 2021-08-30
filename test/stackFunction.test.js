@@ -20,6 +20,7 @@ import FunctionInputNode from '../src/app/flow/node/FunctionInputNode.js'
 import EventNode from '../src/app/flow/node/EventNode.js'
 import OnCallEvent from '../src/app/flow/event/native/OnCallEvent.js'
 import ACustomFunction from '../src/app/flow/function/custom/ACustomFunction.js'
+import FunctionOutputNode from '../src/app/flow/node/FunctionOutputNode.js'
 
 test('Execute native function (without output)', function () {
     const log = new LogFunction()
@@ -296,4 +297,58 @@ test('Create and compile class function (no return)', function () {
     console.log = jest.fn()
     mouseEventCompiled.execute(functionRegistry, null, scriptComponent, World.get())
     expect(console.log).toHaveBeenCalledWith('testMessage')
+})
+
+test('Create and compile class function (return value)', function () {
+    const world = World.get()
+    const functionRegistry = world.getFunctionRegistry()
+
+    functionRegistry.init()
+
+    const script = new ClassScript('classScript')
+    const scriptFunction = new FunctionScript('testFunction')
+    const mainScriptFunction = new FunctionScript('main')
+    script.addFunction(mainScriptFunction)
+    script.addFunction(scriptFunction)
+    const scriptComponent = new ScriptComponent()
+
+    const nodeMultiply = scriptFunction.createNode(functionRegistry, FunctionNode, 'Multiply')
+    const nodeInput1 = scriptFunction.createNode(functionRegistry, FunctionInputNode, `numberA[${TYPES.NUMBER}]`)
+    const nodeInput2 = scriptFunction.createNode(functionRegistry, FunctionInputNode, `numberB[${TYPES.NUMBER}]`)
+    const nodeOutput = scriptFunction.createNode(functionRegistry, FunctionOutputNode, `${TYPES.NUMBER}`)
+    const nodeOnCall = scriptFunction.createNode(functionRegistry, EventNode, 'OnCall')
+    nodeMultiply.attach(nodeInput1, 'value1')
+    nodeMultiply.attach(nodeInput2, 'value2')
+    nodeMultiply.attach(nodeOnCall, null)
+    nodeOutput.attach(nodeMultiply, null)
+
+    script.compile(world)
+
+    const functionCompiled = functionRegistry.getInstance('classScript.testFunction')
+    const callEventCompiled = functionRegistry.getInstance('classScript.testFunction.OnCall')
+    expect(functionRegistry.getInstance('classScript')).toBe(undefined)
+    expect(callEventCompiled).toBeDefined()
+    expect(functionCompiled).toBeDefined()
+    expect(callEventCompiled.constructor).toEqual(OnCallEvent)
+    expect(functionCompiled.constructor).toEqual(ACustomFunction)
+
+    const nodeLogFunction = mainScriptFunction.createNode(functionRegistry, FunctionNode, 'Log')
+    const nodeMultiplyFunction = mainScriptFunction.createNode(functionRegistry, FunctionNode, 'classScript.testFunction')
+    const nodeMouseClick = mainScriptFunction.createNode(functionRegistry, EventNode, 'OnMouseClick')
+    const nodeInputValue1 = mainScriptFunction.createNode(functionRegistry, ConstantNode, '5')
+    const nodeInputValue2 = mainScriptFunction.createNode(functionRegistry, ConstantNode, '4')
+    nodeLogFunction.attach(nodeMouseClick, null)
+    nodeLogFunction.attach(nodeMultiplyFunction, 'value')
+    nodeMultiplyFunction.attach(nodeInputValue1, 'numberA')
+    nodeMultiplyFunction.attach(nodeInputValue2, 'numberB')
+
+    script.compile(world)
+
+    const mouseEventCompiled = functionRegistry.getInstance('classScript.main.OnMouseClick.2')
+    expect(mouseEventCompiled).toBeDefined()
+    expect(mouseEventCompiled.constructor).toEqual(OnMouseClickEvent)
+
+    console.log = jest.fn()
+    mouseEventCompiled.execute(functionRegistry, null, scriptComponent, World.get())
+    expect(console.log).toHaveBeenCalledWith(20)
 })

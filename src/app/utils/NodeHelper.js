@@ -155,6 +155,16 @@ export default class NodeHelper {
     }
 
     /**
+     * @param {World} world
+     * @param {ANode} node
+     * @return {DynamicAttribute}
+     */
+    static getAttributeFromNodeFunctionOutput(node, world){
+        const nodeSource = this.getSourceNode(node, world)
+        return new DynamicAttribute('output', parseInt(nodeSource.getName()))
+    }
+
+    /**
      * @param {number} nodeType
      * @return {string}
      */

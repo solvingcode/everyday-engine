@@ -23,6 +23,7 @@ import AudioVariableNode from './node/variable/AudioVariableNode.js'
 import AScriptFunctionData from '../project/data/AScriptFunctionData.js'
 import FunctionInputNode from './node/FunctionInputNode.js'
 import FunctionOutputNode from './node/FunctionOutputNode.js'
+import {ACCESSOR} from './function/AFunction.js'
 
 /**
  * @abstract
@@ -239,6 +240,13 @@ export default class AScriptFunction extends AScriptFunctionData {
      */
     isUpdated(){
         return this.updated
+    }
+
+    /**
+     * @return {boolean}
+     */
+    isPublic(){
+        return this.access === ACCESSOR.PUBLIC
     }
 
 }

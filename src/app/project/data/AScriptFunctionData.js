@@ -29,6 +29,11 @@ export default class AScriptFunctionData extends Data{
     selected
 
     /**
+     * @type {number}
+     */
+    access
+
+    /**
      * @param {string} name
      */
     constructor(name= '') {
@@ -37,6 +42,7 @@ export default class AScriptFunctionData extends Data{
         this.name = name
         this.nodes = []
         this.selected = false
+        this.access = 0
     }
 
     /**
@@ -51,6 +57,20 @@ export default class AScriptFunctionData extends Data{
      */
     getId(){
         return this.id
+    }
+
+    /**
+     * @param {number} access
+     */
+    setAccess(access){
+        this.access = access
+    }
+
+    /**
+     * @return {number}
+     */
+    getAccess() {
+        return this.access
     }
 
     /**

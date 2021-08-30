@@ -2,6 +2,7 @@ import MenuItem from '../../../MenuItem.js'
 import Layout from '../../../Layout.js'
 import AddScriptFunctionMenuItem from './add/AddScriptFunctionMenuItem.js'
 import ScriptFunctionListMenuItem from './list/ScriptFunctionListMenuItem.js'
+import EditScriptFunctionFormMenuItem from './edit/EditScriptFunctionFormMenuItem.js'
 
 export default class ScriptFunctionsMenuItem extends MenuItem {
     constructor(parent) {
@@ -14,7 +15,8 @@ export default class ScriptFunctionsMenuItem extends MenuItem {
         this.parent = parent
         this.items = [
             new AddScriptFunctionMenuItem(this),
-            new ScriptFunctionListMenuItem(this)
+            new ScriptFunctionListMenuItem(this),
+            new EditScriptFunctionFormMenuItem(this)
         ]
     }
 }
