@@ -5,6 +5,8 @@ import World from '../../world/World.js'
 import Window from '../../core/Window.js'
 import UnitHelper from '../../utils/UnitHelper.js'
 import {MouseButton} from '../../core/Mouse.js'
+import ScriptComponent from '../../component/internal/ScriptComponent.js'
+import ClientError from '../../exception/type/ClientError.js'
 
 export default class UIButtonInteractionExecutor extends ComponentExecutor {
 
@@ -30,14 +32,27 @@ export default class UIButtonInteractionExecutor extends ComponentExecutor {
             fillColor = uiButtonComponent.getPressedColor()
             fillColorOpacity = uiButtonComponent.getPressedColorOpacity()
             const onClickName = uiButtonComponent.getOnClick()
-            if(onClickName){
-                const onClick = world.getFunctionRegistry().getInstance(onClickName)
-                onClick.execute(world.getFunctionRegistry(), null, null, world)
+            const onClickUnitId = uiButtonComponent.getOnClickUnit()
+            if (onClickName) {
+                const onClickUnit = world.getUnitManager().findUnitById(onClickUnitId)
+                if (onClickUnit) {
+                    const onClickScript = onClickName.replace(/^([^.]+).*/, '$1')
+                    const scriptComponent = onClickUnit.findComponentsByClass(ScriptComponent)
+                        .find(pScriptComponent => pScriptComponent.getScript() === onClickScript)
+                    if (scriptComponent) {
+                        const onClick = world.getFunctionRegistry().getInstance(onClickName)
+                        onClick.execute(world.getFunctionRegistry(), onClickUnit, scriptComponent, world)
+                    } else {
+                        throw new ClientError(`Cannot execute function "${onClickName}" for Unit "${onClickUnit.getName()}"`)
+                    }
+                } else {
+                    throw new ClientError(`Cannot execute function "${onClickName}"`)
+                }
             }
         } else if (isHoverUnit) {
             fillColor = uiButtonComponent.getHoverColor()
             fillColorOpacity = uiButtonComponent.getHoverColorOpacity()
-        } else if(uiButtonComponent.getDefaultColor() !== fillColor || uiButtonComponent.getDefaultColorOpacity() !== fillColorOpacity) {
+        } else if (uiButtonComponent.getDefaultColor() !== fillColor || uiButtonComponent.getDefaultColorOpacity() !== fillColorOpacity) {
             fillColor = uiButtonComponent.getDefaultColor()
             fillColorOpacity = uiButtonComponent.getDefaultColorOpacity()
         }

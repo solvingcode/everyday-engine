@@ -31,6 +31,7 @@ export default class UIButtonComponent extends Component {
         this.add('hoverColorOpacity', TYPES.RANGE, 1, [0, 1, 0.01])
         this.add('pressedColor', TYPES.COLOR)
         this.add('pressedColorOpacity', TYPES.RANGE, 1, [0, 1, 0.01])
+        this.add('onClickUnit', TYPES.UNIT)
         this.add('onClick', TYPES.FUNCTION)
     }
 
@@ -130,6 +131,20 @@ export default class UIButtonComponent extends Component {
      */
     setOnClick(onClick) {
         this.setValue('onClick', onClick)
+    }
+
+    /**
+     * @return {number}
+     */
+    getOnClickUnit(){
+        return this.getValue('onClickUnit')
+    }
+
+    /**
+     * @param {number} onClickUnit
+     */
+    setOnClickUnit(onClickUnit) {
+        this.setValue('onClickUnit', onClickUnit)
     }
 
 }
