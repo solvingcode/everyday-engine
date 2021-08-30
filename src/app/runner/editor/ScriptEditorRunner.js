@@ -143,8 +143,8 @@ export default class ScriptEditorRunner extends Runner {
                 //search if a node input/output is clicked to start drawing edges, else start drawing selection box
                 if (!stateManager.hasAnyState('DRAW_SELECT_GRAPH') &&
                     !stateManager.hasAnyState('DRAW_NODE_EDGE')) {
-                    this.startNodeInput = ScriptHelper.findNodeInputByPosition(script, unit, currentScenePosition)
-                    this.startNodeOutput = ScriptHelper.findNodeOutputByPosition(script, unit, currentScenePosition)
+                    this.startNodeInput = ScriptHelper.findNodeInputByPosition(script, unit, currentScenePosition, world)
+                    this.startNodeOutput = ScriptHelper.findNodeOutputByPosition(script, unit, currentScenePosition, world)
                     if (this.startNodeInput !== undefined || this.startNodeOutput !== undefined) {
                         stateManager.startState('DRAW_NODE_EDGE', 1, {unit: null})
                     } else {
@@ -160,8 +160,8 @@ export default class ScriptEditorRunner extends Runner {
             const drawUnit = drawState && drawState.unit
             if (drawUnit) {
                 const endUnit = graphManager.findFirstUnitByPosition(currentScenePosition)
-                const endNodeInput = ScriptHelper.findNodeInputByPosition(script, endUnit, currentScenePosition)
-                const endNodeOutput = ScriptHelper.findNodeInputByPosition(script, endUnit, currentScenePosition)
+                const endNodeInput = ScriptHelper.findNodeInputByPosition(script, endUnit, currentScenePosition, world)
+                const endNodeOutput = ScriptHelper.findNodeInputByPosition(script, endUnit, currentScenePosition, world)
                 const nodeTargetInput = this.startNodeInput || endNodeInput
                 const nodeSourceInput = this.startNodeOutput || endNodeOutput
                 if (nodeTargetInput && nodeSourceInput) {
@@ -192,7 +192,8 @@ export default class ScriptEditorRunner extends Runner {
      * @return {boolean}
      */
     isValidPositionForMoving(script, unit, position) {
-        return ScriptHelper.findNodeInputByPosition(script, unit, position) === undefined &&
-            ScriptHelper.findNodeOutputByPosition(script, unit, position) === undefined
+        const world = World.get()
+        return ScriptHelper.findNodeInputByPosition(script, unit, position, world) === undefined &&
+            ScriptHelper.findNodeOutputByPosition(script, unit, position, world) === undefined
     }
 }

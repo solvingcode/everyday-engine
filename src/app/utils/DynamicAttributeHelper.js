@@ -1,5 +1,5 @@
 import DynamicAttribute from '../pobject/DynamicAttribute.js'
-import {TYPES} from '../pobject/AttributeType.js'
+import {TYPES, TYPES_NAME} from '../pobject/AttributeType.js'
 import ClientError from '../exception/type/ClientError.js'
 import Layout from '../layout/Layout.js'
 import Component from '../component/Component.js'
@@ -541,6 +541,18 @@ export default class DynamicAttributeHelper {
                 break
         }
         return newValue
+    }
+
+    /**
+     * @param {number} attributeType
+     * @return {string}
+     */
+    static getAttributeTypeName(attributeType){
+        const typeName = TYPES_NAME.find(type => type.value === attributeType)
+        if (typeName) {
+            return typeName.label
+        }
+        throw new ClientError(`Attribute type not recognized "${typeName}"`)
     }
 
 }

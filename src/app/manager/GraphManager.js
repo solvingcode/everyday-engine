@@ -84,7 +84,7 @@ export default class GraphManager {
                     node.setPosition(position)
                     updated = true
                 }
-                graphUnit.update(node.getPosition(), node, script)
+                graphUnit.update(node.getPosition(), node, script, World.get())
             }
         })
         graphNodeIds.forEach(graphNodeId => {
@@ -115,7 +115,7 @@ export default class GraphManager {
                 const graphUnit = units
                     .find(gUnit =>
                         gUnit.getComponent(NodeInputComponent).getNodeInputId() === nodeInput.getId())
-                graphUnit.update(script, nodeInput)
+                graphUnit.update(script, nodeInput, World.get())
             }
         })
         graphEdgeIds.forEach(graphEdgeId => {
@@ -134,7 +134,7 @@ export default class GraphManager {
     createGraphNodeUnit(node, script) {
         const unit = new GraphNodeUnitInstant()
         const position = node.getPosition()
-        unit.instantiate(position, node, script)
+        unit.instantiate(position, node, script, World.get())
         if (NodeHelper.isHidden(node)) {
             unit.getComponent(MeshComponent).setEnabled(false)
         }
@@ -148,7 +148,7 @@ export default class GraphManager {
      */
     createGraphEdgeUnit(script, nodeInput) {
         const unit = new GraphEdgeUnitInstant()
-        unit.instantiate(script, nodeInput)
+        unit.instantiate(script, nodeInput, World.get())
         if (NodeHelper.isHidden(script.findNodeById(nodeInput.getSourceNodeId()))) {
             unit.getComponent(MeshComponent).setEnabled(false)
         }

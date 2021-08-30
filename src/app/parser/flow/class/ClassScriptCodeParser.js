@@ -84,7 +84,7 @@ export default class ClassScriptCodeParser extends Parser {
     static getEdges(script, nodes) {
         return nodes.reduce((edges, node) => {
             const targetNode = script.findNodeById(node.id)
-            const targetSourceNode = NodeHelper.getSourceNode(targetNode)
+            const targetSourceNode = NodeHelper.getSourceNode(targetNode, null)
             const inputs = targetSourceNode.getInputs()
             return edges.concat([]
                 .concat(this.getConstantEdges(script, nodes, node, inputs))

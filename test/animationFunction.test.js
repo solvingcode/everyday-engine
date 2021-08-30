@@ -16,6 +16,7 @@ import ConstantNode from '../src/app/flow/node/ConstantNode.js'
 import StringVariableNode from '../src/app/flow/node/variable/StringVariableNode.js'
 import AssetHelper from '../src/app/utils/AssetHelper.js'
 import ReferenceNode from '../src/app/flow/node/ReferenceNode.js'
+import FunctionScript from '../src/app/flow/FunctionScript.js'
 
 test('Create and compile animation when (startEvent -> animation)', function () {
     const world = World.get()
@@ -27,19 +28,21 @@ test('Create and compile animation when (startEvent -> animation)', function () 
     functionRegistry.init()
 
     const script = new AnimationScript('animationScript')
+    const scriptFunction = new FunctionScript('main')
+    script.addFunction(scriptFunction)
     const animation = new Animation(1, 'Animation')
 
     animationManager.add(animation)
     animationComponent.setScript(script.getName())
 
-    const nodeStartAnimation = script.createNode(functionRegistry, EventNode, 'OnAnimationStart')
-    const nodeAnimation = script.createNode(functionRegistry, AnimationNode, `${animation.getId()}`)
+    const nodeStartAnimation = scriptFunction.createNode(functionRegistry, EventNode, 'OnAnimationStart')
+    const nodeAnimation = scriptFunction.createNode(functionRegistry, AnimationNode, `${animation.getId()}`)
 
     nodeAnimation.attach(nodeStartAnimation, null)
 
-    script.compile()
+    script.compile(world)
 
-    const mouseEventCompiled = functionRegistry.getInstance('animationScript.OnAnimationStart.0')
+    const mouseEventCompiled = functionRegistry.getInstance('animationScript.main.OnAnimationStart.0')
     expect(functionRegistry.getInstance('animationScript')).toBe(undefined)
     expect(mouseEventCompiled).toBeDefined()
     expect(mouseEventCompiled.constructor).toEqual(OnAnimationStartEvent)
@@ -58,6 +61,8 @@ test('Create and compile animation when (startEvent -> animation1 -> animation2)
     functionRegistry.init()
 
     const script = new AnimationScript('animationScript')
+    const scriptFunction = new FunctionScript('main')
+    script.addFunction(scriptFunction)
     const animation1 = new Animation(1, 'Animation1')
     const animation2 = new Animation(2, 'Animation2')
     animation1.setSamples(10)
@@ -69,24 +74,22 @@ test('Create and compile animation when (startEvent -> animation1 -> animation2)
     animationManager.add(animation2)
     animationComponent.setScript(script.getName())
 
-    const nodeStartAnimation = script.createNode(functionRegistry, EventNode, 'OnAnimationStart')
-    const nodeAnimation1 = script.createNode(functionRegistry, AnimationNode, `${animation1.getId()}`)
-    const nodeAnimation2 = script.createNode(functionRegistry, AnimationNode, `${animation2.getId()}`)
+    const nodeStartAnimation = scriptFunction.createNode(functionRegistry, EventNode, 'OnAnimationStart')
+    const nodeAnimation1 = scriptFunction.createNode(functionRegistry, AnimationNode, `${animation1.getId()}`)
+    const nodeAnimation2 = scriptFunction.createNode(functionRegistry, AnimationNode, `${animation2.getId()}`)
 
     nodeAnimation1.attach(nodeStartAnimation, null)
     nodeAnimation2.attach(nodeAnimation1, null)
 
-    script.compile()
+    script.compile(world)
 
-    const mouseEventCompiled = functionRegistry.getInstance('animationScript.OnAnimationStart.0')
+    const mouseEventCompiled = functionRegistry.getInstance('animationScript.main.OnAnimationStart.0')
     expect(functionRegistry.getInstance('animationScript')).toBe(undefined)
     expect(mouseEventCompiled).toBeDefined()
     expect(mouseEventCompiled.constructor).toEqual(OnAnimationStartEvent)
 
     new AnimationScriptExecutor().execute(unit, {})
     expect(unit.getComponent(AnimationComponent).getAnimation()).toEqual(animation2.getId())
-    expect(animation1.isPlaying()).toBeFalsy()
-    expect(animation2.isPlaying()).toBeTruthy()
     expect(animation2.getTime()).toBe(0)
     const time = animation2.getTime()
 
@@ -94,9 +97,7 @@ test('Create and compile animation when (startEvent -> animation1 -> animation2)
     new AnimationScriptExecutor().execute(unit, {})
 
     expect(unit.getComponent(AnimationComponent).getAnimation()).toEqual(animation2.getId())
-    expect(animation1.isPlaying()).toBeFalsy()
-    expect(animation2.isPlaying()).toBeTruthy()
-    expect(animation2.getTime()).toBeGreaterThan(time)
+    expect(unit.getComponent(AnimationComponent).getTime()).toBeGreaterThan(time)
 })
 
 test('Create and compile animation when (startEvent -> animation1 -> condition -> animation2)', function () {
@@ -109,6 +110,8 @@ test('Create and compile animation when (startEvent -> animation1 -> condition -
     functionRegistry.init()
 
     const script = new AnimationScript('animationScript')
+    const scriptFunction = new FunctionScript('main')
+    script.addFunction(scriptFunction)
     const animation1 = new Animation(1, 'Animation1')
     const animation2 = new Animation(2, 'Animation2')
     animation1.setSamples(10)
@@ -119,13 +122,13 @@ test('Create and compile animation when (startEvent -> animation1 -> condition -
     animationManager.add(animation1)
     animationManager.add(animation2)
 
-    const nodeStartAnimation = script.createNode(functionRegistry, EventNode, 'OnAnimationStart')
-    const nodeAnimation1 = script.createNode(functionRegistry, AnimationNode, `${animation1.getId()}`)
-    const nodeAnimation2 = script.createNode(functionRegistry, AnimationNode, `${animation2.getId()}`)
-    const nodeTrue = script.createNode(functionRegistry, ConditionNode, 'True')
-    const nodeNotEqual = script.createNode(functionRegistry, FunctionNode, '!=')
-    const nodeConstant0 = script.createNode(functionRegistry, ConstantNode, '0')
-    const nodeVarSpeed = script.createNode(functionRegistry, StringVariableNode, 'speed')
+    const nodeStartAnimation = scriptFunction.createNode(functionRegistry, EventNode, 'OnAnimationStart')
+    const nodeAnimation1 = scriptFunction.createNode(functionRegistry, AnimationNode, `${animation1.getId()}`)
+    const nodeAnimation2 = scriptFunction.createNode(functionRegistry, AnimationNode, `${animation2.getId()}`)
+    const nodeTrue = scriptFunction.createNode(functionRegistry, ConditionNode, 'True')
+    const nodeNotEqual = scriptFunction.createNode(functionRegistry, FunctionNode, '!=')
+    const nodeConstant0 = scriptFunction.createNode(functionRegistry, ConstantNode, '0')
+    const nodeVarSpeed = scriptFunction.createNode(functionRegistry, StringVariableNode, 'speed')
 
     nodeAnimation1.attach(nodeStartAnimation, null)
     nodeTrue.attach(nodeAnimation1, null)
@@ -134,12 +137,12 @@ test('Create and compile animation when (startEvent -> animation1 -> condition -
     nodeNotEqual.attach(nodeConstant0, 'value2')
     nodeAnimation2.attach(nodeTrue, null)
 
-    animationComponent.setVarsAttributes(AssetHelper.getScriptVars(script))
+    animationComponent.setVarsAttributes(AssetHelper.getScriptVars(script, world))
     animationComponent.setScript(script.getName())
 
-    script.compile()
+    script.compile(world)
 
-    const mouseEventCompiled = functionRegistry.getInstance('animationScript.OnAnimationStart.0')
+    const mouseEventCompiled = functionRegistry.getInstance('animationScript.main.OnAnimationStart.0')
     expect(functionRegistry.getInstance('animationScript')).toBe(undefined)
     expect(mouseEventCompiled).toBeDefined()
     expect(mouseEventCompiled.constructor).toEqual(OnAnimationStartEvent)
@@ -148,33 +151,29 @@ test('Create and compile animation when (startEvent -> animation1 -> condition -
     animationComponent.setValue('speed', 0)
 
     new AnimationScriptExecutor().execute(unit, {})
+    new AnimationMeshExecutor().execute(unit, {deltaTime: 0.1})
     expect(unit.getComponent(AnimationComponent).getAnimation()).toEqual(animation1.getId())
-    expect(animation1.isPlaying()).toBeTruthy()
-    expect(animation2.isPlaying()).toBeFalsy()
     expect(animation1.getTime()).toBe(0)
     const time1 = animation1.getTime()
 
-    new AnimationMeshExecutor().execute(unit, {deltaTime: 0.1})
     new AnimationScriptExecutor().execute(unit, {})
-
+    new AnimationMeshExecutor().execute(unit, {deltaTime: 0.1})
     expect(unit.getComponent(AnimationComponent).getAnimation()).toEqual(animation1.getId())
-    expect(animation1.isPlaying()).toBeTruthy()
-    expect(animation2.isPlaying()).toBeFalsy()
-    expect(animation1.getTime()).toBeGreaterThan(time1)
+    expect(unit.getComponent(AnimationComponent).getTime()).toBeGreaterThan(time1)
 
     //Set speed to 1
     animationComponent.setValue('speed', 1)
 
     new AnimationScriptExecutor().execute(unit, {})
+    new AnimationMeshExecutor().execute(unit, {deltaTime: 0.1})
     expect(unit.getComponent(AnimationComponent).getAnimation()).toEqual(animation2.getId())
     expect(animation2.isPlaying()).toBeTruthy()
     expect(animation1.isPlaying()).toBeFalsy()
     expect(animation2.getTime()).toBe(0)
     const time2 = animation2.getTime()
 
-    new AnimationMeshExecutor().execute(unit, {deltaTime: 0.1})
     new AnimationScriptExecutor().execute(unit, {})
-
+    new AnimationMeshExecutor().execute(unit, {deltaTime: 0.1})
     expect(unit.getComponent(AnimationComponent).getAnimation()).toEqual(animation2.getId())
     expect(animation2.isPlaying()).toBeTruthy()
     expect(animation1.isPlaying()).toBeFalsy()
@@ -184,15 +183,15 @@ test('Create and compile animation when (startEvent -> animation1 -> condition -
     animationComponent.setValue('speed', 0)
 
     new AnimationScriptExecutor().execute(unit, {})
+    new AnimationMeshExecutor().execute(unit, {deltaTime: 0.1})
     expect(unit.getComponent(AnimationComponent).getAnimation()).toEqual(animation2.getId())
     expect(animation2.isPlaying()).toBeTruthy()
     expect(animation1.isPlaying()).toBeFalsy()
     expect(animation2.getTime()).toBe(1)
     const time3 = animation2.getTime()
 
-    new AnimationMeshExecutor().execute(unit, {deltaTime: 0.1})
     new AnimationScriptExecutor().execute(unit, {})
-
+    new AnimationMeshExecutor().execute(unit, {deltaTime: 0.1})
     expect(unit.getComponent(AnimationComponent).getAnimation()).toEqual(animation2.getId())
     expect(animation2.isPlaying()).toBeTruthy()
     expect(animation1.isPlaying()).toBeFalsy()
@@ -209,6 +208,8 @@ test('Create and compile animation when (startEvent -> animation1 -> condition -
     functionRegistry.init()
 
     const script = new AnimationScript('animationScript')
+    const scriptFunction = new FunctionScript('main')
+    script.addFunction(scriptFunction)
     const animation1 = new Animation(1, 'Animation1')
     const animation2 = new Animation(2, 'Animation2')
     animation1.setSamples(10)
@@ -219,16 +220,16 @@ test('Create and compile animation when (startEvent -> animation1 -> condition -
     animationManager.add(animation1)
     animationManager.add(animation2)
 
-    const nodeStartAnimation = script.createNode(functionRegistry, EventNode, 'OnAnimationStart')
-    const nodeAnimation1 = script.createNode(functionRegistry, AnimationNode, `${animation1.getId()}`)
-    const nodeAnimation2 = script.createNode(functionRegistry, AnimationNode, `${animation2.getId()}`)
-    const nodeTrue = script.createNode(functionRegistry, ConditionNode, 'True')
-    const nodeTrue2 = script.createNode(functionRegistry, ConditionNode, 'True')
-    const nodeNotEqual = script.createNode(functionRegistry, FunctionNode, '!=')
-    const nodeEqual = script.createNode(functionRegistry, FunctionNode, '==')
-    const nodeConstant0 = script.createNode(functionRegistry, ConstantNode, '0')
-    const nodeVarSpeed = script.createNode(functionRegistry, StringVariableNode, 'speed')
-    const nodeReference = script.createNode(functionRegistry, ReferenceNode, '')
+    const nodeStartAnimation = scriptFunction.createNode(functionRegistry, EventNode, 'OnAnimationStart')
+    const nodeAnimation1 = scriptFunction.createNode(functionRegistry, AnimationNode, `${animation1.getId()}`)
+    const nodeAnimation2 = scriptFunction.createNode(functionRegistry, AnimationNode, `${animation2.getId()}`)
+    const nodeTrue = scriptFunction.createNode(functionRegistry, ConditionNode, 'True')
+    const nodeTrue2 = scriptFunction.createNode(functionRegistry, ConditionNode, 'True')
+    const nodeNotEqual = scriptFunction.createNode(functionRegistry, FunctionNode, '!=')
+    const nodeEqual = scriptFunction.createNode(functionRegistry, FunctionNode, '==')
+    const nodeConstant0 = scriptFunction.createNode(functionRegistry, ConstantNode, '0')
+    const nodeVarSpeed = scriptFunction.createNode(functionRegistry, StringVariableNode, 'speed')
+    const nodeReference = scriptFunction.createNode(functionRegistry, ReferenceNode, '')
 
     nodeAnimation1.attach(nodeStartAnimation, null)
     nodeTrue.attach(nodeAnimation1, null)
@@ -243,12 +244,12 @@ test('Create and compile animation when (startEvent -> animation1 -> condition -
     nodeReference.attach(nodeTrue2, null)
     nodeReference.attach(nodeAnimation1, 'target')
 
-    animationComponent.setVarsAttributes(AssetHelper.getScriptVars(script))
+    animationComponent.setVarsAttributes(AssetHelper.getScriptVars(script, world))
     animationComponent.setScript(script.getName())
 
-    script.compile()
+    script.compile(world)
 
-    const mouseEventCompiled = functionRegistry.getInstance('animationScript.OnAnimationStart.0')
+    const mouseEventCompiled = functionRegistry.getInstance('animationScript.main.OnAnimationStart.0')
     expect(functionRegistry.getInstance('animationScript')).toBe(undefined)
     expect(mouseEventCompiled).toBeDefined()
     expect(mouseEventCompiled.constructor).toEqual(OnAnimationStartEvent)
@@ -258,8 +259,6 @@ test('Create and compile animation when (startEvent -> animation1 -> condition -
 
     new AnimationScriptExecutor().execute(unit, {})
     expect(unit.getComponent(AnimationComponent).getAnimation()).toEqual(animation1.getId())
-    expect(animation1.isPlaying()).toBeTruthy()
-    expect(animation2.isPlaying()).toBeFalsy()
     expect(animation1.getTime()).toBe(0)
     const time1 = animation1.getTime()
 
@@ -267,9 +266,7 @@ test('Create and compile animation when (startEvent -> animation1 -> condition -
     new AnimationScriptExecutor().execute(unit, {})
 
     expect(unit.getComponent(AnimationComponent).getAnimation()).toEqual(animation1.getId())
-    expect(animation1.isPlaying()).toBeTruthy()
-    expect(animation2.isPlaying()).toBeFalsy()
-    expect(animation1.getTime()).toBeGreaterThan(time1)
+    expect(unit.getComponent(AnimationComponent).getTime()).toBeGreaterThan(time1)
 
     //Set speed to 1
     animationComponent.setValue('speed', 1)
@@ -318,6 +315,8 @@ test('Create and compile animation when (startEvent -> animation1 -> anyStartEve
     functionRegistry.init()
 
     const script = new AnimationScript('animationScript')
+    const scriptFunction = new FunctionScript('main')
+    script.addFunction(scriptFunction)
     const animation1 = new Animation(1, 'Animation1')
     const animation2 = new Animation(2, 'Animation2')
     animation1.setSamples(10)
@@ -328,14 +327,14 @@ test('Create and compile animation when (startEvent -> animation1 -> anyStartEve
     animationManager.add(animation1)
     animationManager.add(animation2)
 
-    const nodeStartAnimation = script.createNode(functionRegistry, EventNode, 'OnAnimationStart')
-    const nodeAnyStartAnimation = script.createNode(functionRegistry, EventNode, 'OnAnyAnimationStart')
-    const nodeAnimation1 = script.createNode(functionRegistry, AnimationNode, `${animation1.getId()}`)
-    const nodeAnimation2 = script.createNode(functionRegistry, AnimationNode, `${animation2.getId()}`)
-    const nodeTrue = script.createNode(functionRegistry, ConditionNode, 'True')
-    const nodeNotEqual = script.createNode(functionRegistry, FunctionNode, '!=')
-    const nodeConstant0 = script.createNode(functionRegistry, ConstantNode, '0')
-    const nodeVarSpeed = script.createNode(functionRegistry, StringVariableNode, 'speed')
+    const nodeStartAnimation = scriptFunction.createNode(functionRegistry, EventNode, 'OnAnimationStart')
+    const nodeAnyStartAnimation = scriptFunction.createNode(functionRegistry, EventNode, 'OnAnyAnimationStart')
+    const nodeAnimation1 = scriptFunction.createNode(functionRegistry, AnimationNode, `${animation1.getId()}`)
+    const nodeAnimation2 = scriptFunction.createNode(functionRegistry, AnimationNode, `${animation2.getId()}`)
+    const nodeTrue = scriptFunction.createNode(functionRegistry, ConditionNode, 'True')
+    const nodeNotEqual = scriptFunction.createNode(functionRegistry, FunctionNode, '!=')
+    const nodeConstant0 = scriptFunction.createNode(functionRegistry, ConstantNode, '0')
+    const nodeVarSpeed = scriptFunction.createNode(functionRegistry, StringVariableNode, 'speed')
 
     nodeAnimation1.attach(nodeStartAnimation, null)
     nodeTrue.attach(nodeAnyStartAnimation, null)
@@ -344,12 +343,12 @@ test('Create and compile animation when (startEvent -> animation1 -> anyStartEve
     nodeNotEqual.attach(nodeConstant0, 'value2')
     nodeAnimation2.attach(nodeTrue, null)
 
-    animationComponent.setVarsAttributes(AssetHelper.getScriptVars(script))
+    animationComponent.setVarsAttributes(AssetHelper.getScriptVars(script, world))
     animationComponent.setScript(script.getName())
 
-    script.compile()
+    script.compile(world)
 
-    const mouseEventCompiled = functionRegistry.getInstance('animationScript.OnAnimationStart.0')
+    const mouseEventCompiled = functionRegistry.getInstance('animationScript.main.OnAnimationStart.0')
     expect(functionRegistry.getInstance('animationScript')).toBe(undefined)
     expect(mouseEventCompiled).toBeDefined()
     expect(mouseEventCompiled.constructor).toEqual(OnAnimationStartEvent)
@@ -359,8 +358,6 @@ test('Create and compile animation when (startEvent -> animation1 -> anyStartEve
 
     new AnimationScriptExecutor().execute(unit, {})
     expect(unit.getComponent(AnimationComponent).getAnimation()).toEqual(animation1.getId())
-    expect(animation1.isPlaying()).toBeTruthy()
-    expect(animation2.isPlaying()).toBeFalsy()
     expect(animation1.getTime()).toBe(0)
     const time1 = animation1.getTime()
 
@@ -368,9 +365,7 @@ test('Create and compile animation when (startEvent -> animation1 -> anyStartEve
     new AnimationScriptExecutor().execute(unit, {})
 
     expect(unit.getComponent(AnimationComponent).getAnimation()).toEqual(animation1.getId())
-    expect(animation1.isPlaying()).toBeTruthy()
-    expect(animation2.isPlaying()).toBeFalsy()
-    expect(animation1.getTime()).toBeGreaterThan(time1)
+    expect(unit.getComponent(AnimationComponent).getTime()).toBeGreaterThan(time1)
 
     //Set speed to 1
     animationComponent.setValue('speed', 1)

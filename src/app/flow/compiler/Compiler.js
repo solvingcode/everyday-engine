@@ -10,9 +10,10 @@ export default class Compiler {
     /**
      * @abstract
      * @param {AScript} flow
+     * @param {World} world
      * @return {boolean}
      */
-    run(flow){
+    run(flow, world){
         throw new SystemError(`${this.constructor.name}.run must be implemented`)
     }
 

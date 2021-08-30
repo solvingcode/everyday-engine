@@ -71,6 +71,9 @@ import IsUpdateTimeFunction from '../flow/function/native/time/IsUpdateTimeFunct
 import PlayAudioFunction from '../flow/function/native/audio/PlayAudioFunction.js'
 import IsAudioPlayingFunction from '../flow/function/native/audio/IsAudioPlayingFunction.js'
 import FlipScaleFunction from '../flow/function/native/transform/FlipScaleFunction.js'
+import AFunctionInput from '../flow/io/AFunctionInput.js'
+import AFunctionOutput from '../flow/io/AFunctionOutput.js'
+import OnCallEvent from '../flow/event/native/OnCallEvent.js'
 
 export default class FunctionRegistry extends Registry{
 
@@ -93,6 +96,7 @@ export default class FunctionRegistry extends Registry{
             new OnAnyAnimationStartEvent(),
             new OnUpdateEvent(),
             new OnInputAttackEvent(),
+            new OnCallEvent(),
 
             // Condition
             new TrueCondition(),
@@ -258,6 +262,8 @@ export default class FunctionRegistry extends Registry{
                 !(instance instanceof ALoop) &&
                 !(instance instanceof AUnit) &&
                 !(instance instanceof AAnimation) &&
+                !(instance instanceof AFunctionInput) &&
+                !(instance instanceof AFunctionOutput) &&
                 !(instance instanceof AKeyCode) &&
                 !(instance instanceof AVariable) &&
                 !(instance instanceof AComponent)

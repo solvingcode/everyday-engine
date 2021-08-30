@@ -6,8 +6,8 @@ export default class ClassScript extends AScript{
     /**
      * @override
      */
-    doCompile(){
-        return ClassCompiler.get().run(this)
+    doCompile(world){
+        return ClassCompiler.get().run(this, world)
     }
 
 }

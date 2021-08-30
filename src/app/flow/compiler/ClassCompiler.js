@@ -4,7 +4,6 @@ import AEvent from '../event/AEvent.js'
 import Compiler from './Compiler.js'
 import ClassScript from '../ClassScript.js'
 import AFunction from '../function/AFunction.js'
-import World from '../../world/World.js'
 import ACondition from '../condition/ACondition.js'
 import SystemError from '../../exception/type/SystemError.js'
 import ClientError from '../../exception/type/ClientError.js'
@@ -26,17 +25,20 @@ import ANativeFunction from '../function/native/ANativeFunction.js'
 import ALoop from '../loop/ALoop.js'
 import GetValueFunction from '../function/native/object/GetValueFunction.js'
 import IsArrayEmptyFunction from '../function/native/array/IsArrayEmptyFunction.js'
+import ACustomFunction from '../function/custom/ACustomFunction.js'
+import FunctionInputNode from '../node/FunctionInputNode.js'
+import FunctionOutputNode from '../node/FunctionOutputNode.js'
+import AFunctionInput from '../io/AFunctionInput.js'
 
 export default class ClassCompiler extends Compiler {
 
     /**
      * @override
      */
-    run(script) {
+    run(script, world) {
         if (!(script instanceof ClassScript)) {
             throw new SystemError(`The given script is not correct (must be a Class script)`)
         }
-        const world = World.get()
         const functionRegistry = world.getFunctionRegistry()
         script.getFunctions().forEach(scriptFunction => {
             const nodes = scriptFunction.getNodes()
@@ -45,14 +47,14 @@ export default class ClassCompiler extends Compiler {
 
             //compile stack function
             nodes.forEach((node) => {
-                const element = NodeHelper.getSourceNode(node)
+                const element = NodeHelper.getSourceNode(node, world)
                 if (!element) {
                     throw new ClientError(`Class Compiler Error: cannot find function ${node.getSourceName()}`)
                 }
                 if (!functionRegistry.getInstance(element.getName()) && !(element instanceof AStackFunction)) {
                     throw new ClientError(`Class Compiler Error: function ${node.getSourceName()} not a registered function nor stack function`)
                 }
-                const stackFunction = ScriptHelper.createStackFunction(script, scriptFunction, node)
+                const stackFunction = ScriptHelper.createStackFunction(script, scriptFunction, node, world)
                 if (element.getOutput()) {
                     stackFunction.addOutput(element.getOutput().getAttrType())
                 }
@@ -62,14 +64,14 @@ export default class ClassCompiler extends Compiler {
             //compile associations
             scriptFunction.getInputs().forEach(input => {
                 const node = scriptFunction.findNodeById(input.getNodeId())
-                const functionName = ScriptHelper.generateFunctionName(script, scriptFunction, node)
-                const element = NodeHelper.getSourceNode(node)
+                const functionName = ScriptHelper.generateFunctionName(script, scriptFunction, node, world)
+                const element = NodeHelper.getSourceNode(node, world)
                 const sourceNode = scriptFunction.findNodeById(input.getSourceNodeId())
                 const targetName = input.getTargetName()
                 const stackFunction = functionRegistry.getInstance(functionName)
                 if (sourceNode) {
-                    const sourceElement = NodeHelper.getSourceNode(sourceNode)
-                    const sourceElementName = ScriptHelper.generateFunctionName(script, scriptFunction, sourceNode)
+                    const sourceElement = NodeHelper.getSourceNode(sourceNode, world)
+                    const sourceElementName = ScriptHelper.generateFunctionName(script, scriptFunction, sourceNode, world)
                     const sourceStackFunction = functionRegistry.getInstance(sourceElementName)
                     if (sourceElement instanceof AEvent) {
                         sourceStackFunction.getStack().push(...[new StackOperation(OPERATIONS.CALL, functionName)])
@@ -105,15 +107,33 @@ export default class ClassCompiler extends Compiler {
                                 new StackOperation(OPERATIONS.PUSH, targetInput.getAttrName(), '[MEM]attributes')
                             ])
                         }
+                    } else if(sourceElement instanceof AFunctionInput){
+                        const targetInput = element.findInputByName(targetName)
+                        if (targetInput) {
+                            const attribute = NodeHelper.getAttributeFromNodeFunctionInput(sourceNode, world)
+                            stackFunction.getStack().push(...[
+                                new StackOperation(OPERATIONS.PUSH, targetInput.getAttrName(),
+                                    `[MEM]${scriptFunctionName}.${attribute.getAttrName()}`)
+                            ])
+                        }
                     }
                     // must be the last condition
                     else if (sourceElement instanceof AFunction) {
                         const targetInput = element.findInputByName(targetName)
                         if (targetInput) {
                             stackFunction.getStack().push(...[
-                                new StackOperation(OPERATIONS.CALL, sourceElementName),
-                                new StackOperation(OPERATIONS.PUSH, targetInput.getAttrName(), CONSTANTS.RESULT)
+                                new StackOperation(OPERATIONS.CALL, sourceElementName)
                             ])
+                            if(element instanceof ACustomFunction){
+                                stackFunction.getStack().push(...[
+                                    new StackOperation(OPERATIONS.PUSH,
+                                        `[MEM]${element.getName()}.${targetInput.getAttrName()}`, CONSTANTS.RESULT)
+                                ])
+                            }else{
+                                stackFunction.getStack().push(...[
+                                    new StackOperation(OPERATIONS.PUSH, targetInput.getAttrName(), CONSTANTS.RESULT)
+                                ])
+                            }
                         }
                     } else if (sourceElement) {
                         throw new SystemError(`Class compiler: ${sourceElement.constructor.name} not supported`)
@@ -123,8 +143,8 @@ export default class ClassCompiler extends Compiler {
 
             //complete compiling function
             nodes.forEach((node) => {
-                const element = NodeHelper.getSourceNode(node)
-                const functionName = ScriptHelper.generateFunctionName(script, scriptFunction, node)
+                const element = NodeHelper.getSourceNode(node, world)
+                const functionName = ScriptHelper.generateFunctionName(script, scriptFunction, node, world)
                 const stackFunction = functionRegistry.getInstance(functionName)
                 if (!(element instanceof AEvent)) {
                     if (functionRegistry.getInstance(element.getName())) {
@@ -141,7 +161,7 @@ export default class ClassCompiler extends Compiler {
                                 new StackOperation(OPERATIONS.CALL, element.getName()),
                                 new StackOperation(OPERATIONS.PUSH, '[MEM]attributes', CONSTANTS.RESULT)
                             ])
-                        }else{
+                        } else {
                             stackFunction.getStack().push(new StackOperation(OPERATIONS.CALL, element.getName()))
                         }
                     } else if (element instanceof AAnimation) {
@@ -174,19 +194,18 @@ export default class ClassCompiler extends Compiler {
             //complete compiling associations
             scriptFunction.getInputs().forEach(input => {
                 const node = scriptFunction.findNodeById(input.getNodeId())
-                const element = NodeHelper.getSourceNode(node)
-                const functionName = ScriptHelper.generateFunctionName(script, scriptFunction, node)
+                const element = NodeHelper.getSourceNode(node, world)
+                const functionName = ScriptHelper.generateFunctionName(script, scriptFunction, node, world)
                 const sourceNode = scriptFunction.findNodeById(input.getSourceNodeId())
                 const targetName = input.getTargetName()
                 if (sourceNode) {
-                    const sourceElement = NodeHelper.getSourceNode(sourceNode)
-                    const sourceElementName = ScriptHelper.generateFunctionName(script, scriptFunction, sourceNode)
+                    const sourceElement = NodeHelper.getSourceNode(sourceNode, world)
+                    const sourceElementName = ScriptHelper.generateFunctionName(script, scriptFunction, sourceNode, world)
                     const sourceStackFunction = functionRegistry.getInstance(sourceElementName)
                     if (sourceElement instanceof AAnimation) {
                         if (element instanceof AAnimation) {
                             const stopAnimation = new StopAnimationFunction()
                             sourceStackFunction.getStack().push(...[
-                                new StackOperation(OPERATIONS.PUSH, stopAnimation.getInputs()[0].getAttrName(), sourceElement.getName()),
                                 new StackOperation(OPERATIONS.CALL, stopAnimation.getName()),
                                 new StackOperation(OPERATIONS.CALL, functionName)
                             ])
@@ -201,7 +220,6 @@ export default class ClassCompiler extends Compiler {
                             const stopAnimation = new StopAnimationFunction()
                             sourceStackFunction.getStack().push(...[
                                 new StackOperation(OPERATIONS.CALL, getCurrentAnimation.getName()),
-                                new StackOperation(OPERATIONS.PUSH, stopAnimation.getInputs()[0].getAttrName(), CONSTANTS.RESULT),
                                 new StackOperation(OPERATIONS.CALL, stopAnimation.getName()),
                                 new StackOperation(OPERATIONS.CALL, functionName)
                             ])
@@ -227,6 +245,18 @@ export default class ClassCompiler extends Compiler {
                     }
                 }
             })
+
+            if (!scriptFunction.isMain()) {
+                const nodeInputs = scriptFunction.findNodesByClass(FunctionInputNode)
+                const nodeOutputs = scriptFunction.findNodesByClass(FunctionOutputNode)
+                const functionInputs = nodeInputs.map(nodeInput => NodeHelper.getAttributeFromNodeFunctionInput(nodeInput, world))
+                const functionOutput = !!nodeOutputs.length ? NodeHelper.getAttributeFromNodeFunctionInput(nodeOutputs[0], world) : null
+                const stackScriptFunction = new ACustomFunction(scriptFunctionName, functionInputs, functionOutput)
+                stackScriptFunction.setStack([
+                    new StackOperation(OPERATIONS.CALL, `${scriptFunctionName}.OnCall`)
+                ])
+                functionRegistry.tryRegister(stackScriptFunction)
+            }
         })
 
         return true

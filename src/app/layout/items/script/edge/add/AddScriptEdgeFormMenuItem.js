@@ -24,7 +24,8 @@ export default class AddScriptEdgeFormMenuItem extends FormMenuItem {
      * @override
      */
     generateFields() {
-        const script = World.get().getScriptManager().getFunctionSelected(World.get().getTabManager())
+        const world = World.get()
+        const script = world.getScriptManager().getFunctionSelected(World.get().getTabManager())
         let sourceNodes = []
         let targetNodes = []
         let connections = []
@@ -42,7 +43,7 @@ export default class AddScriptEdgeFormMenuItem extends FormMenuItem {
             if(object.getTargetId()){
                 const targetNode = script.findNodeById(parseInt(object.getTargetId()))
                 if(targetNode){
-                    const sourceInputs = NodeHelper.getSourceNode(targetNode).getInputs()
+                    const sourceInputs = NodeHelper.getSourceNode(targetNode, world).getInputs()
                     connections = sourceInputs.map(sourceInput => ({
                         value: sourceInput.getId(),
                         label: sourceInput.getAttrName()

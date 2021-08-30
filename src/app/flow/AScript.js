@@ -6,8 +6,11 @@ import SystemError from '../exception/type/SystemError.js'
  */
 export default class AScript extends AScriptData {
 
-    compile() {
-        if (this.doCompile()) {
+    /**
+     * @param {World} world
+     */
+    compile(world) {
+        if (this.doCompile(world)) {
             this.setStatus(STATUS.COMPILED)
         } else {
             this.setStatus(STATUS.ERROR)
@@ -42,9 +45,10 @@ export default class AScript extends AScriptData {
     /**
      * @abstract
      * @private
+     * @param {World} world
      * @return {boolean}
      */
-    doCompile() {
+    doCompile(world) {
         throw new SystemError(`${this.constructor.name}.doCompile must be implemented`)
     }
 

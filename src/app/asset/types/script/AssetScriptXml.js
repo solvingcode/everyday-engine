@@ -35,8 +35,8 @@ export default class AssetScriptXml extends AssetScript{
     /**
      * @override
      */
-    validate(data){
-        return data.getFunctions().every(func => ScriptHelper.validate(func))
+    validate(data, world){
+        return data.getFunctions().every(func => ScriptHelper.validate(func, world))
     }
 
     /**

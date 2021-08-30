@@ -1,8 +1,9 @@
 import FormMenuItem from '../../../form/FormMenuItem.js'
 import Layout from '../../../../Layout.js'
-import {NODE_TYPE_NAMES} from '../../../../../flow/node/ANode.js'
+import {NODE_TYPES} from '../../../../../flow/node/ANode.js'
+import {TYPES_NAME} from '../../../../../pobject/AttributeType.js'
 
-export default class AddScriptNodeFormTypeMenuItem extends FormMenuItem {
+export default class AddScriptNodeFormInputMenuItem extends FormMenuItem {
     /**
      * @param {MenuItem} parent
      * @param {AddScriptNodeForm} addNodeForm
@@ -24,10 +25,15 @@ export default class AddScriptNodeFormTypeMenuItem extends FormMenuItem {
     generateFields() {
         return [
             {
-                bind: 'type',
-                label: 'Type',
+                bind: 'value',
+                label: 'Input name',
+                type: Layout.form.TEXT
+            },
+            {
+                bind: 'inputType',
+                label: 'Input type',
                 type: Layout.form.DROPDOWN,
-                list: NODE_TYPE_NAMES
+                list: TYPES_NAME
             }
         ]
     }
@@ -37,5 +43,9 @@ export default class AddScriptNodeFormTypeMenuItem extends FormMenuItem {
      */
     getFormObject() {
         return this.data.addNodeForm
+    }
+
+    isValid() {
+        return super.isValid() && this.getFormObject().getType() === NODE_TYPES.INPUT
     }
 }

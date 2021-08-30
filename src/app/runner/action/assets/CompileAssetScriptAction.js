@@ -19,7 +19,7 @@ export default class CompileAssetScriptAction extends Action {
             if (asset.getType() instanceof AssetScript) {
                 const script = World.get().getScriptManager().findByName(asset.getName())
                 if (script) {
-                    script.compile()
+                    script.compile(world)
                     const unitsAttached = unitManager.findUnitsAttachedToScript(script)
                     unitsAttached.forEach(unit => {
 

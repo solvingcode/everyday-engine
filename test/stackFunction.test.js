@@ -16,6 +16,10 @@ import StringVariableNode from '../src/app/flow/node/variable/StringVariableNode
 import ScriptComponent from '../src/app/component/internal/ScriptComponent.js'
 import DynamicAttribute from '../src/app/pobject/DynamicAttribute.js'
 import LoopNode from '../src/app/flow/node/LoopNode.js'
+import FunctionInputNode from '../src/app/flow/node/FunctionInputNode.js'
+import EventNode from '../src/app/flow/node/EventNode.js'
+import OnCallEvent from '../src/app/flow/event/native/OnCallEvent.js'
+import ACustomFunction from '../src/app/flow/function/custom/ACustomFunction.js'
 
 test('Execute native function (without output)', function () {
     const log = new LogFunction()
@@ -71,46 +75,30 @@ test('Execute stack function (with output)', function () {
     expect(func.getOutputValue()).toBe(110)
 })
 
-test('Create and compile function flow', function () {
-    const functionRegistry = World.get().getFunctionRegistry()
-    functionRegistry.init()
-    const script = new FunctionScript('testScript')
-
-    const nodeSetValue1 = script.createNode(functionRegistry, ConstantNode, 20)
-    const nodeSetValue2 = script.createNode(functionRegistry, ConstantNode, 30)
-    const node = script.createNode(functionRegistry, FunctionNode, '+')
-
-    node.attach(nodeSetValue1, 'value1')
-    node.attach(nodeSetValue2, 'value2')
-
-    script.compile()
-
-    const compiledFunction = functionRegistry.getInstance('testScript')
-    compiledFunction.execute(functionRegistry, null, null, World.get())
-    expect(compiledFunction.getOutputValue()).toBe(50)
-})
-
 test('Create and compile class flow', function () {
-    const functionRegistry = World.get().getFunctionRegistry()
+    const world = World.get()
+    const functionRegistry = world.getFunctionRegistry()
 
     functionRegistry.init()
 
     const script = new ClassScript('classScript')
+    const scriptFunction = new FunctionScript('main')
+    script.addFunction(scriptFunction)
 
-    const nodeLog = script.createNode(functionRegistry, FunctionNode, 'Log')
-    const nodeAdd = script.createNode(functionRegistry, FunctionNode, '+')
-    const nodeSetValue1 = script.createNode(functionRegistry, ConstantNode, 20)
-    const nodeSetValue2 = script.createNode(functionRegistry, ConstantNode, 30)
-    const nodeEvent = script.createNode(functionRegistry, FunctionNode, 'OnMouseClick')
+    const nodeLog = scriptFunction.createNode(functionRegistry, FunctionNode, 'Log')
+    const nodeAdd = scriptFunction.createNode(functionRegistry, FunctionNode, '+')
+    const nodeSetValue1 = scriptFunction.createNode(functionRegistry, ConstantNode, 20)
+    const nodeSetValue2 = scriptFunction.createNode(functionRegistry, ConstantNode, 30)
+    const nodeEvent = scriptFunction.createNode(functionRegistry, FunctionNode, 'OnMouseClick')
 
     nodeAdd.attach(nodeSetValue1, 'value1')
     nodeAdd.attach(nodeSetValue2, 'value2')
     nodeLog.attach(nodeAdd, 'value')
     nodeLog.attach(nodeEvent, null)
 
-    script.compile()
+    script.compile(world)
 
-    const mouseEventCompiled = functionRegistry.getInstance('classScript.OnMouseClick.4')
+    const mouseEventCompiled = functionRegistry.getInstance('classScript.main.OnMouseClick.4')
     expect(functionRegistry.getInstance('classScript')).toBe(undefined)
     expect(mouseEventCompiled).toBeDefined()
     expect(mouseEventCompiled.constructor).toEqual(OnMouseClickEvent)
@@ -121,19 +109,22 @@ test('Create and compile class flow', function () {
 })
 
 test('Create and compile class script with success condition', function () {
-    const functionRegistry = World.get().getFunctionRegistry()
+    const world = World.get()
+    const functionRegistry = world.getFunctionRegistry()
 
     functionRegistry.init()
 
     const script = new ClassScript('classScript')
+    const scriptFunction = new FunctionScript('main')
+    script.addFunction(scriptFunction)
 
-    const nodeLog = script.createNode(functionRegistry, FunctionNode, 'Log')
-    const nodeLessThan = script.createNode(functionRegistry, FunctionNode, '<')
-    const nodeSetValue1 = script.createNode(functionRegistry, ConstantNode, 20)
-    const nodeSetValue2 = script.createNode(functionRegistry, ConstantNode, 30)
-    const nodeSetValue3 = script.createNode(functionRegistry, ConstantNode, 'correct')
-    const nodeTrueCondition = script.createNode(functionRegistry, ConditionNode, 'True')
-    const nodeEvent = script.createNode(functionRegistry, FunctionNode, 'OnMouseClick')
+    const nodeLog = scriptFunction.createNode(functionRegistry, FunctionNode, 'Log')
+    const nodeLessThan = scriptFunction.createNode(functionRegistry, FunctionNode, '<')
+    const nodeSetValue1 = scriptFunction.createNode(functionRegistry, ConstantNode, 20)
+    const nodeSetValue2 = scriptFunction.createNode(functionRegistry, ConstantNode, 30)
+    const nodeSetValue3 = scriptFunction.createNode(functionRegistry, ConstantNode, 'correct')
+    const nodeTrueCondition = scriptFunction.createNode(functionRegistry, ConditionNode, 'True')
+    const nodeEvent = scriptFunction.createNode(functionRegistry, FunctionNode, 'OnMouseClick')
 
     nodeLessThan.attach(nodeSetValue1, 'value1')
     nodeLessThan.attach(nodeSetValue2, 'value2')
@@ -142,9 +133,9 @@ test('Create and compile class script with success condition', function () {
     nodeLog.attach(nodeTrueCondition, null)
     nodeTrueCondition.attach(nodeEvent, null)
 
-    script.compile()
+    script.compile(world)
 
-    const mouseEventCompiled = functionRegistry.getInstance('classScript.OnMouseClick.6')
+    const mouseEventCompiled = functionRegistry.getInstance('classScript.main.OnMouseClick.6')
     expect(functionRegistry.getInstance('classScript')).toBe(undefined)
     expect(mouseEventCompiled).toBeDefined()
     expect(mouseEventCompiled.constructor).toEqual(OnMouseClickEvent)
@@ -155,19 +146,22 @@ test('Create and compile class script with success condition', function () {
 })
 
 test('Create and compile class script with failed condition', function () {
-    const functionRegistry = World.get().getFunctionRegistry()
+    const world = World.get()
+    const functionRegistry = world.getFunctionRegistry()
 
     functionRegistry.init()
 
     const script = new ClassScript('classScript')
+    const scriptFunction = new FunctionScript('main')
+    script.addFunction(scriptFunction)
 
-    const nodeLog = script.createNode(functionRegistry, FunctionNode, 'Log')
-    const nodeLessThan = script.createNode(functionRegistry, FunctionNode, '<')
-    const nodeSetValue1 = script.createNode(functionRegistry, ConstantNode, 20)
-    const nodeSetValue2 = script.createNode(functionRegistry, ConstantNode, 10)
-    const nodeSetValue3 = script.createNode(functionRegistry, ConstantNode, 'correct')
-    const nodeTrueCondition = script.createNode(functionRegistry, ConditionNode, 'True')
-    const nodeEvent = script.createNode(functionRegistry, FunctionNode, 'OnMouseClick')
+    const nodeLog = scriptFunction.createNode(functionRegistry, FunctionNode, 'Log')
+    const nodeLessThan = scriptFunction.createNode(functionRegistry, FunctionNode, '<')
+    const nodeSetValue1 = scriptFunction.createNode(functionRegistry, ConstantNode, 20)
+    const nodeSetValue2 = scriptFunction.createNode(functionRegistry, ConstantNode, 10)
+    const nodeSetValue3 = scriptFunction.createNode(functionRegistry, ConstantNode, 'correct')
+    const nodeTrueCondition = scriptFunction.createNode(functionRegistry, ConditionNode, 'True')
+    const nodeEvent = scriptFunction.createNode(functionRegistry, FunctionNode, 'OnMouseClick')
 
     nodeLessThan.attach(nodeSetValue1, 'value1')
     nodeLessThan.attach(nodeSetValue2, 'value2')
@@ -176,9 +170,9 @@ test('Create and compile class script with failed condition', function () {
     nodeLog.attach(nodeTrueCondition, null)
     nodeTrueCondition.attach(nodeEvent, null)
 
-    script.compile()
+    script.compile(world)
 
-    const mouseEventCompiled = functionRegistry.getInstance('classScript.OnMouseClick.6')
+    const mouseEventCompiled = functionRegistry.getInstance('classScript.main.OnMouseClick.6')
     expect(functionRegistry.getInstance('classScript')).toBe(undefined)
     expect(mouseEventCompiled).toBeDefined()
     expect(mouseEventCompiled.constructor).toEqual(OnMouseClickEvent)
@@ -189,24 +183,27 @@ test('Create and compile class script with failed condition', function () {
 })
 
 test('Create and compile class script with variables', function () {
-    const functionRegistry = World.get().getFunctionRegistry()
+    const world = World.get()
+    const functionRegistry = world.getFunctionRegistry()
 
     functionRegistry.init()
 
     const script = new ClassScript('classScript')
+    const scriptFunction = new FunctionScript('main')
+    script.addFunction(scriptFunction)
     const scriptComponent = new ScriptComponent()
     scriptComponent.setVarsAttributes([new DynamicAttribute('text', TYPES.STRING, 'test')])
 
-    const nodeLog = script.createNode(functionRegistry, FunctionNode, 'Log')
-    const nodeVar = script.createNode(functionRegistry, StringVariableNode, 'text')
-    const nodeEvent = script.createNode(functionRegistry, FunctionNode, 'OnMouseClick')
+    const nodeLog = scriptFunction.createNode(functionRegistry, FunctionNode, 'Log')
+    const nodeVar = scriptFunction.createNode(functionRegistry, StringVariableNode, 'text')
+    const nodeEvent = scriptFunction.createNode(functionRegistry, FunctionNode, 'OnMouseClick')
 
     nodeLog.attach(nodeVar, 'value')
     nodeLog.attach(nodeEvent, null)
 
-    script.compile()
+    script.compile(world)
 
-    const mouseEventCompiled = functionRegistry.getInstance('classScript.OnMouseClick.2')
+    const mouseEventCompiled = functionRegistry.getInstance('classScript.main.OnMouseClick.2')
     expect(functionRegistry.getInstance('classScript')).toBe(undefined)
     expect(mouseEventCompiled).toBeDefined()
     expect(mouseEventCompiled.constructor).toEqual(OnMouseClickEvent)
@@ -217,20 +214,23 @@ test('Create and compile class script with variables', function () {
 })
 
 test('Create and compile class script with loop', function () {
-    const functionRegistry = World.get().getFunctionRegistry()
+    const world = World.get()
+    const functionRegistry = world.getFunctionRegistry()
 
     functionRegistry.init()
 
     const script = new ClassScript('classScript')
+    const scriptFunction = new FunctionScript('main')
+    script.addFunction(scriptFunction)
     const scriptComponent = new ScriptComponent()
 
-    const nodeLog = script.createNode(functionRegistry, FunctionNode, 'Log')
-    const nodeLoop = script.createNode(functionRegistry, LoopNode, 'Loop')
-    const nodeEvent = script.createNode(functionRegistry, FunctionNode, 'OnMouseClick')
-    const nodeArray = script.createNode(functionRegistry, FunctionNode, 'Array')
-    const nodeLength = script.createNode(functionRegistry, ConstantNode, 10)
-    const nodeAttributeName = script.createNode(functionRegistry, ConstantNode, "index")
-    const nodeGetValue = script.createNode(functionRegistry, FunctionNode, 'GetValue')
+    const nodeLog = scriptFunction.createNode(functionRegistry, FunctionNode, 'Log')
+    const nodeLoop = scriptFunction.createNode(functionRegistry, LoopNode, 'Loop')
+    const nodeEvent = scriptFunction.createNode(functionRegistry, FunctionNode, 'OnMouseClick')
+    const nodeArray = scriptFunction.createNode(functionRegistry, FunctionNode, 'Array')
+    const nodeLength = scriptFunction.createNode(functionRegistry, ConstantNode, 10)
+    const nodeAttributeName = scriptFunction.createNode(functionRegistry, ConstantNode, "index")
+    const nodeGetValue = scriptFunction.createNode(functionRegistry, FunctionNode, 'GetValue')
 
     nodeArray.attach(nodeLength, 'length')
     nodeLoop.attach(nodeArray, 'array')
@@ -240,9 +240,9 @@ test('Create and compile class script with loop', function () {
     nodeLog.attach(nodeGetValue, 'value')
     nodeLog.attach(nodeLoop, null)
 
-    script.compile()
+    script.compile(world)
 
-    const mouseEventCompiled = functionRegistry.getInstance('classScript.OnMouseClick.2')
+    const mouseEventCompiled = functionRegistry.getInstance('classScript.main.OnMouseClick.2')
     expect(functionRegistry.getInstance('classScript')).toBe(undefined)
     expect(mouseEventCompiled).toBeDefined()
     expect(mouseEventCompiled.constructor).toEqual(OnMouseClickEvent)
@@ -250,4 +250,50 @@ test('Create and compile class script with loop', function () {
     console.log = jest.fn()
     mouseEventCompiled.execute(functionRegistry, null, scriptComponent, World.get())
     expect(console.log).toHaveBeenCalledWith(10)
+})
+
+test('Create and compile class function (no return)', function () {
+    const world = World.get()
+    const functionRegistry = world.getFunctionRegistry()
+
+    functionRegistry.init()
+
+    const script = new ClassScript('classScript')
+    const scriptFunction = new FunctionScript('testFunction')
+    const mainScriptFunction = new FunctionScript('main')
+    script.addFunction(mainScriptFunction)
+    script.addFunction(scriptFunction)
+    const scriptComponent = new ScriptComponent()
+
+    const nodeLog = scriptFunction.createNode(functionRegistry, FunctionNode, 'Log')
+    const nodeInput1 = scriptFunction.createNode(functionRegistry, FunctionInputNode, `text[${TYPES.STRING}]`)
+    const nodeOnCall = scriptFunction.createNode(functionRegistry, EventNode, 'OnCall')
+    nodeLog.attach(nodeInput1, 'value')
+    nodeLog.attach(nodeOnCall, null)
+
+    script.compile(world)
+
+    const functionCompiled = functionRegistry.getInstance('classScript.testFunction')
+    const callEventCompiled = functionRegistry.getInstance('classScript.testFunction.OnCall')
+    expect(functionRegistry.getInstance('classScript')).toBe(undefined)
+    expect(callEventCompiled).toBeDefined()
+    expect(functionCompiled).toBeDefined()
+    expect(callEventCompiled.constructor).toEqual(OnCallEvent)
+    expect(functionCompiled.constructor).toEqual(ACustomFunction)
+
+    const nodeLogFunction = mainScriptFunction.createNode(functionRegistry, FunctionNode, 'classScript.testFunction')
+    const nodeMouseClick = mainScriptFunction.createNode(functionRegistry, EventNode, 'OnMouseClick')
+    const nodeInputText = mainScriptFunction.createNode(functionRegistry, ConstantNode, 'testMessage')
+    nodeLogFunction.attach(nodeMouseClick, null)
+    nodeLogFunction.attach(nodeInputText, 'text')
+
+    script.compile(world)
+
+    const mouseEventCompiled = functionRegistry.getInstance('classScript.main.OnMouseClick.1')
+    expect(mouseEventCompiled).toBeDefined()
+    expect(mouseEventCompiled.constructor).toEqual(OnMouseClickEvent)
+
+    console.log = jest.fn()
+    mouseEventCompiled.execute(functionRegistry, null, scriptComponent, World.get())
+    expect(console.log).toHaveBeenCalledWith('testMessage')
 })

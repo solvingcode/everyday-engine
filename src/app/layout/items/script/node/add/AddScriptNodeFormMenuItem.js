@@ -8,6 +8,8 @@ import AddScriptNodeFormVariableMenuItem from './AddScriptNodeFormVariableMenuIt
 import World from '../../../../../world/World.js'
 import AddScriptNodeFormAnimationMenuItem from './AddScriptNodeFormAnimationMenuItem.js'
 import AddScriptNodeFormComponentMenuItem from './AddScriptNodeFormComponentMenuItem.js'
+import AddScriptNodeFormInputMenuItem from './AddScriptNodeFormInputMenuItem.js'
+import AddScriptNodeFormOutputMenuItem from './AddScriptNodeFormOutputMenuItem.js'
 
 export default class AddScriptNodeFormMenuItem  extends MenuItem {
     /**
@@ -29,7 +31,9 @@ export default class AddScriptNodeFormMenuItem  extends MenuItem {
             new AddScriptNodeFormFunctionMenuItem(this, addNodeForm),
             new AddScriptNodeFormUnitMenuItem(this, addNodeForm),
             new AddScriptNodeFormKeyCodeMenuItem(this, addNodeForm),
-            new AddScriptNodeFormVariableMenuItem(this, addNodeForm)
+            new AddScriptNodeFormVariableMenuItem(this, addNodeForm),
+            new AddScriptNodeFormInputMenuItem(this, addNodeForm),
+            new AddScriptNodeFormOutputMenuItem(this, addNodeForm)
         ]
     }
 

@@ -40,9 +40,10 @@ export default class AssetType extends AssetTypeData{
     /**
      * @abstract
      * @param {*} data
+     * @param {World} world
      * @return {boolean}
      */
-    validate(data){
+    validate(data, world){
         throw new ClientError(`${this.constructor.name}.validate must be implemented`)
     }
 

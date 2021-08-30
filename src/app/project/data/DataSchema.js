@@ -171,6 +171,10 @@ import UISliderUnitInstant from '../../unit/instant/type/internal/ui/slider/UISl
 import UISliderComponent from '../../component/internal/ui/slider/UISliderComponent.js'
 import UISliderFillComponent from '../../component/internal/ui/slider/UISliderFillComponent.js'
 import UISliderHandleComponent from '../../component/internal/ui/slider/UISliderHandleComponent.js'
+import AFunctionInput from '../../flow/io/AFunctionInput.js'
+import AFunctionOutput from '../../flow/io/AFunctionOutput.js'
+import OnCallEvent from '../../flow/event/native/OnCallEvent.js'
+import ACustomFunction from '../../flow/function/custom/ACustomFunction.js'
 
 /**
  * @class {DataSchema}
@@ -338,7 +342,11 @@ class DataSchema {
         {id: 1480, type: UISliderHandleUnitInstant},
         {id: 1490, type: UISliderComponent},
         {id: 1500, type: UISliderFillComponent},
-        {id: 1510, type: UISliderHandleComponent}
+        {id: 1510, type: UISliderHandleComponent},
+        {id: 1520, type: AFunctionInput},
+        {id: 1530, type: AFunctionOutput},
+        {id: 1540, type: OnCallEvent},
+        {id: 1550, type: ACustomFunction},
     ]
 
     /**

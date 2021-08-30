@@ -54,7 +54,8 @@ export default class AssetHelper {
      * @return {DynamicAttribute[]}
      */
     static getAssetScriptVars(assetId) {
-        const assetManager = World.get().getAssetsManager()
+        const world = World.get()
+        const assetManager = world.getAssetsManager()
         const asset = assetManager.findAssetById(assetId)
         if (!asset) {
             throw new SystemError(`Asset not found "${assetId}"`)
@@ -63,19 +64,20 @@ export default class AssetHelper {
         if (!script) {
             throw new ClientError(`No compiled script found for asset "${asset.getName()}"`)
         }
-        return this.getScriptVars(script)
+        return this.getScriptVars(script, world)
     }
 
     /**
      * @param {AScript} script
+     * @param {World} world
      * @return {DynamicAttribute[]}
      */
-    static getScriptVars(script){
+    static getScriptVars(script, world){
         const functionScript = script.getMainFunction()
         if(functionScript){
             const nodes = functionScript.findNodesByClass(VariableNode)
             return nodes.map(node => {
-                const sourceNode = NodeHelper.getSourceNode(node)
+                const sourceNode = NodeHelper.getSourceNode(node, world)
                 return new DynamicAttribute(sourceNode.getName(), sourceNode.getOutput().getAttrType())
             })
         }

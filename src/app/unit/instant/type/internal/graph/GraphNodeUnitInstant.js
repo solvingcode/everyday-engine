@@ -15,30 +15,32 @@ export default class GraphNodeUnitInstant extends UnitInstant {
      * @param {Vector} position
      * @param {ANode} node
      * @param {AScriptFunction} script
+     * @param {World} world
      */
-    instantiate(position, node, script) {
+    instantiate(position, node, script, world) {
         this.createComponent(NodeComponent)
-        this.update(position, node, script)
+        this.update(position, node, script, world)
     }
 
     /**
      * @param {Vector} position
      * @param {ANode} node
      * @param {AScriptFunction} script
+     * @param {World} world
      */
-    update(position, node, script) {
+    update(position, node, script, world) {
         const transformComponent = this.getComponent(TransformComponent)
         const meshComponent = this.getComponent(MeshComponent)
         const nodeComponent = this.getComponent(NodeComponent)
-        const nodeSource = NodeHelper.getSourceNode(node)
+        const nodeSource = NodeHelper.getSourceNode(node, world)
         const actualNodeInputs = nodeComponent.getInputs()
-        const nodeInputs = NodeHelper.getNodeGUIInputs(node, script)
+        const nodeInputs = NodeHelper.getNodeGUIInputs(node, script, world)
         const nodeSourceOutput = nodeSource.getOutput()
-        const size = NodeHelper.getNodeGUISize(node, script)
+        const size = NodeHelper.getNodeGUISize(node, script, world)
         transformComponent.setPosition(position)
         transformComponent.setScale(TransformHelper.getScaleFromSize(size))
         meshComponent.setShape(PrimitiveShape.NODE)
-        nodeComponent.setTitle(NodeHelper.getNodeName(node))
+        nodeComponent.setTitle(NodeHelper.getNodeName(node, world))
         nodeComponent.setInputs(nodeInputs)
         nodeComponent.setType(ScriptHelper.getNodeType(node))
         nodeComponent.setNodeId(node.getId())

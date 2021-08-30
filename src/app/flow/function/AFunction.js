@@ -26,7 +26,7 @@ export default class AFunction extends FunctionData{
      */
     isInstanceOfClass(className){
         const regexName = new RegExp(`^${className}\.`)
-        return !!this.getName().match(regexName)
+        return !!this.getName().match(regexName) || this.getName() === className
     }
 
     init() {
@@ -38,6 +38,13 @@ export default class AFunction extends FunctionData{
      */
     isGlobal(){
         return !this.getName().match(/\./)
+    }
+
+    /**
+     * @return {boolean}
+     */
+    isPublic(){
+        return this.access === ACCESSOR.PUBLIC
     }
 
     /**
@@ -170,4 +177,17 @@ export default class AFunction extends FunctionData{
         return this.output && this.output.getAttrValue()
     }
 
+    /**
+     * @return {boolean}
+     */
+    isUnique(){
+        return false
+    }
+
+}
+
+export const ACCESSOR = {
+    PRIVATE: 0,
+    PROTECTED: 1,
+    PUBLIC: 2
 }

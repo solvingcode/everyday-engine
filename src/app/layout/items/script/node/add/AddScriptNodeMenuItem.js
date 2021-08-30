@@ -43,6 +43,11 @@ export class AddScriptNodeForm {
      */
     value
 
+    /**
+     * @type {number}
+     */
+    inputType
+
     constructor() {
         this.type = ''
         this.value = ''
@@ -74,6 +79,20 @@ export class AddScriptNodeForm {
      */
     getValue() {
         return this.value
+    }
+
+    /**
+     * @param {number} inputType
+     */
+    setInputType(inputType) {
+        this.inputType = inputType
+    }
+
+    /**
+     * @return {number}
+     */
+    getInputType() {
+        return this.inputType
     }
 
 }

@@ -21,6 +21,8 @@ import MaskGroupVariableNode from './node/variable/MaskGroupVariableNode.js'
 import LoopNode from './node/LoopNode.js'
 import AudioVariableNode from './node/variable/AudioVariableNode.js'
 import AScriptFunctionData from '../project/data/AScriptFunctionData.js'
+import FunctionInputNode from './node/FunctionInputNode.js'
+import FunctionOutputNode from './node/FunctionOutputNode.js'
 
 /**
  * @abstract
@@ -59,6 +61,8 @@ export default class AScriptFunction extends AScriptFunctionData {
             case KeyCodeNode:
             case UnitNode:
             case AnimationNode:
+            case FunctionInputNode:
+            case FunctionOutputNode:
             case ReferenceNode:
             case LoopNode:
             case StringVariableNode:

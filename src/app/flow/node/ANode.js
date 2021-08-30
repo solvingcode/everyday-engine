@@ -134,5 +134,82 @@ export const NODE_TYPES = {
     COMPONENT: 'component',
     REFERENCE: 'reference',
     SELF: 'self',
-    AUDIO: 'audio'
+    AUDIO: 'audio',
+    INPUT: 'input',
+    OUTPUT: 'output'
 }
+
+export const NODE_TYPE_NAMES = [
+    {
+        value: NODE_TYPES.INPUT,
+        label: 'Input'
+    },
+    {
+        value: NODE_TYPES.OUTPUT,
+        label: 'Output'
+    },
+    {
+        value: NODE_TYPES.SELF,
+        label: 'Self'
+    },
+    {
+        value: NODE_TYPES.EVENT,
+        label: 'Event'
+    },
+    {
+        value: NODE_TYPES.ANIMATION,
+        label: 'Animation'
+    },
+    {
+        value: NODE_TYPES.COMPONENT,
+        label: 'Component'
+    },
+    {
+        value: NODE_TYPES.FUNCTION,
+        label: 'Function'
+    },
+    {
+        value: NODE_TYPES.LOOP,
+        label: 'Loop'
+    },
+    {
+        value: NODE_TYPES.CONDITION,
+        label: 'Condition'
+    },
+    {
+        value: NODE_TYPES.KEY_CODE,
+        label: 'Key Code'
+    },
+    {
+        value: NODE_TYPES.VAR_NUMBER,
+        label: 'Variable (Number)'
+    },
+    {
+        value: NODE_TYPES.VAR_STRING,
+        label: 'Variable (string)'
+    },
+    {
+        value: NODE_TYPES.VAR_BOOLEAN,
+        label: 'Variable (boolean)'
+    },
+    {
+        value: NODE_TYPES.VAR_TOGGLE,
+        label: 'Variable (toggle)'
+    },
+    {
+        value: NODE_TYPES.VAR_COMPONENT,
+        label: 'Variable (component)'
+    },
+    {
+        value: NODE_TYPES.VAR_AUDIO,
+        label: 'Variable (Audio)'
+    },
+    {
+        value: NODE_TYPES.VAR_MASK_GROUP,
+        label: 'Variable (Mask Group)'
+    },
+    {
+        value: NODE_TYPES.REFERENCE,
+        label: 'Reference'
+    }
+]

@@ -42,7 +42,7 @@ export default class AddScriptNodeInputListMenuItem extends ListMenuItem {
         const selectedGraphUnit = selectedGraphUnits[0]
         const nodeId = selectedGraphUnit.getComponent(NodeComponent).getNodeId()
         const node = script.findNodeById(nodeId)
-        return NodeHelper.getSourceNode(node).getInputs().filter(input => !node.getInputNodeAttached(input.getAttrName()))
+        return NodeHelper.getSourceNode(node, world).getInputs().filter(input => !node.getInputNodeAttached(input.getAttrName()))
     }
 
     /**

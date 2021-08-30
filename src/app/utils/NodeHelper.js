@@ -2,9 +2,8 @@ import AConstant from '../flow/constant/AConstant.js'
 import ACondition from '../flow/condition/ACondition.js'
 import AEvent from '../flow/event/AEvent.js'
 import AFunction from '../flow/function/AFunction.js'
-import World from '../world/World.js'
 import AUnit from '../flow/unit/AUnit.js'
-import {NODE_TYPES} from '../flow/node/ANode.js'
+import {NODE_TYPE_NAMES, NODE_TYPES} from '../flow/node/ANode.js'
 import ClientError from '../exception/type/ClientError.js'
 import Size from '../pobject/Size.js'
 import Vector from './Vector.js'
@@ -44,15 +43,20 @@ import LoopNode from '../flow/node/LoopNode.js'
 import ALoop from '../flow/loop/ALoop.js'
 import AudioVariableNode from '../flow/node/variable/AudioVariableNode.js'
 import AAudioVariable from '../flow/variable/AAudioVariable.js'
+import FunctionInputNode from '../flow/node/FunctionInputNode.js'
+import FunctionOutputNode from '../flow/node/FunctionOutputNode.js'
+import AFunctionInput from '../flow/io/AFunctionInput.js'
+import AFunctionOutput from '../flow/io/AFunctionOutput.js'
 
 export default class NodeHelper {
 
     /**
      * @param {ANode} node
+     * @param {World} world
      * @return {AFunction}
      */
-    static getSourceNode(node) {
-        const functionRegistry = World.get().getFunctionRegistry()
+    static getSourceNode(node, world) {
+        const functionRegistry = world.getFunctionRegistry()
         const sourceName = node.getSourceName()
         switch (node.constructor) {
             case FunctionNode:
@@ -69,6 +73,10 @@ export default class NodeHelper {
                 return new ASelf(sourceName)
             case AnimationNode:
                 return new AAnimation(sourceName)
+            case FunctionInputNode:
+                return new AFunctionInput(sourceName)
+            case FunctionOutputNode:
+                return new AFunctionOutput(sourceName)
             case ReferenceNode:
                 return new AReference(sourceName)
             case LoopNode:
@@ -96,10 +104,11 @@ export default class NodeHelper {
 
     /**
      * @param {ANode} node
+     * @param {World} world
      * @return {string}
      */
-    static getNodeName(node) {
-        const nodeSource = this.getSourceNode(node)
+    static getNodeName(node, world) {
+        const nodeSource = this.getSourceNode(node, world)
         if (nodeSource instanceof AConstant) {
             return `${nodeSource.getName()}`
         } else if (nodeSource instanceof AKeyCode) {
@@ -113,18 +122,48 @@ export default class NodeHelper {
         } else if (nodeSource instanceof AEvent) {
             return `${nodeSource.getName()}`
         } else if (nodeSource instanceof AUnit) {
-            const unit = World.get().findUnitById(parseInt(nodeSource.getName()))
+            const unit = world.findUnitById(parseInt(nodeSource.getName()))
             return `${unit.getName()}`
         } else if (nodeSource instanceof AAnimation) {
-            const animation = World.get().getAnimationManager().findById(parseInt(nodeSource.getName()))
+            const animation = world.getAnimationManager().findById(parseInt(nodeSource.getName()))
             return `${animation.getName()}`
         } else if (nodeSource instanceof AComponent) {
             return `${nodeSource.getName()}`
+        } else if (nodeSource instanceof AFunctionInput) {
+            const dynamicAttribute = this.getAttributeFromNodeFunctionInput(node, world)
+            return `${dynamicAttribute.getAttrName()} [${DynamicAttributeHelper.getAttributeTypeName(dynamicAttribute.getAttrType())}]`
+        } else if (nodeSource instanceof AFunctionOutput) {
+            return DynamicAttributeHelper.getAttributeTypeName(parseInt(nodeSource.getName()))
         } else if (nodeSource instanceof AFunction) {
             return `${nodeSource.getName()}`
         } else {
             throw new ClientError(`Node source "${nodeSource && nodeSource.constructor.name}" unknown`)
         }
+    }
+
+    /**
+     * @param {World} world
+     * @param {ANode} node
+     * @return {DynamicAttribute}
+     */
+    static getAttributeFromNodeFunctionInput(node, world){
+        const nodeSource = this.getSourceNode(node, world)
+        const inputMatches = nodeSource.getName().match(/([^\[]+)\[(\d+)]$/)
+        const inputName = inputMatches[1]
+        const inputType = parseInt(inputMatches[2])
+        return new DynamicAttribute(inputName, inputType)
+    }
+
+    /**
+     * @param {number} nodeType
+     * @return {string}
+     */
+    static getNodeTypeName(nodeType) {
+        const nodeTypeName = NODE_TYPE_NAMES.find(nodeName => nodeName.value === nodeType)
+        if (nodeTypeName) {
+            return nodeTypeName.label
+        }
+        throw new ClientError(`Node type not recognized "${nodeType}"`)
     }
 
     /**
@@ -176,6 +215,10 @@ export default class NodeHelper {
             headColor = '#5e2254'
         } else if (type === NODE_TYPES.REFERENCE) {
             headColor = '#22445e'
+        } else if (type === NODE_TYPES.INPUT) {
+            headColor = '#a33b0b'
+        } else if (type === NODE_TYPES.OUTPUT) {
+            headColor = '#a33b0b'
         }
         return {
             sizeInput,
@@ -196,15 +239,16 @@ export default class NodeHelper {
     /**
      * @param {ANode} node
      * @param {AScriptFunction} script
+     * @param {World} world
      * @return {Size}
      */
-    static getNodeGUISize(node, script) {
-        const nodeSource = this.getSourceNode(node)
+    static getNodeGUISize(node, script, world) {
+        const nodeSource = this.getSourceNode(node, world)
         const nodeSourceInputs = nodeSource.getInputs()
         const type = node.getType()
         const {fontSize, padding, fontSizeRatio, sizeInput} = this.getNodeGUIProps(type)
-        const nodeInputTextLengths = this.getNodeGUIInputs(node, script)
-            .concat(this.getNodeName(node)).map(text => text.length)
+        const nodeInputTextLengths = this.getNodeGUIInputs(node, script, world)
+            .concat(this.getNodeName(node, world)).map(text => text.length)
         const width = Math.max(Math.max(...nodeInputTextLengths) * fontSize / fontSizeRatio, 100)
         const height = (nodeSourceInputs.length + 1) * (sizeInput + padding * 2) + (fontSize + padding * 2)
         return new Size({width, height})
@@ -238,16 +282,17 @@ export default class NodeHelper {
     /**
      * @param {ANode} node
      * @param {AScriptFunction} script
+     * @param {World} world
      * @return {DynamicAttribute[]}
      */
-    static getNodeGUIConstantInputs(node, script) {
+    static getNodeGUIConstantInputs(node, script, world) {
         return node.getInputs().map(input => {
             const sourceNode = script.findNodeById(input.getSourceNodeId())
             if (this.isHidden(sourceNode)) {
                 return new DynamicAttribute(
                     input.getTargetName(),
                     TYPES.STRING,
-                    sourceNode && this.getNodeName(sourceNode)
+                    sourceNode && this.getNodeName(sourceNode, world)
                 )
             }
             return null
@@ -268,11 +313,12 @@ export default class NodeHelper {
     /**
      * @param {ANode} node
      * @param {AScriptFunction} script
+     * @param {World} world
      * @return {string[]}
      */
-    static getNodeGUIInputs(node, script) {
-        const nodeConstantInputs = this.getNodeGUIConstantInputs(node, script)
-        const nodeSource = this.getSourceNode(node)
+    static getNodeGUIInputs(node, script, world) {
+        const nodeConstantInputs = this.getNodeGUIConstantInputs(node, script, world)
+        const nodeSource = this.getSourceNode(node, world)
         const inputs = nodeSource.getInputs()
         return inputs.map(input => {
             const nodeInput = nodeConstantInputs.find(pInput => pInput.getAttrName() === input.getAttrName())
@@ -289,7 +335,8 @@ export default class NodeHelper {
             type === NODE_TYPES.LOOP ||
             type === NODE_TYPES.CONDITION ||
             type === NODE_TYPES.ANIMATION ||
-            type === NODE_TYPES.REFERENCE
+            type === NODE_TYPES.REFERENCE ||
+            type === NODE_TYPES.OUTPUT
     }
 
     /**
@@ -297,6 +344,7 @@ export default class NodeHelper {
      * @return {boolean}
      */
     static hasBaseOutput(type) {
-        return type === NODE_TYPES.EVENT || type === NODE_TYPES.ANIMATION || type === NODE_TYPES.SELF
+        return type === NODE_TYPES.EVENT || type === NODE_TYPES.ANIMATION ||
+            type === NODE_TYPES.SELF || type === NODE_TYPES.INPUT
     }
 }

@@ -242,6 +242,9 @@ export default {
                                     },
                                     output: {
                                         prototype: TYPES.DYNAMIC_ATTRIBUTE
+                                    },
+                                    access: {
+                                        type: TYPES.NUMBER
                                     }
                                 }
                             }

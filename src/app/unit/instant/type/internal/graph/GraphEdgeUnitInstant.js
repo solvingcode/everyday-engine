@@ -17,17 +17,19 @@ export default class GraphEdgeUnitInstant extends UnitInstant {
     /**
      * @param {AScriptFunction} script
      * @param {NodeInput} nodeInput
+     * @param {World} world
      */
-    instantiate(script, nodeInput) {
+    instantiate(script, nodeInput, world) {
         this.createComponent(NodeInputComponent)
-        this.update(script, nodeInput)
+        this.update(script, nodeInput, world)
     }
 
     /**
      * @param {AScriptFunction} script
+     * @param {World} world
      * @param {NodeInput} nodeInput
      */
-    update(script, nodeInput) {
+    update(script, nodeInput, world) {
         const transformComponent = this.getComponent(TransformComponent)
         const meshComponent = this.getComponent(MeshComponent)
         const nodeInputComponent = this.getComponent(NodeInputComponent)
@@ -35,10 +37,10 @@ export default class GraphEdgeUnitInstant extends UnitInstant {
         const sourceNode = script.findNodeById(nodeInput.getSourceNodeId())
         const targetNode = script.findNodeById(nodeInput.getNodeId())
         if (sourceNode && targetNode) {
-            const targetSourceNode = NodeHelper.getSourceNode(targetNode)
+            const targetSourceNode = NodeHelper.getSourceNode(targetNode, world)
             const targetNodeInputIndex = targetSourceNode.getInputs()
                 .findIndex(input => input.getAttrName() === nodeInput.getTargetName())
-            const sourceNodeSize = NodeHelper.getNodeGUISize(sourceNode, script)
+            const sourceNodeSize = NodeHelper.getNodeGUISize(sourceNode, script, world)
             const {position: sourceOutputPosition} = NodeHelper.getNodeGUIOutput(sourceNode.getType(), sourceNodeSize)
             const {position: targetInputPosition} = NodeHelper.getNodeGUIInput(sourceNode.getType(), targetNodeInputIndex)
             const {sizeInput} = NodeHelper.getNodeGUIProps(sourceNode.getType())

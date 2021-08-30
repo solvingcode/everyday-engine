@@ -27,6 +27,8 @@ import MaskGroupVariableNode from '../flow/node/variable/MaskGroupVariableNode.j
 import LoopNode from '../flow/node/LoopNode.js'
 import AudioVariableNode from '../flow/node/variable/AudioVariableNode.js'
 import FunctionScript from '../flow/FunctionScript.js'
+import FunctionInputNode from '../flow/node/FunctionInputNode.js'
+import FunctionOutputNode from '../flow/node/FunctionOutputNode.js'
 
 export default class ScriptHelper {
 
@@ -57,6 +59,10 @@ export default class ScriptHelper {
             node = script.createNode(functionRegistry, SelfNode, nodeValue)
         } else if (nodeType === NODE_TYPES.ANIMATION) {
             node = script.createNode(functionRegistry, AnimationNode, nodeValue)
+        } else if (nodeType === NODE_TYPES.INPUT) {
+            node = script.createNode(functionRegistry, FunctionInputNode, nodeValue)
+        } else if (nodeType === NODE_TYPES.OUTPUT) {
+            node = script.createNode(functionRegistry, FunctionOutputNode, nodeValue)
         } else if (nodeType === NODE_TYPES.REFERENCE) {
             node = script.createNode(functionRegistry, ReferenceNode, nodeValue)
         } else if (nodeType === NODE_TYPES.VAR_STRING) {
@@ -103,6 +109,10 @@ export default class ScriptHelper {
             nodeType = NODE_TYPES.SELF
         } else if (node instanceof AnimationNode) {
             nodeType = NODE_TYPES.ANIMATION
+        } else if (node instanceof FunctionInputNode) {
+            nodeType = NODE_TYPES.INPUT
+        } else if (node instanceof FunctionOutputNode) {
+            nodeType = NODE_TYPES.OUTPUT
         } else if (node instanceof ReferenceNode) {
             nodeType = NODE_TYPES.REFERENCE
         } else if (node instanceof KeyCodeNode) {
@@ -134,15 +144,16 @@ export default class ScriptHelper {
      * @param {AScriptFunction} script
      * @param {Unit} unit
      * @param {Vector} position
+     * @param {World} world
      * @return {{node: ANode, input: DynamicAttribute|null}|undefined}
      */
-    static findNodeInputByPosition(script, unit, position) {
+    static findNodeInputByPosition(script, unit, position, world) {
         if (unit) {
             const nodeId = unit.getComponent(NodeComponent).getNodeId()
             const unitPosition = unit.getComponent(TransformComponent).getPosition()
             const node = script.findNodeById(nodeId)
             if (node && NodeHelper.hasBaseInput(node.getType())) {
-                const sourceNode = NodeHelper.getSourceNode(node)
+                const sourceNode = NodeHelper.getSourceNode(node, world)
                 const inputs = sourceNode.getInputs()
                 for (let iInput = -1; iInput < inputs.length; iInput++) {
                     const input = iInput >= 0 ? inputs[iInput] : null
@@ -164,15 +175,16 @@ export default class ScriptHelper {
      * @param {AScriptFunction} script
      * @param {Unit} unit
      * @param {Vector} position
+     * @param {World} world
      * @return {{node: ANode, output: DynamicAttribute|null}|undefined}
      */
-    static findNodeOutputByPosition(script, unit, position) {
+    static findNodeOutputByPosition(script, unit, position, world) {
         if (unit) {
             const nodeId = unit.getComponent(NodeComponent).getNodeId()
             const unitPosition = unit.getComponent(TransformComponent).getPosition()
             const size = unit.getComponent(MeshComponent).getSize()
             const node = script.findNodeById(nodeId)
-            const sourceNode = NodeHelper.getSourceNode(node)
+            const sourceNode = NodeHelper.getSourceNode(node, world)
             const output = sourceNode.getOutput()
             if (node && (output || NodeHelper.hasBaseOutput(node.getType()))) {
                 const {position: inputLocalPosition, sizeInput} = NodeHelper.getNodeGUIOutput(node.getType(), size)
@@ -189,11 +201,12 @@ export default class ScriptHelper {
 
     /**
      * @param {AScriptFunction} script
+     * @param {World} world
      * @return {boolean}
      */
-    static validate(script) {
+    static validate(script, world) {
         script.getNodes().forEach(node => {
-            const sourceNode = NodeHelper.getSourceNode(node)
+            const sourceNode = NodeHelper.getSourceNode(node, world)
             if (!sourceNode) {
                 script.removeNodeById(node.getId())
             }
@@ -204,11 +217,14 @@ export default class ScriptHelper {
      * @param {AScript} script
      * @param {AScriptFunction} scriptFunction
      * @param {ANode} node
+     * @param {World} world
      * @return {string}
      */
-    static generateFunctionName(script, scriptFunction, node) {
+    static generateFunctionName(script, scriptFunction, node, world) {
         const nodeIndex = scriptFunction.getNodes().findIndex(pNode => pNode === node)
-        return `${script.getName()}.${scriptFunction.getName()}.${node.getSourceName()}.${nodeIndex}`
+        const sourceNode = NodeHelper.getSourceNode(node, world)
+        const isAddIndex = !sourceNode.isUnique()
+        return `${script.getName()}.${scriptFunction.getName()}.${node.getSourceName()}${isAddIndex ? `.${nodeIndex}`: ''}`
     }
 
     /**
@@ -226,11 +242,12 @@ export default class ScriptHelper {
      * @param {AScript} script
      * @param {AScriptFunction} scriptFunction
      * @param {ANode} node
+     * @param {World} world
      * @return {AFunction}
      */
-    static createStackFunction(script, scriptFunction, node) {
-        const element = NodeHelper.getSourceNode(node)
-        const functionName = this.generateFunctionName(script, scriptFunction, node)
+    static createStackFunction(script, scriptFunction, node, world) {
+        const element = NodeHelper.getSourceNode(node, world)
+        const functionName = this.generateFunctionName(script, scriptFunction, node, world)
         if (element instanceof AEvent || element instanceof AAnimation) {
             return new (element.constructor)(functionName)
         }
@@ -240,7 +257,6 @@ export default class ScriptHelper {
     /**
      * @param {AScript} script
      * @param {string} functionName
-     * @return {AFunction}
      */
     static createFunction(script, functionName) {
         const scriptFunction = new FunctionScript(functionName)

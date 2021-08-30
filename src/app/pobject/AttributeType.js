@@ -163,3 +163,18 @@ export const TYPES = {
     ARRAY:                          0b00100000000000000000000000,
     MESH:                           0b01000000000000000000000001
 }
+
+export const TYPES_NAME = [
+    {
+        value: TYPES.STRING,
+        label: 'String'
+    },
+    {
+        value: TYPES.NUMBER,
+        label: 'Number'
+    },
+    {
+        value: TYPES.BOOLEAN,
+        label: 'Boolean'
+    }
+]
