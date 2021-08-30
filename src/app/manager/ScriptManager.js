@@ -111,6 +111,17 @@ export default class ScriptManager extends ScriptManagerData {
 
     /**
      * @param {TabManager} tabManager
+     * @return {AScriptFunction}
+     */
+    getMainFunction(tabManager){
+        const script = this.getSelected(tabManager)
+        if (script) {
+            return script.getMainFunction()
+        }
+    }
+
+    /**
+     * @param {TabManager} tabManager
      * @return {Asset}
      */
     getSelectedAsset(tabManager) {

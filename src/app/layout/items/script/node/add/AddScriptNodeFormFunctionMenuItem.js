@@ -2,7 +2,6 @@ import FormMenuItem from '../../../form/FormMenuItem.js'
 import Layout from '../../../../Layout.js'
 import {NODE_TYPES} from '../../../../../flow/node/ANode.js'
 import World from '../../../../../world/World.js'
-import ACustomFunction from '../../../../../flow/function/custom/ACustomFunction.js'
 
 export default class AddScriptNodeFormFunctionMenuItem extends FormMenuItem {
     /**
@@ -36,9 +35,7 @@ export default class AddScriptNodeFormFunctionMenuItem extends FormMenuItem {
         } else if (type === NODE_TYPES.CONDITION) {
             functions = functionRegistry.getConditionInstances().filter(instance => instance.isGlobal())
         } else if (type === NODE_TYPES.FUNCTION) {
-            functions = functionRegistry.getOtherInstances().filter(instance =>
-                instance.isGlobal() || instance.isPublic() ||
-                (instance instanceof ACustomFunction && instance.isInstanceOfClass(script.getName())))
+            functions = functionRegistry.getCustomFunctionInstances(script)
         }
         return [
             {

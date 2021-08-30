@@ -24,6 +24,11 @@ export default class SceneFormMenuItem extends FormMenuItem {
                 bind: 'name',
                 label: 'Name',
                 type: Layout.form.TEXT
+            },
+            {
+                bind: 'index',
+                label: 'Index',
+                type: Layout.form.TEXT
             }
         ]
     }

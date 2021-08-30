@@ -69,6 +69,14 @@ export default class SceneManager extends SceneManagerData {
     }
 
     /**
+     * @param {number} index
+     * @return {Scene}
+     */
+    findByIndex(index) {
+        return this.scenes.find(scene => scene.getIndex() === index)
+    }
+
+    /**
      * @param {string} name
      * @return {Scene}
      */

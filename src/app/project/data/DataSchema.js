@@ -175,6 +175,8 @@ import AFunctionInput from '../../flow/io/AFunctionInput.js'
 import AFunctionOutput from '../../flow/io/AFunctionOutput.js'
 import OnCallEvent from '../../flow/event/native/OnCallEvent.js'
 import ACustomFunction from '../../flow/function/custom/ACustomFunction.js'
+import LoadSceneFunction from '../../flow/function/native/scene/LoadSceneFunction.js'
+import LoadSceneIndexFunction from '../../flow/function/native/scene/LoadSceneIndexFunction.js'
 
 /**
  * @class {DataSchema}
@@ -347,6 +349,8 @@ class DataSchema {
         {id: 1530, type: AFunctionOutput},
         {id: 1540, type: OnCallEvent},
         {id: 1550, type: ACustomFunction},
+        {id: 1560, type: LoadSceneFunction},
+        {id: 1570, type: LoadSceneIndexFunction},
     ]
 
     /**

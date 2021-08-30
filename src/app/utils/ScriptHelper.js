@@ -29,6 +29,7 @@ import AudioVariableNode from '../flow/node/variable/AudioVariableNode.js'
 import FunctionScript from '../flow/FunctionScript.js'
 import FunctionInputNode from '../flow/node/FunctionInputNode.js'
 import FunctionOutputNode from '../flow/node/FunctionOutputNode.js'
+import SceneVariableNode from '../flow/node/variable/SceneVariableNode.js'
 
 export default class ScriptHelper {
 
@@ -77,6 +78,8 @@ export default class ScriptHelper {
             node = script.createNode(functionRegistry, BooleanVariableNode, nodeValue)
         } else if (nodeType === NODE_TYPES.VAR_AUDIO) {
             node = script.createNode(functionRegistry, AudioVariableNode, nodeValue)
+        } else if (nodeType === NODE_TYPES.VAR_SCENE) {
+            node = script.createNode(functionRegistry, SceneVariableNode, nodeValue)
         } else if (nodeType === NODE_TYPES.VAR_TOGGLE) {
             node = script.createNode(functionRegistry, ToggleVariableNode, nodeValue)
         } else if (nodeType === NODE_TYPES.COMPONENT) {
@@ -129,6 +132,8 @@ export default class ScriptHelper {
             nodeType = NODE_TYPES.VAR_BOOLEAN
         } else if (node instanceof AudioVariableNode) {
             nodeType = NODE_TYPES.VAR_AUDIO
+        } else if (node instanceof SceneVariableNode) {
+            nodeType = NODE_TYPES.VAR_SCENE
         } else if (node instanceof ToggleVariableNode) {
             nodeType = NODE_TYPES.VAR_TOGGLE
         } else if (node instanceof ComponentNode) {

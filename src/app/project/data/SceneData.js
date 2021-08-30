@@ -13,6 +13,10 @@ export default class SceneData extends Data{
      */
     name
     /**
+     * @type {number}
+     */
+    index
+    /**
      * @type {boolean}
      */
     active
@@ -46,6 +50,20 @@ export default class SceneData extends Data{
      */
     getId() {
         return this.id
+    }
+
+    /**
+     * @param {number} index
+     */
+    setIndex(index) {
+        this.index = index
+    }
+
+    /**
+     * @return {number}
+     */
+    getIndex() {
+        return this.index
     }
 
     /**

@@ -1,9 +1,7 @@
 import Layout from '../../../../Layout.js'
-import ScriptNodeNameMenuItem from './ScriptNodeNameMenuItem.js'
-import ListSelectElementMenuItem from '../../../list/ListSelectElementMenuItem.js'
-import DeleteScriptNodeMenuItem from '../delete/DeleteScriptNodeMenuItem.js'
+import ListSelectElementActionsMenuItem from '../../../list/ListSelectElementActionsMenuItem.js'
 
-export default class ScriptNodeElementMenuItem extends ListSelectElementMenuItem {
+export default class ScriptNodeElementMenuItem extends ListSelectElementActionsMenuItem {
     constructor(parent, data) {
         super(parent, data, {
             name: '',
@@ -14,19 +12,15 @@ export default class ScriptNodeElementMenuItem extends ListSelectElementMenuItem
     /**
      * @override
      */
-    setData(data) {
-        super.setData(data)
-        this.items = [
-            new ScriptNodeNameMenuItem(this, data.bind),
-            new DeleteScriptNodeMenuItem(this, data.bind)
-        ]
+    getIcon() {
+        return 'sitemap'
     }
 
     /**
      * @override
      */
-    getName() {
-        return ''
+    isButton() {
+        return true
     }
 
 }

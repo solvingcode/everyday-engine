@@ -24,6 +24,7 @@ import AScriptFunctionData from '../project/data/AScriptFunctionData.js'
 import FunctionInputNode from './node/FunctionInputNode.js'
 import FunctionOutputNode from './node/FunctionOutputNode.js'
 import {ACCESSOR} from './function/AFunction.js'
+import SceneVariableNode from './node/variable/SceneVariableNode.js'
 
 /**
  * @abstract
@@ -70,6 +71,7 @@ export default class AScriptFunction extends AScriptFunctionData {
             case ToggleVariableNode:
             case BooleanVariableNode:
             case AudioVariableNode:
+            case SceneVariableNode:
             case NumberVariableNode:
             case ComponentVariableNode:
             case MaskGroupVariableNode:

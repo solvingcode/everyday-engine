@@ -2,6 +2,7 @@ import World from '../../../../../world/World.js'
 import ListMenuItem from '../../../list/ListMenuItem.js'
 import VariableNode from '../../../../../flow/node/variable/VariableNode.js'
 import ScriptNodeElementMenuItem from './ScriptNodeElementMenuItem.js'
+import DeleteScriptNodeMenuItem from '../delete/DeleteScriptNodeMenuItem.js'
 
 export default class ScriptNodeVarsListMenuItem extends ListMenuItem {
 
@@ -27,7 +28,9 @@ export default class ScriptNodeVarsListMenuItem extends ListMenuItem {
      * @override
      */
     getActions(bindObject){
-        return []
+        return [
+            new DeleteScriptNodeMenuItem(this, bindObject)
+        ]
     }
 
     /**
@@ -35,7 +38,7 @@ export default class ScriptNodeVarsListMenuItem extends ListMenuItem {
      */
     getFormObject() {
         const world = World.get()
-        const script = world.getScriptManager().getFunctionSelected(world.getTabManager())
+        const script = world.getScriptManager().getMainFunction(world.getTabManager())
         return script.getNodes().filter(node => node instanceof VariableNode)
     }
 

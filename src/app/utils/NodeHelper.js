@@ -47,6 +47,8 @@ import FunctionInputNode from '../flow/node/FunctionInputNode.js'
 import FunctionOutputNode from '../flow/node/FunctionOutputNode.js'
 import AFunctionInput from '../flow/io/AFunctionInput.js'
 import AFunctionOutput from '../flow/io/AFunctionOutput.js'
+import SceneVariableNode from '../flow/node/variable/SceneVariableNode.js'
+import ASceneVariable from '../flow/variable/ASceneVariable.js'
 
 export default class NodeHelper {
 
@@ -87,6 +89,8 @@ export default class NodeHelper {
                 return new ABooleanVariable(sourceName)
             case AudioVariableNode:
                 return new AAudioVariable(sourceName)
+            case SceneVariableNode:
+                return new ASceneVariable(sourceName)
             case NumberVariableNode:
                 return new ANumberVariable(sourceName)
             case ComponentVariableNode:

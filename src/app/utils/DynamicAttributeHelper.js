@@ -243,6 +243,32 @@ export default class DynamicAttributeHelper {
                 list: listAudios,
                 dynamicAttribute
             }]
+        } else if (attribute.getAttrType() === TYPES.SCENE && isListInstances) {
+            const listScenes = world.getSceneManager().getScenes()
+                .map(scene => ({
+                    value: scene.getId(),
+                    label: scene.getName()
+                }))
+            formField = [{
+                bind: bindName,
+                label: attribute.getAttrName(),
+                type: Layout.form.DROPDOWN,
+                list: listScenes,
+                dynamicAttribute
+            }]
+        } else if (attribute.getAttrType() === TYPES.FUNCTION && isListInstances) {
+            const listFunctions = world.getFunctionRegistry().getCustomFunctionInstances()
+                .map(func => ({
+                    value: func.getName(),
+                    label: func.getName()
+                }))
+            formField = [{
+                bind: bindName,
+                label: attribute.getAttrName(),
+                type: Layout.form.DROPDOWN,
+                list: listFunctions,
+                dynamicAttribute
+            }]
         } else if (attribute.getAttrType() === TYPES.FONT && isListInstances) {
             const listFonts = world.getAssetsManager().getFontAssets()
                 .map(font => ({
@@ -498,6 +524,20 @@ export default class DynamicAttributeHelper {
                     throw new ClientError(`${this.constructor.name}: Audio "${value}" not found`)
                 }
                 newValue = audio.getType()
+                break
+            case TYPES.SCENE:
+                const scene = world.getSceneManager().findById(value)
+                if (!scene) {
+                    throw new ClientError(`${this.constructor.name}: Scene "${value}" not found`)
+                }
+                newValue = scene
+                break
+            case TYPES.FUNCTION:
+                const func = world.getFunctionRegistry().getInstance(value)
+                if (!func) {
+                    throw new ClientError(`${this.constructor.name}: Function "${value}" not found`)
+                }
+                newValue = func
                 break
             case TYPES.FONT:
                 const font = world.getAssetsManager().findAssetFontById(value)

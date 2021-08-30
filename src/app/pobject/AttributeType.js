@@ -62,9 +62,13 @@ export default class AttributeType {
                 return 'number'
             case TYPES.AUDIO:
                 return 'number'
+            case TYPES.SCENE:
+                return 'number'
             case TYPES.FONT:
                 return 'number'
             case TYPES.LIST:
+                return 'string'
+            case TYPES.FUNCTION:
                 return 'string'
             case TYPES.MASK_GROUP_INSTANCE:
                 return 'number'
@@ -155,6 +159,8 @@ export const TYPES = {
     AUDIO:                          0b00000100000000100000000000,
     LIST:                           0b00000100000001000000000000,
     FONT:                           0b00000100000010000000000000,
+    SCENE:                          0b00000100000100000000000000,
+    FUNCTION:                       0b00000100001000000000000000,
     RANGE:                          0b00001000000000000000000001,
     STYLE:                          0b00010000000000000000000010,
     SIZE:                           0b00010000000000000000000100,

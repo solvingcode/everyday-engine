@@ -74,6 +74,9 @@ import FlipScaleFunction from '../flow/function/native/transform/FlipScaleFuncti
 import AFunctionInput from '../flow/io/AFunctionInput.js'
 import AFunctionOutput from '../flow/io/AFunctionOutput.js'
 import OnCallEvent from '../flow/event/native/OnCallEvent.js'
+import LoadSceneFunction from '../flow/function/native/scene/LoadSceneFunction.js'
+import LoadSceneIndexFunction from '../flow/function/native/scene/LoadSceneIndexFunction.js'
+import ACustomFunction from '../flow/function/custom/ACustomFunction.js'
 
 export default class FunctionRegistry extends Registry{
 
@@ -152,6 +155,10 @@ export default class FunctionRegistry extends Registry{
             //Audio
             new PlayAudioFunction(),
             new IsAudioPlayingFunction(),
+
+            //Scene
+            new LoadSceneFunction(),
+            new LoadSceneIndexFunction(),
 
             //Object
             new GetValueFunction(),
@@ -268,6 +275,16 @@ export default class FunctionRegistry extends Registry{
                 !(instance instanceof AVariable) &&
                 !(instance instanceof AComponent)
             )
+    }
+
+    /**
+     * @param {AScript} script
+     * @return {AFunction[]}
+     */
+    getCustomFunctionInstances(script = null){
+        return this.getOtherInstances().filter(instance =>
+            instance.isGlobal() || instance.isPublic() ||
+            (instance instanceof ACustomFunction && script && instance.isInstanceOfClass(script.getName())))
     }
 
     /**

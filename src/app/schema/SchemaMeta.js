@@ -314,6 +314,9 @@ export default {
                                     id: {
                                         type: TYPES.NUMBER
                                     },
+                                    index: {
+                                        type: TYPES.NUMBER
+                                    },
                                     name: {
                                         type: TYPES.STRING
                                     },

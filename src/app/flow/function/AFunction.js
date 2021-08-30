@@ -44,7 +44,7 @@ export default class AFunction extends FunctionData{
      * @return {boolean}
      */
     isPublic(){
-        return this.access === ACCESSOR.PUBLIC
+        return parseInt(this.access) === ACCESSOR.PUBLIC
     }
 
     /**

@@ -29,6 +29,11 @@ export default class UIButtonInteractionExecutor extends ComponentExecutor {
         if (mouse.isButtonPressed(MouseButton.LEFT) && isPressedUnit) {
             fillColor = uiButtonComponent.getPressedColor()
             fillColorOpacity = uiButtonComponent.getPressedColorOpacity()
+            const onClickName = uiButtonComponent.getOnClick()
+            if(onClickName){
+                const onClick = world.getFunctionRegistry().getInstance(onClickName)
+                onClick.execute(world.getFunctionRegistry(), null, null, world)
+            }
         } else if (isHoverUnit) {
             fillColor = uiButtonComponent.getHoverColor()
             fillColorOpacity = uiButtonComponent.getHoverColorOpacity()
