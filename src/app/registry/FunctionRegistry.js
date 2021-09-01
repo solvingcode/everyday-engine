@@ -77,6 +77,9 @@ import OnCallEvent from '../flow/event/native/OnCallEvent.js'
 import LoadSceneFunction from '../flow/function/native/scene/LoadSceneFunction.js'
 import LoadSceneIndexFunction from '../flow/function/native/scene/LoadSceneIndexFunction.js'
 import ACustomFunction from '../flow/function/custom/ACustomFunction.js'
+import EnableUnitFunction from '../flow/function/native/unit/EnableUnitFunction.js'
+import DisableUnitFunction from '../flow/function/native/unit/DisableUnitFunction.js'
+import IsUnitPressedFunction from '../flow/function/native/unit/IsUnitPressedFunction.js'
 
 export default class FunctionRegistry extends Registry{
 
@@ -134,6 +137,9 @@ export default class FunctionRegistry extends Registry{
             new SetWorldPositionFunction(),
             new GetUnitFunction(),
             new GetComponentFunction(),
+            new EnableUnitFunction(),
+            new DisableUnitFunction(),
+            new IsUnitPressedFunction(),
 
             //Animation
             new StartAnimationFunction(),

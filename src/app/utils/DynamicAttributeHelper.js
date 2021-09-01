@@ -154,7 +154,7 @@ export default class DynamicAttributeHelper {
         const dynamicAttribute = !pBindName
         let formField
         if (attribute.getAttrType() === TYPES.UNIT) {
-            if(isListInstances){
+            if (isListInstances) {
                 const units = world.getUnitManager().getUnits()
                     .map(unit => ({
                         value: unit.getId(),
@@ -167,13 +167,15 @@ export default class DynamicAttributeHelper {
                     list: units,
                     dynamicAttribute
                 }]
-            }else{
-                formField = [{
-                    bind: bindName,
-                    label: `${attribute.getAttrName()} (Self) `,
-                    type: Layout.form.CHECKBOX,
-                    dynamicAttribute
-                }]
+            } else {
+                formField = [
+                    {
+                        bind: bindName,
+                        label: `${attribute.getAttrName()}`,
+                        type: Layout.form.TEXT,
+                        dynamicAttribute
+                    }
+                ]
             }
         } else if (attribute.getAttrType() === TYPES.COMPONENT) {
             const components = world.getComponentRegistry().getInstances()
@@ -444,7 +446,7 @@ export default class DynamicAttributeHelper {
                 list,
                 dynamicAttribute
             }]
-        } else if (attribute.getAttrType() === (TYPES.ARRAY|TYPES.LIST) && isListInstances) {
+        } else if (attribute.getAttrType() === (TYPES.ARRAY | TYPES.LIST) && isListInstances) {
             const rule = attribute.getAttrRule()
             const list = rule.map(eRule => ({value: eRule, label: eRule}))
             formField = [{
@@ -461,7 +463,7 @@ export default class DynamicAttributeHelper {
                 type: Layout.form.NUMBER,
                 dynamicAttribute
             }]
-        }else {
+        } else {
             formField = [{
                 bind: bindName,
                 label: attribute.getAttrName(),
@@ -587,7 +589,7 @@ export default class DynamicAttributeHelper {
      * @param {number} attributeType
      * @return {string}
      */
-    static getAttributeTypeName(attributeType){
+    static getAttributeTypeName(attributeType) {
         const typeName = TYPES_NAME.find(type => type.value === attributeType)
         if (typeName) {
             return typeName.label

@@ -177,6 +177,10 @@ import OnCallEvent from '../../flow/event/native/OnCallEvent.js'
 import ACustomFunction from '../../flow/function/custom/ACustomFunction.js'
 import LoadSceneFunction from '../../flow/function/native/scene/LoadSceneFunction.js'
 import LoadSceneIndexFunction from '../../flow/function/native/scene/LoadSceneIndexFunction.js'
+import EnableUnitFunction from '../../flow/function/native/unit/EnableUnitFunction.js'
+import DisableUnitFunction from '../../flow/function/native/unit/DisableUnitFunction.js'
+import IsUnitPressedFunction from '../../flow/function/native/unit/IsUnitPressedFunction.js'
+import AUnitVariable from '../../flow/variable/AUnitVariable.js'
 
 /**
  * @class {DataSchema}
@@ -351,6 +355,10 @@ class DataSchema {
         {id: 1550, type: ACustomFunction},
         {id: 1560, type: LoadSceneFunction},
         {id: 1570, type: LoadSceneIndexFunction},
+        {id: 1580, type: EnableUnitFunction},
+        {id: 1590, type: DisableUnitFunction},
+        {id: 1600, type: IsUnitPressedFunction},
+        {id: 1610, type: AUnitVariable},
     ]
 
     /**

@@ -39,8 +39,7 @@ export default class ListElementButtonUI extends ItemUI {
             el.setAttribute('order', `${this.getOrder(el)}`)
 
             const isCollapsable = item.element.isCollapsable()
-            const isReadOnly = item.element.isReadOnly()
-            if (isCollapsable && !isReadOnly) {
+            if (isCollapsable) {
                 const collapseEl = document.createElement('div')
                 collapseEl.className = 'list-element-collapse-el'
                 collapseEl.onclick = () => element.setCollapsed(!element.isCollapsed())

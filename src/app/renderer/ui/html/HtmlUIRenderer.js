@@ -326,7 +326,7 @@ class HtmlUIRenderer extends UIRenderer {
         if(item.element.isSelected()){
             classNames.push('selected')
         }
-        if(item.element.isCollapsed() || item.element.isReadOnly()){
+        if(item.element.isCollapsed()){
             classNames.push('collapsed')
         }
         !item.element.isEnabled() && classNames.push('disabled')

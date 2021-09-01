@@ -131,6 +131,7 @@ export const NODE_TYPES = {
     VAR_MASK_GROUP: 'var_mask_group',
     VAR_AUDIO: 'var_audio',
     VAR_SCENE: 'var_scene',
+    VAR_UNIT: 'var_unit',
     ANIMATION: 'animation',
     COMPONENT: 'component',
     REFERENCE: 'reference',
@@ -164,6 +165,10 @@ export const NODE_TYPE_NAMES = [
     {
         value: NODE_TYPES.COMPONENT,
         label: 'Component'
+    },
+    {
+        value: NODE_TYPES.VAR_UNIT,
+        label: 'Variable (Unit)'
     },
     {
         value: NODE_TYPES.FUNCTION,

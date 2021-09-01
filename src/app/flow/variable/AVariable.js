@@ -7,7 +7,7 @@ export default class AVariable extends AEmptyStackFunction{
 
     /**
      * @param {string} name
-     * @param {string} type
+     * @param {number} type
      */
     constructor(type, name) {
         super('Variable')

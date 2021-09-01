@@ -30,6 +30,7 @@ import FunctionScript from '../flow/FunctionScript.js'
 import FunctionInputNode from '../flow/node/FunctionInputNode.js'
 import FunctionOutputNode from '../flow/node/FunctionOutputNode.js'
 import SceneVariableNode from '../flow/node/variable/SceneVariableNode.js'
+import UnitVariableNode from '../flow/node/variable/UnitVariableNode.js'
 
 export default class ScriptHelper {
 
@@ -68,6 +69,8 @@ export default class ScriptHelper {
             node = script.createNode(functionRegistry, ReferenceNode, nodeValue)
         } else if (nodeType === NODE_TYPES.VAR_STRING) {
             node = script.createNode(functionRegistry, StringVariableNode, nodeValue)
+        } else if (nodeType === NODE_TYPES.VAR_UNIT) {
+            node = script.createNode(functionRegistry, UnitVariableNode, nodeValue)
         } else if (nodeType === NODE_TYPES.VAR_NUMBER) {
             node = script.createNode(functionRegistry, NumberVariableNode, nodeValue)
         } else if (nodeType === NODE_TYPES.VAR_COMPONENT) {
@@ -122,6 +125,8 @@ export default class ScriptHelper {
             nodeType = NODE_TYPES.KEY_CODE
         } else if (node instanceof StringVariableNode) {
             nodeType = NODE_TYPES.VAR_STRING
+        } else if (node instanceof UnitVariableNode) {
+            nodeType = NODE_TYPES.VAR_UNIT
         } else if (node instanceof NumberVariableNode) {
             nodeType = NODE_TYPES.VAR_NUMBER
         } else if (node instanceof ComponentVariableNode) {

@@ -34,7 +34,7 @@ export default class AddNodeInputAction extends Action {
 
         let nodeSource
         const value = formData.getValue()
-        if (formData.getAttribute().getAttrType() === TYPES.UNIT) {
+        if (formData.getAttribute().getAttrType() === TYPES.UNIT && value === '[self]') {
             nodeSource = ScriptHelper.createNode(functionRegistry, script, NODE_TYPES.SELF)
         } else if (formData.getAttribute().getAttrType() === TYPES.COMPONENT) {
             nodeSource = ScriptHelper.createNode(functionRegistry, script, NODE_TYPES.COMPONENT, value)

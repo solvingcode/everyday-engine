@@ -25,6 +25,7 @@ import FunctionInputNode from './node/FunctionInputNode.js'
 import FunctionOutputNode from './node/FunctionOutputNode.js'
 import {ACCESSOR} from './function/AFunction.js'
 import SceneVariableNode from './node/variable/SceneVariableNode.js'
+import UnitVariableNode from './node/variable/UnitVariableNode.js'
 
 /**
  * @abstract
@@ -68,6 +69,7 @@ export default class AScriptFunction extends AScriptFunctionData {
             case ReferenceNode:
             case LoopNode:
             case StringVariableNode:
+            case UnitVariableNode:
             case ToggleVariableNode:
             case BooleanVariableNode:
             case AudioVariableNode:

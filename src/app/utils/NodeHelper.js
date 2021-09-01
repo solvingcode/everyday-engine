@@ -49,6 +49,8 @@ import AFunctionInput from '../flow/io/AFunctionInput.js'
 import AFunctionOutput from '../flow/io/AFunctionOutput.js'
 import SceneVariableNode from '../flow/node/variable/SceneVariableNode.js'
 import ASceneVariable from '../flow/variable/ASceneVariable.js'
+import UnitVariableNode from '../flow/node/variable/UnitVariableNode.js'
+import AUnitVariable from '../flow/variable/AUnitVariable.js'
 
 export default class NodeHelper {
 
@@ -85,6 +87,8 @@ export default class NodeHelper {
                 return new ALoop(sourceName)
             case StringVariableNode:
                 return new AStringVariable(sourceName)
+            case UnitVariableNode:
+                return new AUnitVariable(sourceName)
             case BooleanVariableNode:
                 return new ABooleanVariable(sourceName)
             case AudioVariableNode:

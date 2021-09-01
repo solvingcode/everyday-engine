@@ -190,6 +190,11 @@ button.selected, button.hidden.selected, button.locked.selected{
     color: #767676;
 }
 
+.panel .tree .list-element.has-child.readonly .list-element-collapse-el:after{
+    color: #767676;
+    text-shadow: #000000 0 0;
+}
+
 .panel .tree .list-element.selected > button:hover, .panel .script-nodes .list-element.selected > button:hover{
     background-color: #3f6093;
 }
