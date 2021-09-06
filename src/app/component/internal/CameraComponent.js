@@ -21,6 +21,7 @@ export default class CameraComponent extends Component {
         this.add('delaySmoothing', TYPES.VECTOR, new Vector())
         this.add('lastUnitFollowPosition', TYPES.VECTOR, new Vector())
         this.add('lookDistance', TYPES.VECTOR, new Vector())
+        this.add('debug', TYPES.BOOLEAN)
     }
 
     /**
@@ -133,6 +134,27 @@ export default class CameraComponent extends Component {
      */
     setLookDistance(lookDistance) {
         this.setValue('lookDistance', lookDistance)
+    }
+
+    /**
+     * @param {boolean} debug
+     */
+    setDebug(debug) {
+        this.setValue('debug', debug)
+    }
+
+    /**
+     * @return {boolean}
+     */
+    getDebug() {
+        return this.getValue('debug')
+    }
+
+    /**
+     * @return {boolean}
+     */
+    isDebug(){
+        return this.getDebug()
     }
 
     /**

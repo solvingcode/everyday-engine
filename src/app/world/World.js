@@ -23,6 +23,7 @@ import {SceneLoadMode} from '../scene/Scene.js'
 import SceneManager from '../manager/SceneManager.js'
 import ClientError from '../exception/type/ClientError.js'
 import SceneUnitManager from '../manager/SceneUnitManager.js'
+import CameraComponent from '../component/internal/CameraComponent.js'
 
 /**
  * @class {World}
@@ -231,7 +232,7 @@ class World extends WorldData {
         return this.getUnitManager().createUnitInstant(T, parentUnit, ...props)
     }
 
-    unloadAllScene(){
+    unloadAllScene() {
         this.getSceneManager().unloadAll()
         this.getUnitManager().units = []
     }
@@ -271,11 +272,21 @@ class World extends WorldData {
         this.setGridUnitId(null)
     }
 
-    disableGuides() {
-        this.getCamera().disableGuides(this)
-        this.getUnitManager()
-            .getUnitsHasComponentClasses([LightComponent, MeshComponent])
-            .forEach(unit => unit.getComponent(MeshComponent).setEnabled(false))
+    /**
+     * @param {boolean} onlyDebug
+     */
+    disableGuides(onlyDebug = false) {
+        const componentClasses = [LightComponent, CameraComponent]
+        componentClasses.forEach(componentClass => {
+            this.getSceneManager().getScenes().forEach(scene => {
+                scene.getUnitManager()
+                    .getUnitsHasComponentClasses([componentClass, MeshComponent]).forEach(unit => {
+                    if ((onlyDebug && !unit.getComponent(componentClass).isDebug()) || !onlyDebug) {
+                        unit.getComponent(MeshComponent).setEnabled(false)
+                    }
+                })
+            })
+        })
     }
 
     /**
@@ -400,7 +411,7 @@ class World extends WorldData {
         const activeScene = this.getSceneManager().getActive()
         if (activeScene) {
             return activeScene.getUnitManager()
-        }else{
+        } else {
             throw new ClientError(`At least on scene must be activated`)
         }
     }
@@ -409,9 +420,9 @@ class World extends WorldData {
      * @param {Unit} unit
      * @return {UnitManager}
      */
-    getSceneUnitManager(unit){
+    getSceneUnitManager(unit) {
         const scene = this.findSceneByUnit(unit)
-        if(scene){
+        if (scene) {
             return scene.getUnitManager()
         }
         throw new ClientError(`No scene contains Unit (ID: ${unit.getId()})`)
@@ -421,7 +432,7 @@ class World extends WorldData {
      * @param {Unit} unit
      * @return {Scene}
      */
-    findSceneByUnit(unit){
+    findSceneByUnit(unit) {
         return this.getSceneManager().findSceneByUnit(unit)
     }
 

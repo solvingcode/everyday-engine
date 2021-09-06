@@ -1,7 +1,6 @@
 import CameraData from '../project/data/CameraData.js'
 import Vector from '../utils/Vector.js'
 import Size from '../pobject/Size.js'
-import MeshComponent from '../component/internal/MeshComponent.js'
 
 class Camera extends CameraData {
 
@@ -149,15 +148,6 @@ class Camera extends CameraData {
      */
     fromScaleNumber(value, position = new Vector()){
         return value / this.getScale(position)
-    }
-
-    /**
-     * @param {World} world
-     */
-    disableGuides(world){
-        const unit = this.getUnit(world.getUnitManager())
-        const meshComponent = unit.getComponent(MeshComponent)
-        meshComponent.setEnabled(false)
     }
 
     /**

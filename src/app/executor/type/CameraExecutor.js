@@ -6,11 +6,12 @@ import Vector from '../../utils/Vector.js'
 import MeshComponent from '../../component/internal/MeshComponent.js'
 import ObjectHelper from '../../utils/ObjectHelper.js'
 import Maths from '../../utils/Maths.js'
+import TransformHelper from '../../utils/TransformHelper.js'
 
 export default class CameraExecutor extends ComponentExecutor {
 
     constructor() {
-        super([TransformComponent, MeshComponent, CameraComponent])
+        super([TransformComponent, CameraComponent])
     }
 
     /**
@@ -37,7 +38,7 @@ export default class CameraExecutor extends ComponentExecutor {
             const lastUnitFollowPosition = cameraComponent.getLastUnitFollowPosition()
 
             const unitFollowPosition = unitFollow.getComponent(TransformComponent).getPosition()
-            const sizeCamera = meshComponent.getSize()
+            const sizeCamera = TransformHelper.getSizeFromScale(transformComponent.getScale())
             const sizeUnitFollow = unitFollow.getComponent(MeshComponent).getSize()
             const centerCamera = new Vector({x: sizeCamera.getWidth() / 2, y: sizeCamera.getHeight() / 2})
             const centerUnitFollow = new Vector({x: sizeUnitFollow.getWidth() / 2, y: sizeUnitFollow.getHeight() / 2})
@@ -82,8 +83,8 @@ export default class CameraExecutor extends ComponentExecutor {
                 newCameraPosition.setY(newCameraPosition.getY() + distanceYSmoothing)
             }
 
-            if (!ObjectHelper.isEqual(transformComponent.getPosition(), newCameraPosition) ||
-                !ObjectHelper.isEqual(cameraComponent.getTrackPoint(), trackPointDelayed)) {
+            if ((!ObjectHelper.isEqual(transformComponent.getPosition(), newCameraPosition) ||
+                !ObjectHelper.isEqual(cameraComponent.getTrackPoint(), trackPointDelayed)) && meshComponent) {
                 transformComponent.getPosition().setX(newCameraPosition.getX())
                 transformComponent.getPosition().setY(newCameraPosition.getY())
                 cameraComponent.setTrackPoint(trackPointDelayed)

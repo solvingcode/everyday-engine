@@ -16,6 +16,7 @@ export default class LightComponent extends Component{
         this.add('intensity', TYPES.NUMBER, 1)
         this.add('color', TYPES.COLOR, '#FFFFFF')
         this.add('generated', TYPES.BOOLEAN, false)
+        this.add('debug', TYPES.BOOLEAN)
     }
 
     /**
@@ -65,6 +66,27 @@ export default class LightComponent extends Component{
      */
     isGenerated(){
         return this.getGenerated()
+    }
+
+    /**
+     * @param {boolean} debug
+     */
+    setDebug(debug) {
+        this.setValue('debug', debug)
+    }
+
+    /**
+     * @return {boolean}
+     */
+    getDebug() {
+        return this.getValue('debug')
+    }
+
+    /**
+     * @return {boolean}
+     */
+    isDebug(){
+        return this.getDebug()
     }
 
 }

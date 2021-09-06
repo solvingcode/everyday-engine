@@ -19,6 +19,7 @@ class PreviewGameLoop extends GameLoop {
     async doInit() {
         await Storage.get().loadLocal(Storage.type.WORLD, World.get())
         await super.doInit()
+        World.get().disableGuides(true)
     }
 
 }
