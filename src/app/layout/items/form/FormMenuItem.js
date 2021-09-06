@@ -169,9 +169,7 @@ class FormMenuItem extends MenuItem {
      * @return {boolean}
      */
     isFormUpdated(object) {
-        if (!this.object || object.id !== this.object.id) {
-            return true
-        } else if (this.isFieldsUpdated()) {
+        if (!this.object || object.id !== this.object.id || this.isFieldsUpdated()) {
             this.updateFields()
             return true
         }
@@ -211,7 +209,7 @@ class FormMenuItem extends MenuItem {
 
     /**
      * @param {FormField} field
-     * @return {callback}
+     * @return {Function}
      */
     getGetter(field) {
         return this.getGetterForObject(field, this.bindObject)
@@ -220,7 +218,7 @@ class FormMenuItem extends MenuItem {
     /**
      * @param {FormField} field
      * @param {Object} bindObject
-     * @return {callback}
+     * @return {Function}
      */
     getGetterForObject(field, bindObject) {
         const getterString = this.getGetterString(field)

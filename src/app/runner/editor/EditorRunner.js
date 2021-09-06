@@ -239,7 +239,7 @@ class EditorRunner extends Runner {
             if (colliderUnits.length) {
                 return colliderUnits[0]
             }
-        }else{
+        } else {
             unitManager.deleteUnitsByComponents([GUIColliderComponent])
         }
     }
@@ -252,7 +252,8 @@ class EditorRunner extends Runner {
         const world = World.get()
         const unitManager = world.getUnitManager()
 
-        const editorPosition = targetUnit && UnitHelper.toLargeCenterPosition(targetUnit)
+        const editorPosition = targetUnit && targetUnit.getComponent(TransformComponent)
+            && UnitHelper.toLargeCenterPosition(targetUnit)
 
         const editorComponents = {
             DRAW_MOVE: [MoveXUnitInstant, MoveYUnitInstant, MoveFreeUnitInstant],
@@ -288,13 +289,15 @@ class EditorRunner extends Runner {
             unitManager.deleteUnits(exitGUISelectors
                 .filter(unit => !selectedUnitIds.includes(unit.getComponent(GUISelectorComponent).getUnitId())))
             selectedUnits.forEach(selectedUnit => {
-                const existGUISelector = exitGUISelectors
-                    .find(guiUnit => guiUnit.getComponent(GUISelectorComponent).getUnitId() === selectedUnit.getId())
-                if(!existGUISelector){
-                    UnitHelper.createGUISelector(selectedUnit, world)
+                if (selectedUnit.getComponent(TransformComponent)) {
+                    const existGUISelector = exitGUISelectors
+                        .find(guiUnit => guiUnit.getComponent(GUISelectorComponent).getUnitId() === selectedUnit.getId())
+                    if (!existGUISelector) {
+                        UnitHelper.createGUISelector(selectedUnit, world)
+                    }
                 }
             })
-        }else{
+        } else {
             unitManager.deleteUnitsByComponents([GUISelectorComponent])
         }
     }
@@ -307,15 +310,15 @@ class EditorRunner extends Runner {
         const unitManager = world.getUnitManager()
         if (selectedUnits.length === 1) {
             const selectedUnit = selectedUnits[0]
-            if(selectedUnit.getComponent(UITransformComponent)){
+            if (selectedUnit.getComponent(UITransformComponent)) {
                 const exitGUIAnchors = unitManager.getUnitsHasComponents([GUIAnchorComponent])
                 unitManager.deleteUnits(exitGUIAnchors
                     .filter(unit => unit.getComponent(GUIAnchorComponent).getUnitId() !== selectedUnit.getId()))
                 UnitHelper.createGUIAnchor(selectedUnit, world)
-            }else{
+            } else {
                 unitManager.deleteUnitsByComponents([GUIAnchorComponent])
             }
-        }else{
+        } else {
             unitManager.deleteUnitsByComponents([GUIAnchorComponent])
         }
     }
