@@ -80,6 +80,9 @@ class Window {
         document.addEventListener('wheel', (event) => {
             this.mouse.setMouseWheel(event.deltaY)
         })
+        document.addEventListener('contextmenu', (event) => {
+            event.preventDefault()
+        })
         window.addEventListener('unhandledrejection', (e) => {
             this.exceptionHandler.handle(e.reason)
             e.preventDefault()

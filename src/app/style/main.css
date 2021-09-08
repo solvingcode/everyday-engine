@@ -566,6 +566,10 @@ h4{
     white-space: nowrap;
 }
 
+.options-popup .option-actions-wrapper .text{
+    padding: 0;
+}
+
 .options-popup .option-actions-wrapper li .option-actions-trigger{
     position: relative;
 }

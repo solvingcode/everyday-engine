@@ -19,6 +19,13 @@ export default class SceneElementMenuItem extends ListSelectElementActionsMenuIt
     /**
      * @override
      */
+    isRightClick() {
+        return true
+    }
+
+    /**
+     * @override
+     */
     getName() {
         const scene = this.getDataBind()
         return `${scene.getName()}${scene.isLoaded() ? ' [loaded]' : ''}`

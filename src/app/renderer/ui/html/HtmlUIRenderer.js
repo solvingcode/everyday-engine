@@ -287,12 +287,27 @@ class HtmlUIRenderer extends UIRenderer {
         el.setAttribute('data-name', element.props.name)
         el.setAttribute('data-zone', element.zone)
         type.postCreate(item, el, this)
+        this.setupTriggerClick(type, item, el)
+    }
+
+    /**
+     * @param {ItemUI} type
+     * @param {MenuItemUI} item
+     * @param {HTMLElement} el
+     */
+    setupTriggerClick(type, item, el) {
         const triggerEl = type.getTriggerClickElement(item, el)
-        if(triggerEl !== el){
-            triggerEl.setAttribute('data-index', el.getAttribute('data-index'))
-            triggerEl.setAttribute('data-zone', el.getAttribute('data-zone'))
+        if (triggerEl !== el) {
+            if (triggerEl.getAttribute('data-index') !== el.getAttribute('data-index')) {
+                triggerEl.setAttribute('data-index', el.getAttribute('data-index'))
+            }
+            if (triggerEl.getAttribute('data-zone') !== el.getAttribute('data-zone')) {
+                triggerEl.setAttribute('data-zone', el.getAttribute('data-zone'))
+            }
         }
-        triggerEl.setAttribute('data-index-trigger-click', 'true')
+        if (triggerEl.getAttribute('data-index-trigger-click') !== 'true') {
+            triggerEl.setAttribute('data-index-trigger-click', 'true')
+        }
     }
 
     /**
@@ -311,6 +326,7 @@ class HtmlUIRenderer extends UIRenderer {
             el.className = className
         }
         type.postUpdate(item, el, this)
+        this.setupTriggerClick(type, item, el)
     }
 
 
@@ -323,14 +339,15 @@ class HtmlUIRenderer extends UIRenderer {
         const classNames = []
         const type = this.getType(item)
         const hasChild = this.hasChild(item)
-        if(item.element.isSelected()){
+        if (item.element.isSelected()) {
             classNames.push('selected')
         }
-        if(item.element.isCollapsed()){
+        if (item.element.isCollapsed()) {
             classNames.push('collapsed')
         }
         !item.element.isEnabled() && classNames.push('disabled')
         item.element.isReadOnly() && classNames.push('readonly')
+        item.element.isLocked() && classNames.push('locked')
         hasChild && classNames.push('has-child')
         classNames.push(type.getProps().className)
         classNames.push(type.getClassName(item))
@@ -341,7 +358,7 @@ class HtmlUIRenderer extends UIRenderer {
      * @param {MenuItemUI} item
      * @return {boolean}
      */
-    hasChild(item){
+    hasChild(item) {
         const type = this.getType(item)
         return !!(item.element.items && item.element.items.length) && type.hasChild(item)
     }

@@ -177,6 +177,15 @@ class World extends WorldData {
     }
 
     /**
+     * @param {Unit} unit
+     */
+    selectOneUnit(unit){
+        const unitSelector = UnitSelector.get()
+        unitSelector.unselectAll(this)
+        unit.select()
+    }
+
+    /**
      * @param {Mouse} mouse
      * @return {Unit[]}
      */

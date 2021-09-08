@@ -2,6 +2,8 @@ import Layout from '../../Layout.js'
 import ListSelectElementActionsMenuItem from '../list/ListSelectElementActionsMenuItem.js'
 import IconHelper from '../../../utils/IconHelper.js'
 import LayerListMenuItem from './LayerListMenuItem.js'
+import Unit from '../../../unit/Unit.js'
+import GUIPropertyComponent from '../../../component/internal/gui/property/GUIPropertyComponent.js'
 
 export default class LayerElementMenuItem extends ListSelectElementActionsMenuItem {
     constructor(parent, data) {
@@ -40,21 +42,38 @@ export default class LayerElementMenuItem extends ListSelectElementActionsMenuIt
     /**
      * @override
      */
-    isReadOnly(){
+    isReadOnly() {
         return !this.getDataBind().isEnabled()
     }
 
     /**
      * @override
      */
-    isDraggable(){
+    isLocked() {
+        if (this.getDataBind() instanceof Unit) {
+            return this.getDataBind().getComponent(GUIPropertyComponent).isLocked()
+        }
+        return false
+    }
+
+    /**
+     * @override
+     */
+    isDraggable() {
         return true
     }
 
     /**
      * @override
      */
-    isCollapsable(){
+    isRightClick() {
+        return true
+    }
+
+    /**
+     * @override
+     */
+    isCollapsable() {
         return true
     }
 

@@ -1,5 +1,6 @@
 import MenuItem from '../../MenuItem.js'
 import Layout from '../../Layout.js'
+import GUIPropertyComponent from '../../../component/internal/gui/property/GUIPropertyComponent.js'
 
 /**
  * @class {UnlockItemMenuItem}
@@ -7,23 +8,22 @@ import Layout from '../../Layout.js'
 export default class UnlockItemMenuItem extends MenuItem {
 
     /**
-     * @param {Entity} entity
+     * @param {Unit} unit
      */
-    constructor(entity) {
+    constructor(unit) {
         super({
-            name: 'unlock',
-            title: 'Unlock',
+            name: 'Unlock',
             stateCode: 'ACTION_UNLOCK_ITEM',
-            type: Layout.type.ICON,
+            type: Layout.type.BUTTON,
             zone: Layout.zone.TOP
         })
-        this.data = {entity}
+        this.data = {unit}
     }
 
     /**
      * @override
      */
     isValid() {
-        return super.isValid() && this.data.entity.isLocked()
+        return super.isValid() && this.data.unit.getComponent(GUIPropertyComponent).isLocked()
     }
 }

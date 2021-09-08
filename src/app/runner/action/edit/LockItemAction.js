@@ -1,6 +1,6 @@
 import Action from '../Action.js'
-import World from '../../../world/World.js'
 import StateManager from '../../../state/StateManager.js'
+import GUIPropertyComponent from '../../../component/internal/gui/property/GUIPropertyComponent.js'
 
 export default class LockItemAction extends Action {
 
@@ -14,9 +14,8 @@ export default class LockItemAction extends Action {
      * @override
      */
     static run() {
-        const entityManager = World.get().getEntityManager()
-        const {entity} = StateManager.get().getNextProgressData(this.STATE)
-        entityManager.lock(entity)
+        const {unit} = StateManager.get().getNextProgressData(this.STATE)
+        unit.getComponent(GUIPropertyComponent).setLocked(true)
         return true
     }
 

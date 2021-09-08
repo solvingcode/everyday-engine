@@ -64,6 +64,14 @@ class MenuItem {
     }
 
     /**
+     * @param {MenuItem} parent
+     * @return {boolean}
+     */
+    isChildOf(parent){
+        return this.parent === parent || (this.parent && this.parent.isChildOf(parent))
+    }
+
+    /**
      * @param {Window} window
      */
     isHandle(window){
@@ -74,6 +82,13 @@ class MenuItem {
      * @return {boolean}
      */
     isDraggable(){
+        return false
+    }
+
+    /**
+     * @return {boolean}
+     */
+    isRightClick(){
         return false
     }
 
@@ -102,6 +117,13 @@ class MenuItem {
      * @return {boolean}
      */
     isReadOnly(){
+        return false
+    }
+
+    /**
+     * @return {boolean}
+     */
+    isLocked(){
         return false
     }
 

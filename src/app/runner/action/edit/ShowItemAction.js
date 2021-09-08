@@ -1,7 +1,6 @@
 import Action from '../Action.js'
 import StateManager from '../../../state/StateManager.js'
-import GUIPropertyComponent from '../../../component/internal/gui/property/GUIPropertyComponent.js'
-import MeshComponent from '../../../component/internal/MeshComponent.js'
+import World from '../../../world/World.js'
 
 export default class ShowItemAction extends Action {
 
@@ -15,9 +14,9 @@ export default class ShowItemAction extends Action {
      * @override
      */
     static run() {
+        const unitManager = World.get().getUnitManager()
         const {unit} = StateManager.get().getNextProgressData(this.STATE)
-        unit.getComponent(GUIPropertyComponent).setVisible(true)
-        unit.getComponent(MeshComponent).setGenerated(false)
+        unitManager.setVisibilityUnit(unit, true)
         return true
     }
 

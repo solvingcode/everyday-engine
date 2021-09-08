@@ -190,6 +190,10 @@ button.selected, button.hidden.selected, button.locked.selected{
     color: #767676;
 }
 
+.panel .tree .list-element.locked button{
+    color: #e0b26d;
+}
+
 .panel .tree .list-element.has-child.readonly .list-element-collapse-el:after{
     color: #767676;
     text-shadow: #000000 0 0;
@@ -281,6 +285,12 @@ button.selected, button.hidden.selected, button.locked.selected{
     background-color: #3e3e3e;
     border: 1px solid #5c5c5c;
     box-shadow: 2px 2px 2px #3e3e3e;
+}
+
+.options-popup .option-actions-wrapper .text{
+    background-color: rgba(77, 77, 76, 0.51);
+    color: #767676;
+    text-shadow: none;
 }
 
 .options-popup .option-actions-wrapper button:not(:last-child){
