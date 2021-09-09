@@ -86,6 +86,7 @@ import AlignParentAction from './edit/AlignParentAction.js'
 import AddUIEmptyAction from './ui/AddUIEmptyAction.js'
 import AddUISliderAction from './ui/AddUISliderAction.js'
 import AddFunctionAction from './script/AddFunctionAction.js'
+import CloseConfirmPopupAction from './window/CloseConfirmPopupAction.js'
 
 /**
  * Action Runner class.
@@ -169,6 +170,7 @@ class ActionRunner extends Runner {
             ADD_SCRIPT_EDGE: AddEdgeAction,
             ADD_SCRIPT_NODE_INPUT: AddNodeInputAction,
             CLOSE_ERROR_POPUP: CloseErrorPopupAction,
+            CLOSE_CONFIRM_POPUP: CloseConfirmPopupAction,
             ATTACH_COMPONENT: AttachComponentAction,
             ATTACH_ASSET_SCRIPT: AttachAssetScriptAction,
             ATTACH_ASSET_IMAGE: AttachAssetImageAction,

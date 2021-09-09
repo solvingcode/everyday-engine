@@ -170,7 +170,8 @@ AppState.instance = null
 
 AppState.Categories = {
     ACTION: 'ACTION_',
-    DRAW: 'DRAW_'
+    DRAW: 'DRAW_',
+    CONFIRM: 'CONFIRM_'
 }
 
 /**
@@ -467,6 +468,17 @@ AppState.States = {
     ACTION_ADD_SCRIPT_FUNCTION_START: {history: false},
     ACTION_ADD_SCRIPT_FUNCTION_PROGRESS: {history: false},
     ACTION_ADD_SCRIPT_FUNCTION_STOP: {history: false},
+    ACTION_CLOSE_CONFIRM_POPUP_START: {history: false},
+    ACTION_CLOSE_CONFIRM_POPUP_PROGRESS: {history: false},
+    ACTION_CLOSE_CONFIRM_POPUP_STOP: {history: false},
+    CONFIRM_ACTION_DELETE_START: {history: false},
+    CONFIRM_ACTION_DELETE_FOLDER_START: {history: false},
+    CONFIRM_ACTION_DELETE_SCRIPT_NODE_START: {history: true},
+    CONFIRM_ACTION_DELETE_SELECTED_NODE_START: {history: true},
+    CONFIRM_ACTION_DELETE_SCRIPT_EDGE_START: {history: true},
+    CONFIRM_ACTION_DELETE_ASSET_START: {history: true},
+    CONFIRM_ACTION_DELETE_ANIMATION_FRAME_START: {history: true},
+    CONFIRM_ACTION_DELETE_COMPONENT_START: {history: false},
 }
 
 export default AppState

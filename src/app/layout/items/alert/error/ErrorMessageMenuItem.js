@@ -1,6 +1,6 @@
-import MenuItem from '../../MenuItem.js'
-import Layout from '../../Layout.js'
-import ExceptionHandler from '../../../exception/ExceptionHandler.js'
+import MenuItem from '../../../MenuItem.js'
+import Layout from '../../../Layout.js'
+import ExceptionHandler from '../../../../exception/ExceptionHandler.js'
 
 export default class ErrorMessageMenuItem extends MenuItem {
     constructor(parent) {

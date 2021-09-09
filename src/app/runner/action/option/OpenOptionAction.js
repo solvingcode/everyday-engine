@@ -25,20 +25,23 @@ export default class OpenOptionAction extends Action {
         const mouse = Window.get().mouse
         const uiRenderer = menu.getUIRenderer()
         const triggerItem = uiRenderer.getItemAt(mouse)
-        if (triggerItem) {
-            const {optionActionsMenuItem, object, absolute} = StateManager.get().getNextProgressData(this.STATE)
+        const {optionActionsMenuItem, object, absolute} = StateManager.get().getNextProgressData(this.STATE)
+        let triggerItemPosition
+        if (absolute) {
+            triggerItemPosition = mouse.position
+        } else if (triggerItem) {
+            const triggerItemSize = uiRenderer.getSize(triggerItem)
+            triggerItemPosition = uiRenderer.getPosition(triggerItem)
+            if (triggerItem.element.hasParent) {
+                triggerItemPosition.x += triggerItemSize.width
+                triggerItemPosition.y -= triggerItemSize.height
+            }
+            triggerItemPosition.y += triggerItemSize.height
+        }
+        if (triggerItemPosition) {
             const activeOptionsMenu = optionsMenuManager.getMenu(optionActionsMenuItem)
             if (!activeOptionsMenu) {
                 const itemSize = new Size({width: 0, height: 0})
-                const triggerItemSize = uiRenderer.getSize(triggerItem)
-                const triggerItemPosition = absolute ? mouse.position : uiRenderer.getPosition(triggerItem)
-                if (triggerItem.element.hasParent) {
-                    triggerItemPosition.x += triggerItemSize.width
-                    triggerItemPosition.y -= triggerItemSize.height
-                }
-                if (!absolute) {
-                    triggerItemPosition.y += triggerItemSize.height
-                }
                 optionsMenuManager.setMenu(new optionActionsMenuItem(object, triggerItemPosition, itemSize))
             } else {
                 const optionsItem = menu.findItemByElement(activeOptionsMenu)

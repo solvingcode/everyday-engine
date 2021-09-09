@@ -9,7 +9,7 @@ export default class DeleteSelectedNodeMenuItem extends MenuItem {
             id: 1,
             name: 'trash',
             title: 'Remove selected node',
-            stateCode: 'ACTION_DELETE_SELECTED_NODE',
+            stateCode: 'CONFIRM_ACTION_DELETE_SELECTED_NODE',
             type: Layout.type.ICON,
             zone: Layout.zone.LEFT
         })

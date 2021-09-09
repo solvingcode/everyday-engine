@@ -60,7 +60,7 @@ export default class AnimationManager {
     deleteFrameByAsset(asset) {
         this.animations.forEach(animation => {
             const frame = animation.getFrames().find(pFrame => pFrame.getAssetId() === asset.getId())
-            animation.deleteFrame(frame)
+            frame && animation.deleteFrame(frame)
         })
     }
 

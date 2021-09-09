@@ -13,12 +13,14 @@ import TabListMenuItem from './items/tab/TabListMenuItem.js'
 import ContentMenuItem from './items/content/ContentMenuItem.js'
 import AssetMenuItem from './items/assets/AssetMenuItem.js'
 import ScriptMenuItem from './items/script/ScriptMenuItem.js'
-import ErrorPopupMenuItem from './items/error/ErrorPopupMenuItem.js'
+import ErrorPopupMenuItem from './items/alert/error/ErrorPopupMenuItem.js'
 import DeleteSelectedNodeMenuItem from './items/script/node/delete/DeleteSelectedNodeMenuItem.js'
 import LayerMenuItem from './items/layer/LayerMenuItem.js'
 import SceneMenuItem from './items/scene/SceneMenuItem.js'
 import OptionsPopupMenuItem from './items/option/OptionsPopupMenuItem.js'
 import TopMenuItem from './items/topmenu/TopMenuItem.js'
+import ConfirmPopupMenuItem from './items/alert/confirm/ConfirmPopupMenuItem.js'
+import StateManager from '../state/StateManager.js'
 
 /**
  * Define all menu items
@@ -30,6 +32,7 @@ class Menu {
         this.types = [
             //Window
             new ErrorPopupMenuItem(),
+            new ConfirmPopupMenuItem(),
             new OptionsPopupMenuItem(),
 
             //LEFT
@@ -160,7 +163,10 @@ class Menu {
         const elementsToRun = menuItems.map(menuItem => menuItem.element)
         elementsToStop.forEach(element => {
             if (!elementsToRun.includes(element)) {
-                element.stop(menuItems[0].element.stateCode)
+                const stateCodeToStop = menuItems[0].element.stateCode
+                if (stateCodeToStop && !StateManager.get().isConfirmState(stateCodeToStop)) {
+                    element.stop(stateCodeToStop)
+                }
             }
         })
         elementsToRun.forEach(element => {
@@ -174,7 +180,7 @@ class Menu {
      * @param {MenuItemUI} startMenuItem
      * @param {MenuItemUI} endMenuItem
      */
-    dragItems(startMenuItem, endMenuItem){
+    dragItems(startMenuItem, endMenuItem) {
         endMenuItem.element.drag(startMenuItem.element.getDataBind())
     }
 

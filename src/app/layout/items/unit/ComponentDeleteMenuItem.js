@@ -10,7 +10,7 @@ export default class ComponentDeleteMenuItem extends MenuItem {
         super({
             name: 'times',
             title: 'Delete component',
-            stateCode: 'ACTION_DELETE_COMPONENT',
+            stateCode: 'CONFIRM_ACTION_DELETE_COMPONENT',
             type: Layout.type.ICON,
             zone: parent.zone
         })

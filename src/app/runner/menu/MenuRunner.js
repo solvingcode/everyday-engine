@@ -7,6 +7,7 @@ import StateManager from '../../state/StateManager.js'
 import OpenOptionAction from '../action/option/OpenOptionAction.js'
 import Unit from '../../unit/Unit.js'
 import World from '../../world/World.js'
+import UnitSelector from '../../selector/UnitSelector.js'
 
 /**
  * Execute actions related to menu items
@@ -79,9 +80,8 @@ class MenuRunner extends Runner {
         const mouse = window.mouse
         const stateManager = StateManager.get()
         if (mouse.isButtonPressed(MouseButton.RIGHT)) {
-            const object = this.findUIObjectByMousePosition(mouse) || this.findSceneObject(mouse)
+            const object = this.processObject(this.findUIObjectByMousePosition(mouse)) || this.findSceneObject(mouse)
             if (object) {
-                this.processObject(object)
                 stateManager.startState(OpenOptionAction.STATE, 1,
                     {optionActionsMenuItem: OptionsMenuItem, object, absolute: true})
             }
@@ -111,16 +111,23 @@ class MenuRunner extends Runner {
      * @return {*}
      */
     findSceneObject(mouse) {
+        const {path} = mouse
+        const menuRightClickItem = this.menu.getUIRenderer().getItemsAt(path)
+        if(!menuRightClickItem.length){
+            return UnitSelector.get().getFirstSelected(World.get())
+        }
         return null
     }
 
     /**
      * @param {*} object
+     * @return {*}
      */
     processObject(object) {
         if (object instanceof Unit) {
             World.get().selectOneUnit(object)
         }
+        return object
     }
 }
 

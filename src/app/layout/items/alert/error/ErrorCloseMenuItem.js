@@ -1,5 +1,5 @@
-import MenuItem from '../../MenuItem.js'
-import Layout from '../../Layout.js'
+import MenuItem from '../../../MenuItem.js'
+import Layout from '../../../Layout.js'
 
 export default class ErrorCloseMenuItem extends MenuItem {
     constructor(parent) {

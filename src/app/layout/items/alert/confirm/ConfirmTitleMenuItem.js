@@ -1,11 +1,11 @@
-import MenuItem from '../../MenuItem.js'
-import Layout from '../../Layout.js'
+import MenuItem from '../../../MenuItem.js'
+import Layout from '../../../Layout.js'
 
-export default class ErrorTitleMenuItem extends MenuItem {
+export default class ConfirmTitleMenuItem extends MenuItem {
     constructor(parent) {
         super({
             name: 'exclamation-circle',
-            title: 'Error',
+            title: 'Confirm',
             stateCode: '',
             type: Layout.type.ICON_TEXT,
             zone: parent.zone

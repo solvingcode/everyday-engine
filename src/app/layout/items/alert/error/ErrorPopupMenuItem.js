@@ -1,7 +1,7 @@
-import Layout from '../../Layout.js'
-import MenuItem from '../../MenuItem.js'
+import Layout from '../../../Layout.js'
+import MenuItem from '../../../MenuItem.js'
 import ErrorMessageMenuItem from './ErrorMessageMenuItem.js'
-import ExceptionHandler from '../../../exception/ExceptionHandler.js'
+import ExceptionHandler from '../../../../exception/ExceptionHandler.js'
 import ErrorCloseMenuItem from './ErrorCloseMenuItem.js'
 import ErrorTitleMenuItem from './ErrorTitleMenuItem.js'
 

@@ -631,7 +631,7 @@ h4{
     margin-right: 5px;
 }
 
-#app-el-window .error-popup > button:nth-child(3) {
+#app-el-window .error-popup > button:nth-child(n+3) {
     float: right;
     margin: 0 10px 10px 0;
     width: 100px;

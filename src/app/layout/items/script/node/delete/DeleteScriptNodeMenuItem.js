@@ -6,7 +6,7 @@ export default class DeleteScriptNodeMenuItem extends MenuItem {
         super({
             name: 'times',
             title: 'Delete selected node',
-            stateCode: 'ACTION_DELETE_SCRIPT_NODE',
+            stateCode: 'CONFIRM_ACTION_DELETE_SCRIPT_NODE',
             type: Layout.type.ICON,
             zone: parent.zone
         })

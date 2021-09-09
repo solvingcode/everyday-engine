@@ -7,7 +7,7 @@ export default class DeleteAssetScriptMenuItem extends MenuItem {
         super({
             name: 'trash',
             title: 'Delete asset',
-            stateCode: 'ACTION_DELETE_ASSET',
+            stateCode: 'CONFIRM_ACTION_DELETE_ASSET',
             type: Layout.type.ICON,
             zone: parent.zone
         })

@@ -1,5 +1,6 @@
 import AppState from './AppState.js'
 import History from '../core/History.js'
+import SystemError from '../exception/type/SystemError.js'
 
 /**
  * Manage the state of the application
@@ -39,6 +40,15 @@ class StateManager {
      */
     isActionState(state) {
         const catMatch = new RegExp(`^${AppState.Categories.ACTION}`)
+        return !!state.match(catMatch)
+    }
+
+    /**
+     * @param {string} state
+     * @return {boolean}
+     */
+    isConfirmState(state) {
+        const catMatch = new RegExp(`^${AppState.Categories.CONFIRM}`)
         return !!state.match(catMatch)
     }
 
@@ -217,6 +227,13 @@ class StateManager {
     /**
      * @return {string[]}
      */
+    getConfirmStates() {
+        return this.appState.getState().filter(state => this.isConfirmState(state))
+    }
+
+    /**
+     * @return {string[]}
+     */
     getStartStates() {
         return this.appState.getState().filter(state => this.isStartState(state))
     }
@@ -277,6 +294,19 @@ class StateManager {
     }
 
     /**
+     * @param {string} state
+     * @return {{state: string, data: *}}
+     */
+    confirmState(state){
+        if (!this.isConfirmState(state)) {
+            throw new SystemError(`${state} is not a confirm state`)
+        }
+        const nextState = state.replace(new RegExp(`^${AppState.Categories.CONFIRM}([A-Z_]+)_START`), '$1')
+        const confirmData = this.getNextConfirmData(state)
+        return {state: nextState, data: confirmData}
+    }
+
+    /**
      * Get the start state data
      * @param {string} type
      * @param {number} id
@@ -313,6 +343,18 @@ class StateManager {
             throw new TypeError('Action id must be defined')
         }
         return this.getStateData(`${type}_STOP`, id)
+    }
+
+    /**
+     * Get the next confirm state data
+     * @param {string} state
+     * @return {Object|null}
+     */
+    getNextConfirmData(state) {
+        if (!this.isConfirmState(state)) {
+            throw new SystemError(`${state} is not a confirm state`)
+        }
+        return this.getNextData(state)
     }
 
     /**
@@ -402,6 +444,16 @@ class StateManager {
     }
 
     /**
+     * Remove the next state
+     * @private
+     * @param {string} state
+     */
+    removeNextState(state) {
+        const data = this.getNextData(state)
+        this.removeStateData(state, data.id)
+    }
+
+    /**
      * Remove the state
      * @private
      * @param {string} state
@@ -467,6 +519,13 @@ class StateManager {
         states.forEach(state => {
             const type = this.getType(state)
             type && this.stopNextState(type)
+        })
+    }
+
+    removeConfirmStates() {
+        const confirmStates = this.getConfirmStates()
+        confirmStates.forEach(confirmState => {
+            this.removeNextState(confirmState)
         })
     }
 

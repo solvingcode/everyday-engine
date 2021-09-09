@@ -6,7 +6,7 @@ export default class DeleteScriptEdgeMenuItem extends MenuItem {
         super({
             name: 'times',
             title: 'Delete selected edge',
-            stateCode: 'ACTION_DELETE_SCRIPT_EDGE',
+            stateCode: 'CONFIRM_ACTION_DELETE_SCRIPT_EDGE',
             type: Layout.type.ICON,
             zone: parent.zone
         })

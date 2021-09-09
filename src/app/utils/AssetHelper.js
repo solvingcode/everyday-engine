@@ -46,6 +46,7 @@ export default class AssetHelper {
         }else if(asset.getType() instanceof AssetImage){
             world.getUnitManager().emptyUnitsByAsset(asset)
             world.getAnimationManager().deleteFrameByAsset(asset)
+            world.regenerateAll()
         }
     }
 

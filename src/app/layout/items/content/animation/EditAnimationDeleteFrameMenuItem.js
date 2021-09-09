@@ -7,7 +7,7 @@ export default class EditAnimationDeleteFrameMenuItem extends MenuItem {
         super({
             name: 'trash',
             title: 'Delete key frame',
-            stateCode: 'ACTION_DELETE_ANIMATION_FRAME',
+            stateCode: 'CONFIRM_ACTION_DELETE_ANIMATION_FRAME',
             type: Layout.type.ICON,
             zone: parent.zone
         })

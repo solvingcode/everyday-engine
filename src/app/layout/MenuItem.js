@@ -36,6 +36,7 @@ class MenuItem {
         this.index = props.index || Maths.generateId()
         this.stateCode = props.stateCode
         this.dragStateCode = props.dragStateCode
+        this.postStateCode = props.postStateCode
         this.collapsed = false
         this.parent = parent
         this.items = []
@@ -146,6 +147,7 @@ class MenuItem {
      */
     run() {
         this.stateCode && this.startState()
+        this.postStateCode && this.postState()
     }
 
     /**
@@ -197,6 +199,13 @@ class MenuItem {
      */
     startState() {
         this.stateManager.startState(this.stateCode, this.id, this.data)
+    }
+
+    /**
+     * Start a post action by type and data (state)
+     */
+    postState() {
+        this.stateManager.startState(this.postStateCode, this.id, this.data)
     }
 
     /**
