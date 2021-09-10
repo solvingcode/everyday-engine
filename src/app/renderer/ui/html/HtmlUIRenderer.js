@@ -5,7 +5,6 @@ import ColorButtonUI from './buttons/ColorButtonUI.js'
 import EntityElementButtonUI from './list/EntityElementButtonUI.js'
 import HtmlPanelUI from './ui/HtmlPanelUI.js'
 import HtmlTextUI from './ui/HtmlTextUI.js'
-import HtmlGraphUI from './ui/HtmlGraphUI.js'
 import HtmlFormUI from './forms/HtmlFormUI.js'
 import HtmlFormElementUI from './forms/HtmlFormElementUI.js'
 import Menu from '../../../layout/Menu.js'
@@ -97,13 +96,6 @@ class HtmlUIRenderer extends UIRenderer {
      */
     getTextUI() {
         return HtmlTextUI
-    }
-
-    /**
-     * @override
-     */
-    getGraphUI() {
-        return HtmlGraphUI
     }
 
     /**

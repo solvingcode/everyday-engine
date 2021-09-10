@@ -13,7 +13,6 @@ import HideAction from './edit/HideAction.js'
 import ShowAction from './edit/ShowAction.js'
 import RotateUpAction from './edit/RotateUpAction.js'
 import StyleColorAction from './edit/StyleColorAction.js'
-import SelectEntityAction from './edit/SelectEntityAction.js'
 import SelectElementAction from './edit/SelectElementAction.js'
 import AttachCameraAction from './camera/AttachCameraAction.js'
 import DetachCameraAction from './camera/DetachCameraAction.js'
@@ -134,7 +133,6 @@ class ActionRunner extends Runner {
             SHOW: ShowAction,
             ROTATE_UP: RotateUpAction,
             STYLE_COLOR: StyleColorAction,
-            SELECT_ENTITY: SelectEntityAction,
             SELECT_LIST_ELEMENT: SelectElementAction,
             ATTACH_CAMERA: AttachCameraAction,
             DETACH_CAMERA: DetachCameraAction,
