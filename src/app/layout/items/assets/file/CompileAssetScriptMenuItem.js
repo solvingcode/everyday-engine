@@ -9,8 +9,8 @@ export default class CompileAssetScriptMenuItem extends MenuItem {
             name: 'code',
             title: 'Compile',
             stateCode: 'ACTION_COMPILE_ASSET_SCRIPT',
-            type: Layout.type.ICON,
-            zone: parent.zone
+            type: Layout.type.ICON_TEXT,
+            zone: parent ? parent.zone : Layout.zone.WINDOW
         })
         this.parent = parent
     }

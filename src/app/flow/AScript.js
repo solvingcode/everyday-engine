@@ -22,6 +22,13 @@ export default class AScript extends AScriptData {
     }
 
     /**
+     * @param {FunctionRegistry} functionRegistry
+     */
+    delete(functionRegistry){
+        this.getFunctions().forEach(func => func.delete(functionRegistry))
+    }
+
+    /**
      * @param {AScriptFunction} func
      */
     addFunction(func) {

@@ -8,8 +8,8 @@ export default class DeleteFolderMenuItem extends MenuItem {
             name: 'folder-minus',
             title: 'Delete folder',
             stateCode: 'CONFIRM_ACTION_DELETE_FOLDER',
-            type: Layout.type.ICON,
-            zone: parent.zone
+            type: Layout.type.ICON_TEXT,
+            zone: parent ? parent.zone : Layout.zone.WINDOW
         })
         this.parent = parent
     }

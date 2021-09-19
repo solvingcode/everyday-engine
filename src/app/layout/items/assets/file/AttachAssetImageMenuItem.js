@@ -11,8 +11,8 @@ export default class AttachAssetImageMenuItem extends MenuItem {
             name: 'plug',
             title: 'Attach image to the selected Unit',
             stateCode: 'ACTION_ATTACH_ASSET_IMAGE',
-            type: Layout.type.ICON,
-            zone: parent.zone
+            type: Layout.type.ICON_TEXT,
+            zone: parent ? parent.zone : Layout.zone.WINDOW
         })
         this.parent = parent
     }

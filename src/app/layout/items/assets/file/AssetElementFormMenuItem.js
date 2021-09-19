@@ -11,4 +11,11 @@ export default class AssetElementFormMenuItem extends ListSelectElementActionsMe
             type: Layout.type.ASSET_ELEMENT
         })
     }
+
+    /**
+     * @override
+     */
+    isRightClick() {
+        return true
+    }
 }

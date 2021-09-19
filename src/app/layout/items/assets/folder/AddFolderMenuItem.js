@@ -10,8 +10,8 @@ export default class AddFolderMenuItem extends MenuItem {
             name: 'folder-plus',
             title: 'Add Folder',
             stateCode: 'ACTION_ADD_FOLDER',
-            type: Layout.type.ICON,
-            zone: parent.zone
+            type: Layout.type.ICON_TEXT,
+            zone: parent ? parent.zone : Layout.zone.WINDOW
         })
         this.parent = parent
     }

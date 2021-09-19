@@ -9,8 +9,8 @@ export default class PlayAssetAudioMenuItem extends MenuItem {
             name: 'play-circle',
             title: 'Play audio',
             stateCode: 'ACTION_PLAY_ASSET_AUDIO',
-            type: Layout.type.ICON,
-            zone: parent.zone
+            type: Layout.type.ICON_TEXT,
+            zone: parent ? parent.zone : Layout.zone.WINDOW
         })
         this.parent = parent
     }

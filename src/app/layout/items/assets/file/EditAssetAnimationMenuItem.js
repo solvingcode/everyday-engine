@@ -9,8 +9,8 @@ export default class EditAssetAnimationMenuItem extends MenuItem {
             name: 'edit',
             title: 'Edit animation',
             stateCode: 'ACTION_EDIT_ASSET_ANIMATION',
-            type: Layout.type.ICON,
-            zone: parent.zone
+            type: Layout.type.ICON_TEXT,
+            zone: parent ? parent.zone : Layout.zone.WINDOW
         })
         this.parent = parent
     }

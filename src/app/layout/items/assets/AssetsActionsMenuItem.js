@@ -5,7 +5,7 @@ import AddFolderMenuItem from './folder/AddFolderMenuItem.js'
 import AddAssetSceneMenuItem from './file/AddAssetSceneMenuItem.js'
 import CompileAssetScriptMenuItem from './file/CompileAssetScriptMenuItem.js'
 import EditAssetScriptMenuItem from './file/EditAssetScriptMenuItem.js'
-import DeleteAssetScriptMenuItem from './file/DeleteAssetScriptMenuItem.js'
+import DeleteAssetMenuItem from './file/edit/DeleteAssetMenuItem.js'
 import DeleteFolderMenuItem from './folder/DeleteFolderMenuItem.js'
 import AttachAssetScriptMenuItem from './file/AttachAssetScriptMenuItem.js'
 import EditAssetAnimationMenuItem from './file/EditAssetAnimationMenuItem.js'
@@ -34,7 +34,7 @@ export default class AssetsActionsMenuItem  extends MenuItem {
             new EditAssetAnimationMenuItem(this),
             new AddAssetToAnimationMenuItem(this),
             new ExportAssetMenuItem(this),
-            new DeleteAssetScriptMenuItem(this),
+            new DeleteAssetMenuItem(this),
             new DeleteFolderMenuItem(this),
             new PlayAssetAudioMenuItem(this),
             new StopAssetAudioMenuItem(this),

@@ -10,8 +10,8 @@ export default class AttachAssetScriptMenuItem extends MenuItem {
             name: 'plug',
             title: 'Plug into selected unit',
             stateCode: 'ACTION_ATTACH_ASSET_SCRIPT',
-            type: Layout.type.ICON,
-            zone: parent.zone
+            type: Layout.type.ICON_TEXT,
+            zone: parent ? parent.zone : Layout.zone.WINDOW
         })
         this.parent = parent
     }

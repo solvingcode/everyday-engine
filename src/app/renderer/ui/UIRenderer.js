@@ -235,15 +235,6 @@ class UIRenderer {
 
     /**
      * @abstract
-     * Get the graph UI
-     * @return {ItemUI}
-     */
-    getGraphUI() {
-        throw new TypeError('"UIRenderer.getGraphUI" method must be implemented')
-    }
-
-    /**
-     * @abstract
      * Get the form UI
      * @return {ItemUI}
      */

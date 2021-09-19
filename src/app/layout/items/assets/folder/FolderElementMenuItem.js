@@ -44,4 +44,11 @@ export default class FolderElementMenuItem extends ListElementMenuItem {
         return true
     }
 
+    /**
+     * @override
+     */
+    isRightClick() {
+        return true
+    }
+
 }

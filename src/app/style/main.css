@@ -328,6 +328,9 @@ h4{
     height: 25px;
     font-size: 14px;
 }
+.panel-action button span{
+    display: none;
+}
 
 .wrapper{
     width: 100%;
@@ -564,6 +567,15 @@ h4{
     width: 100%;
     text-align: left;
     white-space: nowrap;
+}
+
+.options-popup .option-actions-wrapper button i{
+    display: none;
+}
+
+.options-popup .option-actions-wrapper button[data-icon]{
+    height: unset;
+    font-size: unset;
 }
 
 .options-popup .option-actions-wrapper .text{

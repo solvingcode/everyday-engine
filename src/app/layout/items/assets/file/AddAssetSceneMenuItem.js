@@ -7,10 +7,10 @@ export default class AddAssetSceneMenuItem extends MenuItem {
     constructor(parent) {
         super({
             name: 'layer-group',
-            title: 'Add selected Asset to the Scene',
+            title: 'Add asset to the Scene',
             stateCode: 'ACTION_ADD_ASSET_SCENE',
-            type: Layout.type.ICON,
-            zone: parent.zone
+            type: Layout.type.ICON_TEXT,
+            zone: parent ? parent.zone : Layout.zone.WINDOW
         })
         this.parent = parent
     }

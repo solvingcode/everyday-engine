@@ -9,8 +9,8 @@ export default class EditAssetScriptMenuItem extends MenuItem {
             name: 'edit',
             title: 'Edit script',
             stateCode: 'ACTION_EDIT_ASSET_SCRIPT_XML',
-            type: Layout.type.ICON,
-            zone: parent.zone
+            type: Layout.type.ICON_TEXT,
+            zone: parent ? parent.zone : Layout.zone.WINDOW
         })
         this.parent = parent
     }

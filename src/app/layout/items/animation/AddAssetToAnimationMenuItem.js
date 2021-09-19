@@ -8,7 +8,7 @@ export default class AddAssetToAnimationMenuItem extends MenuItem {
             name: 'photo-video',
             title: 'Add asset to animation',
             stateCode: 'ACTION_ATTACH_ASSET_ANIMATION',
-            type: Layout.type.ICON,
+            type: Layout.type.ICON_TEXT,
             zone: Layout.zone.TOP
         })
     }

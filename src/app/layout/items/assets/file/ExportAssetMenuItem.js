@@ -8,8 +8,8 @@ export default class ExportAssetMenuItem extends MenuItem {
             name: 'file-export',
             title: 'Export asset',
             stateCode: 'ACTION_EXPORT_ASSET',
-            type: Layout.type.ICON,
-            zone: parent.zone
+            type: Layout.type.ICON_TEXT,
+            zone: parent ? parent.zone : Layout.zone.WINDOW
         })
         this.parent = parent
     }

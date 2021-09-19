@@ -49,4 +49,11 @@ export default class AssetsListFormMenuItem extends ListMenuItem {
         return []
     }
 
+    /**
+     * @override
+     */
+    isRightClick() {
+        return true
+    }
+
 }

@@ -10,8 +10,8 @@ export default class AddAssetMenuItem extends MenuItem {
             name: 'plus',
             title: 'Add Asset',
             stateCode: 'ACTION_ADD_ASSET',
-            type: Layout.type.ICON,
-            zone: parent.zone
+            type: Layout.type.ICON_TEXT,
+            zone: parent ? parent.zone : Layout.zone.WINDOW
         })
         this.parent = parent
     }

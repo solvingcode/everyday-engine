@@ -9,8 +9,8 @@ export default class StopAssetAudioMenuItem extends MenuItem {
             name: 'stop-circle',
             title: 'Stop audio',
             stateCode: 'ACTION_STOP_ASSET_AUDIO',
-            type: Layout.type.ICON,
-            zone: parent.zone
+            type: Layout.type.ICON_TEXT,
+            zone: parent ? parent.zone : Layout.zone.WINDOW
         })
         this.parent = parent
     }
