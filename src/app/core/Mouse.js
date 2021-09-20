@@ -21,6 +21,7 @@ class Mouse {
         this.mouseWheel = {y: 0}
         this.path = null
         this.pathEnd = null
+        this.pathCurrent = null
     }
 
     /**
@@ -225,6 +226,7 @@ class Mouse {
         this.currentPosition = this.getPosition(event)
         this.currentScenePosition = this.toSceneCoord(this.currentPosition)
         this.mouseDrag = this.isButtonPressed(MouseButton.LEFT)
+        this.pathCurrent = this.getPath(event)
     }
 
     clearKeyClicked() {

@@ -37,7 +37,10 @@ class MenuItem {
         this.stateCode = props.stateCode
         this.dragStateCode = props.dragStateCode
         this.postStateCode = props.postStateCode
+        this.skipStateCodes = props.skipStateCodes || []
         this.collapsed = false
+        this.startDragging = false
+        this.endDragging = false
         this.parent = parent
         this.items = []
     }
@@ -84,6 +87,34 @@ class MenuItem {
      */
     isDraggable(){
         return false
+    }
+
+    /**
+     * @return {boolean}
+     */
+    isStartDragging(){
+        return this.startDragging
+    }
+
+    /**
+     * @param {boolean} value
+     */
+    setStartDragging(value){
+        this.startDragging = value
+    }
+
+    /**
+     * @return {boolean}
+     */
+    isEndDragging(){
+        return this.endDragging
+    }
+
+    /**
+     * @param {boolean} value
+     */
+    setEndDragging(value){
+        this.endDragging = value
     }
 
     /**

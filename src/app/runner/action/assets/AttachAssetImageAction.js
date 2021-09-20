@@ -1,7 +1,7 @@
 import Action from '../Action.js'
 import World from '../../../world/World.js'
 import UnitSelector from '../../../selector/UnitSelector.js'
-import MeshComponent from '../../../component/internal/MeshComponent.js'
+import AssetHelper from '../../../utils/AssetHelper.js'
 
 export default class AttachAssetImageAction extends Action {
 
@@ -14,9 +14,7 @@ export default class AttachAssetImageAction extends Action {
         const world = World.get()
         const selectedAsset = world.getAssetsManager().getSelectedAsset()
         const selectedUnit = UnitSelector.get().getFirstSelected(world)
-        const meshComponent = selectedUnit.getComponent(MeshComponent)
-        meshComponent.setAssetId(selectedAsset.getId())
-        meshComponent.setGenerated(false)
+        AssetHelper.attachAssetImageToUnit(selectedUnit, selectedAsset)
         return true
     }
 

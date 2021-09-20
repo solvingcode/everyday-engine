@@ -5,6 +5,18 @@ body{
     font-size: 11pt;
     overflow: hidden;
 }
+/* CURSOR -- */
+body.cursor-pointer, body.cursor-pointer button{
+    cursor: pointer;
+}
+body.cursor-drag, body.cursor-drag button{
+    cursor: grabbing;
+}
+.end-drag, .end-drag button{
+    cursor: context-menu !important;
+}
+/* -- CURSOR */
+
 canvas{
     position: absolute;
     top: 0;
@@ -257,11 +269,11 @@ h4{
     position: relative;
 }
 
-.panel .tree .list-element.has-child button {
+.panel .tree .list-element button {
     padding-left: 20px;
 }
 
-.panel .tree .list-element.has-child .list-element-img-wrapper{
+.panel .tree .list-element .list-element-img-wrapper{
     left: 20px;
 }
 
@@ -955,3 +967,11 @@ i.static-entity::before{
     border-radius: 10px;
 }
 /* -- scroll */
+
+img {
+    -webkit-user-drag: none;
+    -khtml-user-drag: none;
+    -moz-user-drag: none;
+    -o-user-drag: none;
+    user-drag: none;
+}

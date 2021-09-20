@@ -8,6 +8,7 @@ export default class AssetElementFormMenuItem extends ListSelectElementActionsMe
     constructor(parent, data) {
         super(parent, data, {
             stateCode: 'ACTION_SELECT_ASSET',
+            dragStateCode: 'ACTION_ATTACH_ASSET',
             type: Layout.type.ASSET_ELEMENT
         })
     }
@@ -16,6 +17,13 @@ export default class AssetElementFormMenuItem extends ListSelectElementActionsMe
      * @override
      */
     isRightClick() {
+        return true
+    }
+
+    /**
+     * @return {boolean}
+     */
+    isDraggable() {
         return true
     }
 }

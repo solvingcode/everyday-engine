@@ -20,4 +20,8 @@ export default class FormField{
      */
     dynamicAttribute
     options
+    /**
+     * @type {boolean}
+     */
+    draggable
 }

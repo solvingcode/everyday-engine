@@ -158,22 +158,24 @@ class Menu {
      * @param {MenuItemUI[]} menuItems
      */
     selectItems(menuItems) {
+        const stateManager = StateManager.get()
         const elementsToStop = this.items
             .filter(item => item.element.isSelected()).map(menuItem => menuItem.element)
         const elementsToRun = menuItems.map(menuItem => menuItem.element)
         elementsToStop.forEach(element => {
             if (!elementsToRun.includes(element)) {
                 const stateCodeToStop = menuItems[0].element.stateCode
-                if (stateCodeToStop && !StateManager.get().isConfirmState(stateCodeToStop)) {
+                if (stateCodeToStop && !stateManager.isConfirmState(stateCodeToStop)) {
                     element.stop(stateCodeToStop)
                 }
             }
         })
-        elementsToRun.forEach(element => {
-            if (!elementsToStop.includes(element)) {
-                element.run()
-            }
+        const elementsToSkip = elementsToRun.filter(element => {
+            return element.skipStateCodes
+                .find(skipStateCode => elementsToRun.find(elementToRun => elementToRun.stateCode === skipStateCode))
         })
+        elementsToRun.filter(element => !elementsToStop.includes(element) &&
+            !elementsToSkip.includes(element)).forEach(element => element.run())
     }
 
     /**
@@ -182,6 +184,21 @@ class Menu {
      */
     dragItems(startMenuItem, endMenuItem) {
         endMenuItem.element.drag(startMenuItem.element.getDataBind())
+    }
+
+    resetDragItems() {
+        this.getDraggingItems()
+            .forEach(item => {
+                item.element.setStartDragging(false)
+                item.element.setEndDragging(false)
+            })
+    }
+
+    /**
+     * @return {MenuItemUI[]}
+     */
+    getDraggingItems() {
+        return this.items.filter(item => item.element.isStartDragging() || item.element.isEndDragging())
     }
 
     stopActionMenuItem() {

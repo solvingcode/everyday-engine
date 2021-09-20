@@ -86,6 +86,10 @@ import AddUIEmptyAction from './ui/AddUIEmptyAction.js'
 import AddUISliderAction from './ui/AddUISliderAction.js'
 import AddFunctionAction from './script/AddFunctionAction.js'
 import CloseConfirmPopupAction from './window/CloseConfirmPopupAction.js'
+import UnselectAssetAction from './assets/UnselectAssetAction.js'
+import AttachFolderAction from './assets/AttachFolderAction.js'
+import AttachAssetAction from './assets/AttachAssetAction.js'
+import AttachEditorAction from './assets/AttachEditorAction.js'
 
 /**
  * Action Runner class.
@@ -155,6 +159,7 @@ class ActionRunner extends Runner {
             CLOSE_TAB: CloseTabAction,
             SELECT_FOLDER: SelectFolderAction,
             SELECT_ASSET: SelectAssetAction,
+            UNSELECT_ASSET: UnselectAssetAction,
             SELECT_LAYER_ELEMENT: SelectLayerAction,
             DELETE_FOLDER: DeleteFolderAction,
             DELETE_ASSET: DeleteAssetAction,
@@ -196,7 +201,10 @@ class ActionRunner extends Runner {
             ADD_SCENE: AddSceneAction,
             ATTACH_LAYER_ELEMENT: AttachLayerElementAction,
             ADD_UI_EMPTY: AddUIEmptyAction,
-            ADD_UI_SLIDER: AddUISliderAction
+            ADD_UI_SLIDER: AddUISliderAction,
+            ATTACH_FOLDER: AttachFolderAction,
+            ATTACH_ASSET: AttachAssetAction,
+            ATTACH_EDITOR: AttachEditorAction,
         }
         const selectedUnits = this.unitSelector.getSelected(World.get())
         for(const iTypeAction in typeActions){

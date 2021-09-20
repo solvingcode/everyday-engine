@@ -351,6 +351,9 @@ AppState.States = {
     ACTION_SELECT_ASSET_START: {history: false},
     ACTION_SELECT_ASSET_PROGRESS: {history: false},
     ACTION_SELECT_ASSET_STOP: {history: false},
+    ACTION_UNSELECT_ASSET_START: {history: false},
+    ACTION_UNSELECT_ASSET_PROGRESS: {history: false},
+    ACTION_UNSELECT_ASSET_STOP: {history: false},
     ACTION_ADD_SCRIPT_START: {history: false},
     ACTION_ADD_SCRIPT_PROGRESS: {history: false},
     ACTION_ADD_SCRIPT_STOP: {history: false},
@@ -479,6 +482,15 @@ AppState.States = {
     CONFIRM_ACTION_DELETE_ASSET_START: {history: true},
     CONFIRM_ACTION_DELETE_ANIMATION_FRAME_START: {history: true},
     CONFIRM_ACTION_DELETE_COMPONENT_START: {history: false},
+    ACTION_ATTACH_FOLDER_START: {history: true},
+    ACTION_ATTACH_FOLDER_PROGRESS: {history: false},
+    ACTION_ATTACH_FOLDER_STOP: {history: true},
+    ACTION_ATTACH_ASSET_START: {history: true},
+    ACTION_ATTACH_ASSET_PROGRESS: {history: false},
+    ACTION_ATTACH_ASSET_STOP: {history: true},
+    ACTION_ATTACH_EDITOR_START: {history: true},
+    ACTION_ATTACH_EDITOR_PROGRESS: {history: false},
+    ACTION_ATTACH_EDITOR_STOP: {history: true},
 }
 
 export default AppState

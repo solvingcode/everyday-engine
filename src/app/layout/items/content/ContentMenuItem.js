@@ -20,6 +20,7 @@ export default class ContentMenuItem extends MenuItem {
     constructor() {
         super({
             stateCode: '',
+            dragStateCode: 'ACTION_ATTACH_EDITOR',
             name: '',
             zone: Layout.zone.BODY,
             type: Layout.type.BODY_CONTAINER
@@ -64,6 +65,13 @@ export default class ContentMenuItem extends MenuItem {
             default:
                 throw new TypeError(`ContentMenuItem: ${content.constructor.name} not supported`)
         }
+    }
+
+    /**
+     * @override
+     */
+    isDraggable() {
+        return true
     }
 
 }

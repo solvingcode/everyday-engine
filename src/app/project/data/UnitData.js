@@ -83,7 +83,7 @@ export default class UnitData extends Data {
     }
 
     /**
-     * @param {number} unitParentId
+     * @param {number|null} unitParentId
      */
     setUnitParentId(unitParentId) {
         this.unitParentId = unitParentId

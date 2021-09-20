@@ -1,5 +1,5 @@
 import Runner from '../Runner.js'
-import StateManager from '../../state/StateManager.js'
+import Menu from '../../layout/Menu.js'
 
 class WindowRunner extends Runner {
 
@@ -21,8 +21,11 @@ class WindowRunner extends Runner {
      * Change cursor mouse
      */
     cursor() {
-        let cursor = StateManager.get().getData('cursor')
-        document.body.style.cursor = cursor || 'default'
+        let cursor = 'default'
+        if (!!Menu.get().getDraggingItems().length) {
+            cursor = 'drag'
+        }
+        document.body.className = `cursor-${cursor}`
     }
 
     static get() {

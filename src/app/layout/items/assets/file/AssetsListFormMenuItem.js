@@ -11,6 +11,8 @@ export default class AssetsListFormMenuItem extends ListMenuItem {
     constructor(parent, props) {
         super({
             zone: parent.zone,
+            stateCode: 'ACTION_UNSELECT_ASSET',
+            skipStateCodes: ['ACTION_SELECT_ASSET'],
             type: Layout.type.ASSETS,
             ...props
         })

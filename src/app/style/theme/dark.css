@@ -358,6 +358,14 @@ button.selected, button.hidden.selected, button.locked.selected{
     background-color: #3f6093;
 }
 
+.list-element.start-drag button, .list-element.start-drag i{
+    color: #959595;
+}
+
+.list-element.end-drag > button, .list-element.end-drag > button:hover{
+    box-shadow: 0 0 2px #bfbe95 inset;
+}
+
 .list-element{
     background: none;
 }

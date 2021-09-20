@@ -337,6 +337,12 @@ class HtmlUIRenderer extends UIRenderer {
         if (item.element.isCollapsed()) {
             classNames.push('collapsed')
         }
+        if (item.element.isStartDragging()) {
+            classNames.push('start-drag')
+        }
+        if (item.element.isEndDragging()) {
+            classNames.push('end-drag')
+        }
         !item.element.isEnabled() && classNames.push('disabled')
         item.element.isReadOnly() && classNames.push('readonly')
         item.element.isLocked() && classNames.push('locked')

@@ -10,6 +10,7 @@ import ClientError from '../exception/type/ClientError.js'
 import AssetScriptXml from '../asset/types/script/AssetScriptXml.js'
 import ScriptComponent from '../component/internal/ScriptComponent.js'
 import AssetImage from '../asset/types/image/AssetImage.js'
+import MeshComponent from '../component/internal/MeshComponent.js'
 
 export default class AssetHelper {
 
@@ -115,6 +116,16 @@ export default class AssetHelper {
         }else{
             throw new ClientError(`Cannot attach asset "${asset.getType().constructor.name}" : Type not supported`)
         }
+    }
+
+    /**
+     * @param {Unit} unit
+     * @param {Asset} asset
+     */
+    static attachAssetImageToUnit(unit, asset) {
+        const meshComponent = unit.getComponent(MeshComponent)
+        meshComponent.setAssetId(asset.getId())
+        meshComponent.setGenerated(false)
     }
 
 }

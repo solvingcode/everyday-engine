@@ -8,6 +8,7 @@ import OpenOptionAction from '../action/option/OpenOptionAction.js'
 import Unit from '../../unit/Unit.js'
 import World from '../../world/World.js'
 import UnitSelector from '../../selector/UnitSelector.js'
+import ContentMenuItem from '../../layout/items/content/ContentMenuItem.js'
 
 /**
  * Execute actions related to menu items
@@ -36,8 +37,32 @@ class MenuRunner extends Runner {
      */
     execute() {
         const window = Window.get()
+        this.menu.resetDragItems()
         this.handleLeftClick(window)
         this.handleRightClick(window)
+    }
+
+    /**
+     * @param {EventTarget[]} path
+     * @return {MenuItemUI}
+     */
+    getStartDragMenuItemByPath(path) {
+        return this.menu.getUIRenderer().getItemsAt(path)
+            .reverse()
+            .find(menuItem => menuItem.element.isDraggable() && menuItem.element.isEnabled())
+    }
+
+    /**
+     * @param {EventTarget[]} path
+     * @return {MenuItemUI}
+     */
+    getEndDragMenuItemByPath(path) {
+        if (path && path[0].constructor === HTMLCanvasElement) {
+            return this.menu.items.find(item => item.element instanceof ContentMenuItem)
+        }
+        return this.menu.getUIRenderer().getItemsAt(path)
+            .reverse()
+            .find(menuItem => !!menuItem.element.getDragStateCode() && menuItem.element.isEnabled())
     }
 
     /**
@@ -47,19 +72,24 @@ class MenuRunner extends Runner {
         const mouse = window.mouse
         if (mouse.isButtonPressed(MouseButton.LEFT) ||
             mouse.isButtonClicked(MouseButton.LEFT)) {
-            const {path, pathEnd} = mouse
+            const {path, pathEnd, pathCurrent} = mouse
             let selectItem = true
             if (mouse.isMouseDrag()) {
-                const menuDragStartItem = this.menu.getUIRenderer().getItemsAt(path)
-                    .reverse()
-                    .find(menuItem => menuItem.element.isDraggable() && menuItem.element.isEnabled())
+                this.menu.resetDragItems()
+                const menuDragStartItem = this.getStartDragMenuItemByPath(path)
                 if (menuDragStartItem) {
-                    const menuDragEndItem = this.menu.getUIRenderer().getItemsAt(pathEnd)
-                        .reverse()
-                        .find(menuItem => !!menuItem.element.getDragStateCode() && menuItem.element.isEnabled())
+                    menuDragStartItem.element.setStartDragging(true)
+                    const menuDragCurrentEndItem = this.getEndDragMenuItemByPath(pathCurrent)
+                    if (menuDragCurrentEndItem) {
+                        menuDragCurrentEndItem.element.setEndDragging(true)
+                    }
+                    const menuDragEndItem = this.getEndDragMenuItemByPath(pathEnd)
                     if (menuDragEndItem && menuDragStartItem !== menuDragEndItem) {
                         this.menu.dragItems(menuDragStartItem, menuDragEndItem)
+                        this.menu.resetDragItems()
                         selectItem = false
+                    } else if (menuDragStartItem === menuDragEndItem) {
+                        this.menu.resetDragItems()
                     }
                 }
             }
@@ -113,7 +143,7 @@ class MenuRunner extends Runner {
     findSceneObject(mouse) {
         const {path} = mouse
         const menuRightClickItem = this.menu.getUIRenderer().getItemsAt(path)
-        if(!menuRightClickItem.length){
+        if (!menuRightClickItem.length) {
             return UnitSelector.get().getFirstSelected(World.get())
         }
         return null

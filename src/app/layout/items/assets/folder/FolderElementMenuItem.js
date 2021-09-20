@@ -10,6 +10,7 @@ export default class FolderElementMenuItem extends ListElementMenuItem {
         super(parent, data, {
             name: '',
             stateCode: 'ACTION_SELECT_FOLDER',
+            dragStateCode: 'ACTION_ATTACH_FOLDER',
             type: Layout.type.LIST_ELEMENT
         })
     }
@@ -50,5 +51,20 @@ export default class FolderElementMenuItem extends ListElementMenuItem {
     isRightClick() {
         return true
     }
+
+    /**
+     * @override
+     */
+    isCollapsable() {
+        return true
+    }
+
+    /**
+     * @override
+     */
+    isDraggable() {
+        return true
+    }
+
 
 }
