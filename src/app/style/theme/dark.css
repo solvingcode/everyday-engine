@@ -333,7 +333,6 @@ button.selected, button.hidden.selected, button.locked.selected{
     border: 1px solid #5a5a5a;
     background-color: #3e3e3e;
     color: #f4f4f4;
-    cursor: default;
 }
 
 .form select{
@@ -362,8 +361,9 @@ button.selected, button.hidden.selected, button.locked.selected{
     color: #959595;
 }
 
-.list-element.end-drag > button, .list-element.end-drag > button:hover{
+.end-drag > button, .end-drag > input, .end-drag > select{
     box-shadow: 0 0 2px #bfbe95 inset;
+    background-color: #313131 !important;
 }
 
 .list-element{

@@ -66,6 +66,8 @@ export default class AttributeType {
                 return 'number'
             case TYPES.FONT:
                 return 'number'
+            case TYPES.IMAGE:
+                return 'number'
             case TYPES.LIST:
                 return 'string'
             case TYPES.FUNCTION:
@@ -161,6 +163,7 @@ export const TYPES = {
     FONT:                           0b00000100000010000000000000,
     SCENE:                          0b00000100000100000000000000,
     FUNCTION:                       0b00000100001000000000000000,
+    IMAGE:                          0b00000100010000000000000000,
     RANGE:                          0b00001000000000000000000001,
     STYLE:                          0b00010000000000000000000010,
     SIZE:                           0b00010000000000000000000100,

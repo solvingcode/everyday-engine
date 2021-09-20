@@ -491,6 +491,9 @@ AppState.States = {
     ACTION_ATTACH_EDITOR_START: {history: true},
     ACTION_ATTACH_EDITOR_PROGRESS: {history: false},
     ACTION_ATTACH_EDITOR_STOP: {history: true},
+    ACTION_ATTACH_COMPONENT_VALUE_START: {history: true},
+    ACTION_ATTACH_COMPONENT_VALUE_PROGRESS: {history: false},
+    ACTION_ATTACH_COMPONENT_VALUE_STOP: {history: true},
 }
 
 export default AppState

@@ -12,7 +12,10 @@ body.cursor-pointer, body.cursor-pointer button{
 body.cursor-drag, body.cursor-drag button{
     cursor: grabbing;
 }
-.end-drag, .end-drag button{
+body.cursor-end-drag, body.cursor-end-drag button{
+    cursor: context-menu;
+}
+.end-drag, .end-drag button, .end-drag input, .end-drag select, .end-drag label{
     cursor: context-menu !important;
 }
 /* -- CURSOR */

@@ -90,6 +90,7 @@ import UnselectAssetAction from './assets/UnselectAssetAction.js'
 import AttachFolderAction from './assets/AttachFolderAction.js'
 import AttachAssetAction from './assets/AttachAssetAction.js'
 import AttachEditorAction from './assets/AttachEditorAction.js'
+import AttachComponentValueAction from './unit/AttachComponentValueAction.js'
 
 /**
  * Action Runner class.
@@ -205,6 +206,7 @@ class ActionRunner extends Runner {
             ATTACH_FOLDER: AttachFolderAction,
             ATTACH_ASSET: AttachAssetAction,
             ATTACH_EDITOR: AttachEditorAction,
+            ATTACH_COMPONENT_VALUE: AttachComponentValueAction,
         }
         const selectedUnits = this.unitSelector.getSelected(World.get())
         for(const iTypeAction in typeActions){

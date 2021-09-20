@@ -25,7 +25,7 @@ class InputMenuItem extends MenuItem {
         this.parent = parent
         this.event = this.callbackExecute(event)
         this.value = this.callbackExecute(value)
-        this.data = {event, item: this}
+        this.data = {event, item: this, bind: props.bind}
     }
 
     /**

@@ -39,6 +39,7 @@ class MenuItem {
         this.postStateCode = props.postStateCode
         this.skipStateCodes = props.skipStateCodes || []
         this.collapsed = false
+        this.draggable = props.draggable || false
         this.startDragging = false
         this.endDragging = false
         this.parent = parent
@@ -86,7 +87,7 @@ class MenuItem {
      * @return {boolean}
      */
     isDraggable(){
-        return false
+        return this.draggable
     }
 
     /**

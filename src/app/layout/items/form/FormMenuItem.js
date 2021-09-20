@@ -196,10 +196,13 @@ class FormMenuItem extends MenuItem {
                 return new typeMenuItem(this,
                     {
                         index: existItem && existItem.index,
+                        bind: field.bind,
                         name: field.label,
                         list: field.list || [],
                         options: field.options,
-                        isEditing: existItem && existItem.isEditing()
+                        isEditing: existItem && existItem.isEditing(),
+                        draggable: field.draggable,
+                        dragStateCode: field.draggable ? 'ACTION_ATTACH_COMPONENT_VALUE' : ''
                     },
                     getter,
                     setter

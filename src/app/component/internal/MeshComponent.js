@@ -23,7 +23,7 @@ export default class MeshComponent extends Component{
         this.add('vertices', TYPES.ARRAY | TYPES.VECTOR, [])
         this.add('shapeVertices',TYPES.ARRAY | TYPES.VECTOR, [])
         this.add('generated', TYPES.BOOLEAN, false)
-        this.add('assetId', TYPES.NUMBER)
+        this.add('assetId', TYPES.IMAGE)
         this.add('imageRepeat', TYPES.BOOLEAN, false)
         this.add('imageScale', TYPES.VECTOR, new Vector({x: 1, y: 1}))
         this.add('imagePosition', TYPES.VECTOR, new Vector())

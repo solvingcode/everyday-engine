@@ -193,6 +193,13 @@ export default class AssetsManager extends AssetsManagerData {
     /**
      * @return {Asset[]}
      */
+    getImageAssets() {
+        return this.getAssets().filter(asset => this.isAssetImage(asset))
+    }
+
+    /**
+     * @return {Asset[]}
+     */
     getColorAssets() {
         return this.getAssets().filter(asset => this.isAssetColor(asset))
     }

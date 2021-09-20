@@ -165,6 +165,7 @@ export default class DynamicAttributeHelper {
                     label: attribute.getAttrName(),
                     type: Layout.form.DROPDOWN,
                     list: units,
+                    draggable: true,
                     dynamicAttribute
                 }]
             } else {
@@ -243,6 +244,21 @@ export default class DynamicAttributeHelper {
                 label: attribute.getAttrName(),
                 type: Layout.form.DROPDOWN,
                 list: listAudios,
+                draggable: true,
+                dynamicAttribute
+            }]
+        } else if (attribute.getAttrType() === TYPES.IMAGE && isListInstances) {
+            const listMeshes = world.getAssetsManager().getImageAssets()
+                .map(mesh => ({
+                    value: mesh.getId(),
+                    label: mesh.getName()
+                }))
+            formField = [{
+                bind: bindName,
+                label: attribute.getAttrName(),
+                type: Layout.form.DROPDOWN,
+                list: listMeshes,
+                draggable: true,
                 dynamicAttribute
             }]
         } else if (attribute.getAttrType() === TYPES.SCENE && isListInstances) {
@@ -282,6 +298,7 @@ export default class DynamicAttributeHelper {
                 label: attribute.getAttrName(),
                 type: Layout.form.DROPDOWN,
                 list: listFonts,
+                draggable: true,
                 dynamicAttribute
             }]
         } else if (attribute.getAttrType() === TYPES.BOOLEAN && isListInstances) {
