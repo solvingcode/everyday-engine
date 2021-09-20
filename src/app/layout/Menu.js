@@ -186,6 +186,13 @@ class Menu {
         endMenuItem.element.drag(startMenuItem.element.getDataBind())
     }
 
+    /**
+     * @param {MenuItemUI} menuItem
+     */
+    dblClickItem(menuItem){
+        menuItem.element.dblClickState()
+    }
+
     resetDragItems() {
         this.getDraggingItems()
             .forEach(item => {

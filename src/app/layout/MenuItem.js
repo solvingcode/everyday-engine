@@ -36,6 +36,7 @@ class MenuItem {
         this.index = props.index || Maths.generateId()
         this.stateCode = props.stateCode
         this.dragStateCode = props.dragStateCode
+        this.dbClickStateCode = props.dbClickStateCode
         this.postStateCode = props.postStateCode
         this.skipStateCodes = props.skipStateCodes || []
         this.collapsed = false
@@ -133,6 +134,13 @@ class MenuItem {
     }
 
     /**
+     * @return {string|null}
+     */
+    getDbClickStateCode(){
+        return this.dbClickStateCode
+    }
+
+    /**
      * @return {boolean}
      */
     isCollapsed() {
@@ -191,6 +199,13 @@ class MenuItem {
     }
 
     /**
+     * Run the action when the item receive a dragged item
+     */
+    dblClick() {
+        this.dbClickStateCode && this.dblClickState()
+    }
+
+    /**
      * Update the items for the menu
      */
     update() {
@@ -246,6 +261,13 @@ class MenuItem {
      */
     dragState(data) {
         this.stateManager.startState(this.dragStateCode, this.id, {start: data, end: this.getDataBind()})
+    }
+
+    /**
+     * Start a double click action by type and data (state)
+     */
+    dblClickState() {
+        this.stateManager.startState(this.dbClickStateCode, this.id, this.data)
     }
 
     /**

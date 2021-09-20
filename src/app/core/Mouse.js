@@ -76,6 +76,7 @@ class Mouse {
      */
     setButtonDoubleClicked(key) {
         if (!this.isButtonDoubleClicked(key)) {
+            this.path = this.getPath(event)
             this.keydbclicks.push(key)
         }
     }

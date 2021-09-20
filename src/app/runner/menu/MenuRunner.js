@@ -28,6 +28,7 @@ class MenuRunner extends Runner {
         return window.mouse.isButtonPressed(MouseButton.LEFT) ||
             window.mouse.isButtonClicked(MouseButton.LEFT) ||
             window.mouse.isButtonPressed(MouseButton.RIGHT) ||
+            window.mouse.isButtonDoubleClicked(MouseButton.LEFT) ||
             window.mouse.isMouseWheelMove()
     }
 
@@ -70,7 +71,14 @@ class MenuRunner extends Runner {
      */
     handleLeftClick(window) {
         const mouse = window.mouse
-        if (mouse.isButtonPressed(MouseButton.LEFT) ||
+        if (mouse.isButtonDoubleClicked(MouseButton.LEFT)) {
+            const {path} = mouse
+            const menuItem = this.menu.getUIRenderer().getItemsAt(path)
+                .find(pMenuItem => pMenuItem.element.getDbClickStateCode() && pMenuItem.element.isEnabled())
+            if (menuItem) {
+                this.menu.dblClickItem(menuItem)
+            }
+        } else if (mouse.isButtonPressed(MouseButton.LEFT) ||
             mouse.isButtonClicked(MouseButton.LEFT)) {
             const {path, pathEnd, pathCurrent} = mouse
             let selectItem = true

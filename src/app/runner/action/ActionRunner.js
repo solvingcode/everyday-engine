@@ -91,6 +91,7 @@ import AttachFolderAction from './assets/AttachFolderAction.js'
 import AttachAssetAction from './assets/AttachAssetAction.js'
 import AttachEditorAction from './assets/AttachEditorAction.js'
 import AttachComponentValueAction from './unit/AttachComponentValueAction.js'
+import EditAssetAction from './assets/EditAssetAction.js'
 
 /**
  * Action Runner class.
@@ -149,6 +150,7 @@ class ActionRunner extends Runner {
             ADD_ASSET_SCENE: AddAssetSceneAction,
             COMPILE_ASSET_SCRIPT: CompileAssetScriptAction,
             EDIT_ASSET_SCRIPT_XML: EditAssetScriptXmlAction,
+            EDIT_ASSET: EditAssetAction,
             NEW_PROJECT: NewProjectAction,
             EXPORT_PROJECT: ExportProjectAction,
             ZOOM_CAMERA: ZoomInOutCameraAction,
