@@ -29,6 +29,7 @@ import MeshExecutor from '../executor/type/MeshExecutor.js'
 import MeshStyleExecutor from '../executor/type/MeshStyleExecutor.js'
 import UITransformExecutor from '../executor/type/UITransformExecutor.js'
 import UIButtonStyleExecutor from '../executor/type/UIButtonStyleExecutor.js'
+import {ShortcutRunner} from '../runner/shortcut/ShortcutRunner.js'
 
 /**
  * @class {SetupLoop}
@@ -51,7 +52,7 @@ class SetupLoop extends Loop {
         this.runners = [
             WorldInitializeRunner, /*HistoryRunner,*/ SimulateRunner, ActionRunner, EditorRunner, ScriptEditorRunner,
             AnimationEditorRunner, MenuRunner, SetupExecutorRunner, SetupRenderRunner, WindowRunner, GraphDrawerRunner,
-            UnitDrawerRunner, FormRunner, MoveUnitRunner, LightRunner, SceneRunner
+            UnitDrawerRunner, FormRunner, MoveUnitRunner, LightRunner, SceneRunner, ShortcutRunner
         ]
         ExecutorRegistry.get().register([
             new CameraExecutor(),

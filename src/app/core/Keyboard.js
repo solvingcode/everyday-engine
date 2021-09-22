@@ -53,6 +53,13 @@ class Keyboard {
         return this.keysPressed.length > 0
     }
 
+    /***
+     * @return {Boolean}
+     */
+    isAnyKeyReleased() {
+        return this.keysReleased.length > 0
+    }
+
     clear(){
         this.keysReleased = []
     }
@@ -71,6 +78,11 @@ export const KeyCode = {
     SPACE: 32,
     ENTER: 13,
     P: 80,
+    M: 77,
+    G: 71,
+    R: 82,
+    BACKSPACE: 8,
+    DELETE: 46,
 
     //Not ascii code
     SHIFT: 10001,

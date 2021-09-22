@@ -522,6 +522,11 @@ class StateManager {
         })
     }
 
+    stopDrawStates(){
+        this.stopStates(this.appState.getState()
+            .filter(state => this.getNextData(state) && this.isDrawState(state)))
+    }
+
     removeConfirmStates() {
         const confirmStates = this.getConfirmStates()
         confirmStates.forEach(confirmState => {
