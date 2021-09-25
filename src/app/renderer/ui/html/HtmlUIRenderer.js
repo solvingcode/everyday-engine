@@ -346,6 +346,7 @@ class HtmlUIRenderer extends UIRenderer {
         !item.element.isEnabled() && classNames.push('disabled')
         item.element.isReadOnly() && classNames.push('readonly')
         item.element.isLocked() && classNames.push('locked')
+        item.element.isHidden() && classNames.push('hidden')
         hasChild && classNames.push('has-child')
         classNames.push(type.getProps().className)
         classNames.push(type.getClassName(item))
@@ -467,8 +468,7 @@ class HtmlUIRenderer extends UIRenderer {
         childs.forEach(node => {
             const index = parseInt(node.getAttribute('data-index'))
             const parentIndex = parseInt(node.getAttribute('data-parent-index'))
-            const zone = node.getAttribute('data-zone')
-            const item = Menu.get().findItemByZoneAndIndex(index, zone)
+            const item = Menu.get().findItemByIndex(index)
             if (!item || (item.parent && item.parent.index !== parentIndex)) {
                 node.remove()
             } else {

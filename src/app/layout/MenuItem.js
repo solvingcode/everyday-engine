@@ -39,7 +39,7 @@ class MenuItem {
         this.dbClickStateCode = props.dbClickStateCode
         this.postStateCode = props.postStateCode
         this.skipStateCodes = props.skipStateCodes || []
-        this.collapsed = false
+        this.collapsed = props.collapsed || false
         this.draggable = props.draggable || false
         this.startDragging = false
         this.endDragging = false
@@ -152,6 +152,13 @@ class MenuItem {
      */
     isEnabled() {
         return true
+    }
+
+    /**
+     * @return {boolean}
+     */
+    isHidden(){
+        return false
     }
 
     /**

@@ -21,6 +21,7 @@ import OptionsPopupMenuItem from './items/option/OptionsPopupMenuItem.js'
 import TopMenuItem from './items/topmenu/TopMenuItem.js'
 import ConfirmPopupMenuItem from './items/alert/confirm/ConfirmPopupMenuItem.js'
 import StateManager from '../state/StateManager.js'
+import ContentPopupMenuItem from './items/content/ContentPopupMenuItem.js'
 
 /**
  * Define all menu items
@@ -34,6 +35,7 @@ class Menu {
             new ErrorPopupMenuItem(),
             new ConfirmPopupMenuItem(),
             new OptionsPopupMenuItem(),
+            new ContentPopupMenuItem(),
 
             //LEFT
             new SelectorMenuItem(),
@@ -118,13 +120,22 @@ class Menu {
 
     /**
      * Find menu item by index and zone
-     * @param {Number} index (must start from 0)
+     * @param {Number} index
      * @param {String} zone
      * @return {MenuItemUI}
      */
     findItemByZoneAndIndex(index, zone) {
         const itemsZone = this.items.filter(pItem => pItem.element.zone === zone)
         return itemsZone.find(itemZone => itemZone.index === index)
+    }
+
+    /**
+     * Find menu item by index and zone
+     * @param {Number} index
+     * @return {MenuItemUI}
+     */
+    findItemByIndex(index) {
+        return this.items.find(pItem => pItem.index === index)
     }
 
     /**

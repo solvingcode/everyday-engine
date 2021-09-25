@@ -4,14 +4,16 @@ import PanelMenuItem from '../../../panel/PanelMenuItem.js'
 import World from '../../../../../world/World.js'
 import AssetScriptXml from '../../../../../asset/types/script/AssetScriptXml.js'
 import AssetAnimationScriptXml from '../../../../../asset/types/animation/AssetAnimationScriptXml.js'
+import Layout from '../../../../Layout.js'
 
 export default class AddScriptNodeMenuItem  extends PanelMenuItem {
-    constructor(parent) {
+    constructor(parent, props = {}) {
         super({
             name: 'Add node',
-            zone: parent.zone
+            zone: parent ? parent.zone : Layout.zone.WINDOW,
+            collapsed: true,
+            ...props
         })
-        this.collapsed = true
         this.parent = parent
         const formData = new AddScriptNodeForm()
         this.items = [

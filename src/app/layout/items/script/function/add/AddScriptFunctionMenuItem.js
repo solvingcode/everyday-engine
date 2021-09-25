@@ -3,14 +3,16 @@ import World from '../../../../../world/World.js'
 import AssetScriptXml from '../../../../../asset/types/script/AssetScriptXml.js'
 import AddScriptFunctionFormMenuItem from './AddScriptFunctionFormMenuItem.js'
 import AddScriptFunctionSubmitMenuItem from './AddScriptFunctionSubmitMenuItem.js'
+import Layout from '../../../../Layout.js'
 
 export default class AddScriptFunctionMenuItem  extends PanelMenuItem {
-    constructor(parent) {
+    constructor(parent, props = {}) {
         super({
             name: 'Add function',
-            zone: parent.zone
+            zone: parent ? parent.zone : Layout.zone.WINDOW,
+            collapsed: true,
+            ...props
         })
-        this.collapsed = true
         this.parent = parent
         const formData = new AddScriptFunctionForm()
         this.items = [

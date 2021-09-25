@@ -424,7 +424,7 @@ h4{
     white-space: nowrap;
     text-overflow: ellipsis;
     overflow: hidden;
-    padding: 0;
+    padding: 5px;
 }
 
 .animation-wrapper{
@@ -561,7 +561,7 @@ h4{
     height: 100%;
 }
 
-.options-popup{
+.options-popup, .content-popup{
     position: absolute;
     top: 0;
     left: 0;
@@ -571,26 +571,34 @@ h4{
     padding: 3px;
 }
 
-.options-popup .option-actions-wrapper{
+.options-popup .option-actions-wrapper, .content-popup .content-popup-wrapper{
     padding: 0;
     margin: 0;
     width: unset;
 }
 
-.options-popup .option-actions-wrapper button{
+.options-popup .option-actions-wrapper button, .content-popup .content-popup-wrapper button{
     padding: 5px 20px;
     width: 100%;
     text-align: left;
     white-space: nowrap;
 }
 
-.options-popup .option-actions-wrapper button i{
+.options-popup .option-actions-wrapper button i, .content-popup .content-popup-wrapper button i{
     display: none;
 }
 
-.options-popup .option-actions-wrapper button[data-icon]{
+.options-popup .option-actions-wrapper button[data-icon] {
     height: unset;
     font-size: unset;
+}
+
+.content-popup .content-popup-wrapper button[data-icon]{
+    height: unset;
+    font-size: unset;
+    float: right;
+    width: unset;
+    margin: 5px;
 }
 
 .options-popup .option-actions-wrapper .text{
@@ -973,8 +981,8 @@ i.static-entity::before{
 
 img {
     -webkit-user-drag: none;
-    -khtml-user-drag: none;
-    -moz-user-drag: none;
-    -o-user-drag: none;
-    user-drag: none;
+}
+
+.hidden{
+    display: none;
 }

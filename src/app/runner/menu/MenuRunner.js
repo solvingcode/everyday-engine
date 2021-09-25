@@ -7,8 +7,8 @@ import StateManager from '../../state/StateManager.js'
 import OpenOptionAction from '../action/option/OpenOptionAction.js'
 import Unit from '../../unit/Unit.js'
 import World from '../../world/World.js'
-import UnitSelector from '../../selector/UnitSelector.js'
-import ContentMenuItem from '../../layout/items/content/ContentMenuItem.js'
+import UIHelper from '../../utils/UIHelper.js'
+import OpenPopupAction from '../action/popup/OpenPopupAction.js'
 
 /**
  * Execute actions related to menu items
@@ -44,29 +44,6 @@ class MenuRunner extends Runner {
     }
 
     /**
-     * @param {EventTarget[]} path
-     * @return {MenuItemUI}
-     */
-    getStartDragMenuItemByPath(path) {
-        return this.menu.getUIRenderer().getItemsAt(path)
-            .reverse()
-            .find(menuItem => menuItem.element.isDraggable() && menuItem.element.isEnabled())
-    }
-
-    /**
-     * @param {EventTarget[]} path
-     * @return {MenuItemUI}
-     */
-    getEndDragMenuItemByPath(path) {
-        if (path && path[0].constructor === HTMLCanvasElement) {
-            return this.menu.items.find(item => item.element instanceof ContentMenuItem)
-        }
-        return this.menu.getUIRenderer().getItemsAt(path)
-            .reverse()
-            .find(menuItem => !!menuItem.element.getDragStateCode() && menuItem.element.isEnabled())
-    }
-
-    /**
      * @param {Window} window
      */
     handleLeftClick(window) {
@@ -84,14 +61,14 @@ class MenuRunner extends Runner {
             let selectItem = true
             if (mouse.isMouseDrag()) {
                 this.menu.resetDragItems()
-                const menuDragStartItem = this.getStartDragMenuItemByPath(path)
+                const menuDragStartItem = UIHelper.getStartDragMenuItemByPath(path, this.menu)
                 if (menuDragStartItem) {
                     menuDragStartItem.element.setStartDragging(true)
-                    const menuDragCurrentEndItem = this.getEndDragMenuItemByPath(pathCurrent)
+                    const menuDragCurrentEndItem = UIHelper.getEndDragMenuItemByPath(pathCurrent, this.menu)
                     if (menuDragCurrentEndItem) {
                         menuDragCurrentEndItem.element.setEndDragging(true)
                     }
-                    const menuDragEndItem = this.getEndDragMenuItemByPath(pathEnd)
+                    const menuDragEndItem = UIHelper.getEndDragMenuItemByPath(pathEnd, this.menu)
                     if (menuDragEndItem && menuDragStartItem !== menuDragEndItem) {
                         this.menu.dragItems(menuDragStartItem, menuDragEndItem)
                         this.menu.resetDragItems()
@@ -118,7 +95,10 @@ class MenuRunner extends Runner {
         const mouse = window.mouse
         const stateManager = StateManager.get()
         if (mouse.isButtonPressed(MouseButton.RIGHT)) {
-            const object = this.processObject(this.findUIObjectByMousePosition(mouse)) || this.findSceneObject(mouse)
+            let object = this.processObject(UIHelper.findUIObjectByMousePosition(mouse, this.menu))
+            if (object === UIHelper.UI.CANVAS) {
+                object = UIHelper.findSceneObject(mouse, this.menu)
+            }
             if (object) {
                 stateManager.startState(OpenOptionAction.STATE, 1,
                     {optionActionsMenuItem: OptionsMenuItem, object, absolute: true})
@@ -127,34 +107,10 @@ class MenuRunner extends Runner {
             if (stateManager.isProgress(OpenOptionAction.STATE)) {
                 stateManager.stopNextState(OpenOptionAction.STATE)
             }
+            if (stateManager.isProgress(OpenPopupAction.STATE)) {
+                stateManager.stopNextState(OpenPopupAction.STATE)
+            }
         }
-    }
-
-    /**
-     * @param {Mouse} mouse
-     * @return {*}
-     */
-    findUIObjectByMousePosition(mouse) {
-        const {path} = mouse
-        const menuRightClickItem = this.menu.getUIRenderer().getItemsAt(path)
-            .reverse()
-            .find(menuItem => menuItem.element.isRightClick() && menuItem.element.isEnabled())
-        if (menuRightClickItem) {
-            return menuRightClickItem.element.getDataBind()
-        }
-    }
-
-    /**
-     * @param {Mouse} mouse
-     * @return {*}
-     */
-    findSceneObject(mouse) {
-        const {path} = mouse
-        const menuRightClickItem = this.menu.getUIRenderer().getItemsAt(path)
-        if (!menuRightClickItem.length) {
-            return UnitSelector.get().getFirstSelected(World.get())
-        }
-        return null
     }
 
     /**

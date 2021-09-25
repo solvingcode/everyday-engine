@@ -497,6 +497,12 @@ AppState.States = {
     ACTION_EDIT_ASSET_START: {history: false},
     ACTION_EDIT_ASSET_PROGRESS: {history: false},
     ACTION_EDIT_ASSET_STOP: {history: false},
+    ACTION_ADD_SCRIPT_FUNCTION_POPUP_START: {history: false},
+    ACTION_ADD_SCRIPT_FUNCTION_POPUP_PROGRESS: {history: false},
+    ACTION_ADD_SCRIPT_FUNCTION_POPUP_STOP: {history: false},
+    ACTION_CONTENT_POPUP_START: {history: false},
+    ACTION_CONTENT_POPUP_PROGRESS: {history: false},
+    ACTION_CONTENT_POPUP_STOP: {history: false},
 }
 
 export default AppState

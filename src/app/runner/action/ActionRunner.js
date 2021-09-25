@@ -92,6 +92,7 @@ import AttachAssetAction from './assets/AttachAssetAction.js'
 import AttachEditorAction from './assets/AttachEditorAction.js'
 import AttachComponentValueAction from './unit/AttachComponentValueAction.js'
 import EditAssetAction from './assets/EditAssetAction.js'
+import OpenPopupAction from './popup/OpenPopupAction.js'
 
 /**
  * Action Runner class.
@@ -195,6 +196,7 @@ class ActionRunner extends Runner {
             LOAD_SCENE: LoadSceneAction,
             UNLOAD_SCENE: UnLoadSceneAction,
             OPEN_OPTION: OpenOptionAction,
+            CONTENT_POPUP: OpenPopupAction,
             ADD_UI_CONTAINER: AddUIContainerAction,
             ADD_UI_IMAGE: AddUIImageAction,
             ADD_UI_BUTTON: AddUIButtonAction,
