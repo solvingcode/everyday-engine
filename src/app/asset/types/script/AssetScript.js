@@ -39,6 +39,7 @@ export default class AssetScript extends AssetType{
         return new Promise(resolve => {
             this.setDataUrl(data)
             const script = this.parse()
+            script.setAssetId(asset.getId())
             asset.setName(script.getName())
             resolve(script)
         })

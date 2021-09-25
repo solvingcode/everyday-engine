@@ -17,6 +17,7 @@ import StringVariableNode from '../src/app/flow/node/variable/StringVariableNode
 import AssetHelper from '../src/app/utils/AssetHelper.js'
 import ReferenceNode from '../src/app/flow/node/ReferenceNode.js'
 import FunctionScript from '../src/app/flow/FunctionScript.js'
+import ScriptHelper from '../src/app/utils/ScriptHelper.js'
 
 test('Create and compile animation when (startEvent -> animation)', function () {
     const world = World.get()
@@ -35,8 +36,8 @@ test('Create and compile animation when (startEvent -> animation)', function () 
     animationManager.add(animation)
     animationComponent.setScript(script.getName())
 
-    const nodeStartAnimation = scriptFunction.createNode(functionRegistry, EventNode, 'OnAnimationStart')
-    const nodeAnimation = scriptFunction.createNode(functionRegistry, AnimationNode, `${animation.getId()}`)
+    const nodeStartAnimation = ScriptHelper.createNodeByClass(functionRegistry, scriptFunction, EventNode, 'OnAnimationStart')
+    const nodeAnimation = ScriptHelper.createNodeByClass(functionRegistry, scriptFunction, AnimationNode, `${animation.getId()}`)
 
     nodeAnimation.attach(nodeStartAnimation, null)
 
@@ -74,9 +75,9 @@ test('Create and compile animation when (startEvent -> animation1 -> animation2)
     animationManager.add(animation2)
     animationComponent.setScript(script.getName())
 
-    const nodeStartAnimation = scriptFunction.createNode(functionRegistry, EventNode, 'OnAnimationStart')
-    const nodeAnimation1 = scriptFunction.createNode(functionRegistry, AnimationNode, `${animation1.getId()}`)
-    const nodeAnimation2 = scriptFunction.createNode(functionRegistry, AnimationNode, `${animation2.getId()}`)
+    const nodeStartAnimation = ScriptHelper.createNodeByClass(functionRegistry, scriptFunction, EventNode, 'OnAnimationStart')
+    const nodeAnimation1 = ScriptHelper.createNodeByClass(functionRegistry, scriptFunction, AnimationNode, `${animation1.getId()}`)
+    const nodeAnimation2 = ScriptHelper.createNodeByClass(functionRegistry, scriptFunction, AnimationNode, `${animation2.getId()}`)
 
     nodeAnimation1.attach(nodeStartAnimation, null)
     nodeAnimation2.attach(nodeAnimation1, null)
@@ -122,13 +123,13 @@ test('Create and compile animation when (startEvent -> animation1 -> condition -
     animationManager.add(animation1)
     animationManager.add(animation2)
 
-    const nodeStartAnimation = scriptFunction.createNode(functionRegistry, EventNode, 'OnAnimationStart')
-    const nodeAnimation1 = scriptFunction.createNode(functionRegistry, AnimationNode, `${animation1.getId()}`)
-    const nodeAnimation2 = scriptFunction.createNode(functionRegistry, AnimationNode, `${animation2.getId()}`)
-    const nodeTrue = scriptFunction.createNode(functionRegistry, ConditionNode, 'True')
-    const nodeNotEqual = scriptFunction.createNode(functionRegistry, FunctionNode, '!=')
-    const nodeConstant0 = scriptFunction.createNode(functionRegistry, ConstantNode, '0')
-    const nodeVarSpeed = scriptFunction.createNode(functionRegistry, StringVariableNode, 'speed')
+    const nodeStartAnimation = ScriptHelper.createNodeByClass(functionRegistry, scriptFunction, EventNode, 'OnAnimationStart')
+    const nodeAnimation1 = ScriptHelper.createNodeByClass(functionRegistry, scriptFunction, AnimationNode, `${animation1.getId()}`)
+    const nodeAnimation2 = ScriptHelper.createNodeByClass(functionRegistry, scriptFunction, AnimationNode, `${animation2.getId()}`)
+    const nodeTrue = ScriptHelper.createNodeByClass(functionRegistry, scriptFunction, ConditionNode, 'True')
+    const nodeNotEqual = ScriptHelper.createNodeByClass(functionRegistry, scriptFunction, FunctionNode, '!=')
+    const nodeConstant0 = ScriptHelper.createNodeByClass(functionRegistry, scriptFunction, ConstantNode, '0')
+    const nodeVarSpeed = ScriptHelper.createNodeByClass(functionRegistry, scriptFunction, StringVariableNode, 'speed')
 
     nodeAnimation1.attach(nodeStartAnimation, null)
     nodeTrue.attach(nodeAnimation1, null)
@@ -220,16 +221,16 @@ test('Create and compile animation when (startEvent -> animation1 -> condition -
     animationManager.add(animation1)
     animationManager.add(animation2)
 
-    const nodeStartAnimation = scriptFunction.createNode(functionRegistry, EventNode, 'OnAnimationStart')
-    const nodeAnimation1 = scriptFunction.createNode(functionRegistry, AnimationNode, `${animation1.getId()}`)
-    const nodeAnimation2 = scriptFunction.createNode(functionRegistry, AnimationNode, `${animation2.getId()}`)
-    const nodeTrue = scriptFunction.createNode(functionRegistry, ConditionNode, 'True')
-    const nodeTrue2 = scriptFunction.createNode(functionRegistry, ConditionNode, 'True')
-    const nodeNotEqual = scriptFunction.createNode(functionRegistry, FunctionNode, '!=')
-    const nodeEqual = scriptFunction.createNode(functionRegistry, FunctionNode, '==')
-    const nodeConstant0 = scriptFunction.createNode(functionRegistry, ConstantNode, '0')
-    const nodeVarSpeed = scriptFunction.createNode(functionRegistry, StringVariableNode, 'speed')
-    const nodeReference = scriptFunction.createNode(functionRegistry, ReferenceNode, '')
+    const nodeStartAnimation = ScriptHelper.createNodeByClass(functionRegistry, scriptFunction, EventNode, 'OnAnimationStart')
+    const nodeAnimation1 = ScriptHelper.createNodeByClass(functionRegistry, scriptFunction, AnimationNode, `${animation1.getId()}`)
+    const nodeAnimation2 = ScriptHelper.createNodeByClass(functionRegistry, scriptFunction, AnimationNode, `${animation2.getId()}`)
+    const nodeTrue = ScriptHelper.createNodeByClass(functionRegistry, scriptFunction, ConditionNode, 'True')
+    const nodeTrue2 = ScriptHelper.createNodeByClass(functionRegistry, scriptFunction, ConditionNode, 'True')
+    const nodeNotEqual = ScriptHelper.createNodeByClass(functionRegistry, scriptFunction, FunctionNode, '!=')
+    const nodeEqual = ScriptHelper.createNodeByClass(functionRegistry, scriptFunction, FunctionNode, '==')
+    const nodeConstant0 = ScriptHelper.createNodeByClass(functionRegistry, scriptFunction, ConstantNode, '0')
+    const nodeVarSpeed = ScriptHelper.createNodeByClass(functionRegistry, scriptFunction, StringVariableNode, 'speed')
+    const nodeReference = ScriptHelper.createNodeByClass(functionRegistry, scriptFunction, ReferenceNode, '')
 
     nodeAnimation1.attach(nodeStartAnimation, null)
     nodeTrue.attach(nodeAnimation1, null)
@@ -327,14 +328,14 @@ test('Create and compile animation when (startEvent -> animation1 -> anyStartEve
     animationManager.add(animation1)
     animationManager.add(animation2)
 
-    const nodeStartAnimation = scriptFunction.createNode(functionRegistry, EventNode, 'OnAnimationStart')
-    const nodeAnyStartAnimation = scriptFunction.createNode(functionRegistry, EventNode, 'OnAnyAnimationStart')
-    const nodeAnimation1 = scriptFunction.createNode(functionRegistry, AnimationNode, `${animation1.getId()}`)
-    const nodeAnimation2 = scriptFunction.createNode(functionRegistry, AnimationNode, `${animation2.getId()}`)
-    const nodeTrue = scriptFunction.createNode(functionRegistry, ConditionNode, 'True')
-    const nodeNotEqual = scriptFunction.createNode(functionRegistry, FunctionNode, '!=')
-    const nodeConstant0 = scriptFunction.createNode(functionRegistry, ConstantNode, '0')
-    const nodeVarSpeed = scriptFunction.createNode(functionRegistry, StringVariableNode, 'speed')
+    const nodeStartAnimation = ScriptHelper.createNodeByClass(functionRegistry, scriptFunction, EventNode, 'OnAnimationStart')
+    const nodeAnyStartAnimation = ScriptHelper.createNodeByClass(functionRegistry, scriptFunction, EventNode, 'OnAnyAnimationStart')
+    const nodeAnimation1 = ScriptHelper.createNodeByClass(functionRegistry, scriptFunction, AnimationNode, `${animation1.getId()}`)
+    const nodeAnimation2 = ScriptHelper.createNodeByClass(functionRegistry, scriptFunction, AnimationNode, `${animation2.getId()}`)
+    const nodeTrue = ScriptHelper.createNodeByClass(functionRegistry, scriptFunction, ConditionNode, 'True')
+    const nodeNotEqual = ScriptHelper.createNodeByClass(functionRegistry, scriptFunction, FunctionNode, '!=')
+    const nodeConstant0 = ScriptHelper.createNodeByClass(functionRegistry, scriptFunction, ConstantNode, '0')
+    const nodeVarSpeed = ScriptHelper.createNodeByClass(functionRegistry, scriptFunction, StringVariableNode, 'speed')
 
     nodeAnimation1.attach(nodeStartAnimation, null)
     nodeTrue.attach(nodeAnyStartAnimation, null)

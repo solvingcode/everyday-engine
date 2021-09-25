@@ -4,6 +4,7 @@ import AssetScript from './AssetScript.js'
 import EditGraphScriptContent from '../../../content/script/EditGraphScriptContent.js'
 import ScriptHelper from '../../../utils/ScriptHelper.js'
 import FileHelper from '../../../utils/FileHelper.js'
+import XmlHelper from '../../../utils/XmlHelper.js'
 
 export default class AssetScriptXml extends AssetScript{
 
@@ -85,10 +86,9 @@ export default class AssetScriptXml extends AssetScript{
      * @override
      */
     async setDataUrl(dataUrl) {
-        const parser = new DOMParser()
-        const doc = parser.parseFromString(dataUrl, 'application/xml')
-        if(doc.documentElement.tagName === 'html'){
-            this.setError(`Script XML Parser: ${doc.documentElement.textContent}`)
+        const doc = XmlHelper.parse(dataUrl)
+        if(!(doc instanceof Document)){
+            this.setError(`Script XML Parser: ${doc}`)
         }else{
             this.setError('')
             this.data = doc

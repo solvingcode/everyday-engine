@@ -1,9 +1,9 @@
-import AssetScriptGenerator from './AssetScriptGenerator.js'
+import ScriptXmlGenerator from './ScriptXmlGenerator.js'
 
 /**
  * @abstract
  */
-export default class AssetScriptCodeGenerator extends AssetScriptGenerator{
+export default class AssetScriptCodeGenerator extends ScriptXmlGenerator{
 
     static instance
 

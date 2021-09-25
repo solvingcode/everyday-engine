@@ -103,8 +103,10 @@ export default class UnitSelector {
         } else {
             selectedUnits = this.getInsideArea(world, point, size)
         }
-        return selectedUnits.map(selectedUnit => selectedUnit.select() && selectedUnit)
-            .filter(unit => unit)
+        return selectedUnits.map(selectedUnit => {
+            selectedUnit.select()
+            return selectedUnit
+        }).filter(unit => unit)
     }
 
     /**

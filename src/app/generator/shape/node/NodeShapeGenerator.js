@@ -24,7 +24,8 @@ export default class NodeShapeGenerator extends TypeShapeGenerator {
         const {
             sizeInput, fontSize, heightHead,
             shadowBlur, boxColor, baseInputColor,
-            fontColor, headColor, padding
+            fontColor, headColor, padding,
+            colorFocused, selectColor
         } = NodeHelper.getNodeGUIProps(type)
 
         //convert props to camera scale
@@ -32,12 +33,20 @@ export default class NodeShapeGenerator extends TypeShapeGenerator {
         const fontSizeScale = camera.toScaleNumber(fontSize)
         const paddingScale = camera.toScaleNumber(padding)
         const sizeInputScale = camera.toScaleNumber(sizeInput)
+        const borderSize = camera.toScaleNumber(3)
 
         // box
-        context.shadowColor = headColor
+        let shadowColor = headColor
+        if (unit.isSelected()) {
+            shadowColor = selectColor
+        } else if (unit.isFocused()) {
+            shadowColor = colorFocused
+        }
+        context.shadowColor = shadowColor
         context.shadowBlur = shadowBlur
         context.fillStyle = boxColor
-        context.strokeStyle = headColor
+        context.lineWidth = borderSize
+        context.strokeStyle = unit.isSelected() ? selectColor : headColor
         context.rect(0, 0, width, height)
         context.fill()
         context.stroke()
@@ -46,7 +55,7 @@ export default class NodeShapeGenerator extends TypeShapeGenerator {
 
         //box header
         context.fillStyle = headColor
-        context.fillRect(0, 0, width, heightHeadScale)
+        context.fillRect(borderSize / 2, borderSize / 2, width - borderSize, heightHeadScale - borderSize)
 
         //box header title
         context.font = `${fontSizeScale}px Arial`

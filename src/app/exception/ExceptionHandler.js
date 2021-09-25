@@ -18,15 +18,17 @@ class ExceptionHandler {
      * @param {Error} e
      */
     handle(e) {
-        if(!(e instanceof ClientError) && !(e instanceof SystemError)){
+        if (!(e instanceof ClientError) && !(e instanceof SystemError)) {
             throw e
         }
         console.warn(e)
 
-        try {
-            StateManager.get().stopAll()
-        } catch (error) {
-            StateManager.get().reset()
+        if (e instanceof SystemError) {
+            try {
+                StateManager.get().stopAll()
+            } catch (error) {
+                StateManager.get().reset()
+            }
         }
 
         //Here Go to the last recovery point
@@ -38,21 +40,21 @@ class ExceptionHandler {
     /**
      * @param {Error} error
      */
-    setLastError(error){
+    setLastError(error) {
         this.lastError = error
     }
 
     /**
      * @return {Error}
      */
-    getLastError(){
+    getLastError() {
         return this.lastError
     }
 
     /**
      * @return {Error}
      */
-    popLastError(){
+    popLastError() {
         const lastError = this.getLastError()
         this.setLastError(null)
         return lastError

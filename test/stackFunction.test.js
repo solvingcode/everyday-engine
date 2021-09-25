@@ -21,6 +21,7 @@ import EventNode from '../src/app/flow/node/EventNode.js'
 import OnCallEvent from '../src/app/flow/event/native/OnCallEvent.js'
 import ACustomFunction from '../src/app/flow/function/custom/ACustomFunction.js'
 import FunctionOutputNode from '../src/app/flow/node/FunctionOutputNode.js'
+import ScriptHelper from '../src/app/utils/ScriptHelper.js'
 
 test('Execute native function (without output)', function () {
     const log = new LogFunction()
@@ -86,11 +87,11 @@ test('Create and compile class flow', function () {
     const scriptFunction = new FunctionScript('main')
     script.addFunction(scriptFunction)
 
-    const nodeLog = scriptFunction.createNode(functionRegistry, FunctionNode, 'Log')
-    const nodeAdd = scriptFunction.createNode(functionRegistry, FunctionNode, '+')
-    const nodeSetValue1 = scriptFunction.createNode(functionRegistry, ConstantNode, 20)
-    const nodeSetValue2 = scriptFunction.createNode(functionRegistry, ConstantNode, 30)
-    const nodeEvent = scriptFunction.createNode(functionRegistry, FunctionNode, 'OnMouseClick')
+    const nodeLog = ScriptHelper.createNodeByClass(functionRegistry, scriptFunction, FunctionNode, 'Log')
+    const nodeAdd = ScriptHelper.createNodeByClass(functionRegistry, scriptFunction, FunctionNode, '+')
+    const nodeSetValue1 = ScriptHelper.createNodeByClass(functionRegistry, scriptFunction, ConstantNode, 20)
+    const nodeSetValue2 = ScriptHelper.createNodeByClass(functionRegistry, scriptFunction, ConstantNode, 30)
+    const nodeEvent = ScriptHelper.createNodeByClass(functionRegistry, scriptFunction, FunctionNode, 'OnMouseClick')
 
     nodeAdd.attach(nodeSetValue1, 'value1')
     nodeAdd.attach(nodeSetValue2, 'value2')
@@ -119,13 +120,13 @@ test('Create and compile class script with success condition', function () {
     const scriptFunction = new FunctionScript('main')
     script.addFunction(scriptFunction)
 
-    const nodeLog = scriptFunction.createNode(functionRegistry, FunctionNode, 'Log')
-    const nodeLessThan = scriptFunction.createNode(functionRegistry, FunctionNode, '<')
-    const nodeSetValue1 = scriptFunction.createNode(functionRegistry, ConstantNode, 20)
-    const nodeSetValue2 = scriptFunction.createNode(functionRegistry, ConstantNode, 30)
-    const nodeSetValue3 = scriptFunction.createNode(functionRegistry, ConstantNode, 'correct')
-    const nodeTrueCondition = scriptFunction.createNode(functionRegistry, ConditionNode, 'True')
-    const nodeEvent = scriptFunction.createNode(functionRegistry, FunctionNode, 'OnMouseClick')
+    const nodeLog = ScriptHelper.createNodeByClass(functionRegistry, scriptFunction, FunctionNode, 'Log')
+    const nodeLessThan = ScriptHelper.createNodeByClass(functionRegistry, scriptFunction, FunctionNode, '<')
+    const nodeSetValue1 = ScriptHelper.createNodeByClass(functionRegistry, scriptFunction, ConstantNode, 20)
+    const nodeSetValue2 = ScriptHelper.createNodeByClass(functionRegistry, scriptFunction, ConstantNode, 30)
+    const nodeSetValue3 = ScriptHelper.createNodeByClass(functionRegistry, scriptFunction, ConstantNode, 'correct')
+    const nodeTrueCondition = ScriptHelper.createNodeByClass(functionRegistry, scriptFunction, ConditionNode, 'True')
+    const nodeEvent = ScriptHelper.createNodeByClass(functionRegistry, scriptFunction, FunctionNode, 'OnMouseClick')
 
     nodeLessThan.attach(nodeSetValue1, 'value1')
     nodeLessThan.attach(nodeSetValue2, 'value2')
@@ -156,13 +157,13 @@ test('Create and compile class script with failed condition', function () {
     const scriptFunction = new FunctionScript('main')
     script.addFunction(scriptFunction)
 
-    const nodeLog = scriptFunction.createNode(functionRegistry, FunctionNode, 'Log')
-    const nodeLessThan = scriptFunction.createNode(functionRegistry, FunctionNode, '<')
-    const nodeSetValue1 = scriptFunction.createNode(functionRegistry, ConstantNode, 20)
-    const nodeSetValue2 = scriptFunction.createNode(functionRegistry, ConstantNode, 10)
-    const nodeSetValue3 = scriptFunction.createNode(functionRegistry, ConstantNode, 'correct')
-    const nodeTrueCondition = scriptFunction.createNode(functionRegistry, ConditionNode, 'True')
-    const nodeEvent = scriptFunction.createNode(functionRegistry, FunctionNode, 'OnMouseClick')
+    const nodeLog = ScriptHelper.createNodeByClass(functionRegistry, scriptFunction, FunctionNode, 'Log')
+    const nodeLessThan = ScriptHelper.createNodeByClass(functionRegistry, scriptFunction, FunctionNode, '<')
+    const nodeSetValue1 = ScriptHelper.createNodeByClass(functionRegistry, scriptFunction, ConstantNode, 20)
+    const nodeSetValue2 = ScriptHelper.createNodeByClass(functionRegistry, scriptFunction, ConstantNode, 10)
+    const nodeSetValue3 = ScriptHelper.createNodeByClass(functionRegistry, scriptFunction, ConstantNode, 'correct')
+    const nodeTrueCondition = ScriptHelper.createNodeByClass(functionRegistry, scriptFunction, ConditionNode, 'True')
+    const nodeEvent = ScriptHelper.createNodeByClass(functionRegistry, scriptFunction, FunctionNode, 'OnMouseClick')
 
     nodeLessThan.attach(nodeSetValue1, 'value1')
     nodeLessThan.attach(nodeSetValue2, 'value2')
@@ -195,9 +196,9 @@ test('Create and compile class script with variables', function () {
     const scriptComponent = new ScriptComponent()
     scriptComponent.setVarsAttributes([new DynamicAttribute('text', TYPES.STRING, 'test')])
 
-    const nodeLog = scriptFunction.createNode(functionRegistry, FunctionNode, 'Log')
-    const nodeVar = scriptFunction.createNode(functionRegistry, StringVariableNode, 'text')
-    const nodeEvent = scriptFunction.createNode(functionRegistry, FunctionNode, 'OnMouseClick')
+    const nodeLog = ScriptHelper.createNodeByClass(functionRegistry, scriptFunction, FunctionNode, 'Log')
+    const nodeVar = ScriptHelper.createNodeByClass(functionRegistry, scriptFunction, StringVariableNode, 'text')
+    const nodeEvent = ScriptHelper.createNodeByClass(functionRegistry, scriptFunction, FunctionNode, 'OnMouseClick')
 
     nodeLog.attach(nodeVar, 'value')
     nodeLog.attach(nodeEvent, null)
@@ -225,13 +226,13 @@ test('Create and compile class script with loop', function () {
     script.addFunction(scriptFunction)
     const scriptComponent = new ScriptComponent()
 
-    const nodeLog = scriptFunction.createNode(functionRegistry, FunctionNode, 'Log')
-    const nodeLoop = scriptFunction.createNode(functionRegistry, LoopNode, 'Loop')
-    const nodeEvent = scriptFunction.createNode(functionRegistry, FunctionNode, 'OnMouseClick')
-    const nodeArray = scriptFunction.createNode(functionRegistry, FunctionNode, 'Array')
-    const nodeLength = scriptFunction.createNode(functionRegistry, ConstantNode, 10)
-    const nodeAttributeName = scriptFunction.createNode(functionRegistry, ConstantNode, "index")
-    const nodeGetValue = scriptFunction.createNode(functionRegistry, FunctionNode, 'GetValue')
+    const nodeLog = ScriptHelper.createNodeByClass(functionRegistry, scriptFunction, FunctionNode, 'Log')
+    const nodeLoop = ScriptHelper.createNodeByClass(functionRegistry, scriptFunction, LoopNode, 'Loop')
+    const nodeEvent = ScriptHelper.createNodeByClass(functionRegistry, scriptFunction, FunctionNode, 'OnMouseClick')
+    const nodeArray = ScriptHelper.createNodeByClass(functionRegistry, scriptFunction, FunctionNode, 'Array')
+    const nodeLength = ScriptHelper.createNodeByClass(functionRegistry, scriptFunction, ConstantNode, 10)
+    const nodeAttributeName = ScriptHelper.createNodeByClass(functionRegistry, scriptFunction, ConstantNode, "index")
+    const nodeGetValue = ScriptHelper.createNodeByClass(functionRegistry, scriptFunction, FunctionNode, 'GetValue')
 
     nodeArray.attach(nodeLength, 'length')
     nodeLoop.attach(nodeArray, 'array')
@@ -266,9 +267,9 @@ test('Create and compile class function (no return)', function () {
     script.addFunction(scriptFunction)
     const scriptComponent = new ScriptComponent()
 
-    const nodeLog = scriptFunction.createNode(functionRegistry, FunctionNode, 'Log')
-    const nodeInput1 = scriptFunction.createNode(functionRegistry, FunctionInputNode, `text[${TYPES.STRING}]`)
-    const nodeOnCall = scriptFunction.createNode(functionRegistry, EventNode, 'OnCall')
+    const nodeLog = ScriptHelper.createNodeByClass(functionRegistry, scriptFunction, FunctionNode, 'Log')
+    const nodeInput1 = ScriptHelper.createNodeByClass(functionRegistry, scriptFunction, FunctionInputNode, `text[${TYPES.STRING}]`)
+    const nodeOnCall = ScriptHelper.createNodeByClass(functionRegistry, scriptFunction, EventNode, 'OnCall')
     nodeLog.attach(nodeInput1, 'value')
     nodeLog.attach(nodeOnCall, null)
 
@@ -282,9 +283,9 @@ test('Create and compile class function (no return)', function () {
     expect(callEventCompiled.constructor).toEqual(OnCallEvent)
     expect(functionCompiled.constructor).toEqual(ACustomFunction)
 
-    const nodeLogFunction = mainScriptFunction.createNode(functionRegistry, FunctionNode, 'classScript.testFunction')
-    const nodeMouseClick = mainScriptFunction.createNode(functionRegistry, EventNode, 'OnMouseClick')
-    const nodeInputText = mainScriptFunction.createNode(functionRegistry, ConstantNode, 'testMessage')
+    const nodeLogFunction = ScriptHelper.createNodeByClass(functionRegistry, mainScriptFunction, FunctionNode, 'classScript.testFunction')
+    const nodeMouseClick = ScriptHelper.createNodeByClass(functionRegistry, mainScriptFunction, EventNode, 'OnMouseClick')
+    const nodeInputText = ScriptHelper.createNodeByClass(functionRegistry, mainScriptFunction, ConstantNode, 'testMessage')
     nodeLogFunction.attach(nodeMouseClick, null)
     nodeLogFunction.attach(nodeInputText, 'text')
 
@@ -312,11 +313,11 @@ test('Create and compile class function (return value)', function () {
     script.addFunction(scriptFunction)
     const scriptComponent = new ScriptComponent()
 
-    const nodeMultiply = scriptFunction.createNode(functionRegistry, FunctionNode, 'Multiply')
-    const nodeInput1 = scriptFunction.createNode(functionRegistry, FunctionInputNode, `numberA[${TYPES.NUMBER}]`)
-    const nodeInput2 = scriptFunction.createNode(functionRegistry, FunctionInputNode, `numberB[${TYPES.NUMBER}]`)
-    const nodeOutput = scriptFunction.createNode(functionRegistry, FunctionOutputNode, `${TYPES.NUMBER}`)
-    const nodeOnCall = scriptFunction.createNode(functionRegistry, EventNode, 'OnCall')
+    const nodeMultiply = ScriptHelper.createNodeByClass(functionRegistry, scriptFunction, FunctionNode, 'Multiply')
+    const nodeInput1 = ScriptHelper.createNodeByClass(functionRegistry, scriptFunction, FunctionInputNode, `numberA[${TYPES.NUMBER}]`)
+    const nodeInput2 = ScriptHelper.createNodeByClass(functionRegistry, scriptFunction, FunctionInputNode, `numberB[${TYPES.NUMBER}]`)
+    const nodeOutput = ScriptHelper.createNodeByClass(functionRegistry, scriptFunction, FunctionOutputNode, `${TYPES.NUMBER}`)
+    const nodeOnCall = ScriptHelper.createNodeByClass(functionRegistry, scriptFunction, EventNode, 'OnCall')
     nodeMultiply.attach(nodeInput1, 'value1')
     nodeMultiply.attach(nodeInput2, 'value2')
     nodeMultiply.attach(nodeOnCall, null)
@@ -332,11 +333,11 @@ test('Create and compile class function (return value)', function () {
     expect(callEventCompiled.constructor).toEqual(OnCallEvent)
     expect(functionCompiled.constructor).toEqual(ACustomFunction)
 
-    const nodeLogFunction = mainScriptFunction.createNode(functionRegistry, FunctionNode, 'Log')
-    const nodeMultiplyFunction = mainScriptFunction.createNode(functionRegistry, FunctionNode, 'classScript.testFunction')
-    const nodeMouseClick = mainScriptFunction.createNode(functionRegistry, EventNode, 'OnMouseClick')
-    const nodeInputValue1 = mainScriptFunction.createNode(functionRegistry, ConstantNode, '5')
-    const nodeInputValue2 = mainScriptFunction.createNode(functionRegistry, ConstantNode, '4')
+    const nodeLogFunction = ScriptHelper.createNodeByClass(functionRegistry, mainScriptFunction, FunctionNode, 'Log')
+    const nodeMultiplyFunction = ScriptHelper.createNodeByClass(functionRegistry, mainScriptFunction, FunctionNode, 'classScript.testFunction')
+    const nodeMouseClick = ScriptHelper.createNodeByClass(functionRegistry, mainScriptFunction, EventNode, 'OnMouseClick')
+    const nodeInputValue1 = ScriptHelper.createNodeByClass(functionRegistry, mainScriptFunction, ConstantNode, '5')
+    const nodeInputValue2 = ScriptHelper.createNodeByClass(functionRegistry, mainScriptFunction, ConstantNode, '4')
     nodeLogFunction.attach(nodeMouseClick, null)
     nodeLogFunction.attach(nodeMultiplyFunction, 'value')
     nodeMultiplyFunction.attach(nodeInputValue1, 'numberA')

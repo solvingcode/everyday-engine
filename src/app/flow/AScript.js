@@ -24,7 +24,7 @@ export default class AScript extends AScriptData {
     /**
      * @param {FunctionRegistry} functionRegistry
      */
-    delete(functionRegistry){
+    delete(functionRegistry) {
         this.getFunctions().forEach(func => func.delete(functionRegistry))
     }
 
@@ -36,16 +36,24 @@ export default class AScript extends AScriptData {
     }
 
     /**
+     * @param {string} functionName
      * @return {AScriptFunction}
      */
-    getSelected(){
+    getFunction(functionName) {
+        return this.functions.find(func => func.getName() === functionName)
+    }
+
+    /**
+     * @return {AScriptFunction}
+     */
+    getSelected() {
         return this.getFunctions().find(func => func.isSelected())
     }
 
     /**
      * @return {AScriptFunction}
      */
-    getMainFunction(){
+    getMainFunction() {
         return this.getFunctions().find(func => func.isMain())
     }
 

@@ -33,6 +33,10 @@ import UIHelper from './UIHelper.js'
 import AddScriptFunctionPopupButtonMenuItem
     from '../layout/items/popup/script/AddScriptFunctionPopupButtonMenuItem.js'
 import AddScriptNodePopupButtonMenuItem from '../layout/items/popup/script/AddScriptNodePopupButtonMenuItem.js'
+import CompileScriptMenuItem from '../layout/items/assets/file/CompileScriptMenuItem.js'
+import DeleteSelectedNodeMenuItem from '../layout/items/script/node/delete/DeleteSelectedNodeMenuItem.js'
+import CopySelectedNodeMenuItem from '../layout/items/script/node/edit/CopySelectedNodeMenuItem.js'
+import PasteScriptMenuItem from '../layout/items/script/edit/PasteScriptMenuItem.js'
 
 export default class OptionHelper {
 
@@ -93,8 +97,12 @@ export default class OptionHelper {
             options.push(...[
                 new OptionActionsTitleMenuItem('Script'),
                 new AddScriptFunctionPopupButtonMenuItem(),
+                new CompileScriptMenuItem(),
+                new PasteScriptMenuItem(),
+                new OptionActionsTitleMenuItem('Node'),
                 new AddScriptNodePopupButtonMenuItem(),
-                new CompileAssetScriptMenuItem(),
+                new DeleteSelectedNodeMenuItem(),
+                new CopySelectedNodeMenuItem(),
             ])
         }
         return options

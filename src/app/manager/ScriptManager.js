@@ -15,6 +15,14 @@ export default class ScriptManager extends ScriptManagerData {
     }
 
     /**
+     * @param {Asset} asset
+     * @return {AScript}
+     */
+    findByAsset(asset){
+        return this.getScripts().find(script => script.getAssetId() === asset.getId())
+    }
+
+    /**
      * @param {string} name
      * @param {Function} type
      * @return {AScript}

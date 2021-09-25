@@ -31,6 +31,8 @@ import FunctionInputNode from '../flow/node/FunctionInputNode.js'
 import FunctionOutputNode from '../flow/node/FunctionOutputNode.js'
 import SceneVariableNode from '../flow/node/variable/SceneVariableNode.js'
 import UnitVariableNode from '../flow/node/variable/UnitVariableNode.js'
+import NodeScriptXmlParser from '../parser/flow/class/node/NodeScriptXmlParser.js'
+import Maths from './Maths.js'
 
 export default class ScriptHelper {
 
@@ -42,55 +44,123 @@ export default class ScriptHelper {
      * @return {ANode}
      */
     static createNode(functionRegistry, script, nodeType, nodeValue = '') {
+        const node = this.newNode(functionRegistry, nodeType, nodeValue)
+        script.addNode(node)
+        return node
+    }
+
+    /**
+     * @param {FunctionRegistry} registry
+     * @param {AScriptFunction} script
+     * @param {ANode} nodeClass
+     * @param {string|number|boolean} value
+     * @return {ANode}
+     */
+    static createNodeByClass(registry, script, nodeClass, value) {
+        const node = this.getNodeInstance(registry, nodeClass, value)
+        script.addNode(node)
+        return node
+    }
+
+    /**
+     * @param {FunctionRegistry} functionRegistry
+     * @param {string} nodeType
+     * @param {string} nodeValue
+     * @return {ANode}
+     */
+    static newNode(functionRegistry, nodeType, nodeValue = '') {
         let node
         if (nodeType === NODE_TYPES.EVENT) {
-            node = script.createNode(functionRegistry, EventNode, nodeValue)
+            node = this.getNodeInstance(functionRegistry, EventNode, nodeValue)
         } else if (nodeType === NODE_TYPES.FUNCTION) {
-            node = script.createNode(functionRegistry, FunctionNode, nodeValue)
+            node = this.getNodeInstance(functionRegistry, FunctionNode, nodeValue)
         } else if (nodeType === NODE_TYPES.CONSTANT) {
-            node = script.createNode(functionRegistry, ConstantNode, nodeValue)
+            node = this.getNodeInstance(functionRegistry, ConstantNode, nodeValue)
         } else if (nodeType === NODE_TYPES.KEY_CODE) {
-            node = script.createNode(functionRegistry, KeyCodeNode, nodeValue)
+            node = this.getNodeInstance(functionRegistry, KeyCodeNode, nodeValue)
         } else if (nodeType === NODE_TYPES.CONDITION) {
-            node = script.createNode(functionRegistry, ConditionNode, nodeValue)
+            node = this.getNodeInstance(functionRegistry, ConditionNode, nodeValue)
         } else if (nodeType === NODE_TYPES.LOOP) {
-            node = script.createNode(functionRegistry, LoopNode, nodeValue)
+            node = this.getNodeInstance(functionRegistry, LoopNode, nodeValue)
         } else if (nodeType === NODE_TYPES.UNIT) {
-            node = script.createNode(functionRegistry, UnitNode, nodeValue)
+            node = this.getNodeInstance(functionRegistry, UnitNode, nodeValue)
         } else if (nodeType === NODE_TYPES.SELF) {
-            node = script.createNode(functionRegistry, SelfNode, nodeValue)
+            node = this.getNodeInstance(functionRegistry, SelfNode, nodeValue)
         } else if (nodeType === NODE_TYPES.ANIMATION) {
-            node = script.createNode(functionRegistry, AnimationNode, nodeValue)
+            node = this.getNodeInstance(functionRegistry, AnimationNode, nodeValue)
         } else if (nodeType === NODE_TYPES.INPUT) {
-            node = script.createNode(functionRegistry, FunctionInputNode, nodeValue)
+            node = this.getNodeInstance(functionRegistry, FunctionInputNode, nodeValue)
         } else if (nodeType === NODE_TYPES.OUTPUT) {
-            node = script.createNode(functionRegistry, FunctionOutputNode, nodeValue)
+            node = this.getNodeInstance(functionRegistry, FunctionOutputNode, nodeValue)
         } else if (nodeType === NODE_TYPES.REFERENCE) {
-            node = script.createNode(functionRegistry, ReferenceNode, nodeValue)
+            node = this.getNodeInstance(functionRegistry, ReferenceNode, nodeValue)
         } else if (nodeType === NODE_TYPES.VAR_STRING) {
-            node = script.createNode(functionRegistry, StringVariableNode, nodeValue)
+            node = this.getNodeInstance(functionRegistry, StringVariableNode, nodeValue)
         } else if (nodeType === NODE_TYPES.VAR_UNIT) {
-            node = script.createNode(functionRegistry, UnitVariableNode, nodeValue)
+            node = this.getNodeInstance(functionRegistry, UnitVariableNode, nodeValue)
         } else if (nodeType === NODE_TYPES.VAR_NUMBER) {
-            node = script.createNode(functionRegistry, NumberVariableNode, nodeValue)
+            node = this.getNodeInstance(functionRegistry, NumberVariableNode, nodeValue)
         } else if (nodeType === NODE_TYPES.VAR_COMPONENT) {
-            node = script.createNode(functionRegistry, ComponentVariableNode, nodeValue)
+            node = this.getNodeInstance(functionRegistry, ComponentVariableNode, nodeValue)
         } else if (nodeType === NODE_TYPES.VAR_MASK_GROUP) {
-            node = script.createNode(functionRegistry, MaskGroupVariableNode, nodeValue)
+            node = this.getNodeInstance(functionRegistry, MaskGroupVariableNode, nodeValue)
         } else if (nodeType === NODE_TYPES.VAR_BOOLEAN) {
-            node = script.createNode(functionRegistry, BooleanVariableNode, nodeValue)
+            node = this.getNodeInstance(functionRegistry, BooleanVariableNode, nodeValue)
         } else if (nodeType === NODE_TYPES.VAR_AUDIO) {
-            node = script.createNode(functionRegistry, AudioVariableNode, nodeValue)
+            node = this.getNodeInstance(functionRegistry, AudioVariableNode, nodeValue)
         } else if (nodeType === NODE_TYPES.VAR_SCENE) {
-            node = script.createNode(functionRegistry, SceneVariableNode, nodeValue)
+            node = this.getNodeInstance(functionRegistry, SceneVariableNode, nodeValue)
         } else if (nodeType === NODE_TYPES.VAR_TOGGLE) {
-            node = script.createNode(functionRegistry, ToggleVariableNode, nodeValue)
+            node = this.getNodeInstance(functionRegistry, ToggleVariableNode, nodeValue)
         } else if (nodeType === NODE_TYPES.COMPONENT) {
-            node = script.createNode(functionRegistry, ComponentNode, nodeValue)
+            node = this.getNodeInstance(functionRegistry, ComponentNode, nodeValue)
         } else {
             throw new ClientError(`Script: Node with type "${nodeType}" not supported!`)
         }
         return node
+    }
+
+    /**
+     * @param {FunctionRegistry} registry
+     * @param {ANode} nodeClass
+     * @param {string|number|boolean} value
+     * @return {ANode}
+     */
+    static getNodeInstance(registry, nodeClass, value) {
+        let sourceName
+        switch (nodeClass) {
+            case FunctionNode:
+            case ConditionNode:
+            case EventNode:
+                sourceName = registry.tryGetInstance(value).getName()
+                break
+            case ConstantNode:
+            case KeyCodeNode:
+            case UnitNode:
+            case AnimationNode:
+            case FunctionInputNode:
+            case FunctionOutputNode:
+            case ReferenceNode:
+            case LoopNode:
+            case StringVariableNode:
+            case UnitVariableNode:
+            case ToggleVariableNode:
+            case BooleanVariableNode:
+            case AudioVariableNode:
+            case SceneVariableNode:
+            case NumberVariableNode:
+            case ComponentVariableNode:
+            case MaskGroupVariableNode:
+            case ComponentNode:
+                sourceName = value
+                break
+            case SelfNode:
+                sourceName = 'Self'
+                break
+            default:
+                throw new ClientError(`Script Create Node: "${nodeClass.name}" not supported`)
+        }
+        return new nodeClass(sourceName)
     }
 
     /**
@@ -234,7 +304,7 @@ export default class ScriptHelper {
         const nodeIndex = scriptFunction.getNodes().findIndex(pNode => pNode === node)
         const sourceNode = NodeHelper.getSourceNode(node, world)
         const isAddIndex = !sourceNode.isUnique()
-        return `${script.getName()}.${scriptFunction.getName()}.${node.getSourceName()}${isAddIndex ? `.${nodeIndex}`: ''}`
+        return `${script.getName()}.${scriptFunction.getName()}.${node.getSourceName()}${isAddIndex ? `.${nodeIndex}` : ''}`
     }
 
     /**
@@ -242,7 +312,7 @@ export default class ScriptHelper {
      * @param {string} name
      * @return {string}
      */
-    static getValueFromFunctionName(className, name){
+    static getValueFromFunctionName(className, name) {
         const classRegex = new RegExp(`^${className}\.`)
         const nameFunction = name.replace(classRegex, '')
         return nameFunction.replace(/^(.+)\.[0-9]+$/, '$1')
@@ -269,8 +339,12 @@ export default class ScriptHelper {
      * @param {string} functionName
      */
     static createFunction(script, functionName) {
-        const scriptFunction = new FunctionScript(functionName)
-        script.addFunction(scriptFunction)
+        if (!script.getFunction(functionName)) {
+            const scriptFunction = new FunctionScript(functionName)
+            script.addFunction(scriptFunction)
+        }else{
+            throw new ClientError(`Function "${functionName}" already exists`)
+        }
     }
 
     /**
@@ -292,5 +366,71 @@ export default class ScriptHelper {
             }
         }
         return false
+    }
+
+    /**
+     * @param {AScriptFunction} functionScript
+     * @param {Element|ChildNode} cXmlNode
+     */
+    static attachNodeXml(functionScript, cXmlNode) {
+        const nodeSourceId = parseInt(cXmlNode.getAttribute('source'))
+        const nodeTargetId = parseInt(cXmlNode.getAttribute('target'))
+        const nodeConnection = cXmlNode.getAttribute('connection')
+        const nodeSource = functionScript.findNodeById(nodeSourceId)
+        const nodeTarget = functionScript.findNodeById(nodeTargetId)
+        if (!nodeSource) {
+            throw new ClientError(`ClassScriptXmlParser Error: Node ${nodeSourceId} not found`)
+        }
+        if (!nodeTarget) {
+            throw new ClientError(`ClassScriptXmlParser Error: Node ${nodeTargetId} not found`)
+        }
+        nodeTarget.attach(nodeSource, nodeConnection)
+    }
+
+    /**
+     * @param {ChildNode|Element} cXmlNode
+     * @param {AScriptFunction} functionScript
+     */
+    static addXmlNode(cXmlNode, functionScript) {
+        const element = cXmlNode.nodeName
+        if (element === 'node') {
+            const node = NodeScriptXmlParser.parse(cXmlNode)
+            const nodeId = parseInt(cXmlNode.getAttribute('id'))
+            functionScript.addNode(node)
+            functionScript.updateNodeId(node, nodeId)
+        } else if (element === 'edge') {
+            this.attachNodeXml(functionScript, cXmlNode)
+        }
+    }
+
+    /**
+     * @param {(ChildNode|Element)[]} xmlNodes
+     * @return {(ChildNode|Element)[]}
+     */
+    static regenerateXmlNodeIds(xmlNodes){
+        const oldIds = []
+        const newIds = []
+        xmlNodes.forEach(xmlNode => {
+            const element = xmlNode.nodeName
+            if (element === 'node') {
+                const nodeId = parseInt(xmlNode.getAttribute('id'))
+                oldIds.push(nodeId)
+                const newNodeId = Maths.generateId()
+                xmlNode.setAttribute('id', `${newNodeId}`)
+                newIds.push(newNodeId)
+            }
+        })
+        xmlNodes.forEach(xmlNode => {
+            const element = xmlNode.nodeName
+            if (element === 'edge') {
+                const nodeSourceId = parseInt(xmlNode.getAttribute('source'))
+                const nodeTargetId = parseInt(xmlNode.getAttribute('target'))
+                const indexOldSourceId = oldIds.findIndex(id => id === nodeSourceId)
+                const indexOldTargetId = oldIds.findIndex(id => id === nodeTargetId)
+                xmlNode.setAttribute('source', newIds[indexOldSourceId])
+                xmlNode.setAttribute('target', newIds[indexOldTargetId])
+            }
+        })
+        return xmlNodes
     }
 }

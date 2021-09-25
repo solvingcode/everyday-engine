@@ -1,31 +1,9 @@
-import FunctionNode from './node/FunctionNode.js'
-import ConstantNode from './node/ConstantNode.js'
-import EventNode from './node/EventNode.js'
-import ConditionNode from './node/ConditionNode.js'
-import UnitNode from './node/UnitNode.js'
 import ClientError from '../exception/type/ClientError.js'
-import KeyCodeNode from './node/KeyCodeNode.js'
 import Camera from '../core/Camera.js'
 import Vector from '../utils/Vector.js'
 import {SCENE_HEIGHT, SCENE_WIDTH} from '../core/Constant.js'
-import StringVariableNode from './node/variable/StringVariableNode.js'
-import AnimationNode from './node/AnimationNode.js'
-import ComponentNode from './node/ComponentNode.js'
-import ReferenceNode from './node/ReferenceNode.js'
-import SelfNode from './node/SelfNode.js'
-import ToggleVariableNode from './node/variable/ToggleVariableNode.js'
-import BooleanVariableNode from './node/variable/BooleanVariableNode.js'
-import NumberVariableNode from './node/variable/NumberVariableNode.js'
-import ComponentVariableNode from './node/variable/ComponentVariableNode.js'
-import MaskGroupVariableNode from './node/variable/MaskGroupVariableNode.js'
-import LoopNode from './node/LoopNode.js'
-import AudioVariableNode from './node/variable/AudioVariableNode.js'
 import AScriptFunctionData from '../project/data/AScriptFunctionData.js'
-import FunctionInputNode from './node/FunctionInputNode.js'
-import FunctionOutputNode from './node/FunctionOutputNode.js'
 import {ACCESSOR} from './function/AFunction.js'
-import SceneVariableNode from './node/variable/SceneVariableNode.js'
-import UnitVariableNode from './node/variable/UnitVariableNode.js'
 
 /**
  * @abstract
@@ -44,51 +22,6 @@ export default class AScriptFunction extends AScriptFunctionData {
         super(name)
         this.camera = new Camera(new Vector({x: -SCENE_WIDTH / 2, y: -SCENE_HEIGHT / 2}))
         this.updated = false
-    }
-
-    /**
-     * @param {FunctionRegistry} registry
-     * @param {ANode} nodeClass
-     * @param {string|number|boolean} value
-     * @return {ANode}
-     */
-    createNode(registry, nodeClass, value) {
-        let sourceName
-        switch (nodeClass) {
-            case FunctionNode:
-            case ConditionNode:
-            case EventNode:
-                sourceName = registry.tryGetInstance(value).getName()
-                break
-            case ConstantNode:
-            case KeyCodeNode:
-            case UnitNode:
-            case AnimationNode:
-            case FunctionInputNode:
-            case FunctionOutputNode:
-            case ReferenceNode:
-            case LoopNode:
-            case StringVariableNode:
-            case UnitVariableNode:
-            case ToggleVariableNode:
-            case BooleanVariableNode:
-            case AudioVariableNode:
-            case SceneVariableNode:
-            case NumberVariableNode:
-            case ComponentVariableNode:
-            case MaskGroupVariableNode:
-            case ComponentNode:
-                sourceName = value
-                break
-            case SelfNode:
-                sourceName = 'Self'
-                break
-            default:
-                throw new ClientError(`Script Create Node: "${nodeClass.name}" not supported`)
-        }
-        const node = new nodeClass(sourceName)
-        this.addNode(node)
-        return node
     }
 
     /**

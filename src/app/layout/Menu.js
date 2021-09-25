@@ -14,7 +14,6 @@ import ContentMenuItem from './items/content/ContentMenuItem.js'
 import AssetMenuItem from './items/assets/AssetMenuItem.js'
 import ScriptMenuItem from './items/script/ScriptMenuItem.js'
 import ErrorPopupMenuItem from './items/alert/error/ErrorPopupMenuItem.js'
-import DeleteSelectedNodeMenuItem from './items/script/node/delete/DeleteSelectedNodeMenuItem.js'
 import LayerMenuItem from './items/layer/LayerMenuItem.js'
 import SceneMenuItem from './items/scene/SceneMenuItem.js'
 import OptionsPopupMenuItem from './items/option/OptionsPopupMenuItem.js'
@@ -42,7 +41,6 @@ class Menu {
             new MoveMenuItem(),
             new ScaleMenuItem(),
             new RotateMenuItem(),
-            new DeleteSelectedNodeMenuItem(),
 
             //TOP MENU
             new TopMenuItem(),

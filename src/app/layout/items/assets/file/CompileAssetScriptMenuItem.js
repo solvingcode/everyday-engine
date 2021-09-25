@@ -7,7 +7,7 @@ export default class CompileAssetScriptMenuItem extends MenuItem {
     constructor(parent) {
         super({
             name: 'code',
-            title: 'Compile',
+            title: 'Compile asset',
             stateCode: 'ACTION_COMPILE_ASSET_SCRIPT',
             type: Layout.type.ICON_TEXT,
             zone: parent ? parent.zone : Layout.zone.WINDOW

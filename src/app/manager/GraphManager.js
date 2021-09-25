@@ -48,6 +48,21 @@ export default class GraphManager {
     }
 
     /**
+     * @param {Component[]} componentClasses
+     * @return {Unit[]}
+     */
+    getUnitsHasComponents(componentClasses) {
+        return this.getUnits().filter(unit => unit.hasComponents(componentClasses))
+    }
+
+    /**
+     * @param {Unit[]} units
+     */
+    deleteUnits(units) {
+        units.forEach(unit => this.deleteUnit(unit))
+    }
+
+    /**
      * @param {AScriptFunction} script
      * @param {MeshRenderer} renderer
      */
@@ -217,6 +232,14 @@ export default class GraphManager {
     }
 
     /**
+     * @param {Vector} position
+     * @return {Unit[]}
+     */
+    findUnitsByPosition(position) {
+        return ScriptGraphSelector.get().getAll(World.get(), position)
+    }
+
+    /**
      * @param {AScriptFunction} script
      * @param {Mouse} mouse
      * @return {Unit[]}
@@ -238,8 +261,11 @@ export default class GraphManager {
     selectUnits(script, dragArea) {
         const unitSelector = ScriptGraphSelector.get()
         const world = World.get()
+        world.getGraphManager().getSelected().forEach(unit => unit.getComponent(MeshComponent).setGenerated(false))
         unitSelector.unselectAll(world)
-        return unitSelector.select(world, script.getCamera().fromCanvasCoord(dragArea.position), dragArea.size)
+        const units = unitSelector.select(world, script.getCamera().fromCanvasCoord(dragArea.position), dragArea.size)
+        units.forEach(unit => unit.getComponent(MeshComponent).setGenerated(false))
+        return units
     }
 
     /**

@@ -15,6 +15,7 @@ import Maths from '../utils/Maths.js'
 import AssetAudio from '../asset/types/Audio/AssetAudio.js'
 import AssetFont from '../asset/types/font/AssetFont.js'
 import AssetGradientColorXml from '../asset/types/color/AssetGradientColorXml.js'
+import AssetHelper from '../utils/AssetHelper.js'
 
 /**
  * @class {AssetsManager}
@@ -78,33 +79,39 @@ export default class AssetsManager extends AssetsManagerData {
     /**
      * @param {Folder} folder
      * @param {Class<AssetScript>} type
-     * @param {AssetScriptGenerator} generator
+     * @param {ScriptXmlGenerator} generator
+     * @return {Asset}
      */
     async createClassScript(folder, type, generator) {
         const assetName = this.generateUniqAssetName('NewScript', folder.getId())
         const flow = new ClassScript(assetName)
-        return this.createAsset(
+        const asset = this.createAsset(
             generator.generate(flow),
             type,
             assetName,
             folder.getId()
         )
+        flow.setAssetId(asset.getId())
+        return asset
     }
 
     /**
      * @param {Folder} folder
      * @param {Class<AssetScript>} type
      * @param {AssetAnimationScriptGenerator} generator
+     * @return {Asset}
      */
     async createAnimationScript(folder, type, generator) {
         const assetName = this.generateUniqAssetName('NewAnimationScript', folder.getId())
         const flow = new AnimationScript(assetName)
-        return this.createAsset(
+        const asset = this.createAsset(
             generator.generate(flow),
             type,
             assetName,
             folder.getId()
         )
+        flow.setAssetId(asset.getId())
+        return asset
     }
 
     /**
@@ -433,6 +440,52 @@ export default class AssetsManager extends AssetsManagerData {
             return rootFolder
         }
         return rootFolderExist
+    }
+
+    /**
+     * @param {AScript} script
+     */
+    findAssetByScript(script){
+        return this.findAssetById(script.getAssetId())
+    }
+
+    /**
+     * @param {Asset[]} assets
+     * @param {World} world
+     */
+    compileScriptAssets(assets, world){
+        const unitManager = world.getUnitManager()
+        assets.forEach(asset => {
+            if (asset.getType() instanceof AssetScript) {
+                const script = world.getScriptManager().findByAsset(asset)
+                if (script) {
+                    script.compile(world)
+                    const unitsAttached = unitManager.findUnitsAttachedToScript(script)
+                    unitsAttached.forEach(unit => {
+
+                        const oldScriptComponent = unitManager.findComponentAttachedToScript(unit, script)
+                        const oldAttributes = oldScriptComponent.getAttributes()
+                        unit.deleteComponent(oldScriptComponent.getId())
+
+                        AssetHelper.attachAssetScriptToUnit(unit, asset)
+                        const newScriptComponent = unitManager.findComponentAttachedToScript(unit, script)
+                        newScriptComponent.getAttributes().forEach(attribute => {
+                            const oldAttribute = oldAttributes
+                                .find(pOldAttribute =>
+                                    pOldAttribute.getAttrName() === attribute.getAttrName() &&
+                                    pOldAttribute.getAttrType() === attribute.getAttrType()
+                                )
+                            if(oldAttribute){
+                                attribute.setAttrValue(oldAttribute.getAttrValue())
+                            }
+                        })
+
+                    })
+                } else {
+                    throw new ClientError(`Compile script asset: Asset "${asset.getName()}" is not parsed`)
+                }
+            }
+        })
     }
 
     /**

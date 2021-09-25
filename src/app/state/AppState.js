@@ -293,6 +293,9 @@ AppState.States = {
     ACTION_COMPILE_ASSET_SCRIPT_STOP: {history: false},
     ACTION_COMPILE_ASSET_SCRIPT_START: {history: false},
     ACTION_COMPILE_ASSET_SCRIPT_PROGRESS: {history: false},
+    ACTION_COMPILE_SCRIPT_STOP: {history: false},
+    ACTION_COMPILE_SCRIPT_START: {history: false},
+    ACTION_COMPILE_SCRIPT_PROGRESS: {history: false},
     ACTION_ATTACH_ASSET_SCRIPT_STOP: {history: false},
     ACTION_ATTACH_ASSET_SCRIPT_START: {history: false},
     ACTION_ATTACH_ASSET_SCRIPT_PROGRESS: {history: false},
@@ -503,6 +506,15 @@ AppState.States = {
     ACTION_CONTENT_POPUP_START: {history: false},
     ACTION_CONTENT_POPUP_PROGRESS: {history: false},
     ACTION_CONTENT_POPUP_STOP: {history: false},
+    ACTION_CLOSE_CONTENT_POPUP_START: {history: false},
+    ACTION_CLOSE_CONTENT_POPUP_PROGRESS: {history: false},
+    ACTION_CLOSE_CONTENT_POPUP_STOP: {history: false},
+    ACTION_COPY_SELECTED_NODE_START: {history: false},
+    ACTION_COPY_SELECTED_NODE_PROGRESS: {history: false},
+    ACTION_COPY_SELECTED_NODE_STOP: {history: false},
+    ACTION_PASTE_SCRIPT_START: {history: false},
+    ACTION_PASTE_SCRIPT_PROGRESS: {history: false},
+    ACTION_PASTE_SCRIPT_STOP: {history: false},
 }
 
 export default AppState

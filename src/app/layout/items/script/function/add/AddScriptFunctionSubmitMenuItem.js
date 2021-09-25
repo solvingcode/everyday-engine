@@ -11,6 +11,7 @@ export default class AddScriptFunctionSubmitMenuItem extends MenuItem {
             name: 'check',
             title: 'Confirm',
             stateCode: 'ACTION_ADD_SCRIPT_FUNCTION',
+            postStateCode: 'ACTION_CLOSE_CONTENT_POPUP',
             type: Layout.type.ICON_TEXT,
             zone: parent.zone
         })

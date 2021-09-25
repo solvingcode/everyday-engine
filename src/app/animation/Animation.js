@@ -49,6 +49,11 @@ export default class Animation {
     lengthSecond
 
     /**
+     * @type {number}
+     */
+    assetId
+
+    /**
      * @param {number} id
      * @param {string} name
      */
@@ -288,6 +293,20 @@ export default class Animation {
      */
     getLengthSecond() {
         return this.lengthSecond
+    }
+
+    /**
+     * @param {number} assetId
+     */
+    setAssetId(assetId){
+        this.assetId = assetId
+    }
+
+    /**
+     * @return {number}
+     */
+    getAssetId(){
+        return this.assetId
     }
 
     /**

@@ -45,6 +45,13 @@ export default class Unit extends UnitData{
         return this.getComponent(GUIPropertyComponent).isLocked()
     }
 
+    /**
+     * @return {boolean}
+     */
+    isFocused(){
+        return this.getComponent(GUIPropertyComponent).isFocused()
+    }
+
     select(){
         this.getComponent(GUIPropertyComponent).setSelected(true)
     }

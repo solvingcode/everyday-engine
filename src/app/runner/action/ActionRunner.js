@@ -93,6 +93,10 @@ import AttachEditorAction from './assets/AttachEditorAction.js'
 import AttachComponentValueAction from './unit/AttachComponentValueAction.js'
 import EditAssetAction from './assets/EditAssetAction.js'
 import OpenPopupAction from './popup/OpenPopupAction.js'
+import CompileScriptAction from './script/CompileScriptAction.js'
+import ClosePopupAction from './popup/ClosePopupAction.js'
+import CopySelectedNodeAction from './script/CopySelectedNodeAction.js'
+import PasteScriptAction from './script/PasteScriptAction.js'
 
 /**
  * Action Runner class.
@@ -150,6 +154,7 @@ class ActionRunner extends Runner {
             ADD_FOLDER: AddFolderAction,
             ADD_ASSET_SCENE: AddAssetSceneAction,
             COMPILE_ASSET_SCRIPT: CompileAssetScriptAction,
+            COMPILE_SCRIPT: CompileScriptAction,
             EDIT_ASSET_SCRIPT_XML: EditAssetScriptXmlAction,
             EDIT_ASSET: EditAssetAction,
             NEW_PROJECT: NewProjectAction,
@@ -171,6 +176,8 @@ class ActionRunner extends Runner {
             ADD_CODE_SCRIPT: AddScriptCodeAction,
             DELETE_SCRIPT_NODE: DeleteNodeAction,
             DELETE_SELECTED_NODE: DeleteSelectedNodeAction,
+            COPY_SELECTED_NODE: CopySelectedNodeAction,
+            PASTE_SCRIPT: PasteScriptAction,
             DELETE_SCRIPT_EDGE: DeleteEdgeAction,
             ADD_SCRIPT_NODE: AddNodeAction,
             ADD_SCRIPT_FUNCTION: AddFunctionAction,
@@ -211,18 +218,24 @@ class ActionRunner extends Runner {
             ATTACH_ASSET: AttachAssetAction,
             ATTACH_EDITOR: AttachEditorAction,
             ATTACH_COMPONENT_VALUE: AttachComponentValueAction,
+            CLOSE_CONTENT_POPUP: ClosePopupAction
         }
         const selectedUnits = this.unitSelector.getSelected(World.get())
-        for(const iTypeAction in typeActions){
+        for (const iTypeAction in typeActions) {
             const typeAction = typeActions[iTypeAction]
             const type = `ACTION_${iTypeAction}`
             const action = typeAction
             if (action.shouldStart(type, stateManager)) {
                 stateManager.progressNextState(type)
-            }else if (action.shouldStop(type, stateManager)) {
+            } else if (action.shouldStop(type, stateManager)) {
                 this.stopState(action, mouse, selectedUnits) && stateManager.endNextState(type)
-            }else if (action.shouldProgress(type, stateManager)) {
-                this.runAction(action, mouse, selectedUnits) && stateManager.stopNextState(type)
+            } else if (action.shouldProgress(type, stateManager)) {
+                try {
+                    this.runAction(action, mouse, selectedUnits) && stateManager.stopNextState(type)
+                } catch (e) {
+                    stateManager.stopNextState(type)
+                    throw e
+                }
             }
         }
     }

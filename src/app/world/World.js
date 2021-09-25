@@ -101,6 +101,7 @@ class World extends WorldData {
         this.getGraphManager().reset()
         this.getAssetsManager().getParsedAssets().forEach(asset => {
             const result = asset.getType().parse()
+            result.setAssetId(asset.getId())
             asset.getType().validate(result, this)
         })
         this.initialized = true
