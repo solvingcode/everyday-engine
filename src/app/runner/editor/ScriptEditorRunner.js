@@ -9,6 +9,7 @@ import ScriptHelper from '../../utils/ScriptHelper.js'
 import Window from '../../core/Window.js'
 import FunctionScript from '../../flow/FunctionScript.js'
 import {MAIN_FUNCTION} from '../../flow/AScriptFunction.js'
+import ContentCanvasMenuItem from '../../layout/items/content/ContentCanvasMenuItem.js'
 
 export default class ScriptEditorRunner extends Runner {
 
@@ -182,7 +183,8 @@ export default class ScriptEditorRunner extends Runner {
      */
     isPositionValid(mouse) {
         const menu = Menu.get()
-        return !menu.getUIRenderer().getItemAt(mouse)
+        const menuItem = menu.getUIRenderer().getItemAt(mouse)
+        return !menuItem || (menuItem && menuItem.element instanceof ContentCanvasMenuItem)
     }
 
     /**

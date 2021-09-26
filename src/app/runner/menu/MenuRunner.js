@@ -95,10 +95,7 @@ class MenuRunner extends Runner {
         const mouse = window.mouse
         const stateManager = StateManager.get()
         if (mouse.isButtonPressed(MouseButton.RIGHT)) {
-            let object = this.processObject(UIHelper.findUIObjectByMousePosition(mouse, this.menu))
-            if (object === UIHelper.UI.CANVAS) {
-                object = UIHelper.findSceneObject(mouse, this.menu)
-            }
+            const object = this.processObject(UIHelper.findUIObjectByMousePosition(mouse, this.menu))
             if (object) {
                 stateManager.startState(OpenOptionAction.STATE, 1,
                     {optionActionsMenuItem: OptionsMenuItem, object, absolute: true})

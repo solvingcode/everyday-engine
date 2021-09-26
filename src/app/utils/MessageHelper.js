@@ -13,6 +13,8 @@ export default class MessageHelper {
                 return 'Do you want to remove selected folders ?'
             case AppState.States.CONFIRM_ACTION_DELETE_ASSET_START:
                 return 'Do you want to remove selected assets ?'
+            case AppState.States.CONFIRM_ACTION_DELETE_SCRIPT_NODE_START:
+                return 'Do you want to remove selected nodes ?'
             default:
                 return 'Do you want to remove selected elements ?'
         }

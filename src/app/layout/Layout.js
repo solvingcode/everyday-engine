@@ -13,7 +13,8 @@ Layout.zone = {
     RIGHT: 'right',
     BOTTOM: 'bottom',
     FOOTER: 'footer',
-    WINDOW: 'window'
+    WINDOW: 'window',
+    CANVAS: 'canvas'
 }
 
 Layout.type = {

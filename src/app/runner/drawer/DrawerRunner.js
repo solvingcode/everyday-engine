@@ -11,6 +11,7 @@ import SystemError from '../../exception/type/SystemError.js'
 import GeometryHelper from '../../utils/GeometryHelper.js'
 import Window from '../../core/Window.js'
 import TransformHelper from '../../utils/TransformHelper.js'
+import ContentCanvasMenuItem from '../../layout/items/content/ContentCanvasMenuItem.js'
 
 /**
  * @abstract
@@ -239,7 +240,8 @@ export default class DrawerRunner extends Runner {
      * @param {Menu} menu
      */
     isPositionValid(mouse, menu) {
-        return !menu.getUIRenderer().getItemAt(mouse)
+        const menuItem = menu.getUIRenderer().getItemAt(mouse)
+        return !menuItem || (menuItem && menuItem.element instanceof ContentCanvasMenuItem)
     }
 
     static get() {

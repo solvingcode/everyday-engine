@@ -99,6 +99,7 @@ import CopySelectedNodeAction from './script/CopySelectedNodeAction.js'
 import PasteScriptAction from './script/PasteScriptAction.js'
 import DeleteAction from './edit/DeleteAction.js'
 import CopyAction from './edit/CopyAction.js'
+import PasteAction from './edit/PasteAction.js'
 
 /**
  * Action Runner class.
@@ -129,6 +130,7 @@ class ActionRunner extends Runner {
         const typeActions = {
             DELETE: DeleteAction,
             COPY: CopyAction,
+            PASTE: PasteAction,
             DELETE_UNIT: DeleteUnitAction,
             DUPLICATE: DuplicateAction,
             UNDO: UndoAction,

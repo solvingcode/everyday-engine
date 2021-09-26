@@ -36,6 +36,8 @@ export class ShortcutRunner extends Runner {
             stateManager.startState('ACTION_DELETE', 1)
         } else if (keyboard.isKeyPressed(KeyCode.CTRL) && keyboard.isKeyReleased(KeyCode.C)) {
             stateManager.startState('ACTION_COPY', 1)
+        } else if (keyboard.isKeyPressed(KeyCode.CTRL) && keyboard.isKeyReleased(KeyCode.V)) {
+            stateManager.startState('ACTION_PASTE', 1)
         }
     }
 

@@ -635,6 +635,16 @@ h4{
     box-sizing: border-box;
 }
 
+#app-el-canvas{
+    position: absolute;
+    box-sizing: border-box;
+    z-index: 3;
+    top: 110px;
+    left: 0;
+    width: calc(100% - 300px);
+    height: calc(100% - 450px);
+}
+
 #app-el-window {
     z-index: 99999;
     top: 0;
@@ -675,6 +685,11 @@ h4{
 #app-el-window .error-popup p{
     padding: 20px;
     font-size: 16px;
+}
+
+#app-el-canvas .app-zone-wrapper, #app-el-canvas .content-canvas{
+    width: 100%;
+    height: 100%;
 }
 
 .app-zone-wrapper{

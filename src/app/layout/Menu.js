@@ -21,6 +21,7 @@ import TopMenuItem from './items/topmenu/TopMenuItem.js'
 import ConfirmPopupMenuItem from './items/alert/confirm/ConfirmPopupMenuItem.js'
 import StateManager from '../state/StateManager.js'
 import ContentPopupMenuItem from './items/content/ContentPopupMenuItem.js'
+import ContentCanvasMenuItem from './items/content/ContentCanvasMenuItem.js'
 
 /**
  * Define all menu items
@@ -54,6 +55,9 @@ class Menu {
 
             //Body
             new ContentMenuItem(),
+
+            //Canvas
+            new ContentCanvasMenuItem(),
 
             //RIGHT
             new LayerMenuItem(),
@@ -265,12 +269,11 @@ class Menu {
      * @return {MenuItemUI}
      */
     findSection(menuItemUI){
-        const parent = menuItemUI.parent
-        if(parent){
-            if(parent.element.isSection()){
-                return parent
+        if(menuItemUI){
+            if(menuItemUI.element.isSection()){
+                return menuItemUI
             }else{
-                return this.findSection(parent)
+                return this.findSection(menuItemUI.parent)
             }
         }
     }

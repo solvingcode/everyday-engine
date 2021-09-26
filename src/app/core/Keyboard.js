@@ -82,6 +82,7 @@ export const KeyCode = {
     G: 71,
     R: 82,
     C: 67,
+    V: 86,
     BACKSPACE: 8,
     DELETE: 46,
     CTRL: 17,
