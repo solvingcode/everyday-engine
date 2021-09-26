@@ -58,7 +58,7 @@ class Storage {
      */
     async load(type, data, target) {
         await this.updateAndValidate(type, data)
-        target.set(_.cloneDeep(this.data[type]))
+        target.set(_.cloneDeep(this.data[type]), type)
     }
 
     /**
@@ -97,18 +97,19 @@ class Storage {
      */
     export(key, format) {
         const serde = this.getSerDe(format)
-        return new serde().serialize(this.data[key])
+        return new serde().serialize(this.data[key], key)
     }
 
     /**
      * Import data from the given data and format
+     * @param {string} key
      * @param {string} data
      * @param {Storage.format} format
      * @return {Map<string, *>}
      */
-    import(data, format) {
+    import(key, data, format) {
         const serde = this.getSerDe(format)
-        return new serde().deserialize(data)
+        return new serde().deserialize(data, key)
     }
 
     /**
@@ -149,7 +150,7 @@ class Storage {
 
     /**
      * @param {Storage.format} format
-     * @return {Class}
+     * @return {SerDe}
      */
     getSerDe(format) {
         switch (format) {
@@ -167,7 +168,7 @@ class Storage {
 }
 
 Storage.type = {
-    ENTITY: 'entities',
+    UNITS: 'world.sceneManager.scenes.element.unitManager.units',
     WORLD: 'world'
 }
 

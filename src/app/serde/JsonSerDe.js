@@ -9,7 +9,7 @@ class JsonSerDe extends SerDe {
     /**
      * @override
      */
-    serialize(data) {
+    serialize(data, key) {
         if (_.isArray(data)) {
             throw new TypeError('Data to serialize must be an Object')
         }
@@ -19,7 +19,7 @@ class JsonSerDe extends SerDe {
     /**
      * @override
      */
-    deserialize(data) {
+    deserialize(data, key) {
         if (!_.isString(data)) {
             throw new TypeError('Data to deserialize must be a String')
         }

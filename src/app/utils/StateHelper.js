@@ -31,8 +31,8 @@ export default class StateHelper {
                     const script = world.getScriptManager().getFunctionSelected(world.getTabManager())
                     if (!script) {
                         stateCodes.delete = 'CONFIRM_ACTION_DELETE_UNIT'
-                        stateCodes.copy = 'CONFIRM_ACTION_COPY_UNIT'
-                        stateCodes.paste = 'CONFIRM_ACTION_PASTE_UNIT'
+                        stateCodes.copy = 'ACTION_COPY_UNIT'
+                        stateCodes.paste = 'ACTION_PASTE_UNIT'
                     }else{
                         stateCodes.delete = 'CONFIRM_ACTION_DELETE_SELECTED_NODE'
                         stateCodes.copy = 'ACTION_COPY_SELECTED_NODE'

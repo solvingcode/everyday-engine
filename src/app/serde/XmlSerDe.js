@@ -9,13 +9,10 @@ class XmlSerDe extends SerDe {
     /**
      * @override
      */
-    serialize(data) {
-        if (_.isArray(data)) {
-            throw new TypeError('Data to export must be an Object')
-        }
+    serialize(data, key) {
         const xmlSerializer = new XMLSerializer()
         const root = document.implementation.createDocument('', '', null)
-        const dataNode = this.exportData('project', data, root)
+        const dataNode = this.exportData(key, data, root)
         root.appendChild(dataNode)
         return xmlSerializer.serializeToString(root)
     }
@@ -23,13 +20,10 @@ class XmlSerDe extends SerDe {
     /**
      * @override
      */
-    deserialize(data) {
-        if (_.isArray(data)) {
-            throw new TypeError('Data to export must be an Object')
-        }
+    deserialize(data, key) {
         const parser = new DOMParser()
         const node = parser.parseFromString(data, 'application/xml')
-        return this.importData('project', node.documentElement)
+        return this.importData(key, node.documentElement)
     }
 
     /**

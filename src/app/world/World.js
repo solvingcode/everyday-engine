@@ -232,6 +232,14 @@ class World extends WorldData {
     }
 
     /**
+     * @param {Unit} instance
+     */
+    createUnitByInstance(instance){
+        const selectedUnit = this.getUnitManager().getSelected()
+        return this.getUnitManager().createUnitByInstance(instance, selectedUnit)
+    }
+
+    /**
      * @template T
      * @param {Class} T
      * @param {Unit} parentUnit

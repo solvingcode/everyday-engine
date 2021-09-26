@@ -10,19 +10,19 @@ class JsSerDe extends SerDe {
     /**
      * @override
      */
-    serialize(data) {
+    serialize(data, key) {
         if (_.isArray(data)) {
             throw new TypeError('Data to export must be an Object')
         }
         const schema = Schema.getMeta()
-        const result = this.exportData('world', data, schema)
-        return result.concat('var EngineWorldData = {world}').join('')
+        const result = this.exportData(key, data, schema)
+        return result.concat(`var EngineWorldData = {${key}}`).join('')
     }
 
     /**
      * @override
      */
-    deserialize(data) {
+    deserialize(data, key) {
         return null
     }
 

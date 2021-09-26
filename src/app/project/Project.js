@@ -3,6 +3,8 @@ import Storage from '../core/Storage.js'
 import FileHelper from '../utils/FileHelper.js'
 import JsProjectExporter from './exporter/JsProjectExporter.js'
 import ClientError from '../exception/type/ClientError.js'
+import ClipboardManager from '../manager/ClipboardManager.js'
+import DataGenerator from '../generator/data/DataGenerator.js'
 
 class Project {
 
@@ -25,13 +27,32 @@ class Project {
     }
 
     /**
+     * @param {string} type
+     * @param {*} data
+     */
+    async saveClipboard(type, data){
+        await this.storage.save(type, data)
+        const dataExport = this.storage.export(type, this.saveFormat)
+        ClipboardManager.get().setContent(dataExport)
+    }
+
+    /**
+     * @param {string} type
+     */
+    async loadClipboard(type){
+        const clipboard = ClipboardManager.get().getContent()
+        const dataImport = this.storage.import(type, clipboard, this.saveFormat)
+        dataImport && await this.storage.load(type, dataImport[type], DataGenerator)
+    }
+
+    /**
      * @param {Blob} file
      */
     async load(file) {
         const data = await FileHelper.load(file, this.saveFileType)
         if (data) {
-            const dataImport = this.storage.import(data, this.saveFormat)
-            dataImport && await this.storage.load(Storage.type.WORLD, dataImport.project, World.get())
+            const dataImport = this.storage.import(Storage.type.WORLD, data, this.saveFormat)
+            dataImport && await this.storage.load(Storage.type.WORLD, dataImport[Storage.type.WORLD], World.get())
         }
     }
 

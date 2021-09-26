@@ -279,6 +279,20 @@ export default class UnitManager extends UnitManagerData {
     }
 
     /**
+     * @template T
+     * @param {Unit} instance
+     * @param {Unit} parentUnit
+     * @return {Unit}
+     */
+    createUnitByInstance(instance, parentUnit) {
+        if (!(instance instanceof Unit)) {
+            throw new ClientError('Unit type must be child of Unit class')
+        }
+        this.addUnit(instance)
+        return instance
+    }
+
+    /**
      * @param {Unit} unit
      */
     addUnit(unit) {
