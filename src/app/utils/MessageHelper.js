@@ -7,8 +7,12 @@ export default class MessageHelper {
      */
     static getConfirmMessage(state) {
         switch (AppState.States[state]){
-            case AppState.States.CONFIRM_ACTION_DELETE_START:
-                return 'Do you want to remove selected Units ?'
+            case AppState.States.CONFIRM_ACTION_DELETE_UNIT_START:
+                return 'Do you want to remove selected units ?'
+            case AppState.States.CONFIRM_ACTION_DELETE_FOLDER_START:
+                return 'Do you want to remove selected folders ?'
+            case AppState.States.CONFIRM_ACTION_DELETE_ASSET_START:
+                return 'Do you want to remove selected assets ?'
             default:
                 return 'Do you want to remove selected elements ?'
         }

@@ -27,7 +27,7 @@ import AttachAssetImageMenuItem from '../layout/items/assets/file/AttachAssetIma
 import Folder from '../asset/Folder.js'
 import AddFolderMenuItem from '../layout/items/assets/folder/AddFolderMenuItem.js'
 import DeleteFolderMenuItem from '../layout/items/assets/folder/DeleteFolderMenuItem.js'
-import AssetsListFormMenuItem from '../layout/items/assets/file/AssetsListFormMenuItem.js'
+import AssetsListMenuItem from '../layout/items/assets/file/AssetsListMenuItem.js'
 import AddAssetMenuItem from '../layout/items/assets/file/AddAssetMenuItem.js'
 import UIHelper from './UIHelper.js'
 import AddScriptFunctionPopupButtonMenuItem
@@ -87,7 +87,7 @@ export default class OptionHelper {
                 new DeleteFolderMenuItem(),
             ])
         }
-        if(bindObject && bindObject.bind instanceof AssetsListFormMenuItem){
+        if(bindObject && bindObject.bind instanceof AssetsListMenuItem){
             options.push(...[
                 new AddFolderMenuItem(),
                 new AddAssetMenuItem(),

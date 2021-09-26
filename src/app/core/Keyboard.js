@@ -81,12 +81,13 @@ export const KeyCode = {
     M: 77,
     G: 71,
     R: 82,
+    C: 67,
     BACKSPACE: 8,
     DELETE: 46,
+    CTRL: 17,
 
     //Not ascii code
     SHIFT: 10001,
-    CTRL: 10002
 }
 
 export default Keyboard

@@ -33,7 +33,9 @@ export class ShortcutRunner extends Runner {
             stateManager.stopDrawStates()
             stateManager.startState('DRAW_ROTATE', 1, {unit: null})
         } else if (keyboard.isKeyReleased(KeyCode.DELETE)) {
-            stateManager.startState('CONFIRM_ACTION_DELETE', 1)
+            stateManager.startState('ACTION_DELETE', 1)
+        } else if (keyboard.isKeyPressed(KeyCode.CTRL) && keyboard.isKeyReleased(KeyCode.C)) {
+            stateManager.startState('ACTION_COPY', 1)
         }
     }
 

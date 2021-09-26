@@ -44,6 +44,7 @@ class MenuItem {
         this.startDragging = false
         this.endDragging = false
         this.parent = parent
+        this.sectionActive = false
         this.items = []
     }
 
@@ -67,6 +68,20 @@ class MenuItem {
      */
     isSelected() {
         return this.stateCode && this.hasState(this.stateCode, this.id)
+    }
+
+    /**
+     * @return {boolean}
+     */
+    isSectionActive(){
+        return this.sectionActive
+    }
+
+    /**
+     * @param {boolean} active
+     */
+    setSectionActive(active){
+        this.sectionActive = active
     }
 
     /**
@@ -123,6 +138,13 @@ class MenuItem {
      * @return {boolean}
      */
     isRightClick(){
+        return false
+    }
+
+    /**
+     * @return {boolean}
+     */
+    isSection(){
         return false
     }
 

@@ -135,7 +135,7 @@ button.selected, button.hidden.selected, button.locked.selected{
     padding: 0;
 }
 
-.units-wrapper .panel .panel h4, .component-add-wrapper .panel h4{
+.units-wrapper .panel .panel h4, .component-add-wrapper .panel h4, .script-nodes .panel h4{
     border: none;
     background-color: unset;
     border-top: 1px solid #4e4e4e;

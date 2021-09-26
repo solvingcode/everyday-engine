@@ -164,27 +164,30 @@ class Menu {
     }
 
     /**
-     * @param {MenuItemUI[]} menuItems
+     * @param {MenuItemUI[]} menuItemsToRun
      */
-    selectItems(menuItems) {
+    selectItems(menuItemsToRun) {
         const stateManager = StateManager.get()
-        const elementsToStop = this.items
-            .filter(item => item.element.isSelected()).map(menuItem => menuItem.element)
-        const elementsToRun = menuItems.map(menuItem => menuItem.element)
-        elementsToStop.forEach(element => {
-            if (!elementsToRun.includes(element)) {
-                const stateCodeToStop = menuItems[0].element.stateCode
+        const menuItemsToStop = this.items
+            .filter(item => item.element.isSelected())
+        menuItemsToStop.forEach(menuItem => {
+            if (!menuItemsToRun.includes(menuItem)) {
+                const stateCodeToStop = menuItemsToRun[0].element.stateCode
                 if (stateCodeToStop && !stateManager.isConfirmState(stateCodeToStop)) {
-                    element.stop(stateCodeToStop)
+                    menuItem.element.stop(stateCodeToStop)
                 }
             }
         })
-        const elementsToSkip = elementsToRun.filter(element => {
-            return element.skipStateCodes
-                .find(skipStateCode => elementsToRun.find(elementToRun => elementToRun.stateCode === skipStateCode))
+        const menuItemsToSkip = menuItemsToRun.filter(menuItem => {
+            return menuItem.element.skipStateCodes
+                .find(skipStateCode => menuItemsToRun.find(menuItemToRun => menuItemToRun.element.stateCode === skipStateCode))
         })
-        elementsToRun.filter(element => !elementsToStop.includes(element) &&
-            !elementsToSkip.includes(element)).forEach(element => element.run())
+        menuItemsToRun.filter(menuItem => !menuItemsToStop.includes(menuItem) &&
+            !menuItemsToSkip.includes(menuItem))
+            .forEach(menuItem => {
+                menuItem.element.run()
+                this.activateSection(menuItem)
+            })
     }
 
     /**
@@ -255,6 +258,46 @@ class Menu {
      */
     setUIRenderer(uiRenderer) {
         this.uiRenderer = uiRenderer
+    }
+
+    /**
+     * @param {MenuItemUI} menuItemUI
+     * @return {MenuItemUI}
+     */
+    findSection(menuItemUI){
+        const parent = menuItemUI.parent
+        if(parent){
+            if(parent.element.isSection()){
+                return parent
+            }else{
+                return this.findSection(parent)
+            }
+        }
+    }
+
+    /**
+     * @return {MenuItemUI}
+     */
+    getActiveSection(){
+        return this.items.find(menuItemUI => menuItemUI.element.isSectionActive())
+    }
+
+    /**
+     * @return {MenuItemUI[]}
+     */
+    getSections(){
+       return this.items.filter(menuItemUI => menuItemUI.element.isSection())
+    }
+
+    /**
+     * @param {MenuItemUI} menuItemUI
+     */
+    activateSection(menuItemUI){
+        this.getSections().forEach(pSection => pSection.element.setSectionActive(false))
+        const section = this.findSection(menuItemUI)
+        if(section){
+            section.element.setSectionActive(true)
+        }
     }
 
     /**

@@ -4,9 +4,9 @@ import AssetElementFormMenuItem from './AssetElementFormMenuItem.js'
 import Layout from '../../../Layout.js'
 
 /**
- * @class {AssetsListFormMenuItem}
+ * @class {AssetsListMenuItem}
  */
-export default class AssetsListFormMenuItem extends ListMenuItem {
+export default class AssetsListMenuItem extends ListMenuItem {
 
     constructor(parent, props) {
         super({
@@ -55,6 +55,13 @@ export default class AssetsListFormMenuItem extends ListMenuItem {
      * @override
      */
     isRightClick() {
+        return true
+    }
+
+    /**
+     * @override
+     */
+    isSection() {
         return true
     }
 

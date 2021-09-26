@@ -216,6 +216,9 @@ AppState.States = {
     ACTION_DELETE_START: {history: true},
     ACTION_DELETE_PROGRESS: {history: false},
     ACTION_DELETE_STOP: {history: false},
+    ACTION_DELETE_UNIT_START: {history: true},
+    ACTION_DELETE_UNIT_PROGRESS: {history: false},
+    ACTION_DELETE_UNIT_STOP: {history: false},
     ACTION_DUPLICATE_START: {history: true},
     ACTION_DUPLICATE_PROGRESS: {history: false},
     ACTION_DUPLICATE_STOP: {history: false},
@@ -477,6 +480,7 @@ AppState.States = {
     ACTION_CLOSE_CONFIRM_POPUP_START: {history: false},
     ACTION_CLOSE_CONFIRM_POPUP_PROGRESS: {history: false},
     ACTION_CLOSE_CONFIRM_POPUP_STOP: {history: false},
+    CONFIRM_ACTION_DELETE_UNIT_START: {history: false},
     CONFIRM_ACTION_DELETE_START: {history: false},
     CONFIRM_ACTION_DELETE_FOLDER_START: {history: false},
     CONFIRM_ACTION_DELETE_SCRIPT_NODE_START: {history: true},
@@ -515,6 +519,9 @@ AppState.States = {
     ACTION_PASTE_SCRIPT_START: {history: false},
     ACTION_PASTE_SCRIPT_PROGRESS: {history: false},
     ACTION_PASTE_SCRIPT_STOP: {history: false},
+    ACTION_COPY_START: {history: false},
+    ACTION_COPY_PROGRESS: {history: false},
+    ACTION_COPY_STOP: {history: false},
 }
 
 export default AppState

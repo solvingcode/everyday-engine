@@ -10,7 +10,7 @@ export default class ScriptFunctionListMenuItem extends ListMenuItem{
      */
     constructor(parent, props = {}) {
         super({
-            name: '',
+            name: 'Functions',
             zone: parent.zone,
             ...props
         })

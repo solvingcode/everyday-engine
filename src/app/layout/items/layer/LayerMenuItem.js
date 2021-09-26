@@ -13,4 +13,11 @@ export default class LayerMenuItem extends PanelMenuItem {
             new LayerTreeMenuItem(this)
         ]
     }
+
+    /**
+     * @override
+     */
+    isSection() {
+        return true
+    }
 }

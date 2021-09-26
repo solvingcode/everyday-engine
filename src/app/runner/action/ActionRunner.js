@@ -1,7 +1,7 @@
 import Runner from '../Runner.js'
 import World from '../../world/World.js'
 import StateManager from '../../state/StateManager.js'
-import DeleteAction from './edit/DeleteAction.js'
+import DeleteUnitAction from './edit/DeleteUnitAction.js'
 import DuplicateAction from './edit/DuplicateAction.js'
 import UndoAction from './edit/UndoAction.js'
 import MoveAction from './edit/MoveAction.js'
@@ -97,6 +97,8 @@ import CompileScriptAction from './script/CompileScriptAction.js'
 import ClosePopupAction from './popup/ClosePopupAction.js'
 import CopySelectedNodeAction from './script/CopySelectedNodeAction.js'
 import PasteScriptAction from './script/PasteScriptAction.js'
+import DeleteAction from './edit/DeleteAction.js'
+import CopyAction from './edit/CopyAction.js'
 
 /**
  * Action Runner class.
@@ -126,6 +128,8 @@ class ActionRunner extends Runner {
         const stateManager = StateManager.get()
         const typeActions = {
             DELETE: DeleteAction,
+            COPY: CopyAction,
+            DELETE_UNIT: DeleteUnitAction,
             DUPLICATE: DuplicateAction,
             UNDO: UndoAction,
             MOVE: MoveAction,

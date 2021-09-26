@@ -15,4 +15,11 @@ export default class FolderTreeMenuItem extends MenuItem {
             new FolderListMenuItem(this)
         ]
     }
+
+    /**
+     * @override
+     */
+    isSection() {
+        return true
+    }
 }

@@ -1,4 +1,4 @@
-import Keyboard, {KeyCode} from './Keyboard.js'
+import Keyboard from './Keyboard.js'
 import Mouse from './Mouse.js'
 import {SCENE_HEIGHT, SCENE_WIDTH} from './Constant.js'
 import Size from '../pobject/Size.js'
@@ -47,15 +47,10 @@ class Window {
     initEvents() {
         document.addEventListener('keydown', (event) => {
             let key = event.keyCode
-            if(event.shiftKey){
-                key = KeyCode.SHIFT
-            }else if(event.ctrlKey){
-                key = KeyCode.CTRL
-            }
             this.keyboard.setKeyPressed(key)
         })
         document.addEventListener('keyup', (event) => {
-            const key = event.keyCode
+            let key = event.keyCode
             this.keyboard.setKeyReleased(key)
         })
         document.addEventListener('click', (event) => {
@@ -92,14 +87,14 @@ class Window {
     /**
      * @return {number}
      */
-    getDeltaTime(){
+    getDeltaTime() {
         return this.deltaTime
     }
 
     /**
      * @param {Size} size
      */
-    setSize(size){
+    setSize(size) {
         this.size = size
         this.initCanvas()
     }
@@ -107,7 +102,7 @@ class Window {
     /**
      * @return {Size}
      */
-    getSize(){
+    getSize() {
         return this.size
     }
 
@@ -116,7 +111,7 @@ class Window {
         this.keyboard.clear()
     }
 
-    update(){
+    update() {
         this.deltaTime = this.lastUpdTime ? (Date.now() - this.lastUpdTime) / 1000 : 0
         this.lastUpdTime = Date.now()
     }
