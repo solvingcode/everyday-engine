@@ -1,17 +1,14 @@
 import Action from '../Action.js'
-import World from '../../../world/World.js'
+import StateHelper from '../../../utils/StateHelper.js'
 
-class DeleteAction extends Action {
+export default class DeleteAction extends Action {
 
     /**
      * @override
      */
-    static run(mouse, selectedUnits) {
-        const unitManager = World.get().getUnitManager()
-        selectedUnits.forEach(unit => unitManager.deleteUnit(unit))
+    static run() {
+        StateHelper.startDeleteSectionState()
         return true
     }
 
 }
-
-export default DeleteAction
