@@ -30,6 +30,10 @@ export default class UnitData extends Data {
      * @type {boolean}
      */
     enabled
+    /**
+     * @type {number}
+     */
+    assetId
 
     constructor(name) {
         super()
@@ -122,6 +126,20 @@ export default class UnitData extends Data {
      */
     getEnabled(){
         return this.enabled
+    }
+
+    /**
+     * @param {number} assetId
+     */
+    setAssetId(assetId) {
+        this.assetId = assetId
+    }
+
+    /**
+     * @return {number}
+     */
+    getAssetId() {
+        return this.assetId
     }
 
     /**

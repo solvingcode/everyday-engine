@@ -535,6 +535,12 @@ AppState.States = {
     ACTION_PASTE_UNIT_START: {history: false},
     ACTION_PASTE_UNIT_PROGRESS: {history: false},
     ACTION_PASTE_UNIT_STOP: {history: false},
+    ACTION_CREATE_UNIT_INSTANT_START: {history: false},
+    ACTION_CREATE_UNIT_INSTANT_PROGRESS: {history: false},
+    ACTION_CREATE_UNIT_INSTANT_STOP: {history: false},
+    ACTION_LOAD_UNIT_INSTANT_START: {history: false},
+    ACTION_LOAD_UNIT_INSTANT_PROGRESS: {history: false},
+    ACTION_LOAD_UNIT_INSTANT_STOP: {history: false},
 }
 
 export default AppState

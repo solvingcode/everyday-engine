@@ -13,6 +13,7 @@ import AssetAnimationScriptXml from '../../../../asset/types/animation/AssetAnim
 import AssetAudio from '../../../../asset/types/Audio/AssetAudio.js'
 import AssetFont from '../../../../asset/types/font/AssetFont.js'
 import AssetGradientColorXml from '../../../../asset/types/color/AssetGradientColorXml.js'
+import AssetUnit from '../../../../asset/types/unit/AssetUnit.js'
 
 export default class AssetElementButtonUI extends ListElementButtonUI {
 
@@ -61,6 +62,8 @@ export default class AssetElementButtonUI extends ListElementButtonUI {
                 return IconUI.createIcon('font')
             case AssetGradientColorXml:
                 return IconUI.createIcon('palette')
+            case AssetUnit:
+                return IconUI.createIcon('object-ungroup')
             default:
                 throw new SystemError(`Asset: No icon founded for "${type.constructor.name}"`)
         }

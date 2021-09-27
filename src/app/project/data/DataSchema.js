@@ -181,6 +181,7 @@ import EnableUnitFunction from '../../flow/function/native/unit/EnableUnitFuncti
 import DisableUnitFunction from '../../flow/function/native/unit/DisableUnitFunction.js'
 import IsUnitPressedFunction from '../../flow/function/native/unit/IsUnitPressedFunction.js'
 import AUnitVariable from '../../flow/variable/AUnitVariable.js'
+import AssetUnit from '../../asset/types/unit/AssetUnit.js'
 
 /**
  * @class {DataSchema}
@@ -359,6 +360,7 @@ class DataSchema {
         {id: 1590, type: DisableUnitFunction},
         {id: 1600, type: IsUnitPressedFunction},
         {id: 1610, type: AUnitVariable},
+        {id: 1620, type: AssetUnit},
     ]
 
     /**

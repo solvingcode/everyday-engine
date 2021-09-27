@@ -344,6 +344,9 @@ export default {
                                                             id: {
                                                                 type: TYPES.NUMBER
                                                             },
+                                                            assetId: {
+                                                                type: TYPES.NUMBER
+                                                            },
                                                             enabled: {
                                                                 type: TYPES.BOOLEAN
                                                             },

@@ -92,7 +92,7 @@ class Storage {
     /**
      * Export all data to the given format
      * @param {string} key
-     * @param {Storage.format} format
+     * @param {string} format
      * @return {string|Object}
      */
     export(key, format) {
@@ -104,12 +104,23 @@ class Storage {
      * Import data from the given data and format
      * @param {string} key
      * @param {string} data
-     * @param {Storage.format} format
+     * @param {string} format
      * @return {Map<string, *>}
      */
     import(key, data, format) {
         const serde = this.getSerDe(format)
         return new serde().deserialize(data, key)
+    }
+
+    /**
+     * @param {string} type
+     * @param {*} data
+     * @param {string} format
+     * @return {string}
+     */
+    async serialize(type, data, format){
+        await this.save(type, data)
+        return this.export(type, format)
     }
 
     /**
@@ -149,7 +160,7 @@ class Storage {
     }
 
     /**
-     * @param {Storage.format} format
+     * @param {string} format
      * @return {SerDe}
      */
     getSerDe(format) {

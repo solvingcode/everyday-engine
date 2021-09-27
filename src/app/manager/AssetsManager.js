@@ -16,6 +16,8 @@ import AssetAudio from '../asset/types/Audio/AssetAudio.js'
 import AssetFont from '../asset/types/font/AssetFont.js'
 import AssetGradientColorXml from '../asset/types/color/AssetGradientColorXml.js'
 import AssetHelper from '../utils/AssetHelper.js'
+import AssetUnit from '../asset/types/unit/AssetUnit.js'
+import * as StorageConstant from '../constant/StorageConstant.js'
 
 /**
  * @class {AssetsManager}
@@ -131,6 +133,21 @@ export default class AssetsManager extends AssetsManagerData {
     }
 
     /**
+     * @param {Folder} folder
+     * @param {Unit} unit
+     * @param {string} dataXml
+     */
+    createUnitInstant(folder, unit, dataXml) {
+        const assetName = this.generateUniqAssetName(unit.getName(), folder.getId())
+        return this.createAsset(
+            dataXml,
+            AssetUnit,
+            assetName,
+            folder.getId()
+        )
+    }
+
+    /**
      * @param {File} blob
      */
     setAssetByBlob(blob) {
@@ -193,6 +210,13 @@ export default class AssetsManager extends AssetsManagerData {
     /**
      * @return {Asset[]}
      */
+    getUnitAssets() {
+        return this.getAssets().filter(asset => this.isAssetUnit(asset))
+    }
+
+    /**
+     * @return {Asset[]}
+     */
     getAudioAssets() {
         return this.getAssets().filter(asset => this.isAssetAudio(asset))
     }
@@ -216,6 +240,14 @@ export default class AssetsManager extends AssetsManagerData {
      */
     getFontAssets() {
         return this.getAssets().filter(asset => this.isAssetFont(asset))
+    }
+
+    /**
+     * @param {Asset} asset
+     * @return {boolean}
+     */
+    isAssetUnit(asset) {
+        return asset && asset.getType() instanceof AssetUnit
     }
 
     /**
@@ -300,6 +332,8 @@ export default class AssetsManager extends AssetsManagerData {
                 return AssetGradientColorXml
             case 'animation':
                 return AssetAnimationXml
+            case StorageConstant.type.UNITS:
+                return AssetUnit
             case 'html':
                 throw new ClientError(`Asset XML : ${doc.documentElement.textContent}`)
             default:
@@ -375,6 +409,18 @@ export default class AssetsManager extends AssetsManagerData {
         const asset = this.findAssetById(assetId)
         if (!asset || !this.isAssetFont(asset)) {
             throw new SystemError(`No asset font found with ID "${assetId}"`)
+        }
+        return asset
+    }
+
+    /**
+     * @param {number|string} assetId
+     * @return {Asset}
+     */
+    findAssetUnitById(assetId) {
+        const asset = this.findAssetById(assetId)
+        if (!asset || !this.isAssetUnit(asset)) {
+            throw new SystemError(`No asset unit found with ID "${assetId}"`)
         }
         return asset
     }

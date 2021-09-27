@@ -103,6 +103,8 @@ import PasteAction from './edit/PasteAction.js'
 import CopyUnitAction from './unit/CopyUnitAction.js'
 import PasteUnitAction from './unit/PasteUnitAction.js'
 import MoveKeyAction from './edit/MoveKeyAction.js'
+import CreateUnitInstantAction from './unit/CreateUnitInstantAction.js'
+import LoadUnitInstantAction from './unit/LoadUnitInstantAction.js'
 
 /**
  * Action Runner class.
@@ -230,7 +232,9 @@ class ActionRunner extends Runner {
             ATTACH_ASSET: AttachAssetAction,
             ATTACH_EDITOR: AttachEditorAction,
             ATTACH_COMPONENT_VALUE: AttachComponentValueAction,
-            CLOSE_CONTENT_POPUP: ClosePopupAction
+            CLOSE_CONTENT_POPUP: ClosePopupAction,
+            CREATE_UNIT_INSTANT: CreateUnitInstantAction,
+            LOAD_UNIT_INSTANT: LoadUnitInstantAction
         }
         const selectedUnits = this.unitSelector.getSelected(World.get())
         for (const iTypeAction in typeActions) {

@@ -44,6 +44,8 @@ import CameraMenuItem from '../layout/items/edit/CameraMenuItem.js'
 import LightPointMenuItem from '../layout/items/edit/LightPointMenuItem.js'
 import LightGlobalMenuItem from '../layout/items/edit/LightGlobalMenuItem.js'
 import AddAnimationMenuItem from '../layout/items/animation/AddAnimationMenuItem.js'
+import CreateUnitInstantMenuItem from '../layout/items/unit/CreateUnitInstantMenuItem.js'
+import LoadUnitInstantMenuItem from '../layout/items/unit/LoadUnitInstantMenuItem.js'
 
 export default class OptionHelper {
 
@@ -72,7 +74,8 @@ export default class OptionHelper {
                 new OptionActionsButtonMenuItem('UI', UITopMenuItem, null, true),
                 new OptionActionsButtonMenuItem('Visibility', VisibilityTopMenuItem, null, true),
                 new AlignViewMenuItem(),
-                new AlignParentMenuItem()
+                new AlignParentMenuItem(),
+                new CreateUnitInstantMenuItem()
             ])
         }
         if(bindObject instanceof Asset){
@@ -87,7 +90,8 @@ export default class OptionHelper {
                 new ExportAssetMenuItem(),
                 new PlayAssetAudioMenuItem(),
                 new StopAssetAudioMenuItem(),
-                new AttachAssetImageMenuItem()
+                new AttachAssetImageMenuItem(),
+                new LoadUnitInstantMenuItem()
             ])
         }
         if(bindObject instanceof Folder){

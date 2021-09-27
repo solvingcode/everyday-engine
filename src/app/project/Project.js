@@ -31,9 +31,7 @@ class Project {
      * @param {*} data
      */
     async saveClipboard(type, data){
-        await this.storage.save(type, data)
-        const dataExport = this.storage.export(type, this.saveFormat)
-        ClipboardManager.get().setContent(dataExport)
+        ClipboardManager.get().setContent(await this.storage.serialize(type, data, this.saveFormat))
     }
 
     /**

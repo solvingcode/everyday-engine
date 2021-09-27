@@ -9,6 +9,7 @@ import AlignViewMenuItem from '../../edit/AlignViewMenuItem.js'
 import VisibilityTopMenuItem from './VisibilityTopMenuItem.js'
 import AddSceneMenuItem from '../../scene/AddSceneMenuItem.js'
 import AlignParentMenuItem from '../../edit/AlignParentMenuItem.js'
+import CreateUnitInstantMenuItem from '../../unit/CreateUnitInstantMenuItem.js'
 
 export default class UnitTopMenuItem extends OptionActionsMenuItem {
     constructor(bindObject, position, size) {
@@ -21,7 +22,8 @@ export default class UnitTopMenuItem extends OptionActionsMenuItem {
             new OptionActionsButtonMenuItem('UI', UITopMenuItem, null, true),
             new OptionActionsButtonMenuItem('Visibility', VisibilityTopMenuItem, null, true),
             new AlignViewMenuItem(),
-            new AlignParentMenuItem()
+            new AlignParentMenuItem(),
+            new CreateUnitInstantMenuItem()
             ], position, size
         )
     }
