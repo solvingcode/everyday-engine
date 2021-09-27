@@ -492,6 +492,7 @@ AppState.States = {
     CONFIRM_ACTION_DELETE_ASSET_START: {history: true},
     CONFIRM_ACTION_DELETE_ANIMATION_FRAME_START: {history: true},
     CONFIRM_ACTION_DELETE_COMPONENT_START: {history: false},
+    CONFIRM_ACTION_NEW_PROJECT_START: {history: false},
     ACTION_ATTACH_FOLDER_START: {history: true},
     ACTION_ATTACH_FOLDER_PROGRESS: {history: false},
     ACTION_ATTACH_FOLDER_STOP: {history: true},

@@ -1,6 +1,8 @@
 import Action from '../Action.js'
 import StateHelper from '../../../utils/StateHelper.js'
-import StateManager from '../../../state/StateManager.js'
+import Vector from '../../../utils/Vector.js'
+import {KeyCode} from '../../../core/Keyboard.js'
+import Window from '../../../core/Window.js'
 
 export default class MoveKeyAction extends Action {
 
@@ -10,7 +12,20 @@ export default class MoveKeyAction extends Action {
      * @override
      */
     static run() {
-        StateHelper.startMoveSectionState(StateManager.get().getNextProgressData(this.STATE))
+        const {keyboard} = Window.get()
+        const direction = new Vector()
+        if (keyboard.isKeyPressed(KeyCode.LEFT)) {
+            direction.setX(-1)
+        } else if (keyboard.isKeyPressed(KeyCode.RIGHT)) {
+            direction.setX(1)
+        }
+        if (keyboard.isKeyPressed(KeyCode.UP)) {
+            direction.setY(-1)
+        } else if (keyboard.isKeyPressed(KeyCode.DOWN)) {
+            direction.setY(1)
+        }
+        const step = keyboard.isKeyPressed(KeyCode.SHIFT) ? 10 : 1
+        StateHelper.startMoveSectionState({direction, step})
         return true
     }
 

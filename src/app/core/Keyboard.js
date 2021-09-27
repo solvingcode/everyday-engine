@@ -18,6 +18,34 @@ class Keyboard {
     }
 
     /**
+     * @return {boolean}
+     */
+    isOpenShortcutPressed(){
+        return this.isKeyPressed(KeyCode.CTRL) && this.isKeyPressed(KeyCode.O)
+    }
+
+    /**
+     * @return {boolean}
+     */
+    isSaveShortcutPressed(){
+        return this.isKeyPressed(KeyCode.CTRL) && this.isKeyPressed(KeyCode.S)
+    }
+
+    /**
+     * @return {boolean}
+     */
+    isCopyShortcutPressed(){
+        return this.isKeyPressed(KeyCode.CTRL) && this.isKeyPressed(KeyCode.C)
+    }
+
+    /**
+     * @return {boolean}
+     */
+    isPasteShortcutPressed(){
+        return this.isKeyPressed(KeyCode.CTRL) && this.isKeyPressed(KeyCode.V)
+    }
+
+    /**
      * @param {number} key
      */
     setKeyReleased(key) {
@@ -83,12 +111,12 @@ export const KeyCode = {
     R: 82,
     C: 67,
     V: 86,
+    O: 79,
+    B: 66,
     BACKSPACE: 8,
     DELETE: 46,
     CTRL: 17,
-
-    //Not ascii code
-    SHIFT: 10001,
+    SHIFT: 16,
 }
 
 export default Keyboard

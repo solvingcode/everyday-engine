@@ -48,6 +48,9 @@ class Window {
         document.addEventListener('keydown', (event) => {
             let key = event.keyCode
             this.keyboard.setKeyPressed(key)
+            if (this.keyboard.isOpenShortcutPressed() || this.keyboard.isSaveShortcutPressed()) {
+                event.preventDefault()
+            }
         })
         document.addEventListener('keyup', (event) => {
             let key = event.keyCode

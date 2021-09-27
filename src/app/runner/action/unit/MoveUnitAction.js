@@ -11,9 +11,8 @@ export default class MoveUnitAction extends Action {
      * @override
      */
     static run(mouse, selectedUnits) {
-        const {direction} = StateManager.get().getNextProgressData(this.STATE)
+        const {direction, step} = StateManager.get().getNextProgressData(this.STATE)
         const world = World.get()
-        const step = 1
 
         if(direction){
             selectedUnits.forEach(unit => {
