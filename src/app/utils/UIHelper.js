@@ -64,7 +64,8 @@ export default class UIHelper {
 
     static UI = {
         CANVAS: 'ui-canvas',
-        SCRIPT: 'ui-script'
+        SCRIPT: 'ui-script',
+        SCENE: 'ui-scene'
     }
 
 }

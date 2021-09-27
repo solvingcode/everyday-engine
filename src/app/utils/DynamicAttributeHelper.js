@@ -331,31 +331,49 @@ export default class DynamicAttributeHelper {
         } else if (attribute.getAttrType() === TYPES.VECTOR && isListInstances) {
             formField = [
                 {
-                    bind: `${bindName}.x`,
-                    label: `${attribute.getAttrName()} X`,
-                    type: Layout.form.NUMBER,
-                    dynamicAttribute
-                },
-                {
-                    bind: `${bindName}.y`,
-                    label: `${attribute.getAttrName()} Y`,
-                    type: Layout.form.NUMBER,
-                    dynamicAttribute
+                    bind: bindName,
+                    label: attribute.getAttrName(),
+                    type: Layout.form.GROUP,
+                    items: [
+                        {
+                            bind: `${bindName}.x`,
+                            label: `X`,
+                            type: Layout.form.NUMBER,
+                            size: 0.5,
+                            dynamicAttribute
+                        },
+                        {
+                            bind: `${bindName}.y`,
+                            label: `Y`,
+                            type: Layout.form.NUMBER,
+                            size: 0.5,
+                            dynamicAttribute
+                        }
+                    ]
                 }
             ]
         } else if (attribute.getAttrType() === TYPES.SIZE && isListInstances) {
             formField = [
                 {
-                    bind: `${bindName}.width`,
-                    label: `${attribute.getAttrName()} Width`,
-                    type: Layout.form.NUMBER,
-                    dynamicAttribute
-                },
-                {
-                    bind: `${bindName}.height`,
-                    label: `${attribute.getAttrName()} Height`,
-                    type: Layout.form.NUMBER,
-                    dynamicAttribute
+                    bind: bindName,
+                    label: attribute.getAttrName(),
+                    type: Layout.form.GROUP,
+                    items: [
+                        {
+                            bind: `${bindName}.width`,
+                            label: `Width`,
+                            type: Layout.form.NUMBER,
+                            size: 0.5,
+                            dynamicAttribute
+                        },
+                        {
+                            bind: `${bindName}.height`,
+                            label: `Height`,
+                            type: Layout.form.NUMBER,
+                            size: 0.5,
+                            dynamicAttribute
+                        }
+                    ]
                 }
             ]
         } else if (attribute.getAttrType() === TYPES.STYLE && isListInstances) {
@@ -435,16 +453,25 @@ export default class DynamicAttributeHelper {
                     dynamicAttribute
                 },
                 {
-                    bind: `${bindName}.shadowPosition.x`,
-                    label: `Shadow OffsetX`,
-                    type: Layout.form.NUMBER,
-                    dynamicAttribute
-                },
-                {
-                    bind: `${bindName}.shadowPosition.y`,
-                    label: `Shadow OffsetY`,
-                    type: Layout.form.NUMBER,
-                    dynamicAttribute
+                    bind: `${bindName}.shadowPosition`,
+                    label: 'Shadow Position',
+                    type: Layout.form.GROUP,
+                    items: [
+                        {
+                            bind: `${bindName}.shadowPosition.x`,
+                            label: 'Y',
+                            type: Layout.form.NUMBER,
+                            size: 0.5,
+                            dynamicAttribute
+                        },
+                        {
+                            bind: `${bindName}.shadowPosition.y`,
+                            label: 'Y',
+                            type: Layout.form.NUMBER,
+                            size: 0.5,
+                            dynamicAttribute
+                        }
+                    ]
                 },
                 {
                     bind: `${bindName}.shadowBlur`,

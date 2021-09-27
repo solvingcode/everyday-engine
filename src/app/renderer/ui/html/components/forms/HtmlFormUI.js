@@ -139,6 +139,18 @@ class HtmlFormUI extends ItemUI {
     }
 
     /**
+     * @param {MenuItemUI} item
+     */
+    static getCustomStyle(item){
+        const {props} = item.element
+        if(props.size){
+            return {
+                width: `${props.size * 100}%`
+            }
+        }
+    }
+
+    /**
      * @override
      */
     static getClassName(item) {

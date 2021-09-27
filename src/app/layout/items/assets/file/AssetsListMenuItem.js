@@ -65,4 +65,12 @@ export default class AssetsListMenuItem extends ListMenuItem {
         return true
     }
 
+    /**
+     * @override
+     */
+    isValid() {
+        const assetsManager = World.get().getAssetsManager()
+        return !!assetsManager.getRootFolder()
+    }
+
 }

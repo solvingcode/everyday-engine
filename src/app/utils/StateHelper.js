@@ -8,12 +8,12 @@ import World from '../world/World.js'
 
 export default class StateHelper {
     /**
-     * @return {{copy: string, delete: string, paste: string}}
+     * @return {{copy: string, delete: string, paste: string, move: string}}
      */
     static getSectionStates() {
         const world = World.get()
         const menuItemUI = Menu.get().getActiveSection()
-        let stateCodes = {copy: '', delete: '', paste: ''}
+        let stateCodes = {copy: '', delete: '', paste: '', move: ''}
         if (menuItemUI) {
             const menuItem = menuItemUI.element
             switch (menuItem.constructor) {
@@ -33,6 +33,7 @@ export default class StateHelper {
                         stateCodes.delete = 'CONFIRM_ACTION_DELETE_UNIT'
                         stateCodes.copy = 'ACTION_COPY_UNIT'
                         stateCodes.paste = 'ACTION_PASTE_UNIT'
+                        stateCodes.move = 'ACTION_MOVE_UNIT'
                     }else{
                         stateCodes.delete = 'CONFIRM_ACTION_DELETE_SELECTED_NODE'
                         stateCodes.copy = 'ACTION_COPY_SELECTED_NODE'
@@ -65,27 +66,49 @@ export default class StateHelper {
         return this.getSectionStates().paste
     }
 
-    static startDeleteSectionState() {
-        const stateManager = StateManager.get()
-        const stateCode = this.getDeleteSectionState()
-        if (stateCode) {
-            stateManager.startState(stateCode, 1)
-        }
+    /**
+     * @return {string}
+     */
+    static getMoveSectionState() {
+        return this.getSectionStates().move
     }
 
-    static startCopySectionState() {
-        const stateManager = StateManager.get()
-        const stateCode = this.getCopySectionState()
-        if (stateCode) {
-            stateManager.startState(stateCode, 1)
-        }
+    /**
+     * @param {*} data
+     */
+    static startDeleteSectionState(data) {
+        this.startState(this.getDeleteSectionState(), data)
     }
 
-    static startPasteSectionState() {
+    /**
+     * @param {*} data
+     */
+    static startCopySectionState(data) {
+        this.startState(this.getCopySectionState(), data)
+    }
+
+    /**
+     * @param {*} data
+     */
+    static startPasteSectionState(data) {
+        this.startState(this.getPasteSectionState(), data)
+    }
+
+    /**
+     * @param {*} data
+     */
+    static startMoveSectionState(data) {
+        this.startState(this.getMoveSectionState(), data)
+    }
+
+    /**
+     * @param {string} stateCode
+     * @param {*} data
+     */
+    static startState(stateCode, data){
         const stateManager = StateManager.get()
-        const stateCode = this.getPasteSectionState()
         if (stateCode) {
-            stateManager.startState(stateCode, 1)
+            stateManager.startState(stateCode, 1, data)
         }
     }
 }

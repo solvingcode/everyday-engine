@@ -37,6 +37,13 @@ import CompileScriptMenuItem from '../layout/items/assets/file/CompileScriptMenu
 import DeleteSelectedNodeMenuItem from '../layout/items/script/node/delete/DeleteSelectedNodeMenuItem.js'
 import CopySelectedNodeMenuItem from '../layout/items/script/node/edit/CopySelectedNodeMenuItem.js'
 import PasteScriptMenuItem from '../layout/items/script/edit/PasteScriptMenuItem.js'
+import CopyMenuItem from '../layout/items/action/CopyMenuItem.js'
+import PasteMenuItem from '../layout/items/action/PasteMenuItem.js'
+import AddSceneMenuItem from '../layout/items/scene/AddSceneMenuItem.js'
+import CameraMenuItem from '../layout/items/edit/CameraMenuItem.js'
+import LightPointMenuItem from '../layout/items/edit/LightPointMenuItem.js'
+import LightGlobalMenuItem from '../layout/items/edit/LightGlobalMenuItem.js'
+import AddAnimationMenuItem from '../layout/items/animation/AddAnimationMenuItem.js'
 
 export default class OptionHelper {
 
@@ -55,6 +62,8 @@ export default class OptionHelper {
         if(bindObject instanceof Unit){
             options.push(...[
                 new OptionActionsTitleMenuItem('Edit'),
+                new CopyMenuItem(),
+                new PasteMenuItem(),
                 new DeleteMenuItem(),
                 new DuplicateMenuItem(),
                 new MoveUpMenuItem(),
@@ -91,6 +100,19 @@ export default class OptionHelper {
             options.push(...[
                 new AddFolderMenuItem(),
                 new AddAssetMenuItem(),
+            ])
+        }
+        if(bindObject === UIHelper.UI.SCENE){
+            options.push(...[
+                new OptionActionsTitleMenuItem('Edit'),
+                new PasteMenuItem(),
+                new OptionActionsTitleMenuItem('Unit'),
+                new AddSceneMenuItem(),
+                new CameraMenuItem(),
+                new LightPointMenuItem(),
+                new LightGlobalMenuItem(),
+                new AddAnimationMenuItem(),
+                new OptionActionsButtonMenuItem('UI', UITopMenuItem, null, true),
             ])
         }
         if(bindObject === UIHelper.UI.SCRIPT){

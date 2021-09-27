@@ -18,7 +18,6 @@ import GraphDrawerRunner from '../runner/drawer/GraphDrawerRunner.js'
 import AnimationEditorRunner from '../runner/editor/AnimationEditorRunner.js'
 import WorldInitializeRunner from '../runner/world/WorldInitializeRunner.js'
 import FormRunner from '../runner/form/FormRunner.js'
-import MoveUnitRunner from '../runner/editor/MoveUnitRunner.js'
 import CameraExecutor from '../executor/type/CameraExecutor.js'
 import LightExecutor from '../executor/type/LightExecutor.js'
 import LightRunner from '../runner/light/LightRunner.js'
@@ -52,7 +51,7 @@ class SetupLoop extends Loop {
         this.runners = [
             WorldInitializeRunner, /*HistoryRunner,*/ SimulateRunner, ActionRunner, EditorRunner, ScriptEditorRunner,
             AnimationEditorRunner, MenuRunner, SetupExecutorRunner, SetupRenderRunner, WindowRunner, GraphDrawerRunner,
-            UnitDrawerRunner, FormRunner, MoveUnitRunner, LightRunner, SceneRunner, ShortcutRunner
+            UnitDrawerRunner, FormRunner, LightRunner, SceneRunner, ShortcutRunner
         ]
         ExecutorRegistry.get().register([
             new CameraExecutor(),

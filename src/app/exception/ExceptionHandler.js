@@ -19,6 +19,7 @@ class ExceptionHandler {
      */
     handle(e) {
         if (!(e instanceof ClientError) && !(e instanceof SystemError)) {
+            console.error(e)
             throw e
         }
         console.warn(e)

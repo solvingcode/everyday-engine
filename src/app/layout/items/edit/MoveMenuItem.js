@@ -7,7 +7,7 @@ export default class MoveMenuItem extends MenuItem {
         super({
             id: 1,
             name: 'arrows-alt',
-            title: 'Select/Move',
+            title: 'Select/Move (G)',
             stateCode: 'DRAW_MOVE',
             type: Layout.type.ICON,
             zone: Layout.zone.LEFT

@@ -22,14 +22,23 @@ export default class ResolutionFormMenuItem extends FormMenuItem {
     generateFields() {
         return [
             {
-                bind: 'resolution.width',
-                label: 'Width',
-                type: Layout.form.NUMBER
-            },
-            {
-                bind: 'resolution.height',
-                label: 'Height',
-                type: Layout.form.NUMBER
+                bind: 'resolution',
+                label: 'Resolution',
+                type: Layout.form.GROUP,
+                items: [
+                    {
+                        bind: 'resolution.width',
+                        label: 'Width',
+                        type: Layout.form.NUMBER,
+                        size: 0.5
+                    },
+                    {
+                        bind: 'resolution.height',
+                        label: 'Height',
+                        type: Layout.form.NUMBER,
+                        size: 0.5
+                    }
+                ]
             }
         ]
     }

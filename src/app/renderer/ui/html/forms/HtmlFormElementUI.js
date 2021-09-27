@@ -11,6 +11,7 @@ import HtmlFormWysiwygUI from '../components/forms/HtmlFormWysiwygUI.js'
 import SystemError from '../../../../exception/type/SystemError.js'
 import HtmlFormNumberUI from '../components/forms/HtmlFormNumberUI.js'
 import HtmlFormMultiButtonUI from '../components/forms/HtmlFormMultiButtonUI.js'
+import HtmlFormGroupUI from '../components/forms/HtmlFormGroupUI.js'
 
 class HtmlFormElementUI extends ItemUI {
     /**
@@ -37,6 +38,8 @@ class HtmlFormElementUI extends ItemUI {
             return HtmlFormRangeUI
         } else if (field === Layout.form.NUMBER) {
             return HtmlFormNumberUI
+        } else if (field === Layout.form.GROUP) {
+            return HtmlFormGroupUI
         } else if (field === Layout.form.WYSIWYG) {
             return HtmlFormWysiwygUI
         }

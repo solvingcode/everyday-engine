@@ -934,6 +934,34 @@ i.static-entity::before{
     float: left;
 }
 
+.form .form-group {
+    width: 100%;
+    overflow: hidden;
+    position: relative;
+}
+
+.form .form-group > label{
+    width: 40%;
+    padding-right: 10px;
+    box-sizing: border-box;
+    display: inline-block;
+    text-align: right;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    line-height: 30px;
+}
+
+.form .form-group > div{
+    width: 60%;
+    float: right;
+}
+
+.form .form-group > div .form-input{
+    float: left;
+    box-sizing: border-box;
+}
+
 /* -- form */
 
 /* components -- */

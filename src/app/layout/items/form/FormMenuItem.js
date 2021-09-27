@@ -14,6 +14,7 @@ import SystemError from '../../../exception/type/SystemError.js'
 import ClientError from '../../../exception/type/ClientError.js'
 import NumberMenuItem from './NumberMenuItem.js'
 import MultiButtonMenuItem from './MultiButtonMenuItem.js'
+import GroupMenuItem from './GroupMenuItem.js'
 
 /**
  * Form menu item
@@ -56,7 +57,7 @@ class FormMenuItem extends MenuItem {
     /**
      * @return {*}
      */
-    getPreUpdateData(){
+    getPreUpdateData() {
         return this.object
     }
 
@@ -113,7 +114,15 @@ class FormMenuItem extends MenuItem {
     updateForm() {
         this.version = Maths.generateId()
         this.buildFormItems()
-        this.items.forEach(item => item.version = this.version)
+        this.items.forEach(item => this.updateFormVersion(item))
+    }
+
+    /**
+     * @param {MenuItem} item
+     */
+    updateFormVersion(item){
+        item.version = this.version
+        item.items.forEach(subItem => this.updateFormVersion(subItem))
     }
 
     updateFields() {
@@ -187,27 +196,37 @@ class FormMenuItem extends MenuItem {
      * Build form items
      */
     buildFormItems() {
-        this.items = this.fields
-            .map(field => {
-                const existItem = this.items.find(item => item.props.name === field.label)
-                const getter = this.getGetter(field)
-                const setter = this.getSetter(field)
-                const typeMenuItem = this.getMenuItem(field)
-                return new typeMenuItem(this,
-                    {
-                        index: existItem && existItem.index,
-                        bind: field.bind,
-                        name: field.label,
-                        list: field.list || [],
-                        options: field.options,
-                        isEditing: existItem && existItem.isEditing(),
-                        draggable: field.draggable,
-                        dragStateCode: field.draggable ? 'ACTION_ATTACH_COMPONENT_VALUE' : ''
-                    },
-                    getter,
-                    setter
-                )
-            })
+        this.items = this.fields.map(field => this.getFormItem(field))
+    }
+
+    /**
+     * @param {FormField} field
+     * @return {MenuItem}
+     */
+    getFormItem(field) {
+        const existItem = this.items.find(item => item.props.name === field.label)
+        const getter = this.getGetter(field)
+        const setter = this.getSetter(field)
+        const typeMenuItem = this.getMenuItem(field)
+        const menuItem = new typeMenuItem(this,
+            {
+                index: existItem && existItem.index,
+                bind: field.bind,
+                name: field.label,
+                size: field.size,
+                list: field.list || [],
+                options: field.options,
+                isEditing: existItem && existItem.isEditing(),
+                draggable: field.draggable,
+                dragStateCode: field.draggable ? 'ACTION_ATTACH_COMPONENT_VALUE' : ''
+            },
+            getter,
+            setter
+        )
+        if (field.items) {
+            menuItem.items = field.items.map(item => this.getFormItem(item))
+        }
+        return menuItem
     }
 
     /**
@@ -233,7 +252,7 @@ class FormMenuItem extends MenuItem {
                         const fieldName = fieldNames[currentIndex]
                         if (field.dynamicAttribute && typeof pValue[getterDynamicField] === 'function') {
                             return pValue[getterDynamicField](fieldName)
-                        }else if (typeof pValue[cValue] === 'function') {
+                        } else if (typeof pValue[cValue] === 'function') {
                             return pValue[cValue]()
                         } else {
                             throw new SystemError(`getGetterForObject: ${pValue.constructor.name}.${cValue} is not a function`)
@@ -269,15 +288,15 @@ class FormMenuItem extends MenuItem {
                 (pValue, cValue, iValue) => {
                     const fieldName = fieldNames[iValue]
                     if (field.dynamicAttribute && typeof pValue[getterDynamicField] === 'function') {
-                        if(iValue !== setter.length - 1){
+                        if (iValue !== setter.length - 1) {
                             return pValue[getterDynamicField](fieldName)
-                        }else{
+                        } else {
                             return pValue[setterDynamicField](fieldName, value)
                         }
-                    }else{
-                        if(iValue !== setter.length - 1){
+                    } else {
+                        if (iValue !== setter.length - 1) {
                             return pValue[cValue]()
-                        }else{
+                        } else {
                             return pValue[cValue](value)
                         }
                     }
@@ -323,6 +342,8 @@ class FormMenuItem extends MenuItem {
                 return WysiwygMenuItem
             case Layout.form.MULTI_BUTTON:
                 return MultiButtonMenuItem
+            case Layout.form.GROUP:
+                return GroupMenuItem
             default:
                 throw new SystemError(`Form item "${field.type}" not defined`)
         }

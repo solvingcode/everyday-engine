@@ -39,14 +39,25 @@ class ItemUI {
      */
     static getStyle(item) {
         const {position, size} = item.element
+        let style = {}
         if (position) {
-            return {
+            style = {
                 x0: position.x,
                 y0: position.y,
                 width: size.width,
-                height: size.height
+                height: size.height,
+
             }
         }
+        style = {...style, ...(this.getCustomStyle(item) || {})}
+        return style
+    }
+
+    /**
+     * Get Style for the given menu item
+     * @param {MenuItemUI} item
+     */
+    static getCustomStyle(item){
     }
 
     /**

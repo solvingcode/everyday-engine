@@ -102,6 +102,7 @@ import CopyAction from './edit/CopyAction.js'
 import PasteAction from './edit/PasteAction.js'
 import CopyUnitAction from './unit/CopyUnitAction.js'
 import PasteUnitAction from './unit/PasteUnitAction.js'
+import MoveKeyAction from './edit/MoveKeyAction.js'
 
 /**
  * Action Runner class.
@@ -139,7 +140,8 @@ class ActionRunner extends Runner {
             DUPLICATE: DuplicateAction,
             UNDO: UndoAction,
             MOVE: MoveAction,
-            UNIT_MOVE: MoveUnitAction,
+            MOVE_KEY: MoveKeyAction,
+            MOVE_UNIT: MoveUnitAction,
             SCALE: ScaleAction,
             ROTATE: RotateAction,
             MOVE_UP: MoveUpAction,

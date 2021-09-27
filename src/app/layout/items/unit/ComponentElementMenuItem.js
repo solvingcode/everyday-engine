@@ -11,6 +11,7 @@ export default class ComponentElementMenuItem extends ListElementPanelMenuItem{
             new ComponentDeleteMenuItem(this, data),
             new ComponentFormMenuItem(this)
         ]
+        this.collapsed = true
     }
 
     /**

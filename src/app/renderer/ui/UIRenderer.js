@@ -347,8 +347,6 @@ class UIRenderer {
             return this.getAssetElementButtonUI()
         } else if (element.type === Layout.type.TEXT) {
             return this.getTextUI()
-        } else if (element.type === Layout.type.GRAPH) {
-            return this.getGraphUI()
         } else if (element.type === Layout.type.FORM) {
             return this.getFormUI()
         } else if (element.type === Layout.type.FORM_ELEMENT) {

@@ -61,7 +61,8 @@ Layout.form = {
     RANGE: 'range',
     TEXTAREA: 'textarea',
     WYSIWYG: 'wysiwyg',
-    MULTI_BUTTON: 'multi_button'
+    MULTI_BUTTON: 'multi_button',
+    GROUP: 'group'
 }
 
 export default Layout

@@ -24,4 +24,12 @@ export default class FormField{
      * @type {boolean}
      */
     draggable
+    /**
+     * @type {FormField[]}
+     */
+    items
+    /**
+     * @type {number}
+     */
+    size
 }

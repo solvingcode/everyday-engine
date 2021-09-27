@@ -5,17 +5,18 @@ import UnitHelper from '../../../utils/UnitHelper.js'
 
 export default class MoveUnitAction extends Action {
 
-    static STATE = 'ACTION_UNIT_MOVE'
+    static STATE = 'ACTION_MOVE_UNIT'
 
     /**
      * @override
      */
-    static run(mouse) {
-        const {units, direction, step} = StateManager.get().getNextProgressData(this.STATE)
+    static run(mouse, selectedUnits) {
+        const {direction} = StateManager.get().getNextProgressData(this.STATE)
         const world = World.get()
+        const step = 1
 
         if(direction){
-            units.forEach(unit => {
+            selectedUnits.forEach(unit => {
                 if(UnitHelper.isColliderEditing(unit)){
                     UnitHelper.moveCollider(world, unit, step, direction)
                 }else{

@@ -1,15 +1,13 @@
 import MenuItem from '../../MenuItem.js'
 import Layout from '../../Layout.js'
 
-class DeleteMenuItem extends MenuItem {
+export default class CopyMenuItem extends MenuItem {
     constructor() {
         super({
-            name: 'Delete (DEL)',
-            stateCode: 'CONFIRM_ACTION_DELETE',
+            name: 'Copy (Ctrl+C)',
+            stateCode: 'ACTION_COPY',
             type: Layout.type.BUTTON,
             zone: Layout.zone.TOP
         })
     }
 }
-
-export default DeleteMenuItem

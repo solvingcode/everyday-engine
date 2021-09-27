@@ -44,7 +44,7 @@ export default class ContentCanvasMenuItem extends MenuItem {
         const world = World.get()
         const script = world.getScriptManager().getFunctionSelected(world.getTabManager())
         if (!script) {
-            return UnitSelector.get().getFirstSelected(World.get())
+            return UnitSelector.get().getFirstSelected(World.get()) || UIHelper.UI.SCENE
         } else {
             return UIHelper.UI.SCRIPT
         }
