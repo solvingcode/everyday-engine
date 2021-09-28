@@ -1,8 +1,6 @@
 import Action from '../Action.js'
 import World from '../../../world/World.js'
-import DataGenerator from '../../../generator/data/DataGenerator.js'
-import * as StorageConstant from '../../../constant/StorageConstant.js'
-import Storage from '../../../core/Storage.js'
+import StorageHelper from '../../../utils/StorageHelper.js'
 
 export default class LoadUnitInstantAction extends Action {
 
@@ -19,10 +17,7 @@ export default class LoadUnitInstantAction extends Action {
         const world = World.get()
         const selectedAssets = world.getAssetsManager().getSelectedAssets()
         selectedAssets.forEach(asset => {
-            const type = StorageConstant.type.UNITS
-            const storage = Storage.get()
-            const dataImport = storage.import(type, asset.getType().getDataUrl(), StorageConstant.format.XML)
-            dataImport && storage.load(type, dataImport[type], DataGenerator)
+            StorageHelper.loadAssetUnit(asset)
         })
         return true
     }

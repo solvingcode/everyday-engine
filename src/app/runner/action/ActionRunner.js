@@ -105,6 +105,7 @@ import PasteUnitAction from './unit/PasteUnitAction.js'
 import MoveKeyAction from './edit/MoveKeyAction.js'
 import CreateUnitInstantAction from './unit/CreateUnitInstantAction.js'
 import LoadUnitInstantAction from './unit/LoadUnitInstantAction.js'
+import PasteAssetAction from './assets/PasteAssetAction.js'
 
 /**
  * Action Runner class.
@@ -139,6 +140,7 @@ class ActionRunner extends Runner {
             DELETE_UNIT: DeleteUnitAction,
             COPY_UNIT: CopyUnitAction,
             PASTE_UNIT: PasteUnitAction,
+            PASTE_ASSET: PasteAssetAction,
             DUPLICATE: DuplicateAction,
             UNDO: UndoAction,
             MOVE: MoveAction,

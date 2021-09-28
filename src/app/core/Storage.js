@@ -124,6 +124,16 @@ class Storage {
     }
 
     /**
+     * @param {string} type
+     * @param {Object|Array} data
+     * @return {*}
+     */
+    async deserialize(type, data) {
+        await this.updateAndValidate(type, data)
+        return _.cloneDeep(this.data[type])
+    }
+
+    /**
      * Save data to local storage
      * @param {string} key
      * @param {Object|Array} data

@@ -6,6 +6,8 @@ import AssetImage from '../../../asset/types/image/AssetImage.js'
 import Asset from '../../../asset/Asset.js'
 import AssetUnitInstant from '../../../unit/instant/type/internal/asset/AssetUnitInstant.js'
 import Window from '../../../core/Window.js'
+import AssetUnit from '../../../asset/types/unit/AssetUnit.js'
+import StorageHelper from '../../../utils/StorageHelper.js'
 
 export default class AttachEditorAction extends Action {
 
@@ -21,8 +23,10 @@ export default class AttachEditorAction extends Action {
         }
         const world = World.get()
         const {mouse} = Window.get()
-        if(startData.getType() instanceof AssetImage){
+        if (startData.getType() instanceof AssetImage) {
             world.createUnitInstant(AssetUnitInstant, world.getWorldScalePosition(mouse.currentScenePosition), startData)
+        } else if (startData.getType() instanceof AssetUnit) {
+            StorageHelper.loadAssetUnit(startData)
         }
         return true
     }

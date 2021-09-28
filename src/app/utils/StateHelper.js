@@ -26,6 +26,7 @@ export default class StateHelper {
                     break
                 case AssetsListMenuItem:
                     stateCodes.delete = 'CONFIRM_ACTION_DELETE_ASSET'
+                    stateCodes.paste = 'ACTION_PASTE_ASSET'
                     break
                 case ContentCanvasMenuItem:
                     const script = world.getScriptManager().getFunctionSelected(world.getTabManager())
@@ -76,28 +77,28 @@ export default class StateHelper {
     /**
      * @param {*} data
      */
-    static startDeleteSectionState(data) {
+    static startDeleteSectionState(data = null) {
         this.startState(this.getDeleteSectionState(), data)
     }
 
     /**
      * @param {*} data
      */
-    static startCopySectionState(data) {
+    static startCopySectionState(data = null) {
         this.startState(this.getCopySectionState(), data)
     }
 
     /**
      * @param {*} data
      */
-    static startPasteSectionState(data) {
+    static startPasteSectionState(data = null) {
         this.startState(this.getPasteSectionState(), data)
     }
 
     /**
      * @param {*} data
      */
-    static startMoveSectionState(data) {
+    static startMoveSectionState(data = null) {
         this.startState(this.getMoveSectionState(), data)
     }
 
