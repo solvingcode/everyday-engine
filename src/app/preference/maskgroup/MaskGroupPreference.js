@@ -6,4 +6,11 @@ export default class MaskGroupPreference extends MaskGroupPreferenceData {
         this.tryAddMask('Enemy')
     }
 
+    /**
+     * @return {MaskGroup}
+     */
+    getSelected(){
+        return this.getMasks().find(mask => mask.isSelected())
+    }
+
 }

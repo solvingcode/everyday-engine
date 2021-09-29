@@ -106,6 +106,8 @@ import MoveKeyAction from './edit/MoveKeyAction.js'
 import CreateUnitInstantAction from './unit/CreateUnitInstantAction.js'
 import LoadUnitInstantAction from './unit/LoadUnitInstantAction.js'
 import PasteAssetAction from './assets/PasteAssetAction.js'
+import AddMaskAction from './mask/AddMaskAction.js'
+import DeleteMaskAction from './mask/DeleteMaskAction.js'
 
 /**
  * Action Runner class.
@@ -168,6 +170,7 @@ class ActionRunner extends Runner {
             LOAD_PROJECT: LoadProjectAction,
             ADD_ASSET: AddAssetAction,
             ADD_FOLDER: AddFolderAction,
+            ADD_MASK: AddMaskAction,
             ADD_ASSET_SCENE: AddAssetSceneAction,
             COMPILE_ASSET_SCRIPT: CompileAssetScriptAction,
             COMPILE_SCRIPT: CompileScriptAction,
@@ -187,6 +190,7 @@ class ActionRunner extends Runner {
             UNSELECT_ASSET: UnselectAssetAction,
             SELECT_LAYER_ELEMENT: SelectLayerAction,
             DELETE_FOLDER: DeleteFolderAction,
+            DELETE_MASK: DeleteMaskAction,
             DELETE_ASSET: DeleteAssetAction,
             ADD_SCRIPT: AddClassScriptAction,
             ADD_CODE_SCRIPT: AddScriptCodeAction,

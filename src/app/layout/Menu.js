@@ -22,6 +22,7 @@ import ConfirmPopupMenuItem from './items/alert/confirm/ConfirmPopupMenuItem.js'
 import StateManager from '../state/StateManager.js'
 import ContentPopupMenuItem from './items/content/ContentPopupMenuItem.js'
 import ContentCanvasMenuItem from './items/content/ContentCanvasMenuItem.js'
+import GameMenuItem from './items/game/GameMenuItem.js'
 
 /**
  * Define all menu items
@@ -66,6 +67,7 @@ class Menu {
             new AssetMenuItem(),
             new MainCameraMenuItem(),
             new ScriptMenuItem(),
+            new GameMenuItem(),
 
             //BOTTOM
             new AssetsMenuItem(),

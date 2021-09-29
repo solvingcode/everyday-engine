@@ -544,6 +544,13 @@ AppState.States = {
     ACTION_LOAD_UNIT_INSTANT_START: {history: false},
     ACTION_LOAD_UNIT_INSTANT_PROGRESS: {history: false},
     ACTION_LOAD_UNIT_INSTANT_STOP: {history: false},
+    ACTION_ADD_MASK_START: {history: false},
+    ACTION_ADD_MASK_PROGRESS: {history: false},
+    ACTION_ADD_MASK_STOP: {history: false},
+    CONFIRM_ACTION_DELETE_MASK_START: {history: false},
+    ACTION_DELETE_MASK_START: {history: true},
+    ACTION_DELETE_MASK_PROGRESS: {history: false},
+    ACTION_DELETE_MASK_STOP: {history: true},
 }
 
 export default AppState

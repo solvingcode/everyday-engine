@@ -24,13 +24,13 @@ export default class OpenPopupAction extends Action {
         const menu = Menu.get()
         const mouse = Window.get().mouse
         const uiRenderer = menu.getUIRenderer()
-        const {contentMenuItem} = StateManager.get().getNextProgressData(this.STATE)
+        const {contentMenuItem, bindObject} = StateManager.get().getNextProgressData(this.STATE)
         const triggerItemPosition = mouse.position
         if (triggerItemPosition) {
             const activeOptionsMenu = popupMenuManager.getMenu()
             if (!activeOptionsMenu) {
                 popupMenuManager.setMenu(
-                    new ContentPopupElementMenuItem(new contentMenuItem(null, {collapsed: false}), triggerItemPosition, new Size(0))
+                    new ContentPopupElementMenuItem(new contentMenuItem(null, {collapsed: false}, bindObject), triggerItemPosition, new Size(0))
                 )
             } else {
                 const popupItem = menu.findItemByElement(activeOptionsMenu)
@@ -47,7 +47,7 @@ export default class OpenPopupAction extends Action {
                 }
                 if (!ObjectHelper.isEqual(popupItemPosition, correctPopupItemPosition)) {
                     popupMenuManager.setMenu(
-                        new ContentPopupElementMenuItem(new contentMenuItem(null, {collapsed: false}),
+                        new ContentPopupElementMenuItem(new contentMenuItem(null, {collapsed: false}, bindObject),
                             correctPopupItemPosition, new Size(0))
                     )
                 }

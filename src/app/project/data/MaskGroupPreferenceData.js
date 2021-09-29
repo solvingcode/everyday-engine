@@ -70,6 +70,14 @@ export default class MaskGroupPreferenceData extends Data {
     }
 
     /**
+     * @param {MaskGroup} mask
+     */
+    delete(mask){
+        const index = this.getMasks().findIndex((element) => element === mask)
+        return this.getMasks().splice(index, 1)
+    }
+
+    /**
      * @return {MaskGroup[]}
      */
     getMasks() {

@@ -27,6 +27,13 @@ class Keyboard {
     /**
      * @return {boolean}
      */
+    isNewShortcutPressed(){
+        return this.isKeyPressed(KeyCode.CTRL) && this.isKeyPressed(KeyCode.N)
+    }
+
+    /**
+     * @return {boolean}
+     */
     isSaveShortcutPressed(){
         return this.isKeyPressed(KeyCode.CTRL) && this.isKeyPressed(KeyCode.S)
     }
@@ -113,6 +120,7 @@ export const KeyCode = {
     V: 86,
     O: 79,
     B: 66,
+    N: 78,
     BACKSPACE: 8,
     DELETE: 46,
     CTRL: 17,

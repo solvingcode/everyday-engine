@@ -46,6 +46,9 @@ import LightGlobalMenuItem from '../layout/items/edit/LightGlobalMenuItem.js'
 import AddAnimationMenuItem from '../layout/items/animation/AddAnimationMenuItem.js'
 import CreateUnitInstantMenuItem from '../layout/items/unit/CreateUnitInstantMenuItem.js'
 import LoadUnitInstantMenuItem from '../layout/items/unit/LoadUnitInstantMenuItem.js'
+import MaskGroup from '../preference/maskgroup/MaskGroup.js'
+import EditMaskPopupButtonMenuItem from '../layout/items/mask/edit/EditMaskPopupButtonMenuItem.js'
+import DeleteMaskMenuItem from '../layout/items/mask/delete/DeleteMaskMenuItem.js'
 
 export default class OptionHelper {
 
@@ -98,6 +101,12 @@ export default class OptionHelper {
             options.push(...[
                 new AddFolderMenuItem(),
                 new DeleteFolderMenuItem(),
+            ])
+        }
+        if(bindObject instanceof MaskGroup){
+            options.push(...[
+                new EditMaskPopupButtonMenuItem(bindObject),
+                new DeleteMaskMenuItem(null, bindObject),
             ])
         }
         if(bindObject && bindObject.bind instanceof AssetsListMenuItem){
