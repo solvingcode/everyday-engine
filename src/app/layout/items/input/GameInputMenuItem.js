@@ -1,8 +1,8 @@
 import Layout from '../../Layout.js'
-import MaskPanelMenuItem from './MaskPanelMenuItem.js'
 import MenuItem from '../../MenuItem.js'
+import GameInputPanelMenuItem from './GameInputPanelMenuItem.js'
 
-export default class MaskMenuItem extends MenuItem {
+export default class GameInputMenuItem extends MenuItem {
     constructor() {
         super({
             name: 'default-form-wrapper',
@@ -11,7 +11,7 @@ export default class MaskMenuItem extends MenuItem {
             type: Layout.type.WRAPPER
         })
         this.items = [
-            new MaskPanelMenuItem()
+            new GameInputPanelMenuItem()
         ]
     }
 }

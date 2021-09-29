@@ -10,7 +10,7 @@ export default class DeleteMaskAction extends Action {
      * @override
      */
     static run() {
-        const mask = StateManager.get().getNextProgressData(this.STATE)
+        const {bind: mask} = StateManager.get().getNextProgressData(this.STATE)
         World.get().getPreference().getMaskGroup().delete(mask)
         return true
     }

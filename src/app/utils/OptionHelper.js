@@ -49,6 +49,9 @@ import LoadUnitInstantMenuItem from '../layout/items/unit/LoadUnitInstantMenuIte
 import MaskGroup from '../preference/maskgroup/MaskGroup.js'
 import EditMaskPopupButtonMenuItem from '../layout/items/mask/edit/EditMaskPopupButtonMenuItem.js'
 import DeleteMaskMenuItem from '../layout/items/mask/delete/DeleteMaskMenuItem.js'
+import GameInput from '../preference/gameInput/GameInput.js'
+import EditGameInputPopupButtonMenuItem from '../layout/items/input/edit/EditGameInputPopupButtonMenuItem.js'
+import DeleteGameInputMenuItem from '../layout/items/input/delete/DeleteGameInputMenuItem.js'
 
 export default class OptionHelper {
 
@@ -107,6 +110,12 @@ export default class OptionHelper {
             options.push(...[
                 new EditMaskPopupButtonMenuItem(bindObject),
                 new DeleteMaskMenuItem(null, bindObject),
+            ])
+        }
+        if(bindObject instanceof GameInput){
+            options.push(...[
+                new EditGameInputPopupButtonMenuItem(bindObject),
+                new DeleteGameInputMenuItem(null, bindObject),
             ])
         }
         if(bindObject && bindObject.bind instanceof AssetsListMenuItem){

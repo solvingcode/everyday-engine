@@ -47,7 +47,7 @@ export default class MaskGroupPreferenceData extends Data {
      * @param {string} name
      * @return {MaskGroup}
      */
-    add(name){
+    add(name) {
         const maskGroup = new MaskGroup(name)
         this.masks.push(maskGroup)
         return maskGroup
@@ -72,9 +72,13 @@ export default class MaskGroupPreferenceData extends Data {
     /**
      * @param {MaskGroup} mask
      */
-    delete(mask){
+    delete(mask) {
         const index = this.getMasks().findIndex((element) => element === mask)
-        return this.getMasks().splice(index, 1)
+        if (index >= 0) {
+            return this.getMasks().splice(index, 1)
+        } else {
+            throw new ClientError(`Mask Group "${mask.getName()}" not found!`)
+        }
     }
 
     /**

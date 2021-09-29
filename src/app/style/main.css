@@ -540,15 +540,19 @@ h4{
     overflow: auto;
 }
 
-.mask-wrapper .panel button{
+.default-form-wrapper .panel button{
     width: unset;
     height: unset;
     padding: 5px 10px;
     margin-bottom: 10px;
 }
 
-.mask-wrapper .panel button i{
+.default-form-wrapper .panel button i{
     margin-right: 5px;
+}
+
+.default-form-wrapper .list-element{
+    margin-bottom: 2px;
 }
 
 #app-el-top-menu .panel{

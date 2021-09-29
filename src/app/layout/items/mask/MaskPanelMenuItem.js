@@ -7,13 +7,14 @@ export default class MaskPanelMenuItem extends PanelMenuItem {
     constructor() {
         super({
             name: 'mask',
-            title: 'Mask',
+            title: 'Mask Group',
             zone: Layout.zone.RIGHT
         })
         this.items = [
             new AddMaskPopupButtonMenuItem(this),
             new MaskListMenuItem(this)
         ]
+        this.collapsed = true
     }
 
     /**

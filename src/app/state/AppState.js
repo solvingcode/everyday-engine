@@ -551,6 +551,13 @@ AppState.States = {
     ACTION_DELETE_MASK_START: {history: true},
     ACTION_DELETE_MASK_PROGRESS: {history: false},
     ACTION_DELETE_MASK_STOP: {history: true},
+    ACTION_ADD_GAME_INPUT_START: {history: false},
+    ACTION_ADD_GAME_INPUT_PROGRESS: {history: false},
+    ACTION_ADD_GAME_INPUT_STOP: {history: false},
+    CONFIRM_ACTION_DELETE_GAME_INPUT_START: {history: false},
+    ACTION_DELETE_GAME_INPUT_START: {history: true},
+    ACTION_DELETE_GAME_INPUT_PROGRESS: {history: false},
+    ACTION_DELETE_GAME_INPUT_STOP: {history: true},
 }
 
 export default AppState
