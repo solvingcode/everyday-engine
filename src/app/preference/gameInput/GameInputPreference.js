@@ -8,12 +8,12 @@ import {GAME_INPUTS} from './GameInput.js'
 export default class GameInputPreference extends GameInputPreferenceData {
 
     init() {
-        this.addInput(GAME_INPUTS.RIGHT, 'D', new DynamicAttribute('value', TYPES.NUMBER, 1))
-        this.addInput(GAME_INPUTS.LEFT, 'Q', new DynamicAttribute('value', TYPES.NUMBER, -1))
-        this.addInput(GAME_INPUTS.UP, 'Z', new DynamicAttribute('value', TYPES.NUMBER, -1))
-        this.addInput(GAME_INPUTS.DOWN, 'S', new DynamicAttribute('value', TYPES.NUMBER, 1))
-        this.addInput(GAME_INPUTS.JUMP, 'SPACE', new DynamicAttribute('value', TYPES.NUMBER, 1))
-        this.addInput(GAME_INPUTS.ATTACK, 'P', new DynamicAttribute('value', TYPES.NUMBER, 1))
+        this.tryAddInput(GAME_INPUTS.RIGHT, 'D', new DynamicAttribute('value', TYPES.NUMBER, 1))
+        this.tryAddInput(GAME_INPUTS.LEFT, 'Q', new DynamicAttribute('value', TYPES.NUMBER, -1))
+        this.tryAddInput(GAME_INPUTS.UP, 'Z', new DynamicAttribute('value', TYPES.NUMBER, -1))
+        this.tryAddInput(GAME_INPUTS.DOWN, 'S', new DynamicAttribute('value', TYPES.NUMBER, 1))
+        this.tryAddInput(GAME_INPUTS.JUMP, 'SPACE', new DynamicAttribute('value', TYPES.NUMBER, 1))
+        this.tryAddInput(GAME_INPUTS.ATTACK, 'P', new DynamicAttribute('value', TYPES.NUMBER, 1))
     }
 
     /**

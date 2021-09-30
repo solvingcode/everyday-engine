@@ -99,6 +99,7 @@ class Mouse {
         this.mouseWheel.y = deltaY
         this.mouseWheelMove = true
         this.target = this.getTarget(event)
+        this.path = this.getPath(event)
     }
 
     /**

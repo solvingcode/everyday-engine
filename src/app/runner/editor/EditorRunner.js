@@ -7,7 +7,6 @@ import {MouseButton} from '../../core/Mouse.js'
 import MoveAction from '../action/edit/MoveAction.js'
 import ScaleAction from '../action/edit/ScaleAction.js'
 import RotateAction from '../action/edit/RotateAction.js'
-import {objectCanvas} from '../../core/Context.js'
 import Vector from '../../utils/Vector.js'
 import UnitSelector from '../../selector/UnitSelector.js'
 import UnitHelper from '../../utils/UnitHelper.js'
@@ -39,6 +38,8 @@ import MeshUnit from '../../unit/type/MeshUnit.js'
 import GUISelectorComponent from '../../component/internal/gui/selector/GUISelectorComponent.js'
 import GUIAnchorComponent from '../../component/internal/gui/anchor/GUIAnchorComponent.js'
 import UITransformComponent from '../../component/internal/ui/UITransformComponent.js'
+import Menu from '../../layout/Menu.js'
+import ContentCanvasMenuItem from '../../layout/items/content/ContentCanvasMenuItem.js'
 
 class EditorRunner extends Runner {
 
@@ -133,9 +134,12 @@ class EditorRunner extends Runner {
                 stateManager.startState(MoveCameraAction.STATE, 1)
             }
         }
-        if (mouse.getMouseWheel().y && mouse.target === objectCanvas) {
-            stateManager.startState(ZoomInOutCameraAction.STATE, 1,
-                {deltaY: mouse.getMouseWheel().y})
+        if (mouse.getMouseWheel().y) {
+            const itemTarget = Menu.get().getUIRenderer().getItemAt(mouse)
+            if(itemTarget && itemTarget.element instanceof ContentCanvasMenuItem){
+                stateManager.startState(ZoomInOutCameraAction.STATE, 1,
+                    {deltaY: mouse.getMouseWheel().y})
+            }
         }
     }
 

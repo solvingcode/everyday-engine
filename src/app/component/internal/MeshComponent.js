@@ -5,6 +5,7 @@ import {PrimitiveShape} from '../../unit/Unit.js'
 import {TYPES} from '../../pobject/AttributeType.js'
 import Vector from '../../utils/Vector.js'
 import MaterialType from '../../material/MaterialType.js'
+import {MODE} from '../../constant/FilterMode.js'
 
 export default class MeshComponent extends Component{
 
@@ -17,6 +18,7 @@ export default class MeshComponent extends Component{
      */
     initAttributes() {
         this.add('shape', TYPES.STRING, PrimitiveShape.RECT)
+        this.add('filter', TYPES.STRING, MODE.NO_SMOOTHING)
         this.add('style', TYPES.STYLE, new Style())
         this.add('size', TYPES.SIZE, new Size(0))
         this.add('material', TYPES.MATERIAL, MaterialType.DEFAULT)
@@ -247,6 +249,20 @@ export default class MeshComponent extends Component{
      */
     setMaterial(material){
         this.setValue('material', material)
+    }
+
+    /**
+     * @return {string}
+     */
+    getFilter(){
+        return this.getValue('filter')
+    }
+
+    /**
+     * @param {string} filter
+     */
+    setFilter(filter){
+        this.setValue('filter', filter)
     }
 
     /**

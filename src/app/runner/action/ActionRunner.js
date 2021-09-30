@@ -110,6 +110,7 @@ import AddMaskAction from './mask/AddMaskAction.js'
 import DeleteMaskAction from './mask/DeleteMaskAction.js'
 import AddGameInputAction from './input/AddGameInputAction.js'
 import DeleteGameInputAction from './input/DeleteGameInputAction.js'
+import RefreshProjectAction from './project/RefreshProjectAction.js'
 
 /**
  * Action Runner class.
@@ -162,6 +163,7 @@ class ActionRunner extends Runner {
             LOCK_ITEM: LockItemAction,
             UNLOCK_ITEM: UnlockItemAction,
             SHOW: ShowAction,
+            REFRESH: RefreshProjectAction,
             ROTATE_UP: RotateUpAction,
             STYLE_COLOR: StyleColorAction,
             SELECT_LIST_ELEMENT: SelectElementAction,

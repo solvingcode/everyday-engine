@@ -518,7 +518,9 @@ class StateManager {
     stopStates(states) {
         states.forEach(state => {
             const type = this.getType(state)
-            type && this.stopNextState(type)
+            if(type && this.hasAnyState(type)){
+                this.stopNextState(type)
+            }
         })
     }
 

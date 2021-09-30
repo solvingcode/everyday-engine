@@ -414,6 +414,9 @@ export default {
                                             dataId: {
                                                 type: TYPES.NUMBER
                                             },
+                                            id: {
+                                                type: TYPES.NUMBER
+                                            },
                                             name: {
                                                 type: TYPES.STRING
                                             },

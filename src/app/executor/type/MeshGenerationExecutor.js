@@ -14,6 +14,7 @@ import Maths from '../../utils/Maths.js'
 import ImageHelper from '../../utils/ImageHelper.js'
 import TransformHelper from '../../utils/TransformHelper.js'
 import Color from '../../utils/Color.js'
+import {MODE} from '../../constant/FilterMode.js'
 
 export default class MeshGenerationExecutor extends ComponentExecutor {
 
@@ -71,13 +72,15 @@ export default class MeshGenerationExecutor extends ComponentExecutor {
             const center = new Vector({x: scaleSize.width / 2, y: scaleSize.height / 2})
             const canvas = new OffscreenCanvas(width, height)
             const context = canvas.getContext(CANVAS_CONTEXT_TYPE)
-            const {opacity, borderSize, fillColor,
+            const {
+                opacity, borderSize, fillColor,
                 color, fillColorOpacity, colorOpacity,
                 shadowColor, shadowPosition, shadowBlur,
-                gradientColorAssetId} = meshComponent.getStyle()
+                gradientColorAssetId
+            } = meshComponent.getStyle()
             context.strokeStyle = Color.hexToRgba(color, colorOpacity)
             const gradientColorAsset = world.getAssetsManager().findAssetById(gradientColorAssetId)
-            if(gradientColorAsset){
+            if (gradientColorAsset) {
                 const gradientColor = gradientColorAsset.getType().getData()
                 const linearGradient = context.createLinearGradient(
                     scaleSize.width / 2, 0, scaleSize.width / 2, scaleSize.height)
@@ -85,10 +88,10 @@ export default class MeshGenerationExecutor extends ComponentExecutor {
                     linearGradient.addColorStop(colorStop.getOffset(), colorStop.getColor())
                 })
                 context.fillStyle = linearGradient
-            }else if (fillColor) {
+            } else if (fillColor) {
                 context.fillStyle = Color.hexToRgba(fillColor, fillColorOpacity)
             }
-            if(shadowColor){
+            if (shadowColor) {
                 context.shadowColor = shadowColor
                 context.shadowBlur = camera.toScaleNumber(shadowBlur)
                 context.shadowOffsetX = camera.toScaleNumber(shadowPosition.getX())
@@ -123,6 +126,9 @@ export default class MeshGenerationExecutor extends ComponentExecutor {
     closeContext(meshComponent, transformComponent, dataContext) {
         const {fillColor, color, borderSize, gradientColorAssetId} = meshComponent.getStyle()
         const {context, world, unitId, scaleSize} = dataContext
+        if (meshComponent.getFilter() === MODE.NO_SMOOTHING) {
+            context.imageSmoothingEnabled = false
+        }
         if (meshComponent.getAssetId()) {
             if (fillColor || gradientColorAssetId) {
                 context.fill()
@@ -147,7 +153,7 @@ export default class MeshGenerationExecutor extends ComponentExecutor {
             if (color && borderSize) {
                 context.stroke()
             }
-        } else if(borderSize) {
+        } else if (borderSize) {
             context.stroke()
         }
         return this.updateMeshFromContext(unitId, world.getMeshManager(), context)
@@ -158,7 +164,7 @@ export default class MeshGenerationExecutor extends ComponentExecutor {
      * @param {string} material
      * @return {Material}
      */
-    getMaterial(world, material){
+    getMaterial(world, material) {
         return world.getMaterialRegistry().getInstance(material)
     }
 
