@@ -23,11 +23,11 @@ export default class AnimationScriptExecutor extends ComponentExecutor {
             const scriptName = animationComponent.getScript()
             functionRegistry.getInstancesByClass(scriptName).forEach(instance => {
                 if (instance instanceof OnAnimationStartEvent && !animation) {
-                    instance.execute(functionRegistry, unit, animationComponent, world)
+                    instance.execute(functionRegistry, unit, animationComponent, world, executionContext)
                 } else if (instance instanceof AAnimation) {
                     const animationInstance = parseInt(ScriptHelper.getValueFromFunctionName(scriptName, instance.getName()))
                     if (animationInstance === animation) {
-                        instance.execute(functionRegistry, unit, animationComponent, world)
+                        instance.execute(functionRegistry, unit, animationComponent, world, executionContext)
                     }
                 }
             })

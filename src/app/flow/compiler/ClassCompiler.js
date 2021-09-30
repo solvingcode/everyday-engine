@@ -79,9 +79,18 @@ export default class ClassCompiler extends Compiler {
                     } else if (sourceElement instanceof AVariable) {
                         const targetInput = element.findInputByName(targetName)
                         stackFunction.getStack().push(...[
-                            new StackOperation(OPERATIONS.GET, sourceNode.getSourceName()),
-                            new StackOperation(OPERATIONS.PUSH, targetInput.getAttrName(), CONSTANTS.RESULT)
+                            new StackOperation(OPERATIONS.GET, sourceNode.getSourceName())
                         ])
+                        if(element instanceof ACustomFunction){
+                            stackFunction.getStack().push(...[
+                                new StackOperation(OPERATIONS.PUSH,
+                                    `[MEM]${element.getName()}.${targetInput.getAttrName()}`, CONSTANTS.RESULT)
+                            ])
+                        }else{
+                            stackFunction.getStack().push(...[
+                                new StackOperation(OPERATIONS.PUSH, targetInput.getAttrName(), CONSTANTS.RESULT)
+                            ])
+                        }
                         if (sourceElement instanceof AToggleVariable) {
                             stackFunction.getStack().push(...[
                                 new StackOperation(OPERATIONS.PUSH, CONSTANTS.RESULT, ''),

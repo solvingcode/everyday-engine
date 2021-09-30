@@ -11,8 +11,10 @@ export default class CallProcessor {
      * @param {Unit} unit
      * @param {ScriptComponent} scriptComponent
      * @param {World} world
+     * @param {{camera: Camera, lights: Unit[], deltaTime: number}} executionContext
      */
-    static run(functionName, stackOperation, stackRegister, functionRegistry, unit, scriptComponent, world) {
+    static run(functionName, stackOperation, stackRegister, functionRegistry,
+               unit, scriptComponent, world, executionContext) {
         const args = stackOperation.getArgs()
         const calledFunctionName = args && args[0]
         if (!calledFunctionName) {
@@ -33,7 +35,7 @@ export default class CallProcessor {
             }
             aFunction.setInputValue(inputName, inputValue)
         })
-        aFunction.execute(functionRegistry, unit, scriptComponent, world)
+        aFunction.execute(functionRegistry, unit, scriptComponent, world, executionContext)
         stackRegister.pushRet(functionName, aFunction.getOutputValue())
     }
 

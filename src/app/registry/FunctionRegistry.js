@@ -80,6 +80,9 @@ import ACustomFunction from '../flow/function/custom/ACustomFunction.js'
 import EnableUnitFunction from '../flow/function/native/unit/EnableUnitFunction.js'
 import DisableUnitFunction from '../flow/function/native/unit/DisableUnitFunction.js'
 import IsUnitPressedFunction from '../flow/function/native/unit/IsUnitPressedFunction.js'
+import GetDeltaTimeFunction from '../flow/function/native/time/GetDeltaTimeFunction.js'
+import TranslateFunction from '../flow/function/native/transform/TranslateFunction.js'
+import MultiplyVectorFunction from '../flow/function/native/basic/MultiplyVectorFunction.js'
 
 export default class FunctionRegistry extends Registry{
 
@@ -118,6 +121,7 @@ export default class FunctionRegistry extends Registry{
             new GetInputXAxisFunction(),
             new GetInputYAxisFunction(),
             new MultiplyFunction(),
+            new MultiplyVectorFunction(),
             new EqualToFunction(),
             new NotEqualToFunction(),
             new AndFunction(),
@@ -175,6 +179,7 @@ export default class FunctionRegistry extends Registry{
             //Time
             new GetTimeFunction(),
             new IsUpdateTimeFunction(),
+            new GetDeltaTimeFunction(),
 
             //Physics
             new MoveXAxisFunction(),
@@ -187,6 +192,7 @@ export default class FunctionRegistry extends Registry{
 
             //Transform
             new FlipScaleFunction(),
+            new TranslateFunction(),
 
             //Structure
             new VectorFunction(),

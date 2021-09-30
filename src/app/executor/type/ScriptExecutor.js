@@ -49,7 +49,7 @@ export default class ScriptExecutor extends ComponentExecutor {
 
                         instance instanceof OnUpdateEvent
                     ) {
-                        instance.execute(functionRegistry, unit, scriptComponent, world)
+                        instance.execute(functionRegistry, unit, scriptComponent, world, executionContext)
                     }
                 })
             })

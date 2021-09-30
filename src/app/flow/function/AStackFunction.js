@@ -15,8 +15,8 @@ export default class AStackFunction extends AFunction{
     /**
      * @override
      */
-    execute(functionRegistry, unit, scriptComponent, world){
-        const stackRegister = StackProcessor.get().run(this.getName(), this.stack, functionRegistry, unit, scriptComponent, world)
+    execute(functionRegistry, unit, scriptComponent, world, executionContext){
+        const stackRegister = StackProcessor.get().run(this.getName(), this.stack, functionRegistry, unit, scriptComponent, world, executionContext)
         this.setOutputValue(stackRegister.popRet(this.getName()))
     }
 

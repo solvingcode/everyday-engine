@@ -182,6 +182,9 @@ import DisableUnitFunction from '../../flow/function/native/unit/DisableUnitFunc
 import IsUnitPressedFunction from '../../flow/function/native/unit/IsUnitPressedFunction.js'
 import AUnitVariable from '../../flow/variable/AUnitVariable.js'
 import AssetUnit from '../../asset/types/unit/AssetUnit.js'
+import TranslateFunction from '../../flow/function/native/transform/TranslateFunction.js'
+import GetDeltaTimeFunction from '../../flow/function/native/time/GetDeltaTimeFunction.js'
+import MultiplyVectorFunction from '../../flow/function/native/basic/MultiplyVectorFunction.js'
 
 /**
  * @class {DataSchema}
@@ -361,6 +364,9 @@ class DataSchema {
         {id: 1600, type: IsUnitPressedFunction},
         {id: 1610, type: AUnitVariable},
         {id: 1620, type: AssetUnit},
+        {id: 1630, type: TranslateFunction},
+        {id: 1640, type: GetDeltaTimeFunction},
+        {id: 1650, type: MultiplyVectorFunction},
     ]
 
     /**

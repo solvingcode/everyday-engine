@@ -24,7 +24,7 @@ export class PhysicsRunner extends Runner {
         const world = World.get()
         const physicsManager = world.getPhysicsManager()
         world.getUnitManager()
-            .findUnitsByAnyComponentClasses([RigidBodyComponent, ColliderComponent])
+            .findUnitsByComponentClasses([RigidBodyComponent, ColliderComponent])
             .forEach(unit => physicsManager.update(unit))
         physicsManager.updateEngine()
     }

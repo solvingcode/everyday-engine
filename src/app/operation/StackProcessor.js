@@ -31,9 +31,11 @@ export default class StackProcessor {
      * @param {Unit} unit
      * @param {ScriptComponent} scriptComponent
      * @param {World} world
+     * @param {{camera: Camera, lights: Unit[], deltaTime: number}} executionContext
      * @return {StackRegister}
      */
-    run(functionName, stack, functionRegistry, unit, scriptComponent, world) {
+    run(functionName, stack, functionRegistry, unit, scriptComponent,
+        world, executionContext) {
 
         let iStackOperation = 0
         while (iStackOperation < stack.length) {
@@ -47,10 +49,10 @@ export default class StackProcessor {
                 const operation = stackOperation.getOperation()
                 switch (operation) {
                     case OPERATIONS.CALL:
-                        CallProcessor.run(functionName, stackOperation, this.stackRegister, functionRegistry, unit, scriptComponent, world)
+                        CallProcessor.run(functionName, stackOperation, this.stackRegister, functionRegistry, unit, scriptComponent, world, executionContext)
                         break
                     case OPERATIONS.DISPATCH:
-                        EventProcessor.run(stackOperation, this.stackRegister, functionRegistry, unit, scriptComponent, world)
+                        EventProcessor.run(stackOperation, this.stackRegister, functionRegistry, unit, scriptComponent, world, executionContext)
                         break
                     case OPERATIONS.GET:
                         GetProcessor.run(functionName, stackOperation, this.stackRegister, unit, scriptComponent)
