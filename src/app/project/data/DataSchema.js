@@ -185,6 +185,8 @@ import AssetUnit from '../../asset/types/unit/AssetUnit.js'
 import TranslateFunction from '../../flow/function/native/transform/TranslateFunction.js'
 import GetDeltaTimeFunction from '../../flow/function/native/time/GetDeltaTimeFunction.js'
 import MultiplyVectorFunction from '../../flow/function/native/basic/MultiplyVectorFunction.js'
+import BoxCastFunction from '../../flow/function/native/physics/BoxCastFunction.js'
+import MoveXYAxisFunction from '../../flow/function/native/physics/MoveXYAxisFunction.js'
 
 /**
  * @class {DataSchema}
@@ -367,6 +369,8 @@ class DataSchema {
         {id: 1630, type: TranslateFunction},
         {id: 1640, type: GetDeltaTimeFunction},
         {id: 1650, type: MultiplyVectorFunction},
+        {id: 1660, type: BoxCastFunction},
+        {id: 1670, type: MoveXYAxisFunction},
     ]
 
     /**

@@ -135,6 +135,15 @@ export default class MatterEngine extends PhysicsEngine {
 
     /**
      * @override
+     * @param {Matter.Body} body
+     * @param {Vector} position
+     */
+    setPositionToBody(body, position) {
+        Matter.Body.setPosition(body, position)
+    }
+
+    /**
+     * @override
      */
     setFrictionToBody(body, friction) {
         body.friction = friction
@@ -212,5 +221,12 @@ export default class MatterEngine extends PhysicsEngine {
     isCollisionHasCollider(collision, colliderComponent) {
         const colliderComponentId = colliderComponent.getId()
         return colliderComponentId === collision.bodyA.label || colliderComponentId === collision.bodyB.label
+    }
+
+    /**
+     * @override
+     */
+    getColliderIdsFromCollision(collision){
+        return [collision.bodyA.label, collision.bodyB.label]
     }
 }

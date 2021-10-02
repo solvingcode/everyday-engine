@@ -185,5 +185,17 @@ export const TYPES_NAME = [
     {
         value: TYPES.BOOLEAN,
         label: 'Boolean'
+    },
+    {
+        value: TYPES.VECTOR,
+        label: 'Vector'
+    },
+    {
+        value: TYPES.MASK_GROUP_INSTANCE,
+        label: 'Mask Group'
+    },
+    {
+        value: TYPES.COMPONENT_INSTANCE,
+        label: 'Component'
     }
 ]

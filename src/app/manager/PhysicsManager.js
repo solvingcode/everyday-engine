@@ -47,6 +47,35 @@ export default class PhysicsManager {
     }
 
     /**
+     * @param {World} world
+     * @param {Unit} unit
+     * @param {ColliderComponent} colliderComponent
+     * @param {Vector} distance
+     * @param {MaskGroup} maskGroup
+     * @return {ColliderComponent[]}
+     */
+    boxCast(world, unit, colliderComponent, distance, maskGroup){
+        const position = UnitHelper.getColliderPosition(unit, colliderComponent)
+        const size = UnitHelper.getColliderSize(unit, colliderComponent)
+        const boxNewPosition = [
+            distance,
+            Vector.add(distance, new Vector({x: size.getWidth() })),
+            Vector.add(distance, new Vector({x: size.getWidth(), y: size.getHeight()})),
+            Vector.add(distance, new Vector({ y: size.getHeight()}))
+        ]
+        const collisions = boxNewPosition.reduce((pValue, cValue) =>
+            [...pValue, ...this.physicsEngine.rayCast(unit, position, Vector.add(position, cValue))], [])
+        const colliderIds = _.uniq(collisions.reduce((pValue, cValue) =>
+            [...pValue, ...this.physicsEngine.getColliderIdsFromCollision(cValue)], []))
+        const units = world.getUnitManager().findUnitsByComponentIds(colliderIds)
+            .filter(pUnit => pUnit.getMaskGroupId() === maskGroup.getId())
+        return units.reduce((pValue, cValue) => [
+            ...pValue,
+            ...colliderIds.map(colliderId => cValue.findComponentById(colliderId)).filter(result => result)
+        ], [])
+    }
+
+    /**
      * @param {Unit} unit
      * @param {ColliderComponent} colliderComponent
      * @param {Vector} start
@@ -118,10 +147,42 @@ export default class PhysicsManager {
 
     /**
      * @param {Unit} unit
+     * @param {Vector} position
+     */
+    setPosition(unit, position){
+        this.physicsEngine.setPosition(unit, position)
+    }
+
+    /**
+     * @param {Unit} unit
      * @param {number} speed
      */
     moveXAxis(unit, speed) {
         this.setVelocity(unit, new Vector({x: speed, y: this.getVelocity(unit).getY()}))
+    }
+
+    /**
+     * @param {Unit} unit
+     * @param {Vector} moveVector
+     */
+    moveXYAxis(unit, moveVector){
+        this.setVelocity(unit, moveVector)
+    }
+
+    /**
+     * @param {Unit} unit
+     * @param {Vector} position
+     */
+    translate(unit, position){
+        const body = this.physicsEngine.findBody(unit)
+        if (body) {
+            const bodyPosition = new Vector(this.physicsEngine.getBodyPosition(body))
+            const transformComponent = unit.getComponent(TransformComponent)
+            const actualPosition = transformComponent.getPosition()
+            const actualDiff = Vector.subtract(bodyPosition, actualPosition)
+            const newPosition = Vector.add(position, actualDiff)
+            this.setPosition(unit, newPosition)
+        }
     }
 
     updateEngine() {

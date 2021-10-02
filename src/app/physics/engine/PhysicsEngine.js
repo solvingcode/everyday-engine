@@ -59,6 +59,15 @@ export default class PhysicsEngine {
 
     /**
      * @param {Unit} unit
+     * @param {Vector} position
+     */
+    setPosition(unit, position) {
+        const body = this.tryFindBody(unit)
+        this.setPositionToBody(body, position)
+    }
+
+    /**
+     * @param {Unit} unit
      * @param {number} friction
      */
     setFriction(unit, friction) {
@@ -291,6 +300,16 @@ export default class PhysicsEngine {
      * @protected
      * @abstract
      * @param {*} body
+     * @param {Vector} position
+     */
+    setPositionToBody(body, position) {
+        throw new SystemError(`${this.constructor.name}.setPositionToBody method must be implemented`)
+    }
+
+    /**
+     * @protected
+     * @abstract
+     * @param {*} body
      * @param {number} friction
      */
     setFrictionToBody(body, friction) {
@@ -399,6 +418,15 @@ export default class PhysicsEngine {
      */
     isCollisionHasCollider(collision, colliderComponent) {
         throw new SystemError(`${this.constructor.name}.isCollisionHasCollider method must be implemented`)
+    }
+
+    /**
+     * @abstract
+     * @param {*} collision
+     * @return {number[]}
+     */
+    getColliderIdsFromCollision(collision) {
+        throw new SystemError(`${this.constructor.name}.getColliderFromCollision method must be implemented`)
     }
 
     /**

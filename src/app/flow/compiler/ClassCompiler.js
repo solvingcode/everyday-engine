@@ -121,10 +121,18 @@ export default class ClassCompiler extends Compiler {
                         const targetInput = element.findInputByName(targetName)
                         if (targetInput) {
                             const attribute = NodeHelper.getAttributeFromNodeFunctionInput(sourceNode, world)
-                            stackFunction.getStack().push(...[
-                                new StackOperation(OPERATIONS.PUSH, targetInput.getAttrName(),
-                                    `[MEM]${scriptFunctionName}.${attribute.getAttrName()}`)
-                            ])
+                            if(element instanceof ACustomFunction){
+                                stackFunction.getStack().push(...[
+                                    new StackOperation(OPERATIONS.PUSH,
+                                        `[MEM]${element.getName()}.${targetInput.getAttrName()}`,
+                                        `[MEM]${scriptFunctionName}.${attribute.getAttrName()}`)
+                                ])
+                            }else{
+                                stackFunction.getStack().push(...[
+                                    new StackOperation(OPERATIONS.PUSH, targetInput.getAttrName(),
+                                        `[MEM]${scriptFunctionName}.${attribute.getAttrName()}`)
+                                ])
+                            }
                         }
                     } else if(sourceElement instanceof ACustomFunction){
                         const targetInput = element.findInputByName(targetName)

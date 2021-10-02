@@ -1,13 +1,12 @@
 import {TYPES} from '../../../../pobject/AttributeType.js'
 import AFunction from '../../AFunction.js'
-import TransformComponent from '../../../../component/internal/TransformComponent.js'
 import Vector from '../../../../utils/Vector.js'
 import World from '../../../../world/World.js'
 
-export default class TranslateFunction extends AFunction {
+export default class MoveXYAxisFunction extends AFunction {
 
     constructor() {
-        super('Translate')
+        super('MoveXYAxis')
     }
 
     /**
@@ -26,9 +25,6 @@ export default class TranslateFunction extends AFunction {
         const physicsManager = world.getPhysicsManager()
         const target = this.getInputValue('target')
         const moveVector = this.getInputValue('moveVector')
-        const transformComponent = target.getComponent(TransformComponent)
-        const actualPosition = transformComponent.getPosition()
-        const newPosition = Vector.add(actualPosition, moveVector)
-        physicsManager.translate(unit, newPosition)
+        physicsManager.moveXYAxis(target, moveVector)
     }
 }

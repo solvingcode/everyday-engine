@@ -4,13 +4,11 @@ import FileHelper from '../utils/FileHelper.js'
 import AssetImage from '../asset/types/image/AssetImage.js'
 import AssetScriptXml from '../asset/types/script/AssetScriptXml.js'
 import Folder from '../asset/Folder.js'
-import ClassScript from '../flow/ClassScript.js'
 import ClientError from '../exception/type/ClientError.js'
 import AssetScript from '../asset/types/script/AssetScript.js'
 import Animation from '../animation/Animation.js'
 import AssetAnimationXml from '../asset/types/animation/AssetAnimationXml.js'
 import SystemError from '../exception/type/SystemError.js'
-import AnimationScript from '../flow/AnimationScript.js'
 import Maths from '../utils/Maths.js'
 import AssetAudio from '../asset/types/Audio/AssetAudio.js'
 import AssetFont from '../asset/types/font/AssetFont.js'
@@ -82,11 +80,12 @@ export default class AssetsManager extends AssetsManagerData {
      * @param {Folder} folder
      * @param {Class<AssetScript>} type
      * @param {ScriptXmlGenerator} generator
+     * @param {ClassScript} scriptClass
      * @return {Asset}
      */
-    async createClassScript(folder, type, generator) {
+    async createClassScript(folder, type, generator, scriptClass) {
         const assetName = this.generateUniqAssetName('NewScript', folder.getId())
-        const flow = new ClassScript(assetName)
+        const flow = new scriptClass(assetName)
         const asset = this.createAsset(
             generator.generate(flow),
             type,
@@ -101,11 +100,12 @@ export default class AssetsManager extends AssetsManagerData {
      * @param {Folder} folder
      * @param {Class<AssetScript>} type
      * @param {AssetAnimationScriptGenerator} generator
+     * @param {ClassScript} scriptClass
      * @return {Asset}
      */
-    async createAnimationScript(folder, type, generator) {
+    async createAnimationScript(folder, type, generator, scriptClass) {
         const assetName = this.generateUniqAssetName('NewAnimationScript', folder.getId())
-        const flow = new AnimationScript(assetName)
+        const flow = new scriptClass(assetName)
         const asset = this.createAsset(
             generator.generate(flow),
             type,

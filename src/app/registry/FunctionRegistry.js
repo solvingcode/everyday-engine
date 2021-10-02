@@ -83,6 +83,8 @@ import IsUnitPressedFunction from '../flow/function/native/unit/IsUnitPressedFun
 import GetDeltaTimeFunction from '../flow/function/native/time/GetDeltaTimeFunction.js'
 import TranslateFunction from '../flow/function/native/transform/TranslateFunction.js'
 import MultiplyVectorFunction from '../flow/function/native/basic/MultiplyVectorFunction.js'
+import BoxCastFunction from '../flow/function/native/physics/BoxCastFunction.js'
+import MoveXYAxisFunction from '../flow/function/native/physics/MoveXYAxisFunction.js'
 
 export default class FunctionRegistry extends Registry{
 
@@ -183,12 +185,14 @@ export default class FunctionRegistry extends Registry{
 
             //Physics
             new MoveXAxisFunction(),
+            new MoveXYAxisFunction(),
             new ApplyForceFunction(),
             new GetVelocityXFunction(),
             new GetVelocityYFunction(),
             new IsGroundedFunction(),
             new ScaleMeshFunction(),
             new GetAllCollisionFunction(),
+            new BoxCastFunction(),
 
             //Transform
             new FlipScaleFunction(),

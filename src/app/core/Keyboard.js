@@ -12,7 +12,7 @@ class Keyboard {
      * @param {number} key
      */
     setKeyPressed(key) {
-        if (!this.isKeyPressed(key)) {
+        if (!this.isKeyPressed(key) && this.isKeyValid(key)) {
             this.keysPressed.push(key)
         }
     }
@@ -56,7 +56,7 @@ class Keyboard {
      * @param {number} key
      */
     setKeyReleased(key) {
-        if (this.isKeyPressed(key)) {
+        if (this.isKeyPressed(key) && this.isKeyValid(key)) {
             let index = this.keysPressed.indexOf(key)
             this.keysPressed.splice(index, 1)
             this.keysReleased.push(key)
@@ -97,6 +97,14 @@ class Keyboard {
 
     clear(){
         this.keysReleased = []
+    }
+
+    /**
+     * @param {number} key
+     * @return {boolean}
+     */
+    isKeyValid(key) {
+        return Object.values(KeyCode).includes(key)
     }
 }
 

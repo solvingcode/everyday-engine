@@ -3,7 +3,7 @@ import MaskGroupPreferenceData from '../../project/data/MaskGroupPreferenceData.
 export default class MaskGroupPreference extends MaskGroupPreferenceData {
 
     init() {
-        this.tryAddMask('Enemy')
+        this.tryAddMask('Default')
     }
 
     /**

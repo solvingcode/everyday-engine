@@ -20,6 +20,6 @@ export default class isArrayEmptyFunction extends AFunction{
      */
     execute(functionRegistry, unit, scriptComponent, world) {
         const array = this.getInputValue('array')
-        this.setOutputValue(!array || array.length)
+        this.setOutputValue(!array || array.length === 0)
     }
 }
