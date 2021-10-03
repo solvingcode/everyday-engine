@@ -564,6 +564,12 @@ AppState.States = {
     ACTION_ADD_TILE_GRID_START: {history: false},
     ACTION_ADD_TILE_GRID_PROGRESS: {history: false},
     ACTION_ADD_TILE_GRID_STOP: {history: false},
+    ACTION_ADD_TILE_MAP_START: {history: false},
+    ACTION_ADD_TILE_MAP_PROGRESS: {history: false},
+    ACTION_ADD_TILE_MAP_STOP: {history: false},
+    ACTION_SET_TILE_MAP_START: {history: false},
+    ACTION_SET_TILE_MAP_PROGRESS: {history: false},
+    ACTION_SET_TILE_MAP_STOP: {history: false},
 }
 
 export default AppState

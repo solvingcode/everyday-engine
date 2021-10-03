@@ -1,6 +1,6 @@
 import GUIPropertyComponent from '../../../../../component/internal/gui/property/GUIPropertyComponent.js'
 import UnitBehaviorInstant from '../../../UnitBehaviorInstant.js'
-import TileGridComponent from '../../../../../component/internal/TileGridComponent.js'
+import TileGridComponent from '../../../../../component/internal/tile/TileGridComponent.js'
 
 export default class TileGridUnitInstant extends UnitBehaviorInstant {
 
@@ -17,6 +17,7 @@ export default class TileGridUnitInstant extends UnitBehaviorInstant {
      */
     setup() {
         this.getComponent(GUIPropertyComponent).setRank(60)
+        this.getComponent(GUIPropertyComponent).setSelectable(false)
     }
 
 }

@@ -11,6 +11,7 @@ import AddSceneMenuItem from '../../scene/AddSceneMenuItem.js'
 import AlignParentMenuItem from '../../edit/AlignParentMenuItem.js'
 import CreateUnitInstantMenuItem from '../../unit/CreateUnitInstantMenuItem.js'
 import TileGridMenuItem from '../../unit/TileGridMenuItem.js'
+import TileMapMenuItem from '../../unit/TileMapMenuItem.js'
 
 export default class UnitTopMenuItem extends OptionActionsMenuItem {
     constructor(bindObject, position, size) {
@@ -20,6 +21,7 @@ export default class UnitTopMenuItem extends OptionActionsMenuItem {
             new LightPointMenuItem(),
             new LightGlobalMenuItem(),
             new TileGridMenuItem(),
+            new TileMapMenuItem(),
             new AddAnimationMenuItem(),
             new OptionActionsButtonMenuItem('UI', UITopMenuItem, null, true),
             new OptionActionsButtonMenuItem('Visibility', VisibilityTopMenuItem, null, true),

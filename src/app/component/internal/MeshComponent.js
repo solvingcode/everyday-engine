@@ -32,13 +32,16 @@ export default class MeshComponent extends Component{
         this.add('imageRepeatAreaMin', TYPES.VECTOR, new Vector())
         this.add('imageRepeatAreaMax', TYPES.VECTOR, new Vector())
         this.add('version', TYPES.NUMBER, 0)
+        this.add('mapAssetPositions', TYPES.ARRAY | TYPES.VECTOR, [])
+        this.add('mapAssetIds', TYPES.ARRAY | TYPES.NUMBER, [])
     }
 
     /**
      * @override
      */
     getExcludeFields() {
-        return ['generated', 'shape', 'shapeVertices', 'vertices', 'version', 'style', 'size']
+        return ['generated', 'shape', 'shapeVertices', 'vertices',  'version', 'style', 'size', 'mapAssetPositions',
+            'mapAssetIds']
     }
 
     /**
@@ -263,6 +266,34 @@ export default class MeshComponent extends Component{
      */
     setFilter(filter){
         this.setValue('filter', filter)
+    }
+
+    /**
+     * @return {Vector[]}
+     */
+    getMapAssetPositions(){
+        return this.getValue('mapAssetPositions')
+    }
+
+    /**
+     * @param {Vector[]} mapAssetPositions
+     */
+    setMapAssetPositions(mapAssetPositions){
+        this.setValue('mapAssetPositions', mapAssetPositions)
+    }
+
+    /**
+     * @return {number[]}
+     */
+    getMapAssetIds(){
+        return this.getValue('mapAssetIds')
+    }
+
+    /**
+     * @param {Vector[]} mapAssetIds
+     */
+    setMapAssetIds(mapAssetIds){
+        this.setValue('mapAssetIds', mapAssetIds)
     }
 
     /**

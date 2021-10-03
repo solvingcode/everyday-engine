@@ -112,6 +112,8 @@ import AddGameInputAction from './input/AddGameInputAction.js'
 import DeleteGameInputAction from './input/DeleteGameInputAction.js'
 import RefreshProjectAction from './project/RefreshProjectAction.js'
 import AddTileGridAction from './tile/AddTileGridAction.js'
+import AddTileMapAction from './tile/AddTileMapAction.js'
+import SetTileMapAction from './tile/SetTileMapAction.js'
 
 /**
  * Action Runner class.
@@ -188,6 +190,8 @@ class ActionRunner extends Runner {
             FORM_UPDATE: FormUpdateAction,
             ADD_CAMERA: AddCameraAction,
             ADD_TILE_GRID: AddTileGridAction,
+            ADD_TILE_MAP: AddTileMapAction,
+            SET_TILE_MAP: SetTileMapAction,
             ADD_LIGHT_POINT: AddLightPointAction,
             ADD_LIGHT_GLOBAL: AddLightGlobalAction,
             SELECT_TAB: SelectTabAction,

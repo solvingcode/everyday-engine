@@ -9,12 +9,17 @@ export default class ComponentData extends Data{
      * @type {DynamicAttribute[]}
      */
     attributes
+    /**
+     * @type {boolean}
+     */
+    hidden
 
     constructor(name) {
         super()
         this.id = Maths.generateId()
         this.name = name || 'Custom Component'
         this.attributes = []
+        this.hidden = false
     }
 
     /**
@@ -46,6 +51,13 @@ export default class ComponentData extends Data{
     }
 
     /**
+     * @param {boolean} hidden
+     */
+    setHidden(hidden){
+        this.hidden = hidden
+    }
+
+    /**
      * @return {boolean}
      */
     isUnique(){
@@ -55,8 +67,15 @@ export default class ComponentData extends Data{
     /**
      * @return {boolean}
      */
+    getHidden(){
+        return this.hidden
+    }
+
+    /**
+     * @return {boolean}
+     */
     isHidden(){
-        return false
+        return this.getHidden()
     }
 
     /**

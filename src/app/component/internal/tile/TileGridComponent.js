@@ -1,6 +1,6 @@
-import Component from '../Component.js'
-import {TYPES} from '../../pobject/AttributeType.js'
-import Vector from '../../utils/Vector.js'
+import Component from '../../Component.js'
+import {TYPES} from '../../../pobject/AttributeType.js'
+import Vector from '../../../utils/Vector.js'
 
 export default class TileGridComponent extends Component {
 
@@ -12,7 +12,7 @@ export default class TileGridComponent extends Component {
      * @override
      */
     initAttributes() {
-        this.add('cellScale', TYPES.VECTOR, new Vector({x: 20, y: 20}))
+        this.add('cellScale', TYPES.VECTOR, new Vector({x: 10, y: 10}))
     }
 
     /**

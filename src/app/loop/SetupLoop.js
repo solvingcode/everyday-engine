@@ -29,7 +29,7 @@ import MeshStyleExecutor from '../executor/type/MeshStyleExecutor.js'
 import UITransformExecutor from '../executor/type/UITransformExecutor.js'
 import UIButtonStyleExecutor from '../executor/type/UIButtonStyleExecutor.js'
 import {ShortcutRunner} from '../runner/shortcut/ShortcutRunner.js'
-import TileGridExecutor from '../executor/type/TileGridExecutor.js'
+import TileEditorRunner from '../runner/editor/TileEditorRunner.js'
 
 /**
  * @class {SetupLoop}
@@ -51,8 +51,8 @@ class SetupLoop extends Loop {
         this.setupRenderer = SetupRenderer.get()
         this.runners = [
             WorldInitializeRunner, /*HistoryRunner,*/ SimulateRunner, ActionRunner, EditorRunner, ScriptEditorRunner,
-            AnimationEditorRunner, MenuRunner, SetupExecutorRunner, SetupRenderRunner, WindowRunner, GraphDrawerRunner,
-            UnitDrawerRunner, FormRunner, LightRunner, SceneRunner, ShortcutRunner
+            AnimationEditorRunner, TileEditorRunner, MenuRunner, SetupExecutorRunner, SetupRenderRunner, WindowRunner,
+            GraphDrawerRunner, UnitDrawerRunner, FormRunner, LightRunner, SceneRunner, ShortcutRunner
         ]
         ExecutorRegistry.get().register([
             new CameraExecutor(),
@@ -64,8 +64,7 @@ class SetupLoop extends Loop {
             new MeshStyleExecutor(),
             new GUIPropertyExecutor(),
             new LightExecutor(),
-            new UIButtonStyleExecutor(),
-            new TileGridExecutor()
+            new UIButtonStyleExecutor()
         ])
     }
 

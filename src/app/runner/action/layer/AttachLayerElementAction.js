@@ -8,6 +8,8 @@ import ClientError from '../../../exception/type/ClientError.js'
 import AssetScript from '../../../asset/types/script/AssetScript.js'
 import AssetHelper from '../../../utils/AssetHelper.js'
 import AssetImage from '../../../asset/types/image/AssetImage.js'
+import TileGridUnitInstant from '../../../unit/instant/type/internal/tile/TileGridUnitInstant.js'
+import TileMapUnitInstant from '../../../unit/instant/type/internal/tile/TileMapUnitInstant.js'
 
 export default class AttachLayerElementAction extends Action {
 
@@ -20,6 +22,9 @@ export default class AttachLayerElementAction extends Action {
         const {start: startData, end: endData} = StateManager.get().getNextProgressData(this.STATE)
         if (startData instanceof UIUnitInstant && !(endData instanceof UIContainerUnitInstant)) {
             throw new ClientError(`UI Unit must be child of UI Container`)
+        }
+        if (startData instanceof TileMapUnitInstant && !(endData instanceof TileGridUnitInstant)) {
+            throw new ClientError(`Tile Map must be child of Tile Grid`)
         }
         if (endData instanceof Unit && startData instanceof Unit && endData !== startData) {
             startData.setUnitParentId(endData.getId())

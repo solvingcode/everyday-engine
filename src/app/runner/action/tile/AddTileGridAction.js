@@ -1,6 +1,6 @@
 import Action from '../Action.js'
 import World from '../../../world/World.js'
-import TileGridUnitInstant from '../../../unit/instant/type/internal/tilegrid/TileGridUnitInstant.js'
+import TileGridUnitInstant from '../../../unit/instant/type/internal/tile/TileGridUnitInstant.js'
 
 export default class AddTileGridAction extends Action {
 

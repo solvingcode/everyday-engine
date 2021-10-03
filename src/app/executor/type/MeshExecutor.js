@@ -117,8 +117,10 @@ export default class MeshExecutor extends ComponentExecutor {
         const parentUnit = unitManager.findParentUnit(unit)
         if (parentUnit) {
             const parentTransformComponent = parentUnit.getComponent(TransformComponent)
-            const parentRotation = parentTransformComponent.getRotation()
-            transformComponent.setLocalRotation(rotation - parentRotation)
+            if(parentTransformComponent){
+                const parentRotation = parentTransformComponent.getRotation()
+                transformComponent.setLocalRotation(rotation - parentRotation)
+            }
         }
         meshComponent.setGenerated(false)
         transformComponent.setLastRotation(transformComponent.getRotation())

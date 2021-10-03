@@ -53,6 +53,7 @@ import GameInput from '../preference/gameInput/GameInput.js'
 import EditGameInputPopupButtonMenuItem from '../layout/items/input/edit/EditGameInputPopupButtonMenuItem.js'
 import DeleteGameInputMenuItem from '../layout/items/input/delete/DeleteGameInputMenuItem.js'
 import TileGridMenuItem from '../layout/items/unit/TileGridMenuItem.js'
+import TileMapMenuItem from '../layout/items/unit/TileMapMenuItem.js'
 
 export default class OptionHelper {
 
@@ -77,6 +78,7 @@ export default class OptionHelper {
                 new DuplicateMenuItem(),
                 new MoveUpMenuItem(),
                 new MoveDownMenuItem(),
+                new TileMapMenuItem(),
                 new OptionActionsTitleMenuItem('Unit'),
                 new OptionActionsButtonMenuItem('UI', UITopMenuItem, null, true),
                 new OptionActionsButtonMenuItem('Visibility', VisibilityTopMenuItem, null, true),
@@ -135,6 +137,7 @@ export default class OptionHelper {
                 new LightPointMenuItem(),
                 new LightGlobalMenuItem(),
                 new TileGridMenuItem(),
+                new TileMapMenuItem(),
                 new AddAnimationMenuItem(),
                 new OptionActionsButtonMenuItem('UI', UITopMenuItem, null, true),
             ])

@@ -4,12 +4,11 @@ import World from '../../world/World.js'
 import {MouseButton} from '../../core/Mouse.js'
 import TransformComponent from '../../component/internal/TransformComponent.js'
 import Vector from '../../utils/Vector.js'
-import Menu from '../../layout/Menu.js'
 import ScriptHelper from '../../utils/ScriptHelper.js'
 import Window from '../../core/Window.js'
 import FunctionScript from '../../flow/FunctionScript.js'
 import {MAIN_FUNCTION} from '../../flow/AScriptFunction.js'
-import ContentCanvasMenuItem from '../../layout/items/content/ContentCanvasMenuItem.js'
+import LayoutHelper from '../../utils/LayoutHelper.js'
 
 export default class ScriptEditorRunner extends Runner {
 
@@ -98,7 +97,7 @@ export default class ScriptEditorRunner extends Runner {
         const unit = graphManager.findFirstUnitByPosition(camera.fromCanvasCoord(currentScenePosition))
         if (mouse.isButtonPressed(MouseButton.LEFT) &&
             !stateManager.hasAnyState('DRAW_NODE_EDGE') &&
-            this.isPositionValid(mouse) && !this.unitMoving && (!unit || !unit.isSelected())) {
+            LayoutHelper.isPositionValid(mouse) && !this.unitMoving && (!unit || !unit.isSelected())) {
             const dragArea = mouse.getDragArea(script.getCamera())
             world.getGraphManager().selectUnits(script, dragArea)
         }
@@ -140,7 +139,7 @@ export default class ScriptEditorRunner extends Runner {
                 this.unitMoving = unit
             }
             //if the actual position is valid (not outside area of selection)
-            else if (this.isPositionValid(mouse)) {
+            else if (LayoutHelper.isPositionValid(mouse)) {
                 //search if a node input/output is clicked to start drawing edges, else start drawing selection box
                 if (!stateManager.hasAnyState('DRAW_SELECT_GRAPH') &&
                     !stateManager.hasAnyState('DRAW_NODE_EDGE')) {
@@ -175,16 +174,6 @@ export default class ScriptEditorRunner extends Runner {
             this.isMoving = false
             this.unitMoving = null
         }
-    }
-
-    /**
-     * @param {Mouse} mouse
-     * @return {boolean}
-     */
-    isPositionValid(mouse) {
-        const menu = Menu.get()
-        const menuItem = menu.getUIRenderer().getItemAt(mouse)
-        return !menuItem || (menuItem && menuItem.element instanceof ContentCanvasMenuItem)
     }
 
     /**

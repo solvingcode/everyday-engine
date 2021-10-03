@@ -155,6 +155,9 @@ export default {
                                     id: {
                                         type: TYPES.NUMBER
                                     },
+                                    hidden: {
+                                        type: TYPES.BOOLEAN
+                                    },
                                     name: {
                                         type: TYPES.STRING
                                     },
@@ -373,6 +376,9 @@ export default {
                                                                             },
                                                                             name: {
                                                                                 type: TYPES.STRING
+                                                                            },
+                                                                            hidden: {
+                                                                                type: TYPES.BOOLEAN
                                                                             },
                                                                             attributes: {
                                                                                 type: TYPES.ARRAY | TYPES.DYNAMIC_ATTRIBUTE
