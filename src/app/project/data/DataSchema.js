@@ -187,6 +187,8 @@ import GetDeltaTimeFunction from '../../flow/function/native/time/GetDeltaTimeFu
 import MultiplyVectorFunction from '../../flow/function/native/basic/MultiplyVectorFunction.js'
 import BoxCastFunction from '../../flow/function/native/physics/BoxCastFunction.js'
 import MoveXYAxisFunction from '../../flow/function/native/physics/MoveXYAxisFunction.js'
+import TileGridUnitInstant from '../../unit/instant/type/internal/tilegrid/TileGridUnitInstant.js'
+import TileGridComponent from '../../component/internal/TileGridComponent.js'
 
 /**
  * @class {DataSchema}
@@ -371,6 +373,8 @@ class DataSchema {
         {id: 1650, type: MultiplyVectorFunction},
         {id: 1660, type: BoxCastFunction},
         {id: 1670, type: MoveXYAxisFunction},
+        {id: 1680, type: TileGridUnitInstant},
+        {id: 1690, type: TileGridComponent},
     ]
 
     /**
