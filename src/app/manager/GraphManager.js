@@ -16,7 +16,7 @@ import NodeHelper from '../utils/NodeHelper.js'
 export default class GraphManager {
 
     /**
-     * @type {UnitInstant[]}
+     * @type {MeshUnitInstant[]}
      */
     units
 
@@ -25,14 +25,14 @@ export default class GraphManager {
     }
 
     /**
-     * @return {UnitInstant[]}
+     * @return {MeshUnitInstant[]}
      */
     getUnits() {
         return this.units
     }
 
     /**
-     * @return {UnitInstant[]}
+     * @return {MeshUnitInstant[]}
      */
     getGraphUnits() {
         return this.getUnits()
@@ -40,7 +40,7 @@ export default class GraphManager {
     }
 
     /**
-     * @return {UnitInstant[]}
+     * @return {MeshUnitInstant[]}
      */
     getGraphEdges() {
         return this.getUnits()
@@ -269,7 +269,7 @@ export default class GraphManager {
     }
 
     /**
-     * @return {UnitInstant[]}
+     * @return {MeshUnitInstant[]}
      */
     getSelected() {
         return this.getGraphUnits().filter(unit => unit.isSelected())

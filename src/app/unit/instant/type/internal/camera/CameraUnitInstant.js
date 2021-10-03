@@ -1,4 +1,4 @@
-import UnitInstant from '../../../UnitInstant.js'
+import MeshUnitInstant from '../../../MeshUnitInstant.js'
 import MeshComponent from '../../../../../component/internal/MeshComponent.js'
 import TransformComponent from '../../../../../component/internal/TransformComponent.js'
 import GUIPropertyComponent from '../../../../../component/internal/gui/property/GUIPropertyComponent.js'
@@ -8,7 +8,7 @@ import CameraComponent from '../../../../../component/internal/CameraComponent.j
 import StyleComponent from '../../../../../component/internal/StyleComponent.js'
 import TransformHelper from '../../../../../utils/TransformHelper.js'
 
-export default class CameraUnitInstant extends UnitInstant {
+export default class CameraUnitInstant extends MeshUnitInstant {
 
     /**
      * @override

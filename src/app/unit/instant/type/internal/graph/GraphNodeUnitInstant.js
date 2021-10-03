@@ -1,4 +1,4 @@
-import UnitInstant from '../../../UnitInstant.js'
+import MeshUnitInstant from '../../../MeshUnitInstant.js'
 import TransformComponent from '../../../../../component/internal/TransformComponent.js'
 import MeshComponent from '../../../../../component/internal/MeshComponent.js'
 import GUIPropertyComponent from '../../../../../component/internal/gui/property/GUIPropertyComponent.js'
@@ -9,7 +9,7 @@ import ScriptHelper from '../../../../../utils/ScriptHelper.js'
 import ArrayHelper from '../../../../../utils/ArrayHelper.js'
 import TransformHelper from '../../../../../utils/TransformHelper.js'
 
-export default class GraphNodeUnitInstant extends UnitInstant {
+export default class GraphNodeUnitInstant extends MeshUnitInstant {
 
     /**
      * @param {Vector} position

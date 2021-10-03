@@ -62,6 +62,13 @@ export default class GUIPropertyComponent extends Component{
     }
 
     /**
+     * @param {boolean} value
+     */
+    setSelectable(value) {
+        this.setValue('selectable', value)
+    }
+
+    /**
      * @return {boolean}
      */
     getSelectable() {

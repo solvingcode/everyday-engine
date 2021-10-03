@@ -1,4 +1,4 @@
-import UnitInstant from '../../../UnitInstant.js'
+import MeshUnitInstant from '../../../MeshUnitInstant.js'
 import TransformComponent from '../../../../../component/internal/TransformComponent.js'
 import GUIPendingComponent from '../../../../../component/internal/gui/GUIPendingComponent.js'
 import Style from '../../../../../pobject/Style.js'
@@ -6,7 +6,7 @@ import GUIPropertyComponent from '../../../../../component/internal/gui/property
 import TransformHelper from '../../../../../utils/TransformHelper.js'
 import StyleComponent from '../../../../../component/internal/StyleComponent.js'
 
-export default class SelectionUnitInstant extends UnitInstant {
+export default class SelectionUnitInstant extends MeshUnitInstant {
 
     /**
      * @param {Vector} position

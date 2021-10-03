@@ -45,6 +45,13 @@ class Size {
     getHeight() {
         return this.height
     }
+
+    /**
+     * @param {Size} size
+     */
+    equals(size){
+        return this.width === size.width && this.height === size.height
+    }
 }
 
 export default Size

@@ -1,7 +1,7 @@
 import OptionActionsMenuItem from '../../option/OptionActionsMenuItem.js'
-import CameraMenuItem from '../../edit/CameraMenuItem.js'
-import LightPointMenuItem from '../../edit/LightPointMenuItem.js'
-import LightGlobalMenuItem from '../../edit/LightGlobalMenuItem.js'
+import CameraMenuItem from '../../unit/CameraMenuItem.js'
+import LightPointMenuItem from '../../unit/LightPointMenuItem.js'
+import LightGlobalMenuItem from '../../unit/LightGlobalMenuItem.js'
 import AddAnimationMenuItem from '../../animation/AddAnimationMenuItem.js'
 import OptionActionsButtonMenuItem from '../../option/OptionActionsButtonMenuItem.js'
 import UITopMenuItem from './UITopMenuItem.js'
@@ -10,6 +10,7 @@ import VisibilityTopMenuItem from './VisibilityTopMenuItem.js'
 import AddSceneMenuItem from '../../scene/AddSceneMenuItem.js'
 import AlignParentMenuItem from '../../edit/AlignParentMenuItem.js'
 import CreateUnitInstantMenuItem from '../../unit/CreateUnitInstantMenuItem.js'
+import TileGridMenuItem from '../../unit/TileGridMenuItem.js'
 
 export default class UnitTopMenuItem extends OptionActionsMenuItem {
     constructor(bindObject, position, size) {
@@ -18,6 +19,7 @@ export default class UnitTopMenuItem extends OptionActionsMenuItem {
             new CameraMenuItem(),
             new LightPointMenuItem(),
             new LightGlobalMenuItem(),
+            new TileGridMenuItem(),
             new AddAnimationMenuItem(),
             new OptionActionsButtonMenuItem('UI', UITopMenuItem, null, true),
             new OptionActionsButtonMenuItem('Visibility', VisibilityTopMenuItem, null, true),

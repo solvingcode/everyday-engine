@@ -1,4 +1,4 @@
-import UnitInstant from '../../UnitInstant.js'
+import MeshUnitInstant from '../../MeshUnitInstant.js'
 import Vector from '../../../../utils/Vector.js'
 import TransformComponent from '../../../../component/internal/TransformComponent.js'
 import MeshComponent from '../../../../component/internal/MeshComponent.js'
@@ -8,7 +8,7 @@ import StyleComponent from '../../../../component/internal/StyleComponent.js'
 import TransformHelper from '../../../../utils/TransformHelper.js'
 import SystemError from '../../../../exception/type/SystemError.js'
 
-export default class TransformUnitInstant extends UnitInstant {
+export default class TransformUnitInstant extends MeshUnitInstant {
 
     /**
      * @param {Class} moveComponentClass

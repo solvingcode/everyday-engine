@@ -1,4 +1,4 @@
-import UnitInstant from '../../../UnitInstant.js'
+import MeshUnitInstant from '../../../MeshUnitInstant.js'
 import MeshComponent from '../../../../../component/internal/MeshComponent.js'
 import GUIPendingComponent from '../../../../../component/internal/gui/GUIPendingComponent.js'
 import Vector from '../../../../../utils/Vector.js'
@@ -9,7 +9,7 @@ import GUIGridYComponent from '../../../../../component/internal/gui/grid/GUIGri
 import GUIPropertyComponent from '../../../../../component/internal/gui/property/GUIPropertyComponent.js'
 import TransformHelper from '../../../../../utils/TransformHelper.js'
 
-export default class GridYUnitInstant extends UnitInstant {
+export default class GridYUnitInstant extends MeshUnitInstant {
 
     /**
      * @param {Vector} position

@@ -2,6 +2,7 @@ import UnitHelper from '../utils/UnitHelper.js'
 import GUIPendingComponent from '../component/internal/gui/GUIPendingComponent.js'
 import MeshUnit from '../unit/type/MeshUnit.js'
 import MeshComponent from '../component/internal/MeshComponent.js'
+import GUIPropertyComponent from '../component/internal/gui/property/GUIPropertyComponent.js'
 
 export default class UnitSelector {
 
@@ -67,7 +68,9 @@ export default class UnitSelector {
      */
     getAll(world, point) {
         return this.getUnits(world).filter((unit) => {
-            if (unit.getComponent(MeshComponent)) {
+            if (unit.getComponent(MeshComponent) &&
+                unit.getComponent(GUIPropertyComponent) &&
+                unit.getComponent(GUIPropertyComponent).isSelectable()) {
                 return UnitHelper.isInside(unit, point)
             }
         })

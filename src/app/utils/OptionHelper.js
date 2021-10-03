@@ -40,9 +40,9 @@ import PasteScriptMenuItem from '../layout/items/script/edit/PasteScriptMenuItem
 import CopyMenuItem from '../layout/items/action/CopyMenuItem.js'
 import PasteMenuItem from '../layout/items/action/PasteMenuItem.js'
 import AddSceneMenuItem from '../layout/items/scene/AddSceneMenuItem.js'
-import CameraMenuItem from '../layout/items/edit/CameraMenuItem.js'
-import LightPointMenuItem from '../layout/items/edit/LightPointMenuItem.js'
-import LightGlobalMenuItem from '../layout/items/edit/LightGlobalMenuItem.js'
+import CameraMenuItem from '../layout/items/unit/CameraMenuItem.js'
+import LightPointMenuItem from '../layout/items/unit/LightPointMenuItem.js'
+import LightGlobalMenuItem from '../layout/items/unit/LightGlobalMenuItem.js'
 import AddAnimationMenuItem from '../layout/items/animation/AddAnimationMenuItem.js'
 import CreateUnitInstantMenuItem from '../layout/items/unit/CreateUnitInstantMenuItem.js'
 import LoadUnitInstantMenuItem from '../layout/items/unit/LoadUnitInstantMenuItem.js'
@@ -52,6 +52,7 @@ import DeleteMaskMenuItem from '../layout/items/mask/delete/DeleteMaskMenuItem.j
 import GameInput from '../preference/gameInput/GameInput.js'
 import EditGameInputPopupButtonMenuItem from '../layout/items/input/edit/EditGameInputPopupButtonMenuItem.js'
 import DeleteGameInputMenuItem from '../layout/items/input/delete/DeleteGameInputMenuItem.js'
+import TileGridMenuItem from '../layout/items/unit/TileGridMenuItem.js'
 
 export default class OptionHelper {
 
@@ -133,6 +134,7 @@ export default class OptionHelper {
                 new CameraMenuItem(),
                 new LightPointMenuItem(),
                 new LightGlobalMenuItem(),
+                new TileGridMenuItem(),
                 new AddAnimationMenuItem(),
                 new OptionActionsButtonMenuItem('UI', UITopMenuItem, null, true),
             ])

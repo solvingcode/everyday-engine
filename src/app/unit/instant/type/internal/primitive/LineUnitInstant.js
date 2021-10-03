@@ -1,4 +1,4 @@
-import UnitInstant from '../../../UnitInstant.js'
+import MeshUnitInstant from '../../../MeshUnitInstant.js'
 import TransformComponent from '../../../../../component/internal/TransformComponent.js'
 import MeshComponent from '../../../../../component/internal/MeshComponent.js'
 import GUIPendingComponent from '../../../../../component/internal/gui/GUIPendingComponent.js'
@@ -8,7 +8,7 @@ import {PrimitiveShape} from '../../../../Unit.js'
 import TransformHelper from '../../../../../utils/TransformHelper.js'
 import StyleComponent from '../../../../../component/internal/StyleComponent.js'
 
-export default class LineUnitInstant extends UnitInstant {
+export default class LineUnitInstant extends MeshUnitInstant {
 
     /**
      * @param {Vector} position

@@ -1,6 +1,6 @@
 import MeshUnit from '../type/MeshUnit.js'
 
-export default class UnitInstant extends MeshUnit{
+export default class MeshUnitInstant extends MeshUnit{
 
     constructor() {
         super()

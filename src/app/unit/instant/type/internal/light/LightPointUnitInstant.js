@@ -1,4 +1,4 @@
-import UnitInstant from '../../../UnitInstant.js'
+import MeshUnitInstant from '../../../MeshUnitInstant.js'
 import MeshComponent from '../../../../../component/internal/MeshComponent.js'
 import TransformComponent from '../../../../../component/internal/TransformComponent.js'
 import GUIPropertyComponent from '../../../../../component/internal/gui/property/GUIPropertyComponent.js'
@@ -9,7 +9,7 @@ import LightPointComponent from '../../../../../component/internal/LightPointCom
 import ClientError from '../../../../../exception/type/ClientError.js'
 import TransformHelper from '../../../../../utils/TransformHelper.js'
 
-export default class LightPointUnitInstant extends UnitInstant {
+export default class LightPointUnitInstant extends MeshUnitInstant {
 
     /**
      * @override
