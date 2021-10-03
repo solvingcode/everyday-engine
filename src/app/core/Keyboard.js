@@ -129,6 +129,7 @@ export const KeyCode = {
     O: 79,
     B: 66,
     N: 78,
+    E: 69,
     BACKSPACE: 8,
     DELETE: 46,
     CTRL: 17,

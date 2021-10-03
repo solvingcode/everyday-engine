@@ -114,6 +114,7 @@ import RefreshProjectAction from './project/RefreshProjectAction.js'
 import AddTileGridAction from './tile/AddTileGridAction.js'
 import AddTileMapAction from './tile/AddTileMapAction.js'
 import SetTileMapAction from './tile/SetTileMapAction.js'
+import DeleteTileMapAction from './tile/DeleteTileMapAction.js'
 
 /**
  * Action Runner class.
@@ -192,6 +193,7 @@ class ActionRunner extends Runner {
             ADD_TILE_GRID: AddTileGridAction,
             ADD_TILE_MAP: AddTileMapAction,
             SET_TILE_MAP: SetTileMapAction,
+            DELETE_TILE_MAP: DeleteTileMapAction,
             ADD_LIGHT_POINT: AddLightPointAction,
             ADD_LIGHT_GLOBAL: AddLightGlobalAction,
             SELECT_TAB: SelectTabAction,

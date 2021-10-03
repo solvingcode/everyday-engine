@@ -35,6 +35,25 @@ export default class TileMapHelper {
     }
 
     /**
+     * @param {Unit} tileMap
+     * @param {Vector} cellIndex
+     */
+    static delete(tileMap, cellIndex) {
+        const tileMapComponent = tileMap.getComponent(TileMapComponent)
+        if (tileMapComponent) {
+            const cellIndexes = tileMapComponent.getCellIndexes()
+            const assetIds = tileMapComponent.getAssetIds()
+            const iCellIndexExist = cellIndexes.findIndex(index => index.equals(cellIndex))
+            if (iCellIndexExist >= 0) {
+                cellIndexes.splice(iCellIndexExist, 1)
+                assetIds.splice(iCellIndexExist, 1)
+            }
+        } else {
+            throw new ClientError(`Selected unit is not a Tile Map`)
+        }
+    }
+
+    /**
      * @param {World} world
      * @param {Unit} unit
      */

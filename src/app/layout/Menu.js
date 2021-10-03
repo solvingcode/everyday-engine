@@ -23,6 +23,8 @@ import StateManager from '../state/StateManager.js'
 import ContentPopupMenuItem from './items/content/ContentPopupMenuItem.js'
 import ContentCanvasMenuItem from './items/content/ContentCanvasMenuItem.js'
 import GameMenuItem from './items/game/GameMenuItem.js'
+import EditTileMenuItem from './items/edit/EditTileMenuItem.js'
+import DeleteTileMenuItem from './items/edit/DeleteTileMenuItem.js'
 
 /**
  * Define all menu items
@@ -43,6 +45,8 @@ class Menu {
             new MoveMenuItem(),
             new ScaleMenuItem(),
             new RotateMenuItem(),
+            new EditTileMenuItem(),
+            new DeleteTileMenuItem(),
 
             //TOP MENU
             new TopMenuItem(),

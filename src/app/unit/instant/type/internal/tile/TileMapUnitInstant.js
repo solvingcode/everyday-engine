@@ -19,10 +19,11 @@ export default class TileMapUnitInstant extends MeshUnitInstant {
      * @override
      */
     setup() {
-        this.getComponent(GUIPropertyComponent).setRank(60)
+        this.getComponent(GUIPropertyComponent).setRank(20)
         this.getComponent(MeshComponent).setHidden(true)
         this.getComponent(TransformComponent).setHidden(true)
         this.getComponent(StyleComponent).setHidden(true)
+        this.getComponent(GUIPropertyComponent).setSelectable(false)
     }
 
 }

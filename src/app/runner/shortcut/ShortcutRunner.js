@@ -32,6 +32,12 @@ export class ShortcutRunner extends Runner {
         } else if (keyboard.isKeyReleased(KeyCode.R)) {
             stateManager.stopDrawStates()
             stateManager.startState('DRAW_ROTATE', 1, {unit: null})
+        } else if (keyboard.isKeyReleased(KeyCode.E)) {
+            stateManager.stopDrawStates()
+            stateManager.startState('DRAW_EDIT_TILE_MAP', 1)
+        } else if (keyboard.isKeyReleased(KeyCode.D)) {
+            stateManager.stopDrawStates()
+            stateManager.startState('DRAW_DELETE_TILE_MAP', 1)
         } else if (keyboard.isKeyReleased(KeyCode.DELETE)) {
             stateManager.startState('ACTION_DELETE', 1)
         } else if (keyboard.isCopyShortcutPressed()) {

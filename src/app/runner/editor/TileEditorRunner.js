@@ -43,8 +43,11 @@ export default class TileEditorRunner extends Runner {
             const tileGridComponent = unit.getComponent(TileGridComponent)
             const cellScale = tileGridComponent.getCellScale()
             this.createGrid(cellScale)
-            this.selectCell(cellScale)
-            this.editTileMap(cellScale)
+            const selectedUnit = world.getUnitManager().getSelected()
+            if (selectedUnit && selectedUnit.getComponent(TileMapComponent)) {
+                this.selectCell(cellScale)
+                this.editTileMap(cellScale)
+            }
         }
     }
 
@@ -137,6 +140,22 @@ export default class TileEditorRunner extends Runner {
     }
 
     /**
+     * @param {StateManager} stateManager
+     * @return {boolean}
+     */
+    isEdit(stateManager) {
+        return stateManager.hasAnyState('DRAW_EDIT_TILE_MAP')
+    }
+
+    /**
+     * @param {StateManager} stateManager
+     * @return {boolean}
+     */
+    isDelete(stateManager) {
+        return stateManager.hasAnyState('DRAW_DELETE_TILE_MAP')
+    }
+
+    /**
      * @param {Vector} cellScale
      */
     selectCell(cellScale) {
@@ -144,7 +163,13 @@ export default class TileEditorRunner extends Runner {
         const camera = world.getCamera()
         const cellSize = new Size(TransformHelper.getSizeFromScale(cellScale))
         const selectedCellPosition = this.getSelectedCellPosition(cellScale)
-        if (selectedCellPosition) {
+        const stateManager = StateManager.get()
+        if (!this.isEdit(stateManager) && !this.isDelete(stateManager)) {
+            if (this.selectedCell) {
+                world.getUnitManager().tryDeleteUnitById(this.selectedCell.getId())
+                this.selectedCell = null
+            }
+        } else if (selectedCellPosition) {
             if (this.selectedCell) {
                 const transformComponent = this.selectedCell.getComponent(TransformComponent)
                 if (
@@ -212,22 +237,35 @@ export default class TileEditorRunner extends Runner {
         const mouse = Window.get().mouse
         const stateManager = StateManager.get()
         if (mouse.isButtonPressed(MouseButton.LEFT) &&
-            !stateManager.hasAnyState('ACTION_SET_TILE_MAP') &&
             LayoutHelper.isPositionValid(mouse)) {
             const selectedUnit = world.getUnitManager().getSelected()
             const cellSize = new Size(TransformHelper.getSizeFromScale(cellScale))
-            if (selectedUnit) {
-                const tileMapComponent = selectedUnit.getComponent(TileMapComponent)
-                if (tileMapComponent) {
-                    const selectedCellPosition = this.getSelectedCellPosition(cellScale)
-                    const selectedAsset = world.getAssetsManager().getSelectedAsset()
-                    if (selectedAsset && selectedAsset.getType() instanceof AssetImage) {
+            if (!stateManager.hasAnyState('ACTION_SET_TILE_MAP') && this.isEdit(stateManager)) {
+                if (selectedUnit) {
+                    const tileMapComponent = selectedUnit.getComponent(TileMapComponent)
+                    if (tileMapComponent) {
+                        const selectedCellPosition = this.getSelectedCellPosition(cellScale)
+                        const selectedAsset = world.getAssetsManager().getSelectedAsset()
+                        if (selectedAsset && selectedAsset.getType() instanceof AssetImage) {
+                            const cellIndex = new Vector({
+                                x: selectedCellPosition.getX() / cellSize.getWidth(),
+                                y: selectedCellPosition.getY() / cellSize.getHeight()
+                            })
+                            const assetId = selectedAsset.getId()
+                            stateManager.startState('ACTION_SET_TILE_MAP', 1, {cellIndex, assetId})
+                        }
+                    }
+                }
+            } else if (!stateManager.hasAnyState('ACTION_DELETE_TILE_MAP') && this.isDelete(stateManager)) {
+                if (selectedUnit) {
+                    const tileMapComponent = selectedUnit.getComponent(TileMapComponent)
+                    if (tileMapComponent) {
+                        const selectedCellPosition = this.getSelectedCellPosition(cellScale)
                         const cellIndex = new Vector({
                             x: selectedCellPosition.getX() / cellSize.getWidth(),
                             y: selectedCellPosition.getY() / cellSize.getHeight()
                         })
-                        const assetId = selectedAsset.getId()
-                        stateManager.startState('ACTION_SET_TILE_MAP', 1, {cellIndex, assetId})
+                        stateManager.startState('ACTION_DELETE_TILE_MAP', 1, {cellIndex})
                     }
                 }
             }
