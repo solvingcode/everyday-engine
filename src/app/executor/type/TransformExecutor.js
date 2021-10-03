@@ -33,8 +33,10 @@ export default class TransformExecutor extends ComponentExecutor {
         const parentUnit = unitManager.findParentUnit(unit)
         if (parentUnit) {
             const parentTransformComponent = parentUnit.getComponent(TransformComponent)
-            const parentPosition = parentTransformComponent.getPosition()
-            transformComponent.setLocalPosition(Vector.subtract(position, parentPosition))
+            if(parentTransformComponent){
+                const parentPosition = parentTransformComponent.getPosition()
+                transformComponent.setLocalPosition(Vector.subtract(position, parentPosition))
+            }
         }
         transformComponent.setLastPosition(_.cloneDeep(transformComponent.getPosition()))
         transformComponent.setLastLocalPosition(_.cloneDeep(transformComponent.getLocalPosition()))

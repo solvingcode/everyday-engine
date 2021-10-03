@@ -55,9 +55,11 @@ export default class MeshExecutor extends ComponentExecutor {
         const parentUnit = unitManager.findParentUnit(unit)
         if (parentUnit) {
             const parentTransformComponent = parentUnit.getComponent(TransformComponent)
-            const parentScale = parentTransformComponent.getScale()
-            const newLocalScale = Vector.linearDivide(scale, parentScale)
-            transformComponent.setLocalScale(newLocalScale)
+            if(parentTransformComponent){
+                const parentScale = parentTransformComponent.getScale()
+                const newLocalScale = Vector.linearDivide(scale, parentScale)
+                transformComponent.setLocalScale(newLocalScale)
+            }
         }else{
             transformComponent.setLocalScale(scale)
         }

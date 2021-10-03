@@ -34,6 +34,7 @@ export default class MeshComponent extends Component{
         this.add('version', TYPES.NUMBER, 0)
         this.add('mapAssetPositions', TYPES.ARRAY | TYPES.VECTOR, [])
         this.add('mapAssetIds', TYPES.ARRAY | TYPES.NUMBER, [])
+        this.add('mapAssetSize', TYPES.SIZE, new Size(0))
     }
 
     /**
@@ -41,7 +42,7 @@ export default class MeshComponent extends Component{
      */
     getExcludeFields() {
         return ['generated', 'shape', 'shapeVertices', 'vertices',  'version', 'style', 'size', 'mapAssetPositions',
-            'mapAssetIds']
+            'mapAssetIds', 'mapAssetSize']
     }
 
     /**
@@ -196,6 +197,20 @@ export default class MeshComponent extends Component{
      */
     setImageScale(imageScale){
         this.setValue('imageScale', imageScale)
+    }
+
+    /**
+     * @return {Size}
+     */
+    getMapAssetSize(){
+        return this.getValue('mapAssetSize')
+    }
+
+    /**
+     * @param {Size} mapAssetSize
+     */
+    setMapAssetSize(mapAssetSize){
+        this.setValue('mapAssetSize', mapAssetSize)
     }
 
     /**

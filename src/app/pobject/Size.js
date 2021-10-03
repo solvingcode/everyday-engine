@@ -52,6 +52,16 @@ class Size {
     equals(size){
         return this.width === size.width && this.height === size.height
     }
+
+    /**
+     * @param {Size} size
+     * @return {Size}
+     */
+    add(size){
+        this.width += size.width
+        this.height += size.height
+        return this
+    }
 }
 
 export default Size

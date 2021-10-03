@@ -14,7 +14,9 @@ export default class SetTileMapAction extends Action {
         const world = World.get()
         const {cellIndex, assetId} = StateManager.get().getNextProgressData(this.STATE)
         const selectedUnit = world.getUnitManager().getSelected()
-        TileMapHelper.set(selectedUnit, cellIndex, assetId)
+        if (selectedUnit) {
+            TileMapHelper.set(selectedUnit, cellIndex, assetId)
+        }
         return true
     }
 

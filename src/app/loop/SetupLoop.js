@@ -30,6 +30,7 @@ import UITransformExecutor from '../executor/type/UITransformExecutor.js'
 import UIButtonStyleExecutor from '../executor/type/UIButtonStyleExecutor.js'
 import {ShortcutRunner} from '../runner/shortcut/ShortcutRunner.js'
 import TileEditorRunner from '../runner/editor/TileEditorRunner.js'
+import TileMapExecutor from '../executor/type/TileMapExecutor.js'
 
 /**
  * @class {SetupLoop}
@@ -64,7 +65,8 @@ class SetupLoop extends Loop {
             new MeshStyleExecutor(),
             new GUIPropertyExecutor(),
             new LightExecutor(),
-            new UIButtonStyleExecutor()
+            new UIButtonStyleExecutor(),
+            new TileMapExecutor()
         ])
     }
 

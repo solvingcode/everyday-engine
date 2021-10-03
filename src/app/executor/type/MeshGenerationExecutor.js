@@ -125,30 +125,21 @@ export default class MeshGenerationExecutor extends ComponentExecutor {
      */
     closeContext(meshComponent, transformComponent, dataContext) {
         const {fillColor, color, borderSize, gradientColorAssetId} = meshComponent.getStyle()
-        const {context, world, unitId, scaleSize} = dataContext
+        const {context, world, unitId, scaleSize, camera} = dataContext
         if (meshComponent.getFilter() === MODE.NO_SMOOTHING) {
             context.imageSmoothingEnabled = false
         }
         if (meshComponent.getAssetId()) {
-            if (fillColor || gradientColorAssetId) {
-                context.fill()
-                context.globalCompositeOperation = 'destination-over'
-            }
-            context.clip()
-            const asset = world.getAssetsManager().findAssetById(meshComponent.getAssetId())
-            const canvasBg = asset.getType().getData().context.canvas
-            if (meshComponent.isImageRepeat()) {
-                const canvasBgScaled = UnitHelper.generateImageRepeat(canvasBg, dataContext, meshComponent)
-                context.drawImage(canvasBgScaled, 0, 0, scaleSize.width, scaleSize.height)
-            } else {
-                const directionScale = TransformHelper.getScaleDirection(transformComponent.getScale())
-                context.drawImage(ImageHelper.scaleCanvas(canvasBg, directionScale),
-                    0, 0, scaleSize.width, scaleSize.height)
-            }
-            this.getMaterial(world, meshComponent.getMaterial())
-                .generate(canvasBg, dataContext, meshComponent, transformComponent)
-            borderSize && context.stroke()
-        } else if (fillColor || gradientColorAssetId) {
+            this.drawAssetImage(dataContext, meshComponent.getAssetId(), meshComponent, transformComponent, scaleSize)
+        } else if(meshComponent.getMapAssetPositions().length > 0){
+            const mapAssetIds = meshComponent.getMapAssetIds()
+            meshComponent.getMapAssetPositions().forEach((mapAssetPosition, iMapAssetPosition) => {
+                this.drawAssetImage(dataContext, mapAssetIds[iMapAssetPosition], meshComponent,
+                    transformComponent,
+                    camera.toScaleSize(meshComponent.getMapAssetSize()),
+                    camera.toCameraScale(mapAssetPosition))
+            })
+        }else if (fillColor || gradientColorAssetId) {
             context.fill()
             if (color && borderSize) {
                 context.stroke()
@@ -157,6 +148,38 @@ export default class MeshGenerationExecutor extends ComponentExecutor {
             context.stroke()
         }
         return this.updateMeshFromContext(unitId, world.getMeshManager(), context)
+    }
+
+    /**
+     * @param {DataContext} dataContext
+     * @param {number} assetId
+     * @param {MeshComponent} meshComponent
+     * @param {TransformComponent} transformComponent
+     * @param {Size} scaleSize
+     * @param {Vector} drawPosition
+     */
+    drawAssetImage(dataContext, assetId, meshComponent,
+                   transformComponent, scaleSize, drawPosition = new Vector()){
+        const {fillColor, borderSize, gradientColorAssetId} = meshComponent.getStyle()
+        const {context, world} = dataContext
+        if (fillColor || gradientColorAssetId) {
+            context.fill()
+            context.globalCompositeOperation = 'destination-over'
+        }
+        context.clip()
+        const asset = world.getAssetsManager().findAssetById(assetId)
+        const canvasBg = asset.getType().getData().context.canvas
+        if (meshComponent.isImageRepeat()) {
+            const canvasBgScaled = UnitHelper.generateImageRepeat(canvasBg, dataContext, meshComponent)
+            context.drawImage(canvasBgScaled, 0, 0, scaleSize.width, scaleSize.height)
+        } else {
+            const directionScale = TransformHelper.getScaleDirection(transformComponent.getScale())
+            context.drawImage(ImageHelper.scaleCanvas(canvasBg, directionScale),
+                drawPosition.getX(), drawPosition.getY(), scaleSize.width, scaleSize.height)
+        }
+        this.getMaterial(world, meshComponent.getMaterial())
+            .generate(canvasBg, dataContext, meshComponent, transformComponent)
+        borderSize && context.stroke()
     }
 
     /**

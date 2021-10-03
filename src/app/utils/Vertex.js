@@ -1,4 +1,5 @@
 import Vector from './Vector.js'
+import Size from '../pobject/Size.js'
 
 /**
  * Define methods to manipulate vertices
@@ -8,12 +9,12 @@ class Vertex {
      * @param {{x: number, y: number}[]} vertices
      */
     static getArea(vertices) {
-        let area = 0, jVertex = vertices.length - 1;
+        let area = 0, jVertex = vertices.length - 1
         vertices.forEach((vertex, iVertex) => {
-            area += (vertices[jVertex].x - vertex.x) * (vertices[jVertex].y + vertex.y);
-            jVertex = iVertex;
+            area += (vertices[jVertex].x - vertex.x) * (vertices[jVertex].y + vertex.y)
+            jVertex = iVertex
         })
-        return area / 2;
+        return area / 2
     }
 
     /**
@@ -31,7 +32,7 @@ class Vertex {
             center = Vector.add(center, multiply)
         })
 
-        return Vector.divide(center, 6 * area);
+        return Vector.divide(center, 6 * area)
     }
 
     /**
@@ -83,6 +84,59 @@ class Vertex {
             x: vertex.x + vector.x * sign,
             y: vertex.y + vector.y * sign
         })))
+    }
+
+    /**
+     * @param {Vector[]} vertices
+     * @return {{position: Vector, size: Size}|null}
+     */
+    static getRectContainer(vertices) {
+        const rectPosition = this.min(vertices)
+        const maxVertex = this.max(vertices)
+        if(rectPosition && maxVertex){
+            return {
+                position: rectPosition,
+                size: new Size({
+                    width: maxVertex.getX() - rectPosition.getX(),
+                    height: maxVertex.getY() - rectPosition.getY()
+                })
+            }
+        }
+        return null
+    }
+
+    /**
+     * @param {Vector[]} vertices
+     * @return {Vector}
+     */
+    static min(vertices) {
+        return vertices.reduce((minVertex, vertex) => {
+            if (!minVertex) {
+                return vertex
+            } else {
+                return new Vector({
+                    x: minVertex.getX() >= vertex.getX() ? vertex.getX() : minVertex.getX(),
+                    y: minVertex.getY() >= vertex.getY() ? vertex.getY() : minVertex.getY()
+                })
+            }
+        }, null)
+    }
+
+    /**
+     * @param {Vector[]} vertices
+     * @return {Vector}
+     */
+    static max(vertices) {
+        return vertices.reduce((maxVertex, vertex) => {
+            if (!maxVertex) {
+                return vertex
+            } else {
+                return new Vector({
+                    x: maxVertex.getX() <= vertex.getX() ? vertex.getX() : maxVertex.getX(),
+                    y: maxVertex.getY() <= vertex.getY() ? vertex.getY() : maxVertex.getY()
+                })
+            }
+        }, null)
     }
 }
 

@@ -1,30 +1,51 @@
-import ComponentExecutor from './ComponentExecutor.js'
-import TileGridComponent from '../../component/internal/TileGridComponent.js'
+import Runner from '../Runner.js'
 import World from '../../world/World.js'
-import Window from '../../core/Window.js'
-import Vector from '../../utils/Vector.js'
+import TileGridComponent from '../../component/internal/tile/TileGridComponent.js'
 import Size from '../../pobject/Size.js'
+import TransformHelper from '../../utils/TransformHelper.js'
+import Vector from '../../utils/Vector.js'
 import GUIGridComponent from '../../component/internal/gui/grid/GUIGridComponent.js'
 import TransformComponent from '../../component/internal/TransformComponent.js'
 import GridUnitInstant from '../../unit/instant/type/internal/grid/GridUnitInstant.js'
-import TransformHelper from '../../utils/TransformHelper.js'
-import RectUnitInstant from '../../unit/instant/type/internal/primitive/RectUnitInstant.js'
+import Window from '../../core/Window.js'
 import Style from '../../pobject/Style.js'
+import RectUnitInstant from '../../unit/instant/type/internal/primitive/RectUnitInstant.js'
+import TileMapComponent from '../../component/internal/tile/TileMapComponent.js'
+import AssetImage from '../../asset/types/image/AssetImage.js'
+import {MouseButton} from '../../core/Mouse.js'
+import StateManager from '../../state/StateManager.js'
+import LayoutHelper from '../../utils/LayoutHelper.js'
+import MeshComponent from '../../component/internal/MeshComponent.js'
 
-export default class TileGridExecutor extends ComponentExecutor {
+export default class TileEditorRunner extends Runner {
 
-    constructor() {
-        super([TileGridComponent])
-    }
+    /**
+     * @type {TileEditorRunner}
+     */
+    static instance = null
 
     /**
      * @override
      */
-    execute(unit, executionContext) {
-        const tileGridComponent = unit.getComponent(TileGridComponent)
-        const cellScale = tileGridComponent.getCellScale()
-        this.createGrid(cellScale)
-        this.selectCell(cellScale)
+    isHandle(window) {
+        return true
+    }
+
+    /**
+     * @override
+     * @param {number} deltaTime
+     */
+    execute(deltaTime) {
+        const world = World.get()
+        const units = world.getUnitManager().findUnitsByComponents([TileGridComponent])
+        const unit = units && units[0]
+        if (unit) {
+            const tileGridComponent = unit.getComponent(TileGridComponent)
+            const cellScale = tileGridComponent.getCellScale()
+            this.createGrid(cellScale)
+            this.selectCell(cellScale)
+            this.editTileMap(cellScale)
+        }
     }
 
     /**
@@ -121,11 +142,44 @@ export default class TileGridExecutor extends ComponentExecutor {
     selectCell(cellScale) {
         const world = World.get()
         const camera = world.getCamera()
+        const cellSize = new Size(TransformHelper.getSizeFromScale(cellScale))
+        const selectedCellPosition = this.getSelectedCellPosition(cellScale)
+        if (selectedCellPosition) {
+            if (this.selectedCell) {
+                const transformComponent = this.selectedCell.getComponent(TransformComponent)
+                if (
+                    !transformComponent.getPosition().equals(selectedCellPosition) ||
+                    !transformComponent.getScale().equals(cellScale)
+                ) {
+                    world.getUnitManager().tryDeleteUnitById(this.selectedCell.getId())
+                    this.selectedCell = null
+                }
+            }
+            if (!this.selectedCell) {
+                const style = new Style()
+                style.setBorderSize(camera.fromScaleNumber(2))
+                style.setColor('#ffffff')
+                this.selectedCell = world.createChildUnitInstant(RectUnitInstant, null,
+                    selectedCellPosition, cellSize, style)
+
+                const selectedAsset = world.getAssetsManager().getSelectedAsset()
+                if (selectedAsset && selectedAsset.getType() instanceof AssetImage) {
+                    this.selectedCell.getComponent(MeshComponent).setAssetId(selectedAsset.getId())
+                }
+            }
+        }
+    }
+
+    /**
+     * @param {Vector} cellScale
+     * @return {Vector|null}
+     */
+    getSelectedCellPosition(cellScale) {
+        const cellSize = new Size(TransformHelper.getSizeFromScale(cellScale))
         const mouse = Window.get().mouse
-        const currentWorldMousePosition = world.getWorldScalePosition(mouse.currentScenePosition)
+        const currentWorldMousePosition = World.get().getWorldScalePosition(mouse.currentScenePosition)
         const sizeChunkCells = this.getSizeChunkCells(cellScale)
         const chunkVectors = this.getChunkVectors(cellScale)
-        const cellSize = new Size(TransformHelper.getSizeFromScale(cellScale))
         const chunkSelected = chunkVectors.find(chunkVector => {
             const chunkVectorMax = Vector.add(chunkVector, new Vector({
                 x: sizeChunkCells.width, y: sizeChunkCells.height
@@ -135,7 +189,7 @@ export default class TileGridExecutor extends ComponentExecutor {
                 currentWorldMousePosition.getY() >= chunkVector.getY() &&
                 currentWorldMousePosition.getY() <= chunkVectorMax.getY()
         })
-        if(chunkSelected){
+        if (chunkSelected) {
             const positionChunk = new Vector(chunkSelected)
             const numberCellsX = Math.ceil(sizeChunkCells.width / cellSize.width)
             const numberCellsY = Math.ceil(sizeChunkCells.height / cellSize.height)
@@ -143,24 +197,38 @@ export default class TileGridExecutor extends ComponentExecutor {
             const distanceMouseCellX = Math.floor(distanceMouse.getX() / cellSize.width)
             const distanceMouseCellY = Math.floor(distanceMouse.getY() / cellSize.height)
             if (distanceMouseCellX <= numberCellsX && distanceMouseCellY <= numberCellsY) {
-                const selectedCellPosition = Vector.add(positionChunk,
+                return Vector.add(positionChunk,
                     new Vector({x: distanceMouseCellX * cellSize.width, y: distanceMouseCellY * cellSize.height}))
-                if (this.selectedCell) {
-                    const transformComponent = this.selectedCell.getComponent(TransformComponent)
-                    if (
-                        !transformComponent.getPosition().equals(selectedCellPosition) ||
-                        !transformComponent.getScale().equals(cellScale)
-                    ) {
-                        world.getUnitManager().tryDeleteUnitById(this.selectedCell.getId())
-                        this.selectedCell = null
+            }
+        }
+        return null
+    }
+
+    /**
+     * @param {Vector} cellScale
+     */
+    editTileMap(cellScale) {
+        const world = World.get()
+        const mouse = Window.get().mouse
+        const stateManager = StateManager.get()
+        if (mouse.isButtonPressed(MouseButton.LEFT) &&
+            !stateManager.hasAnyState('ACTION_SET_TILE_MAP') &&
+            LayoutHelper.isPositionValid(mouse)) {
+            const selectedUnit = world.getUnitManager().getSelected()
+            const cellSize = new Size(TransformHelper.getSizeFromScale(cellScale))
+            if (selectedUnit) {
+                const tileMapComponent = selectedUnit.getComponent(TileMapComponent)
+                if (tileMapComponent) {
+                    const selectedCellPosition = this.getSelectedCellPosition(cellScale)
+                    const selectedAsset = world.getAssetsManager().getSelectedAsset()
+                    if (selectedAsset && selectedAsset.getType() instanceof AssetImage) {
+                        const cellIndex = new Vector({
+                            x: selectedCellPosition.getX() / cellSize.getWidth(),
+                            y: selectedCellPosition.getY() / cellSize.getHeight()
+                        })
+                        const assetId = selectedAsset.getId()
+                        stateManager.startState('ACTION_SET_TILE_MAP', 1, {cellIndex, assetId})
                     }
-                }
-                if (!this.selectedCell) {
-                    const style = new Style()
-                    style.setBorderSize(camera.fromScaleNumber(2))
-                    style.setColor('#ffffff')
-                    this.selectedCell = world.createChildUnitInstant(RectUnitInstant, null,
-                        selectedCellPosition, cellSize, style)
                 }
             }
         }
