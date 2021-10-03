@@ -16,7 +16,9 @@ export default class GUIPropertyComponent extends Component{
         this.add('locked', TYPES.BOOLEAN, false)
         this.add('visible', TYPES.BOOLEAN, true)
         this.add('focused', TYPES.BOOLEAN, false)
+        this.add('ignored', TYPES.BOOLEAN, false)
         this.add('rank', TYPES.NUMBER, 0)
+        this.add('restoreStyle', TYPES.STYLE, null)
     }
 
     /**
@@ -31,6 +33,20 @@ export default class GUIPropertyComponent extends Component{
      */
     getSelected(){
         return this.getValue('selected')
+    }
+
+    /**
+     * @param {boolean} ignored
+     */
+    setIgnored(ignored) {
+        this.setValue('ignored', ignored)
+    }
+
+    /**
+     * @return {boolean}
+     */
+    getIgnored(){
+        return this.getValue('ignored')
     }
 
     /**
@@ -52,6 +68,13 @@ export default class GUIPropertyComponent extends Component{
      */
     isFocused(){
         return this.getFocused()
+    }
+
+    /**
+     * @return {boolean}
+     */
+    isIgnored(){
+        return this.getIgnored()
     }
 
     /**
@@ -136,6 +159,20 @@ export default class GUIPropertyComponent extends Component{
      */
     getRank(){
         return this.getValue('rank')
+    }
+
+    /**
+     * @param {Style} style
+     */
+    setRestoreStyle(style) {
+        this.setValue('restoreStyle', style)
+    }
+
+    /**
+     * @return {Style}
+     */
+    getRestoreStyle(){
+        return this.getValue('restoreStyle')
     }
 
     /**

@@ -355,6 +355,20 @@ export default class UnitManager extends UnitManagerData {
     }
 
     /**
+     * @param {Unit} unit
+     * @param {boolean} focus
+     */
+    setFocusUnit(unit, focus) {
+        const unitChilds = this.findChildUnits(unit)
+        unitChilds.forEach(cUnit => this.setFocusUnit(cUnit, focus))
+        const meshComponent = unit.getComponent(MeshComponent)
+        unit.getComponent(GUIPropertyComponent).setIgnored(!focus)
+        if (meshComponent) {
+            meshComponent.setGenerated(false)
+        }
+    }
+
+    /**
      * @param {Unit[]} units
      */
     deleteUnits(units) {

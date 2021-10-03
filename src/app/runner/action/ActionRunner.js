@@ -115,6 +115,8 @@ import AddTileGridAction from './tile/AddTileGridAction.js'
 import AddTileMapAction from './tile/AddTileMapAction.js'
 import SetTileMapAction from './tile/SetTileMapAction.js'
 import DeleteTileMapAction from './tile/DeleteTileMapAction.js'
+import FocusAction from './edit/FocusAction.js'
+import UnFocusAction from './edit/UnFocusAction.js'
 
 /**
  * Action Runner class.
@@ -162,6 +164,8 @@ class ActionRunner extends Runner {
             LOCK: LockAction,
             UNLOCK: UnlockAction,
             HIDE: HideAction,
+            FOCUS: FocusAction,
+            UNFOCUS: UnFocusAction,
             HIDE_ITEM: HideItemAction,
             SHOW_ITEM: ShowItemAction,
             LOCK_ITEM: LockItemAction,
