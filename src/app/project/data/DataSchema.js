@@ -191,6 +191,7 @@ import TileGridUnitInstant from '../../unit/instant/type/internal/tile/TileGridU
 import TileGridComponent from '../../component/internal/tile/TileGridComponent.js'
 import TileMapUnitInstant from '../../unit/instant/type/internal/tile/TileMapUnitInstant.js'
 import TileMapComponent from '../../component/internal/tile/TileMapComponent.js'
+import TileColliderComponent from '../../component/internal/tile/TileColliderComponent.js'
 
 /**
  * @class {DataSchema}
@@ -379,6 +380,7 @@ class DataSchema {
         {id: 1690, type: TileGridComponent},
         {id: 1700, type: TileMapUnitInstant},
         {id: 1710, type: TileMapComponent},
+        {id: 1720, type: TileColliderComponent},
     ]
 
     /**

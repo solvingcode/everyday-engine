@@ -8,6 +8,8 @@ import TransformComponent from '../component/internal/TransformComponent.js'
 import TransformHelper from './TransformHelper.js'
 import Size from '../pobject/Size.js'
 import ClientError from '../exception/type/ClientError.js'
+import TileColliderComponent from '../component/internal/tile/TileColliderComponent.js'
+import RectColliderComponent from '../component/internal/RectColliderComponent.js'
 
 export default class TileMapHelper {
 
@@ -96,6 +98,50 @@ export default class TileMapHelper {
                 meshComponent.setMapAssetSize(cellSize)
                 meshComponent.setGenerated(false)
             }
+        }
+    }
+
+
+    /**
+     * @param {World} world
+     * @param {Unit} unit
+     */
+    static updateColliders(world, unit) {
+        const unitManager = world.getUnitManager()
+        const meshComponent = unit.getComponent(MeshComponent)
+        const tileColliderComponent = unit.getComponent(TileColliderComponent)
+        const actualColliderComponents = unit.findComponentsByClass(RectColliderComponent)
+        const tileGrid = unitManager.findParentUnit(unit)
+        const tileGridComponent = tileGrid && tileGrid.getComponent(TileGridComponent)
+        if (tileColliderComponent && tileGridComponent) {
+            const cellScale = tileGridComponent.getCellScale()
+            const cellSize = new Size(TransformHelper.getSizeFromScale(cellScale))
+            const mapAssetPositions = meshComponent.getMapAssetPositions()
+            const cellSizePercent = new Size({
+                width: cellSize.width / meshComponent.getSize().width * 100,
+                height: cellSize.height / meshComponent.getSize().height * 100
+            })
+            if (!ArrayHelper.isEqual(mapAssetPositions, tileColliderComponent.getColliderPositions()) ||
+                !tileColliderComponent.getColliderSize().equals(cellSizePercent)
+            ) {
+                tileColliderComponent.setColliderPositions(_.cloneDeep(mapAssetPositions))
+                tileColliderComponent.setColliderSize(cellSizePercent)
+            }
+            actualColliderComponents.forEach(actualColliderComponent => {
+                if(!mapAssetPositions.find(mapAssetPosition =>
+                    mapAssetPosition.equals(actualColliderComponent.getPosition()))){
+                    unit.deleteComponent(actualColliderComponent.getId())
+                }
+            })
+            mapAssetPositions.forEach(mapAssetPosition => {
+                if(!actualColliderComponents.find(actualColliderComponent =>
+                    actualColliderComponent.getPosition().equals(mapAssetPosition))){
+                    const colliderComponent = unit.createComponent(RectColliderComponent)
+                    colliderComponent.setPosition(_.cloneDeep(mapAssetPosition))
+                    colliderComponent.setSize(cellSizePercent)
+                    colliderComponent.setHidden(true)
+                }
+            })
         }
     }
 

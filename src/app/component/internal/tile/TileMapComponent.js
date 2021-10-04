@@ -16,6 +16,13 @@ export default class TileMapComponent extends Component {
     }
 
     /**
+     * @override
+     */
+    getExcludeFields() {
+        return ['cellIndexes', 'assetIds']
+    }
+
+    /**
      * @return {Vector[]}
      */
     getCellIndexes() {
@@ -50,10 +57,4 @@ export default class TileMapComponent extends Component {
         return false
     }
 
-    /**
-     * @override
-     */
-    isHidden() {
-        return true
-    }
 }

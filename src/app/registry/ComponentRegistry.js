@@ -5,6 +5,7 @@ import CircleColliderComponent from '../component/internal/CircleColliderCompone
 import AnimationComponent from '../component/internal/AnimationComponent.js'
 import TransformComponent from '../component/internal/TransformComponent.js'
 import MeshComponent from '../component/internal/MeshComponent.js'
+import TileColliderComponent from '../component/internal/tile/TileColliderComponent.js'
 
 export default class ComponentRegistry extends Registry{
 
@@ -20,6 +21,7 @@ export default class ComponentRegistry extends Registry{
             new RigidBodyComponent(),
             new RectColliderComponent(),
             new CircleColliderComponent(),
+            new TileColliderComponent(),
             new AnimationComponent(),
             new TransformComponent(),
             new MeshComponent()

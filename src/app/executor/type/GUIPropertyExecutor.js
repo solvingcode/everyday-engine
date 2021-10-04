@@ -19,7 +19,7 @@ export default class GUIPropertyExecutor extends ComponentExecutor {
             if (!guiPropertyComponent.getRestoreStyle()) {
                 guiPropertyComponent.setRestoreStyle(_.cloneDeep(styleComponent.getStyle()))
             }
-            styleComponent.getStyle().setOpacity(0.2)
+            styleComponent.getStyle().setOpacity(0.4)
         } else {
             if (guiPropertyComponent.getRestoreStyle()) {
                 styleComponent.setStyle(_.cloneDeep(guiPropertyComponent.getRestoreStyle()))
