@@ -151,6 +151,14 @@ export default class TileEditorRunner extends Runner {
      * @param {StateManager} stateManager
      * @return {boolean}
      */
+    isEditArea(stateManager) {
+        return stateManager.hasAnyState('DRAW_EDIT_AREA_TILE_MAP')
+    }
+
+    /**
+     * @param {StateManager} stateManager
+     * @return {boolean}
+     */
     isDelete(stateManager) {
         return stateManager.hasAnyState('DRAW_DELETE_TILE_MAP')
     }
@@ -161,10 +169,11 @@ export default class TileEditorRunner extends Runner {
     selectCell(cellScale) {
         const world = World.get()
         const camera = world.getCamera()
+        const mouse = Window.get().mouse
         const cellSize = new Size(TransformHelper.getSizeFromScale(cellScale))
-        const selectedCellPosition = this.getSelectedCellPosition(cellScale)
+        const selectedCellPosition = this.getSelectedCellPosition(cellScale, mouse.currentScenePosition)
         const stateManager = StateManager.get()
-        if (!this.isEdit(stateManager) && !this.isDelete(stateManager)) {
+        if (!this.isEdit(stateManager) && !this.isDelete(stateManager) && !this.isEditArea(stateManager)) {
             if (this.selectedCell) {
                 world.getUnitManager().tryDeleteUnitById(this.selectedCell.getId())
                 this.selectedCell = null
@@ -197,12 +206,12 @@ export default class TileEditorRunner extends Runner {
 
     /**
      * @param {Vector} cellScale
+     * @param {Vector} mousePosition
      * @return {Vector|null}
      */
-    getSelectedCellPosition(cellScale) {
+    getSelectedCellPosition(cellScale, mousePosition) {
         const cellSize = new Size(TransformHelper.getSizeFromScale(cellScale))
-        const mouse = Window.get().mouse
-        const currentWorldMousePosition = World.get().getWorldScalePosition(mouse.currentScenePosition)
+        const currentWorldMousePosition = World.get().getWorldScalePosition(mousePosition)
         const sizeChunkCells = this.getSizeChunkCells(cellScale)
         const chunkVectors = this.getChunkVectors(cellScale)
         const chunkSelected = chunkVectors.find(chunkVector => {
@@ -236,15 +245,15 @@ export default class TileEditorRunner extends Runner {
         const world = World.get()
         const mouse = Window.get().mouse
         const stateManager = StateManager.get()
+        const cellSize = new Size(TransformHelper.getSizeFromScale(cellScale))
         if (mouse.isButtonPressed(MouseButton.LEFT) &&
             LayoutHelper.isPositionValid(mouse)) {
             const selectedUnit = world.getUnitManager().getSelected()
-            const cellSize = new Size(TransformHelper.getSizeFromScale(cellScale))
             if (!stateManager.hasAnyState('ACTION_SET_TILE_MAP') && this.isEdit(stateManager)) {
                 if (selectedUnit) {
                     const tileMapComponent = selectedUnit.getComponent(TileMapComponent)
                     if (tileMapComponent) {
-                        const selectedCellPosition = this.getSelectedCellPosition(cellScale)
+                        const selectedCellPosition = this.getSelectedCellPosition(cellScale, mouse.currentScenePosition)
                         const selectedAsset = world.getAssetsManager().getSelectedAsset()
                         if (selectedAsset && selectedAsset.getType() instanceof AssetImage) {
                             const cellIndex = new Vector({
@@ -260,7 +269,7 @@ export default class TileEditorRunner extends Runner {
                 if (selectedUnit) {
                     const tileMapComponent = selectedUnit.getComponent(TileMapComponent)
                     if (tileMapComponent) {
-                        const selectedCellPosition = this.getSelectedCellPosition(cellScale)
+                        const selectedCellPosition = this.getSelectedCellPosition(cellScale, mouse.currentScenePosition)
                         const cellIndex = new Vector({
                             x: selectedCellPosition.getX() / cellSize.getWidth(),
                             y: selectedCellPosition.getY() / cellSize.getHeight()
@@ -268,6 +277,38 @@ export default class TileEditorRunner extends Runner {
                         stateManager.startState('ACTION_DELETE_TILE_MAP', 1, {cellIndex})
                     }
                 }
+            } else if (!stateManager.hasAnyState('ACTION_SET_AREA_TILE_MAP')) {
+                if (selectedUnit) {
+                    const tileMapComponent = selectedUnit.getComponent(TileMapComponent)
+                    if (tileMapComponent) {
+                        const selectedAsset = world.getAssetsManager().getSelectedAsset()
+                        if (selectedAsset && selectedAsset.getType() instanceof AssetImage) {
+                            if (this.isEditArea(stateManager) && !this.startCellPosition) {
+                                this.startCellPosition = this.getSelectedCellPosition(cellScale, mouse.scenePosition)
+                            }
+                        }
+                    }
+                }
+            }
+        }else if(mouse.isButtonClicked(MouseButton.LEFT) && this.isEditArea(stateManager) && this.startCellPosition){
+            const endCellPosition = this.getSelectedCellPosition(cellScale, mouse.currentScenePosition)
+            const startCellIndex = new Vector({
+                x: this.startCellPosition.getX() / cellSize.getWidth(),
+                y: this.startCellPosition.getY() / cellSize.getHeight()
+            })
+            const endCellIndex = new Vector({
+                x: endCellPosition.getX() / cellSize.getWidth(),
+                y: endCellPosition.getY() / cellSize.getHeight()
+            })
+            const selectedAsset = world.getAssetsManager().getSelectedAsset()
+            if (selectedAsset && selectedAsset.getType() instanceof AssetImage) {
+                const assetId = selectedAsset.getId()
+                stateManager.startState('ACTION_SET_AREA_TILE_MAP', 1, {
+                    startCellIndex,
+                    endCellIndex,
+                    assetId
+                })
+                this.startCellPosition = null
             }
         }
     }

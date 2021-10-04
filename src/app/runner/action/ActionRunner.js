@@ -117,6 +117,7 @@ import SetTileMapAction from './tile/SetTileMapAction.js'
 import DeleteTileMapAction from './tile/DeleteTileMapAction.js'
 import FocusAction from './edit/FocusAction.js'
 import UnFocusAction from './edit/UnFocusAction.js'
+import SetAreaTileMapAction from './tile/SetAreaTileMapAction.js'
 
 /**
  * Action Runner class.
@@ -197,6 +198,7 @@ class ActionRunner extends Runner {
             ADD_TILE_GRID: AddTileGridAction,
             ADD_TILE_MAP: AddTileMapAction,
             SET_TILE_MAP: SetTileMapAction,
+            SET_AREA_TILE_MAP: SetAreaTileMapAction,
             DELETE_TILE_MAP: DeleteTileMapAction,
             ADD_LIGHT_POINT: AddLightPointAction,
             ADD_LIGHT_GLOBAL: AddLightGlobalAction,

@@ -25,6 +25,7 @@ import ContentCanvasMenuItem from './items/content/ContentCanvasMenuItem.js'
 import GameMenuItem from './items/game/GameMenuItem.js'
 import EditTileMenuItem from './items/edit/EditTileMenuItem.js'
 import DeleteTileMenuItem from './items/edit/DeleteTileMenuItem.js'
+import EditAreaTileMenuItem from './items/edit/EditAreaTileMenuItem.js'
 
 /**
  * Define all menu items
@@ -47,6 +48,7 @@ class Menu {
             new RotateMenuItem(),
             new EditTileMenuItem(),
             new DeleteTileMenuItem(),
+            new EditAreaTileMenuItem(),
 
             //TOP MENU
             new TopMenuItem(),

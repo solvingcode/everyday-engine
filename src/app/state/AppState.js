@@ -576,6 +576,9 @@ AppState.States = {
     ACTION_SET_TILE_MAP_START: {history: false},
     ACTION_SET_TILE_MAP_PROGRESS: {history: false},
     ACTION_SET_TILE_MAP_STOP: {history: false},
+    ACTION_SET_AREA_TILE_MAP_START: {history: false},
+    ACTION_SET_AREA_TILE_MAP_PROGRESS: {history: false},
+    ACTION_SET_AREA_TILE_MAP_STOP: {history: false},
     ACTION_DELETE_TILE_MAP_START: {history: false},
     ACTION_DELETE_TILE_MAP_PROGRESS: {history: false},
     ACTION_DELETE_TILE_MAP_STOP: {history: false},
@@ -585,6 +588,9 @@ AppState.States = {
     DRAW_DELETE_TILE_MAP_START: {history: false},
     DRAW_DELETE_TILE_MAP_PROGRESS: {history: false},
     DRAW_DELETE_TILE_MAP_STOP: {history: false},
+    DRAW_EDIT_AREA_TILE_MAP_START: {history: false},
+    DRAW_EDIT_AREA_TILE_MAP_PROGRESS: {history: false},
+    DRAW_EDIT_AREA_TILE_MAP_STOP: {history: false},
 }
 
 export default AppState
