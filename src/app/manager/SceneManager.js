@@ -69,6 +69,14 @@ export default class SceneManager extends SceneManagerData {
     }
 
     /**
+     * @param {Scene} scene
+     * @return {boolean}
+     */
+    hasScene(scene){
+        return !!this.scenes.find(pScene => pScene === scene)
+    }
+
+    /**
      * @param {number} index
      * @return {Scene}
      */

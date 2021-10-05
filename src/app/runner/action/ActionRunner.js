@@ -118,6 +118,7 @@ import DeleteTileMapAction from './tile/DeleteTileMapAction.js'
 import FocusAction from './edit/FocusAction.js'
 import UnFocusAction from './edit/UnFocusAction.js'
 import SetAreaTileMapAction from './tile/SetAreaTileMapAction.js'
+import AddEmptyUnitAction from './unit/AddEmptyUnitAction.js'
 
 /**
  * Action Runner class.
@@ -260,7 +261,8 @@ class ActionRunner extends Runner {
             ATTACH_COMPONENT_VALUE: AttachComponentValueAction,
             CLOSE_CONTENT_POPUP: ClosePopupAction,
             CREATE_UNIT_INSTANT: CreateUnitInstantAction,
-            LOAD_UNIT_INSTANT: LoadUnitInstantAction
+            LOAD_UNIT_INSTANT: LoadUnitInstantAction,
+            ADD_EMPTY_UNIT: AddEmptyUnitAction
         }
         const selectedUnits = this.unitSelector.getSelected(World.get())
         for (const iTypeAction in typeActions) {

@@ -572,7 +572,8 @@ export default class DynamicAttributeHelper {
                 newValue = audio.getType()
                 break
             case TYPES.SCENE:
-                const scene = world.getSceneManager().findById(value)
+                const sceneManager = world.getSceneManager()
+                const scene = sceneManager.hasScene(value) ? value : sceneManager.findById(value)
                 if (!scene) {
                     throw new ClientError(`${this.constructor.name}: Scene "${value}" not found`)
                 }

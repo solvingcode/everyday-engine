@@ -18,6 +18,7 @@ export default class SceneRunner extends Runner {
         const sceneManager = world.getSceneManager()
         const unLoadingScenes = sceneManager.getUnLoading()
         const loadingScenes = sceneManager.getLoading()
+        const physicsManager = world.getPhysicsManager()
 
         if(unLoadingScenes.length){
             world.unloadAllScene()
@@ -26,6 +27,7 @@ export default class SceneRunner extends Runner {
 
         if(unLoadingScenes.length || loadingScenes.length){
             world.regenerateAll()
+            physicsManager.clear()
         }
     }
 

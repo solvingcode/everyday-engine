@@ -12,11 +12,13 @@ import AlignParentMenuItem from '../../edit/AlignParentMenuItem.js'
 import CreateUnitInstantMenuItem from '../../unit/CreateUnitInstantMenuItem.js'
 import TileGridMenuItem from '../../unit/TileGridMenuItem.js'
 import TileMapMenuItem from '../../unit/TileMapMenuItem.js'
+import EmptyUnitMenuItem from '../../unit/EmptyUnitMenuItem.js'
 
 export default class UnitTopMenuItem extends OptionActionsMenuItem {
     constructor(bindObject, position, size) {
         super([
             new AddSceneMenuItem(),
+            new EmptyUnitMenuItem(),
             new CameraMenuItem(),
             new LightPointMenuItem(),
             new LightGlobalMenuItem(),

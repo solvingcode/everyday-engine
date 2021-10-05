@@ -9,13 +9,16 @@ export default class AssetUnitInstant extends MeshUnitInstant {
     /**
      * @param {Vector} position
      * @param {Asset} asset
+     * @param {string|null} name
      */
-    instantiate(position, asset) {
-        this.setName(asset.getName())
+    instantiate(position, asset, name = null) {
+        this.setName(!name ? asset.getName() : name)
         const meshComponent = this.getComponent(MeshComponent)
         const transformComponent = this.getComponent(TransformComponent)
-        transformComponent.setScale(TransformHelper.getScaleFromSize(asset.getType().getData().size))
-        meshComponent.setAssetId(asset.getId())
+        if(asset){
+            transformComponent.setScale(TransformHelper.getScaleFromSize(asset.getType().getData().size))
+            meshComponent.setAssetId(asset.getId())
+        }
         meshComponent.setMaterial('default')
         transformComponent.setPosition(position)
     }

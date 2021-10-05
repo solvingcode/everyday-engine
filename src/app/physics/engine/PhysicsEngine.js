@@ -19,6 +19,17 @@ export default class PhysicsEngine {
         this.instance = this.createEngineInstance()
     }
 
+    clear(){
+        this.clearEngine()
+    }
+
+    /**
+     * @abstract
+     */
+    clearEngine(){
+        throw new SystemError(`${this.constructor.name}.clearWorld method must be implemented`)
+    }
+
     /**
      * @param {Unit} unit
      * @param {RigidBodyOptions} options

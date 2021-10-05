@@ -22,6 +22,12 @@ export default class PhysicsManager {
         this.physicsEngine.init()
     }
 
+    clear(){
+        if(this.physicsEngine.getInstance()){
+            this.physicsEngine.clear()
+        }
+    }
+
     /**
      * @return {PhysicsEngine}
      */

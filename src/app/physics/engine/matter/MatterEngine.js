@@ -50,6 +50,13 @@ export default class MatterEngine extends PhysicsEngine {
 
     /**
      * @override
+     */
+    clearEngine() {
+        Matter.Engine.clear(this.getInstance())
+    }
+
+    /**
+     * @override
      * @return {Matter}
      */
     createEngineInstance() {
@@ -97,7 +104,7 @@ export default class MatterEngine extends PhysicsEngine {
      * @override
      */
     getBodyColliders(body) {
-        return body.parts.filter((_, index) => index !== 0)
+        return body ? body.parts.filter((_, index) => index !== 0) : []
     }
 
     /**
