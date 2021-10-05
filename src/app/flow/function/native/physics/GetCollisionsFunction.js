@@ -2,19 +2,18 @@ import {TYPES} from '../../../../pobject/AttributeType.js'
 import AFunction from '../../AFunction.js'
 import World from '../../../../world/World.js'
 
-export default class GetAllCollisionFunction extends AFunction{
+export default class GetCollisionsFunction extends AFunction{
 
     constructor() {
-        super('GetAllCollision')
+        super('GetCollisions')
     }
 
     /**
      * @override
-     */d
+     */
     initAttributes() {
         this.addInput('target', TYPES.UNIT)
         this.addInput('collider', TYPES.COMPONENT_INSTANCE)
-        this.addInput('maskGroup', TYPES.MASK_GROUP_INSTANCE)
         this.addOutput(TYPES.ARRAY | TYPES.COMPONENT_INSTANCE)
     }
 
@@ -26,8 +25,7 @@ export default class GetAllCollisionFunction extends AFunction{
         const physicsManager = world.getPhysicsManager()
         const colliderComponent = this.getInputValue('collider')
         const unit = this.getInputValue('target')
-        const maskGroup = this.getInputValue('maskGroup')
-        const colliderComponents = physicsManager.getAllCollision(world, unit, colliderComponent, maskGroup)
+        const colliderComponents = physicsManager.getAllCollision(world, unit, colliderComponent, null)
         this.setOutputValue(colliderComponents.map(pColliderComponent => pColliderComponent.getId()))
     }
 }

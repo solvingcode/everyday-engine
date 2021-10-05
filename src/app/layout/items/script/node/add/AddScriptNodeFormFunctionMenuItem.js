@@ -37,6 +37,9 @@ export default class AddScriptNodeFormFunctionMenuItem extends FormMenuItem {
         } else if (type === NODE_TYPES.FUNCTION) {
             functions = functionRegistry.getCustomFunctionInstances(script)
         }
+        functions = functions.sort((first, second) =>
+            first.getName() < second.getName() ? -1 : 1
+        )
         return [
             {
                 bind: 'value',

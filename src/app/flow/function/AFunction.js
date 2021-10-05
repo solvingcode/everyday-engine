@@ -24,9 +24,27 @@ export default class AFunction extends FunctionData{
      * @param {string} className
      * @return {boolean}
      */
-    isInstanceOfClass(className){
+    isMemberOfClass(className){
         const regexName = new RegExp(`^${className}\.`)
         return !!this.getName().match(regexName) || this.getName() === className
+    }
+
+    /**
+     * @return {string}
+     */
+    getClassName(){
+        const regexName = new RegExp(`^([^\.]+).*`)
+        const match = this.getName().match(regexName)
+        return match ? match[1] : ''
+    }
+
+    /**
+     * @return {string}
+     */
+    getFunctionName(){
+        const className = this.getClassName()
+        const regexName = new RegExp(`^(${className}\.)(.*)`)
+        return this.getName().replace(regexName, '$2')
     }
 
     init() {

@@ -17,6 +17,7 @@ export default class AssetScriptXmlGenerator extends ScriptXmlGenerator {
         const parentNode = root.createElement('flow')
         parentNode.setAttribute('type', 'class')
         parentNode.setAttribute('name', flow.getName())
+        parentNode.setAttribute('parent', flow.getParentName())
         flow.getFunctions().forEach(scriptFunction => {
             const functionNode = root.createElement('function')
             functionNode.setAttribute('name', scriptFunction.getName())

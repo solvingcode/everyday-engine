@@ -85,6 +85,9 @@ import TranslateFunction from '../flow/function/native/transform/TranslateFuncti
 import MultiplyVectorFunction from '../flow/function/native/basic/MultiplyVectorFunction.js'
 import BoxCastFunction from '../flow/function/native/physics/BoxCastFunction.js'
 import MoveXYAxisFunction from '../flow/function/native/physics/MoveXYAxisFunction.js'
+import GetComponentInstanceFunction from '../flow/function/native/component/GetComponentInstanceFunction.js'
+import GetCollisionsFunction from '../flow/function/native/physics/GetCollisionsFunction.js'
+import CallFunction from '../flow/function/native/component/CallFunction.js'
 
 export default class FunctionRegistry extends Registry{
 
@@ -146,6 +149,8 @@ export default class FunctionRegistry extends Registry{
             new EnableUnitFunction(),
             new DisableUnitFunction(),
             new IsUnitPressedFunction(),
+            new GetComponentInstanceFunction(),
+            new CallFunction(),
 
             //Animation
             new StartAnimationFunction(),
@@ -192,6 +197,7 @@ export default class FunctionRegistry extends Registry{
             new IsGroundedFunction(),
             new ScaleMeshFunction(),
             new GetAllCollisionFunction(),
+            new GetCollisionsFunction(),
             new BoxCastFunction(),
 
             //Transform
@@ -256,14 +262,14 @@ export default class FunctionRegistry extends Registry{
      * @return {AFunction[]}
      */
     getInstancesByClass(className) {
-        return this.getInstances().filter(instance => instance.isInstanceOfClass(className))
+        return this.getInstances().filter(instance => instance.isMemberOfClass(className))
     }
 
     /**
      * @param {string} className
      */
     removeInstancesByClass(className){
-        _.remove(this.getInstances(), (instance) => instance.isInstanceOfClass(className))
+        _.remove(this.getInstances(), (instance) => instance.isMemberOfClass(className))
     }
 
     /**
@@ -300,7 +306,7 @@ export default class FunctionRegistry extends Registry{
     getCustomFunctionInstances(script = null){
         return this.getOtherInstances().filter(instance =>
             instance.isGlobal() || instance.isPublic() ||
-            (instance instanceof ACustomFunction && script && instance.isInstanceOfClass(script.getName())))
+            (instance instanceof ACustomFunction && script && instance.isMemberOfClass(script.getName())))
     }
 
     /**

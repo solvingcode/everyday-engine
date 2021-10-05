@@ -265,7 +265,7 @@ export default class PhysicsEngine {
                 return this.isCollisionHasCollider(collision, targetColliderUnit.colliderComponent)
             })
             return colliderUnit.colliderComponent
-        })
+        }).filter(collider => collider !== sourceColliderUnit.colliderComponent)
     }
 
     /**

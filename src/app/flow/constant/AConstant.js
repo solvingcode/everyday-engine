@@ -11,7 +11,7 @@ export default class AConstant extends AStackFunction{
     constructor(type, value) {
         super('Constant')
         this.stack = [new StackOperation(OPERATIONS.PUSH, CONSTANTS.RESULT, value)]
-        this.setName(`${value}`)
+        this.setName(`[${value}]`)
         this.addOutput(type)
     }
 

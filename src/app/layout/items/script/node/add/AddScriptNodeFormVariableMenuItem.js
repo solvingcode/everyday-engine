@@ -48,6 +48,7 @@ export default class AddScriptNodeFormVariableMenuItem extends FormMenuItem {
                 type === NODE_TYPES.VAR_COMPONENT ||
                 type === NODE_TYPES.VAR_UNIT ||
                 type === NODE_TYPES.VAR_AUDIO ||
+                type === NODE_TYPES.VAR_IMAGE ||
                 type === NODE_TYPES.VAR_SCENE ||
                 type === NODE_TYPES.VAR_MASK_GROUP)
     }

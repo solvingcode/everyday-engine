@@ -51,6 +51,8 @@ import SceneVariableNode from '../flow/node/variable/SceneVariableNode.js'
 import ASceneVariable from '../flow/variable/ASceneVariable.js'
 import UnitVariableNode from '../flow/node/variable/UnitVariableNode.js'
 import AUnitVariable from '../flow/variable/AUnitVariable.js'
+import AImageVariable from '../flow/variable/AImageVariable.js'
+import ImageVariableNode from '../flow/node/variable/ImageVariableNode.js'
 
 export default class NodeHelper {
 
@@ -93,6 +95,8 @@ export default class NodeHelper {
                 return new ABooleanVariable(sourceName)
             case AudioVariableNode:
                 return new AAudioVariable(sourceName)
+            case ImageVariableNode:
+                return new AImageVariable(sourceName)
             case SceneVariableNode:
                 return new ASceneVariable(sourceName)
             case NumberVariableNode:

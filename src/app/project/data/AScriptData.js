@@ -29,6 +29,11 @@ export default class AScriptData extends Data{
     assetId
 
     /**
+     * @type {string}
+     */
+    parentName
+
+    /**
      * @param {string} name
      */
     constructor(name= '') {
@@ -37,6 +42,7 @@ export default class AScriptData extends Data{
         this.name = name
         this.status = STATUS.NEW
         this.functions = []
+        this.parentName = ''
     }
 
     /**
@@ -51,6 +57,20 @@ export default class AScriptData extends Data{
      */
     getId(){
         return this.id
+    }
+
+    /**
+     * @param {string} parentName
+     */
+    setParentName(parentName){
+        this.parentName = parentName
+    }
+
+    /**
+     * @return {string}
+     */
+    getParentName(){
+        return this.parentName
     }
 
     /**

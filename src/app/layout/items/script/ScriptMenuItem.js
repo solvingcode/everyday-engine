@@ -4,6 +4,7 @@ import World from '../../../world/World.js'
 import ScriptShowMenuItem from './ScriptShowMenuItem.js'
 import AddScriptNodeInputListMenuItem from './edge/list/AddScriptNodeInputListMenuItem.js'
 import ScriptFunctionsMenuItem from './function/ScriptFunctionsMenuItem.js'
+import EditScriptFormMenuItem from './edit/EditScriptFormMenuItem.js'
 
 export default class ScriptMenuItem extends PanelMenuItem {
     constructor() {
@@ -12,6 +13,7 @@ export default class ScriptMenuItem extends PanelMenuItem {
             zone: Layout.zone.RIGHT
         })
         this.items = [
+            new EditScriptFormMenuItem(this),
             new ScriptFunctionsMenuItem(this),
             new ScriptShowMenuItem(this),
             new AddScriptNodeInputListMenuItem(this)

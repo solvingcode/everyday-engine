@@ -192,6 +192,9 @@ import TileGridComponent from '../../component/internal/tile/TileGridComponent.j
 import TileMapUnitInstant from '../../unit/instant/type/internal/tile/TileMapUnitInstant.js'
 import TileMapComponent from '../../component/internal/tile/TileMapComponent.js'
 import TileColliderComponent from '../../component/internal/tile/TileColliderComponent.js'
+import GetComponentInstanceFunction from '../../flow/function/native/component/GetComponentInstanceFunction.js'
+import GetCollisionsFunction from '../../flow/function/native/physics/GetCollisionsFunction.js'
+import CallFunction from '../../flow/function/native/component/CallFunction.js'
 
 /**
  * @class {DataSchema}
@@ -381,6 +384,9 @@ class DataSchema {
         {id: 1700, type: TileMapUnitInstant},
         {id: 1710, type: TileMapComponent},
         {id: 1720, type: TileColliderComponent},
+        {id: 1730, type: GetComponentInstanceFunction},
+        {id: 1740, type: GetCollisionsFunction},
+        {id: 1750, type: CallFunction},
     ]
 
     /**

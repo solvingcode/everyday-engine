@@ -15,7 +15,9 @@ export default class ClassScriptXmlParser extends Parser {
     static parse(xmlDocument) {
         const xmlNode = xmlDocument.documentElement
         const name = xmlNode.getAttribute('name')
+        const parentName = xmlNode.getAttribute('parent')
         const script = new ClassScript(name)
+        script.setParentName(parentName)
         xmlNode.childNodes.forEach(functionXmlNode => {
             const functionTag = functionXmlNode.nodeName
             if (functionTag === 'function') {

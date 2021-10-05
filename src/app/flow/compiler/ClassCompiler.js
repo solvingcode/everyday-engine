@@ -177,10 +177,13 @@ export default class ClassCompiler extends Compiler {
                     if (functionRegistry.getInstance(element.getName())) {
                         if (element instanceof ALoop) {
                             const isArrayEmpty = new IsArrayEmptyFunction()
+                            const not = new NotFunction()
                             stackFunction.getStack().push(...[
                                 new StackOperation(OPERATIONS.PUSH, '[MEM]array', CONSTANTS.RESULT),
                                 new StackOperation(OPERATIONS.PUSH, 'array', CONSTANTS.RESULT),
                                 new StackOperation(OPERATIONS.CALL, isArrayEmpty.getName()),
+                                new StackOperation(OPERATIONS.PUSH, not.getInputs()[0].getAttrName(), CONSTANTS.RESULT),
+                                new StackOperation(OPERATIONS.CALL, not.getName()),
                                 new StackOperation(OPERATIONS.EXIT, CONSTANTS.RESULT),
                                 new StackOperation(OPERATIONS.PUSH, 'index', '0'),
                                 new StackOperation(OPERATIONS.JUMP_TO, 'start_loop'),

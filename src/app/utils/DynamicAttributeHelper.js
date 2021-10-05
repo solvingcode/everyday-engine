@@ -274,7 +274,7 @@ export default class DynamicAttributeHelper {
                 list: listScenes,
                 dynamicAttribute
             }]
-        } else if (attribute.getAttrType() === TYPES.FUNCTION && isListInstances) {
+        } else if (attribute.getAttrType() === TYPES.FUNCTION) {
             const listFunctions = world.getFunctionRegistry().getCustomFunctionInstances()
                 .map(func => ({
                     value: func.getName(),

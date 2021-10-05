@@ -13,6 +13,7 @@ export default class GetVarFunction extends AFunction{
      */
     initAttributes() {
         this.addInput('variable', TYPES.STRING)
+        this.addOutput(TYPES.ANY)
     }
 
     /**

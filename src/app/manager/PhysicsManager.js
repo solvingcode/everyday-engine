@@ -110,7 +110,8 @@ export default class PhysicsManager {
      * @return {ColliderComponent[]}
      */
     getAllCollision(world, unit, colliderComponent, maskGroup){
-        const maskGroupUnits = world.getUnitManager().findUnitsByMaskGroup(maskGroup)
+        const maskGroupUnits = maskGroup ? world.getUnitManager().findUnitsByMaskGroup(maskGroup)
+            : world.getUnitManager().getUnits()
         const sourceColliderUnit = { unit, colliderComponent }
         const targetColliderUnits = []
         maskGroupUnits.forEach(maskGroupUnit => {

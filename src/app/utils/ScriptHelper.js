@@ -33,6 +33,7 @@ import SceneVariableNode from '../flow/node/variable/SceneVariableNode.js'
 import UnitVariableNode from '../flow/node/variable/UnitVariableNode.js'
 import NodeScriptXmlParser from '../parser/flow/class/node/NodeScriptXmlParser.js'
 import Maths from './Maths.js'
+import ImageVariableNode from '../flow/node/variable/ImageVariableNode.js'
 
 export default class ScriptHelper {
 
@@ -108,6 +109,8 @@ export default class ScriptHelper {
             node = this.getNodeInstance(functionRegistry, BooleanVariableNode, nodeValue)
         } else if (nodeType === NODE_TYPES.VAR_AUDIO) {
             node = this.getNodeInstance(functionRegistry, AudioVariableNode, nodeValue)
+        } else if (nodeType === NODE_TYPES.VAR_IMAGE) {
+            node = this.getNodeInstance(functionRegistry, ImageVariableNode, nodeValue)
         } else if (nodeType === NODE_TYPES.VAR_SCENE) {
             node = this.getNodeInstance(functionRegistry, SceneVariableNode, nodeValue)
         } else if (nodeType === NODE_TYPES.VAR_TOGGLE) {
@@ -147,6 +150,7 @@ export default class ScriptHelper {
             case ToggleVariableNode:
             case BooleanVariableNode:
             case AudioVariableNode:
+            case ImageVariableNode:
             case SceneVariableNode:
             case NumberVariableNode:
             case ComponentVariableNode:
@@ -207,6 +211,8 @@ export default class ScriptHelper {
             nodeType = NODE_TYPES.VAR_BOOLEAN
         } else if (node instanceof AudioVariableNode) {
             nodeType = NODE_TYPES.VAR_AUDIO
+        } else if (node instanceof ImageVariableNode) {
+            nodeType = NODE_TYPES.VAR_IMAGE
         } else if (node instanceof SceneVariableNode) {
             nodeType = NODE_TYPES.VAR_SCENE
         } else if (node instanceof ToggleVariableNode) {
@@ -217,6 +223,38 @@ export default class ScriptHelper {
             throw new ClientError(`AssetScriptXmlGenerator: ${node.constructor.name} not supported`)
         }
         return nodeType
+    }
+
+    /**
+     * @param {World} world
+     * @param {string} functionName
+     * @param {string} className
+     * @return {boolean}
+     */
+    static isFunctionInstanceOf(world, functionName, className) {
+        const func = world.getFunctionRegistry().getInstance(functionName)
+        if (func) {
+            const functionClassName = func.getClassName()
+            if (functionClassName) {
+                return this.isClassInstanceOf(world, functionClassName, className)
+            }
+        }
+    }
+
+    /**
+     * @param {World} world
+     * @param {string} className
+     * @param {string} parentClassName
+     * @return {boolean}
+     */
+    static isClassInstanceOf(world, className, parentClassName) {
+        if (className === parentClassName) {
+            return true
+        }
+        const script = world.getScriptManager().findByName(className)
+        if (script) {
+            return this.isClassInstanceOf(world, script.getParentName(), parentClassName)
+        }
     }
 
     /**
@@ -342,7 +380,7 @@ export default class ScriptHelper {
         if (!script.getFunction(functionName)) {
             const scriptFunction = new FunctionScript(functionName)
             script.addFunction(scriptFunction)
-        }else{
+        } else {
             throw new ClientError(`Function "${functionName}" already exists`)
         }
     }
@@ -407,7 +445,7 @@ export default class ScriptHelper {
      * @param {(ChildNode|Element)[]} xmlNodes
      * @return {(ChildNode|Element)[]}
      */
-    static regenerateXmlNodeIds(xmlNodes){
+    static regenerateXmlNodeIds(xmlNodes) {
         const oldIds = []
         const newIds = []
         xmlNodes.forEach(xmlNode => {
