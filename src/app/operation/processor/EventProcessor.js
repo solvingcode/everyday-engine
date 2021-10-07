@@ -9,7 +9,7 @@ export default class EventProcessor {
      * @param {Unit} unit
      * @param {ScriptComponent} scriptComponent
      * @param {World} world
-     * @param {{camera: Camera, lights: Unit[], deltaTime: number}} executionContext
+     * @param {{camera: Camera, lights: Unit[], deltaTime: number, storage: Storage}} executionContext
      */
     static run(stackOperation, stackRegister, functionRegistry, unit,
                scriptComponent, world, executionContext) {

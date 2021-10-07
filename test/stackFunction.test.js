@@ -22,6 +22,10 @@ import OnCallEvent from '../src/app/flow/event/native/OnCallEvent.js'
 import ACustomFunction from '../src/app/flow/function/custom/ACustomFunction.js'
 import FunctionOutputNode from '../src/app/flow/node/FunctionOutputNode.js'
 import ScriptHelper from '../src/app/utils/ScriptHelper.js'
+import AssetUnitInstant from '../src/app/unit/instant/type/internal/asset/AssetUnitInstant.js'
+import Vector from '../src/app/utils/Vector.js'
+import Scene from '../src/app/scene/Scene.js'
+import SelfNode from '../src/app/flow/node/SelfNode.js'
 
 test('Execute native function (without output)', function () {
     const log = new LogFunction()
@@ -256,6 +260,15 @@ test('Create and compile class script with loop', function () {
 
 test('Create and compile class function (no return)', function () {
     const world = World.get()
+    const scene = new Scene("Game")
+    world.getSceneManager().tryAdd(scene)
+    world.getSceneManager().activate(scene)
+    const unit = world.createUnitInstant(AssetUnitInstant, new Vector(), null, 'Empty')
+    const unitCaller = world.createUnitInstant(AssetUnitInstant, new Vector(), null, 'Empty Caller')
+    const unitScriptComponent = unit.createComponent(ScriptComponent)
+    const scriptComponent = unitCaller.createComponent(ScriptComponent)
+    unitScriptComponent.setScript('classScript')
+    scriptComponent.setScript('classScript')
     const functionRegistry = world.getFunctionRegistry()
 
     functionRegistry.init()
@@ -265,7 +278,6 @@ test('Create and compile class function (no return)', function () {
     const mainScriptFunction = new FunctionScript('main')
     script.addFunction(mainScriptFunction)
     script.addFunction(scriptFunction)
-    const scriptComponent = new ScriptComponent()
 
     const nodeLog = ScriptHelper.createNodeByClass(functionRegistry, scriptFunction, FunctionNode, 'Log')
     const nodeInput1 = ScriptHelper.createNodeByClass(functionRegistry, scriptFunction, FunctionInputNode, `text[${TYPES.STRING}]`)
@@ -283,25 +295,33 @@ test('Create and compile class function (no return)', function () {
     expect(callEventCompiled.constructor).toEqual(OnCallEvent)
     expect(functionCompiled.constructor).toEqual(ACustomFunction)
 
+    const nodeInputUnit = ScriptHelper.createNodeByClass(functionRegistry, mainScriptFunction, SelfNode, '')
     const nodeLogFunction = ScriptHelper.createNodeByClass(functionRegistry, mainScriptFunction, FunctionNode, 'classScript.testFunction')
     const nodeMouseClick = ScriptHelper.createNodeByClass(functionRegistry, mainScriptFunction, EventNode, 'OnMouseClick')
     const nodeInputText = ScriptHelper.createNodeByClass(functionRegistry, mainScriptFunction, ConstantNode, 'testMessage')
     nodeLogFunction.attach(nodeMouseClick, null)
     nodeLogFunction.attach(nodeInputText, 'text')
+    nodeLogFunction.attach(nodeInputUnit, 'unit')
 
     script.compile(world)
 
-    const mouseEventCompiled = functionRegistry.getInstance('classScript.main.OnMouseClick.1')
+    const mouseEventCompiled = functionRegistry.getInstance('classScript.main.OnMouseClick.2')
     expect(mouseEventCompiled).toBeDefined()
     expect(mouseEventCompiled.constructor).toEqual(OnMouseClickEvent)
 
     console.log = jest.fn()
-    mouseEventCompiled.execute(functionRegistry, null, scriptComponent, World.get())
+    mouseEventCompiled.execute(functionRegistry, unitCaller, scriptComponent, World.get())
     expect(console.log).toHaveBeenCalledWith('testMessage')
 })
 
 test('Create and compile class function (return value)', function () {
     const world = World.get()
+    const scene = new Scene("Game2")
+    world.getSceneManager().tryAdd(scene)
+    world.getSceneManager().activate(scene)
+    const unit = world.createUnitInstant(AssetUnitInstant, new Vector(), null, 'Empty')
+    const unitScriptComponent = unit.createComponent(ScriptComponent)
+    unitScriptComponent.setScript('classScript')
     const functionRegistry = world.getFunctionRegistry()
 
     functionRegistry.init()
@@ -333,6 +353,8 @@ test('Create and compile class function (return value)', function () {
     expect(callEventCompiled.constructor).toEqual(OnCallEvent)
     expect(functionCompiled.constructor).toEqual(ACustomFunction)
 
+    const nodeInputUnit1 = ScriptHelper.createNodeByClass(functionRegistry, mainScriptFunction, ConstantNode, unit.getId())
+    const nodeInputUnit2 = ScriptHelper.createNodeByClass(functionRegistry, mainScriptFunction, ConstantNode, unit.getId())
     const nodeLogFunction = ScriptHelper.createNodeByClass(functionRegistry, mainScriptFunction, FunctionNode, 'Log')
     const nodeMultiplyFunction = ScriptHelper.createNodeByClass(functionRegistry, mainScriptFunction, FunctionNode, 'classScript.testFunction')
     const nodeMouseClick = ScriptHelper.createNodeByClass(functionRegistry, mainScriptFunction, EventNode, 'OnMouseClick')
@@ -340,12 +362,14 @@ test('Create and compile class function (return value)', function () {
     const nodeInputValue2 = ScriptHelper.createNodeByClass(functionRegistry, mainScriptFunction, ConstantNode, '4')
     nodeLogFunction.attach(nodeMouseClick, null)
     nodeLogFunction.attach(nodeMultiplyFunction, 'value')
+    nodeLogFunction.attach(nodeInputUnit1, 'unit')
     nodeMultiplyFunction.attach(nodeInputValue1, 'numberA')
     nodeMultiplyFunction.attach(nodeInputValue2, 'numberB')
+    nodeMultiplyFunction.attach(nodeInputUnit2, 'unit')
 
     script.compile(world)
 
-    const mouseEventCompiled = functionRegistry.getInstance('classScript.main.OnMouseClick.2')
+    const mouseEventCompiled = functionRegistry.getInstance('classScript.main.OnMouseClick.4')
     expect(mouseEventCompiled).toBeDefined()
     expect(mouseEventCompiled.constructor).toEqual(OnMouseClickEvent)
 

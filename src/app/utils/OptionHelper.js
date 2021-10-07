@@ -54,6 +54,8 @@ import EditGameInputPopupButtonMenuItem from '../layout/items/input/edit/EditGam
 import DeleteGameInputMenuItem from '../layout/items/input/delete/DeleteGameInputMenuItem.js'
 import TileGridMenuItem from '../layout/items/unit/TileGridMenuItem.js'
 import TileMapMenuItem from '../layout/items/unit/TileMapMenuItem.js'
+import VariableNode from '../flow/node/variable/VariableNode.js'
+import DeleteScriptNodeMenuItem from '../layout/items/script/node/delete/DeleteScriptNodeMenuItem.js'
 
 export default class OptionHelper {
 
@@ -152,6 +154,12 @@ export default class OptionHelper {
                 new AddScriptNodePopupButtonMenuItem(),
                 new DeleteSelectedNodeMenuItem(),
                 new CopySelectedNodeMenuItem(),
+            ])
+        }
+        if(bindObject instanceof VariableNode){
+            options.push(...[
+                new OptionActionsTitleMenuItem('Node'),
+                new DeleteScriptNodeMenuItem(null, bindObject),
             ])
         }
         return options

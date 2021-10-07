@@ -1,6 +1,7 @@
 import Action from '../Action.js'
 import World from '../../../world/World.js'
 import StorageHelper from '../../../utils/StorageHelper.js'
+import Storage from '../../../core/Storage.js'
 
 export default class LoadUnitInstantAction extends Action {
 
@@ -17,7 +18,7 @@ export default class LoadUnitInstantAction extends Action {
         const world = World.get()
         const selectedAssets = world.getAssetsManager().getSelectedAssets()
         selectedAssets.forEach(asset => {
-            StorageHelper.loadAssetUnit(asset)
+            StorageHelper.loadAssetUnit(asset, Storage.get())
         })
         return true
     }

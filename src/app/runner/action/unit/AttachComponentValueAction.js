@@ -8,6 +8,7 @@ import Asset from '../../../asset/Asset.js'
 import AssetImage from '../../../asset/types/image/AssetImage.js'
 import MeshComponent from '../../../component/internal/MeshComponent.js'
 import AssetAudio from '../../../asset/types/Audio/AssetAudio.js'
+import AssetUnit from '../../../asset/types/unit/AssetUnit.js'
 
 export default class AttachComponentValueAction extends Action {
 
@@ -35,6 +36,11 @@ export default class AttachComponentValueAction extends Action {
         if (type === TYPES.AUDIO) {
             if (!(startData.getType() instanceof AssetAudio)) {
                 throw new ClientError(`Source must be an Audio`)
+            }
+        }
+        if (type === TYPES.UNIT_INSTANT) {
+            if (!(startData.getType() instanceof AssetUnit)) {
+                throw new ClientError(`Source must be a Unit Instant`)
             }
         }
         component.setValue(attributeName, startData.getId())

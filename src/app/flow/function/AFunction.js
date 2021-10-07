@@ -71,7 +71,7 @@ export default class AFunction extends FunctionData{
      * @param {Unit} unit
      * @param {ScriptComponent} scriptComponent
      * @param {World} world
-     * @param {{camera: Camera, lights: Unit[], deltaTime: number}} executionContext
+     * @param {{camera: Camera, lights: Unit[], deltaTime: number, storage: Storage}} executionContext
      * @return {void}
      */
     execute(functionRegistry, unit, scriptComponent, world, executionContext){

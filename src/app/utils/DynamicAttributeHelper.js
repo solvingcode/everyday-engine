@@ -261,6 +261,20 @@ export default class DynamicAttributeHelper {
                 draggable: true,
                 dynamicAttribute
             }]
+        } else if (attribute.getAttrType() === TYPES.UNIT_INSTANT && isListInstances) {
+            const listUnitInstants = world.getAssetsManager().getUnitAssets()
+                .map(instant => ({
+                    value: instant.getId(),
+                    label: instant.getName()
+                }))
+            formField = [{
+                bind: bindName,
+                label: attribute.getAttrName(),
+                type: Layout.form.DROPDOWN,
+                list: listUnitInstants,
+                draggable: true,
+                dynamicAttribute
+            }]
         } else if (attribute.getAttrType() === TYPES.SCENE && isListInstances) {
             const listScenes = world.getSceneManager().getScenes()
                 .map(scene => ({

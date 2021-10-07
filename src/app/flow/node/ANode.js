@@ -131,6 +131,7 @@ export const NODE_TYPES = {
     VAR_MASK_GROUP: 'var_mask_group',
     VAR_AUDIO: 'var_audio',
     VAR_IMAGE: 'var_image',
+    VAR_UNIT_INSTANT: 'var_unit_instant',
     VAR_SCENE: 'var_scene',
     VAR_UNIT: 'var_unit',
     ANIMATION: 'animation',
@@ -139,7 +140,8 @@ export const NODE_TYPES = {
     SELF: 'self',
     AUDIO: 'audio',
     INPUT: 'input',
-    OUTPUT: 'output'
+    OUTPUT: 'output',
+    THEN: 'then'
 }
 
 export const NODE_TYPE_NAMES = [
@@ -180,6 +182,10 @@ export const NODE_TYPE_NAMES = [
         label: 'Loop'
     },
     {
+        value: NODE_TYPES.THEN,
+        label: 'Then'
+    },
+    {
         value: NODE_TYPES.CONDITION,
         label: 'Condition'
     },
@@ -214,6 +220,10 @@ export const NODE_TYPE_NAMES = [
     {
         value: NODE_TYPES.VAR_IMAGE,
         label: 'Variable (Image)'
+    },
+    {
+        value: NODE_TYPES.VAR_UNIT_INSTANT,
+        label: 'Variable (Unit Instant)'
     },
     {
         value: NODE_TYPES.VAR_SCENE,

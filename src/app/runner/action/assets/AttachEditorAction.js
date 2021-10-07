@@ -8,6 +8,7 @@ import AssetUnitInstant from '../../../unit/instant/type/internal/asset/AssetUni
 import Window from '../../../core/Window.js'
 import AssetUnit from '../../../asset/types/unit/AssetUnit.js'
 import StorageHelper from '../../../utils/StorageHelper.js'
+import Storage from '../../../core/Storage.js'
 
 export default class AttachEditorAction extends Action {
 
@@ -26,7 +27,7 @@ export default class AttachEditorAction extends Action {
         if (startData.getType() instanceof AssetImage) {
             world.createUnitInstant(AssetUnitInstant, world.getWorldScalePosition(mouse.currentScenePosition), startData)
         } else if (startData.getType() instanceof AssetUnit) {
-            StorageHelper.loadAssetUnit(startData)
+            StorageHelper.loadAssetUnit(startData, Storage.get())
         }
         return true
     }

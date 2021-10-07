@@ -88,6 +88,9 @@ import MoveXYAxisFunction from '../flow/function/native/physics/MoveXYAxisFuncti
 import GetComponentInstanceFunction from '../flow/function/native/component/GetComponentInstanceFunction.js'
 import GetCollisionsFunction from '../flow/function/native/physics/GetCollisionsFunction.js'
 import CallFunction from '../flow/function/native/component/CallFunction.js'
+import InstantiateUnitFunction from '../flow/function/native/unit/InstantiateUnitFunction.js'
+import AThen from '../flow/promise/AThen.js'
+import SetParentUnitFunction from '../flow/function/native/unit/SetParentUnitFunction.js'
 
 export default class FunctionRegistry extends Registry{
 
@@ -141,13 +144,18 @@ export default class FunctionRegistry extends Registry{
             //Loop
             new ALoop(),
 
+            //Promise
+            new AThen(),
+
             //Unit
             new GetWorldPositionFunction(),
             new SetWorldPositionFunction(),
             new GetUnitFunction(),
+            new InstantiateUnitFunction(),
             new GetComponentFunction(),
             new EnableUnitFunction(),
             new DisableUnitFunction(),
+            new SetParentUnitFunction(),
             new IsUnitPressedFunction(),
             new GetComponentInstanceFunction(),
             new CallFunction(),
@@ -289,6 +297,7 @@ export default class FunctionRegistry extends Registry{
                 !(instance instanceof AConstant) &&
                 !(instance instanceof ACondition) &&
                 !(instance instanceof ALoop) &&
+                !(instance instanceof AThen) &&
                 !(instance instanceof AUnit) &&
                 !(instance instanceof AAnimation) &&
                 !(instance instanceof AFunctionInput) &&

@@ -53,6 +53,10 @@ import UnitVariableNode from '../flow/node/variable/UnitVariableNode.js'
 import AUnitVariable from '../flow/variable/AUnitVariable.js'
 import AImageVariable from '../flow/variable/AImageVariable.js'
 import ImageVariableNode from '../flow/node/variable/ImageVariableNode.js'
+import AUnitInstantVariable from '../flow/variable/AUnitInstantVariable.js'
+import UnitInstantVariableNode from '../flow/node/variable/UnitInstantVariableNode.js'
+import AThen from '../flow/promise/AThen.js'
+import ThenNode from '../flow/node/ThenNode.js'
 
 export default class NodeHelper {
 
@@ -87,6 +91,8 @@ export default class NodeHelper {
                 return new AReference(sourceName)
             case LoopNode:
                 return new ALoop(sourceName)
+            case ThenNode:
+                return new AThen(sourceName)
             case StringVariableNode:
                 return new AStringVariable(sourceName)
             case UnitVariableNode:
@@ -97,6 +103,8 @@ export default class NodeHelper {
                 return new AAudioVariable(sourceName)
             case ImageVariableNode:
                 return new AImageVariable(sourceName)
+            case UnitInstantVariableNode:
+                return new AUnitInstantVariable(sourceName)
             case SceneVariableNode:
                 return new ASceneVariable(sourceName)
             case NumberVariableNode:
@@ -130,6 +138,8 @@ export default class NodeHelper {
         } else if (nodeSource instanceof ACondition) {
             return `${nodeSource.getName()}`
         } else if (nodeSource instanceof ALoop) {
+            return `${nodeSource.getName()}`
+        } else if (nodeSource instanceof AThen) {
             return `${nodeSource.getName()}`
         } else if (nodeSource instanceof AEvent) {
             return `${nodeSource.getName()}`
@@ -222,6 +232,8 @@ export default class NodeHelper {
             headColor = '#225e31'
         } else if (type === NODE_TYPES.LOOP) {
             headColor = '#225e50'
+        } else if (type === NODE_TYPES.THEN) {
+            headColor = '#40225e'
         } else if (type === NODE_TYPES.UNIT) {
             headColor = '#5e2254'
         } else if (type === NODE_TYPES.ANIMATION) {
@@ -355,6 +367,7 @@ export default class NodeHelper {
     static hasBaseInput(type) {
         return type === NODE_TYPES.FUNCTION ||
             type === NODE_TYPES.LOOP ||
+            type === NODE_TYPES.THEN ||
             type === NODE_TYPES.CONDITION ||
             type === NODE_TYPES.ANIMATION ||
             type === NODE_TYPES.REFERENCE ||
@@ -367,6 +380,6 @@ export default class NodeHelper {
      */
     static hasBaseOutput(type) {
         return type === NODE_TYPES.EVENT || type === NODE_TYPES.ANIMATION ||
-            type === NODE_TYPES.SELF || type === NODE_TYPES.INPUT
+            type === NODE_TYPES.SELF || type === NODE_TYPES.INPUT || type === NODE_TYPES.THEN
     }
 }

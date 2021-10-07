@@ -1,5 +1,4 @@
 import * as StorageConstant from '../constant/StorageConstant.js'
-import Storage from '../core/Storage.js'
 import DataGenerator from '../generator/data/DataGenerator.js'
 import ClipboardManager from '../manager/ClipboardManager.js'
 
@@ -7,20 +6,20 @@ export default class StorageHelper {
 
     /**
      * @param {Asset} asset
+     * @param {Storage} storage
      */
-    static loadAssetUnit(asset){
+    static async loadAssetUnit(asset, storage){
         const type = StorageConstant.type.UNITS
-        const storage = Storage.get()
         const dataImport = storage.import(type, asset.getType().getDataUrl(), StorageConstant.format.XML)
-        dataImport && storage.load(type, dataImport[type], DataGenerator)
+        return dataImport && storage.load(type, dataImport[type], DataGenerator)
     }
 
     /**
+     * @param {Storage} storage
      * @return {Promise<Unit[]>}
      */
-    static async getUnitsFromClipboard(){
+    static async getUnitsFromClipboard(storage){
         const type = StorageConstant.type.UNITS
-        const storage = Storage.get()
         const clipboard = ClipboardManager.get().getContent()
         const dataImport = storage.import(type, clipboard, StorageConstant.format.XML)
         return await storage.deserialize(type, dataImport[type])

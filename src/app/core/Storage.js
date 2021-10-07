@@ -55,10 +55,13 @@ class Storage {
      * @param {string} type
      * @param {Object|Array} data
      * @param {Object} target
+     * @return {Object|Array}
      */
     async load(type, data, target) {
         await this.updateAndValidate(type, data)
-        target.set(_.cloneDeep(this.data[type]), type)
+        const dataType = _.cloneDeep(this.data[type])
+        target.set(dataType, type)
+        return dataType
     }
 
     /**

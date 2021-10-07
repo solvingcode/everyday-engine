@@ -444,9 +444,6 @@ export default class PhysicsEngine {
      * @return {*}
      */
     getInstance() {
-        if (!this.instance) {
-            throw new SystemError(`Physics Engine "${this.constructor.name}" not initialized`)
-        }
         return this.instance
     }
 }

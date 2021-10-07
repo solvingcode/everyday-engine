@@ -34,6 +34,8 @@ import UnitVariableNode from '../flow/node/variable/UnitVariableNode.js'
 import NodeScriptXmlParser from '../parser/flow/class/node/NodeScriptXmlParser.js'
 import Maths from './Maths.js'
 import ImageVariableNode from '../flow/node/variable/ImageVariableNode.js'
+import UnitInstantVariableNode from '../flow/node/variable/UnitInstantVariableNode.js'
+import ThenNode from '../flow/node/ThenNode.js'
 
 export default class ScriptHelper {
 
@@ -83,6 +85,8 @@ export default class ScriptHelper {
             node = this.getNodeInstance(functionRegistry, ConditionNode, nodeValue)
         } else if (nodeType === NODE_TYPES.LOOP) {
             node = this.getNodeInstance(functionRegistry, LoopNode, nodeValue)
+        } else if (nodeType === NODE_TYPES.THEN) {
+            node = this.getNodeInstance(functionRegistry, ThenNode, nodeValue)
         } else if (nodeType === NODE_TYPES.UNIT) {
             node = this.getNodeInstance(functionRegistry, UnitNode, nodeValue)
         } else if (nodeType === NODE_TYPES.SELF) {
@@ -111,6 +115,8 @@ export default class ScriptHelper {
             node = this.getNodeInstance(functionRegistry, AudioVariableNode, nodeValue)
         } else if (nodeType === NODE_TYPES.VAR_IMAGE) {
             node = this.getNodeInstance(functionRegistry, ImageVariableNode, nodeValue)
+        } else if (nodeType === NODE_TYPES.VAR_UNIT_INSTANT) {
+            node = this.getNodeInstance(functionRegistry, UnitInstantVariableNode, nodeValue)
         } else if (nodeType === NODE_TYPES.VAR_SCENE) {
             node = this.getNodeInstance(functionRegistry, SceneVariableNode, nodeValue)
         } else if (nodeType === NODE_TYPES.VAR_TOGGLE) {
@@ -145,12 +151,14 @@ export default class ScriptHelper {
             case FunctionOutputNode:
             case ReferenceNode:
             case LoopNode:
+            case ThenNode:
             case StringVariableNode:
             case UnitVariableNode:
             case ToggleVariableNode:
             case BooleanVariableNode:
             case AudioVariableNode:
             case ImageVariableNode:
+            case UnitInstantVariableNode:
             case SceneVariableNode:
             case NumberVariableNode:
             case ComponentVariableNode:
@@ -183,6 +191,8 @@ export default class ScriptHelper {
             nodeType = NODE_TYPES.CONDITION
         } else if (node instanceof LoopNode) {
             nodeType = NODE_TYPES.LOOP
+        } else if (node instanceof ThenNode) {
+            nodeType = NODE_TYPES.THEN
         } else if (node instanceof UnitNode) {
             nodeType = NODE_TYPES.UNIT
         } else if (node instanceof SelfNode) {
@@ -213,6 +223,8 @@ export default class ScriptHelper {
             nodeType = NODE_TYPES.VAR_AUDIO
         } else if (node instanceof ImageVariableNode) {
             nodeType = NODE_TYPES.VAR_IMAGE
+        } else if (node instanceof UnitInstantVariableNode) {
+            nodeType = NODE_TYPES.VAR_UNIT_INSTANT
         } else if (node instanceof SceneVariableNode) {
             nodeType = NODE_TYPES.VAR_SCENE
         } else if (node instanceof ToggleVariableNode) {

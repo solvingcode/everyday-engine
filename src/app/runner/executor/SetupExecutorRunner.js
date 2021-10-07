@@ -1,6 +1,7 @@
 import Runner from '../Runner.js'
 import World from '../../world/World.js'
 import ExecutorRegistry from '../../executor/ExecutorRegistry.js'
+import Storage from '../../core/Storage.js'
 
 export class SetupExecutorRunner extends Runner {
 
@@ -26,6 +27,7 @@ export class SetupExecutorRunner extends Runner {
         const scriptFunction = scriptManager.getFunctionSelected(world.getTabManager())
         const scriptClass = scriptManager.getSelected(world.getTabManager())
         const lights = world.getLightsNotGenerated()
+        const storage = Storage.get()
         let units, camera
         if(scriptClass){
             units = graphManager.getUnits()
@@ -35,7 +37,7 @@ export class SetupExecutorRunner extends Runner {
             camera = world.getCamera()
         }
         units.forEach(unit => {
-            ExecutorRegistry.get().execute(unit, {camera, deltaTime, lights})
+            ExecutorRegistry.get().execute(unit, {camera, deltaTime, lights, storage})
         })
     }
 

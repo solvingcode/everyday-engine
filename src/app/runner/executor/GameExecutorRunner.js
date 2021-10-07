@@ -1,6 +1,7 @@
 import Runner from '../Runner.js'
 import World from '../../world/World.js'
 import ExecutorRegistry from '../../executor/ExecutorRegistry.js'
+import Storage from '../../core/Storage.js'
 
 export class GameExecutorRunner extends Runner {
 
@@ -24,8 +25,9 @@ export class GameExecutorRunner extends Runner {
         const units = world.getUnitManager().getEnabledUnits()
         const camera = world.getCamera()
         const lights = world.getLightsNotGenerated()
+        const storage = Storage.get()
         units.forEach(unit => {
-            ExecutorRegistry.get().execute(unit, {camera, deltaTime, lights})
+            ExecutorRegistry.get().execute(unit, {camera, deltaTime, lights, storage})
         })
     }
 

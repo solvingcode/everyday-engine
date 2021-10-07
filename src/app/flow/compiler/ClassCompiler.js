@@ -30,6 +30,9 @@ import FunctionInputNode from '../node/FunctionInputNode.js'
 import FunctionOutputNode from '../node/FunctionOutputNode.js'
 import AFunctionInput from '../io/AFunctionInput.js'
 import AFunctionOutput from '../io/AFunctionOutput.js'
+import DynamicAttribute from '../../pobject/DynamicAttribute.js'
+import {TYPES} from '../../pobject/AttributeType.js'
+import CallFunction from '../function/native/component/CallFunction.js'
 
 export default class ClassCompiler extends Compiler {
 
@@ -81,12 +84,12 @@ export default class ClassCompiler extends Compiler {
                         stackFunction.getStack().push(...[
                             new StackOperation(OPERATIONS.GET, sourceNode.getSourceName())
                         ])
-                        if(element instanceof ACustomFunction){
+                        if (element instanceof ACustomFunction) {
                             stackFunction.getStack().push(...[
                                 new StackOperation(OPERATIONS.PUSH,
                                     `[MEM]${element.getName()}.${targetInput.getAttrName()}`, CONSTANTS.RESULT)
                             ])
-                        }else{
+                        } else {
                             stackFunction.getStack().push(...[
                                 new StackOperation(OPERATIONS.PUSH, targetInput.getAttrName(), CONSTANTS.RESULT)
                             ])
@@ -100,9 +103,18 @@ export default class ClassCompiler extends Compiler {
                     } else if (sourceElement instanceof ASelf) {
                         const targetInput = element.findInputByName(targetName)
                         stackFunction.getStack().push(...[
-                            new StackOperation(OPERATIONS.SELF, `${targetInput.getAttrType()}`),
-                            new StackOperation(OPERATIONS.PUSH, targetInput.getAttrName(), CONSTANTS.RESULT)
+                            new StackOperation(OPERATIONS.SELF, `${targetInput.getAttrType()}`)
                         ])
+                        if (element instanceof ACustomFunction) {
+                            stackFunction.getStack().push(...[
+                                new StackOperation(OPERATIONS.PUSH,
+                                    `[MEM]${element.getName()}.${targetInput.getAttrName()}`, CONSTANTS.RESULT)
+                            ])
+                        } else {
+                            stackFunction.getStack().push(...[
+                                new StackOperation(OPERATIONS.PUSH, targetInput.getAttrName(), CONSTANTS.RESULT)
+                            ])
+                        }
                     } else if (sourceElement instanceof AAnimation) {
                         if (element instanceof ANativeFunction) {
                             const targetInput = element.findInputByName(targetName)
@@ -117,24 +129,24 @@ export default class ClassCompiler extends Compiler {
                                 new StackOperation(OPERATIONS.PUSH, targetInput.getAttrName(), '[MEM]attributes')
                             ])
                         }
-                    } else if(sourceElement instanceof AFunctionInput){
+                    } else if (sourceElement instanceof AFunctionInput) {
                         const targetInput = element.findInputByName(targetName)
                         if (targetInput) {
                             const attribute = NodeHelper.getAttributeFromNodeFunctionInput(sourceNode, world)
-                            if(element instanceof ACustomFunction){
+                            if (element instanceof ACustomFunction) {
                                 stackFunction.getStack().push(...[
                                     new StackOperation(OPERATIONS.PUSH,
                                         `[MEM]${element.getName()}.${targetInput.getAttrName()}`,
                                         `[MEM]${scriptFunctionName}.${attribute.getAttrName()}`)
                                 ])
-                            }else{
+                            } else {
                                 stackFunction.getStack().push(...[
                                     new StackOperation(OPERATIONS.PUSH, targetInput.getAttrName(),
                                         `[MEM]${scriptFunctionName}.${attribute.getAttrName()}`)
                                 ])
                             }
                         }
-                    } else if(sourceElement instanceof ACustomFunction){
+                    } else if (sourceElement instanceof ACustomFunction) {
                         const targetInput = element.findInputByName(targetName)
                         if (targetInput) {
                             stackFunction.getStack().push(...[
@@ -151,12 +163,12 @@ export default class ClassCompiler extends Compiler {
                             stackFunction.getStack().push(...[
                                 new StackOperation(OPERATIONS.CALL, sourceElementName)
                             ])
-                            if(element instanceof ACustomFunction){
+                            if (element instanceof ACustomFunction) {
                                 stackFunction.getStack().push(...[
                                     new StackOperation(OPERATIONS.PUSH,
                                         `[MEM]${element.getName()}.${targetInput.getAttrName()}`, CONSTANTS.RESULT)
                                 ])
-                            }else{
+                            } else {
                                 stackFunction.getStack().push(...[
                                     new StackOperation(OPERATIONS.PUSH, targetInput.getAttrName(), CONSTANTS.RESULT)
                                 ])
@@ -190,6 +202,13 @@ export default class ClassCompiler extends Compiler {
                                 new StackOperation(OPERATIONS.PUSH, 'array', '[MEM]array'),
                                 new StackOperation(OPERATIONS.CALL, element.getName()),
                                 new StackOperation(OPERATIONS.PUSH, '[MEM]attributes', CONSTANTS.RESULT)
+                            ])
+                        } else if (element instanceof ACustomFunction) {
+                            const callFunction = new CallFunction()
+                            stackFunction.getStack().push(...[
+                                new StackOperation(OPERATIONS.PUSH, 'unit', `[MEM]${element.getName()}.unit`),
+                                new StackOperation(OPERATIONS.PUSH, 'function', element.getName()),
+                                new StackOperation(OPERATIONS.CALL, callFunction.getName())
                             ])
                         } else {
                             stackFunction.getStack().push(new StackOperation(OPERATIONS.CALL, element.getName()))
@@ -232,12 +251,12 @@ export default class ClassCompiler extends Compiler {
                     const sourceElement = NodeHelper.getSourceNode(sourceNode, world)
                     const sourceElementName = ScriptHelper.generateFunctionName(script, scriptFunction, sourceNode, world)
                     const sourceStackFunction = functionRegistry.getInstance(sourceElementName)
-                    if(element instanceof AFunctionOutput){
+                    if (element instanceof AFunctionOutput) {
                         sourceStackFunction.getStack().push(...[
                             new StackOperation(OPERATIONS.PUSH,
                                 `[MEM]${scriptFunctionName}.${CONSTANTS.RESULT}`, CONSTANTS.RESULT)
                         ])
-                    }else if (sourceElement instanceof AAnimation) {
+                    } else if (sourceElement instanceof AAnimation) {
                         if (element instanceof AAnimation) {
                             const stopAnimation = new StopAnimationFunction()
                             sourceStackFunction.getStack().push(...[
@@ -284,7 +303,10 @@ export default class ClassCompiler extends Compiler {
             if (!scriptFunction.isMain()) {
                 const nodeInputs = scriptFunction.findNodesByClass(FunctionInputNode)
                 const nodeOutputs = scriptFunction.findNodesByClass(FunctionOutputNode)
-                const functionInputs = nodeInputs.map(nodeInput => NodeHelper.getAttributeFromNodeFunctionInput(nodeInput, world))
+                const functionInputs = [
+                    new DynamicAttribute('unit', TYPES.UNIT),
+                    ...nodeInputs.map(nodeInput => NodeHelper.getAttributeFromNodeFunctionInput(nodeInput, world))
+                ]
                 const functionOutput = !!nodeOutputs.length ? NodeHelper.getAttributeFromNodeFunctionOutput(nodeOutputs[0], world) : null
                 const stackScriptFunction = new ACustomFunction(scriptFunctionName, functionInputs, functionOutput)
                 stackScriptFunction.setAccess(scriptFunction.getAccess())

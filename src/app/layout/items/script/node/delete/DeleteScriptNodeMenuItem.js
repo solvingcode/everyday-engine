@@ -5,10 +5,10 @@ export default class DeleteScriptNodeMenuItem extends MenuItem {
     constructor(parent, node) {
         super({
             name: 'times',
-            title: 'Delete selected node',
+            title: 'Delete node',
             stateCode: 'CONFIRM_ACTION_DELETE_SCRIPT_NODE',
-            type: Layout.type.ICON,
-            zone: parent.zone
+            type: Layout.type.ICON_TEXT,
+            zone: parent ? parent.zone : Layout.zone.WINDOW
         })
         this.parent = parent
         this.data = {node}

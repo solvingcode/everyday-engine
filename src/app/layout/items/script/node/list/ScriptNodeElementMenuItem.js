@@ -23,4 +23,11 @@ export default class ScriptNodeElementMenuItem extends ListSelectElementActionsM
         return true
     }
 
+    /**
+     * @override
+     */
+    isRightClick() {
+        return true
+    }
+
 }

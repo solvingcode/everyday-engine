@@ -11,7 +11,7 @@ export default class CallProcessor {
      * @param {Unit} unit
      * @param {ScriptComponent} scriptComponent
      * @param {World} world
-     * @param {{camera: Camera, lights: Unit[], deltaTime: number}} executionContext
+     * @param {{camera: Camera, lights: Unit[], deltaTime: number, storage: Storage}} executionContext
      */
     static run(functionName, stackOperation, stackRegister, functionRegistry,
                unit, scriptComponent, world, executionContext) {

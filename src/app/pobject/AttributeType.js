@@ -68,6 +68,10 @@ export default class AttributeType {
                 return 'number'
             case TYPES.IMAGE:
                 return 'number'
+            case TYPES.UNIT_INSTANT:
+                return 'number'
+            case TYPES.PROMISE:
+                return 'string'
             case TYPES.LIST:
                 return 'string'
             case TYPES.FUNCTION:
@@ -164,13 +168,15 @@ export const TYPES = {
     SCENE:                          0b00000100000100000000000000,
     FUNCTION:                       0b00000100001000000000000000,
     IMAGE:                          0b00000100010000000000000000,
+    UNIT_INSTANT:                   0b00000100100000000000000000,
     RANGE:                          0b00001000000000000000000001,
     STYLE:                          0b00010000000000000000000010,
     SIZE:                           0b00010000000000000000000100,
     VECTOR:                         0b00010000000000000000001000,
     DYNAMIC_ATTRIBUTE:              0b00010000000000000000010000,
     ARRAY:                          0b00100000000000000000000000,
-    MESH:                           0b01000000000000000000000001
+    MESH:                           0b01000000000000000000000001,
+    PROMISE:                        0b01000000000000000000000010
 }
 
 export const TYPES_NAME = [
@@ -193,6 +199,14 @@ export const TYPES_NAME = [
     {
         value: TYPES.MASK_GROUP_INSTANCE,
         label: 'Mask Group'
+    },
+    {
+        value: TYPES.UNIT,
+        label: 'Unit'
+    },
+    {
+        value: TYPES.PROMISE,
+        label: 'Promise'
     },
     {
         value: TYPES.COMPONENT_INSTANCE,
