@@ -33,6 +33,7 @@ import AFunctionOutput from '../io/AFunctionOutput.js'
 import DynamicAttribute from '../../pobject/DynamicAttribute.js'
 import {TYPES} from '../../pobject/AttributeType.js'
 import CallFunction from '../function/native/component/CallFunction.js'
+import AThen from '../promise/AThen.js'
 
 export default class ClassCompiler extends Compiler {
 
@@ -129,6 +130,13 @@ export default class ClassCompiler extends Compiler {
                                 new StackOperation(OPERATIONS.PUSH, targetInput.getAttrName(), '[MEM]attributes')
                             ])
                         }
+                    } else if (sourceElement instanceof AThen) {
+                        const targetInput = element.findInputByName(targetName)
+                        if (targetInput) {
+                            stackFunction.getStack().push(...[
+                                new StackOperation(OPERATIONS.PUSH, targetInput.getAttrName(), `[MEM]${sourceStackFunction.getName()}.promise.then`)
+                            ])
+                        }
                     } else if (sourceElement instanceof AFunctionInput) {
                         const targetInput = element.findInputByName(targetName)
                         if (targetInput) {
@@ -203,6 +211,10 @@ export default class ClassCompiler extends Compiler {
                                 new StackOperation(OPERATIONS.CALL, element.getName()),
                                 new StackOperation(OPERATIONS.PUSH, '[MEM]attributes', CONSTANTS.RESULT)
                             ])
+                        } else if (element instanceof AThen) {
+                            stackFunction.getStack().push(...[
+                                new StackOperation(OPERATIONS.PUSH, `${functionName}.promise`, CONSTANTS.RESULT)
+                            ])
                         } else if (element instanceof ACustomFunction) {
                             const callFunction = new CallFunction()
                             stackFunction.getStack().push(...[
@@ -256,6 +268,16 @@ export default class ClassCompiler extends Compiler {
                             new StackOperation(OPERATIONS.PUSH,
                                 `[MEM]${scriptFunctionName}.${CONSTANTS.RESULT}`, CONSTANTS.RESULT)
                         ])
+                    } else if (element instanceof AThen) {
+                        if (sourceElement instanceof ACustomFunction) {
+                            sourceStackFunction.getStack().push(...[
+                                new StackOperation(OPERATIONS.PUSH, CONSTANTS.RESULT,
+                                    `[MEM]${sourceElement.getName()}.${CONSTANTS.RESULT}`)
+                            ])
+                        }
+                        sourceStackFunction.getStack().push(...[
+                            new StackOperation(OPERATIONS.CALL, functionName)
+                        ])
                     } else if (sourceElement instanceof AAnimation) {
                         if (element instanceof AAnimation) {
                             const stopAnimation = new StopAnimationFunction()
@@ -294,6 +316,13 @@ export default class ClassCompiler extends Compiler {
                                 new StackOperation(OPERATIONS.PUSH, 'name', 'ended'),
                                 new StackOperation(OPERATIONS.CALL, getValueFunction.getName()),
                                 new StackOperation(OPERATIONS.JUMP, CONSTANTS.RESULT, 'start_loop')
+                            ])
+                        }
+                    } else if (sourceElement instanceof AThen) {
+                        const targetInput = element.findInputByName(targetName)
+                        if (!targetInput) {
+                            sourceStackFunction.getStack().push(...[
+                                new StackOperation(OPERATIONS.THEN, functionName)
                             ])
                         }
                     }

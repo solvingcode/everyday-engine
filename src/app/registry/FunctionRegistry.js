@@ -91,6 +91,7 @@ import CallFunction from '../flow/function/native/component/CallFunction.js'
 import InstantiateUnitFunction from '../flow/function/native/unit/InstantiateUnitFunction.js'
 import AThen from '../flow/promise/AThen.js'
 import SetParentUnitFunction from '../flow/function/native/unit/SetParentUnitFunction.js'
+import APromise from '../flow/promise/APromise.js'
 
 export default class FunctionRegistry extends Registry{
 
@@ -146,6 +147,7 @@ export default class FunctionRegistry extends Registry{
 
             //Promise
             new AThen(),
+            new APromise(),
 
             //Unit
             new GetWorldPositionFunction(),

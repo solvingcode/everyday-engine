@@ -26,6 +26,7 @@ import AssetUnitInstant from '../src/app/unit/instant/type/internal/asset/AssetU
 import Vector from '../src/app/utils/Vector.js'
 import Scene from '../src/app/scene/Scene.js'
 import SelfNode from '../src/app/flow/node/SelfNode.js'
+import ThenNode from '../src/app/flow/node/ThenNode.js'
 
 test('Execute native function (without output)', function () {
     const log = new LogFunction()
@@ -375,5 +376,77 @@ test('Create and compile class function (return value)', function () {
 
     console.log = jest.fn()
     mouseEventCompiled.execute(functionRegistry, null, scriptComponent, World.get())
+    expect(console.log).toHaveBeenCalledWith(20)
+})
+
+test('Create and compile class function (with async calls)', async function () {
+    const world = World.get()
+    const scene = new Scene("Game3")
+    world.getSceneManager().tryAdd(scene)
+    world.getSceneManager().activate(scene)
+    const unit = world.createUnitInstant(AssetUnitInstant, new Vector(), null, 'Empty')
+    const unitScriptComponent = unit.createComponent(ScriptComponent)
+    unitScriptComponent.setScript('classScript')
+    const functionRegistry = world.getFunctionRegistry()
+
+    functionRegistry.init()
+
+    const script = new ClassScript('classScript')
+    const scriptFunction = new FunctionScript('testFunction')
+    const mainScriptFunction = new FunctionScript('main')
+    script.addFunction(mainScriptFunction)
+    script.addFunction(scriptFunction)
+    const scriptComponent = new ScriptComponent()
+
+    const nodeMultiply = ScriptHelper.createNodeByClass(functionRegistry, scriptFunction, FunctionNode, 'Multiply')
+    const nodeInput1 = ScriptHelper.createNodeByClass(functionRegistry, scriptFunction, FunctionInputNode, `numberA[${TYPES.NUMBER}]`)
+    const nodeInput2 = ScriptHelper.createNodeByClass(functionRegistry, scriptFunction, FunctionInputNode, `numberB[${TYPES.NUMBER}]`)
+    const nodeOutput = ScriptHelper.createNodeByClass(functionRegistry, scriptFunction, FunctionOutputNode, `${TYPES.NUMBER}`)
+    const nodeOnCall = ScriptHelper.createNodeByClass(functionRegistry, scriptFunction, EventNode, 'OnCall')
+
+    nodeMultiply.attach(nodeInput1, 'value1')
+    nodeMultiply.attach(nodeInput2, 'value2')
+    nodeMultiply.attach(nodeOnCall, null)
+    nodeOutput.attach(nodeMultiply, null)
+
+    script.compile(world)
+
+    const functionCompiled = functionRegistry.getInstance('classScript.testFunction')
+    const callEventCompiled = functionRegistry.getInstance('classScript.testFunction.OnCall')
+    expect(functionRegistry.getInstance('classScript')).toBe(undefined)
+    expect(callEventCompiled).toBeDefined()
+    expect(functionCompiled).toBeDefined()
+    expect(callEventCompiled.constructor).toEqual(OnCallEvent)
+    expect(functionCompiled.constructor).toEqual(ACustomFunction)
+
+    const nodeInputUnit1 = ScriptHelper.createNodeByClass(functionRegistry, mainScriptFunction, ConstantNode, unit.getId())
+    const nodeInputUnit2 = ScriptHelper.createNodeByClass(functionRegistry, mainScriptFunction, ConstantNode, unit.getId())
+    const nodeThen = ScriptHelper.createNodeByClass(functionRegistry, mainScriptFunction, ThenNode, 'Then')
+    const nodeLogFunction = ScriptHelper.createNodeByClass(functionRegistry, mainScriptFunction, FunctionNode, 'Log')
+    const nodeMultiplyFunction = ScriptHelper.createNodeByClass(functionRegistry, mainScriptFunction, FunctionNode, 'classScript.testFunction')
+    const nodeMouseClick = ScriptHelper.createNodeByClass(functionRegistry, mainScriptFunction, EventNode, 'OnMouseClick')
+    const nodeInputValue1 = ScriptHelper.createNodeByClass(functionRegistry, mainScriptFunction, ConstantNode, '5')
+    const nodeInputValue2 = ScriptHelper.createNodeByClass(functionRegistry, mainScriptFunction, ConstantNode, '4')
+    const nodePromise = ScriptHelper.createNodeByClass(functionRegistry, mainScriptFunction, FunctionNode, 'APromise')
+
+    nodePromise.attach(nodeMultiplyFunction, 'target')
+    nodePromise.attach(nodeMouseClick, null)
+    nodeThen.attach(nodePromise, null)
+    nodeLogFunction.attach(nodeThen, null)
+    nodeLogFunction.attach(nodeThen, 'value')
+    nodeLogFunction.attach(nodeInputUnit1, 'unit')
+    nodeMultiplyFunction.attach(nodeInputValue1, 'numberA')
+    nodeMultiplyFunction.attach(nodeInputValue2, 'numberB')
+    nodeMultiplyFunction.attach(nodeInputUnit2, 'unit')
+
+    script.compile(world)
+
+    const mouseEventCompiled = functionRegistry.getInstance('classScript.main.OnMouseClick.5')
+    expect(mouseEventCompiled).toBeDefined()
+    expect(mouseEventCompiled.constructor).toEqual(OnMouseClickEvent)
+
+    console.log = jest.fn()
+    mouseEventCompiled.execute(functionRegistry, null, scriptComponent, World.get())
+    await new Promise((r) => setTimeout(r, 2000));
     expect(console.log).toHaveBeenCalledWith(20)
 })

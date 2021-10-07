@@ -10,6 +10,7 @@ import JumpProcessor from './processor/JumpProcessor.js'
 import ClientError from '../exception/type/ClientError.js'
 import SelfProcessor from './processor/SelfProcessor.js'
 import SetProcessor from './processor/SetProcessor.js'
+import ThenProcessor from './processor/ThenProcessor.js'
 
 export default class StackProcessor {
 
@@ -62,6 +63,9 @@ export default class StackProcessor {
                         break
                     case OPERATIONS.SELF:
                         SelfProcessor.run(functionName, stackOperation, this.stackRegister, unit, scriptComponent)
+                        break
+                    case OPERATIONS.THEN:
+                        ThenProcessor.run(functionName, stackOperation, this.stackRegister, functionRegistry, unit, scriptComponent, world, executionContext)
                         break
                     case OPERATIONS.PUSH:
                         PushProcessor.run(functionName, stackOperation, this.stackRegister)

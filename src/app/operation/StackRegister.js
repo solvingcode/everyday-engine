@@ -22,6 +22,15 @@ export default class StackRegister {
 
     /**
      * @param {string} functionName
+     * @param {string} name
+     * @param {*} value
+     */
+    pushMem(functionName, name, value) {
+        this.register[`[MEM]${this.getScopeName(functionName, name)}`] = value
+    }
+
+    /**
+     * @param {string} functionName
      * @param {*} value
      */
     pushRet(functionName, value) {

@@ -544,7 +544,8 @@ export default class DynamicAttributeHelper {
         let newValue = value
         switch (type) {
             case TYPES.UNIT:
-                newValue = world.findUnitById(parseInt(value))
+                const unitManager = world.getUnitManager()
+                newValue = unitManager.hasUnit(value) ? value : world.findUnitById(parseInt(value))
                 if (!newValue) {
                     throw new ClientError(`${this.constructor.name}: Unit "${value}" not found`)
                 }
@@ -584,6 +585,14 @@ export default class DynamicAttributeHelper {
                     throw new ClientError(`${this.constructor.name}: Audio "${value}" not found`)
                 }
                 newValue = audio.getType()
+                break
+            case TYPES.UNIT_INSTANT:
+                const assetManager = world.getAssetsManager()
+                const unitInstant = assetManager.hasAsset(value) ? value : world.getAssetsManager().findAssetUnitById(value)
+                if (!unitInstant) {
+                    throw new ClientError(`${this.constructor.name}: Unit Instant "${value}" not found`)
+                }
+                newValue = unitInstant
                 break
             case TYPES.SCENE:
                 const sceneManager = world.getSceneManager()

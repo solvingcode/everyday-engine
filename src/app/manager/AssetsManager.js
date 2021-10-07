@@ -496,6 +496,22 @@ export default class AssetsManager extends AssetsManagerData {
     }
 
     /**
+     * @param {Asset} asset
+     * @return {boolean}
+     */
+    hasAsset(asset){
+        return !!this.assets.find(pAsset => pAsset === asset)
+    }
+
+    /**
+     * @param {AssetType} assetType
+     * @return {Asset}
+     */
+    findAssetType(assetType){
+        return this.getAssets().find(pAsset => pAsset.getType() === assetType)
+    }
+
+    /**
      * @param {Asset[]} assets
      * @param {World} world
      */

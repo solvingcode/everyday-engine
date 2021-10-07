@@ -64,5 +64,6 @@ export const OPERATIONS = {
     JUMP: 'jump',
     JUMP_TO: 'jump_to',
     DISPATCH: 'dispatch',
-    SELF: 'self'
+    SELF: 'self',
+    THEN: 'then'
 }
