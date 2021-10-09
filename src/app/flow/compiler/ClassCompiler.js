@@ -133,9 +133,15 @@ export default class ClassCompiler extends Compiler {
                     } else if (sourceElement instanceof AThen) {
                         const targetInput = element.findInputByName(targetName)
                         if (targetInput) {
-                            stackFunction.getStack().push(...[
-                                new StackOperation(OPERATIONS.PUSH, targetInput.getAttrName(), `[MEM]${sourceStackFunction.getName()}.promise.then`)
-                            ])
+                            if (element instanceof ACustomFunction) {
+                                stackFunction.getStack().push(...[
+                                    new StackOperation(OPERATIONS.PUSH, `[MEM]${element.getName()}.${targetInput.getAttrName()}`, `[MEM]${sourceStackFunction.getName()}.promise.then`)
+                                ])
+                            } else {
+                                stackFunction.getStack().push(...[
+                                    new StackOperation(OPERATIONS.PUSH, targetInput.getAttrName(), `[MEM]${sourceStackFunction.getName()}.promise.then`)
+                                ])
+                            }
                         }
                     } else if (sourceElement instanceof AFunctionInput) {
                         const targetInput = element.findInputByName(targetName)
@@ -158,10 +164,19 @@ export default class ClassCompiler extends Compiler {
                         const targetInput = element.findInputByName(targetName)
                         if (targetInput) {
                             stackFunction.getStack().push(...[
-                                new StackOperation(OPERATIONS.CALL, sourceElementName),
-                                new StackOperation(OPERATIONS.PUSH, targetInput.getAttrName(),
-                                    `[MEM]${sourceElement.getName()}.${CONSTANTS.RESULT}`)
+                                new StackOperation(OPERATIONS.CALL, sourceElementName)
                             ])
+                            if (element instanceof ACustomFunction) {
+                                stackFunction.getStack().push(...[
+                                    new StackOperation(OPERATIONS.PUSH, `[MEM]${element.getName()}.${targetInput.getAttrName()}`,
+                                        `[MEM]${sourceElement.getName()}.${CONSTANTS.RESULT}`)
+                                ])
+                            } else {
+                                stackFunction.getStack().push(...[
+                                    new StackOperation(OPERATIONS.PUSH, targetInput.getAttrName(),
+                                        `[MEM]${sourceElement.getName()}.${CONSTANTS.RESULT}`)
+                                ])
+                            }
                         }
                     }
                     // must be the last condition

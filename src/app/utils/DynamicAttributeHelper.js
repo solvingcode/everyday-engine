@@ -1,5 +1,5 @@
 import DynamicAttribute from '../pobject/DynamicAttribute.js'
-import {TYPES, TYPES_NAME} from '../pobject/AttributeType.js'
+import AttributeType, {TYPES, TYPES_NAME} from '../pobject/AttributeType.js'
 import ClientError from '../exception/type/ClientError.js'
 import Layout from '../layout/Layout.js'
 import Component from '../component/Component.js'
@@ -60,7 +60,11 @@ export default class DynamicAttributeHelper {
      */
     static setValue(target, name, value) {
         let attribute = this.get(target, name)
-        attribute.setAttrValue(value)
+        if (AttributeType.isArrayType(attribute.getAttrType()) && value === '[]') {
+            attribute.setAttrValue([])
+        } else {
+            attribute.setAttrValue(value)
+        }
     }
 
     /**

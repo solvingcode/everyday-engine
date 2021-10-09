@@ -43,6 +43,11 @@ export class AddScriptNodeForm {
     /**
      * @type {string}
      */
+    name
+
+    /**
+     * @type {string}
+     */
     value
 
     /**
@@ -53,6 +58,7 @@ export class AddScriptNodeForm {
     constructor() {
         this.type = ''
         this.value = ''
+        this.name = ''
     }
 
     /**
@@ -81,6 +87,20 @@ export class AddScriptNodeForm {
      */
     getValue() {
         return this.value
+    }
+
+    /**
+     * @param {string} name
+     */
+    setName(name) {
+        this.name = name
+    }
+
+    /**
+     * @return {string}
+     */
+    getName() {
+        return this.name
     }
 
     /**

@@ -21,6 +21,6 @@ export default class InstantiateUnitFunction extends AAsyncFunction{
      */
     asyncExecute(functionRegistry, unit, scriptComponent, world, executionContext) {
         const target = this.getInputValue('target')
-        this.setOutputValue(StorageHelper.loadAssetUnit(target, executionContext.storage))
+        this.setOutputValue(StorageHelper.loadAssetUnit(target, executionContext.storage).then(units => units[0]))
     }
 }

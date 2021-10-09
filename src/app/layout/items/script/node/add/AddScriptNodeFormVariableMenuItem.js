@@ -1,6 +1,7 @@
 import FormMenuItem from '../../../form/FormMenuItem.js'
 import Layout from '../../../../Layout.js'
 import {NODE_TYPES} from '../../../../../flow/node/ANode.js'
+import {TYPES_NAME} from '../../../../../pobject/AttributeType.js'
 
 export default class AddScriptNodeFormVariableMenuItem extends FormMenuItem {
     /**
@@ -27,7 +28,14 @@ export default class AddScriptNodeFormVariableMenuItem extends FormMenuItem {
                 bind: 'value',
                 label: 'Name',
                 type: Layout.form.TEXT
-            }
+            },
+            ...(this.getFormObject() && this.getFormObject().getType() === NODE_TYPES.VAR_ARRAY ? [
+                {
+                    bind: 'name',
+                    label: 'Type',
+                    type: Layout.form.DROPDOWN,
+                    list: TYPES_NAME
+                }]: [])
         ]
     }
 
@@ -51,6 +59,7 @@ export default class AddScriptNodeFormVariableMenuItem extends FormMenuItem {
                 type === NODE_TYPES.VAR_IMAGE ||
                 type === NODE_TYPES.VAR_UNIT_INSTANT ||
                 type === NODE_TYPES.VAR_SCENE ||
+                type === NODE_TYPES.VAR_ARRAY ||
                 type === NODE_TYPES.VAR_MASK_GROUP)
     }
 }

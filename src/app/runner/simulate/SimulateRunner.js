@@ -84,7 +84,7 @@ class SimulateRunner extends Runner {
      * @param {StateManager} stateManager
      */
     stop(storage, stateManager) {
-        this.windowInstance.close()
+        this.windowInstance && this.windowInstance.close()
         this.isSimulating = false
         stateManager.endNextState(this.STATE)
     }

@@ -38,6 +38,9 @@ export default class AddNodeAction extends Action {
                 throw new ClientError(`The output is already set for "${script.getName()}"`)
             }
         }
+        if (formData.type === NODE_TYPES.VAR_ARRAY) {
+            value = `${value}[${formData.name}]`
+        }
         const node = ScriptHelper.createNode(functionRegistry, script, formData.type, value)
         const sizeWindow = Window.get().getSize()
         const scriptGraphPosition = Vector.add(

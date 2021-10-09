@@ -131,6 +131,7 @@ export const NODE_TYPES = {
     VAR_MASK_GROUP: 'var_mask_group',
     VAR_AUDIO: 'var_audio',
     VAR_IMAGE: 'var_image',
+    VAR_ARRAY: 'var_array',
     VAR_UNIT_INSTANT: 'var_unit_instant',
     VAR_SCENE: 'var_scene',
     VAR_UNIT: 'var_unit',
@@ -170,10 +171,6 @@ export const NODE_TYPE_NAMES = [
         label: 'Component'
     },
     {
-        value: NODE_TYPES.VAR_UNIT,
-        label: 'Variable (Unit)'
-    },
-    {
         value: NODE_TYPES.FUNCTION,
         label: 'Function'
     },
@@ -192,6 +189,10 @@ export const NODE_TYPE_NAMES = [
     {
         value: NODE_TYPES.KEY_CODE,
         label: 'Key Code'
+    },
+    {
+        value: NODE_TYPES.VAR_UNIT,
+        label: 'Variable (Unit)'
     },
     {
         value: NODE_TYPES.VAR_NUMBER,
@@ -224,6 +225,10 @@ export const NODE_TYPE_NAMES = [
     {
         value: NODE_TYPES.VAR_UNIT_INSTANT,
         label: 'Variable (Unit Instant)'
+    },
+    {
+        value: NODE_TYPES.VAR_ARRAY,
+        label: 'Variable (Array)'
     },
     {
         value: NODE_TYPES.VAR_SCENE,

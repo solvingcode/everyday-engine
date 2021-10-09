@@ -450,3 +450,93 @@ test('Create and compile class function (with async calls)', async function () {
     await new Promise((r) => setTimeout(r, 2000));
     expect(console.log).toHaveBeenCalledWith(20)
 })
+
+test('Create and compile class function (with async calls inside custom function)', async function () {
+    const world = World.get()
+    const scene = new Scene("Game4")
+    world.getSceneManager().tryAdd(scene)
+    world.getSceneManager().activate(scene)
+    const unit = world.createUnitInstant(AssetUnitInstant, new Vector(), null, 'Empty')
+    const unitScriptComponent = unit.createComponent(ScriptComponent)
+    unitScriptComponent.setScript('classScript')
+    const functionRegistry = world.getFunctionRegistry()
+
+    functionRegistry.init()
+
+    const script = new ClassScript('classScript')
+    const multiplyCustomFunction = new FunctionScript('multiplyCustomFunction')
+    const promiseCustomFunction = new FunctionScript('promiseCustomFunction')
+    const mainScriptFunction = new FunctionScript('main')
+    script.addFunction(mainScriptFunction)
+    script.addFunction(multiplyCustomFunction)
+    script.addFunction(promiseCustomFunction)
+    const scriptComponent = new ScriptComponent()
+
+    const nodeMultiply = ScriptHelper.createNodeByClass(functionRegistry, multiplyCustomFunction, FunctionNode, 'Multiply')
+    const nodeInput1 = ScriptHelper.createNodeByClass(functionRegistry, multiplyCustomFunction, FunctionInputNode, `numberA[${TYPES.NUMBER}]`)
+    const nodeInput2 = ScriptHelper.createNodeByClass(functionRegistry, multiplyCustomFunction, FunctionInputNode, `numberB[${TYPES.NUMBER}]`)
+    const nodeOutput = ScriptHelper.createNodeByClass(functionRegistry, multiplyCustomFunction, FunctionOutputNode, `${TYPES.NUMBER}`)
+    const nodeOnCall = ScriptHelper.createNodeByClass(functionRegistry, multiplyCustomFunction, EventNode, 'OnCall')
+
+    nodeMultiply.attach(nodeInput1, 'value1')
+    nodeMultiply.attach(nodeInput2, 'value2')
+    nodeMultiply.attach(nodeOnCall, null)
+    nodeOutput.attach(nodeMultiply, null)
+
+    const nodePromise = ScriptHelper.createNodeByClass(functionRegistry, promiseCustomFunction, FunctionNode, 'APromise')
+    const nodePromiseValue = ScriptHelper.createNodeByClass(functionRegistry, promiseCustomFunction, FunctionInputNode, `value[${TYPES.NUMBER}]`)
+    const nodePromiseOutput = ScriptHelper.createNodeByClass(functionRegistry, promiseCustomFunction, FunctionOutputNode, `${TYPES.PROMISE}`)
+    const nodePromiseOnCall = ScriptHelper.createNodeByClass(functionRegistry, promiseCustomFunction, EventNode, 'OnCall')
+
+    nodePromise.attach(nodePromiseValue, 'target')
+    nodePromise.attach(nodePromiseOnCall, null)
+    nodePromiseOutput.attach(nodePromise, null)
+
+    script.compile(world)
+
+    const multiplyFunctionCompiled = functionRegistry.getInstance('classScript.multiplyCustomFunction')
+    const multiplyCallEventCompiled = functionRegistry.getInstance('classScript.multiplyCustomFunction.OnCall')
+    const promiseFunctionCompiled = functionRegistry.getInstance('classScript.promiseCustomFunction')
+    const promiseCallEventCompiled = functionRegistry.getInstance('classScript.promiseCustomFunction.OnCall')
+    expect(functionRegistry.getInstance('classScript')).toBe(undefined)
+    expect(multiplyCallEventCompiled).toBeDefined()
+    expect(multiplyFunctionCompiled).toBeDefined()
+    expect(promiseCallEventCompiled).toBeDefined()
+    expect(promiseFunctionCompiled).toBeDefined()
+    expect(multiplyCallEventCompiled.constructor).toEqual(OnCallEvent)
+    expect(multiplyFunctionCompiled.constructor).toEqual(ACustomFunction)
+    expect(promiseCallEventCompiled.constructor).toEqual(OnCallEvent)
+    expect(promiseFunctionCompiled.constructor).toEqual(ACustomFunction)
+
+    const nodeInputUnit1 = ScriptHelper.createNodeByClass(functionRegistry, mainScriptFunction, ConstantNode, unit.getId())
+    const nodeInputUnit2 = ScriptHelper.createNodeByClass(functionRegistry, mainScriptFunction, ConstantNode, unit.getId())
+    const nodeThen = ScriptHelper.createNodeByClass(functionRegistry, mainScriptFunction, ThenNode, 'Then')
+    const nodeLogFunction = ScriptHelper.createNodeByClass(functionRegistry, mainScriptFunction, FunctionNode, 'Log')
+    const nodeMultiplyFunction = ScriptHelper.createNodeByClass(functionRegistry, mainScriptFunction, FunctionNode, 'classScript.multiplyCustomFunction')
+    const nodeMouseClick = ScriptHelper.createNodeByClass(functionRegistry, mainScriptFunction, EventNode, 'OnMouseClick')
+    const nodeInputValue1 = ScriptHelper.createNodeByClass(functionRegistry, mainScriptFunction, ConstantNode, '5')
+    const nodeInputValue2 = ScriptHelper.createNodeByClass(functionRegistry, mainScriptFunction, ConstantNode, '4')
+    const nodePromiseFunction = ScriptHelper.createNodeByClass(functionRegistry, mainScriptFunction, FunctionNode, 'classScript.promiseCustomFunction')
+
+    nodePromiseFunction.attach(nodeMultiplyFunction, 'value')
+    nodePromiseFunction.attach(nodeMouseClick, null)
+    nodePromiseFunction.attach(nodeInputUnit2, 'unit')
+    nodeThen.attach(nodePromiseFunction, null)
+    nodeLogFunction.attach(nodeThen, null)
+    nodeLogFunction.attach(nodeThen, 'value')
+    nodeLogFunction.attach(nodeInputUnit1, 'unit')
+    nodeMultiplyFunction.attach(nodeInputValue1, 'numberA')
+    nodeMultiplyFunction.attach(nodeInputValue2, 'numberB')
+    nodeMultiplyFunction.attach(nodeInputUnit2, 'unit')
+
+    script.compile(world)
+
+    const mouseEventCompiled = functionRegistry.getInstance('classScript.main.OnMouseClick.5')
+    expect(mouseEventCompiled).toBeDefined()
+    expect(mouseEventCompiled.constructor).toEqual(OnMouseClickEvent)
+
+    console.log = jest.fn()
+    mouseEventCompiled.execute(functionRegistry, null, scriptComponent, World.get())
+    await new Promise((r) => setTimeout(r, 2000));
+    expect(console.log).toHaveBeenCalledWith(20)
+})

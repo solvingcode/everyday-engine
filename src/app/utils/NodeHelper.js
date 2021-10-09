@@ -57,6 +57,8 @@ import AUnitInstantVariable from '../flow/variable/AUnitInstantVariable.js'
 import UnitInstantVariableNode from '../flow/node/variable/UnitInstantVariableNode.js'
 import AThen from '../flow/promise/AThen.js'
 import ThenNode from '../flow/node/ThenNode.js'
+import AArrayVariable from '../flow/variable/AArrayVariable.js'
+import ArrayVariableNode from '../flow/node/variable/ArrayVariableNode.js'
 
 export default class NodeHelper {
 
@@ -101,6 +103,8 @@ export default class NodeHelper {
                 return new ABooleanVariable(sourceName)
             case AudioVariableNode:
                 return new AAudioVariable(sourceName)
+            case ArrayVariableNode:
+                return new AArrayVariable(sourceName)
             case ImageVariableNode:
                 return new AImageVariable(sourceName)
             case UnitInstantVariableNode:

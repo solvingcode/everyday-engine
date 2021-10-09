@@ -36,6 +36,7 @@ import Maths from './Maths.js'
 import ImageVariableNode from '../flow/node/variable/ImageVariableNode.js'
 import UnitInstantVariableNode from '../flow/node/variable/UnitInstantVariableNode.js'
 import ThenNode from '../flow/node/ThenNode.js'
+import ArrayVariableNode from '../flow/node/variable/ArrayVariableNode.js'
 
 export default class ScriptHelper {
 
@@ -115,6 +116,8 @@ export default class ScriptHelper {
             node = this.getNodeInstance(functionRegistry, AudioVariableNode, nodeValue)
         } else if (nodeType === NODE_TYPES.VAR_IMAGE) {
             node = this.getNodeInstance(functionRegistry, ImageVariableNode, nodeValue)
+        } else if (nodeType === NODE_TYPES.VAR_ARRAY) {
+            node = this.getNodeInstance(functionRegistry, ArrayVariableNode, nodeValue)
         } else if (nodeType === NODE_TYPES.VAR_UNIT_INSTANT) {
             node = this.getNodeInstance(functionRegistry, UnitInstantVariableNode, nodeValue)
         } else if (nodeType === NODE_TYPES.VAR_SCENE) {
@@ -141,8 +144,6 @@ export default class ScriptHelper {
             case FunctionNode:
             case ConditionNode:
             case EventNode:
-                sourceName = registry.tryGetInstance(value).getName()
-                break
             case ConstantNode:
             case KeyCodeNode:
             case UnitNode:
@@ -157,6 +158,7 @@ export default class ScriptHelper {
             case ToggleVariableNode:
             case BooleanVariableNode:
             case AudioVariableNode:
+            case ArrayVariableNode:
             case ImageVariableNode:
             case UnitInstantVariableNode:
             case SceneVariableNode:
@@ -221,6 +223,8 @@ export default class ScriptHelper {
             nodeType = NODE_TYPES.VAR_BOOLEAN
         } else if (node instanceof AudioVariableNode) {
             nodeType = NODE_TYPES.VAR_AUDIO
+        } else if (node instanceof ArrayVariableNode) {
+            nodeType = NODE_TYPES.VAR_ARRAY
         } else if (node instanceof ImageVariableNode) {
             nodeType = NODE_TYPES.VAR_IMAGE
         } else if (node instanceof UnitInstantVariableNode) {

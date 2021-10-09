@@ -199,6 +199,10 @@ import InstantiateUnitFunction from '../../flow/function/native/unit/Instantiate
 import AThen from '../../flow/promise/AThen.js'
 import SetParentUnitFunction from '../../flow/function/native/unit/SetParentUnitFunction.js'
 import APromise from '../../flow/promise/APromise.js'
+import ToScreenPositionFunction from '../../flow/function/native/transform/ToScreenPositionFunction.js'
+import ConcatFunction from '../../flow/function/native/basic/ConcatFunction.js'
+import ArrayPushFunction from '../../flow/function/native/array/ArrayPushFunction.js'
+import PhysicsTranslateFunction from '../../flow/function/native/transform/PhysicsTranslateFunction.js'
 
 /**
  * @class {DataSchema}
@@ -395,6 +399,10 @@ class DataSchema {
         {id: 1770, type: AThen},
         {id: 1780, type: SetParentUnitFunction},
         {id: 1790, type: APromise},
+        {id: 1800, type: ToScreenPositionFunction},
+        {id: 1810, type: ConcatFunction},
+        {id: 1820, type: ArrayPushFunction},
+        {id: 1830, type: PhysicsTranslateFunction},
     ]
 
     /**
