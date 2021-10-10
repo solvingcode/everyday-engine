@@ -24,6 +24,8 @@ import MaterialRegistry from '../registry/MaterialRegistry.js'
 import Material from '../material/Material.js'
 import SceneManager from '../manager/SceneManager.js'
 import Scene from '../scene/Scene.js'
+import TagPreference from '../preference/tag/TagPreference.js'
+import Tag from '../preference/tag/Tag.js'
 
 /**
  * Define the schema of project data.
@@ -248,6 +250,12 @@ export default {
                                     },
                                     access: {
                                         type: TYPES.NUMBER
+                                    },
+                                    className: {
+                                        type: TYPES.STRING
+                                    },
+                                    parentClassName: {
+                                        type: TYPES.STRING
                                     }
                                 }
                             }
@@ -356,6 +364,9 @@ export default {
                                                             maskGroupId: {
                                                                 type: TYPES.NUMBER
                                                             },
+                                                            tagId: {
+                                                                type: TYPES.NUMBER
+                                                            },
                                                             unitParentId: {
                                                                 type: TYPES.NUMBER
                                                             },
@@ -449,6 +460,33 @@ export default {
                                 meta: {
                                     element: {
                                         type: MaskGroup,
+                                        meta: {
+                                            dataId: {
+                                                type: TYPES.NUMBER
+                                            },
+                                            id: {
+                                                type: TYPES.NUMBER
+                                            },
+                                            name: {
+                                                type: TYPES.STRING
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    tag: {
+                        type: TagPreference,
+                        meta: {
+                            dataId: {
+                                type: TYPES.NUMBER
+                            },
+                            tags: {
+                                type: Array,
+                                meta: {
+                                    element: {
+                                        type: Tag,
                                         meta: {
                                             dataId: {
                                                 type: TYPES.NUMBER

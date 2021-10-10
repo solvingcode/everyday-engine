@@ -26,13 +26,13 @@ export default class CallFunction extends AFunction {
         const func = this.getInputValue('function')
         const targetScriptComponent = pUnit.findComponentsByClass(ScriptComponent)
             .find(script => {
-                const overrideFunctionName = `${script.getScript()}.${func.getFunctionName()}`
-                return ScriptHelper.isFunctionInstanceOf(world, overrideFunctionName, func.getClassName())
+                return ScriptHelper.isClassInstanceOf(world, script.getName(), func.getClassName())
             })
         if (targetScriptComponent) {
             const overrideFunctionName = `${targetScriptComponent.getName()}.${func.getFunctionName()}`
-            const overrideFunction = world.getFunctionRegistry().getInstance(overrideFunctionName) || func
-            overrideFunction.execute(functionRegistry, pUnit, targetScriptComponent, world, executionContext)
+            const overrideFunction = world.getFunctionRegistry().getInstance(overrideFunctionName)
+            const callFunction = overrideFunction || func
+            callFunction.execute(functionRegistry, pUnit, targetScriptComponent, world, executionContext)
             this.setOutputValue(func.getOutputValue())
         }
     }

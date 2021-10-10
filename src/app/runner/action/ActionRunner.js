@@ -119,6 +119,8 @@ import FocusAction from './edit/FocusAction.js'
 import UnFocusAction from './edit/UnFocusAction.js'
 import SetAreaTileMapAction from './tile/SetAreaTileMapAction.js'
 import AddEmptyUnitAction from './unit/AddEmptyUnitAction.js'
+import AddTagAction from './tag/AddTagAction.js'
+import DeleteTagAction from './tag/DeleteTagAction.js'
 
 /**
  * Action Runner class.
@@ -185,6 +187,7 @@ class ActionRunner extends Runner {
             ADD_ASSET: AddAssetAction,
             ADD_FOLDER: AddFolderAction,
             ADD_MASK: AddMaskAction,
+            ADD_TAG: AddTagAction,
             ADD_GAME_INPUT: AddGameInputAction,
             ADD_ASSET_SCENE: AddAssetSceneAction,
             COMPILE_ASSET_SCRIPT: CompileAssetScriptAction,
@@ -211,6 +214,7 @@ class ActionRunner extends Runner {
             SELECT_LAYER_ELEMENT: SelectLayerAction,
             DELETE_FOLDER: DeleteFolderAction,
             DELETE_MASK: DeleteMaskAction,
+            DELETE_TAG: DeleteTagAction,
             DELETE_GAME_INPUT: DeleteGameInputAction,
             DELETE_ASSET: DeleteAssetAction,
             ADD_SCRIPT: AddClassScriptAction,

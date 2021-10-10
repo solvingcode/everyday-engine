@@ -32,8 +32,9 @@ import AFunctionInput from '../io/AFunctionInput.js'
 import AFunctionOutput from '../io/AFunctionOutput.js'
 import DynamicAttribute from '../../pobject/DynamicAttribute.js'
 import {TYPES} from '../../pobject/AttributeType.js'
-import CallFunction from '../function/native/component/CallFunction.js'
+import CallFunction from '../function/native/basic/CallFunction.js'
 import AThen from '../promise/AThen.js'
+import IsFunctionDefinedFunction from '../function/native/basic/IsFunctionDefinedFunction.js'
 
 export default class ClassCompiler extends Compiler {
 
@@ -147,14 +148,29 @@ export default class ClassCompiler extends Compiler {
                         const targetInput = element.findInputByName(targetName)
                         if (targetInput) {
                             const attribute = NodeHelper.getAttributeFromNodeFunctionInput(sourceNode, world)
+                            const parentClassName = script.getParentName()
+                            if (parentClassName) {
+                                const isFunctionDefinedFunction = new IsFunctionDefinedFunction()
+                                const scriptFunctionAbstractName = `${parentClassName}.${scriptFunction.getName()}`
+                                stackFunction.getStack().push(...[
+                                    new StackOperation(OPERATIONS.PUSH, 'functionName', scriptFunctionAbstractName),
+                                    new StackOperation(OPERATIONS.CALL, isFunctionDefinedFunction.getName()),
+                                    new StackOperation(OPERATIONS.JUMP, CONSTANTS.RESULT, 'set_input'),
+                                    new StackOperation(OPERATIONS.PUSH,
+                                        `[MEM]${scriptFunctionName}.${attribute.getAttrName()}`,
+                                        `[MEM]${scriptFunctionAbstractName}.${attribute.getAttrName()}`)
+                                ])
+                            }
                             if (element instanceof ACustomFunction) {
                                 stackFunction.getStack().push(...[
+                                    new StackOperation(OPERATIONS.JUMP_TO, 'set_input'),
                                     new StackOperation(OPERATIONS.PUSH,
                                         `[MEM]${element.getName()}.${targetInput.getAttrName()}`,
                                         `[MEM]${scriptFunctionName}.${attribute.getAttrName()}`)
                                 ])
                             } else {
                                 stackFunction.getStack().push(...[
+                                    new StackOperation(OPERATIONS.JUMP_TO, 'set_input'),
                                     new StackOperation(OPERATIONS.PUSH, targetInput.getAttrName(),
                                         `[MEM]${scriptFunctionName}.${attribute.getAttrName()}`)
                                 ])
@@ -354,6 +370,8 @@ export default class ClassCompiler extends Compiler {
                 const functionOutput = !!nodeOutputs.length ? NodeHelper.getAttributeFromNodeFunctionOutput(nodeOutputs[0], world) : null
                 const stackScriptFunction = new ACustomFunction(scriptFunctionName, functionInputs, functionOutput)
                 stackScriptFunction.setAccess(scriptFunction.getAccess())
+                stackScriptFunction.setClassName(script.getName())
+                stackScriptFunction.setParentClassName(script.getParentName())
                 stackScriptFunction.setStack([
                     new StackOperation(OPERATIONS.CALL, `${scriptFunctionName}.OnCall`)
                 ])

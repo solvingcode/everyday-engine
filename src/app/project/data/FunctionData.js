@@ -27,6 +27,14 @@ export default class FunctionData extends Data {
      * @type {number}
      */
     access
+    /**
+     * @type {string}
+     */
+    className
+    /**
+     * @type {string}
+     */
+    parentClassName
 
     /**
      * @param {string} name
@@ -81,6 +89,34 @@ export default class FunctionData extends Data {
      */
     getName() {
         return this.name
+    }
+
+    /**
+     * @param {string} className
+     */
+    setClassName(className) {
+        this.className = className
+    }
+
+    /**
+     * @return {string}
+     */
+    getClassName() {
+        return this.className
+    }
+
+    /**
+     * @param {string} parentClassName
+     */
+    setParentClassName(parentClassName) {
+        this.parentClassName = parentClassName
+    }
+
+    /**
+     * @return {string}
+     */
+    getParentClassName() {
+        return this.parentClassName
     }
 
     /**

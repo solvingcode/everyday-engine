@@ -19,6 +19,10 @@ export default class UnitData extends Data {
      */
     maskGroupId
     /**
+     * @type {number}
+     */
+    tagId
+    /**
      * @type {number|null}
      */
     unitParentId
@@ -70,6 +74,20 @@ export default class UnitData extends Data {
      */
     getMaskGroupId() {
         return this.maskGroupId
+    }
+
+    /**
+     * @param {number} tagId
+     */
+    setTagId(tagId) {
+        this.tagId = tagId
+    }
+
+    /**
+     * @return {number}
+     */
+    getTagId() {
+        return this.tagId
     }
 
     /**

@@ -20,11 +20,16 @@ export default class UnitFormMenuItem extends FormMenuItem {
      * @override
      */
     generateFields() {
-        const listMaskGroup = World.get()
-            .getPreference().getMaskGroup().getMasks()
+        const preference = World.get().getPreference()
+        const listMaskGroup = preference.getMaskGroup().getMasks()
             .map(maskGroup => ({
                 value: maskGroup.getId(),
                 label: maskGroup.getName()
+            }))
+        const listTag = preference.getTag().getTags()
+            .map(tag => ({
+                value: tag.getId(),
+                label: tag.getName()
             }))
         return [
             {
@@ -37,6 +42,12 @@ export default class UnitFormMenuItem extends FormMenuItem {
                 label: 'Mask Group',
                 type: Layout.form.DROPDOWN,
                 list: listMaskGroup
+            },
+            {
+                bind: 'tagId',
+                label: 'Tag',
+                type: Layout.form.DROPDOWN,
+                list: listTag
             }
         ]
     }

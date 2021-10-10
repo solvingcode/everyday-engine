@@ -20,11 +20,11 @@ export default class CallProcessor {
         if (!calledFunctionName) {
             throw new ClientError(`Stack operation invalid (Function not provided)`)
         }
-        const aFunction = functionRegistry.getInstance(calledFunctionName)
-        if (!aFunction) {
+        const calledFunction = functionRegistry.getInstance(calledFunctionName)
+        if (!calledFunction) {
             throw new ClientError(`Function "${calledFunctionName}" not founded in the registry`)
         }
-        const inputs = aFunction.getInputs()
+        const inputs = calledFunction.getInputs()
         inputs.forEach(input => {
             const inputName = input.getAttrName()
             const inputType = input.getAttrType()
@@ -33,10 +33,10 @@ export default class CallProcessor {
             if (value === null) {
                 throw new ClientError(`Function "${calledFunctionName}": Input name ${inputName} not provided`)
             }
-            aFunction.setInputValue(inputName, inputValue)
+            calledFunction.setInputValue(inputName, inputValue)
         })
-        aFunction.execute(functionRegistry, unit, scriptComponent, world, executionContext)
-        stackRegister.pushRet(functionName, aFunction.getOutputValue())
+        calledFunction.execute(functionRegistry, unit, scriptComponent, world, executionContext)
+        stackRegister.pushRet(functionName, calledFunction.getOutputValue())
     }
 
 }

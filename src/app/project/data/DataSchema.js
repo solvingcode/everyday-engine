@@ -194,7 +194,7 @@ import TileMapComponent from '../../component/internal/tile/TileMapComponent.js'
 import TileColliderComponent from '../../component/internal/tile/TileColliderComponent.js'
 import GetComponentInstanceFunction from '../../flow/function/native/component/GetComponentInstanceFunction.js'
 import GetCollisionsFunction from '../../flow/function/native/physics/GetCollisionsFunction.js'
-import CallFunction from '../../flow/function/native/component/CallFunction.js'
+import CallFunction from '../../flow/function/native/basic/CallFunction.js'
 import InstantiateUnitFunction from '../../flow/function/native/unit/InstantiateUnitFunction.js'
 import AThen from '../../flow/promise/AThen.js'
 import SetParentUnitFunction from '../../flow/function/native/unit/SetParentUnitFunction.js'
@@ -203,6 +203,12 @@ import ToScreenPositionFunction from '../../flow/function/native/transform/ToScr
 import ConcatFunction from '../../flow/function/native/basic/ConcatFunction.js'
 import ArrayPushFunction from '../../flow/function/native/array/ArrayPushFunction.js'
 import PhysicsTranslateFunction from '../../flow/function/native/transform/PhysicsTranslateFunction.js'
+import GetUnitNameFunction from '../../flow/function/native/unit/GetUnitNameFunction.js'
+import Tag from '../../preference/tag/Tag.js'
+import TagPreference from '../../preference/tag/TagPreference.js'
+import GetUnitTagNameFunction from '../../flow/function/native/unit/GetUnitTagNameFunction.js'
+import IsFunctionDefinedFunction from '../../flow/function/native/basic/IsFunctionDefinedFunction.js'
+import SetColorFunction from '../../flow/function/native/style/SetColorFunction.js'
 
 /**
  * @class {DataSchema}
@@ -403,6 +409,12 @@ class DataSchema {
         {id: 1810, type: ConcatFunction},
         {id: 1820, type: ArrayPushFunction},
         {id: 1830, type: PhysicsTranslateFunction},
+        {id: 1840, type: GetUnitNameFunction},
+        {id: 1850, type: Tag},
+        {id: 1860, type: TagPreference},
+        {id: 1870, type: GetUnitTagNameFunction},
+        {id: 1880, type: IsFunctionDefinedFunction},
+        {id: 1890, type: SetColorFunction},
     ]
 
     /**

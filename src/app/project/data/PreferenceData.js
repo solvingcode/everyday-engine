@@ -13,6 +13,11 @@ export default class PreferenceData extends Data{
     maskGroup
 
     /**
+     * @type {TagPreference}
+     */
+    tag
+
+    /**
      * @param {GameInputPreference} gameInput
      */
     setGameInput(gameInput){
@@ -38,6 +43,20 @@ export default class PreferenceData extends Data{
      */
     getMaskGroup(){
         return this.maskGroup
+    }
+
+    /**
+     * @param {TagPreference} tag
+     */
+    setTag(tag){
+        this.tag = tag
+    }
+
+    /**
+     * @return {TagPreference}
+     */
+    getTag(){
+        return this.tag
     }
 
 }

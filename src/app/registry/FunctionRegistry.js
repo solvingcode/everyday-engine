@@ -87,7 +87,7 @@ import BoxCastFunction from '../flow/function/native/physics/BoxCastFunction.js'
 import MoveXYAxisFunction from '../flow/function/native/physics/MoveXYAxisFunction.js'
 import GetComponentInstanceFunction from '../flow/function/native/component/GetComponentInstanceFunction.js'
 import GetCollisionsFunction from '../flow/function/native/physics/GetCollisionsFunction.js'
-import CallFunction from '../flow/function/native/component/CallFunction.js'
+import CallFunction from '../flow/function/native/basic/CallFunction.js'
 import InstantiateUnitFunction from '../flow/function/native/unit/InstantiateUnitFunction.js'
 import AThen from '../flow/promise/AThen.js'
 import SetParentUnitFunction from '../flow/function/native/unit/SetParentUnitFunction.js'
@@ -96,6 +96,10 @@ import ToScreenPositionFunction from '../flow/function/native/transform/ToScreen
 import ConcatFunction from '../flow/function/native/basic/ConcatFunction.js'
 import ArrayPushFunction from '../flow/function/native/array/ArrayPushFunction.js'
 import PhysicsTranslateFunction from '../flow/function/native/transform/PhysicsTranslateFunction.js'
+import GetUnitNameFunction from '../flow/function/native/unit/GetUnitNameFunction.js'
+import GetUnitTagNameFunction from '../flow/function/native/unit/GetUnitTagNameFunction.js'
+import IsFunctionDefinedFunction from '../flow/function/native/basic/IsFunctionDefinedFunction.js'
+import SetColorFunction from '../flow/function/native/style/SetColorFunction.js'
 
 export default class FunctionRegistry extends Registry{
 
@@ -167,6 +171,9 @@ export default class FunctionRegistry extends Registry{
             new IsUnitPressedFunction(),
             new GetComponentInstanceFunction(),
             new CallFunction(),
+            new IsFunctionDefinedFunction(),
+            new GetUnitNameFunction(),
+            new GetUnitTagNameFunction(),
 
             //Animation
             new StartAnimationFunction(),
@@ -221,6 +228,9 @@ export default class FunctionRegistry extends Registry{
             new FlipScaleFunction(),
             new TranslateFunction(),
             new PhysicsTranslateFunction(),
+
+            //Style
+            new SetColorFunction(),
 
             //Structure
             new VectorFunction(),
