@@ -62,6 +62,30 @@ class Vector {
     }
 
     /**
+     * @return {Vector}
+     */
+    abs(){
+        return new Vector({
+            x: Math.abs(this.getX()),
+            y: Math.abs(this.getY())
+        })
+    }
+
+    /**
+     * @return {Vector}
+     */
+    static zero(){
+        return new Vector({x: 0, y: 0})
+    }
+
+    /**
+     * @return {Vector}
+     */
+    static one(){
+        return new Vector({x: 1, y: 1})
+    }
+
+    /**
      * @param {Vector} vectorA
      * @param {Vector} vectorB
      * @return {number}
@@ -182,6 +206,17 @@ class Vector {
     static angle(vectorA, vectorB){
         const signedAngleRadian = Math.atan2(vectorB.y, vectorB.x) - Math.atan2(vectorA.y, vectorA.x)
         return signedAngleRadian || 0
+    }
+
+    /**
+     * @param {Size} size
+     * @return {Vector}
+     */
+    static fromSize(size){
+        return new Vector({
+            x: size.getWidth(),
+            y: size.getHeight()
+        })
     }
 
     /**

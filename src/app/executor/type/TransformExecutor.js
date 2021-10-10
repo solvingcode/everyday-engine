@@ -2,6 +2,7 @@ import ComponentExecutor from './ComponentExecutor.js'
 import World from '../../world/World.js'
 import TransformComponent from '../../component/internal/TransformComponent.js'
 import Vector from '../../utils/Vector.js'
+import TransformHelper from '../../utils/TransformHelper.js'
 
 export default class TransformExecutor extends ComponentExecutor {
 
@@ -27,13 +28,14 @@ export default class TransformExecutor extends ComponentExecutor {
      * @param {TransformComponent} transformComponent
      */
     updatePosition(unit, transformComponent) {
+        const world = World.get()
         const unitManager = World.get().getUnitManager()
         const position = transformComponent.getPosition()
         const childUnits = unitManager.findChildUnits(unit)
         const parentUnit = unitManager.findParentUnit(unit)
         if (parentUnit) {
             const parentTransformComponent = parentUnit.getComponent(TransformComponent)
-            if(parentTransformComponent){
+            if (parentTransformComponent) {
                 const parentPosition = parentTransformComponent.getPosition()
                 transformComponent.setLocalPosition(Vector.subtract(position, parentPosition))
             }
@@ -42,9 +44,10 @@ export default class TransformExecutor extends ComponentExecutor {
         transformComponent.setLastLocalPosition(_.cloneDeep(transformComponent.getLocalPosition()))
         childUnits.forEach(cUnit => {
             const childTransformComponent = cUnit.getComponent(TransformComponent)
-            if(!childTransformComponent.getPositionUpdated()){
+            if (!childTransformComponent.getPositionUpdated()) {
                 const childLocalPosition = childTransformComponent.getLocalPosition()
-                childTransformComponent.setPosition(Vector.add(position, childLocalPosition))
+                const newChildPosition = Vector.add(position, childLocalPosition)
+                TransformHelper.translate(world, cUnit, newChildPosition)
                 childTransformComponent.setLastPosition(_.cloneDeep(childTransformComponent.getPosition())) // block updating localPosition of childs
                 this.updatePosition(cUnit, childTransformComponent)
             }
@@ -56,17 +59,20 @@ export default class TransformExecutor extends ComponentExecutor {
      * @param {TransformComponent} transformComponent
      */
     updateLocalPosition(unit, transformComponent) {
-        const unitManager = World.get().getUnitManager()
+        const world = World.get()
+        const unitManager = world.getUnitManager()
         const localPosition = transformComponent.getLocalPosition()
         const parentUnit = unitManager.findParentUnit(unit)
         const childUnits = unitManager.findChildUnits(unit)
+        let newPosition
         if (parentUnit) {
             const parentTransformComponent = parentUnit.getComponent(TransformComponent)
             const parentPosition = parentTransformComponent.getPosition()
-            transformComponent.setPosition(Vector.add(localPosition, parentPosition))
+            newPosition = Vector.add(localPosition, parentPosition)
         } else {
-            transformComponent.setPosition(_.cloneDeep(localPosition))
+            newPosition = _.cloneDeep(localPosition)
         }
+        TransformHelper.translate(world, unit, newPosition)
         transformComponent.setLastPosition(_.cloneDeep(transformComponent.getPosition()))
         transformComponent.setLastLocalPosition(_.cloneDeep(transformComponent.getLocalPosition()))
         childUnits.forEach(cUnit => {

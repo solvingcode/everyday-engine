@@ -164,6 +164,24 @@ export default class UnitHelper {
     }
 
     /**
+     * @todo: not working
+     * @param {Unit} parentUnit
+     * @param {Unit} childUnit
+     * @return {Vector}
+     */
+    static getChildPosition(parentUnit, childUnit){
+        const pTransformComponent = parentUnit.getComponent(TransformComponent)
+        const cTransformComponent = parentUnit.getComponent(TransformComponent)
+        const parentRotation = pTransformComponent.getRotation()
+        const parentSize = TransformHelper.getSizeFromScale(pTransformComponent.getScale())
+        const childLocalPosition = cTransformComponent.getLocalPosition()
+        const childPosition = cTransformComponent.getPosition()
+        const childSize = TransformHelper.getSizeFromScale(cTransformComponent.getScale())
+        const correctionVector = this.GetCorrectionVector(parentSize, childSize, parentRotation, childLocalPosition)
+        return Vector.add(childPosition, correctionVector)
+    }
+
+    /**
      * @param {Unit} unit
      * @param {ColliderComponent} colliderComponent
      * @return {Size}
@@ -262,19 +280,19 @@ export default class UnitHelper {
     }
 
     /**
-     * @param {Size} unitSize
-     * @param {Size} colliderSize
-     * @param {number} unitRotation
-     * @param {Vector} colliderRelativePosition
+     * @param {Size} parentSize
+     * @param {Size} childSize
+     * @param {number} parentRotation
+     * @param {Vector} childLocalPosition
      * @return {Vector}
      */
-    static GetCorrectionVector(unitSize, colliderSize, unitRotation, colliderRelativePosition) {
-        const unitVertices = GeometryHelper.loadVertices(unitSize)
-        const colliderVertices = GeometryHelper.loadVertices(colliderSize)
-            .map(colliderVertex => Vector.subtract(colliderVertex, colliderRelativePosition))
+    static GetCorrectionVector(parentSize, childSize, parentRotation, childLocalPosition) {
+        const unitVertices = GeometryHelper.loadVertices(parentSize)
+        const colliderVertices = GeometryHelper.loadVertices(childSize)
+            .map(colliderVertex => Vector.subtract(colliderVertex, childLocalPosition))
         const initDiff = Vector.subtract(colliderVertices[0], unitVertices[0])
-        const unitVerticesRotated = GeometryHelper.rotateVertices(unitVertices, unitRotation, unitSize)
-        const colliderVerticesRotated = GeometryHelper.rotateVertices(colliderVertices, unitRotation, colliderSize)
+        const unitVerticesRotated = GeometryHelper.rotateVertices(unitVertices, parentRotation, parentSize)
+        const colliderVerticesRotated = GeometryHelper.rotateVertices(colliderVertices, parentRotation, childSize)
         const rotatedDiff = Vector.subtract(colliderVerticesRotated[0], unitVerticesRotated[0])
         return Vector.subtract(initDiff, rotatedDiff)
     }

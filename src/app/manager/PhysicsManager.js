@@ -22,8 +22,8 @@ export default class PhysicsManager {
         this.physicsEngine.init()
     }
 
-    clear(){
-        if(this.physicsEngine.getInstance()){
+    clear() {
+        if (this.physicsEngine.getInstance()) {
             this.physicsEngine.clear()
         }
     }
@@ -45,6 +45,16 @@ export default class PhysicsManager {
 
     /**
      * @param {Unit} unit
+     * @return {boolean}
+     */
+    hasUnit(unit) {
+        if (this.physicsEngine.getInstance()) {
+            return !!this.physicsEngine.findBody(unit)
+        }
+    }
+
+    /**
+     * @param {Unit} unit
      * @param {Vector} position
      * @param {Vector} force
      */
@@ -60,14 +70,14 @@ export default class PhysicsManager {
      * @param {MaskGroup} maskGroup
      * @return {ColliderComponent[]}
      */
-    boxCast(world, unit, colliderComponent, distance, maskGroup){
+    boxCast(world, unit, colliderComponent, distance, maskGroup) {
         const position = UnitHelper.getColliderPosition(unit, colliderComponent)
         const size = UnitHelper.getColliderSize(unit, colliderComponent)
         const boxNewPosition = [
             distance,
-            Vector.add(distance, new Vector({x: size.getWidth() })),
+            Vector.add(distance, new Vector({x: size.getWidth()})),
             Vector.add(distance, new Vector({x: size.getWidth(), y: size.getHeight()})),
-            Vector.add(distance, new Vector({ y: size.getHeight()}))
+            Vector.add(distance, new Vector({y: size.getHeight()}))
         ]
         const collisions = boxNewPosition.reduce((pValue, cValue) =>
             [...pValue, ...this.physicsEngine.rayCast(unit, position, Vector.add(position, cValue))], [])
@@ -115,10 +125,10 @@ export default class PhysicsManager {
      * @param {MaskGroup} maskGroup
      * @return {ColliderComponent[]}
      */
-    getAllCollision(world, unit, colliderComponent, maskGroup){
+    getAllCollision(world, unit, colliderComponent, maskGroup) {
         const maskGroupUnits = maskGroup ? world.getUnitManager().findUnitsByMaskGroup(maskGroup)
             : world.getUnitManager().getUnits()
-        const sourceColliderUnit = { unit, colliderComponent }
+        const sourceColliderUnit = {unit, colliderComponent}
         const targetColliderUnits = []
         maskGroupUnits.forEach(maskGroupUnit => {
             maskGroupUnit.findComponentsByClass(ColliderComponent).forEach(maskColliderComponent => {
@@ -156,7 +166,7 @@ export default class PhysicsManager {
      * @param {Unit} unit
      * @param {Vector} position
      */
-    setPosition(unit, position){
+    setPosition(unit, position) {
         this.physicsEngine.setPosition(unit, position)
     }
 
@@ -172,7 +182,7 @@ export default class PhysicsManager {
      * @param {Unit} unit
      * @param {Vector} moveVector
      */
-    moveXYAxis(unit, moveVector){
+    moveXYAxis(unit, moveVector) {
         this.setVelocity(unit, moveVector)
     }
 
@@ -180,7 +190,7 @@ export default class PhysicsManager {
      * @param {Unit} unit
      * @param {Vector} position
      */
-    translate(unit, position){
+    translate(unit, position) {
         const body = this.physicsEngine.findBody(unit)
         if (body) {
             const bodyPosition = new Vector(this.physicsEngine.getBodyPosition(body))
@@ -206,7 +216,7 @@ export default class PhysicsManager {
     /**
      * @param {Unit} unit
      */
-    deleteUnit(unit){
+    deleteUnit(unit) {
         this.physicsEngine.deleteUnit(unit)
     }
 
@@ -237,10 +247,10 @@ export default class PhysicsManager {
             const colliderComponents = unit.findComponentsByClass(ColliderComponent)
                 .filter(colliderComponent => colliderComponent.isEnabled())
             const firstColliderComponent = colliderComponents[0]
-            if(firstColliderComponent){
+            if (firstColliderComponent) {
                 const firstColliderRelativePosition = UnitHelper.getColliderRelativePosition(unit, firstColliderComponent)
                 const bodyCollider = this.physicsEngine.getBodyColliders(body)[0]
-                if(bodyCollider){
+                if (bodyCollider) {
                     const bodyColliderPosition = new Vector(this.physicsEngine.getBodyPosition(bodyCollider))
                     const actualColliderSize = UnitHelper.getColliderSize(unit, firstColliderComponent)
                     const unitColliderPosition = GeometryHelper.fromCenterPosition(bodyColliderPosition, bodyRotationRounded, actualColliderSize)
@@ -256,11 +266,13 @@ export default class PhysicsManager {
             colliderComponents.forEach(colliderComponent => {
                 colliderComponent.setVelocity(bodyVelocity)
             })
-            if(rigidBodyComponent){
+            if (rigidBodyComponent) {
                 rigidBodyComponent.setVelocity(bodyVelocity)
             }
 
-            transformComponent.setPosition(newPosition)
+            if (!transformComponent.getPosition().equals(newPosition)) {
+                transformComponent.setPosition(newPosition)
+            }
             transformComponent.setRotation(newRotation)
             if (actualUnitRotation !== newRotation) {
                 meshComponent.setGenerated(false)
