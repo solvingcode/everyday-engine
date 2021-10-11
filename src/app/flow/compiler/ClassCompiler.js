@@ -35,6 +35,7 @@ import {TYPES} from '../../pobject/AttributeType.js'
 import CallFunction from '../function/native/basic/CallFunction.js'
 import AThen from '../promise/AThen.js'
 import IsFunctionDefinedFunction from '../function/native/basic/IsFunctionDefinedFunction.js'
+import Maths from '../../utils/Maths.js'
 
 export default class ClassCompiler extends Compiler {
 
@@ -148,29 +149,32 @@ export default class ClassCompiler extends Compiler {
                         const targetInput = element.findInputByName(targetName)
                         if (targetInput) {
                             const attribute = NodeHelper.getAttributeFromNodeFunctionInput(sourceNode, world)
-                            const parentClassName = script.getParentName()
-                            if (parentClassName) {
+                            const jumpTo = `set_input_${attribute.getAttrName()}${Maths.generateId()}`
+                            const parentClassNames = ScriptHelper.getParentClassNames(world, script).reverse()
+                            if (parentClassNames.length > 0) {
                                 const isFunctionDefinedFunction = new IsFunctionDefinedFunction()
-                                const scriptFunctionAbstractName = `${parentClassName}.${scriptFunction.getName()}`
-                                stackFunction.getStack().push(...[
-                                    new StackOperation(OPERATIONS.PUSH, 'functionName', scriptFunctionAbstractName),
-                                    new StackOperation(OPERATIONS.CALL, isFunctionDefinedFunction.getName()),
-                                    new StackOperation(OPERATIONS.JUMP, CONSTANTS.RESULT, 'set_input'),
-                                    new StackOperation(OPERATIONS.PUSH,
-                                        `[MEM]${scriptFunctionName}.${attribute.getAttrName()}`,
-                                        `[MEM]${scriptFunctionAbstractName}.${attribute.getAttrName()}`)
-                                ])
+                                parentClassNames.forEach(parentClassName => {
+                                    const scriptFunctionAbstractName = `${parentClassName}.${scriptFunction.getName()}`
+                                    stackFunction.getStack().push(...[
+                                        new StackOperation(OPERATIONS.PUSH, 'functionName', scriptFunctionAbstractName),
+                                        new StackOperation(OPERATIONS.CALL, isFunctionDefinedFunction.getName()),
+                                        new StackOperation(OPERATIONS.JUMP, CONSTANTS.RESULT, jumpTo),
+                                        new StackOperation(OPERATIONS.PUSH,
+                                            `[MEM]${scriptFunctionName}.${attribute.getAttrName()}`,
+                                            `[MEM]${scriptFunctionAbstractName}.${attribute.getAttrName()}`)
+                                    ])
+                                })
                             }
                             if (element instanceof ACustomFunction) {
                                 stackFunction.getStack().push(...[
-                                    new StackOperation(OPERATIONS.JUMP_TO, 'set_input'),
+                                    new StackOperation(OPERATIONS.JUMP_TO, jumpTo),
                                     new StackOperation(OPERATIONS.PUSH,
                                         `[MEM]${element.getName()}.${targetInput.getAttrName()}`,
                                         `[MEM]${scriptFunctionName}.${attribute.getAttrName()}`)
                                 ])
                             } else {
                                 stackFunction.getStack().push(...[
-                                    new StackOperation(OPERATIONS.JUMP_TO, 'set_input'),
+                                    new StackOperation(OPERATIONS.JUMP_TO, jumpTo),
                                     new StackOperation(OPERATIONS.PUSH, targetInput.getAttrName(),
                                         `[MEM]${scriptFunctionName}.${attribute.getAttrName()}`)
                                 ])

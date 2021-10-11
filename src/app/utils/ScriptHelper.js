@@ -274,6 +274,22 @@ export default class ScriptHelper {
     }
 
     /**
+     * @param {World} world
+     * @param {AScript} script
+     * @return {string[]}
+     */
+    static getParentClassNames(world, script) {
+        if (script) {
+            const parentClassName = script.getParentName()
+            if (parentClassName) {
+                const parentScript = world.getScriptManager().findByName(parentClassName)
+                return [parentClassName, ...this.getParentClassNames(world, parentScript)]
+            }
+        }
+        return []
+    }
+
+    /**
      * undefined if no input found
      * @param {AScriptFunction} script
      * @param {Unit} unit

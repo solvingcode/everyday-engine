@@ -84,6 +84,14 @@ export default class UnitManager extends UnitManagerData {
     }
 
     /**
+     * @param {Component} componentInstance
+     * @return {boolean}
+     */
+    hasComponent(componentInstance) {
+        return !!this.units.find(unit => unit.hasComponentInstance(componentInstance))
+    }
+
+    /**
      * @param {string} name
      * @return {Unit}
      */

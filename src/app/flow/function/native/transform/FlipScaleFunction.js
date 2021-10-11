@@ -26,15 +26,17 @@ export default class FlipScaleFunction extends AFunction {
     execute(functionRegistry, unit) {
         const target = this.getInputValue('target')
         const scaleFactor = this.getInputValue('scaleFactor')
-        const transformComponent = target.getComponent(TransformComponent)
-        const actualScale = transformComponent.getScale()
-        const flipScale = Vector.linearMultiply(Vector.abs(actualScale), scaleFactor)
-        transformComponent.setScale(flipScale)
-        if (!ObjectHelper.isEqual(actualScale, flipScale)) {
-            target.getComponent(MeshComponent).setGenerated(false)
-            const rigidBodyComponent = unit.getComponent(RigidBodyComponent)
-            if(rigidBodyComponent){
-                rigidBodyComponent.setCreated(false)
+        if (Math.abs(scaleFactor.getX()) > 0 && Math.abs(scaleFactor.getY()) > 0) {
+            const transformComponent = target.getComponent(TransformComponent)
+            const actualScale = transformComponent.getScale()
+            const flipScale = Vector.linearMultiply(Vector.abs(actualScale), scaleFactor)
+            transformComponent.setScale(flipScale)
+            if (!ObjectHelper.isEqual(actualScale, flipScale)) {
+                target.getComponent(MeshComponent).setGenerated(false)
+                const rigidBodyComponent = unit.getComponent(RigidBodyComponent)
+                if (rigidBodyComponent) {
+                    rigidBodyComponent.setCreated(false)
+                }
             }
         }
     }

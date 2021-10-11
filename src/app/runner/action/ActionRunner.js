@@ -121,6 +121,7 @@ import SetAreaTileMapAction from './tile/SetAreaTileMapAction.js'
 import AddEmptyUnitAction from './unit/AddEmptyUnitAction.js'
 import AddTagAction from './tag/AddTagAction.js'
 import DeleteTagAction from './tag/DeleteTagAction.js'
+import DeleteFunctionAction from './script/DeleteFunctionAction.js'
 
 /**
  * Action Runner class.
@@ -220,6 +221,7 @@ class ActionRunner extends Runner {
             ADD_SCRIPT: AddClassScriptAction,
             ADD_CODE_SCRIPT: AddScriptCodeAction,
             DELETE_SCRIPT_NODE: DeleteNodeAction,
+            DELETE_SCRIPT_FUNCTION: DeleteFunctionAction,
             DELETE_SELECTED_NODE: DeleteSelectedNodeAction,
             COPY_SELECTED_NODE: CopySelectedNodeAction,
             PASTE_SCRIPT: PasteScriptAction,

@@ -568,16 +568,20 @@ export default class DynamicAttributeHelper {
                 newValue = component.constructor
                 break
             case TYPES.COMPONENT_INSTANCE:
-                const componentInstance = value === '[self]'
+                const unitManagerComponent = world.getUnitManager()
+                const componentInstance = unitManagerComponent.hasComponent(value) ? value :
+                    (value === '[self]'
                     ? scriptComponent
-                    : world.getUnitManager().findComponentById(parseInt(value))
+                    : world.getUnitManager().findComponentById(parseInt(value)))
                 if (!componentInstance) {
                     throw new ClientError(`${this.constructor.name}: Component Instance "${value}" not found`)
                 }
                 newValue = componentInstance
                 break
             case TYPES.MASK_GROUP_INSTANCE:
-                const maskGroupInstance = world.getPreference().getMaskGroup().find(parseInt(value))
+                const maskGroupPref = world.getPreference().getMaskGroup()
+                const maskGroupInstance = maskGroupPref.hasMaskGroup(value) ? value :
+                    world.getPreference().getMaskGroup().find(parseInt(value))
                 if (!maskGroupInstance) {
                     throw new ClientError(`${this.constructor.name}: Mask Group Instance "${value}" not found`)
                 }

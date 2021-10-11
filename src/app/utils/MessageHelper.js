@@ -15,6 +15,8 @@ export default class MessageHelper {
                 return 'Do you want to remove selected assets ?'
             case AppState.States.CONFIRM_ACTION_DELETE_SCRIPT_NODE_START:
                 return 'Do you want to remove selected nodes ?'
+            case AppState.States.CONFIRM_ACTION_DELETE_SCRIPT_FUNCTION_START:
+                return 'Do you want to remove selected function ?'
             case AppState.States.CONFIRM_ACTION_NEW_PROJECT_START:
                 return 'Do you want to start new project (Unsaved modification will be lost!) ?'
             default:

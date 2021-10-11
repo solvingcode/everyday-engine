@@ -78,10 +78,11 @@ export default class AssetHelper {
         const functionScript = script.getMainFunction()
         if(functionScript){
             const nodes = functionScript.findNodesByClass(VariableNode)
-            return nodes.map(node => {
+            return [...nodes.map(node => {
                 const sourceNode = NodeHelper.getSourceNode(node, world)
                 return new DynamicAttribute(sourceNode.getName(), sourceNode.getOutput().getAttrType())
-            })
+            }), ...(script.getParentName() ?
+                this.getScriptVars(world.getScriptManager().findByName(script.getParentName()), world) : [])]
         }
         return []
     }

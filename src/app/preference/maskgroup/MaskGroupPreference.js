@@ -7,6 +7,14 @@ export default class MaskGroupPreference extends MaskGroupPreferenceData {
     }
 
     /**
+     * @param {MaskGroup} maskGroup
+     * @return {boolean}
+     */
+    hasMaskGroup(maskGroup){
+        return !!this.getMasks().find(mask => mask === maskGroup)
+    }
+
+    /**
      * @return {MaskGroup}
      */
     getSelected(){

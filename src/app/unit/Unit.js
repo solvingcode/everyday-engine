@@ -18,6 +18,14 @@ export default class Unit extends UnitData{
     }
 
     /**
+     * @param {Component} componentInstance
+     * @return {boolean}
+     */
+    hasComponentInstance(componentInstance) {
+        return !!this.getComponents().find(component => component === componentInstance)
+    }
+
+    /**
      * @return {boolean}
      */
     isSelected(){

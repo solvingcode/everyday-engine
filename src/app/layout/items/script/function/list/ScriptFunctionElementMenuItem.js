@@ -26,6 +26,13 @@ export default class ScriptFunctionElementMenuItem extends ListSelectElementActi
     /**
      * @override
      */
+    isRightClick() {
+        return true
+    }
+
+    /**
+     * @override
+     */
     isDraggable(){
         return true
     }

@@ -56,6 +56,8 @@ import TileGridMenuItem from '../layout/items/unit/TileGridMenuItem.js'
 import TileMapMenuItem from '../layout/items/unit/TileMapMenuItem.js'
 import VariableNode from '../flow/node/variable/VariableNode.js'
 import DeleteScriptNodeMenuItem from '../layout/items/script/node/delete/DeleteScriptNodeMenuItem.js'
+import AScriptFunction from '../flow/AScriptFunction.js'
+import DeleteFunctionMenuItem from '../layout/items/script/function/delete/DeleteFunctionMenuItem.js'
 
 export default class OptionHelper {
 
@@ -160,6 +162,12 @@ export default class OptionHelper {
             options.push(...[
                 new OptionActionsTitleMenuItem('Node'),
                 new DeleteScriptNodeMenuItem(null, bindObject),
+            ])
+        }
+        if(bindObject instanceof AScriptFunction){
+            options.push(...[
+                new OptionActionsTitleMenuItem('Script'),
+                new DeleteFunctionMenuItem(null, bindObject),
             ])
         }
         return options
