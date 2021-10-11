@@ -19,14 +19,14 @@ export default class PhysicsEngine {
         this.instance = this.createEngineInstance()
     }
 
-    clear(){
+    clear() {
         this.clearEngine()
     }
 
     /**
      * @abstract
      */
-    clearEngine(){
+    clearEngine() {
         throw new SystemError(`${this.constructor.name}.clearWorld method must be implemented`)
     }
 
@@ -156,6 +156,16 @@ export default class PhysicsEngine {
 
     /**
      * @abstract
+     * @param {*} body
+     * @param {Vector} moveVector
+     * @return {void}
+     */
+    translate(body, moveVector) {
+        throw new SystemError(`${this.constructor.name}.translate method must be implemented`)
+    }
+
+    /**
+     * @abstract
      */
     update() {
         throw new SystemError(`${this.constructor.name}.update method must be implemented`)
@@ -265,7 +275,7 @@ export default class PhysicsEngine {
      * @param {{unit: Unit, colliderComponent: ColliderComponent}[]} targetColliderUnits
      * @return {ColliderComponent[]}
      */
-    getAllCollision(sourceColliderUnit, targetColliderUnits){
+    getAllCollision(sourceColliderUnit, targetColliderUnits) {
         const targetBodyColliders = targetColliderUnits.map(targetColliderUnit => {
             return this.findBodyCollider(targetColliderUnit.unit, targetColliderUnit.colliderComponent)
         }).filter(bodyCollider => bodyCollider)

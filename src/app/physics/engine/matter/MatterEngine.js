@@ -66,6 +66,13 @@ export default class MatterEngine extends PhysicsEngine {
     /**
      * @override
      */
+    translate(body, moveVector) {
+        Matter.Body.translate(body, moveVector)
+    }
+
+    /**
+     * @override
+     */
     update() {
         Matter.Engine.update(this.getInstance())
     }

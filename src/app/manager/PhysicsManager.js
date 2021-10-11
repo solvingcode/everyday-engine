@@ -188,17 +188,12 @@ export default class PhysicsManager {
 
     /**
      * @param {Unit} unit
-     * @param {Vector} position
+     * @param {Vector} moveVector
      */
-    translate(unit, position) {
+    translate(unit, moveVector) {
         const body = this.physicsEngine.findBody(unit)
         if (body) {
-            const bodyPosition = new Vector(this.physicsEngine.getBodyPosition(body))
-            const transformComponent = unit.getComponent(TransformComponent)
-            const actualPosition = transformComponent.getPosition()
-            const actualDiff = Vector.subtract(bodyPosition, actualPosition)
-            const newPosition = Vector.add(position, actualDiff)
-            this.setPosition(unit, newPosition)
+            this.physicsEngine.translate(body, moveVector)
         }
     }
 

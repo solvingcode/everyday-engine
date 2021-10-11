@@ -47,7 +47,7 @@ export default class TransformExecutor extends ComponentExecutor {
             if (!childTransformComponent.getPositionUpdated()) {
                 const childLocalPosition = childTransformComponent.getLocalPosition()
                 const newChildPosition = Vector.add(position, childLocalPosition)
-                TransformHelper.translate(world, cUnit, newChildPosition)
+                TransformHelper.translateTo(world, cUnit, newChildPosition)
                 childTransformComponent.setLastPosition(_.cloneDeep(childTransformComponent.getPosition())) // block updating localPosition of childs
                 this.updatePosition(cUnit, childTransformComponent)
             }
@@ -72,7 +72,7 @@ export default class TransformExecutor extends ComponentExecutor {
         } else {
             newPosition = _.cloneDeep(localPosition)
         }
-        TransformHelper.translate(world, unit, newPosition)
+        TransformHelper.translateTo(world, unit, newPosition)
         transformComponent.setLastPosition(_.cloneDeep(transformComponent.getPosition()))
         transformComponent.setLastLocalPosition(_.cloneDeep(transformComponent.getLocalPosition()))
         childUnits.forEach(cUnit => {

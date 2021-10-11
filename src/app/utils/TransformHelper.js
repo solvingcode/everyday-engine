@@ -41,13 +41,31 @@ export default class TransformHelper {
      * @param {Unit} unit
      * @param {Vector} newPosition
      */
-    static translate(world, unit, newPosition) {
+    static translateTo(world, unit, newPosition) {
         const physicsManager = world.getPhysicsManager()
         const transformComponent = unit.getComponent(TransformComponent)
         if (physicsManager.hasUnit(unit)) {
-            physicsManager.translate(unit, _.cloneDeep(newPosition))
+            physicsManager.translate(unit, Vector.subtract(newPosition, transformComponent.getPosition()))
         }
         transformComponent.setPosition(_.cloneDeep(newPosition))
+    }
+
+    /**
+     * @param {World} world
+     * @param {Unit} unit
+     * @param {Vector} moveVector
+     */
+    static translate(world, unit, moveVector) {
+        const physicsManager = world.getPhysicsManager()
+        const unitManager = world.getUnitManager()
+        const transformComponent = unit.getComponent(TransformComponent)
+        if (physicsManager.hasUnit(unit)) {
+            physicsManager.translate(unit, moveVector)
+        }
+        transformComponent.setPosition(Vector.add(moveVector, transformComponent.getPosition()))
+        unitManager.findChildUnits(unit).forEach(cUnit => {
+            this.translate(world, cUnit, moveVector)
+        })
     }
 
 }
