@@ -29,7 +29,7 @@ export default class FlipScaleFunction extends AFunction {
         if (Math.abs(scaleFactor.getX()) > 0 && Math.abs(scaleFactor.getY()) > 0) {
             const transformComponent = target.getComponent(TransformComponent)
             const actualScale = transformComponent.getScale()
-            const flipScale = Vector.linearMultiply(Vector.abs(actualScale), scaleFactor)
+            const flipScale = Vector.linearMultiply(Vector.abs(actualScale), Vector.sign(scaleFactor))
             transformComponent.setScale(flipScale)
             if (!ObjectHelper.isEqual(actualScale, flipScale)) {
                 target.getComponent(MeshComponent).setGenerated(false)

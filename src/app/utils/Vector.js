@@ -139,6 +139,14 @@ class Vector {
     }
 
     /**
+     * @param {Vector} vector
+     * @return {Vector}
+     */
+    static sign(vector){
+        return this.linearDivide(vector, this.abs(vector))
+    }
+
+    /**
      * @param {Vector} vectorA
      * @param {Vector} vectorB
      * @return {Vector}

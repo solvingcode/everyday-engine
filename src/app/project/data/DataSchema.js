@@ -209,6 +209,11 @@ import TagPreference from '../../preference/tag/TagPreference.js'
 import GetUnitTagNameFunction from '../../flow/function/native/unit/GetUnitTagNameFunction.js'
 import IsFunctionDefinedFunction from '../../flow/function/native/basic/IsFunctionDefinedFunction.js'
 import SetColorFunction from '../../flow/function/native/style/SetColorFunction.js'
+import VectorDistance from '../../flow/function/native/basic/VectorDistance.js'
+import SubtractVectorFunction from '../../flow/function/native/basic/SubtractVectorFunction.js'
+import NormalizeVectorFunction from '../../flow/function/native/basic/NormalizeVectorFunction.js'
+import GetterFunction from '../../flow/function/native/basic/GetterFunction.js'
+import DestroyUnitFunction from '../../flow/function/native/unit/DestroyUnitFunction.js'
 
 /**
  * @class {DataSchema}
@@ -415,6 +420,11 @@ class DataSchema {
         {id: 1870, type: GetUnitTagNameFunction},
         {id: 1880, type: IsFunctionDefinedFunction},
         {id: 1890, type: SetColorFunction},
+        {id: 1900, type: VectorDistance},
+        {id: 1910, type: SubtractVectorFunction},
+        {id: 1920, type: NormalizeVectorFunction},
+        {id: 1930, type: GetterFunction},
+        {id: 1940, type: DestroyUnitFunction},
     ]
 
     /**

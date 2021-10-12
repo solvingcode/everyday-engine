@@ -100,6 +100,11 @@ import GetUnitNameFunction from '../flow/function/native/unit/GetUnitNameFunctio
 import GetUnitTagNameFunction from '../flow/function/native/unit/GetUnitTagNameFunction.js'
 import IsFunctionDefinedFunction from '../flow/function/native/basic/IsFunctionDefinedFunction.js'
 import SetColorFunction from '../flow/function/native/style/SetColorFunction.js'
+import VectorDistance from '../flow/function/native/basic/VectorDistance.js'
+import SubtractVectorFunction from '../flow/function/native/basic/SubtractVectorFunction.js'
+import NormalizeVectorFunction from '../flow/function/native/basic/NormalizeVectorFunction.js'
+import GetterFunction from '../flow/function/native/basic/GetterFunction.js'
+import DestroyUnitFunction from '../flow/function/native/unit/DestroyUnitFunction.js'
 
 export default class FunctionRegistry extends Registry{
 
@@ -150,6 +155,11 @@ export default class FunctionRegistry extends Registry{
             new DivideFunction(),
             new AddVectorFunction(),
             new ConcatFunction(),
+            new VectorDistance(),
+            new SubtractVectorFunction(),
+            new NormalizeVectorFunction(),
+            new GetterFunction(),
+            new DestroyUnitFunction(),
 
             //Loop
             new ALoop(),
