@@ -181,6 +181,7 @@ export const NODE_TYPES = {
     VAR_UNIT_INSTANT: 'var_unit_instant',
     VAR_SCENE: 'var_scene',
     VAR_UNIT: 'var_unit',
+    GET_VAR: 'GET_VAR',
     ANIMATION: 'animation',
     COMPONENT: 'component',
     REFERENCE: 'reference',

@@ -7,7 +7,6 @@ import NodeComponent from '../../../component/internal/gui/node/NodeComponent.js
 import ScriptHelper from '../../../utils/ScriptHelper.js'
 import {NODE_TYPES} from '../../../flow/node/ANode.js'
 import {TYPES} from '../../../pobject/AttributeType.js'
-import VariableNode from '../../../flow/node/variable/VariableNode.js'
 
 export default class AddNodeInputAction extends Action {
 
@@ -41,13 +40,13 @@ export default class AddNodeInputAction extends Action {
         } else if (formData.getAttribute().getAttrType() === TYPES.COMPONENT_INSTANCE && value === '[self]') {
             nodeSource = ScriptHelper.createNode(functionRegistry, script, NODE_TYPES.SELF)
         } else {
-            const varRegex = new RegExp('^var:([^:]+)$', 'i')
+            const varRegex = new RegExp('^var\\[([^:]+)\]$', 'i')
             let variableValue
             if (value.match(varRegex)) {
                 variableValue = value.replace(varRegex, '$1')
             }
             if (variableValue) {
-                nodeSource = script.findNodeByNameClass(variableValue, VariableNode)
+                nodeSource = ScriptHelper.createNode(functionRegistry, script, NODE_TYPES.GET_VAR, variableValue)
             } else {
                 nodeSource = ScriptHelper.createNode(functionRegistry, script, NODE_TYPES.CONSTANT, value)
             }

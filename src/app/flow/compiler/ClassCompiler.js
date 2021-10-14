@@ -7,7 +7,6 @@ import AFunction from '../function/AFunction.js'
 import ACondition from '../condition/ACondition.js'
 import SystemError from '../../exception/type/SystemError.js'
 import ClientError from '../../exception/type/ClientError.js'
-import AVariable from '../variable/AVariable.js'
 import AAnimation from '../animation/AAnimation.js'
 import NodeHelper from '../../utils/NodeHelper.js'
 import AStackFunction from '../function/AStackFunction.js'
@@ -36,6 +35,8 @@ import CallFunction from '../function/native/basic/CallFunction.js'
 import AThen from '../promise/AThen.js'
 import IsFunctionDefinedFunction from '../function/native/basic/IsFunctionDefinedFunction.js'
 import Maths from '../../utils/Maths.js'
+import AGetVariable from '../variable/AGetVariable.js'
+import VariableNode from '../node/variable/VariableNode.js'
 
 export default class ClassCompiler extends Compiler {
 
@@ -108,8 +109,12 @@ export default class ClassCompiler extends Compiler {
                     if (sourceElement instanceof AEvent) {
                         NodeHelper.validateOrderConnection(node, input)
                         sourceStackFunction.getStack().push(...[new StackOperation(OPERATIONS.CALL, functionName)])
-                    } else if (sourceElement instanceof AVariable) {
+                    } else if (sourceElement instanceof AGetVariable) {
                         NodeHelper.validateResultToInputConnection(node, input)
+                        const variableExists = script.getMainFunction().findNodeByNameClass(sourceElement.getName(), VariableNode)
+                        if (!variableExists) {
+                            throw new ClientError(`Variable ${element.getName()} not defined`)
+                        }
                         const targetInput = element.findInputByName(targetName)
                         stackFunction.getStack().push(...[
                             new StackOperation(OPERATIONS.GET, sourceNode.getSourceName())

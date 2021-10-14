@@ -37,6 +37,7 @@ import ImageVariableNode from '../flow/node/variable/ImageVariableNode.js'
 import UnitInstantVariableNode from '../flow/node/variable/UnitInstantVariableNode.js'
 import ThenNode from '../flow/node/ThenNode.js'
 import ArrayVariableNode from '../flow/node/variable/ArrayVariableNode.js'
+import GetVariableNode from '../flow/node/variable/GetVariableNode.js'
 
 export default class ScriptHelper {
 
@@ -102,6 +103,8 @@ export default class ScriptHelper {
             node = this.getNodeInstance(functionRegistry, ReferenceNode, nodeValue)
         } else if (nodeType === NODE_TYPES.VAR_STRING) {
             node = this.getNodeInstance(functionRegistry, StringVariableNode, nodeValue)
+        } else if (nodeType === NODE_TYPES.GET_VAR) {
+            node = this.getNodeInstance(functionRegistry, GetVariableNode, nodeValue)
         } else if (nodeType === NODE_TYPES.VAR_UNIT) {
             node = this.getNodeInstance(functionRegistry, UnitVariableNode, nodeValue)
         } else if (nodeType === NODE_TYPES.VAR_NUMBER) {
@@ -153,6 +156,7 @@ export default class ScriptHelper {
             case ReferenceNode:
             case LoopNode:
             case ThenNode:
+            case GetVariableNode:
             case StringVariableNode:
             case UnitVariableNode:
             case ToggleVariableNode:
@@ -211,6 +215,8 @@ export default class ScriptHelper {
             nodeType = NODE_TYPES.KEY_CODE
         } else if (node instanceof StringVariableNode) {
             nodeType = NODE_TYPES.VAR_STRING
+        } else if (node instanceof GetVariableNode) {
+            nodeType = NODE_TYPES.GET_VAR
         } else if (node instanceof UnitVariableNode) {
             nodeType = NODE_TYPES.VAR_UNIT
         } else if (node instanceof NumberVariableNode) {

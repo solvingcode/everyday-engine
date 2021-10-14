@@ -12,7 +12,6 @@ import ConstantNode from '../src/app/flow/node/ConstantNode.js'
 import World from '../src/app/world/World.js'
 import ConditionNode from '../src/app/flow/node/ConditionNode.js'
 import OnMouseClickEvent from '../src/app/flow/event/native/OnMouseClickEvent.js'
-import StringVariableNode from '../src/app/flow/node/variable/StringVariableNode.js'
 import ScriptComponent from '../src/app/component/internal/ScriptComponent.js'
 import DynamicAttribute from '../src/app/pobject/DynamicAttribute.js'
 import LoopNode from '../src/app/flow/node/LoopNode.js'
@@ -27,6 +26,7 @@ import Vector from '../src/app/utils/Vector.js'
 import Scene from '../src/app/scene/Scene.js'
 import SelfNode from '../src/app/flow/node/SelfNode.js'
 import ThenNode from '../src/app/flow/node/ThenNode.js'
+import GetVariableNode from '../src/app/flow/node/variable/GetVariableNode.js'
 
 test('Execute native function (without output)', function () {
     const log = new LogFunction()
@@ -202,7 +202,7 @@ test('Create and compile class script with variables', function () {
     scriptComponent.setVarsAttributes([new DynamicAttribute('text', TYPES.STRING, 'test')])
 
     const nodeLog = ScriptHelper.createNodeByClass(functionRegistry, scriptFunction, FunctionNode, 'Log')
-    const nodeVar = ScriptHelper.createNodeByClass(functionRegistry, scriptFunction, StringVariableNode, 'text')
+    const nodeVar = ScriptHelper.createNodeByClass(functionRegistry, scriptFunction, GetVariableNode, 'text')
     const nodeEvent = ScriptHelper.createNodeByClass(functionRegistry, scriptFunction, FunctionNode, 'OnMouseClick')
 
     nodeLog.attachResultOutput(nodeVar, 'value')

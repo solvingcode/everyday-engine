@@ -59,6 +59,8 @@ import AThen from '../flow/promise/AThen.js'
 import ThenNode from '../flow/node/ThenNode.js'
 import AArrayVariable from '../flow/variable/AArrayVariable.js'
 import ArrayVariableNode from '../flow/node/variable/ArrayVariableNode.js'
+import GetVariableNode from '../flow/node/variable/GetVariableNode.js'
+import AGetVariable from '../flow/variable/AGetVariable.js'
 
 export default class NodeHelper {
 
@@ -95,6 +97,8 @@ export default class NodeHelper {
                 return new ALoop(sourceName)
             case ThenNode:
                 return new AThen(sourceName)
+            case GetVariableNode:
+                return new AGetVariable(sourceName)
             case StringVariableNode:
                 return new AStringVariable(sourceName)
             case UnitVariableNode:
@@ -138,6 +142,8 @@ export default class NodeHelper {
         } else if (nodeSource instanceof AKeyCode) {
             return `${nodeSource.getName()}`
         } else if (nodeSource instanceof AVariable) {
+            return `${nodeSource.getName()} (var)`
+        } else if (nodeSource instanceof AGetVariable) {
             return `${nodeSource.getName()} (var)`
         } else if (nodeSource instanceof ACondition) {
             return `${nodeSource.getName()}`
@@ -291,11 +297,6 @@ export default class NodeHelper {
             headColor = '#5e5622'
         } else if (type === NODE_TYPES.KEY_CODE) {
             headColor = '#375e22'
-        } else if (type === NODE_TYPES.VAR_STRING ||
-            type === NODE_TYPES.VAR_TOGGLE ||
-            type === NODE_TYPES.VAR_BOOLEAN ||
-            type === NODE_TYPES.VAR_NUMBER) {
-            headColor = '#5e4322'
         } else if (type === NODE_TYPES.COMPONENT) {
             headColor = '#5e2254'
         } else if (type === NODE_TYPES.REFERENCE) {
@@ -398,7 +399,8 @@ export default class NodeHelper {
         return node instanceof ConstantNode ||
             node instanceof SelfNode ||
             node instanceof ComponentNode ||
-            node instanceof VariableNode
+            node instanceof VariableNode ||
+            node instanceof GetVariableNode
     }
 
     /**
