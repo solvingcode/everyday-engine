@@ -326,7 +326,7 @@ export default class ScriptHelper {
      * @param {Unit} unit
      * @param {Vector} position
      * @param {World} world
-     * @return {{node: ANode, output: DynamicAttribute|null}|undefined}
+     * @return {{node: ANode, output: DynamicAttribute|string|null}|undefined}
      */
     static findNodeOutputByPosition(script, unit, position, world) {
         if (unit) {
@@ -335,14 +335,21 @@ export default class ScriptHelper {
             const size = unit.getComponent(MeshComponent).getSize()
             const node = script.findNodeById(nodeId)
             const sourceNode = NodeHelper.getSourceNode(node, world)
-            const output = sourceNode.getOutput()
-            if (node && (output || NodeHelper.hasBaseOutput(node.getType()))) {
-                const {position: inputLocalPosition, sizeInput} = NodeHelper.getNodeGUIOutput(node.getType(), size)
-                const outputPosition = Vector.add(unitPosition, inputLocalPosition)
-                if (position.getX() >= outputPosition.getX() && position.getX() <= outputPosition.getX() + sizeInput &&
-                    position.getY() >= outputPosition.getY() && position.getY() <= outputPosition.getY() + sizeInput
-                ) {
-                    return {node, output}
+            const nodeOutput = sourceNode.getOutput()
+            const outputs = [null, ...(sourceNode.getOutput() ? [nodeOutput] : [])]
+            if (node) {
+                for (let iOutput = 0; iOutput < outputs.length; iOutput++) {
+                    const output = outputs[iOutput]
+                    const {
+                        position: inputLocalPosition,
+                        sizeInput
+                    } = NodeHelper.getNodeGUIOutput(node.getType(), size, iOutput)
+                    const outputPosition = Vector.add(unitPosition, inputLocalPosition)
+                    if (position.getX() >= outputPosition.getX() && position.getX() <= outputPosition.getX() + sizeInput &&
+                        position.getY() >= outputPosition.getY() && position.getY() <= outputPosition.getY() + sizeInput
+                    ) {
+                        return {node, output}
+                    }
                 }
             }
         }
@@ -446,6 +453,7 @@ export default class ScriptHelper {
         const nodeSourceId = parseInt(cXmlNode.getAttribute('source'))
         const nodeTargetId = parseInt(cXmlNode.getAttribute('target'))
         const nodeConnection = cXmlNode.getAttribute('connection')
+        const output = cXmlNode.getAttribute('output')
         const nodeSource = functionScript.findNodeById(nodeSourceId)
         const nodeTarget = functionScript.findNodeById(nodeTargetId)
         if (!nodeSource) {
@@ -454,7 +462,7 @@ export default class ScriptHelper {
         if (!nodeTarget) {
             throw new ClientError(`ClassScriptXmlParser Error: Node ${nodeTargetId} not found`)
         }
-        nodeTarget.attach(nodeSource, nodeConnection)
+        nodeTarget.attach(nodeSource, nodeConnection, output)
     }
 
     /**

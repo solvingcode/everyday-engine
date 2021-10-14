@@ -2,6 +2,7 @@ import ANodeData from '../../project/data/ANodeData.js'
 import NodeInput from '../../pobject/NodeInput.js'
 import Vector from '../../utils/Vector.js'
 import SystemError from '../../exception/type/SystemError.js'
+import {CONSTANTS} from '../../operation/StackRegister.js'
 
 /**
  * @abstract
@@ -30,18 +31,63 @@ export default class ANode extends ANodeData {
     /**
      * @param {ANode} sourceNode
      * @param {string|null} targetName
+     * @param {string|null} sourceName
      */
-    attach(sourceNode, targetName){
+    attach(sourceNode, targetName, sourceName){
         const inputNode = this.getInputNodeAttached(targetName)
         if(!inputNode){
             const newInputNode = new NodeInput()
             newInputNode.setSourceNodeId(sourceNode.getId())
             newInputNode.setTargetName(targetName)
             newInputNode.setNodeId(this.getId())
+            newInputNode.setSourceName(sourceName)
             this.inputs.push(newInputNode)
         }else{
             inputNode.sourceNode = sourceNode
         }
+    }
+
+    /**
+     * @param {ANode} sourceNode
+     * @param {string} targetName
+     */
+    attachResultOutput(sourceNode, targetName){
+        this.attach(sourceNode, targetName, CONSTANTS.RESULT)
+    }
+
+    /**
+     * @param {ANode} sourceNode
+     */
+    attachManagedOutput(sourceNode){
+        this.attach(sourceNode, null, CONSTANTS.RESULT)
+    }
+
+    /**
+     * @param {ANode} sourceNode
+     */
+    attachPrevNode(sourceNode){
+        this.attach(sourceNode, null, null)
+    }
+
+    /**
+     * @param {NodeInput} nodeInput
+     */
+    isResultToInputConnection(nodeInput){
+        return nodeInput.getTargetName() && nodeInput.getSourceName() === CONSTANTS.RESULT
+    }
+
+    /**
+     * @param {NodeInput} nodeInput
+     */
+    isOrderConnection(nodeInput){
+        return !nodeInput.getTargetName() && !nodeInput.getSourceName()
+    }
+
+    /**
+     * @param {NodeInput} nodeInput
+     */
+    isResultToBaseConnection(nodeInput){
+        return !nodeInput.getTargetName() && nodeInput.getSourceName() === CONSTANTS.RESULT
     }
 
     /**

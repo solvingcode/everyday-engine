@@ -67,7 +67,11 @@ export default class NodeShapeGenerator extends TypeShapeGenerator {
             const {position: baseInputPosition} = NodeHelper.getNodeGUIInput(type, -1)
             const baseInputPositionScale = camera.toCameraScale(baseInputPosition)
             context.fillStyle = baseInputColor
-            context.fillRect(baseInputPositionScale.getX(), baseInputPositionScale.getY(), sizeInputScale, sizeInputScale)
+            context.beginPath()
+            context.moveTo(baseInputPositionScale.getX(), baseInputPositionScale.getY())
+            context.lineTo(baseInputPositionScale.getX() + sizeInputScale, baseInputPositionScale.getY() + sizeInputScale / 2)
+            context.lineTo(baseInputPositionScale.getX(), baseInputPositionScale.getY() + sizeInputScale)
+            context.fill()
         }
 
         //other inputs
@@ -83,12 +87,22 @@ export default class NodeShapeGenerator extends TypeShapeGenerator {
         })
 
         //output
-        if (output || NodeHelper.hasBaseOutput(type)) {
-            const {position: outputPosition} = NodeHelper.getNodeGUIOutput(type, camera.fromScaleSize(scaleSize))
+        if (output) {
+            const {position: outputPosition, outputColor} = NodeHelper.getNodeGUIOutput(type, camera.fromScaleSize(scaleSize), 1)
             const outputPositionScale = camera.toCameraScale(outputPosition)
-            context.fillStyle = baseInputColor
+            context.fillStyle = outputColor
             context.fillRect(outputPositionScale.getX(), outputPositionScale.getY(), sizeInputScale, sizeInputScale)
         }
+
+        //base output
+        const {position: baseOutputPosition} = NodeHelper.getNodeGUIOutput(type, camera.fromScaleSize(scaleSize), 0)
+        const baseOutputPositionScale = camera.toCameraScale(baseOutputPosition)
+        context.fillStyle = baseInputColor
+        context.beginPath()
+        context.moveTo(baseOutputPositionScale.getX(), baseOutputPositionScale.getY())
+        context.lineTo(baseOutputPositionScale.getX() + sizeInputScale, baseOutputPositionScale.getY() + sizeInputScale / 2)
+        context.lineTo(baseOutputPositionScale.getX(), baseOutputPositionScale.getY() + sizeInputScale)
+        context.fill()
 
     }
 

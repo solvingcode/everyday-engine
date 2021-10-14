@@ -13,7 +13,7 @@ export default class ScriptEdgeNameMenuItem extends MenuItem {
         const sourceNode = script.findNodeById(nodeInput.getSourceNodeId())
         const targetNode = script.findNodeById(nodeInput.getNodeId())
         const targetInput = targetNode.getTargetInput(functionRegistry, nodeInput)
-        const title = `${sourceNode.getName()} -> (${targetInput ? targetInput.getAttrName() : ''}) ${targetNode.getName()}`
+        const title = `${sourceNode.getName()} (${nodeInput.getSourceName()}) -> (${targetInput ? targetInput.getAttrName() : ''}) ${targetNode.getName()}`
         super({
             name: 'link',
             title,

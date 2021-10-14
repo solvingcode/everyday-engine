@@ -20,7 +20,7 @@ export default class ScriptEdgeElementMenuItem extends ListSelectElementActionsM
         const sourceNode = script.findNodeById(nodeInput.getSourceNodeId())
         const targetNode = script.findNodeById(nodeInput.getNodeId())
         const targetInput = targetNode.getTargetInput(functionRegistry, nodeInput)
-        return `${sourceNode.getName()} -> (${targetInput ? targetInput.getAttrName() : ''}) ${targetNode.getName()}`
+        return `${sourceNode.getName()} (${nodeInput.getSourceName()}) -> (${targetInput ? targetInput.getAttrName() : ''}) ${targetNode.getName()}`
     }
 
     /**

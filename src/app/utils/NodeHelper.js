@@ -74,7 +74,7 @@ export default class NodeHelper {
             case FunctionNode:
             case ConditionNode:
             case EventNode:
-                return functionRegistry.tryGetInstance(sourceName)
+                return functionRegistry.getInstance(sourceName)
             case ConstantNode:
                 return new AConstant(DynamicAttributeHelper.findTypeOfValue(sourceName), sourceName)
             case KeyCodeNode:
@@ -168,11 +168,57 @@ export default class NodeHelper {
     }
 
     /**
+     * @param {ANode} node
+     * @param {NodeInput} nodeInput
+     */
+    static validateResultToInputConnection(node, nodeInput) {
+        if (!node.isResultToInputConnection(nodeInput)) {
+            throw new ClientError(`${node.getName()}: Connection is invalid (must be a result to input connection)`)
+        }
+    }
+
+    /**
+     * @param {ANode} node
+     * @param {NodeInput} nodeInput
+     */
+    static validateOrderConnection(node, nodeInput) {
+        if (!node.isOrderConnection(nodeInput)) {
+            throw new ClientError(`${node.getName()}: Connection is invalid (must be an order connection)`)
+        }
+    }
+
+    /**
+     * @param {ANode} node
+     * @param {NodeInput} nodeInput
+     */
+    static validateResultToBaseConnection(node, nodeInput) {
+        if (!node.isResultToBaseConnection(nodeInput)) {
+            throw new ClientError(`${node.getName()}: Connection is invalid (must be a result to base connection)`)
+        }
+    }
+
+    /**
+     * @param {ANode} node
+     * @param {NodeInput} nodeInput
+     * @param {World} world
+     * @return {DynamicAttribute}
+     */
+    static validateTargetInput(node, nodeInput, world) {
+        const element = this.getSourceNode(node, world)
+        const targetName = nodeInput.getTargetName()
+        const targetInput = element.findInputByName(targetName)
+        if (!element.findInputByName(targetName)) {
+            throw new ClientError(`${node.getName()}: Target input "${targetName}" not exists`)
+        }
+        return targetInput
+    }
+
+    /**
      * @param {World} world
      * @param {ANode} node
      * @return {DynamicAttribute}
      */
-    static getAttributeFromNodeFunctionInput(node, world){
+    static getAttributeFromNodeFunctionInput(node, world) {
         const nodeSource = this.getSourceNode(node, world)
         const inputMatches = nodeSource.getName().match(/([^\[]+)\[(\d+)]$/)
         const inputName = inputMatches[1]
@@ -185,7 +231,7 @@ export default class NodeHelper {
      * @param {ANode} node
      * @return {DynamicAttribute}
      */
-    static getAttributeFromNodeFunctionOutput(node, world){
+    static getAttributeFromNodeFunctionOutput(node, world) {
         const nodeSource = this.getSourceNode(node, world)
         return new DynamicAttribute('output', parseInt(nodeSource.getName()))
     }
@@ -225,6 +271,7 @@ export default class NodeHelper {
         const colorFocused = '#555555'
         const fontColor = '#ffffff'
         const selectColor = '#d09300'
+        const outputColor = '#69ebff'
         let headColor
         if (type === NODE_TYPES.FUNCTION) {
             headColor = '#2c3f66'
@@ -270,7 +317,8 @@ export default class NodeHelper {
             padding,
             headColor,
             fontSizeRatio,
-            selectColor
+            selectColor,
+            outputColor
         }
     }
 
@@ -283,24 +331,29 @@ export default class NodeHelper {
     static getNodeGUISize(node, script, world) {
         const nodeSource = this.getSourceNode(node, world)
         const nodeSourceInputs = nodeSource.getInputs()
+        const outputs = nodeSource.getOutput() ? [nodeSource.getOutput()] : []
         const type = node.getType()
         const {fontSize, padding, fontSizeRatio, sizeInput} = this.getNodeGUIProps(type)
         const nodeInputTextLengths = this.getNodeGUIInputs(node, script, world)
             .concat(this.getNodeName(node, world)).map(text => text.length)
         const width = Math.max(Math.max(...nodeInputTextLengths) * fontSize / fontSizeRatio, 100)
-        const height = (nodeSourceInputs.length + 1) * (sizeInput + padding * 2) + (fontSize + padding * 2)
+        const height = (Math.max(nodeSourceInputs.length, outputs.length) + 1) * (sizeInput + padding * 2) + (fontSize + padding * 2)
         return new Size({width, height})
     }
 
     /**
      * @param {string} type
      * @param {Size} size
-     * @return {{position: Vector, sizeInput: number}}
+     * @param {number} index
+     * @return {{position: Vector, sizeInput: number, outputColor: string}}
      */
-    static getNodeGUIOutput(type, size) {
-        const {sizeInput, padding, heightHead} = this.getNodeGUIProps(type)
-        const position = new Vector({x: size.getWidth() - padding - sizeInput, y: heightHead + padding})
-        return {position, sizeInput}
+    static getNodeGUIOutput(type, size, index) {
+        const {sizeInput, padding, heightHead, outputColor} = this.getNodeGUIProps(type)
+        const position = new Vector({
+            x: size.getWidth() - padding - sizeInput,
+            y: heightHead + padding + padding * 2 * index
+        })
+        return {position, sizeInput, outputColor}
     }
 
     /**
@@ -378,12 +431,4 @@ export default class NodeHelper {
             type === NODE_TYPES.OUTPUT
     }
 
-    /**
-     * @param {string} type
-     * @return {boolean}
-     */
-    static hasBaseOutput(type) {
-        return type === NODE_TYPES.EVENT || type === NODE_TYPES.ANIMATION ||
-            type === NODE_TYPES.SELF || type === NODE_TYPES.INPUT || type === NODE_TYPES.THEN
-    }
 }

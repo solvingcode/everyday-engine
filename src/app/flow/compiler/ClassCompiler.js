@@ -47,6 +47,8 @@ export default class ClassCompiler extends Compiler {
             throw new SystemError(`The given script is not correct (must be a Class script)`)
         }
         const functionRegistry = world.getFunctionRegistry()
+
+        //clean and recreate function instance
         script.getFunctions().forEach(scriptFunction => {
             const nodes = scriptFunction.getNodes()
             const scriptFunctionName = `${script.getName()}.${scriptFunction.getName()}`
@@ -68,6 +70,29 @@ export default class ClassCompiler extends Compiler {
                 functionRegistry.tryRegister(stackFunction)
             })
 
+            if (!scriptFunction.isMain()) {
+                const nodeInputs = scriptFunction.findNodesByClass(FunctionInputNode)
+                const nodeOutputs = scriptFunction.findNodesByClass(FunctionOutputNode)
+                const functionInputs = [
+                    new DynamicAttribute('unit', TYPES.UNIT),
+                    ...nodeInputs.map(nodeInput => NodeHelper.getAttributeFromNodeFunctionInput(nodeInput, world))
+                ]
+                const functionOutput = !!nodeOutputs.length ? NodeHelper.getAttributeFromNodeFunctionOutput(nodeOutputs[0], world) : null
+                const stackScriptFunction = new ACustomFunction(scriptFunctionName, functionInputs, functionOutput)
+                stackScriptFunction.setAccess(scriptFunction.getAccess())
+                stackScriptFunction.setClassName(script.getName())
+                stackScriptFunction.setParentClassName(script.getParentName())
+                stackScriptFunction.setStack([
+                    new StackOperation(OPERATIONS.CALL, `${scriptFunctionName}.OnCall`)
+                ])
+                functionRegistry.tryRegister(stackScriptFunction)
+            }
+        })
+
+        script.getFunctions().forEach(scriptFunction => {
+            const nodes = scriptFunction.getNodes()
+            const scriptFunctionName = `${script.getName()}.${scriptFunction.getName()}`
+
             //compile associations
             scriptFunction.getInputs().forEach(input => {
                 const node = scriptFunction.findNodeById(input.getNodeId())
@@ -81,8 +106,10 @@ export default class ClassCompiler extends Compiler {
                     const sourceElementName = ScriptHelper.generateFunctionName(script, scriptFunction, sourceNode, world)
                     const sourceStackFunction = functionRegistry.getInstance(sourceElementName)
                     if (sourceElement instanceof AEvent) {
+                        NodeHelper.validateOrderConnection(node, input)
                         sourceStackFunction.getStack().push(...[new StackOperation(OPERATIONS.CALL, functionName)])
                     } else if (sourceElement instanceof AVariable) {
+                        NodeHelper.validateResultToInputConnection(node, input)
                         const targetInput = element.findInputByName(targetName)
                         stackFunction.getStack().push(...[
                             new StackOperation(OPERATIONS.GET, sourceNode.getSourceName())
@@ -104,6 +131,7 @@ export default class ClassCompiler extends Compiler {
                             ])
                         }
                     } else if (sourceElement instanceof ASelf) {
+                        NodeHelper.validateResultToInputConnection(node, input)
                         const targetInput = element.findInputByName(targetName)
                         stackFunction.getStack().push(...[
                             new StackOperation(OPERATIONS.SELF, `${targetInput.getAttrType()}`)
@@ -119,6 +147,7 @@ export default class ClassCompiler extends Compiler {
                             ])
                         }
                     } else if (sourceElement instanceof AAnimation) {
+                        NodeHelper.validateResultToInputConnection(node, input)
                         if (element instanceof ANativeFunction) {
                             const targetInput = element.findInputByName(targetName)
                             stackFunction.getStack().push(...[
@@ -126,15 +155,15 @@ export default class ClassCompiler extends Compiler {
                             ])
                         }
                     } else if (sourceElement instanceof ALoop) {
-                        const targetInput = element.findInputByName(targetName)
-                        if (targetInput) {
+                        if (node.isResultToInputConnection(input)) {
+                            const targetInput = NodeHelper.validateTargetInput(node, input, world)
                             stackFunction.getStack().push(...[
                                 new StackOperation(OPERATIONS.PUSH, targetInput.getAttrName(), '[MEM]attributes')
                             ])
                         }
                     } else if (sourceElement instanceof AThen) {
-                        const targetInput = element.findInputByName(targetName)
-                        if (targetInput) {
+                        if (node.isResultToInputConnection(input)) {
+                            const targetInput = NodeHelper.validateTargetInput(node, input, world)
                             if (element instanceof ACustomFunction) {
                                 stackFunction.getStack().push(...[
                                     new StackOperation(OPERATIONS.PUSH, `[MEM]${element.getName()}.${targetInput.getAttrName()}`, `[MEM]${sourceStackFunction.getName()}.promise.then`)
@@ -146,6 +175,7 @@ export default class ClassCompiler extends Compiler {
                             }
                         }
                     } else if (sourceElement instanceof AFunctionInput) {
+                        NodeHelper.validateResultToInputConnection(node, input)
                         const targetInput = element.findInputByName(targetName)
                         if (targetInput) {
                             const attribute = NodeHelper.getAttributeFromNodeFunctionInput(sourceNode, world)
@@ -181,8 +211,8 @@ export default class ClassCompiler extends Compiler {
                             }
                         }
                     } else if (sourceElement instanceof ACustomFunction) {
-                        const targetInput = element.findInputByName(targetName)
-                        if (targetInput) {
+                        if (node.isResultToInputConnection(input)) {
+                            const targetInput = NodeHelper.validateTargetInput(node, input, world)
                             stackFunction.getStack().push(...[
                                 new StackOperation(OPERATIONS.CALL, sourceElementName)
                             ])
@@ -282,7 +312,7 @@ export default class ClassCompiler extends Compiler {
                         stackFunction.getStack().push(...element.getStack())
                     }
                     if (element instanceof ACondition) {
-                        stackFunction.getStack().push(new StackOperation(OPERATIONS.EXIT, CONSTANTS.RESULT))
+                        stackFunction.getStack().push(new StackOperation(OPERATIONS.JUMP, CONSTANTS.RESULT, `end_condition_${functionName}`))
                     }
                 }
             })
@@ -293,17 +323,18 @@ export default class ClassCompiler extends Compiler {
                 const element = NodeHelper.getSourceNode(node, world)
                 const functionName = ScriptHelper.generateFunctionName(script, scriptFunction, node, world)
                 const sourceNode = scriptFunction.findNodeById(input.getSourceNodeId())
-                const targetName = input.getTargetName()
                 if (sourceNode) {
                     const sourceElement = NodeHelper.getSourceNode(sourceNode, world)
                     const sourceElementName = ScriptHelper.generateFunctionName(script, scriptFunction, sourceNode, world)
                     const sourceStackFunction = functionRegistry.getInstance(sourceElementName)
                     if (element instanceof AFunctionOutput) {
+                        NodeHelper.validateResultToBaseConnection(node, input)
                         sourceStackFunction.getStack().push(...[
                             new StackOperation(OPERATIONS.PUSH,
                                 `[MEM]${scriptFunctionName}.${CONSTANTS.RESULT}`, CONSTANTS.RESULT)
                         ])
                     } else if (element instanceof AThen) {
+                        NodeHelper.validateOrderConnection(node, input)
                         if (sourceElement instanceof ACustomFunction) {
                             sourceStackFunction.getStack().push(...[
                                 new StackOperation(OPERATIONS.PUSH, CONSTANTS.RESULT,
@@ -314,6 +345,7 @@ export default class ClassCompiler extends Compiler {
                             new StackOperation(OPERATIONS.CALL, functionName)
                         ])
                     } else if (sourceElement instanceof AAnimation) {
+                        NodeHelper.validateOrderConnection(node, input)
                         if (element instanceof AAnimation) {
                             const stopAnimation = new StopAnimationFunction()
                             sourceStackFunction.getStack().push(...[
@@ -326,21 +358,25 @@ export default class ClassCompiler extends Compiler {
                             ])
                         }
                     } else if (sourceElement instanceof ACondition) {
-                        if (element instanceof AAnimation || element instanceof AReference) {
-                            const getCurrentAnimation = new GetCurrentAnimationFunction()
-                            const stopAnimation = new StopAnimationFunction()
-                            sourceStackFunction.getStack().push(...[
-                                new StackOperation(OPERATIONS.CALL, getCurrentAnimation.getName()),
-                                new StackOperation(OPERATIONS.CALL, stopAnimation.getName()),
-                                new StackOperation(OPERATIONS.CALL, functionName)
-                            ])
-                        } else {
-                            sourceStackFunction.getStack().push(...[new StackOperation(OPERATIONS.CALL, functionName)])
+                        if (node.isResultToBaseConnection(input)) {
+                            if (element instanceof AAnimation || element instanceof AReference) {
+                                const getCurrentAnimation = new GetCurrentAnimationFunction()
+                                const stopAnimation = new StopAnimationFunction()
+                                sourceStackFunction.getStack().push(...[
+                                    new StackOperation(OPERATIONS.CALL, getCurrentAnimation.getName()),
+                                    new StackOperation(OPERATIONS.CALL, stopAnimation.getName()),
+                                    new StackOperation(OPERATIONS.CALL, functionName)
+                                ])
+                            } else {
+                                sourceStackFunction.getStack().push(...[
+                                    new StackOperation(OPERATIONS.CALL, functionName),
+                                    new StackOperation(OPERATIONS.JUMP_TO, `end_condition_${sourceStackFunction.getName()}`)
+                                ])
+                            }
                         }
                     } else if (sourceElement instanceof ALoop) {
-                        const getValueFunction = new GetValueFunction()
-                        const targetInput = element.findInputByName(targetName)
-                        if (!targetInput) {
+                        if (node.isOrderConnection(input)) {
+                            const getValueFunction = new GetValueFunction()
                             sourceStackFunction.getStack().push(...[
                                 new StackOperation(OPERATIONS.CALL, functionName),
                                 new StackOperation(OPERATIONS.PUSH, 'attributes', '[MEM]attributes'),
@@ -354,33 +390,23 @@ export default class ClassCompiler extends Compiler {
                             ])
                         }
                     } else if (sourceElement instanceof AThen) {
-                        const targetInput = element.findInputByName(targetName)
-                        if (!targetInput) {
+                        if (node.isOrderConnection(input)) {
                             sourceStackFunction.getStack().push(...[
                                 new StackOperation(OPERATIONS.THEN, functionName)
+                            ])
+                        }
+                    }
+                    // must be the last condition
+                    else if (sourceElement instanceof AFunction) {
+                        if (node.isOrderConnection(input)) {
+                            sourceStackFunction.getStack().push(...[
+                                new StackOperation(OPERATIONS.CALL, functionName)
                             ])
                         }
                     }
                 }
             })
 
-            if (!scriptFunction.isMain()) {
-                const nodeInputs = scriptFunction.findNodesByClass(FunctionInputNode)
-                const nodeOutputs = scriptFunction.findNodesByClass(FunctionOutputNode)
-                const functionInputs = [
-                    new DynamicAttribute('unit', TYPES.UNIT),
-                    ...nodeInputs.map(nodeInput => NodeHelper.getAttributeFromNodeFunctionInput(nodeInput, world))
-                ]
-                const functionOutput = !!nodeOutputs.length ? NodeHelper.getAttributeFromNodeFunctionOutput(nodeOutputs[0], world) : null
-                const stackScriptFunction = new ACustomFunction(scriptFunctionName, functionInputs, functionOutput)
-                stackScriptFunction.setAccess(scriptFunction.getAccess())
-                stackScriptFunction.setClassName(script.getName())
-                stackScriptFunction.setParentClassName(script.getParentName())
-                stackScriptFunction.setStack([
-                    new StackOperation(OPERATIONS.CALL, `${scriptFunctionName}.OnCall`)
-                ])
-                functionRegistry.tryRegister(stackScriptFunction)
-            }
         })
 
         return true

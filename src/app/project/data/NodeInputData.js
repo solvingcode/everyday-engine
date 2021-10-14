@@ -21,6 +21,11 @@ export default class NodeInputData extends Data{
     /**
      * @type {string}
      */
+    sourceName
+
+    /**
+     * @type {string}
+     */
     targetName
 
     constructor() {
@@ -89,6 +94,20 @@ export default class NodeInputData extends Data{
      */
     setTargetName(targetName){
         this.targetName = targetName
+    }
+
+    /**
+     * @return {string}
+     */
+    getSourceName(){
+        return this.sourceName
+    }
+
+    /**
+     * @param {string} sourceName
+     */
+    setSourceName(sourceName){
+        this.sourceName = sourceName
     }
 
 }

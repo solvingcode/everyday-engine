@@ -40,8 +40,9 @@ export default class GraphEdgeUnitInstant extends MeshUnitInstant {
             const targetSourceNode = NodeHelper.getSourceNode(targetNode, world)
             const targetNodeInputIndex = targetSourceNode.getInputs()
                 .findIndex(input => input.getAttrName() === nodeInput.getTargetName())
+            const sourceNodeInputIndex = !nodeInput.getSourceName() ? 0 : 1
             const sourceNodeSize = NodeHelper.getNodeGUISize(sourceNode, script, world)
-            const {position: sourceOutputPosition} = NodeHelper.getNodeGUIOutput(sourceNode.getType(), sourceNodeSize)
+            const {position: sourceOutputPosition} = NodeHelper.getNodeGUIOutput(sourceNode.getType(), sourceNodeSize, sourceNodeInputIndex)
             const {position: targetInputPosition} = NodeHelper.getNodeGUIInput(sourceNode.getType(), targetNodeInputIndex)
             const {sizeInput} = NodeHelper.getNodeGUIProps(sourceNode.getType())
             const centerInputSize = new Vector({x: sizeInput / 2, y: sizeInput / 2})

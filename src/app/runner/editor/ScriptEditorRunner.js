@@ -58,7 +58,7 @@ export default class ScriptEditorRunner extends Runner {
                 if (!exitMainFunction) {
                     const mainFunction = new FunctionScript(MAIN_FUNCTION)
                     scriptClass.addFunction(mainFunction)
-                } else if(!exitMainFunction.isSelected()) {
+                } else if (!exitMainFunction.isSelected()) {
                     exitMainFunction.setSelected(true)
                 }
             }
@@ -161,13 +161,17 @@ export default class ScriptEditorRunner extends Runner {
             if (drawUnit) {
                 const endUnit = graphManager.findFirstUnitByPosition(currentScenePosition)
                 const endNodeInput = ScriptHelper.findNodeInputByPosition(script, endUnit, currentScenePosition, world)
-                const endNodeOutput = ScriptHelper.findNodeInputByPosition(script, endUnit, currentScenePosition, world)
+                const endNodeOutput = ScriptHelper.findNodeOutputByPosition(script, endUnit, currentScenePosition, world)
                 const nodeTargetInput = this.startNodeInput || endNodeInput
                 const nodeSourceInput = this.startNodeOutput || endNodeOutput
                 if (nodeTargetInput && nodeSourceInput) {
-                    nodeTargetInput.node
-                        .attach(nodeSourceInput.node,
-                            nodeTargetInput.input ? nodeTargetInput.input.getAttrName() : null)
+                    if (nodeTargetInput.input && nodeSourceInput.output) {
+                        nodeTargetInput.node.attachResultOutput(nodeSourceInput.node, nodeTargetInput.input.getAttrName())
+                    } else if (!nodeTargetInput.input && !nodeSourceInput.output) {
+                        nodeTargetInput.node.attachPrevNode(nodeSourceInput.node)
+                    } else if (!nodeTargetInput.input && nodeSourceInput.output) {
+                        nodeTargetInput.node.attachManagedOutput(nodeSourceInput.node)
+                    }
                 }
             }
         } else {

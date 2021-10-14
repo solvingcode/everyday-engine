@@ -54,7 +54,7 @@ export default class AddNodeInputAction extends Action {
         }
 
         if (node && nodeSource) {
-            node.attach(nodeSource, formData.getAttribute().getAttrName())
+            node.attachResultOutput(nodeSource, formData.getAttribute().getAttrName())
             script.setUpdated(true)
         } else {
             throw new ClientError(`Cannot add the connection (target are invalid)`)

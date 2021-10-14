@@ -10,6 +10,7 @@ export default class EdgeScriptXmlGenerator extends ScriptXmlGenerator {
         const edgeNode = root.createElement('edge')
         edgeNode.setAttribute('source', `${nodeInput.input.getSourceNodeId()}`)
         edgeNode.setAttribute('target', `${nodeInput.node.getId()}`)
+        edgeNode.setAttribute('output', nodeInput.input.getSourceName() || '')
         edgeNode.setAttribute('connection', nodeInput.input.getTargetName() || '')
         return edgeNode
     }
