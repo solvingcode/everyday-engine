@@ -179,7 +179,17 @@ export default class NodeHelper {
      */
     static validateResultToInputConnection(node, nodeInput) {
         if (!node.isResultToInputConnection(nodeInput)) {
-            throw new ClientError(`${node.getName()}: Connection is invalid (must be a result to input connection)`)
+            throw new ClientError(`${node.getName()}: Connection is invalid (must be a result-to-input connection)`)
+        }
+    }
+
+    /**
+     * @param {ANode} node
+     * @param {NodeInput} nodeInput
+     */
+    static validateResultToInputOrOrderConnection(node, nodeInput) {
+        if (!node.isResultToInputConnection(nodeInput) && !node.isOrderConnection(nodeInput)) {
+            throw new ClientError(`${node.getName()}: Connection is invalid (must be a result-to-input or order connection)`)
         }
     }
 

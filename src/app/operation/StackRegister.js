@@ -68,6 +68,16 @@ export default class StackRegister {
 
     /**
      * @param {string} functionName
+     * @param {string} name
+     * @return {*}
+     */
+    has(functionName, name){
+        const attrName = this.getScopeName(functionName, name)
+        return this.register[attrName] !== null || this.register.hasOwnProperty(attrName)
+    }
+
+    /**
+     * @param {string} functionName
      * @return {*}
      */
     popRet(functionName) {

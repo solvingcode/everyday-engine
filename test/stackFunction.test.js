@@ -27,6 +27,7 @@ import Scene from '../src/app/scene/Scene.js'
 import SelfNode from '../src/app/flow/node/SelfNode.js'
 import ThenNode from '../src/app/flow/node/ThenNode.js'
 import GetVariableNode from '../src/app/flow/node/variable/GetVariableNode.js'
+import StringVariableNode from '../src/app/flow/node/variable/StringVariableNode.js'
 
 test('Execute native function (without output)', function () {
     const log = new LogFunction()
@@ -202,15 +203,16 @@ test('Create and compile class script with variables', function () {
     scriptComponent.setVarsAttributes([new DynamicAttribute('text', TYPES.STRING, 'test')])
 
     const nodeLog = ScriptHelper.createNodeByClass(functionRegistry, scriptFunction, FunctionNode, 'Log')
-    const nodeVar = ScriptHelper.createNodeByClass(functionRegistry, scriptFunction, GetVariableNode, 'text')
+    ScriptHelper.createNodeByClass(functionRegistry, scriptFunction, StringVariableNode, 'text')
+    const nodeGetVar = ScriptHelper.createNodeByClass(functionRegistry, scriptFunction, GetVariableNode, 'text')
     const nodeEvent = ScriptHelper.createNodeByClass(functionRegistry, scriptFunction, FunctionNode, 'OnMouseClick')
 
-    nodeLog.attachResultOutput(nodeVar, 'value')
+    nodeLog.attachResultOutput(nodeGetVar, 'value')
     nodeLog.attachPrevNode(nodeEvent)
 
     script.compile(world)
 
-    const mouseEventCompiled = functionRegistry.getInstance('classScript.main.OnMouseClick.2')
+    const mouseEventCompiled = functionRegistry.getInstance('classScript.main.OnMouseClick.3')
     expect(functionRegistry.getInstance('classScript')).toBe(undefined)
     expect(mouseEventCompiled).toBeDefined()
     expect(mouseEventCompiled.constructor).toEqual(OnMouseClickEvent)
@@ -431,7 +433,7 @@ test('Create and compile class function (with async calls)', async function () {
 
     nodePromise.attachResultOutput(nodeMultiplyFunction, 'target')
     nodePromise.attachPrevNode(nodeMouseClick)
-    nodeThen.attachPrevNode(nodePromise)
+    nodeThen.attachManagedOutput(nodePromise)
     nodeLogFunction.attachPrevNode(nodeThen)
     nodeLogFunction.attachResultOutput(nodeThen, 'value')
     nodeLogFunction.attachResultOutput(nodeInputUnit1, 'unit')
@@ -521,7 +523,7 @@ test('Create and compile class function (with async calls inside custom function
     nodePromiseFunction.attachResultOutput(nodeMultiplyFunction, 'value')
     nodePromiseFunction.attachPrevNode(nodeMouseClick)
     nodePromiseFunction.attachResultOutput(nodeInputUnit2, 'unit')
-    nodeThen.attachPrevNode(nodePromiseFunction)
+    nodeThen.attachManagedOutput(nodePromiseFunction)
     nodeLogFunction.attachPrevNode(nodeThen)
     nodeLogFunction.attachResultOutput(nodeThen, 'value')
     nodeLogFunction.attachResultOutput(nodeInputUnit1, 'unit')

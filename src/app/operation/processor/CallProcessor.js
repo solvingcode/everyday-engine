@@ -28,11 +28,11 @@ export default class CallProcessor {
         inputs.forEach(input => {
             const inputName = input.getAttrName()
             const inputType = input.getAttrType()
-            const value = stackRegister.pop(functionName, inputName)
-            let inputValue = DynamicAttributeHelper.getValueByType(value, inputType, world, unit, scriptComponent)
-            if (value === null) {
+            if (!stackRegister.has(functionName, inputName)) {
                 throw new ClientError(`Function "${calledFunctionName}": Input name ${inputName} not provided`)
             }
+            const value = stackRegister.pop(functionName, inputName)
+            let inputValue = DynamicAttributeHelper.getValueByType(value, inputType, world, unit, scriptComponent)
             calledFunction.setInputValue(inputName, inputValue)
         })
         calledFunction.execute(functionRegistry, unit, scriptComponent, world, executionContext)

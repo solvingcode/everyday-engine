@@ -40,7 +40,7 @@ export default class AddNodeInputAction extends Action {
         } else if (formData.getAttribute().getAttrType() === TYPES.COMPONENT_INSTANCE && value === '[self]') {
             nodeSource = ScriptHelper.createNode(functionRegistry, script, NODE_TYPES.SELF)
         } else {
-            const varRegex = new RegExp('^var\\[([^:]+)\]$', 'i')
+            const varRegex = new RegExp('^var\\[(.+)\]$', 'i')
             let variableValue
             if (value.match(varRegex)) {
                 variableValue = value.replace(varRegex, '$1')

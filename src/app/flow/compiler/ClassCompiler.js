@@ -48,29 +48,11 @@ export default class ClassCompiler extends Compiler {
             throw new SystemError(`The given script is not correct (must be a Class script)`)
         }
         const functionRegistry = world.getFunctionRegistry()
+        functionRegistry.removeInstancesByClass(script.getName())
 
         //clean and recreate function instance
         script.getFunctions().forEach(scriptFunction => {
-            const nodes = scriptFunction.getNodes()
             const scriptFunctionName = `${script.getName()}.${scriptFunction.getName()}`
-            functionRegistry.removeInstancesByClass(scriptFunctionName)
-
-            //compile stack function
-            nodes.forEach((node) => {
-                const element = NodeHelper.getSourceNode(node, world)
-                if (!element) {
-                    throw new ClientError(`Class Compiler Error: cannot find function ${node.getSourceName()}`)
-                }
-                if (!functionRegistry.getInstance(element.getName()) && !(element instanceof AStackFunction)) {
-                    throw new ClientError(`Class Compiler Error: function ${node.getSourceName()} not a registered function nor stack function`)
-                }
-                const stackFunction = ScriptHelper.createStackFunction(script, scriptFunction, node, world)
-                if (element.getOutput()) {
-                    stackFunction.addOutput(element.getOutput().getAttrType())
-                }
-                functionRegistry.tryRegister(stackFunction)
-            })
-
             if (!scriptFunction.isMain()) {
                 const nodeInputs = scriptFunction.findNodesByClass(FunctionInputNode)
                 const nodeOutputs = scriptFunction.findNodesByClass(FunctionOutputNode)
@@ -90,6 +72,25 @@ export default class ClassCompiler extends Compiler {
             }
         })
 
+        //compile stack function
+        script.getFunctions().forEach(scriptFunction => {
+            const nodes = scriptFunction.getNodes()
+            nodes.forEach((node) => {
+                const element = NodeHelper.getSourceNode(node, world)
+                if (!element) {
+                    throw new ClientError(`Class Compiler Error: cannot find function ${node.getSourceName()}`)
+                }
+                if (!functionRegistry.getInstance(element.getName()) && !(element instanceof AStackFunction)) {
+                    throw new ClientError(`Class Compiler Error: function ${node.getSourceName()} not a registered function nor stack function`)
+                }
+                const stackFunction = ScriptHelper.createStackFunction(script, scriptFunction, node, world)
+                if (element.getOutput()) {
+                    stackFunction.addOutput(element.getOutput().getAttrType())
+                }
+                functionRegistry.tryRegister(stackFunction)
+            })
+        })
+
         script.getFunctions().forEach(scriptFunction => {
             const nodes = scriptFunction.getNodes()
             const scriptFunctionName = `${script.getName()}.${scriptFunction.getName()}`
@@ -107,13 +108,12 @@ export default class ClassCompiler extends Compiler {
                     const sourceElementName = ScriptHelper.generateFunctionName(script, scriptFunction, sourceNode, world)
                     const sourceStackFunction = functionRegistry.getInstance(sourceElementName)
                     if (sourceElement instanceof AEvent) {
-                        NodeHelper.validateOrderConnection(node, input)
-                        sourceStackFunction.getStack().push(...[new StackOperation(OPERATIONS.CALL, functionName)])
+                        //Nothing to do
                     } else if (sourceElement instanceof AGetVariable) {
                         NodeHelper.validateResultToInputConnection(node, input)
                         const variableExists = script.getMainFunction().findNodeByNameClass(sourceElement.getName(), VariableNode)
                         if (!variableExists) {
-                            throw new ClientError(`Variable ${element.getName()} not defined`)
+                            throw new ClientError(`Variable ${sourceElement.getName()} not defined`)
                         }
                         const targetInput = element.findInputByName(targetName)
                         stackFunction.getStack().push(...[
@@ -242,6 +242,7 @@ export default class ClassCompiler extends Compiler {
                                 new StackOperation(OPERATIONS.CALL, sourceElementName)
                             ])
                             if (element instanceof ACustomFunction) {
+                                NodeHelper.validateResultToInputOrOrderConnection(node, input)
                                 stackFunction.getStack().push(...[
                                     new StackOperation(OPERATIONS.PUSH,
                                         `[MEM]${element.getName()}.${targetInput.getAttrName()}`, CONSTANTS.RESULT)
@@ -339,7 +340,7 @@ export default class ClassCompiler extends Compiler {
                                 `[MEM]${scriptFunctionName}.${CONSTANTS.RESULT}`, CONSTANTS.RESULT)
                         ])
                     } else if (element instanceof AThen) {
-                        NodeHelper.validateOrderConnection(node, input)
+                        NodeHelper.validateResultToBaseConnection(node, input)
                         if (sourceElement instanceof ACustomFunction) {
                             sourceStackFunction.getStack().push(...[
                                 new StackOperation(OPERATIONS.PUSH, CONSTANTS.RESULT,
@@ -404,6 +405,25 @@ export default class ClassCompiler extends Compiler {
                     // must be the last condition
                     else if (sourceElement instanceof AFunction) {
                         if (node.isOrderConnection(input)) {
+                            sourceStackFunction.getStack().push(...[
+                                new StackOperation(OPERATIONS.CALL, functionName)
+                            ])
+                        }
+                    }
+                }
+            })
+
+            //complete compiling associations
+            scriptFunction.getInputs().forEach(input => {
+                const node = scriptFunction.findNodeById(input.getNodeId())
+                const functionName = ScriptHelper.generateFunctionName(script, scriptFunction, node, world)
+                const sourceNode = scriptFunction.findNodeById(input.getSourceNodeId())
+                const sourceElement = NodeHelper.getSourceNode(sourceNode, world)
+                if (sourceNode) {
+                    const sourceElementName = ScriptHelper.generateFunctionName(script, scriptFunction, sourceNode, world)
+                    const sourceStackFunction = functionRegistry.getInstance(sourceElementName)
+                    if (node.isOrderConnection(input)) {
+                        if (sourceElement instanceof ACondition) {
                             sourceStackFunction.getStack().push(...[
                                 new StackOperation(OPERATIONS.CALL, functionName)
                             ])
