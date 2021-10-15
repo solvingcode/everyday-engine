@@ -2,19 +2,20 @@ import {TYPES} from '../../../../pobject/AttributeType.js'
 import AFunction from '../../AFunction.js'
 import Vector from '../../../../utils/Vector.js'
 
-export default class VectorDistance extends AFunction{
+export default class VectorLerpFunction extends AFunction{
 
     constructor() {
-        super('VectorDistance')
+        super('VectorLerp')
     }
 
     /**
      * @override
      */
     initAttributes() {
-        this.addInput('vectorA', TYPES.VECTOR, 0)
-        this.addInput('vectorB', TYPES.VECTOR, 0)
-        this.addOutput(TYPES.NUMBER)
+        this.addInput('vectorA', TYPES.VECTOR)
+        this.addInput('vectorB', TYPES.VECTOR)
+        this.addInput('constant', TYPES.NUMBER, 0)
+        this.addOutput(TYPES.VECTOR)
     }
 
     /**
@@ -23,6 +24,7 @@ export default class VectorDistance extends AFunction{
     execute() {
         const vectorA = this.getInputValue('vectorA')
         const vectorB = this.getInputValue('vectorB')
-        this.setOutputValue(Vector.distance(vectorA, vectorB))
+        const constant = this.getInputValue('constant')
+        this.setOutputValue(Vector.lerp(vectorA, vectorB, constant))
     }
 }

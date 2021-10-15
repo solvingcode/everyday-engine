@@ -199,6 +199,16 @@ class Vector {
     }
 
     /**
+     * @param {Vector} vectorA
+     * @param {Vector} vectorB
+     * @param {number} constant
+     * @return {Vector}
+     */
+    static lerp(vectorA, vectorB, constant){
+        return this.add(this.multiply(vectorA, constant), this.multiply(vectorB, 1 - constant))
+    }
+
+    /**
      * @param {Vector} vector
      * @return {Vector}
      */
