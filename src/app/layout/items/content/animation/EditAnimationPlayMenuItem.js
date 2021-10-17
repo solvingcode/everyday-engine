@@ -19,8 +19,7 @@ export default class EditAnimationPlayMenuItem extends MenuItem {
      */
     isValid() {
         const world = World.get()
-        const tabManager = world.getTabManager()
-        const animation = world.getAnimationManager().getSelected(tabManager)
+        const animation = world.getAnimationManager().getEditing()
         return super.isValid() && animation && !animation.isPlaying()
     }
 }

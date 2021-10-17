@@ -10,6 +10,7 @@ Layout.zone = {
     TOP_MENU: 'top-menu',
     TOP_TAB: 'top-tab',
     BODY: 'body',
+    BODY_BOTTOM: 'body-bottom',
     RIGHT: 'right',
     BOTTOM: 'bottom',
     FOOTER: 'footer',

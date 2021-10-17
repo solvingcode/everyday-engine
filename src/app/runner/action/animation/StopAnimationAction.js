@@ -10,8 +10,7 @@ export default class StopAnimationAction extends Action {
      */
     static run() {
         const world = World.get()
-        const tabManager = world.getTabManager()
-        const animation = world.getAnimationManager().getSelected(tabManager)
+        const animation = world.getAnimationManager().getEditing()
         animation.setPlaying(false)
         animation.setTime(0)
         return true

@@ -8,6 +8,7 @@ import OptionActionsButtonMenuItem from '../option/OptionActionsButtonMenuItem.j
 import ScriptTopMenuItem from './menus/ScriptTopMenuItem.js'
 import UnitTopMenuItem from './menus/UnitTopMenuItem.js'
 import ProjectTopMenuItem from './menus/ProjectTopMenuItem.js'
+import WindowTopMenuItem from './menus/WindowTopMenuItem.js'
 
 export default class TopMenuItem extends ListMenuItem {
 
@@ -90,5 +91,6 @@ const topMenuList = [
     new TopMenuElement(new OptionActionsButtonMenuItem('Edit', EditTopMenuItem)),
     new TopMenuElement(new OptionActionsButtonMenuItem('Script', ScriptTopMenuItem)),
     new TopMenuElement(new OptionActionsButtonMenuItem('Unit', UnitTopMenuItem)),
-    new TopMenuElement(new OptionActionsButtonMenuItem('Project', ProjectTopMenuItem))
+    new TopMenuElement(new OptionActionsButtonMenuItem('Project', ProjectTopMenuItem)),
+    new TopMenuElement(new OptionActionsButtonMenuItem('Window', WindowTopMenuItem))
 ]

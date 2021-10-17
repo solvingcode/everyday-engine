@@ -1,7 +1,6 @@
 import World from '../../../world/World.js'
 import AssetType from '../AssetType.js'
 import AssetAnimationXmlGenerator from '../../../generator/animation/AssetAnimationXmlGenerator.js'
-import EditAnimationContent from '../../../content/animation/EditAnimationContent.js'
 import FileHelper from '../../../utils/FileHelper.js'
 
 export default class AssetAnimationXml extends AssetType {
@@ -37,8 +36,8 @@ export default class AssetAnimationXml extends AssetType {
      * @override
      */
     open(asset, options) {
-        const tabManager = World.get().getTabManager()
-        tabManager.createOrActivate(asset.getName(), new EditAnimationContent(asset))
+        const animationManager = World.get().getAnimationManager()
+        animationManager.openEditing(asset)
     }
 
     /**

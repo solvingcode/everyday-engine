@@ -54,6 +54,11 @@ export default class Animation {
     assetId
 
     /**
+     * @type {number}
+     */
+    controllerAssetId
+
+    /**
      * @param {number} id
      * @param {string} name
      */
@@ -95,6 +100,20 @@ export default class Animation {
      */
     getName() {
         return this.name
+    }
+
+    /**
+     * @param {number} controllerAssetId
+     */
+    setControllerAssetId(controllerAssetId) {
+        this.controllerAssetId = controllerAssetId
+    }
+
+    /**
+     * @return {number}
+     */
+    getControllerAssetId() {
+        return this.controllerAssetId
     }
 
     /**

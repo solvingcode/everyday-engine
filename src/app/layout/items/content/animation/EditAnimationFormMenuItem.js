@@ -39,8 +39,9 @@ export default class EditAnimationFormMenuItem extends FormMenuItem {
      * @override
      */
     postUpdate(value) {
-        const animation = this.getFormObject()
-        const animationAsset = World.get().getTabManager().getSelectedContentData()
+        const world = World.get()
+        const animation = this.data
+        const animationAsset = world.getAssetsManager().findAssetById(animation.getAssetId())
         animationAsset.generate(animation)
     }
 

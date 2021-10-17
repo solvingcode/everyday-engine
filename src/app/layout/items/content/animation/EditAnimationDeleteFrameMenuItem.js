@@ -19,8 +19,7 @@ export default class EditAnimationDeleteFrameMenuItem extends MenuItem {
      */
     isValid() {
         const world = World.get()
-        const tabManager = world.getTabManager()
-        const animation = world.getAnimationManager().getSelected(tabManager)
+        const animation = world.getAnimationManager().getEditing()
         const timeline = animation && animation.getSelectedTimeline()
         return super.isValid() && timeline && !!timeline.getFrame()
     }

@@ -122,6 +122,9 @@ import AddEmptyUnitAction from './unit/AddEmptyUnitAction.js'
 import AddTagAction from './tag/AddTagAction.js'
 import DeleteTagAction from './tag/DeleteTagAction.js'
 import DeleteFunctionAction from './script/DeleteFunctionAction.js'
+import CloseEditAnimationAction from './animation/CloseEditAnimationAction.js'
+import AddWindowAction from './window/AddWindowAction.js'
+import CloseWindowAction from './window/CloseWindowAction.js'
 
 /**
  * Action Runner class.
@@ -268,7 +271,10 @@ class ActionRunner extends Runner {
             CLOSE_CONTENT_POPUP: ClosePopupAction,
             CREATE_UNIT_INSTANT: CreateUnitInstantAction,
             LOAD_UNIT_INSTANT: LoadUnitInstantAction,
-            ADD_EMPTY_UNIT: AddEmptyUnitAction
+            ADD_EMPTY_UNIT: AddEmptyUnitAction,
+            CLOSE_EDIT_ANIMATION: CloseEditAnimationAction,
+            ADD_WINDOW: AddWindowAction,
+            CLOSE_WINDOW: CloseWindowAction,
         }
         const selectedUnits = this.unitSelector.getSelected(World.get())
         for (const iTypeAction in typeActions) {

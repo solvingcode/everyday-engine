@@ -26,6 +26,7 @@ import GameMenuItem from './items/game/GameMenuItem.js'
 import EditTileMenuItem from './items/edit/EditTileMenuItem.js'
 import DeleteTileMenuItem from './items/edit/DeleteTileMenuItem.js'
 import EditAreaTileMenuItem from './items/edit/EditAreaTileMenuItem.js'
+import EditAnimationWrapperMenuItem from './items/content/animation/EditAnimationWrapperMenuItem.js'
 
 /**
  * Define all menu items
@@ -62,6 +63,7 @@ class Menu {
 
             //Body
             new ContentMenuItem(),
+            new EditAnimationWrapperMenuItem(),
 
             //Canvas
             new ContentCanvasMenuItem(),

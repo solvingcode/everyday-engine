@@ -8,6 +8,7 @@ import ScriptComponent from '../component/internal/ScriptComponent.js'
 import CommonUtil from '../utils/CommonUtil.js'
 import ArrayHelper from '../utils/ArrayHelper.js'
 import CameraComponent from '../component/internal/CameraComponent.js'
+import AnimationComponent from '../component/internal/AnimationComponent.js'
 
 /**
  * Manage the units, components list (get, add, load, ...)
@@ -335,7 +336,7 @@ export default class UnitManager extends UnitManagerData {
     /**
      * @return {Unit[]}
      */
-    getEnabledUnits(){
+    getEnabledUnits() {
         return this.getUnits().filter(unit => unit.isEnabled())
     }
 
@@ -513,5 +514,31 @@ export default class UnitManager extends UnitManagerData {
                 name = `${initialName} (${iDuplicate})`
             }
         } while (existUnit)
+    }
+
+    /**
+     * @param {World} world
+     * @param {Unit} unit
+     * @param {Animation} animation
+     * @return {boolean}
+     */
+    isUnitHasAnimation(world, unit, animation) {
+        const animationScript = this.getUnitAnimationController(world, unit)
+        return animation.getControllerAssetId() === animationScript.getAssetId()
+    }
+
+    /**
+     * @param {World} world
+     * @param {Unit} unit
+     * @return {AScript}
+     */
+    getUnitAnimationController(world, unit){
+        const animationComponent = unit.getComponent(AnimationComponent)
+        if (animationComponent) {
+            const animationScriptName = animationComponent.getScript()
+            if (animationScriptName) {
+                return world.getScriptManager().findByName(animationScriptName)
+            }
+        }
     }
 }

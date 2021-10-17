@@ -10,6 +10,11 @@ export default class AnimationManager {
      */
     animations
 
+    /**
+     * @type {Animation}
+     */
+    animationEditing
+
     constructor() {
         this.animations = []
     }
@@ -145,5 +150,32 @@ export default class AnimationManager {
      */
     getSelectedAsset(tabManager) {
         return tabManager.getSelectedContentData()
+    }
+
+    /**
+     * @param {Asset} asset
+     * @return {Animation}
+     */
+    findAnimationByAsset(asset){
+        return this.getAnimations().find(animation => animation.getAssetId() === asset.getId())
+    }
+
+    /**
+     * @param {Asset} asset
+     */
+    openEditing(asset){
+        this.closeEditing()
+        this.animationEditing = this.findAnimationByAsset(asset)
+    }
+
+    /**
+     * @return {Animation}
+     */
+    getEditing(){
+        return this.animationEditing
+    }
+
+    closeEditing(){
+        this.animationEditing = null
     }
 }

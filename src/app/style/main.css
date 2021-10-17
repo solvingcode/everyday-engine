@@ -431,76 +431,74 @@ h4{
     height: 100%;
 }
 
-.animation-wrapper > .asset-view{
-    height: 60%;
-    position: relative;
+.animation-wrapper > .panel > div{
+    padding: 0;
 }
-.animation-wrapper > .asset-view img{
-    width: 200px;
+
+.animation-wrapper .panel h4 + div button[data-icon="times"]{
     position: absolute;
-    top: 50%;
-    left: 50%;
-    -ms-transform: translate(-50%, -50%);
-    transform: translate(-50%, -50%);
+    top: 0;
+    right: 0;
+    width: unset;
+    height: unset;
+    font-size: 14px;
+    padding: 13px 10px;
 }
-.animation-wrapper > .panel:nth-child(2){
-    height: 40%;
-}
-.animation-wrapper > .panel:nth-child(2) div{
+
+.animation-wrapper .panel .list-element:hover{
     background: none;
 }
-.animation-wrapper .panel:nth-child(2) .list-element .asset-view{
-    width: 40px;
-    height: 40px;
-    background: none;
-    float: left;
-}
-.animation-wrapper .panel:nth-child(2) .list-element .asset-view img{
-    width: 100%;
-}
-.animation-wrapper .panel:nth-child(2) .list-element:hover{
-    background: none;
-}
-.animation-wrapper .panel:nth-child(2) .list-element{
+.animation-wrapper .panel .list-element{
     box-sizing: border-box;
     height: 50px;
     background: none;
     border-bottom: 1px solid #4d4d4c;
 }
-.animation-wrapper .panel:nth-child(2) .animation-form-wrapper{
+.animation-wrapper .panel .animation-form-wrapper{
     width: 100%;
     box-sizing: border-box;
 }
-.animation-wrapper .panel:nth-child(2) .animation-form-wrapper .form{
+.animation-wrapper .panel .animation-form-wrapper .form{
     float: left;
     width: unset;
     padding-left: 5px;
 }
-.animation-wrapper .panel:nth-child(2) .animation-form-wrapper > .panel{
+.animation-wrapper .panel .animation-form-wrapper > .panel{
     float: left;
     width: unset;
 }
-.animation-wrapper .panel:nth-child(2) .animation-form-wrapper > .panel button{
+.animation-wrapper .panel .animation-form-wrapper > .panel button{
     width: 30px;
     height: 30px;
     font-size: 12px;
     margin: 3px 3px 3px 0;
     background: none;
 }
-.animation-wrapper .panel:nth-child(2) .animation-form-wrapper .form .form-input{
+.animation-wrapper .panel .animation-form-wrapper .form .form-input{
     float: left;
     box-sizing: border-box;
     height: 30px;
 }
-.animation-wrapper .panel:nth-child(2) .animation-form-wrapper .form .form-input label{
+.animation-wrapper .panel .animation-form-wrapper .form .form-input label{
     text-align: left;
     width: unset;
     line-height: 23px;
     display: block;
     float: left;
 }
+.animation-wrapper .animation-create-wrapper{
+    width: 100%;
+    height: calc(100% - 40px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
 
-.animation-wrapper .panel:nth-child(2) .list-element{
+.animation-wrapper .animation-create-wrapper button{
+    padding: 5px 10px;
+}
+
+.animation-wrapper .panel .list-element{
     width: 60px;
     height: 100%;
     float: left;
@@ -508,7 +506,7 @@ h4{
     padding-top: 25px;
 }
 
-.animation-wrapper .panel:nth-child(2) .list-element .text{
+.animation-wrapper .panel .list-element .text{
     position: absolute;
     top: 0;
     left: 0;
@@ -516,7 +514,7 @@ h4{
     padding: 2px 5px;
 }
 
-.animation-wrapper .panel:nth-child(2) .list-element .text p{
+.animation-wrapper .panel .list-element .text p{
     position: unset !important;
     padding: 0;
 }
@@ -644,7 +642,8 @@ h4{
     padding: 13px 10px;
 }
 
-#app-el-left, #app-el-top, #app-el-right, #app-el-footer, #app-el-bottom, #app-el-top-tab, #app-el-body, #app-el-window, #app-el-top-menu{
+#app-el-left, #app-el-top, #app-el-right, #app-el-footer, #app-el-bottom, #app-el-top-tab, #app-el-body,
+#app-el-window, #app-el-top-menu, #app-el-body-bottom{
     position: absolute;
     z-index: 9999;
     box-sizing: border-box;
@@ -770,6 +769,13 @@ h4{
     left: 0;
     width: calc(100% - 300px);
     height: 300px;
+}
+
+#app-el-body-bottom.has-child{
+    width: calc(100% - 300px);
+    height: 200px;
+    bottom: 340px;
+    left: 0;
 }
 
 /* -- panel */

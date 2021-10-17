@@ -50,6 +50,7 @@ class MenuItem {
 
     /**
      * @param {{bind: Object, list?: *[]}} data
+     * @return {void}
      */
     setData(data) {
         throw new TypeError('MenuItem.setData must be implemented')
@@ -235,10 +236,15 @@ class MenuItem {
     }
 
     /**
+     * @const
      * Update the items for the menu
      */
     update() {
         this.items && this.items.forEach(item => item.isValid() && item.update())
+        this.doUpdate()
+    }
+
+    doUpdate(){
     }
 
     /**
