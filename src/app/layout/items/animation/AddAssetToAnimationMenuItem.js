@@ -1,6 +1,7 @@
 import MenuItem from '../../MenuItem.js'
 import Layout from '../../Layout.js'
 import World from '../../../world/World.js'
+import AssetHelper from '../../../utils/AssetHelper.js'
 export default class AddAssetToAnimationMenuItem extends MenuItem {
     constructor() {
         super({
@@ -23,7 +24,7 @@ export default class AddAssetToAnimationMenuItem extends MenuItem {
         const selectedAsset = assetsManager.getSelectedAsset()
         const animation = world.getAnimationManager().getSelected(tabManager)
         return super.isValid() &&
-            selectedAsset && assetsManager.isAssetImage(selectedAsset) &&
+            selectedAsset && AssetHelper.isAssetImage(selectedAsset) &&
             animation && !!animation.getSelectedTimeline()
     }
 }

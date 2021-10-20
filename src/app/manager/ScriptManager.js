@@ -46,7 +46,7 @@ export default class ScriptManager extends ScriptManagerData {
             this.scripts.splice(scriptIndex, 1)
             script.delete(functionRegistry)
         } else {
-            throw new ClientError(`Script cannot be deleted ("${script.getName()}" not found)`)
+            throw new ClientError(`Script cannot be deleted ("${script ? script.getName() : ''}" not found)`)
         }
     }
 

@@ -26,13 +26,6 @@ export default class AssetScriptXml extends AssetScript{
     }
 
     /**
-     * @return {AScript}
-     */
-    parse(){
-        return World.get().getScriptManager().load(this.data)
-    }
-
-    /**
      * @override
      */
     validate(data, world){

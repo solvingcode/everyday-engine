@@ -107,9 +107,9 @@ class World extends WorldData {
         const assetManager = this.getAssetsManager()
         assetManager.getParsedAssets().forEach(asset => {
             AssetHelper.parseAsset(asset, storage).then(result => {
-                if (assetManager.isAssetAnimation(asset)) {
+                if (AssetHelper.isAssetAnimation(asset)) {
                     this.getAnimationManager().add(result)
-                }else if (assetManager.isAssetScript(asset)) {
+                }else if (AssetHelper.isAssetScript(asset)) {
                     this.getScriptManager().add(result)
                 } else {
                     throw new SystemError(`Cannot parse assets: ${asset.getType().constructor.name} not supported`)

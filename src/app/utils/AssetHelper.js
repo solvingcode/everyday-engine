@@ -18,6 +18,10 @@ import AnimationScript from '../flow/AnimationScript.js'
 import ScriptHelper from './ScriptHelper.js'
 import ClassScript from '../flow/ClassScript.js'
 import AScript from '../flow/AScript.js'
+import AssetUnit from '../asset/types/unit/AssetUnit.js'
+import AssetAudio from '../asset/types/Audio/AssetAudio.js'
+import AssetGradientColorXml from '../asset/types/color/AssetGradientColorXml.js'
+import AssetFont from '../asset/types/font/AssetFont.js'
 
 export default class AssetHelper {
 
@@ -253,17 +257,87 @@ export default class AssetHelper {
      * @return {Promise<*>}
      */
     static load(asset, data, storage) {
-        const type = this.getStorageTypeFromAsset(asset)
-        return asset.getType().setDataUrl(data)
-            .then(() => {
-                return this.parseString(data, storage, type)
-            })
-            .then(parsedData => {
-                asset.setName(parsedData.getName())
-                return new Promise(resolve => {
-                    resolve(parsedData)
+        if (this.isAssetImage(asset)) {
+            return asset.getType().getData().fromImage(data);
+        } else if (this.isParsedAsset(asset)) {
+            const type = this.getStorageTypeFromAsset(asset)
+            return asset.getType().setDataUrl(data)
+                .then(() => {
+                    return this.parseString(data, storage, type)
                 })
-            })
+                .then(parsedData => {
+                    asset.setName(parsedData.getName())
+                    return new Promise(resolve => {
+                        resolve(parsedData)
+                    })
+                })
+        } else {
+            throw new SystemError(`Cannot load asset: "${asset.getType().constructor.name} not supported`)
+        }
+    }
+
+    /**
+     * @param {Asset} asset
+     * @return {boolean}
+     */
+    static isAssetUnit(asset) {
+        return asset && asset.getType() instanceof AssetUnit
+    }
+
+    /**
+     * @param {Asset} asset
+     * @return {boolean}
+     */
+    static isParsedAsset(asset) {
+        return this.isAssetScript(asset) || this.isAssetAnimation(asset)
+    }
+
+    /**
+     * @param {Asset} asset
+     * @return {boolean}
+     */
+    static isAssetScript(asset) {
+        return asset && asset.getType() instanceof AssetScript
+    }
+
+    /**
+     * @param {Asset} asset
+     * @return {boolean}
+     */
+    static isAssetAnimation(asset) {
+        return asset && asset.getType() instanceof AssetAnimationXml
+    }
+
+    /**
+     * @param {Asset} asset
+     * @return {boolean}
+     */
+    static isAssetImage(asset) {
+        return asset && asset.getType() instanceof AssetImage
+    }
+
+    /**
+     * @param {Asset} asset
+     * @return {boolean}
+     */
+    static isAssetAudio(asset) {
+        return asset && asset.getType() instanceof AssetAudio
+    }
+
+    /**
+     * @param {Asset} asset
+     * @return {boolean}
+     */
+    static isAssetColor(asset) {
+        return asset && asset.getType() instanceof AssetGradientColorXml
+    }
+
+    /**
+     * @param {Asset} asset
+     * @return {boolean}
+     */
+    static isAssetFont(asset) {
+        return asset && asset.getType() instanceof AssetFont
     }
 
 }

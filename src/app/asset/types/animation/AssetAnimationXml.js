@@ -22,28 +22,9 @@ export default class AssetAnimationXml extends AssetType {
     /**
      * @override
      */
-    async load(data, asset) {
-        return new Promise(resolve => {
-            this.setDataUrl(data)
-            const animation = this.parse()
-            asset.setName(animation.getName())
-            resolve(animation)
-        })
-    }
-
-    /**
-     * @override
-     */
     open(asset, options) {
         const animationManager = World.get().getAnimationManager()
         animationManager.openEditing(asset)
-    }
-
-    /**
-     * @return {Animation}
-     */
-    parse() {
-        return World.get().getAnimationManager().load(this.data)
     }
 
     /**

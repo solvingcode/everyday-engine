@@ -217,6 +217,23 @@ import DestroyUnitFunction from '../../flow/function/native/unit/DestroyUnitFunc
 import VectorLerpFunction from '../../flow/function/native/basic/VectorLerpFunction.js'
 import AnimationScript from '../../flow/AnimationScript.js'
 import FunctionScript from '../../flow/FunctionScript.js'
+import ComponentVariableNode from '../../flow/node/variable/ComponentVariableNode.js'
+import NumberVariableNode from '../../flow/node/variable/NumberVariableNode.js'
+import MaskGroupVariableNode from '../../flow/node/variable/MaskGroupVariableNode.js'
+import UnitInstantVariableNode from '../../flow/node/variable/UnitInstantVariableNode.js'
+import UnitVariableNode from '../../flow/node/variable/UnitVariableNode.js'
+import StringVariableNode from '../../flow/node/variable/StringVariableNode.js'
+import SceneVariableNode from '../../flow/node/variable/SceneVariableNode.js'
+import ImageVariableNode from '../../flow/node/variable/ImageVariableNode.js'
+import GetVariableNode from '../../flow/node/variable/GetVariableNode.js'
+import BooleanVariableNode from '../../flow/node/variable/BooleanVariableNode.js'
+import AudioVariableNode from '../../flow/node/variable/AudioVariableNode.js'
+import ArrayVariableNode from '../../flow/node/variable/ArrayVariableNode.js'
+import ComponentNode from '../../flow/node/ComponentNode.js'
+import FunctionInputNode from '../../flow/node/FunctionInputNode.js'
+import FunctionOutputNode from '../../flow/node/FunctionOutputNode.js'
+import LoopNode from '../../flow/node/LoopNode.js'
+import ThenNode from '../../flow/node/ThenNode.js'
 
 /**
  * @class {DataSchema}
@@ -431,6 +448,23 @@ class DataSchema {
         {id: 1950, type: VectorLerpFunction},
         {id: 1960, type: AnimationScript},
         {id: 1970, type: FunctionScript},
+        {id: 1980, type: ComponentVariableNode},
+        {id: 1990, type: NumberVariableNode},
+        {id: 1990, type: MaskGroupVariableNode},
+        {id: 2000, type: ArrayVariableNode},
+        {id: 2010, type: AudioVariableNode},
+        {id: 2020, type: BooleanVariableNode},
+        {id: 2030, type: GetVariableNode},
+        {id: 2040, type: ImageVariableNode},
+        {id: 2050, type: SceneVariableNode},
+        {id: 2060, type: StringVariableNode},
+        {id: 2070, type: UnitInstantVariableNode},
+        {id: 2080, type: UnitVariableNode},
+        {id: 2090, type: ComponentNode},
+        {id: 2100, type: FunctionInputNode},
+        {id: 2110, type: FunctionOutputNode},
+        {id: 2120, type: LoopNode},
+        {id: 2130, type: ThenNode},
     ]
 
     /**

@@ -219,98 +219,42 @@ export default class AssetsManager extends AssetsManagerData {
      * @return {Asset[]}
      */
     getParsedAssets() {
-        return this.getAssets().filter(asset => this.isAssetScript(asset) || this.isAssetAnimation(asset))
+        return this.getAssets().filter(asset => AssetHelper.isParsedAsset(asset))
     }
 
     /**
      * @return {Asset[]}
      */
     getUnitAssets() {
-        return this.getAssets().filter(asset => this.isAssetUnit(asset))
+        return this.getAssets().filter(asset => AssetHelper.isAssetUnit(asset))
     }
 
     /**
      * @return {Asset[]}
      */
     getAudioAssets() {
-        return this.getAssets().filter(asset => this.isAssetAudio(asset))
+        return this.getAssets().filter(asset => AssetHelper.isAssetAudio(asset))
     }
 
     /**
      * @return {Asset[]}
      */
     getImageAssets() {
-        return this.getAssets().filter(asset => this.isAssetImage(asset))
+        return this.getAssets().filter(asset => AssetHelper.isAssetImage(asset))
     }
 
     /**
      * @return {Asset[]}
      */
     getColorAssets() {
-        return this.getAssets().filter(asset => this.isAssetColor(asset))
+        return this.getAssets().filter(asset => AssetHelper.isAssetColor(asset))
     }
 
     /**
      * @return {Asset[]}
      */
     getFontAssets() {
-        return this.getAssets().filter(asset => this.isAssetFont(asset))
-    }
-
-    /**
-     * @param {Asset} asset
-     * @return {boolean}
-     */
-    isAssetUnit(asset) {
-        return asset && asset.getType() instanceof AssetUnit
-    }
-
-    /**
-     * @param {Asset} asset
-     * @return {boolean}
-     */
-    isAssetScript(asset) {
-        return asset && asset.getType() instanceof AssetScript
-    }
-
-    /**
-     * @param {Asset} asset
-     * @return {boolean}
-     */
-    isAssetAnimation(asset) {
-        return asset && asset.getType() instanceof AssetAnimationXml
-    }
-
-    /**
-     * @param {Asset} asset
-     * @return {boolean}
-     */
-    isAssetImage(asset) {
-        return asset && asset.getType() instanceof AssetImage
-    }
-
-    /**
-     * @param {Asset} asset
-     * @return {boolean}
-     */
-    isAssetAudio(asset) {
-        return asset && asset.getType() instanceof AssetAudio
-    }
-
-    /**
-     * @param {Asset} asset
-     * @return {boolean}
-     */
-    isAssetColor(asset) {
-        return asset && asset.getType() instanceof AssetGradientColorXml
-    }
-
-    /**
-     * @param {Asset} asset
-     * @return {boolean}
-     */
-    isAssetFont(asset) {
-        return asset && asset.getType() instanceof AssetFont
+        return this.getAssets().filter(asset => AssetHelper.isAssetFont(asset))
     }
 
     /**
@@ -398,7 +342,7 @@ export default class AssetsManager extends AssetsManagerData {
      */
     findAssetImageById(assetId) {
         const asset = this.findAssetById(assetId)
-        if (!asset || !this.isAssetImage(asset)) {
+        if (!asset || !AssetHelper.isAssetImage(asset)) {
             throw new SystemError(`No asset image found with ID "${assetId}"`)
         }
         return asset
@@ -410,7 +354,7 @@ export default class AssetsManager extends AssetsManagerData {
      */
     findAssetAudioById(assetId) {
         const asset = this.findAssetById(assetId)
-        if (!asset || !this.isAssetAudio(asset)) {
+        if (!asset || !AssetHelper.isAssetAudio(asset)) {
             throw new SystemError(`No asset audio found with ID "${assetId}"`)
         }
         return asset
@@ -422,7 +366,7 @@ export default class AssetsManager extends AssetsManagerData {
      */
     findAssetFontById(assetId) {
         const asset = this.findAssetById(assetId)
-        if (!asset || !this.isAssetFont(asset)) {
+        if (!asset || !AssetHelper.isAssetFont(asset)) {
             throw new SystemError(`No asset font found with ID "${assetId}"`)
         }
         return asset
@@ -434,7 +378,7 @@ export default class AssetsManager extends AssetsManagerData {
      */
     findAssetUnitById(assetId) {
         const asset = this.findAssetById(assetId)
-        if (!asset || !this.isAssetUnit(asset)) {
+        if (!asset || !AssetHelper.isAssetUnit(asset)) {
             throw new SystemError(`No asset unit found with ID "${assetId}"`)
         }
         return asset
