@@ -10,9 +10,10 @@ export default class DeleteAssetAction extends Action {
      * @override
      */
     static run() {
-        const assetManager = World.get().getAssetsManager()
+        const world = World.get()
+        const assetManager = world.getAssetsManager()
         const selectedAsset = assetManager.getSelectedAsset()
-        AssetHelper.deleteAsset(selectedAsset)
+        AssetHelper.deleteAsset(selectedAsset, world)
         return true
     }
 

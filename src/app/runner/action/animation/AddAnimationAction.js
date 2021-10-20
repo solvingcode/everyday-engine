@@ -1,7 +1,8 @@
 import Action from '../Action.js'
 import World from '../../../world/World.js'
 import AssetAnimationXml from '../../../asset/types/animation/AssetAnimationXml.js'
-import AssetAnimationXmlGenerator from '../../../generator/animation/AssetAnimationXmlGenerator.js'
+import UnitSelector from '../../../selector/UnitSelector.js'
+import Storage from '../../../core/Storage.js'
 
 export default class AddAnimationAction extends Action {
 
@@ -11,10 +12,16 @@ export default class AddAnimationAction extends Action {
      * @override
      */
     static run() {
-        const assetsManager = World.get().getAssetsManager()
+        const world = World.get()
+        const assetsManager = world.getAssetsManager()
         const selectedFolder = assetsManager.getSelectedFolder() || assetsManager.getRootFolder()
-        assetsManager.createAnimation(selectedFolder, AssetAnimationXml, AssetAnimationXmlGenerator.get())
-            .then(asset => asset.open() || asset.select())
+        const unit = UnitSelector.get().getFirstSelected(world)
+        if (unit) {
+            const animationController = world.getUnitManager().getUnitAnimationController(world, unit)
+            if (animationController) {
+                assetsManager.createAnimation(selectedFolder, AssetAnimationXml, animationController, Storage.get())
+            }
+        }
         return true
     }
 

@@ -7,6 +7,7 @@ import CloseWindowMenuItem from '../../window/CloseWindowMenuItem.js'
 import {WINDOWS} from '../../../../manager/WindowManager.js'
 import CreateAnimationWrapperMenuItem from './CreateAnimationWrapperMenuItem.js'
 import ObjectHelper from '../../../../utils/ObjectHelper.js'
+import EditAnimationPropertyListMenuItem from './EditAnimationPropertyListMenuItem.js'
 
 export default class EditAnimationTimelineMenuItem extends PanelMenuItem {
     /**
@@ -34,6 +35,7 @@ export default class EditAnimationTimelineMenuItem extends PanelMenuItem {
             this.items = [
                 new CloseWindowMenuItem(WINDOWS.ANIMATION, this),
                 new EditAnimationFormWrapperMenuItem(this, animation),
+                new EditAnimationPropertyListMenuItem(this, animation),
                 new EditAnimationTimelineListMenuItem(this, animation)
             ]
         } else if (!ObjectHelper.isEqual(this.data, data)) {
@@ -50,10 +52,12 @@ export default class EditAnimationTimelineMenuItem extends PanelMenuItem {
      */
     getAnimation() {
         const world = World.get()
-        const animation = world.getAnimationManager().getEditing()
-        const unit = this.getUnit()
-        if (unit && animation && world.getUnitManager().isUnitHasAnimation(world, unit, animation)) {
-            return animation
+        const animationController = this.getAnimationController()
+        if (animationController) {
+            const animations = world.getAnimationManager().findAnimationsByControllerAssetId(animationController.getAssetId())
+            if (animations.length > 0) {
+                return animations.find(animation => animation.getSelected()) || animations[0]
+            }
         }
     }
 

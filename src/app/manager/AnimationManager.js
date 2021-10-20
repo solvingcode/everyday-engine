@@ -2,29 +2,9 @@ import ClientError from '../exception/type/ClientError.js'
 import Animation from '../animation/Animation.js'
 import AnimationParser from '../parser/animation/AnimationParser.js'
 import Maths from '../utils/Maths.js'
+import AnimationManagerData from '../project/data/AnimationManagerData.js'
 
-export default class AnimationManager {
-
-    /**
-     * @type {Animation[]}
-     */
-    animations
-
-    /**
-     * @type {Animation}
-     */
-    animationEditing
-
-    constructor() {
-        this.animations = []
-    }
-
-    /**
-     * @return {Animation[]}
-     */
-    getAnimations(){
-        return this.animations
-    }
+export default class AnimationManager extends AnimationManagerData {
 
     /**
      * @param {string} name
@@ -43,7 +23,22 @@ export default class AnimationManager {
     }
 
     /**
-     * @param {Timeline} timeline
+     * @param {Animation} animation
+     */
+    selectAnimation(animation){
+        this.getAnimations().forEach(pAnimation => pAnimation.setSelected(false))
+        animation && animation.setSelected(true)
+    }
+
+    /**
+     * @return {Animation}
+     */
+    getSelectedAnimation(){
+        return this.getAnimations().find(animation => animation.getSelected())
+    }
+
+    /**
+     * @param {TimelineFrame} timeline
      * @return {Animation}
      */
     findByTimeline(timeline) {
@@ -51,11 +46,11 @@ export default class AnimationManager {
     }
 
     /**
-     * @param {Asset} asset
+     * @param {number} assetId
      * @return {Animation[]}
      */
-    findAnimationsByAsset(asset) {
-        return this.animations.filter(animation => animation.getFrames().find(frame => frame.getAssetId() === asset.getId()))
+    findAnimationsByControllerAssetId(assetId) {
+        return this.animations.filter(animation => animation.getControllerAssetId() === assetId)
     }
 
     /**
@@ -116,15 +111,16 @@ export default class AnimationManager {
 
     /**
      * @param {Document} data
+     * @param {Storage} storage
      * @return {Animation}
      */
-    load(data) {
-        const animation = AnimationParser.parse(data)
-        if (animation) {
-            this.add(animation)
-            return animation
-        }
-        return null
+    load(data, storage) {
+        AnimationParser.parse(data, storage).then(animation => {
+            if (animation) {
+                this.add(animation)
+                return animation
+            }
+        })
     }
 
     /**
@@ -160,22 +156,4 @@ export default class AnimationManager {
         return this.getAnimations().find(animation => animation.getAssetId() === asset.getId())
     }
 
-    /**
-     * @param {Asset} asset
-     */
-    openEditing(asset){
-        this.closeEditing()
-        this.animationEditing = this.findAnimationByAsset(asset)
-    }
-
-    /**
-     * @return {Animation}
-     */
-    getEditing(){
-        return this.animationEditing
-    }
-
-    closeEditing(){
-        this.animationEditing = null
-    }
 }

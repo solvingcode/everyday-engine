@@ -14,9 +14,9 @@ export default class EditAnimationActionsMenuItem extends PanelMenuItem {
             zone: parent.zone
         })
         this.items = [
-            new EditAnimationPlayMenuItem(this),
-            new EditAnimationStopMenuItem(this),
-            new EditAnimationDeleteFrameMenuItem(this)
+            new EditAnimationPlayMenuItem(this, animation),
+            new EditAnimationStopMenuItem(this, animation),
+            new EditAnimationDeleteFrameMenuItem(this, animation)
         ]
     }
 }

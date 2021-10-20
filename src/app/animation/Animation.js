@@ -1,201 +1,81 @@
 import ClientError from '../exception/type/ClientError.js'
-import Timeline from './Timeline.js'
+import AnimationProperty from './AnimationProperty.js'
+import Maths from '../utils/Maths.js'
+import AnimationData from '../project/data/AnimationData.js'
 
-export default class Animation {
-
-    /**
-     * @type {number}
-     */
-    id
-
-    /**
-     * @type {string}
-     */
-    name
-
-    /**
-     * @type {KeyFrame[]}
-     */
-    frames
-
-    /**
-     * @type {number}
-     */
-    samples
-
-    /**
-     * @type {boolean}
-     */
-    playing
-
-    /**
-     * @type {Timeline[]}
-     */
-    timeline
-
-    /**
-     * @type {number}
-     */
-    time
-
-    /**
-     * @type {number}
-     */
-    loopTimes
-
-    /**
-     * @type {number}
-     */
-    lengthSecond
-
-    /**
-     * @type {number}
-     */
-    assetId
-
-    /**
-     * @type {number}
-     */
-    controllerAssetId
+export default class Animation extends AnimationData {
 
     /**
      * @param {number} id
      * @param {string} name
      */
     constructor(id, name) {
+        super()
         this.id = id
         this.name = name
-        this.frames = []
-        this.timeline = []
         this.samples = 10
         this.playing = false
         this.time = 0
+        this.duration = 0
         this.loopTimes = 0
         this.lengthSecond = 1
-    }
-
-    /**
-     * @param {number} id
-     */
-    setId(id) {
-        this.id = id
-    }
-
-    /**
-     * @return {number}
-     */
-    getId() {
-        return this.id
-    }
-
-    /**
-     * @param {string} name
-     */
-    setName(name) {
-        this.name = name
-    }
-
-    /**
-     * @return {string}
-     */
-    getName() {
-        return this.name
-    }
-
-    /**
-     * @param {number} controllerAssetId
-     */
-    setControllerAssetId(controllerAssetId) {
-        this.controllerAssetId = controllerAssetId
-    }
-
-    /**
-     * @return {number}
-     */
-    getControllerAssetId() {
-        return this.controllerAssetId
-    }
-
-    /**
-     * @param {KeyFrame[]} frames
-     */
-    setFrames(frames) {
-        this.frames = frames
-        this.updateTimeline()
-    }
-
-    /**
-     * @return {KeyFrame[]}
-     */
-    getFrames() {
-        return this.frames
+        this.selected = false
     }
 
     /**
      * @param {number|string} samples
      */
     setSamples(samples) {
-        this.samples = parseInt(samples)
+        super.setSamples(samples)
         this.updateTimeline()
     }
 
     /**
-     * @return {number}
+     * @param {number} time
+     * @return {KeyFrame[]}
      */
-    getSamples() {
-        return this.samples
-    }
-
-    /**
-     * @param {number|string} loopTimes
-     */
-    setLoopTimes(loopTimes) {
-        this.loopTimes = parseInt(loopTimes)
-    }
-
-    /**
-     * @return {number}
-     */
-    getLoopTimes() {
-        return this.loopTimes
-    }
-
-    /**
-     * @param {boolean} playing
-     */
-    setPlaying(playing) {
-        this.playing = playing
-    }
-
-    /**
-     * @return {boolean}
-     */
-    isPlaying() {
-        return this.playing
+    getAt(time) {
+        const frames = this.tryGetAt(time)
+        if (!frames.length) {
+            throw new ClientError(`No keyframe found at ${time}`)
+        }
+        return frames
     }
 
     /**
      * @param {number} time
-     * @return {KeyFrame}
+     * @return {KeyFrame[]}
      */
-    getAt(time) {
-        const frame = this.tryGetAt(time)
-        if (!frame) {
-            throw new ClientError(`No keyframe found at ${time}`)
-        }
-        return frame
+    tryGetAt(time) {
+        return this.getProperties().map(property => property.tryGetAt(time)).filter(frame => frame)
     }
 
     /**
+     * @param {string} property
+     * @return {AnimationProperty}
+     */
+    getProperty(property){
+        return this.getProperties().find(prop => prop.getName() === property)
+    }
+
+    /**
+     * @param {string} propertyName
+     */
+    addProperty(propertyName){
+        const newProperty = new AnimationProperty(Maths.generateId(), propertyName)
+        this.getProperties().push(newProperty)
+        return newProperty
+    }
+
+    /**
+     * @param {string} propertyName
      * @param {KeyFrame} frame
      */
-    addFrame(frame) {
-        const timeline = this.timeline[frame.getTime()]
-        if (timeline) {
-            if (!timeline.getFrame()) {
-                timeline.setFrame(frame)
-                this.frames.push(frame)
-                this.updateTimeline()
+    addFrame(propertyName, frame) {
+        const property = this.getProperty(propertyName) || this.addProperty(propertyName)
+        if (frame.getTime() < this.getDuration()) {
+            if (!property.tryGetAt(frame.getTime())) {
+                property.addFrame(frame)
             } else {
                 throw new ClientError(`Cannot add frame at "${frame.getTime()}": Frame already exist`)
             }
@@ -205,16 +85,14 @@ export default class Animation {
     }
 
     /**
+     * @param {AnimationProperty} property
      * @param {KeyFrame} frame
      */
-    deleteFrame(frame) {
-        const timeline = this.timeline[frame.getTime()]
-        const frameIndex = this.frames.findIndex(pFrame => pFrame === frame)
-        if (timeline) {
-            if (timeline.getFrame()) {
-                timeline.setFrame(null)
-                this.frames.splice(frameIndex, 1)
-                this.updateTimeline()
+    deleteFrame(property, frame) {
+        const frameIndex = property.getFrames().findIndex(pFrame => pFrame === frame)
+        if (frame.getTime() < this.getDuration()) {
+            if (property.tryGetAt(frame.getTime())) {
+                property.getFrames().splice(frameIndex, 1)
             } else {
                 throw new ClientError(`Cannot delete frame at "${frame.getTime()}": No frame exist`)
             }
@@ -223,66 +101,8 @@ export default class Animation {
         }
     }
 
-    /**
-     * @param {number} time
-     * @return {KeyFrame}
-     */
-    tryGetAt(time) {
-        return this.frames.find(frame => frame.getTime() === time)
-    }
-
-    /**
-     * @return {Timeline}
-     */
-    getSelectedTimeline() {
-        return this.timeline.find(pTimeline => pTimeline.isSelected())
-    }
-
-    /**
-     * @return {number}
-     */
-    getSelectedTime() {
-        return this.timeline.findIndex(pTimeline => pTimeline === this.getSelectedTimeline())
-    }
-
     updateTimeline() {
-        const times = [...Array(Math.ceil(this.getSamples() * this.getLengthSecond())).keys()]
-        this.timeline = times.map(time => new Timeline(this.tryGetAt(time)))
-    }
-
-    /**
-     * @param {number} frameTime
-     */
-    selectTimeline(frameTime) {
-        this.timeline.forEach(pTimeline => {
-            const frame = pTimeline.getFrame()
-            if (frame && frame.getTime() === frameTime) {
-                pTimeline.select()
-            } else {
-                pTimeline.unselect()
-            }
-        })
-    }
-
-    /**
-     * @return {Timeline[]}
-     */
-    getTimeline() {
-        return this.timeline
-    }
-
-    /**
-     * @return {number}
-     */
-    getTime() {
-        return this.time
-    }
-
-    /**
-     * @param {number} time
-     */
-    setTime(time) {
-        this.time = time
+        this.setDuration(Math.ceil(this.getSamples() * this.getLengthSecond()))
     }
 
     /**
@@ -301,34 +121,6 @@ export default class Animation {
     }
 
     /**
-     * @param {number} lengthSecond
-     */
-    setLengthSecond(lengthSecond) {
-        this.lengthSecond = lengthSecond
-    }
-
-    /**
-     * @return {number}
-     */
-    getLengthSecond() {
-        return this.lengthSecond
-    }
-
-    /**
-     * @param {number} assetId
-     */
-    setAssetId(assetId){
-        this.assetId = assetId
-    }
-
-    /**
-     * @return {number}
-     */
-    getAssetId(){
-        return this.assetId
-    }
-
-    /**
      * @return {number}
      */
     getNextTimeFrame(){
@@ -341,40 +133,36 @@ export default class Animation {
      */
     getNextTimeFrameAt(time){
         const newTime = time + 1
-        return newTime % this.getFrames().length
-    }
-
-    goToNextTimeFrame(){
-        this.setTime(this.getNextTimeFrame())
+        return newTime % this.duration
     }
 
     /**
      * @param {number} deltaTime
      * @param {number} time
-     * @return {{time: number, loopTimes: number, frame: KeyFrame}}
+     * @return {{time: number, loopTimes: number, frames: KeyFrame[]}}
      */
     playAt(deltaTime, time){
         const expectedFrameTime = this.getLengthSecond() / this.getSamples()
         const newTime = time + deltaTime / expectedFrameTime
-        const timeFrame = newTime % this.getFrames().length
-        const loopTimes = Math.floor(newTime / this.getFrames().length)
+        const timeFrame = newTime % this.duration || 0
+        const loopTimes = Math.floor(newTime / this.duration)
         return {
-            time: timeFrame || 0,
+            time: timeFrame,
             loopTimes,
-            frame: this.tryGetAt(this.getFrameTimeAt(time))
+            frames: this.tryGetAt(this.getFrameTimeAt(time))
         }
     }
 
     /**
      * @param {number} deltaTime
-     * @return {KeyFrame}
+     * @return {KeyFrame[]}
      */
     play(deltaTime) {
         const playInfo = this.playAt(deltaTime, this.getTime())
         this.loopTimes += playInfo.loopTimes
         this.setTime(playInfo.time)
-        this.selectTimeline(this.getFrameTime())
-        return playInfo.frame
+        this.setSelectedTime(this.getFrameTime())
+        return playInfo.frames
     }
 
 }

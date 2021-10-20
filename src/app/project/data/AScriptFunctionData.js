@@ -24,11 +24,6 @@ export default class AScriptFunctionData extends Data{
     camera
 
     /**
-     * @type {boolean}
-     */
-    selected
-
-    /**
      * @type {number}
      */
     access
@@ -41,7 +36,6 @@ export default class AScriptFunctionData extends Data{
         this.id = Maths.generateId()
         this.name = name
         this.nodes = []
-        this.selected = false
         this.access = 0
     }
 
@@ -120,20 +114,6 @@ export default class AScriptFunctionData extends Data{
      */
     getCamera(){
         return this.camera
-    }
-
-    /**
-     * @param {boolean} selected
-     */
-    setSelected(selected){
-        this.selected = selected
-    }
-
-    /**
-     * @return {boolean}
-     */
-    getSelected(){
-        return this.selected
     }
 
 }

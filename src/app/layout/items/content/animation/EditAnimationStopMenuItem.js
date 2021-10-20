@@ -1,9 +1,12 @@
 import MenuItem from '../../../MenuItem.js'
 import Layout from '../../../Layout.js'
-import World from '../../../../world/World.js'
 
 export default class EditAnimationStopMenuItem extends MenuItem {
-    constructor(parent) {
+    /**
+     * @param {MenuItem} parent
+     * @param {Animation} animation
+     */
+    constructor(parent, animation) {
         super({
             name: 'stop',
             title: 'Stop',
@@ -12,14 +15,14 @@ export default class EditAnimationStopMenuItem extends MenuItem {
             zone: parent.zone
         })
         this.parent = parent
+        this.data = {animation}
     }
 
     /**
      * @override
      */
     isValid() {
-        const world = World.get()
-        const animation = world.getAnimationManager().getEditing()
+        const {animation} = this.data
         return super.isValid() && animation && animation.isPlaying()
     }
 }

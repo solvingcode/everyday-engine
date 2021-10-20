@@ -5,6 +5,7 @@ import ClientError from '../../../exception/type/ClientError.js'
 import Asset from '../../../asset/Asset.js'
 import Unit from '../../../unit/Unit.js'
 import AssetScript from '../../../asset/types/script/AssetScript.js'
+import World from '../../../world/World.js'
 
 export default class AttachAssetAction extends Action {
 
@@ -19,7 +20,7 @@ export default class AttachAssetAction extends Action {
             throw new ClientError(`Source must be an Asset`)
         }
         if(endData instanceof Unit && startData.getType() instanceof AssetScript){
-            AssetHelper.attachAssetScriptToUnit(endData, startData)
+            AssetHelper.attachAssetScriptToUnit(endData, startData, World.get())
         }
         return true
     }

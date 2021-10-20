@@ -14,7 +14,7 @@ export default class AttachAssetScriptAction extends Action {
         const world = World.get()
         const selectedAsset = world.getAssetsManager().getSelectedAsset()
         const selectedUnit = UnitSelector.get().getFirstSelected(world)
-        AssetHelper.attachAssetScriptToUnit(selectedUnit, selectedAsset)
+        AssetHelper.attachAssetScriptToUnit(selectedUnit, selectedAsset, world)
         return true
     }
 

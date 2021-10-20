@@ -2,7 +2,6 @@ import OptionActionsMenuItem from '../../option/OptionActionsMenuItem.js'
 import CameraMenuItem from '../../unit/CameraMenuItem.js'
 import LightPointMenuItem from '../../unit/LightPointMenuItem.js'
 import LightGlobalMenuItem from '../../unit/LightGlobalMenuItem.js'
-import AddAnimationMenuItem from '../../animation/AddAnimationMenuItem.js'
 import OptionActionsButtonMenuItem from '../../option/OptionActionsButtonMenuItem.js'
 import UITopMenuItem from './UITopMenuItem.js'
 import AlignViewMenuItem from '../../edit/AlignViewMenuItem.js'
@@ -24,7 +23,6 @@ export default class UnitTopMenuItem extends OptionActionsMenuItem {
             new LightGlobalMenuItem(),
             new TileGridMenuItem(),
             new TileMapMenuItem(),
-            new AddAnimationMenuItem(),
             new OptionActionsButtonMenuItem('UI', UITopMenuItem, null, true),
             new OptionActionsButtonMenuItem('Visibility', VisibilityTopMenuItem, null, true),
             new AlignViewMenuItem(),

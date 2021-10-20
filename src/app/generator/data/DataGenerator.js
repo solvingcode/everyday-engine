@@ -2,6 +2,8 @@ import * as StorageConstant from '../../constant/StorageConstant.js'
 import SystemError from '../../exception/type/SystemError.js'
 import UnitDataIdGenerator from './id/UnitDataIdGenerator.js'
 import UnitDataTypeGenerator from './type/UnitDataTypeGenerator.js'
+import DefaultDataIdGenerator from './id/DefaultDataIdGenerator.js'
+import ScriptDataTypeGenerator from './type/ScriptDataTypeGenerator.js'
 
 export default class DataGenerator {
 
@@ -22,6 +24,8 @@ export default class DataGenerator {
         switch (type){
             case StorageConstant.type.UNITS:
                 return UnitDataIdGenerator
+            case StorageConstant.type.SCRIPT:
+                return DefaultDataIdGenerator
             default:
                 throw new SystemError(`Storage type "${type}" not supported`)
         }
@@ -35,6 +39,8 @@ export default class DataGenerator {
         switch (type){
             case StorageConstant.type.UNITS:
                 return UnitDataTypeGenerator
+            case StorageConstant.type.SCRIPT:
+                return ScriptDataTypeGenerator
             default:
                 throw new SystemError(`Storage type "${type}" not supported`)
         }

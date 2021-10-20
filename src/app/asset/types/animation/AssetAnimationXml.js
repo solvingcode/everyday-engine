@@ -1,6 +1,5 @@
 import World from '../../../world/World.js'
 import AssetType from '../AssetType.js'
-import AssetAnimationXmlGenerator from '../../../generator/animation/AssetAnimationXmlGenerator.js'
 import FileHelper from '../../../utils/FileHelper.js'
 
 export default class AssetAnimationXml extends AssetType {
@@ -52,16 +51,6 @@ export default class AssetAnimationXml extends AssetType {
      */
     export(asset) {
         FileHelper.save(this.getDataUrl(), FileHelper.type.XML, asset.getName())
-    }
-
-    /**
-     * @override
-     * @param {Animation} animation
-     * @param {Asset} asset
-     */
-    async generate(animation, asset) {
-        const data = AssetAnimationXmlGenerator.get().generate(animation)
-        await this.setDataUrl(data)
     }
 
     /**

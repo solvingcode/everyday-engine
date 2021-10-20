@@ -15,6 +15,26 @@ export default class StorageHelper {
     }
 
     /**
+     * @param {Asset} asset
+     * @param {Storage} storage
+     */
+    static async loadAssetAnimation(asset, storage){
+        const type = StorageConstant.type.UNITS
+        const dataImport = storage.import(type, asset.getType().getDataUrl(), StorageConstant.format.XML)
+        return dataImport && storage.load(type, dataImport[type], DataGenerator)
+    }
+
+    /**
+     * @param {string} type
+     * @param {string} data
+     * @param {Storage} storage
+     */
+    static async parseXml(type, data, storage){
+        const dataImport = storage.import(type, data, StorageConstant.format.XML)
+        return dataImport && storage.load(type, dataImport[type], DataGenerator)
+    }
+
+    /**
      * @param {Storage} storage
      * @return {Promise<Unit[]>}
      */

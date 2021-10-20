@@ -18,6 +18,11 @@ export default class ANodeData extends Data{
      */
     inputs
 
+    /**
+     * @type {Vector}
+     */
+    position
+
     constructor() {
         super()
         this.id = Maths.generateId()
@@ -36,6 +41,20 @@ export default class ANodeData extends Data{
      */
     getId(){
         return this.id
+    }
+
+    /**
+     * @param {Vector} position
+     */
+    setPosition(position){
+        this.position = position
+    }
+
+    /**
+     * @return {Vector}
+     */
+    getPosition(){
+        return this.position
     }
 
     /**

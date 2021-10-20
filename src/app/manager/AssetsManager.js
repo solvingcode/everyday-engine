@@ -28,14 +28,15 @@ export default class AssetsManager extends AssetsManagerData {
      * @param {string} data
      * @param {Class<AssetType>} type
      * @param {string} name
-     * @return {Asset}
+     * @param {Storage} storage
+     * @return {Promise<Asset>}
      */
-    async setAsset(data, type, name) {
+    async setAsset(data, type, name, storage) {
         const folder = this.getSelectedFolder() || this.getRootFolder()
         const asset = new Asset(folder, {})
         asset.setType(new type())
         asset.setName(name)
-        if (await asset.load(data)) {
+        if (await AssetHelper.load(asset, data, storage)) {
             this.assets.push(asset)
             return asset
         }
@@ -46,10 +47,11 @@ export default class AssetsManager extends AssetsManagerData {
      * @param {Class<AssetType>} assetType
      * @param {string} assetName
      * @param {number} folderId
-     * @return {Asset}
+     * @param {Storage} storage
+     * @return {Promise<Asset>}
      */
-    async createAsset(data, assetType, assetName, folderId) {
-        return this.setAsset(data, assetType, assetName)
+    async createAsset(data, assetType, assetName, folderId, storage) {
+        return this.setAsset(data, assetType, assetName, storage)
     }
 
     /**
@@ -79,18 +81,20 @@ export default class AssetsManager extends AssetsManagerData {
     /**
      * @param {Folder} folder
      * @param {Class<AssetScript>} type
-     * @param {ScriptXmlGenerator} generator
      * @param {ClassScript} scriptClass
+     * @param {Storage} storage
      * @return {Asset}
      */
-    async createClassScript(folder, type, generator, scriptClass) {
+    async createClassScript(folder, type, scriptClass, storage) {
         const assetName = this.generateUniqAssetName('NewScript', folder.getId())
         const flow = new scriptClass(assetName)
-        const asset = this.createAsset(
-            generator.generate(flow),
+        const data = await AssetHelper.generate(flow, storage)
+        const asset = await this.createAsset(
+            data,
             type,
             assetName,
-            folder.getId()
+            folder.getId(),
+            storage
         )
         flow.setAssetId(asset.getId())
         return asset
@@ -99,18 +103,20 @@ export default class AssetsManager extends AssetsManagerData {
     /**
      * @param {Folder} folder
      * @param {Class<AssetScript>} type
-     * @param {AssetAnimationScriptGenerator} generator
      * @param {ClassScript} scriptClass
+     * @param {Storage} storage
      * @return {Asset}
      */
-    async createAnimationScript(folder, type, generator, scriptClass) {
+    async createAnimationScript(folder, type, scriptClass, storage) {
         const assetName = this.generateUniqAssetName('NewAnimationScript', folder.getId())
         const flow = new scriptClass(assetName)
-        const asset = this.createAsset(
-            generator.generate(flow),
+        const data = await AssetHelper.generate(flow, storage)
+        const asset = await this.createAsset(
+            data,
             type,
             assetName,
-            folder.getId()
+            folder.getId(),
+            storage
         )
         flow.setAssetId(asset.getId())
         return asset
@@ -119,16 +125,21 @@ export default class AssetsManager extends AssetsManagerData {
     /**
      * @param {Folder} folder
      * @param {Class<AssetAnimationXml>} type
-     * @param {AssetAnimationXmlGenerator} generator
+     * @param {AScript} animationController
+     * @param {Storage} storage
+     * @return {Asset}
      */
-    async createAnimation(folder, type, generator) {
+    async createAnimation(folder, type, animationController, storage) {
         const assetName = this.generateUniqAssetName('Animation', folder.getId())
         const animation = new Animation(Maths.generateId(), assetName)
+        animation.setControllerAssetId(animationController.getAssetId())
+        const data = await AssetHelper.generate(animation, storage)
         return this.createAsset(
-            generator.generate(animation),
+            data,
             type,
             assetName,
-            folder.getId()
+            folder.getId(),
+            storage
         )
     }
 
@@ -136,21 +147,25 @@ export default class AssetsManager extends AssetsManagerData {
      * @param {Folder} folder
      * @param {Unit} unit
      * @param {string} dataXml
+     * @param {Storage} storage
+     * @return {Promise<Asset>}
      */
-    createUnitInstant(folder, unit, dataXml) {
+    async createUnitInstant(folder, unit, dataXml, storage) {
         const assetName = this.generateUniqAssetName(unit.getName(), folder.getId())
-        return this.createAsset(
+        return await this.createAsset(
             dataXml,
             AssetUnit,
             assetName,
-            folder.getId()
+            folder.getId(),
+            storage
         )
     }
 
     /**
      * @param {File} blob
+     * @param {Storage} storage
      */
-    setAssetByBlob(blob) {
+    setAssetByBlob(blob, storage) {
         return new Promise((resolve, reject) => {
             const reader = new FileReader()
             reader.onload = () => {
@@ -164,7 +179,7 @@ export default class AssetsManager extends AssetsManagerData {
             }
         }).then(data => {
             const type = this.getAssetType(blob, data)
-            return this.setAsset(data, type, FileHelper.getFilename(blob.name))
+            return this.setAsset(data, type, FileHelper.getFilename(blob.name), storage)
         })
     }
 
@@ -529,7 +544,7 @@ export default class AssetsManager extends AssetsManagerData {
                         const oldAttributes = oldScriptComponent.getAttributes()
                         unit.deleteComponent(oldScriptComponent.getId())
 
-                        AssetHelper.attachAssetScriptToUnit(unit, asset)
+                        AssetHelper.attachAssetScriptToUnit(unit, asset, world)
                         const newScriptComponent = unitManager.findComponentAttachedToScript(unit, script)
                         newScriptComponent.getAttributes().forEach(attribute => {
                             const oldAttribute = oldAttributes

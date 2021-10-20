@@ -1,5 +1,4 @@
 import World from '../../../world/World.js'
-import AssetScriptXmlGenerator from '../../../generator/script/AssetScriptXmlGenerator.js'
 import AssetScript from './AssetScript.js'
 import EditGraphScriptContent from '../../../content/script/EditGraphScriptContent.js'
 import ScriptHelper from '../../../utils/ScriptHelper.js'
@@ -38,16 +37,6 @@ export default class AssetScriptXml extends AssetScript{
      */
     validate(data, world){
         return data.getFunctions().every(func => ScriptHelper.validate(func, world))
-    }
-
-    /**
-     * @override
-     * @param {AScript} flow
-     * @param {Asset} asset
-     */
-    async generate(flow, asset){
-        const data = AssetScriptXmlGenerator.get().generate(flow)
-        await this.setDataUrl(data)
     }
 
     /**

@@ -1,5 +1,5 @@
 import Action from '../Action.js'
-import World from '../../../world/World.js'
+import StateManager from '../../../state/StateManager.js'
 
 export default class PlayAnimationAction extends Action {
 
@@ -9,8 +9,7 @@ export default class PlayAnimationAction extends Action {
      * @override
      */
     static run() {
-        const world = World.get()
-        const animation = world.getAnimationManager().getEditing()
+        const {animation} = StateManager.get().getNextProgressData(this.STATE)
         animation.setPlaying(true)
         return true
     }

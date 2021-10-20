@@ -9,6 +9,8 @@ import Window from '../../core/Window.js'
 import FunctionScript from '../../flow/FunctionScript.js'
 import {MAIN_FUNCTION} from '../../flow/AScriptFunction.js'
 import LayoutHelper from '../../utils/LayoutHelper.js'
+import AssetHelper from '../../utils/AssetHelper.js'
+import Storage from '../../core/Storage.js'
 
 export default class ScriptEditorRunner extends Runner {
 
@@ -79,8 +81,8 @@ export default class ScriptEditorRunner extends Runner {
         if (shouldUpdate) {
             script.reset()
             const asset = World.get().getTabManager().getSelectedContentData()
-            asset.generate(script)
             script.getFunctions().forEach(func => func.setUpdated(false))
+            AssetHelper.regenerate(asset, script, Storage.get())
         }
     }
 

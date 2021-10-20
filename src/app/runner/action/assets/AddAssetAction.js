@@ -2,6 +2,7 @@ import Action from '../Action.js'
 import StateManager from '../../../state/StateManager.js'
 import FileHelper from '../../../utils/FileHelper.js'
 import World from '../../../world/World.js'
+import Storage from '../../../core/Storage.js'
 
 export default class AddAssetAction extends Action {
 
@@ -15,7 +16,7 @@ export default class AddAssetAction extends Action {
         const filesData = FileHelper.openFileUpload(this.fileId)
         if (filesData.length) {
             StateManager.get().stopNextState(this.STATE)
-            Array.from(filesData).forEach(fileData => World.get().getAssetsManager().setAssetByBlob(fileData))
+            Array.from(filesData).forEach(fileData => World.get().getAssetsManager().setAssetByBlob(fileData, Storage.get()))
         }
         return false
     }

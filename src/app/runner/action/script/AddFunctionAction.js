@@ -2,6 +2,8 @@ import Action from '../Action.js'
 import StateManager from '../../../state/StateManager.js'
 import World from '../../../world/World.js'
 import ScriptHelper from '../../../utils/ScriptHelper.js'
+import AssetHelper from '../../../utils/AssetHelper.js'
+import Storage from '../../../core/Storage.js'
 
 export default class AddFunctionAction extends Action {
 
@@ -19,7 +21,7 @@ export default class AddFunctionAction extends Action {
         const script = World.get().getScriptManager().getSelected(World.get().getTabManager())
         const assetTab = World.get().getTabManager().getSelectedContentData()
         ScriptHelper.createFunction(script, formData.name)
-        assetTab.generate(script)
+        AssetHelper.regenerate(assetTab, script, Storage.get())
         return true
     }
 

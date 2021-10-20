@@ -2,6 +2,7 @@ import MenuItem from '../../../MenuItem.js'
 import Layout from '../../../Layout.js'
 import EditAnimationFormMenuItem from './EditAnimationFormMenuItem.js'
 import EditAnimationActionsMenuItem from './EditAnimationActionsMenuItem.js'
+import EditAnimationSelectMenuItem from './EditAnimationSelectMenuItem.js'
 
 export default class EditAnimationFormWrapperMenuItem extends MenuItem {
     /**
@@ -17,6 +18,7 @@ export default class EditAnimationFormWrapperMenuItem extends MenuItem {
         })
         this.parent = parent
         this.items = [
+            new EditAnimationSelectMenuItem(this, animation),
             new EditAnimationActionsMenuItem(this, animation),
             new EditAnimationFormMenuItem(this, animation)
         ]

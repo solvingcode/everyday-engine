@@ -13,6 +13,11 @@ export default class AScriptFunction extends AScriptFunctionData {
     /**
      * @type {boolean}
      */
+    selected
+
+    /**
+     * @type {boolean}
+     */
     updated
 
     /**
@@ -22,6 +27,21 @@ export default class AScriptFunction extends AScriptFunctionData {
         super(name)
         this.camera = new Camera(new Vector({x: -SCENE_WIDTH / 2, y: -SCENE_HEIGHT / 2}))
         this.updated = false
+        this.selected = false
+    }
+
+    /**
+     * @param {boolean} selected
+     */
+    setSelected(selected){
+        this.selected = selected
+    }
+
+    /**
+     * @return {boolean}
+     */
+    getSelected(){
+        return this.selected
     }
 
     /**

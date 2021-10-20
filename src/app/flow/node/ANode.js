@@ -15,11 +15,6 @@ export default class ANode extends ANodeData {
     selected
 
     /**
-     * @type {Vector}
-     */
-    position
-
-    /**
      * @param {string} sourceName
      */
     constructor(sourceName) {
@@ -143,20 +138,6 @@ export default class ANode extends ANodeData {
      */
     isSelected(){
         return this.selected
-    }
-
-    /**
-     * @param {Vector} position
-     */
-    setPosition(position){
-        this.position = position
-    }
-
-    /**
-     * @return {Vector}
-     */
-    getPosition(){
-        return this.position
     }
 
 }

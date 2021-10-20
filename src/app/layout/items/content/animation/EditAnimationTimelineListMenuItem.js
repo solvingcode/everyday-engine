@@ -30,7 +30,13 @@ export default class EditAnimationTimelineListMenuItem extends ListMenuItem{
      */
     getFormObject() {
         const {animation} = this.data
-        return animation.getTimeline()
+        const samples = animation.getSamples()
+        return Array.from({length: animation.getDuration()})
+            .map((v, index) => {
+                const second = Math.floor(index/samples)
+                const secondDivide = index % samples
+                return `${second}:${secondDivide < 10 ? '0' : ''}${secondDivide}`
+            })
     }
 
     /**

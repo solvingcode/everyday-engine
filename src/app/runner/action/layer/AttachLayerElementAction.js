@@ -10,6 +10,7 @@ import AssetHelper from '../../../utils/AssetHelper.js'
 import AssetImage from '../../../asset/types/image/AssetImage.js'
 import TileGridUnitInstant from '../../../unit/instant/type/internal/tile/TileGridUnitInstant.js'
 import TileMapUnitInstant from '../../../unit/instant/type/internal/tile/TileMapUnitInstant.js'
+import World from '../../../world/World.js'
 
 export default class AttachLayerElementAction extends Action {
 
@@ -31,7 +32,7 @@ export default class AttachLayerElementAction extends Action {
         } else if (endData instanceof Scene && startData instanceof Unit) {
             startData.setUnitParentId(null)
         } else if (endData instanceof Unit && startData.getType() instanceof AssetScript) {
-            AssetHelper.attachAssetScriptToUnit(endData, startData)
+            AssetHelper.attachAssetScriptToUnit(endData, startData, World.get())
         } else if (endData instanceof Unit && startData.getType() instanceof AssetImage) {
             AssetHelper.attachAssetImageToUnit(endData, startData)
         }

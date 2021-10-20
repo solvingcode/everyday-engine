@@ -26,6 +26,15 @@ import SceneManager from '../manager/SceneManager.js'
 import Scene from '../scene/Scene.js'
 import TagPreference from '../preference/tag/TagPreference.js'
 import Tag from '../preference/tag/Tag.js'
+import AnimationManager from '../manager/AnimationManager.js'
+import Animation from '../animation/Animation.js'
+import AnimationProperty from '../animation/AnimationProperty.js'
+import KeyFrame from '../animation/KeyFrame.js'
+import ScriptManager from '../manager/ScriptManager.js'
+import ANode from '../flow/node/ANode.js'
+import NodeInput from '../pobject/NodeInput.js'
+import ClassScript from '../flow/ClassScript.js'
+import FunctionScript from '../flow/FunctionScript.js'
 
 /**
  * Define the schema of project data.
@@ -575,6 +584,207 @@ export default {
                                     },
                                     folderId: {
                                         type: TYPES.NUMBER
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            animationManager: {
+                type: AnimationManager,
+                meta: {
+                    animations: {
+                        type: Array,
+                        meta: {
+                            element: {
+                                type: Animation,
+                                meta: {
+                                    dataId: {
+                                        type: TYPES.NUMBER
+                                    },
+                                    id: {
+                                        type: TYPES.NUMBER
+                                    },
+                                    name: {
+                                        type: TYPES.STRING
+                                    },
+                                    samples: {
+                                        type: TYPES.NUMBER
+                                    },
+                                    lengthSecond: {
+                                        type: TYPES.NUMBER
+                                    },
+                                    controllerAssetId: {
+                                        type: TYPES.NUMBER
+                                    },
+                                    properties: {
+                                        type: Array,
+                                        meta: {
+                                            element: {
+                                                type: AnimationProperty,
+                                                meta: {
+                                                    dataId: {
+                                                        type: TYPES.NUMBER
+                                                    },
+                                                    id: {
+                                                        type: TYPES.NUMBER
+                                                    },
+                                                    name: {
+                                                        type: TYPES.STRING
+                                                    },
+                                                    frames: {
+                                                        type: Array,
+                                                        meta: {
+                                                            element: {
+                                                                type: KeyFrame,
+                                                                meta: {
+                                                                    dataId: {
+                                                                        type: TYPES.NUMBER
+                                                                    },
+                                                                    id: {
+                                                                        type: TYPES.NUMBER
+                                                                    },
+                                                                    time: {
+                                                                        type: TYPES.NUMBER
+                                                                    },
+                                                                    component: {
+                                                                        type: Component,
+                                                                        meta: {
+                                                                            dataId: {
+                                                                                type: TYPES.NUMBER
+                                                                            },
+                                                                            id: {
+                                                                                type: TYPES.NUMBER
+                                                                            },
+                                                                            name: {
+                                                                                type: TYPES.STRING
+                                                                            },
+                                                                            attributes: {
+                                                                                type: TYPES.ARRAY | TYPES.DYNAMIC_ATTRIBUTE
+                                                                            }
+                                                                        }
+                                                                    }
+                                                                }
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            scriptManager: {
+                type: ScriptManager,
+                meta: {
+                    scripts: {
+                        type: Array,
+                        meta: {
+                            element: {
+                                type: ClassScript,
+                                meta: {
+                                    dataId: {
+                                        type: TYPES.NUMBER
+                                    },
+                                    id: {
+                                        type: TYPES.NUMBER
+                                    },
+                                    name: {
+                                        type: TYPES.STRING
+                                    },
+                                    status: {
+                                        type: TYPES.STRING
+                                    },
+                                    parentName: {
+                                        type: TYPES.STRING
+                                    },
+                                    functions: {
+                                        type: Array,
+                                        meta: {
+                                            element: {
+                                                type: FunctionScript,
+                                                meta: {
+                                                    dataId: {
+                                                        type: TYPES.NUMBER
+                                                    },
+                                                    id: {
+                                                        type: TYPES.NUMBER
+                                                    },
+                                                    name: {
+                                                        type: TYPES.STRING
+                                                    },
+                                                    camera: {
+                                                        type: Camera,
+                                                        meta: {
+                                                            dataId: {
+                                                                type: TYPES.NUMBER
+                                                            },
+                                                            position: {
+                                                                prototype: TYPES.VECTOR
+                                                            }
+                                                        }
+                                                    },
+                                                    access: {
+                                                        type: TYPES.NUMBER
+                                                    },
+                                                    nodes: {
+                                                        type: Array,
+                                                        meta: {
+                                                            element: {
+                                                                type: ANode,
+                                                                meta: {
+                                                                    dataId: {
+                                                                        type: TYPES.NUMBER
+                                                                    },
+                                                                    id: {
+                                                                        type: TYPES.NUMBER
+                                                                    },
+                                                                    sourceName: {
+                                                                        type: TYPES.STRING
+                                                                    },
+                                                                    position: {
+                                                                        type: TYPES.VECTOR
+                                                                    },
+                                                                    inputs: {
+                                                                        type: Array,
+                                                                        meta: {
+                                                                            element: {
+                                                                                type: NodeInput,
+                                                                                meta: {
+                                                                                    dataId: {
+                                                                                        type: TYPES.NUMBER
+                                                                                    },
+                                                                                    id: {
+                                                                                        type: TYPES.NUMBER
+                                                                                    },
+                                                                                    sourceNodeId: {
+                                                                                        type: TYPES.NUMBER
+                                                                                    },
+                                                                                    nodeId: {
+                                                                                        type: TYPES.NUMBER
+                                                                                    },
+                                                                                    sourceName: {
+                                                                                        type: TYPES.STRING
+                                                                                    },
+                                                                                    targetName: {
+                                                                                        type: TYPES.STRING
+                                                                                    }
+                                                                                }
+                                                                            }
+                                                                        }
+                                                                    }
+                                                                }
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
                                     }
                                 }
                             }

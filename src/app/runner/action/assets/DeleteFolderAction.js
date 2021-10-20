@@ -11,14 +11,15 @@ export default class DeleteFolderAction extends Action {
      * @override
      */
     static run() {
-        const assetsManager = World.get().getAssetsManager()
+        const world = World.get()
+        const assetsManager = world.getAssetsManager()
         const selectedFolder = assetsManager.getSelectedFolder()
         const rootFolder = assetsManager.getRootFolder()
         if (selectedFolder === rootFolder) {
             throw new ClientError(`Cannot delete root folder`)
         }
         const assets = assetsManager.findAssetsByFolderId(selectedFolder.getId())
-        assets.forEach(asset => AssetHelper.deleteAsset(asset))
+        assets.forEach(asset => AssetHelper.deleteAsset(asset, world))
         assetsManager.deleteFolder(selectedFolder)
         return true
     }

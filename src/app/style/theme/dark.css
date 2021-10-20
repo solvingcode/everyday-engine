@@ -264,6 +264,9 @@ button.selected, button.hidden.selected, button.locked.selected{
 .animation-wrapper .panel .animation-form-wrapper{
     background-color: #3e3e3e;
 }
+.animation-wrapper{
+    background-color: #323232;
+}
 .animation-wrapper .panel{
   background-color: #323232;
 }

@@ -1,6 +1,7 @@
 import Action from '../Action.js'
 import World from '../../../world/World.js'
 import AssetUnitXmlGenerator from '../../../generator/unit/AssetUnitXmlGenerator.js'
+import Storage from '../../../core/Storage.js'
 
 export default class CreateUnitInstantAction extends Action {
 
@@ -20,7 +21,7 @@ export default class CreateUnitInstantAction extends Action {
         const selectedFolder = assetsManager.getSelectedFolder() || assetsManager.getRootFolder()
         selectedUnits.forEach(unit => {
             AssetUnitXmlGenerator.generate(unit)
-                .then(dataXml => assetsManager.createUnitInstant(selectedFolder, unit, dataXml))
+                .then(dataXml => assetsManager.createUnitInstant(selectedFolder, unit, dataXml, Storage.get()))
         })
         return true
     }

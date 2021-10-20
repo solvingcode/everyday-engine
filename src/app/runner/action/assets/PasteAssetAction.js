@@ -14,7 +14,7 @@ export default class PasteAssetAction extends Action {
         const selectedFolder = assetsManager.getSelectedFolder() || assetsManager.getRootFolder()
         StorageHelper.getUnitsFromClipboard(Storage.get())
             .then(units => units
-                .map(unit => assetsManager.createUnitInstant(selectedFolder, unit, ClipboardManager.get().getContent())))
+                .map(unit => assetsManager.createUnitInstant(selectedFolder, unit, ClipboardManager.get().getContent(), Storage.get())))
         return true
     }
 

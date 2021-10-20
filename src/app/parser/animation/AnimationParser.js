@@ -1,43 +1,17 @@
 import Parser from '../Parser.js'
-import ClientError from '../../exception/type/ClientError.js'
-import Animation from '../../animation/Animation.js'
-import KeyFrame from '../../animation/KeyFrame.js'
+import StorageHelper from '../../utils/StorageHelper.js'
+import * as StorageConstant from '../../constant/StorageConstant.js'
 
 export default class AnimationParser extends Parser {
 
     /**
      * @param {Document} xmlDocument
-     * @return {Animation}
+     * @param {Storage} storage
+     * @return {Promise<Animation>}
      */
-    static parse(xmlDocument) {
-        if (xmlDocument.constructor === XMLDocument) {
-            const xmlNode = xmlDocument.documentElement
-            const id = parseInt(xmlNode.getAttribute('id'))
-            const name = xmlNode.getAttribute('name')
-            const samples = xmlNode.getAttribute('samples')
-            const lengthSecond = xmlNode.getAttribute('length')
-            const animation = new Animation(id, name)
-            const keyframes = []
-            xmlNode.childNodes.forEach(cXmlNode => {
-                const element = cXmlNode.nodeName
-                if (element === 'frame') {
-                    const asset = cXmlNode.getAttribute('asset')
-                    const time = cXmlNode.getAttribute('time')
-                    const frameId = parseInt(cXmlNode.getAttribute('id'))
-                    const keyframe = new KeyFrame()
-                    keyframe.setId(frameId)
-                    keyframe.setAssetId(parseInt(asset))
-                    keyframe.setTime(parseInt(time))
-                    keyframes.push(keyframe)
-                }
-            })
-            animation.setFrames(keyframes)
-            animation.setSamples(parseInt(samples))
-            animation.setLengthSecond(parseFloat(lengthSecond))
-            return animation
-        } else {
-            throw new ClientError(`${this.constructor.name}: data must be an XML Document`)
-        }
+    static async parse(xmlDocument, storage) {
+        const stringData = (new XMLSerializer()).serializeToString(xmlDocument)
+        return StorageHelper.parseXml(StorageConstant.type.ANIMATIONS, stringData, storage)
     }
 
     /**

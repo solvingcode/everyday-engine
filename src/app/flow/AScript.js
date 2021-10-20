@@ -7,6 +7,25 @@ import SystemError from '../exception/type/SystemError.js'
 export default class AScript extends AScriptData {
 
     /**
+     * @type {number}
+     */
+    assetId
+
+    /**
+     * @param {number} assetId
+     */
+    setAssetId(assetId){
+        this.assetId = assetId
+    }
+
+    /**
+     * @return {number}
+     */
+    getAssetId(){
+        return this.assetId
+    }
+
+    /**
      * @param {World} world
      */
     compile(world) {

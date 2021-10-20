@@ -24,11 +24,6 @@ export default class AScriptData extends Data{
     status
 
     /**
-     * @type {number}
-     */
-    assetId
-
-    /**
      * @type {string}
      */
     parentName
@@ -120,20 +115,6 @@ export default class AScriptData extends Data{
      */
     getStatus(){
         return this.status
-    }
-
-    /**
-     * @param {number} assetId
-     */
-    setAssetId(assetId){
-        this.assetId = assetId
-    }
-
-    /**
-     * @return {number}
-     */
-    getAssetId(){
-        return this.assetId
     }
 
 }

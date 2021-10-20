@@ -24,6 +24,8 @@ import SceneManager from '../manager/SceneManager.js'
 import ClientError from '../exception/type/ClientError.js'
 import SceneUnitManager from '../manager/SceneUnitManager.js'
 import CameraComponent from '../component/internal/CameraComponent.js'
+import AssetHelper from '../utils/AssetHelper.js'
+import SystemError from '../exception/type/SystemError.js'
 
 /**
  * @class {World}
@@ -90,7 +92,10 @@ class World extends WorldData {
         this.initialized = false
     }
 
-    doInit() {
+    /**
+     * @param {Storage} storage
+     */
+    doInit(storage) {
         this.createRootFolder()
         this.getPreference().init()
         this.getTabManager().init()
@@ -99,10 +104,19 @@ class World extends WorldData {
         this.getComponentRegistry().init()
         this.getMaterialRegistry().init()
         this.getGraphManager().reset()
-        this.getAssetsManager().getParsedAssets().forEach(asset => {
-            const result = asset.getType().parse()
-            result.setAssetId(asset.getId())
-            asset.getType().validate(result, this)
+        const assetManager = this.getAssetsManager()
+        assetManager.getParsedAssets().forEach(asset => {
+            AssetHelper.parseAsset(asset, storage).then(result => {
+                if (assetManager.isAssetAnimation(asset)) {
+                    this.getAnimationManager().add(result)
+                }else if (assetManager.isAssetScript(asset)) {
+                    this.getScriptManager().add(result)
+                } else {
+                    throw new SystemError(`Cannot parse assets: ${asset.getType().constructor.name} not supported`)
+                }
+                result.setAssetId(asset.getId())
+                AssetHelper.validate(result, this)
+            })
         })
         this.initialized = true
     }
@@ -180,7 +194,7 @@ class World extends WorldData {
     /**
      * @param {Unit} unit
      */
-    selectOneUnit(unit){
+    selectOneUnit(unit) {
         const unitSelector = UnitSelector.get()
         unitSelector.unselectAll(this)
         unit.select()
@@ -234,7 +248,7 @@ class World extends WorldData {
     /**
      * @param {Unit} instance
      */
-    createUnitByInstance(instance){
+    createUnitByInstance(instance) {
         const selectedUnit = this.getUnitManager().getSelected()
         return this.getUnitManager().createUnitByInstance(instance, selectedUnit)
     }
