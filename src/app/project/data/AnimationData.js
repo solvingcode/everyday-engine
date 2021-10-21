@@ -23,29 +23,9 @@ export default class AnimationData extends Data {
     samples
 
     /**
-     * @type {boolean}
-     */
-    playing
-
-    /**
-     * @type {number}
-     */
-    time
-
-    /**
-     * @type {number}
-     */
-    selectedTime
-
-    /**
      * @type {number}
      */
     duration
-
-    /**
-     * @type {number}
-     */
-    loopTimes
 
     /**
      * @type {number}
@@ -55,17 +35,7 @@ export default class AnimationData extends Data {
     /**
      * @type {number}
      */
-    assetId
-
-    /**
-     * @type {number}
-     */
     controllerAssetId
-
-    /**
-     * @type {boolean}
-     */
-    selected
 
     constructor() {
         super()
@@ -101,20 +71,6 @@ export default class AnimationData extends Data {
     }
 
     /**
-     * @return {boolean}
-     */
-    getSelected(){
-        return this.selected
-    }
-
-    /**
-     * @param {boolean} selected
-     */
-    setSelected(selected){
-        this.selected = selected
-    }
-
-    /**
      * @param {number} controllerAssetId
      */
     setControllerAssetId(controllerAssetId) {
@@ -147,7 +103,6 @@ export default class AnimationData extends Data {
      */
     setSamples(samples) {
         this.samples = parseInt(samples)
-        this.updateTimeline()
     }
 
     /**
@@ -155,20 +110,6 @@ export default class AnimationData extends Data {
      */
     getSamples() {
         return this.samples
-    }
-
-    /**
-     * @param {number|string} loopTimes
-     */
-    setLoopTimes(loopTimes) {
-        this.loopTimes = parseInt(loopTimes)
-    }
-
-    /**
-     * @return {number}
-     */
-    getLoopTimes() {
-        return this.loopTimes
     }
 
     /**
@@ -186,48 +127,6 @@ export default class AnimationData extends Data {
     }
 
     /**
-     * @param {boolean} playing
-     */
-    setPlaying(playing) {
-        this.playing = playing
-    }
-
-    /**
-     * @return {boolean}
-     */
-    isPlaying() {
-        return this.playing
-    }
-
-    /**
-     * @return {number}
-     */
-    getSelectedTime() {
-        return this.selectedTime
-    }
-
-    /**
-     * @param {number} selectedTime
-     */
-    setSelectedTime(selectedTime){
-        this.selectedTime = selectedTime
-    }
-
-    /**
-     * @return {number}
-     */
-    getTime() {
-        return this.time
-    }
-
-    /**
-     * @param {number} time
-     */
-    setTime(time) {
-        this.time = time
-    }
-
-    /**
      * @param {number} lengthSecond
      */
     setLengthSecond(lengthSecond) {
@@ -242,17 +141,10 @@ export default class AnimationData extends Data {
     }
 
     /**
-     * @param {number} assetId
+     * @param {AnimationProperty[]} properties
      */
-    setAssetId(assetId){
-        this.assetId = assetId
-    }
-
-    /**
-     * @return {number}
-     */
-    getAssetId(){
-        return this.assetId
+    concatProperties(properties){
+        this.setProperties(properties)
     }
 
 }

@@ -6,6 +6,36 @@ import AnimationData from '../project/data/AnimationData.js'
 export default class Animation extends AnimationData {
 
     /**
+     * @type {boolean}
+     */
+    playing
+
+    /**
+     * @type {number}
+     */
+    assetId
+
+    /**
+     * @type {number}
+     */
+    time
+
+    /**
+     * @type {number}
+     */
+    selectedTime
+
+    /**
+     * @type {number}
+     */
+    loopTimes
+
+    /**
+     * @type {boolean}
+     */
+    selected
+
+    /**
      * @param {number} id
      * @param {string} name
      */
@@ -101,6 +131,14 @@ export default class Animation extends AnimationData {
         }
     }
 
+    /**
+     * @return {KeyFrame}
+     */
+    getSelectedFrame(){
+        return this.getProperties().reduce(
+            (frame, animationProperty) => animationProperty.getSelectedFrame() , null)
+    }
+
     updateTimeline() {
         this.setDuration(Math.ceil(this.getSamples() * this.getLengthSecond()))
     }
@@ -163,6 +201,90 @@ export default class Animation extends AnimationData {
         this.setTime(playInfo.time)
         this.setSelectedTime(this.getFrameTime())
         return playInfo.frames
+    }
+
+    /**
+     * @param {number} assetId
+     */
+    setAssetId(assetId){
+        this.assetId = assetId
+    }
+
+    /**
+     * @return {number}
+     */
+    getAssetId(){
+        return this.assetId
+    }
+
+    /**
+     * @param {boolean} playing
+     */
+    setPlaying(playing) {
+        this.playing = playing
+    }
+
+    /**
+     * @return {boolean}
+     */
+    isPlaying() {
+        return this.playing
+    }
+
+    /**
+     * @return {number}
+     */
+    getSelectedTime() {
+        return this.selectedTime
+    }
+
+    /**
+     * @param {number} selectedTime
+     */
+    setSelectedTime(selectedTime){
+        this.selectedTime = selectedTime
+    }
+
+    /**
+     * @return {number}
+     */
+    getTime() {
+        return this.time
+    }
+
+    /**
+     * @param {number} time
+     */
+    setTime(time) {
+        this.time = time
+    }
+
+    /**
+     * @param {number|string} loopTimes
+     */
+    setLoopTimes(loopTimes) {
+        this.loopTimes = parseInt(loopTimes)
+    }
+
+    /**
+     * @return {number}
+     */
+    getLoopTimes() {
+        return this.loopTimes
+    }
+
+    /**
+     * @return {boolean}
+     */
+    getSelected(){
+        return this.selected
+    }
+
+    /**
+     * @param {boolean} selected
+     */
+    setSelected(selected){
+        this.selected = selected
     }
 
 }

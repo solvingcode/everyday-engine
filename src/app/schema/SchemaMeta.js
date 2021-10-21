@@ -612,6 +612,9 @@ export default {
                                     samples: {
                                         type: TYPES.NUMBER
                                     },
+                                    duration: {
+                                        type: TYPES.NUMBER
+                                    },
                                     lengthSecond: {
                                         type: TYPES.NUMBER
                                     },

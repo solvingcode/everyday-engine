@@ -32,6 +32,7 @@ import {ShortcutRunner} from '../runner/shortcut/ShortcutRunner.js'
 import TileEditorRunner from '../runner/editor/TileEditorRunner.js'
 import TileMapExecutor from '../executor/type/TileMapExecutor.js'
 import TileColliderExecutor from '../executor/type/TileColliderExecutor.js'
+import AssetRunner from '../runner/asset/AssetRunner.js'
 
 /**
  * @class {SetupLoop}
@@ -54,7 +55,7 @@ class SetupLoop extends Loop {
         this.runners = [
             WorldInitializeRunner, /*HistoryRunner,*/ SimulateRunner, ActionRunner, EditorRunner, ScriptEditorRunner,
             AnimationEditorRunner, TileEditorRunner, MenuRunner, SetupExecutorRunner, SetupRenderRunner, WindowRunner,
-            GraphDrawerRunner, UnitDrawerRunner, FormRunner, LightRunner, SceneRunner, ShortcutRunner
+            GraphDrawerRunner, UnitDrawerRunner, FormRunner, LightRunner, SceneRunner, ShortcutRunner, AssetRunner
         ]
         ExecutorRegistry.get().register([
             new CameraExecutor(),

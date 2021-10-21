@@ -18,7 +18,7 @@ class FormUpdateAction extends Action {
     static run() {
         const {event, item} = StateManager.get().getNextProgressData(this.STATE)
         item.setIsEditing(true)
-        if(this.isAtChangeField(item.field) && this.isFieldChanged(item)){
+        if (this.isAtChangeField(item.field) && this.isFieldChanged(item)) {
             this.save(event, item)
         }
         return this.isInstantField(item.field)
@@ -38,7 +38,7 @@ class FormUpdateAction extends Action {
      * @param {Function} event
      * @param {MenuItem}item
      */
-    static save(event, item){
+    static save(event, item) {
         const menu = Menu.get()
         const menuItemUI = menu.findItemByElement(item)
         const uiRenderer = menu.getUIRenderer()
@@ -88,7 +88,7 @@ class FormUpdateAction extends Action {
     static isFieldChanged(item) {
         const menu = Menu.get()
         const menuItemUI = menu.findItemByElement(item)
-        if(menuItemUI){
+        if (menuItemUI) {
             const uiRenderer = menu.getUIRenderer()
             const formElement = uiRenderer.getType(menuItemUI).getFormElement(menuItemUI, uiRenderer)
             const oldValue = item.value()

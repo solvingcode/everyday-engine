@@ -7,6 +7,11 @@ import AssetData from '../project/data/AssetData.js'
 export default class Asset extends AssetData {
 
     /**
+     * @type {string}
+     */
+    oldName
+
+    /**
      * @param {Folder} folder
      * @param {Object} props
      */
@@ -14,6 +19,7 @@ export default class Asset extends AssetData {
         super()
         this.id = Maths.generateId()
         this.name = props.name || 'Asset'
+        this.oldName = this.name
         this.selected = false
         this.folderId = folder ? folder.getId() : null
         this.type = null
@@ -47,17 +53,24 @@ export default class Asset extends AssetData {
     }
 
     /**
-     * @override
+     * @return {string}
      */
-    setName(name) {
-        const oldName = this.getName()
-        super.setName(name)
-        if (oldName !== name) {
-            const assetType = this.getType()
-            if (assetType) {
-                assetType.rename(oldName, name)
-            }
-        }
+    getOldName(){
+        return this.oldName
+    }
+
+    /**
+     * @param {string} oldName
+     */
+    setOldName(oldName){
+       this.oldName = oldName
+    }
+
+    /**
+     * @return {boolean}
+     */
+    isNameUpdated(){
+        return this.getOldName() !== this.getName()
     }
 
     /**

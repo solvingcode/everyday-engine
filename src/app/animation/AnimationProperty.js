@@ -49,4 +49,11 @@ export default class AnimationProperty extends AnimationPropertyData {
         return this.frames.find(frame => frame.getTime() === time)
     }
 
+    /**
+     * @return {KeyFrame}
+     */
+    getSelectedFrame(){
+        return this.getFrames().find(frame => frame.getSelected())
+    }
+
 }

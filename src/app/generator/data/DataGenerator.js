@@ -4,6 +4,7 @@ import UnitDataIdGenerator from './id/UnitDataIdGenerator.js'
 import UnitDataTypeGenerator from './type/UnitDataTypeGenerator.js'
 import DefaultDataIdGenerator from './id/DefaultDataIdGenerator.js'
 import ScriptDataTypeGenerator from './type/ScriptDataTypeGenerator.js'
+import AnimationDataTypeGenerator from './type/AnimationDataTypeGenerator.js'
 
 export default class DataGenerator {
 
@@ -26,6 +27,8 @@ export default class DataGenerator {
                 return UnitDataIdGenerator
             case StorageConstant.type.SCRIPT:
                 return DefaultDataIdGenerator
+            case StorageConstant.type.ANIMATION:
+                return DefaultDataIdGenerator
             default:
                 throw new SystemError(`Storage type "${type}" not supported`)
         }
@@ -41,6 +44,8 @@ export default class DataGenerator {
                 return UnitDataTypeGenerator
             case StorageConstant.type.SCRIPT:
                 return ScriptDataTypeGenerator
+            case StorageConstant.type.ANIMATION:
+                return AnimationDataTypeGenerator
             default:
                 throw new SystemError(`Storage type "${type}" not supported`)
         }

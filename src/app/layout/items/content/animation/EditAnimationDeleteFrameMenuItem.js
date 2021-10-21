@@ -23,7 +23,6 @@ export default class EditAnimationDeleteFrameMenuItem extends MenuItem {
      */
     isValid() {
         const {animation} = this.data
-        const timeline = animation && animation.getSelectedTimeline()
-        return super.isValid() && timeline && !!timeline.getFrame()
+        return super.isValid() && animation && animation.getSelectedFrame()
     }
 }

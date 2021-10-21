@@ -258,7 +258,7 @@ export default class AssetHelper {
      */
     static load(asset, data, storage) {
         if (this.isAssetImage(asset)) {
-            return asset.getType().getData().fromImage(data);
+            return asset.getType().getData().fromImage(data)
         } else if (this.isParsedAsset(asset)) {
             const type = this.getStorageTypeFromAsset(asset)
             return asset.getType().setDataUrl(data)
