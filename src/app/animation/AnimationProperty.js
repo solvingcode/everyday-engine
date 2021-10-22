@@ -5,13 +5,22 @@ export default class AnimationProperty extends AnimationPropertyData {
 
     /**
      * @param {number} id
-     * @param {string} name
+     * @param {string} componentName
+     * @param {string} attributeName
      */
-    constructor(id, name) {
+    constructor(id, componentName, attributeName) {
         super()
         this.id = id
-        this.name = name
+        this.componentName = componentName
+        this.attributeName = attributeName
         this.selected = false
+    }
+
+    /**
+     * @return {string}
+     */
+    getName(){
+        return `${this.getComponentName()} - ${this.getAttributeName()}`
     }
 
     /**

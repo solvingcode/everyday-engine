@@ -7,6 +7,11 @@ import AnimationManagerData from '../project/data/AnimationManagerData.js'
 export default class AnimationManager extends AnimationManagerData {
 
     /**
+     * @type {Animation}
+     */
+    animationRecording
+
+    /**
      * @param {string} name
      * @return {Animation}
      */
@@ -154,6 +159,24 @@ export default class AnimationManager extends AnimationManagerData {
      */
     findAnimationByAsset(asset){
         return this.getAnimations().find(animation => animation.getAssetId() === asset.getId())
+    }
+
+    /**
+     * @return {Animation}
+     */
+    getAnimationRecording(){
+        return this.animationRecording
+    }
+
+    /**
+     * @param {Animation} animation
+     */
+    startRecording(animation){
+        this.animationRecording = animation
+    }
+
+    stopRecording(){
+        this.animationRecording = null
     }
 
 }

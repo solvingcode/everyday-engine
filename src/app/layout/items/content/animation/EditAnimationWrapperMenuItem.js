@@ -1,6 +1,6 @@
 import MenuItem from '../../../MenuItem.js'
 import Layout from '../../../Layout.js'
-import EditAnimationTimelineMenuItem from './EditAnimationTimelineMenuItem.js'
+import EditAnimationBodyMenuItem from './EditAnimationBodyMenuItem.js'
 import WindowManager, {WINDOWS} from '../../../../manager/WindowManager.js'
 
 export default class EditAnimationWrapperMenuItem extends MenuItem {
@@ -12,7 +12,7 @@ export default class EditAnimationWrapperMenuItem extends MenuItem {
             type: Layout.type.WRAPPER
         })
         this.items = [
-            new EditAnimationTimelineMenuItem(this)
+            new EditAnimationBodyMenuItem(this)
         ]
     }
 

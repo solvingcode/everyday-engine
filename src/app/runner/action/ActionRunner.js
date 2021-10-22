@@ -125,6 +125,8 @@ import DeleteFunctionAction from './script/DeleteFunctionAction.js'
 import CloseEditAnimationAction from './animation/CloseEditAnimationAction.js'
 import AddWindowAction from './window/AddWindowAction.js'
 import CloseWindowAction from './window/CloseWindowAction.js'
+import StartAnimationRecordingAction from './animation/StartAnimationRecordingAction.js'
+import StopAnimationRecordingAction from './animation/StopAnimationRecordingAction.js'
 
 /**
  * Action Runner class.
@@ -275,6 +277,8 @@ class ActionRunner extends Runner {
             CLOSE_EDIT_ANIMATION: CloseEditAnimationAction,
             ADD_WINDOW: AddWindowAction,
             CLOSE_WINDOW: CloseWindowAction,
+            EDIT_ANIMATION_START_RECORD: StartAnimationRecordingAction,
+            EDIT_ANIMATION_STOP_RECORD: StopAnimationRecordingAction,
         }
         const selectedUnits = this.unitSelector.getSelected(World.get())
         for (const iTypeAction in typeActions) {

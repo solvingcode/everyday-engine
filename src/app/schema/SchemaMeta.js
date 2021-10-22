@@ -633,8 +633,11 @@ export default {
                                                     id: {
                                                         type: TYPES.NUMBER
                                                     },
-                                                    name: {
-                                                        type: TYPES.STRING
+                                                    componentName: {
+                                                        type: TYPES.STRING,
+                                                    },
+                                                    attributeName: {
+                                                        type: TYPES.STRING,
                                                     },
                                                     frames: {
                                                         type: Array,
@@ -651,22 +654,8 @@ export default {
                                                                     time: {
                                                                         type: TYPES.NUMBER
                                                                     },
-                                                                    component: {
-                                                                        type: Component,
-                                                                        meta: {
-                                                                            dataId: {
-                                                                                type: TYPES.NUMBER
-                                                                            },
-                                                                            id: {
-                                                                                type: TYPES.NUMBER
-                                                                            },
-                                                                            name: {
-                                                                                type: TYPES.STRING
-                                                                            },
-                                                                            attributes: {
-                                                                                type: TYPES.ARRAY | TYPES.DYNAMIC_ATTRIBUTE
-                                                                            }
-                                                                        }
+                                                                    attribute: {
+                                                                        type: TYPES.DYNAMIC_ATTRIBUTE
                                                                     }
                                                                 }
                                                             }

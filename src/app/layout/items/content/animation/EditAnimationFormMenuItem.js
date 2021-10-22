@@ -1,6 +1,8 @@
 import FormMenuItem from '../../form/FormMenuItem.js'
 import Layout from '../../../Layout.js'
 import World from '../../../../world/World.js'
+import AssetHelper from '../../../../utils/AssetHelper.js'
+import Storage from '../../../../core/Storage.js'
 
 export default class EditAnimationFormMenuItem extends FormMenuItem {
     /**
@@ -42,7 +44,7 @@ export default class EditAnimationFormMenuItem extends FormMenuItem {
         const world = World.get()
         const animation = this.data
         const animationAsset = world.getAssetsManager().findAssetById(animation.getAssetId())
-        animationAsset.generate(animation)
+        AssetHelper.regenerate(animationAsset, animation, Storage.get())
     }
 
     /**

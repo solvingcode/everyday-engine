@@ -10,7 +10,12 @@ export default class AnimationPropertyData extends Data {
     /**
      * @type {string}
      */
-    name
+    componentName
+
+    /**
+     * @type {string}
+     */
+    attributeName
 
     /**
      * @type {KeyFrame[]}
@@ -42,17 +47,31 @@ export default class AnimationPropertyData extends Data {
     }
 
     /**
-     * @param {string} name
+     * @param {string} componentName
      */
-    setName(name) {
-        this.name = name
+    setComponentName(componentName){
+        this.componentName = componentName
     }
 
     /**
      * @return {string}
      */
-    getName() {
-        return this.name
+    getComponentName(){
+        return this.componentName
+    }
+
+    /**
+     * @param {string} attributeName
+     */
+    setAttributeName(attributeName){
+        this.attributeName = attributeName
+    }
+
+    /**
+     * @return {string}
+     */
+    getAttributeName(){
+        return this.attributeName
     }
 
     /**

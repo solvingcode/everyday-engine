@@ -614,6 +614,12 @@ AppState.States = {
     ACTION_CLOSE_WINDOW_START: {history: false},
     ACTION_CLOSE_WINDOW_PROGRESS: {history: false},
     ACTION_CLOSE_WINDOW_STOP: {history: false},
+    ACTION_EDIT_ANIMATION_START_RECORD_START: {history: false},
+    ACTION_EDIT_ANIMATION_START_RECORD_PROGRESS: {history: false},
+    ACTION_EDIT_ANIMATION_START_RECORD_STOP: {history: false},
+    ACTION_EDIT_ANIMATION_STOP_RECORD_START: {history: false},
+    ACTION_EDIT_ANIMATION_STOP_RECORD_PROGRESS: {history: false},
+    ACTION_EDIT_ANIMATION_STOP_RECORD_STOP: {history: false},
 }
 
 export default AppState

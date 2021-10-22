@@ -25,11 +25,6 @@ export default class AnimationData extends Data {
     /**
      * @type {number}
      */
-    duration
-
-    /**
-     * @type {number}
-     */
     lengthSecond
 
     /**
@@ -113,17 +108,10 @@ export default class AnimationData extends Data {
     }
 
     /**
-     * @param {number|string} duration
-     */
-    setDuration(duration) {
-        this.duration = parseInt(duration)
-    }
-
-    /**
      * @return {number}
      */
     getDuration() {
-        return this.duration
+        return Math.ceil(this.getSamples() * this.getLengthSecond())
     }
 
     /**

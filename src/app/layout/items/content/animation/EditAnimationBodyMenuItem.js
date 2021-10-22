@@ -1,15 +1,14 @@
 import PanelMenuItem from '../../panel/PanelMenuItem.js'
 import EditAnimationFormWrapperMenuItem from './EditAnimationFormWrapperMenuItem.js'
-import EditAnimationTimelineListMenuItem from './EditAnimationTimelineListMenuItem.js'
 import World from '../../../../world/World.js'
 import UnitSelector from '../../../../selector/UnitSelector.js'
 import CloseWindowMenuItem from '../../window/CloseWindowMenuItem.js'
 import {WINDOWS} from '../../../../manager/WindowManager.js'
 import CreateAnimationWrapperMenuItem from './CreateAnimationWrapperMenuItem.js'
 import ObjectHelper from '../../../../utils/ObjectHelper.js'
-import EditAnimationPropertyListMenuItem from './EditAnimationPropertyListMenuItem.js'
+import EditAnimationTimelineWrapperMenuItem from './EditAnimationTimelineWrapperMenuItem.js'
 
-export default class EditAnimationTimelineMenuItem extends PanelMenuItem {
+export default class EditAnimationBodyMenuItem extends PanelMenuItem {
     /**
      * @param {MenuItem} parent
      */
@@ -35,8 +34,7 @@ export default class EditAnimationTimelineMenuItem extends PanelMenuItem {
             this.items = [
                 new CloseWindowMenuItem(WINDOWS.ANIMATION, this),
                 new EditAnimationFormWrapperMenuItem(this, animation),
-                new EditAnimationPropertyListMenuItem(this, animation),
-                new EditAnimationTimelineListMenuItem(this, animation)
+                new EditAnimationTimelineWrapperMenuItem(this, animation)
             ]
         } else if (!ObjectHelper.isEqual(this.data, data)) {
             this.data = data

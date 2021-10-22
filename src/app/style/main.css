@@ -452,11 +452,13 @@ h4{
     box-sizing: border-box;
     height: 50px;
     background: none;
-    border-bottom: 1px solid #4d4d4c;
 }
 .animation-wrapper .panel .animation-form-wrapper{
-    width: 100%;
+    width: max-content;
+    min-width: 100%;
+    height: 36px;
     box-sizing: border-box;
+    overflow: auto;
 }
 .animation-wrapper .panel .animation-form-wrapper .form{
     float: left;
@@ -517,6 +519,42 @@ h4{
 .animation-wrapper .panel .list-element .text p{
     position: unset !important;
     padding: 0;
+}
+
+.animation-wrapper .animation-timeline-wrapper{
+    width: 100%;
+    height: calc(100% - 40px - 36px);
+    overflow: auto;
+}
+
+.animation-wrapper .animation-timeline-wrapper > .panel{
+    width: max-content;
+    min-width: 100%;
+    overflow: hidden;
+}
+
+.animation-wrapper .animation-timeline-wrapper > .panel > div > .list-element{
+    width: unset;
+    position: unset;
+    float: unset;
+    padding-top: 0;
+    height: 40px;
+}
+
+.animation-wrapper .animation-timeline-wrapper > .panel > div > .list-element > .text{
+    box-sizing: border-box;
+    height: 100%;
+    width: 200px;
+    position: unset;
+    float: left;
+    padding: 0;
+}
+
+.animation-wrapper .animation-timeline-wrapper > .panel > div > .list-element > .panel{
+    box-sizing: border-box;
+    height: 100%;
+    width: calc(100% - 200px);
+    float: left;
 }
 
 .units-wrapper .list-element {

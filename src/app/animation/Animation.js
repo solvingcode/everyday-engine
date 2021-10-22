@@ -57,7 +57,6 @@ export default class Animation extends AnimationData {
      */
     setSamples(samples) {
         super.setSamples(samples)
-        this.updateTimeline()
     }
 
     /**
@@ -81,28 +80,32 @@ export default class Animation extends AnimationData {
     }
 
     /**
-     * @param {string} property
+     * @param {string} componentName
+     * @param {string} attributeName
      * @return {AnimationProperty}
      */
-    getProperty(property){
-        return this.getProperties().find(prop => prop.getName() === property)
+    getProperty(componentName, attributeName){
+        return this.getProperties().find(prop => prop.getComponentName() === componentName &&
+            prop.getAttributeName() === attributeName)
     }
 
     /**
-     * @param {string} propertyName
+     * @param {string} componentName
+     * @param {string} attributeName
      */
-    addProperty(propertyName){
-        const newProperty = new AnimationProperty(Maths.generateId(), propertyName)
+    addProperty(componentName, attributeName){
+        const newProperty = new AnimationProperty(Maths.generateId(), componentName, attributeName)
         this.getProperties().push(newProperty)
         return newProperty
     }
 
     /**
-     * @param {string} propertyName
+     * @param {string} componentName
+     * @param {string} attributeName
      * @param {KeyFrame} frame
      */
-    addFrame(propertyName, frame) {
-        const property = this.getProperty(propertyName) || this.addProperty(propertyName)
+    addFrame(componentName, attributeName, frame) {
+        const property = this.getProperty(componentName, attributeName) || this.addProperty(componentName, attributeName)
         if (frame.getTime() < this.getDuration()) {
             if (!property.tryGetAt(frame.getTime())) {
                 property.addFrame(frame)
@@ -137,10 +140,6 @@ export default class Animation extends AnimationData {
     getSelectedFrame(){
         return this.getProperties().reduce(
             (frame, animationProperty) => animationProperty.getSelectedFrame() , null)
-    }
-
-    updateTimeline() {
-        this.setDuration(Math.ceil(this.getSamples() * this.getLengthSecond()))
     }
 
     /**

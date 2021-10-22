@@ -282,6 +282,9 @@ button.selected, button.hidden.selected, button.locked.selected{
 .animation-wrapper .animation-create-wrapper button:hover{
     background-color: #4e4e4e;
 }
+.animation-wrapper .animation-timeline-wrapper > .panel > div > .list-element{
+    border-bottom: 1px solid #4d4d4c;
+}
 
 .units-wrapper .list-element .list-element-img-wrapper i{
     color: #333333;

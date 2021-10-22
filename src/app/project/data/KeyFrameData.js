@@ -8,9 +8,9 @@ export default class KeyFrameData extends Data {
     id
 
     /**
-     * @type {Component}
+     * @type {DynamicAttribute}
      */
-    component
+    attribute
 
     /**
      * @type {number}
@@ -32,17 +32,17 @@ export default class KeyFrameData extends Data {
     }
 
     /**
-     * @param {Component} component
+     * @param {DynamicAttribute} attribute
      */
-    setComponent(component){
-        this.component = component
+    setAttribute(attribute){
+        this.attribute = attribute
     }
 
     /**
-     * @return {Component}
+     * @return {DynamicAttribute}
      */
-    getComponent(){
-        return this.component
+    getAttribute(){
+        return this.attribute
     }
 
     /**
