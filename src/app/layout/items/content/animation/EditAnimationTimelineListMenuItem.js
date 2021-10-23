@@ -37,6 +37,7 @@ export default class EditAnimationTimelineListMenuItem extends ListMenuItem {
     }
 
     /**
+     * @todo Need optimization
      * @param {Animation} animation
      * @return {PropertyTimeline[]}
      */
@@ -54,6 +55,7 @@ export default class EditAnimationTimelineListMenuItem extends ListMenuItem {
                         `${second}:${secondDivide < 10 ? '0' : ''}${secondDivide}`,
                         property,
                         animation,
+                        property && property.tryGetAt(index),
                         animation.getTime() === index)
                 })))
     }
@@ -148,6 +150,11 @@ class TimeDuration {
     property
 
     /**
+     * @type {KeyFrame}
+     */
+    frame
+
+    /**
      * @type {boolean}
      */
     selected
@@ -157,14 +164,16 @@ class TimeDuration {
      * @param {string} name
      * @param {AnimationProperty} property
      * @param {Animation} animation
+     * @param {KeyFrame} frame
      * @param {boolean} selected
      */
-    constructor(time, name, property, animation, selected) {
+    constructor(time, name, property, animation, frame, selected) {
         this.time = time
         this.name = name
         this.property = property
         this.animation = animation
         this.selected = selected
+        this.frame = frame
     }
 
     /**
@@ -186,6 +195,13 @@ class TimeDuration {
      */
     getName() {
         return this.name
+    }
+
+    /**
+     * @return {KeyFrame}
+     */
+    getFrame(){
+        return this.frame
     }
 
     /**

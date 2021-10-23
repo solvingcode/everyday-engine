@@ -2,6 +2,7 @@ import FormMenuItem from '../../form/FormMenuItem.js'
 import Layout from '../../../Layout.js'
 import World from '../../../../world/World.js'
 import UnitSelector from '../../../../selector/UnitSelector.js'
+import AnimationComponent from '../../../../component/internal/AnimationComponent.js'
 
 export default class EditAnimationSelectMenuItem extends FormMenuItem {
     /**
@@ -15,9 +16,6 @@ export default class EditAnimationSelectMenuItem extends FormMenuItem {
             type: Layout.type.FORM,
             zone: parent.zone
         }, parent)
-        const form = new SelectAnimationForm()
-        form.setAnimationId(animation.getId())
-        this.data = form
     }
 
     /**
@@ -32,7 +30,7 @@ export default class EditAnimationSelectMenuItem extends FormMenuItem {
             .map(pAnimation => ({value: pAnimation.getId(), label: pAnimation.getName()}))
         return [
             {
-                bind: 'animationId',
+                bind: 'animation',
                 label: 'Animation',
                 type: Layout.form.DROPDOWN,
                 list
@@ -43,17 +41,8 @@ export default class EditAnimationSelectMenuItem extends FormMenuItem {
     /**
      * @override
      */
-    postUpdate(value) {
-        const world = World.get()
-        const animation = world.getAnimationManager().findById(this.data.getAnimationId())
-        world.getAnimationManager().selectAnimation(animation)
-    }
-
-    /**
-     * @override
-     */
     getFormObject() {
-        return this.data
+        return this.getUnit().getComponent(AnimationComponent)
     }
 
     /**
@@ -68,29 +57,6 @@ export default class EditAnimationSelectMenuItem extends FormMenuItem {
      */
     isValid() {
         return super.isValid() && !!this.getUnit()
-    }
-
-}
-
-class SelectAnimationForm {
-
-    /**
-     * @type {number}
-     */
-    animationId
-
-    /**
-     * @return {number}
-     */
-    getAnimationId() {
-        return this.animationId
-    }
-
-    /**
-     * @param {number} animationId
-     */
-    setAnimationId(animationId) {
-        this.animationId = animationId
     }
 
 }

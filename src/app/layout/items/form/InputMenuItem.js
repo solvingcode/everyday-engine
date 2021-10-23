@@ -31,14 +31,14 @@ class InputMenuItem extends MenuItem {
     /**
      * @param {boolean} isEditing
      */
-    setIsEditing(isEditing){
+    setIsEditing(isEditing) {
         this.props.isEditing = isEditing
     }
 
     /**
      * @return {boolean}
      */
-    isEditing(){
+    isEditing() {
         return this.props.isEditing
     }
 
@@ -52,6 +52,25 @@ class InputMenuItem extends MenuItem {
             } catch (e) {
                 console.warn(`Callback error! `, e)
             }
+        }
+    }
+
+    /**
+     * @return {MenuItem}
+     */
+    getFormMenuItem() {
+        return this.findParentFormMenuItem(this)
+    }
+
+    /**
+     * @param {MenuItem} menuItem
+     * @return {MenuItem}
+     */
+    findParentFormMenuItem(menuItem) {
+        if (menuItem.isForm()) {
+            return menuItem
+        } else {
+            return menuItem.parent || this.findParentFormMenuItem(menuItem.parent)
         }
     }
 

@@ -22,11 +22,6 @@ export default class AnimationPropertyData extends Data {
      */
     frames
 
-    /**
-     * @type {boolean}
-     */
-    selected
-
     constructor() {
         super()
         this.frames = []
@@ -75,20 +70,6 @@ export default class AnimationPropertyData extends Data {
     }
 
     /**
-     * @return {boolean}
-     */
-    getSelected(){
-        return this.selected
-    }
-
-    /**
-     * @param {boolean} selected
-     */
-    setSelected(selected){
-        this.selected = selected
-    }
-
-    /**
      * @param {KeyFrame[]} frames
      */
     setFrames(frames) {
@@ -100,6 +81,13 @@ export default class AnimationPropertyData extends Data {
      */
     getFrames() {
         return this.frames
+    }
+
+    /**
+     * @param {KeyFrame[]} frames
+     */
+    concatFrames(frames){
+        this.setFrames(frames)
     }
 
 }

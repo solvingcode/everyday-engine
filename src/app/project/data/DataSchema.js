@@ -235,6 +235,8 @@ import FunctionOutputNode from '../../flow/node/FunctionOutputNode.js'
 import LoopNode from '../../flow/node/LoopNode.js'
 import ThenNode from '../../flow/node/ThenNode.js'
 import Animation from '../../animation/Animation.js'
+import AnimationProperty from '../../animation/AnimationProperty.js'
+import KeyFrame from '../../animation/KeyFrame.js'
 
 /**
  * @class {DataSchema}
@@ -467,6 +469,8 @@ class DataSchema {
         {id: 2120, type: LoopNode},
         {id: 2130, type: ThenNode},
         {id: 2140, type: Animation},
+        {id: 2150, type: AnimationProperty},
+        {id: 2160, type: KeyFrame},
     ]
 
     /**

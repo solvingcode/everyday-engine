@@ -501,24 +501,27 @@ h4{
 }
 
 .animation-wrapper .panel .list-element{
-    width: 60px;
+    width: 40px;
     height: 100%;
     float: left;
     position: relative;
-    padding-top: 25px;
+    text-align: center;
 }
 
 .animation-wrapper .panel .list-element .text{
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    padding: 2px 5px;
+    padding: 0;
 }
 
 .animation-wrapper .panel .list-element .text p{
     position: unset !important;
     padding: 0;
+}
+
+.animation-wrapper .panel .list-element button{
+    top: 50%;
+    left: 50%;
+    -ms-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
 }
 
 .animation-wrapper .animation-timeline-wrapper{
@@ -538,7 +541,7 @@ h4{
     position: unset;
     float: unset;
     padding-top: 0;
-    height: 40px;
+    height: 20px;
 }
 
 .animation-wrapper .animation-timeline-wrapper > .panel > div > .list-element > .text{

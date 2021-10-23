@@ -69,9 +69,10 @@ class FormMenuItem extends MenuItem {
 
     /**
      * @param {*} value
+     * @param {MenuItem} menuItem
      * @return {boolean}
      */
-    preUpdate(value) {
+    preUpdate(value, menuItem) {
         return true
     }
 
@@ -206,7 +207,7 @@ class FormMenuItem extends MenuItem {
     getFormItem(field) {
         const existItem = this.items.find(item => item.props.name === field.label)
         const getter = this.getGetter(field)
-        const setter = this.getSetter(field)
+        const setter = this.getSetter(field, this)
         const typeMenuItem = this.getMenuItem(field)
         const menuItem = new typeMenuItem(this,
             {
@@ -277,9 +278,10 @@ class FormMenuItem extends MenuItem {
 
     /**
      * @param {FormField} field
+     * @param {{bindObject: *}} object
      * @return {callback}
      */
-    getSetter(field) {
+    getSetter(field, object) {
         const setterString = this.getSetterString(field)
         const setterDynamicField = 'setValue'
         const getterDynamicField = 'getValue'
@@ -302,7 +304,7 @@ class FormMenuItem extends MenuItem {
                     }
                 }
                 , self.bindObject)
-        })(setterString, field.bind.split('.'), this)
+        })(setterString, field.bind.split('.'), object)
     }
 
     /**
@@ -347,6 +349,13 @@ class FormMenuItem extends MenuItem {
             default:
                 throw new SystemError(`Form item "${field.type}" not defined`)
         }
+    }
+
+    /**
+     * @override
+     */
+    isForm(){
+        return true
     }
 }
 

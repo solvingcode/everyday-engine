@@ -274,7 +274,10 @@ button.selected, button.hidden.selected, button.locked.selected{
     border-right: 1px solid #4d4d4c;
 }
 .animation-wrapper .panel .list-element .text p{
-    color: #787878 !important;
+    color: #b3b3b3;
+}
+.animation-wrapper .panel .list-element button{
+    color: #8a6343;
 }
 .animation-wrapper .panel .list-element.selected{
     background-color: #2c3545;

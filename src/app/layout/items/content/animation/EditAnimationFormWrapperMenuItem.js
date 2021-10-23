@@ -18,10 +18,14 @@ export default class EditAnimationFormWrapperMenuItem extends MenuItem {
         })
         this.parent = parent
         this.items = [
-            new EditAnimationSelectMenuItem(this, animation),
-            new EditAnimationActionsMenuItem(this, animation),
-            new EditAnimationFormMenuItem(this, animation)
+            new EditAnimationSelectMenuItem(this, animation)
         ]
+        if (animation) {
+            this.items = [...this.items, ...[
+                new EditAnimationActionsMenuItem(this, animation),
+                new EditAnimationFormMenuItem(this, animation)
+            ]]
+        }
     }
 
 }

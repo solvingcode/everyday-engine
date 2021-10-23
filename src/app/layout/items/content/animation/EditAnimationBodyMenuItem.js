@@ -7,6 +7,7 @@ import {WINDOWS} from '../../../../manager/WindowManager.js'
 import CreateAnimationWrapperMenuItem from './CreateAnimationWrapperMenuItem.js'
 import ObjectHelper from '../../../../utils/ObjectHelper.js'
 import EditAnimationTimelineWrapperMenuItem from './EditAnimationTimelineWrapperMenuItem.js'
+import AnimationComponent from '../../../../component/internal/AnimationComponent.js'
 
 export default class EditAnimationBodyMenuItem extends PanelMenuItem {
     /**
@@ -27,15 +28,20 @@ export default class EditAnimationBodyMenuItem extends PanelMenuItem {
     doUpdate() {
         const unit = this.getUnit()
         const animation = this.getAnimation()
+        const animations = this.getAnimations()
         const animationController = this.getAnimationController()
         const data = {unit, animationController, animation}
-        if (animation && !ObjectHelper.isEqual(this.data, data)) {
+        if (animations && animations.length > 0 && !ObjectHelper.isEqual(this.data, data)) {
             this.data = data
             this.items = [
                 new CloseWindowMenuItem(WINDOWS.ANIMATION, this),
-                new EditAnimationFormWrapperMenuItem(this, animation),
-                new EditAnimationTimelineWrapperMenuItem(this, animation)
+                new EditAnimationFormWrapperMenuItem(this, animation)
             ]
+            if(animation){
+                this.items = [...this.items, ...[
+                    new EditAnimationTimelineWrapperMenuItem(this, animation)
+                ]]
+            }
         } else if (!ObjectHelper.isEqual(this.data, data)) {
             this.data = data
             this.items = [
@@ -50,12 +56,22 @@ export default class EditAnimationBodyMenuItem extends PanelMenuItem {
      */
     getAnimation() {
         const world = World.get()
+        const unit = this.getUnit()
         const animationController = this.getAnimationController()
         if (animationController) {
-            const animations = world.getAnimationManager().findAnimationsByControllerAssetId(animationController.getAssetId())
-            if (animations.length > 0) {
-                return animations.find(animation => animation.getSelected()) || animations[0]
-            }
+            const animationComponent = unit.getComponent(AnimationComponent)
+            return world.getAnimationManager().findById(animationComponent.getAnimation())
+        }
+    }
+
+    /**
+     * @return {Animation[]}
+     */
+    getAnimations(){
+        const world = World.get()
+        const animationController = this.getAnimationController()
+        if (animationController) {
+            return world.getAnimationManager().findAnimationsByControllerAssetId(animationController.getAssetId())
         }
     }
 

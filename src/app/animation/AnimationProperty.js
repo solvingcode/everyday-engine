@@ -4,6 +4,11 @@ import AnimationPropertyData from '../project/data/AnimationPropertyData.js'
 export default class AnimationProperty extends AnimationPropertyData {
 
     /**
+     * @type {boolean}
+     */
+    selected
+
+    /**
      * @param {number} id
      * @param {string} componentName
      * @param {string} attributeName
@@ -59,10 +64,44 @@ export default class AnimationProperty extends AnimationPropertyData {
     }
 
     /**
+     * @param {number} time
+     * @return {KeyFrame}
+     */
+    tryGetPrevAt(time) {
+        const frames = this.frames.filter(frame => frame.getTime() <= time)
+        return frames.sort((frameA, frameB) =>
+            frameA.getTime() > frameB.getTime() ? -1 : 1)[0]
+    }
+
+    /**
+     * @param {number} time
+     * @return {KeyFrame}
+     */
+    tryGetNextAt(time) {
+        const frames = this.frames.filter(frame => frame.getTime() >= time)
+        return frames.sort((frameA, frameB) =>
+            frameA.getTime() < frameB.getTime() ? -1 : 1)[0]
+    }
+
+    /**
      * @return {KeyFrame}
      */
     getSelectedFrame(){
         return this.getFrames().find(frame => frame.getSelected())
+    }
+
+    /**
+     * @return {boolean}
+     */
+    getSelected(){
+        return this.selected
+    }
+
+    /**
+     * @param {boolean} selected
+     */
+    setSelected(selected){
+        this.selected = selected
     }
 
 }

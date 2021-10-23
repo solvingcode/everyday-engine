@@ -40,11 +40,11 @@ export default class EditAssetFormMenuItem extends FormMenuItem {
     /**
      * @override
      */
-    preUpdate(value) {
+    preUpdate(value, menuItem) {
         if (!value) {
             throw new ClientError(`Cannot move Asset (target folder is required)`)
         }
-        return super.preUpdate(value)
+        return super.preUpdate(value, menuItem)
     }
 
     /**

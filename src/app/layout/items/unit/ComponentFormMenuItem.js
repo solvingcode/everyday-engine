@@ -8,6 +8,8 @@ import CameraComponent from '../../../component/internal/CameraComponent.js'
 import LightComponent from '../../../component/internal/LightComponent.js'
 import StyleComponent from '../../../component/internal/StyleComponent.js'
 import UITextComponent from '../../../component/internal/ui/UITextComponent.js'
+import AssetHelper from '../../../utils/AssetHelper.js'
+import Storage from '../../../core/Storage.js'
 
 export default class ComponentFormMenuItem extends FormMenuItem {
     /**
@@ -32,19 +34,41 @@ export default class ComponentFormMenuItem extends FormMenuItem {
     /**
      * @override
      */
+    preUpdate(value, menuItem) {
+        const world = World.get()
+        const animation = world.getAnimationManager().getAnimationRecording()
+        if (animation) {
+            const animationAsset = world.getAssetsManager().findAssetById(animation.getAssetId())
+            const formMenuItem = menuItem.getFormMenuItem()
+            const bindObject = _.cloneDeep(formMenuItem.getBindObject())
+            const bindFields = menuItem.getDataBind().bind.split('.')
+            const bindAttribute = bindFields[0]
+            const setter = formMenuItem.getSetter(menuItem.getDataBind(), {bindObject})
+            setter(value)
+            animation.setFrame(animation.getTime(), bindObject.getName(),
+                bindAttribute, bindObject.get(bindAttribute))
+            AssetHelper.regenerate(animationAsset, animation, Storage.get())
+            return false
+        }
+        return true
+    }
+
+    /**
+     * @override
+     */
     postUpdate(value) {
         const formObject = this.getFormObject()
         const selectedUnit = UnitSelector.get().getFirstSelected(World.get())
         if (formObject instanceof MeshComponent ||
             formObject instanceof TransformComponent ||
             formObject instanceof CameraComponent ||
-            formObject instanceof StyleComponent  ||
+            formObject instanceof StyleComponent ||
             formObject instanceof UITextComponent) {
             selectedUnit.getComponent(MeshComponent).setGenerated(false)
-        } else if(formObject instanceof LightComponent){
+        } else if (formObject instanceof LightComponent) {
             formObject.setGenerated(false)
             const meshComponent = selectedUnit.getComponent(MeshComponent)
-            if(meshComponent){
+            if (meshComponent) {
                 meshComponent.setGenerated(false)
             }
         }

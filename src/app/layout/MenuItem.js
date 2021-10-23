@@ -332,6 +332,13 @@ class MenuItem {
         return this.menu.getPrevItem(this)
     }
 
+    /**
+     * @return {boolean}
+     */
+    isForm(){
+        return false
+    }
+
 }
 
 /**

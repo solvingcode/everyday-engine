@@ -44,7 +44,7 @@ class FormUpdateAction extends Action {
         const uiRenderer = menu.getUIRenderer()
         if (menuItemUI) {
             const formElement = uiRenderer.getType(menuItemUI).getFormElement(menuItemUI, uiRenderer)
-            if (item.parent.preUpdate(formElement.value)) {
+            if (item.parent.preUpdate(formElement.value, item)) {
                 event(formElement.value)
                 item.parent.postUpdate(formElement.value)
             }

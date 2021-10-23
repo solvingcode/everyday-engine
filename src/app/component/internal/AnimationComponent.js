@@ -33,10 +33,10 @@ export default class AnimationComponent extends ScriptComponent {
     }
 
     /**
-     * @param {number} animation
+     * @param {number|string} animation
      */
     setAnimation(animation) {
-        this.setValue('animation', animation)
+        this.setValue('animation', parseInt(animation))
     }
 
     /**

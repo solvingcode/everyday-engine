@@ -247,6 +247,18 @@ class Vector {
             y: Math.abs(vector.y)
         })
     }
+
+    /**
+     * @param {number} t
+     * @param {number} t1
+     * @param {Vector} v1
+     * @param {number} t2
+     * @param {Vector} v2
+     * @return {Vector}
+     */
+    static interpolate(t, t1, v1, t2, v2){
+        return Vector.add(v1, Vector.multiply(Vector.subtract(v2, v1), (t - t1) / (t2 - t1)))
+    }
 }
 
 export default Vector

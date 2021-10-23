@@ -2,6 +2,7 @@ import ClientError from '../exception/type/ClientError.js'
 import AnimationProperty from './AnimationProperty.js'
 import Maths from '../utils/Maths.js'
 import AnimationData from '../project/data/AnimationData.js'
+import KeyFrame from './KeyFrame.js'
 
 export default class Animation extends AnimationData {
 
@@ -84,7 +85,7 @@ export default class Animation extends AnimationData {
      * @param {string} attributeName
      * @return {AnimationProperty}
      */
-    getProperty(componentName, attributeName){
+    getProperty(componentName, attributeName) {
         return this.getProperties().find(prop => prop.getComponentName() === componentName &&
             prop.getAttributeName() === attributeName)
     }
@@ -93,24 +94,29 @@ export default class Animation extends AnimationData {
      * @param {string} componentName
      * @param {string} attributeName
      */
-    addProperty(componentName, attributeName){
+    addProperty(componentName, attributeName) {
         const newProperty = new AnimationProperty(Maths.generateId(), componentName, attributeName)
         this.getProperties().push(newProperty)
         return newProperty
     }
 
     /**
+     * @param {number} time
      * @param {string} componentName
      * @param {string} attributeName
-     * @param {KeyFrame} frame
+     * @param {DynamicAttribute} attribute
      */
-    addFrame(componentName, attributeName, frame) {
+    setFrame(time, componentName, attributeName, attribute) {
         const property = this.getProperty(componentName, attributeName) || this.addProperty(componentName, attributeName)
-        if (frame.getTime() < this.getDuration()) {
-            if (!property.tryGetAt(frame.getTime())) {
-                property.addFrame(frame)
+        if (time < this.getDuration()) {
+            const existFrame = property.tryGetAt(time)
+            if (existFrame) {
+                existFrame.setAttribute(attribute)
             } else {
-                throw new ClientError(`Cannot add frame at "${frame.getTime()}": Frame already exist`)
+                const newFrame = new KeyFrame()
+                newFrame.setTime(time)
+                newFrame.setAttribute(attribute)
+                property.addFrame(newFrame)
             }
         } else {
             throw new ClientError(`Cannot add frame at "${frame.getTime()}": Out of range`)
@@ -137,9 +143,9 @@ export default class Animation extends AnimationData {
     /**
      * @return {KeyFrame}
      */
-    getSelectedFrame(){
+    getSelectedFrame() {
         return this.getProperties().reduce(
-            (frame, animationProperty) => animationProperty.getSelectedFrame() , null)
+            (frame, animationProperty) => animationProperty.getSelectedFrame(), null)
     }
 
     /**
@@ -153,14 +159,14 @@ export default class Animation extends AnimationData {
      * @param {number} time
      * @return {number}
      */
-    getFrameTimeAt(time){
+    getFrameTimeAt(time) {
         return Math.floor(time)
     }
 
     /**
      * @return {number}
      */
-    getNextTimeFrame(){
+    getNextTimeFrame() {
         return this.getNextTimeFrameAt(this.getTime())
     }
 
@@ -168,7 +174,7 @@ export default class Animation extends AnimationData {
      * @param {number} time
      * @return {number}
      */
-    getNextTimeFrameAt(time){
+    getNextTimeFrameAt(time) {
         const newTime = time + 1
         return newTime % this.duration
     }
@@ -178,7 +184,7 @@ export default class Animation extends AnimationData {
      * @param {number} time
      * @return {{time: number, loopTimes: number, frames: KeyFrame[]}}
      */
-    playAt(deltaTime, time){
+    playAt(deltaTime, time) {
         const expectedFrameTime = this.getLengthSecond() / this.getSamples()
         const newTime = time + deltaTime / expectedFrameTime
         const timeFrame = newTime % this.duration || 0
@@ -205,14 +211,14 @@ export default class Animation extends AnimationData {
     /**
      * @param {number} assetId
      */
-    setAssetId(assetId){
+    setAssetId(assetId) {
         this.assetId = assetId
     }
 
     /**
      * @return {number}
      */
-    getAssetId(){
+    getAssetId() {
         return this.assetId
     }
 
@@ -240,7 +246,7 @@ export default class Animation extends AnimationData {
     /**
      * @param {number} selectedTime
      */
-    setSelectedTime(selectedTime){
+    setSelectedTime(selectedTime) {
         this.selectedTime = selectedTime
     }
 
@@ -275,14 +281,14 @@ export default class Animation extends AnimationData {
     /**
      * @return {boolean}
      */
-    getSelected(){
+    getSelected() {
         return this.selected
     }
 
     /**
      * @param {boolean} selected
      */
-    setSelected(selected){
+    setSelected(selected) {
         this.selected = selected
     }
 
