@@ -56,7 +56,7 @@ export default class EditAnimationTimelineListMenuItem extends ListMenuItem {
                         property,
                         animation,
                         property && property.tryGetAt(index),
-                        animation.getTime() === index)
+                        animation.getFrameTime() === index)
                 })))
     }
 

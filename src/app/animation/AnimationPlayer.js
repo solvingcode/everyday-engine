@@ -1,8 +1,37 @@
 import {TYPES} from '../pobject/AttributeType.js'
 import NumberHelper from '../utils/NumberHelper.js'
 import Vector from '../utils/Vector.js'
+import Component from '../component/Component.js'
+import ClientError from '../exception/type/ClientError.js'
 
 export default class AnimationPlayer {
+
+    /**
+     * @param {Animation} animation
+     * @param {World} world
+     * @param {number} time
+     * @param {Unit} unit
+     */
+    static play(animation, world, time, unit){
+        const componentRegistry = world.getComponentRegistry()
+        animation.getProperties().forEach(property => {
+            const component = componentRegistry.getInstance(property.getComponentName())
+            if ((component instanceof Component)) {
+                const componentClass = component.constructor
+                const prevFrame = property.tryGetPrevAt(time)
+                const nextFrame = property.tryGetNextAt(time)
+                const type = unit.getComponent(componentClass).getType(property.getAttributeName())
+                const newValue = this.interpolate(componentClass, type, time, prevFrame, nextFrame)
+                if (prevFrame) {
+                    if(!_.isEqual(unit.getComponent(componentClass).getValue(property.getAttributeName()), newValue)){
+                        unit.getComponent(componentClass).setValue(property.getAttributeName(), newValue)
+                    }
+                }
+            } else {
+                throw new ClientError(`Cannot set Animation : "${component ? component.constructor.name : component}" must be a Component`)
+            }
+        })
+    }
 
     /**
      * @param {Component} component

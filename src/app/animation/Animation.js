@@ -182,30 +182,23 @@ export default class Animation extends AnimationData {
     /**
      * @param {number} deltaTime
      * @param {number} time
-     * @return {{time: number, loopTimes: number, frames: KeyFrame[]}}
+     * @return {{time: number, loopTimes: number}}
      */
     playAt(deltaTime, time) {
         const expectedFrameTime = this.getLengthSecond() / this.getSamples()
         const newTime = time + deltaTime / expectedFrameTime
-        const timeFrame = newTime % this.duration || 0
-        const loopTimes = Math.floor(newTime / this.duration)
-        return {
-            time: timeFrame,
-            loopTimes,
-            frames: this.tryGetAt(this.getFrameTimeAt(time))
-        }
+        const timeFrame = newTime % this.getDuration() || 0
+        const loopTimes = Math.floor(newTime / this.getDuration())
+        return { time: timeFrame, loopTimes }
     }
 
     /**
      * @param {number} deltaTime
-     * @return {KeyFrame[]}
      */
     play(deltaTime) {
         const playInfo = this.playAt(deltaTime, this.getTime())
         this.loopTimes += playInfo.loopTimes
         this.setTime(playInfo.time)
-        this.setSelectedTime(this.getFrameTime())
-        return playInfo.frames
     }
 
     /**
