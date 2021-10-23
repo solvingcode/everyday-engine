@@ -5,6 +5,8 @@ import FolderTreeMenuItem from '../layout/items/assets/folder/FolderTreeMenuItem
 import AssetsListMenuItem from '../layout/items/assets/file/AssetsListMenuItem.js'
 import ContentCanvasMenuItem from '../layout/items/content/ContentCanvasMenuItem.js'
 import World from '../world/World.js'
+import EditAnimationPropertyFrameListMenuItem
+    from '../layout/items/content/animation/EditAnimationPropertyFrameListMenuItem.js'
 
 export default class StateHelper {
     /**
@@ -27,6 +29,9 @@ export default class StateHelper {
                 case AssetsListMenuItem:
                     stateCodes.delete = 'CONFIRM_ACTION_DELETE_ASSET'
                     stateCodes.paste = 'ACTION_PASTE_ASSET'
+                    break
+                case EditAnimationPropertyFrameListMenuItem:
+                    stateCodes.delete = 'CONFIRM_ACTION_DELETE_ANIMATION_FRAME'
                     break
                 case ContentCanvasMenuItem:
                     const script = world.getScriptManager().getFunctionSelected(world.getTabManager())

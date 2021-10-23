@@ -1,12 +1,14 @@
 import MenuItem from '../../../MenuItem.js'
 import Layout from '../../../Layout.js'
+import UnitSelector from '../../../../selector/UnitSelector.js'
+import World from '../../../../world/World.js'
+import UnitHelper from '../../../../utils/UnitHelper.js'
 
 export default class EditAnimationDeleteFrameMenuItem extends MenuItem {
     /**
      * @param {MenuItem} parent
-     * @param {Animation} animation
      */
-    constructor(parent, animation) {
+    constructor(parent) {
         super({
             name: 'trash',
             title: 'Delete key frame',
@@ -15,14 +17,15 @@ export default class EditAnimationDeleteFrameMenuItem extends MenuItem {
             zone: parent.zone
         })
         this.parent = parent
-        this.data = {animation}
     }
 
     /**
      * @override
      */
     isValid() {
-        const {animation} = this.data
-        return super.isValid() && animation && animation.getSelectedFrame()
+        const world = World.get()
+        const unit = UnitSelector.get().getFirstSelected(world)
+        const animation = UnitHelper.getAnimation(world, unit)
+        return super.isValid() && animation && animation.getSelectedFrames().length
     }
 }

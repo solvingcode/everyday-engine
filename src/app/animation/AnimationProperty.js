@@ -52,7 +52,9 @@ export default class AnimationProperty extends AnimationPropertyData {
      */
     deleteFrame(frame) {
         const frameIndex = this.frames.findIndex(pFrame => pFrame === frame)
-        this.frames.splice(frameIndex, 1)
+        if(frameIndex >= 0){
+            this.frames.splice(frameIndex, 1)
+        }
     }
 
     /**

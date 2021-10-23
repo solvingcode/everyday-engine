@@ -620,6 +620,9 @@ AppState.States = {
     ACTION_EDIT_ANIMATION_STOP_RECORD_START: {history: false},
     ACTION_EDIT_ANIMATION_STOP_RECORD_PROGRESS: {history: false},
     ACTION_EDIT_ANIMATION_STOP_RECORD_STOP: {history: false},
+    ACTION_SELECT_ANIMATION_KEYFRAME_START: {history: false},
+    ACTION_SELECT_ANIMATION_KEYFRAME_PROGRESS: {history: false},
+    ACTION_SELECT_ANIMATION_KEYFRAME_STOP: {history: false},
 }
 
 export default AppState

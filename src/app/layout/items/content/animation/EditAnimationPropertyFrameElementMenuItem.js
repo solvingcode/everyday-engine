@@ -16,7 +16,7 @@ export default class EditAnimationPropertyFrameElementMenuItem extends ListSelec
         })
         if(data.bind.getFrame()){
             this.items = [
-                new EditAnimationPropertyFrameButtonMenuItem(this, data.bind.getFrame())
+                new EditAnimationPropertyFrameButtonMenuItem(this, data.bind.getAnimation(), data.bind.getFrame())
             ]
         }else if(!data.bind.getProperty()){
             this.items = [

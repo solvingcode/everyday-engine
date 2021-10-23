@@ -20,6 +20,7 @@ import ObjectHelper from './ObjectHelper.js'
 import GUISelectorComponent from '../component/internal/gui/selector/GUISelectorComponent.js'
 import UITransformComponent from '../component/internal/ui/UITransformComponent.js'
 import GUIAnchorComponent from '../component/internal/gui/anchor/GUIAnchorComponent.js'
+import AnimationComponent from '../component/internal/AnimationComponent.js'
 
 export default class UnitHelper {
 
@@ -531,6 +532,30 @@ export default class UnitHelper {
             height: canvasBgRepeat.height
         }))
         return ImageHelper.resizeCanvasBySize(canvasBgRepeat, canvasCameraScale)
+    }
+
+    /**
+     * @param {World} world
+     * @param {Unit} unit
+     * @return {Animation}
+     */
+    static getAnimation(world, unit){
+        const animationController = this.getAnimationController(world, unit)
+        if (animationController) {
+            const animationComponent = unit.getComponent(AnimationComponent)
+            return world.getAnimationManager().findById(animationComponent.getAnimation())
+        }
+    }
+
+    /**
+     * @param {World} world
+     * @param {Unit} unit
+     * @return {AScript}
+     */
+    static getAnimationController(world, unit) {
+        if (unit) {
+            return world.getUnitManager().getUnitAnimationController(world, unit)
+        }
     }
 
 }

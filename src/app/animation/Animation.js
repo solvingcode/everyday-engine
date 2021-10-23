@@ -124,20 +124,24 @@ export default class Animation extends AnimationData {
     }
 
     /**
-     * @param {AnimationProperty} property
      * @param {KeyFrame} frame
      */
-    deleteFrame(property, frame) {
-        const frameIndex = property.getFrames().findIndex(pFrame => pFrame === frame)
-        if (frame.getTime() < this.getDuration()) {
-            if (property.tryGetAt(frame.getTime())) {
-                property.getFrames().splice(frameIndex, 1)
-            } else {
-                throw new ClientError(`Cannot delete frame at "${frame.getTime()}": No frame exist`)
-            }
-        } else {
-            throw new ClientError(`Cannot delete frame at "${frame.getTime()}": Out of range`)
-        }
+    deleteFrame(frame) {
+        this.getProperties().forEach(pProperty => pProperty.deleteFrame(frame))
+    }
+
+    /**
+     * @return {KeyFrame[]}
+     */
+    getFrames(){
+        return this.getProperties().reduce((list, property) => [...list, ...property.getFrames()], [])
+    }
+
+    /**
+     * @return {KeyFrame[]}
+     */
+    getSelectedFrames(){
+        return this.getFrames().filter(frame => frame.getSelected())
     }
 
     /**

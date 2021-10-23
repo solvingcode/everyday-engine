@@ -127,6 +127,7 @@ import AddWindowAction from './window/AddWindowAction.js'
 import CloseWindowAction from './window/CloseWindowAction.js'
 import StartAnimationRecordingAction from './animation/StartAnimationRecordingAction.js'
 import StopAnimationRecordingAction from './animation/StopAnimationRecordingAction.js'
+import SelectAnimationKeyFrameAction from './animation/SelectAnimationKeyFrameAction.js'
 
 /**
  * Action Runner class.
@@ -279,6 +280,7 @@ class ActionRunner extends Runner {
             CLOSE_WINDOW: CloseWindowAction,
             EDIT_ANIMATION_START_RECORD: StartAnimationRecordingAction,
             EDIT_ANIMATION_STOP_RECORD: StopAnimationRecordingAction,
+            SELECT_ANIMATION_KEYFRAME: SelectAnimationKeyFrameAction,
         }
         const selectedUnits = this.unitSelector.getSelected(World.get())
         for (const iTypeAction in typeActions) {

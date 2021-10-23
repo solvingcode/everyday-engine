@@ -279,6 +279,10 @@ button.selected, button.hidden.selected, button.locked.selected{
 .animation-wrapper .panel .list-element button{
     color: #8a6343;
 }
+.animation-wrapper .panel .list-element button.selected{
+    background: none;
+    color: #0b97c4;
+}
 .animation-wrapper .panel .list-element.selected{
     background-color: #2c3545;
 }

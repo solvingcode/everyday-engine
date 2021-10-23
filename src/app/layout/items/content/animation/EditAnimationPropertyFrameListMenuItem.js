@@ -38,4 +38,11 @@ export default class EditAnimationPropertyFrameListMenuItem extends ListMenuItem
         return []
     }
 
+    /**
+     * @override
+     */
+    isSection() {
+        return true
+    }
+
 }

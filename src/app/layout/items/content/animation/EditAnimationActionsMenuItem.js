@@ -20,7 +20,7 @@ export default class EditAnimationActionsMenuItem extends PanelMenuItem {
             new EditAnimationStopRecordMenuItem(this, animation),
             new EditAnimationPlayMenuItem(this, animation),
             new EditAnimationStopMenuItem(this, animation),
-            new EditAnimationDeleteFrameMenuItem(this, animation)
+            new EditAnimationDeleteFrameMenuItem(this)
         ]
     }
 }

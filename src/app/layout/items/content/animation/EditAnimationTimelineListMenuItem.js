@@ -225,4 +225,11 @@ class TimeDuration {
         return this.selected
     }
 
+    /**
+     * @param {boolean} selected
+     */
+    setSelected(selected){
+        this.selected = selected
+    }
+
 }

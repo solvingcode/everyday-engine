@@ -7,7 +7,7 @@ import {WINDOWS} from '../../../../manager/WindowManager.js'
 import CreateAnimationWrapperMenuItem from './CreateAnimationWrapperMenuItem.js'
 import ObjectHelper from '../../../../utils/ObjectHelper.js'
 import EditAnimationTimelineWrapperMenuItem from './EditAnimationTimelineWrapperMenuItem.js'
-import AnimationComponent from '../../../../component/internal/AnimationComponent.js'
+import UnitHelper from '../../../../utils/UnitHelper.js'
 
 export default class EditAnimationBodyMenuItem extends PanelMenuItem {
     /**
@@ -55,13 +55,7 @@ export default class EditAnimationBodyMenuItem extends PanelMenuItem {
      * @return {Animation}
      */
     getAnimation() {
-        const world = World.get()
-        const unit = this.getUnit()
-        const animationController = this.getAnimationController()
-        if (animationController) {
-            const animationComponent = unit.getComponent(AnimationComponent)
-            return world.getAnimationManager().findById(animationComponent.getAnimation())
-        }
+        return UnitHelper.getAnimation(World.get(), this.getUnit())
     }
 
     /**
@@ -86,10 +80,6 @@ export default class EditAnimationBodyMenuItem extends PanelMenuItem {
      * @return {AScript}
      */
     getAnimationController() {
-        const world = World.get()
-        const unit = this.getUnit()
-        if (unit) {
-            return world.getUnitManager().getUnitAnimationController(world, this.getUnit())
-        }
+        return UnitHelper.getAnimationController(World.get(), this.getUnit())
     }
 }
