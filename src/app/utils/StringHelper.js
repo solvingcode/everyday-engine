@@ -8,4 +8,12 @@ export default class StringHelper{
         return string.charAt(0).toUpperCase() + string.slice(1)
     }
 
+    /**
+     * @param {string} string
+     * @return {string}
+     */
+    static lowFirstLetter(string){
+        return string.charAt(0).toLowerCase() + string.slice(1)
+    }
+
 }

@@ -1,4 +1,5 @@
 import SystemError from '../exception/type/SystemError.js'
+import StringHelper from './StringHelper.js'
 
 /**
  * @class {ClassHelper}
@@ -47,6 +48,20 @@ class ClassHelper {
             }
         }
         return getter
+    }
+
+    /**
+     * @param {Function} setter
+     * @return {string}
+     */
+    static getAttributeFromSetter(setter){
+        const setterName = setter.name
+        const regexSetter = new RegExp('^set(.+)$')
+        const setterParts = setterName.match(regexSetter)
+        if(setterParts.length > 0){
+            return StringHelper.lowFirstLetter(setterParts[1])
+        }
+        throw new SystemError(`${setterName} not a function or a setter function`)
     }
 
 }

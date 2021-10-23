@@ -6,6 +6,7 @@ import UnitHelper from '../../../utils/UnitHelper.js'
 import TransformComponent from '../../../component/internal/TransformComponent.js'
 import MeshComponent from '../../../component/internal/MeshComponent.js'
 import LightComponent from '../../../component/internal/LightComponent.js'
+import Storage from '../../../core/Storage.js'
 
 export default class RotateAction extends Action {
 
@@ -42,7 +43,8 @@ export default class RotateAction extends Action {
             }
             const transformComponent = unit.getComponent(TransformComponent)
             const rotation = transformComponent.getRotation() + angleRadian
-            transformComponent.setRotation(rotation)
+            UnitHelper.updateOrRecordComponent(world, transformComponent, TransformComponent.prototype.setRotation,
+                rotation, Storage.get())
             unit.getComponent(MeshComponent).setGenerated(false)
         })
     }

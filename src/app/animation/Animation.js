@@ -191,8 +191,8 @@ export default class Animation extends AnimationData {
     playAt(deltaTime, time) {
         const expectedFrameTime = this.getLengthSecond() / this.getSamples()
         const newTime = time + deltaTime / expectedFrameTime
-        const timeFrame = newTime % this.getDuration() || 0
-        const loopTimes = Math.floor(newTime / this.getDuration())
+        const timeFrame = newTime % this.getSamples() || 0
+        const loopTimes = this.loopTimes + Math.floor(newTime / this.getSamples())
         return { time: timeFrame, loopTimes }
     }
 

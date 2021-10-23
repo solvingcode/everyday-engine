@@ -46,7 +46,7 @@ export default class EditAnimationTimelineListMenuItem extends ListMenuItem {
         const samples = animation.getSamples()
         return properties.map(property => new PropertyTimeline(
             property,
-            Array.from({length: animation.getDuration()})
+            Array.from({length: animation.getSamples()})
                 .map((v, index) => {
                     const second = Math.floor(index / samples)
                     const secondDivide = index % samples

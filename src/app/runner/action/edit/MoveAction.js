@@ -9,6 +9,7 @@ import GUIMoveFreeComponent from '../../../component/internal/gui/move/GUIMoveFr
 import TransformComponent from '../../../component/internal/TransformComponent.js'
 import LightComponent from '../../../component/internal/LightComponent.js'
 import UITransformComponent from '../../../component/internal/ui/UITransformComponent.js'
+import Storage from '../../../core/Storage.js'
 
 class MoveAction extends Action {
 
@@ -61,7 +62,8 @@ class MoveAction extends Action {
             const transformComponent = unit.getComponent(TransformComponent)
             const uiTransformComponent = unit.getComponent(UITransformComponent)
             const position = transformComponent.getPosition()
-            transformComponent.setPosition(Vector.add(position, dragAreaDirection))
+            UnitHelper.updateOrRecordComponent(world, transformComponent, TransformComponent.prototype.setPosition,
+                Vector.add(position, dragAreaDirection), Storage.get())
             if(uiTransformComponent){
                 uiTransformComponent.setLastAnchorMin(null)
                 uiTransformComponent.setLastAnchorMax(null)

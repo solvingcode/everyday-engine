@@ -21,6 +21,8 @@ import GUISelectorComponent from '../component/internal/gui/selector/GUISelector
 import UITransformComponent from '../component/internal/ui/UITransformComponent.js'
 import GUIAnchorComponent from '../component/internal/gui/anchor/GUIAnchorComponent.js'
 import AnimationComponent from '../component/internal/AnimationComponent.js'
+import AssetHelper from './AssetHelper.js'
+import ClassHelper from './ClassHelper.js'
 
 export default class UnitHelper {
 
@@ -39,7 +41,7 @@ export default class UnitHelper {
      * @param {Vector} point canvas coordinates (window)
      * @return {boolean}
      */
-    static isInsideWindowPosition(world, unit, point){
+    static isInsideWindowPosition(world, unit, point) {
         return this.isInside(unit, world.getWorldPosition(point))
     }
 
@@ -170,7 +172,7 @@ export default class UnitHelper {
      * @param {Unit} childUnit
      * @return {Vector}
      */
-    static getChildPosition(parentUnit, childUnit){
+    static getChildPosition(parentUnit, childUnit) {
         const pTransformComponent = parentUnit.getComponent(TransformComponent)
         const cTransformComponent = parentUnit.getComponent(TransformComponent)
         const parentRotation = pTransformComponent.getRotation()
@@ -429,12 +431,12 @@ export default class UnitHelper {
                 .find(guiAnchor => guiAnchor.getComponent(GUIAnchorComponent).getOffset() === index + 1 &&
                     guiAnchor.getComponent(GUIAnchorComponent).getUnitId() === unit.getId()
                 )
-            if(!existGUIAnchor){
+            if (!existGUIAnchor) {
                 const anchorUnit = world.createUnitInstant(RectUnitInstant, anchorPosition, new Size(anchorSize), style)
                 anchorUnit.createComponents([GUIAnchorComponent])
                 anchorUnit.getComponent(GUIAnchorComponent).setUnitId(unit.getId())
                 anchorUnit.getComponent(GUIAnchorComponent).setOffset(index + 1)
-            }else{
+            } else {
                 const transformComponent = existGUIAnchor.getComponent(TransformComponent)
                 if (!ObjectHelper.isEqual(transformComponent.getPosition(), anchorPosition)) {
                     transformComponent.setPosition(anchorPosition)
@@ -446,7 +448,7 @@ export default class UnitHelper {
     /**
      * @return {number}
      */
-    static getSizeAnchor(){
+    static getSizeAnchor() {
         return 20
     }
 
@@ -455,7 +457,7 @@ export default class UnitHelper {
      * @param {Unit} unit
      * @return [Vector, Vector, Vector, Vector]
      */
-    static getAnchors(world, unit){
+    static getAnchors(world, unit) {
         const unitManager = world.getUnitManager()
         const uiTransformComponent = unit.getComponent(UITransformComponent)
         const parentUnit = unitManager.findParentUnit(unit)
@@ -468,13 +470,20 @@ export default class UnitHelper {
         const anchorMax = uiTransformComponent.getAnchorMax()
         return [
             Vector.add(parentPosition, new Vector({
-                x: anchorMin.getX() * parentSize.getWidth() - anchorSize, y: anchorMin.getY() * parentSize.getHeight() - anchorSize})),
+                x: anchorMin.getX() * parentSize.getWidth() - anchorSize,
+                y: anchorMin.getY() * parentSize.getHeight() - anchorSize
+            })),
             Vector.add(parentPosition, new Vector({
-                x: anchorMax.getX() * parentSize.getWidth(), y: (1 - anchorMax.getY()) * parentSize.getHeight() - anchorSize})),
+                x: anchorMax.getX() * parentSize.getWidth(),
+                y: (1 - anchorMax.getY()) * parentSize.getHeight() - anchorSize
+            })),
             Vector.add(parentPosition, new Vector({
-                x: anchorMax.getX() * parentSize.getWidth(), y: anchorMax.getY() * parentSize.getHeight()})),
+                x: anchorMax.getX() * parentSize.getWidth(), y: anchorMax.getY() * parentSize.getHeight()
+            })),
             Vector.add(parentPosition, new Vector({
-                x: anchorMin.getX() * parentSize.getWidth() - anchorSize, y: (1 - anchorMin.getY()) * parentSize.getHeight()}))
+                x: anchorMin.getX() * parentSize.getWidth() - anchorSize,
+                y: (1 - anchorMin.getY()) * parentSize.getHeight()
+            }))
         ]
     }
 
@@ -539,7 +548,7 @@ export default class UnitHelper {
      * @param {Unit} unit
      * @return {Animation}
      */
-    static getAnimation(world, unit){
+    static getAnimation(world, unit) {
         const animationController = this.getAnimationController(world, unit)
         if (animationController) {
             const animationComponent = unit.getComponent(AnimationComponent)
@@ -555,6 +564,27 @@ export default class UnitHelper {
     static getAnimationController(world, unit) {
         if (unit) {
             return world.getUnitManager().getUnitAnimationController(world, unit)
+        }
+    }
+
+    /**
+     * @param {World} world
+     * @param {Component} component
+     * @param {Function} setter
+     * @param {*} value
+     * @param {Storage} storage
+     */
+    static updateOrRecordComponent(world, component, setter, value, storage) {
+        const animation = world.getAnimationManager().getAnimationRecording()
+        if (animation) {
+            const animationAsset = world.getAssetsManager().findAssetById(animation.getAssetId())
+            const cloneComponent = _.cloneDeep(component)
+            const attributeName = ClassHelper.getAttributeFromSetter(setter)
+            setter.bind(cloneComponent)(value)
+            animation.setFrame(animation.getTime(), cloneComponent.getName(), attributeName, cloneComponent.get(attributeName))
+            AssetHelper.regenerate(animationAsset, animation, storage)
+        } else {
+            setter.bind(component)(value)
         }
     }
 

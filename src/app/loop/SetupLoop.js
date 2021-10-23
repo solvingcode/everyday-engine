@@ -60,6 +60,7 @@ class SetupLoop extends Loop {
         ]
         ExecutorRegistry.get().register([
             new CameraExecutor(),
+            new AnimationPlayExecutor(),
             new UIContainerExecutor(),
             new MeshExecutor(),
             new TransformExecutor(),
@@ -71,7 +72,6 @@ class SetupLoop extends Loop {
             new UIButtonStyleExecutor(),
             new TileColliderExecutor(),
             new TileMapExecutor(),
-            new AnimationPlayExecutor(),
         ])
     }
 
