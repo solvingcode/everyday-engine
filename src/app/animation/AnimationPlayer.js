@@ -12,7 +12,7 @@ export default class AnimationPlayer {
      * @param {number} time
      * @param {Unit} unit
      */
-    static play(animation, world, time, unit){
+    static play(animation, world, time, unit) {
         const componentRegistry = world.getComponentRegistry()
         animation.getProperties().forEach(property => {
             const component = componentRegistry.getInstance(property.getComponentName())
@@ -20,11 +20,11 @@ export default class AnimationPlayer {
                 const componentClass = component.constructor
                 const prevFrame = property.tryGetPrevAt(time)
                 const nextFrame = property.tryGetNextAt(time)
-                const type = unit.getComponent(componentClass).getType(property.getAttributeName())
+                const type = unit.findComponentByClass(componentClass).getType(property.getAttributeName())
                 const newValue = this.interpolate(componentClass, type, time, prevFrame, nextFrame)
                 if (prevFrame) {
-                    if(!_.isEqual(unit.getComponent(componentClass).getValue(property.getAttributeName()), newValue)){
-                        unit.getComponent(componentClass).setValue(property.getAttributeName(), newValue)
+                    if (!_.isEqual(unit.findComponentByClass(componentClass).getValue(property.getAttributeName()), newValue)) {
+                        unit.findComponentByClass(componentClass).setValue(property.getAttributeName(), newValue)
                     }
                 }
             } else {
@@ -53,6 +53,8 @@ export default class AnimationPlayer {
                 return NumberHelper.interpolate(time, prevTime, prevValue, nextTime, nextValue)
             } else if (type === TYPES.VECTOR) {
                 return Vector.interpolate(time, prevTime, prevValue, nextTime, nextValue)
+            } else if (type === TYPES.BOOLEAN) {
+                return prevValue
             }
         }
     }

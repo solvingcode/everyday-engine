@@ -131,7 +131,9 @@ export default class PhysicsManager {
         const sourceColliderUnit = {unit, colliderComponent}
         const targetColliderUnits = []
         maskGroupUnits.forEach(maskGroupUnit => {
-            maskGroupUnit.findComponentsByClass(ColliderComponent).forEach(maskColliderComponent => {
+            maskGroupUnit.findComponentsByClass(ColliderComponent)
+                .filter(component => component.isEnabled())
+                .forEach(maskColliderComponent => {
                 targetColliderUnits.push({unit: maskGroupUnit, colliderComponent: maskColliderComponent})
             })
         })

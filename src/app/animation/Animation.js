@@ -108,7 +108,7 @@ export default class Animation extends AnimationData {
      */
     setFrame(time, componentName, attributeName, attribute) {
         const property = this.getProperty(componentName, attributeName) || this.addProperty(componentName, attributeName)
-        if (time < this.getDuration()) {
+        if (time < this.getSamples()) {
             const existFrame = property.tryGetAt(time)
             if (existFrame) {
                 existFrame.setAttribute(attribute)
@@ -119,7 +119,7 @@ export default class Animation extends AnimationData {
                 property.addFrame(newFrame)
             }
         } else {
-            throw new ClientError(`Cannot add frame at "${frame.getTime()}": Out of range`)
+            throw new ClientError(`Cannot add frame at "${time}": Out of range`)
         }
     }
 

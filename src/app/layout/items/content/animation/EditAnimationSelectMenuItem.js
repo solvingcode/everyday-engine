@@ -25,9 +25,12 @@ export default class EditAnimationSelectMenuItem extends FormMenuItem {
         const world = World.get()
         const unit = this.getUnit()
         const animationController = world.getUnitManager().getUnitAnimationController(world, unit)
-        const list = world.getAnimationManager()
-            .findAnimationsByControllerAssetId(animationController.getAssetId())
-            .map(pAnimation => ({value: pAnimation.getId(), label: pAnimation.getName()}))
+        let list = []
+        if (animationController) {
+            list = world.getAnimationManager()
+                .findAnimationsByControllerAssetId(animationController.getAssetId())
+                .map(pAnimation => ({value: pAnimation.getId(), label: pAnimation.getName()}))
+        }
         return [
             {
                 bind: 'animation',
@@ -48,7 +51,7 @@ export default class EditAnimationSelectMenuItem extends FormMenuItem {
     /**
      * @return {Unit}
      */
-    getUnit(){
+    getUnit() {
         return UnitSelector.get().getFirstSelected(World.get())
     }
 

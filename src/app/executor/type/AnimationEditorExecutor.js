@@ -4,7 +4,7 @@ import AnimationComponent from '../../component/internal/AnimationComponent.js'
 import WindowManager, {WINDOWS} from '../../manager/WindowManager.js'
 import AnimationPlayer from '../../animation/AnimationPlayer.js'
 
-export default class AnimationPlayExecutor extends ComponentExecutor {
+export default class AnimationEditorExecutor extends ComponentExecutor {
 
     constructor() {
         super([AnimationComponent])

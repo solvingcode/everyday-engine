@@ -8,7 +8,6 @@ import AnimationScript from '../src/app/flow/AnimationScript.js'
 import MeshUnit from '../src/app/unit/type/MeshUnit.js'
 import AnimationComponent from '../src/app/component/internal/AnimationComponent.js'
 import AnimationScriptExecutor from '../src/app/executor/type/AnimationScriptExecutor.js'
-import AnimationMeshExecutor from '../src/app/executor/type/AnimationMeshExecutor.js'
 import KeyFrame from '../src/app/animation/KeyFrame.js'
 import ConditionNode from '../src/app/flow/node/ConditionNode.js'
 import FunctionNode from '../src/app/flow/node/FunctionNode.js'
@@ -39,7 +38,7 @@ test('Create and compile animation when (startEvent -> animation)', function () 
     const nodeStartAnimation = ScriptHelper.createNodeByClass(functionRegistry, scriptFunction, EventNode, 'OnAnimationStart')
     const nodeAnimation = ScriptHelper.createNodeByClass(functionRegistry, scriptFunction, AnimationNode, `${animation.getId()}`)
 
-    nodeAnimation.attach(nodeStartAnimation, null)
+    nodeAnimation.attachPrevNode(nodeStartAnimation)
 
     script.compile(world)
 

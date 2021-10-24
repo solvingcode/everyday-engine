@@ -19,8 +19,6 @@ import IsAnimationPlayingFunction from '../function/native/animation/IsAnimation
 import NotFunction from '../function/native/basic/NotFunction.js'
 import AReference from '../reference/AReference.js'
 import ASelf from '../unit/ASelf.js'
-import AToggleVariable from '../variable/AToggleVariable.js'
-import ANativeFunction from '../function/native/ANativeFunction.js'
 import ALoop from '../loop/ALoop.js'
 import GetValueFunction from '../function/native/object/GetValueFunction.js'
 import IsArrayEmptyFunction from '../function/native/array/IsArrayEmptyFunction.js'
@@ -37,6 +35,7 @@ import IsFunctionDefinedFunction from '../function/native/basic/IsFunctionDefine
 import Maths from '../../utils/Maths.js'
 import AGetVariable from '../variable/AGetVariable.js'
 import VariableNode from '../node/variable/VariableNode.js'
+import ToggleVariableNode from '../node/variable/ToggleVariableNode.js'
 
 export default class ClassCompiler extends Compiler {
 
@@ -129,7 +128,7 @@ export default class ClassCompiler extends Compiler {
                                 new StackOperation(OPERATIONS.PUSH, targetInput.getAttrName(), CONSTANTS.RESULT)
                             ])
                         }
-                        if (sourceElement instanceof AToggleVariable) {
+                        if (variableExists instanceof ToggleVariableNode) {
                             stackFunction.getStack().push(...[
                                 new StackOperation(OPERATIONS.PUSH, CONSTANTS.RESULT, ''),
                                 new StackOperation(OPERATIONS.SET, sourceNode.getSourceName())
@@ -149,14 +148,6 @@ export default class ClassCompiler extends Compiler {
                         } else {
                             stackFunction.getStack().push(...[
                                 new StackOperation(OPERATIONS.PUSH, targetInput.getAttrName(), CONSTANTS.RESULT)
-                            ])
-                        }
-                    } else if (sourceElement instanceof AAnimation) {
-                        NodeHelper.validateResultToInputConnection(node, input)
-                        if (element instanceof ANativeFunction) {
-                            const targetInput = element.findInputByName(targetName)
-                            stackFunction.getStack().push(...[
-                                new StackOperation(OPERATIONS.PUSH, targetInput.getAttrName(), sourceElement.getName())
                             ])
                         }
                     } else if (sourceElement instanceof ALoop) {
@@ -247,7 +238,7 @@ export default class ClassCompiler extends Compiler {
                                     new StackOperation(OPERATIONS.PUSH,
                                         `[MEM]${element.getName()}.${targetInput.getAttrName()}`, CONSTANTS.RESULT)
                                 ])
-                            } else {
+                            } else if (!(element instanceof AReference)) {
                                 stackFunction.getStack().push(...[
                                     new StackOperation(OPERATIONS.PUSH, targetInput.getAttrName(), CONSTANTS.RESULT)
                                 ])
@@ -351,17 +342,18 @@ export default class ClassCompiler extends Compiler {
                             new StackOperation(OPERATIONS.CALL, functionName)
                         ])
                     } else if (sourceElement instanceof AAnimation) {
-                        NodeHelper.validateOrderConnection(node, input)
-                        if (element instanceof AAnimation) {
-                            const stopAnimation = new StopAnimationFunction()
-                            sourceStackFunction.getStack().push(...[
-                                new StackOperation(OPERATIONS.CALL, stopAnimation.getName()),
-                                new StackOperation(OPERATIONS.CALL, functionName)
-                            ])
-                        } else if (element instanceof ACondition) {
-                            sourceStackFunction.getStack().push(...[
-                                new StackOperation(OPERATIONS.CALL, functionName)
-                            ])
+                        if (node.isOrderConnection(input)) {
+                            if (element instanceof AAnimation) {
+                                const stopAnimation = new StopAnimationFunction()
+                                sourceStackFunction.getStack().push(...[
+                                    new StackOperation(OPERATIONS.CALL, stopAnimation.getName()),
+                                    new StackOperation(OPERATIONS.CALL, functionName)
+                                ])
+                            } else if (element instanceof ACondition) {
+                                sourceStackFunction.getStack().push(...[
+                                    new StackOperation(OPERATIONS.CALL, functionName)
+                                ])
+                            }
                         }
                     } else if (sourceElement instanceof ACondition) {
                         if (node.isResultToBaseConnection(input)) {
@@ -370,15 +362,13 @@ export default class ClassCompiler extends Compiler {
                                 const stopAnimation = new StopAnimationFunction()
                                 sourceStackFunction.getStack().push(...[
                                     new StackOperation(OPERATIONS.CALL, getCurrentAnimation.getName()),
-                                    new StackOperation(OPERATIONS.CALL, stopAnimation.getName()),
-                                    new StackOperation(OPERATIONS.CALL, functionName)
-                                ])
-                            } else {
-                                sourceStackFunction.getStack().push(...[
-                                    new StackOperation(OPERATIONS.CALL, functionName),
-                                    new StackOperation(OPERATIONS.JUMP_TO, `end_condition_${sourceStackFunction.getName()}`)
+                                    new StackOperation(OPERATIONS.CALL, stopAnimation.getName())
                                 ])
                             }
+                            sourceStackFunction.getStack().push(...[
+                                new StackOperation(OPERATIONS.CALL, functionName),
+                                new StackOperation(OPERATIONS.JUMP_TO, `end_condition_${sourceStackFunction.getName()}`)
+                            ])
                         }
                     } else if (sourceElement instanceof ALoop) {
                         if (node.isOrderConnection(input)) {

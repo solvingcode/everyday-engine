@@ -398,7 +398,7 @@ export default class ScriptHelper {
     static getValueFromFunctionName(className, name) {
         const classRegex = new RegExp(`^${className}\.`)
         const nameFunction = name.replace(classRegex, '')
-        return nameFunction.replace(/^(.+)\.[0-9]+$/, '$1')
+        return nameFunction.replace(/^.+\.([0-9]+)\.[0-9]+$/, '$1')
     }
 
     /**

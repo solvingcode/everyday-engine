@@ -10,7 +10,6 @@ import ColliderExecutor from '../executor/type/ColliderExecutor.js'
 import MeshStyleExecutor from '../executor/type/MeshStyleExecutor.js'
 import ScriptExecutor from '../executor/type/ScriptExecutor.js'
 import AnimationScriptExecutor from '../executor/type/AnimationScriptExecutor.js'
-import AnimationMeshExecutor from '../executor/type/AnimationMeshExecutor.js'
 import WorldInitializeRunner from '../runner/world/WorldInitializeRunner.js'
 import ColliderDebugRunner from '../runner/debug/ColliderDebugRunner.js'
 import CameraRunner from '../runner/camera/CameraRunner.js'
@@ -26,6 +25,7 @@ import UITransformExecutor from '../executor/type/UITransformExecutor.js'
 import UIButtonInteractionExecutor from '../executor/type/UIButtonInteractionExecutor.js'
 import UISliderHandleExecutor from '../executor/type/UISliderHandleExecutor.js'
 import UISliderFillExecutor from '../executor/type/UISliderFillExecutor.js'
+import AnimationPlayerExecutor from '../executor/type/AnimationPlayerExecutor.js'
 
 /**
  * @class {GameLoop}
@@ -45,6 +45,7 @@ class GameLoop extends SceneLoop {
             CameraRunner, GameExecutorRunner, PhysicsRunner, LightRunner]
         ExecutorRegistry.get().register([
             new CameraExecutor(),
+            new AnimationPlayerExecutor(),
             new MeshExecutor(),
             new TransformExecutor(),
             new UITransformExecutor(),
@@ -56,7 +57,6 @@ class GameLoop extends SceneLoop {
             new MeshStyleExecutor(),
             new ScriptExecutor(),
             new AnimationScriptExecutor(),
-            new AnimationMeshExecutor(),
             new LightExecutor(),
             new ScreenTransformExecutor(),
             new MeshRendererExecutor(),

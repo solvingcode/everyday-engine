@@ -33,7 +33,7 @@ import TileEditorRunner from '../runner/editor/TileEditorRunner.js'
 import TileMapExecutor from '../executor/type/TileMapExecutor.js'
 import TileColliderExecutor from '../executor/type/TileColliderExecutor.js'
 import AssetRunner from '../runner/asset/AssetRunner.js'
-import AnimationPlayExecutor from '../executor/type/AnimationPlayExecutor.js'
+import AnimationEditorExecutor from '../executor/type/AnimationEditorExecutor.js'
 
 /**
  * @class {SetupLoop}
@@ -60,7 +60,7 @@ class SetupLoop extends Loop {
         ]
         ExecutorRegistry.get().register([
             new CameraExecutor(),
-            new AnimationPlayExecutor(),
+            new AnimationEditorExecutor(),
             new UIContainerExecutor(),
             new MeshExecutor(),
             new TransformExecutor(),

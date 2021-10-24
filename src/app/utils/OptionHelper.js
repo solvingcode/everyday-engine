@@ -43,7 +43,6 @@ import AddSceneMenuItem from '../layout/items/scene/AddSceneMenuItem.js'
 import CameraMenuItem from '../layout/items/unit/CameraMenuItem.js'
 import LightPointMenuItem from '../layout/items/unit/LightPointMenuItem.js'
 import LightGlobalMenuItem from '../layout/items/unit/LightGlobalMenuItem.js'
-import AddAnimationMenuItem from '../layout/items/animation/AddAnimationMenuItem.js'
 import CreateUnitInstantMenuItem from '../layout/items/unit/CreateUnitInstantMenuItem.js'
 import LoadUnitInstantMenuItem from '../layout/items/unit/LoadUnitInstantMenuItem.js'
 import MaskGroup from '../preference/maskgroup/MaskGroup.js'
@@ -142,7 +141,6 @@ export default class OptionHelper {
                 new LightGlobalMenuItem(),
                 new TileGridMenuItem(),
                 new TileMapMenuItem(),
-                new AddAnimationMenuItem(),
                 new OptionActionsButtonMenuItem('UI', UITopMenuItem, null, true),
             ])
         }
