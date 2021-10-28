@@ -255,9 +255,8 @@ class EditorRunner extends Runner {
     setupTransformEditor(stateManager, targetUnit) {
         const world = World.get()
         const unitManager = world.getUnitManager()
-
-        const editorPosition = targetUnit && targetUnit.getComponent(TransformComponent)
-            && UnitHelper.toLargeCenterPosition(targetUnit)
+        const transformComponent = targetUnit && targetUnit.getComponent(TransformComponent)
+        const editorPosition = transformComponent && UnitHelper.toLargeCenterPosition(targetUnit)
 
         const editorComponents = {
             DRAW_MOVE: [MoveXUnitInstant, MoveYUnitInstant, MoveFreeUnitInstant],
@@ -269,7 +268,7 @@ class EditorRunner extends Runner {
             unitInstants.forEach(unitInstantClass => {
                 const unitExist = unitManager.findUnitByType(unitInstantClass)
                 if (stateManager.hasAnyState(action) && !unitExist && editorPosition) {
-                    world.createChildUnitInstant(unitInstantClass, targetUnit, editorPosition)
+                    world.createChildUnitInstant(unitInstantClass, targetUnit, Vector.zero(), transformComponent.getScale())
                 } else if (unitExist && (
                     !stateManager.hasAnyState(action) ||
                     (targetUnit && unitExist.getUnitParentId() !== targetUnit.getId()) ||

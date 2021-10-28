@@ -395,19 +395,16 @@ export default class UnitHelper {
      */
     static createGUISelector(unit, world) {
         const transformComponent = unit.getComponent(TransformComponent)
-        const position = transformComponent.getPosition()
-        const scale = transformComponent.getScale()
         const rotation = transformComponent.getRotation()
 
         const style = new Style()
         style.setColor('#ffe600')
         style.setBorderSize(2)
 
-        const selectorUnit = world
-            .createUnitInstant(RectUnitInstant, position, TransformHelper.getSizeFromScale(scale), style)
+        const selectorUnit = world.createUnitInstant(RectUnitInstant, Vector.zero(), Vector.one(), style)
         selectorUnit.createComponents([GUISelectorComponent])
         selectorUnit.getComponent(GUISelectorComponent).setUnitId(unit.getId())
-        selectorUnit.getComponent(TransformComponent).setRotation(rotation)
+        selectorUnit.getComponent(TransformComponent).setLocalRotation(rotation)
     }
 
     /**

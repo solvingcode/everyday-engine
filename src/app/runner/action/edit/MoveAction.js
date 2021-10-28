@@ -61,9 +61,9 @@ class MoveAction extends Action {
             }
             const transformComponent = unit.getComponent(TransformComponent)
             const uiTransformComponent = unit.getComponent(UITransformComponent)
-            const position = transformComponent.getPosition()
-            UnitHelper.updateOrRecordComponent(world, transformComponent, TransformComponent.prototype.setPosition,
-                Vector.add(position, dragAreaDirection), Storage.get())
+            const localPosition = transformComponent.getLocalPosition()
+            UnitHelper.updateOrRecordComponent(world, transformComponent, TransformComponent.prototype.setLocalPosition,
+                Vector.add(localPosition, dragAreaDirection), Storage.get())
             if(uiTransformComponent){
                 uiTransformComponent.setLastAnchorMin(null)
                 uiTransformComponent.setLastAnchorMax(null)

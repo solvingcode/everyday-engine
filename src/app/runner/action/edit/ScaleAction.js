@@ -14,6 +14,7 @@ import TransformHelper from '../../../utils/TransformHelper.js'
 import UITransformComponent from '../../../component/internal/ui/UITransformComponent.js'
 import Window from '../../../core/Window.js'
 import {KeyCode} from '../../../core/Keyboard.js'
+import Storage from '../../../core/Storage.js'
 
 export default class ScaleAction extends Action {
 
@@ -74,7 +75,8 @@ export default class ScaleAction extends Action {
             const width = meshWidth + dragVector.x
             const height = meshHeight + dragVector.y
             const newSize = new Size({width, height})
-            transformComponent.setScale(TransformHelper.getScaleFromSize(newSize))
+            UnitHelper.updateOrRecordComponent(world, transformComponent, TransformComponent.prototype.setLocalScale,
+                TransformHelper.getScaleFromSize(newSize), Storage.get())
             if (keyboard.isKeyPressed(KeyCode.SHIFT)) {
                 transformComponent.setPosition(Vector.add(position, Vector.multiply(dragVector, -1/2)))
             }

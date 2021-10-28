@@ -7,20 +7,20 @@ import TransformHelper from '../../../../../utils/TransformHelper.js'
 export default class AssetUnitInstant extends MeshUnitInstant {
 
     /**
-     * @param {Vector} position
+     * @param {Vector} localPosition
      * @param {Asset} asset
      * @param {string|null} name
      */
-    instantiate(position, asset, name = null) {
+    instantiate(localPosition, asset, name = null) {
         this.setName(!name ? asset.getName() : name)
         const meshComponent = this.getComponent(MeshComponent)
         const transformComponent = this.getComponent(TransformComponent)
         if(asset){
-            transformComponent.setScale(TransformHelper.getScaleFromSize(asset.getType().getData().size))
+            transformComponent.setLocalScale(TransformHelper.getScaleFromSize(asset.getType().getData().size))
             meshComponent.setAssetId(asset.getId())
         }
         meshComponent.setMaterial('default')
-        transformComponent.setPosition(position)
+        transformComponent.setLocalPosition(localPosition)
     }
 
     /**

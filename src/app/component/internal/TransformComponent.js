@@ -1,6 +1,7 @@
 import Component from '../Component.js'
 import Vector from '../../utils/Vector.js'
 import {TYPES} from '../../pobject/AttributeType.js'
+import SystemError from '../../exception/type/SystemError.js'
 
 export default class TransformComponent extends Component {
 
@@ -13,24 +14,22 @@ export default class TransformComponent extends Component {
      */
     initAttributes() {
         this.add('position', TYPES.VECTOR, new Vector())
-        this.add('localPosition', TYPES.VECTOR, new Vector())
         this.add('screenPosition', TYPES.VECTOR, new Vector())
-        this.add('localScale', TYPES.VECTOR, new Vector())
         this.add('scale', TYPES.VECTOR, new Vector())
         this.add('rotation', TYPES.RANGE, 0, [0, Math.PI * 2, 0.001])
+        this.add('localPosition', TYPES.VECTOR, new Vector())
+        this.add('localScale', TYPES.VECTOR, new Vector())
         this.add('localRotation', TYPES.RANGE, 0, [0, Math.PI * 2, 0.001])
-        this.add('lastScale', TYPES.VECTOR, new Vector())
-        this.add('lastLocalScale', TYPES.VECTOR, new Vector())
-        this.add('lastPosition', TYPES.VECTOR, new Vector())
-        this.add('lastLocalPosition', TYPES.VECTOR, new Vector())
-        this.add('lastRotation', TYPES.VECTOR, new Vector())
+        this.add('lastLocalScale', TYPES.VECTOR)
+        this.add('lastLocalPosition', TYPES.VECTOR)
+        this.add('lastLocalRotation', TYPES.NUMBER)
     }
 
     /**
      * @override
      */
     getExcludeFields() {
-        return ['lastPosition', 'lastScale', 'lastLocalScale', 'lastLocalPosition', 'lastRotation', 'screenPosition']
+        return ['position', 'scale', 'rotation', 'lastLocalScale', 'lastLocalPosition', 'lastLocalRotation', 'screenPosition']
     }
 
     /**
@@ -42,23 +41,13 @@ export default class TransformComponent extends Component {
 
     /**
      * @param {Vector} position
+     * @param {boolean} force
      */
-    setPosition(position) {
+    setPosition(position, force = false) {
+        if (!force) {
+            throw new SystemError(`setPosition is not authorized`)
+        }
         this.setValue('position', _.cloneDeep(position))
-    }
-
-    /**
-     * @return {Vector}
-     */
-    getLastPosition() {
-        return this.getValue('lastPosition')
-    }
-
-    /**
-     * @param {Vector} position
-     */
-    setLastPosition(position) {
-        this.setValue('lastPosition', _.cloneDeep(position))
     }
 
     /**
@@ -70,23 +59,13 @@ export default class TransformComponent extends Component {
 
     /**
      * @param {number|string} rotation
+     * @param {boolean} force
      */
-    setRotation(rotation) {
+    setRotation(rotation, force = false) {
+        if (!force) {
+            throw new SystemError(`setRotation is not authorized`)
+        }
         this.setValue('rotation', parseFloat(rotation))
-    }
-
-    /**
-     * @return {number}
-     */
-    getLastRotation() {
-        return this.getValue('lastRotation')
-    }
-
-    /**
-     * @param {number|string} rotation
-     */
-    setLastRotation(rotation) {
-        this.setValue('lastRotation', parseFloat(rotation))
     }
 
     /**
@@ -112,23 +91,13 @@ export default class TransformComponent extends Component {
 
     /**
      * @param {Vector} scale
+     * @param {boolean} force
      */
-    setScale(scale) {
+    setScale(scale, force = false) {
+        if (!force) {
+            throw new SystemError(`setScale is not authorized`)
+        }
         this.setValue('scale', _.cloneDeep(scale))
-    }
-
-    /**
-     * @return {Vector}
-     */
-    getLastScale() {
-        return this.getValue('lastScale')
-    }
-
-    /**
-     * @param {Vector} scale
-     */
-    setLastScale(scale) {
-        this.setValue('lastScale', _.cloneDeep(scale))
     }
 
     /**
@@ -174,6 +143,20 @@ export default class TransformComponent extends Component {
     }
 
     /**
+     * @return {number}
+     */
+    getLastLocalRotation() {
+        return this.getValue('lastLocalRotation')
+    }
+
+    /**
+     * @param {number} lastLocalRotation
+     */
+    setLastLocalRotation(lastLocalRotation) {
+        this.setValue('lastLocalRotation', lastLocalRotation)
+    }
+
+    /**
      * @return {Vector}
      */
     getScreenPosition() {
@@ -204,22 +187,8 @@ export default class TransformComponent extends Component {
     /**
      * @return {boolean}
      */
-    getPositionUpdated() {
-        return !_.isEqual(this.getPosition(), this.getLastPosition())
-    }
-
-    /**
-     * @return {boolean}
-     */
     getLocalPositionUpdated() {
         return !_.isEqual(this.getLocalPosition(), this.getLastLocalPosition())
-    }
-
-    /**
-     * @return {boolean}
-     */
-    getScaleUpdated() {
-        return !_.isEqual(this.getScale(), this.getLastScale())
     }
 
     /**
@@ -232,8 +201,8 @@ export default class TransformComponent extends Component {
     /**
      * @return {boolean}
      */
-    getRotationUpdated() {
-        return this.getRotation() !== this.getLastRotation()
+    getLocalRotationUpdated() {
+        return !_.isEqual(this.getLocalRotation(), this.getLastLocalRotation())
     }
 
     /**

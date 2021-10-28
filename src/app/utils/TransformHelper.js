@@ -41,13 +41,13 @@ export default class TransformHelper {
      * @param {Unit} unit
      * @param {Vector} newPosition
      */
-    static translateTo(world, unit, newPosition) {
+    static translateToWorldPosition(world, unit, newPosition) {
         const physicsManager = world.getPhysicsManager()
         const transformComponent = unit.getComponent(TransformComponent)
         if (physicsManager.hasUnit(unit)) {
             physicsManager.translate(unit, Vector.subtract(newPosition, transformComponent.getPosition()))
         }
-        transformComponent.setPosition(_.cloneDeep(newPosition))
+        transformComponent.setPosition(_.cloneDeep(newPosition), true)
     }
 
     /**
@@ -66,6 +66,32 @@ export default class TransformHelper {
         unitManager.findChildUnits(unit).forEach(cUnit => {
             this.translate(world, cUnit, moveVector)
         })
+    }
+
+    /**
+     * @param {Vector} position
+     * @param {Unit} parent
+     * @return {Vector}
+     */
+    static getLocalPosition(position, parent) {
+        if (parent) {
+            const transformComponent = parent.getComponent(TransformComponent)
+            return Vector.subtract(position, transformComponent.getPosition())
+        }
+        return position
+    }
+
+    /**
+     * @param {Vector} scale
+     * @param {Unit} parent
+     * @return {Vector}
+     */
+    static getLocalScale(scale, parent) {
+        if (parent) {
+            const transformComponent = parent.getComponent(TransformComponent)
+            return Vector.linearDivide(scale, transformComponent.getScale())
+        }
+        return scale
     }
 
 }

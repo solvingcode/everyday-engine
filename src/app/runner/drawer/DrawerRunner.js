@@ -212,8 +212,8 @@ export default class DrawerRunner extends Runner {
         const transformComponent = this.getDrawUnit().getComponent(TransformComponent)
         const meshComponent = this.getDrawUnit().getComponent(MeshComponent)
         meshComponent.setShapeVertices(diagonalVertices)
-        transformComponent.setPosition(newPosition)
-        transformComponent.setScale(TransformHelper.getScaleFromSize(size))
+        transformComponent.setLocalPosition(newPosition)
+        transformComponent.setLocalScale(TransformHelper.getScaleFromSize(size))
         meshComponent.setGenerated(false)
     }
 

@@ -1,29 +1,27 @@
 import MeshUnitInstant from '../../MeshUnitInstant.js'
-import Vector from '../../../../utils/Vector.js'
 import TransformComponent from '../../../../component/internal/TransformComponent.js'
 import MeshComponent from '../../../../component/internal/MeshComponent.js'
 import GUIPendingComponent from '../../../../component/internal/gui/GUIPendingComponent.js'
 import GUIPropertyComponent from '../../../../component/internal/gui/property/GUIPropertyComponent.js'
 import StyleComponent from '../../../../component/internal/StyleComponent.js'
-import TransformHelper from '../../../../utils/TransformHelper.js'
 import SystemError from '../../../../exception/type/SystemError.js'
 
 export default class TransformUnitInstant extends MeshUnitInstant {
 
     /**
      * @param {Class} moveComponentClass
-     * @param {Size} size
+     * @param {Vector} localScale
      * @param {StyleUtil} style
      * @param {string} shape
-     * @param {Vector} position
+     * @param {Vector} localPosition
      */
-    instantiate(moveComponentClass, size, style, shape, position) {
+    instantiate(moveComponentClass, localScale, style, shape, localPosition) {
         this.createComponent(moveComponentClass)
         this.createComponent(GUIPendingComponent)
         const transformComponent = this.getComponent(TransformComponent)
         const meshComponent = this.getComponent(MeshComponent)
-        transformComponent.setPosition(new Vector(_.cloneDeep(position)))
-        transformComponent.setScale(TransformHelper.getScaleFromSize(size))
+        transformComponent.setLocalPosition(_.cloneDeep(localPosition))
+        transformComponent.setLocalScale(localScale)
         meshComponent.setShape(shape)
         this.getComponent(StyleComponent).setStyle(style)
         this.getComponent(MeshComponent).setStyle(style)
