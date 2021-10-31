@@ -191,7 +191,8 @@ export default class UnitHelper {
      */
     static getColliderSize(unit, colliderComponent) {
         let resultSize = new Size(0)
-        const unitSize = unit.getComponent(MeshComponent).getSize()
+        const unitScale = unit.getComponent(TransformComponent).getScale()
+        const unitSize = TransformHelper.getSizeFromScale(unitScale)
         if (colliderComponent instanceof RectColliderComponent) {
             const colliderSizeRelated = colliderComponent.getSize()
             resultSize = new Size({
@@ -275,7 +276,8 @@ export default class UnitHelper {
      * @return {Vector}
      */
     static getUnitRelativeCenter(unit) {
-        const size = unit.getComponent(MeshComponent).getSize()
+        const scale = unit.getComponent(TransformComponent).getScale()
+        const size = TransformHelper.getSizeFromScale(scale)
         return new Vector({
             x: size.getWidth() / 2,
             y: size.getHeight() / 2
@@ -370,17 +372,17 @@ export default class UnitHelper {
                 colliderUnit.createComponents([GUIColliderComponent])
                 colliderUnit.getComponent(GUIColliderComponent).setComponentId(colliderComponent.getId())
                 colliderUnit.getComponent(GUIColliderComponent).setUnitId(unit.getId())
-                colliderUnit.getComponent(TransformComponent).setRotation(colliderRotation)
+                colliderUnit.getComponent(TransformComponent).setLocalRotation(TransformHelper.getLocalRotation(colliderRotation, unit))
                 colliderUnits.push(colliderUnit)
             } else if (existGUICollider && !colliderComponent.isEditFlag()) {
                 unitManager.deleteUnit(existGUICollider)
             } else if (existGUICollider) {
                 const transformComponent = existGUICollider.getComponent(TransformComponent)
                 if (!ObjectHelper.isEqual(transformComponent.getPosition(), colliderCorrectedPosition)) {
-                    transformComponent.setPosition(colliderCorrectedPosition)
+                    transformComponent.setLocalPosition(TransformHelper.getLocalPosition(colliderCorrectedPosition, unit))
                 }
                 if (!ObjectHelper.isEqual(transformComponent.getScale(), TransformHelper.getScaleFromSize(colliderSize))) {
-                    transformComponent.setScale(TransformHelper.getScaleFromSize(colliderSize))
+                    transformComponent.setLocalScale(TransformHelper.getLocalScale(TransformHelper.getScaleFromSize(colliderSize), unit))
                 }
                 colliderUnits.push(existGUICollider)
             }

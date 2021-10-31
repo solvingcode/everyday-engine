@@ -25,8 +25,8 @@ export default class CameraUnitInstant extends MeshUnitInstant {
         const transformComponent = this.getComponent(TransformComponent)
         const styleComponent = this.getComponent(StyleComponent)
         styleComponent.setStyle(style)
-        transformComponent.setPosition(position)
-        transformComponent.setScale(TransformHelper.getScaleFromSize(size))
+        transformComponent.setLocalPosition(position)
+        transformComponent.setLocalScale(TransformHelper.getScaleFromSize(size))
         meshComponent.setShape(PrimitiveShape.CAMERA)
     }
 

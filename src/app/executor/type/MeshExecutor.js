@@ -32,13 +32,14 @@ export default class MeshExecutor extends ComponentExecutor {
      * @param {MeshComponent} meshComponent
      */
     updateLocalScale(unit, transformComponent, meshComponent) {
-        const unitManager = World.get().getUnitManager()
+        const world = World.get()
+        const unitManager = world.getUnitManager()
         const localScale = transformComponent.getLocalScale()
         const localPosition = transformComponent.getLocalPosition()
         const scale = transformComponent.getScale()
         const parentUnit = unitManager.findParentUnit(unit)
         const childUnits = unitManager.findChildUnits(unit)
-        if (parentUnit) {
+        if (parentUnit && parentUnit.getComponent(TransformComponent)) {
             const parentTransformComponent = parentUnit.getComponent(TransformComponent)
             const parentScale = parentTransformComponent.getScale()
             const newScale = Vector.linearMultiply(localScale, parentScale)
@@ -54,8 +55,7 @@ export default class MeshExecutor extends ComponentExecutor {
                 , 2)
             const correctionVector = Vector.linearMultiply(sizeVector, Vector.subtract(Vector.one(), scaleRatio))
             const newLocalPosition = Vector.add(Vector.linearMultiply(localPosition, scaleRatio), correctionVector)
-            transformComponent.setLocalPosition(newLocalPosition)
-
+            TransformHelper.translate(world, unit, Vector.subtract(newLocalPosition, localPosition))
         } else {
             transformComponent.setScale(localScale, true)
         }

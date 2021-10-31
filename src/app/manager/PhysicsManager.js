@@ -6,6 +6,7 @@ import ColliderComponent from '../component/internal/ColliderComponent.js'
 import UnitHelper from '../utils/UnitHelper.js'
 import GeometryHelper from '../utils/GeometryHelper.js'
 import RigidBodyComponent from '../component/internal/RigidBodyComponent.js'
+import TransformHelper from '../utils/TransformHelper.js'
 
 export default class PhysicsManager {
 
@@ -204,10 +205,11 @@ export default class PhysicsManager {
     }
 
     /**
+     * @param {World} world
      * @param {Unit} unit
      */
-    update(unit) {
-        this.updateUnit(unit)
+    update(world, unit) {
+        this.updateUnit(world, unit)
     }
 
     /**
@@ -218,11 +220,14 @@ export default class PhysicsManager {
     }
 
     /**
+     * @param {World} world
      * @param {Unit} unit
      */
-    updateUnit(unit) {
+    updateUnit(world, unit) {
         const body = this.physicsEngine.findBody(unit)
         if (body) {
+            const parentUnit = world.getUnitManager().findParentUnit(unit)
+
             // unit component
             const transformComponent = unit.getComponent(TransformComponent)
             const meshComponent = unit.getComponent(MeshComponent)
@@ -232,8 +237,10 @@ export default class PhysicsManager {
             const bodyRotation = this.physicsEngine.getBodyRotation(body)
             const bodyVelocity = this.physicsEngine.getVelocity(unit)
             const bodyPosition = new Vector(this.physicsEngine.getBodyPosition(body))
+            const actualPosition = transformComponent.getPosition()
             const actualUnitRotation = transformComponent.getRotation()
-            const actualUnitSize = meshComponent.getSize()
+            const actualUnitScale = transformComponent.getScale()
+            const actualUnitSize = TransformHelper.getSizeFromScale(actualUnitScale)
             const bodyRotationRounded = Math.round(bodyRotation * 100) / 100
 
             //init result
@@ -266,11 +273,11 @@ export default class PhysicsManager {
             if (rigidBodyComponent) {
                 rigidBodyComponent.setVelocity(bodyVelocity)
             }
-
-            if (!transformComponent.getPosition().equals(newPosition)) {
-                transformComponent.setPosition(newPosition)
+            if (!actualPosition.equals(newPosition)) {
+                transformComponent.setPhysicsPosition(newPosition)
+                transformComponent.setPhysicsUpdated(true)
             }
-            transformComponent.setRotation(newRotation)
+            transformComponent.setLocalRotation(TransformHelper.getLocalRotation(newRotation, parentUnit))
             if (actualUnitRotation !== newRotation) {
                 meshComponent.setGenerated(false)
             }

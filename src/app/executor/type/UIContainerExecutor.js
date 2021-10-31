@@ -4,6 +4,7 @@ import UIContainerComponent from '../../component/internal/ui/UIContainerCompone
 import TransformComponent from '../../component/internal/TransformComponent.js'
 import ObjectHelper from '../../utils/ObjectHelper.js'
 import Vector from '../../utils/Vector.js'
+import TransformHelper from '../../utils/TransformHelper.js'
 
 export default class UIContainerExecutor extends ComponentExecutor {
 
@@ -26,10 +27,12 @@ export default class UIContainerExecutor extends ComponentExecutor {
             const scale = transformComponent.getScale()
             const newPosition = new Vector({x: cameraPosition.getX(), y: cameraPosition.getY()})
             if (!ObjectHelper.isEqual(position, newPosition)) {
-                transformComponent.setPosition(newPosition)
+                transformComponent.setLocalPosition(TransformHelper
+                    .getLocalPosition(newPosition, world.getUnitManager().findParentUnit(unit)))
             }
             if (!ObjectHelper.isEqual(cameraScale, scale)) {
-                transformComponent.setScale(_.cloneDeep(cameraScale))
+                transformComponent.setLocalScale(TransformHelper
+                    .getLocalScale(cameraScale, world.getUnitManager().findParentUnit(unit)))
             }
         }
     }

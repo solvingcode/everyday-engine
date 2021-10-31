@@ -1,7 +1,7 @@
 import {TYPES} from '../../../../pobject/AttributeType.js'
 import AFunction from '../../AFunction.js'
-import TransformComponent from '../../../../component/internal/TransformComponent.js'
 import Vector from '../../../../utils/Vector.js'
+import TransformHelper from '../../../../utils/TransformHelper.js'
 
 export default class TranslateFunction extends AFunction {
 
@@ -20,12 +20,9 @@ export default class TranslateFunction extends AFunction {
     /**
      * @override
      */
-    execute(functionRegistry, unit) {
+    execute(functionRegistry, unit, scriptComponent, world, executionContext) {
         const target = this.getInputValue('target')
         const moveVector = this.getInputValue('moveVector')
-        const transformComponent = target.getComponent(TransformComponent)
-        const actualPosition = transformComponent.getPosition()
-        const newPosition = Vector.add(actualPosition, moveVector)
-        transformComponent.setPosition(newPosition)
+        TransformHelper.translate(world, target, moveVector)
     }
 }

@@ -14,6 +14,8 @@ export default class TransformComponent extends Component {
      */
     initAttributes() {
         this.add('position', TYPES.VECTOR, new Vector())
+        this.add('physicsPosition', TYPES.VECTOR, new Vector())
+        this.add('physicsUpdated', TYPES.BOOLEAN, false)
         this.add('screenPosition', TYPES.VECTOR, new Vector())
         this.add('scale', TYPES.VECTOR, new Vector())
         this.add('rotation', TYPES.RANGE, 0, [0, Math.PI * 2, 0.001])
@@ -29,7 +31,8 @@ export default class TransformComponent extends Component {
      * @override
      */
     getExcludeFields() {
-        return ['position', 'scale', 'rotation', 'lastLocalScale', 'lastLocalPosition', 'lastLocalRotation', 'screenPosition']
+        return ['position', 'scale', 'rotation', 'lastLocalScale', 'lastLocalPosition', 'lastLocalRotation',
+            'screenPosition', 'physicsPosition']
     }
 
     /**
@@ -98,6 +101,20 @@ export default class TransformComponent extends Component {
             throw new SystemError(`setScale is not authorized`)
         }
         this.setValue('scale', _.cloneDeep(scale))
+    }
+
+    /**
+     * @return {Vector}
+     */
+    getPhysicsPosition() {
+        return this.getValue('physicsPosition')
+    }
+
+    /**
+     * @param {Vector} physicsPosition
+     */
+    setPhysicsPosition(physicsPosition) {
+        this.setValue('physicsPosition', _.cloneDeep(physicsPosition))
     }
 
     /**
@@ -182,6 +199,20 @@ export default class TransformComponent extends Component {
      */
     setLocalScale(localScale) {
         this.setValue('localScale', _.cloneDeep(localScale))
+    }
+
+    /**
+     * @return {boolean}
+     */
+    getPhysicsUpdated(){
+        return this.getValue('physicsUpdated')
+    }
+
+    /**
+     * @param {boolean} physicsUpdated
+     */
+    setPhysicsUpdated(physicsUpdated) {
+        this.setValue('physicsUpdated', physicsUpdated)
     }
 
     /**

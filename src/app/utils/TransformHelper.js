@@ -39,33 +39,35 @@ export default class TransformHelper {
     /**
      * @param {World} world
      * @param {Unit} unit
-     * @param {Vector} newPosition
-     */
-    static translateToWorldPosition(world, unit, newPosition) {
-        const physicsManager = world.getPhysicsManager()
-        const transformComponent = unit.getComponent(TransformComponent)
-        if (physicsManager.hasUnit(unit)) {
-            physicsManager.translate(unit, Vector.subtract(newPosition, transformComponent.getPosition()))
-        }
-        transformComponent.setPosition(_.cloneDeep(newPosition), true)
-    }
-
-    /**
-     * @param {World} world
-     * @param {Unit} unit
      * @param {Vector} moveVector
      */
     static translate(world, unit, moveVector) {
         const physicsManager = world.getPhysicsManager()
         const unitManager = world.getUnitManager()
+        const parentUnit = unitManager.findParentUnit(unit)
+        const childUnits = unitManager.findChildUnits(unit)
         const transformComponent = unit.getComponent(TransformComponent)
         if (physicsManager.hasUnit(unit)) {
             physicsManager.translate(unit, moveVector)
+            childUnits.forEach(cUnit => {
+                if (physicsManager.hasUnit(cUnit)) {
+                    physicsManager.translate(cUnit, moveVector)
+                }
+            })
+        } else {
+            const newPosition = Vector.add(moveVector, transformComponent.getPosition())
+            transformComponent.setLocalPosition(this.getLocalPosition(newPosition, parentUnit))
         }
-        transformComponent.setPosition(Vector.add(moveVector, transformComponent.getPosition()))
-        unitManager.findChildUnits(unit).forEach(cUnit => {
-            this.translate(world, cUnit, moveVector)
-        })
+    }
+
+    /**
+     * @param {World} world
+     * @param {Unit} unit
+     * @param {Vector} localScale
+     */
+    static scaleTo(world, unit, localScale) {
+        const transformComponent = unit.getComponent(TransformComponent)
+        transformComponent.setLocalScale(localScale)
     }
 
     /**
@@ -82,12 +84,25 @@ export default class TransformHelper {
     }
 
     /**
+     * @param {number} rotation
+     * @param {Unit} parent
+     * @return {number}
+     */
+    static getLocalRotation(rotation, parent) {
+        if (parent && parent.getComponent(TransformComponent)) {
+            const transformComponent = parent.getComponent(TransformComponent)
+            return (rotation - transformComponent.getRotation()) % Math.PI * 2
+        }
+        return rotation
+    }
+
+    /**
      * @param {Vector} scale
      * @param {Unit} parent
      * @return {Vector}
      */
     static getLocalScale(scale, parent) {
-        if (parent) {
+        if (parent && parent.getComponent(TransformComponent)) {
             const transformComponent = parent.getComponent(TransformComponent)
             return Vector.linearDivide(scale, transformComponent.getScale())
         }

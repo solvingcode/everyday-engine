@@ -23,7 +23,7 @@ export default class GridUnitInstant extends MeshUnitInstant {
         this.createComponent(GUIPendingComponent)
         const transformComponent = this.getComponent(TransformComponent)
         const meshComponent = this.getComponent(MeshComponent)
-        transformComponent.setPosition(new Vector(_.cloneDeep(position)))
+        transformComponent.setLocalPosition(new Vector(_.cloneDeep(position)))
         meshComponent.setShape(PrimitiveShape.GRID)
         const style = new Style()
         style.setColor('#474747')
@@ -31,7 +31,7 @@ export default class GridUnitInstant extends MeshUnitInstant {
         this.getComponent(StyleComponent).setStyle(style)
         this.getComponent(GUIGridComponent).setCellSize(cellSize)
         this.getComponent(GUIGridComponent).setCellSizeScaled(cellSizeScaled)
-        transformComponent.setScale(TransformHelper.getScaleFromSize(size))
+        transformComponent.setLocalScale(TransformHelper.getScaleFromSize(size))
     }
 
     /**

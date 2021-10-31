@@ -5,6 +5,7 @@ import MeshComponent from '../../../../component/internal/MeshComponent.js'
 import ObjectHelper from '../../../../utils/ObjectHelper.js'
 import RigidBodyComponent from '../../../../component/internal/RigidBodyComponent.js'
 import Vector from '../../../../utils/Vector.js'
+import TransformHelper from '../../../../utils/TransformHelper.js'
 
 export default class FlipScaleFunction extends AFunction {
 
@@ -23,15 +24,15 @@ export default class FlipScaleFunction extends AFunction {
     /**
      * @override
      */
-    execute(functionRegistry, unit) {
+    execute(functionRegistry, unit, scriptComponent, world, executionContext) {
         const target = this.getInputValue('target')
         const scaleFactor = this.getInputValue('scaleFactor')
         if (Math.abs(scaleFactor.getX()) > 0 && Math.abs(scaleFactor.getY()) > 0) {
             const transformComponent = target.getComponent(TransformComponent)
-            const actualScale = transformComponent.getScale()
-            const flipScale = Vector.linearMultiply(Vector.abs(actualScale), Vector.sign(scaleFactor))
-            transformComponent.setScale(flipScale)
-            if (!ObjectHelper.isEqual(actualScale, flipScale)) {
+            const actualLocalScale = transformComponent.getLocalScale()
+            const flipLocalScale = Vector.linearMultiply(Vector.abs(actualLocalScale), Vector.sign(scaleFactor))
+            TransformHelper.scaleTo(world, unit, flipLocalScale)
+            if (!ObjectHelper.isEqual(actualLocalScale, flipLocalScale)) {
                 target.getComponent(MeshComponent).setGenerated(false)
                 const rigidBodyComponent = unit.getComponent(RigidBodyComponent)
                 if (rigidBodyComponent) {

@@ -133,7 +133,7 @@ export default class ScriptEditorRunner extends Runner {
                 selectedUnits.forEach(selectedUnit => {
                     const transformComponent = selectedUnit.getComponent(TransformComponent)
                     const position = transformComponent.getPosition()
-                    transformComponent.setPosition(Vector.add(position, dragArea))
+                    transformComponent.setLocalPosition(Vector.add(position, dragArea))
                 })
             }
             //otherwise start moving the selected units

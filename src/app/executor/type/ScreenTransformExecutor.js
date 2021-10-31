@@ -24,7 +24,7 @@ export default class ScreenTransformExecutor extends ComponentExecutor {
         if(uiContainerComponent){
             screenPosition = new Vector({x: 0, y: 0})
             if(!transformComponent.getPosition().equals(screenPosition)){
-                transformComponent.setPosition(screenPosition)
+                transformComponent.setLocalPosition(screenPosition)
             }
         }else if(uiComponent){
             screenPosition = transformComponent.getPosition()

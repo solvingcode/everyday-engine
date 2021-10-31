@@ -61,6 +61,7 @@ export default class TileMapHelper {
      */
     static updateMeshes(world, unit) {
         const unitManager = world.getUnitManager()
+        const parentUnit = unitManager.findParentUnit(unit)
         const tileMapComponent = unit.getComponent(TileMapComponent)
         const meshComponent = unit.getComponent(MeshComponent)
         const transformComponent = unit.getComponent(TransformComponent)
@@ -91,8 +92,8 @@ export default class TileMapHelper {
                 !transformComponent.getScale().equals(tileMapScale) ||
                 !meshComponent.getMapAssetSize().equals(cellSize)) {
 
-                transformComponent.setScale(tileMapScale)
-                transformComponent.setPosition(tileMapPosition)
+                transformComponent.setLocalScale(TransformHelper.getLocalScale(tileMapScale, parentUnit))
+                transformComponent.setLocalPosition(TransformHelper.getLocalPosition(tileMapPosition, parentUnit))
                 meshComponent.setMapAssetPositions(tileMapAssetPositions)
                 meshComponent.setMapAssetIds(mapAssetIds)
                 meshComponent.setMapAssetSize(cellSize)

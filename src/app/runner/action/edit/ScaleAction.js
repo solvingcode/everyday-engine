@@ -6,7 +6,6 @@ import Size from '../../../pobject/Size.js'
 import GUIScaleFreeComponent from '../../../component/internal/gui/scale/GUIScaleFreeComponent.js'
 import GUIScaleXComponent from '../../../component/internal/gui/scale/GUIScaleXComponent.js'
 import GUIScaleYComponent from '../../../component/internal/gui/scale/GUIScaleYComponent.js'
-import MeshComponent from '../../../component/internal/MeshComponent.js'
 import UnitHelper from '../../../utils/UnitHelper.js'
 import LightComponent from '../../../component/internal/LightComponent.js'
 import TransformComponent from '../../../component/internal/TransformComponent.js'
@@ -57,12 +56,13 @@ export default class ScaleAction extends Action {
         const world = World.get()
         const {keyboard} = Window.get()
         const camera = world.getCamera()
+        const unitManager = world.getUnitManager()
         const dragDistance = mouse.dragAndDrop(camera)
         selectedUnits.map((unit) => {
+            const parentUnit = unitManager.findParentUnit(unit)
             if (unit.hasComponentsByClasses([LightComponent])) {
                 unit.findComponentByClass(LightComponent).setGenerated(false)
             }
-            const meshComponent = unit.getComponent(MeshComponent)
             const transformComponent = unit.getComponent(TransformComponent)
             const uiTransformComponent = unit.getComponent(UITransformComponent)
             const {width: meshWidth, height: meshHeight} = TransformHelper.getSizeFromScale(transformComponent.getScale())
@@ -75,14 +75,12 @@ export default class ScaleAction extends Action {
             const width = meshWidth + dragVector.x
             const height = meshHeight + dragVector.y
             const newSize = new Size({width, height})
+            const newScale = TransformHelper.getScaleFromSize(newSize)
+            const newLocalScale = TransformHelper.getLocalScale(newScale, parentUnit)
             UnitHelper.updateOrRecordComponent(world, transformComponent, TransformComponent.prototype.setLocalScale,
-                TransformHelper.getScaleFromSize(newSize), Storage.get())
+                newLocalScale, Storage.get())
             if (keyboard.isKeyPressed(KeyCode.SHIFT)) {
                 transformComponent.setPosition(Vector.add(position, Vector.multiply(dragVector, -1/2)))
-            }
-            if(meshComponent){
-                meshComponent.setSize(newSize)
-                meshComponent.setGenerated(false)
             }
             if (uiTransformComponent) {
                 uiTransformComponent.setLastAnchorMin(null)

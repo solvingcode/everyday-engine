@@ -2,7 +2,6 @@ import ComponentExecutor from './ComponentExecutor.js'
 import World from '../../world/World.js'
 import TransformComponent from '../../component/internal/TransformComponent.js'
 import Vector from '../../utils/Vector.js'
-import TransformHelper from '../../utils/TransformHelper.js'
 
 export default class TransformExecutor extends ComponentExecutor {
 
@@ -31,14 +30,16 @@ export default class TransformExecutor extends ComponentExecutor {
         const parentUnit = unitManager.findParentUnit(unit)
         const childUnits = unitManager.findChildUnits(unit)
         let newPosition
-        if (parentUnit) {
+        if (parentUnit && parentUnit.getComponent(TransformComponent)) {
             const parentTransformComponent = parentUnit.getComponent(TransformComponent)
             const parentPosition = parentTransformComponent.getPosition()
             newPosition = Vector.add(localPosition, parentPosition)
         } else {
             newPosition = _.cloneDeep(localPosition)
         }
-        TransformHelper.translateToWorldPosition(world, unit, newPosition)
+        if(!_.isEqual(newPosition, transformComponent.getPosition())){
+            transformComponent.setPosition(newPosition, true)
+        }
         transformComponent.setLastLocalPosition(_.cloneDeep(transformComponent.getLocalPosition()))
         childUnits.forEach(cUnit => {
             const childTransformComponent = cUnit.getComponent(TransformComponent)
