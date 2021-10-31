@@ -34,7 +34,7 @@ export default class EditAnimationSelectMenuItem extends FormMenuItem {
         return [
             {
                 bind: 'animation',
-                label: 'Animation',
+                label: '',
                 type: Layout.form.DROPDOWN,
                 list
             }

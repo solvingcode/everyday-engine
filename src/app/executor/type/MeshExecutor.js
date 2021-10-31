@@ -3,7 +3,6 @@ import World from '../../world/World.js'
 import TransformComponent from '../../component/internal/TransformComponent.js'
 import Vector from '../../utils/Vector.js'
 import MeshComponent from '../../component/internal/MeshComponent.js'
-import GeometryHelper from '../../utils/GeometryHelper.js'
 import TransformHelper from '../../utils/TransformHelper.js'
 
 export default class MeshExecutor extends ComponentExecutor {
@@ -77,19 +76,17 @@ export default class MeshExecutor extends ComponentExecutor {
     updateLocalRotation(unit, transformComponent, meshComponent) {
         const unitManager = World.get().getUnitManager()
         const localRotation = transformComponent.getLocalRotation()
-        const position = transformComponent.getPosition()
         const childUnits = unitManager.findChildUnits(unit)
         const parentUnit = unitManager.findParentUnit(unit)
         if (parentUnit) {
             const parentTransformComponent = parentUnit.getComponent(TransformComponent)
             if (parentTransformComponent) {
-                const parentPosition = parentTransformComponent.getPosition()
                 const parentRotation = parentTransformComponent.getRotation()
                 const newRotation = localRotation + parentRotation
                 transformComponent.setRotation(newRotation, true)
-                transformComponent.setPosition(
-                    GeometryHelper.rotatePoint(position, newRotation - parentRotation, parentPosition), true)
             }
+        } else {
+            transformComponent.setRotation(localRotation, true)
         }
         meshComponent.setGenerated(false)
         transformComponent.setLastLocalRotation(transformComponent.getLocalRotation())

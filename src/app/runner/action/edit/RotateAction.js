@@ -42,9 +42,9 @@ export default class RotateAction extends Action {
                 unit.findComponentByClass(LightComponent).setGenerated(false)
             }
             const transformComponent = unit.getComponent(TransformComponent)
-            const rotation = transformComponent.getRotation() + angleRadian
-            UnitHelper.updateOrRecordComponent(world, transformComponent, TransformComponent.prototype.setRotation,
-                rotation, Storage.get())
+            const localRotation = transformComponent.getLocalRotation() + angleRadian
+            UnitHelper.updateOrRecordComponent(world, transformComponent, TransformComponent.prototype.setLocalRotation,
+                localRotation, Storage.get())
             unit.getComponent(MeshComponent).setGenerated(false)
         })
     }

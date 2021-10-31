@@ -44,7 +44,6 @@ export default class TransformHelper {
     static translate(world, unit, moveVector) {
         const physicsManager = world.getPhysicsManager()
         const unitManager = world.getUnitManager()
-        const parentUnit = unitManager.findParentUnit(unit)
         const childUnits = unitManager.findChildUnits(unit)
         const transformComponent = unit.getComponent(TransformComponent)
         if (physicsManager.hasUnit(unit)) {
@@ -55,8 +54,8 @@ export default class TransformHelper {
                 }
             })
         } else {
-            const newPosition = Vector.add(moveVector, transformComponent.getPosition())
-            transformComponent.setLocalPosition(this.getLocalPosition(newPosition, parentUnit))
+            const newLocalPosition = Vector.add(moveVector, transformComponent.getLocalPosition())
+            transformComponent.setLocalPosition(newLocalPosition)
         }
     }
 
@@ -91,7 +90,7 @@ export default class TransformHelper {
     static getLocalRotation(rotation, parent) {
         if (parent && parent.getComponent(TransformComponent)) {
             const transformComponent = parent.getComponent(TransformComponent)
-            return (rotation - transformComponent.getRotation()) % Math.PI * 2
+            return (rotation - transformComponent.getRotation()) % (Math.PI * 2)
         }
         return rotation
     }

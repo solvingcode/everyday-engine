@@ -695,6 +695,9 @@ export default {
                                     parentName: {
                                         type: TYPES.STRING
                                     },
+                                    assetId: {
+                                        type: TYPES.NUMBER
+                                    },
                                     functions: {
                                         type: Array,
                                         meta: {

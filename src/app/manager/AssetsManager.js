@@ -25,7 +25,7 @@ export default class AssetsManager extends AssetsManagerData {
 
     /**
      * @private
-     * @param {string} data
+     * @param {string|null} data
      * @param {Class<AssetType>} type
      * @param {string} name
      * @param {Storage} storage
@@ -40,14 +40,15 @@ export default class AssetsManager extends AssetsManagerData {
         if (object) {
             object.setAssetId(asset.getId())
         }
-        if (await AssetHelper.load(asset, data, storage)) {
+        const assetData = data || await AssetHelper.generate(object, storage)
+        if (await AssetHelper.load(asset, assetData, storage)) {
             this.assets.push(asset)
             return asset
         }
     }
 
     /**
-     * @param {string} data
+     * @param {string|null} data
      * @param {Class<AssetType>} assetType
      * @param {string} assetName
      * @param {number} folderId
@@ -93,9 +94,8 @@ export default class AssetsManager extends AssetsManagerData {
     async createClassScript(folder, type, scriptClass, storage) {
         const assetName = this.generateUniqAssetName('NewScript', folder.getId())
         const flow = new scriptClass(assetName)
-        const data = await AssetHelper.generate(flow, storage)
         return this.createAsset(
-            data,
+            null,
             type,
             assetName,
             folder.getId(),
@@ -114,9 +114,8 @@ export default class AssetsManager extends AssetsManagerData {
     async createAnimationScript(folder, type, scriptClass, storage) {
         const assetName = this.generateUniqAssetName('NewAnimationScript', folder.getId())
         const flow = new scriptClass(assetName)
-        const data = await AssetHelper.generate(flow, storage)
         return this.createAsset(
-            data,
+            null,
             type,
             assetName,
             folder.getId(),
@@ -136,9 +135,8 @@ export default class AssetsManager extends AssetsManagerData {
         const assetName = this.generateUniqAssetName('Animation', folder.getId())
         const animation = new Animation(Maths.generateId(), assetName)
         animation.setControllerAssetId(animationController.getAssetId())
-        const data = await AssetHelper.generate(animation, storage)
         return this.createAsset(
-            data,
+            null,
             type,
             assetName,
             folder.getId(),

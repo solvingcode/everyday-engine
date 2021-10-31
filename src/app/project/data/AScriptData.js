@@ -29,6 +29,11 @@ export default class AScriptData extends Data{
     parentName
 
     /**
+     * @type {number}
+     */
+    assetId
+
+    /**
      * @param {string} name
      */
     constructor(name= '') {
@@ -52,6 +57,20 @@ export default class AScriptData extends Data{
      */
     getId(){
         return this.id
+    }
+
+    /**
+     * @param {number} assetId
+     */
+    setAssetId(assetId){
+        this.assetId = assetId
+    }
+
+    /**
+     * @return {number}
+     */
+    getAssetId(){
+        return this.assetId
     }
 
     /**
