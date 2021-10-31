@@ -587,4 +587,12 @@ export default class UnitHelper {
         }
     }
 
+    /**
+     * @param {World} world
+     * @param {Unit} unit
+     */
+    static hasPhysics(world, unit){
+        return world.getPhysicsManager().hasUnit(unit)
+    }
+
 }

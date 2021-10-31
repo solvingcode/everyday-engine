@@ -3,6 +3,7 @@ import NumberHelper from '../utils/NumberHelper.js'
 import Vector from '../utils/Vector.js'
 import Component from '../component/Component.js'
 import ClientError from '../exception/type/ClientError.js'
+import ClassHelper from '../utils/ClassHelper.js'
 
 export default class AnimationPlayer {
 
@@ -24,7 +25,9 @@ export default class AnimationPlayer {
                 const newValue = this.interpolate(componentClass, type, time, prevFrame, nextFrame)
                 if (prevFrame) {
                     if (!_.isEqual(unit.findComponentByClass(componentClass).getValue(property.getAttributeName()), newValue)) {
-                        unit.findComponentByClass(componentClass).setValue(property.getAttributeName(), newValue)
+                        const componentInstance = unit.findComponentByClass(componentClass)
+                        const setter = ClassHelper.getSetter(componentInstance, property.getAttributeName())
+                        componentInstance[setter](newValue)
                     }
                 }
             } else {

@@ -31,7 +31,6 @@ export default class PhysicsExecutor extends ComponentExecutor {
         const parentUnit = unitManager.findParentUnit(unit)
         const physicsPosition = transformComponent.getPhysicsPosition()
         const localPosition = transformComponent.getLocalPosition()
-        console.log('updatePhysicsPosition', unit.getName())
         if (!parentUnit) {
             transformComponent.setLocalPosition(physicsPosition)
         } else {
@@ -48,6 +47,7 @@ export default class PhysicsExecutor extends ComponentExecutor {
                 transformComponent.setLocalPosition(TransformHelper.getLocalPosition(physicsPosition, parentUnit))
             }
         }
+        transformComponent.setPhysicsPositionSync(true)
         transformComponent.setPhysicsUpdated(false)
     }
 }
