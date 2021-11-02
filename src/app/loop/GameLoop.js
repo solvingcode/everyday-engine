@@ -46,8 +46,8 @@ class GameLoop extends SceneLoop {
             CameraRunner, PhysicsRunner, GameExecutorRunner, LightRunner]
         ExecutorRegistry.get().register([
             new CameraExecutor(),
-            new AnimationPlayerExecutor(),
             new PhysicsExecutor(),
+            new AnimationPlayerExecutor(),
             new MeshExecutor(),
             new TransformExecutor(),
             new UITransformExecutor(),

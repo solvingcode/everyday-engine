@@ -73,6 +73,13 @@ export default class MatterEngine extends PhysicsEngine {
     /**
      * @override
      */
+    rotate(body, angle) {
+        Matter.Body.rotate(body, angle)
+    }
+
+    /**
+     * @override
+     */
     update() {
         Matter.Engine.update(this.getInstance())
     }
@@ -154,6 +161,15 @@ export default class MatterEngine extends PhysicsEngine {
      */
     setPositionToBody(body, position) {
         Matter.Body.setPosition(body, position)
+    }
+
+    /**
+     * @override
+     * @param {Matter.Body} body
+     * @param {number} angle
+     */
+    setRotationToBody(body, angle) {
+        Matter.Body.setAngle(body, angle)
     }
 
     /**

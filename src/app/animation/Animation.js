@@ -14,11 +14,6 @@ export default class Animation extends AnimationData {
     /**
      * @type {number}
      */
-    assetId
-
-    /**
-     * @type {number}
-     */
     time
 
     /**
@@ -203,20 +198,6 @@ export default class Animation extends AnimationData {
         const playInfo = this.playAt(deltaTime, this.getTime())
         this.loopTimes += playInfo.loopTimes
         this.setTime(playInfo.time)
-    }
-
-    /**
-     * @param {number} assetId
-     */
-    setAssetId(assetId) {
-        this.assetId = assetId
-    }
-
-    /**
-     * @return {number}
-     */
-    getAssetId() {
-        return this.assetId
     }
 
     /**

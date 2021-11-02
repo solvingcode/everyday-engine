@@ -79,6 +79,15 @@ export default class PhysicsEngine {
 
     /**
      * @param {Unit} unit
+     * @param {number} angle
+     */
+    setRotation(unit, angle) {
+        const body = this.tryFindBody(unit)
+        this.setRotationToBody(body, angle)
+    }
+
+    /**
+     * @param {Unit} unit
      * @param {number} friction
      */
     setFriction(unit, friction) {
@@ -161,6 +170,16 @@ export default class PhysicsEngine {
      * @return {void}
      */
     translate(body, moveVector) {
+        throw new SystemError(`${this.constructor.name}.translate method must be implemented`)
+    }
+
+    /**
+     * @abstract
+     * @param {*} body
+     * @param {number} angle
+     * @return {void}
+     */
+    rotate(body, angle) {
         throw new SystemError(`${this.constructor.name}.translate method must be implemented`)
     }
 
@@ -298,6 +317,16 @@ export default class PhysicsEngine {
     }
 
     /**
+     * @abstract
+     * @param {*} body
+     * @param {number} angle
+     * @return {void}
+     */
+    setRotationToBody(body, angle) {
+        throw new SystemError(`${this.constructor.name}.setRotationToBody method must be implemented`)
+    }
+
+    /**
      * @protected
      * @abstract
      * @param {ColliderComponent} colliderComponent
@@ -322,6 +351,7 @@ export default class PhysicsEngine {
      * @abstract
      * @param {*} body
      * @param {Vector} position
+     * @return {void}
      */
     setPositionToBody(body, position) {
         throw new SystemError(`${this.constructor.name}.setPositionToBody method must be implemented`)
@@ -332,6 +362,7 @@ export default class PhysicsEngine {
      * @abstract
      * @param {*} body
      * @param {number} friction
+     * @return {void}
      */
     setFrictionToBody(body, friction) {
         throw new SystemError(`${this.constructor.name}.setFrictionToBody method must be implemented`)

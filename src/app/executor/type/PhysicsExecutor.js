@@ -4,6 +4,7 @@ import TransformComponent from '../../component/internal/TransformComponent.js'
 import Vector from '../../utils/Vector.js'
 import ColliderComponent from '../../component/internal/ColliderComponent.js'
 import TransformHelper from '../../utils/TransformHelper.js'
+import MeshComponent from '../../component/internal/MeshComponent.js'
 
 export default class PhysicsExecutor extends ComponentExecutor {
 
@@ -16,8 +17,12 @@ export default class PhysicsExecutor extends ComponentExecutor {
      */
     execute(unit, executionContext) {
         const transformComponent = unit.getComponent(TransformComponent)
-        if (transformComponent.getPhysicsUpdated()) {
+        const meshComponent = unit.getComponent(MeshComponent)
+        if (transformComponent.getPhysicsPositionUpdated()) {
             this.updatePosition(unit, transformComponent)
+        }
+        if (transformComponent.getPhysicsRotationUpdated()) {
+            this.updateRotation(unit, transformComponent, meshComponent)
         }
     }
 
@@ -35,7 +40,7 @@ export default class PhysicsExecutor extends ComponentExecutor {
             transformComponent.setLocalPosition(physicsPosition)
         } else {
             const parentTransformComponent = parentUnit.getComponent(TransformComponent)
-            if (parentTransformComponent.getPhysicsUpdated()) {
+            if (parentTransformComponent.getPhysicsPositionUpdated()) {
                 const parentPhysicsPositionGap = Vector.subtract(parentTransformComponent.getPhysicsPosition(),
                     parentTransformComponent.getPosition())
                 const physicsPositionGap = Vector.subtract(transformComponent.getPhysicsPosition(),
@@ -48,6 +53,39 @@ export default class PhysicsExecutor extends ComponentExecutor {
             }
         }
         transformComponent.setPhysicsPositionSync(true)
-        transformComponent.setPhysicsUpdated(false)
+        transformComponent.setPhysicsPositionUpdated(false)
+    }
+
+    /**
+     * @param {Unit} unit
+     * @param {TransformComponent} transformComponent
+     * @param {MeshComponent} meshComponent
+     */
+    updateRotation(unit, transformComponent, meshComponent) {
+        const world = World.get()
+        const unitManager = world.getUnitManager()
+        const parentUnit = unitManager.findParentUnit(unit)
+        const physicsRotation = transformComponent.getPhysicsRotation()
+        const localRotation = transformComponent.getLocalRotation()
+        if (!parentUnit) {
+            transformComponent.setLocalRotation(physicsRotation)
+        } else {
+            const parentTransformComponent = parentUnit.getComponent(TransformComponent)
+            if (parentTransformComponent.getPhysicsRotationUpdated()) {
+                const parentPhysicsRotationGap = parentTransformComponent.getPhysicsRotation() -
+                    parentTransformComponent.getRotation()
+                const physicsRotationGap = transformComponent.getPhysicsRotation() -
+                    transformComponent.getRotation()
+                const correctionGap = physicsRotationGap - parentPhysicsRotationGap
+                const newLocalRotation = localRotation + correctionGap
+                transformComponent.setLocalRotation(newLocalRotation)
+            } else {
+                transformComponent.setLocalRotation(TransformHelper.getLocalRotation(physicsRotation, parentUnit))
+            }
+        }
+        transformComponent.setRotation(physicsRotation, true)
+        meshComponent.setGenerated(false)
+        transformComponent.setPhysicsRotationSync(true)
+        transformComponent.setPhysicsRotationUpdated(false)
     }
 }

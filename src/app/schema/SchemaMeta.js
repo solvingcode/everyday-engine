@@ -606,6 +606,9 @@ export default {
                                     id: {
                                         type: TYPES.NUMBER
                                     },
+                                    assetId: {
+                                        type: TYPES.NUMBER
+                                    },
                                     name: {
                                         type: TYPES.STRING
                                     },

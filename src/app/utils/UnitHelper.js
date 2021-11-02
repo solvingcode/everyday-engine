@@ -131,6 +131,19 @@ export default class UnitHelper {
 
     /**
      * @param {Unit} unit
+     * @param {Vector} position
+     * @return {Vector}
+     */
+    static convertToCenterPosition(unit, position){
+        const center = this.getLargeCenterByUnit(unit)
+        return new Vector({
+            x: position.x + center.x,
+            y: position.y + center.y
+        })
+    }
+
+    /**
+     * @param {Unit} unit
      * @param {ColliderComponent} colliderComponent
      * @param {Vector} unitPosition
      * @param {number} colliderRotation
@@ -591,8 +604,40 @@ export default class UnitHelper {
      * @param {World} world
      * @param {Unit} unit
      */
-    static hasPhysics(world, unit){
+    static hasPhysics(world, unit) {
         return world.getPhysicsManager().hasUnit(unit)
+    }
+
+    /**
+     * @param {World} world
+     * @param {Unit} unit
+     * @param {number} angle
+     */
+    static setRotation(world, unit, angle) {
+        const physicsManager = world.getPhysicsManager()
+        const transformComponent = unit.getComponent(TransformComponent)
+        const meshComponent = unit.getComponent(MeshComponent)
+        if (this.hasPhysics(world, unit) && !transformComponent.getPhysicsRotationSync()) {
+            physicsManager.setRotation(unit, angle)
+        } else {
+            transformComponent.setRotation(angle, true)
+            meshComponent.setGenerated(false)
+        }
+    }
+
+    /**
+     * @param {World} world
+     * @param {Unit} unit
+     * @param {Vector} position
+     */
+    static setPosition(world, unit, position) {
+        const physicsManager = world.getPhysicsManager()
+        const transformComponent = unit.getComponent(TransformComponent)
+        if (this.hasPhysics(world, unit) && !transformComponent.getPhysicsPositionSync()) {
+            physicsManager.setPosition(unit, this.convertToCenterPosition(unit, position))
+        } else {
+            transformComponent.setPosition(_.cloneDeep(position), true)
+        }
     }
 
 }

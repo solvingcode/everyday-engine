@@ -1,7 +1,6 @@
 import MatterEngine from '../physics/engine/matter/MatterEngine.js'
 import Vector from '../utils/Vector.js'
 import TransformComponent from '../component/internal/TransformComponent.js'
-import MeshComponent from '../component/internal/MeshComponent.js'
 import ColliderComponent from '../component/internal/ColliderComponent.js'
 import UnitHelper from '../utils/UnitHelper.js'
 import GeometryHelper from '../utils/GeometryHelper.js'
@@ -200,6 +199,25 @@ export default class PhysicsManager {
         }
     }
 
+    /**
+     * @param {Unit} unit
+     * @param {number} angle
+     */
+    rotate(unit, angle) {
+        const body = this.physicsEngine.findBody(unit)
+        if (body) {
+            this.physicsEngine.rotate(body, angle)
+        }
+    }
+
+    /**
+     * @param {Unit} unit
+     * @param {number} angle
+     */
+    setRotation(unit, angle){
+        this.physicsEngine.setRotation(unit, angle)
+    }
+
     updateEngine() {
         this.physicsEngine.update()
     }
@@ -226,11 +244,8 @@ export default class PhysicsManager {
     updateUnit(world, unit) {
         const body = this.physicsEngine.findBody(unit)
         if (body) {
-            const parentUnit = world.getUnitManager().findParentUnit(unit)
-
             // unit component
             const transformComponent = unit.getComponent(TransformComponent)
-            const meshComponent = unit.getComponent(MeshComponent)
             const rigidBodyComponent = unit.getComponent(RigidBodyComponent)
 
             // unit/body info
@@ -241,7 +256,7 @@ export default class PhysicsManager {
             const actualUnitRotation = transformComponent.getRotation()
             const actualUnitScale = transformComponent.getScale()
             const actualUnitSize = TransformHelper.getSizeFromScale(actualUnitScale)
-            const bodyRotationRounded = Math.round(bodyRotation * 100) / 100
+            const bodyRotationRounded = bodyRotation
 
             //init result
             let newPosition = GeometryHelper.fromCenterPosition(bodyPosition, bodyRotationRounded, actualUnitSize)
@@ -266,7 +281,6 @@ export default class PhysicsManager {
                 }
             }
 
-            //save velocity
             colliderComponents.forEach(colliderComponent => {
                 colliderComponent.setVelocity(bodyVelocity)
             })
@@ -275,11 +289,11 @@ export default class PhysicsManager {
             }
             if (!actualPosition.equals(newPosition)) {
                 transformComponent.setPhysicsPosition(newPosition)
-                transformComponent.setPhysicsUpdated(true)
+                transformComponent.setPhysicsPositionUpdated(true)
             }
-            transformComponent.setLocalRotation(TransformHelper.getLocalRotation(newRotation, parentUnit))
             if (actualUnitRotation !== newRotation) {
-                meshComponent.setGenerated(false)
+                transformComponent.setPhysicsRotation(newRotation)
+                transformComponent.setPhysicsRotationUpdated(true)
             }
         }
     }

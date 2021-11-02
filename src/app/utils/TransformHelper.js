@@ -2,6 +2,7 @@ import {SCALE_FACTOR} from '../core/Constant.js'
 import Vector from './Vector.js'
 import Size from '../pobject/Size.js'
 import TransformComponent from '../component/internal/TransformComponent.js'
+import GeometryHelper from './GeometryHelper.js'
 
 export default class TransformHelper {
 
@@ -57,6 +58,43 @@ export default class TransformHelper {
             const newLocalPosition = Vector.add(moveVector, transformComponent.getLocalPosition())
             transformComponent.setLocalPosition(newLocalPosition)
         }
+    }
+
+    /**
+     * @param {World} world
+     * @param {Unit} unit
+     * @param {number} angle
+     */
+    static rotate(world, unit, angle) {
+        const physicsManager = world.getPhysicsManager()
+        const unitManager = world.getUnitManager()
+        const childUnits = unitManager.findChildUnits(unit)
+        const transformComponent = unit.getComponent(TransformComponent)
+        if (physicsManager.hasUnit(unit)) {
+            physicsManager.rotate(unit, angle)
+            childUnits.forEach(cUnit => {
+                if (physicsManager.hasUnit(cUnit)) {
+                    physicsManager.rotate(cUnit, angle)
+                }
+            })
+        } else {
+            const newLocalRotation = angle + transformComponent.getLocalRotation()
+            transformComponent.setLocalRotation(newLocalRotation)
+        }
+    }
+
+    /**
+     * @param {World} world
+     * @param {Unit} unit
+     * @param {number} angle
+     * @return {Vector}
+     */
+    static getCorrectionTranslateVector(world, unit, angle){
+        const transformComponent = unit.getComponent(TransformComponent)
+        const size = this.getSizeFromScale(transformComponent.getScale())
+        const vertices = GeometryHelper.loadVertices(size)
+        const rotateVertices = GeometryHelper.rotateVertices(vertices, angle, size)
+        return Vector.subtract(rotateVertices[0], vertices[0])
     }
 
     /**

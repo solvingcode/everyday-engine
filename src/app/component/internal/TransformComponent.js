@@ -15,8 +15,11 @@ export default class TransformComponent extends Component {
     initAttributes() {
         this.add('position', TYPES.VECTOR, new Vector())
         this.add('physicsPosition', TYPES.VECTOR, new Vector())
-        this.add('physicsUpdated', TYPES.BOOLEAN, false)
+        this.add('physicsRotation', TYPES.NUMBER)
+        this.add('physicsPositionUpdated', TYPES.BOOLEAN, false)
+        this.add('physicsRotationUpdated', TYPES.BOOLEAN, false)
         this.add('physicsPositionSync', TYPES.BOOLEAN, true)
+        this.add('physicsRotationSync', TYPES.BOOLEAN, true)
         this.add('screenPosition', TYPES.VECTOR, new Vector())
         this.add('scale', TYPES.VECTOR, new Vector())
         this.add('rotation', TYPES.RANGE, 0, [0, Math.PI * 2, 0.001])
@@ -25,7 +28,7 @@ export default class TransformComponent extends Component {
         this.add('localRotation', TYPES.RANGE, 0, [0, Math.PI * 2, 0.001])
         this.add('lastLocalScale', TYPES.VECTOR)
         this.add('lastLocalPosition', TYPES.VECTOR)
-        this.add('lastLocalRotation', TYPES.NUMBER)
+        this.add('lastLocalRotation', TYPES.NUMBER, null)
     }
 
     /**
@@ -33,7 +36,7 @@ export default class TransformComponent extends Component {
      */
     getExcludeFields() {
         return ['position', 'scale', 'rotation', 'lastLocalScale', 'lastLocalPosition', 'lastLocalRotation',
-            'screenPosition', 'physicsPosition', 'physicsPositionNotSync']
+            'screenPosition', 'physicsPosition', 'physicsPositionNotSync', 'physicsRotation', 'physicsRotationSync']
     }
 
     /**
@@ -83,6 +86,7 @@ export default class TransformComponent extends Component {
      * @param {number|string} localRotation
      */
     setLocalRotation(localRotation) {
+        this.setPhysicsRotationSync(false)
         this.setValue('localRotation', parseFloat(localRotation))
     }
 
@@ -116,6 +120,20 @@ export default class TransformComponent extends Component {
      */
     setPhysicsPosition(physicsPosition) {
         this.setValue('physicsPosition', _.cloneDeep(physicsPosition))
+    }
+
+    /**
+     * @return {number}
+     */
+    getPhysicsRotation() {
+        return this.getValue('physicsRotation')
+    }
+
+    /**
+     * @param {number} physicsRotation
+     */
+    setPhysicsRotation(physicsRotation) {
+        this.setValue('physicsRotation', physicsRotation)
     }
 
     /**
@@ -206,15 +224,29 @@ export default class TransformComponent extends Component {
     /**
      * @return {boolean}
      */
-    getPhysicsUpdated(){
-        return this.getValue('physicsUpdated')
+    getPhysicsPositionUpdated(){
+        return this.getValue('physicsPositionUpdated')
     }
 
     /**
-     * @param {boolean} physicsUpdated
+     * @param {boolean} physicsPositionUpdated
      */
-    setPhysicsUpdated(physicsUpdated) {
-        this.setValue('physicsUpdated', physicsUpdated)
+    setPhysicsPositionUpdated(physicsPositionUpdated) {
+        this.setValue('physicsPositionUpdated', physicsPositionUpdated)
+    }
+
+    /**
+     * @return {boolean}
+     */
+    getPhysicsRotationUpdated(){
+        return this.getValue('physicsRotationUpdated')
+    }
+
+    /**
+     * @param {boolean} physicsRotationUpdated
+     */
+    setPhysicsRotationUpdated(physicsRotationUpdated) {
+        this.setValue('physicsRotationUpdated', physicsRotationUpdated)
     }
 
     /**
@@ -229,6 +261,20 @@ export default class TransformComponent extends Component {
      */
     setPhysicsPositionSync(physicsPositionSync) {
         this.setValue('physicsPositionSync', physicsPositionSync)
+    }
+
+    /**
+     * @return {boolean}
+     */
+    getPhysicsRotationSync(){
+        return this.getValue('physicsRotationSync')
+    }
+
+    /**
+     * @param {boolean} physicsRotationSync
+     */
+    setPhysicsRotationSync(physicsRotationSync) {
+        this.setValue('physicsRotationSync', physicsRotationSync)
     }
 
     /**

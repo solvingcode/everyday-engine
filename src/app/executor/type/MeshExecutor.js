@@ -4,6 +4,7 @@ import TransformComponent from '../../component/internal/TransformComponent.js'
 import Vector from '../../utils/Vector.js'
 import MeshComponent from '../../component/internal/MeshComponent.js'
 import TransformHelper from '../../utils/TransformHelper.js'
+import UnitHelper from '../../utils/UnitHelper.js'
 
 export default class MeshExecutor extends ComponentExecutor {
 
@@ -54,7 +55,7 @@ export default class MeshExecutor extends ComponentExecutor {
                 , 2)
             const correctionVector = Vector.linearMultiply(sizeVector, Vector.subtract(Vector.one(), scaleRatio))
             const newLocalPosition = Vector.add(Vector.linearMultiply(localPosition, scaleRatio), correctionVector)
-            TransformHelper.translate(world, unit, Vector.subtract(newLocalPosition, localPosition))
+            transformComponent.setLocalPosition(newLocalPosition)
         } else {
             transformComponent.setScale(localScale, true)
         }
@@ -74,21 +75,22 @@ export default class MeshExecutor extends ComponentExecutor {
      * @param {MeshComponent} meshComponent
      */
     updateLocalRotation(unit, transformComponent, meshComponent) {
-        const unitManager = World.get().getUnitManager()
+        const world = World.get()
+        const unitManager = world.getUnitManager()
         const localRotation = transformComponent.getLocalRotation()
         const childUnits = unitManager.findChildUnits(unit)
         const parentUnit = unitManager.findParentUnit(unit)
+        let newRotation
         if (parentUnit) {
             const parentTransformComponent = parentUnit.getComponent(TransformComponent)
             if (parentTransformComponent) {
                 const parentRotation = parentTransformComponent.getRotation()
-                const newRotation = localRotation + parentRotation
-                transformComponent.setRotation(newRotation, true)
+                newRotation = localRotation + parentRotation
             }
         } else {
-            transformComponent.setRotation(localRotation, true)
+            newRotation = localRotation
         }
-        meshComponent.setGenerated(false)
+        UnitHelper.setRotation(world, unit, newRotation)
         transformComponent.setLastLocalRotation(transformComponent.getLocalRotation())
         childUnits.forEach(cUnit => {
             const childTransformComponent = cUnit.getComponent(TransformComponent)

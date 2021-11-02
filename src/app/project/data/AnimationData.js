@@ -32,6 +32,11 @@ export default class AnimationData extends Data {
      */
     controllerAssetId
 
+    /**
+     * @type {number}
+     */
+    assetId
+
     constructor() {
         super()
         this.properties = []
@@ -126,6 +131,20 @@ export default class AnimationData extends Data {
      */
     getLengthSecond() {
         return this.lengthSecond
+    }
+
+    /**
+     * @param {number} assetId
+     */
+    setAssetId(assetId) {
+        this.assetId = assetId
+    }
+
+    /**
+     * @return {number}
+     */
+    getAssetId() {
+        return this.assetId
     }
 
     /**
