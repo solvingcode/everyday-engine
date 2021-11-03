@@ -38,9 +38,7 @@ export default class TransformExecutor extends ComponentExecutor {
         } else {
             newPosition = _.cloneDeep(localPosition)
         }
-        if(!_.isEqual(newPosition, transformComponent.getPosition())){
-            UnitHelper.setPosition(world, unit, newPosition)
-        }
+        UnitHelper.setPosition(world, unit, newPosition)
         transformComponent.setLastLocalPosition(_.cloneDeep(transformComponent.getLocalPosition()))
         childUnits.forEach(cUnit => {
             const childTransformComponent = cUnit.getComponent(TransformComponent)

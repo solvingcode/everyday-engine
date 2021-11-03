@@ -73,6 +73,13 @@ export default class MatterEngine extends PhysicsEngine {
     /**
      * @override
      */
+    scale(body, scale) {
+        Matter.Body.scale(body, scale.getX(), scale.getY())
+    }
+
+    /**
+     * @override
+     */
     rotate(body, angle) {
         Matter.Body.rotate(body, angle)
     }
@@ -126,6 +133,20 @@ export default class MatterEngine extends PhysicsEngine {
      */
     getBodyPosition(body) {
         return body.position
+    }
+
+    /**
+     * @override
+     */
+    getLeftTopBodyPosition(body) {
+        return body.bounds.min
+    }
+
+    /**
+     * @override
+     */
+    getBodySize(body) {
+        return Matter.Vector.sub(body.bounds.max, body.bounds.min)
     }
 
     /**

@@ -105,6 +105,15 @@ export default class PhysicsEngine {
     }
 
     /**
+     * @param {Unit} unit
+     * @return {Vector}
+     */
+    getPosition(unit){
+        const body = this.tryFindBody(unit)
+        return new Vector(this.getLeftTopBodyPosition(body))
+    }
+
+    /**
      * @abstract
      * @param {Unit} unit
      * @return {Object}
@@ -176,6 +185,16 @@ export default class PhysicsEngine {
     /**
      * @abstract
      * @param {*} body
+     * @param {Vector} scale
+     * @return {void}
+     */
+    scale(body, scale) {
+        throw new SystemError(`${this.constructor.name}.scale method must be implemented`)
+    }
+
+    /**
+     * @abstract
+     * @param {*} body
      * @param {number} angle
      * @return {void}
      */
@@ -197,6 +216,24 @@ export default class PhysicsEngine {
      */
     getBodyPosition(body) {
         throw new SystemError(`${this.constructor.name}.getBodyPosition method must be implemented`)
+    }
+
+    /**
+     * @abstract
+     * @param {*} body
+     * @return {*}
+     */
+    getLeftTopBodyPosition(body) {
+        throw new SystemError(`${this.constructor.name}.getLeftTopBodyPosition method must be implemented`)
+    }
+
+    /**
+     * @abstract
+     * @param {*} body
+     * @return {*}
+     */
+    getBodySize(body){
+        throw new SystemError(`${this.constructor.name}.getBodySize method must be implemented`)
     }
 
     /**

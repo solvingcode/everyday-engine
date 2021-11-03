@@ -35,30 +35,17 @@ export default class MeshExecutor extends ComponentExecutor {
         const world = World.get()
         const unitManager = world.getUnitManager()
         const localScale = transformComponent.getLocalScale()
-        const localPosition = transformComponent.getLocalPosition()
-        const scale = transformComponent.getScale()
         const parentUnit = unitManager.findParentUnit(unit)
         const childUnits = unitManager.findChildUnits(unit)
+        let newScale
         if (parentUnit && parentUnit.getComponent(TransformComponent)) {
             const parentTransformComponent = parentUnit.getComponent(TransformComponent)
             const parentScale = parentTransformComponent.getScale()
-            const newScale = Vector.linearMultiply(localScale, parentScale)
-            transformComponent.setScale(newScale, true)
-
-            // update localPosition after changing the scale
-            const scaleRatio = Vector.linearDivide(newScale, scale)
-            const sizeVector = Vector.divide(
-                Vector.subtract(
-                    Vector.fromSize(TransformHelper.getSizeFromScale(parentScale)),
-                    Vector.fromSize(TransformHelper.getSizeFromScale(newScale))
-                )
-                , 2)
-            const correctionVector = Vector.linearMultiply(sizeVector, Vector.subtract(Vector.one(), scaleRatio))
-            const newLocalPosition = Vector.add(Vector.linearMultiply(localPosition, scaleRatio), correctionVector)
-            transformComponent.setLocalPosition(newLocalPosition)
+            newScale = Vector.linearMultiply(localScale, parentScale)
         } else {
-            transformComponent.setScale(localScale, true)
+            newScale = localScale
         }
+        UnitHelper.setScale(world, unit, newScale)
         transformComponent.setLastLocalScale(_.cloneDeep(transformComponent.getLocalScale()))
         meshComponent.setSize(TransformHelper.getSizeFromScale(transformComponent.getScale()))
         meshComponent.setGenerated(false)

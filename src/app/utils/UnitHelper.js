@@ -81,10 +81,10 @@ export default class UnitHelper {
      * @return {Vector[]}
      */
     static generateVertices(unit) {
-        const meshComponent = unit.getComponent(MeshComponent)
         const transformComponent = unit.getComponent(TransformComponent)
-        const vertices = GeometryHelper.loadVertices(meshComponent.getSize())
-        return GeometryHelper.rotateVertices(vertices, transformComponent.getRotation(), meshComponent.getSize())
+        const size = TransformHelper.getSizeFromScale(transformComponent.getScale())
+        const vertices = GeometryHelper.loadVertices(size)
+        return GeometryHelper.rotateVertices(vertices, transformComponent.getRotation(), size)
     }
 
     /**
@@ -134,7 +134,7 @@ export default class UnitHelper {
      * @param {Vector} position
      * @return {Vector}
      */
-    static convertToCenterPosition(unit, position){
+    static convertToCenterPosition(unit, position) {
         const center = this.getLargeCenterByUnit(unit)
         return new Vector({
             x: position.x + center.x,
@@ -171,7 +171,7 @@ export default class UnitHelper {
         const transformComponent = unit.getComponent(TransformComponent)
         const unitPosition = transformComponent.getPosition()
         const unitRotation = transformComponent.getRotation()
-        const unitSize = unit.getComponent(MeshComponent).getSize()
+        const unitSize = TransformHelper.getSizeFromScale(transformComponent.getScale())
         const colliderRelativePosition = this.getColliderRelativePosition(unit, colliderComponent)
         const colliderPosition = Vector.add(unitPosition, colliderRelativePosition)
         const colliderSize = UnitHelper.getColliderSize(unit, colliderComponent)
@@ -617,7 +617,7 @@ export default class UnitHelper {
         const physicsManager = world.getPhysicsManager()
         const transformComponent = unit.getComponent(TransformComponent)
         const meshComponent = unit.getComponent(MeshComponent)
-        if (this.hasPhysics(world, unit) && !transformComponent.getPhysicsRotationSync()) {
+        if (this.hasPhysics(world, unit)) {
             physicsManager.setRotation(unit, angle)
         } else {
             transformComponent.setRotation(angle, true)
@@ -633,11 +633,104 @@ export default class UnitHelper {
     static setPosition(world, unit, position) {
         const physicsManager = world.getPhysicsManager()
         const transformComponent = unit.getComponent(TransformComponent)
-        if (this.hasPhysics(world, unit) && !transformComponent.getPhysicsPositionSync()) {
+        if (this.hasPhysics(world, unit)) {
             physicsManager.setPosition(unit, this.convertToCenterPosition(unit, position))
         } else {
             transformComponent.setPosition(_.cloneDeep(position), true)
         }
+    }
+
+    /**
+     * @param {World} world
+     * @param {Unit} unit
+     * @param {Vector} scale
+     */
+    static setScale(world, unit, scale) {
+        const physicsManager = world.getPhysicsManager()
+        const transformComponent = unit.getComponent(TransformComponent)
+        if (this.hasPhysics(world, unit)) {
+            physicsManager.scale(unit, Vector.sign(scale))
+        }
+        transformComponent.setScale(scale, true)
+    }
+
+    /**
+     * @param {Unit} unit
+     * @return {Vector}
+     */
+    static getAxis(unit) {
+        const transformComponent = unit.getComponent(TransformComponent)
+        return Vector.sign(transformComponent.getScale())
+    }
+
+    /**
+     * @param {World} world
+     * @param {Unit} unit
+     * @param {Vector} newScale
+     */
+    static getPositionFromScale(world, unit, newScale){
+        const unitManager = world.getUnitManager()
+        const parentUnit = unitManager.findParentUnit(unit)
+        const transformComponent = unit.getComponent(TransformComponent)
+        const scale = transformComponent.getScale()
+        const localPosition = transformComponent.getLocalPosition()
+        if(parentUnit){
+            const parentTransformComponent = unit.getComponent(TransformComponent)
+            const parentScale = parentTransformComponent.getScale()
+            const scaleRatio = Vector.linearDivide(newScale, scale)
+            const sizeVector = Vector.divide(
+                Vector.subtract(
+                    Vector.fromSize(TransformHelper.getSizeFromScale(parentScale)),
+                    Vector.fromSize(TransformHelper.getSizeFromScale(newScale))
+                )
+                , 2)
+            const correctionVector = Vector.linearMultiply(sizeVector, Vector.subtract(Vector.one(), scaleRatio))
+            return Vector.add(Vector.linearMultiply(localPosition, scaleRatio), correctionVector)
+        }
+        return localPosition
+    }
+
+    /**
+     * @param {World }world
+     * @param {Unit} unit
+     * @param {*} body
+     * @param {*} bodyPosition
+     * @param {*} bodyRotation
+     * @return {Vector}
+     */
+    static getUnitPositionFromPhysics(world, unit, body, bodyPosition, bodyRotation){
+        const physicsManager = world.getPhysicsManager()
+        const physicsEngine = physicsManager.getPhysicsEngine()
+        const transformComponent = unit.getComponent(TransformComponent)
+
+        const actualUnitScale = transformComponent.getScale()
+        const actualUnitSize = TransformHelper.getSizeFromScale(actualUnitScale)
+
+        //init result
+        let newPosition = GeometryHelper.fromCenterPosition(bodyPosition, bodyRotation, actualUnitSize)
+
+        //first active collider
+        const colliderComponents = unit.findComponentsByClass(ColliderComponent)
+            .filter(colliderComponent => colliderComponent.isEnabled())
+        const firstColliderComponent = colliderComponents[0]
+
+        if (firstColliderComponent) {
+            const firstColliderRelativePosition = UnitHelper.getColliderRelativePosition(unit, firstColliderComponent)
+            const bodyCollider = physicsEngine.getBodyColliders(body)[0]
+            if (bodyCollider) {
+                const bodyColliderPosition = new Vector(physicsEngine.getBodyPosition(bodyCollider))
+                const actualColliderSize = UnitHelper.getColliderSize(unit, firstColliderComponent)
+                const unitColliderPosition = GeometryHelper.fromCenterPosition(bodyColliderPosition,
+                    bodyRotation, actualColliderSize)
+                const newUnitPosition = Vector.subtract(unitColliderPosition, firstColliderRelativePosition)
+
+                const correctionVector = UnitHelper.GetCorrectionVector(actualUnitSize, actualColliderSize,
+                    bodyRotation, firstColliderRelativePosition)
+                newPosition = Vector.subtract(newUnitPosition, correctionVector)
+            }
+        }
+
+        return newPosition
     }
 
 }

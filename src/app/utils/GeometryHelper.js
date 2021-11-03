@@ -28,8 +28,8 @@ export default class GeometryHelper{
         const minY = rotatedPoints.reduce((mnY, current) => ((mnY > current.y && current.y) || mnY), rotatedPoints[0].y)
         const maxY = rotatedPoints.reduce((mxY, current) => ((mxY < current.y && current.y) || mxY), rotatedPoints[0].y)
         return new Size({
-            width: Math.ceil(maxX - minX),
-            height: Math.ceil(maxY - minY)
+            width: maxX - minX,
+            height: maxY - minY
         })
     }
 

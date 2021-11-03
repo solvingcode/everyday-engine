@@ -3,9 +3,7 @@ import Vector from '../utils/Vector.js'
 import TransformComponent from '../component/internal/TransformComponent.js'
 import ColliderComponent from '../component/internal/ColliderComponent.js'
 import UnitHelper from '../utils/UnitHelper.js'
-import GeometryHelper from '../utils/GeometryHelper.js'
 import RigidBodyComponent from '../component/internal/RigidBodyComponent.js'
-import TransformHelper from '../utils/TransformHelper.js'
 
 export default class PhysicsManager {
 
@@ -134,8 +132,8 @@ export default class PhysicsManager {
             maskGroupUnit.findComponentsByClass(ColliderComponent)
                 .filter(component => component.isEnabled())
                 .forEach(maskColliderComponent => {
-                targetColliderUnits.push({unit: maskGroupUnit, colliderComponent: maskColliderComponent})
-            })
+                    targetColliderUnits.push({unit: maskGroupUnit, colliderComponent: maskColliderComponent})
+                })
         })
         return this.physicsEngine.getAllCollision(sourceColliderUnit, targetColliderUnits)
     }
@@ -201,6 +199,17 @@ export default class PhysicsManager {
 
     /**
      * @param {Unit} unit
+     * @param {Vector} scale
+     */
+    scale(unit, scale) {
+        const body = this.physicsEngine.findBody(unit)
+        if (body) {
+            this.physicsEngine.scale(body, scale)
+        }
+    }
+
+    /**
+     * @param {Unit} unit
      * @param {number} angle
      */
     rotate(unit, angle) {
@@ -214,7 +223,7 @@ export default class PhysicsManager {
      * @param {Unit} unit
      * @param {number} angle
      */
-    setRotation(unit, angle){
+    setRotation(unit, angle) {
         this.physicsEngine.setRotation(unit, angle)
     }
 
@@ -244,42 +253,15 @@ export default class PhysicsManager {
     updateUnit(world, unit) {
         const body = this.physicsEngine.findBody(unit)
         if (body) {
-            // unit component
             const transformComponent = unit.getComponent(TransformComponent)
             const rigidBodyComponent = unit.getComponent(RigidBodyComponent)
 
-            // unit/body info
-            const bodyRotation = this.physicsEngine.getBodyRotation(body)
+            const physicsRotation = this.physicsEngine.getBodyRotation(body)
             const bodyVelocity = this.physicsEngine.getVelocity(unit)
-            const bodyPosition = new Vector(this.physicsEngine.getBodyPosition(body))
+            const physicsPosition = this.physicsEngine.getPosition(unit)
             const actualPosition = transformComponent.getPosition()
             const actualUnitRotation = transformComponent.getRotation()
-            const actualUnitScale = transformComponent.getScale()
-            const actualUnitSize = TransformHelper.getSizeFromScale(actualUnitScale)
-            const bodyRotationRounded = bodyRotation
-
-            //init result
-            let newPosition = GeometryHelper.fromCenterPosition(bodyPosition, bodyRotationRounded, actualUnitSize)
-            let newRotation = bodyRotationRounded
-
-            //first active collider
             const colliderComponents = unit.findComponentsByClass(ColliderComponent)
-                .filter(colliderComponent => colliderComponent.isEnabled())
-            const firstColliderComponent = colliderComponents[0]
-            if (firstColliderComponent) {
-                const firstColliderRelativePosition = UnitHelper.getColliderRelativePosition(unit, firstColliderComponent)
-                const bodyCollider = this.physicsEngine.getBodyColliders(body)[0]
-                if (bodyCollider) {
-                    const bodyColliderPosition = new Vector(this.physicsEngine.getBodyPosition(bodyCollider))
-                    const actualColliderSize = UnitHelper.getColliderSize(unit, firstColliderComponent)
-                    const unitColliderPosition = GeometryHelper.fromCenterPosition(bodyColliderPosition, bodyRotationRounded, actualColliderSize)
-                    const newUnitPosition = Vector.subtract(unitColliderPosition, firstColliderRelativePosition)
-
-                    const correctionVector = UnitHelper.GetCorrectionVector(actualUnitSize, actualColliderSize,
-                        bodyRotationRounded, firstColliderRelativePosition)
-                    newPosition = Vector.subtract(newUnitPosition, correctionVector)
-                }
-            }
 
             colliderComponents.forEach(colliderComponent => {
                 colliderComponent.setVelocity(bodyVelocity)
@@ -287,12 +269,12 @@ export default class PhysicsManager {
             if (rigidBodyComponent) {
                 rigidBodyComponent.setVelocity(bodyVelocity)
             }
-            if (!actualPosition.equals(newPosition)) {
-                transformComponent.setPhysicsPosition(newPosition)
+            if (!actualPosition.equals(physicsPosition)) {
+                transformComponent.setPhysicsPosition(physicsPosition)
                 transformComponent.setPhysicsPositionUpdated(true)
             }
-            if (actualUnitRotation !== newRotation) {
-                transformComponent.setPhysicsRotation(newRotation)
+            if (actualUnitRotation !== physicsRotation) {
+                transformComponent.setPhysicsRotation(physicsRotation)
                 transformComponent.setPhysicsRotationUpdated(true)
             }
         }

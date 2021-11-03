@@ -52,7 +52,7 @@ export default class PhysicsExecutor extends ComponentExecutor {
                 transformComponent.setLocalPosition(TransformHelper.getLocalPosition(physicsPosition, parentUnit))
             }
         }
-        transformComponent.setPhysicsPositionSync(true)
+        transformComponent.setPosition(physicsPosition, true)
         transformComponent.setPhysicsPositionUpdated(false)
     }
 
@@ -85,7 +85,6 @@ export default class PhysicsExecutor extends ComponentExecutor {
         }
         transformComponent.setRotation(physicsRotation, true)
         meshComponent.setGenerated(false)
-        transformComponent.setPhysicsRotationSync(true)
         transformComponent.setPhysicsRotationUpdated(false)
     }
 }
