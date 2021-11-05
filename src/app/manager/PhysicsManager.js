@@ -255,13 +255,16 @@ export default class PhysicsManager {
         if (body) {
             const transformComponent = unit.getComponent(TransformComponent)
             const rigidBodyComponent = unit.getComponent(RigidBodyComponent)
+            const colliderComponents = unit.findComponentsByClass(ColliderComponent)
 
-            const physicsRotation = this.physicsEngine.getBodyRotation(body)
+            const bodyPosition = new Vector(this.physicsEngine.getBodyPosition(body))
+            const bodyRotation = this.physicsEngine.getBodyRotation(body)
             const bodyVelocity = this.physicsEngine.getVelocity(unit)
-            const physicsPosition = this.physicsEngine.getPosition(unit)
+
+            const physicsPosition = UnitHelper.getUnitPositionFromPhysics(world, unit, body, bodyPosition, bodyRotation)
+            const physicsRotation = bodyRotation
             const actualPosition = transformComponent.getPosition()
             const actualUnitRotation = transformComponent.getRotation()
-            const colliderComponents = unit.findComponentsByClass(ColliderComponent)
 
             colliderComponents.forEach(colliderComponent => {
                 colliderComponent.setVelocity(bodyVelocity)

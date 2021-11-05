@@ -19,16 +19,18 @@ export default class RotateZUnitInstant extends TransformUnitInstant {
         style.setBorderSize(2)
         const shape = PrimitiveShape.CIRCLE
         super.instantiate(GUIRotateComponent, scale, style, shape,
-            this.getTransformPosition(position, TransformHelper.getSizeFromScale(childScale)))
+            this.getTransformPosition(position,
+                TransformHelper.getSizeFromScale(childScale),
+                TransformHelper.getSizeFromScale(parentScale)))
     }
 
     /**
      * @override
      */
-    getTransformPosition(position, size){
+    getTransformPosition(position, childSize, parentSize){
         const movePosition = new Vector()
-        movePosition.setX(position.getX() - size.getWidth() / 2)
-        movePosition.setY(position.getY() - size.getHeight() / 2)
+        movePosition.setX(position.getX() - childSize.getWidth() / 2 + parentSize.getWidth() / 2)
+        movePosition.setY(position.getY() - childSize.getHeight() / 2 + parentSize.getHeight() / 2)
         return movePosition
     }
 

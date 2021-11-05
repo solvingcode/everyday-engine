@@ -89,7 +89,7 @@ export default class TransformHelper {
      * @param {number} angle
      * @return {Vector}
      */
-    static getCorrectionTranslateVector(world, unit, angle){
+    static getCorrectionTranslateVector(world, unit, angle) {
         const transformComponent = unit.getComponent(TransformComponent)
         const size = this.getSizeFromScale(transformComponent.getScale())
         const vertices = GeometryHelper.loadVertices(size)
@@ -115,7 +115,9 @@ export default class TransformHelper {
     static getLocalPosition(position, parent) {
         if (parent) {
             const transformComponent = parent.getComponent(TransformComponent)
-            return Vector.subtract(position, transformComponent.getPosition())
+            if (transformComponent) {
+                return Vector.subtract(position, transformComponent.getPosition())
+            }
         }
         return position
     }

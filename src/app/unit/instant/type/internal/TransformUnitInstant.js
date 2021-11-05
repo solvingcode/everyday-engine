@@ -30,10 +30,11 @@ export default class TransformUnitInstant extends MeshUnitInstant {
     /**
      * @abstract
      * @param {Vector} position
-     * @param {Size} size
+     * @param {Size} childSize
+     * @param {Size} parentSize
      * @return {Vector}
      */
-    getTransformPosition(position, size){
+    getTransformPosition(position, childSize, parentSize){
         throw new SystemError(`${this.constructor.name}.getTransformPosition must be implemented`)
     }
 

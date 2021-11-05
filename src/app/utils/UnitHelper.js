@@ -646,11 +646,7 @@ export default class UnitHelper {
      * @param {Vector} scale
      */
     static setScale(world, unit, scale) {
-        const physicsManager = world.getPhysicsManager()
         const transformComponent = unit.getComponent(TransformComponent)
-        if (this.hasPhysics(world, unit)) {
-            physicsManager.scale(unit, Vector.sign(scale))
-        }
         transformComponent.setScale(scale, true)
     }
 
