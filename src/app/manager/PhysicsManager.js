@@ -4,6 +4,7 @@ import TransformComponent from '../component/internal/TransformComponent.js'
 import ColliderComponent from '../component/internal/ColliderComponent.js'
 import UnitHelper from '../utils/UnitHelper.js'
 import RigidBodyComponent from '../component/internal/RigidBodyComponent.js'
+import MeshComponent from '../component/internal/MeshComponent.js'
 
 export default class PhysicsManager {
 
@@ -254,6 +255,7 @@ export default class PhysicsManager {
         const body = this.physicsEngine.findBody(unit)
         if (body) {
             const transformComponent = unit.getComponent(TransformComponent)
+            const meshComponent = unit.getComponent(MeshComponent)
             const rigidBodyComponent = unit.getComponent(RigidBodyComponent)
             const colliderComponents = unit.findComponentsByClass(ColliderComponent)
 
@@ -273,12 +275,11 @@ export default class PhysicsManager {
                 rigidBodyComponent.setVelocity(bodyVelocity)
             }
             if (!actualPosition.equals(physicsPosition)) {
-                transformComponent.setPhysicsPosition(physicsPosition)
-                transformComponent.setPhysicsPositionUpdated(true)
+                transformComponent.setPosition(physicsPosition, true)
             }
             if (actualUnitRotation !== physicsRotation) {
-                transformComponent.setPhysicsRotation(physicsRotation)
-                transformComponent.setPhysicsRotationUpdated(true)
+                transformComponent.setRotation(physicsRotation, true)
+                meshComponent.setGenerated(false)
             }
         }
     }

@@ -26,7 +26,6 @@ import UIButtonInteractionExecutor from '../executor/type/UIButtonInteractionExe
 import UISliderHandleExecutor from '../executor/type/UISliderHandleExecutor.js'
 import UISliderFillExecutor from '../executor/type/UISliderFillExecutor.js'
 import AnimationPlayerExecutor from '../executor/type/AnimationPlayerExecutor.js'
-import PhysicsExecutor from '../executor/type/PhysicsExecutor.js'
 
 /**
  * @class {GameLoop}
@@ -46,7 +45,6 @@ class GameLoop extends SceneLoop {
             CameraRunner, PhysicsRunner, GameExecutorRunner, LightRunner]
         ExecutorRegistry.get().register([
             new CameraExecutor(),
-            new PhysicsExecutor(),
             new AnimationPlayerExecutor(),
             new MeshExecutor(),
             new TransformExecutor(),
