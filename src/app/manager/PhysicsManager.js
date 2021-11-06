@@ -5,6 +5,7 @@ import ColliderComponent from '../component/internal/ColliderComponent.js'
 import UnitHelper from '../utils/UnitHelper.js'
 import RigidBodyComponent from '../component/internal/RigidBodyComponent.js'
 import MeshComponent from '../component/internal/MeshComponent.js'
+import GeometryHelper from '../utils/GeometryHelper.js'
 
 export default class PhysicsManager {
 
@@ -168,7 +169,10 @@ export default class PhysicsManager {
      * @param {Vector} position
      */
     setPosition(unit, position) {
-        this.physicsEngine.setPosition(unit, position)
+        const physicsRotation = this.physicsEngine.getRotation(unit)
+        const scale = unit.getComponent(TransformComponent).getScale()
+        const physicsPosition = GeometryHelper.convertToCenterPosition(position, physicsRotation, scale)
+        this.physicsEngine.setPosition(unit, physicsPosition)
     }
 
     /**

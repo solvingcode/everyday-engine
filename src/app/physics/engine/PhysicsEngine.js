@@ -106,6 +106,15 @@ export default class PhysicsEngine {
 
     /**
      * @param {Unit} unit
+     * @return {number}
+     */
+    getRotation(unit) {
+        const body = this.tryFindBody(unit)
+        return this.getBodyRotation(body)
+    }
+
+    /**
+     * @param {Unit} unit
      * @return {Vector}
      */
     getPosition(unit){
@@ -239,7 +248,7 @@ export default class PhysicsEngine {
     /**
      * @abstract
      * @param {*} body
-     * @return {*}
+     * @return {number}
      */
     getBodyRotation(body) {
         throw new SystemError(`${this.constructor.name}.getBodyRotation method must be implemented`)

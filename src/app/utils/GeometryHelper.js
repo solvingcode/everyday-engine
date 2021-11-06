@@ -175,4 +175,18 @@ export default class GeometryHelper{
         return rotatedPoint
     }
 
+    /**
+     * @param {Vector} position
+     * @param {number} rotation
+     * @param {Vector} scale
+     * @return {Vector}
+     */
+    static convertToCenterPosition(position, rotation, scale) {
+        const center = this.getLargeCenterFromRotationScale(rotation, scale)
+        return new Vector({
+            x: position.x + center.x,
+            y: position.y + center.y
+        })
+    }
+
 }

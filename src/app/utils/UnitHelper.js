@@ -634,7 +634,7 @@ export default class UnitHelper {
         const physicsManager = world.getPhysicsManager()
         const transformComponent = unit.getComponent(TransformComponent)
         if (this.hasPhysics(world, unit)) {
-            physicsManager.setPosition(unit, this.convertToCenterPosition(unit, position))
+            physicsManager.setPosition(unit, position)
         } else {
             transformComponent.setPosition(_.cloneDeep(position), true)
         }
