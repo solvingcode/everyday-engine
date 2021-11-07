@@ -3,6 +3,7 @@ import World from '../../world/World.js'
 import TransformComponent from '../../component/internal/TransformComponent.js'
 import Vector from '../../utils/Vector.js'
 import UnitHelper from '../../utils/UnitHelper.js'
+import TransformHelper from '../../utils/TransformHelper.js'
 
 export default class TransformExecutor extends ComponentExecutor {
 
@@ -15,9 +16,20 @@ export default class TransformExecutor extends ComponentExecutor {
      */
     execute(unit, executionContext) {
         const transformComponent = unit.getComponent(TransformComponent)
-        if (transformComponent.getLocalPositionUpdated()) {
+        if (transformComponent.getLocalPositionUpdated() || this.isAxisUpdated(unit, transformComponent)) {
             this.updateLocalPosition(unit, transformComponent)
         }
+    }
+
+    /**
+     * @param {Unit} unit
+     * @param {TransformComponent} transformComponent
+     * @return {boolean}
+     */
+    isAxisUpdated(unit, transformComponent){
+        const world = World.get()
+        const actualLocalAxisPosition = transformComponent.getLocalAxisPosition()
+        return !actualLocalAxisPosition.equals(TransformHelper.getAxisLocalPosition(world, unit))
     }
 
     /**
@@ -27,18 +39,19 @@ export default class TransformExecutor extends ComponentExecutor {
     updateLocalPosition(unit, transformComponent) {
         const world = World.get()
         const unitManager = world.getUnitManager()
-        const localPosition = transformComponent.getLocalPosition()
+        const axisLocalPosition = TransformHelper.getAxisLocalPosition(world, unit)
         const parentUnit = unitManager.findParentUnit(unit)
         const childUnits = unitManager.findChildUnits(unit)
         let newPosition
         if (parentUnit && parentUnit.getComponent(TransformComponent)) {
             const parentTransformComponent = parentUnit.getComponent(TransformComponent)
             const parentPosition = parentTransformComponent.getPosition()
-            newPosition = Vector.add(localPosition, parentPosition)
+            newPosition = Vector.add(axisLocalPosition, parentPosition)
         } else {
-            newPosition = _.cloneDeep(localPosition)
+            newPosition = _.cloneDeep(axisLocalPosition)
         }
         UnitHelper.setPosition(world, unit, newPosition)
+        transformComponent.setLocalAxisPosition(axisLocalPosition)
         transformComponent.setLastLocalPosition(_.cloneDeep(transformComponent.getLocalPosition()))
         childUnits.forEach(cUnit => {
             const childTransformComponent = cUnit.getComponent(TransformComponent)

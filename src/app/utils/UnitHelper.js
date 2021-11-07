@@ -636,7 +636,7 @@ export default class UnitHelper {
         if (this.hasPhysics(world, unit)) {
             physicsManager.setPosition(unit, position)
         } else {
-            transformComponent.setPosition(_.cloneDeep(position), true)
+            transformComponent.setPosition(position, true)
         }
     }
 
@@ -648,15 +648,6 @@ export default class UnitHelper {
     static setScale(world, unit, scale) {
         const transformComponent = unit.getComponent(TransformComponent)
         transformComponent.setScale(scale, true)
-    }
-
-    /**
-     * @param {Unit} unit
-     * @return {Vector}
-     */
-    static getAxis(unit) {
-        const transformComponent = unit.getComponent(TransformComponent)
-        return Vector.sign(transformComponent.getScale())
     }
 
     /**
