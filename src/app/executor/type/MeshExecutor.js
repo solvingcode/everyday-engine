@@ -21,9 +21,20 @@ export default class MeshExecutor extends ComponentExecutor {
         if (transformComponent.getLocalScaleUpdated()) {
             this.updateLocalScale(unit, transformComponent, meshComponent)
         }
-        if (transformComponent.getLocalRotationUpdated()) {
+        if (transformComponent.getLocalRotationUpdated() || this.isAxisUpdated(unit, transformComponent)) {
             this.updateLocalRotation(unit, transformComponent, meshComponent)
         }
+    }
+
+    /**
+     * @param {Unit} unit
+     * @param {TransformComponent} transformComponent
+     * @return {boolean}
+     */
+    isAxisUpdated(unit, transformComponent){
+        const world = World.get()
+        const actualLocalAxisRotation = transformComponent.getLocalAxisRotation()
+        return actualLocalAxisRotation !== UnitHelper.getAxisLocalRotation(world, unit)
     }
 
     /**
@@ -64,7 +75,7 @@ export default class MeshExecutor extends ComponentExecutor {
     updateLocalRotation(unit, transformComponent, meshComponent) {
         const world = World.get()
         const unitManager = world.getUnitManager()
-        const localRotation = transformComponent.getLocalRotation()
+        const localAxisRotation = UnitHelper.getAxisLocalRotation(world, unit)
         const childUnits = unitManager.findChildUnits(unit)
         const parentUnit = unitManager.findParentUnit(unit)
         let newRotation
@@ -72,12 +83,13 @@ export default class MeshExecutor extends ComponentExecutor {
             const parentTransformComponent = parentUnit.getComponent(TransformComponent)
             if (parentTransformComponent) {
                 const parentRotation = parentTransformComponent.getRotation()
-                newRotation = localRotation + parentRotation
+                newRotation = localAxisRotation + parentRotation
             }
         } else {
-            newRotation = localRotation
+            newRotation = localAxisRotation
         }
         UnitHelper.setRotation(world, unit, newRotation)
+        transformComponent.setLocalAxisRotation(localAxisRotation)
         transformComponent.setLastLocalRotation(transformComponent.getLocalRotation())
         childUnits.forEach(cUnit => {
             const childTransformComponent = cUnit.getComponent(TransformComponent)

@@ -16,11 +16,12 @@ export default class TransformComponent extends Component {
         this.add('position', TYPES.VECTOR, new Vector())
         this.add('screenPosition', TYPES.VECTOR, new Vector())
         this.add('scale', TYPES.VECTOR, new Vector())
-        this.add('rotation', TYPES.RANGE, 0, [0, Math.PI * 2, 0.001])
+        this.add('rotation', TYPES.RANGE, 0, [-Math.PI * 2, Math.PI * 2, 0.001])
         this.add('localPosition', TYPES.VECTOR, new Vector())
         this.add('localAxisPosition', TYPES.VECTOR, new Vector())
         this.add('localScale', TYPES.VECTOR, new Vector())
-        this.add('localRotation', TYPES.RANGE, 0, [0, Math.PI * 2, 0.001])
+        this.add('localRotation', TYPES.NUMBER, 0)
+        this.add('localAxisRotation', TYPES.NUMBER, null)
         this.add('lastLocalScale', TYPES.VECTOR)
         this.add('lastLocalPosition', TYPES.VECTOR)
         this.add('lastLocalRotation', TYPES.NUMBER, null)
@@ -31,7 +32,7 @@ export default class TransformComponent extends Component {
      */
     getExcludeFields() {
         return ['position', 'scale', 'rotation', 'lastLocalScale', 'lastLocalPosition', 'lastLocalRotation',
-            'screenPosition', 'localAxisPosition']
+            'screenPosition', 'localAxisPosition', 'localAxisRotation']
     }
 
     /**
@@ -142,6 +143,20 @@ export default class TransformComponent extends Component {
      */
     setLocalAxisPosition(localAxisPosition) {
         this.setValue('localAxisPosition', _.cloneDeep(localAxisPosition))
+    }
+
+    /**
+     * @return {number}
+     */
+    getLocalAxisRotation() {
+        return this.getValue('localAxisRotation')
+    }
+
+    /**
+     * @param {number} localAxisRotation
+     */
+    setLocalAxisRotation(localAxisRotation) {
+        this.setValue('localAxisRotation', _.cloneDeep(localAxisRotation))
     }
 
     /**

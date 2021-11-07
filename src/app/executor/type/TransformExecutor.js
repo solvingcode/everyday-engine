@@ -3,7 +3,6 @@ import World from '../../world/World.js'
 import TransformComponent from '../../component/internal/TransformComponent.js'
 import Vector from '../../utils/Vector.js'
 import UnitHelper from '../../utils/UnitHelper.js'
-import TransformHelper from '../../utils/TransformHelper.js'
 
 export default class TransformExecutor extends ComponentExecutor {
 
@@ -29,7 +28,7 @@ export default class TransformExecutor extends ComponentExecutor {
     isAxisUpdated(unit, transformComponent){
         const world = World.get()
         const actualLocalAxisPosition = transformComponent.getLocalAxisPosition()
-        return !actualLocalAxisPosition.equals(TransformHelper.getAxisLocalPosition(world, unit))
+        return !actualLocalAxisPosition.equals(UnitHelper.getAxisLocalPosition(world, unit))
     }
 
     /**
@@ -39,7 +38,7 @@ export default class TransformExecutor extends ComponentExecutor {
     updateLocalPosition(unit, transformComponent) {
         const world = World.get()
         const unitManager = world.getUnitManager()
-        const axisLocalPosition = TransformHelper.getAxisLocalPosition(world, unit)
+        const axisLocalPosition = UnitHelper.getAxisLocalPosition(world, unit)
         const parentUnit = unitManager.findParentUnit(unit)
         const childUnits = unitManager.findChildUnits(unit)
         let newPosition

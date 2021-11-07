@@ -409,9 +409,6 @@ export default class UnitHelper {
      * @return {Unit[]}
      */
     static createGUISelector(unit, world) {
-        const transformComponent = unit.getComponent(TransformComponent)
-        const rotation = transformComponent.getRotation()
-
         const style = new Style()
         style.setColor('#ffe600')
         style.setBorderSize(2)
@@ -419,7 +416,7 @@ export default class UnitHelper {
         const selectorUnit = world.createUnitInstant(RectUnitInstant, Vector.zero(), Vector.one(), style)
         selectorUnit.createComponents([GUISelectorComponent])
         selectorUnit.getComponent(GUISelectorComponent).setUnitId(unit.getId())
-        selectorUnit.getComponent(TransformComponent).setLocalRotation(rotation)
+        selectorUnit.getComponent(TransformComponent).setLocalRotation(0)
     }
 
     /**
@@ -653,28 +650,58 @@ export default class UnitHelper {
     /**
      * @param {World} world
      * @param {Unit} unit
-     * @param {Vector} newScale
+     * @return {Vector}
      */
-    static getPositionFromScale(world, unit, newScale){
+    static getAxisLocalPosition(world, unit) {
+        const defaultAxis = Vector.one()
+        const unitManager = world.getUnitManager()
+        const physicsManager = world.getPhysicsManager()
+        const parentUnit = unitManager.findParentUnit(unit)
+        const transformComponent = unit.getComponent(TransformComponent)
+        const localPosition = transformComponent.getLocalPosition()
+        const scale = transformComponent.getScale()
+        const size = TransformHelper.getSizeFromScale(scale)
+        const rotation = this.hasPhysics(world, unit) ?
+            physicsManager.getPhysicsEngine().getRotation(unit) : transformComponent.getRotation()
+        if (parentUnit) {
+            const parentTransformComponent = parentUnit.getComponent(TransformComponent)
+            if (parentTransformComponent) {
+                const actualAxis = TransformHelper.getAxis(parentUnit)
+                const parentScale = parentTransformComponent.getScale()
+                const scaleRatio = Vector.linearDivide(actualAxis, defaultAxis)
+                const sizeVector = Vector.divide(
+                    Vector.subtract(
+                        Vector.fromSize(TransformHelper.getSizeFromScale(parentScale)),
+                        Vector.fromSize(GeometryHelper.getLargestRectangle(rotation, size))
+                    )
+                    , 2)
+                const correctionVector = Vector.linearMultiply(sizeVector, Vector.subtract(Vector.one(), scaleRatio))
+                return Vector.add(Vector.linearMultiply(localPosition, scaleRatio), correctionVector)
+            }
+        }
+        return localPosition
+    }
+
+    /**
+     * @param {World} world
+     * @param {Unit} unit
+     * @return {number}
+     */
+    static getAxisLocalRotation(world, unit) {
+        const defaultAxis = Vector.one()
         const unitManager = world.getUnitManager()
         const parentUnit = unitManager.findParentUnit(unit)
         const transformComponent = unit.getComponent(TransformComponent)
-        const scale = transformComponent.getScale()
-        const localPosition = transformComponent.getLocalPosition()
-        if(parentUnit){
-            const parentTransformComponent = unit.getComponent(TransformComponent)
-            const parentScale = parentTransformComponent.getScale()
-            const scaleRatio = Vector.linearDivide(newScale, scale)
-            const sizeVector = Vector.divide(
-                Vector.subtract(
-                    Vector.fromSize(TransformHelper.getSizeFromScale(parentScale)),
-                    Vector.fromSize(TransformHelper.getSizeFromScale(newScale))
-                )
-                , 2)
-            const correctionVector = Vector.linearMultiply(sizeVector, Vector.subtract(Vector.one(), scaleRatio))
-            return Vector.add(Vector.linearMultiply(localPosition, scaleRatio), correctionVector)
+        const localRotation = transformComponent.getLocalRotation()
+        if (parentUnit) {
+            const parentTransformComponent = parentUnit.getComponent(TransformComponent)
+            if (parentTransformComponent) {
+                const actualAxis = TransformHelper.getAxis(parentUnit)
+                const scaleRatio = Vector.linearDivide(actualAxis, defaultAxis)
+                return localRotation * scaleRatio.getX()
+            }
         }
-        return localPosition
+        return localRotation
     }
 
     /**

@@ -117,68 +117,6 @@ export default class TransformHelper {
     }
 
     /**
-     * @param {World} world
-     * @param {Unit} unit
-     * @param {Vector} position
-     * @return {Vector}
-     */
-    static getPosition(world, unit, position) {
-        const defaultAxis = Vector.one()
-        const unitManager = world.getUnitManager()
-        const parentUnit = unitManager.findParentUnit(unit)
-        const transformComponent = unit.getComponent(TransformComponent)
-        const scale = transformComponent.getScale()
-        if (parentUnit) {
-            const parentTransformComponent = parentUnit.getComponent(TransformComponent)
-            if (parentTransformComponent) {
-                const actualAxis = this.getAxis(parentUnit)
-                const parentScale = parentTransformComponent.getScale()
-                const scaleRatio = Vector.linearDivide(actualAxis, defaultAxis)
-                const sizeVector = Vector.divide(
-                    Vector.subtract(
-                        Vector.fromSize(this.getSizeFromScale(parentScale)),
-                        Vector.fromSize(this.getSizeFromScale(scale))
-                    )
-                    , 2)
-                const correctionVector = Vector.linearMultiply(sizeVector, Vector.subtract(Vector.one(), scaleRatio))
-                return Vector.add(Vector.linearMultiply(position, scaleRatio), correctionVector)
-            }
-        }
-        return position
-    }
-
-    /**
-     * @param {World} world
-     * @param {Unit} unit
-     * @return {Vector}
-     */
-    static getAxisLocalPosition(world, unit) {
-        const defaultAxis = Vector.one()
-        const unitManager = world.getUnitManager()
-        const parentUnit = unitManager.findParentUnit(unit)
-        const transformComponent = unit.getComponent(TransformComponent)
-        const localPosition = transformComponent.getLocalPosition()
-        const scale = transformComponent.getScale()
-        if (parentUnit) {
-            const parentTransformComponent = parentUnit.getComponent(TransformComponent)
-            if (parentTransformComponent) {
-                const actualAxis = this.getAxis(parentUnit)
-                const parentScale = parentTransformComponent.getScale()
-                const scaleRatio = Vector.linearDivide(actualAxis, defaultAxis)
-                const sizeVector = Vector.divide(
-                    Vector.subtract(
-                        Vector.fromSize(this.getSizeFromScale(parentScale)),
-                        Vector.fromSize(this.getSizeFromScale(scale))
-                    )
-                    , 2)
-                const correctionVector = Vector.linearMultiply(sizeVector, Vector.subtract(Vector.one(), scaleRatio))
-                return Vector.add(Vector.linearMultiply(localPosition, scaleRatio), correctionVector)
-            }
-        }
-        return localPosition
-    }
-
-    /**
      * @param {Vector} position
      * @param {Unit} parent
      * @return {Vector}
