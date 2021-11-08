@@ -1,5 +1,7 @@
 import Layout from '../../../../Layout.js'
 import ListSelectElementActionsMenuItem from '../../../list/ListSelectElementActionsMenuItem.js'
+import NodeHelper from '../../../../../utils/NodeHelper.js'
+import World from '../../../../../world/World.js'
 
 export default class ScriptNodeElementMenuItem extends ListSelectElementActionsMenuItem {
     constructor(parent, data) {
@@ -28,6 +30,13 @@ export default class ScriptNodeElementMenuItem extends ListSelectElementActionsM
      */
     isRightClick() {
         return true
+    }
+
+    /**
+     * @override
+     */
+    getName() {
+        return NodeHelper.getNodeName(this.getDataBind(), World.get())
     }
 
 }

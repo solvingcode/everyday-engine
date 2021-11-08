@@ -281,7 +281,7 @@ export default class PhysicsEngine {
      */
     loadBody(unit, options) {
         const colliderComponents = unit.findComponentsByClass(ColliderComponent)
-            .filter(colliderComponent => colliderComponent.isEnabled())
+            //.filter(colliderComponent => colliderComponent.isEnabled())
         const existBody = this.findBody(unit)
         if (!existBody) {
             this.createBody(unit, options, colliderComponents)

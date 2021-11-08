@@ -2,7 +2,7 @@ import {TYPES} from '../../../../pobject/AttributeType.js'
 import AFunction from '../../AFunction.js'
 import World from '../../../../world/World.js'
 
-export default class GetCollisionsFunction extends AFunction{
+export default class GetCollisionsFunction extends AFunction {
 
     constructor() {
         super('GetCollisions')
@@ -24,7 +24,7 @@ export default class GetCollisionsFunction extends AFunction{
         const world = World.get()
         const physicsManager = world.getPhysicsManager()
         const colliderComponent = this.getInputValue('collider')
-        if(colliderComponent.isEnabled()){
+        if (colliderComponent.isEnabled()) {
             const unit = this.getInputValue('target')
             const colliderComponents = physicsManager.getAllCollision(world, unit, colliderComponent, null)
             this.setOutputValue(colliderComponents.map(pColliderComponent => pColliderComponent.getId()))

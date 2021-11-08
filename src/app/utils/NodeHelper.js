@@ -32,7 +32,7 @@ import AToggleVariable from '../flow/variable/AToggleVariable.js'
 import BooleanVariableNode from '../flow/node/variable/BooleanVariableNode.js'
 import ABooleanVariable from '../flow/variable/ABooleanVariable.js'
 import DynamicAttribute from '../pobject/DynamicAttribute.js'
-import {TYPES} from '../pobject/AttributeType.js'
+import AttributeType, {TYPES} from '../pobject/AttributeType.js'
 import VariableNode from '../flow/node/variable/VariableNode.js'
 import AVariable from '../flow/variable/AVariable.js'
 import ComponentVariableNode from '../flow/node/variable/ComponentVariableNode.js'
@@ -142,7 +142,7 @@ export default class NodeHelper {
         } else if (nodeSource instanceof AKeyCode) {
             return `${nodeSource.getName()}`
         } else if (nodeSource instanceof AVariable) {
-            return `${nodeSource.getName()} (var)`
+            return `${nodeSource.getName()} (${AttributeType.getName(nodeSource.getOutput().getAttrType())})`
         } else if (nodeSource instanceof AGetVariable) {
             return `${nodeSource.getName()} (var)`
         } else if (nodeSource instanceof ACondition) {

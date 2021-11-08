@@ -137,6 +137,14 @@ export default class AttributeType {
         return parseInt(type) === typeMask
     }
 
+    /**
+     * @param {number} type
+     * @return {string}
+     */
+    static getName(type){
+        return TYPES_NAME.find(pType => pType.value === type).label
+    }
+
 }
 
 /**
