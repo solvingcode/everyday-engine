@@ -2,6 +2,7 @@ import Action from '../Action.js'
 import World from '../../../world/World.js'
 import StateManager from '../../../state/StateManager.js'
 import UnitHelper from '../../../utils/UnitHelper.js'
+import Storage from '../../../core/Storage.js'
 
 export default class MoveUnitAction extends Action {
 
@@ -15,13 +16,11 @@ export default class MoveUnitAction extends Action {
         const world = World.get()
 
         if(direction){
-            selectedUnits.forEach(unit => {
-                if(UnitHelper.isColliderEditing(unit)){
-                    UnitHelper.moveCollider(world, unit, step, direction)
-                }else{
-                    UnitHelper.moveUnit(world, unit, step, direction)
-                }
-            })
+            if(selectedUnits.length === 1 && UnitHelper.isColliderEditing(selectedUnits[0])){
+                UnitHelper.moveCollider(world, mouse, selectedUnits[0], direction, step)
+            }else{
+                UnitHelper.moveUnits(world, Storage.get(), mouse, selectedUnits, direction, step)
+            }
         }
         return true
     }

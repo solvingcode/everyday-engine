@@ -23,6 +23,7 @@ import GUIAnchorComponent from '../component/internal/gui/anchor/GUIAnchorCompon
 import AnimationComponent from '../component/internal/AnimationComponent.js'
 import AssetHelper from './AssetHelper.js'
 import ClassHelper from './ClassHelper.js'
+import LightComponent from '../component/internal/LightComponent.js'
 
 export default class UnitHelper {
 
@@ -441,14 +442,16 @@ export default class UnitHelper {
                     guiAnchor.getComponent(GUIAnchorComponent).getUnitId() === unit.getId()
                 )
             if (!existGUIAnchor) {
-                const anchorUnit = world.createUnitInstant(RectUnitInstant, anchorPosition, new Size(anchorSize), style)
+                const anchorLocalScale = TransformHelper.getLocalScale(TransformHelper.getScaleFromSize(new Size(anchorSize)), unit)
+                const anchorUnit = world.createUnitInstant(RectUnitInstant, anchorPosition, anchorLocalScale, style)
                 anchorUnit.createComponents([GUIAnchorComponent])
                 anchorUnit.getComponent(GUIAnchorComponent).setUnitId(unit.getId())
                 anchorUnit.getComponent(GUIAnchorComponent).setOffset(index + 1)
             } else {
                 const transformComponent = existGUIAnchor.getComponent(TransformComponent)
-                if (!ObjectHelper.isEqual(transformComponent.getPosition(), anchorPosition)) {
-                    transformComponent.setPosition(anchorPosition)
+                const newLocalPosition = TransformHelper.getLocalPosition(anchorPosition, unit)
+                if (!ObjectHelper.isEqual(transformComponent.getLocalPosition(), newLocalPosition)) {
+                    transformComponent.setLocalPosition(newLocalPosition)
                 }
             }
         })
@@ -498,38 +501,52 @@ export default class UnitHelper {
 
     /**
      * @param {World} world
-     * @param {Unit} unit
-     * @param {number} step
+     * @param {Storage} storage
+     * @param {Mouse} mouse
+     * @param {Unit[]} selectedUnits
      * @param {Vector} direction
+     * @param {number|null} step
      */
-    static moveUnit(world, unit, step, direction) {
+    static moveUnits(world, storage, mouse, selectedUnits, direction, step = null){
         const camera = world.getCamera()
-        const stepScale = camera.fromScaleNumber(step)
-        const moveDirection = new Vector({
-            x: stepScale * direction.x,
-            y: stepScale * direction.y
+        const dragArea = step ? Vector.multiply(Vector.one(), camera.fromScaleNumber(step)) : mouse.dragAndDrop(camera)
+        const dragAreaDirection = new Vector({
+            x: dragArea.x * direction.x,
+            y: dragArea.y * direction.y
         })
-        const transformComponent = unit.getComponent(TransformComponent)
-        const position = transformComponent.getPosition()
-        transformComponent.setPosition(Vector.add(position, moveDirection))
+        selectedUnits.map(unit => {
+            if(unit.hasComponentsByClasses([LightComponent])){
+                unit.findComponentByClass(LightComponent).setGenerated(false)
+            }
+            const transformComponent = unit.getComponent(TransformComponent)
+            const uiTransformComponent = unit.getComponent(UITransformComponent)
+            const localPosition = transformComponent.getLocalPosition()
+            UnitHelper.updateOrRecordComponent(world, transformComponent, TransformComponent.prototype.setLocalPosition,
+                Vector.add(localPosition, dragAreaDirection), storage)
+            if(uiTransformComponent){
+                uiTransformComponent.setLastAnchorMin(null)
+                uiTransformComponent.setLastAnchorMax(null)
+            }
+        })
     }
 
     /**
      * @param {World} world
+     * @param {Mouse} mouse
      * @param {Unit} unit
-     * @param {number} step
      * @param {Vector} direction
+     * @param {number|null} step
      */
-    static moveCollider(world, unit, step, direction) {
+    static moveCollider(world, mouse, unit, direction, step = null){
         const camera = world.getCamera()
-        const stepScale = camera.fromScaleNumber(step)
-        const moveDirection = new Vector({
-            x: stepScale * direction.x,
-            y: stepScale * direction.y
+        const dragArea = step ? camera.fromScaleNumber(step) : mouse.dragAndDrop(camera)
+        const dragAreaDirection = new Vector({
+            x: dragArea.x * direction.x,
+            y: dragArea.y * direction.y
         })
         const colliderComponent = UnitHelper.getColliderEditing(unit)
         const position = colliderComponent.getPosition()
-        colliderComponent.setPosition(Vector.add(position, moveDirection))
+        colliderComponent.setPosition(Vector.add(position, dragAreaDirection))
     }
 
     /**

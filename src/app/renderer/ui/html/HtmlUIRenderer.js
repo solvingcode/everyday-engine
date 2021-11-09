@@ -491,9 +491,13 @@ class HtmlUIRenderer extends UIRenderer {
                 const hasChild = !!Menu.get().findItemsByZone(zone).filter(item => item.element.isValid()).length
                 if (zoneDiv) {
                     if (hasChild) {
-                        zoneDiv.className = 'has-child'
+                        if (zoneDiv.className !== 'has-child') {
+                            zoneDiv.className = 'has-child'
+                        }
                     } else {
-                        zoneDiv.className = ''
+                        if (zoneDiv.className !== '') {
+                            zoneDiv.className = ''
+                        }
                     }
                 }
             }

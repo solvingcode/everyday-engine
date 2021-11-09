@@ -10,6 +10,7 @@ import StyleComponent from '../../../component/internal/StyleComponent.js'
 import UITextComponent from '../../../component/internal/ui/UITextComponent.js'
 import AssetHelper from '../../../utils/AssetHelper.js'
 import Storage from '../../../core/Storage.js'
+import UITransformComponent from '../../../component/internal/ui/UITransformComponent.js'
 
 export default class ComponentFormMenuItem extends FormMenuItem {
     /**
@@ -64,7 +65,15 @@ export default class ComponentFormMenuItem extends FormMenuItem {
             formObject instanceof CameraComponent ||
             formObject instanceof StyleComponent ||
             formObject instanceof UITextComponent) {
-            selectedUnit.getComponent(MeshComponent).setGenerated(false)
+            const meshComponent = selectedUnit.getComponent(MeshComponent)
+            meshComponent && meshComponent.setGenerated(false)
+            if(formObject instanceof TransformComponent){
+                const uiTransformComponent = selectedUnit.getComponent(UITransformComponent)
+                if (uiTransformComponent) {
+                    uiTransformComponent.setLastAnchorMin(null)
+                    uiTransformComponent.setLastAnchorMax(null)
+                }
+            }
         } else if (formObject instanceof LightComponent) {
             formObject.setGenerated(false)
             const meshComponent = selectedUnit.getComponent(MeshComponent)

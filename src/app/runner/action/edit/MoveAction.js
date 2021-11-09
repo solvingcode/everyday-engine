@@ -1,14 +1,11 @@
 import Action from '../Action.js'
-import World from '../../../world/World.js'
 import StateManager from '../../../state/StateManager.js'
 import Vector from '../../../utils/Vector.js'
 import GUIMoveXComponent from '../../../component/internal/gui/move/GUIMoveXComponent.js'
 import UnitHelper from '../../../utils/UnitHelper.js'
 import GUIMoveYComponent from '../../../component/internal/gui/move/GUIMoveYComponent.js'
 import GUIMoveFreeComponent from '../../../component/internal/gui/move/GUIMoveFreeComponent.js'
-import TransformComponent from '../../../component/internal/TransformComponent.js'
-import LightComponent from '../../../component/internal/LightComponent.js'
-import UITransformComponent from '../../../component/internal/ui/UITransformComponent.js'
+import World from '../../../world/World.js'
 import Storage from '../../../core/Storage.js'
 
 class MoveAction extends Action {
@@ -21,6 +18,7 @@ class MoveAction extends Action {
      * @param {Unit[]} selectedUnits
      */
     static run(mouse, selectedUnits) {
+        const world = World.get()
         const {unit} = StateManager.get().getNextProgressData(this.STATE)
         let direction
 
@@ -34,59 +32,12 @@ class MoveAction extends Action {
 
         if(direction){
             if(selectedUnits.length === 1 && UnitHelper.isColliderEditing(selectedUnits[0])){
-                this.moveCollider(mouse, selectedUnits[0], direction)
+                UnitHelper.moveCollider(world, mouse, selectedUnits[0], direction)
             }else{
-                this.moveUnits(mouse, selectedUnits, direction)
+                UnitHelper.moveUnits(world, Storage.get(), mouse, selectedUnits, direction)
             }
         }
         return false
-    }
-
-    /**
-     * @param {Mouse} mouse
-     * @param {Unit[]} selectedUnits
-     * @param {Vector} direction
-     */
-    static moveUnits(mouse, selectedUnits, direction){
-        const world = World.get()
-        const camera = world.getCamera()
-        const dragArea = mouse.dragAndDrop(camera)
-        const dragAreaDirection = new Vector({
-            x: dragArea.x * direction.x,
-            y: dragArea.y * direction.y
-        })
-        selectedUnits.map(unit => {
-            if(unit.hasComponentsByClasses([LightComponent])){
-                unit.findComponentByClass(LightComponent).setGenerated(false)
-            }
-            const transformComponent = unit.getComponent(TransformComponent)
-            const uiTransformComponent = unit.getComponent(UITransformComponent)
-            const localPosition = transformComponent.getLocalPosition()
-            UnitHelper.updateOrRecordComponent(world, transformComponent, TransformComponent.prototype.setLocalPosition,
-                Vector.add(localPosition, dragAreaDirection), Storage.get())
-            if(uiTransformComponent){
-                uiTransformComponent.setLastAnchorMin(null)
-                uiTransformComponent.setLastAnchorMax(null)
-            }
-        })
-    }
-
-    /**
-     * @param {Mouse} mouse
-     * @param {Unit} unit
-     * @param {Vector} direction
-     */
-    static moveCollider(mouse, unit, direction){
-        const world = World.get()
-        const camera = world.getCamera()
-        const dragArea = mouse.dragAndDrop(camera)
-        const dragAreaDirection = new Vector({
-            x: dragArea.x * direction.x,
-            y: dragArea.y * direction.y
-        })
-        const colliderComponent = UnitHelper.getColliderEditing(unit)
-        const position = colliderComponent.getPosition()
-        colliderComponent.setPosition(Vector.add(position, dragAreaDirection))
     }
 
 }

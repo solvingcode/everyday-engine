@@ -107,12 +107,8 @@ class Menu {
      */
     prepare(item, parent = null) {
         if (item.isValid()) {
-            const itemsZone = this.items.filter(pItem => pItem.element.zone === item.zone)
             const existItem = this.items.find(pItem => pItem.element === item)
             const index = item.index
-            if (existItem) {
-                existItem.index = itemsZone.find(pItem => pItem.element === item).index
-            }
             const resultItem = existItem || new MenuItemUI(item, index, parent)
             !existItem && this.items.push(resultItem)
             if (item.items) {

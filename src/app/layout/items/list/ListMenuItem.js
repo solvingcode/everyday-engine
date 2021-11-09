@@ -1,5 +1,4 @@
 import PanelMenuItem from '../panel/PanelMenuItem.js'
-import ArrayHelper from '../../../utils/ArrayHelper.js'
 import SystemError from '../../../exception/type/SystemError.js'
 
 /**
@@ -56,7 +55,7 @@ class ListMenuItem extends PanelMenuItem {
             const element = this.items[index]
             const data = {bind: each, list}
             const listElementClass = this.getListElementFormClass()
-            if (element && (element.data.bind !== each || !ArrayHelper.isEqual(element.data.list, list))) {
+            if (element && (element.data.bind !== each || !_.isEqual(element.data.list, list))) {
                 element.setData(data)
             }
             return element || new listElementClass(this, data)

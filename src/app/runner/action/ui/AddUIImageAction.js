@@ -1,6 +1,8 @@
 import Action from '../Action.js'
 import World from '../../../world/World.js'
 import UIImageUnitInstant from '../../../unit/instant/type/internal/ui/UIImageUnitInstant.js'
+import TransformComponent from '../../../component/internal/TransformComponent.js'
+import Vector from '../../../utils/Vector.js'
 
 export default class AddUIImageAction extends Action {
 
@@ -11,7 +13,9 @@ export default class AddUIImageAction extends Action {
      */
     static run() {
         const world = World.get()
-        world.createUnitInstant(UIImageUnitInstant)
+        const unit = world.createUnitInstant(UIImageUnitInstant)
+        const transformComponent = unit.getComponent(TransformComponent)
+        transformComponent.setLocalScale(Vector.one())
         return true
     }
 

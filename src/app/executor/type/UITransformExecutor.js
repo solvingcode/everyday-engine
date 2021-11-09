@@ -91,10 +91,10 @@ export default class UITransformExecutor extends ComponentExecutor {
             }))
 
             if(!_.isEqual(position, newPosition)){
-                transformComponent.setPosition(_.cloneDeep(newPosition))
+                transformComponent.setLocalPosition(TransformHelper.getLocalPosition(newPosition, parentUnit))
             }
             if(!_.isEqual(scale, newScale)){
-                transformComponent.setScale(_.cloneDeep(newScale))
+                transformComponent.setLocalScale(TransformHelper.getLocalScale(newScale, parentUnit))
             }
         }
     }

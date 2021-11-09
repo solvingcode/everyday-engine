@@ -15,8 +15,7 @@ export default class AddUIButtonAction extends Action {
         const world = World.get()
         const unit = world.createUnitInstant(UIButtonUnitInstant)
         const transformComponent = unit.getComponent(TransformComponent)
-        transformComponent.setScale(new Vector())
-        transformComponent.setLocalScale(new Vector({x: 1, y: 1}))
+        transformComponent.setLocalScale(Vector.one())
         return true
     }
 
