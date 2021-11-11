@@ -14,9 +14,9 @@ export default class StartAnimationRecordingAction extends Action {
      * @override
      */
     static run() {
-        const {animation} = StateManager.get().getNextProgressData(this.STATE)
+        const {animation, unit} = StateManager.get().getNextProgressData(this.STATE)
         if (animation) {
-            World.get().getAnimationManager().startRecording(animation)
+            World.get().getAnimationManager().startRecording(unit, animation)
         }
         return true
     }

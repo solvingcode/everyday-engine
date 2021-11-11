@@ -636,6 +636,9 @@ export default {
                                                     id: {
                                                         type: TYPES.NUMBER
                                                     },
+                                                    childId: {
+                                                        type: TYPES.NUMBER
+                                                    },
                                                     componentName: {
                                                         type: TYPES.STRING,
                                                     },

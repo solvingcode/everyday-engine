@@ -12,6 +12,11 @@ export default class AnimationManager extends AnimationManagerData {
     animationRecording
 
     /**
+     * @type {Unit}
+     */
+    unitRecording
+
+    /**
      * @param {string} name
      * @return {Animation}
      */
@@ -40,14 +45,6 @@ export default class AnimationManager extends AnimationManagerData {
      */
     getSelectedAnimation(){
         return this.getAnimations().find(animation => animation.getSelected())
-    }
-
-    /**
-     * @param {TimelineFrame} timeline
-     * @return {Animation}
-     */
-    findByTimeline(timeline) {
-        return this.animations.find(animation => animation.getTimeline().find(pTimeline => pTimeline === timeline))
     }
 
     /**
@@ -162,6 +159,13 @@ export default class AnimationManager extends AnimationManagerData {
     }
 
     /**
+     * @return {Unit}
+     */
+    getUnitRecording(){
+        return this.unitRecording
+    }
+
+    /**
      * @return {Animation}
      */
     getAnimationRecording(){
@@ -169,13 +173,16 @@ export default class AnimationManager extends AnimationManagerData {
     }
 
     /**
+     * @param {Unit} unit
      * @param {Animation} animation
      */
-    startRecording(animation){
+    startRecording(unit, animation){
+        this.unitRecording = unit
         this.animationRecording = animation
     }
 
     stopRecording(){
+        this.unitRecording = null
         this.animationRecording = null
     }
 

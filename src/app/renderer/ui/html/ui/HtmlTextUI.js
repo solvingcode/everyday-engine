@@ -18,6 +18,7 @@ class HtmlTextUI extends ItemUI {
         const pText = text.join('<br/>')
         const pTextHtml = document.createElement('p')
         pTextHtml.innerHTML = pText
+        pTextHtml.title = pText
         el.appendChild(pTextHtml)
     }
 

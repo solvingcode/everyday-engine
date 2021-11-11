@@ -24,6 +24,7 @@ import AnimationComponent from '../component/internal/AnimationComponent.js'
 import AssetHelper from './AssetHelper.js'
 import ClassHelper from './ClassHelper.js'
 import LightComponent from '../component/internal/LightComponent.js'
+import UIContainerComponent from '../component/internal/ui/UIContainerComponent.js'
 
 export default class UnitHelper {
 
@@ -507,7 +508,7 @@ export default class UnitHelper {
      * @param {Vector} direction
      * @param {number|null} step
      */
-    static moveUnits(world, storage, mouse, selectedUnits, direction, step = null){
+    static moveUnits(world, storage, mouse, selectedUnits, direction, step = null) {
         const camera = world.getCamera()
         const dragArea = step ? Vector.multiply(Vector.one(), camera.fromScaleNumber(step)) : mouse.dragAndDrop(camera)
         const dragAreaDirection = new Vector({
@@ -515,15 +516,15 @@ export default class UnitHelper {
             y: dragArea.y * direction.y
         })
         selectedUnits.map(unit => {
-            if(unit.hasComponentsByClasses([LightComponent])){
+            if (unit.hasComponentsByClasses([LightComponent])) {
                 unit.findComponentByClass(LightComponent).setGenerated(false)
             }
             const transformComponent = unit.getComponent(TransformComponent)
             const uiTransformComponent = unit.getComponent(UITransformComponent)
             const localPosition = transformComponent.getLocalPosition()
-            UnitHelper.updateOrRecordComponent(world, transformComponent, TransformComponent.prototype.setLocalPosition,
+            UnitHelper.updateOrRecordComponent(world, unit, transformComponent, TransformComponent.prototype.setLocalPosition,
                 Vector.add(localPosition, dragAreaDirection), storage)
-            if(uiTransformComponent){
+            if (uiTransformComponent) {
                 uiTransformComponent.setLastAnchorMin(null)
                 uiTransformComponent.setLastAnchorMax(null)
             }
@@ -537,7 +538,7 @@ export default class UnitHelper {
      * @param {Vector} direction
      * @param {number|null} step
      */
-    static moveCollider(world, mouse, unit, direction, step = null){
+    static moveCollider(world, mouse, unit, direction, step = null) {
         const camera = world.getCamera()
         const dragArea = step ? camera.fromScaleNumber(step) : mouse.dragAndDrop(camera)
         const dragAreaDirection = new Vector({
@@ -595,19 +596,24 @@ export default class UnitHelper {
 
     /**
      * @param {World} world
+     * @param {Unit} unit
      * @param {Component} component
      * @param {Function} setter
      * @param {*} value
      * @param {Storage} storage
      */
-    static updateOrRecordComponent(world, component, setter, value, storage) {
-        const animation = world.getAnimationManager().getAnimationRecording()
+    static updateOrRecordComponent(world, unit, component, setter, value, storage) {
+        const animationManager = world.getAnimationManager()
+        const animation = animationManager.getAnimationRecording()
         if (animation) {
+            const unitRecording = animationManager.getUnitRecording()
+            const childUnit = unitRecording !== unit ? unit : null
             const animationAsset = world.getAssetsManager().findAssetById(animation.getAssetId())
             const cloneComponent = _.cloneDeep(component)
             const attributeName = ClassHelper.getAttributeFromSetter(setter)
             setter.bind(cloneComponent)(value)
-            animation.setFrame(animation.getTime(), cloneComponent.getName(), attributeName, cloneComponent.get(attributeName))
+            animation.setFrame(animation.getTime(), childUnit, cloneComponent.getName(), attributeName,
+                cloneComponent.get(attributeName))
             AssetHelper.regenerate(animationAsset, animation, storage)
         } else {
             setter.bind(component)(value)
@@ -729,7 +735,7 @@ export default class UnitHelper {
      * @param {*} bodyRotation
      * @return {Vector}
      */
-    static getUnitPositionFromPhysics(world, unit, body, bodyPosition, bodyRotation){
+    static getUnitPositionFromPhysics(world, unit, body, bodyPosition, bodyRotation) {
         const physicsManager = world.getPhysicsManager()
         const physicsEngine = physicsManager.getPhysicsEngine()
         const transformComponent = unit.getComponent(TransformComponent)
@@ -762,6 +768,69 @@ export default class UnitHelper {
         }
 
         return newPosition
+    }
+
+    /**
+     * @param {World} world
+     * @param {Unit} unit
+     * @return {Animation[]}
+     */
+    static getAnimations(world, unit) {
+        const animationController = this.getAnimationController(world, unit)
+        if (animationController) {
+            return world.getAnimationManager().findAnimationsByControllerAssetId(animationController.getAssetId())
+        }
+    }
+
+    /**
+     * @param {World} world
+     * @param {Unit} unit
+     * @param {Animation} animation
+     */
+    static hasAnimation(world, unit, animation) {
+        return !!this.getAnimations(world, unit).find(pAnimation => pAnimation === animation)
+    }
+
+    /**
+     * @param {World} world
+     * @param {Animation} animation
+     * @return {Unit}
+     */
+    static getAnimationUnit(world, animation) {
+        return world.getAnimationManager().getUnitRecording()
+    }
+
+    /**
+     * @param {Unit} unit
+     * @param {World} world
+     * @return {number}
+     */
+    static getOpacity(unit, world) {
+        const meshComponent = unit.getComponent(MeshComponent)
+        if (meshComponent) {
+            const opacity = parseFloat(meshComponent.getStyle().getOpacity())
+            const parentUnit = world.getUnitManager().findParentUnit(unit)
+            if (parentUnit) {
+                const parentMeshComponent = parentUnit.getComponent(MeshComponent)
+                if (parentMeshComponent) {
+                    const parentOpacity = parseFloat(meshComponent.getStyle().getOpacity())
+                    return opacity * parentOpacity
+                }
+            }
+            return opacity
+        }
+    }
+
+    /**
+     * @param {World} world
+     * @param {Unit} unit
+     */
+    static getUIContainer(world, unit) {
+        if (unit.getComponent(UIContainerComponent)) {
+            return unit
+        } else if (unit) {
+            return this.getUIContainer(world, world.getUnitManager().findParentUnit(unit))
+        }
     }
 
 }

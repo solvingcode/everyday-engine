@@ -515,6 +515,9 @@ h4{
 .animation-wrapper .panel .list-element .text p{
     position: unset !important;
     padding: 0;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
 }
 
 .animation-wrapper .panel .list-element button{

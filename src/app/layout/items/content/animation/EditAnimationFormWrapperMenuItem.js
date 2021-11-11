@@ -8,8 +8,9 @@ export default class EditAnimationFormWrapperMenuItem extends MenuItem {
     /**
      * @param {MenuItem} parent
      * @param {Animation} animation
+     * @param {Unit} unit
      */
-    constructor(parent, animation) {
+    constructor(parent, animation, unit) {
         super({
             name: 'animation-form-wrapper',
             stateCode: '',
@@ -22,7 +23,7 @@ export default class EditAnimationFormWrapperMenuItem extends MenuItem {
         ]
         if (animation) {
             this.items = [...this.items, ...[
-                new EditAnimationActionsMenuItem(this, animation),
+                new EditAnimationActionsMenuItem(this, animation, unit),
                 new EditAnimationFormMenuItem(this, animation)
             ]]
         }

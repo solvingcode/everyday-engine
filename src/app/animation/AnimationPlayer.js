@@ -16,16 +16,21 @@ export default class AnimationPlayer {
     static play(animation, world, time, unit) {
         const componentRegistry = world.getComponentRegistry()
         animation.getProperties().forEach(property => {
+            const childUnit = property.getChildId() && world.getUnitManager().findUnitById(property.getChildId())
+            if(childUnit && childUnit.getUnitParentId() !== unit.getId()){
+                throw new ClientError(`"${childUnit.getName()}" is not a child of "${unit.getName()}"`)
+            }
+            const targetUnit = childUnit || unit
             const component = componentRegistry.getInstance(property.getComponentName())
             if ((component instanceof Component)) {
                 const componentClass = component.constructor
                 const prevFrame = property.tryGetPrevAt(time)
                 const nextFrame = property.tryGetNextAt(time)
-                const type = unit.findComponentByClass(componentClass).getType(property.getAttributeName())
+                const type = targetUnit.findComponentByClass(componentClass).getType(property.getAttributeName())
                 const newValue = this.interpolate(componentClass, type, time, prevFrame, nextFrame)
                 if (prevFrame) {
-                    if (!_.isEqual(unit.findComponentByClass(componentClass).getValue(property.getAttributeName()), newValue)) {
-                        const componentInstance = unit.findComponentByClass(componentClass)
+                    if (!_.isEqual(targetUnit.findComponentByClass(componentClass).getValue(property.getAttributeName()), newValue)) {
+                        const componentInstance = targetUnit.findComponentByClass(componentClass)
                         const setter = ClassHelper.getSetter(componentInstance, property.getAttributeName())
                         componentInstance[setter](newValue)
                     }

@@ -37,7 +37,8 @@ export default class ComponentFormMenuItem extends FormMenuItem {
      */
     preUpdate(value, menuItem) {
         const world = World.get()
-        const animation = world.getAnimationManager().getAnimationRecording()
+        const animationManager = world.getAnimationManager()
+        const animation = animationManager.getAnimationRecording()
         if (animation) {
             const animationAsset = world.getAssetsManager().findAssetById(animation.getAssetId())
             const formMenuItem = menuItem.getFormMenuItem()
@@ -46,7 +47,10 @@ export default class ComponentFormMenuItem extends FormMenuItem {
             const bindAttribute = bindFields[0]
             const setter = formMenuItem.getSetter(menuItem.getDataBind(), {bindObject})
             setter(value)
-            animation.setFrame(animation.getTime(), bindObject.getName(),
+            const unitRecording = animationManager.getUnitRecording()
+            const targetUnit = UnitSelector.get().getFirstSelected(world)
+            const childUnit = unitRecording !== targetUnit ? targetUnit : null
+            animation.setFrame(animation.getTime(), childUnit, bindObject.getName(),
                 bindAttribute, bindObject.get(bindAttribute))
             AssetHelper.regenerate(animationAsset, animation, Storage.get())
             return false
@@ -59,7 +63,8 @@ export default class ComponentFormMenuItem extends FormMenuItem {
      */
     postUpdate(value) {
         const formObject = this.getFormObject()
-        const selectedUnit = UnitSelector.get().getFirstSelected(World.get())
+        const world = World.get()
+        const selectedUnit = UnitSelector.get().getFirstSelected(world)
         if (formObject instanceof MeshComponent ||
             formObject instanceof TransformComponent ||
             formObject instanceof CameraComponent ||

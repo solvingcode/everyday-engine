@@ -6,6 +6,8 @@ import AnimationComponent from '../component/internal/AnimationComponent.js'
 import TransformComponent from '../component/internal/TransformComponent.js'
 import MeshComponent from '../component/internal/MeshComponent.js'
 import TileColliderComponent from '../component/internal/tile/TileColliderComponent.js'
+import UIButtonComponent from '../component/internal/ui/UIButtonComponent.js'
+import UIContainerComponent from '../component/internal/ui/UIContainerComponent.js'
 
 export default class ComponentRegistry extends Registry{
 
@@ -24,7 +26,9 @@ export default class ComponentRegistry extends Registry{
             new TileColliderComponent(),
             new AnimationComponent(),
             new TransformComponent(),
-            new MeshComponent()
+            new MeshComponent(),
+            new UIButtonComponent(),
+            new UIContainerComponent()
         ])
     }
 

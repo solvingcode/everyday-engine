@@ -45,9 +45,19 @@ class Storage {
      * @param {boolean} forGame
      */
     async updateAndValidate(type, data, forGame = false) {
-        const validData = await SchemaValidator.get().validate(type, data, forGame)
+        const validData = await this.validate(type, data, forGame)
         this.data[type] = _.cloneDeep(validData)
         return this
+    }
+
+    /**
+     * Update the storage and validate data
+     * @param {string} type
+     * @param {Object|Array} data
+     * @param {boolean} forGame
+     */
+    async validate(type, data, forGame = false) {
+        return await SchemaValidator.get().validate(type, data, forGame)
     }
 
     /**
@@ -60,6 +70,19 @@ class Storage {
     async load(type, data, target) {
         await this.updateAndValidate(type, data)
         const dataType = _.cloneDeep(this.data[type])
+        target.set(dataType, type)
+        return dataType
+    }
+
+    /**
+     * Load and validate data to the given target
+     * @param {string} type
+     * @param {Object|Array} data
+     * @param {Object} target
+     * @return {Object|Array}
+     */
+    async parse(type, data, target) {
+        const dataType = await this.validate(type, data)
         target.set(dataType, type)
         return dataType
     }

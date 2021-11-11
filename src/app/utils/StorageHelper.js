@@ -31,7 +31,7 @@ export default class StorageHelper {
      */
     static async parseXml(type, data, storage){
         const dataImport = storage.import(type, data, StorageConstant.format.XML)
-        return dataImport && storage.load(type, dataImport[type], DataGenerator)
+        return dataImport && storage.parse(type, dataImport[type], DataGenerator)
     }
 
     /**

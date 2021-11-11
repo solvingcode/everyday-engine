@@ -9,14 +9,15 @@ export default class EditAnimationActionsMenuItem extends PanelMenuItem {
     /**
      * @param {MenuItem} parent
      * @param {Animation} animation
+     * @param {Unit} unit
      */
-    constructor(parent, animation) {
+    constructor(parent, animation, unit) {
         super({
             name: '',
             zone: parent.zone
         })
         this.items = [
-            new EditAnimationStartRecordMenuItem(this, animation),
+            new EditAnimationStartRecordMenuItem(this, animation, unit),
             new EditAnimationStopRecordMenuItem(this, animation),
             new EditAnimationPlayMenuItem(this, animation),
             new EditAnimationStopMenuItem(this, animation),

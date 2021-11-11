@@ -35,7 +35,7 @@ export default class EditAnimationBodyMenuItem extends PanelMenuItem {
             this.data = data
             this.items = [
                 new CloseWindowMenuItem(WINDOWS.ANIMATION, this),
-                new EditAnimationFormWrapperMenuItem(this, animation)
+                new EditAnimationFormWrapperMenuItem(this, animation, unit)
             ]
             if(animation){
                 this.items = [...this.items, ...[
@@ -55,25 +55,23 @@ export default class EditAnimationBodyMenuItem extends PanelMenuItem {
      * @return {Animation}
      */
     getAnimation() {
-        return UnitHelper.getAnimation(World.get(), this.getUnit())
+        const world = World.get()
+        return world.getAnimationManager().getAnimationRecording() || UnitHelper.getAnimation(world, this.getUnit())
     }
 
     /**
      * @return {Animation[]}
      */
     getAnimations(){
-        const world = World.get()
-        const animationController = this.getAnimationController()
-        if (animationController) {
-            return world.getAnimationManager().findAnimationsByControllerAssetId(animationController.getAssetId())
-        }
+        return UnitHelper.getAnimations(World.get(), this.getUnit())
     }
 
     /**
      * @return {Unit}
      */
     getUnit() {
-        return UnitSelector.get().getFirstSelected(World.get())
+        const world = World.get()
+        return world.getAnimationManager().getUnitRecording() || UnitSelector.get().getFirstSelected(World.get())
     }
 
     /**

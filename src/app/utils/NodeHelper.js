@@ -158,7 +158,7 @@ export default class NodeHelper {
             return `${unit.getName()}`
         } else if (nodeSource instanceof AAnimation) {
             const animation = world.getAnimationManager().findById(parseInt(nodeSource.getName()))
-            return `${animation.getName()}`
+            return `${animation ? animation.getName() : nodeSource.getName()}`
         } else if (nodeSource instanceof AComponent) {
             return `${nodeSource.getName()}`
         } else if (nodeSource instanceof AFunctionInput) {

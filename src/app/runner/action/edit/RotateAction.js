@@ -43,7 +43,7 @@ export default class RotateAction extends Action {
             }
             const transformComponent = unit.getComponent(TransformComponent)
             const localRotation = transformComponent.getLocalRotation() + angleRadian
-            UnitHelper.updateOrRecordComponent(world, transformComponent, TransformComponent.prototype.setLocalRotation,
+            UnitHelper.updateOrRecordComponent(world, unit, transformComponent, TransformComponent.prototype.setLocalRotation,
                 localRotation, Storage.get())
             unit.getComponent(MeshComponent).setGenerated(false)
         })

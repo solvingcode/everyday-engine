@@ -1,5 +1,6 @@
 import ListMenuItem from '../../list/ListMenuItem.js'
 import EditAnimationTimelineElementMenuItem from './EditAnimationTimelineElementMenuItem.js'
+import World from '../../../../world/World.js'
 
 export default class EditAnimationTimelineListMenuItem extends ListMenuItem {
 
@@ -101,7 +102,11 @@ class PropertyTimeline {
      * @return {string}
      */
     getName() {
-        return this.property ? this.property.getName() : ''
+        if (this.property) {
+            const unit = World.get().getUnitManager().findUnitById(this.property.getChildId())
+            return `${unit ? `${unit.getName()} - ` : ''}${this.property.getComponentName()} - ${this.property.getAttributeName()}`
+        }
+        return ''
     }
 
     /**
@@ -200,14 +205,14 @@ class TimeDuration {
     /**
      * @return {KeyFrame}
      */
-    getFrame(){
+    getFrame() {
         return this.frame
     }
 
     /**
      * @return {Animation}
      */
-    getAnimation(){
+    getAnimation() {
         return this.animation
     }
 
@@ -228,7 +233,7 @@ class TimeDuration {
     /**
      * @param {boolean} selected
      */
-    setSelected(selected){
+    setSelected(selected) {
         this.selected = selected
     }
 

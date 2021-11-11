@@ -77,7 +77,7 @@ export default class ScaleAction extends Action {
             const newSize = new Size({width, height})
             const newScale = TransformHelper.getScaleFromSize(newSize)
             const newLocalScale = TransformHelper.getLocalScale(newScale, parentUnit)
-            UnitHelper.updateOrRecordComponent(world, transformComponent, TransformComponent.prototype.setLocalScale,
+            UnitHelper.updateOrRecordComponent(world, unit, transformComponent, TransformComponent.prototype.setLocalScale,
                 newLocalScale, Storage.get())
             if (keyboard.isKeyPressed(KeyCode.SHIFT)) {
                 transformComponent.setPosition(Vector.add(position, Vector.multiply(dragVector, -1/2)))

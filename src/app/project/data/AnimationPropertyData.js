@@ -8,6 +8,11 @@ export default class AnimationPropertyData extends Data {
     id
 
     /**
+     * @type {number}
+     */
+    childId
+
+    /**
      * @type {string}
      */
     componentName
@@ -39,6 +44,20 @@ export default class AnimationPropertyData extends Data {
      */
     getId() {
         return this.id
+    }
+
+    /**
+     * @param {number} childId
+     */
+    setChildId(childId) {
+        this.childId = childId
+    }
+
+    /**
+     * @return {number}
+     */
+    getChildId() {
+        return this.childId
     }
 
     /**

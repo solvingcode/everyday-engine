@@ -80,7 +80,7 @@ export default class Style {
     }
 
     /**
-     * @return {number}
+     * @return {number|string}
      */
     getOpacity() {
         return this.opacity

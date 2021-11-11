@@ -6,8 +6,9 @@ export default class EditAnimationStartRecordMenuItem extends MenuItem {
     /**
      * @param {MenuItem} parent
      * @param {Animation} animation
+     * @param {Unit} unit
      */
-    constructor(parent, animation) {
+    constructor(parent, animation, unit) {
         super({
             name: 'circle',
             title: 'Start Recording',
@@ -16,7 +17,7 @@ export default class EditAnimationStartRecordMenuItem extends MenuItem {
             zone: parent.zone
         })
         this.parent = parent
-        this.data = {animation}
+        this.data = {animation, unit}
     }
 
     /**

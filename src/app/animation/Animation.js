@@ -78,31 +78,36 @@ export default class Animation extends AnimationData {
     /**
      * @param {string} componentName
      * @param {string} attributeName
+     * @param {Unit} childUnit
      * @return {AnimationProperty}
      */
-    getProperty(componentName, attributeName) {
+    getProperty(componentName, attributeName, childUnit) {
         return this.getProperties().find(prop => prop.getComponentName() === componentName &&
-            prop.getAttributeName() === attributeName)
+            prop.getAttributeName() === attributeName && prop.getChildId() === (childUnit ? childUnit.getId() : null))
     }
 
     /**
      * @param {string} componentName
      * @param {string} attributeName
+     * @param {Unit} childUnit
      */
-    addProperty(componentName, attributeName) {
-        const newProperty = new AnimationProperty(Maths.generateId(), componentName, attributeName)
+    addProperty(componentName, attributeName, childUnit) {
+        const childId = childUnit ? childUnit.getId() : null;
+        const newProperty = new AnimationProperty(Maths.generateId(), childId, componentName, attributeName)
         this.getProperties().push(newProperty)
         return newProperty
     }
 
     /**
      * @param {number} time
+     * @param {Unit} childUnit
      * @param {string} componentName
      * @param {string} attributeName
      * @param {DynamicAttribute} attribute
      */
-    setFrame(time, componentName, attributeName, attribute) {
-        const property = this.getProperty(componentName, attributeName) || this.addProperty(componentName, attributeName)
+    setFrame(time, childUnit, componentName, attributeName, attribute) {
+        const property = this.getProperty(componentName, attributeName, childUnit) ||
+            this.addProperty(componentName, attributeName, childUnit)
         if (time < this.getSamples()) {
             const existFrame = property.tryGetAt(time)
             if (existFrame) {

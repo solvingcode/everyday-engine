@@ -5,6 +5,8 @@ import World from '../../world/World.js'
 import Window from '../../core/Window.js'
 import UnitHelper from '../../utils/UnitHelper.js'
 import {MouseButton} from '../../core/Mouse.js'
+import UIContainerComponent from '../../component/internal/ui/UIContainerComponent.js'
+
 export default class UIButtonInteractionExecutor extends ComponentExecutor {
 
     constructor() {
@@ -19,26 +21,32 @@ export default class UIButtonInteractionExecutor extends ComponentExecutor {
         const {mouse} = Window.get()
         const styleComponent = unit.getComponent(StyleComponent)
         const uiButtonComponent = unit.getComponent(UIButtonComponent)
-        const style = styleComponent.getStyle()
-        const isHoverUnit = UnitHelper.isInsideWindowPosition(world, unit, mouse.currentPosition)
-        const isPressedUnit = UnitHelper.isInsideWindowPosition(world, unit, mouse.position)
-        let fillColor = style.getFillColor()
-        let fillColorOpacity = style.getFillColorOpacity()
+        const uiContainer = UnitHelper.getUIContainer(world, unit)
+        if (uiContainer) {
+            const uiContainerComponent = uiContainer.getComponent(UIContainerComponent)
+            if (uiContainerComponent.getIntractable()) {
+                const style = styleComponent.getStyle()
+                const isHoverUnit = UnitHelper.isInsideWindowPosition(world, unit, mouse.currentPosition)
+                const isPressedUnit = UnitHelper.isInsideWindowPosition(world, unit, mouse.position)
+                let fillColor = style.getFillColor()
+                let fillColorOpacity = style.getFillColorOpacity()
 
-        if (mouse.isButtonPressed(MouseButton.LEFT) && isPressedUnit) {
-            fillColor = uiButtonComponent.getPressedColor()
-            fillColorOpacity = uiButtonComponent.getPressedColorOpacity()
-        } else if (isHoverUnit) {
-            fillColor = uiButtonComponent.getHoverColor()
-            fillColorOpacity = uiButtonComponent.getHoverColorOpacity()
-        } else if (uiButtonComponent.getDefaultColor() !== fillColor || uiButtonComponent.getDefaultColorOpacity() !== fillColorOpacity) {
-            fillColor = uiButtonComponent.getDefaultColor()
-            fillColorOpacity = uiButtonComponent.getDefaultColorOpacity()
-        }
+                if (mouse.isButtonPressed(MouseButton.LEFT) && isPressedUnit) {
+                    fillColor = uiButtonComponent.getPressedColor()
+                    fillColorOpacity = uiButtonComponent.getPressedColorOpacity()
+                } else if (isHoverUnit) {
+                    fillColor = uiButtonComponent.getHoverColor()
+                    fillColorOpacity = uiButtonComponent.getHoverColorOpacity()
+                } else if (uiButtonComponent.getDefaultColor() !== fillColor || uiButtonComponent.getDefaultColorOpacity() !== fillColorOpacity) {
+                    fillColor = uiButtonComponent.getDefaultColor()
+                    fillColorOpacity = uiButtonComponent.getDefaultColorOpacity()
+                }
 
-        if (fillColor !== style.getFillColor() || fillColorOpacity !== style.getFillColorOpacity()) {
-            style.setFillColor(fillColor)
-            style.setFillColorOpacity(fillColorOpacity)
+                if (fillColor !== style.getFillColor() || fillColorOpacity !== style.getFillColorOpacity()) {
+                    style.setFillColor(fillColor)
+                    style.setFillColorOpacity(fillColorOpacity)
+                }
+            }
         }
     }
 
