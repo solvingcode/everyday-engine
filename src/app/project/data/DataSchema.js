@@ -237,6 +237,7 @@ import ThenNode from '../../flow/node/ThenNode.js'
 import Animation from '../../animation/Animation.js'
 import AnimationProperty from '../../animation/AnimationProperty.js'
 import KeyFrame from '../../animation/KeyFrame.js'
+import OnButtonClickEvent from '../../flow/event/native/OnButtonClickEvent.js'
 
 /**
  * @class {DataSchema}
@@ -471,6 +472,7 @@ class DataSchema {
         {id: 2140, type: Animation},
         {id: 2150, type: AnimationProperty},
         {id: 2160, type: KeyFrame},
+        {id: 2170, type: OnButtonClickEvent},
     ]
 
     /**

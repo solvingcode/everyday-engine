@@ -106,6 +106,7 @@ import NormalizeVectorFunction from '../flow/function/native/basic/NormalizeVect
 import GetterFunction from '../flow/function/native/basic/GetterFunction.js'
 import DestroyUnitFunction from '../flow/function/native/unit/DestroyUnitFunction.js'
 import VectorLerpFunction from '../flow/function/native/basic/VectorLerpFunction.js'
+import OnButtonClickEvent from '../flow/event/native/OnButtonClickEvent.js'
 
 export default class FunctionRegistry extends Registry{
 
@@ -129,6 +130,7 @@ export default class FunctionRegistry extends Registry{
             new OnUpdateEvent(),
             new OnInputAttackEvent(),
             new OnCallEvent(),
+            new OnButtonClickEvent(),
 
             // Condition
             new TrueCondition(),

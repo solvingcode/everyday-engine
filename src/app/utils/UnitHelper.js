@@ -25,6 +25,7 @@ import AssetHelper from './AssetHelper.js'
 import ClassHelper from './ClassHelper.js'
 import LightComponent from '../component/internal/LightComponent.js'
 import UIContainerComponent from '../component/internal/ui/UIContainerComponent.js'
+import UIButtonUnitInstant from '../unit/instant/type/internal/ui/UIButtonUnitInstant.js'
 
 export default class UnitHelper {
 
@@ -44,7 +45,9 @@ export default class UnitHelper {
      * @return {boolean}
      */
     static isInsideWindowPosition(world, unit, point) {
-        return this.isInside(unit, world.getWorldPosition(point))
+        const worldPosition = unit.getComponent(UITransformComponent) ?
+            world.getCamera().fromCameraScale(point) : world.getWorldPosition(point)
+        return this.isInside(unit, worldPosition)
     }
 
     /**
@@ -831,6 +834,21 @@ export default class UnitHelper {
         } else if (unit) {
             return this.getUIContainer(world, world.getUnitManager().findParentUnit(unit))
         }
+    }
+
+    /**
+     * @param {World} world
+     * @param {Unit} unit
+     * @return {boolean}
+     */
+    static isIntractableButton(world, unit){
+        if(unit instanceof UIButtonUnitInstant){
+            const uiContainer = this.getUIContainer(world, unit)
+            if (uiContainer) {
+                return uiContainer.getComponent(UIContainerComponent).getIntractable()
+            }
+        }
+        return false
     }
 
 }

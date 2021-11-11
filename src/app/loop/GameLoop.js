@@ -26,6 +26,7 @@ import UIButtonInteractionExecutor from '../executor/type/UIButtonInteractionExe
 import UISliderHandleExecutor from '../executor/type/UISliderHandleExecutor.js'
 import UISliderFillExecutor from '../executor/type/UISliderFillExecutor.js'
 import AnimationPlayerExecutor from '../executor/type/AnimationPlayerExecutor.js'
+import UIButtonStyleExecutor from '../executor/type/UIButtonStyleExecutor.js'
 
 /**
  * @class {GameLoop}
@@ -50,6 +51,7 @@ class GameLoop extends SceneLoop {
             new TransformExecutor(),
             new UITransformExecutor(),
             new UIButtonInteractionExecutor(),
+            new UIButtonStyleExecutor(),
             new UISliderHandleExecutor(),
             new MeshGenerationExecutor(),
             new RigidBodyExecutor(),

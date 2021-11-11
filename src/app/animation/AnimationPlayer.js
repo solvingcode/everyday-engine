@@ -63,6 +63,8 @@ export default class AnimationPlayer {
                 return Vector.interpolate(time, prevTime, prevValue, nextTime, nextValue)
             } else if (type === TYPES.BOOLEAN) {
                 return prevValue
+            } else {
+                return prevValue
             }
         }
     }

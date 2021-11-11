@@ -97,8 +97,8 @@ export default class MeshGenerationExecutor extends ComponentExecutor {
                 context.shadowOffsetX = camera.toScaleNumber(shadowPosition.getX())
                 context.shadowOffsetY = camera.toScaleNumber(shadowPosition.getY())
             }
-            if (_.isNumber(opacity)) {
-                context.globalAlpha = opacity
+            if (_.isNumber(parseFloat(opacity))) {
+                context.globalAlpha = parseFloat(opacity)
             }
             context.lineWidth = camera.toScaleNumber(borderSize || 1)
             context.translate(width / 2, height / 2)

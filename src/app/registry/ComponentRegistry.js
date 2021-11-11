@@ -8,6 +8,7 @@ import MeshComponent from '../component/internal/MeshComponent.js'
 import TileColliderComponent from '../component/internal/tile/TileColliderComponent.js'
 import UIButtonComponent from '../component/internal/ui/UIButtonComponent.js'
 import UIContainerComponent from '../component/internal/ui/UIContainerComponent.js'
+import StyleComponent from '../component/internal/StyleComponent.js'
 
 export default class ComponentRegistry extends Registry{
 
@@ -28,7 +29,8 @@ export default class ComponentRegistry extends Registry{
             new TransformComponent(),
             new MeshComponent(),
             new UIButtonComponent(),
-            new UIContainerComponent()
+            new UIContainerComponent(),
+            new StyleComponent()
         ])
     }
 
