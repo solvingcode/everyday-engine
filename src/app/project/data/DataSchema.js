@@ -238,6 +238,8 @@ import Animation from '../../animation/Animation.js'
 import AnimationProperty from '../../animation/AnimationProperty.js'
 import KeyFrame from '../../animation/KeyFrame.js'
 import OnButtonClickEvent from '../../flow/event/native/OnButtonClickEvent.js'
+import ArraySizeFunction from '../../flow/function/native/array/ArraySizeFunction.js'
+import ArrayIndexFunction from '../../flow/function/native/array/ArrayIndexFunction.js'
 
 /**
  * @class {DataSchema}
@@ -473,6 +475,8 @@ class DataSchema {
         {id: 2150, type: AnimationProperty},
         {id: 2160, type: KeyFrame},
         {id: 2170, type: OnButtonClickEvent},
+        {id: 2180, type: ArraySizeFunction},
+        {id: 2190, type: ArrayIndexFunction}
     ]
 
     /**

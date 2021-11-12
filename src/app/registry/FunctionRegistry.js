@@ -107,6 +107,8 @@ import GetterFunction from '../flow/function/native/basic/GetterFunction.js'
 import DestroyUnitFunction from '../flow/function/native/unit/DestroyUnitFunction.js'
 import VectorLerpFunction from '../flow/function/native/basic/VectorLerpFunction.js'
 import OnButtonClickEvent from '../flow/event/native/OnButtonClickEvent.js'
+import ArraySizeFunction from '../flow/function/native/array/ArraySizeFunction.js'
+import ArrayIndexFunction from '../flow/function/native/array/ArrayIndexFunction.js'
 
 export default class FunctionRegistry extends Registry{
 
@@ -220,6 +222,8 @@ export default class FunctionRegistry extends Registry{
             //Array
             new IsArrayEmptyFunction(),
             new ArrayPushFunction(),
+            new ArraySizeFunction(),
+            new ArrayIndexFunction(),
 
             //Time
             new GetTimeFunction(),

@@ -11,6 +11,10 @@ import AssetImage from '../../../asset/types/image/AssetImage.js'
 import TileGridUnitInstant from '../../../unit/instant/type/internal/tile/TileGridUnitInstant.js'
 import TileMapUnitInstant from '../../../unit/instant/type/internal/tile/TileMapUnitInstant.js'
 import World from '../../../world/World.js'
+import UIImageUnitInstant from '../../../unit/instant/type/internal/ui/UIImageUnitInstant.js'
+import UIEmptyUnitInstant from '../../../unit/instant/type/internal/ui/UIEmptyUnitInstant.js'
+import UIButtonUnitInstant from '../../../unit/instant/type/internal/ui/UIButtonUnitInstant.js'
+import UITextUnitInstant from '../../../unit/instant/type/internal/ui/UITextUnitInstant.js'
 
 export default class AttachLayerElementAction extends Action {
 
@@ -21,7 +25,12 @@ export default class AttachLayerElementAction extends Action {
      */
     static run() {
         const {start: startData, end: endData} = StateManager.get().getNextProgressData(this.STATE)
-        if (startData instanceof UIUnitInstant && !(endData instanceof UIContainerUnitInstant)) {
+        if (startData instanceof UIUnitInstant && !(
+            endData instanceof UIContainerUnitInstant ||
+            endData instanceof UIImageUnitInstant ||
+            endData instanceof UIEmptyUnitInstant ||
+            endData instanceof UIButtonUnitInstant ||
+            endData instanceof UITextUnitInstant)) {
             throw new ClientError(`UI Unit must be child of UI Container`)
         }
         if (startData instanceof TileMapUnitInstant && !(endData instanceof TileGridUnitInstant)) {

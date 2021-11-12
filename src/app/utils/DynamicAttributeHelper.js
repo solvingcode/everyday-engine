@@ -3,6 +3,7 @@ import AttributeType, {TYPES, TYPES_NAME} from '../pobject/AttributeType.js'
 import ClientError from '../exception/type/ClientError.js'
 import Layout from '../layout/Layout.js'
 import Component from '../component/Component.js'
+import RegexHelper from './RegexHelper.js'
 
 export default class DynamicAttributeHelper {
 
@@ -151,13 +152,19 @@ export default class DynamicAttributeHelper {
      * @param {DynamicAttribute} attribute
      * @param {boolean} isListInstances
      * @param {string|null} pBindName
+     * @param {number|null} arrayIndex
+     * @param {string|null} pAttributeName
      * @return {FormField[]}
      */
-    static getFormFields(world, unitSelector, attribute, isListInstances = true, pBindName = null) {
-        const bindName = pBindName || attribute.getAttrName()
+    static getFormFields(world, unitSelector, attribute,
+                         isListInstances = true, pBindName = null,
+                         arrayIndex = null, pAttributeName = null) {
+        const bindName = `${pBindName || attribute.getAttrName()}${arrayIndex !== null ? `[${arrayIndex}]` : ''}`
+        const attributeName = pAttributeName || attribute.getAttrName()
         const dynamicAttribute = !pBindName
+        const attrType = arrayIndex !== null ? AttributeType.getArrayElementType(attribute.getAttrType()) : attribute.getAttrType()
         let formField
-        if (attribute.getAttrType() === TYPES.UNIT) {
+        if (attrType === TYPES.UNIT) {
             if (isListInstances) {
                 const units = world.getUnitManager().getUnits()
                     .map(unit => ({
@@ -166,7 +173,7 @@ export default class DynamicAttributeHelper {
                     }))
                 formField = [{
                     bind: bindName,
-                    label: attribute.getAttrName(),
+                    label: attributeName,
                     type: Layout.form.DROPDOWN,
                     list: units,
                     draggable: true,
@@ -176,13 +183,13 @@ export default class DynamicAttributeHelper {
                 formField = [
                     {
                         bind: bindName,
-                        label: `${attribute.getAttrName()}`,
+                        label: `${attributeName}`,
                         type: Layout.form.TEXT,
                         dynamicAttribute
                     }
                 ]
             }
-        } else if (attribute.getAttrType() === TYPES.COMPONENT) {
+        } else if (attrType === TYPES.COMPONENT) {
             const components = world.getComponentRegistry().getInstances()
                 .map(component => ({
                     value: component.getName(),
@@ -190,12 +197,12 @@ export default class DynamicAttributeHelper {
                 }))
             formField = [{
                 bind: bindName,
-                label: attribute.getAttrName(),
+                label: attributeName,
                 type: Layout.form.DROPDOWN,
                 list: components,
                 dynamicAttribute
             }]
-        } else if (attribute.getAttrType() === TYPES.MATERIAL) {
+        } else if (attrType === TYPES.MATERIAL) {
             const materials = world.getMaterialRegistry().getInstances()
                 .map(material => ({
                     value: material.getName(),
@@ -203,12 +210,12 @@ export default class DynamicAttributeHelper {
                 }))
             formField = [{
                 bind: bindName,
-                label: attribute.getAttrName(),
+                label: attributeName,
                 type: Layout.form.DROPDOWN,
                 list: materials,
                 dynamicAttribute
             }]
-        } else if (attribute.getAttrType() === TYPES.COMPONENT_INSTANCE && isListInstances) {
+        } else if (attrType === TYPES.COMPONENT_INSTANCE && isListInstances) {
             const selectedUnit = unitSelector.getFirstSelected(world)
             const componentInstances = selectedUnit.getComponents()
                 .filter(component => !component.isHidden() && !component.isUnique())
@@ -218,12 +225,12 @@ export default class DynamicAttributeHelper {
                 }))
             formField = [{
                 bind: bindName,
-                label: attribute.getAttrName(),
+                label: attributeName,
                 type: Layout.form.DROPDOWN,
                 list: componentInstances,
                 dynamicAttribute
             }]
-        } else if (attribute.getAttrType() === TYPES.MASK_GROUP_INSTANCE && isListInstances) {
+        } else if (attrType === TYPES.MASK_GROUP_INSTANCE && isListInstances) {
             const listMaskGroups = world
                 .getPreference().getMaskGroup().getMasks()
                 .map(maskGroup => ({
@@ -232,12 +239,12 @@ export default class DynamicAttributeHelper {
                 }))
             formField = [{
                 bind: bindName,
-                label: attribute.getAttrName(),
+                label: attributeName,
                 type: Layout.form.DROPDOWN,
                 list: listMaskGroups,
                 dynamicAttribute
             }]
-        } else if (attribute.getAttrType() === TYPES.AUDIO && isListInstances) {
+        } else if (attrType === TYPES.AUDIO && isListInstances) {
             const listAudios = world.getAssetsManager().getAudioAssets()
                 .map(audio => ({
                     value: audio.getId(),
@@ -245,13 +252,13 @@ export default class DynamicAttributeHelper {
                 }))
             formField = [{
                 bind: bindName,
-                label: attribute.getAttrName(),
+                label: attributeName,
                 type: Layout.form.DROPDOWN,
                 list: listAudios,
                 draggable: true,
                 dynamicAttribute
             }]
-        } else if (attribute.getAttrType() === TYPES.IMAGE && isListInstances) {
+        } else if (attrType === TYPES.IMAGE && isListInstances) {
             const listMeshes = world.getAssetsManager().getImageAssets()
                 .map(mesh => ({
                     value: mesh.getId(),
@@ -259,13 +266,13 @@ export default class DynamicAttributeHelper {
                 }))
             formField = [{
                 bind: bindName,
-                label: attribute.getAttrName(),
+                label: attributeName,
                 type: Layout.form.DROPDOWN,
                 list: listMeshes,
                 draggable: true,
                 dynamicAttribute
             }]
-        } else if (attribute.getAttrType() === TYPES.UNIT_INSTANT && isListInstances) {
+        } else if (attrType === TYPES.UNIT_INSTANT && isListInstances) {
             const listUnitInstants = world.getAssetsManager().getUnitAssets()
                 .map(instant => ({
                     value: instant.getId(),
@@ -273,13 +280,13 @@ export default class DynamicAttributeHelper {
                 }))
             formField = [{
                 bind: bindName,
-                label: attribute.getAttrName(),
+                label: attributeName,
                 type: Layout.form.DROPDOWN,
                 list: listUnitInstants,
                 draggable: true,
                 dynamicAttribute
             }]
-        } else if (attribute.getAttrType() === TYPES.SCENE && isListInstances) {
+        } else if (attrType === TYPES.SCENE && isListInstances) {
             const listScenes = world.getSceneManager().getScenes()
                 .map(scene => ({
                     value: scene.getId(),
@@ -287,12 +294,12 @@ export default class DynamicAttributeHelper {
                 }))
             formField = [{
                 bind: bindName,
-                label: attribute.getAttrName(),
+                label: attributeName,
                 type: Layout.form.DROPDOWN,
                 list: listScenes,
                 dynamicAttribute
             }]
-        } else if (attribute.getAttrType() === TYPES.FUNCTION) {
+        } else if (attrType === TYPES.FUNCTION) {
             const listFunctions = world.getFunctionRegistry().getCustomFunctionInstances()
                 .map(func => ({
                     value: func.getName(),
@@ -300,12 +307,12 @@ export default class DynamicAttributeHelper {
                 }))
             formField = [{
                 bind: bindName,
-                label: attribute.getAttrName(),
+                label: attributeName,
                 type: Layout.form.DROPDOWN,
                 list: listFunctions,
                 dynamicAttribute
             }]
-        } else if (attribute.getAttrType() === TYPES.FONT && isListInstances) {
+        } else if (attrType === TYPES.FONT && isListInstances) {
             const listFonts = world.getAssetsManager().getFontAssets()
                 .map(font => ({
                     value: font.getId(),
@@ -313,31 +320,31 @@ export default class DynamicAttributeHelper {
                 }))
             formField = [{
                 bind: bindName,
-                label: attribute.getAttrName(),
+                label: attributeName,
                 type: Layout.form.DROPDOWN,
                 list: listFonts,
                 draggable: true,
                 dynamicAttribute
             }]
-        } else if (attribute.getAttrType() === TYPES.BOOLEAN && isListInstances) {
+        } else if (attrType === TYPES.BOOLEAN && isListInstances) {
             formField = [{
                 bind: bindName,
-                label: `${attribute.getAttrName()} `,
+                label: `${attributeName} `,
                 type: Layout.form.CHECKBOX,
                 dynamicAttribute
             }]
-        } else if (attribute.getAttrType() === TYPES.COLOR && isListInstances) {
+        } else if (attrType === TYPES.COLOR && isListInstances) {
             formField = [{
                 bind: bindName,
-                label: `${attribute.getAttrName()} `,
+                label: `${attributeName} `,
                 type: Layout.form.COLOR,
                 dynamicAttribute
             }]
-        } else if (attribute.getAttrType() === TYPES.RANGE && isListInstances) {
+        } else if (attrType === TYPES.RANGE && isListInstances) {
             const rule = attribute.getAttrRule() || []
             formField = [{
                 bind: bindName,
-                label: `${attribute.getAttrName()} `,
+                label: `${attributeName} `,
                 type: Layout.form.RANGE,
                 options: {
                     min: rule[0],
@@ -346,11 +353,11 @@ export default class DynamicAttributeHelper {
                 },
                 dynamicAttribute
             }]
-        } else if (attribute.getAttrType() === TYPES.VECTOR && isListInstances) {
+        } else if (attrType === TYPES.VECTOR && isListInstances) {
             formField = [
                 {
                     bind: bindName,
-                    label: attribute.getAttrName(),
+                    label: attributeName,
                     type: Layout.form.GROUP,
                     items: [
                         {
@@ -370,11 +377,11 @@ export default class DynamicAttributeHelper {
                     ]
                 }
             ]
-        } else if (attribute.getAttrType() === TYPES.SIZE && isListInstances) {
+        } else if (attrType === TYPES.SIZE && isListInstances) {
             formField = [
                 {
                     bind: bindName,
-                    label: attribute.getAttrName(),
+                    label: attributeName,
                     type: Layout.form.GROUP,
                     items: [
                         {
@@ -394,7 +401,7 @@ export default class DynamicAttributeHelper {
                     ]
                 }
             ]
-        } else if (attribute.getAttrType() === TYPES.STYLE && isListInstances) {
+        } else if (attrType === TYPES.STYLE && isListInstances) {
             const listColors = world.getAssetsManager().getColorAssets()
                 .map(color => ({
                     value: color.getId(),
@@ -498,37 +505,58 @@ export default class DynamicAttributeHelper {
                     dynamicAttribute
                 }
             ]
-        } else if (attribute.getAttrType() === TYPES.LIST && isListInstances) {
+        } else if (attrType === TYPES.LIST && isListInstances) {
             const rule = attribute.getAttrRule()
             const list = rule.map(eRule => ({value: eRule, label: eRule}))
             formField = [{
                 bind: bindName,
-                label: attribute.getAttrName(),
+                label: attributeName,
                 type: Layout.form.DROPDOWN,
                 list,
                 dynamicAttribute
             }]
-        } else if (attribute.getAttrType() === (TYPES.ARRAY | TYPES.LIST) && isListInstances) {
+        } else if (attrType === (TYPES.ARRAY | TYPES.LIST) && isListInstances) {
             const rule = attribute.getAttrRule()
             const list = rule.map(eRule => ({value: eRule, label: eRule}))
             formField = [{
                 bind: bindName,
-                label: attribute.getAttrName(),
+                label: attributeName,
                 type: Layout.form.MULTI_BUTTON,
                 list,
                 dynamicAttribute
             }]
-        } else if (attribute.getAttrType() === TYPES.NUMBER && isListInstances) {
+        } else if (attrType === TYPES.NUMBER && isListInstances) {
             formField = [{
                 bind: bindName,
-                label: attribute.getAttrName(),
+                label: attributeName,
                 type: Layout.form.NUMBER,
                 dynamicAttribute
+            }]
+        } else if (AttributeType.isArrayType(attrType) && isListInstances) {
+            const array = attribute.getAttrValue() || []
+            const size = array.length
+            formField = [{
+                bind: bindName,
+                label: attributeName,
+                type: Layout.form.GROUP,
+                dynamicAttribute,
+                items: [
+                    {
+                        bind: `size[${bindName}]`,
+                        label: 'Size',
+                        type: Layout.form.NUMBER,
+                        dynamicAttribute
+                    },
+                    ...(Array.from({length: size}).reduce((listElement, current, index) =>
+                            [...listElement, ...this.getFormFields(world, unitSelector, attribute, isListInstances,
+                                null, index, `Element ${index}`)]
+                        , []))
+                ]
             }]
         } else {
             formField = [{
                 bind: bindName,
-                label: attribute.getAttrName(),
+                label: attributeName,
                 type: Layout.form.TEXT,
                 dynamicAttribute
             }]
@@ -671,6 +699,49 @@ export default class DynamicAttributeHelper {
             return typeName.label
         }
         throw new ClientError(`Attribute type not recognized "${typeName}"`)
+    }
+
+    /**
+     * @param {string} fieldName
+     * @return {boolean}
+     */
+    static isSizeField(fieldName) {
+        return !!fieldName.match(RegexHelper.FIELD_NAME_SIZE)
+    }
+
+    /**
+     * @param {string} fieldName
+     * @return {boolean}
+     */
+    static isArrayIndexField(fieldName) {
+        return !!fieldName.match(RegexHelper.FIELD_NAME_ARRAY_INDEX)
+    }
+
+    /**
+     * @param {string} fieldName
+     * @return {string}
+     */
+    static getAttributeName(fieldName) {
+        if (this.isSizeField(fieldName)) {
+            const fieldMatch = fieldName.match(RegexHelper.FIELD_NAME_SIZE)
+            return fieldMatch[1]
+        } else if(this.isArrayIndexField(fieldName)) {
+            const fieldMatch = fieldName.match(RegexHelper.FIELD_NAME_ARRAY_INDEX)
+            return fieldMatch[1]
+        }
+        return fieldName
+    }
+
+    /**
+     * @param {string} fieldName
+     * @return {number|null}
+     */
+    static getAttributeArrayIndex(fieldName){
+        if(this.isArrayIndexField(fieldName)) {
+            const fieldMatch = fieldName.match(RegexHelper.FIELD_NAME_ARRAY_INDEX)
+            return parseInt(fieldMatch[2])
+        }
+        return null
     }
 
 }

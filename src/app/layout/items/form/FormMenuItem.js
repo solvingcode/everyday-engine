@@ -15,6 +15,7 @@ import ClientError from '../../../exception/type/ClientError.js'
 import NumberMenuItem from './NumberMenuItem.js'
 import MultiButtonMenuItem from './MultiButtonMenuItem.js'
 import GroupMenuItem from './GroupMenuItem.js'
+import DynamicAttributeHelper from '../../../utils/DynamicAttributeHelper.js'
 
 /**
  * Form menu item
@@ -121,7 +122,7 @@ class FormMenuItem extends MenuItem {
     /**
      * @param {MenuItem} item
      */
-    updateFormVersion(item){
+    updateFormVersion(item) {
         item.version = this.version
         item.items.forEach(subItem => this.updateFormVersion(subItem))
     }
@@ -148,6 +149,7 @@ class FormMenuItem extends MenuItem {
                         return true
                     }
                 } catch (e) {
+                    console.error(e)
                     throw new ClientError(`Error comparing ${getterString} for ${object.constructor.name}`)
                 }
             }
@@ -252,7 +254,13 @@ class FormMenuItem extends MenuItem {
                     (pValue, cValue, currentIndex) => {
                         const fieldName = fieldNames[currentIndex]
                         if (field.dynamicAttribute && typeof pValue[getterDynamicField] === 'function') {
-                            return pValue[getterDynamicField](fieldName)
+                            const getterValue = pValue[getterDynamicField](DynamicAttributeHelper.getAttributeName(fieldName))
+                            if (DynamicAttributeHelper.isSizeField(fieldName)) {
+                                return getterValue.length
+                            } else if (DynamicAttributeHelper.isArrayIndexField(fieldName)) {
+                                return getterValue[DynamicAttributeHelper.getAttributeArrayIndex(fieldName)]
+                            }
+                            return getterValue
                         } else if (typeof pValue[cValue] === 'function') {
                             return pValue[cValue]()
                         } else {
@@ -293,6 +301,13 @@ class FormMenuItem extends MenuItem {
                         if (iValue !== setter.length - 1) {
                             return pValue[getterDynamicField](fieldName)
                         } else {
+                            const attributeName = DynamicAttributeHelper.getAttributeName(fieldName)
+                            if (DynamicAttributeHelper.isSizeField(fieldName)) {
+                                return pValue[setterDynamicField](attributeName, new Array(parseInt(value)))
+                            } else if (DynamicAttributeHelper.isArrayIndexField(fieldName)) {
+                                const getterValue = pValue[getterDynamicField](attributeName)
+                                return (getterValue[DynamicAttributeHelper.getAttributeArrayIndex(fieldName)] = value)
+                            }
                             return pValue[setterDynamicField](fieldName, value)
                         }
                     } else {
@@ -354,7 +369,7 @@ class FormMenuItem extends MenuItem {
     /**
      * @override
      */
-    isForm(){
+    isForm() {
         return true
     }
 }

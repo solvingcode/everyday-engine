@@ -142,7 +142,7 @@ export default class AttributeType {
      * @return {string}
      */
     static getName(type){
-        return TYPES_NAME.find(pType => pType.value === type).label
+        return this.isArrayType(type) ? 'Array' : TYPES_NAME.find(pType => pType.value === type).label
     }
 
 }
@@ -213,11 +213,23 @@ export const TYPES_NAME = [
         label: 'Unit'
     },
     {
+        value: TYPES.UNIT_INSTANT,
+        label: 'Unit Instant'
+    },
+    {
         value: TYPES.PROMISE,
         label: 'Promise'
     },
     {
         value: TYPES.COMPONENT_INSTANCE,
         label: 'Component'
+    },
+    {
+        value: TYPES.IMAGE,
+        label: 'Image'
+    },
+    {
+        value: TYPES.ARRAY,
+        label: 'Array'
     }
 ]

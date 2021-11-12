@@ -119,7 +119,7 @@ export default class ListElementButtonUI extends ItemUI {
             const bindName = el.getAttribute('data-list-element-name')
             const titleElement = this.getTitleElement(el)
             const title = (titleElement && titleElement.innerText) || ''
-            if (parseInt(bindId) !== bind.getId() || bindName !== bind.getName() || this.getTitle(item) !== title) {
+            if (parseInt(bindId) !== bind.getId() || bindName !== bind.getName() || this.getTitle(item).trim() !== title) {
                 this.update(item, el, uiRenderer)
             }
         }
