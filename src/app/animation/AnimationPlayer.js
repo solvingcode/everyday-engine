@@ -4,6 +4,7 @@ import Vector from '../utils/Vector.js'
 import Component from '../component/Component.js'
 import ClientError from '../exception/type/ClientError.js'
 import ClassHelper from '../utils/ClassHelper.js'
+import MeshComponent from '../component/internal/MeshComponent.js'
 
 export default class AnimationPlayer {
 
@@ -33,6 +34,9 @@ export default class AnimationPlayer {
                         const componentInstance = targetUnit.findComponentByClass(componentClass)
                         const setter = ClassHelper.getSetter(componentInstance, property.getAttributeName())
                         componentInstance[setter](newValue)
+                        if(componentInstance instanceof MeshComponent){
+                            componentInstance.setGenerated(false)
+                        }
                     }
                 }
             } else {

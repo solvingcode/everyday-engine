@@ -8,10 +8,19 @@ export default class UnitDataIdGenerator extends DataIdGenerator{
      * @param {Unit[]} units
      */
     static generate(units){
+        const newUnitIds = []
+        const newComponentIds = []
         units.forEach(unit => {
-            unit.setId(Maths.generateId())
+            newUnitIds[unit.getId()] = Maths.generateId()
             unit.getComponents().forEach(component => {
-                component.setId(Maths.generateId())
+                newComponentIds[component.getId()] = Maths.generateId()
+            })
+        })
+        units.forEach(unit => {
+            unit.setId(newUnitIds[unit.getId()])
+            unit.setUnitParentId(newUnitIds[unit.getUnitParentId()])
+            unit.getComponents().forEach(component => {
+                component.setId(newComponentIds[component.getId()])
             })
         })
     }

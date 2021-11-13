@@ -4,11 +4,11 @@ import * as StorageConstant from '../../constant/StorageConstant.js'
 export default class AssetUnitXmlGenerator {
 
     /**
-     * @param {Unit} unit
+     * @param {Unit[]} units
      * @return {Promise<string>}
      */
-    static async generate(unit) {
-        return Storage.get().serialize(StorageConstant.type.UNITS, [unit], StorageConstant.format.XML)
+    static async generate(units) {
+        return Storage.get().serialize(StorageConstant.type.UNITS, units, StorageConstant.format.XML)
     }
 
 }

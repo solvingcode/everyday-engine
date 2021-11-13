@@ -371,7 +371,7 @@ export default class ClassCompiler extends Compiler {
                             ])
                         }
                     } else if (sourceElement instanceof ALoop) {
-                        if (node.isOrderConnection(input)) {
+                        if (node.isResultToBaseConnection(input)) {
                             const getValueFunction = new GetValueFunction()
                             sourceStackFunction.getStack().push(...[
                                 new StackOperation(OPERATIONS.CALL, functionName),
@@ -383,6 +383,10 @@ export default class ClassCompiler extends Compiler {
                                 new StackOperation(OPERATIONS.PUSH, 'name', 'ended'),
                                 new StackOperation(OPERATIONS.CALL, getValueFunction.getName()),
                                 new StackOperation(OPERATIONS.JUMP, CONSTANTS.RESULT, 'start_loop')
+                            ])
+                        } else if (node.isOrderConnection(input)) {
+                            sourceStackFunction.getStack().push(...[
+                                new StackOperation(OPERATIONS.CALL, functionName)
                             ])
                         }
                     } else if (sourceElement instanceof AThen) {

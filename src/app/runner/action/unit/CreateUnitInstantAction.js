@@ -17,10 +17,11 @@ export default class CreateUnitInstantAction extends Action {
      * @param {Unit[]} selectedUnits
      */
     static run(mouse, selectedUnits) {
-        const assetsManager = World.get().getAssetsManager()
+        const world = World.get()
+        const assetsManager = world.getAssetsManager()
         const selectedFolder = assetsManager.getSelectedFolder() || assetsManager.getRootFolder()
         selectedUnits.forEach(unit => {
-            AssetUnitXmlGenerator.generate(unit)
+            AssetUnitXmlGenerator.generate([unit, ...world.getUnitManager().findChildUnits(unit)])
                 .then(dataXml => assetsManager.createUnitInstant(selectedFolder, unit, dataXml, Storage.get()))
         })
         return true

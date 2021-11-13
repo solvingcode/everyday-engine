@@ -170,7 +170,6 @@ export default class TileEditorRunner extends Runner {
         const world = World.get()
         const camera = world.getCamera()
         const mouse = Window.get().mouse
-        const cellSize = new Size(TransformHelper.getSizeFromScale(cellScale))
         const selectedCellPosition = this.getSelectedCellPosition(cellScale, mouse.currentScenePosition)
         const stateManager = StateManager.get()
         if (!this.isEdit(stateManager) && !this.isDelete(stateManager) && !this.isEditArea(stateManager)) {
@@ -194,7 +193,7 @@ export default class TileEditorRunner extends Runner {
                 style.setBorderSize(camera.fromScaleNumber(2))
                 style.setColor('#ffffff')
                 this.selectedCell = world.createChildUnitInstant(RectUnitInstant, null,
-                    selectedCellPosition, cellSize, style)
+                    selectedCellPosition, cellScale, style)
 
                 const selectedAsset = world.getAssetsManager().getSelectedAsset()
                 if (selectedAsset && selectedAsset.getType() instanceof AssetImage) {

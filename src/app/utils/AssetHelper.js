@@ -259,6 +259,10 @@ export default class AssetHelper {
     static load(asset, data, storage) {
         if (this.isAssetImage(asset)) {
             return asset.getType().getData().fromImage(data)
+        } else if (this.isAssetUnit(asset)) {
+            return asset.getType().setDataUrl(data).then(() => true)
+        } else if(this.isAssetFont(asset)) {
+            return asset.getType().setDataUrl(`name=${asset.getName()}|url(${data})`).then(() => true)
         } else if (this.isParsedAsset(asset)) {
             const type = this.getStorageTypeFromAsset(asset)
             return asset.getType().setDataUrl(data)
@@ -272,7 +276,7 @@ export default class AssetHelper {
                     })
                 })
         } else {
-            throw new SystemError(`Cannot load asset: "${asset.getType().constructor.name} not supported`)
+            throw new SystemError(`Cannot load asset: "${asset.getType().constructor.name}" not supported`)
         }
     }
 
