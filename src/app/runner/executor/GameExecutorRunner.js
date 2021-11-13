@@ -26,8 +26,8 @@ export class GameExecutorRunner extends Runner {
         const camera = world.getCamera()
         const lights = world.getLightsNotGenerated()
         const storage = Storage.get()
-        units.forEach(unit => {
-            ExecutorRegistry.get().execute(unit, {camera, deltaTime, lights, storage})
+        units.forEach((unit, index) => {
+            ExecutorRegistry.get().execute(unit, {camera, deltaTime, lights, storage, unitIndex: index})
         })
     }
 

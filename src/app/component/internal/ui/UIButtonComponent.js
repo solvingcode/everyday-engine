@@ -31,6 +31,14 @@ export default class UIButtonComponent extends Component {
         this.add('hoverColorOpacity', TYPES.RANGE, 1, [0, 1, 0.01])
         this.add('pressedColor', TYPES.COLOR)
         this.add('pressedColorOpacity', TYPES.RANGE, 1, [0, 1, 0.01])
+        this.add('intractable', TYPES.BOOLEAN, false)
+    }
+
+    /**
+     * @override
+     */
+    getExcludeFields() {
+        return ['intractable']
     }
 
     /**
@@ -115,6 +123,20 @@ export default class UIButtonComponent extends Component {
      */
     setPressedColorOpacity(opacity) {
         this.setValue('pressedColorOpacity', opacity)
+    }
+
+    /**
+     * @return {boolean}
+     */
+    getIntractable() {
+        return this.getValue('intractable')
+    }
+
+    /**
+     * @param {boolean} intractable
+     */
+    setIntractable(intractable) {
+        this.setValue('intractable', intractable)
     }
 
 }

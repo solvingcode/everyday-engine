@@ -26,6 +26,7 @@ import ClassHelper from './ClassHelper.js'
 import LightComponent from '../component/internal/LightComponent.js'
 import UIContainerComponent from '../component/internal/ui/UIContainerComponent.js'
 import UIButtonUnitInstant from '../unit/instant/type/internal/ui/UIButtonUnitInstant.js'
+import UIButtonComponent from '../component/internal/ui/UIButtonComponent.js'
 
 export default class UnitHelper {
 
@@ -841,12 +842,9 @@ export default class UnitHelper {
      * @param {Unit} unit
      * @return {boolean}
      */
-    static isIntractableButton(world, unit){
-        if(unit instanceof UIButtonUnitInstant){
-            const uiContainer = this.getUIContainer(world, unit)
-            if (uiContainer) {
-                return uiContainer.getComponent(UIContainerComponent).getIntractable()
-            }
+    static isIntractableButton(world, unit) {
+        if (unit instanceof UIButtonUnitInstant) {
+            return unit.getComponent(UIButtonComponent).getIntractable()
         }
         return false
     }

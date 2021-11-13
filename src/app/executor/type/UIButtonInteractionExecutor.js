@@ -5,6 +5,7 @@ import World from '../../world/World.js'
 import Window from '../../core/Window.js'
 import UnitHelper from '../../utils/UnitHelper.js'
 import {MouseButton} from '../../core/Mouse.js'
+import UIContainerComponent from '../../component/internal/ui/UIContainerComponent.js'
 
 export default class UIButtonInteractionExecutor extends ComponentExecutor {
 
@@ -17,10 +18,18 @@ export default class UIButtonInteractionExecutor extends ComponentExecutor {
      */
     execute(unit, executionContext) {
         const world = World.get()
+        const {unitIndex} = executionContext
         const {mouse} = Window.get()
         const styleComponent = unit.getComponent(StyleComponent)
         const uiButtonComponent = unit.getComponent(UIButtonComponent)
-        if (UnitHelper.isIntractableButton(world, unit)) {
+        let containerIntractable = false
+        const uiContainer = UnitHelper.getUIContainer(world, unit)
+        if (uiContainer) {
+            containerIntractable = uiContainer.getComponent(UIContainerComponent).getIntractable()
+        }
+        if (containerIntractable) {
+            const uiContainerComponent = uiContainer.getComponent(UIContainerComponent)
+            const buttonIntractableIndex = uiContainerComponent.getButtonIntractableIndex()
             const style = styleComponent.getStyle()
             const isHoverUnit = UnitHelper.isInsideWindowPosition(world, unit, mouse.currentPosition)
             const isPressedUnit = UnitHelper.isInsideWindowPosition(world, unit, mouse.position)
@@ -42,6 +51,22 @@ export default class UIButtonInteractionExecutor extends ComponentExecutor {
                 style.setFillColor(fillColor)
                 style.setFillColorOpacity(fillColorOpacity)
             }
+
+            if (isHoverUnit) {
+                if (buttonIntractableIndex <= unitIndex) {
+                    uiContainerComponent.setButtonIntractableIndex(unitIndex)
+                    uiButtonComponent.setIntractable(true)
+                } else {
+                    uiButtonComponent.setIntractable(false)
+                }
+            } else {
+                if (buttonIntractableIndex === unitIndex) {
+                    uiContainerComponent.setButtonIntractableIndex(-1)
+                }
+                uiButtonComponent.setIntractable(false)
+            }
+        } else {
+            uiButtonComponent.setIntractable(false)
         }
     }
 

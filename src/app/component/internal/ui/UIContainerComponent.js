@@ -26,6 +26,14 @@ export default class UIContainerComponent extends Component {
      */
     initAttributes() {
         this.add('intractable', TYPES.BOOLEAN, true)
+        this.add('buttonIntractableIndex', TYPES.NUMBER, -1)
+    }
+
+    /**
+     * @override
+     */
+    getExcludeFields() {
+        return ['buttonIntractableIndex']
     }
 
     /**
@@ -40,6 +48,20 @@ export default class UIContainerComponent extends Component {
      */
     setIntractable(intractable) {
         this.setValue('intractable', intractable)
+    }
+
+    /**
+     * @return {number}
+     */
+    getButtonIntractableIndex() {
+        return this.getValue('buttonIntractableIndex')
+    }
+
+    /**
+     * @param {number} buttonIntractableIndex
+     */
+    setButtonIntractableIndex(buttonIntractableIndex) {
+        this.setValue('buttonIntractableIndex', buttonIntractableIndex)
     }
 
 }
