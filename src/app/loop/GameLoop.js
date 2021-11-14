@@ -11,7 +11,6 @@ import MeshStyleExecutor from '../executor/type/MeshStyleExecutor.js'
 import ScriptExecutor from '../executor/type/ScriptExecutor.js'
 import AnimationScriptExecutor from '../executor/type/AnimationScriptExecutor.js'
 import WorldInitializeRunner from '../runner/world/WorldInitializeRunner.js'
-import ColliderDebugRunner from '../runner/debug/ColliderDebugRunner.js'
 import CameraRunner from '../runner/camera/CameraRunner.js'
 import CameraExecutor from '../executor/type/CameraExecutor.js'
 import LightExecutor from '../executor/type/LightExecutor.js'
@@ -42,8 +41,7 @@ class GameLoop extends SceneLoop {
     constructor() {
         super()
         this.runners = [
-            WorldInitializeRunner, SceneRunner, ColliderDebugRunner,
-            CameraRunner, PhysicsRunner, GameExecutorRunner, LightRunner]
+            WorldInitializeRunner, SceneRunner, CameraRunner, PhysicsRunner, GameExecutorRunner, LightRunner]
         ExecutorRegistry.get().register([
             new CameraExecutor(),
             new AnimationPlayerExecutor(),

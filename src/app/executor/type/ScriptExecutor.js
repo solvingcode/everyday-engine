@@ -11,7 +11,6 @@ import OnInputJumpEvent from '../../flow/event/native/OnInputJumpEvent.js'
 import Window from '../../core/Window.js'
 import OnUpdateEvent from '../../flow/event/native/OnUpdateEvent.js'
 import OnInputAttackEvent from '../../flow/event/native/OnInputAttackEvent.js'
-import {MAIN_FUNCTION} from '../../flow/AScriptFunction.js'
 import OnButtonClickEvent from '../../flow/event/native/OnButtonClickEvent.js'
 import UnitHelper from '../../utils/UnitHelper.js'
 
@@ -32,8 +31,8 @@ export default class ScriptExecutor extends ComponentExecutor {
         unit.findComponentsByClass(ScriptComponent)
             .filter(scriptComponent => scriptComponent.isEnabled())
             .forEach(scriptComponent => {
-                const mainFunction = `${scriptComponent.getScript()}.${MAIN_FUNCTION}`
-                functionRegistry.getInstancesByClass(mainFunction).forEach(instance => {
+                const className = scriptComponent.getScript()
+                functionRegistry.getInstancesByClass(className).forEach(instance => {
                     if (
                         (mouse.isButtonClicked(MouseButton.LEFT) && instance instanceof OnMouseClickEvent) ||
 
