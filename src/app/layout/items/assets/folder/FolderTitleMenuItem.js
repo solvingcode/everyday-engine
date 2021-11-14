@@ -18,11 +18,17 @@ export default class FolderTitleMenuItem extends MenuItem {
         this.data = {folder}
     }
 
-    update() {
-        super.update()
+    /**
+     * @override
+     */
+    doUpdate() {
         const folderName = this.data.folder.getName()
         if(this.props.title !== folderName){
             this.props.title = folderName
+            return true
         }
+    }
+
+    doSetData(data) {
     }
 }

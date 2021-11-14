@@ -13,12 +13,15 @@ export default class ContentPopupMenuItem extends MenuItem {
         this.items = []
     }
 
-    update() {
+    /**
+     * @override
+     */
+    doUpdate() {
         const menu = PopupMenuManager.get().getMenu()
         if (this.items[0] !== menu) {
             this.items[0] = menu
+            return true
         }
-        super.update()
     }
 
     /**
@@ -26,5 +29,8 @@ export default class ContentPopupMenuItem extends MenuItem {
      */
     isValid() {
         return !!PopupMenuManager.get().getMenu()
+    }
+
+    doSetData(data) {
     }
 }

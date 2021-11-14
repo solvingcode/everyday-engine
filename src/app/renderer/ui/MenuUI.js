@@ -11,7 +11,10 @@ class MenuUI {
     static draw(menu, uiRenderer) {
         uiRenderer.clean()
         for (let iItem in menu.items) {
-            menu.items[iItem].draw(uiRenderer)
+            const menuItemUI = menu.items[iItem]
+            if(menuItemUI.element.isUpdated()){
+                menu.items[iItem].draw(uiRenderer)
+            }
         }
     }
 }

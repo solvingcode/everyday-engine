@@ -18,8 +18,7 @@ export default class LayerElementMenuItem extends ListSelectElementActionsMenuIt
     /**
      * @override
      */
-    setData(data) {
-        super.setData(data)
+    doSetData(data) {
         this.items = this.items.concat([
             new LayerListMenuItem(this, this.parent.props, data.bind)
         ])

@@ -17,8 +17,7 @@ export default class TabItemMenuItem extends ListElementMenuItem{
     /**
      * @override
      */
-    setData(data) {
-        super.setData(data)
+    doSetData(data) {
         if(!data.bind.isProtected()){
             this.items = [
                 new TabCloseItemMenuItem(this, data)
@@ -36,11 +35,11 @@ export default class TabItemMenuItem extends ListElementMenuItem{
     /**
      * @override
      */
-    update() {
-        super.update()
+    doUpdate() {
         const tabName = this.data.bind.getName()
         if(this.props.name !== tabName){
             this.props.name = tabName
+            return true
         }
     }
 

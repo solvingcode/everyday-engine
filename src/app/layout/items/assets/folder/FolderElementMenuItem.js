@@ -14,11 +14,11 @@ export default class FolderElementMenuItem extends ListElementMenuItem {
             type: Layout.type.LIST_ELEMENT
         })
     }
+
     /**
      * @override
      */
-    setData(data) {
-        super.setData(data)
+    doSetData(data) {
         this.items = [
             new FolderListMenuItem(this, this.parent.props, data.bind.getId())
         ]

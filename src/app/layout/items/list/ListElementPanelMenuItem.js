@@ -17,8 +17,7 @@ export default class ListElementPanelMenuItem extends PanelMenuItem {
     /**
      * @override
      */
-    setData(data){
-        this.data = data
+    doSetData(data){
         this.items = this.parent.getActions(this.data.bind)
     }
 

@@ -39,14 +39,6 @@ export default class AssetsListMenuItem extends ListMenuItem {
     /**
      * @override
      */
-    getList() {
-        const assetsManager = World.get().getAssetsManager()
-        return [].concat(assetsManager.getFolders()).concat(assetsManager.getAssets())
-    }
-
-    /**
-     * @override
-     */
     getActions(bindObject){
         return []
     }

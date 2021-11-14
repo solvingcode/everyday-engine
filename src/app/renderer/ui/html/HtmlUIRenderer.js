@@ -278,6 +278,7 @@ class HtmlUIRenderer extends UIRenderer {
         el.setAttribute('data-parent-index', item.parent ? item.parent.index : 0)
         el.setAttribute('data-name', element.props.name)
         el.setAttribute('data-zone', element.zone)
+        this.updateStyle(item, el)
         type.postCreate(item, el, this)
         this.setupTriggerClick(type, item, el)
     }
@@ -303,20 +304,28 @@ class HtmlUIRenderer extends UIRenderer {
     }
 
     /**
-     * What to do after update HTML Element
      * @param {MenuItemUI} item
      * @param {HTMLElement} el
      */
-    postUpdate(item, el) {
+    updateStyle(item, el){
         const style = this.getStyle(item)
         const className = this.getClassName(item)
-        const type = this.getType(item)
         if (el.style.cssText !== style) {
             el.style = style
         }
         if (el.className !== className) {
             el.className = className
         }
+    }
+
+    /**
+     * What to do after update HTML Element
+     * @param {MenuItemUI} item
+     * @param {HTMLElement} el
+     */
+    postUpdate(item, el) {
+        const type = this.getType(item)
+        this.updateStyle(item, el)
         type.postUpdate(item, el, this)
         this.setupTriggerClick(type, item, el)
     }

@@ -46,6 +46,9 @@ class MenuItem {
         this.parent = parent
         this.sectionActive = false
         this.items = []
+        this.updated = true
+        this.selected = false
+        this.validated = false
     }
 
     /**
@@ -53,7 +56,18 @@ class MenuItem {
      * @return {void}
      */
     setData(data) {
-        throw new TypeError('MenuItem.setData must be implemented')
+        this.data = data
+        this.doSetData(data)
+        this.setUpdated(true)
+    }
+
+    /**
+     * @abstract
+     * @param {{bind: Object, list?: *[]}} data
+     * @return {void}
+     */
+    doSetData(data) {
+        throw new TypeError('MenuItem.doSetData must be implemented')
     }
 
     /**
@@ -67,21 +81,35 @@ class MenuItem {
      * Define if the menu is selected
      * @return {boolean}
      */
-    isSelected() {
+    getSelected() {
         return this.stateCode && this.hasState(this.stateCode, this.id)
     }
 
     /**
      * @return {boolean}
      */
-    isSectionActive(){
+    isSelected() {
+        return this.selected
+    }
+
+    /**
+     * @param {boolean} selected
+     */
+    setSelected(selected) {
+        this.selected = selected
+    }
+
+    /**
+     * @return {boolean}
+     */
+    isSectionActive() {
         return this.sectionActive
     }
 
     /**
      * @param {boolean} active
      */
-    setSectionActive(active){
+    setSectionActive(active) {
         this.sectionActive = active
     }
 
@@ -89,77 +117,77 @@ class MenuItem {
      * @param {MenuItem} parent
      * @return {boolean}
      */
-    isChildOf(parent){
+    isChildOf(parent) {
         return this.parent === parent || (this.parent && this.parent.isChildOf(parent))
     }
 
     /**
      * @param {Window} window
      */
-    isHandle(window){
+    isHandle(window) {
         return window.mouse.isButtonClicked(MouseButton.LEFT)
     }
 
     /**
      * @return {boolean}
      */
-    isDraggable(){
+    isDraggable() {
         return this.draggable
     }
 
     /**
      * @return {boolean}
      */
-    isStartDragging(){
+    isStartDragging() {
         return this.startDragging
     }
 
     /**
      * @param {boolean} value
      */
-    setStartDragging(value){
+    setStartDragging(value) {
         this.startDragging = value
     }
 
     /**
      * @return {boolean}
      */
-    isEndDragging(){
+    isEndDragging() {
         return this.endDragging
     }
 
     /**
      * @param {boolean} value
      */
-    setEndDragging(value){
+    setEndDragging(value) {
         this.endDragging = value
     }
 
     /**
      * @return {boolean}
      */
-    isRightClick(){
+    isRightClick() {
         return false
     }
 
     /**
      * @return {boolean}
      */
-    isSection(){
+    isSection() {
         return false
     }
 
     /**
      * @return {string|null}
      */
-    getDragStateCode(){
+    getDragStateCode() {
         return this.dragStateCode
     }
 
     /**
      * @return {string|null}
      */
-    getDbClickStateCode(){
+    getDbClickStateCode() {
         return this.dbClickStateCode
     }
 
@@ -180,28 +208,42 @@ class MenuItem {
     /**
      * @return {boolean}
      */
-    isHidden(){
+    isHidden() {
         return false
     }
 
     /**
      * @return {boolean}
      */
-    isReadOnly(){
+    isUpdated() {
+        return this.updated
+    }
+
+    /**
+     * @param {boolean} updated
+     */
+    setUpdated(updated) {
+        this.updated = updated
+    }
+
+    /**
+     * @return {boolean}
+     */
+    isReadOnly() {
         return false
     }
 
     /**
      * @return {boolean}
      */
-    isLocked(){
+    isLocked() {
         return false
     }
 
     /**
      * @return {boolean}
      */
-    isEditing(){
+    isEditing() {
         return false
     }
 
@@ -210,6 +252,7 @@ class MenuItem {
      */
     setCollapsed(collapsed) {
         this.collapsed = collapsed
+        this.setUpdated(true)
     }
 
     /**
@@ -218,6 +261,7 @@ class MenuItem {
     run() {
         this.stateCode && this.startState()
         this.postStateCode && this.postState()
+        this.setUpdated(true)
     }
 
     /**
@@ -226,6 +270,7 @@ class MenuItem {
      */
     drag(data) {
         this.dragStateCode && this.dragState(data)
+        this.setUpdated(true)
     }
 
     /**
@@ -235,16 +280,53 @@ class MenuItem {
         this.dbClickStateCode && this.dblClickState()
     }
 
+    updateSelected() {
+        if (this.getSelected() !== this.isSelected()) {
+            this.setSelected(this.getSelected())
+            this.setUpdated(true)
+        }
+    }
+
+    /**
+     * @return {boolean}
+     */
+    isValidated() {
+        return this.validated
+    }
+
+    /**
+     * @param {boolean} validated
+     */
+    setValidated(validated) {
+        this.validated = validated
+    }
+
+    updateValidated() {
+        if (this.isValidated() !== this.isValid()) {
+            this.setValidated(this.isValid())
+            this.setUpdated(true)
+        }
+    }
+
     /**
      * @const
      * Update the items for the menu
      */
     update() {
-        this.items && this.items.forEach(item => item.isValid() && item.update())
-        this.doUpdate()
+        this.updateSelected()
+        this.updateValidated()
+        if (this.isValid()) {
+            this.items && this.items.forEach(item => item.update())
+            if (this.doUpdate()) {
+                this.setUpdated(true)
+            }
+        }
     }
 
-    doUpdate(){
+    /**
+     * @return {boolean}
+     */
+    doUpdate() {
     }
 
     /**
@@ -267,12 +349,13 @@ class MenuItem {
                 this.startState()
             }
         }
+        this.setUpdated(true)
     }
 
     /**
      * @return {boolean}
      */
-    isAction(){
+    isAction() {
         return this.stateManager.isActionState(this.stateCode)
     }
 
@@ -309,7 +392,7 @@ class MenuItem {
      * Stop an action by type (state)
      */
     stopState() {
-        if(this.stateCode){
+        if (this.stateCode) {
             this.stateManager.stopState(this.stateCode, this.id)
         }
     }
@@ -335,7 +418,7 @@ class MenuItem {
     /**
      * @return {boolean}
      */
-    isForm(){
+    isForm() {
         return false
     }
 

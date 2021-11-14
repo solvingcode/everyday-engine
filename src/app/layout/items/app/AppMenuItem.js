@@ -21,15 +21,16 @@ class AppMenuItem extends MenuItem {
     /**
      * @override
      */
-    update() {
-        this.updateFPS()
+    doUpdate() {
         this.text = [
             `FPS : ${this.fps}`,
         ]
+        return this.updateFPS()
     }
 
     /**
      * Update the FPS and show it in the title
+     * @return {boolean}
      */
     updateFPS() {
         const deltaTime = (Date.now() - this.startTimeFPS) / 1000
@@ -37,9 +38,11 @@ class AppMenuItem extends MenuItem {
             this.fps = Math.floor(this.nbFrame / deltaTime)
             this.nbFrame = 0
             this.startTimeFPS = Date.now()
+            return true
         } else {
             this.nbFrame++
         }
+        return false
     }
 
     /**
@@ -47,6 +50,9 @@ class AppMenuItem extends MenuItem {
      */
     isValid() {
         return true
+    }
+
+    doSetData(data) {
     }
 }
 

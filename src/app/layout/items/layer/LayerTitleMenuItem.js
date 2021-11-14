@@ -19,11 +19,17 @@ export default class LayerTitleMenuItem extends MenuItem {
         this.data = {object}
     }
 
-    update() {
-        super.update()
+    /**
+     * @override
+     */
+    doUpdate() {
         const objectName = this.data.object.getName()
         if(this.props.title !== objectName){
             this.props.title = objectName
+            return true
         }
+    }
+
+    doSetData(data) {
     }
 }

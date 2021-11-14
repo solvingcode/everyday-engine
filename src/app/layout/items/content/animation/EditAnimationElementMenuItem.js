@@ -16,8 +16,7 @@ export default class EditAnimationElementMenuItem extends ListSelectElementMenuI
     /**
      * @override
      */
-    setData(data) {
-        super.setData(data)
+    doSetData(data) {
         const timelines = data.list
         const timeline = data.bind
         const second = 0

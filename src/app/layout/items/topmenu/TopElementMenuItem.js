@@ -13,8 +13,7 @@ export default class TopElementMenuItem extends ListSelectElementActionsMenuItem
     /**
      * @override
      */
-    setData(data) {
-        super.setData(data)
+    doSetData(data) {
         this.items = [data.bind.menuItem]
     }
 

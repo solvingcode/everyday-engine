@@ -24,12 +24,12 @@ export default class EditAnimationDisplayMenuItem extends MenuItem {
     /**
      * @override
      */
-    update() {
-        super.update()
+    doUpdate() {
         const {animation} = this.data.bind
         if(animation.getFrameTime() !== this.time){
             this.updateDisplay()
             this.time = animation.getFrameTime()
+            return true
         }
     }
 
@@ -44,4 +44,6 @@ export default class EditAnimationDisplayMenuItem extends MenuItem {
         }
     }
 
+    doSetData(data) {
+    }
 }

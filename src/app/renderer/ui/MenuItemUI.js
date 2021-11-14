@@ -29,6 +29,7 @@ class MenuItemUI {
      */
     draw(uiRenderer) {
         uiRenderer.getType(this).draw(this, uiRenderer)
+        this.element.updated = false
     }
 
     /**

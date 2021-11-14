@@ -48,18 +48,26 @@ class ListMenuItem extends PanelMenuItem {
     /**
      * @override
      */
-    update() {
-        super.update()
+    doSetData(data) {
+    }
+
+    /**
+     * @override
+     */
+    doUpdate() {
         const list = this.getList()
+        let updated = false
         this.items = list.map((each, index) => {
             const element = this.items[index]
             const data = {bind: each, list}
             const listElementClass = this.getListElementFormClass()
             if (element && (element.data.bind !== each || !_.isEqual(element.data.list, list))) {
                 element.setData(data)
+                updated = true
             }
             return element || new listElementClass(this, data)
         })
+        return updated
     }
 }
 

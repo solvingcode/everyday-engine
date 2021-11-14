@@ -16,8 +16,7 @@ export default class AddScriptNodeInputElementMenuItem extends ListElementMenuIt
     /**
      * @override
      */
-    setData(data) {
-        super.setData(data)
+    doSetData(data) {
         const formData = new AddScriptNodeInputForm(data.bind)
         this.items = [
             new AddScriptNodeInputFormMenuItem(this, formData),

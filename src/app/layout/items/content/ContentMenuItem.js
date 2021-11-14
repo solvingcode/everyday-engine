@@ -30,19 +30,21 @@ export default class ContentMenuItem extends MenuItem {
     /**
      * @override
      */
-    update() {
-        super.update()
+    doUpdate() {
         const selectedTab = World.get().getTabManager().getSelected()
         const actualContentItem = this.items[0]
         if (selectedTab && (!actualContentItem || actualContentItem.data !== selectedTab.getContent())) {
             const contentTab = selectedTab.getContent()
+            let items = []
             if (contentTab) {
                 const contentItemType = this.getContentType(contentTab)
-                this.items = [
+                items = [
                     new contentItemType(this, contentTab)
                 ]
-            } else {
-                this.items = []
+            }
+            if (!_.isEqual(this.items, items)) {
+                this.items = items
+                return true
             }
         }
     }
@@ -66,4 +68,6 @@ export default class ContentMenuItem extends MenuItem {
         }
     }
 
+    doSetData(data) {
+    }
 }

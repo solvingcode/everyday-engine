@@ -15,20 +15,18 @@ export default class EditAnimationTimelineElementMenuItem extends ListSelectElem
             stateCode: ''
         })
         this.items = []
-        this.setData(data)
     }
 
     /**
      * @override
      */
-    setData(data) {
+    doSetData(data) {
         if(!_.isEqual(data.bind, this.data.bind) || !this.items.length){
             this.items = [
                 new TextMenuItem(this, data.bind.getName()),
                 new EditAnimationPropertyFrameListMenuItem(this, data.bind)
             ]
         }
-        super.setData(data)
     }
 
     /**

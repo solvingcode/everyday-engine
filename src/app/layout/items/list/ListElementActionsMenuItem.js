@@ -11,14 +11,12 @@ export default class ListElementActionsMenuItem extends ListElementMenuItem {
             ...props
         })
         this.parent = parent
-        this.setData(data)
     }
 
     /**
      * @override
      */
-    setData(data){
-        super.setData(data)
+    doSetData(data){
         this.items = this.parent.getActions(this.data.bind)
     }
 }

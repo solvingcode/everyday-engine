@@ -1,13 +1,9 @@
-import SelectorMenuItem from './items/edit/SelectorMenuItem.js'
-import ScaleMenuItem from './items/edit/ScaleMenuItem.js'
 import SimulateStartMenuItem from './items/action/SimulateStartMenuItem.js'
 import SimulateStopMenuItem from './items/action/SimulateStopMenuItem.js'
 import MenuItemUI from '../renderer/ui/MenuItemUI.js'
 import AppMenuItem from './items/app/AppMenuItem.js'
 import MainCameraMenuItem from './items/world/MainCameraMenuItem.js'
 import WorldMenuItem from './items/world/WorldMenuItem.js'
-import RotateMenuItem from './items/edit/RotateMenuItem.js'
-import MoveMenuItem from './items/edit/MoveMenuItem.js'
 import AssetsMenuItem from './items/assets/AssetsMenuItem.js'
 import TabListMenuItem from './items/tab/TabListMenuItem.js'
 import ContentMenuItem from './items/content/ContentMenuItem.js'
@@ -23,10 +19,8 @@ import StateManager from '../state/StateManager.js'
 import ContentPopupMenuItem from './items/content/ContentPopupMenuItem.js'
 import ContentCanvasMenuItem from './items/content/ContentCanvasMenuItem.js'
 import GameMenuItem from './items/game/GameMenuItem.js'
-import EditTileMenuItem from './items/edit/EditTileMenuItem.js'
-import DeleteTileMenuItem from './items/edit/DeleteTileMenuItem.js'
-import EditAreaTileMenuItem from './items/edit/EditAreaTileMenuItem.js'
 import EditAnimationWrapperMenuItem from './items/content/animation/EditAnimationWrapperMenuItem.js'
+import LeftSectionMenuItem from './items/section/LeftSectionMenuItem.js'
 
 /**
  * Define all menu items
@@ -43,13 +37,7 @@ class Menu {
             new ContentPopupMenuItem(),
 
             //LEFT
-            new SelectorMenuItem(),
-            new MoveMenuItem(),
-            new ScaleMenuItem(),
-            new RotateMenuItem(),
-            new EditTileMenuItem(),
-            new DeleteTileMenuItem(),
-            new EditAreaTileMenuItem(),
+            new LeftSectionMenuItem(),
 
             //TOP MENU
             new TopMenuItem(),

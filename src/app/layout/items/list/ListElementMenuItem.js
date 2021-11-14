@@ -17,8 +17,7 @@ export default class ListElementMenuItem extends MenuItem {
     /**
      * @override
      */
-    setData(data){
-        this.data = data
+    doSetData(data) {
     }
 
     /**
