@@ -16,6 +16,7 @@ class AppMenuItem extends MenuItem {
         this.startTimeFPS = Date.now()
         this.nbFrame = 0
         this.fps = 0
+        this.text = []
     }
 
     /**

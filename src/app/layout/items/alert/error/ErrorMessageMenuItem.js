@@ -10,6 +10,7 @@ export default class ErrorMessageMenuItem extends MenuItem {
             type: Layout.type.TEXT,
             zone: parent.zone
         })
+        this.text = []
     }
 
     /**
@@ -17,8 +18,11 @@ export default class ErrorMessageMenuItem extends MenuItem {
      */
     update() {
         const lastError = ExceptionHandler.get().getLastError()
-        if(!this.text || this.text[0] !== lastError.message){
+        if(lastError && (!this.text || this.text[0] !== lastError.message)){
             this.text = [lastError.message]
         }
+    }
+
+    doSetData(data) {
     }
 }

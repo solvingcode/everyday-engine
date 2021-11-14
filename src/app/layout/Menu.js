@@ -1,26 +1,32 @@
+import MenuItemUI from '../renderer/ui/MenuItemUI.js'
+import StateManager from '../state/StateManager.js'
+import ContentCanvasMenuItem from './items/content/ContentCanvasMenuItem.js'
+import ErrorPopupMenuItem from './items/alert/error/ErrorPopupMenuItem.js'
+import ConfirmPopupMenuItem from './items/alert/confirm/ConfirmPopupMenuItem.js'
+import OptionsPopupMenuItem from './items/option/OptionsPopupMenuItem.js'
+import ContentPopupMenuItem from './items/content/ContentPopupMenuItem.js'
+import SelectorMenuItem from './items/edit/SelectorMenuItem.js'
+import MoveMenuItem from './items/edit/MoveMenuItem.js'
+import ScaleMenuItem from './items/edit/ScaleMenuItem.js'
+import RotateMenuItem from './items/edit/RotateMenuItem.js'
+import EditTileMenuItem from './items/edit/EditTileMenuItem.js'
+import DeleteTileMenuItem from './items/edit/DeleteTileMenuItem.js'
+import EditAreaTileMenuItem from './items/edit/EditAreaTileMenuItem.js'
+import TopMenuItem from './items/topmenu/TopMenuItem.js'
 import SimulateStartMenuItem from './items/action/SimulateStartMenuItem.js'
 import SimulateStopMenuItem from './items/action/SimulateStopMenuItem.js'
-import MenuItemUI from '../renderer/ui/MenuItemUI.js'
-import AppMenuItem from './items/app/AppMenuItem.js'
-import MainCameraMenuItem from './items/world/MainCameraMenuItem.js'
-import WorldMenuItem from './items/world/WorldMenuItem.js'
-import AssetsMenuItem from './items/assets/AssetsMenuItem.js'
 import TabListMenuItem from './items/tab/TabListMenuItem.js'
 import ContentMenuItem from './items/content/ContentMenuItem.js'
-import AssetMenuItem from './items/assets/AssetMenuItem.js'
-import ScriptMenuItem from './items/script/ScriptMenuItem.js'
-import ErrorPopupMenuItem from './items/alert/error/ErrorPopupMenuItem.js'
+import EditAnimationWrapperMenuItem from './items/content/animation/EditAnimationWrapperMenuItem.js'
 import LayerMenuItem from './items/layer/LayerMenuItem.js'
 import SceneMenuItem from './items/scene/SceneMenuItem.js'
-import OptionsPopupMenuItem from './items/option/OptionsPopupMenuItem.js'
-import TopMenuItem from './items/topmenu/TopMenuItem.js'
-import ConfirmPopupMenuItem from './items/alert/confirm/ConfirmPopupMenuItem.js'
-import StateManager from '../state/StateManager.js'
-import ContentPopupMenuItem from './items/content/ContentPopupMenuItem.js'
-import ContentCanvasMenuItem from './items/content/ContentCanvasMenuItem.js'
+import WorldMenuItem from './items/world/WorldMenuItem.js'
+import AssetMenuItem from './items/assets/AssetMenuItem.js'
+import MainCameraMenuItem from './items/world/MainCameraMenuItem.js'
+import ScriptMenuItem from './items/script/ScriptMenuItem.js'
 import GameMenuItem from './items/game/GameMenuItem.js'
-import EditAnimationWrapperMenuItem from './items/content/animation/EditAnimationWrapperMenuItem.js'
-import LeftSectionMenuItem from './items/section/LeftSectionMenuItem.js'
+import AssetsMenuItem from './items/assets/AssetsMenuItem.js'
+import AppMenuItem from './items/app/AppMenuItem.js'
 
 /**
  * Define all menu items
@@ -37,7 +43,13 @@ class Menu {
             new ContentPopupMenuItem(),
 
             //LEFT
-            new LeftSectionMenuItem(),
+            new SelectorMenuItem(),
+            new MoveMenuItem(),
+            new ScaleMenuItem(),
+            new RotateMenuItem(),
+            new EditTileMenuItem(),
+            new DeleteTileMenuItem(),
+            new EditAreaTileMenuItem(),
 
             //TOP MENU
             new TopMenuItem(),
@@ -236,7 +248,7 @@ class Menu {
     }
 
     update() {
-        this.types.forEach(type => type.isValid() && type.update())
+        this.types.forEach(type => type.update())
         this.setup()
     }
 

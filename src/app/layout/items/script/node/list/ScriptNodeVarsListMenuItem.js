@@ -36,7 +36,7 @@ export default class ScriptNodeVarsListMenuItem extends ListMenuItem {
     getFormObject() {
         const world = World.get()
         const script = world.getScriptManager().getMainFunction(world.getTabManager())
-        return script.getNodes().filter(node => node instanceof VariableNode)
+        return script && script.getNodes().filter(node => node instanceof VariableNode)
     }
 
 }

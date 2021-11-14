@@ -24,7 +24,8 @@ export default class ListElementMenuItem extends MenuItem {
      * @override
      */
     isValid() {
-        return super.isValid() && this.parent.getFormObject().includes(this.getDataBind())
+        const parentFormObject = this.parent.getFormObject()
+        return super.isValid() && parentFormObject && parentFormObject.includes(this.getDataBind())
     }
 
     /**

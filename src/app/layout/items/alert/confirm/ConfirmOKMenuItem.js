@@ -20,18 +20,23 @@ export default class ConfirmOKMenuItem extends MenuItem {
     /**
      * @override
      */
-    update() {
+    doUpdate() {
         const stateManager = StateManager.get()
         const confirmStates = stateManager.getConfirmStates()
-        if (confirmStates) {
+        if (confirmStates && confirmStates.length) {
             const {state: nextState, data: confirmData} = stateManager.confirmState(confirmStates[0])
             if (this.stateCode !== nextState) {
                 this.stateCode = nextState
                 this.postStateCode = CloseConfirmPopupAction.STATE
+                return true
             }
             if (this.data !== confirmData) {
                 this.data = confirmData
+                return true
             }
         }
+    }
+
+    doSetData(data) {
     }
 }

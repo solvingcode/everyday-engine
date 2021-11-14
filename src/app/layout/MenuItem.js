@@ -302,8 +302,9 @@ class MenuItem {
     }
 
     updateValidated() {
-        if (this.isValidated() !== this.isValid()) {
-            this.setValidated(this.isValid())
+        const isValid = !!this.isValid()
+        if (this.isValidated() !== isValid) {
+            this.setValidated(isValid)
             this.setUpdated(true)
         }
     }
@@ -315,12 +316,12 @@ class MenuItem {
     update() {
         this.updateSelected()
         this.updateValidated()
-        if (this.isValid()) {
-            this.items && this.items.forEach(item => item.update())
+        if (this.isValidated()) {
             if (this.doUpdate()) {
                 this.setUpdated(true)
             }
         }
+        this.items && this.items.forEach(item => item.update())
     }
 
     /**
