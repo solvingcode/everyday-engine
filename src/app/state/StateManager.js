@@ -83,7 +83,7 @@ class StateManager {
      */
     isStart(type) {
         return this.appState.hasState(`${type}_START`)
-            && this.getNextStartData(type)
+            && !!this.getNextStartData(type)
     }
 
     /**
@@ -92,7 +92,7 @@ class StateManager {
      */
     isProgress(type) {
         return this.appState.hasState(`${type}_PROGRESS`)
-            && this.getNextProgressData(type)
+            && !!this.getNextProgressData(type)
     }
 
     /**
@@ -101,7 +101,7 @@ class StateManager {
      */
     isStop(type) {
         return this.appState.hasState(`${type}_STOP`)
-            && this.getNextStopData(type)
+            && !!this.getNextStopData(type)
     }
 
     /**

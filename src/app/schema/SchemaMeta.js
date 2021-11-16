@@ -265,6 +265,9 @@ export default {
                                     },
                                     parentClassName: {
                                         type: TYPES.STRING
+                                    },
+                                    scopeFunctionName: {
+                                        type: TYPES.STRING
                                     }
                                 }
                             }

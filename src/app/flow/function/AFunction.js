@@ -6,6 +6,16 @@ import SystemError from '../../exception/type/SystemError.js'
 export default class AFunction extends FunctionData{
 
     /**
+     * @param {boolean}
+     */
+    optimized
+
+    /**
+     * @param {boolean}
+     */
+    validated
+
+    /**
      * @param {string} name
      */
     constructor(name) {
@@ -21,11 +31,56 @@ export default class AFunction extends FunctionData{
     }
 
     /**
+     * @return {boolean}
+     */
+    isOptimized(){
+        return this.optimized
+    }
+
+    /**
+     * @param {boolean} optimized
+     */
+    setOptimized(optimized){
+        this.optimized = optimized
+    }
+
+    /**
+     * @return {boolean}
+     */
+    isValidated(){
+        return this.validated
+    }
+
+    /**
+     * @param {boolean} validated
+     */
+    setValidated(validated){
+        this.validated = validated
+    }
+
+    /**
      * @param {string} className
      * @return {boolean}
      */
     isMemberOfClass(className){
         return this.getClassName() === className
+    }
+
+    /**
+     * @param {string} className
+     * @return {boolean}
+     */
+    isMemberOfClassByRegex(className){
+        const regexName = new RegExp(`^${className}\\.`)
+        return !!this.getName().match(regexName) || this.getName() === className
+    }
+
+    /**
+     * @param {string} functionName
+     * @return {boolean}
+     */
+    isScopeOfFunction(functionName){
+        return this.getScopeFunctionName() === functionName
     }
 
     /**

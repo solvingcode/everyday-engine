@@ -82,6 +82,14 @@ export default class Registry extends RegistryData {
     }
 
     /**
+     * @param {*} instance
+     */
+    removeInstance(instance){
+        const index = this.findIndexInstance(instance)
+        this.registry.splice(index, 1)
+    }
+
+    /**
      * @return {*[]}
      */
     getInstances() {

@@ -17,7 +17,6 @@ import DynamicAttribute from '../src/app/pobject/DynamicAttribute.js'
 import LoopNode from '../src/app/flow/node/LoopNode.js'
 import FunctionInputNode from '../src/app/flow/node/FunctionInputNode.js'
 import EventNode from '../src/app/flow/node/EventNode.js'
-import OnCallEvent from '../src/app/flow/event/native/OnCallEvent.js'
 import ACustomFunction from '../src/app/flow/function/custom/ACustomFunction.js'
 import FunctionOutputNode from '../src/app/flow/node/FunctionOutputNode.js'
 import ScriptHelper from '../src/app/utils/ScriptHelper.js'
@@ -28,6 +27,7 @@ import SelfNode from '../src/app/flow/node/SelfNode.js'
 import ThenNode from '../src/app/flow/node/ThenNode.js'
 import GetVariableNode from '../src/app/flow/node/variable/GetVariableNode.js'
 import StringVariableNode from '../src/app/flow/node/variable/StringVariableNode.js'
+import OperationLogger from '../src/app/operation/logger/OperationLogger.js'
 
 test('Execute native function (without output)', function () {
     const log = new LogFunction()
@@ -247,7 +247,7 @@ test('Create and compile class script with loop', function () {
     nodeGetValue.attachResultOutput(nodeLoop, 'attributes')
     nodeGetValue.attachResultOutput(nodeAttributeName, 'name')
     nodeLog.attachResultOutput(nodeGetValue, 'value')
-    nodeLog.attachPrevNode(nodeLoop)
+    nodeLog.attachManagedOutput(nodeLoop)
 
     script.compile(world)
 
@@ -291,11 +291,8 @@ test('Create and compile class function (no return)', function () {
     script.compile(world)
 
     const functionCompiled = functionRegistry.getInstance('classScript.testFunction')
-    const callEventCompiled = functionRegistry.getInstance('classScript.testFunction.OnCall')
     expect(functionRegistry.getInstance('classScript')).toBe(undefined)
-    expect(callEventCompiled).toBeDefined()
     expect(functionCompiled).toBeDefined()
-    expect(callEventCompiled.constructor).toEqual(OnCallEvent)
     expect(functionCompiled.constructor).toEqual(ACustomFunction)
 
     const nodeInputUnit = ScriptHelper.createNodeByClass(functionRegistry, mainScriptFunction, SelfNode, '')
@@ -349,11 +346,8 @@ test('Create and compile class function (return value)', function () {
     script.compile(world)
 
     const functionCompiled = functionRegistry.getInstance('classScript.testFunction')
-    const callEventCompiled = functionRegistry.getInstance('classScript.testFunction.OnCall')
     expect(functionRegistry.getInstance('classScript')).toBe(undefined)
-    expect(callEventCompiled).toBeDefined()
     expect(functionCompiled).toBeDefined()
-    expect(callEventCompiled.constructor).toEqual(OnCallEvent)
     expect(functionCompiled.constructor).toEqual(ACustomFunction)
 
     const nodeInputUnit1 = ScriptHelper.createNodeByClass(functionRegistry, mainScriptFunction, ConstantNode, unit.getId())
@@ -414,11 +408,8 @@ test('Create and compile class function (with async calls)', async function () {
     script.compile(world)
 
     const functionCompiled = functionRegistry.getInstance('classScript.testFunction')
-    const callEventCompiled = functionRegistry.getInstance('classScript.testFunction.OnCall')
     expect(functionRegistry.getInstance('classScript')).toBe(undefined)
-    expect(callEventCompiled).toBeDefined()
     expect(functionCompiled).toBeDefined()
-    expect(callEventCompiled.constructor).toEqual(OnCallEvent)
     expect(functionCompiled.constructor).toEqual(ACustomFunction)
 
     const nodeInputUnit1 = ScriptHelper.createNodeByClass(functionRegistry, mainScriptFunction, ConstantNode, unit.getId())
@@ -448,7 +439,7 @@ test('Create and compile class function (with async calls)', async function () {
     expect(mouseEventCompiled.constructor).toEqual(OnMouseClickEvent)
 
     console.log = jest.fn()
-    mouseEventCompiled.execute(functionRegistry, null, scriptComponent, World.get(), {})
+    mouseEventCompiled. execute(functionRegistry, null, scriptComponent, World.get(), {})
     await new Promise((r) => setTimeout(r, 2000));
     expect(console.log).toHaveBeenCalledWith(20)
 })
@@ -497,17 +488,11 @@ test('Create and compile class function (with async calls inside custom function
     script.compile(world)
 
     const multiplyFunctionCompiled = functionRegistry.getInstance('classScript.multiplyCustomFunction')
-    const multiplyCallEventCompiled = functionRegistry.getInstance('classScript.multiplyCustomFunction.OnCall')
     const promiseFunctionCompiled = functionRegistry.getInstance('classScript.promiseCustomFunction')
-    const promiseCallEventCompiled = functionRegistry.getInstance('classScript.promiseCustomFunction.OnCall')
     expect(functionRegistry.getInstance('classScript')).toBe(undefined)
-    expect(multiplyCallEventCompiled).toBeDefined()
     expect(multiplyFunctionCompiled).toBeDefined()
-    expect(promiseCallEventCompiled).toBeDefined()
     expect(promiseFunctionCompiled).toBeDefined()
-    expect(multiplyCallEventCompiled.constructor).toEqual(OnCallEvent)
     expect(multiplyFunctionCompiled.constructor).toEqual(ACustomFunction)
-    expect(promiseCallEventCompiled.constructor).toEqual(OnCallEvent)
     expect(promiseFunctionCompiled.constructor).toEqual(ACustomFunction)
 
     const nodeInputUnit1 = ScriptHelper.createNodeByClass(functionRegistry, mainScriptFunction, ConstantNode, unit.getId())
@@ -537,6 +522,7 @@ test('Create and compile class function (with async calls inside custom function
     expect(mouseEventCompiled).toBeDefined()
     expect(mouseEventCompiled.constructor).toEqual(OnMouseClickEvent)
 
+    OperationLogger.logStack(multiplyFunctionCompiled.getStack())
     console.log = jest.fn()
     mouseEventCompiled.execute(functionRegistry, null, scriptComponent, World.get(), {})
     await new Promise((r) => setTimeout(r, 2000));

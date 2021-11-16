@@ -1,5 +1,4 @@
 import AScript from '../flow/AScript.js'
-import ScriptParser from '../parser/flow/ScriptParser.js'
 import ScriptManagerData from '../project/data/ScriptManagerData.js'
 import SystemError from '../exception/type/SystemError.js'
 import ClientError from '../exception/type/ClientError.js'
@@ -71,30 +70,6 @@ export default class ScriptManager extends ScriptManagerData {
         } else {
             this.scripts.push(script)
         }
-    }
-
-    /**
-     * @param {Document|string} data
-     * @return {AScript}
-     */
-    load(data) {
-        const script = ScriptParser.parse(data)
-        if (script) {
-            this.add(script)
-            return script
-        }
-        return null
-    }
-
-    /**
-     * @param {Document} data
-     * @param {string} oldName
-     * @param {string} newName
-     */
-    rename(data, oldName, newName) {
-        ScriptParser.rename(data, newName)
-        const script = this.findByName(oldName)
-        script.setName(newName)
     }
 
     /**

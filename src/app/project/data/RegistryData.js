@@ -9,6 +9,7 @@ export default class RegistryData extends Data{
 
     /**
      * @protected
+     * @type {*[]}
      */
     registry
 

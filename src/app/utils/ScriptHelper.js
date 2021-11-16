@@ -31,7 +31,6 @@ import FunctionInputNode from '../flow/node/FunctionInputNode.js'
 import FunctionOutputNode from '../flow/node/FunctionOutputNode.js'
 import SceneVariableNode from '../flow/node/variable/SceneVariableNode.js'
 import UnitVariableNode from '../flow/node/variable/UnitVariableNode.js'
-import NodeScriptXmlParser from '../parser/flow/class/node/NodeScriptXmlParser.js'
 import Maths from './Maths.js'
 import ImageVariableNode from '../flow/node/variable/ImageVariableNode.js'
 import UnitInstantVariableNode from '../flow/node/variable/UnitInstantVariableNode.js'
@@ -469,22 +468,6 @@ export default class ScriptHelper {
             throw new ClientError(`ClassScriptXmlParser Error: Node ${nodeTargetId} not found`)
         }
         nodeTarget.attach(nodeSource, nodeConnection, output)
-    }
-
-    /**
-     * @param {ChildNode|Element} cXmlNode
-     * @param {AScriptFunction} functionScript
-     */
-    static addXmlNode(cXmlNode, functionScript) {
-        const element = cXmlNode.nodeName
-        if (element === 'node') {
-            const node = NodeScriptXmlParser.parse(cXmlNode)
-            const nodeId = parseInt(cXmlNode.getAttribute('id'))
-            functionScript.addNode(node)
-            functionScript.updateNodeId(node, nodeId)
-        } else if (element === 'edge') {
-            this.attachNodeXml(functionScript, cXmlNode)
-        }
     }
 
     /**

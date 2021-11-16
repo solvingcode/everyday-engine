@@ -36,6 +36,7 @@ import Maths from '../../utils/Maths.js'
 import AGetVariable from '../variable/AGetVariable.js'
 import VariableNode from '../node/variable/VariableNode.js'
 import ToggleVariableNode from '../node/variable/ToggleVariableNode.js'
+import OnCallEvent from '../event/native/OnCallEvent.js'
 
 export default class ClassCompiler extends Compiler {
 
@@ -83,6 +84,8 @@ export default class ClassCompiler extends Compiler {
                     throw new ClientError(`Class Compiler Error: function ${node.getSourceName()} not a registered function nor stack function`)
                 }
                 const stackFunction = ScriptHelper.createStackFunction(script, scriptFunction, node, world)
+                stackFunction.setScopeFunctionName(scriptFunction.getName())
+                stackFunction.setClassName(script.getName())
                 if (element.getOutput()) {
                     stackFunction.addOutput(element.getOutput().getAttrType())
                 }
@@ -105,7 +108,6 @@ export default class ClassCompiler extends Compiler {
                 if (sourceNode) {
                     const sourceElement = NodeHelper.getSourceNode(sourceNode, world)
                     const sourceElementName = ScriptHelper.generateFunctionName(script, scriptFunction, sourceNode, world)
-                    const sourceStackFunction = functionRegistry.getInstance(sourceElementName)
                     if (sourceElement instanceof AEvent) {
                         //Nothing to do
                     } else if (sourceElement instanceof AGetVariable) {
@@ -162,11 +164,11 @@ export default class ClassCompiler extends Compiler {
                             const targetInput = NodeHelper.validateTargetInput(node, input, world)
                             if (element instanceof ACustomFunction) {
                                 stackFunction.getStack().push(...[
-                                    new StackOperation(OPERATIONS.PUSH, `[MEM]${element.getName()}.${targetInput.getAttrName()}`, `[MEM]${sourceStackFunction.getName()}.promise.then`)
+                                    new StackOperation(OPERATIONS.PUSH, `[MEM]${element.getName()}.${targetInput.getAttrName()}`, `[MEM]${functionName}.promise.then`)
                                 ])
                             } else {
                                 stackFunction.getStack().push(...[
-                                    new StackOperation(OPERATIONS.PUSH, targetInput.getAttrName(), `[MEM]${sourceStackFunction.getName()}.promise.then`)
+                                    new StackOperation(OPERATIONS.PUSH, targetInput.getAttrName(), `[MEM]${functionName}.promise.then`)
                                 ])
                             }
                         }
@@ -175,7 +177,7 @@ export default class ClassCompiler extends Compiler {
                         const targetInput = element.findInputByName(targetName)
                         if (targetInput) {
                             const attribute = NodeHelper.getAttributeFromNodeFunctionInput(sourceNode, world)
-                            const jumpTo = `set_input_${attribute.getAttrName()}${Maths.generateId()}`
+                            const jumpTo = `set_input_${functionName}_${attribute.getAttrName()}${Maths.generateId()}`
                             const parentClassNames = ScriptHelper.getParentClassNames(world, script).reverse()
                             if (parentClassNames.length > 0) {
                                 const isFunctionDefinedFunction = new IsFunctionDefinedFunction()
@@ -275,7 +277,7 @@ export default class ClassCompiler extends Compiler {
                             ])
                         } else if (element instanceof AThen) {
                             stackFunction.getStack().push(...[
-                                new StackOperation(OPERATIONS.PUSH, `${functionName}.promise`, CONSTANTS.RESULT)
+                                new StackOperation(OPERATIONS.PUSH, `promise`, CONSTANTS.RESULT)
                             ])
                         } else if (element instanceof ACustomFunction) {
                             const callFunction = new CallFunction()
@@ -428,7 +430,53 @@ export default class ClassCompiler extends Compiler {
 
         })
 
+        this.optimize(script, world)
+
         return true
+    }
+
+    /**
+     * @param {AScript} script
+     * @param {World} world
+     */
+    optimize(script, world) {
+        const functionRegistry = world.getFunctionRegistry()
+        const classInstances = functionRegistry.getInstancesByClass(script.getName())
+        const functionsToOptimize = [].concat(classInstances.filter(instance => instance instanceof AEvent))
+            .concat(classInstances.filter(instance => instance instanceof ACustomFunction))
+        functionsToOptimize.forEach(event => {
+            event.setStack(this.getOptimizedStack(event, world))
+        })
+        classInstances.filter(instance => (instance.isOptimized() || !instance.isValidated()) &&
+            !(instance instanceof ACustomFunction))
+            .forEach(instance => functionRegistry.removeInstance(instance))
+    }
+
+    /**
+     * @param {AFunction} aFunction
+     * @param {World} world
+     * @return {StackOperation[]}
+     */
+    getOptimizedStack(aFunction, world) {
+        const functionRegistry = world.getFunctionRegistry()
+        aFunction.setValidated(true)
+        return aFunction.getStack().reduce((optimizeStack, stackOperation) => {
+            const operation = stackOperation.getOperation()
+            const args = stackOperation.getArgs()
+            if (operation === OPERATIONS.CALL || operation === OPERATIONS.THEN) {
+                const calledFunctionName = args && args[0]
+                const stackFunction = functionRegistry.getInstance(calledFunctionName)
+                if(operation === OPERATIONS.CALL && ((stackFunction instanceof AStackFunction &&
+                    !(stackFunction instanceof ACustomFunction))
+                || stackFunction instanceof OnCallEvent)){
+                    stackFunction.setOptimized(true)
+                    return [...optimizeStack, ...this.getOptimizedStack(stackFunction, world)]
+                }else if(operation === OPERATIONS.THEN){
+                    stackFunction.setValidated(true)
+                }
+            }
+            return [...optimizeStack, stackOperation]
+        }, [])
     }
 
 }

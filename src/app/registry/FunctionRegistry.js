@@ -313,9 +313,20 @@ export default class FunctionRegistry extends Registry{
 
     /**
      * @param {string} className
+     * @param {string} scopeFunctionName
+     * @return {AFunction[]}
+     */
+    getInstancesByScope(className, scopeFunctionName) {
+        return this.getInstances().filter(instance => instance.isMemberOfClass(className) &&
+            instance.isScopeOfFunction(scopeFunctionName))
+    }
+
+    /**
+     * @param {string} className
      */
     removeInstancesByClass(className){
-        _.remove(this.getInstances(), (instance) => instance.isMemberOfClass(className))
+        _.remove(this.getInstances(), (instance) => instance.isMemberOfClass(className) ||
+            instance.isMemberOfClassByRegex(className))
     }
 
     /**

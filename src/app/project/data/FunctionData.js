@@ -35,6 +35,10 @@ export default class FunctionData extends Data {
      * @type {string}
      */
     parentClassName
+    /**
+     * @type {string}
+     */
+    scopeFunctionName
 
     /**
      * @param {string} name
@@ -117,6 +121,20 @@ export default class FunctionData extends Data {
      */
     getParentClassName() {
         return this.parentClassName
+    }
+
+    /**
+     * @param {string} scopeFunctionName
+     */
+    setScopeFunctionName(scopeFunctionName) {
+        this.scopeFunctionName = scopeFunctionName
+    }
+
+    /**
+     * @return {string}
+     */
+    getScopeFunctionName() {
+        return this.scopeFunctionName
     }
 
     /**

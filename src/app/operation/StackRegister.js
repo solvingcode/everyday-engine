@@ -73,7 +73,7 @@ export default class StackRegister {
      */
     has(functionName, name){
         const attrName = this.getScopeName(functionName, name)
-        return this.register[attrName] !== null || this.register.hasOwnProperty(attrName)
+        return this.register.hasOwnProperty(attrName)
     }
 
     /**

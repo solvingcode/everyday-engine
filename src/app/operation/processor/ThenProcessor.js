@@ -23,9 +23,9 @@ export default class ThenProcessor {
         if (!aFunction) {
             throw new ClientError(`Function "${calledFunctionName}" not founded in the registry`)
         }
-        const promise = stackRegister.pop(functionName, `${functionName}.promise`)
+        const promise = stackRegister.pop(functionName, `promise`)
         promise.then(result => {
-            stackRegister.pushMem(functionName, 'promise.then', result)
+            stackRegister.pushMem(calledFunctionName, 'promise.then', result)
             aFunction.execute(functionRegistry, unit, scriptComponent, world, executionContext)
             stackRegister.pushRet(functionName, aFunction.getOutputValue())
         })

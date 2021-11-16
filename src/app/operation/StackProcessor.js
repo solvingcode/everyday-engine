@@ -88,10 +88,13 @@ export default class StackProcessor {
 
             const jumpTo = this.stackRegister.popJump(functionName)
             if (jumpTo) {
-                const nextJumpToIndex = stack.findIndex((vStack) =>
+                const findJump = (vStack) =>
                     vStack.getOperation() === OPERATIONS.JUMP_TO &&
                     vStack.getArgs()[0] === jumpTo
-                )
+                if(stack.filter(findJump).length > 1){
+                    throw new ClientError(`Multiple "JUMP TO" operation found for "${jumpTo}"`)
+                }
+                const nextJumpToIndex = stack.findIndex(findJump)
                 if (nextJumpToIndex >= 0) {
                     iStackOperation = nextJumpToIndex
                 } else {
