@@ -10,7 +10,7 @@ import ToggleVariableNode from '../../node/variable/ToggleVariableNode.js'
 export default class GetVariableTypeCompiler extends FunctionTypeCompiler {
 
     stepOne(contextCompiler) {
-        const {script, node, input, sourceElement, element, stackFunction, sourceNode} = contextCompiler
+        const {script, node, input, sourceElement, element, stackFunction, sourceNode, functionName} = contextCompiler
         const targetName = input.getTargetName()
         NodeHelper.validateResultToInputConnection(node, input)
         const variableExists = script.getMainFunction().findNodeByNameClass(sourceElement.getName(), VariableNode)
@@ -28,7 +28,8 @@ export default class GetVariableTypeCompiler extends FunctionTypeCompiler {
             ])
         } else {
             stackFunction.getStack().push(...[
-                new StackOperation(OPERATIONS.PUSH, targetInput.getAttrName(), CONSTANTS.RESULT)
+                new StackOperation(OPERATIONS.PUSH,
+                    this.getScopedAttributedName(functionName, targetInput.getAttrName()), CONSTANTS.RESULT)
             ])
         }
         if (variableExists instanceof ToggleVariableNode) {

@@ -7,7 +7,7 @@ import {CONSTANTS} from '../../../operation/StackRegister.js'
 export default class SelfTypeCompiler extends FunctionTypeCompiler {
 
     stepOne(contextCompiler) {
-        const {node, input, element, stackFunction} = contextCompiler
+        const {node, input, element, stackFunction, functionName} = contextCompiler
         const targetName = input.getTargetName()
         NodeHelper.validateResultToInputConnection(node, input)
         const targetInput = element.findInputByName(targetName)
@@ -21,7 +21,8 @@ export default class SelfTypeCompiler extends FunctionTypeCompiler {
             ])
         } else {
             stackFunction.getStack().push(...[
-                new StackOperation(OPERATIONS.PUSH, targetInput.getAttrName(), CONSTANTS.RESULT)
+                new StackOperation(OPERATIONS.PUSH, this.getScopedAttributedName(functionName, targetInput.getAttrName())
+                    , CONSTANTS.RESULT)
             ])
         }
     }

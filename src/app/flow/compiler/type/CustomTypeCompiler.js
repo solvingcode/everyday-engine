@@ -8,7 +8,7 @@ import CallFunction from '../../function/native/basic/CallFunction.js'
 export default class CustomTypeCompiler extends FunctionTypeCompiler {
 
     stepOne(contextCompiler) {
-        const {node, input, stackFunction, world, element, sourceElement, sourceElementName} = contextCompiler
+        const {node, input, stackFunction, world, element, sourceElement, sourceElementName, functionName} = contextCompiler
         if (node.isResultToInputConnection(input)) {
             const targetInput = NodeHelper.validateTargetInput(node, input, world)
             stackFunction.getStack().push(...[
@@ -21,7 +21,7 @@ export default class CustomTypeCompiler extends FunctionTypeCompiler {
                 ])
             } else {
                 stackFunction.getStack().push(...[
-                    new StackOperation(OPERATIONS.PUSH, targetInput.getAttrName(),
+                    new StackOperation(OPERATIONS.PUSH, this.getScopedAttributedName(functionName, targetInput.getAttrName()),
                         `[MEM]${sourceElement.getName()}.${CONSTANTS.RESULT}`)
                 ])
             }

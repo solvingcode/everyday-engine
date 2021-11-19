@@ -33,12 +33,14 @@ export default class ScriptEdgeMenuItem extends ListMenuItem{
     getFormObject() {
         const world = World.get()
         const script = world.getScriptManager().getFunctionSelected(World.get().getTabManager())
-        const selectedGraphUnits = ScriptGraphSelector.get().getSelected(world)
-        return selectedGraphUnits.reduce((list, graphUnit) => {
-            const nodeId = graphUnit.getComponent(NodeComponent).getNodeId()
-            const node = script.findNodeById(nodeId)
-            return list.concat(node.getInputs())
-        }, []).filter(input => input)
+        if(script){
+            const selectedGraphUnits = ScriptGraphSelector.get().getSelected(world)
+            return selectedGraphUnits.reduce((list, graphUnit) => {
+                const nodeId = graphUnit.getComponent(NodeComponent).getNodeId()
+                const node = script.findNodeById(nodeId)
+                return list.concat(node.getInputs())
+            }, []).filter(input => input)
+        }
     }
 
     /**

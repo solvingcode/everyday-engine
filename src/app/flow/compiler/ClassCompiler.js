@@ -76,6 +76,17 @@ export default class ClassCompiler extends Compiler {
             const nodes = scriptFunction.getNodes()
             const scriptFunctionName = `${script.getName()}.${scriptFunction.getName()}`
 
+            //complete compiling function
+            nodes.forEach((node) => {
+                const element = NodeHelper.getSourceNode(node, world)
+                const functionName = ScriptHelper.generateFunctionName(script, scriptFunction, node, world)
+                const stackFunction = functionRegistry.getInstance(functionName)
+                functionCompiler.run(element, new ContextCompiler(script, node, null, null,
+                    element, stackFunction, null, world, scriptFunction, scriptFunctionName, null,
+                    null, functionName),
+                    STEPS.ZERO)
+            })
+
             //compile associations
             scriptFunction.getInputs().forEach(input => {
                 const node = scriptFunction.findNodeById(input.getNodeId())

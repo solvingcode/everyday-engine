@@ -11,6 +11,7 @@ import ClientError from '../exception/type/ClientError.js'
 import SelfProcessor from './processor/SelfProcessor.js'
 import SetProcessor from './processor/SetProcessor.js'
 import ThenProcessor from './processor/ThenProcessor.js'
+import RegexHelper from '../utils/RegexHelper.js'
 
 export default class StackProcessor {
 
@@ -88,10 +89,13 @@ export default class StackProcessor {
 
             const jumpTo = this.stackRegister.popJump(functionName)
             if (jumpTo) {
-                const findJump = (vStack) =>
+                const canPickNextJump = this.isNextJump(jumpTo)
+                const findJump = (vStack, iStack) =>
                     vStack.getOperation() === OPERATIONS.JUMP_TO &&
-                    vStack.getArgs()[0] === jumpTo
-                if(stack.filter(findJump).length > 1){
+                    vStack.getArgs()[0] === jumpTo && (
+                        !canPickNextJump || iStack > iStackOperation
+                    )
+                if(stack.filter(findJump).length > 1 && !canPickNextJump){
                     throw new ClientError(`Multiple "JUMP TO" operation found for "${jumpTo}"`)
                 }
                 const nextJumpToIndex = stack.findIndex(findJump)
@@ -105,6 +109,13 @@ export default class StackProcessor {
             iStackOperation++
         }
         return this.stackRegister
+    }
+
+    /**
+     * @param {string} jumpTo
+     */
+    isNextJump(jumpTo){
+        return !!jumpTo.match(RegexHelper.NEXT_JUMP)
     }
 
     /**

@@ -17,7 +17,8 @@ export default class ThenTypeCompiler extends FunctionTypeCompiler {
                 ])
             } else {
                 stackFunction.getStack().push(...[
-                    new StackOperation(OPERATIONS.PUSH, targetInput.getAttrName(), `[MEM]${functionName}.promise.then`)
+                    new StackOperation(OPERATIONS.PUSH, this.getScopedAttributedName(functionName, targetInput.getAttrName())
+                        , `[MEM]${functionName}.promise.then`)
                 ])
             }
         }

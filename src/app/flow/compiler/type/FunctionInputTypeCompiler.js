@@ -17,7 +17,7 @@ export default class FunctionInputTypeCompiler extends FunctionTypeCompiler {
         const targetInput = element.findInputByName(targetName)
         if (targetInput) {
             const attribute = NodeHelper.getAttributeFromNodeFunctionInput(sourceNode, world)
-            const jumpTo = `set_input_${functionName}_${attribute.getAttrName()}${Maths.generateId()}`
+            const jumpTo = `[NEXT]set_input_${functionName}_${attribute.getAttrName()}${Maths.generateId()}`
             const parentClassNames = ScriptHelper.getParentClassNames(world, script).reverse()
             if (parentClassNames.length > 0) {
                 const isFunctionDefinedFunction = new IsFunctionDefinedFunction()
@@ -43,7 +43,7 @@ export default class FunctionInputTypeCompiler extends FunctionTypeCompiler {
             } else {
                 stackFunction.getStack().push(...[
                     new StackOperation(OPERATIONS.JUMP_TO, jumpTo),
-                    new StackOperation(OPERATIONS.PUSH, targetInput.getAttrName(),
+                    new StackOperation(OPERATIONS.PUSH, this.getScopedAttributedName(functionName, targetInput.getAttrName()),
                         `[MEM]${scriptFunctionName}.${attribute.getAttrName()}`)
                 ])
             }

@@ -11,10 +11,25 @@ import AReference from '../../reference/AReference.js'
 export default class FunctionTypeCompiler {
 
     /**
+     * @param {string} functionName
+     * @param {string} inputName
+     * @return {string}
+     */
+    getScopedAttributedName(functionName, inputName){
+        return `${functionName}.${inputName}`
+    }
+
+    /**
+     * @param {ContextCompiler} contextCompiler
+     */
+    stepZero(contextCompiler){
+    }
+
+    /**
      * @param {ContextCompiler} contextCompiler
      */
     stepOne(contextCompiler){
-        const {node, input, stackFunction, element, sourceElementName} = contextCompiler
+        const {node, input, stackFunction, element, sourceElementName, functionName} = contextCompiler
         const targetName = input.getTargetName()
         const targetInput = element.findInputByName(targetName)
         if (targetInput) {
@@ -29,7 +44,8 @@ export default class FunctionTypeCompiler {
                 ])
             } else if (!(element instanceof AReference)) {
                 stackFunction.getStack().push(...[
-                    new StackOperation(OPERATIONS.PUSH, targetInput.getAttrName(), CONSTANTS.RESULT)
+                    new StackOperation(OPERATIONS.PUSH,
+                        this.getScopedAttributedName(functionName, targetInput.getAttrName()), CONSTANTS.RESULT)
                 ])
             }
         }
@@ -39,10 +55,10 @@ export default class FunctionTypeCompiler {
      * @param {ContextCompiler} contextCompiler
      */
     stepTwo(contextCompiler){
-        const {element, stackFunction, world} = contextCompiler
+        const {element, stackFunction, world, functionName} = contextCompiler
         const functionRegistry = world.getFunctionRegistry()
         if(functionRegistry.getInstance(element.getName())){
-            stackFunction.getStack().push(new StackOperation(OPERATIONS.CALL, element.getName()))
+            stackFunction.getStack().push(new StackOperation(OPERATIONS.CALL, element.getName(), functionName))
         }else if (element instanceof AStackFunction) {
             stackFunction.getStack().push(...element.getStack())
         }

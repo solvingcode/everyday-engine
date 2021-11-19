@@ -20,6 +20,7 @@ export default class CallProcessor {
         if (!calledFunctionName) {
             throw new ClientError(`Stack operation invalid (Function not provided)`)
         }
+        const scopeFunction = args[1]
         const calledFunction = functionRegistry.getInstance(calledFunctionName)
         if (!calledFunction) {
             throw new ClientError(`Function "${calledFunctionName}" not founded in the registry`)
@@ -27,11 +28,12 @@ export default class CallProcessor {
         const inputs = calledFunction.getInputs()
         inputs.forEach(input => {
             const inputName = input.getAttrName()
+            const inputScopeName = `${scopeFunction ? `${scopeFunction}.` : ''}${inputName}`
             const inputType = input.getAttrType()
-            if (!stackRegister.has(functionName, inputName)) {
-                throw new ClientError(`Function "${calledFunctionName}": Input name ${inputName} not provided`)
+            if (!stackRegister.has(functionName, inputScopeName)) {
+                throw new ClientError(`Function "${calledFunctionName}": Input name ${inputScopeName} not provided`)
             }
-            const value = stackRegister.pop(functionName, inputName)
+            const value = stackRegister.pop(functionName, inputScopeName)
             let inputValue = DynamicAttributeHelper.getValueByType(value, inputType, world, unit, scriptComponent)
             calledFunction.setInputValue(inputName, inputValue)
         })

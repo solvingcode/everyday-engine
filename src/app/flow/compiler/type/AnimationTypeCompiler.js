@@ -13,18 +13,18 @@ import ACondition from '../../condition/ACondition.js'
 export default class AnimationTypeCompiler extends FunctionTypeCompiler {
 
     stepTwo(contextCompiler) {
-        const {node, stackFunction, element, scriptFunction} = contextCompiler
+        const {node, stackFunction, element, scriptFunction, functionName} = contextCompiler
         const onAnyAnimation = new OnAnyAnimationStartEvent()
         const isAnimationPlaying = new IsAnimationPlayingFunction()
         const startAnimation = new StartAnimationFunction()
         const not = new NotFunction()
         stackFunction.getStack().push(...[
-            new StackOperation(OPERATIONS.PUSH, isAnimationPlaying.getInputs()[0].getAttrName(), element.getName()),
+            new StackOperation(OPERATIONS.PUSH, this.getScopedAttributedName(functionName, 'target'), element.getName()),
             new StackOperation(OPERATIONS.CALL, isAnimationPlaying.getName()),
-            new StackOperation(OPERATIONS.PUSH, not.getInputs()[0].getAttrName(), CONSTANTS.RESULT),
+            new StackOperation(OPERATIONS.PUSH, this.getScopedAttributedName(functionName, 'value'), CONSTANTS.RESULT),
             new StackOperation(OPERATIONS.CALL, not.getName()),
             new StackOperation(OPERATIONS.JUMP, CONSTANTS.RESULT, 'start_animation'),
-            new StackOperation(OPERATIONS.PUSH, startAnimation.getInputs()[0].getAttrName(), element.getName()),
+            new StackOperation(OPERATIONS.PUSH, this.getScopedAttributedName(functionName, 'target'), element.getName()),
             new StackOperation(OPERATIONS.CALL, startAnimation.getName()),
             new StackOperation(OPERATIONS.JUMP_TO, 'start_animation')
         ])

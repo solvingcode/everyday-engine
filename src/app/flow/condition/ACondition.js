@@ -1,10 +1,11 @@
-import AStackFunction from '../function/AStackFunction.js'
+import AFunction from '../function/AFunction.js'
 
-export default class ACondition extends AStackFunction{
-
-    createStack() {
-    }
+/**
+ * @abstract
+ */
+export default class ACondition extends AFunction{
 
     initAttributes() {
     }
+
 }

@@ -34,6 +34,9 @@ export default class FunctionCompiler {
     run(aFunction, contextCompiler, step) {
         const typeCompiler = this.getFunctionTypeCompiler(aFunction).get()
         switch (step) {
+            case STEPS.ZERO:
+                typeCompiler.stepZero(contextCompiler)
+                break
             case STEPS.ONE:
                 typeCompiler.stepOne(contextCompiler)
                 break
@@ -101,6 +104,7 @@ export default class FunctionCompiler {
 }
 
 export const STEPS = {
+    ZERO: 'zero',
     ONE: 'one',
     TWO: 'two',
     THREE: 'three',

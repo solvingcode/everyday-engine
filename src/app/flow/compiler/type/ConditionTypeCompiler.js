@@ -9,9 +9,12 @@ import StopAnimationFunction from '../../function/native/animation/StopAnimation
 export default class ConditionTypeCompiler extends FunctionTypeCompiler {
 
     stepTwo(contextCompiler) {
-        const {stackFunction} = contextCompiler
+        const {stackFunction, element} = contextCompiler
         const functionName = stackFunction.getName()
-        stackFunction.getStack().push(new StackOperation(OPERATIONS.JUMP, CONSTANTS.RESULT, `end_condition_${functionName}`))
+        stackFunction.getStack().push(...[
+            new StackOperation(OPERATIONS.CALL, element.getName(), functionName),
+            new StackOperation(OPERATIONS.JUMP, CONSTANTS.RESULT, `[NEXT]end_condition_${functionName}`)
+        ])
     }
 
     stepFour(contextCompiler) {
@@ -27,7 +30,7 @@ export default class ConditionTypeCompiler extends FunctionTypeCompiler {
             }
             sourceStackFunction.getStack().push(...[
                 new StackOperation(OPERATIONS.CALL, functionName),
-                new StackOperation(OPERATIONS.JUMP_TO, `end_condition_${sourceStackFunction.getName()}`)
+                new StackOperation(OPERATIONS.JUMP_TO, `[NEXT]end_condition_${sourceStackFunction.getName()}`)
             ])
         }
     }

@@ -111,6 +111,7 @@ test('Create and compile class flow', function () {
     expect(mouseEventCompiled).toBeDefined()
     expect(mouseEventCompiled.constructor).toEqual(OnMouseClickEvent)
 
+    OperationLogger.logStack(mouseEventCompiled.getStack())
     console.log = jest.fn()
     mouseEventCompiled.execute(functionRegistry, null, null, World.get(), {})
     expect(console.log).toHaveBeenCalledWith(50)
@@ -217,6 +218,7 @@ test('Create and compile class script with variables', function () {
     expect(mouseEventCompiled).toBeDefined()
     expect(mouseEventCompiled.constructor).toEqual(OnMouseClickEvent)
 
+    OperationLogger.logStack(mouseEventCompiled.getStack())
     console.log = jest.fn()
     mouseEventCompiled.execute(functionRegistry, null, scriptComponent, World.get(), {})
     expect(console.log).toHaveBeenCalledWith('test')
@@ -256,6 +258,7 @@ test('Create and compile class script with loop', function () {
     expect(mouseEventCompiled).toBeDefined()
     expect(mouseEventCompiled.constructor).toEqual(OnMouseClickEvent)
 
+    OperationLogger.logStack(mouseEventCompiled.getStack())
     console.log = jest.fn()
     mouseEventCompiled.execute(functionRegistry, null, scriptComponent, World.get(), {})
     expect(console.log).toHaveBeenCalledWith(10)
@@ -309,6 +312,7 @@ test('Create and compile class function (no return)', function () {
     expect(mouseEventCompiled).toBeDefined()
     expect(mouseEventCompiled.constructor).toEqual(OnMouseClickEvent)
 
+    OperationLogger.logStack(mouseEventCompiled.getStack())
     console.log = jest.fn()
     mouseEventCompiled.execute(functionRegistry, unitCaller, scriptComponent, World.get(), {})
     expect(console.log).toHaveBeenCalledWith('testMessage')
