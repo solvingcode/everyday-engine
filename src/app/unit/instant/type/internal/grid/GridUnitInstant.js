@@ -3,7 +3,6 @@ import {PrimitiveShape} from '../../../../Unit.js'
 import MeshUnitInstant from '../../../MeshUnitInstant.js'
 import TransformComponent from '../../../../../component/internal/TransformComponent.js'
 import MeshComponent from '../../../../../component/internal/MeshComponent.js'
-import GUIPropertyComponent from '../../../../../component/internal/gui/property/GUIPropertyComponent.js'
 import GUIPendingComponent from '../../../../../component/internal/gui/GUIPendingComponent.js'
 import Vector from '../../../../../utils/Vector.js'
 import Style from '../../../../../pobject/Style.js'
@@ -38,8 +37,6 @@ export default class GridUnitInstant extends MeshUnitInstant {
      * @override
      */
     setup() {
-        this.getComponent(GUIPropertyComponent).setRank(60)
-        this.getComponent(GUIPropertyComponent).setSelectable(false)
     }
 
 }

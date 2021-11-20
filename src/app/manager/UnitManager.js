@@ -317,20 +317,20 @@ export default class UnitManager extends UnitManagerData {
     addUnit(unit) {
         CommonUtil.setupName(unit, unit.getName(),
             (name) => unit.setName(name), (name) => this.findUnitByName(name))
-
-        const rank = unit.getComponent(GUIPropertyComponent).getRank()
-        const indexBiggerRank = this.units.findIndex(pUnit => pUnit.getComponent(GUIPropertyComponent).getRank() > rank)
-        if (indexBiggerRank >= 0) {
-            this.units.splice(indexBiggerRank, 0, unit)
-        } else {
-            this.units.push(unit)
-        }
+        this.units.push(unit)
     }
 
     sortUnits() {
-        this.units.sort((unitA, unitB) =>
-            unitA.getComponent(GUIPropertyComponent).getRank() > unitB.getComponent(GUIPropertyComponent).getRank()
-        )
+        this.units.sort((unitA, unitB) => {
+            const rankA = unitA.getComponent(GUIPropertyComponent).getRank()
+            const rankB = unitB.getComponent(GUIPropertyComponent).getRank()
+            if (rankA < rankB) {
+                return -1
+            } else if (rankA > rankB) {
+                return 1
+            }
+            return 0
+        })
     }
 
     /**
@@ -499,6 +499,24 @@ export default class UnitManager extends UnitManagerData {
     }
 
     /**
+     * @return {Unit[]}
+     */
+    getNotDestroyable() {
+        return this.getUnits().filter(unit => !this.isDestroyable(unit))
+    }
+
+    /**
+     * @param {Unit} unit
+     * @return {boolean}
+     */
+    isDestroyable(unit) {
+        if (unit) {
+            return !unit.getDontDestroy() && this.isDestroyable(this.findParentUnit(unit))
+        }
+        return true
+    }
+
+    /**
      * @param {Unit} unit
      */
     setupName(unit) {
@@ -532,7 +550,7 @@ export default class UnitManager extends UnitManagerData {
      * @param {Unit} unit
      * @return {AScript}
      */
-    getUnitAnimationController(world, unit){
+    getUnitAnimationController(world, unit) {
         const animationComponent = unit.getComponent(AnimationComponent)
         if (animationComponent) {
             const animationScriptName = animationComponent.getScript()

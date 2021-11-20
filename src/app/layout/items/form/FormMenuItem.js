@@ -23,8 +23,13 @@ import DynamicAttributeHelper from '../../../utils/DynamicAttributeHelper.js'
  */
 class FormMenuItem extends MenuItem {
 
-    constructor(props, parent) {
-        super(props, parent)
+    /**
+     * @param {*} props
+     * @param {MenuItem} parent
+     * @param {*} data
+     */
+    constructor(props, parent, data = {}) {
+        super(props, parent, data)
         this.init()
     }
 

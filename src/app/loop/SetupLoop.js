@@ -34,6 +34,7 @@ import TileMapExecutor from '../executor/type/TileMapExecutor.js'
 import TileColliderExecutor from '../executor/type/TileColliderExecutor.js'
 import AssetRunner from '../runner/asset/AssetRunner.js'
 import AnimationEditorExecutor from '../executor/type/AnimationEditorExecutor.js'
+import LayerExecutor from '../executor/type/LayerExecutor.js'
 
 /**
  * @class {SetupLoop}
@@ -72,6 +73,7 @@ class SetupLoop extends Loop {
             new UIButtonStyleExecutor(),
             new TileColliderExecutor(),
             new TileMapExecutor(),
+            new LayerExecutor(),
         ])
     }
 

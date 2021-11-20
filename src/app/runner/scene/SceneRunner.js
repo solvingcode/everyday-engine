@@ -26,7 +26,7 @@ export default class SceneRunner extends Runner {
         loadingScenes.forEach(scene => sceneManager.load(world, scene))
 
         if(unLoadingScenes.length || loadingScenes.length){
-            world.regenerateAll()
+            world.forceReload()
             physicsManager.clear()
         }
     }

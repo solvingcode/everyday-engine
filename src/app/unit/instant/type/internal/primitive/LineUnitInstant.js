@@ -3,7 +3,6 @@ import TransformComponent from '../../../../../component/internal/TransformCompo
 import MeshComponent from '../../../../../component/internal/MeshComponent.js'
 import GUIPendingComponent from '../../../../../component/internal/gui/GUIPendingComponent.js'
 import Style from '../../../../../pobject/Style.js'
-import GUIPropertyComponent from '../../../../../component/internal/gui/property/GUIPropertyComponent.js'
 import {PrimitiveShape} from '../../../../Unit.js'
 import StyleComponent from '../../../../../component/internal/StyleComponent.js'
 
@@ -31,7 +30,6 @@ export default class LineUnitInstant extends MeshUnitInstant {
      * @override
      */
     setup() {
-        this.getComponent(GUIPropertyComponent).setRank(60)
     }
 
 }

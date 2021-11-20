@@ -16,8 +16,14 @@ export default class TileGridUnitInstant extends UnitBehaviorInstant {
      * @override
      */
     setup() {
-        this.getComponent(GUIPropertyComponent).setRank(60)
         this.getComponent(GUIPropertyComponent).setSelectable(false)
+    }
+
+    /**
+     * @override
+     */
+    getRank(world) {
+        return 100060
     }
 
 }

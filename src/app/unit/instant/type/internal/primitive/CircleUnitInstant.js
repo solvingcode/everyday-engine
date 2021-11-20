@@ -3,7 +3,6 @@ import TransformComponent from '../../../../../component/internal/TransformCompo
 import MeshComponent from '../../../../../component/internal/MeshComponent.js'
 import GUIPendingComponent from '../../../../../component/internal/gui/GUIPendingComponent.js'
 import Style from '../../../../../pobject/Style.js'
-import GUIPropertyComponent from '../../../../../component/internal/gui/property/GUIPropertyComponent.js'
 import {PrimitiveShape} from '../../../../Unit.js'
 import TransformHelper from '../../../../../utils/TransformHelper.js'
 
@@ -28,7 +27,6 @@ export default class CircleUnitInstant extends MeshUnitInstant {
      * @override
      */
     setup() {
-        this.getComponent(GUIPropertyComponent).setRank(60)
     }
 
 }

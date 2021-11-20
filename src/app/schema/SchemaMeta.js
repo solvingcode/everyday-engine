@@ -35,6 +35,8 @@ import ANode from '../flow/node/ANode.js'
 import NodeInput from '../pobject/NodeInput.js'
 import ClassScript from '../flow/ClassScript.js'
 import FunctionScript from '../flow/FunctionScript.js'
+import LayerGroupPreference from '../preference/layerGroup/LayerGroupPreference.js'
+import LayerGroup from '../preference/layerGroup/LayerGroup.js'
 
 /**
  * Define the schema of project data.
@@ -373,7 +375,13 @@ export default {
                                                             enabled: {
                                                                 type: TYPES.BOOLEAN
                                                             },
+                                                            dontDestroy: {
+                                                                type: TYPES.BOOLEAN
+                                                            },
                                                             maskGroupId: {
+                                                                type: TYPES.NUMBER
+                                                            },
+                                                            layerId: {
                                                                 type: TYPES.NUMBER
                                                             },
                                                             tagId: {
@@ -477,6 +485,36 @@ export default {
                                                 type: TYPES.NUMBER
                                             },
                                             id: {
+                                                type: TYPES.NUMBER
+                                            },
+                                            name: {
+                                                type: TYPES.STRING
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    layerGroup: {
+                        type: LayerGroupPreference,
+                        meta: {
+                            dataId: {
+                                type: TYPES.NUMBER
+                            },
+                            layers: {
+                                type: Array,
+                                meta: {
+                                    element: {
+                                        type: LayerGroup,
+                                        meta: {
+                                            dataId: {
+                                                type: TYPES.NUMBER
+                                            },
+                                            id: {
+                                                type: TYPES.NUMBER
+                                            },
+                                            rank: {
                                                 type: TYPES.NUMBER
                                             },
                                             name: {

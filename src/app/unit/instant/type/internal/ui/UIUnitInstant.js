@@ -1,4 +1,3 @@
-import GUIPropertyComponent from '../../../../../component/internal/gui/property/GUIPropertyComponent.js'
 import UIElementComponent from '../../../../../component/internal/ui/UIElementComponent.js'
 import MeshUnitInstant from '../../../MeshUnitInstant.js'
 import UITransformComponent from '../../../../../component/internal/ui/UITransformComponent.js'
@@ -17,7 +16,13 @@ export default class UIUnitInstant extends MeshUnitInstant {
      * @override
      */
     setup() {
-        this.getComponent(GUIPropertyComponent).setRank(60)
+    }
+
+    /**
+     * @override
+     */
+    getRank(world) {
+        return 100060
     }
 
 }

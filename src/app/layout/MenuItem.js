@@ -16,7 +16,7 @@ import {MouseButton} from '../core/Mouse.js'
  * @property {callback} event The event bound to the field
  */
 class MenuItem {
-    constructor(props, parent) {
+    constructor(props, parent, data = {}) {
         this.props = props
         if (props.stateCode === undefined) {
             throw new TypeError('State code for MenuItem is required!')
@@ -30,7 +30,7 @@ class MenuItem {
         this.stateManager = StateManager.get()
         this.zone = props.zone
         this.type = props.type
-        this.data = {}
+        this.data = data
         this.menu = null
         this.id = props.id || Maths.generateId()
         this.index = props.index || Maths.generateId()
@@ -62,12 +62,10 @@ class MenuItem {
     }
 
     /**
-     * @abstract
      * @param {{bind: Object, list?: *[]}} data
      * @return {void}
      */
     doSetData(data) {
-        throw new TypeError('MenuItem.doSetData must be implemented')
     }
 
     /**

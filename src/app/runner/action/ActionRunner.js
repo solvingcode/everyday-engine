@@ -128,6 +128,8 @@ import CloseWindowAction from './window/CloseWindowAction.js'
 import StartAnimationRecordingAction from './animation/StartAnimationRecordingAction.js'
 import StopAnimationRecordingAction from './animation/StopAnimationRecordingAction.js'
 import SelectAnimationKeyFrameAction from './animation/SelectAnimationKeyFrameAction.js'
+import AddCrudAction from './crud/AddCrudAction.js'
+import DeleteCrudAction from './crud/DeleteCrudAction.js'
 
 /**
  * Action Runner class.
@@ -194,6 +196,7 @@ class ActionRunner extends Runner {
             ADD_ASSET: AddAssetAction,
             ADD_FOLDER: AddFolderAction,
             ADD_MASK: AddMaskAction,
+            ADD_CRUD: AddCrudAction,
             ADD_TAG: AddTagAction,
             ADD_GAME_INPUT: AddGameInputAction,
             ADD_ASSET_SCENE: AddAssetSceneAction,
@@ -221,6 +224,7 @@ class ActionRunner extends Runner {
             SELECT_LAYER_ELEMENT: SelectLayerAction,
             DELETE_FOLDER: DeleteFolderAction,
             DELETE_MASK: DeleteMaskAction,
+            DELETE_CRUD: DeleteCrudAction,
             DELETE_TAG: DeleteTagAction,
             DELETE_GAME_INPUT: DeleteGameInputAction,
             DELETE_ASSET: DeleteAssetAction,

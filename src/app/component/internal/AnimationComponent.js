@@ -23,7 +23,6 @@ export default class AnimationComponent extends ScriptComponent {
         this.add('animation', TYPES.NUMBER)
         this.add('time', TYPES.NUMBER)
         this.add('loopTimes', TYPES.NUMBER)
-        this.add('started', TYPES.BOOLEAN)
     }
 
     /**
@@ -45,27 +44,6 @@ export default class AnimationComponent extends ScriptComponent {
      */
     setAnimation(animation) {
         this.setValue('animation', parseInt(animation))
-    }
-
-    /**
-     * @return {number}
-     */
-    getStarted() {
-        return this.getValue('started')
-    }
-
-    /**
-     * @return {number}
-     */
-    isStarted(){
-        return this.getStarted()
-    }
-
-    /**
-     * @param {boolean} started
-     */
-    setStarted(started) {
-        this.setValue('started', started)
     }
 
     /**

@@ -21,6 +21,10 @@ export default class UnitData extends Data {
     /**
      * @type {number}
      */
+    layerId
+    /**
+     * @type {number}
+     */
     tagId
     /**
      * @type {number|null}
@@ -38,6 +42,10 @@ export default class UnitData extends Data {
      * @type {number}
      */
     assetId
+    /**
+     * @type {boolean}
+     */
+    dontDestroy
 
     constructor(name) {
         super()
@@ -46,6 +54,7 @@ export default class UnitData extends Data {
         this.components = []
         this.unitParentId = null
         this.enabled = true
+        this.dontDestroy = false
     }
 
     /**
@@ -74,6 +83,20 @@ export default class UnitData extends Data {
      */
     getMaskGroupId() {
         return this.maskGroupId
+    }
+
+    /**
+     * @param {number} layerId
+     */
+    setLayerId(layerId) {
+        this.layerId = layerId
+    }
+
+    /**
+     * @return {number|string}
+     */
+    getLayerId() {
+        return this.layerId
     }
 
     /**
@@ -144,6 +167,20 @@ export default class UnitData extends Data {
      */
     getEnabled(){
         return this.enabled
+    }
+
+    /**
+     * @param {boolean} dontDestroy
+     */
+    setDontDestroy(dontDestroy){
+        this.dontDestroy = dontDestroy
+    }
+
+    /**
+     * @return {boolean}
+     */
+    getDontDestroy(){
+        return this.dontDestroy
     }
 
     /**

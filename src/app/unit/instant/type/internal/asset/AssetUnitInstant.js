@@ -1,7 +1,6 @@
 import MeshUnitInstant from '../../../MeshUnitInstant.js'
 import TransformComponent from '../../../../../component/internal/TransformComponent.js'
 import MeshComponent from '../../../../../component/internal/MeshComponent.js'
-import GUIPropertyComponent from '../../../../../component/internal/gui/property/GUIPropertyComponent.js'
 import TransformHelper from '../../../../../utils/TransformHelper.js'
 
 export default class AssetUnitInstant extends MeshUnitInstant {
@@ -27,6 +26,5 @@ export default class AssetUnitInstant extends MeshUnitInstant {
      * @override
      */
     setup() {
-        this.getComponent(GUIPropertyComponent).setRank(20)
     }
 }

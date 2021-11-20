@@ -35,7 +35,7 @@ class Data {
      * @param {Function} criteria
      * @param {Function} exclude
      */
-    concat(target, source, criteria, exclude) {
+    concat(target, source, criteria, exclude = null) {
         if (target && source) {
             source.forEach((sItem) => {
                 const existIndex = target.findIndex(tItem => criteria(tItem, sItem))

@@ -57,6 +57,9 @@ import VariableNode from '../flow/node/variable/VariableNode.js'
 import DeleteScriptNodeMenuItem from '../layout/items/script/node/delete/DeleteScriptNodeMenuItem.js'
 import AScriptFunction from '../flow/AScriptFunction.js'
 import DeleteFunctionMenuItem from '../layout/items/script/function/delete/DeleteFunctionMenuItem.js'
+import LayerGroup from '../preference/layerGroup/LayerGroup.js'
+import EditCrudPopupButtonMenuItem from '../layout/items/crud/edit/EditCrudPopupButtonMenuItem.js'
+import DeleteCrudMenuItem from '../layout/items/crud/delete/DeleteCrudMenuItem.js'
 
 export default class OptionHelper {
 
@@ -116,6 +119,12 @@ export default class OptionHelper {
             options.push(...[
                 new EditMaskPopupButtonMenuItem(bindObject),
                 new DeleteMaskMenuItem(null, bindObject),
+            ])
+        }
+        if(bindObject instanceof LayerGroup){
+            options.push(...[
+                new EditCrudPopupButtonMenuItem(bindObject),
+                new DeleteCrudMenuItem(null, bindObject),
             ])
         }
         if(bindObject instanceof GameInput){

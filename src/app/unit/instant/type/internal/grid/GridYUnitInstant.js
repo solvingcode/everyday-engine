@@ -6,7 +6,6 @@ import {PrimitiveShape} from '../../../../Unit.js'
 import TransformComponent from '../../../../../component/internal/TransformComponent.js'
 import Style from '../../../../../pobject/Style.js'
 import GUIGridYComponent from '../../../../../component/internal/gui/grid/GUIGridYComponent.js'
-import GUIPropertyComponent from '../../../../../component/internal/gui/property/GUIPropertyComponent.js'
 import TransformHelper from '../../../../../utils/TransformHelper.js'
 
 export default class GridYUnitInstant extends MeshUnitInstant {
@@ -34,7 +33,6 @@ export default class GridYUnitInstant extends MeshUnitInstant {
      * @override
      */
     setup() {
-        this.getComponent(GUIPropertyComponent).setRank(100)
     }
 
 }

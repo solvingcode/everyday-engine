@@ -13,6 +13,11 @@ export default class PreferenceData extends Data{
     maskGroup
 
     /**
+     * @type {LayerGroupPreference}
+     */
+    layerGroup
+
+    /**
      * @type {TagPreference}
      */
     tag
@@ -43,6 +48,20 @@ export default class PreferenceData extends Data{
      */
     getMaskGroup(){
         return this.maskGroup
+    }
+
+    /**
+     * @param {LayerGroupPreference} layerGroup
+     */
+    setLayerGroup(layerGroup){
+        this.layerGroup = layerGroup
+    }
+
+    /**
+     * @return {LayerGroupPreference}
+     */
+    getLayerGroup(){
+        return this.layerGroup
     }
 
     /**

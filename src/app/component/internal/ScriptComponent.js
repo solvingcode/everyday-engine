@@ -37,6 +37,7 @@ export default class ScriptComponent extends Component {
      */
     initAttributes() {
         this.add('script', TYPES.STRING)
+        this.add('started', TYPES.BOOLEAN)
     }
 
     /**
@@ -51,6 +52,27 @@ export default class ScriptComponent extends Component {
      */
     setScript(script) {
         this.setValue('script', script)
+    }
+
+    /**
+     * @return {number}
+     */
+    getStarted() {
+        return this.getValue('started')
+    }
+
+    /**
+     * @return {number}
+     */
+    isStarted(){
+        return this.getStarted()
+    }
+
+    /**
+     * @param {boolean} started
+     */
+    setStarted(started) {
+        this.setValue('started', started)
     }
 
     /**

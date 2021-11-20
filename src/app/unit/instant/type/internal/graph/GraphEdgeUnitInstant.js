@@ -1,7 +1,6 @@
 import MeshUnitInstant from '../../../MeshUnitInstant.js'
 import TransformComponent from '../../../../../component/internal/TransformComponent.js'
 import MeshComponent from '../../../../../component/internal/MeshComponent.js'
-import GUIPropertyComponent from '../../../../../component/internal/gui/property/GUIPropertyComponent.js'
 import {PrimitiveShape} from '../../../../Unit.js'
 import NodeInputComponent from '../../../../../component/internal/gui/node/NodeInputComponent.js'
 import Style from '../../../../../pobject/Style.js'
@@ -74,7 +73,13 @@ export default class GraphEdgeUnitInstant extends MeshUnitInstant {
      * @override
      */
     setup() {
-        this.getComponent(GUIPropertyComponent).setRank(60)
+    }
+
+    /**
+     * @override
+     */
+    getRank(world) {
+        return 100060
     }
 
 }

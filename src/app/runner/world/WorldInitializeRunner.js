@@ -16,8 +16,10 @@ export default class WorldInitializeRunner extends Runner {
      */
     execute() {
         const world = World.get()
-        if(!world.isInitialized()){
+        if (!world.isInitialized()) {
             world.doInit(Storage.get())
+        } else if (!world.isReloaded()) {
+            world.reloadAllUnit()
         }
     }
 

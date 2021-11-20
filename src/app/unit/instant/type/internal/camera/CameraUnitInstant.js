@@ -1,7 +1,6 @@
 import MeshUnitInstant from '../../../MeshUnitInstant.js'
 import MeshComponent from '../../../../../component/internal/MeshComponent.js'
 import TransformComponent from '../../../../../component/internal/TransformComponent.js'
-import GUIPropertyComponent from '../../../../../component/internal/gui/property/GUIPropertyComponent.js'
 import Style from '../../../../../pobject/Style.js'
 import {PrimitiveShape} from '../../../../Unit.js'
 import CameraComponent from '../../../../../component/internal/CameraComponent.js'
@@ -34,7 +33,13 @@ export default class CameraUnitInstant extends MeshUnitInstant {
      * @override
      */
     setup() {
-        this.getComponent(GUIPropertyComponent).setRank(40)
+    }
+
+    /**
+     * @override
+     */
+    getRank(world) {
+        return 100040
     }
 
 }

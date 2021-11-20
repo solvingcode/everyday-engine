@@ -82,6 +82,7 @@ class World extends WorldData {
         this.resolution = new Size({width: SCENE_WIDTH, height: SCENE_HEIGHT})
         this.gridUnitId = null
         this.showGrid = false
+        this.reloaded = true
         this.init()
     }
 
@@ -126,6 +127,13 @@ class World extends WorldData {
      */
     isInitialized() {
         return this.initialized
+    }
+
+    /**
+     * @return {boolean}
+     */
+    isReloaded(){
+        return this.reloaded
     }
 
     /**
@@ -213,6 +221,18 @@ class World extends WorldData {
     }
 
     /**
+     * @param {Unit} unit
+     * @return {number}
+     */
+    getRankUnit(unit){
+        const layerGroup = this.getPreference().getLayerGroup().find(parseInt(unit.getLayerId()))
+        if(layerGroup){
+            return layerGroup.getRank()
+        }
+        return 0
+    }
+
+    /**
      * @param {Vector} position
      * @return {Unit}
      */
@@ -266,7 +286,8 @@ class World extends WorldData {
 
     unloadAllScene() {
         this.getSceneManager().unloadAll()
-        this.getUnitManager().units = []
+        const unitManager = this.getUnitManager()
+        unitManager.setUnits(unitManager.getNotDestroyable())
     }
 
     /**
@@ -277,9 +298,14 @@ class World extends WorldData {
         this.reloadAllUnit()
     }
 
+    forceReload(){
+        this.reloaded = false
+    }
+
     reloadAllUnit() {
         this.getUnitManager().sortUnits()
         this.regenerateAll()
+        this.reloaded = true
     }
 
     regenerateAll() {

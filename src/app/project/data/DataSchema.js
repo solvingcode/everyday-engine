@@ -240,6 +240,10 @@ import KeyFrame from '../../animation/KeyFrame.js'
 import OnButtonClickEvent from '../../flow/event/native/OnButtonClickEvent.js'
 import ArraySizeFunction from '../../flow/function/native/array/ArraySizeFunction.js'
 import ArrayIndexFunction from '../../flow/function/native/array/ArrayIndexFunction.js'
+import OnStartEvent from '../../flow/event/native/OnStartEvent.js'
+import DontDestroyOnLoadFunction from '../../flow/function/native/unit/DontDestroyOnLoadFunction.js'
+import LayerGroupPreference from '../../preference/layerGroup/LayerGroupPreference.js'
+import LayerGroup from '../../preference/layerGroup/LayerGroup.js'
 
 /**
  * @class {DataSchema}
@@ -476,7 +480,11 @@ class DataSchema {
         {id: 2160, type: KeyFrame},
         {id: 2170, type: OnButtonClickEvent},
         {id: 2180, type: ArraySizeFunction},
-        {id: 2190, type: ArrayIndexFunction}
+        {id: 2190, type: ArrayIndexFunction},
+        {id: 2200, type: OnStartEvent},
+        {id: 2210, type: DontDestroyOnLoadFunction},
+        {id: 2220, type: LayerGroupPreference},
+        {id: 2230, type: LayerGroup},
     ]
 
     /**

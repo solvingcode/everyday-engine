@@ -13,6 +13,7 @@ import OnUpdateEvent from '../../flow/event/native/OnUpdateEvent.js'
 import OnInputAttackEvent from '../../flow/event/native/OnInputAttackEvent.js'
 import OnButtonClickEvent from '../../flow/event/native/OnButtonClickEvent.js'
 import UnitHelper from '../../utils/UnitHelper.js'
+import OnStartEvent from '../../flow/event/native/OnStartEvent.js'
 
 export default class ScriptExecutor extends ComponentExecutor {
 
@@ -37,7 +38,7 @@ export default class ScriptExecutor extends ComponentExecutor {
                         (mouse.isButtonClicked(MouseButton.LEFT) && instance instanceof OnMouseClickEvent) ||
 
                         (mouse.isButtonClicked(MouseButton.LEFT) && instance instanceof OnButtonClickEvent &&
-                        UnitHelper.isIntractableButton(world, unit) &&
+                            UnitHelper.isIntractableButton(world, unit) &&
                             UnitHelper.isInsideWindowPosition(world, unit, mouse.position)) ||
 
                         (keyboard.isAnyKeyPressed() && instance instanceof OnKeyDownEvent) ||
@@ -52,9 +53,14 @@ export default class ScriptExecutor extends ComponentExecutor {
 
                         (keyboard.isKeyReleased(gameInput.getKeyCode(GAME_INPUTS.ATTACK)) && instance instanceof OnInputAttackEvent) ||
 
-                        instance instanceof OnUpdateEvent
+                        instance instanceof OnUpdateEvent ||
+
+                        (instance instanceof OnStartEvent && !scriptComponent.isStarted())
                     ) {
                         instance.execute(functionRegistry, unit, scriptComponent, world, executionContext)
+                        if (instance instanceof OnStartEvent) {
+                            scriptComponent.setStarted(true)
+                        }
                     }
                 })
             })

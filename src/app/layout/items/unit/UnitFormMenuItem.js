@@ -31,6 +31,11 @@ export default class UnitFormMenuItem extends FormMenuItem {
                 value: tag.getId(),
                 label: tag.getName()
             }))
+        const listLayerGroup = preference.getLayerGroup().getLayers()
+            .map(layerGroup => ({
+                value: layerGroup.getId(),
+                label: layerGroup.getName()
+            }))
         return [
             {
                 bind: 'name',
@@ -42,6 +47,12 @@ export default class UnitFormMenuItem extends FormMenuItem {
                 label: 'Mask Group',
                 type: Layout.form.DROPDOWN,
                 list: listMaskGroup
+            },
+            {
+                bind: 'layerId',
+                label: 'Layer',
+                type: Layout.form.DROPDOWN,
+                list: listLayerGroup
             },
             {
                 bind: 'tagId',

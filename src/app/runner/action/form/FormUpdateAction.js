@@ -18,6 +18,7 @@ class FormUpdateAction extends Action {
     static run() {
         const {event, item} = StateManager.get().getNextProgressData(this.STATE)
         item.setIsEditing(true)
+        item.setUpdated(true)
         if (this.isAtChangeField(item.field) && this.isFieldChanged(item)) {
             this.save(event, item)
         }
@@ -31,6 +32,7 @@ class FormUpdateAction extends Action {
         const {event, item} = StateManager.get().getNextStopData(this.STATE)
         this.save(event, item)
         item.setIsEditing(false)
+        item.setUpdated(true)
         return true
     }
 

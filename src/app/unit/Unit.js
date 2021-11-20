@@ -76,6 +76,14 @@ export default class Unit extends UnitData{
         this.getComponent(GUIPropertyComponent).setFocused(false)
     }
 
+    /**
+     * @param {World} world
+     * @return {number}
+     */
+    getRank(world){
+        return world.getRankUnit(this)
+    }
+
 }
 
 export const PrimitiveShape = {

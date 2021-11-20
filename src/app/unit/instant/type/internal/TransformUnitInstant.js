@@ -2,7 +2,6 @@ import MeshUnitInstant from '../../MeshUnitInstant.js'
 import TransformComponent from '../../../../component/internal/TransformComponent.js'
 import MeshComponent from '../../../../component/internal/MeshComponent.js'
 import GUIPendingComponent from '../../../../component/internal/gui/GUIPendingComponent.js'
-import GUIPropertyComponent from '../../../../component/internal/gui/property/GUIPropertyComponent.js'
 import StyleComponent from '../../../../component/internal/StyleComponent.js'
 import SystemError from '../../../../exception/type/SystemError.js'
 
@@ -42,7 +41,13 @@ export default class TransformUnitInstant extends MeshUnitInstant {
      * @override
      */
     setup() {
-        this.getComponent(GUIPropertyComponent).setRank(70)
+    }
+
+    /**
+     * @override
+     */
+    getRank(world) {
+        return 100070
     }
 
 }

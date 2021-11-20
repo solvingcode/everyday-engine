@@ -109,6 +109,8 @@ import VectorLerpFunction from '../flow/function/native/basic/VectorLerpFunction
 import OnButtonClickEvent from '../flow/event/native/OnButtonClickEvent.js'
 import ArraySizeFunction from '../flow/function/native/array/ArraySizeFunction.js'
 import ArrayIndexFunction from '../flow/function/native/array/ArrayIndexFunction.js'
+import OnStartEvent from '../flow/event/native/OnStartEvent.js'
+import DontDestroyOnLoadFunction from '../flow/function/native/unit/DontDestroyOnLoadFunction.js'
 
 export default class FunctionRegistry extends Registry{
 
@@ -133,6 +135,7 @@ export default class FunctionRegistry extends Registry{
             new OnInputAttackEvent(),
             new OnCallEvent(),
             new OnButtonClickEvent(),
+            new OnStartEvent(),
 
             // Condition
             new TrueCondition(),
@@ -166,6 +169,7 @@ export default class FunctionRegistry extends Registry{
             new GetterFunction(),
             new DestroyUnitFunction(),
             new VectorLerpFunction(),
+            new DontDestroyOnLoadFunction(),
 
             //Loop
             new ALoop(),
