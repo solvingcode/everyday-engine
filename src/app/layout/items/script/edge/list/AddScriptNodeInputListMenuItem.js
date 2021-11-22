@@ -38,14 +38,16 @@ export default class AddScriptNodeInputListMenuItem extends ListMenuItem {
     getFormObject() {
         const world = World.get()
         const script = world.getScriptManager().getFunctionSelected(world.getTabManager())
-        const selectedGraphUnits = ScriptGraphSelector.get().getSelected(world)
-        const selectedGraphUnit = selectedGraphUnits[0]
-        if(selectedGraphUnit){
-            const nodeComponent = selectedGraphUnit.getComponent(NodeComponent)
-            if (nodeComponent) {
-                const nodeId = selectedGraphUnit.getComponent(NodeComponent).getNodeId()
-                const node = script.findNodeById(nodeId)
-                return NodeHelper.getSourceNode(node, world).getInputs().filter(input => !node.getInputNodeAttached(input.getAttrName()))
+        if(script){
+            const selectedGraphUnits = ScriptGraphSelector.get().getSelected(world)
+            const selectedGraphUnit = selectedGraphUnits[0]
+            if(selectedGraphUnit){
+                const nodeComponent = selectedGraphUnit.getComponent(NodeComponent)
+                if (nodeComponent) {
+                    const nodeId = selectedGraphUnit.getComponent(NodeComponent).getNodeId()
+                    const node = script.findNodeById(nodeId)
+                    return NodeHelper.getSourceNode(node, world).getInputs().filter(input => !node.getInputNodeAttached(input.getAttrName()))
+                }
             }
         }
     }

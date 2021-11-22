@@ -111,6 +111,7 @@ import ArraySizeFunction from '../flow/function/native/array/ArraySizeFunction.j
 import ArrayIndexFunction from '../flow/function/native/array/ArrayIndexFunction.js'
 import OnStartEvent from '../flow/event/native/OnStartEvent.js'
 import DontDestroyOnLoadFunction from '../flow/function/native/unit/DontDestroyOnLoadFunction.js'
+import FindUnitsByNameFunction from '../flow/function/native/unit/FindUnitsByNameFunction.js'
 
 export default class FunctionRegistry extends Registry{
 
@@ -194,6 +195,7 @@ export default class FunctionRegistry extends Registry{
             new IsFunctionDefinedFunction(),
             new GetUnitNameFunction(),
             new GetUnitTagNameFunction(),
+            new FindUnitsByNameFunction(),
 
             //Animation
             new StartAnimationFunction(),

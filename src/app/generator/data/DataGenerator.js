@@ -5,6 +5,8 @@ import UnitDataTypeGenerator from './type/UnitDataTypeGenerator.js'
 import DefaultDataIdGenerator from './id/DefaultDataIdGenerator.js'
 import ScriptDataTypeGenerator from './type/ScriptDataTypeGenerator.js'
 import AnimationDataTypeGenerator from './type/AnimationDataTypeGenerator.js'
+import NodeDataIdGenerator from './id/NodeDataIdGenerator.js'
+import NodeDataTypeGenerator from './type/NodeDataTypeGenerator.js'
 
 export default class DataGenerator {
 
@@ -27,6 +29,8 @@ export default class DataGenerator {
                 return UnitDataIdGenerator
             case StorageConstant.type.SCRIPT:
                 return DefaultDataIdGenerator
+            case StorageConstant.type.NODES:
+                return NodeDataIdGenerator
             case StorageConstant.type.ANIMATION:
                 return DefaultDataIdGenerator
             default:
@@ -44,6 +48,8 @@ export default class DataGenerator {
                 return UnitDataTypeGenerator
             case StorageConstant.type.SCRIPT:
                 return ScriptDataTypeGenerator
+            case StorageConstant.type.NODES:
+                return NodeDataTypeGenerator
             case StorageConstant.type.ANIMATION:
                 return AnimationDataTypeGenerator
             default:

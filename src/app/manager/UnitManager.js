@@ -103,6 +103,16 @@ export default class UnitManager extends UnitManagerData {
     }
 
     /**
+     * @param {string} name
+     * @return {Unit[]}
+     */
+    findUnitsByName(name) {
+        return this.units.filter((element) =>
+            element.getName() === name
+        )
+    }
+
+    /**
      * @param {MaskGroup} maskGroup
      * @return {Unit[]}
      */

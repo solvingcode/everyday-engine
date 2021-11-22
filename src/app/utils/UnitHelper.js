@@ -9,8 +9,6 @@ import Size from '../pobject/Size.js'
 import RectColliderComponent from '../component/internal/RectColliderComponent.js'
 import CircleColliderComponent from '../component/internal/CircleColliderComponent.js'
 import {PrimitiveShape} from '../unit/Unit.js'
-import RectUnitInstant from '../unit/instant/type/internal/primitive/RectUnitInstant.js'
-import CircleUnitInstant from '../unit/instant/type/internal/primitive/CircleUnitInstant.js'
 import SystemError from '../exception/type/SystemError.js'
 import Style from '../pobject/Style.js'
 import GUIColliderComponent from '../component/internal/gui/collider/GUIColliderComponent.js'
@@ -27,6 +25,8 @@ import LightComponent from '../component/internal/LightComponent.js'
 import UIContainerComponent from '../component/internal/ui/UIContainerComponent.js'
 import UIButtonUnitInstant from '../unit/instant/type/internal/ui/UIButtonUnitInstant.js'
 import UIButtonComponent from '../component/internal/ui/UIButtonComponent.js'
+import RectSelectorUnitInstant from '../unit/instant/type/internal/edit/RectSelectorUnitInstant.js'
+import CircleSelectorUnitInstant from '../unit/instant/type/internal/edit/CircleSelectorUnitInstant.js'
 
 export default class UnitHelper {
 
@@ -373,10 +373,10 @@ export default class UnitHelper {
                 let unitInstantClass
                 switch (shape) {
                     case PrimitiveShape.RECT:
-                        unitInstantClass = RectUnitInstant
+                        unitInstantClass = RectSelectorUnitInstant
                         break
                     case PrimitiveShape.CIRCLE:
-                        unitInstantClass = CircleUnitInstant
+                        unitInstantClass = CircleSelectorUnitInstant
                         break
                     default:
                         throw new SystemError(`No Unit Instant configured for Collider "${shape}"`)
@@ -419,7 +419,7 @@ export default class UnitHelper {
         style.setColor('#ffe600')
         style.setBorderSize(2)
 
-        const selectorUnit = world.createUnitInstant(RectUnitInstant, Vector.zero(), Vector.one(), style)
+        const selectorUnit = world.createUnitInstant(RectSelectorUnitInstant, Vector.zero(), Vector.one(), style)
         selectorUnit.createComponents([GUISelectorComponent])
         selectorUnit.getComponent(GUISelectorComponent).setUnitId(unit.getId())
         selectorUnit.getComponent(TransformComponent).setLocalRotation(0)
@@ -448,7 +448,7 @@ export default class UnitHelper {
                 )
             if (!existGUIAnchor) {
                 const anchorLocalScale = TransformHelper.getLocalScale(TransformHelper.getScaleFromSize(new Size(anchorSize)), unit)
-                const anchorUnit = world.createUnitInstant(RectUnitInstant, anchorPosition, anchorLocalScale, style)
+                const anchorUnit = world.createUnitInstant(RectSelectorUnitInstant, anchorPosition, anchorLocalScale, style)
                 anchorUnit.createComponents([GUIAnchorComponent])
                 anchorUnit.getComponent(GUIAnchorComponent).setUnitId(unit.getId())
                 anchorUnit.getComponent(GUIAnchorComponent).setOffset(index + 1)

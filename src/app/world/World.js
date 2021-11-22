@@ -26,6 +26,7 @@ import SceneUnitManager from '../manager/SceneUnitManager.js'
 import CameraComponent from '../component/internal/CameraComponent.js'
 import AssetHelper from '../utils/AssetHelper.js'
 import SystemError from '../exception/type/SystemError.js'
+import ScriptComponent from '../component/internal/ScriptComponent.js'
 
 /**
  * @class {World}
@@ -183,6 +184,14 @@ class World extends WorldData {
     }
 
     /**
+     * @param {string} name
+     * @return {Unit[]}
+     */
+    findUnitsByName(name) {
+        return this.getUnitManager().findUnitsByName(name)
+    }
+
+    /**
      * @param {Unit} unit
      */
     deleteUnit(unit) {
@@ -250,8 +259,20 @@ class World extends WorldData {
                 .filter(pScene => pScene !== scene).forEach(pScene => pScene.setIncluded(false) && pScene.setActive(false))
             scene.setActive(true)
         }
-        this.getUnitManager().getUnits().push(...scene.getUnitManager().getUnits())
+        const unitsToLoad = scene.getUnitManager().getUnits()
+        this.restartUnits(unitsToLoad)
+        this.getUnitManager().getUnits().push(...unitsToLoad)
         this.regenerateAll()
+    }
+
+    /**
+     * @param {Unit[]} units
+     */
+    restartUnits(units){
+        units.forEach(unit => {
+            unit.findComponentsByClass(ScriptComponent).forEach(scriptComponent =>
+                scriptComponent.setStarted(false))
+        })
     }
 
     /**

@@ -18,7 +18,7 @@ export default class ScriptComponent extends Component {
      * @override
      */
     getExcludeFields() {
-        return ['script']
+        return ['script', 'started']
     }
 
     /**

@@ -25,7 +25,7 @@ export default class AttributeType {
      * @param {Object} parentPathData
      * @return {number}
      */
-    static extractDynamicPrototypeName(prototype, parentPathData){
+    static extractDynamicPrototypeName(prototype, parentPathData) {
         if (_.isObject(parentPathData)) {
             const dynamicTypeRegex = _.isString(prototype) && /^\[([a-zA-Z]+)]$/.exec(prototype)
             const dynamicType = dynamicTypeRegex && dynamicTypeRegex[1]
@@ -91,7 +91,7 @@ export default class AttributeType {
             case TYPES.DYNAMIC_ATTRIBUTE:
                 return DynamicAttribute
             default:
-                if(this.isArrayType(prototype)){
+                if (this.isArrayType(prototype)) {
                     return Array
                 }
                 throw new SystemError(`AttributeType not supported (${prototype})`)
@@ -102,7 +102,7 @@ export default class AttributeType {
      * @param {number} type
      * @return {boolean}
      */
-    static isArrayType(type){
+    static isArrayType(type) {
         return this.has(type, TYPES.ARRAY)
     }
 
@@ -110,10 +110,10 @@ export default class AttributeType {
      * @param {number} type
      * @return {number}
      */
-    static getArrayElementType(type){
-        for(const maskType in TYPES){
+    static getArrayElementType(type) {
+        for (const maskType in TYPES) {
             const mask = TYPES[maskType]
-            if(mask !== TYPES.ARRAY && this.has(type, mask)){
+            if (mask !== TYPES.ARRAY && this.has(type, mask)) {
                 return mask
             }
         }
@@ -124,7 +124,7 @@ export default class AttributeType {
      * @param {number} typeMask
      * @return {boolean}
      */
-    static has(type, typeMask){
+    static has(type, typeMask) {
         return (parseInt(type) & typeMask) === typeMask
     }
 
@@ -133,7 +133,7 @@ export default class AttributeType {
      * @param {number} typeMask
      * @return {boolean}
      */
-    static is(type, typeMask){
+    static is(type, typeMask) {
         return parseInt(type) === typeMask
     }
 
@@ -141,8 +141,9 @@ export default class AttributeType {
      * @param {number} type
      * @return {string}
      */
-    static getName(type){
-        return this.isArrayType(type) ? 'Array' : TYPES_NAME.find(pType => pType.value === type).label
+    static getName(type) {
+        const findType = TYPES_NAME.find(pType => pType.value === type)
+        return this.isArrayType(type) ? 'Array' : (findType && findType.label)
     }
 
 }
@@ -159,32 +160,32 @@ export default class AttributeType {
  * @type {Object}
  */
 export const TYPES = {
-    ANY:                            0b00000100000000000000000001,
-    STRING:                         0b00000100000000000000000010,
-    BOOLEAN:                        0b00000100000000000000000100,
-    NUMBER:                         0b00000100000000000000001000,
-    UNIT:                           0b00000100000000000000010000,
-    ANIMATION:                      0b00000100000000000000100000,
-    COMPONENT:                      0b00000100000000000001000000,
-    COMPONENT_INSTANCE:             0b00000100000000000010000000,
-    MASK_GROUP_INSTANCE:            0b00000100000000000100000000,
-    MATERIAL:                       0b00000100000000001000000000,
-    COLOR:                          0b00000100000000010000000000,
-    AUDIO:                          0b00000100000000100000000000,
-    LIST:                           0b00000100000001000000000000,
-    FONT:                           0b00000100000010000000000000,
-    SCENE:                          0b00000100000100000000000000,
-    FUNCTION:                       0b00000100001000000000000000,
-    IMAGE:                          0b00000100010000000000000000,
-    UNIT_INSTANT:                   0b00000100100000000000000000,
-    RANGE:                          0b00001000000000000000000001,
-    STYLE:                          0b00010000000000000000000010,
-    SIZE:                           0b00010000000000000000000100,
-    VECTOR:                         0b00010000000000000000001000,
-    DYNAMIC_ATTRIBUTE:              0b00010000000000000000010000,
-    ARRAY:                          0b00100000000000000000000000,
-    MESH:                           0b01000000000000000000000001,
-    PROMISE:                        0b01000000000000000000000010
+    ANY: 0b00000100000000000000000001,
+    STRING: 0b00000100000000000000000010,
+    BOOLEAN: 0b00000100000000000000000100,
+    NUMBER: 0b00000100000000000000001000,
+    UNIT: 0b00000100000000000000010000,
+    ANIMATION: 0b00000100000000000000100000,
+    COMPONENT: 0b00000100000000000001000000,
+    COMPONENT_INSTANCE: 0b00000100000000000010000000,
+    MASK_GROUP_INSTANCE: 0b00000100000000000100000000,
+    MATERIAL: 0b00000100000000001000000000,
+    COLOR: 0b00000100000000010000000000,
+    AUDIO: 0b00000100000000100000000000,
+    LIST: 0b00000100000001000000000000,
+    FONT: 0b00000100000010000000000000,
+    SCENE: 0b00000100000100000000000000,
+    FUNCTION: 0b00000100001000000000000000,
+    IMAGE: 0b00000100010000000000000000,
+    UNIT_INSTANT: 0b00000100100000000000000000,
+    RANGE: 0b00001000000000000000000001,
+    STYLE: 0b00010000000000000000000010,
+    SIZE: 0b00010000000000000000000100,
+    VECTOR: 0b00010000000000000000001000,
+    DYNAMIC_ATTRIBUTE: 0b00010000000000000000010000,
+    ARRAY: 0b00100000000000000000000000,
+    MESH: 0b01000000000000000000000001,
+    PROMISE: 0b01000000000000000000000010
 }
 
 export const TYPES_NAME = [
@@ -231,5 +232,9 @@ export const TYPES_NAME = [
     {
         value: TYPES.ARRAY,
         label: 'Array'
+    },
+    {
+        value: TYPES.SCENE,
+        label: 'Scene'
     }
 ]

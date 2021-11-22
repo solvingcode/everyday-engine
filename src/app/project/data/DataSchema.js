@@ -244,6 +244,9 @@ import OnStartEvent from '../../flow/event/native/OnStartEvent.js'
 import DontDestroyOnLoadFunction from '../../flow/function/native/unit/DontDestroyOnLoadFunction.js'
 import LayerGroupPreference from '../../preference/layerGroup/LayerGroupPreference.js'
 import LayerGroup from '../../preference/layerGroup/LayerGroup.js'
+import RectSelectorUnitInstant from '../../unit/instant/type/internal/edit/RectSelectorUnitInstant.js'
+import CircleSelectorUnitInstant from '../../unit/instant/type/internal/edit/CircleSelectorUnitInstant.js'
+import FindUnitsByNameFunction from '../../flow/function/native/unit/FindUnitsByNameFunction.js'
 
 /**
  * @class {DataSchema}
@@ -485,6 +488,7 @@ class DataSchema {
         {id: 2210, type: DontDestroyOnLoadFunction},
         {id: 2220, type: LayerGroupPreference},
         {id: 2230, type: LayerGroup},
+        {id: 2240, type: FindUnitsByNameFunction},
     ]
 
     /**
@@ -503,7 +507,9 @@ class DataSchema {
         ScaleFreeUnitInstant,
         RotateZUnitInstant,
         RectUnitInstant,
-        CircleUnitInstant
+        CircleUnitInstant,
+        RectSelectorUnitInstant,
+        CircleSelectorUnitInstant
     ]
 
     /**
