@@ -112,6 +112,8 @@ import ArrayIndexFunction from '../flow/function/native/array/ArrayIndexFunction
 import OnStartEvent from '../flow/event/native/OnStartEvent.js'
 import DontDestroyOnLoadFunction from '../flow/function/native/unit/DontDestroyOnLoadFunction.js'
 import FindUnitsByNameFunction from '../flow/function/native/unit/FindUnitsByNameFunction.js'
+import GetFunctionFunction from '../flow/function/native/function/GetFunctionFunction.js'
+import GetAnimationFunction from '../flow/function/native/animation/GetAnimationFunction.js'
 
 export default class FunctionRegistry extends Registry{
 
@@ -171,6 +173,8 @@ export default class FunctionRegistry extends Registry{
             new DestroyUnitFunction(),
             new VectorLerpFunction(),
             new DontDestroyOnLoadFunction(),
+            new GetFunctionFunction(),
+            new GetAnimationFunction(),
 
             //Loop
             new ALoop(),
@@ -290,6 +294,14 @@ export default class FunctionRegistry extends Registry{
      */
     getInstance(name) {
         return super.getInstance(name)
+    }
+
+    /**
+     * @param {AFunction} instance
+     * @return {boolean}
+     */
+    hasInstance(instance){
+        return super.hasInstance(instance)
     }
 
     /**

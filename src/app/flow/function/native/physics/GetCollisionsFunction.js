@@ -27,7 +27,7 @@ export default class GetCollisionsFunction extends AFunction {
         if (colliderComponent.isEnabled()) {
             const unit = this.getInputValue('target')
             const colliderComponents = physicsManager.getAllCollision(world, unit, colliderComponent, null)
-            this.setOutputValue(colliderComponents.map(pColliderComponent => pColliderComponent.getId()))
+            this.setOutputValue(colliderComponents)
         }
     }
 }

@@ -46,6 +46,14 @@ export default class Registry extends RegistryData {
     }
 
     /**
+     * @param {*} instance
+     * @return {boolean}
+     */
+    hasInstance(instance){
+        return this.registry.find(item => item === instance)
+    }
+
+    /**
      * @param {string} name
      * @return {*}
      */

@@ -15,7 +15,7 @@ export default class AnimationPlayer {
      * @param {Unit} unit
      */
     static play(animation, world, time, unit) {
-        const componentRegistry = world.getComponentRegistry()
+    const componentRegistry = world.getComponentRegistry()
         animation.getProperties().forEach(property => {
             const childUnit = property.getChildId() && world.getUnitManager().findUnitById(property.getChildId())
             if(childUnit && childUnit.getUnitParentId() !== unit.getId()){
@@ -27,15 +27,17 @@ export default class AnimationPlayer {
                 const componentClass = component.constructor
                 const prevFrame = property.tryGetPrevAt(time)
                 const nextFrame = property.tryGetNextAt(time)
-                const type = targetUnit.findComponentByClass(componentClass).getType(property.getAttributeName())
-                const newValue = this.interpolate(componentClass, type, time, prevFrame, nextFrame)
-                if (prevFrame) {
-                    if (!_.isEqual(targetUnit.findComponentByClass(componentClass).getValue(property.getAttributeName()), newValue)) {
-                        const componentInstance = targetUnit.findComponentByClass(componentClass)
-                        const setter = ClassHelper.getSetter(componentInstance, property.getAttributeName())
-                        componentInstance[setter](newValue)
-                        if(componentInstance instanceof MeshComponent){
-                            componentInstance.setGenerated(false)
+                const componentInstance = targetUnit.findComponentByClass(componentClass)
+                if(componentInstance){
+                    const type = componentInstance.getType(property.getAttributeName())
+                    const newValue = this.interpolate(componentClass, type, time, prevFrame, nextFrame)
+                    if (prevFrame) {
+                        if (!_.isEqual(targetUnit.findComponentByClass(componentClass).getValue(property.getAttributeName()), newValue)) {
+                            const setter = ClassHelper.getSetter(componentInstance, property.getAttributeName())
+                            componentInstance[setter](newValue)
+                            if(componentInstance instanceof MeshComponent){
+                                componentInstance.setGenerated(false)
+                            }
                         }
                     }
                 }

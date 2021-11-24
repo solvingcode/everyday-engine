@@ -356,7 +356,22 @@ export default class UnitManager extends UnitManagerData {
     deleteUnit(unit) {
         const unitChilds = this.findChildUnits(unit)
         unitChilds.forEach(cUnit => this.deleteUnit(cUnit))
-        return this.units.splice(this.getIndexOfUnit(unit), 1)
+        const index = this.getIndexOfUnit(unit)
+        if (index >= 0) {
+            return this.units.splice(this.getIndexOfUnit(unit), 1)
+        }
+    }
+
+    /**
+     * @param {Unit} unit
+     */
+    destroyUnit(unit){
+        const unitChilds = this.findChildUnits(unit)
+        unitChilds.forEach(cUnit => this.destroyUnit(cUnit))
+        const index = this.getIndexOfUnit(unit)
+        if (index >= 0) {
+            return this.units.splice(this.getIndexOfUnit(unit), 1)
+        }
     }
 
     /**

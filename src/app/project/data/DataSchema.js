@@ -247,6 +247,8 @@ import LayerGroup from '../../preference/layerGroup/LayerGroup.js'
 import RectSelectorUnitInstant from '../../unit/instant/type/internal/edit/RectSelectorUnitInstant.js'
 import CircleSelectorUnitInstant from '../../unit/instant/type/internal/edit/CircleSelectorUnitInstant.js'
 import FindUnitsByNameFunction from '../../flow/function/native/unit/FindUnitsByNameFunction.js'
+import GetFunctionFunction from '../../flow/function/native/function/GetFunctionFunction.js'
+import GetAnimationFunction from '../../flow/function/native/animation/GetAnimationFunction.js'
 
 /**
  * @class {DataSchema}
@@ -489,6 +491,8 @@ class DataSchema {
         {id: 2220, type: LayerGroupPreference},
         {id: 2230, type: LayerGroup},
         {id: 2240, type: FindUnitsByNameFunction},
+        {id: 2250, type: GetFunctionFunction},
+        {id: 2260, type: GetAnimationFunction},
     ]
 
     /**

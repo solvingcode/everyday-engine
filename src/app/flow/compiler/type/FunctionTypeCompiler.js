@@ -15,20 +15,24 @@ export default class FunctionTypeCompiler {
      * @param {string} inputName
      * @return {string}
      */
-    getScopedAttributedName(functionName, inputName){
+    getScopedAttributedName(functionName, inputName) {
         return `${functionName}.${inputName}`
     }
 
     /**
      * @param {ContextCompiler} contextCompiler
      */
-    stepZero(contextCompiler){
+    stepZero(contextCompiler) {
+        const {stackFunction, functionName} = contextCompiler
+        stackFunction.getStack().push(...[
+            new StackOperation(OPERATIONS.JUMP_TO, functionName)
+        ])
     }
 
     /**
      * @param {ContextCompiler} contextCompiler
      */
-    stepOne(contextCompiler){
+    stepOne(contextCompiler) {
         const {node, input, stackFunction, element, sourceElementName, functionName} = contextCompiler
         const targetName = input.getTargetName()
         const targetInput = element.findInputByName(targetName)
@@ -54,12 +58,12 @@ export default class FunctionTypeCompiler {
     /**
      * @param {ContextCompiler} contextCompiler
      */
-    stepTwo(contextCompiler){
+    stepTwo(contextCompiler) {
         const {element, stackFunction, world, functionName} = contextCompiler
         const functionRegistry = world.getFunctionRegistry()
-        if(functionRegistry.getInstance(element.getName())){
+        if (functionRegistry.getInstance(element.getName())) {
             stackFunction.getStack().push(new StackOperation(OPERATIONS.CALL, element.getName(), functionName))
-        }else if (element instanceof AStackFunction) {
+        } else if (element instanceof AStackFunction) {
             stackFunction.getStack().push(...element.getStack())
         }
     }
@@ -67,13 +71,13 @@ export default class FunctionTypeCompiler {
     /**
      * @param {ContextCompiler} contextCompiler
      */
-    stepThree(contextCompiler){
+    stepThree(contextCompiler) {
     }
 
     /**
      * @param {ContextCompiler} contextCompiler
      */
-    stepFour(contextCompiler){
+    stepFour(contextCompiler) {
         const {node, input, functionName, sourceStackFunction} = contextCompiler
         if (node.isOrderConnection(input)) {
             sourceStackFunction.getStack().push(...[
@@ -85,7 +89,7 @@ export default class FunctionTypeCompiler {
     /**
      * @param {ContextCompiler} contextCompiler
      */
-    stepFive(contextCompiler){
+    stepFive(contextCompiler) {
     }
 
     /**

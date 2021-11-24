@@ -34,6 +34,14 @@ export default class AnimationManager extends AnimationManagerData {
 
     /**
      * @param {Animation} animation
+     * @return {boolean}
+     */
+    hasAnimation(animation) {
+        return !!this.animations.find(pAnimation => pAnimation === animation)
+    }
+
+    /**
+     * @param {Animation} animation
      */
     selectAnimation(animation){
         this.getAnimations().forEach(pAnimation => pAnimation.setSelected(false))

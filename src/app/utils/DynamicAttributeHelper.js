@@ -61,11 +61,7 @@ export default class DynamicAttributeHelper {
      */
     static setValue(target, name, value) {
         let attribute = this.get(target, name)
-        if (AttributeType.isArrayType(attribute.getAttrType()) && value === '[]') {
-            attribute.setAttrValue([])
-        } else {
-            attribute.setAttrValue(value)
-        }
+        attribute.setAttrValue(value)
     }
 
     /**
@@ -599,8 +595,8 @@ export default class DynamicAttributeHelper {
                 const unitManagerComponent = world.getUnitManager()
                 const componentInstance = unitManagerComponent.hasComponent(value) ? value :
                     (value === '[self]'
-                    ? scriptComponent
-                    : world.getUnitManager().findComponentById(parseInt(value)))
+                        ? scriptComponent
+                        : world.getUnitManager().findComponentById(parseInt(value)))
                 if (!componentInstance) {
                     throw new ClientError(`${this.constructor.name}: Component Instance "${value}" not found`)
                 }
@@ -690,6 +686,58 @@ export default class DynamicAttributeHelper {
     }
 
     /**
+     * @param {*} value
+     * @param {number} type
+     * @param {World} world
+     * @param {Unit} unit
+     * @param {ScriptComponent} scriptComponent
+     * @return {*}
+     */
+    static validateValueByType(value, type, world, unit, scriptComponent) {
+        switch (type) {
+            case TYPES.UNIT:
+                return world.getUnitManager().hasUnit(value)
+            case TYPES.ANIMATION:
+                return world.getAnimationManager().hasAnimation(value)
+            case TYPES.COMPONENT:
+                return world.getComponentRegistry().hasInstance(value)
+            case TYPES.COMPONENT_INSTANCE:
+                return world.getUnitManager().hasComponent(value)
+            case TYPES.MASK_GROUP_INSTANCE:
+                const maskGroupPref = world.getPreference().getMaskGroup()
+                return maskGroupPref.hasMaskGroup(value)
+            case TYPES.AUDIO:
+                return world.getAssetsManager().hasAsset(value)
+            case TYPES.UNIT_INSTANT:
+                return world.getAssetsManager().hasAsset(value)
+            case TYPES.SCENE:
+                return world.getSceneManager().hasScene(value)
+            case TYPES.FUNCTION:
+                return world.getFunctionRegistry().hasInstance(value)
+            case TYPES.FONT:
+                return world.getAssetsManager().hasAsset(value)
+            case TYPES.ARRAY | TYPES.ANY:
+                return _.isArray(value)
+            case TYPES.ARRAY | TYPES.COMPONENT_INSTANCE:
+                return _.isArray(value) && value.every(eArray => eArray instanceof Component)
+            case TYPES.ARRAY | TYPES.DYNAMIC_ATTRIBUTE:
+                return _.isArray(value) && value.every(eArray => eArray instanceof DynamicAttribute)
+            case TYPES.DYNAMIC_ATTRIBUTE:
+                return value instanceof DynamicAttribute
+            case TYPES.NUMBER:
+                return !isNaN(value) && !isNaN(parseFloat(value))
+            case TYPES.RANGE:
+                return !isNaN(value) && !isNaN(parseFloat(value))
+            case TYPES.BOOLEAN:
+                return value === 'true' || value === '1' || value === true || value === '0' || value === false
+                    || value === 'false' || value === null
+            case TYPES.STRING:
+                return _.isString(value)
+        }
+        return false
+    }
+
+    /**
      * @param {number} attributeType
      * @return {string}
      */
@@ -725,7 +773,7 @@ export default class DynamicAttributeHelper {
         if (this.isSizeField(fieldName)) {
             const fieldMatch = fieldName.match(RegexHelper.FIELD_NAME_SIZE)
             return fieldMatch[1]
-        } else if(this.isArrayIndexField(fieldName)) {
+        } else if (this.isArrayIndexField(fieldName)) {
             const fieldMatch = fieldName.match(RegexHelper.FIELD_NAME_ARRAY_INDEX)
             return fieldMatch[1]
         }
@@ -736,8 +784,8 @@ export default class DynamicAttributeHelper {
      * @param {string} fieldName
      * @return {number|null}
      */
-    static getAttributeArrayIndex(fieldName){
-        if(this.isArrayIndexField(fieldName)) {
+    static getAttributeArrayIndex(fieldName) {
+        if (this.isArrayIndexField(fieldName)) {
             const fieldMatch = fieldName.match(RegexHelper.FIELD_NAME_ARRAY_INDEX)
             return parseInt(fieldMatch[2])
         }

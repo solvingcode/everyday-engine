@@ -1,6 +1,5 @@
 import {TYPES} from '../../../../pobject/AttributeType.js'
 import AFunction from '../../AFunction.js'
-import DynamicAttributeHelper from '../../../../utils/DynamicAttributeHelper.js'
 
 export default class GetInstanceFunction extends AFunction{
 
@@ -23,9 +22,6 @@ export default class GetInstanceFunction extends AFunction{
     execute(functionRegistry, unit, scriptComponent, world) {
         const component = this.getInputValue('component')
         const attribute = this.getInputValue('attribute')
-        const componentAttribute = component.get(attribute)
-        const value = component.getValue(attribute)
-        const outputValue = DynamicAttributeHelper.getValueByType(value, componentAttribute.getAttrType(), world, unit, scriptComponent)
-        this.setOutputValue(outputValue)
+        this.setOutputValue(component.getValue(attribute))
     }
 }

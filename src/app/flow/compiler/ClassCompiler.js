@@ -208,12 +208,16 @@ export default class ClassCompiler extends Compiler {
             if (operation === OPERATIONS.CALL || operation === OPERATIONS.THEN) {
                 const calledFunctionName = args && args[0]
                 const stackFunction = functionRegistry.getInstance(calledFunctionName)
-                if(operation === OPERATIONS.CALL && ((stackFunction instanceof AStackFunction &&
+                if (operation === OPERATIONS.CALL && ((stackFunction instanceof AStackFunction &&
                     !(stackFunction instanceof ACustomFunction))
-                || stackFunction instanceof OnCallEvent)){
-                    stackFunction.setOptimized(true)
-                    return [...optimizeStack, ...this.getOptimizedStack(stackFunction, world)]
-                }else if(operation === OPERATIONS.THEN){
+                    || stackFunction instanceof OnCallEvent)) {
+                    if (stackFunction.isOptimized()) {
+                        return [...optimizeStack, new StackOperation(OPERATIONS.JUMP, stackFunction.getName())]
+                    } else {
+                        stackFunction.setOptimized(true)
+                        return [...optimizeStack, ...this.getOptimizedStack(stackFunction, world)]
+                    }
+                } else if (operation === OPERATIONS.THEN) {
                     stackFunction.setValidated(true)
                 }
             }

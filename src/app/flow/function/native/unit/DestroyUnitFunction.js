@@ -20,6 +20,6 @@ export default class DestroyUnitFunction extends AFunction{
     execute(functionRegistry, unit, scriptComponent, world, executionContext) {
         const target = this.getInputValue('target')
         world.getPhysicsManager().deleteUnit(target)
-        world.getUnitManager().deleteUnit(target)
+        world.getUnitManager().destroyUnit(target)
     }
 }

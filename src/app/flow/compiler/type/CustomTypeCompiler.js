@@ -4,6 +4,7 @@ import StackOperation, {OPERATIONS} from '../../../operation/StackOperation.js'
 import ACustomFunction from '../../function/custom/ACustomFunction.js'
 import {CONSTANTS} from '../../../operation/StackRegister.js'
 import CallFunction from '../../function/native/basic/CallFunction.js'
+import GetFunctionFunction from '../../function/native/function/GetFunctionFunction.js'
 
 export default class CustomTypeCompiler extends FunctionTypeCompiler {
 
@@ -31,9 +32,12 @@ export default class CustomTypeCompiler extends FunctionTypeCompiler {
     stepTwo(contextCompiler) {
         const {stackFunction, element} = contextCompiler
         const callFunction = new CallFunction()
+        const getFunction = new GetFunctionFunction()
         stackFunction.getStack().push(...[
             new StackOperation(OPERATIONS.PUSH, 'unit', `[MEM]${element.getName()}.unit`),
-            new StackOperation(OPERATIONS.PUSH, 'function', element.getName()),
+            new StackOperation(OPERATIONS.PUSH, 'name', element.getName()),
+            new StackOperation(OPERATIONS.CALL, getFunction.getName()),
+            new StackOperation(OPERATIONS.PUSH, 'function', CONSTANTS.RESULT),
             new StackOperation(OPERATIONS.CALL, callFunction.getName())
         ])
     }

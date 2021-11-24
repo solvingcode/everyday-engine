@@ -214,6 +214,10 @@ export const TYPES_NAME = [
         label: 'Unit'
     },
     {
+        value: TYPES.ANIMATION,
+        label: 'Animation'
+    },
+    {
         value: TYPES.UNIT_INSTANT,
         label: 'Unit Instant'
     },
@@ -223,7 +227,7 @@ export const TYPES_NAME = [
     },
     {
         value: TYPES.COMPONENT_INSTANCE,
-        label: 'Component'
+        label: 'Component instance'
     },
     {
         value: TYPES.IMAGE,
@@ -236,5 +240,13 @@ export const TYPES_NAME = [
     {
         value: TYPES.SCENE,
         label: 'Scene'
+    },
+    {
+        value: TYPES.FUNCTION,
+        label: 'Function'
+    },
+    {
+        value: TYPES.COMPONENT,
+        label: 'Component'
     }
 ]

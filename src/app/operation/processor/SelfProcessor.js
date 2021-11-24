@@ -17,9 +17,9 @@ export default class SelfProcessor {
         }
         const type = args[0]
         if (AttributeType.is(type, TYPES.UNIT)) {
-            stackRegister.pushRet(functionName, unit.getId())
+            stackRegister.pushRet(functionName, unit)
         } else if (AttributeType.is(type, TYPES.COMPONENT_INSTANCE)) {
-            stackRegister.pushRet(functionName, scriptComponent.getId())
+            stackRegister.pushRet(functionName, scriptComponent)
         } else {
             throw new ClientError(`Self: Input type "${type}" not supported`)
         }

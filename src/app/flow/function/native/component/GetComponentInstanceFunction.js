@@ -12,7 +12,7 @@ export default class GetComponentInstanceFunction extends AFunction {
      * @override
      */
     initAttributes() {
-        this.addInput('component', TYPES.COMPONENT, 0)
+        this.addInput('component', TYPES.STRING, 0)
         this.addOutput(TYPES.COMPONENT_INSTANCE)
     }
 
@@ -20,11 +20,15 @@ export default class GetComponentInstanceFunction extends AFunction {
      * @override
      */
     execute(functionRegistry, unit, scriptComponent, world) {
-        const classComponent = this.getInputValue('component')
-        const component = unit.findComponentByClass(classComponent)
+        const classComponentName = this.getInputValue('component')
+        const classComponent = world.getComponentRegistry().getInstance(classComponentName)
+        if (!classComponent) {
+            throw new ClientError(`${this.getName()}: ${classComponentName} not found`)
+        }
+        const component = unit.findComponentByClass(classComponent.constructor)
         if (!component) {
             throw new ClientError(`${this.getName()}: ${classComponent.constructor.name} not found`)
         }
-        this.setOutputValue(component.getId())
+        this.setOutputValue(component)
     }
 }

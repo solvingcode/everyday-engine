@@ -1,5 +1,6 @@
 import ClientError from '../../exception/type/ClientError.js'
 import DynamicAttributeHelper from '../../utils/DynamicAttributeHelper.js'
+import AttributeType from '../../pobject/AttributeType.js'
 
 export default class CallProcessor {
 
@@ -34,8 +35,11 @@ export default class CallProcessor {
                 throw new ClientError(`Function "${calledFunctionName}": Input name ${inputScopeName} not provided`)
             }
             const value = stackRegister.pop(functionName, inputScopeName)
-            let inputValue = DynamicAttributeHelper.getValueByType(value, inputType, world, unit, scriptComponent)
-            calledFunction.setInputValue(inputName, inputValue)
+            if (DynamicAttributeHelper.validateValueByType(value, inputType, world, unit, scriptComponent)) {
+                calledFunction.setInputValue(inputName, value)
+            } else {
+                throw new ClientError(`"${inputName}": Value invalid (type: "${AttributeType.getName(inputType)}", value: "${value}")`)
+            }
         })
         calledFunction.execute(functionRegistry, unit, scriptComponent, world, executionContext)
         stackRegister.pushRet(functionName, calledFunction.getOutputValue())
