@@ -11,7 +11,7 @@ export default class LogFunction extends AFunction{
      * @override
      */
     initAttributes() {
-        this.addInput('value', TYPES.STRING)
+        this.addInput('value', TYPES.ANY)
     }
 
     /**

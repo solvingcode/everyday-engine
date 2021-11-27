@@ -17,6 +17,7 @@ import FunctionCompiler, {STEPS} from './FunctionCompiler.js'
 import ContextCompiler from './ContextCompiler.js'
 import OnInitEvent from '../event/native/OnInitEvent.js'
 import GetVarValueFunction from '../function/native/component/GetVarValueFunction.js'
+import AAnimation from '../animation/AAnimation.js'
 
 export default class ClassCompiler extends Compiler {
 
@@ -203,6 +204,7 @@ export default class ClassCompiler extends Compiler {
         const classInstances = functionRegistry.getInstancesByClass(script.getName())
         const functionsToOptimize = [].concat(classInstances.filter(instance => instance instanceof AEvent))
             .concat(classInstances.filter(instance => instance instanceof ACustomFunction))
+            .concat(classInstances.filter(instance => instance instanceof AAnimation))
         functionsToOptimize.forEach(event => {
             event.setStack(this.getOptimizedStack(event, world))
         })
@@ -226,14 +228,11 @@ export default class ClassCompiler extends Compiler {
                 const calledFunctionName = args && args[0]
                 const stackFunction = functionRegistry.getInstance(calledFunctionName)
                 if (operation === OPERATIONS.CALL && ((stackFunction instanceof AStackFunction &&
-                    !(stackFunction instanceof ACustomFunction))
+                    !(stackFunction instanceof ACustomFunction) &&
+                    !(stackFunction instanceof AAnimation))
                     || stackFunction instanceof OnCallEvent)) {
-                    if (stackFunction.isOptimized()) {
-                        return [...optimizeStack, new StackOperation(OPERATIONS.JUMP, stackFunction.getName())]
-                    } else {
-                        stackFunction.setOptimized(true)
-                        return [...optimizeStack, ...this.getOptimizedStack(stackFunction, world)]
-                    }
+                    stackFunction.setOptimized(true)
+                    return [...optimizeStack, ...this.getOptimizedStack(stackFunction, world)]
                 } else if (operation === OPERATIONS.THEN) {
                     stackFunction.setValidated(true)
                 }

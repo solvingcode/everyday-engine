@@ -753,7 +753,7 @@ export default class DynamicAttributeHelper {
                 return !isNaN(value) && !isNaN(parseFloat(value))
             case TYPES.BOOLEAN:
                 return value === 'true' || value === '1' || value === true || value === '0' || value === false
-                    || value === 'false' || value === null
+                    || value === 'false' || value === null || value === ''
             case TYPES.STRING:
                 return _.isString(value) || _.isNumber(value)
             case TYPES.ANY:

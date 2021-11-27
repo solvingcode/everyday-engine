@@ -23,6 +23,8 @@ import AFunctionOutput from '../io/AFunctionOutput.js'
 import FunctionOutputTypeCompiler from './type/FunctionOutputTypeCompiler.js'
 import AConstant from '../constant/AConstant.js'
 import ConstantTypeCompiler from './type/ConstantTypeCompiler.js'
+import AReference from '../reference/AReference.js'
+import ReferenceTypeCompiler from './type/ReferenceTypeCompiler.js'
 
 export default class FunctionCompiler {
 
@@ -80,6 +82,8 @@ export default class FunctionCompiler {
             return CustomTypeCompiler
         } else if (aFunction instanceof AAnimation) {
             return AnimationTypeCompiler
+        } else if (aFunction instanceof AReference) {
+            return ReferenceTypeCompiler
         } else if (aFunction instanceof ACondition) {
             return ConditionTypeCompiler
         } else if (aFunction instanceof AConstant) {

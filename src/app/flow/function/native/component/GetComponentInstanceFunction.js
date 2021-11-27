@@ -19,7 +19,7 @@ export default class GetComponentInstanceFunction extends AFunction {
     /**
      * @override
      */
-    execute(functionRegistry, unit, scriptComponent, world) {
+    execute(functionRegistry, unit, scriptComponent, world, executionContext) {
         const classComponentName = this.getInputValue('component')
         const classComponent = world.getComponentRegistry().getInstance(classComponentName)
         if (!classComponent) {
