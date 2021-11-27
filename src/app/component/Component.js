@@ -84,6 +84,24 @@ export default class Component extends ComponentData{
     }
 
     /**
+     * @param {string} name
+     * @param {*} value
+     * @param {World} world
+     */
+    setKeyValue(name, value, world){
+        this.setValue(name, DynamicAttributeHelper.getValueByType(value, this.getType(name), world))
+    }
+
+    /**
+     * @param {string} name
+     * @param {World} world
+     * @return {*}
+     */
+    getKeyValue(name, world){
+        return DynamicAttributeHelper.getKeyByType(this.getValue(name), this.getType(name), world)
+    }
+
+    /**
      * @protected
      * @param {string} name
      * @return {*}

@@ -28,7 +28,9 @@ export default class AnimationTypeCompiler extends FunctionTypeCompiler {
             new StackOperation(OPERATIONS.PUSH, this.getScopedAttributedName(functionName, 'value'), CONSTANTS.RESULT),
             new StackOperation(OPERATIONS.CALL, not.getName(), functionName),
             new StackOperation(OPERATIONS.JUMP, CONSTANTS.RESULT, '[NEXT]start_animation'),
-            new StackOperation(OPERATIONS.PUSH, this.getScopedAttributedName(functionName, 'target'), element.getName()),
+            new StackOperation(OPERATIONS.PUSH, this.getScopedAttributedName(functionName, 'id'), element.getName()),
+            new StackOperation(OPERATIONS.CALL, getAnimation.getName(), functionName),
+            new StackOperation(OPERATIONS.PUSH, this.getScopedAttributedName(functionName, 'target'), CONSTANTS.RESULT),
             new StackOperation(OPERATIONS.CALL, startAnimation.getName(), functionName),
             new StackOperation(OPERATIONS.JUMP_TO, '[NEXT]start_animation')
         ])

@@ -27,6 +27,6 @@ export default class GetComponentFunction extends AFunction {
         if (!component) {
             throw new ClientError(`${this.getName()}: ${componentName} not found`)
         }
-        this.setOutputValue(component.getId())
+        this.setOutputValue(component)
     }
 }

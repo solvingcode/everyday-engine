@@ -15,7 +15,7 @@ export default class SetInstanceFunction extends AFunction{
     initAttributes() {
         this.addInput('component', TYPES.COMPONENT_INSTANCE, 0)
         this.addInput('attribute', TYPES.STRING)
-        this.addInput('value', TYPES.STRING)
+        this.addInput('value', TYPES.ANY)
     }
 
     /**

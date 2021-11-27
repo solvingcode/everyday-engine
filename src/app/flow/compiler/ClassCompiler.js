@@ -15,6 +15,8 @@ import {TYPES} from '../../pobject/AttributeType.js'
 import OnCallEvent from '../event/native/OnCallEvent.js'
 import FunctionCompiler, {STEPS} from './FunctionCompiler.js'
 import ContextCompiler from './ContextCompiler.js'
+import OnInitEvent from '../event/native/OnInitEvent.js'
+import GetVarValueFunction from '../function/native/component/GetVarValueFunction.js'
 
 export default class ClassCompiler extends Compiler {
 
@@ -50,6 +52,21 @@ export default class ClassCompiler extends Compiler {
                 functionRegistry.tryRegister(stackScriptFunction)
             }
         })
+
+        //create OnInitEvent
+        const mainFunction = script.getMainFunction()
+        const onInitEvent = new OnInitEvent(`${script.getName()}.${mainFunction.getName()}.OnInit`)
+        const getVarValueFunction = new GetVarValueFunction()
+        onInitEvent.setClassName(script.getName())
+        const nodeVars = ScriptHelper.getScriptVars(script, world)
+        nodeVars.forEach((variable) => {
+            onInitEvent.getStack().push(...[
+                new StackOperation(OPERATIONS.PUSH, 'variable', variable.getAttrName()),
+                new StackOperation(OPERATIONS.CALL, getVarValueFunction.getName()),
+                new StackOperation(OPERATIONS.SET, variable.getAttrName()),
+            ])
+        })
+        functionRegistry.tryRegister(onInitEvent)
 
         //compile stack function
         script.getFunctions().forEach(scriptFunction => {

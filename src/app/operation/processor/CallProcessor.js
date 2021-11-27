@@ -35,7 +35,7 @@ export default class CallProcessor {
                 throw new ClientError(`Function "${calledFunctionName}": Input name ${inputScopeName} not provided`)
             }
             const value = stackRegister.pop(functionName, inputScopeName)
-            if (DynamicAttributeHelper.validateValueByType(value, inputType, world, unit, scriptComponent)) {
+            if (DynamicAttributeHelper.validateValueByType(value, inputType, world)) {
                 calledFunction.setInputValue(inputName, value)
             } else {
                 throw new ClientError(`"${inputName}": Value invalid (type: "${AttributeType.getName(inputType)}", value: "${value}")`)

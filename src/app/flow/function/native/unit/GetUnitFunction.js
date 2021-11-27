@@ -26,6 +26,6 @@ export default class GetUnitFunction extends AFunction{
         if(!unit){
             throw new ClientError(`GetUnit: ${name} not found`)
         }
-        this.setOutputValue(unit.getId())
+        this.setOutputValue(unit)
     }
 }

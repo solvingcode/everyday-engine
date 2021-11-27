@@ -20,8 +20,8 @@ export default class ALoop extends AFunction{
     /**
      * @override
      */
-    execute() {
-        const index = this.getInputValue('index') || 0
+    execute(functionRegistry, unit, scriptComponent, world, executionContext) {
+        const index = parseInt(this.getInputValue('index') || 0)
         const array = this.getInputValue('array')
         const attributes = [
             new DynamicAttribute('index', TYPES.NUMBER, index + 1),

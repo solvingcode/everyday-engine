@@ -21,6 +21,6 @@ export default class GetUnitByComponentFunction extends AFunction{
     execute(functionRegistry, unit, scriptComponent, world) {
         const component = this.getInputValue('component')
         const unitFound = world.getUnitManager().findUnitByComponent(component)
-        this.setOutputValue(unitFound && unitFound.getId())
+        this.setOutputValue(unitFound)
     }
 }

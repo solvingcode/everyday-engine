@@ -114,6 +114,8 @@ import DontDestroyOnLoadFunction from '../flow/function/native/unit/DontDestroyO
 import FindUnitsByNameFunction from '../flow/function/native/unit/FindUnitsByNameFunction.js'
 import GetFunctionFunction from '../flow/function/native/function/GetFunctionFunction.js'
 import GetAnimationFunction from '../flow/function/native/animation/GetAnimationFunction.js'
+import SetKeyVarFunction from '../flow/function/native/component/SetKeyVarFunction.js'
+import GetVarValueFunction from '../flow/function/native/component/GetVarValueFunction.js'
 
 export default class FunctionRegistry extends Registry{
 
@@ -217,6 +219,8 @@ export default class FunctionRegistry extends Registry{
             new GetUnitByComponentFunction(),
             new GetVarFunction(),
             new SetVarFunction(),
+            new SetKeyVarFunction(),
+            new GetVarValueFunction(),
 
             //Audio
             new PlayAudioFunction(),

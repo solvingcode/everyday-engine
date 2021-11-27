@@ -1,8 +1,5 @@
 import AssetScript from '../asset/types/script/AssetScript.js'
 import SystemError from '../exception/type/SystemError.js'
-import VariableNode from '../flow/node/variable/VariableNode.js'
-import NodeHelper from './NodeHelper.js'
-import DynamicAttribute from '../pobject/DynamicAttribute.js'
 import AssetAnimationScriptXml from '../asset/types/animation/AssetAnimationScriptXml.js'
 import AnimationComponent from '../component/internal/AnimationComponent.js'
 import ClientError from '../exception/type/ClientError.js'
@@ -77,25 +74,7 @@ export default class AssetHelper {
         if (!script) {
             throw new ClientError(`No compiled script found for asset "${asset.getName()}"`)
         }
-        return this.getScriptVars(script, world)
-    }
-
-    /**
-     * @param {AScript} script
-     * @param {World} world
-     * @return {DynamicAttribute[]}
-     */
-    static getScriptVars(script, world) {
-        const functionScript = script.getMainFunction()
-        if (functionScript) {
-            const nodes = functionScript.findNodesByClass(VariableNode)
-            return [...nodes.map(node => {
-                const sourceNode = NodeHelper.getSourceNode(node, world)
-                return new DynamicAttribute(sourceNode.getName(), sourceNode.getOutput().getAttrType())
-            }), ...(script.getParentName() ?
-                this.getScriptVars(world.getScriptManager().findByName(script.getParentName()), world) : [])]
-        }
-        return []
+        return ScriptHelper.getScriptVars(script, world)
     }
 
     /**

@@ -14,6 +14,7 @@ import OnInputAttackEvent from '../../flow/event/native/OnInputAttackEvent.js'
 import OnButtonClickEvent from '../../flow/event/native/OnButtonClickEvent.js'
 import UnitHelper from '../../utils/UnitHelper.js'
 import OnStartEvent from '../../flow/event/native/OnStartEvent.js'
+import OnInitEvent from '../../flow/event/native/OnInitEvent.js'
 
 export default class ScriptExecutor extends ComponentExecutor {
 
@@ -55,11 +56,16 @@ export default class ScriptExecutor extends ComponentExecutor {
 
                         instance instanceof OnUpdateEvent ||
 
-                        (instance instanceof OnStartEvent && !scriptComponent.isStarted())
+                        (instance instanceof OnStartEvent && !scriptComponent.isStarted() && scriptComponent.isInitialized()) ||
+
+                        (instance instanceof OnInitEvent && !scriptComponent.isInitialized())
                     ) {
                         instance.execute(functionRegistry, unit, scriptComponent, world, executionContext)
                         if (instance instanceof OnStartEvent) {
                             scriptComponent.setStarted(true)
+                        }
+                        if (instance instanceof OnInitEvent) {
+                            scriptComponent.setInitialized(true)
                         }
                     }
                 })

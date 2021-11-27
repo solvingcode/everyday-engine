@@ -260,6 +260,13 @@ export default class AssetsManager extends AssetsManagerData {
     }
 
     /**
+     * @return {Asset[]}
+     */
+    getScriptAssets() {
+        return this.getAssets().filter(asset => AssetHelper.isAssetScript(asset))
+    }
+
+    /**
      * @param {Blob} blob
      * @param {string} data
      * @return {Class<AssetType>}

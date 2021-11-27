@@ -12,7 +12,7 @@ export default class SetFunction extends AFunction{
      * @override
      */
     initAttributes() {
-        this.addInput('component', TYPES.COMPONENT, 0)
+        this.addInput('component', TYPES.STRING, 0)
         this.addInput('attribute', TYPES.STRING)
         this.addInput('value', TYPES.STRING)
     }
@@ -21,10 +21,11 @@ export default class SetFunction extends AFunction{
      * @override
      */
     execute(functionRegistry, unit, scriptComponent, world) {
-        const classComponent = this.getInputValue('component')
+        const classComponentName = this.getInputValue('component')
+        const classComponent = world.getComponentRegistry().getInstance(classComponentName)
         const attribute = this.getInputValue('attribute')
         const value = this.getInputValue('value')
-        const component = unit.getComponent(classComponent)
+        const component = unit.getComponent(classComponent.constructor)
         component.setValue(attribute, value)
         if(classComponent === MeshComponent){
             component.setGenerated(false)

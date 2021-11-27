@@ -18,7 +18,7 @@ export default class ScriptComponent extends Component {
      * @override
      */
     getExcludeFields() {
-        return ['script', 'started']
+        return ['script', 'started', 'initialized']
     }
 
     /**
@@ -38,6 +38,7 @@ export default class ScriptComponent extends Component {
     initAttributes() {
         this.add('script', TYPES.STRING)
         this.add('started', TYPES.BOOLEAN)
+        this.add('initialized', TYPES.BOOLEAN)
     }
 
     /**
@@ -73,6 +74,27 @@ export default class ScriptComponent extends Component {
      */
     setStarted(started) {
         this.setValue('started', started)
+    }
+
+    /**
+     * @return {boolean}
+     */
+    getInitialized() {
+        return this.getValue('initialized')
+    }
+
+    /**
+     * @return {boolean}
+     */
+    isInitialized(){
+        return this.getInitialized()
+    }
+
+    /**
+     * @param {boolean} initialized
+     */
+    setInitialized(initialized) {
+        this.setValue('initialized', initialized)
     }
 
     /**

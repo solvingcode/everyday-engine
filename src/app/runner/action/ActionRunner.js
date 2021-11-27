@@ -130,6 +130,7 @@ import StopAnimationRecordingAction from './animation/StopAnimationRecordingActi
 import SelectAnimationKeyFrameAction from './animation/SelectAnimationKeyFrameAction.js'
 import AddCrudAction from './crud/AddCrudAction.js'
 import DeleteCrudAction from './crud/DeleteCrudAction.js'
+import CompileAllScriptAction from './script/CompileAllScriptAction.js'
 
 /**
  * Action Runner class.
@@ -202,6 +203,7 @@ class ActionRunner extends Runner {
             ADD_ASSET_SCENE: AddAssetSceneAction,
             COMPILE_ASSET_SCRIPT: CompileAssetScriptAction,
             COMPILE_SCRIPT: CompileScriptAction,
+            COMPILE_ALL_SCRIPT: CompileAllScriptAction,
             EDIT_ASSET_SCRIPT_XML: EditAssetScriptXmlAction,
             EDIT_ASSET: EditAssetAction,
             NEW_PROJECT: NewProjectAction,

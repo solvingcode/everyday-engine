@@ -630,6 +630,9 @@ AppState.States = {
     ACTION_SELECT_ANIMATION_KEYFRAME_START: {history: false},
     ACTION_SELECT_ANIMATION_KEYFRAME_PROGRESS: {history: false},
     ACTION_SELECT_ANIMATION_KEYFRAME_STOP: {history: false},
+    ACTION_COMPILE_ALL_SCRIPT_START: {history: false},
+    ACTION_COMPILE_ALL_SCRIPT_PROGRESS: {history: false},
+    ACTION_COMPILE_ALL_SCRIPT_STOP: {history: false},
 }
 
 export default AppState

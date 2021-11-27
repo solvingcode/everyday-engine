@@ -37,6 +37,8 @@ import UnitInstantVariableNode from '../flow/node/variable/UnitInstantVariableNo
 import ThenNode from '../flow/node/ThenNode.js'
 import ArrayVariableNode from '../flow/node/variable/ArrayVariableNode.js'
 import GetVariableNode from '../flow/node/variable/GetVariableNode.js'
+import VariableNode from '../flow/node/variable/VariableNode.js'
+import DynamicAttribute from '../pobject/DynamicAttribute.js'
 
 export default class ScriptHelper {
 
@@ -499,5 +501,23 @@ export default class ScriptHelper {
             }
         })
         return xmlNodes
+    }
+
+    /**
+     * @param {AScript} script
+     * @param {World} world
+     * @return {DynamicAttribute[]}
+     */
+    static getScriptVars(script, world) {
+        const functionScript = script.getMainFunction()
+        if (functionScript) {
+            const nodes = functionScript.findNodesByClass(VariableNode)
+            return [...nodes.map(node => {
+                const sourceNode = NodeHelper.getSourceNode(node, world)
+                return new DynamicAttribute(sourceNode.getName(), sourceNode.getOutput().getAttrType())
+            }), ...(script.getParentName() ?
+                this.getScriptVars(world.getScriptManager().findByName(script.getParentName()), world) : [])]
+        }
+        return []
     }
 }

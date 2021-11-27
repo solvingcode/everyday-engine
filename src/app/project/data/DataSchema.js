@@ -249,6 +249,9 @@ import CircleSelectorUnitInstant from '../../unit/instant/type/internal/edit/Cir
 import FindUnitsByNameFunction from '../../flow/function/native/unit/FindUnitsByNameFunction.js'
 import GetFunctionFunction from '../../flow/function/native/function/GetFunctionFunction.js'
 import GetAnimationFunction from '../../flow/function/native/animation/GetAnimationFunction.js'
+import SetKeyVarFunction from '../../flow/function/native/component/SetKeyVarFunction.js'
+import GetVarValueFunction from '../../flow/function/native/component/GetVarValueFunction.js'
+import OnInitEvent from '../../flow/event/native/OnInitEvent.js'
 
 /**
  * @class {DataSchema}
@@ -465,7 +468,7 @@ class DataSchema {
         {id: 1970, type: FunctionScript},
         {id: 1980, type: ComponentVariableNode},
         {id: 1990, type: NumberVariableNode},
-        {id: 1990, type: MaskGroupVariableNode},
+        {id: 1991, type: MaskGroupVariableNode},
         {id: 2000, type: ArrayVariableNode},
         {id: 2010, type: AudioVariableNode},
         {id: 2020, type: BooleanVariableNode},
@@ -493,6 +496,9 @@ class DataSchema {
         {id: 2240, type: FindUnitsByNameFunction},
         {id: 2250, type: GetFunctionFunction},
         {id: 2260, type: GetAnimationFunction},
+        {id: 2270, type: SetKeyVarFunction},
+        {id: 2280, type: GetVarValueFunction},
+        {id: 2290, type: OnInitEvent},
     ]
 
     /**

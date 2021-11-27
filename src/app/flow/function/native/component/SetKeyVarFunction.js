@@ -1,10 +1,10 @@
 import {TYPES} from '../../../../pobject/AttributeType.js'
 import AFunction from '../../AFunction.js'
 
-export default class SetVarFunction extends AFunction{
+export default class SetKeyVarFunction extends AFunction{
 
     constructor() {
-        super('SetVar')
+        super('SetKeyVar')
     }
 
     /**
@@ -12,15 +12,15 @@ export default class SetVarFunction extends AFunction{
      */
     initAttributes() {
         this.addInput('variable', TYPES.STRING)
-        this.addInput('value', TYPES.ANY)
+        this.addInput('value', TYPES.STRING)
     }
 
     /**
      * @override
      */
-    execute(functionRegistry, unit, scriptComponent, world) {
+    execute(functionRegistry, unit, scriptComponent, world, executionContext) {
         const variable = this.getInputValue('variable')
         const value = this.getInputValue('value')
-        scriptComponent.setValue(variable, value)
+        scriptComponent.setKeyValue(variable, value, world)
     }
 }

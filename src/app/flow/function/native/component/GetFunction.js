@@ -11,7 +11,7 @@ export default class GetFunction extends AFunction{
      * @override
      */
     initAttributes() {
-        this.addInput('component', TYPES.COMPONENT, 0)
+        this.addInput('component', TYPES.STRING, 0)
         this.addInput('attribute', TYPES.STRING)
         this.addOutput(TYPES.ANY)
     }
@@ -20,9 +20,10 @@ export default class GetFunction extends AFunction{
      * @override
      */
     execute(functionRegistry, unit, scriptComponent, world) {
-        const classComponent = this.getInputValue('component')
+        const classComponentName = this.getInputValue('component')
+        const classComponent = world.getComponentRegistry().getInstance(classComponentName)
         const attribute = this.getInputValue('attribute')
-        const component = unit.getComponent(classComponent)
+        const component = unit.getComponent(classComponent.constructor)
         this.setOutputValue(component.getValue(attribute))
     }
 }

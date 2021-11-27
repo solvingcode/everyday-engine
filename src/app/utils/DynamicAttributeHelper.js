@@ -4,6 +4,7 @@ import ClientError from '../exception/type/ClientError.js'
 import Layout from '../layout/Layout.js'
 import Component from '../component/Component.js'
 import RegexHelper from './RegexHelper.js'
+import Vector from './Vector.js'
 
 export default class DynamicAttributeHelper {
 
@@ -564,11 +565,33 @@ export default class DynamicAttributeHelper {
      * @param {*} value
      * @param {string} type
      * @param {World} world
-     * @param {Unit} unit
-     * @param {ScriptComponent} scriptComponent
      * @return {*}
      */
-    static getValueByType(value, type, world, unit, scriptComponent) {
+    static getKeyByType(value, type, world) {
+        switch (type) {
+            case TYPES.UNIT:
+            case TYPES.ANIMATION:
+            case TYPES.COMPONENT_INSTANCE:
+            case TYPES.MASK_GROUP_INSTANCE:
+            case TYPES.AUDIO:
+            case TYPES.UNIT_INSTANT:
+            case TYPES.SCENE:
+            case TYPES.FONT:
+                return value.getId()
+            case TYPES.FUNCTION:
+            case TYPES.COMPONENT:
+                return value.getName()
+        }
+        return value
+    }
+
+    /**
+     * @param {*} value
+     * @param {number} type
+     * @param {World} world
+     * @return {*}
+     */
+    static getValueByType(value, type, world) {
         let newValue = value
         switch (type) {
             case TYPES.UNIT:
@@ -579,7 +602,8 @@ export default class DynamicAttributeHelper {
                 }
                 break
             case TYPES.ANIMATION:
-                newValue = world.getAnimationManager().findById(parseInt(value))
+                const animationManager = world.getAnimationManager()
+                newValue = animationManager.hasAnimation(value) ? value : animationManager.findById(parseInt(value))
                 if (!newValue) {
                     throw new ClientError(`${this.constructor.name}: Animation "${value}" not found`)
                 }
@@ -594,9 +618,7 @@ export default class DynamicAttributeHelper {
             case TYPES.COMPONENT_INSTANCE:
                 const unitManagerComponent = world.getUnitManager()
                 const componentInstance = unitManagerComponent.hasComponent(value) ? value :
-                    (value === '[self]'
-                        ? scriptComponent
-                        : world.getUnitManager().findComponentById(parseInt(value)))
+                    world.getUnitManager().findComponentById(parseInt(value))
                 if (!componentInstance) {
                     throw new ClientError(`${this.constructor.name}: Component Instance "${value}" not found`)
                 }
@@ -635,7 +657,8 @@ export default class DynamicAttributeHelper {
                 newValue = scene
                 break
             case TYPES.FUNCTION:
-                const func = world.getFunctionRegistry().getInstance(value)
+                const functionRegistry = world.getFunctionRegistry()
+                const func = functionRegistry.hasInstance(value) ? value : functionRegistry.getInstance(value)
                 if (!func) {
                     throw new ClientError(`${this.constructor.name}: Function "${value}" not found`)
                 }
@@ -689,11 +712,9 @@ export default class DynamicAttributeHelper {
      * @param {*} value
      * @param {number} type
      * @param {World} world
-     * @param {Unit} unit
-     * @param {ScriptComponent} scriptComponent
      * @return {*}
      */
-    static validateValueByType(value, type, world, unit, scriptComponent) {
+    static validateValueByType(value, type, world) {
         switch (type) {
             case TYPES.UNIT:
                 return world.getUnitManager().hasUnit(value)
@@ -724,6 +745,8 @@ export default class DynamicAttributeHelper {
                 return _.isArray(value) && value.every(eArray => eArray instanceof DynamicAttribute)
             case TYPES.DYNAMIC_ATTRIBUTE:
                 return value instanceof DynamicAttribute
+            case TYPES.VECTOR:
+                return value instanceof Vector
             case TYPES.NUMBER:
                 return !isNaN(value) && !isNaN(parseFloat(value))
             case TYPES.RANGE:
@@ -732,7 +755,9 @@ export default class DynamicAttributeHelper {
                 return value === 'true' || value === '1' || value === true || value === '0' || value === false
                     || value === 'false' || value === null
             case TYPES.STRING:
-                return _.isString(value)
+                return _.isString(value) || _.isNumber(value)
+            case TYPES.ANY:
+                return true
         }
         return false
     }
