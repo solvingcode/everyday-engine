@@ -252,6 +252,8 @@ import GetAnimationFunction from '../../flow/function/native/animation/GetAnimat
 import SetKeyVarFunction from '../../flow/function/native/component/SetKeyVarFunction.js'
 import GetVarValueFunction from '../../flow/function/native/component/GetVarValueFunction.js'
 import OnInitEvent from '../../flow/event/native/OnInitEvent.js'
+import VariableScript from '../../flow/VariableScript.js'
+import AClassVariable from '../../flow/function/variable/AClassVariable.js'
 
 /**
  * @class {DataSchema}
@@ -499,6 +501,8 @@ class DataSchema {
         {id: 2270, type: SetKeyVarFunction},
         {id: 2280, type: GetVarValueFunction},
         {id: 2290, type: OnInitEvent},
+        {id: 2300, type: VariableScript},
+        {id: 2310, type: AClassVariable},
     ]
 
     /**

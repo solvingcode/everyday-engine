@@ -15,7 +15,7 @@ import CameraRunner from '../runner/camera/CameraRunner.js'
 import CameraExecutor from '../executor/type/CameraExecutor.js'
 import LightExecutor from '../executor/type/LightExecutor.js'
 import LightRunner from '../runner/light/LightRunner.js'
-import SceneRunner from '../runner/scene/SceneRunner.js'
+import GameSceneRunner from '../runner/scene/GameSceneRunner.js'
 import TransformExecutor from '../executor/type/TransformExecutor.js'
 import MeshExecutor from '../executor/type/MeshExecutor.js'
 import MeshRendererExecutor from '../executor/type/MeshRendererExecutor.js'
@@ -42,7 +42,7 @@ class GameLoop extends SceneLoop {
     constructor() {
         super()
         this.runners = [
-            WorldInitializeRunner, SceneRunner, CameraRunner, PhysicsRunner, GameExecutorRunner, LightRunner]
+            WorldInitializeRunner, GameSceneRunner, CameraRunner, PhysicsRunner, GameExecutorRunner, LightRunner]
         ExecutorRegistry.get().register([
             new CameraExecutor(),
             new AnimationPlayerExecutor(),

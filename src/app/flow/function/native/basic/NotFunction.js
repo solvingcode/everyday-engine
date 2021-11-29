@@ -11,7 +11,7 @@ export default class NotFunction extends AFunction{
      * @override
      */
     initAttributes() {
-        this.addInput('value', TYPES.BOOLEAN, 0)
+        this.addInput('value', TYPES.ANY, 0)
         this.addOutput(TYPES.BOOLEAN)
     }
 

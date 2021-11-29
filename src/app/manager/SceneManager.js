@@ -170,13 +170,14 @@ export default class SceneManager extends SceneManagerData {
     /**
      * @param {World} world
      * @param {Scene} scene
+     * @param {boolean} edit
      * @param {string} mode
      */
-    load(world, scene, mode = SceneLoadMode.DEFAULT) {
+    load(world, scene, edit, mode = SceneLoadMode.DEFAULT) {
         if (scene) {
             const exist = this.findByName(scene.getName())
             if (exist) {
-                world.loadScene(scene, mode)
+                world.loadScene(scene, mode, edit)
                 exist.setLoaded(true)
             } else {
                 throw new SystemError(`Scene with name "${scene.getName()}" not found`)

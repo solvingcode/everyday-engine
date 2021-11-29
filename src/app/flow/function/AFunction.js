@@ -17,16 +17,19 @@ export default class AFunction extends FunctionData{
 
     /**
      * @param {string} name
+     * @param {*} params
      */
-    constructor(name) {
+    constructor(name, params = {}) {
         super(name)
-        this.init()
+        this.init(params)
     }
 
     /**
      * @abstract
+     * @param {*} params
+     * @return {void}
      */
-    initAttributes() {
+    initAttributes(params) {
         throw new SystemError(`${this.constructor.name}.initAttributes must be implemented`)
     }
 
@@ -99,8 +102,11 @@ export default class AFunction extends FunctionData{
         return this.getName().replace(regexName, '$2')
     }
 
-    init() {
-        this.initAttributes()
+    /**
+     * @param {*} params
+     */
+    init(params) {
+        this.initAttributes(params)
     }
 
     /**

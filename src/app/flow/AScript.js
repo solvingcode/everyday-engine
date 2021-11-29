@@ -32,11 +32,21 @@ export default class AScript extends AScriptData {
      * @param {FunctionRegistry} functionRegistry
      * @param {AScriptFunction} func
      */
-    deleteFunction(functionRegistry, func){
+    deleteFunction(functionRegistry, func) {
         const index = this.functions.findIndex(pFunc => pFunc === func)
-        if(index >= 0){
+        if (index >= 0) {
             this.functions.splice(index, 1)
             func.delete(functionRegistry)
+        }
+    }
+
+    /**
+     * @param {VariableScript} variable
+     */
+    deleteVariable(variable) {
+        const index = this.variables.findIndex(pVariable => pVariable === variable)
+        if (index >= 0) {
+            this.variables.splice(index, 1)
         }
     }
 

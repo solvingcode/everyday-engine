@@ -27,6 +27,7 @@ import CameraComponent from '../component/internal/CameraComponent.js'
 import AssetHelper from '../utils/AssetHelper.js'
 import SystemError from '../exception/type/SystemError.js'
 import ScriptComponent from '../component/internal/ScriptComponent.js'
+import UnitDataIdGenerator from '../generator/data/id/UnitDataIdGenerator.js'
 
 /**
  * @class {World}
@@ -111,7 +112,7 @@ class World extends WorldData {
             AssetHelper.parseAsset(asset, storage).then(result => {
                 if (AssetHelper.isAssetAnimation(asset)) {
                     this.getAnimationManager().add(result)
-                }else if (AssetHelper.isAssetScript(asset)) {
+                } else if (AssetHelper.isAssetScript(asset)) {
                     this.getScriptManager().add(result)
                 } else {
                     throw new SystemError(`Cannot parse assets: ${asset.getType().constructor.name} not supported`)
@@ -133,7 +134,7 @@ class World extends WorldData {
     /**
      * @return {boolean}
      */
-    isReloaded(){
+    isReloaded() {
         return this.reloaded
     }
 
@@ -233,9 +234,9 @@ class World extends WorldData {
      * @param {Unit} unit
      * @return {number}
      */
-    getRankUnit(unit){
+    getRankUnit(unit) {
         const layerGroup = this.getPreference().getLayerGroup().find(parseInt(unit.getLayerId()))
-        if(layerGroup){
+        if (layerGroup) {
             return layerGroup.getRank()
         }
         return 0
@@ -252,14 +253,18 @@ class World extends WorldData {
     /**
      * @param {Scene} scene
      * @param {string} mode
+     * @param {boolean} edit
      */
-    loadScene(scene, mode) {
+    loadScene(scene, mode, edit) {
         if (mode !== SceneLoadMode.APPEND) {
             this.getSceneManager().getScenes()
                 .filter(pScene => pScene !== scene).forEach(pScene => pScene.setIncluded(false) && pScene.setActive(false))
             scene.setActive(true)
         }
-        const unitsToLoad = scene.getUnitManager().getUnits()
+        const unitsToLoad = edit ? scene.getUnitManager().getUnits() : _.cloneDeep(scene.getUnitManager().getUnits())
+        if (!edit) {
+            UnitDataIdGenerator.generate(unitsToLoad)
+        }
         this.restartUnits(unitsToLoad)
         this.getUnitManager().getUnits().push(...unitsToLoad)
         this.regenerateAll()
@@ -268,10 +273,12 @@ class World extends WorldData {
     /**
      * @param {Unit[]} units
      */
-    restartUnits(units){
+    restartUnits(units) {
         units.forEach(unit => {
-            unit.findComponentsByClass(ScriptComponent).forEach(scriptComponent =>
-                scriptComponent.setStarted(false))
+            unit.findComponentsByClass(ScriptComponent).forEach(scriptComponent => {
+                scriptComponent.setInitialized(false)
+                scriptComponent.setStarted(false)
+            })
         })
     }
 
@@ -319,7 +326,7 @@ class World extends WorldData {
         this.reloadAllUnit()
     }
 
-    forceReload(){
+    forceReload() {
         this.reloaded = false
     }
 

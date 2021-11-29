@@ -1,20 +1,10 @@
-import Runner from '../Runner.js'
-import World from '../../world/World.js'
-
-export default class SceneRunner extends Runner {
+export default class SceneHelper {
 
     /**
-     * @override
+     * @param {World} world
+     * @param {boolean} edit
      */
-    isHandle(window) {
-        return true
-    }
-
-    /**
-     * @override
-     */
-    execute() {
-        const world = World.get()
+    static load(world, edit){
         const sceneManager = world.getSceneManager()
         const unLoadingScenes = sceneManager.getUnLoading()
         const loadingScenes = sceneManager.getLoading()
@@ -23,7 +13,7 @@ export default class SceneRunner extends Runner {
         if(unLoadingScenes.length){
             world.unloadAllScene()
         }
-        loadingScenes.forEach(scene => sceneManager.load(world, scene))
+        loadingScenes.forEach(scene => sceneManager.load(world, scene, edit))
 
         if(unLoadingScenes.length || loadingScenes.length){
             world.forceReload()

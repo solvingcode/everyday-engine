@@ -5,6 +5,7 @@ import ScriptShowMenuItem from './ScriptShowMenuItem.js'
 import AddScriptNodeInputListMenuItem from './edge/list/AddScriptNodeInputListMenuItem.js'
 import ScriptFunctionsMenuItem from './function/ScriptFunctionsMenuItem.js'
 import EditScriptFormMenuItem from './edit/EditScriptFormMenuItem.js'
+import ScriptVariablesMenuItem from './variable/ScriptVariablesMenuItem.js'
 
 export default class ScriptMenuItem extends PanelMenuItem {
     constructor() {
@@ -15,6 +16,7 @@ export default class ScriptMenuItem extends PanelMenuItem {
         this.items = [
             new EditScriptFormMenuItem(this),
             new ScriptFunctionsMenuItem(this),
+            new ScriptVariablesMenuItem(),
             new ScriptShowMenuItem(this),
             new AddScriptNodeInputListMenuItem(this)
         ]

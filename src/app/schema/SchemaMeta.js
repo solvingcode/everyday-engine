@@ -37,6 +37,7 @@ import ClassScript from '../flow/ClassScript.js'
 import FunctionScript from '../flow/FunctionScript.js'
 import LayerGroupPreference from '../preference/layerGroup/LayerGroupPreference.js'
 import LayerGroup from '../preference/layerGroup/LayerGroup.js'
+import VariableScript from '../flow/VariableScript.js'
 
 /**
  * Define the schema of project data.
@@ -744,6 +745,22 @@ export default {
                                     },
                                     assetId: {
                                         type: TYPES.NUMBER
+                                    },
+                                    variables: {
+                                        type: Array,
+                                        meta: {
+                                            element: {
+                                                prototype: VariableScript,
+                                                meta: {
+                                                    definition: {
+                                                        type: TYPES.DYNAMIC_ATTRIBUTE
+                                                    },
+                                                    selected: {
+                                                        type: TYPES.BOOLEAN
+                                                    }
+                                                }
+                                            }
+                                        }
                                     },
                                     functions: {
                                         type: Array,

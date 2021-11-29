@@ -60,6 +60,7 @@ import DeleteFunctionMenuItem from '../layout/items/script/function/delete/Delet
 import LayerGroup from '../preference/layerGroup/LayerGroup.js'
 import EditCrudPopupButtonMenuItem from '../layout/items/crud/edit/EditCrudPopupButtonMenuItem.js'
 import DeleteCrudMenuItem from '../layout/items/crud/delete/DeleteCrudMenuItem.js'
+import VariableScript from '../flow/VariableScript.js'
 
 export default class OptionHelper {
 
@@ -67,15 +68,15 @@ export default class OptionHelper {
      * @param {*} bindObject
      * @return {MenuItem[]}
      */
-    static getList(bindObject){
+    static getList(bindObject) {
         const options = []
-        if(bindObject instanceof Scene){
+        if (bindObject instanceof Scene) {
             options.push(...[
                 new SceneLoadMenuItem(bindObject),
                 new SceneUnLoadMenuItem(bindObject)
             ])
         }
-        if(bindObject instanceof Unit){
+        if (bindObject instanceof Unit) {
             options.push(...[
                 new OptionActionsTitleMenuItem('Edit'),
                 new CopyMenuItem(),
@@ -93,7 +94,7 @@ export default class OptionHelper {
                 new CreateUnitInstantMenuItem()
             ])
         }
-        if(bindObject instanceof Asset){
+        if (bindObject instanceof Asset) {
             options.push(...[
                 new DeleteAssetMenuItem(),
                 new AddAssetSceneMenuItem(),
@@ -109,37 +110,38 @@ export default class OptionHelper {
                 new LoadUnitInstantMenuItem()
             ])
         }
-        if(bindObject instanceof Folder){
+        if (bindObject instanceof Folder) {
             options.push(...[
                 new AddFolderMenuItem(),
-                new DeleteFolderMenuItem(),
+                new DeleteFolderMenuItem()
             ])
         }
-        if(bindObject instanceof MaskGroup){
+        if (bindObject instanceof MaskGroup) {
             options.push(...[
                 new EditMaskPopupButtonMenuItem(bindObject),
-                new DeleteMaskMenuItem(null, bindObject),
+                new DeleteMaskMenuItem(null, bindObject)
             ])
         }
-        if(bindObject instanceof LayerGroup){
+        if (bindObject instanceof LayerGroup ||
+            bindObject instanceof VariableScript) {
             options.push(...[
                 new EditCrudPopupButtonMenuItem(bindObject),
-                new DeleteCrudMenuItem(null, bindObject),
+                new DeleteCrudMenuItem(null, bindObject)
             ])
         }
-        if(bindObject instanceof GameInput){
+        if (bindObject instanceof GameInput) {
             options.push(...[
                 new EditGameInputPopupButtonMenuItem(bindObject),
-                new DeleteGameInputMenuItem(null, bindObject),
+                new DeleteGameInputMenuItem(null, bindObject)
             ])
         }
-        if(bindObject && bindObject.bind instanceof AssetsListMenuItem){
+        if (bindObject && bindObject.bind instanceof AssetsListMenuItem) {
             options.push(...[
                 new AddFolderMenuItem(),
-                new AddAssetMenuItem(),
+                new AddAssetMenuItem()
             ])
         }
-        if(bindObject === UIHelper.UI.SCENE){
+        if (bindObject === UIHelper.UI.SCENE) {
             options.push(...[
                 new OptionActionsTitleMenuItem('Edit'),
                 new PasteMenuItem(),
@@ -150,10 +152,10 @@ export default class OptionHelper {
                 new LightGlobalMenuItem(),
                 new TileGridMenuItem(),
                 new TileMapMenuItem(),
-                new OptionActionsButtonMenuItem('UI', UITopMenuItem, null, true),
+                new OptionActionsButtonMenuItem('UI', UITopMenuItem, null, true)
             ])
         }
-        if(bindObject === UIHelper.UI.SCRIPT){
+        if (bindObject === UIHelper.UI.SCRIPT) {
             options.push(...[
                 new OptionActionsTitleMenuItem('Script'),
                 new AddScriptFunctionPopupButtonMenuItem(),
@@ -162,19 +164,19 @@ export default class OptionHelper {
                 new OptionActionsTitleMenuItem('Node'),
                 new AddScriptNodePopupButtonMenuItem(),
                 new DeleteSelectedNodeMenuItem(),
-                new CopySelectedNodeMenuItem(),
+                new CopySelectedNodeMenuItem()
             ])
         }
-        if(bindObject instanceof VariableNode){
+        if (bindObject instanceof VariableNode) {
             options.push(...[
                 new OptionActionsTitleMenuItem('Node'),
-                new DeleteScriptNodeMenuItem(null, bindObject),
+                new DeleteScriptNodeMenuItem(null, bindObject)
             ])
         }
-        if(bindObject instanceof AScriptFunction){
+        if (bindObject instanceof AScriptFunction) {
             options.push(...[
                 new OptionActionsTitleMenuItem('Script'),
-                new DeleteFunctionMenuItem(null, bindObject),
+                new DeleteFunctionMenuItem(null, bindObject)
             ])
         }
         return options

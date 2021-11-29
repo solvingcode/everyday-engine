@@ -1,5 +1,6 @@
 import DataIdGenerator from './DataIdGenerator.js'
 import Maths from '../../../utils/Maths.js'
+import {TYPES} from '../../../pobject/AttributeType.js'
 
 export default class UnitDataIdGenerator extends DataIdGenerator{
 
@@ -21,6 +22,12 @@ export default class UnitDataIdGenerator extends DataIdGenerator{
             unit.setUnitParentId(newUnitIds[unit.getUnitParentId()])
             unit.getComponents().forEach(component => {
                 component.setId(newComponentIds[component.getId()])
+                component.getAttributes()
+                    .filter(attribute => attribute.getAttrType() === TYPES.UNIT)
+                    .forEach(attribute => attribute.setAttrValue(newUnitIds[attribute.getAttrValue()]))
+                component.getAttributes()
+                    .filter(attribute => attribute.getAttrType() === TYPES.COMPONENT_INSTANCE)
+                    .forEach(attribute => attribute.setAttrValue(newComponentIds[attribute.getAttrValue()]))
             })
         })
     }

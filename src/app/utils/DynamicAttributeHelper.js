@@ -593,6 +593,9 @@ export default class DynamicAttributeHelper {
      */
     static getValueByType(value, type, world) {
         let newValue = value
+        if (newValue === '[undefined]') {
+            return undefined
+        }
         switch (type) {
             case TYPES.UNIT:
                 const unitManager = world.getUnitManager()
@@ -715,6 +718,9 @@ export default class DynamicAttributeHelper {
      * @return {*}
      */
     static validateValueByType(value, type, world) {
+        if (value === '[undefined]') {
+            return true
+        }
         switch (type) {
             case TYPES.UNIT:
                 return world.getUnitManager().hasUnit(value)

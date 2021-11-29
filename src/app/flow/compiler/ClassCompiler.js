@@ -18,6 +18,8 @@ import ContextCompiler from './ContextCompiler.js'
 import OnInitEvent from '../event/native/OnInitEvent.js'
 import GetVarValueFunction from '../function/native/component/GetVarValueFunction.js'
 import AAnimation from '../animation/AAnimation.js'
+import AClassVariable from '../function/variable/AClassVariable.js'
+import {ACCESSOR} from '../function/AFunction.js'
 
 export default class ClassCompiler extends Compiler {
 
@@ -52,6 +54,18 @@ export default class ClassCompiler extends Compiler {
                 ])
                 functionRegistry.tryRegister(stackScriptFunction)
             }
+        })
+
+        //create variables
+        script.getVariables().forEach(variable => {
+            const classVariableName = `${script.getName()}.${variable.getDefinition().getAttrName()}`
+            const variableDefinition = variable.getDefinition()
+            const classVariable = new AClassVariable(classVariableName, {type: variableDefinition.getAttrType(),
+                value: variableDefinition.getAttrValue()})
+            classVariable.setAccess(ACCESSOR.PUBLIC)
+            classVariable.setClassName(script.getName())
+            classVariable.setParentClassName(script.getParentName())
+            functionRegistry.tryRegister(classVariable)
         })
 
         //create OnInitEvent
@@ -209,7 +223,7 @@ export default class ClassCompiler extends Compiler {
             event.setStack(this.getOptimizedStack(event, world))
         })
         classInstances.filter(instance => (instance.isOptimized() || !instance.isValidated()) &&
-            !(instance instanceof ACustomFunction))
+            !(instance instanceof ACustomFunction) && !(instance instanceof AClassVariable))
             .forEach(instance => functionRegistry.removeInstance(instance))
     }
 

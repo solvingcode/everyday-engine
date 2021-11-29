@@ -21,7 +21,6 @@ import FormRunner from '../runner/form/FormRunner.js'
 import CameraExecutor from '../executor/type/CameraExecutor.js'
 import LightExecutor from '../executor/type/LightExecutor.js'
 import LightRunner from '../runner/light/LightRunner.js'
-import SceneRunner from '../runner/scene/SceneRunner.js'
 import TransformExecutor from '../executor/type/TransformExecutor.js'
 import UIContainerExecutor from '../executor/type/UIContainerExecutor.js'
 import MeshExecutor from '../executor/type/MeshExecutor.js'
@@ -35,6 +34,7 @@ import TileColliderExecutor from '../executor/type/TileColliderExecutor.js'
 import AssetRunner from '../runner/asset/AssetRunner.js'
 import AnimationEditorExecutor from '../executor/type/AnimationEditorExecutor.js'
 import LayerExecutor from '../executor/type/LayerExecutor.js'
+import EditorSceneRunner from '../runner/scene/EditorSceneRunner.js'
 
 /**
  * @class {SetupLoop}
@@ -57,7 +57,7 @@ class SetupLoop extends Loop {
         this.runners = [
             WorldInitializeRunner, /*HistoryRunner,*/ SimulateRunner, ActionRunner, EditorRunner, ScriptEditorRunner,
             AnimationEditorRunner, TileEditorRunner, MenuRunner, SetupExecutorRunner, SetupRenderRunner, WindowRunner,
-            GraphDrawerRunner, UnitDrawerRunner, FormRunner, LightRunner, SceneRunner, ShortcutRunner, AssetRunner
+            GraphDrawerRunner, UnitDrawerRunner, FormRunner, LightRunner, EditorSceneRunner, ShortcutRunner, AssetRunner
         ]
         ExecutorRegistry.get().register([
             new CameraExecutor(),
