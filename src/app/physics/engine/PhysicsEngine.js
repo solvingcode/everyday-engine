@@ -220,6 +220,23 @@ export default class PhysicsEngine {
 
     /**
      * @abstract
+     * @return {*[]}
+     */
+    getBodies() {
+        throw new SystemError(`${this.constructor.name}.getBodies method must be implemented`)
+    }
+
+    /**
+     * @abstract
+     * @param {*} body
+     * @return {number}
+     */
+    getUnitId(body) {
+        throw new SystemError(`${this.constructor.name}.getUnitId method must be implemented`)
+    }
+
+    /**
+     * @abstract
      * @param {*} body
      * @return {*}
      */
@@ -346,12 +363,12 @@ export default class PhysicsEngine {
         }).filter(bodyCollider => bodyCollider)
         const sourceBodyCollider = this.findBodyCollider(sourceColliderUnit.unit, sourceColliderUnit.colliderComponent)
         const collisions = this.detectCollisions(sourceBodyCollider, targetBodyColliders)
-        return collisions.map(collision => {
-            const colliderUnit = targetColliderUnits.find(targetColliderUnit => {
+        return collisions.reduce((collisionColliders, collision) => {
+            const colliderUnits = targetColliderUnits.filter(targetColliderUnit => {
                 return this.isCollisionHasCollider(collision, targetColliderUnit.colliderComponent)
             })
-            return colliderUnit.colliderComponent
-        }).filter(collider => collider !== sourceColliderUnit.colliderComponent)
+            return [...collisionColliders, ...colliderUnits.map(colliderUnit => colliderUnit.colliderComponent)]
+        }, [])
     }
 
     /**

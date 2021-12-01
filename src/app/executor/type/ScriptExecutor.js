@@ -60,12 +60,14 @@ export default class ScriptExecutor extends ComponentExecutor {
 
                         (instance instanceof OnInitEvent && !scriptComponent.isInitialized())
                     ) {
-                        instance.execute(functionRegistry, unit, scriptComponent, world, executionContext)
-                        if (instance instanceof OnStartEvent) {
-                            scriptComponent.setStarted(true)
-                        }
-                        if (instance instanceof OnInitEvent) {
-                            scriptComponent.setInitialized(true)
+                        if (world.getUnitManager().hasUnit(unit)) {
+                            instance.execute(functionRegistry, unit, scriptComponent, world, executionContext)
+                            if (instance instanceof OnStartEvent) {
+                                scriptComponent.setStarted(true)
+                            }
+                            if (instance instanceof OnInitEvent) {
+                                scriptComponent.setInitialized(true)
+                            }
                         }
                     }
                 })

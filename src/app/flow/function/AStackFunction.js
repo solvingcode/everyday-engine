@@ -7,8 +7,8 @@ export default class AStackFunction extends AFunction{
     /**
      * @override
      */
-    init() {
-        super.init()
+    init(params) {
+        super.init(params)
         this.createStack()
     }
 

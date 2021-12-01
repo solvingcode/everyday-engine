@@ -20,7 +20,7 @@ export default class AnimationComponent extends ScriptComponent {
      */
     initAttributes() {
         super.initAttributes()
-        this.add('animation', TYPES.NUMBER)
+        this.add('animation', TYPES.ANIMATION)
         this.add('time', TYPES.NUMBER)
         this.add('loopTimes', TYPES.NUMBER)
     }

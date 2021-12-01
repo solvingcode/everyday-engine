@@ -238,6 +238,18 @@ export default class PhysicsManager {
 
     /**
      * @param {World} world
+     */
+    clean(world) {
+        this.physicsEngine.getBodies().forEach(body => {
+            const unitId = this.physicsEngine.getUnitId(body)
+            if (!world.getUnitManager().findUnitById(unitId)) {
+                this.physicsEngine.deleteBody(body)
+            }
+        })
+    }
+
+    /**
+     * @param {World} world
      * @param {Unit} unit
      */
     update(world, unit) {

@@ -219,10 +219,17 @@ export default class MatterEngine extends PhysicsEngine {
     }
 
     /**
-     * @return {*[]}
+     * @override
      */
     getBodies(){
         return Matter.Composite.allBodies(this.getInstance().world)
+    }
+
+    /**
+     * @override
+     */
+    getUnitId(body) {
+        return parseInt(body.label)
     }
 
     /**

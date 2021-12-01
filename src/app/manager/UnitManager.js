@@ -85,6 +85,14 @@ export default class UnitManager extends UnitManagerData {
     }
 
     /**
+     * @param {Unit} unit
+     * @return {boolean}
+     */
+    isUnit(unit){
+        return unit instanceof Unit
+    }
+
+    /**
      * @param {Component} componentInstance
      * @return {boolean}
      */
