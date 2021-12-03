@@ -111,6 +111,17 @@ export default class UnitManager extends UnitManagerData {
     }
 
     /**
+     * @param {Unit} parent
+     * @param {string} name
+     * @return {Unit}
+     */
+    findChildUnitByName(parent, name){
+        return this.findChildUnits(parent).find((element) =>
+            element.getName() === name
+        )
+    }
+
+    /**
      * @param {string} name
      * @return {Unit[]}
      */

@@ -17,7 +17,7 @@ export default class EditAnimationBodyMenuItem extends PanelMenuItem {
         super({
             name: 'Animation',
             zone: parent.zone
-        })
+        }, parent)
         this.items = []
         this.data = {unit: null, animationController: null, animation: null}
     }
@@ -42,12 +42,14 @@ export default class EditAnimationBodyMenuItem extends PanelMenuItem {
                     new EditAnimationTimelineWrapperMenuItem(this, animation)
                 ]]
             }
+            return true
         } else if (!ObjectHelper.isEqual(this.data, data)) {
             this.data = data
             this.items = [
                 new CloseWindowMenuItem(WINDOWS.ANIMATION, this),
                 new CreateAnimationWrapperMenuItem(this, this.getUnit(), this.getAnimationController(), this.getAnimation())
             ]
+            return true
         }
     }
 

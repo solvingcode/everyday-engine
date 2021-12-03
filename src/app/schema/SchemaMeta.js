@@ -678,8 +678,8 @@ export default {
                                                     id: {
                                                         type: TYPES.NUMBER
                                                     },
-                                                    childId: {
-                                                        type: TYPES.NUMBER
+                                                    childName: {
+                                                        type: TYPES.STRING
                                                     },
                                                     componentName: {
                                                         type: TYPES.STRING,

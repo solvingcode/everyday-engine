@@ -478,30 +478,32 @@ export default class UnitHelper {
         const unitManager = world.getUnitManager()
         const uiTransformComponent = unit.getComponent(UITransformComponent)
         const parentUnit = unitManager.findParentUnit(unit)
-        const parentTransformComponent = parentUnit.getComponent(TransformComponent)
-        const parentPosition = parentTransformComponent.getPosition()
-        const parentScale = parentTransformComponent.getScale()
-        const parentSize = TransformHelper.getSizeFromScale(parentScale)
-        const anchorSize = this.getSizeAnchor()
-        const anchorMin = uiTransformComponent.getAnchorMin()
-        const anchorMax = uiTransformComponent.getAnchorMax()
-        return [
-            Vector.add(parentPosition, new Vector({
-                x: anchorMin.getX() * parentSize.getWidth() - anchorSize,
-                y: anchorMin.getY() * parentSize.getHeight() - anchorSize
-            })),
-            Vector.add(parentPosition, new Vector({
-                x: anchorMax.getX() * parentSize.getWidth(),
-                y: (1 - anchorMax.getY()) * parentSize.getHeight() - anchorSize
-            })),
-            Vector.add(parentPosition, new Vector({
-                x: anchorMax.getX() * parentSize.getWidth(), y: anchorMax.getY() * parentSize.getHeight()
-            })),
-            Vector.add(parentPosition, new Vector({
-                x: anchorMin.getX() * parentSize.getWidth() - anchorSize,
-                y: (1 - anchorMin.getY()) * parentSize.getHeight()
-            }))
-        ]
+        if(parentUnit){
+            const parentTransformComponent = parentUnit.getComponent(TransformComponent)
+            const parentPosition = parentTransformComponent.getPosition()
+            const parentScale = parentTransformComponent.getScale()
+            const parentSize = TransformHelper.getSizeFromScale(parentScale)
+            const anchorSize = this.getSizeAnchor()
+            const anchorMin = uiTransformComponent.getAnchorMin()
+            const anchorMax = uiTransformComponent.getAnchorMax()
+            return [
+                Vector.add(parentPosition, new Vector({
+                    x: anchorMin.getX() * parentSize.getWidth() - anchorSize,
+                    y: anchorMin.getY() * parentSize.getHeight() - anchorSize
+                })),
+                Vector.add(parentPosition, new Vector({
+                    x: anchorMax.getX() * parentSize.getWidth(),
+                    y: (1 - anchorMax.getY()) * parentSize.getHeight() - anchorSize
+                })),
+                Vector.add(parentPosition, new Vector({
+                    x: anchorMax.getX() * parentSize.getWidth(), y: anchorMax.getY() * parentSize.getHeight()
+                })),
+                Vector.add(parentPosition, new Vector({
+                    x: anchorMin.getX() * parentSize.getWidth() - anchorSize,
+                    y: (1 - anchorMin.getY()) * parentSize.getHeight()
+                }))
+            ]
+        }
     }
 
     /**

@@ -15,14 +15,15 @@ import UITransformComponent from '../../../component/internal/ui/UITransformComp
 export default class ComponentFormMenuItem extends FormMenuItem {
     /**
      * @param {MenuItem} parent
+     * @param {*} data
      */
-    constructor(parent) {
+    constructor(parent, data) {
         super({
             name: '',
             stateCode: '',
             type: Layout.type.FORM,
             zone: parent.zone
-        }, parent)
+        }, parent, data)
     }
 
     /**
@@ -90,8 +91,17 @@ export default class ComponentFormMenuItem extends FormMenuItem {
 
     /**
      * @override
+     * @param {Component} object
+     * @param {string} fieldName
+     */
+    cleanFloatingField(object, fieldName) {
+        object.deleteAttribute(fieldName)
+    }
+
+    /**
+     * @override
      */
     getFormObject() {
-        return this.parent.data.bind
+        return this.data.bind
     }
 }

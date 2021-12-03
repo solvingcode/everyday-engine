@@ -1,6 +1,7 @@
 import ListMenuItem from '../../list/ListMenuItem.js'
 import EditAnimationTimelineElementMenuItem from './EditAnimationTimelineElementMenuItem.js'
 import World from '../../../../world/World.js'
+import UnitSelector from '../../../../selector/UnitSelector.js'
 
 export default class EditAnimationTimelineListMenuItem extends ListMenuItem {
 
@@ -103,7 +104,9 @@ class PropertyTimeline {
      */
     getName() {
         if (this.property) {
-            const unit = World.get().getUnitManager().findUnitById(this.property.getChildId())
+            const world = World.get()
+            const unitRecording = world.getAnimationManager().getUnitRecording() || UnitSelector.get().getFirstSelected(World.get())
+            const unit = world.getUnitManager().findChildUnitByName(unitRecording, this.property.getChildName())
             return `${unit ? `${unit.getName()} - ` : ''}${this.property.getComponentName()} - ${this.property.getAttributeName()}`
         }
         return ''

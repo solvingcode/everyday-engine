@@ -14,7 +14,6 @@ export default class EditAnimationTimelineElementMenuItem extends ListSelectElem
             type: Layout.type.LIST_ELEMENT,
             stateCode: ''
         })
-        this.items = []
     }
 
     /**

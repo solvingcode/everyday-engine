@@ -56,9 +56,9 @@ class MenuItem {
      * @return {void}
      */
     setData(data) {
-        this.data = data
         this.doSetData(data)
         this.setUpdated(true)
+        this.data = data
     }
 
     /**

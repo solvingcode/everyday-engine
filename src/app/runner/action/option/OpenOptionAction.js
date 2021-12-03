@@ -45,14 +45,16 @@ export default class OpenOptionAction extends Action {
                 optionsMenuManager.setMenu(new optionActionsMenuItem(object, triggerItemPosition, itemSize))
             } else {
                 const optionsItem = menu.findItemByElement(activeOptionsMenu)
-                const optionsItemSize = uiRenderer.getSize(optionsItem)
-                const optionsItemPosition = uiRenderer.getPosition(optionsItem)
-                const correctOptionsItemPosition = uiRenderer.getPosition(optionsItem)
-                if (correctOptionsItemPosition.x + optionsItemSize.width > SCENE_WIDTH) {
-                    correctOptionsItemPosition.x -= optionsItemSize.width
-                }
-                if (!ObjectHelper.isEqual(optionsItemPosition, correctOptionsItemPosition)) {
-                    optionsMenuManager.setMenu(new optionActionsMenuItem(object, correctOptionsItemPosition, new Size(0)))
+                if (optionsItem) {
+                    const optionsItemSize = uiRenderer.getSize(optionsItem)
+                    const optionsItemPosition = uiRenderer.getPosition(optionsItem)
+                    const correctOptionsItemPosition = uiRenderer.getPosition(optionsItem)
+                    if (correctOptionsItemPosition.x + optionsItemSize.width > SCENE_WIDTH) {
+                        correctOptionsItemPosition.x -= optionsItemSize.width
+                    }
+                    if (!ObjectHelper.isEqual(optionsItemPosition, correctOptionsItemPosition)) {
+                        optionsMenuManager.setMenu(new optionActionsMenuItem(object, correctOptionsItemPosition, new Size(0)))
+                    }
                 }
             }
         }

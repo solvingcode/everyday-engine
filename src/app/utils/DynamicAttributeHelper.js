@@ -58,6 +58,17 @@ export default class DynamicAttributeHelper {
     /**
      * @param {DynamicAttribute[]} target
      * @param {string} name
+     */
+    static delete(target, name) {
+        const index = target.findIndex(pAttribute => pAttribute.getAttrName() === name)
+        if (index >= 0) {
+            target.splice(index, 1)
+        }
+    }
+
+    /**
+     * @param {DynamicAttribute[]} target
+     * @param {string} name
      * @param {*} value
      */
     static setValue(target, name, value) {

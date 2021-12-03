@@ -127,6 +127,13 @@ export default class Component extends ComponentData{
         return !!DynamicAttributeHelper.tryGet(this.attributes, name)
     }
 
+    /**
+     * @param {string} name
+     */
+    deleteAttribute(name){
+        DynamicAttributeHelper.delete(this.attributes, name)
+    }
+
     enable(){
         this.setValue('enabled', true)
     }

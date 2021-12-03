@@ -14,14 +14,22 @@ export default class EditAnimationPropertyFrameElementMenuItem extends ListSelec
             type: Layout.type.LIST_ELEMENT,
             stateCode: 'ACTION_SELECT_LIST_TIMELINE'
         })
-        if(data.bind.getFrame()){
-            this.items = [
-                new EditAnimationPropertyFrameButtonMenuItem(this, data.bind.getAnimation(), data.bind.getFrame())
-            ]
-        }else if(!data.bind.getProperty()){
-            this.items = [
-                new TextMenuItem(this, data.bind.getName())
-            ]
+    }
+
+    /**
+     * @override
+     */
+    doSetData(data) {
+        if(!_.isEqual(data.bind, this.data.bind) || !this.items.length){
+            if(data.bind.getFrame()){
+                this.items = [
+                    new EditAnimationPropertyFrameButtonMenuItem(this, data.bind.getAnimation(), data.bind.getFrame())
+                ]
+            }else if(!data.bind.getProperty()){
+                this.items = [
+                    new TextMenuItem(this, data.bind.getName())
+                ]
+            }
         }
     }
 

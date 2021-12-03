@@ -8,9 +8,9 @@ export default class AnimationPropertyData extends Data {
     id
 
     /**
-     * @type {number}
+     * @type {string}
      */
-    childId
+    childName
 
     /**
      * @type {string}
@@ -47,17 +47,17 @@ export default class AnimationPropertyData extends Data {
     }
 
     /**
-     * @param {number} childId
+     * @param {string} childName
      */
-    setChildId(childId) {
-        this.childId = childId
+    setChildName(childName) {
+        this.childName = childName
     }
 
     /**
-     * @return {number}
+     * @return {string}
      */
-    getChildId() {
-        return this.childId
+    getChildName() {
+        return this.childName
     }
 
     /**

@@ -83,7 +83,7 @@ export default class Animation extends AnimationData {
      */
     getProperty(componentName, attributeName, childUnit) {
         return this.getProperties().find(prop => prop.getComponentName() === componentName &&
-            prop.getAttributeName() === attributeName && prop.getChildId() === (childUnit ? childUnit.getId() : null))
+            prop.getAttributeName() === attributeName && prop.getChildName() === (childUnit ? childUnit.getName() : null))
     }
 
     /**
@@ -92,8 +92,8 @@ export default class Animation extends AnimationData {
      * @param {Unit} childUnit
      */
     addProperty(componentName, attributeName, childUnit) {
-        const childId = childUnit ? childUnit.getId() : null;
-        const newProperty = new AnimationProperty(Maths.generateId(), childId, componentName, attributeName)
+        const childName = childUnit ? childUnit.getName() : null;
+        const newProperty = new AnimationProperty(Maths.generateId(), childName, componentName, attributeName)
         this.getProperties().push(newProperty)
         return newProperty
     }

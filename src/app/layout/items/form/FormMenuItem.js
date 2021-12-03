@@ -246,6 +246,13 @@ class FormMenuItem extends MenuItem {
     }
 
     /**
+     * @param {*} object
+     * @param {string} fieldName
+     */
+    cleanFloatingField(object, fieldName) {
+    }
+
+    /**
      * @param {FormField} field
      * @param {Object} bindObject
      * @return {Function}
@@ -253,6 +260,7 @@ class FormMenuItem extends MenuItem {
     getGetterForObject(field, bindObject) {
         const getterString = this.getGetterString(field)
         const getterDynamicField = 'getValue'
+        const self = this
         if (field.type !== Layout.form.FILE) {
             return (function (getter, fieldNames, object) {
                 return () => getter.reduce(
@@ -269,6 +277,7 @@ class FormMenuItem extends MenuItem {
                         } else if (typeof pValue[cValue] === 'function') {
                             return pValue[cValue]()
                         } else {
+                            self.cleanFloatingField(pValue, fieldName)
                             throw new SystemError(`getGetterForObject: ${pValue.constructor.name}.${cValue} is not a function`)
                         }
                     }

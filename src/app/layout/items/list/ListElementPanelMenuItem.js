@@ -9,8 +9,7 @@ export default class ListElementPanelMenuItem extends PanelMenuItem {
             name: '',
             zone: parent.zone,
             ...props
-        })
-        this.parent = parent
+        }, parent)
         this.setData(data)
     }
 

@@ -4,22 +4,28 @@ import ListElementPanelMenuItem from '../list/ListElementPanelMenuItem.js'
 
 export default class ComponentElementMenuItem extends ListElementPanelMenuItem{
     constructor(parent, data) {
-        super(parent, data, {
-            name: data.bind.getName()
-        })
-        this.items = [
-            new ComponentDeleteMenuItem(this, data),
-            new ComponentFormMenuItem(this)
-        ]
+        super(parent, data, {})
         this.collapsed = true
     }
 
     /**
      * @override
-     * Must override the method, else the parent's implementation will erase the items defined in the constructor
      */
-    setData(data) {
-        this.data = data
+    doUpdate() {
+        if(this.props.name !== this.data.bind.getName()){
+            this.props.name = this.data.bind.getName()
+            return true
+        }
+    }
+
+    /**
+     * @override
+     */
+    doSetData(data) {
+        this.items = [
+            new ComponentDeleteMenuItem(this, data),
+            new ComponentFormMenuItem(this, data)
+        ]
     }
 
 }
