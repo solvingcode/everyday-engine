@@ -18,7 +18,7 @@ export default class UIButtonInteractionExecutor extends ComponentExecutor {
      */
     execute(unit, executionContext) {
         const world = World.get()
-        const {unitIndex} = executionContext
+        const {unitIndex, units} = executionContext
         const {mouse} = Window.get()
         const styleComponent = unit.getComponent(StyleComponent)
         const uiButtonComponent = unit.getComponent(UIButtonComponent)
@@ -60,7 +60,9 @@ export default class UIButtonInteractionExecutor extends ComponentExecutor {
                     uiButtonComponent.setIntractable(false)
                 }
             } else {
-                if (buttonIntractableIndex === unitIndex) {
+                const buttonIntractableUnit = units[buttonIntractableIndex]
+                if (buttonIntractableIndex === unitIndex ||
+                    (buttonIntractableUnit && !buttonIntractableUnit.getComponent(UIButtonComponent))) {
                     uiContainerComponent.setButtonIntractableIndex(-1)
                 }
                 uiButtonComponent.setIntractable(false)

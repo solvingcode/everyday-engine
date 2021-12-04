@@ -29,7 +29,7 @@ export default class SetFunction extends AFunction{
         const component = unit.getComponent(classComponent.constructor)
         component.setValue(attribute, DynamicAttributeHelper
             .getValueByType(value, component.getType(attribute), world))
-        if(classComponent === MeshComponent){
+        if(classComponent.constructor === MeshComponent){
             component.setGenerated(false)
         }
     }

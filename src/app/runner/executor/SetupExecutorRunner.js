@@ -37,7 +37,7 @@ export class SetupExecutorRunner extends Runner {
             camera = world.getCamera()
         }
         units.forEach((unit, index) => {
-            ExecutorRegistry.get().execute(unit, {camera, deltaTime, lights, storage, unitIndex: index})
+            ExecutorRegistry.get().execute(unit, {camera, deltaTime, lights, storage, unitIndex: index, units})
         })
     }
 
