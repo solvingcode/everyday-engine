@@ -1,11 +1,10 @@
 import Vector from '../../../../../utils/Vector.js'
-import TransformUnitInstant from '../TransformUnitInstant.js'
 import Style from '../../../../../pobject/Style.js'
 import {PrimitiveShape} from '../../../../Unit.js'
+import TransformYUnitInstant from '../transform/TransformYUnitInstant.js'
 import GUIMoveYComponent from '../../../../../component/internal/gui/move/GUIMoveYComponent.js'
-import TransformHelper from '../../../../../utils/TransformHelper.js'
 
-export default class MoveYUnitInstant extends TransformUnitInstant {
+export default class MoveYUnitInstant extends TransformYUnitInstant {
 
     /**
      * @param {Vector} position
@@ -13,23 +12,11 @@ export default class MoveYUnitInstant extends TransformUnitInstant {
      */
     instantiate(position, parentScale) {
         const childScale = new Vector({x: 3, y: 10})
-        const scale = Vector.linearDivide(childScale, parentScale)
         const style = new Style()
         style.setColor('#0000FF')
         style.setBorderSize(4)
         const shape = PrimitiveShape.ARROW_DOWN
-        super.instantiate(GUIMoveYComponent, scale, style, shape,
-            this.getTransformPosition(position, TransformHelper.getSizeFromScale(scale)))
-    }
-
-    /**
-     * @override
-     */
-    getTransformPosition(position, size){
-        const movePosition = new Vector()
-        movePosition.setX(position.getX() - size.getWidth() / 2)
-        movePosition.setY(position.getY())
-        return movePosition
+        super.instantiate(GUIMoveYComponent, childScale, parentScale, style, shape, position)
     }
 
 }

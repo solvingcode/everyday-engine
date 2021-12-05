@@ -1,16 +1,16 @@
-import MeshUnitInstant from '../../MeshUnitInstant.js'
-import TransformComponent from '../../../../component/internal/TransformComponent.js'
-import MeshComponent from '../../../../component/internal/MeshComponent.js'
-import GUIPendingComponent from '../../../../component/internal/gui/GUIPendingComponent.js'
-import StyleComponent from '../../../../component/internal/StyleComponent.js'
-import SystemError from '../../../../exception/type/SystemError.js'
+import MeshUnitInstant from '../../../MeshUnitInstant.js'
+import TransformComponent from '../../../../../component/internal/TransformComponent.js'
+import MeshComponent from '../../../../../component/internal/MeshComponent.js'
+import GUIPendingComponent from '../../../../../component/internal/gui/GUIPendingComponent.js'
+import StyleComponent from '../../../../../component/internal/StyleComponent.js'
+import SystemError from '../../../../../exception/type/SystemError.js'
 
 export default class TransformUnitInstant extends MeshUnitInstant {
 
     /**
      * @param {Class} moveComponentClass
      * @param {Vector} localScale
-     * @param {StyleUtil} style
+     * @param {Style} style
      * @param {string} shape
      * @param {Vector} localPosition
      */

@@ -311,7 +311,7 @@ export default class UnitManager extends UnitManagerData {
 
     /**
      * @template T
-     * @param {Class} T
+     * @param {Class<Unit>} T
      * @param {Unit} parentUnit
      * @param {...any} props
      * @return {T}
@@ -347,6 +347,21 @@ export default class UnitManager extends UnitManagerData {
         CommonUtil.setupName(unit, unit.getName(),
             (name) => unit.setName(name), (name) => this.findUnitByName(name))
         this.units.push(unit)
+    }
+
+    /**
+     * @param {Unit} unit
+     */
+    sortUnit(unit){
+        const indexUnit = this.units.findIndex(pUnit => pUnit === unit)
+        const rank = unit.getComponent(GUIPropertyComponent).getRank()
+        this.units.splice(indexUnit, 1)
+        const indexBiggerRank = this.units.findIndex(pUnit => pUnit.getComponent(GUIPropertyComponent).getRank() > rank)
+        if (indexBiggerRank >= 0) {
+            this.units.splice(indexBiggerRank, 0, unit)
+        } else {
+            this.units.splice(indexUnit, 0, unit)
+        }
     }
 
     sortUnits() {

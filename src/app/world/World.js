@@ -251,6 +251,14 @@ class World extends WorldData {
     }
 
     /**
+     * @param {Vector} position
+     * @return {Unit[]}
+     */
+    findUnitsByPosition(position) {
+        return UnitSelector.get().getAll(this, position)
+    }
+
+    /**
      * @param {Scene} scene
      * @param {string} mode
      * @param {boolean} edit
@@ -284,13 +292,24 @@ class World extends WorldData {
 
     /**
      * @template T
-     * @param {Class} T
+     * @param {Class<Unit>} T
      * @param {...any} props
      * @return {T}
      */
     createUnitInstant(T, ...props) {
         const selectedUnit = this.getUnitManager().getSelected()
-        return this.getUnitManager().createUnitInstant(T, selectedUnit, ...props)
+        return this.createChildUnitInstant(T, selectedUnit, ...props)
+    }
+
+    /**
+     * @template T
+     * @param {Class<Unit>} T
+     * @param {Unit} parentUnit
+     * @param {...any} props
+     * @return {T}
+     */
+    createChildUnitInstant(T, parentUnit, ...props) {
+        return this.getUnitManager().createUnitInstant(T, parentUnit, ...props)
     }
 
     /**
@@ -299,17 +318,6 @@ class World extends WorldData {
     createUnitByInstance(instance) {
         const selectedUnit = this.getUnitManager().getSelected()
         return this.getUnitManager().createUnitByInstance(instance, selectedUnit)
-    }
-
-    /**
-     * @template T
-     * @param {Class} T
-     * @param {Unit} parentUnit
-     * @param {...any} props
-     * @return {T}
-     */
-    createChildUnitInstant(T, parentUnit, ...props) {
-        return this.getUnitManager().createUnitInstant(T, parentUnit, ...props)
     }
 
     unloadAllScene() {

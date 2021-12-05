@@ -10,13 +10,7 @@ import RotateAction from '../action/edit/RotateAction.js'
 import Vector from '../../utils/Vector.js'
 import UnitSelector from '../../selector/UnitSelector.js'
 import UnitHelper from '../../utils/UnitHelper.js'
-import GUIMoveXComponent from '../../component/internal/gui/move/GUIMoveXComponent.js'
 import Size from '../../pobject/Size.js'
-import GUIMoveYComponent from '../../component/internal/gui/move/GUIMoveYComponent.js'
-import GUIMoveFreeComponent from '../../component/internal/gui/move/GUIMoveFreeComponent.js'
-import GUIScaleXComponent from '../../component/internal/gui/scale/GUIScaleXComponent.js'
-import GUIScaleYComponent from '../../component/internal/gui/scale/GUIScaleYComponent.js'
-import GUIScaleFreeComponent from '../../component/internal/gui/scale/GUIScaleFreeComponent.js'
 import GUIRotateComponent from '../../component/internal/gui/rotate/GUIRotateComponent.js'
 import MoveXUnitInstant from '../../unit/instant/type/internal/move/MoveXUnitInstant.js'
 import MoveYUnitInstant from '../../unit/instant/type/internal/move/MoveYUnitInstant.js'
@@ -40,6 +34,8 @@ import GUIAnchorComponent from '../../component/internal/gui/anchor/GUIAnchorCom
 import UITransformComponent from '../../component/internal/ui/UITransformComponent.js'
 import Menu from '../../layout/Menu.js'
 import ContentCanvasMenuItem from '../../layout/items/content/ContentCanvasMenuItem.js'
+import GUIMoveComponent from '../../component/internal/gui/move/GUIMoveComponent.js'
+import GUIScaleComponent from '../../component/internal/gui/scale/GUIScaleComponent.js'
 
 class EditorRunner extends Runner {
 
@@ -187,17 +183,19 @@ class EditorRunner extends Runner {
             if (mouse.isButtonPressed(MouseButton.LEFT)) {
                 const world = World.get()
                 const currentScenePosition = world.getCamera().fromCameraScale(mouse.currentScenePosition)
-                const unit = world.findFirstUnitByPosition(world.getWorldPosition(currentScenePosition))
+                const unit = world.findUnitsByPosition(world.getWorldPosition(currentScenePosition))
+                    .find(pUnit => pUnit.hasAnyComponentsByClasses([
+                        GUIMoveComponent, GUIScaleComponent, GUIRotateComponent]))
                 const dragArea = mouse.getDragArea(world.getCamera())
                 if (unit && dragArea) {
-                    if (unit.hasAnyComponents([GUIMoveXComponent, GUIMoveYComponent, GUIMoveFreeComponent])) {
+                    if (unit.hasAnyComponentsByClasses([GUIMoveComponent])) {
                         !stateManager.isProgress(MoveAction.STATE) &&
                         stateManager.startState(MoveAction.STATE, 1, {unit})
                     }
-                    if (unit.hasAnyComponents([GUIScaleXComponent, GUIScaleYComponent, GUIScaleFreeComponent])) {
+                    if (unit.hasAnyComponentsByClasses([GUIScaleComponent])) {
                         !stateManager.isProgress(ScaleAction.STATE) &&
                         stateManager.startState(ScaleAction.STATE, 1, {unit})
-                    } else if (unit.hasComponents([GUIRotateComponent])) {
+                    } else if (unit.hasAnyComponentsByClasses([GUIRotateComponent])) {
                         !stateManager.isProgress(RotateAction.STATE) &&
                         stateManager.startState(RotateAction.STATE, 1, {unit})
                     }

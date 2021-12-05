@@ -18,9 +18,9 @@ export default class LayerExecutor extends ComponentExecutor {
         const guiPropertyComponent = unit.getComponent(GUIPropertyComponent)
         const unitRank = unit.getRank(world)
         const actualRank = guiPropertyComponent.getRank()
-        if(unitRank !== actualRank){
+        if (unitRank !== actualRank) {
             guiPropertyComponent.setRank(unitRank)
-            world.forceReload()
+            world.getUnitManager().sortUnit(unit)
         }
     }
 
