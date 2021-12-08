@@ -99,5 +99,6 @@ export const PrimitiveShape = {
     RECT_CROSS: 'rect_cross',
     NODE: 'node',
     CAMERA: 'camera',
-    TEXT: 'text'
+    TEXT: 'text',
+    CURVE: 'curve'
 }

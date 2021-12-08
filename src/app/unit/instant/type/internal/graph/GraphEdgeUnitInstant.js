@@ -56,12 +56,12 @@ export default class GraphEdgeUnitInstant extends MeshUnitInstant {
             styleComponent.setStyle(style)
             transformComponent.setLocalPosition(position)
             if (
-                meshComponent.getShape() !== PrimitiveShape.LINE ||
+                meshComponent.getShape() !== PrimitiveShape.CURVE ||
                 !ArrayHelper.isEqual(meshComponent.getShapeVertices(), vertices) ||
                 meshComponent.getSize().getWidth() !== size.getWidth() ||
                 meshComponent.getSize().getHeight() !== size.getHeight()
             ) {
-                meshComponent.setShape(PrimitiveShape.LINE)
+                meshComponent.setShape(PrimitiveShape.CURVE)
                 meshComponent.setShapeVertices(vertices)
                 transformComponent.setLocalScale(TransformHelper.getScaleFromSize(size))
                 meshComponent.setGenerated(false)

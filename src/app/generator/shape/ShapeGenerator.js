@@ -13,6 +13,7 @@ import NodeShapeGenerator from './node/NodeShapeGenerator.js'
 import CameraShapeGenerator from './camera/CameraShapeGenerator.js'
 import LightPointShapeGenerator from './light/LightPointShapeGenerator.js'
 import TextShapeGenerator from './text/TextShapeGenerator.js'
+import CurveShapeGenerator from './curve/CurveShapeGenerator.js'
 
 /**
  * @abstract
@@ -60,6 +61,8 @@ export default class ShapeGenerator {
                 return GridShapeGenerator
             case PrimitiveShape.LINE:
                 return LineShapeGenerator
+            case PrimitiveShape.CURVE:
+                return CurveShapeGenerator
             case PrimitiveShape.NODE:
                 return NodeShapeGenerator
             case PrimitiveShape.TEXT:
