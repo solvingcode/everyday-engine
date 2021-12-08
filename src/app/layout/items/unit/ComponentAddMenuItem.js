@@ -7,9 +7,8 @@ export default class ComponentAddMenuItem  extends PanelMenuItem {
         super({
             name: 'Attach new component',
             zone: parent.zone
-        })
+        }, parent)
         this.collapsed = true
-        this.parent = parent
         const formData = new AddComponentForm()
         this.items = [
             new ComponentAddFormMenuItem(this, formData),

@@ -1,6 +1,5 @@
 import Window from './Window.js'
 import RunnerHandler from './RunnerHandler.js'
-import ExceptionHandler from '../exception/ExceptionHandler.js'
 
 /**
  * Define the application main
@@ -17,7 +16,6 @@ class Application {
      */
     constructor(loops) {
         this.loops = loops
-        this.exceptionHandler = ExceptionHandler.get()
         this.window = Window.get()
         this.loop = this.loop.bind(this)
     }
@@ -32,15 +30,11 @@ class Application {
      * @private
      */
     loop() {
-        try {
-            this.loops.forEach(loop => {
-                const loopInstance = loop.get()
-                RunnerHandler.get().handle(loopInstance.getRunners())
-                loopInstance.loop()
-            })
-        } catch (e) {
-            this.exceptionHandler.handle(e)
-        }
+        this.loops.forEach(loop => {
+            const loopInstance = loop.get()
+            RunnerHandler.get().handle(loopInstance.getRunners())
+            loopInstance.loop()
+        })
         this.window.clear()
         this.window.update()
         requestAnimationFrame(this.loop)

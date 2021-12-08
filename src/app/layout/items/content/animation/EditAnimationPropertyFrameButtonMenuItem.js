@@ -22,7 +22,7 @@ export default class EditAnimationPropertyFrameButtonMenuItem extends MenuItem {
     /**
      * @override
      */
-    isSelected() {
+    getSelected() {
         return this.data.frame.getSelected()
     }
 }

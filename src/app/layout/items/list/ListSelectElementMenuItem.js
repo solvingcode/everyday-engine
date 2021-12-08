@@ -12,7 +12,7 @@ export default class ListSelectElementMenuItem extends ListElementMenuItem {
     /**
      * @override
      */
-    isSelected() {
+    getSelected() {
         return this.getDataBind().isSelected()
     }
 

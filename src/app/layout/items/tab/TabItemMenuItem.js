@@ -26,6 +26,13 @@ export default class TabItemMenuItem extends ListElementMenuItem{
     }
 
     /**
+     * @override
+     */
+    getSelected() {
+        return this.getDataBind().isSelected()
+    }
+
+    /**
      * @return {boolean}
      */
     isValid() {

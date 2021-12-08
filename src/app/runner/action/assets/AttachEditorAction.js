@@ -9,6 +9,9 @@ import Window from '../../../core/Window.js'
 import AssetUnit from '../../../asset/types/unit/AssetUnit.js'
 import StorageHelper from '../../../utils/StorageHelper.js'
 import Storage from '../../../core/Storage.js'
+import TransformComponent from '../../../component/internal/TransformComponent.js'
+import Vector from '../../../utils/Vector.js'
+import MeshComponent from '../../../component/internal/MeshComponent.js'
 
 export default class AttachEditorAction extends Action {
 
@@ -24,10 +27,24 @@ export default class AttachEditorAction extends Action {
         }
         const world = World.get()
         const {mouse} = Window.get()
+        const currentScenePosition = world.getWorldScalePosition(mouse.currentScenePosition)
         if (startData.getType() instanceof AssetImage) {
-            world.createUnitInstant(AssetUnitInstant, world.getWorldScalePosition(mouse.currentScenePosition), startData)
+            world.createUnitInstant(AssetUnitInstant, currentScenePosition, startData)
         } else if (startData.getType() instanceof AssetUnit) {
-            StorageHelper.loadAssetUnit(startData, Storage.get())
+            StorageHelper.loadAssetUnit(startData, Storage.get()).then(units => {
+                units.forEach(unit => {
+                    const transformComponent = unit.getComponent(TransformComponent)
+                    const meshComponent = unit.getComponent(MeshComponent)
+                    if (transformComponent) {
+                        const position = transformComponent.getPosition()
+                        const deltaVector = Vector.subtract(currentScenePosition, position)
+                        transformComponent.setLocalPosition(Vector.add(transformComponent.getLocalPosition(), deltaVector))
+                    }
+                    if (meshComponent) {
+                        meshComponent.setGenerated(false)
+                    }
+                })
+            })
         }
         return true
     }

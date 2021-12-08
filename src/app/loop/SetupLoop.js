@@ -35,6 +35,7 @@ import AssetRunner from '../runner/asset/AssetRunner.js'
 import AnimationEditorExecutor from '../executor/type/AnimationEditorExecutor.js'
 import LayerExecutor from '../executor/type/LayerExecutor.js'
 import EditorSceneRunner from '../runner/scene/EditorSceneRunner.js'
+import {GarbageRunner} from '../runner/unit/GarbageRunner.js'
 
 /**
  * @class {SetupLoop}
@@ -57,7 +58,8 @@ class SetupLoop extends Loop {
         this.runners = [
             WorldInitializeRunner, /*HistoryRunner,*/ SimulateRunner, ActionRunner, EditorRunner, ScriptEditorRunner,
             AnimationEditorRunner, TileEditorRunner, MenuRunner, SetupExecutorRunner, SetupRenderRunner, WindowRunner,
-            GraphDrawerRunner, UnitDrawerRunner, FormRunner, LightRunner, EditorSceneRunner, ShortcutRunner, AssetRunner
+            GraphDrawerRunner, UnitDrawerRunner, FormRunner, LightRunner, EditorSceneRunner, ShortcutRunner, AssetRunner,
+            GarbageRunner
         ]
         ExecutorRegistry.get().register([
             new CameraExecutor(),

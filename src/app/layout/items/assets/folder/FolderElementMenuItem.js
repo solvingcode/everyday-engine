@@ -34,7 +34,7 @@ export default class FolderElementMenuItem extends ListElementMenuItem {
     /**
      * @override
      */
-    isSelected() {
+    getSelected() {
         return this.getDataBind().isSelected()
     }
 

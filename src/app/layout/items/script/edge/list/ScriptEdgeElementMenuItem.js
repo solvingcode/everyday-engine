@@ -18,9 +18,12 @@ export default class ScriptEdgeElementMenuItem extends ListSelectElementActionsM
         const functionRegistry = World.get().getFunctionRegistry()
         const script = World.get().getScriptManager().getFunctionSelected(World.get().getTabManager())
         const sourceNode = script.findNodeById(nodeInput.getSourceNodeId())
-        const targetNode = script.findNodeById(nodeInput.getNodeId())
-        const targetInput = targetNode.getTargetInput(functionRegistry, nodeInput)
-        return `${sourceNode.getName()} (${nodeInput.getSourceName()}) -> (${targetInput ? targetInput.getAttrName() : ''}) ${targetNode.getName()}`
+        if (sourceNode) {
+            const targetNode = script.findNodeById(nodeInput.getNodeId())
+            const targetInput = targetNode.getTargetInput(functionRegistry, nodeInput)
+            return `${sourceNode.getName()} (${nodeInput.getSourceName()}) -> (${targetInput ? targetInput.getAttrName() : ''}) ${targetNode.getName()}`
+        }
+        return ''
     }
 
     /**

@@ -27,6 +27,7 @@ import UISliderFillExecutor from '../executor/type/UISliderFillExecutor.js'
 import AnimationPlayerExecutor from '../executor/type/AnimationPlayerExecutor.js'
 import UIButtonStyleExecutor from '../executor/type/UIButtonStyleExecutor.js'
 import LayerExecutor from '../executor/type/LayerExecutor.js'
+import {GarbageRunner} from '../runner/unit/GarbageRunner.js'
 
 /**
  * @class {GameLoop}
@@ -42,7 +43,8 @@ class GameLoop extends SceneLoop {
     constructor() {
         super()
         this.runners = [
-            WorldInitializeRunner, GameSceneRunner, CameraRunner, PhysicsRunner, GameExecutorRunner, LightRunner]
+            WorldInitializeRunner, GameSceneRunner, CameraRunner, PhysicsRunner,
+            GameExecutorRunner, LightRunner, GarbageRunner]
         ExecutorRegistry.get().register([
             new CameraExecutor(),
             new AnimationPlayerExecutor(),

@@ -18,12 +18,6 @@ export default class CopySelectedNodeAction extends Action {
         selectedGraphUnits.forEach(selectedGraphUnit => {
             const nodeId = selectedGraphUnit.getComponent(NodeComponent).getNodeId()
             const node = script.findNodeById(nodeId)
-            node.getInputs().forEach(input => {
-                const sourceNode = script.findNodeById(input.getSourceNodeId())
-                if (sourceNode) {
-                    nodes.push(sourceNode)
-                }
-            })
             nodes.push(node)
         })
         Project.get().saveClipboard(StorageConstant.type.NODES, nodes)

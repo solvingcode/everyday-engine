@@ -28,6 +28,7 @@ import AssetHelper from '../utils/AssetHelper.js'
 import SystemError from '../exception/type/SystemError.js'
 import ScriptComponent from '../component/internal/ScriptComponent.js'
 import UnitDataIdGenerator from '../generator/data/id/UnitDataIdGenerator.js'
+import GarbageManager from '../manager/GarbageManager.js'
 
 /**
  * @class {World}
@@ -519,6 +520,7 @@ class World extends WorldData {
         if (scene) {
             return scene.getUnitManager()
         }
+        GarbageManager.get().addUnitId(unit.getId())
         throw new ClientError(`No scene contains Unit (ID: ${unit.getId()})`)
     }
 

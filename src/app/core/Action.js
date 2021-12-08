@@ -1,3 +1,5 @@
+import ExceptionHandler from '../exception/ExceptionHandler.js'
+
 /**
  * Define the action to be executed when an event is triggered
  */
@@ -5,6 +7,7 @@ class Action {
 
     constructor() {
         this.queue = []
+        this.exceptionHandler = ExceptionHandler.get()
     }
 
     static get() {
@@ -29,9 +32,13 @@ class Action {
     run() {
         for (const iQueue in this.queue) {
             if (this.queue.hasOwnProperty(iQueue)) {
-                const action = this.queue[iQueue]
-                if (action.object.run(...action.args)) {
-                    break;
+                try {
+                    const action = this.queue[iQueue]
+                    if (action.object.run(...action.args)) {
+                        break
+                    }
+                } catch (e) {
+                    this.exceptionHandler.handle(e)
                 }
             }
         }
