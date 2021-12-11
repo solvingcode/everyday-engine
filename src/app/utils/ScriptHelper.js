@@ -306,9 +306,8 @@ export default class ScriptHelper {
      */
     static findNodeInputByPosition(script, unit, position, world) {
         if (unit) {
-            const nodeId = unit.getComponent(NodeComponent).getNodeId()
+            const node = unit.getComponent(NodeComponent).getNode()
             const unitPosition = unit.getComponent(TransformComponent).getPosition()
-            const node = script.findNodeById(nodeId)
             if (node && NodeHelper.hasBaseInput(node.getType())) {
                 const sourceNode = NodeHelper.getSourceNode(node, world)
                 const inputs = sourceNode.getInputs()
@@ -337,10 +336,9 @@ export default class ScriptHelper {
      */
     static findNodeOutputByPosition(script, unit, position, world) {
         if (unit) {
-            const nodeId = unit.getComponent(NodeComponent).getNodeId()
+            const node = unit.getComponent(NodeComponent).getNode()
             const unitPosition = unit.getComponent(TransformComponent).getPosition()
             const size = unit.getComponent(MeshComponent).getSize()
-            const node = script.findNodeById(nodeId)
             const sourceNode = NodeHelper.getSourceNode(node, world)
             const nodeOutput = sourceNode.getOutput()
             const outputs = [null, ...(sourceNode.getOutput() ? [nodeOutput] : [])]

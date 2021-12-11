@@ -16,7 +16,7 @@ import NodeHelper from '../utils/NodeHelper.js'
 export default class GraphManager {
 
     /**
-     * @type {MeshUnitInstant[]}
+     * @type {Unit[]}
      */
     units
 
@@ -25,14 +25,14 @@ export default class GraphManager {
     }
 
     /**
-     * @return {MeshUnitInstant[]}
+     * @return {Unit[]}
      */
     getUnits() {
         return this.units
     }
 
     /**
-     * @return {MeshUnitInstant[]}
+     * @return {Unit[]}
      */
     getGraphUnits() {
         return this.getUnits()
@@ -40,7 +40,7 @@ export default class GraphManager {
     }
 
     /**
-     * @return {MeshUnitInstant[]}
+     * @return {Unit[]}
      */
     getGraphEdges() {
         return this.getUnits()
@@ -83,30 +83,29 @@ export default class GraphManager {
         let updated = false
         const units = this.getGraphUnits()
         const nodes = script.getNodes()
-        const graphNodeIds = units
-            .map(graphUnit => graphUnit.getComponent(NodeComponent).getNodeId())
-        const nodeIds = nodes.map(node => node.getId())
         nodes.forEach(node => {
-            const isGraphUnitExist = graphNodeIds.includes(node.getId())
-            if (!isGraphUnitExist) {
-                this.createGraphNodeUnit(node, script)
+            if (!node.isInitialized()) {
+                const unit = this.createGraphNodeUnit(node, script)
+                node.setInitialized(true)
+                node.setGraphUnit(unit)
                 updated = true
-            } else {
-                const graphUnit = units
-                    .find(gUnit => gUnit.getComponent(NodeComponent).getNodeId() === node.getId())
-                const position = graphUnit.getComponent(TransformComponent).getPosition()
-                if (!ObjectHelper.isEqual(node.getPosition(), position)) {
-                    node.setPosition(position)
-                    updated = true
+            }else{
+                if(!units.includes(node.getGraphUnit())){
+                    this.units.push(node.getGraphUnit())
                 }
-                graphUnit.update(node.getPosition(), node, script, World.get())
             }
         })
-        graphNodeIds.forEach(graphNodeId => {
-            if (!nodeIds.includes(graphNodeId)) {
-                this.deleteGraphNodeUnitByNodeId(graphNodeId)
+        units.forEach(unit => {
+            const position = unit.getComponent(TransformComponent).getPosition()
+            const node = unit.getComponent(NodeComponent).getNode()
+            if (!node || !script.hasNode(node)) {
+                this.deleteUnit(unit)
+                updated = true
+            } else if (!ObjectHelper.isEqual(node.getPosition(), position)) {
+                node.setPosition(position)
                 updated = true
             }
+            unit.update(node.getPosition(), node, script, World.get())
         })
         return updated
     }
@@ -145,6 +144,7 @@ export default class GraphManager {
     /**
      * @param {ANode} node
      * @param {AScriptFunction} script
+     * @return {Unit}
      */
     createGraphNodeUnit(node, script) {
         const unit = new GraphNodeUnitInstant()

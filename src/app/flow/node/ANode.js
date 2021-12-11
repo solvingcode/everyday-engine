@@ -15,6 +15,16 @@ export default class ANode extends ANodeData {
     selected
 
     /**
+     * @type {boolean}
+     */
+    initialized
+
+    /**
+     * @type {Unit}
+     */
+    graphUnit
+
+    /**
      * @param {string} sourceName
      */
     constructor(sourceName) {
@@ -138,6 +148,34 @@ export default class ANode extends ANodeData {
      */
     isSelected(){
         return this.selected
+    }
+
+    /**
+     * @return {Unit}
+     */
+    getGraphUnit(){
+        return this.graphUnit
+    }
+
+    /**
+     * @param {Unit} graphUnit
+     */
+    setGraphUnit(graphUnit){
+        this.graphUnit = graphUnit
+    }
+
+    /**
+     * @return {boolean}
+     */
+    isInitialized(){
+        return this.initialized
+    }
+
+    /**
+     * @param {boolean} initialized
+     */
+    setInitialized(initialized){
+        this.initialized = initialized
     }
 
 }

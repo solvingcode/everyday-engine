@@ -74,11 +74,19 @@ export default class ScriptEditorRunner extends Runner {
     }
 
     /**
+     * @return {boolean}
+     */
+    isEditing(){
+        const mouse = Window.get().mouse
+        return mouse.isButtonPressed(MouseButton.LEFT)
+    }
+
+    /**
      * @param {AScript} script
      */
     updateScript(script) {
-        const shouldUpdate = !!script.getFunctions().find(func => func.isUpdated())
-        if (shouldUpdate) {
+        const shouldUpdate = script.getFunctions().some(func => func.isUpdated())
+        if (shouldUpdate && !this.isEditing()) {
             script.reset()
             const asset = World.get().getTabManager().getSelectedContentData()
             script.getFunctions().forEach(func => func.setUpdated(false))

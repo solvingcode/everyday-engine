@@ -17,6 +17,13 @@ export default class MeshUnitInstant extends MeshUnit{
     /**
      * @abstract
      */
+    update(){
+        throw new TypeError(`${this.constructor.name}.update must be implemented`)
+    }
+
+    /**
+     * @abstract
+     */
     instantiate(){
         throw new TypeError(`${this.constructor.name}.instantiate must be implemented`)
     }

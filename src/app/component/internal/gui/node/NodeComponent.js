@@ -12,7 +12,7 @@ export default class NodeComponent extends Component{
      * @override
      */
     initAttributes() {
-        this.add('nodeId', TYPES.NUMBER)
+        this.add('node', TYPES.ANY)
         this.add('title', TYPES.STRING)
         this.add('type', TYPES.STRING)
         this.add('inputs', TYPES.ARRAY | TYPES.STRING, [])
@@ -27,10 +27,10 @@ export default class NodeComponent extends Component{
     }
 
     /**
-     * @param {number} nodeId
+     * @param {ANode} node
      */
-    setNodeId(nodeId) {
-        this.setValue('nodeId', nodeId)
+    setNode(node) {
+        this.setValue('node', node)
     }
 
     /**
@@ -62,10 +62,10 @@ export default class NodeComponent extends Component{
     }
 
     /**
-     * @return {number}
+     * @return {ANode}
      */
-    getNodeId(){
-        return this.getValue('nodeId')
+    getNode(){
+        return this.getValue('node')
     }
 
     /**

@@ -26,8 +26,7 @@ export default class AddNodeInputAction extends Action {
 
         const selectedGraphUnits = ScriptGraphSelector.get().getSelected(world)
         const selectedGraphUnit = selectedGraphUnits[0]
-        const nodeId = selectedGraphUnit.getComponent(NodeComponent).getNodeId()
-        const node = script.findNodeById(nodeId)
+        const node = selectedGraphUnit.getComponent(NodeComponent).getNode()
 
         const functionRegistry = World.get().getFunctionRegistry()
 

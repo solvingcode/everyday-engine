@@ -76,7 +76,17 @@ export default class AScriptFunction extends AScriptFunctionData {
     removeNodeById(id) {
         this.removeConnectionsByNodeId(id)
         const nodeIndex = this.nodes.findIndex(node => node.getId() === id)
-        this.nodes.splice(nodeIndex, 1)
+        if(nodeIndex >= 0){
+            this.nodes.splice(nodeIndex, 1)
+        }
+    }
+
+    /**
+     * @param {ANode} node
+     * @return {boolean}
+     */
+    hasNode(node){
+        return this.nodes.some(pNode => pNode === node)
     }
 
     /**

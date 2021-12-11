@@ -42,7 +42,7 @@ export default class GraphNodeUnitInstant extends MeshUnitInstant {
         nodeComponent.setTitle(NodeHelper.getNodeName(node, world))
         nodeComponent.setInputs(nodeInputs)
         nodeComponent.setType(ScriptHelper.getNodeType(node))
-        nodeComponent.setNodeId(node.getId())
+        nodeComponent.setNode(node)
         if (nodeSourceOutput) {
             nodeComponent.setOutput(nodeSourceOutput.getAttrName())
         }

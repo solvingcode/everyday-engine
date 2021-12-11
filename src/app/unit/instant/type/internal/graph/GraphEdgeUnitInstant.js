@@ -8,7 +8,6 @@ import StyleComponent from '../../../../../component/internal/StyleComponent.js'
 import GeometryHelper from '../../../../../utils/GeometryHelper.js'
 import NodeHelper from '../../../../../utils/NodeHelper.js'
 import Vector from '../../../../../utils/Vector.js'
-import ArrayHelper from '../../../../../utils/ArrayHelper.js'
 import TransformHelper from '../../../../../utils/TransformHelper.js'
 
 export default class GraphEdgeUnitInstant extends MeshUnitInstant {
@@ -57,9 +56,8 @@ export default class GraphEdgeUnitInstant extends MeshUnitInstant {
             transformComponent.setLocalPosition(position)
             if (
                 meshComponent.getShape() !== PrimitiveShape.CURVE ||
-                !ArrayHelper.isEqual(meshComponent.getShapeVertices(), vertices) ||
-                meshComponent.getSize().getWidth() !== size.getWidth() ||
-                meshComponent.getSize().getHeight() !== size.getHeight()
+                !_.isEqual(meshComponent.getShapeVertices(), vertices) ||
+                !_.isEqual(transformComponent.getLocalScale(), TransformHelper.getScaleFromSize(size))
             ) {
                 meshComponent.setShape(PrimitiveShape.CURVE)
                 meshComponent.setShapeVertices(vertices)

@@ -36,8 +36,7 @@ export default class ScriptEdgeMenuItem extends ListMenuItem{
         if(script){
             const selectedGraphUnits = ScriptGraphSelector.get().getSelected(world)
             return selectedGraphUnits.reduce((list, graphUnit) => {
-                const nodeId = graphUnit.getComponent(NodeComponent).getNodeId()
-                const node = script.findNodeById(nodeId)
+                const node = graphUnit.getComponent(NodeComponent).getNode()
                 return list.concat(node.getInputs())
             }, []).filter(input => input)
         }
