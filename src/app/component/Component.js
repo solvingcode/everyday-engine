@@ -6,10 +6,16 @@ import SystemError from '../exception/type/SystemError.js'
 /**
  * @abstract
  */
-export default class Component extends ComponentData{
+export default class Component extends ComponentData {
+
+    /**
+     * @type {DynamicAttribute[]}
+     */
+    finalAttributes
 
     constructor(name) {
         super(name)
+        this.finalAttributes = []
         this.init()
     }
 
@@ -35,14 +41,14 @@ export default class Component extends ComponentData{
     /**
      * @return {string[]}
      */
-    getExcludeFields(){
+    getExcludeFields() {
         return []
     }
 
     /**
      * @private
      */
-    init(){
+    init() {
         this.add('enabled', TYPES.BOOLEAN, true)
         this.initAttributes()
     }
@@ -50,7 +56,7 @@ export default class Component extends ComponentData{
     /**
      * @abstract
      */
-    initAttributes(){
+    initAttributes() {
         throw new SystemError(`${this.constructor.name}.initAttributes must be implement`)
     }
 
@@ -61,8 +67,21 @@ export default class Component extends ComponentData{
      * @param {*} defaultValue
      * @param {*} rule
      */
-    add(name, type, defaultValue = null, rule = null){
-        DynamicAttributeHelper.add(this.attributes, name, type, defaultValue, rule)
+    add(name, type, defaultValue = null, rule = null) {
+        DynamicAttributeHelper.add(this.finalAttributes, name, type, defaultValue, rule, false)
+        DynamicAttributeHelper.add(this.attributes, name, type, defaultValue, rule, false)
+    }
+
+    /**
+     * @protected
+     * @param {string} name
+     * @param {number} type
+     * @param {*} defaultValue
+     * @param {*} rule
+     */
+    addInternal(name, type, defaultValue = null, rule = null) {
+        DynamicAttributeHelper.add(this.finalAttributes, name, type, defaultValue, rule, true)
+        DynamicAttributeHelper.add(this.attributes, name, type, defaultValue, rule, true)
     }
 
     /**
@@ -70,7 +89,7 @@ export default class Component extends ComponentData{
      * @param {string} name
      * @return {DynamicAttribute}
      */
-    get(name){
+    get(name) {
         return DynamicAttributeHelper.get(this.attributes, name)
     }
 
@@ -79,7 +98,7 @@ export default class Component extends ComponentData{
      * @param {string} name
      * @param {*} value
      */
-    setValue(name, value){
+    setValue(name, value) {
         DynamicAttributeHelper.setValue(this.attributes, name, value)
     }
 
@@ -88,7 +107,7 @@ export default class Component extends ComponentData{
      * @param {*} value
      * @param {World} world
      */
-    setKeyValue(name, value, world){
+    setKeyValue(name, value, world) {
         this.setValue(name, DynamicAttributeHelper.getValueByType(value, this.getType(name), world))
     }
 
@@ -97,7 +116,7 @@ export default class Component extends ComponentData{
      * @param {World} world
      * @return {*}
      */
-    getKeyValue(name, world){
+    getKeyValue(name, world) {
         return DynamicAttributeHelper.getKeyByType(this.getValue(name), this.getType(name), world)
     }
 
@@ -106,7 +125,7 @@ export default class Component extends ComponentData{
      * @param {string} name
      * @return {*}
      */
-    getValue(name){
+    getValue(name) {
         return DynamicAttributeHelper.getValue(this.attributes, name)
     }
 
@@ -115,7 +134,7 @@ export default class Component extends ComponentData{
      * @param {string} name
      * @return {*}
      */
-    getType(name){
+    getType(name) {
         return DynamicAttributeHelper.getType(this.attributes, name)
     }
 
@@ -123,51 +142,103 @@ export default class Component extends ComponentData{
      * @param {string} name
      * @return {boolean}
      */
-    hasAttribute(name){
+    hasAttribute(name) {
         return !!DynamicAttributeHelper.tryGet(this.attributes, name)
     }
 
     /**
      * @param {string} name
      */
-    deleteAttribute(name){
+    deleteAttribute(name) {
+        DynamicAttributeHelper.delete(this.finalAttributes, name)
         DynamicAttributeHelper.delete(this.attributes, name)
     }
 
-    enable(){
+    /**
+     * @param {string} name
+     * @param {DynamicAttribute} attributeDefinition
+     */
+    updateAttributeDefinition(name, attributeDefinition) {
+        const attribute = this.get(name)
+        attribute.setInternal(attributeDefinition.getInternal())
+        attribute.setAttrType(attributeDefinition.getAttrType())
+        attribute.setAttrRule(attributeDefinition.getAttrRule())
+        if (attributeDefinition.getInternal()) {
+            attribute.setAttrValue(attributeDefinition.getAttrValue())
+        }
+    }
+
+    /**
+     * @protected
+     * @param {DynamicAttribute[]} finalAttributes
+     */
+    setFinalAttributes(finalAttributes) {
+        this.finalAttributes = finalAttributes
+    }
+
+    /**
+     * @return {DynamicAttribute[]}
+     */
+    getFinalAttributes() {
+        return this.finalAttributes
+    }
+
+    enable() {
         this.setValue('enabled', true)
     }
 
-    disable(){
+    disable() {
         this.setValue('enabled', false)
     }
 
     /**
      * @param {boolean} enabled
      */
-    setEnabled(enabled){
+    setEnabled(enabled) {
         this.setValue('enabled', enabled)
     }
 
     /**
      * @return {boolean}
      */
-    getEnabled(){
+    getEnabled() {
         return this.getValue('enabled')
     }
 
     /**
      * @return {boolean}
      */
-    isEnabled(){
+    isEnabled() {
         return this.getEnabled()
     }
 
     /**
      * @return {boolean}
      */
-    isRemovable(){
+    isRemovable() {
         return true
+    }
+
+    /**
+     * @return {boolean}
+     */
+    isProtected(){
+        return true
+    }
+
+    concatAttributes(attributes) {
+        super.concatAttributes(attributes)
+        const finalAttributes = this.getFinalAttributes()
+        if (finalAttributes && finalAttributes.length && this.isProtected()) {
+            this.getAttributes().forEach(attribute => {
+                const finalAttribute = finalAttributes.find(attr => attr.getAttrName() === attribute.getAttrName())
+                if (!finalAttribute) {
+                    this.deleteAttribute(attribute.getAttrName())
+                } else {
+                    this.updateAttributeDefinition(attribute.getAttrName(), finalAttribute)
+                }
+            })
+        }
     }
 
 }

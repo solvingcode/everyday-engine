@@ -13,9 +13,10 @@ export default class DynamicAttributeHelper {
      * @param {number} type
      * @param {*} defaultValue
      * @param {*} rule
+     * @param {boolean} internal
      */
-    static create(name, type, defaultValue = null, rule = null) {
-        return new DynamicAttribute(name, type, defaultValue, rule)
+    static create(name, type, defaultValue = null, rule = null, internal = false) {
+        return new DynamicAttribute(name, type, defaultValue, rule, internal)
     }
 
     /**
@@ -24,10 +25,11 @@ export default class DynamicAttributeHelper {
      * @param {number} type
      * @param {*} defaultValue
      * @param {*} rule
+     * @param {boolean} internal
      */
-    static add(target, name, type, defaultValue = null, rule = null) {
+    static add(target, name, type, defaultValue = null, rule = null, internal = false) {
         if (!this.tryGet(target, name)) {
-            target.push(this.create(name, type, defaultValue, rule))
+            target.push(this.create(name, type, defaultValue, rule, internal))
         } else {
             throw new ClientError(`Attribute ${name} already defined`)
         }

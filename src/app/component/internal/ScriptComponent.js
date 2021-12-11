@@ -117,4 +117,11 @@ export default class ScriptComponent extends Component {
     getType(name) {
         return super.getType(name)
     }
+
+    /**
+     * @override
+     */
+    isProtected(){
+        return false
+    }
 }

@@ -131,6 +131,9 @@ export const PrefSchema = {
         },
         attrValue: {
             type: '[attrType]'
+        },
+        internal: {
+            type: TYPES.BOOLEAN
         }
     }
 }

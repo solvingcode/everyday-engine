@@ -22,19 +22,25 @@ export default class DynamicAttribute {
      * @type {*}
      */
     attrRule
+    /**
+     * @type {boolean}
+     */
+    internal
 
     /**
      * @param {string} attrName
      * @param {number|string} attrType
      * @param {*} attrValue
      * @param {*} attrRule
+     * @param {boolean} internal
      */
-    constructor(attrName, attrType, attrValue = null, attrRule = null) {
+    constructor(attrName, attrType, attrValue = null, attrRule = null, internal = false) {
         this.id = Maths.generateId()
         this.setAttrName(attrName)
         this.setAttrType(attrType)
         this.setAttrValue(attrValue)
         this.setAttrRule(attrRule)
+        this.setInternal(internal)
     }
 
     /**
@@ -49,6 +55,20 @@ export default class DynamicAttribute {
      */
     getId(){
         return this.id
+    }
+
+    /**
+     * @param {boolean} internal
+     */
+    setInternal(internal){
+        this.internal = internal
+    }
+
+    /**
+     * @return {boolean}
+     */
+    getInternal(){
+        return this.internal
     }
 
     /**

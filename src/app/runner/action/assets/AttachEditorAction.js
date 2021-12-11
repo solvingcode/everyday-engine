@@ -35,7 +35,7 @@ export default class AttachEditorAction extends Action {
                 units.forEach(unit => {
                     const transformComponent = unit.getComponent(TransformComponent)
                     const meshComponent = unit.getComponent(MeshComponent)
-                    if (transformComponent) {
+                    if (transformComponent && !unit.getUnitParentId()) {
                         const position = transformComponent.getPosition()
                         const deltaVector = Vector.subtract(currentScenePosition, position)
                         transformComponent.setLocalPosition(Vector.add(transformComponent.getLocalPosition(), deltaVector))

@@ -62,7 +62,6 @@ class EditorRunner extends Runner {
             if (!World.get().getScriptManager().getSelected(World.get().getTabManager())) {
                 this.handleUnitEvent(stateManager, mouse)
                 this.selectUnits(stateManager, mouse)
-                this.focusUnits(mouse)
                 this.setupEditor(stateManager)
                 this.createGridEntity()
             }

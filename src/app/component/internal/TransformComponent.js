@@ -22,9 +22,9 @@ export default class TransformComponent extends Component {
         this.add('localScale', TYPES.VECTOR, new Vector())
         this.add('localRotation', TYPES.NUMBER, 0)
         this.add('localAxisRotation', TYPES.NUMBER, null)
-        this.add('lastLocalScale', TYPES.VECTOR)
-        this.add('lastLocalPosition', TYPES.VECTOR)
-        this.add('lastLocalRotation', TYPES.NUMBER, null)
+        this.addInternal('lastLocalScale', TYPES.VECTOR)
+        this.addInternal('lastLocalPosition', TYPES.VECTOR)
+        this.addInternal('lastLocalRotation', TYPES.NUMBER, null)
     }
 
     /**
