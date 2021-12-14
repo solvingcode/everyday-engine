@@ -17,6 +17,6 @@ export default class ListElementActionsMenuItem extends ListElementMenuItem {
      * @override
      */
     doSetData(data){
-        this.items = this.parent.getActions(this.data.bind)
+        this.items = this.parent.getActions(data.bind)
     }
 }

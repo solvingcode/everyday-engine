@@ -13,7 +13,7 @@ export default class DeleteEdgeAction extends Action {
         const script = World.get().getScriptManager().getFunctionSelected(World.get().getTabManager())
         const {nodeInput} = StateManager.get().getNextProgressData(this.STATE)
         if (script && nodeInput) {
-            script.removeInputById(nodeInput.getId())
+            script.removeInput(nodeInput)
             script.setUpdated(true)
         }
         return true

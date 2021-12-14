@@ -478,7 +478,7 @@ export default class UnitHelper {
         const unitManager = world.getUnitManager()
         const uiTransformComponent = unit.getComponent(UITransformComponent)
         const parentUnit = unitManager.findParentUnit(unit)
-        if(parentUnit){
+        if (parentUnit) {
             const parentTransformComponent = parentUnit.getComponent(TransformComponent)
             const parentPosition = parentTransformComponent.getPosition()
             const parentScale = parentTransformComponent.getScale()
@@ -779,6 +779,37 @@ export default class UnitHelper {
     /**
      * @param {World} world
      * @param {Unit} unit
+     * @param {Vector} position
+     */
+    static setWorldPosition(world, unit, position) {
+        const parentUnit = world.getUnitManager().findParentUnit(unit)
+        if (parentUnit) {
+            const parentPosition = parentUnit.getComponent(TransformComponent).getPosition()
+            unit.getComponent(TransformComponent).setLocalPosition(Vector.subtract(position, parentPosition))
+        } else {
+            unit.getComponent(TransformComponent).setLocalPosition(position)
+        }
+    }
+
+    /**
+     * @param {World} world
+     * @param {Unit} unit
+     * @param {Vector} centerPosition
+     */
+    static setCenterWorldPosition(world, unit, centerPosition) {
+        const parentUnit = world.getUnitManager().findParentUnit(unit)
+        const position = this.fromCenterPosition(unit, centerPosition)
+        if (parentUnit) {
+            const parentPosition = parentUnit.getComponent(TransformComponent).getPosition()
+            unit.getComponent(TransformComponent).setLocalPosition(Vector.subtract(position, parentPosition))
+        } else {
+            unit.getComponent(TransformComponent).setLocalPosition(position)
+        }
+    }
+
+    /**
+     * @param {World} world
+     * @param {Unit} unit
      * @return {Animation[]}
      */
     static getAnimations(world, unit) {
@@ -832,10 +863,12 @@ export default class UnitHelper {
      * @param {Unit} unit
      */
     static getUIContainer(world, unit) {
-        if (unit.getComponent(UIContainerComponent)) {
-            return unit
-        } else if (unit) {
-            return this.getUIContainer(world, world.getUnitManager().findParentUnit(unit))
+        if (unit) {
+            if (unit.getComponent(UIContainerComponent)) {
+                return unit
+            } else if (unit) {
+                return this.getUIContainer(world, world.getUnitManager().findParentUnit(unit))
+            }
         }
     }
 

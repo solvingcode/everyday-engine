@@ -254,6 +254,11 @@ import GetVarValueFunction from '../../flow/function/native/component/GetVarValu
 import OnInitEvent from '../../flow/event/native/OnInitEvent.js'
 import VariableScript from '../../flow/VariableScript.js'
 import AClassVariable from '../../flow/function/variable/AClassVariable.js'
+import CosFunction from '../../flow/function/native/math/CosFunction.js'
+import SinFunction from '../../flow/function/native/math/SinFunction.js'
+import VectorRoundFunction from '../../flow/function/native/basic/VectorRoundFunction.js'
+import GetCenterWorldPositionFunction from '../../flow/function/native/unit/GetCenterWorldPositionFunction.js'
+import SetCenterWorldPositionFunction from '../../flow/function/native/unit/SetCenterWorldPositionFunction.js'
 
 /**
  * @class {DataSchema}
@@ -503,6 +508,11 @@ class DataSchema {
         {id: 2290, type: OnInitEvent},
         {id: 2300, type: VariableScript},
         {id: 2310, type: AClassVariable},
+        {id: 2320, type: CosFunction},
+        {id: 2330, type: SinFunction},
+        {id: 2340, type: VectorRoundFunction},
+        {id: 2350, type: GetCenterWorldPositionFunction},
+        {id: 2360, type: SetCenterWorldPositionFunction},
     ]
 
     /**

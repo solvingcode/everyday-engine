@@ -111,6 +111,18 @@ export default class AScriptFunction extends AScriptFunctionData {
     }
 
     /**
+     * @param {NodeInput} nodeInput
+     */
+    removeInput(nodeInput) {
+        const node = this.findNodeById(nodeInput.getNodeId())
+        if (!node) {
+            throw new ClientError(`Target Node for edge ID "${nodeInput.getName()}" not found`)
+        }
+        const nodeInputIndex = node.getInputs().findIndex(pNodeInput => pNodeInput === nodeInput)
+        node.getInputs().splice(nodeInputIndex, 1)
+    }
+
+    /**
      * @return {ANode[]}
      */
     getSelectedNodes() {

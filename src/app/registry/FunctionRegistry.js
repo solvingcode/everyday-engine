@@ -116,6 +116,11 @@ import GetFunctionFunction from '../flow/function/native/function/GetFunctionFun
 import GetAnimationFunction from '../flow/function/native/animation/GetAnimationFunction.js'
 import SetKeyVarFunction from '../flow/function/native/component/SetKeyVarFunction.js'
 import GetVarValueFunction from '../flow/function/native/component/GetVarValueFunction.js'
+import CosFunction from '../flow/function/native/math/CosFunction.js'
+import SinFunction from '../flow/function/native/math/SinFunction.js'
+import VectorRoundFunction from '../flow/function/native/basic/VectorRoundFunction.js'
+import GetCenterWorldPositionFunction from '../flow/function/native/unit/GetCenterWorldPositionFunction.js'
+import SetCenterWorldPositionFunction from '../flow/function/native/unit/SetCenterWorldPositionFunction.js'
 
 export default class FunctionRegistry extends Registry{
 
@@ -177,6 +182,9 @@ export default class FunctionRegistry extends Registry{
             new DontDestroyOnLoadFunction(),
             new GetFunctionFunction(),
             new GetAnimationFunction(),
+            new CosFunction(),
+            new SinFunction(),
+            new VectorRoundFunction(),
 
             //Loop
             new ALoop(),
@@ -202,6 +210,8 @@ export default class FunctionRegistry extends Registry{
             new GetUnitNameFunction(),
             new GetUnitTagNameFunction(),
             new FindUnitsByNameFunction(),
+            new GetCenterWorldPositionFunction(),
+            new SetCenterWorldPositionFunction(),
 
             //Animation
             new StartAnimationFunction(),

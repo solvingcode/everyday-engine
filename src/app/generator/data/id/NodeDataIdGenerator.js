@@ -16,10 +16,9 @@ export default class NodeDataIdGenerator extends DataIdGenerator {
             node.setId(newIds[node.getId()])
             node.getInputs().forEach(nodeInput => {
                 nodeInput.setNodeId(newIds[nodeInput.getNodeId()])
-                if (newIds[nodeInput.getSourceNodeId()]) {
-                    nodeInput.setSourceNodeId(newIds[nodeInput.getSourceNodeId()])
-                }
+                nodeInput.setSourceNodeId(newIds[nodeInput.getSourceNodeId()])
             })
+            _.remove(node.getInputs(), (input) => !input.getSourceNodeId())
         })
     }
 

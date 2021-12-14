@@ -3,10 +3,10 @@ import AFunction from '../../AFunction.js'
 import Vector from '../../../../utils/Vector.js'
 import UnitHelper from '../../../../utils/UnitHelper.js'
 
-export default class SetWorldPositionFunction extends AFunction{
+export default class SetCenterWorldPositionFunction extends AFunction{
 
     constructor() {
-        super('SetWorldPosition')
+        super('SetCenterWorldPosition')
     }
 
     /**
@@ -21,6 +21,6 @@ export default class SetWorldPositionFunction extends AFunction{
      * @override
      */
     execute(functionRegistry, unit, scriptComponent, world, executionContext) {
-        UnitHelper.setWorldPosition(world, this.getInputValue('target'), this.getInputValue('vector'))
+        UnitHelper.setCenterWorldPosition(world, this.getInputValue('target'), this.getInputValue('vector'))
     }
 }
