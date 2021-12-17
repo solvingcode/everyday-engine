@@ -250,34 +250,12 @@ export default class ScriptHelper {
 
     /**
      * @param {World} world
-     * @param {string} functionName
      * @param {string} className
+     * @param {AFunction} func
      * @return {boolean}
      */
-    static isFunctionInstanceOf(world, functionName, className) {
-        const func = world.getFunctionRegistry().getInstance(functionName)
-        if (func) {
-            const functionClassName = func.getClassName()
-            if (functionClassName) {
-                return this.isClassInstanceOf(world, functionClassName, className)
-            }
-        }
-    }
-
-    /**
-     * @param {World} world
-     * @param {string} className
-     * @param {string} parentClassName
-     * @return {boolean}
-     */
-    static isClassInstanceOf(world, className, parentClassName) {
-        if (className === parentClassName) {
-            return true
-        }
-        const script = world.getScriptManager().findByName(className)
-        if (script) {
-            return this.isClassInstanceOf(world, script.getParentName(), parentClassName)
-        }
+    static isHasFunction(world, className, func) {
+        return className === func.getClassName() || func.getChildClassNames().includes(className)
     }
 
     /**
@@ -291,6 +269,23 @@ export default class ScriptHelper {
             if (parentClassName) {
                 const parentScript = world.getScriptManager().findByName(parentClassName)
                 return [parentClassName, ...this.getParentClassNames(world, parentScript)]
+            }
+        }
+        return []
+    }
+
+    /**
+     * @param {World} world
+     * @param {AScript} script
+     * @return {string[]}
+     */
+    static getChildClassNames(world, script) {
+        if (script) {
+            const childClasses = world.getScriptManager().findByParentClassName(script.getName())
+            if (childClasses.length) {
+                const childClassNames = childClasses.map(pScript => pScript.getName())
+                return [...childClassNames, ...childClasses.reduce((subChildClassNames, pScript) =>
+                    [...subChildClassNames, ...this.getChildClassNames(world, pScript)], [])]
             }
         }
         return []

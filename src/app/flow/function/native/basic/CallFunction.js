@@ -25,8 +25,8 @@ export default class CallFunction extends AFunction {
         const pUnit = this.getInputValue('unit')
         const func = this.getInputValue('function')
         const targetScriptComponent = pUnit.findComponentsByClass(ScriptComponent)
-            .find(script => {
-                return ScriptHelper.isClassInstanceOf(world, script.getScript(), func.getClassName())
+            .find(pScriptComponent => {
+                return ScriptHelper.isHasFunction(world, pScriptComponent.getScript(), func)
             })
         if (targetScriptComponent) {
             const overrideFunctionName = `${targetScriptComponent.getName()}.${func.getFunctionName()}`

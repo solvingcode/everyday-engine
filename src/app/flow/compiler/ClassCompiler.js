@@ -49,6 +49,7 @@ export default class ClassCompiler extends Compiler {
                 stackScriptFunction.setAccess(scriptFunction.getAccess())
                 stackScriptFunction.setClassName(script.getName())
                 stackScriptFunction.setParentClassName(script.getParentName())
+                stackScriptFunction.setChildClassNames(ScriptHelper.getChildClassNames(world, script))
                 stackScriptFunction.setStack([
                     new StackOperation(OPERATIONS.CALL, `${scriptFunctionName}.OnCall`)
                 ])

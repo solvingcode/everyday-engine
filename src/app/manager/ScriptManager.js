@@ -14,6 +14,14 @@ export default class ScriptManager extends ScriptManagerData {
     }
 
     /**
+     * @param {string} parentClassName
+     * @return {AScript[]}
+     */
+    findByParentClassName(parentClassName) {
+        return this.getScripts().filter(script => script.getParentName() === parentClassName)
+    }
+
+    /**
      * @param {Asset} asset
      * @return {AScript}
      */

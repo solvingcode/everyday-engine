@@ -36,6 +36,10 @@ export default class FunctionData extends Data {
      */
     parentClassName
     /**
+     * @type {string[]}
+     */
+    childClassNames
+    /**
      * @type {string}
      */
     scopeFunctionName
@@ -49,6 +53,7 @@ export default class FunctionData extends Data {
         this.name = name
         this.inputs = []
         this.stack = []
+        this.childClassNames = []
         this.output = null
         this.access = 0
     }
@@ -124,6 +129,20 @@ export default class FunctionData extends Data {
     }
 
     /**
+     * @param {string[]} childClassNames
+     */
+    setChildClassNames(childClassNames) {
+        this.childClassNames = childClassNames
+    }
+
+    /**
+     * @return {string[]}
+     */
+    getChildClassNames() {
+        return this.childClassNames
+    }
+
+    /**
      * @param {string} scopeFunctionName
      */
     setScopeFunctionName(scopeFunctionName) {
@@ -191,6 +210,13 @@ export default class FunctionData extends Data {
      */
     concatStack(stack){
         this.setStack(stack)
+    }
+
+    /**
+     * @param {string[]} childClassNames
+     */
+    concatChildClassNames(childClassNames){
+        this.setChildClassNames(childClassNames)
     }
 
 }

@@ -272,6 +272,9 @@ export default {
                                     parentClassName: {
                                         type: TYPES.STRING
                                     },
+                                    childClassNames: {
+                                        type: TYPES.ARRAY | TYPES.STRING
+                                    },
                                     scopeFunctionName: {
                                         type: TYPES.STRING
                                     }
