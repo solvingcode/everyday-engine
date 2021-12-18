@@ -1,5 +1,6 @@
 import Maths from '../utils/Maths.js'
 import FolderData from '../project/data/FolderData.js'
+import Layout from '../layout/Layout.js'
 
 export default class Folder extends FolderData {
 
@@ -38,6 +39,16 @@ export default class Folder extends FolderData {
      */
     setSelected(value) {
         this.selected = value
+    }
+
+    generateFields() {
+        return [
+            {
+                bind: 'name',
+                label: 'Folder',
+                type: Layout.form.TEXT
+            }
+        ]
     }
 
 }

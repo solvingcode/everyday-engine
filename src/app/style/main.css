@@ -84,6 +84,14 @@ h4{
     padding: 5px;
 }
 
+.section-right .panel .panel {
+    margin-bottom: 5px;
+}
+
+.section-right .panel-layer .panel .panel {
+    margin-bottom: 0;
+}
+
 .panel .panel > div{
     padding: 0;
     margin-left: 2px;
@@ -583,7 +591,7 @@ h4{
 }
 
 .default-form-wrapper .panel button{
-    width: unset;
+    width: 100%;
     height: unset;
     padding: 5px 10px;
     margin-bottom: 10px;

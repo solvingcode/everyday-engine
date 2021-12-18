@@ -96,6 +96,7 @@ export default class OptionHelper {
         }
         if (bindObject instanceof Asset) {
             options.push(...[
+                new EditCrudPopupButtonMenuItem(bindObject),
                 new DeleteAssetMenuItem(),
                 new AddAssetSceneMenuItem(),
                 new CompileAssetScriptMenuItem(),
@@ -112,6 +113,7 @@ export default class OptionHelper {
         }
         if (bindObject instanceof Folder) {
             options.push(...[
+                new EditCrudPopupButtonMenuItem(bindObject),
                 new AddFolderMenuItem(),
                 new DeleteFolderMenuItem()
             ])
@@ -175,7 +177,7 @@ export default class OptionHelper {
         }
         if (bindObject instanceof AScriptFunction) {
             options.push(...[
-                new OptionActionsTitleMenuItem('Script'),
+                new EditCrudPopupButtonMenuItem(bindObject),
                 new DeleteFunctionMenuItem(null, bindObject)
             ])
         }

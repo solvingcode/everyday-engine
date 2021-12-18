@@ -4,6 +4,7 @@ import Vector from '../utils/Vector.js'
 import {SCENE_HEIGHT, SCENE_WIDTH} from '../core/Constant.js'
 import AScriptFunctionData from '../project/data/AScriptFunctionData.js'
 import {ACCESSOR} from './function/AFunction.js'
+import Layout from '../layout/Layout.js'
 
 /**
  * @abstract
@@ -226,6 +227,35 @@ export default class AScriptFunction extends AScriptFunctionData {
      */
     isPublic(){
         return this.access === ACCESSOR.PUBLIC
+    }
+
+    generateFields(){
+        return [
+            {
+                bind: 'name',
+                label: 'Name',
+                type: Layout.form.TEXT
+            },
+            {
+                bind: 'access',
+                label: 'Access',
+                type: Layout.form.DROPDOWN,
+                list:  [
+                    {
+                        value: ACCESSOR.PRIVATE,
+                        label: 'Private'
+                    },
+                    {
+                        value: ACCESSOR.PROTECTED,
+                        label: 'Protected'
+                    },
+                    {
+                        value: ACCESSOR.PUBLIC,
+                        label: 'Public'
+                    }
+                ]
+            }
+        ]
     }
 
 }

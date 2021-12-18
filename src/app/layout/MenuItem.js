@@ -68,6 +68,9 @@ class MenuItem {
     doSetData(data) {
     }
 
+    setupItems(){
+    }
+
     /**
      * @return {Object}
      */
@@ -303,6 +306,7 @@ class MenuItem {
         const isValid = !!this.isValid()
         if (this.isValidated() !== isValid) {
             this.setValidated(isValid)
+            this.setupItems()
             this.setUpdated(true)
         }
     }

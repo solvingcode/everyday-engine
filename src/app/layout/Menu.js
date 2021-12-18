@@ -18,15 +18,9 @@ import SimulateStopMenuItem from './items/action/SimulateStopMenuItem.js'
 import TabListMenuItem from './items/tab/TabListMenuItem.js'
 import ContentMenuItem from './items/content/ContentMenuItem.js'
 import EditAnimationWrapperMenuItem from './items/content/animation/EditAnimationWrapperMenuItem.js'
-import LayerMenuItem from './items/layer/LayerMenuItem.js'
-import SceneMenuItem from './items/scene/SceneMenuItem.js'
-import WorldMenuItem from './items/world/WorldMenuItem.js'
-import AssetMenuItem from './items/assets/AssetMenuItem.js'
-import MainCameraMenuItem from './items/world/MainCameraMenuItem.js'
-import ScriptMenuItem from './items/script/ScriptMenuItem.js'
-import GameMenuItem from './items/game/GameMenuItem.js'
 import AssetsMenuItem from './items/assets/AssetsMenuItem.js'
 import AppMenuItem from './items/app/AppMenuItem.js'
+import RightMenuItem from './items/section/RightMenuItem.js'
 
 /**
  * Define all menu items
@@ -69,13 +63,7 @@ class Menu {
             new ContentCanvasMenuItem(),
 
             //RIGHT
-            new LayerMenuItem(),
-            new SceneMenuItem(),
-            new WorldMenuItem(),
-            new AssetMenuItem(),
-            new MainCameraMenuItem(),
-            new ScriptMenuItem(),
-            new GameMenuItem(),
+            new RightMenuItem(),
 
             //BOTTOM
             new AssetsMenuItem(),

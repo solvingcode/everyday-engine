@@ -66,6 +66,13 @@ class HtmlPanelUI extends ItemUI {
             return body
         }
     }
+
+    /**
+     * @override
+     */
+    static getClassName(item) {
+        return `panel-${item.element.props.name}`
+    }
 }
 
 HtmlPanelUI.props = {

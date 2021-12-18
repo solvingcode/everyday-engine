@@ -170,7 +170,7 @@ export default class DynamicAttributeHelper {
                          isListInstances = true, pBindName = null,
                          arrayIndex = null, pAttributeName = null) {
         const bindName = `${pBindName || attribute.getAttrName()}${arrayIndex !== null ? `[${arrayIndex}]` : ''}`
-        const attributeName = pAttributeName || attribute.getAttrName()
+        const attributeName = _.startCase(pAttributeName || attribute.getAttrName())
         const dynamicAttribute = !pBindName
         const attrType = arrayIndex !== null ? AttributeType.getArrayElementType(attribute.getAttrType()) : attribute.getAttrType()
         let formField
@@ -193,7 +193,7 @@ export default class DynamicAttributeHelper {
                 formField = [
                     {
                         bind: bindName,
-                        label: `${attributeName}`,
+                        label: attributeName,
                         type: Layout.form.TEXT,
                         dynamicAttribute
                     }

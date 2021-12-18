@@ -23,8 +23,6 @@ export default class AssetAnimationXml extends AssetType {
      * @override
      */
     open(asset, options) {
-        const animationManager = World.get().getAnimationManager()
-        animationManager.openEditing(asset)
     }
 
     /**

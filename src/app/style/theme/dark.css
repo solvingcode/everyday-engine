@@ -37,6 +37,14 @@ button:not(.disabled):not(.selected):hover, button.locked:hover, button.hidden:h
     background-color: #333333;
 }
 
+.default-form-wrapper .panel button{
+    background-color: #3f6093;
+}
+
+.default-form-wrapper .panel button:hover{
+    background-color: #466ca4;
+}
+
 button.selected:hover{
     background-color: #3f6093;
 }
@@ -136,17 +144,13 @@ button.selected, button.hidden.selected, button.locked.selected{
 }
 
 .units-wrapper .panel .panel h4, .component-add-wrapper .panel h4, .script-nodes .panel h4, .panel .panel h4{
-    border: none;
     background-color: unset;
-    border-top: 1px solid #4e4e4e;
+    border: none;
+    padding: 5px;
 }
 
 .units-wrapper .panel h4 + div button[data-icon="times"]{
     background: none;
-}
-
-.panel .panel:first-child h4{
-    border-top: none;
 }
 
 .panel .panel > div{

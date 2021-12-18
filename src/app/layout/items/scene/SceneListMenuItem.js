@@ -1,8 +1,6 @@
 import SceneElementMenuItem from './SceneElementMenuItem.js'
 import ListMenuItem from '../list/ListMenuItem.js'
 import World from '../../../world/World.js'
-import OptionActionsButtonEllipsisMenuItem from '../option/OptionActionsButtonEllipsisMenuItem.js'
-import SceneActionsMenuItem from './SceneActionsMenuItem.js'
 
 export default class SceneListMenuItem extends ListMenuItem{
 
@@ -38,9 +36,7 @@ export default class SceneListMenuItem extends ListMenuItem{
      * @param {Scene} bindObject
      */
     getActions(bindObject){
-        return [
-            new OptionActionsButtonEllipsisMenuItem(SceneActionsMenuItem, bindObject)
-        ]
+        return []
     }
 
 }

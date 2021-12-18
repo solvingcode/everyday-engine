@@ -1,5 +1,6 @@
 import Maths from '../utils/Maths.js'
 import AssetData from '../project/data/AssetData.js'
+import Layout from '../layout/Layout.js'
 
 /**
  * @class {Asset}
@@ -55,21 +56,21 @@ export default class Asset extends AssetData {
     /**
      * @return {string}
      */
-    getOldName(){
+    getOldName() {
         return this.oldName
     }
 
     /**
      * @param {string} oldName
      */
-    setOldName(oldName){
-       this.oldName = oldName
+    setOldName(oldName) {
+        this.oldName = oldName
     }
 
     /**
      * @return {boolean}
      */
-    isNameUpdated(){
+    isNameUpdated() {
         return this.getOldName() !== this.getName()
     }
 
@@ -94,5 +95,15 @@ export default class Asset extends AssetData {
      */
     async load(data) {
         return this.type.load(data, this)
+    }
+
+    generateFields() {
+        return [
+            {
+                bind: 'name',
+                label: 'Asset',
+                type: Layout.form.TEXT
+            }
+        ]
     }
 }
