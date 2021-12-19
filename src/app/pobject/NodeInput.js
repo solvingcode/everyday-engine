@@ -8,6 +8,16 @@ export default class NodeInput extends NodeInputData{
     selected
 
     /**
+     * @type {boolean}
+     */
+    initialized
+
+    /**
+     * @type {Unit}
+     */
+    graphUnit
+
+    /**
      * @param {boolean} selected
      */
     setSelected(selected){
@@ -34,6 +44,34 @@ export default class NodeInput extends NodeInputData{
      */
     isSelected(){
         return this.getSelected()
+    }
+
+    /**
+     * @return {Unit}
+     */
+    getGraphUnit(){
+        return this.graphUnit
+    }
+
+    /**
+     * @param {Unit} graphUnit
+     */
+    setGraphUnit(graphUnit){
+        this.graphUnit = graphUnit
+    }
+
+    /**
+     * @return {boolean}
+     */
+    isInitialized(){
+        return this.initialized
+    }
+
+    /**
+     * @param {boolean} initialized
+     */
+    setInitialized(initialized){
+        this.initialized = initialized
     }
 
 }

@@ -3,7 +3,6 @@ import {TYPES} from '../../../../pobject/AttributeType.js'
 
 export default class NodeComponent extends Component{
 
-
     constructor() {
         super('Node')
     }
@@ -16,6 +15,12 @@ export default class NodeComponent extends Component{
         this.add('title', TYPES.STRING)
         this.add('type', TYPES.STRING)
         this.add('inputs', TYPES.ARRAY | TYPES.STRING, [])
+        this.add('inputColors', TYPES.ARRAY | TYPES.STRING, [])
+        this.add('connections', TYPES.ARRAY | TYPES.BOOLEAN, [])
+        this.add('baseInputColor', TYPES.STRING)
+        this.add('baseInputConnected', TYPES.BOOLEAN)
+        this.add('baseOutputConnected', TYPES.BOOLEAN)
+        this.add('outputConnected', TYPES.BOOLEAN)
         this.add('output', TYPES.STRING)
     }
 
@@ -55,6 +60,48 @@ export default class NodeComponent extends Component{
     }
 
     /**
+     * @param {string[]} inputColors
+     */
+    setInputColors(inputColors) {
+        this.setValue('inputColors', inputColors)
+    }
+
+    /**
+     * @param {string} baseInputColor
+     */
+    setBaseInputColor(baseInputColor) {
+        this.setValue('baseInputColor', baseInputColor)
+    }
+
+    /**
+     * @param {boolean[]} connections
+     */
+    setInputConnections(connections) {
+        this.setValue('connections', connections)
+    }
+
+    /**
+     * @param {boolean} outputConnected
+     */
+    setOutputConnected(outputConnected) {
+        this.setValue('outputConnected', outputConnected)
+    }
+
+    /**
+     * @param {boolean} baseOutputConnected
+     */
+    setBaseOutputConnected(baseOutputConnected) {
+        this.setValue('baseOutputConnected', baseOutputConnected)
+    }
+
+    /**
+     * @param {boolean} baseInputConnected
+     */
+    setBaseInputConnected(baseInputConnected) {
+        this.setValue('baseInputConnected', baseInputConnected)
+    }
+
+    /**
      * @param {string} output
      */
     setOutput(output) {
@@ -87,6 +134,48 @@ export default class NodeComponent extends Component{
      */
     getInputs(){
         return this.getValue('inputs')
+    }
+
+    /**
+     * @return {string[]}
+     */
+    getInputColors(){
+        return this.getValue('inputColors')
+    }
+
+    /**
+     * @return {string}
+     */
+    getBaseInputColor(){
+        return this.getValue('baseInputColor')
+    }
+
+    /**
+     * @return {boolean[]}
+     */
+    getInputConnections(){
+        return this.getValue('connections')
+    }
+
+    /**
+     * @return {boolean}
+     */
+    getBaseOutputConnected(){
+        return this.getValue('baseOutputConnected')
+    }
+
+    /**
+     * @return {boolean}
+     */
+    getBaseInputConnected(){
+        return this.getValue('baseInputConnected')
+    }
+
+    /**
+     * @return {boolean}
+     */
+    getOutputConnected(){
+        return this.getValue('outputConnected')
     }
 
     /**

@@ -27,6 +27,7 @@ import UIButtonUnitInstant from '../unit/instant/type/internal/ui/UIButtonUnitIn
 import UIButtonComponent from '../component/internal/ui/UIButtonComponent.js'
 import RectSelectorUnitInstant from '../unit/instant/type/internal/edit/RectSelectorUnitInstant.js'
 import CircleSelectorUnitInstant from '../unit/instant/type/internal/edit/CircleSelectorUnitInstant.js'
+import GUIPropertyComponent from '../component/internal/gui/property/GUIPropertyComponent.js'
 
 export default class UnitHelper {
 
@@ -866,7 +867,7 @@ export default class UnitHelper {
         if (unit) {
             if (unit.getComponent(UIContainerComponent)) {
                 return unit
-            } else if (unit) {
+            } else {
                 return this.getUIContainer(world, world.getUnitManager().findParentUnit(unit))
             }
         }
@@ -882,6 +883,22 @@ export default class UnitHelper {
             return unit.getComponent(UIButtonComponent).getIntractable()
         }
         return false
+    }
+
+    /**
+     * @param {Unit[]} units
+     * @param {Unit} unit
+     */
+    static sortUnit(units, unit){
+        const indexUnit = units.findIndex(pUnit => pUnit === unit)
+        const rank = unit.getComponent(GUIPropertyComponent).getRank()
+        units.splice(indexUnit, 1)
+        const indexBiggerRank = units.findIndex(pUnit => pUnit.getComponent(GUIPropertyComponent).getRank() > rank)
+        if (indexBiggerRank >= 0) {
+            units.splice(indexBiggerRank, 0, unit)
+        } else {
+            units.splice(indexUnit, 0, unit)
+        }
     }
 
 }

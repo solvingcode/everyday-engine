@@ -11,7 +11,7 @@ export default class ScaleXUnitInstant extends TransformXUnitInstant {
      * @param {Vector} parentScale
      */
     instantiate(position, parentScale) {
-        const childScale = new Vector({x: 10, y: 3})
+        const childScale = new Vector({x: 10, y: 1})
         const style = new Style()
         style.setColor('#FF0000')
         style.setBorderSize(4)

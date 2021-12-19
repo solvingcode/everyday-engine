@@ -117,26 +117,26 @@ export default class GraphManager {
     updateGraphEdges(script) {
         let updated = false
         const units = this.getGraphEdges()
-        const graphEdgeIds = units
-            .map(graphUnit => graphUnit.getComponent(NodeInputComponent).getNodeInputId())
-        const nodeInputIds = script.getInputs().map(nodeInput => nodeInput.getId())
-        script.getInputs().forEach(nodeInput => {
-            const graphUnitExist = graphEdgeIds.includes(nodeInput.getId())
-            if (!graphUnitExist) {
-                this.createGraphEdgeUnit(script, nodeInput)
+        const inputs = script.getInputs()
+        inputs.forEach(input => {
+            if (!input.isInitialized()) {
+                const unit = this.createGraphEdgeUnit(script, input)
+                input.setInitialized(true)
+                input.setGraphUnit(unit)
                 updated = true
-            } else {
-                const graphUnit = units
-                    .find(gUnit =>
-                        gUnit.getComponent(NodeInputComponent).getNodeInputId() === nodeInput.getId())
-                graphUnit.update(script, nodeInput, World.get())
+            }else{
+                if(!units.includes(input.getGraphUnit())){
+                    this.units.push(input.getGraphUnit())
+                }
             }
         })
-        graphEdgeIds.forEach(graphEdgeId => {
-            if (!nodeInputIds.includes(graphEdgeId)) {
-                this.deleteGraphEdgeUnitByNodeId(graphEdgeId)
+        units.forEach(unit => {
+            const nodeInput = unit.getComponent(NodeInputComponent).getNodeInput()
+            if (!nodeInput || !script.hasNodeInput(nodeInput)) {
+                this.deleteUnit(unit)
                 updated = true
             }
+            unit.update(script, nodeInput, World.get())
         })
         return updated
     }
@@ -185,6 +185,13 @@ export default class GraphManager {
         unit.instantiate(...props)
         this.getUnits().push(unit)
         return unit
+    }
+
+    /**
+     * @param {Unit} unit
+     */
+    sortUnit(unit){
+        UnitHelper.sortUnit(this.units, unit)
     }
 
     /**
@@ -269,7 +276,7 @@ export default class GraphManager {
     }
 
     /**
-     * @return {MeshUnitInstant[]}
+     * @return {Unit[]}
      */
     getSelected() {
         return this.getGraphUnits().filter(unit => unit.isSelected())
@@ -281,8 +288,8 @@ export default class GraphManager {
     update(script) {
         if (script) {
             let updated = false
-            updated = this.updateGraphNodes(script) || updated
             updated = this.updateGraphEdges(script) || updated
+            updated = this.updateGraphNodes(script) || updated
             script.setUpdated(updated)
         }
     }

@@ -1,6 +1,6 @@
 import SystemError from '../../exception/type/SystemError.js'
 
-export default class ComponentExecutor{
+export default class ComponentExecutor {
 
     static instance
 
@@ -15,17 +15,18 @@ export default class ComponentExecutor{
     /**
      * @override
      * @param {Unit} unit
-     * @param {{camera: Camera, lights: Unit[], deltaTime: number, storage: Storage, unitIndex: number, units: Unit[]}} executionContext
+     * @param {{camera: Camera, lights: Unit[], deltaTime: number, storage: Storage, unitIndex: number,
+     * units: Unit[], unitManager: UnitManager|GraphManager}} executionContext
      * @return {void}
      */
-    execute(unit, executionContext){
+    execute(unit, executionContext) {
         throw new SystemError(`${this.constructor.name}.execute must be implemented`)
     }
 
     /**
      * @return {Component[]}
      */
-    getTargetComponents(){
+    getTargetComponents() {
         return this.targetComponents
     }
 

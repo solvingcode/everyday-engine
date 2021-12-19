@@ -16,11 +16,12 @@ export default class ConfirmMessageMenuItem extends MenuItem {
     /**
      * @override
      */
-    update() {
+    doUpdate() {
         const confirmStates = StateManager.get().getConfirmStates()
         const confirmMessage = MessageHelper.getConfirmMessage(confirmStates[0])
         if(!this.text || this.text[0] !== confirmMessage){
             this.text = [confirmMessage]
+            return true
         }
     }
 }

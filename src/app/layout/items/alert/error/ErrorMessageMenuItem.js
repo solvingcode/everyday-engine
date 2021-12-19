@@ -16,10 +16,11 @@ export default class ErrorMessageMenuItem extends MenuItem {
     /**
      * @override
      */
-    update() {
+    doUpdate() {
         const lastError = ExceptionHandler.get().getLastError()
         if(lastError && (!this.text || this.text[0] !== lastError.message)){
             this.text = [lastError.message]
+            return true
         }
     }
 

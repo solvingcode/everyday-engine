@@ -9,6 +9,7 @@ import CommonUtil from '../utils/CommonUtil.js'
 import ArrayHelper from '../utils/ArrayHelper.js'
 import CameraComponent from '../component/internal/CameraComponent.js'
 import AnimationComponent from '../component/internal/AnimationComponent.js'
+import UnitHelper from '../utils/UnitHelper.js'
 
 /**
  * Manage the units, components list (get, add, load, ...)
@@ -353,15 +354,7 @@ export default class UnitManager extends UnitManagerData {
      * @param {Unit} unit
      */
     sortUnit(unit){
-        const indexUnit = this.units.findIndex(pUnit => pUnit === unit)
-        const rank = unit.getComponent(GUIPropertyComponent).getRank()
-        this.units.splice(indexUnit, 1)
-        const indexBiggerRank = this.units.findIndex(pUnit => pUnit.getComponent(GUIPropertyComponent).getRank() > rank)
-        if (indexBiggerRank >= 0) {
-            this.units.splice(indexBiggerRank, 0, unit)
-        } else {
-            this.units.splice(indexUnit, 0, unit)
-        }
+        UnitHelper.sortUnit(this.units, unit)
     }
 
     sortUnits() {

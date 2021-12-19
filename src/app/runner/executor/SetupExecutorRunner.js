@@ -28,16 +28,21 @@ export class SetupExecutorRunner extends Runner {
         const scriptClass = scriptManager.getSelected(world.getTabManager())
         const lights = world.getLightsNotGenerated()
         const storage = Storage.get()
-        let units, camera
-        if(scriptClass){
+        let units, camera, unitManager
+        if (scriptClass) {
+            unitManager = graphManager
             units = graphManager.getUnits()
             camera = scriptFunction && scriptFunction.getCamera()
-        }else{
+        } else {
+            unitManager = world.getUnitManager()
             units = world.getUnitManager().getEnabledUnits()
             camera = world.getCamera()
         }
         units.forEach((unit, index) => {
-            ExecutorRegistry.get().execute(unit, {camera, deltaTime, lights, storage, unitIndex: index, units})
+            ExecutorRegistry.get().execute(unit, {
+                camera, deltaTime, lights, storage,
+                unitIndex: index, units, unitManager
+            })
         })
     }
 

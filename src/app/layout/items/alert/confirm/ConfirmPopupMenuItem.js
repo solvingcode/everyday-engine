@@ -14,6 +14,12 @@ export default class ConfirmPopupMenuItem extends MenuItem {
             zone: Layout.zone.WINDOW,
             type: Layout.type.WRAPPER
         })
+    }
+
+    /**
+     * @override
+     */
+    setupItems() {
         this.items = [
             new ConfirmTitleMenuItem(this),
             new ConfirmMessageMenuItem(this),

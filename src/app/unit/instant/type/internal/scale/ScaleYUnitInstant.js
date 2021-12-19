@@ -11,7 +11,7 @@ export default class ScaleYUnitInstant extends TransformYUnitInstant {
      * @param {Vector} parentScale
      */
     instantiate(position, parentScale) {
-        const childScale = new Vector({x: 3, y: 10})
+        const childScale = new Vector({x: 1, y: 10})
         const style = new Style()
         style.setColor('#0000FF')
         style.setBorderSize(4)

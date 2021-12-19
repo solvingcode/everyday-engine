@@ -75,6 +75,29 @@ export default class ANode extends ANodeData {
     }
 
     /**
+     * @param {ANode} node
+     * @return {boolean}
+     */
+    isResultAttachedTo(node){
+        return this.inputs.some(input => this.isResultConnection(input) && input.getSourceNodeId() === node.getId())
+    }
+
+    /**
+     * @param {ANode} node
+     * @return {boolean}
+     */
+    isBaseAttachedTo(node){
+        return this.inputs.some(input => this.isOrderConnection(input) && input.getSourceNodeId() === node.getId())
+    }
+
+    /**
+     * @param {NodeInput} nodeInput
+     */
+    isResultConnection(nodeInput){
+        return this.isResultToInputConnection(nodeInput) || this.isResultToBaseConnection(nodeInput)
+    }
+
+    /**
      * @param {NodeInput} nodeInput
      */
     isResultToInputConnection(nodeInput){
@@ -111,6 +134,14 @@ export default class ANode extends ANodeData {
     getTargetInput(functionRegistry, nodeInput){
         const functionInstance = functionRegistry.getInstance(this.getSourceName())
         return functionInstance ? functionInstance.findInputByName(nodeInput.getTargetName()) : null
+    }
+
+    /**
+     * @return {NodeInput}
+     */
+    getBaseInput(){
+        return this.getInputs().find(nodeInput =>
+            this.isOrderConnection(nodeInput) || this.isResultToBaseConnection(nodeInput))
     }
 
     /**

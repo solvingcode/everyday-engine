@@ -15,12 +15,13 @@ export default class LayerExecutor extends ComponentExecutor {
      */
     execute(unit, executionContext) {
         const world = World.get()
+        const {unitManager} = executionContext
         const guiPropertyComponent = unit.getComponent(GUIPropertyComponent)
         const unitRank = unit.getRank(world)
         const actualRank = guiPropertyComponent.getRank()
         if (unitRank !== actualRank) {
             guiPropertyComponent.setRank(unitRank)
-            world.getUnitManager().sortUnit(unit)
+            unitManager.sortUnit(unit)
         }
     }
 

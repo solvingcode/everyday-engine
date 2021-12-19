@@ -16,17 +16,18 @@ export default class ExecutorRegistry {
     /**
      * @param {ComponentExecutor[]} registry
      */
-    register(registry){
+    register(registry) {
         this.registry = registry
     }
 
     /**
      * @param {Unit} unit
-     * @param {{camera: Camera, lights: Unit[], deltaTime: number, storage: Storage, unitIndex: number, units: Unit[]}} executionContext
+     * @param {{camera: Camera, lights: Unit[], deltaTime: number, storage: Storage, unitIndex: number,
+     * units: Unit[], unitManager: UnitManager|GraphManager}} executionContext
      */
-    execute(unit, executionContext){
+    execute(unit, executionContext) {
         this.registry.forEach(executor => {
-            if(unit.hasComponentsByClasses(executor.getTargetComponents())){
+            if (unit.hasComponentsByClasses(executor.getTargetComponents())) {
                 executor.execute(unit, executionContext)
             }
         })

@@ -12,7 +12,7 @@ export default class NodeInputComponent extends Component{
      * @override
      */
     initAttributes() {
-        this.add('nodeInputId', TYPES.NUMBER)
+        this.add('nodeInput', TYPES.ANY)
     }
 
     /**
@@ -23,17 +23,17 @@ export default class NodeInputComponent extends Component{
     }
 
     /**
-     * @param {number} nodeInputId
+     * @param {NodeInput} nodeInput
      */
-    setNodeInputId(nodeInputId) {
-        this.setValue('nodeInputId', nodeInputId)
+    setNodeInput(nodeInput) {
+        this.setValue('nodeInput', nodeInput)
     }
 
     /**
-     * @return {number}
+     * @return {NodeInput}
      */
-    getNodeInputId(){
-        return this.getValue('nodeInputId')
+    getNodeInput(){
+        return this.getValue('nodeInput')
     }
 
 }

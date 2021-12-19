@@ -6,7 +6,7 @@ export default class DataContext{
     /**
      * @param {number} unitId
      * @param {Vector} center
-     * @param {OffscreenCanvasRenderingContext2D} context
+     * @param {CanvasRenderingContext2D} context
      * @param {Size} scaleSize
      * @param {Camera} camera
      * @param {World} world

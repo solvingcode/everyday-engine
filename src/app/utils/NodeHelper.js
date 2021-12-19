@@ -283,7 +283,7 @@ export default class NodeHelper {
         const heightHead = fontSize + padding * 2
         const shadowBlur = 10
         const boxColor = '#0f1013'
-        const baseInputColor = '#ffffff'
+        const baseInputColor = '#afafaf'
         const colorFocused = '#555555'
         const fontColor = '#ffffff'
         const selectColor = '#d09300'
@@ -345,7 +345,7 @@ export default class NodeHelper {
         const outputs = nodeSource.getOutput() ? [nodeSource.getOutput()] : []
         const type = node.getType()
         const {fontSize, padding, fontSizeRatio, sizeInput} = this.getNodeGUIProps(type)
-        const nodeInputTextLengths = this.getNodeGUIInputs(node, script, world)
+        const nodeInputTextLengths = this.getNodeGUIInputs(node, script, world).names
             .concat(this.getNodeName(node, world)).map(text => text.length)
         const width = Math.max(Math.max(...nodeInputTextLengths) * fontSize / fontSizeRatio, 100)
         const height = (Math.max(nodeSourceInputs.length, outputs.length) + 1) * (sizeInput + padding * 2) + (fontSize + padding * 2)
@@ -417,16 +417,37 @@ export default class NodeHelper {
      * @param {ANode} node
      * @param {AScriptFunction} script
      * @param {World} world
-     * @return {string[]}
+     * @return {{names: string[], connections: boolean[], colors: string[]}}
      */
     static getNodeGUIInputs(node, script, world) {
         const nodeConstantInputs = this.getNodeGUIConstantInputs(node, script, world)
+        const nodeInputs = node.getInputs()
         const nodeSource = this.getSourceNode(node, world)
         const inputs = nodeSource.getInputs()
-        return inputs.map(input => {
-            const nodeInput = nodeConstantInputs.find(pInput => pInput.getAttrName() === input.getAttrName())
-            return `${input.getAttrName()}${nodeInput ? ` = ${nodeInput.getAttrValue()}` : ''}`
-        })
+        return {
+            names: inputs.map(input => {
+                const nodeInput = nodeConstantInputs.find(pInput => pInput.getAttrName() === input.getAttrName())
+                return `${input.getAttrName()}${nodeInput ? ` = ${nodeInput.getAttrValue()}` : ''}`
+            }),
+            connections: inputs.map(input => !!node.getInputNodeAttached(input.getAttrName())),
+            colors: inputs.map(input => this.getNodeGUISourceColor(script,
+                nodeInputs.find(pNodeInput => pNodeInput.getTargetName() === input.getAttrName())))
+        }
+    }
+
+    /**
+     * @param {AScriptFunction} script
+     * @param {NodeInput} nodeInput
+     * @return {string}
+     */
+    static getNodeGUISourceColor(script, nodeInput) {
+        if (nodeInput) {
+            const sourceNode = script.findNodeById(nodeInput.getSourceNodeId())
+            if (sourceNode) {
+                const props = this.getNodeGUIProps(sourceNode.getType())
+                return props.headColor
+            }
+        }
     }
 
     /**
@@ -443,4 +464,33 @@ export default class NodeHelper {
             type === NODE_TYPES.OUTPUT
     }
 
+    /**
+     * @param {ANode} node
+     * @param {AScriptFunction} script
+     * @return {boolean}
+     */
+    static isOutputConnected(node, script) {
+        return script.getNodes().some(pNode => pNode.isResultAttachedTo(node))
+    }
+
+    /**
+     * @param {ANode} node
+     * @param {AScriptFunction} script
+     * @return {boolean}
+     */
+    static isBaseOutputConnected(node, script) {
+        return script.getNodes().some(pNode => pNode.isBaseAttachedTo(node))
+    }
+
+    /**
+     * @param {AScriptFunction} script
+     * @param {ANode} node
+     * @return {string}
+     */
+    static getNodeGUIBaseInputColor(script, node) {
+        const baseInput = node.getBaseInput()
+        if (baseInput && node.isResultToBaseConnection(baseInput)) {
+            return this.getNodeGUISourceColor(script, baseInput)
+        }
+    }
 }

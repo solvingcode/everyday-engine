@@ -13,6 +13,12 @@ export default class ErrorPopupMenuItem extends MenuItem {
             zone: Layout.zone.WINDOW,
             type: Layout.type.WRAPPER
         })
+    }
+
+    /**
+     * @override
+     */
+    setupItems() {
         this.items = [
             new ErrorTitleMenuItem(this),
             new ErrorMessageMenuItem(this),

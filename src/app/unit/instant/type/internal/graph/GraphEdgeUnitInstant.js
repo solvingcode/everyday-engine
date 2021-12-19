@@ -9,6 +9,7 @@ import GeometryHelper from '../../../../../utils/GeometryHelper.js'
 import NodeHelper from '../../../../../utils/NodeHelper.js'
 import Vector from '../../../../../utils/Vector.js'
 import TransformHelper from '../../../../../utils/TransformHelper.js'
+import Color from '../../../../../utils/Color.js'
 
 export default class GraphEdgeUnitInstant extends MeshUnitInstant {
 
@@ -47,11 +48,27 @@ export default class GraphEdgeUnitInstant extends MeshUnitInstant {
             const sourcePosition = Vector.add(sourceNode.getPosition(), Vector.add(sourceOutputPosition, centerInputSize))
             const targetPosition = Vector.add(targetNode.getPosition(), Vector.add(targetInputPosition, centerInputSize))
             const {position, size, vertices} = GeometryHelper.getRectByDistance(sourcePosition, targetPosition)
+            const {headColor} = NodeHelper.getNodeGUIProps(sourceNode.getType())
+            const connectWidth = 80
+            const connectHeight = 5
+            size.setHeight(size.getHeight() + connectHeight * 2)
+            size.setWidth(size.getWidth() + connectWidth * 2)
+            position.setX(position.getX() - connectWidth)
+            position.setY(position.getY() - connectHeight)
+            vertices[0].setX(vertices[0].getX() + connectWidth)
+            vertices[0].setY(vertices[0].getY() + connectHeight)
+            vertices[1].setX(vertices[1].getX() + connectWidth)
+            vertices[1].setY(vertices[1].getY() + connectHeight)
             const style = new Style()
-            style.setColor('#c4c4c4')
+            if (targetNode.isOrderConnection(nodeInput)) {
+                style.setColor('#afafaf')
+            } else {
+                style.setColor(headColor ? Color.shadeColor(headColor, 100) : '#afafaf')
+            }
             style.setBorderSize(2)
+            style.setOpacity(1)
 
-            nodeInputComponent.setNodeInputId(nodeInput.getId())
+            nodeInputComponent.setNodeInput(nodeInput)
             styleComponent.setStyle(style)
             transformComponent.setLocalPosition(position)
             if (
@@ -77,7 +94,7 @@ export default class GraphEdgeUnitInstant extends MeshUnitInstant {
      * @override
      */
     getRank(world) {
-        return 100060
+        return 100070
     }
 
 }

@@ -91,6 +91,14 @@ export default class AScriptFunction extends AScriptFunctionData {
     }
 
     /**
+     * @param {NodeInput} nodeInput
+     * @return {boolean}
+     */
+    hasNodeInput(nodeInput){
+        return this.getInputs().some(pNodeInput => pNodeInput === nodeInput)
+    }
+
+    /**
      * @param {number} nodeId
      */
     removeConnectionsByNodeId(nodeId) {
