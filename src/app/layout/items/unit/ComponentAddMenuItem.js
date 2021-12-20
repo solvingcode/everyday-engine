@@ -9,10 +9,16 @@ export default class ComponentAddMenuItem  extends PanelMenuItem {
             zone: parent.zone
         }, parent)
         this.collapsed = true
-        const formData = new AddComponentForm()
+        this.data = new AddComponentForm()
+    }
+
+    /**
+     * @override
+     */
+    setupItems() {
         this.items = [
-            new ComponentAddFormMenuItem(this, formData),
-            new ComponentSubmitFormMenuItem(this, formData)
+            new ComponentAddFormMenuItem(this, this.data),
+            new ComponentSubmitFormMenuItem(this, this.data)
         ]
     }
 }

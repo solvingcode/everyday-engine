@@ -4,24 +4,26 @@ import MeshComponent from '../../../../../component/internal/MeshComponent.js'
 import GUIPendingComponent from '../../../../../component/internal/gui/GUIPendingComponent.js'
 import Style from '../../../../../pobject/Style.js'
 import {PrimitiveShape} from '../../../../Unit.js'
-import TransformHelper from '../../../../../utils/TransformHelper.js'
+import StyleComponent from '../../../../../component/internal/StyleComponent.js'
 
 export default class CircleUnitInstant extends MeshUnitInstant {
 
     /**
-     * @param {Vector} position
-     * @param {Size} size
+     * @param {Vector} localPosition
+     * @param {Vector} localScale
      * @param {Style} style
      */
-    instantiate(position, size, style= new Style()) {
+    instantiate(localPosition, localScale, style = new Style()) {
         this.createComponent(GUIPendingComponent)
         const transformComponent = this.getComponent(TransformComponent)
         const meshComponent = this.getComponent(MeshComponent)
-        transformComponent.setPosition(position)
-        transformComponent.setScale(TransformHelper.getScaleFromSize(size))
+        const styleComponent = this.getComponent(StyleComponent)
+        transformComponent.setLocalPosition(localPosition)
+        transformComponent.setLocalScale(localScale)
         meshComponent.setShape(PrimitiveShape.CIRCLE)
-        meshComponent.setStyle(style)
+        styleComponent.setStyle(style)
     }
+
 
     /**
      * @override
@@ -29,4 +31,9 @@ export default class CircleUnitInstant extends MeshUnitInstant {
     setup() {
     }
 
+    /**
+     * @override
+     */
+    update() {
+    }
 }

@@ -36,7 +36,7 @@ export default class AFunction extends FunctionData{
     /**
      * @return {boolean}
      */
-    isOptimized(){
+    isOptimized() {
         return this.optimized
     }
 

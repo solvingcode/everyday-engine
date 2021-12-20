@@ -128,6 +128,7 @@ export default class NodeShapeGenerator extends TypeShapeGenerator {
         const baseOutputPositionScale = camera.toCameraScale(baseOutputPosition)
         context.fillStyle = baseInputColor
         context.strokeStyle = baseInputColor
+        context.lineWidth = camera.toScaleNumber(1)
         context.beginPath()
         context.moveTo(baseOutputPositionScale.getX(), baseOutputPositionScale.getY())
         context.lineTo(baseOutputPositionScale.getX() + sizeInputScale, baseOutputPositionScale.getY() + sizeInputScale / 2)

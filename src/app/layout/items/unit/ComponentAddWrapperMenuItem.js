@@ -12,6 +12,12 @@ export default class ComponentAddWrapperMenuItem extends MenuItem {
             zone: parent.zone,
             type: Layout.type.WRAPPER
         }, parent)
+    }
+
+    /**
+     * @override
+     */
+    setupItems() {
         this.items = [
             new ComponentAddMenuItem(this)
         ]

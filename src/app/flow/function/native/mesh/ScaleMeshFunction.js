@@ -4,6 +4,7 @@ import TransformComponent from '../../../../component/internal/TransformComponen
 import MeshComponent from '../../../../component/internal/MeshComponent.js'
 import ObjectHelper from '../../../../utils/ObjectHelper.js'
 import RigidBodyComponent from '../../../../component/internal/RigidBodyComponent.js'
+import TransformHelper from '../../../../utils/TransformHelper.js'
 
 export default class ScaleMeshFunction extends AFunction {
 
@@ -22,12 +23,12 @@ export default class ScaleMeshFunction extends AFunction {
     /**
      * @override
      */
-    execute(functionRegistry, unit) {
+    execute(functionRegistry, unit, scriptComponent, world, executionContext) {
         const target = this.getInputValue('target')
         const scale = this.getInputValue('scale')
         const transformComponent = target.getComponent(TransformComponent)
         const actualScale = transformComponent.getScale()
-        target.getComponent(TransformComponent).setScale(scale)
+        TransformHelper.scaleTo(world, unit, scale)
         if (!ObjectHelper.isEqual(actualScale, scale)) {
             target. getComponent(MeshComponent).setGenerated(false)
             const rigidBodyComponent = unit.getComponent(RigidBodyComponent)
