@@ -1,7 +1,6 @@
 import MenuItem from '../../../../MenuItem.js'
 import Layout from '../../../../Layout.js'
 import World from '../../../../../world/World.js'
-import ScriptGraphSelector from '../../../../../selector/ScriptGraphSelector.js'
 
 export default class CopySelectedNodeMenuItem extends MenuItem {
     constructor() {
@@ -20,7 +19,7 @@ export default class CopySelectedNodeMenuItem extends MenuItem {
      */
     isValid() {
         const world = World.get()
-        const selectedGraphUnits = ScriptGraphSelector.get().getSelected(world)
+        const selectedGraphUnits = world.getGraphManager().getSelectedNodes()
         return super.isValid() && !!selectedGraphUnits.length
     }
 }

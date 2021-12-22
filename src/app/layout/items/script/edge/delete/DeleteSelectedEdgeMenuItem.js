@@ -2,13 +2,13 @@ import MenuItem from '../../../../MenuItem.js'
 import Layout from '../../../../Layout.js'
 import World from '../../../../../world/World.js'
 
-export default class DeleteSelectedNodeMenuItem extends MenuItem {
+export default class DeleteSelectedEdgeMenuItem extends MenuItem {
     constructor() {
         super({
             id: 1,
             name: 'trash',
-            title: 'Remove selected node',
-            stateCode: 'CONFIRM_ACTION_DELETE_SELECTED_NODE',
+            title: 'Remove selected edge',
+            stateCode: 'CONFIRM_ACTION_DELETE_SELECTED_EDGE',
             type: Layout.type.ICON_TEXT,
             zone: Layout.zone.WINDOW
         })
@@ -19,7 +19,7 @@ export default class DeleteSelectedNodeMenuItem extends MenuItem {
      */
     isValid() {
         const world = World.get()
-        const selectedGraphUnits = world.getGraphManager().getSelectedNodes()
+        const selectedGraphUnits = world.getGraphManager().getSelectedEdges()
         return super.isValid() && !!selectedGraphUnits.length
     }
 }

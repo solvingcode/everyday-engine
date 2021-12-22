@@ -14,6 +14,7 @@ import CameraShapeGenerator from './camera/CameraShapeGenerator.js'
 import LightPointShapeGenerator from './light/LightPointShapeGenerator.js'
 import TextShapeGenerator from './text/TextShapeGenerator.js'
 import CurveShapeGenerator from './curve/CurveShapeGenerator.js'
+import EdgeShapeGenerator from './edge/EdgeShapeGenerator.js'
 
 /**
  * @abstract
@@ -63,6 +64,8 @@ export default class ShapeGenerator {
                 return LineShapeGenerator
             case PrimitiveShape.CURVE:
                 return CurveShapeGenerator
+            case PrimitiveShape.EDGE:
+                return EdgeShapeGenerator
             case PrimitiveShape.NODE:
                 return NodeShapeGenerator
             case PrimitiveShape.TEXT:

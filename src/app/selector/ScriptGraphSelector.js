@@ -11,7 +11,7 @@ export default class ScriptGraphSelector extends UnitSelector {
      * @return {Unit[]}
      */
     getUnits(world){
-        return world ? world.getGraphManager().getGraphUnits()
+        return world ? world.getGraphManager().getUnits()
             .filter(unit => unit.getComponent(MeshComponent).isEnabled()) : []
     }
 

@@ -385,7 +385,9 @@ class MenuItem {
     preState() {
         const {type, stateCode} = this.preStateCode
         if (type === AppState.ActionType.STOP_NEXT) {
-            this.stateManager.stopNextState(stateCode)
+            if(this.stateManager.isProgress(stateCode)){
+                this.stateManager.stopNextState(stateCode)
+            }
         } else {
             this.stateManager.startState(stateCode, this.id, this.data)
         }

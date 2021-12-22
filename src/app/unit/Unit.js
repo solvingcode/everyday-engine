@@ -100,5 +100,6 @@ export const PrimitiveShape = {
     NODE: 'node',
     CAMERA: 'camera',
     TEXT: 'text',
-    CURVE: 'curve'
+    CURVE: 'curve',
+    EDGE: 'edge'
 }

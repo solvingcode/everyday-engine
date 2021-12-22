@@ -1,6 +1,5 @@
 import Action from '../Action.js'
 import World from '../../../world/World.js'
-import ScriptGraphSelector from '../../../selector/ScriptGraphSelector.js'
 import NodeComponent from '../../../component/internal/gui/node/NodeComponent.js'
 
 export default class DeleteSelectedNodeAction extends Action {
@@ -11,7 +10,7 @@ export default class DeleteSelectedNodeAction extends Action {
     static run(mouse) {
         const world = World.get()
         const script = world.getScriptManager().getFunctionSelected(world.getTabManager())
-        const selectedGraphUnits = ScriptGraphSelector.get().getSelected(world)
+        const selectedGraphUnits = world.getGraphManager().getSelectedNodes()
         selectedGraphUnits.forEach(selectedGraphUnit => {
             const node = selectedGraphUnit.getComponent(NodeComponent).getNode()
             script.removeNodeById(node.getId())

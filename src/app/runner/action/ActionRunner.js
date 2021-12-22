@@ -132,6 +132,7 @@ import AddCrudAction from './crud/AddCrudAction.js'
 import DeleteCrudAction from './crud/DeleteCrudAction.js'
 import CompileAllScriptAction from './script/CompileAllScriptAction.js'
 import NewNodeAction from './script/NewNodeAction.js'
+import DeleteSelectedEdgeAction from './script/DeleteSelectedEdgeAction.js'
 
 /**
  * Action Runner class.
@@ -236,6 +237,7 @@ class ActionRunner extends Runner {
             DELETE_SCRIPT_NODE: DeleteNodeAction,
             DELETE_SCRIPT_FUNCTION: DeleteFunctionAction,
             DELETE_SELECTED_NODE: DeleteSelectedNodeAction,
+            DELETE_SELECTED_EDGE: DeleteSelectedEdgeAction,
             COPY_SELECTED_NODE: CopySelectedNodeAction,
             PASTE_SCRIPT: PasteScriptAction,
             DELETE_SCRIPT_EDGE: DeleteEdgeAction,

@@ -40,10 +40,14 @@ export default class StateHelper {
                         stateCodes.copy = 'ACTION_COPY_UNIT'
                         stateCodes.paste = 'ACTION_PASTE_UNIT'
                         stateCodes.move = 'ACTION_MOVE_UNIT'
-                    }else{
-                        stateCodes.delete = 'CONFIRM_ACTION_DELETE_SELECTED_NODE'
-                        stateCodes.copy = 'ACTION_COPY_SELECTED_NODE'
-                        stateCodes.paste = 'ACTION_PASTE_SCRIPT'
+                    } else {
+                        if (world.getGraphManager().getSelectedNodes().length) {
+                            stateCodes.delete = 'CONFIRM_ACTION_DELETE_SELECTED_NODE'
+                            stateCodes.copy = 'ACTION_COPY_SELECTED_NODE'
+                            stateCodes.paste = 'ACTION_PASTE_SCRIPT'
+                        } else if (world.getGraphManager().getSelectedEdges().length) {
+                            stateCodes.delete = 'CONFIRM_ACTION_DELETE_SELECTED_EDGE'
+                        }
                     }
                     break
             }
@@ -111,7 +115,7 @@ export default class StateHelper {
      * @param {string} stateCode
      * @param {*} data
      */
-    static startState(stateCode, data){
+    static startState(stateCode, data) {
         const stateManager = StateManager.get()
         if (stateCode) {
             stateManager.startState(stateCode, 1, data)

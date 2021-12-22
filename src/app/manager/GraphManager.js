@@ -36,7 +36,7 @@ export default class GraphManager {
      */
     getGraphUnits() {
         return this.getUnits()
-            .filter(unit => unit.hasComponents([NodeComponent]))
+            .filter(unit => this.isNodeUnit(unit))
     }
 
     /**
@@ -44,7 +44,23 @@ export default class GraphManager {
      */
     getGraphEdges() {
         return this.getUnits()
-            .filter(unit => unit.hasComponents([NodeInputComponent]))
+            .filter(unit => this.isEdgeUnit(unit))
+    }
+
+    /**
+     * @param {Unit} unit
+     * @return {boolean}
+     */
+    isNodeUnit(unit){
+        return unit.hasComponents([NodeComponent])
+    }
+
+    /**
+     * @param {Unit} unit
+     * @return {boolean}
+     */
+    isEdgeUnit(unit){
+        return unit.hasComponents([NodeInputComponent])
     }
 
     /**
@@ -205,37 +221,27 @@ export default class GraphManager {
     }
 
     /**
-     * @param {number} graphNodeId
+     * @return {Unit[]}
      */
-    deleteGraphNodeUnitByNodeId(graphNodeId) {
-        const units = this.getUnits()
-        const index = units
-            .findIndex(graphUnit => {
-                const nodeComponent = graphUnit.getComponent(NodeComponent)
-                return nodeComponent && nodeComponent.getNodeId() === graphNodeId
-            })
-        units.splice(index, 1)
+    getSelectedNodes(){
+        return this.getSelected().filter(this.isNodeUnit)
     }
 
     /**
-     * @param {number} graphEdgeId
+     * @return {Unit[]}
      */
-    deleteGraphEdgeUnitByNodeId(graphEdgeId) {
-        const units = this.getUnits()
-        const index = units
-            .findIndex(graphUnit => {
-                const nodeInputComponent = graphUnit.getComponent(NodeInputComponent)
-                return nodeInputComponent && nodeInputComponent.getNodeInputId() === graphEdgeId
-            })
-        units.splice(index, 1)
+    getSelectedEdges(){
+        return this.getSelected().filter(this.isEdgeUnit)
     }
 
     /**
      * @param {Vector} position
      * @return {Unit}
      */
-    findFirstUnitByPosition(position) {
-        return ScriptGraphSelector.get().get(World.get(), position)
+    findFirstNodeUnitByPosition(position) {
+        const units = this.findUnitsByPosition(position)
+            .filter(unit => this.isNodeUnit(unit))
+        return units.length && units[units.length - 1]
     }
 
     /**
@@ -263,14 +269,19 @@ export default class GraphManager {
     /**
      * @param {AScriptFunction} script
      * @param {{position: Vector, size: Size}} dragArea
+     * @param {boolean} forEdge
      * @return {Unit[]}
      */
-    selectUnits(script, dragArea) {
+    selectUnits(script, dragArea, forEdge) {
         const unitSelector = ScriptGraphSelector.get()
         const world = World.get()
         world.getGraphManager().getSelected().forEach(unit => unit.getComponent(MeshComponent).setGenerated(false))
         unitSelector.unselectAll(world)
-        const units = unitSelector.select(world, script.getCamera().fromCanvasCoord(dragArea.position), dragArea.size)
+        const units = unitSelector.select(world,
+            script.getCamera().fromCanvasCoord(dragArea.position),
+            dragArea.size,
+            forEdge ? this.isEdgeUnit : this.isNodeUnit
+        )
         units.forEach(unit => unit.getComponent(MeshComponent).setGenerated(false))
         return units
     }
@@ -279,7 +290,7 @@ export default class GraphManager {
      * @return {Unit[]}
      */
     getSelected() {
-        return this.getGraphUnits().filter(unit => unit.isSelected())
+        return this.getUnits().filter(unit => unit.isSelected())
     }
 
     /**

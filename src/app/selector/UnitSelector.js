@@ -22,7 +22,7 @@ export default class UnitSelector {
      * @param {World} world
      * @return {Unit[]}
      */
-    getUnits(world){
+    getUnits(world) {
         return world.getUnitManager().getUnits()
     }
 
@@ -51,12 +51,14 @@ export default class UnitSelector {
     /**
      * @param {World} world
      * @param {Vector} point
+     * @param {Function|null} filter
      * @return {Unit}
      */
-    getFirstSelectable(world, point) {
+    getFirstSelectable(world, point, filter = null) {
         const units = this.getAll(world, point).filter(
             unit => !unit.getComponent(GUIPendingComponent) &&
-            unit.isVisible() && !unit.isLocked())
+                unit.isVisible() && !unit.isLocked() &&
+                (!filter || filter(unit)))
         return units.length && units[units.length - 1]
     }
 
@@ -94,17 +96,21 @@ export default class UnitSelector {
      * @param {World} world
      * @param {Vector} point
      * @param {Size} size
+     * @param {Function|null} filter
      * @return {Unit[]}
      */
-    select(world, point, size) {
+    select(world, point, size, filter = null) {
         let selectedUnits = []
         if (!size || (!size.width && !size.height)) {
-            const selectedUnit = this.getFirstSelectable(world, point)
+            const selectedUnit = this.getFirstSelectable(world, point, filter)
             if (selectedUnit) {
                 selectedUnits.push(selectedUnit)
             }
         } else {
             selectedUnits = this.getInsideArea(world, point, size)
+        }
+        if (filter) {
+            selectedUnits = selectedUnits.filter(filter)
         }
         return selectedUnits.map(selectedUnit => {
             selectedUnit.select()

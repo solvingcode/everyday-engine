@@ -11,6 +11,7 @@ import {MAIN_FUNCTION} from '../../flow/AScriptFunction.js'
 import LayoutHelper from '../../utils/LayoutHelper.js'
 import AssetHelper from '../../utils/AssetHelper.js'
 import Storage from '../../core/Storage.js'
+import {KeyCode} from '../../core/Keyboard.js'
 
 export default class ScriptEditorRunner extends Runner {
 
@@ -50,7 +51,7 @@ export default class ScriptEditorRunner extends Runner {
      * Execute all world actions (move camera, ...)
      */
     execute() {
-        const mouse = Window.get().mouse
+        const {mouse, keyboard} = Window.get()
         const stateManager = StateManager.get()
         if (!stateManager.isRunning() && !stateManager.isFormUpdating()) {
             const scriptClass = World.get().getScriptManager().getSelected(World.get().getTabManager())
@@ -65,7 +66,7 @@ export default class ScriptEditorRunner extends Runner {
                 }
             }
             if (scriptFunction) {
-                this.selectUnits(scriptFunction, mouse)
+                this.selectUnits(scriptFunction, mouse, keyboard)
                 this.focusUnits(scriptFunction, mouse)
                 this.handleUnitEvent(scriptFunction, mouse)
                 this.updateScript(scriptClass)
@@ -76,7 +77,7 @@ export default class ScriptEditorRunner extends Runner {
     /**
      * @return {boolean}
      */
-    isEditing(){
+    isEditing() {
         const mouse = Window.get().mouse
         return mouse.isButtonPressed(MouseButton.LEFT)
     }
@@ -97,19 +98,25 @@ export default class ScriptEditorRunner extends Runner {
     /**
      * @param {AScriptFunction} script
      * @param {Mouse} mouse
+     * @param {Keyboard} keyboard
      */
-    selectUnits(script, mouse) {
+    selectUnits(script, mouse, keyboard) {
         const stateManager = StateManager.get()
         const world = World.get()
         const camera = script.getCamera()
         const graphManager = world.getGraphManager()
         const currentScenePosition = camera.fromCameraScale(mouse.currentScenePosition)
-        const unit = graphManager.findFirstUnitByPosition(camera.fromCanvasCoord(currentScenePosition))
-        if (mouse.isButtonPressed(MouseButton.LEFT) &&
-            !stateManager.hasAnyState('DRAW_NODE_EDGE') &&
-            LayoutHelper.isPositionValid(mouse) && !this.unitMoving && (!unit || !unit.isSelected())) {
+        const nodeUnit = graphManager.findFirstNodeUnitByPosition(camera.fromCanvasCoord(currentScenePosition))
+        if (keyboard.isKeyPressed(KeyCode.CTRL) &&
+            mouse.isButtonPressed(MouseButton.LEFT) &&
+            LayoutHelper.isPositionValid(mouse) && !this.unitMoving) {
             const dragArea = mouse.getDragArea(script.getCamera())
-            world.getGraphManager().selectUnits(script, dragArea)
+            world.getGraphManager().selectUnits(script, dragArea, true)
+        } else if (mouse.isButtonPressed(MouseButton.LEFT) &&
+            !stateManager.hasAnyState('DRAW_NODE_EDGE') &&
+            LayoutHelper.isPositionValid(mouse) && !this.unitMoving && (!nodeUnit || !nodeUnit.isSelected())) {
+            const dragArea = mouse.getDragArea(script.getCamera())
+            world.getGraphManager().selectUnits(script, dragArea, false)
         }
     }
 
@@ -133,7 +140,7 @@ export default class ScriptEditorRunner extends Runner {
         const camera = script.getCamera()
         const currentScenePosition = camera.fromCanvasCoord(camera.fromCameraScale(mouse.currentScenePosition))
         if (mouse.isButtonPressed(MouseButton.LEFT)) {
-            const unit = graphManager.findFirstUnitByPosition(currentScenePosition)
+            const unit = graphManager.findFirstNodeUnitByPosition(currentScenePosition)
             //if a unit is already moving
             if (this.unitMoving) {
                 const selectedUnits = graphManager.getSelected()
@@ -169,7 +176,7 @@ export default class ScriptEditorRunner extends Runner {
             const drawState = stateManager.getStopData('DRAW_NODE_EDGE', 1)
             const drawUnit = drawState && drawState.unit
             if (drawUnit) {
-                const endUnit = graphManager.findFirstUnitByPosition(currentScenePosition)
+                const endUnit = graphManager.findFirstNodeUnitByPosition(currentScenePosition)
                 const endNodeInput = ScriptHelper.findNodeInputByPosition(script, endUnit, currentScenePosition, world)
                 const endNodeOutput = ScriptHelper.findNodeOutputByPosition(script, endUnit, currentScenePosition, world)
                 const nodeTargetInput = this.startNodeInput || endNodeInput
