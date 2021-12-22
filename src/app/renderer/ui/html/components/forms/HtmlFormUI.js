@@ -24,7 +24,7 @@ class HtmlFormUI extends ItemUI {
         if (inputProps.type) {
             formEl.type = inputProps.type
         }
-        if(inputProps.tagClassName){
+        if (inputProps.tagClassName) {
             formEl.className = inputProps.tagClassName
         }
         formEl.id = `${el.id}-${inputProps.suffix}`
@@ -46,6 +46,7 @@ class HtmlFormUI extends ItemUI {
         el.setAttribute(HtmlFormUI.props.version, version)
         this.createFormItem(item, el, uiRenderer)
         this.addCustomAttributes(item, el, uiRenderer)
+        this.addCustomElementStyle(item, el, uiRenderer)
         this.postCreateFormItem(item, el, uiRenderer)
     }
 
@@ -59,6 +60,7 @@ class HtmlFormUI extends ItemUI {
             el.setAttribute(HtmlFormUI.props.version, version)
             this.postUpdateFormItem(item, el, uiRenderer)
             this.addCustomAttributes(item, el, uiRenderer)
+            this.addCustomElementStyle(item, el, uiRenderer)
         }
     }
 
@@ -72,6 +74,17 @@ class HtmlFormUI extends ItemUI {
             const formElement = this.getFormElementFrom(el)
             formElement.setAttribute(name, value)
         })
+    }
+
+    /**
+     * @param {MenuItemUI} item
+     * @param {HTMLElement} el
+     * @param {UIRenderer} uiRenderer
+     */
+    static addCustomElementStyle(item, el, uiRenderer) {
+        const style = this.getCustomElementStyle(item).map(({name, value}) => `${name}: ${value}`)
+        const formElement = this.getFormElementFrom(el)
+        formElement.style = style.join(';')
     }
 
     /**
@@ -140,14 +153,22 @@ class HtmlFormUI extends ItemUI {
 
     /**
      * @param {MenuItemUI} item
+     * @return {{name: string, value: *}[]}
      */
-    static getCustomStyle(item){
+    static getCustomElementStyle(item) {
+        return []
+    }
+
+    /**
+     * @param {MenuItemUI} item
+     */
+    static getCustomStyle(item) {
         const {props} = item.element
-        if(props.size){
-            return {
-                width: `${props.size * 100}%`
-            }
+        const styles = {}
+        if (props.size) {
+            styles.width = `${props.size * 100}%`
         }
+        return styles
     }
 
     /**

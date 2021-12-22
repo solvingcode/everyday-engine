@@ -6,6 +6,11 @@ import SystemError from '../../exception/type/SystemError.js'
 export default class AFunction extends FunctionData{
 
     /**
+     * @type {boolean}
+     */
+    selected
+
+    /**
      * @param {boolean}
      */
     optimized
@@ -259,6 +264,35 @@ export default class AFunction extends FunctionData{
      */
     isUnique(){
         return false
+    }
+
+    /**
+     * @param {boolean} selected
+     */
+    setSelected(selected){
+        this.selected = selected
+    }
+
+    /**
+     * @return {boolean}
+     */
+    getSelected(){
+        return this.selected
+    }
+
+    select(){
+        this.selected = true
+    }
+
+    unselect(){
+        this.selected = false
+    }
+
+    /**
+     * @return {boolean}
+     */
+    isSelected(){
+        return this.getSelected()
     }
 
 }

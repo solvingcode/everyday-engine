@@ -16,6 +16,7 @@ import NumberMenuItem from './NumberMenuItem.js'
 import MultiButtonMenuItem from './MultiButtonMenuItem.js'
 import GroupMenuItem from './GroupMenuItem.js'
 import DynamicAttributeHelper from '../../../utils/DynamicAttributeHelper.js'
+import TextInstantMenuItem from './TextInstantMenuItem.js'
 
 /**
  * Form menu item
@@ -224,9 +225,9 @@ class FormMenuItem extends MenuItem {
                 size: field.size,
                 list: field.list || [],
                 options: field.options,
-                isEditing: existItem && existItem.isEditing(),
+                isEditing: (existItem && existItem.isEditing()) || field.isEditing,
                 draggable: field.draggable,
-                dragStateCode: field.draggable ? 'ACTION_ATTACH_COMPONENT_VALUE' : ''
+                dragStateCode: field.draggable ? 'ACTION_ATTACH_COMPONENT_VALUE' : '',
             },
             getter,
             setter
@@ -357,6 +358,8 @@ class FormMenuItem extends MenuItem {
                 return FileMenuItem
             case Layout.form.TEXT:
                 return TextMenuItem
+            case Layout.form.TEXT_INSTANT:
+                return TextInstantMenuItem
             case Layout.form.CHECKBOX:
                 return CheckboxMenuItem
             case Layout.form.DROPDOWN:

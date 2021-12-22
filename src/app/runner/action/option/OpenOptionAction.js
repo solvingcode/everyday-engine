@@ -40,6 +40,7 @@ export default class OpenOptionAction extends Action {
         }
         if (triggerItemPosition) {
             const activeOptionsMenu = optionsMenuManager.getMenu(optionActionsMenuItem)
+            optionsMenuManager.setLastPosition(mouse.position)
             if (!activeOptionsMenu) {
                 const itemSize = new Size({width: 0, height: 0})
                 optionsMenuManager.setMenu(new optionActionsMenuItem(object, triggerItemPosition, itemSize))

@@ -8,6 +8,7 @@ class HtmlFormTextUI extends HtmlFormUI {
     static postCreateFormItem(item, el, uiRenderer) {
         const {value} = item.element
         const formEl = this.getFormElementFrom(el)
+        this.applyOptions(item)
         this.setValue(formEl, value())
     }
 
@@ -16,6 +17,14 @@ class HtmlFormTextUI extends HtmlFormUI {
      */
     static postUpdate(item, el, uiRenderer){
         super.postUpdate(item, el, uiRenderer)
+        this.updateFocus(item, el)
+    }
+
+    /**
+     * @param {MenuItemUI} item
+     * @param {HTMLElement} el
+     */
+    static updateFocus(item, el){
         const focusedElement = this.getFocused(el)
         if (!item.element.isEditing() && focusedElement) {
             focusedElement.blur()
@@ -67,6 +76,32 @@ class HtmlFormTextUI extends HtmlFormUI {
         }
 
         return attrs
+    }
+
+    /**
+     * @override
+     */
+    static getCustomElementStyle(item){
+        const {props} = item.element
+        const options = props.options || {}
+        const style = []
+
+        if(options.fullwidth){
+            style.push({
+                name: 'width',
+                value: '100%'
+            })
+        }
+
+        return style
+    }
+
+    static applyOptions(item) {
+        const {props} = item.element
+        const options = props.options || {}
+        if(options.autofocus){
+            item.element.run()
+        }
     }
 }
 

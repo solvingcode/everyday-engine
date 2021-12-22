@@ -5,11 +5,16 @@ import SystemError from '../../../exception/type/SystemError.js'
  * @class {ListMenuItem}
  */
 class ListMenuItem extends PanelMenuItem {
-    constructor(props) {
+
+    /**
+     * @param {*} props
+     * @param {MenuItem} parent
+     */
+    constructor(props, parent) {
         super({
             name: '',
             ...props
-        })
+        }, parent)
         this.items = []
     }
 

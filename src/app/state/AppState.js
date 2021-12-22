@@ -174,6 +174,10 @@ AppState.Categories = {
     CONFIRM: 'CONFIRM_'
 }
 
+AppState.ActionType = {
+    STOP_NEXT: 'stop_next'
+}
+
 /**
  * @todo: Think to externalize the states configuration
  */
@@ -396,6 +400,9 @@ AppState.States = {
     ACTION_ADD_SCRIPT_NODE_START: {history: false},
     ACTION_ADD_SCRIPT_NODE_PROGRESS: {history: false},
     ACTION_ADD_SCRIPT_NODE_STOP: {history: false},
+    ACTION_NEW_SCRIPT_NODE_START: {history: false},
+    ACTION_NEW_SCRIPT_NODE_PROGRESS: {history: false},
+    ACTION_NEW_SCRIPT_NODE_STOP: {history: false},
     ACTION_ADD_SCRIPT_EDGE_START: {history: false},
     ACTION_ADD_SCRIPT_EDGE_PROGRESS: {history: false},
     ACTION_ADD_SCRIPT_EDGE_STOP: {history: false},

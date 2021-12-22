@@ -24,6 +24,8 @@ class HtmlFormElementUI extends ItemUI {
             return HtmlFormCheckboxUI
         } else if (field === Layout.form.TEXT) {
             return HtmlFormTextUI
+        } else if (field === Layout.form.TEXT_INSTANT) {
+            return HtmlFormTextUI
         } else if (field === Layout.form.DROPDOWN) {
             return HtmlFormDropdownUI
         } else if (field === Layout.form.MULTI_BUTTON) {

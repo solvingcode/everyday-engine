@@ -19,6 +19,10 @@ export default class FormField{
      * @type {boolean}
      */
     dynamicAttribute
+    /**
+     * @type {boolean}
+     */
+    isEditing
     options
     /**
      * @type {boolean}

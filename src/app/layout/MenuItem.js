@@ -1,6 +1,7 @@
 import StateManager from '../state/StateManager.js'
 import Maths from '../utils/Maths.js'
 import {MouseButton} from '../core/Mouse.js'
+import AppState from '../state/AppState.js'
 
 /**
  * Define an item in the menu
@@ -38,6 +39,7 @@ class MenuItem {
         this.dragStateCode = props.dragStateCode
         this.dbClickStateCode = props.dbClickStateCode
         this.postStateCode = props.postStateCode
+        this.preStateCode = props.preStateCode
         this.skipStateCodes = props.skipStateCodes || []
         this.collapsed = props.collapsed || false
         this.draggable = props.draggable || false
@@ -68,7 +70,7 @@ class MenuItem {
     doSetData(data) {
     }
 
-    setupItems(){
+    setupItems() {
     }
 
     /**
@@ -260,6 +262,7 @@ class MenuItem {
      * Run the action when the item is triggered
      */
     run() {
+        this.preStateCode && this.preState()
         this.stateCode && this.startState()
         this.postStateCode && this.postState()
         this.setUpdated(true)
@@ -374,6 +377,18 @@ class MenuItem {
      */
     postState() {
         this.stateManager.startState(this.postStateCode, this.id, this.data)
+    }
+
+    /**
+     * Start a pre action by type and data (state)
+     */
+    preState() {
+        const {type, stateCode} = this.preStateCode
+        if (type === AppState.ActionType.STOP_NEXT) {
+            this.stateManager.stopNextState(stateCode)
+        } else {
+            this.stateManager.startState(stateCode, this.id, this.data)
+        }
     }
 
     /**

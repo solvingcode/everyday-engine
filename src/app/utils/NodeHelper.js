@@ -131,6 +131,52 @@ export default class NodeHelper {
     }
 
     /**
+     * @param {AFunction} source
+     * @return {string}
+     */
+    static getNodeType(source) {
+        const mapNodeSource = {
+            [NODE_TYPES.CONDITION]: ACondition,
+            [NODE_TYPES.EVENT]: AEvent,
+            [NODE_TYPES.CONSTANT]: AConstant,
+            [NODE_TYPES.KEY_CODE]: AKeyCode,
+            [NODE_TYPES.UNIT]: AUnit,
+            [NODE_TYPES.SELF]: ASelf,
+            [NODE_TYPES.ANIMATION]: AAnimation,
+            [NODE_TYPES.INPUT]: AFunctionInput,
+            [NODE_TYPES.OUTPUT]: AFunctionOutput,
+            [NODE_TYPES.REFERENCE]: AReference,
+            [NODE_TYPES.LOOP]: ALoop,
+            [NODE_TYPES.THEN]: AThen,
+            [NODE_TYPES.GET_VAR]: AGetVariable,
+            [NODE_TYPES.VAR_STRING]: AStringVariable,
+            [NODE_TYPES.VAR_UNIT]: AUnitVariable,
+            [NODE_TYPES.VAR_BOOLEAN]: ABooleanVariable,
+            [NODE_TYPES.VAR_AUDIO]: AAudioVariable,
+            [NODE_TYPES.VAR_ARRAY]: AArrayVariable,
+            [NODE_TYPES.VAR_IMAGE]: AImageVariable,
+            [NODE_TYPES.VAR_UNIT_INSTANT]: AUnitInstantVariable,
+            [NODE_TYPES.VAR_SCENE]: ASceneVariable,
+            [NODE_TYPES.VAR_NUMBER]: ANumberVariable,
+            [NODE_TYPES.VAR_COMPONENT]: AComponentVariable,
+            [NODE_TYPES.VAR_MASK_GROUP]: AMaskGroupVariable,
+            [NODE_TYPES.VAR_TOGGLE]: AToggleVariable,
+            [NODE_TYPES.COMPONENT]: AComponent
+        }
+
+        for (const nodeType in mapNodeSource) {
+            if (source instanceof mapNodeSource[nodeType]) {
+                return nodeType
+            }
+        }
+        if (source instanceof AFunction) {
+            return NODE_TYPES.FUNCTION
+        }
+
+        throw new ClientError(`Source: "${source.constructor.name}" not supported`)
+    }
+
+    /**
      * @param {ANode} node
      * @param {World} world
      * @return {string}

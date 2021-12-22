@@ -642,6 +642,18 @@ h4{
     width: unset;
 }
 
+.content-popup .content-popup-wrapper .list-element button{
+    padding: 0;
+}
+
+.content-popup .content-popup-wrapper .list-element span{
+    padding-left: 25px;
+}
+
+.content-popup .content-popup-wrapper .list-element .list-element-img-wrapper i{
+    display: block;
+}
+
 .options-popup .option-actions-wrapper button, .content-popup .content-popup-wrapper button{
     padding: 5px 20px;
     width: 100%;
@@ -951,6 +963,7 @@ i.static-entity::before{
 .form .form-input{
     margin: 0;
     padding: 5px;
+    box-sizing: border-box;
 }
 
 .form .form-element-editing input[type=text], .form .form-element-editing input[type=number]{

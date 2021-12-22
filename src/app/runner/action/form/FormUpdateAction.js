@@ -68,7 +68,8 @@ class FormUpdateAction extends Action {
             Layout.form.TEXTAREA,
             Layout.form.COLOR,
             Layout.form.FILE,
-            Layout.form.WYSIWYG
+            Layout.form.WYSIWYG,
+            Layout.form.TEXT_INSTANT
         ].includes(field)
     }
 
@@ -79,7 +80,7 @@ class FormUpdateAction extends Action {
      */
     static isAtChangeField(field) {
         return [
-            Layout.form.COLOR, Layout.form.NUMBER
+            Layout.form.COLOR, Layout.form.NUMBER, Layout.form.TEXT_INSTANT
         ].includes(field)
     }
 

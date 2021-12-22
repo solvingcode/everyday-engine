@@ -55,6 +55,7 @@ Layout.type = {
 Layout.form = {
     CHECKBOX: 'checkbox',
     TEXT: 'text',
+    TEXT_INSTANT: 'text_instant',
     NUMBER: 'number',
     DROPDOWN: 'dropdown',
     FILE: 'file',

@@ -7,6 +7,11 @@ export default class OptionsMenuManager {
      */
     menus
 
+    /**
+     * @type {Vector}
+     */
+    lastPosition
+
     constructor() {
         this.menus = []
     }
@@ -36,6 +41,20 @@ export default class OptionsMenuManager {
      */
     getMenus(){
         return this.menus
+    }
+
+    /**
+     * @return {Vector}
+     */
+    getLastPosition(){
+        return this.lastPosition
+    }
+
+    /**
+     * @param {Vector} lastPosition
+     */
+    setLastPosition(lastPosition){
+        this.lastPosition = lastPosition
     }
 
     clear(){

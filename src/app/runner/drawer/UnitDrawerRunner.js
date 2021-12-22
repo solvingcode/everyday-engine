@@ -7,6 +7,14 @@ export default class UnitDrawerRunner extends DrawerRunner {
     /**
      * @override
      */
+    isHandle(window) {
+        const script = World.get().getScriptManager().getFunctionSelected(World.get().getTabManager())
+        return super.isHandle(window) && !script
+    }
+
+    /**
+     * @override
+     */
     getDrawStateTypes(){
         return {
             SELECT: {

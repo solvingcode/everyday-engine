@@ -131,6 +131,7 @@ import SelectAnimationKeyFrameAction from './animation/SelectAnimationKeyFrameAc
 import AddCrudAction from './crud/AddCrudAction.js'
 import DeleteCrudAction from './crud/DeleteCrudAction.js'
 import CompileAllScriptAction from './script/CompileAllScriptAction.js'
+import NewNodeAction from './script/NewNodeAction.js'
 
 /**
  * Action Runner class.
@@ -239,6 +240,7 @@ class ActionRunner extends Runner {
             PASTE_SCRIPT: PasteScriptAction,
             DELETE_SCRIPT_EDGE: DeleteEdgeAction,
             ADD_SCRIPT_NODE: AddNodeAction,
+            NEW_SCRIPT_NODE: NewNodeAction,
             ADD_SCRIPT_FUNCTION: AddFunctionAction,
             ADD_SCRIPT_EDGE: AddEdgeAction,
             ADD_SCRIPT_NODE_INPUT: AddNodeInputAction,
