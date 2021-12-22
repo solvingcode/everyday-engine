@@ -1,7 +1,8 @@
 import Layout from '../../../../Layout.js'
 import AddScriptNodeInputFormMenuItem from '../add/AddScriptNodeInputFormMenuItem.js'
 import ListElementMenuItem from '../../../list/ListElementMenuItem.js'
-import AddScriptNodeInputSubmitMenuItem from '../add/AddScriptNodeInputSubmitMenuItem.js'
+import World from '../../../../../world/World.js'
+import {NODE_TYPES} from '../../../../../flow/node/ANode.js'
 
 export default class AddScriptNodeInputElementMenuItem extends ListElementMenuItem {
     constructor(parent, data) {
@@ -17,22 +18,43 @@ export default class AddScriptNodeInputElementMenuItem extends ListElementMenuIt
      * @override
      */
     doSetData(data) {
-        const formData = new AddScriptNodeInputForm(data.bind)
+        const world = World.get()
+        const {input, node} = data.bind
+        const script = world.getScriptManager().getFunctionSelected(world.getTabManager())
+        const formData = new AddScriptNodeInputForm(input)
+        const nodeInput = node.getInputNodeAttached(input.getAttrName())
+        if (nodeInput) {
+            const sourceNode = script.findNodeById(nodeInput.getSourceNodeId())
+            if (sourceNode.getType() === NODE_TYPES.CONSTANT) {
+                formData.setValue(sourceNode.getName())
+            } else if (sourceNode.getType() === NODE_TYPES.SELF) {
+                formData.setValue(true)
+            }
+        }
         this.items = [
-            new AddScriptNodeInputFormMenuItem(this, formData),
-            new AddScriptNodeInputSubmitMenuItem(this, formData)
+            new AddScriptNodeInputFormMenuItem(this, formData)
         ]
     }
 
     /**
      * @override
      */
+    getId() {
+        return this.getDataBind().input.getId()
+    }
+
+    /**
+     * @override
+     */
+    getName() {
+        return this.getDataBind().input.getName()
+    }
+
+    /**
+     * @override
+     */
     setupItems() {
-        const formData = new AddScriptNodeInputForm(this.data.bind)
-        this.items = [
-            new AddScriptNodeInputFormMenuItem(this, formData),
-            new AddScriptNodeInputSubmitMenuItem(this, formData)
-        ]
+        this.doSetData(this.data)
     }
 
 }
@@ -45,7 +67,7 @@ export class AddScriptNodeInputForm {
     attribute
 
     /**
-     * @type {string}
+     * @type {string|boolean}
      */
     value
 
@@ -65,14 +87,14 @@ export class AddScriptNodeInputForm {
     }
 
     /**
-     * @param {string} value
+     * @param {string|boolean} value
      */
     setValue(value) {
         this.value = value
     }
 
     /**
-     * @return {string}
+     * @return {string|boolean}
      */
     getValue() {
         return this.value

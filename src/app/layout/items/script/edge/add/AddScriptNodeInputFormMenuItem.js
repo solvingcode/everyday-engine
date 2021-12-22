@@ -3,22 +3,23 @@ import FormMenuItem from '../../../form/FormMenuItem.js'
 import World from '../../../../../world/World.js'
 import DynamicAttributeHelper from '../../../../../utils/DynamicAttributeHelper.js'
 import UnitSelector from '../../../../../selector/UnitSelector.js'
+import StateManager from '../../../../../state/StateManager.js'
+import AddNodeInputAction from '../../../../../runner/action/script/AddNodeInputAction.js'
 
 export default class AddScriptNodeInputFormMenuItem extends FormMenuItem {
 
     /**
      * @param {MenuItem} parent
-     * @param {AddScriptNodeInputForm} form
+     * @param {AddScriptNodeInputForm} formData
      */
-    constructor(parent, form) {
+    constructor(parent, formData) {
         super({
             name: '',
             stateCode: '',
             type: Layout.type.FORM,
             zone: parent.zone
-        })
-        this.parent = parent
-        this.data = {form}
+        }, parent)
+        this.data = {formData}
     }
 
     /**
@@ -36,8 +37,16 @@ export default class AddScriptNodeInputFormMenuItem extends FormMenuItem {
     /**
      * @override
      */
+    postUpdate(value) {
+        const stateManager = StateManager.get()
+        stateManager.startState(AddNodeInputAction.STATE, 1, this.data)
+    }
+
+    /**
+     * @override
+     */
     getFormObject() {
-        return this.data.form
+        return this.data.formData
     }
 
 }

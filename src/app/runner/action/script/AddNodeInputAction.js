@@ -7,6 +7,7 @@ import NodeComponent from '../../../component/internal/gui/node/NodeComponent.js
 import ScriptHelper from '../../../utils/ScriptHelper.js'
 import {NODE_TYPES} from '../../../flow/node/ANode.js'
 import {TYPES} from '../../../pobject/AttributeType.js'
+import DynamicAttributeHelper from '../../../utils/DynamicAttributeHelper.js'
 
 export default class AddNodeInputAction extends Action {
 
@@ -32,30 +33,35 @@ export default class AddNodeInputAction extends Action {
 
         let nodeSource
         const value = formData.getValue()
-        if (formData.getAttribute().getAttrType() === TYPES.UNIT && value === '[self]') {
-            nodeSource = ScriptHelper.createNode(functionRegistry, script, NODE_TYPES.SELF)
-        } else if (formData.getAttribute().getAttrType() === TYPES.COMPONENT) {
+        const inputType = formData.getAttribute().getAttrType()
+
+        let hasError = false
+        if (inputType === TYPES.UNIT || inputType === TYPES.COMPONENT_INSTANCE) {
+            if (value === true) {
+                nodeSource = ScriptHelper.createNode(functionRegistry, script, NODE_TYPES.SELF)
+            } else if (value !== false) {
+                hasError = true
+            }
+        } else if (inputType === TYPES.COMPONENT) {
             nodeSource = ScriptHelper.createNode(functionRegistry, script, NODE_TYPES.COMPONENT, value)
-        } else if (formData.getAttribute().getAttrType() === TYPES.COMPONENT_INSTANCE && value === '[self]') {
-            nodeSource = ScriptHelper.createNode(functionRegistry, script, NODE_TYPES.SELF)
         } else {
-            const varRegex = new RegExp('^var\\[(.+)\]$', 'i')
-            let variableValue
-            if (value.match(varRegex)) {
-                variableValue = value.replace(varRegex, '$1')
-            }
-            if (variableValue) {
-                nodeSource = ScriptHelper.createNode(functionRegistry, script, NODE_TYPES.GET_VAR, variableValue)
-            } else {
-                nodeSource = ScriptHelper.createNode(functionRegistry, script, NODE_TYPES.CONSTANT, value)
-            }
+            const validatedValue = DynamicAttributeHelper.getValueByType(value, inputType, world)
+            nodeSource = ScriptHelper.createNode(functionRegistry, script, NODE_TYPES.CONSTANT, validatedValue)
+        }
+
+        if (hasError) {
+            throw new ClientError(`Cannot add the connection (target are invalid)`)
+        }
+
+        const nodeInput = node.getInputNodeAttached(formData.getAttribute().getAttrName())
+        if (nodeInput) {
+            script.removeInput(nodeInput)
+            script.setUpdated(true)
         }
 
         if (node && nodeSource) {
             node.attachResultOutput(nodeSource, formData.getAttribute().getAttrName())
             script.setUpdated(true)
-        } else {
-            throw new ClientError(`Cannot add the connection (target are invalid)`)
         }
         return true
     }

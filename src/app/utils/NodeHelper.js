@@ -340,7 +340,7 @@ export default class NodeHelper {
         } else if (type === NODE_TYPES.EVENT) {
             headColor = '#5e2222'
         } else if (type === NODE_TYPES.CONSTANT) {
-            headColor = '#343030'
+            headColor = ''
         } else if (type === NODE_TYPES.CONDITION) {
             headColor = '#225e31'
         } else if (type === NODE_TYPES.LOOP) {

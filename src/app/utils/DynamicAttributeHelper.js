@@ -194,7 +194,7 @@ export default class DynamicAttributeHelper {
                     {
                         bind: bindName,
                         label: attributeName,
-                        type: Layout.form.TEXT,
+                        type: Layout.form.CHECKBOX,
                         dynamicAttribute
                     }
                 ]
@@ -614,20 +614,20 @@ export default class DynamicAttributeHelper {
                 const unitManager = world.getUnitManager()
                 newValue = unitManager.hasUnit(value) ? value : world.findUnitById(parseInt(value))
                 if (!newValue) {
-                    throw new ClientError(`${this.constructor.name}: Unit "${value}" not found`)
+                    throw new ClientError(`Unit "${value}" not found`)
                 }
                 break
             case TYPES.ANIMATION:
                 const animationManager = world.getAnimationManager()
                 newValue = animationManager.hasAnimation(value) ? value : animationManager.findById(parseInt(value))
                 if (!newValue) {
-                    throw new ClientError(`${this.constructor.name}: Animation "${value}" not found`)
+                    throw new ClientError(`Animation "${value}" not found`)
                 }
                 break
             case TYPES.COMPONENT:
                 const component = world.getComponentRegistry().getInstance(value)
                 if (!component || !component.constructor) {
-                    throw new ClientError(`${this.constructor.name}: Component "${value}" not found`)
+                    throw new ClientError(`Component "${value}" not found`)
                 }
                 newValue = component.constructor
                 break
@@ -636,7 +636,7 @@ export default class DynamicAttributeHelper {
                 const componentInstance = unitManagerComponent.hasComponent(value) ? value :
                     world.getUnitManager().findComponentById(parseInt(value))
                 if (!componentInstance) {
-                    throw new ClientError(`${this.constructor.name}: Component Instance "${value}" not found`)
+                    throw new ClientError(`Component Instance "${value}" not found`)
                 }
                 newValue = componentInstance
                 break
@@ -645,14 +645,14 @@ export default class DynamicAttributeHelper {
                 const maskGroupInstance = maskGroupPref.hasMaskGroup(value) ? value :
                     world.getPreference().getMaskGroup().find(parseInt(value))
                 if (!maskGroupInstance) {
-                    throw new ClientError(`${this.constructor.name}: Mask Group Instance "${value}" not found`)
+                    throw new ClientError(`Mask Group Instance "${value}" not found`)
                 }
                 newValue = maskGroupInstance
                 break
             case TYPES.AUDIO:
                 const audio = world.getAssetsManager().findAssetAudioById(value)
                 if (!audio) {
-                    throw new ClientError(`${this.constructor.name}: Audio "${value}" not found`)
+                    throw new ClientError(`Audio "${value}" not found`)
                 }
                 newValue = audio.getType()
                 break
@@ -660,7 +660,7 @@ export default class DynamicAttributeHelper {
                 const assetManager = world.getAssetsManager()
                 const unitInstant = assetManager.hasAsset(value) ? value : world.getAssetsManager().findAssetUnitById(value)
                 if (!unitInstant) {
-                    throw new ClientError(`${this.constructor.name}: Unit Instant "${value}" not found`)
+                    throw new ClientError(`Unit Instant "${value}" not found`)
                 }
                 newValue = unitInstant
                 break
@@ -668,7 +668,7 @@ export default class DynamicAttributeHelper {
                 const sceneManager = world.getSceneManager()
                 const scene = sceneManager.hasScene(value) ? value : sceneManager.findById(value)
                 if (!scene) {
-                    throw new ClientError(`${this.constructor.name}: Scene "${value}" not found`)
+                    throw new ClientError(`Scene "${value}" not found`)
                 }
                 newValue = scene
                 break
@@ -676,38 +676,44 @@ export default class DynamicAttributeHelper {
                 const functionRegistry = world.getFunctionRegistry()
                 const func = functionRegistry.hasInstance(value) ? value : functionRegistry.getInstance(value)
                 if (!func) {
-                    throw new ClientError(`${this.constructor.name}: Function "${value}" not found`)
+                    throw new ClientError(`Function "${value}" not found`)
                 }
                 newValue = func
                 break
             case TYPES.FONT:
                 const font = world.getAssetsManager().findAssetFontById(value)
                 if (!font) {
-                    throw new ClientError(`${this.constructor.name}: Font "${value}" not found`)
+                    throw new ClientError(`Font "${value}" not found`)
                 }
                 newValue = font.getType()
                 break
             case TYPES.ARRAY | TYPES.ANY:
                 if (!_.isArray(value)) {
-                    throw new ClientError(`${this.constructor.name}: "${value}" is not an array`)
+                    throw new ClientError(`"${value}" is not an array`)
                 }
                 newValue = value
                 break
             case TYPES.ARRAY | TYPES.COMPONENT_INSTANCE:
                 if (!_.isArray(value) || !value.every(eArray => eArray instanceof Component)) {
-                    throw new ClientError(`${this.constructor.name}: "${value}" is not an array`)
+                    throw new ClientError(`"${value}" is not an array`)
                 }
                 newValue = value
                 break
             case TYPES.ARRAY | TYPES.DYNAMIC_ATTRIBUTE:
                 if (!_.isArray(value) || !value.every(eArray => eArray instanceof DynamicAttribute)) {
-                    throw new ClientError(`${this.constructor.name}: "${value}" is not an array of DynamicAttribute`)
+                    throw new ClientError(`"${value}" is not an array of DynamicAttribute`)
                 }
                 newValue = value
                 break
             case TYPES.DYNAMIC_ATTRIBUTE:
                 if (!(value instanceof DynamicAttribute)) {
-                    throw new ClientError(`${this.constructor.name}: "${value}" is not a DynamicAttribute`)
+                    throw new ClientError(`"${value}" is not a DynamicAttribute`)
+                }
+                newValue = value
+                break
+            case TYPES.VECTOR:
+                if (!(value instanceof Vector)) {
+                    throw new ClientError(`"${value}" is not a Vector`)
                 }
                 newValue = value
                 break

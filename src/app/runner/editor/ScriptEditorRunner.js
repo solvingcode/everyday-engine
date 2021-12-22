@@ -182,6 +182,11 @@ export default class ScriptEditorRunner extends Runner {
                 const nodeTargetInput = this.startNodeInput || endNodeInput
                 const nodeSourceInput = this.startNodeOutput || endNodeOutput
                 if (nodeTargetInput && nodeSourceInput) {
+                    const targetName = nodeTargetInput.input ? nodeTargetInput.input.getAttrName() : null
+                    const nodeInput = nodeTargetInput.node.getInputNodeAttached(targetName)
+                    if (nodeInput) {
+                        script.removeInput(nodeInput)
+                    }
                     if (nodeTargetInput.input && nodeSourceInput.output) {
                         nodeTargetInput.node.attachResultOutput(nodeSourceInput.node, nodeTargetInput.input.getAttrName())
                     } else if (!nodeTargetInput.input && !nodeSourceInput.output) {

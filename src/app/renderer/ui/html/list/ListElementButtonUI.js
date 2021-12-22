@@ -33,8 +33,8 @@ export default class ListElementButtonUI extends ItemUI {
                 imageWrapper.appendChild(icon)
                 container.appendChild(imageWrapper)
             }
-            el.setAttribute('data-list-element-id', bind.getId())
-            el.setAttribute('data-list-element-name', bind.getName())
+            el.setAttribute('data-list-element-id', element.getId())
+            el.setAttribute('data-list-element-name', element.getName())
             el.setAttribute('id', item.getId())
             el.setAttribute('order', `${this.getOrder(el)}`)
 
@@ -119,7 +119,7 @@ export default class ListElementButtonUI extends ItemUI {
             const bindName = el.getAttribute('data-list-element-name')
             const titleElement = this.getTitleElement(el)
             const title = (titleElement && titleElement.innerText) || ''
-            if (parseInt(bindId) !== bind.getId() || bindName !== bind.getName() || this.getTitle(item).trim() !== title) {
+            if (parseInt(bindId) !== item.element.getId() || bindName !== item.element.getName() || this.getTitle(item).trim() !== title) {
                 this.update(item, el, uiRenderer)
             }
         }

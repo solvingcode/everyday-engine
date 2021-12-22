@@ -54,6 +54,20 @@ class MenuItem {
     }
 
     /**
+     * @return {number}
+     */
+    getId(){
+        return this.getDataBind().getId()
+    }
+
+    /**
+     * @return {string}
+     */
+    getName(){
+        return this.getDataBind().getName()
+    }
+
+    /**
      * @param {{bind: Object, list?: *[]}} data
      * @return {void}
      */

@@ -33,7 +33,8 @@ export default class AddScriptNodeInputListMenuItem extends ListMenuItem {
     /**
      * @override
      */
-    getFormObject() {
+    setupItems() {
+        super.setupItems()
         const world = World.get()
         const script = world.getScriptManager().getFunctionSelected(world.getTabManager())
         if (script) {
@@ -43,10 +44,17 @@ export default class AddScriptNodeInputListMenuItem extends ListMenuItem {
                 const nodeComponent = selectedGraphUnit.getComponent(NodeComponent)
                 if (nodeComponent) {
                     const node = selectedGraphUnit.getComponent(NodeComponent).getNode()
-                    return NodeHelper.getSourceNode(node, world).getInputs().filter(input => !node.getInputNodeAttached(input.getAttrName()))
+                    this.data.formObject = NodeHelper.getSourceNode(node, world).getInputs().map(input => ({input, node}))
                 }
             }
         }
+    }
+
+    /**
+     * @override
+     */
+    getFormObject() {
+        return this.data.formObject
     }
 
     /**

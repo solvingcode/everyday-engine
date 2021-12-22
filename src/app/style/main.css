@@ -1048,6 +1048,11 @@ i.static-entity::before{
     box-sizing: border-box;
 }
 
+.list-element .form + button.fas{
+    top: 7px;
+    right: 7px;
+}
+
 /* -- form */
 
 /* components -- */
