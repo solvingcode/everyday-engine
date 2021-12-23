@@ -99,6 +99,11 @@ class Keyboard {
         this.keysReleased = []
     }
 
+    reset(){
+        this.keysReleased = []
+        this.keysPressed = []
+    }
+
     /**
      * @param {number} key
      * @return {boolean}

@@ -29,6 +29,7 @@ import SystemError from '../exception/type/SystemError.js'
 import ScriptComponent from '../component/internal/ScriptComponent.js'
 import UnitDataIdGenerator from '../generator/data/id/UnitDataIdGenerator.js'
 import GarbageManager from '../manager/GarbageManager.js'
+import Window from '../core/Window.js'
 
 /**
  * @class {World}
@@ -333,6 +334,7 @@ class World extends WorldData {
     reload() {
         this.init()
         this.reloadAllUnit()
+        Window.get().reset()
     }
 
     forceReload() {

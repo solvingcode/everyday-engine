@@ -37,8 +37,10 @@ import UnitInstantVariableNode from '../flow/node/variable/UnitInstantVariableNo
 import ThenNode from '../flow/node/ThenNode.js'
 import ArrayVariableNode from '../flow/node/variable/ArrayVariableNode.js'
 import GetVariableNode from '../flow/node/variable/GetVariableNode.js'
-import VariableNode from '../flow/node/variable/VariableNode.js'
-import DynamicAttribute from '../pobject/DynamicAttribute.js'
+import GetClassVarNode from '../flow/node/variable/GetClassVarNode.js'
+import SetClassVarNode from '../flow/node/variable/SetClassVarNode.js'
+import GetStaticClassVarNode from '../flow/node/variable/GetStaticClassVarNode.js'
+import SetStaticClassVarNode from '../flow/node/variable/SetStaticClassVarNode.js'
 
 export default class ScriptHelper {
 
@@ -106,6 +108,14 @@ export default class ScriptHelper {
             node = this.getNodeInstance(functionRegistry, StringVariableNode, nodeValue)
         } else if (nodeType === NODE_TYPES.GET_VAR) {
             node = this.getNodeInstance(functionRegistry, GetVariableNode, nodeValue)
+        } else if (nodeType === NODE_TYPES.GET_CLASS_VAR) {
+            node = this.getNodeInstance(functionRegistry, GetClassVarNode, nodeValue)
+        } else if (nodeType === NODE_TYPES.SET_CLASS_VAR) {
+            node = this.getNodeInstance(functionRegistry, SetClassVarNode, nodeValue)
+        } else if (nodeType === NODE_TYPES.GET_STATIC_CLASS_VAR) {
+            node = this.getNodeInstance(functionRegistry, GetStaticClassVarNode, nodeValue)
+        } else if (nodeType === NODE_TYPES.SET_STATIC_CLASS_VAR) {
+            node = this.getNodeInstance(functionRegistry, SetStaticClassVarNode, nodeValue)
         } else if (nodeType === NODE_TYPES.VAR_UNIT) {
             node = this.getNodeInstance(functionRegistry, UnitVariableNode, nodeValue)
         } else if (nodeType === NODE_TYPES.VAR_NUMBER) {
@@ -158,6 +168,10 @@ export default class ScriptHelper {
             case LoopNode:
             case ThenNode:
             case GetVariableNode:
+            case GetClassVarNode:
+            case SetClassVarNode:
+            case GetStaticClassVarNode:
+            case SetStaticClassVarNode:
             case StringVariableNode:
             case UnitVariableNode:
             case ToggleVariableNode:
@@ -218,6 +232,14 @@ export default class ScriptHelper {
             nodeType = NODE_TYPES.VAR_STRING
         } else if (node instanceof GetVariableNode) {
             nodeType = NODE_TYPES.GET_VAR
+        } else if (node instanceof GetClassVarNode) {
+            nodeType = NODE_TYPES.GET_CLASS_VAR
+        } else if (node instanceof SetClassVarNode) {
+            nodeType = NODE_TYPES.SET_CLASS_VAR
+        } else if (node instanceof GetStaticClassVarNode) {
+            nodeType = NODE_TYPES.GET_STATIC_CLASS_VAR
+        } else if (node instanceof SetStaticClassVarNode) {
+            nodeType = NODE_TYPES.SET_STATIC_CLASS_VAR
         } else if (node instanceof UnitVariableNode) {
             nodeType = NODE_TYPES.VAR_UNIT
         } else if (node instanceof NumberVariableNode) {
@@ -502,15 +524,42 @@ export default class ScriptHelper {
      * @return {DynamicAttribute[]}
      */
     static getScriptVars(script, world) {
-        const functionScript = script.getMainFunction()
-        if (functionScript) {
-            const nodes = functionScript.findNodesByClass(VariableNode)
-            return [...nodes.map(node => {
-                const sourceNode = NodeHelper.getSourceNode(node, world)
-                return new DynamicAttribute(sourceNode.getName(), sourceNode.getOutput().getAttrType())
-            }), ...(script.getParentName() ?
-                this.getScriptVars(world.getScriptManager().findByName(script.getParentName()), world) : [])]
-        }
-        return []
+        return [...script.getVariables().map(variable => variable.getDefinition()), ...(script.getParentName() ?
+            this.getScriptVars(world.getScriptManager().findByName(script.getParentName()), world) : [])]
+    }
+
+    /**
+     * @param {string} name
+     * @return {string}
+     */
+    static extractNameFromGetVar(name){
+        const nameParts = name.split('.')
+        return `Get ${nameParts[nameParts.length - 1]}`
+    }
+
+    /**
+     * @param {string} name
+     * @return {string}
+     */
+    static extractNameFromSetVar(name){
+        const nameParts = name.split('.')
+        return `Set ${nameParts[nameParts.length - 1]}`
+    }
+
+    /**
+     * @param {string} name
+     * @return {string}
+     */
+    static extractNameFromVar(name){
+        const nameParts = name.split('.')
+        return nameParts[nameParts.length - 1]
+    }
+
+    /**
+     * @param {string} name
+     * @return {string}
+     */
+    static extractNameFromStaticVar(name){
+        return name.replace(/^(Set|Get) (.+)$/, '$2')
     }
 }

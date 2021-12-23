@@ -5,7 +5,7 @@ import VariableScript from '../../../../flow/VariableScript.js'
 
 export default class ScriptVariablesMenuItem extends CrudMenuItem {
     constructor() {
-        super('Class Variables', new VariableScript('', TYPES.ANY))
+        super('Variables', new VariableScript('', TYPES.ANY))
     }
 
     /**

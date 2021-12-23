@@ -299,8 +299,8 @@ export default class GraphManager {
     update(script) {
         if (script) {
             let updated = false
-            updated = this.updateGraphEdges(script) || updated
             updated = this.updateGraphNodes(script) || updated
+            updated = this.updateGraphEdges(script) || updated
             script.setUpdated(updated)
         }
     }

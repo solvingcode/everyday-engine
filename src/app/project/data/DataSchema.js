@@ -259,6 +259,14 @@ import SinFunction from '../../flow/function/native/math/SinFunction.js'
 import VectorRoundFunction from '../../flow/function/native/basic/VectorRoundFunction.js'
 import GetCenterWorldPositionFunction from '../../flow/function/native/unit/GetCenterWorldPositionFunction.js'
 import SetCenterWorldPositionFunction from '../../flow/function/native/unit/SetCenterWorldPositionFunction.js'
+import AGetClassVariable from '../../flow/function/variable/AGetClassVariable.js'
+import ASetClassVariable from '../../flow/function/variable/ASetClassVariable.js'
+import AGetStaticClassVariable from '../../flow/function/variable/AGetStaticClassVariable.js'
+import ASetStaticClassVariable from '../../flow/function/variable/ASetStaticClassVariable.js'
+import GetClassVarNode from '../../flow/node/variable/GetClassVarNode.js'
+import SetClassVarNode from '../../flow/node/variable/SetClassVarNode.js'
+import GetStaticClassVarNode from '../../flow/node/variable/GetStaticClassVarNode.js'
+import SetStaticClassVarNode from '../../flow/node/variable/SetStaticClassVarNode.js'
 
 /**
  * @class {DataSchema}
@@ -513,6 +521,14 @@ class DataSchema {
         {id: 2340, type: VectorRoundFunction},
         {id: 2350, type: GetCenterWorldPositionFunction},
         {id: 2360, type: SetCenterWorldPositionFunction},
+        {id: 2370, type: AGetClassVariable},
+        {id: 2380, type: ASetClassVariable},
+        {id: 2390, type: AGetStaticClassVariable},
+        {id: 2400, type: ASetStaticClassVariable},
+        {id: 2410, type: GetClassVarNode},
+        {id: 2420, type: SetClassVarNode},
+        {id: 2430, type: GetStaticClassVarNode},
+        {id: 2440, type: SetStaticClassVarNode},
     ]
 
     /**

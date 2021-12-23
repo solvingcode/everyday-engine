@@ -121,6 +121,7 @@ import SinFunction from '../flow/function/native/math/SinFunction.js'
 import VectorRoundFunction from '../flow/function/native/basic/VectorRoundFunction.js'
 import GetCenterWorldPositionFunction from '../flow/function/native/unit/GetCenterWorldPositionFunction.js'
 import SetCenterWorldPositionFunction from '../flow/function/native/unit/SetCenterWorldPositionFunction.js'
+import AReference from '../flow/reference/AReference.js'
 
 export default class FunctionRegistry extends Registry{
 
@@ -276,7 +277,10 @@ export default class FunctionRegistry extends Registry{
 
             //Structure
             new VectorFunction(),
-            new ArrayFunction()
+            new ArrayFunction(),
+
+            //Reference
+            new AReference()
         ])
     }
 

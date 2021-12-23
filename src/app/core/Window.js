@@ -114,6 +114,10 @@ class Window {
         this.keyboard.clear()
     }
 
+    reset(){
+        this.keyboard.reset()
+    }
+
     update() {
         this.deltaTime = this.lastUpdTime ? (Date.now() - this.lastUpdTime) / 1000 : 0
         this.lastUpdTime = Date.now()

@@ -12,8 +12,7 @@ export default class ScriptNodeVarsListMenuItem extends ListMenuItem {
         super({
             name: 'Variables',
             zone: parent.zone
-        })
-        this.parent = parent
+        }, parent)
     }
 
     /**

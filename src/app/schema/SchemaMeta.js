@@ -763,6 +763,9 @@ export default {
                                                     },
                                                     selected: {
                                                         type: TYPES.BOOLEAN
+                                                    },
+                                                    varStatic: {
+                                                        type: TYPES.BOOLEAN
                                                     }
                                                 }
                                             }

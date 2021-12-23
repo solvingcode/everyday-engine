@@ -20,6 +20,10 @@ import GetVarValueFunction from '../function/native/component/GetVarValueFunctio
 import AAnimation from '../animation/AAnimation.js'
 import AClassVariable from '../function/variable/AClassVariable.js'
 import {ACCESSOR} from '../function/AFunction.js'
+import AGetClassVariable from '../function/variable/AGetClassVariable.js'
+import ASetClassVariable from '../function/variable/ASetClassVariable.js'
+import AGetStaticClassVariable from '../function/variable/AGetStaticClassVariable.js'
+import ASetStaticClassVariable from '../function/variable/ASetStaticClassVariable.js'
 
 export default class ClassCompiler extends Compiler {
 
@@ -59,14 +63,26 @@ export default class ClassCompiler extends Compiler {
 
         //create variables
         script.getVariables().forEach(variable => {
-            const classVariableName = `${script.getName()}.${variable.getDefinition().getAttrName()}`
+            const getterClassVariableName = `Get ${script.getName()}.${variable.getDefinition().getAttrName()}`
+            const setterClassVariableName = `Set ${script.getName()}.${variable.getDefinition().getAttrName()}`
             const variableDefinition = variable.getDefinition()
-            const classVariable = new AClassVariable(classVariableName, {type: variableDefinition.getAttrType(),
+            const getterFunction = variable.isVarStatic() ? AGetStaticClassVariable : AGetClassVariable
+            const setterFunction = variable.isVarStatic() ? ASetStaticClassVariable : ASetClassVariable
+            const access = variable.isVarStatic() ? ACCESSOR.PUBLIC : ACCESSOR.PRIVATE
+
+            const getterClassVariable = new getterFunction(getterClassVariableName, {type: variableDefinition.getAttrType(),
                 value: variableDefinition.getAttrValue()})
-            classVariable.setAccess(ACCESSOR.PUBLIC)
-            classVariable.setClassName(script.getName())
-            classVariable.setParentClassName(script.getParentName())
-            functionRegistry.tryRegister(classVariable)
+            getterClassVariable.setAccess(access)
+            getterClassVariable.setClassName(script.getName())
+            getterClassVariable.setParentClassName(script.getParentName())
+            functionRegistry.tryRegister(getterClassVariable)
+
+            const setterClassVariable = new setterFunction(setterClassVariableName, {type: variableDefinition.getAttrType(),
+                value: variableDefinition.getAttrValue()})
+            setterClassVariable.setAccess(access)
+            setterClassVariable.setClassName(script.getName())
+            setterClassVariable.setParentClassName(script.getParentName())
+            functionRegistry.tryRegister(setterClassVariable)
         })
 
         //create OnInitEvent

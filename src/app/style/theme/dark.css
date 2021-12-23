@@ -38,11 +38,11 @@ button:not(.disabled):not(.selected):hover, button.locked:hover, button.hidden:h
 }
 
 .default-form-wrapper .panel button{
-    background-color: #3f6093;
+    background-color: #357c52;
 }
 
 .default-form-wrapper .panel button:hover{
-    background-color: #466ca4;
+    background-color: #398659;
 }
 
 button.selected:hover{

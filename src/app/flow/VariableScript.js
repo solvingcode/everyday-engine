@@ -15,6 +15,11 @@ export default class VariableScript {
     selected
 
     /**
+     * @type {boolean}
+     */
+    varStatic
+
+    /**
      * @param {string} attrName
      * @param {number|string} attrType
      * @param {*} attrValue
@@ -22,6 +27,7 @@ export default class VariableScript {
      */
     constructor(attrName, attrType, attrValue = null, attrRule = null) {
         this.definition = new DynamicAttribute(attrName, attrType, attrValue, attrRule)
+        this.varStatic = false
     }
 
     /**
@@ -62,6 +68,20 @@ export default class VariableScript {
     /**
      * @return {boolean}
      */
+    getVarStatic(){
+        return this.varStatic
+    }
+
+    /**
+     * @return {boolean}
+     */
+    isVarStatic(){
+        return this.getVarStatic()
+    }
+
+    /**
+     * @return {boolean}
+     */
     isSelected(){
         return this.getSelected()
     }
@@ -71,6 +91,13 @@ export default class VariableScript {
      */
     setSelected(selected){
         this.selected = selected
+    }
+
+    /**
+     * @param {boolean} varStatic
+     */
+    setVarStatic(varStatic){
+        this.varStatic = varStatic
     }
 
     unselect(){
@@ -101,6 +128,11 @@ export default class VariableScript {
                 bind: 'definition.attrValue',
                 label: 'Default value',
                 type: Layout.form.TEXT
+            },
+            {
+                bind: 'varStatic',
+                label: 'Static',
+                type: Layout.form.CHECKBOX
             }
         ]
     }

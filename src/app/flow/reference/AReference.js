@@ -3,10 +3,7 @@ import {TYPES} from '../../pobject/AttributeType.js'
 
 export default class AReference extends AStackFunction{
 
-    /**
-     * @param {string} value
-     */
-    constructor(value) {
+    constructor() {
         super('Reference')
     }
 
