@@ -358,8 +358,11 @@ export default class ScriptHelper {
             const size = unit.getComponent(MeshComponent).getSize()
             const sourceNode = NodeHelper.getSourceNode(node, world)
             const nodeOutput = sourceNode.getOutput()
-            const outputs = [null, ...(sourceNode.getOutput() ? [nodeOutput] : [])]
+            const outputs = [...(sourceNode.getOutput() ? [nodeOutput] : [])]
             if (node) {
+                if (NodeHelper.hasBaseOutput(node.getType())) {
+                    outputs.unshift(null)
+                }
                 for (let iOutput = 0; iOutput < outputs.length; iOutput++) {
                     const output = outputs[iOutput]
                     const {
@@ -532,7 +535,7 @@ export default class ScriptHelper {
      * @param {string} name
      * @return {string}
      */
-    static extractNameFromGetVar(name){
+    static extractNameFromGetVar(name) {
         const nameParts = name.split('.')
         return `Get ${nameParts[nameParts.length - 1]}`
     }
@@ -541,7 +544,7 @@ export default class ScriptHelper {
      * @param {string} name
      * @return {string}
      */
-    static extractNameFromSetVar(name){
+    static extractNameFromSetVar(name) {
         const nameParts = name.split('.')
         return `Set ${nameParts[nameParts.length - 1]}`
     }
@@ -550,7 +553,7 @@ export default class ScriptHelper {
      * @param {string} name
      * @return {string}
      */
-    static extractNameFromVar(name){
+    static extractNameFromVar(name) {
         const nameParts = name.split('.')
         return nameParts[nameParts.length - 1]
     }
@@ -559,7 +562,7 @@ export default class ScriptHelper {
      * @param {string} name
      * @return {string}
      */
-    static extractNameFromStaticVar(name){
+    static extractNameFromStaticVar(name) {
         return name.replace(/^(Set|Get) (.+)$/, '$2')
     }
 }

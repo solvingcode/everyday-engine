@@ -14,6 +14,7 @@ export default class NodeShapeGenerator extends TypeShapeGenerator {
      */
     draw(unit, dataContext) {
         const nodeComponent = unit.getComponent(NodeComponent)
+        const node = nodeComponent.getNode()
         const title = nodeComponent.getTitle()
         const type = nodeComponent.getType()
         const inputs = nodeComponent.getInputs()
@@ -111,7 +112,8 @@ export default class NodeShapeGenerator extends TypeShapeGenerator {
         if (output) {
             const {
                 position: outputPosition
-            } = NodeHelper.getNodeGUIOutput(type, camera.fromScaleSize(scaleSize), 1)
+            } = NodeHelper.getNodeGUIOutput(type, camera.fromScaleSize(scaleSize),
+                1 - (!NodeHelper.hasBaseOutput(node.getType()) ? 1 : 0))
             const outputPositionScale = camera.toCameraScale(outputPosition)
             context.fillStyle = Color.shadeColor(headColor, 100)
             context.strokeStyle = headColor
@@ -124,20 +126,22 @@ export default class NodeShapeGenerator extends TypeShapeGenerator {
         }
 
         //base output
-        const {position: baseOutputPosition} = NodeHelper.getNodeGUIOutput(type, camera.fromScaleSize(scaleSize), 0)
-        const baseOutputPositionScale = camera.toCameraScale(baseOutputPosition)
-        context.fillStyle = baseInputColor
-        context.strokeStyle = baseInputColor
-        context.lineWidth = camera.toScaleNumber(1)
-        context.beginPath()
-        context.moveTo(baseOutputPositionScale.getX(), baseOutputPositionScale.getY())
-        context.lineTo(baseOutputPositionScale.getX() + sizeInputScale, baseOutputPositionScale.getY() + sizeInputScale / 2)
-        context.lineTo(baseOutputPositionScale.getX(), baseOutputPositionScale.getY() + sizeInputScale)
-        context.closePath()
-        if (isBaseOutputConnected) {
-            context.fill()
-        } else {
-            context.stroke()
+        if (NodeHelper.hasBaseOutput(type)) {
+            const {position: baseOutputPosition} = NodeHelper.getNodeGUIOutput(type, camera.fromScaleSize(scaleSize), 0)
+            const baseOutputPositionScale = camera.toCameraScale(baseOutputPosition)
+            context.fillStyle = baseInputColor
+            context.strokeStyle = baseInputColor
+            context.lineWidth = camera.toScaleNumber(1)
+            context.beginPath()
+            context.moveTo(baseOutputPositionScale.getX(), baseOutputPositionScale.getY())
+            context.lineTo(baseOutputPositionScale.getX() + sizeInputScale, baseOutputPositionScale.getY() + sizeInputScale / 2)
+            context.lineTo(baseOutputPositionScale.getX(), baseOutputPositionScale.getY() + sizeInputScale)
+            context.closePath()
+            if (isBaseOutputConnected) {
+                context.fill()
+            } else {
+                context.stroke()
+            }
         }
 
     }

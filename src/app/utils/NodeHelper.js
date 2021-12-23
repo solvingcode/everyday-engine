@@ -425,12 +425,13 @@ export default class NodeHelper {
         const nodeSource = this.getSourceNode(node, world)
         const nodeSourceInputs = nodeSource.getInputs()
         const outputs = nodeSource.getOutput() ? [nodeSource.getOutput()] : []
+        const outputLength = outputs.length - (!NodeHelper.hasBaseOutput(node.getType()) ? 1 : 0)
         const type = node.getType()
         const {fontSize, padding, fontSizeRatio, sizeInput} = this.getNodeGUIProps(type)
         const nodeInputTextLengths = this.getNodeGUIInputs(node, script, world).names
             .concat(this.getNodeName(node, world)).map(text => text.length)
         const width = Math.max(Math.max(...nodeInputTextLengths) * fontSize / fontSizeRatio, 100)
-        const height = (Math.max(nodeSourceInputs.length, outputs.length) + 1) * (sizeInput + padding * 2) + (fontSize + padding * 2)
+        const height = (Math.max(nodeSourceInputs.length, outputLength) + 1) * (sizeInput + padding * 2) + (fontSize + padding * 2)
         return new Size({width, height})
     }
 
@@ -544,6 +545,14 @@ export default class NodeHelper {
             type === NODE_TYPES.OUTPUT ||
             type === NODE_TYPES.SET_CLASS_VAR ||
             type === NODE_TYPES.SET_STATIC_CLASS_VAR
+    }
+
+    /**
+     * @param {string} type
+     * @return {boolean}
+     */
+    static hasBaseOutput(type) {
+        return this.hasBaseInput(type) || type === NODE_TYPES.EVENT
     }
 
     /**
