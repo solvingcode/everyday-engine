@@ -46,7 +46,7 @@ export default class AddNodeInputAction extends Action {
             nodeSource = ScriptHelper.createNode(functionRegistry, script, NODE_TYPES.COMPONENT, value)
         } else {
             const validatedValue = DynamicAttributeHelper.getValueByType(value, inputType, world)
-            nodeSource = ScriptHelper.createNode(functionRegistry, script, NODE_TYPES.CONSTANT, validatedValue)
+            nodeSource = ScriptHelper.createNode(functionRegistry, script, NODE_TYPES.CONSTANT, `${validatedValue}`)
         }
 
         if (hasError) {

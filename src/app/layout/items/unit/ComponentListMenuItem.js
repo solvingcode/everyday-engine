@@ -10,8 +10,7 @@ export default class ComponentListMenuItem extends ListMenuItem {
         super({
             zone: Layout.zone.RIGHT,
             ...props
-        })
-        this.parent = parent
+        }, parent)
     }
 
     /**

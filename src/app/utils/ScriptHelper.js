@@ -41,6 +41,8 @@ import GetClassVarNode from '../flow/node/variable/GetClassVarNode.js'
 import SetClassVarNode from '../flow/node/variable/SetClassVarNode.js'
 import GetStaticClassVarNode from '../flow/node/variable/GetStaticClassVarNode.js'
 import SetStaticClassVarNode from '../flow/node/variable/SetStaticClassVarNode.js'
+import GetAttrClassNameNode from '../flow/node/variable/GetAttrClassNameNode.js'
+import SetAttrClassNameNode from '../flow/node/variable/SetAttrClassNameNode.js'
 
 export default class ScriptHelper {
 
@@ -112,6 +114,10 @@ export default class ScriptHelper {
             node = this.getNodeInstance(functionRegistry, GetClassVarNode, nodeValue)
         } else if (nodeType === NODE_TYPES.SET_CLASS_VAR) {
             node = this.getNodeInstance(functionRegistry, SetClassVarNode, nodeValue)
+        } else if (nodeType === NODE_TYPES.GET_ATTR_CLASS_NAME) {
+            node = this.getNodeInstance(functionRegistry, GetAttrClassNameNode, nodeValue)
+        } else if (nodeType === NODE_TYPES.SET_ATTR_CLASS_NAME) {
+            node = this.getNodeInstance(functionRegistry, SetAttrClassNameNode, nodeValue)
         } else if (nodeType === NODE_TYPES.GET_STATIC_CLASS_VAR) {
             node = this.getNodeInstance(functionRegistry, GetStaticClassVarNode, nodeValue)
         } else if (nodeType === NODE_TYPES.SET_STATIC_CLASS_VAR) {
@@ -172,6 +178,8 @@ export default class ScriptHelper {
             case SetClassVarNode:
             case GetStaticClassVarNode:
             case SetStaticClassVarNode:
+            case GetAttrClassNameNode:
+            case SetAttrClassNameNode:
             case StringVariableNode:
             case UnitVariableNode:
             case ToggleVariableNode:
@@ -201,73 +209,7 @@ export default class ScriptHelper {
      * @return {string}
      */
     static getNodeType(node) {
-        let nodeType = ''
-        if (node instanceof EventNode) {
-            nodeType = NODE_TYPES.EVENT
-        } else if (node instanceof FunctionNode) {
-            nodeType = NODE_TYPES.FUNCTION
-        } else if (node instanceof ConstantNode) {
-            nodeType = NODE_TYPES.CONSTANT
-        } else if (node instanceof ConditionNode) {
-            nodeType = NODE_TYPES.CONDITION
-        } else if (node instanceof LoopNode) {
-            nodeType = NODE_TYPES.LOOP
-        } else if (node instanceof ThenNode) {
-            nodeType = NODE_TYPES.THEN
-        } else if (node instanceof UnitNode) {
-            nodeType = NODE_TYPES.UNIT
-        } else if (node instanceof SelfNode) {
-            nodeType = NODE_TYPES.SELF
-        } else if (node instanceof AnimationNode) {
-            nodeType = NODE_TYPES.ANIMATION
-        } else if (node instanceof FunctionInputNode) {
-            nodeType = NODE_TYPES.INPUT
-        } else if (node instanceof FunctionOutputNode) {
-            nodeType = NODE_TYPES.OUTPUT
-        } else if (node instanceof ReferenceNode) {
-            nodeType = NODE_TYPES.REFERENCE
-        } else if (node instanceof KeyCodeNode) {
-            nodeType = NODE_TYPES.KEY_CODE
-        } else if (node instanceof StringVariableNode) {
-            nodeType = NODE_TYPES.VAR_STRING
-        } else if (node instanceof GetVariableNode) {
-            nodeType = NODE_TYPES.GET_VAR
-        } else if (node instanceof GetClassVarNode) {
-            nodeType = NODE_TYPES.GET_CLASS_VAR
-        } else if (node instanceof SetClassVarNode) {
-            nodeType = NODE_TYPES.SET_CLASS_VAR
-        } else if (node instanceof GetStaticClassVarNode) {
-            nodeType = NODE_TYPES.GET_STATIC_CLASS_VAR
-        } else if (node instanceof SetStaticClassVarNode) {
-            nodeType = NODE_TYPES.SET_STATIC_CLASS_VAR
-        } else if (node instanceof UnitVariableNode) {
-            nodeType = NODE_TYPES.VAR_UNIT
-        } else if (node instanceof NumberVariableNode) {
-            nodeType = NODE_TYPES.VAR_NUMBER
-        } else if (node instanceof ComponentVariableNode) {
-            nodeType = NODE_TYPES.VAR_COMPONENT
-        } else if (node instanceof MaskGroupVariableNode) {
-            nodeType = NODE_TYPES.VAR_MASK_GROUP
-        } else if (node instanceof BooleanVariableNode) {
-            nodeType = NODE_TYPES.VAR_BOOLEAN
-        } else if (node instanceof AudioVariableNode) {
-            nodeType = NODE_TYPES.VAR_AUDIO
-        } else if (node instanceof ArrayVariableNode) {
-            nodeType = NODE_TYPES.VAR_ARRAY
-        } else if (node instanceof ImageVariableNode) {
-            nodeType = NODE_TYPES.VAR_IMAGE
-        } else if (node instanceof UnitInstantVariableNode) {
-            nodeType = NODE_TYPES.VAR_UNIT_INSTANT
-        } else if (node instanceof SceneVariableNode) {
-            nodeType = NODE_TYPES.VAR_SCENE
-        } else if (node instanceof ToggleVariableNode) {
-            nodeType = NODE_TYPES.VAR_TOGGLE
-        } else if (node instanceof ComponentNode) {
-            nodeType = NODE_TYPES.COMPONENT
-        } else {
-            throw new ClientError(`AssetScriptXmlGenerator: ${node.constructor.name} not supported`)
-        }
-        return nodeType
+        return node.getType()
     }
 
     /**
@@ -563,6 +505,40 @@ export default class ScriptHelper {
      * @return {string}
      */
     static extractNameFromStaticVar(name) {
-        return name.replace(/^(Set|Get) (.+)$/, '$2')
+        return `static ${this.extractNameFromVar(name)}`
+    }
+
+    /**
+     * @param {string} name
+     * @return {string}
+     */
+    static extractNameFromPublicVar(name) {
+        return name.replace(/^(Set|Get) (.+) \(public\)$/, '$2')
+    }
+
+    /**
+     * @param {string} name
+     * @return {{component: string, attribute: string}}
+     */
+    static extractFromPublicVar(name) {
+        const parseName = this.extractNameFromPublicVar(name)
+        const nameParts = parseName.split('.')
+        return {
+            component: nameParts[0],
+            attribute: nameParts[1]
+        }
+    }
+
+    /**
+     * @param {string} name
+     * @return {{component: string, attribute: string}}
+     */
+    static extractComponentName(name) {
+        const parseName = name.replace(/^(Set|Get) (.+)$/, '$2')
+        const nameParts = parseName.split('.')
+        return {
+            component: nameParts[0],
+            attribute: nameParts[1]
+        }
     }
 }

@@ -24,6 +24,9 @@ import AGetClassVariable from '../function/variable/AGetClassVariable.js'
 import ASetClassVariable from '../function/variable/ASetClassVariable.js'
 import AGetStaticClassVariable from '../function/variable/AGetStaticClassVariable.js'
 import ASetStaticClassVariable from '../function/variable/ASetStaticClassVariable.js'
+import AGetAttrClassNameComponent from '../function/component/AGetAttrClassNameComponent.js'
+import ASetAttrClassNameComponent from '../function/component/ASetAttrClassNameComponent.js'
+import AClassNameComponent from '../function/component/AClassNameComponent.js'
 
 export default class ClassCompiler extends Compiler {
 
@@ -63,26 +66,27 @@ export default class ClassCompiler extends Compiler {
 
         //create variables
         script.getVariables().forEach(variable => {
-            const getterClassVariableName = `Get ${script.getName()}.${variable.getDefinition().getAttrName()}`
-            const setterClassVariableName = `Set ${script.getName()}.${variable.getDefinition().getAttrName()}`
+            const variableName = `${script.getName()}.${variable.getDefinition().getAttrName()}`
             const variableDefinition = variable.getDefinition()
             const getterFunction = variable.isVarStatic() ? AGetStaticClassVariable : AGetClassVariable
             const setterFunction = variable.isVarStatic() ? ASetStaticClassVariable : ASetClassVariable
-            const access = variable.isVarStatic() ? ACCESSOR.PUBLIC : ACCESSOR.PRIVATE
+            const varAccess = variable.isVarStatic() ? ACCESSOR.PUBLIC : ACCESSOR.PRIVATE
 
-            const getterClassVariable = new getterFunction(getterClassVariableName, {type: variableDefinition.getAttrType(),
-                value: variableDefinition.getAttrValue()})
-            getterClassVariable.setAccess(access)
-            getterClassVariable.setClassName(script.getName())
-            getterClassVariable.setParentClassName(script.getParentName())
-            functionRegistry.tryRegister(getterClassVariable)
+            const classVariableDefinitions = [
+                { name: `Get ${variableName}`, instance: getterFunction, access: varAccess },
+                { name: `Set ${variableName}`, instance: setterFunction, access: varAccess },
+                { name: `Get ${variableName} (public)`, instance: AGetAttrClassNameComponent, access: ACCESSOR.PUBLIC },
+                { name: `Set ${variableName} (public)`, instance: ASetAttrClassNameComponent, access: ACCESSOR.PUBLIC }
+            ]
 
-            const setterClassVariable = new setterFunction(setterClassVariableName, {type: variableDefinition.getAttrType(),
-                value: variableDefinition.getAttrValue()})
-            setterClassVariable.setAccess(access)
-            setterClassVariable.setClassName(script.getName())
-            setterClassVariable.setParentClassName(script.getParentName())
-            functionRegistry.tryRegister(setterClassVariable)
+            classVariableDefinitions.forEach(({name, instance, access}) => {
+                const classVariable = new instance(name, {type: variableDefinition.getAttrType(),
+                    value: variableDefinition.getAttrValue()})
+                classVariable.setAccess(access)
+                classVariable.setClassName(script.getName())
+                classVariable.setParentClassName(script.getParentName())
+                functionRegistry.tryRegister(classVariable)
+            })
         })
 
         //create OnInitEvent
@@ -240,7 +244,8 @@ export default class ClassCompiler extends Compiler {
             event.setStack(this.getOptimizedStack(event, world))
         })
         classInstances.filter(instance => (instance.isOptimized() || !instance.isValidated()) &&
-            !(instance instanceof ACustomFunction) && !(instance instanceof AClassVariable))
+            !(instance instanceof ACustomFunction) && !(instance instanceof AClassVariable)
+            && !(instance instanceof AClassNameComponent))
             .forEach(instance => functionRegistry.removeInstance(instance))
     }
 

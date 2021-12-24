@@ -12,8 +12,8 @@ export default class NotEqualToFunction extends AFunction{
      * @override
      */
     initAttributes() {
-        this.addInput('value1', TYPES.NUMBER, 0)
-        this.addInput('value2', TYPES.NUMBER, 0)
+        this.addInput('value1', TYPES.ANY, 0)
+        this.addInput('value2', TYPES.ANY, 0)
         this.addOutput(TYPES.BOOLEAN)
     }
 

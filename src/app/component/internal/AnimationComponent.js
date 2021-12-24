@@ -20,16 +20,16 @@ export default class AnimationComponent extends ScriptComponent {
      */
     initAttributes() {
         super.initAttributes()
-        this.add('animation', TYPES.ANIMATION)
-        this.add('time', TYPES.NUMBER)
-        this.add('loopTimes', TYPES.NUMBER)
+        this.addInternal('animation', TYPES.ANIMATION)
+        this.addInternal('time', TYPES.NUMBER)
+        this.addInternal('loopTimes', TYPES.NUMBER)
     }
 
     /**
      * @override
      */
     getExcludeFields() {
-        return ['started']
+        return ['script', 'started', 'initialized', 'time', 'loopTimes', 'animation']
     }
 
     /**

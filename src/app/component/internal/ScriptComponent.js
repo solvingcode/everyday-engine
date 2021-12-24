@@ -36,9 +36,9 @@ export default class ScriptComponent extends Component {
      * @override
      */
     initAttributes() {
-        this.add('script', TYPES.STRING)
-        this.add('started', TYPES.BOOLEAN)
-        this.add('initialized', TYPES.BOOLEAN)
+        this.addInternal('script', TYPES.STRING)
+        this.addInternal('started', TYPES.BOOLEAN)
+        this.addInternal('initialized', TYPES.BOOLEAN)
     }
 
     /**

@@ -267,6 +267,12 @@ import GetClassVarNode from '../../flow/node/variable/GetClassVarNode.js'
 import SetClassVarNode from '../../flow/node/variable/SetClassVarNode.js'
 import GetStaticClassVarNode from '../../flow/node/variable/GetStaticClassVarNode.js'
 import SetStaticClassVarNode from '../../flow/node/variable/SetStaticClassVarNode.js'
+import AGetAttrClassComponent from '../../flow/function/component/AGetAttrClassComponent.js'
+import ASetAttrClassComponent from '../../flow/function/component/ASetAttrClassComponent.js'
+import AGetAttrClassNameComponent from '../../flow/function/component/AGetAttrClassNameComponent.js'
+import ASetAttrClassNameComponent from '../../flow/function/component/ASetAttrClassNameComponent.js'
+import GetAttrClassNameNode from '../../flow/node/variable/GetAttrClassNameNode.js'
+import SetAttrClassNameNode from '../../flow/node/variable/SetAttrClassNameNode.js'
 
 /**
  * @class {DataSchema}
@@ -529,6 +535,12 @@ class DataSchema {
         {id: 2420, type: SetClassVarNode},
         {id: 2430, type: GetStaticClassVarNode},
         {id: 2440, type: SetStaticClassVarNode},
+        {id: 2450, type: AGetAttrClassComponent},
+        {id: 2460, type: ASetAttrClassComponent},
+        {id: 2470, type: AGetAttrClassNameComponent},
+        {id: 2480, type: ASetAttrClassNameComponent},
+        {id: 2490, type: GetAttrClassNameNode},
+        {id: 2500, type: SetAttrClassNameNode},
     ]
 
     /**

@@ -234,6 +234,8 @@ export const NODE_TYPES = {
     GET_VAR: 'get_var',
     GET_CLASS_VAR: 'get_class_var',
     SET_CLASS_VAR: 'set_class_var',
+    GET_ATTR_CLASS_NAME: 'get_attr_class_name',
+    SET_ATTR_CLASS_NAME: 'set_attr_class_name',
     GET_STATIC_CLASS_VAR: 'get_static_class_var',
     SET_STATIC_CLASS_VAR: 'set_static_class_var',
     ANIMATION: 'animation',

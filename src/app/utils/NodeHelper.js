@@ -69,6 +69,10 @@ import GetClassVarNode from '../flow/node/variable/GetClassVarNode.js'
 import SetClassVarNode from '../flow/node/variable/SetClassVarNode.js'
 import GetStaticClassVarNode from '../flow/node/variable/GetStaticClassVarNode.js'
 import SetStaticClassVarNode from '../flow/node/variable/SetStaticClassVarNode.js'
+import GetAttrClassNameNode from '../flow/node/variable/GetAttrClassNameNode.js'
+import AGetAttrClassNameComponent from '../flow/function/component/AGetAttrClassNameComponent.js'
+import ASetAttrClassNameComponent from '../flow/function/component/ASetAttrClassNameComponent.js'
+import SetAttrClassNameNode from '../flow/node/variable/SetAttrClassNameNode.js'
 
 export default class NodeHelper {
 
@@ -84,6 +88,12 @@ export default class NodeHelper {
             case FunctionNode:
             case ConditionNode:
             case EventNode:
+            case SetAttrClassNameNode:
+            case GetAttrClassNameNode:
+            case GetClassVarNode:
+            case SetClassVarNode:
+            case GetStaticClassVarNode:
+            case SetStaticClassVarNode:
                 return functionRegistry.getInstance(sourceName)
             case ConstantNode:
                 return new AConstant(DynamicAttributeHelper.findTypeOfValue(sourceName), sourceName)
@@ -107,14 +117,6 @@ export default class NodeHelper {
                 return new AThen(sourceName)
             case GetVariableNode:
                 return new AGetVariable(sourceName)
-            case GetClassVarNode:
-                return new AGetClassVariable(sourceName)
-            case SetClassVarNode:
-                return new ASetClassVariable(sourceName)
-            case GetStaticClassVarNode:
-                return new AGetStaticClassVariable(sourceName)
-            case SetStaticClassVarNode:
-                return new ASetStaticClassVariable(sourceName)
             case StringVariableNode:
                 return new AStringVariable(sourceName)
             case UnitVariableNode:
@@ -167,6 +169,8 @@ export default class NodeHelper {
             [NODE_TYPES.GET_VAR]: AGetVariable,
             [NODE_TYPES.GET_CLASS_VAR]: AGetClassVariable,
             [NODE_TYPES.SET_CLASS_VAR]: ASetClassVariable,
+            [NODE_TYPES.GET_ATTR_CLASS_NAME]: AGetAttrClassNameComponent,
+            [NODE_TYPES.SET_ATTR_CLASS_NAME]: ASetAttrClassNameComponent,
             [NODE_TYPES.GET_STATIC_CLASS_VAR]: AGetStaticClassVariable,
             [NODE_TYPES.SET_STATIC_CLASS_VAR]: ASetStaticClassVariable,
             [NODE_TYPES.VAR_STRING]: AStringVariable,
@@ -215,6 +219,10 @@ export default class NodeHelper {
             return ScriptHelper.extractNameFromVar(nodeSource.getName())
         } else if (nodeSource instanceof ASetClassVariable) {
             return ScriptHelper.extractNameFromVar(nodeSource.getName())
+        } else if (nodeSource instanceof AGetAttrClassNameComponent) {
+            return ScriptHelper.extractNameFromPublicVar(nodeSource.getName())
+        } else if (nodeSource instanceof ASetAttrClassNameComponent) {
+            return ScriptHelper.extractNameFromPublicVar(nodeSource.getName())
         } else if (nodeSource instanceof AGetStaticClassVariable) {
             return ScriptHelper.extractNameFromStaticVar(nodeSource.getName())
         } else if (nodeSource instanceof ASetStaticClassVariable) {
@@ -387,6 +395,9 @@ export default class NodeHelper {
             type === NODE_TYPES.SET_CLASS_VAR ||
             type === NODE_TYPES.SET_STATIC_CLASS_VAR) {
             headColor = '#00695a'
+        } else if (type === NODE_TYPES.GET_ATTR_CLASS_NAME ||
+            type === NODE_TYPES.SET_ATTR_CLASS_NAME) {
+            headColor = '#5e2254'
         } else if (type === NODE_TYPES.COMPONENT) {
             headColor = '#5e2254'
         } else if (type === NODE_TYPES.REFERENCE) {
@@ -544,7 +555,8 @@ export default class NodeHelper {
             type === NODE_TYPES.REFERENCE ||
             type === NODE_TYPES.OUTPUT ||
             type === NODE_TYPES.SET_CLASS_VAR ||
-            type === NODE_TYPES.SET_STATIC_CLASS_VAR
+            type === NODE_TYPES.SET_STATIC_CLASS_VAR ||
+            type === NODE_TYPES.SET_ATTR_CLASS_NAME
     }
 
     /**

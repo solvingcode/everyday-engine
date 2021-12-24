@@ -336,7 +336,7 @@ export default class DynamicAttributeHelper {
                 draggable: true,
                 dynamicAttribute
             }]
-        } else if (attrType === TYPES.BOOLEAN && isListInstances) {
+        } else if (attrType === TYPES.BOOLEAN) {
             formField = [{
                 bind: bindName,
                 label: `${attributeName} `,
@@ -535,7 +535,7 @@ export default class DynamicAttributeHelper {
                 list,
                 dynamicAttribute
             }]
-        } else if (attrType === TYPES.NUMBER && isListInstances) {
+        } else if (attrType === TYPES.NUMBER) {
             formField = [{
                 bind: bindName,
                 label: attributeName,

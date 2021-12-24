@@ -103,16 +103,19 @@ class FormMenuItem extends MenuItem {
     /**
      * @override
      */
-    update() {
-        const object = this.getFormObject()
-        this.bindObject = object
-        if (object) {
-            if (this.isFormUpdated(object)) {
-                this.object = _.cloneDeep(object)
-                this.shouldUpdate() && this.updateForm()
+    doUpdate() {
+        if (this.isValid()) {
+            const object = this.getFormObject()
+            this.bindObject = object
+            if (object) {
+                if (this.isFormUpdated(object)) {
+                    this.object = _.cloneDeep(object)
+                    this.shouldUpdate() && this.updateForm()
+                    return true
+                }
+            } else {
+                this.init()
             }
-        } else {
-            this.init()
         }
     }
 
@@ -227,7 +230,7 @@ class FormMenuItem extends MenuItem {
                 options: field.options,
                 isEditing: (existItem && existItem.isEditing()) || field.isEditing,
                 draggable: field.draggable,
-                dragStateCode: field.draggable ? 'ACTION_ATTACH_COMPONENT_VALUE' : '',
+                dragStateCode: field.draggable ? 'ACTION_ATTACH_COMPONENT_VALUE' : ''
             },
             getter,
             setter

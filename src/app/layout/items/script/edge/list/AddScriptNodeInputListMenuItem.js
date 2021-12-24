@@ -36,6 +36,18 @@ export default class AddScriptNodeInputListMenuItem extends ListMenuItem {
     setupItems() {
         super.setupItems()
         const world = World.get()
+        const node = this.getNode()
+        if (node) {
+            this.data.formObject = NodeHelper.getSourceNode(node, world).getInputs().map(input => ({input, node}))
+        }
+        this.data.node = node
+    }
+
+    /**
+     * @return {ANode}
+     */
+    getNode() {
+        const world = World.get()
         const script = world.getScriptManager().getFunctionSelected(world.getTabManager())
         if (script) {
             const selectedGraphUnits = world.getGraphManager().getSelectedNodes()
@@ -43,11 +55,20 @@ export default class AddScriptNodeInputListMenuItem extends ListMenuItem {
             if (selectedGraphUnit) {
                 const nodeComponent = selectedGraphUnit.getComponent(NodeComponent)
                 if (nodeComponent) {
-                    const node = selectedGraphUnit.getComponent(NodeComponent).getNode()
-                    this.data.formObject = NodeHelper.getSourceNode(node, world).getInputs().map(input => ({input, node}))
+                    return selectedGraphUnit.getComponent(NodeComponent).getNode()
                 }
             }
         }
+    }
+
+    /**
+     * @override
+     */
+    doUpdate() {
+        if (this.data.node !== this.getNode()) {
+            this.setupItems()
+        }
+        return super.doUpdate()
     }
 
     /**

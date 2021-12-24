@@ -4,7 +4,7 @@ export default class AGetStaticClassVariable extends AClassVariable {
 
     /**
      * @param {string} name
-     * @param {{type: number, value: *, varStatic}} params
+     * @param {{type: number, value: *}} params
      */
     constructor(name, params = {}) {
         super(name, params)
