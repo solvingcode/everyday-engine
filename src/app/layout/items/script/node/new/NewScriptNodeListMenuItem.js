@@ -35,7 +35,11 @@ export default class NewScriptNodeListMenuItem extends ListMenuItem {
             const regex = new RegExp(`${StringHelper.escapeRegex(valueSearch)}`, 'gi')
             const world = World.get()
             const functionRegistry = world.getFunctionRegistry()
-            return functionRegistry.getInstances().filter(value => value.getName().match(regex))
+            const script = world.getScriptManager().getSelected(world.getTabManager())
+            return functionRegistry.getInstances().filter(instance =>
+                (instance.isGlobal() || instance.isPublic() ||
+                (script && instance.isMemberOfClass(script.getName())))
+                && instance.getName().match(regex))
         }
         return []
     }

@@ -674,7 +674,7 @@ export default class UnitHelper {
      */
     static setScale(world, unit, scale) {
         const transformComponent = unit.getComponent(TransformComponent)
-        transformComponent.setScale(scale, true)
+        transformComponent.setScale(Vector.linearMultiply(scale, transformComponent.getAxis()), true)
     }
 
     /**

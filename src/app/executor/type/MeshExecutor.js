@@ -18,7 +18,7 @@ export default class MeshExecutor extends ComponentExecutor {
     execute(unit, executionContext) {
         const transformComponent = unit.getComponent(TransformComponent)
         const meshComponent = unit.getComponent(MeshComponent)
-        if (transformComponent.getLocalScaleUpdated()) {
+        if (transformComponent.getLocalScaleUpdated() || transformComponent.getAxisUpdated()) {
             this.updateLocalScale(unit, transformComponent, meshComponent)
         }
         if (transformComponent.getLocalRotationUpdated() || this.isAxisUpdated(unit, transformComponent)) {
@@ -58,6 +58,7 @@ export default class MeshExecutor extends ComponentExecutor {
         }
         UnitHelper.setScale(world, unit, newScale)
         transformComponent.setLastLocalScale(_.cloneDeep(transformComponent.getLocalScale()))
+        transformComponent.setLastAxis(transformComponent.getAxis())
         meshComponent.setSize(TransformHelper.getSizeFromScale(transformComponent.getScale()))
         meshComponent.setGenerated(false)
         childUnits.forEach(cUnit => {

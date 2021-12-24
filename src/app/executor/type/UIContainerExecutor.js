@@ -33,7 +33,7 @@ export default class UIContainerExecutor extends ComponentExecutor {
             if (!ObjectHelper.isEqual(cameraScale, localScale)) {
                 transformComponent.setLocalScale(TransformHelper
                     .getLocalScale(cameraScale, world.getUnitManager().findParentUnit(unit)))
-                transformComponent.setScale(transformComponent.getLocalScale(), true)
+                transformComponent.setScale(Vector.linearMultiply(transformComponent.getLocalScale(), transformComponent.getAxis()), true)
             }
         }
     }

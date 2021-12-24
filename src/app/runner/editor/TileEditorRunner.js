@@ -28,7 +28,8 @@ export default class TileEditorRunner extends Runner {
      * @override
      */
     isHandle(window) {
-        return true
+        const selectedTab = World.get().getTabManager().getSelected()
+        return selectedTab && selectedTab.isProtected()
     }
 
     /**

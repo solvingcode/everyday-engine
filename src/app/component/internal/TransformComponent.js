@@ -20,8 +20,10 @@ export default class TransformComponent extends Component {
         this.add('localPosition', TYPES.VECTOR, new Vector())
         this.add('localAxisPosition', TYPES.VECTOR, new Vector())
         this.add('localScale', TYPES.VECTOR, new Vector())
+        this.add('axis', TYPES.VECTOR, Vector.one())
         this.add('localRotation', TYPES.NUMBER, 0)
         this.add('localAxisRotation', TYPES.NUMBER, null)
+        this.addInternal('lastAxis', TYPES.VECTOR)
         this.addInternal('lastLocalScale', TYPES.VECTOR)
         this.addInternal('lastLocalPosition', TYPES.VECTOR)
         this.addInternal('lastLocalRotation', TYPES.NUMBER, null)
@@ -32,7 +34,7 @@ export default class TransformComponent extends Component {
      */
     getExcludeFields() {
         return ['position', 'scale', 'rotation', 'lastLocalScale', 'lastLocalPosition', 'lastLocalRotation',
-            'screenPosition', 'localAxisPosition', 'localAxisRotation']
+            'screenPosition', 'localAxisPosition', 'localAxisRotation', 'lastAxis']
     }
 
     /**
@@ -174,6 +176,34 @@ export default class TransformComponent extends Component {
     }
 
     /**
+     * @return {Vector}
+     */
+    getAxis() {
+        return this.getValue('axis')
+    }
+
+    /**
+     * @param {Vector} axis
+     */
+    setAxis(axis) {
+        this.setValue('axis', _.cloneDeep(axis))
+    }
+
+    /**
+     * @return {Vector}
+     */
+    getLastAxis() {
+        return this.getValue('lastAxis')
+    }
+
+    /**
+     * @param {Vector} axis
+     */
+    setLastAxis(axis) {
+        this.setValue('lastAxis', _.cloneDeep(axis))
+    }
+
+    /**
      * @return {number}
      */
     getLastLocalRotation() {
@@ -213,6 +243,13 @@ export default class TransformComponent extends Component {
      */
     setLocalScale(localScale) {
         this.setValue('localScale', _.cloneDeep(localScale))
+    }
+
+    /**
+     * @return {boolean}
+     */
+    getAxisUpdated() {
+        return !_.isEqual(this.getAxis(), this.getLastAxis())
     }
 
     /**
