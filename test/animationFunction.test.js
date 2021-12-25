@@ -36,7 +36,7 @@ test('Create and compile animation when (startEvent -> animation)', function () 
     animationComponent.setScript(script.getName())
 
     const nodeStartAnimation = ScriptHelper.createNodeByClass(functionRegistry, scriptFunction, EventNode, 'OnAnimationStart')
-    const nodeAnimation = ScriptHelper.createNodeByClass(functionRegistry, scriptFunction, AnimationNode, `${animation.getId()}`)
+    const nodeAnimation = ScriptHelper.createNodeByClass(functionRegistry, scriptFunction, AnimationNode, `Animation ${animation.getName()}`)
 
     nodeAnimation.attachPrevNode(nodeStartAnimation)
 

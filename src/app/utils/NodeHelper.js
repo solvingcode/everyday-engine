@@ -94,6 +94,7 @@ export default class NodeHelper {
             case SetClassVarNode:
             case GetStaticClassVarNode:
             case SetStaticClassVarNode:
+            case AnimationNode:
                 return functionRegistry.getInstance(sourceName)
             case ConstantNode:
                 return new AConstant(DynamicAttributeHelper.findTypeOfValue(sourceName), sourceName)
@@ -103,8 +104,6 @@ export default class NodeHelper {
                 return new AUnit(sourceName)
             case SelfNode:
                 return new ASelf(sourceName)
-            case AnimationNode:
-                return new AAnimation(sourceName)
             case FunctionInputNode:
                 return new AFunctionInput(sourceName)
             case FunctionOutputNode:
@@ -239,8 +238,7 @@ export default class NodeHelper {
             const unit = world.findUnitById(parseInt(nodeSource.getName()))
             return `${unit.getName()}`
         } else if (nodeSource instanceof AAnimation) {
-            const animation = world.getAnimationManager().findById(parseInt(nodeSource.getName()))
-            return `${animation ? animation.getName() : nodeSource.getName()}`
+            return ScriptHelper.extractNameFromPublicAnimation(nodeSource.getName())
         } else if (nodeSource instanceof AComponent) {
             return `${nodeSource.getName()}`
         } else if (nodeSource instanceof AFunctionInput) {

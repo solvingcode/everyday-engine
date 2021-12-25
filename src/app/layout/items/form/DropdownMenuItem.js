@@ -1,5 +1,6 @@
 import Layout from '../../Layout.js'
 import InputMenuItem from './InputMenuItem.js'
+import {MouseButton} from '../../../core/Mouse.js'
 
 /**
  * Checkbox Menu Item
@@ -14,6 +15,13 @@ class DropdownMenuItem extends InputMenuItem {
     constructor(parent, props, value, event) {
         super(parent, props, value, event)
         this.field = Layout.form.DROPDOWN
+    }
+
+    /**
+     * @override
+     */
+    isHandle(window) {
+        return window.mouse.isButtonPressed(MouseButton.LEFT)
     }
 }
 

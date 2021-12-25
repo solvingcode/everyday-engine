@@ -354,8 +354,7 @@ test('Create and compile class function (return value)', function () {
     expect(functionCompiled).toBeDefined()
     expect(functionCompiled.constructor).toEqual(ACustomFunction)
 
-    const nodeInputUnit1 = ScriptHelper.createNodeByClass(functionRegistry, mainScriptFunction, ConstantNode, unit.getId())
-    const nodeInputUnit2 = ScriptHelper.createNodeByClass(functionRegistry, mainScriptFunction, ConstantNode, unit.getId())
+    const nodeInputUnit = ScriptHelper.createNodeByClass(functionRegistry, mainScriptFunction, SelfNode, '')
     const nodeLogFunction = ScriptHelper.createNodeByClass(functionRegistry, mainScriptFunction, FunctionNode, 'Log')
     const nodeMultiplyFunction = ScriptHelper.createNodeByClass(functionRegistry, mainScriptFunction, FunctionNode, 'classScript.testFunction')
     const nodeMouseClick = ScriptHelper.createNodeByClass(functionRegistry, mainScriptFunction, EventNode, 'OnMouseClick')
@@ -363,19 +362,18 @@ test('Create and compile class function (return value)', function () {
     const nodeInputValue2 = ScriptHelper.createNodeByClass(functionRegistry, mainScriptFunction, ConstantNode, '4')
     nodeLogFunction.attachPrevNode(nodeMouseClick)
     nodeLogFunction.attachResultOutput(nodeMultiplyFunction, 'value')
-    nodeLogFunction.attachResultOutput(nodeInputUnit1, 'unit')
     nodeMultiplyFunction.attachResultOutput(nodeInputValue1, 'numberA')
     nodeMultiplyFunction.attachResultOutput(nodeInputValue2, 'numberB')
-    nodeMultiplyFunction.attachResultOutput(nodeInputUnit2, 'unit')
+    nodeMultiplyFunction.attachResultOutput(nodeInputUnit, 'unit')
 
     script.compile(world)
 
-    const mouseEventCompiled = functionRegistry.getInstance('classScript.main.OnMouseClick.4')
+    const mouseEventCompiled = functionRegistry.getInstance('classScript.main.OnMouseClick.3')
     expect(mouseEventCompiled).toBeDefined()
     expect(mouseEventCompiled.constructor).toEqual(OnMouseClickEvent)
 
     console.log = jest.fn()
-    mouseEventCompiled.execute(functionRegistry, null, scriptComponent, World.get(), {})
+    mouseEventCompiled.execute(functionRegistry, unit, scriptComponent, World.get(), {})
     expect(console.log).toHaveBeenCalledWith(20)
 })
 
@@ -416,8 +414,7 @@ test('Create and compile class function (with async calls)', async function () {
     expect(functionCompiled).toBeDefined()
     expect(functionCompiled.constructor).toEqual(ACustomFunction)
 
-    const nodeInputUnit1 = ScriptHelper.createNodeByClass(functionRegistry, mainScriptFunction, ConstantNode, unit.getId())
-    const nodeInputUnit2 = ScriptHelper.createNodeByClass(functionRegistry, mainScriptFunction, ConstantNode, unit.getId())
+    const nodeInputUnit = ScriptHelper.createNodeByClass(functionRegistry, mainScriptFunction, SelfNode, '')
     const nodeThen = ScriptHelper.createNodeByClass(functionRegistry, mainScriptFunction, ThenNode, 'Then')
     const nodeLogFunction = ScriptHelper.createNodeByClass(functionRegistry, mainScriptFunction, FunctionNode, 'Log')
     const nodeMultiplyFunction = ScriptHelper.createNodeByClass(functionRegistry, mainScriptFunction, FunctionNode, 'classScript.testFunction')
@@ -431,19 +428,18 @@ test('Create and compile class function (with async calls)', async function () {
     nodeThen.attachManagedOutput(nodePromise)
     nodeLogFunction.attachPrevNode(nodeThen)
     nodeLogFunction.attachResultOutput(nodeThen, 'value')
-    nodeLogFunction.attachResultOutput(nodeInputUnit1, 'unit')
     nodeMultiplyFunction.attachResultOutput(nodeInputValue1, 'numberA')
     nodeMultiplyFunction.attachResultOutput(nodeInputValue2, 'numberB')
-    nodeMultiplyFunction.attachResultOutput(nodeInputUnit2, 'unit')
+    nodeMultiplyFunction.attachResultOutput(nodeInputUnit, 'unit')
 
     script.compile(world)
 
-    const mouseEventCompiled = functionRegistry.getInstance('classScript.main.OnMouseClick.5')
+    const mouseEventCompiled = functionRegistry.getInstance('classScript.main.OnMouseClick.4')
     expect(mouseEventCompiled).toBeDefined()
     expect(mouseEventCompiled.constructor).toEqual(OnMouseClickEvent)
 
     console.log = jest.fn()
-    mouseEventCompiled. execute(functionRegistry, null, scriptComponent, World.get(), {})
+    mouseEventCompiled. execute(functionRegistry, unit, scriptComponent, World.get(), {})
     await new Promise((r) => setTimeout(r, 2000));
     expect(console.log).toHaveBeenCalledWith(20)
 })
@@ -499,8 +495,7 @@ test('Create and compile class function (with async calls inside custom function
     expect(multiplyFunctionCompiled.constructor).toEqual(ACustomFunction)
     expect(promiseFunctionCompiled.constructor).toEqual(ACustomFunction)
 
-    const nodeInputUnit1 = ScriptHelper.createNodeByClass(functionRegistry, mainScriptFunction, ConstantNode, unit.getId())
-    const nodeInputUnit2 = ScriptHelper.createNodeByClass(functionRegistry, mainScriptFunction, ConstantNode, unit.getId())
+    const nodeInputUnit = ScriptHelper.createNodeByClass(functionRegistry, mainScriptFunction, SelfNode, '')
     const nodeThen = ScriptHelper.createNodeByClass(functionRegistry, mainScriptFunction, ThenNode, 'Then')
     const nodeLogFunction = ScriptHelper.createNodeByClass(functionRegistry, mainScriptFunction, FunctionNode, 'Log')
     const nodeMultiplyFunction = ScriptHelper.createNodeByClass(functionRegistry, mainScriptFunction, FunctionNode, 'classScript.multiplyCustomFunction')
@@ -511,24 +506,23 @@ test('Create and compile class function (with async calls inside custom function
 
     nodePromiseFunction.attachResultOutput(nodeMultiplyFunction, 'value')
     nodePromiseFunction.attachPrevNode(nodeMouseClick)
-    nodePromiseFunction.attachResultOutput(nodeInputUnit2, 'unit')
+    nodePromiseFunction.attachResultOutput(nodeInputUnit, 'unit')
     nodeThen.attachManagedOutput(nodePromiseFunction)
     nodeLogFunction.attachPrevNode(nodeThen)
     nodeLogFunction.attachResultOutput(nodeThen, 'value')
-    nodeLogFunction.attachResultOutput(nodeInputUnit1, 'unit')
     nodeMultiplyFunction.attachResultOutput(nodeInputValue1, 'numberA')
     nodeMultiplyFunction.attachResultOutput(nodeInputValue2, 'numberB')
-    nodeMultiplyFunction.attachResultOutput(nodeInputUnit2, 'unit')
+    nodeMultiplyFunction.attachResultOutput(nodeInputUnit, 'unit')
 
     script.compile(world)
 
-    const mouseEventCompiled = functionRegistry.getInstance('classScript.main.OnMouseClick.5')
+    const mouseEventCompiled = functionRegistry.getInstance('classScript.main.OnMouseClick.4')
     expect(mouseEventCompiled).toBeDefined()
     expect(mouseEventCompiled.constructor).toEqual(OnMouseClickEvent)
 
     OperationLogger.logStack(multiplyFunctionCompiled.getStack())
     console.log = jest.fn()
-    mouseEventCompiled.execute(functionRegistry, null, scriptComponent, World.get(), {})
+    mouseEventCompiled.execute(functionRegistry, unit, scriptComponent, World.get(), {})
     await new Promise((r) => setTimeout(r, 2000));
     expect(console.log).toHaveBeenCalledWith(20)
 })

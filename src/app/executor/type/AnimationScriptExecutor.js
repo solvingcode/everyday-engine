@@ -4,6 +4,7 @@ import AnimationComponent from '../../component/internal/AnimationComponent.js'
 import OnAnimationStartEvent from '../../flow/event/native/OnAnimationStartEvent.js'
 import ScriptHelper from '../../utils/ScriptHelper.js'
 import AAnimation from '../../flow/animation/AAnimation.js'
+import OnInitEvent from '../../flow/event/native/OnInitEvent.js'
 
 export default class AnimationScriptExecutor extends ComponentExecutor {
 
@@ -26,6 +27,9 @@ export default class AnimationScriptExecutor extends ComponentExecutor {
                     && animationComponent.isInitialized()) {
                     instance.execute(functionRegistry, unit, animationComponent, world, executionContext)
                     animationComponent.setStarted(true)
+                } else if(instance instanceof OnInitEvent && !animationComponent.isInitialized()){
+                    instance.execute(functionRegistry, unit, animationComponent, world, executionContext)
+                    animationComponent.setInitialized(true)
                 } else if (instance instanceof AAnimation) {
                     const animationInstance = parseInt(ScriptHelper.getValueFromFunctionName(scriptName, instance.getName()))
                     if (animationInstance === animation) {

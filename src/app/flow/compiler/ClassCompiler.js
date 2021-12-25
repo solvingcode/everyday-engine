@@ -73,21 +73,34 @@ export default class ClassCompiler extends Compiler {
             const varAccess = variable.isVarStatic() ? ACCESSOR.PUBLIC : ACCESSOR.PRIVATE
 
             const classVariableDefinitions = [
-                { name: `Get ${variableName}`, instance: getterFunction, access: varAccess },
-                { name: `Set ${variableName}`, instance: setterFunction, access: varAccess },
-                { name: `Get ${variableName} (public)`, instance: AGetAttrClassNameComponent, access: ACCESSOR.PUBLIC },
-                { name: `Set ${variableName} (public)`, instance: ASetAttrClassNameComponent, access: ACCESSOR.PUBLIC }
+                {name: `Get ${variableName}`, instance: getterFunction, access: varAccess},
+                {name: `Set ${variableName}`, instance: setterFunction, access: varAccess},
+                {name: `Get ${variableName} (public)`, instance: AGetAttrClassNameComponent, access: ACCESSOR.PUBLIC},
+                {name: `Set ${variableName} (public)`, instance: ASetAttrClassNameComponent, access: ACCESSOR.PUBLIC}
             ]
 
             classVariableDefinitions.forEach(({name, instance, access}) => {
-                const classVariable = new instance(name, {type: variableDefinition.getAttrType(),
-                    value: variableDefinition.getAttrValue()})
+                const classVariable = new instance(name, {
+                    type: variableDefinition.getAttrType(),
+                    value: variableDefinition.getAttrValue()
+                })
                 classVariable.setAccess(access)
                 classVariable.setClassName(script.getName())
                 classVariable.setParentClassName(script.getParentName())
                 functionRegistry.tryRegister(classVariable)
             })
         })
+
+        //create animations
+        world.getAnimationManager().findAnimationsByControllerAssetId(script.getAssetId())
+            .forEach(animation => {
+                const animationFuncName = `Animation ${animation.getName()}`
+                const animationFunction = new AAnimation(animationFuncName, animation.getId())
+                animationFunction.setAccess(ACCESSOR.PUBLIC)
+                if(!functionRegistry.getInstance(animationFuncName)){
+                    functionRegistry.tryRegister(animationFunction)
+                }
+            })
 
         //create OnInitEvent
         const mainFunction = script.getMainFunction()
@@ -99,7 +112,7 @@ export default class ClassCompiler extends Compiler {
             onInitEvent.getStack().push(...[
                 new StackOperation(OPERATIONS.PUSH, 'variable', variable.getAttrName()),
                 new StackOperation(OPERATIONS.CALL, getVarValueFunction.getName()),
-                new StackOperation(OPERATIONS.SET, variable.getAttrName()),
+                new StackOperation(OPERATIONS.SET, variable.getAttrName())
             ])
         })
         functionRegistry.tryRegister(onInitEvent)
@@ -135,8 +148,8 @@ export default class ClassCompiler extends Compiler {
                 const functionName = ScriptHelper.generateFunctionName(script, scriptFunction, node, world)
                 const stackFunction = functionRegistry.getInstance(functionName)
                 functionCompiler.run(element, new ContextCompiler(script, node, null, null,
-                    element, stackFunction, null, world, scriptFunction, scriptFunctionName, null,
-                    null, functionName),
+                        element, stackFunction, null, world, scriptFunction, scriptFunctionName, null,
+                        null, functionName),
                     STEPS.ZERO)
             })
 
@@ -152,8 +165,8 @@ export default class ClassCompiler extends Compiler {
                     const sourceElementName = ScriptHelper.generateFunctionName(script, scriptFunction, sourceNode, world)
                     const sourceStackFunction = functionRegistry.getInstance(sourceElementName)
                     functionCompiler.run(sourceElement, new ContextCompiler(script, node, input, sourceElement,
-                        element, stackFunction, sourceNode, world, scriptFunction, scriptFunctionName, sourceElementName,
-                        sourceStackFunction, functionName),
+                            element, stackFunction, sourceNode, world, scriptFunction, scriptFunctionName, sourceElementName,
+                            sourceStackFunction, functionName),
                         STEPS.ONE)
                 }
             })
@@ -164,8 +177,8 @@ export default class ClassCompiler extends Compiler {
                 const functionName = ScriptHelper.generateFunctionName(script, scriptFunction, node, world)
                 const stackFunction = functionRegistry.getInstance(functionName)
                 functionCompiler.run(element, new ContextCompiler(script, node, null, null,
-                    element, stackFunction, null, world, scriptFunction, scriptFunctionName, null,
-                    null, functionName),
+                        element, stackFunction, null, world, scriptFunction, scriptFunctionName, null,
+                        null, functionName),
                     STEPS.TWO)
             })
 
@@ -181,8 +194,8 @@ export default class ClassCompiler extends Compiler {
                     const sourceElementName = ScriptHelper.generateFunctionName(script, scriptFunction, sourceNode, world)
                     const sourceStackFunction = functionRegistry.getInstance(sourceElementName)
                     functionCompiler.run(element, new ContextCompiler(script, node, input, sourceElement,
-                        element, stackFunction, sourceNode, world, scriptFunction, scriptFunctionName, sourceElementName,
-                        sourceStackFunction, functionName),
+                            element, stackFunction, sourceNode, world, scriptFunction, scriptFunctionName, sourceElementName,
+                            sourceStackFunction, functionName),
                         STEPS.THREE)
                 }
             })
@@ -199,8 +212,8 @@ export default class ClassCompiler extends Compiler {
                     const sourceElementName = ScriptHelper.generateFunctionName(script, scriptFunction, sourceNode, world)
                     const sourceStackFunction = functionRegistry.getInstance(sourceElementName)
                     functionCompiler.run(sourceElement, new ContextCompiler(script, node, input, sourceElement,
-                        element, stackFunction, sourceNode, world, scriptFunction, scriptFunctionName, sourceElementName,
-                        sourceStackFunction, functionName),
+                            element, stackFunction, sourceNode, world, scriptFunction, scriptFunctionName, sourceElementName,
+                            sourceStackFunction, functionName),
                         STEPS.FOUR)
                 }
             })
@@ -217,8 +230,8 @@ export default class ClassCompiler extends Compiler {
                     const sourceElementName = ScriptHelper.generateFunctionName(script, scriptFunction, sourceNode, world)
                     const sourceStackFunction = functionRegistry.getInstance(sourceElementName)
                     functionCompiler.run(sourceElement, new ContextCompiler(script, node, input, sourceElement,
-                        element, stackFunction, sourceNode, world, scriptFunction, scriptFunctionName, sourceElementName,
-                        sourceStackFunction, functionName),
+                            element, stackFunction, sourceNode, world, scriptFunction, scriptFunctionName, sourceElementName,
+                            sourceStackFunction, functionName),
                         STEPS.FIVE)
                 }
             })
@@ -264,8 +277,8 @@ export default class ClassCompiler extends Compiler {
                 const calledFunctionName = args && args[0]
                 const stackFunction = functionRegistry.getInstance(calledFunctionName)
                 if (operation === OPERATIONS.CALL && ((stackFunction instanceof AStackFunction &&
-                    !(stackFunction instanceof ACustomFunction) &&
-                    !(stackFunction instanceof AAnimation))
+                        !(stackFunction instanceof ACustomFunction) &&
+                        !(stackFunction instanceof AAnimation))
                     || stackFunction instanceof OnCallEvent)) {
                     stackFunction.setOptimized(true)
                     return [...optimizeStack, ...this.getOptimizedStack(stackFunction, world)]

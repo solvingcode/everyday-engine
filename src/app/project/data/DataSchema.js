@@ -273,6 +273,8 @@ import AGetAttrClassNameComponent from '../../flow/function/component/AGetAttrCl
 import ASetAttrClassNameComponent from '../../flow/function/component/ASetAttrClassNameComponent.js'
 import GetAttrClassNameNode from '../../flow/node/variable/GetAttrClassNameNode.js'
 import SetAttrClassNameNode from '../../flow/node/variable/SetAttrClassNameNode.js'
+import VectorZeroFunction from '../../flow/function/native/structure/VectorZeroFunction.js'
+import VectorOneFunction from '../../flow/function/native/structure/VectorOneFunction.js'
 
 /**
  * @class {DataSchema}
@@ -541,6 +543,8 @@ class DataSchema {
         {id: 2480, type: ASetAttrClassNameComponent},
         {id: 2490, type: GetAttrClassNameNode},
         {id: 2500, type: SetAttrClassNameNode},
+        {id: 2510, type: VectorZeroFunction},
+        {id: 2520, type: VectorOneFunction},
     ]
 
     /**

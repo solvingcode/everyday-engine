@@ -348,7 +348,12 @@ export default class ScriptHelper {
         const nodeIndex = scriptFunction.getNodes().findIndex(pNode => pNode === node)
         const sourceNode = NodeHelper.getSourceNode(node, world)
         const isAddIndex = !sourceNode.isUnique()
-        return `${script.getName()}.${scriptFunction.getName()}.${node.getSourceName()}${isAddIndex ? `.${nodeIndex}` : ''}`
+        let nodeSourceName = node.getSourceName()
+        if(node instanceof AnimationNode){
+            const animation = world.getAnimationManager().findByName(this.extractNameFromPublicAnimation(nodeSourceName))
+            nodeSourceName = `${animation.getId()}`
+        }
+        return `${script.getName()}.${scriptFunction.getName()}.${nodeSourceName}${isAddIndex ? `.${nodeIndex}` : ''}`
     }
 
     /**
@@ -527,6 +532,14 @@ export default class ScriptHelper {
             component: nameParts[0],
             attribute: nameParts[1]
         }
+    }
+
+    /**
+     * @param {string} name
+     * @return {string}
+     */
+    static extractNameFromPublicAnimation(name) {
+        return name.replace(/^Animation (.+)$/, '$1')
     }
 
     /**

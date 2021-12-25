@@ -14,6 +14,7 @@ import UITransformComponent from '../../../component/internal/ui/UITransformComp
 import Window from '../../../core/Window.js'
 import {KeyCode} from '../../../core/Keyboard.js'
 import Storage from '../../../core/Storage.js'
+import ColliderComponent from '../../../component/internal/ColliderComponent.js'
 
 export default class ScaleAction extends Action {
 
@@ -103,7 +104,8 @@ export default class ScaleAction extends Action {
         const ratio = colliderHeight / colliderWidth
         const width = colliderWidth + dragDistance.x * direction.x
         const height = colliderHeight + (direction.x ? dragDistance.x * ratio : dragDistance.y) * direction.y
-        colliderComponent.setSize(new Size({width, height}))
+        UnitHelper.updateOrRecordComponent(world, unit, colliderComponent, ColliderComponent.prototype.setSize,
+            new Size({width, height}), Storage.get())
     }
 
 }

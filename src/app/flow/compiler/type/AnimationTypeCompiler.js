@@ -14,21 +14,22 @@ import GetAnimationFunction from '../../function/native/animation/GetAnimationFu
 export default class AnimationTypeCompiler extends FunctionTypeCompiler {
 
     stepTwo(contextCompiler) {
-        const {node, stackFunction, element, scriptFunction, functionName} = contextCompiler
+        const {node, stackFunction, element, scriptFunction, functionName, world} = contextCompiler
         const onAnyAnimation = new OnAnyAnimationStartEvent()
         const isAnimationPlaying = new IsAnimationPlayingFunction()
         const getAnimation = new GetAnimationFunction()
         const startAnimation = new StartAnimationFunction()
+        const animation = world.getAnimationManager().findByName(ScriptHelper.extractNameFromPublicAnimation(element.getName()))
         const not = new NotFunction()
         stackFunction.getStack().push(...[
-            new StackOperation(OPERATIONS.PUSH, this.getScopedAttributedName(functionName, 'id'), element.getName()),
+            new StackOperation(OPERATIONS.PUSH, this.getScopedAttributedName(functionName, 'id'), `${animation.getId()}`),
             new StackOperation(OPERATIONS.CALL, getAnimation.getName(), functionName),
             new StackOperation(OPERATIONS.PUSH, this.getScopedAttributedName(functionName, 'target'), CONSTANTS.RESULT),
             new StackOperation(OPERATIONS.CALL, isAnimationPlaying.getName(), functionName),
             new StackOperation(OPERATIONS.PUSH, this.getScopedAttributedName(functionName, 'value'), CONSTANTS.RESULT),
             new StackOperation(OPERATIONS.CALL, not.getName(), functionName),
             new StackOperation(OPERATIONS.JUMP, CONSTANTS.RESULT, '[NEXT]start_animation'),
-            new StackOperation(OPERATIONS.PUSH, this.getScopedAttributedName(functionName, 'id'), element.getName()),
+            new StackOperation(OPERATIONS.PUSH, this.getScopedAttributedName(functionName, 'id'), `${animation.getId()}`),
             new StackOperation(OPERATIONS.CALL, getAnimation.getName(), functionName),
             new StackOperation(OPERATIONS.PUSH, this.getScopedAttributedName(functionName, 'target'), CONSTANTS.RESULT),
             new StackOperation(OPERATIONS.CALL, startAnimation.getName(), functionName),

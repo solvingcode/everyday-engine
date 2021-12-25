@@ -122,6 +122,8 @@ import VectorRoundFunction from '../flow/function/native/basic/VectorRoundFuncti
 import GetCenterWorldPositionFunction from '../flow/function/native/unit/GetCenterWorldPositionFunction.js'
 import SetCenterWorldPositionFunction from '../flow/function/native/unit/SetCenterWorldPositionFunction.js'
 import AReference from '../flow/reference/AReference.js'
+import VectorZeroFunction from '../flow/function/native/structure/VectorZeroFunction.js'
+import VectorOneFunction from '../flow/function/native/structure/VectorOneFunction.js'
 
 export default class FunctionRegistry extends Registry{
 
@@ -186,6 +188,8 @@ export default class FunctionRegistry extends Registry{
             new CosFunction(),
             new SinFunction(),
             new VectorRoundFunction(),
+            new VectorZeroFunction(),
+            new VectorOneFunction(),
 
             //Loop
             new ALoop(),
