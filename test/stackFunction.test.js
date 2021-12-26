@@ -28,6 +28,7 @@ import ThenNode from '../src/app/flow/node/ThenNode.js'
 import GetVariableNode from '../src/app/flow/node/variable/GetVariableNode.js'
 import StringVariableNode from '../src/app/flow/node/variable/StringVariableNode.js'
 import OperationLogger from '../src/app/operation/logger/OperationLogger.js'
+import BranchNode from '../src/app/flow/node/BranchNode.js'
 
 test('Execute native function (without output)', function () {
     const log = new LogFunction()
@@ -139,7 +140,7 @@ test('Create and compile class script with success condition', function () {
     nodeLessThan.attachResultOutput(nodeSetValue2, 'value2')
     nodeTrueCondition.attachResultOutput(nodeLessThan, 'target')
     nodeLog.attachResultOutput(nodeSetValue3, 'value')
-    nodeLog.attachManagedOutput(nodeTrueCondition)
+    nodeLog.attachResultManagedOutput(nodeTrueCondition)
     nodeTrueCondition.attachPrevNode(nodeEvent)
 
     script.compile(world)
@@ -176,7 +177,7 @@ test('Create and compile class script with failed condition', function () {
     nodeLessThan.attachResultOutput(nodeSetValue2, 'value2')
     nodeTrueCondition.attachResultOutput(nodeLessThan, 'target')
     nodeLog.attachResultOutput(nodeSetValue3, 'value')
-    nodeLog.attachManagedOutput(nodeTrueCondition)
+    nodeLog.attachResultManagedOutput(nodeTrueCondition)
     nodeTrueCondition.attachPrevNode(nodeEvent)
 
     script.compile(world)
@@ -189,6 +190,90 @@ test('Create and compile class script with failed condition', function () {
     console.log = jest.fn()
     mouseEventCompiled.execute(functionRegistry, null, null, World.get(), {})
     expect(console.log).not.toHaveBeenCalledWith('correct')
+})
+
+test('Create and compile class script with branch (true)', function () {
+    const world = World.get()
+    const functionRegistry = world.getFunctionRegistry()
+
+    functionRegistry.init()
+
+    const script = new ClassScript('classScript')
+    const scriptFunction = new FunctionScript('main')
+    script.addFunction(scriptFunction)
+
+    const nodeLogCorrect = ScriptHelper.createNodeByClass(functionRegistry, scriptFunction, FunctionNode, 'Log')
+    const nodeLogIncorrect = ScriptHelper.createNodeByClass(functionRegistry, scriptFunction, FunctionNode, 'Log')
+    const nodeLessThan = ScriptHelper.createNodeByClass(functionRegistry, scriptFunction, FunctionNode, '<')
+    const nodeSetValue1 = ScriptHelper.createNodeByClass(functionRegistry, scriptFunction, ConstantNode, 20)
+    const nodeSetValue2 = ScriptHelper.createNodeByClass(functionRegistry, scriptFunction, ConstantNode, 30)
+    const nodeSetValueCorrect = ScriptHelper.createNodeByClass(functionRegistry, scriptFunction, ConstantNode, 'correct')
+    const nodeSetValueIncorrect = ScriptHelper.createNodeByClass(functionRegistry, scriptFunction, ConstantNode, 'incorrect')
+    const nodeBranchCondition = ScriptHelper.createNodeByClass(functionRegistry, scriptFunction, BranchNode, 'Branch')
+    const nodeEvent = ScriptHelper.createNodeByClass(functionRegistry, scriptFunction, FunctionNode, 'OnMouseClick')
+
+    nodeLessThan.attachResultOutput(nodeSetValue1, 'value1')
+    nodeLessThan.attachResultOutput(nodeSetValue2, 'value2')
+    nodeBranchCondition.attachResultOutput(nodeLessThan, 'target')
+    nodeLogCorrect.attachResultOutput(nodeSetValueCorrect, 'value')
+    nodeLogIncorrect.attachResultOutput(nodeSetValueIncorrect, 'value')
+    nodeLogCorrect.attachCustomManagedOutput(nodeBranchCondition, 'true')
+    nodeLogIncorrect.attachCustomManagedOutput(nodeBranchCondition, 'false')
+    nodeBranchCondition.attachPrevNode(nodeEvent)
+
+    script.compile(world)
+
+    const mouseEventCompiled = functionRegistry.getInstance('classScript.main.OnMouseClick.8')
+    expect(functionRegistry.getInstance('classScript')).toBe(undefined)
+    expect(mouseEventCompiled).toBeDefined()
+    expect(mouseEventCompiled.constructor).toEqual(OnMouseClickEvent)
+
+    OperationLogger.logStack(mouseEventCompiled.getStack())
+    console.log = jest.fn()
+    mouseEventCompiled.execute(functionRegistry, null, null, World.get(), {})
+    expect(console.log).toHaveBeenCalledWith('correct')
+})
+
+test('Create and compile class script with branch (false)', function () {
+    const world = World.get()
+    const functionRegistry = world.getFunctionRegistry()
+
+    functionRegistry.init()
+
+    const script = new ClassScript('classScript')
+    const scriptFunction = new FunctionScript('main')
+    script.addFunction(scriptFunction)
+
+    const nodeLogCorrect = ScriptHelper.createNodeByClass(functionRegistry, scriptFunction, FunctionNode, 'Log')
+    const nodeLogIncorrect = ScriptHelper.createNodeByClass(functionRegistry, scriptFunction, FunctionNode, 'Log')
+    const nodeLessThan = ScriptHelper.createNodeByClass(functionRegistry, scriptFunction, FunctionNode, '<')
+    const nodeSetValue1 = ScriptHelper.createNodeByClass(functionRegistry, scriptFunction, ConstantNode, 30)
+    const nodeSetValue2 = ScriptHelper.createNodeByClass(functionRegistry, scriptFunction, ConstantNode, 20)
+    const nodeSetValueCorrect = ScriptHelper.createNodeByClass(functionRegistry, scriptFunction, ConstantNode, 'correct')
+    const nodeSetValueIncorrect = ScriptHelper.createNodeByClass(functionRegistry, scriptFunction, ConstantNode, 'incorrect')
+    const nodeBranchCondition = ScriptHelper.createNodeByClass(functionRegistry, scriptFunction, BranchNode, 'Branch')
+    const nodeEvent = ScriptHelper.createNodeByClass(functionRegistry, scriptFunction, FunctionNode, 'OnMouseClick')
+
+    nodeLessThan.attachResultOutput(nodeSetValue1, 'value1')
+    nodeLessThan.attachResultOutput(nodeSetValue2, 'value2')
+    nodeBranchCondition.attachResultOutput(nodeLessThan, 'target')
+    nodeLogCorrect.attachResultOutput(nodeSetValueCorrect, 'value')
+    nodeLogIncorrect.attachResultOutput(nodeSetValueIncorrect, 'value')
+    nodeLogCorrect.attachCustomManagedOutput(nodeBranchCondition, 'true')
+    nodeLogIncorrect.attachCustomManagedOutput(nodeBranchCondition, 'false')
+    nodeBranchCondition.attachPrevNode(nodeEvent)
+
+    script.compile(world)
+
+    const mouseEventCompiled = functionRegistry.getInstance('classScript.main.OnMouseClick.8')
+    expect(functionRegistry.getInstance('classScript')).toBe(undefined)
+    expect(mouseEventCompiled).toBeDefined()
+    expect(mouseEventCompiled.constructor).toEqual(OnMouseClickEvent)
+
+    OperationLogger.logStack(mouseEventCompiled.getStack())
+    console.log = jest.fn()
+    mouseEventCompiled.execute(functionRegistry, null, null, World.get(), {})
+    expect(console.log).toHaveBeenCalledWith('incorrect')
 })
 
 test('Create and compile class script with variables', function () {
@@ -249,7 +334,7 @@ test('Create and compile class script with loop', function () {
     nodeGetValue.attachResultOutput(nodeLoop, 'attributes')
     nodeGetValue.attachResultOutput(nodeAttributeName, 'name')
     nodeLog.attachResultOutput(nodeGetValue, 'value')
-    nodeLog.attachManagedOutput(nodeLoop)
+    nodeLog.attachResultManagedOutput(nodeLoop)
 
     script.compile(world)
 
@@ -345,7 +430,7 @@ test('Create and compile class function (return value)', function () {
     nodeMultiply.attachResultOutput(nodeInput1, 'value1')
     nodeMultiply.attachResultOutput(nodeInput2, 'value2')
     nodeMultiply.attachPrevNode(nodeOnCall)
-    nodeOutput.attachManagedOutput(nodeMultiply)
+    nodeOutput.attachResultManagedOutput(nodeMultiply)
 
     script.compile(world)
 
@@ -405,7 +490,7 @@ test('Create and compile class function (with async calls)', async function () {
     nodeMultiply.attachResultOutput(nodeInput1, 'value1')
     nodeMultiply.attachResultOutput(nodeInput2, 'value2')
     nodeMultiply.attachPrevNode(nodeOnCall)
-    nodeOutput.attachManagedOutput(nodeMultiply)
+    nodeOutput.attachResultManagedOutput(nodeMultiply)
 
     script.compile(world)
 
@@ -425,7 +510,7 @@ test('Create and compile class function (with async calls)', async function () {
 
     nodePromise.attachResultOutput(nodeMultiplyFunction, 'target')
     nodePromise.attachPrevNode(nodeMouseClick)
-    nodeThen.attachManagedOutput(nodePromise)
+    nodeThen.attachResultManagedOutput(nodePromise)
     nodeLogFunction.attachPrevNode(nodeThen)
     nodeLogFunction.attachResultOutput(nodeThen, 'value')
     nodeMultiplyFunction.attachResultOutput(nodeInputValue1, 'numberA')
@@ -474,7 +559,7 @@ test('Create and compile class function (with async calls inside custom function
     nodeMultiply.attachResultOutput(nodeInput1, 'value1')
     nodeMultiply.attachResultOutput(nodeInput2, 'value2')
     nodeMultiply.attachPrevNode(nodeOnCall)
-    nodeOutput.attachManagedOutput(nodeMultiply)
+    nodeOutput.attachResultManagedOutput(nodeMultiply)
 
     const nodePromise = ScriptHelper.createNodeByClass(functionRegistry, promiseCustomFunction, FunctionNode, 'APromise')
     const nodePromiseValue = ScriptHelper.createNodeByClass(functionRegistry, promiseCustomFunction, FunctionInputNode, `value[${TYPES.NUMBER}]`)
@@ -483,7 +568,7 @@ test('Create and compile class function (with async calls inside custom function
 
     nodePromise.attachResultOutput(nodePromiseValue, 'target')
     nodePromise.attachPrevNode(nodePromiseOnCall)
-    nodePromiseOutput.attachManagedOutput(nodePromise)
+    nodePromiseOutput.attachResultManagedOutput(nodePromise)
 
     script.compile(world)
 
@@ -507,7 +592,7 @@ test('Create and compile class function (with async calls inside custom function
     nodePromiseFunction.attachResultOutput(nodeMultiplyFunction, 'value')
     nodePromiseFunction.attachPrevNode(nodeMouseClick)
     nodePromiseFunction.attachResultOutput(nodeInputUnit, 'unit')
-    nodeThen.attachManagedOutput(nodePromiseFunction)
+    nodeThen.attachResultManagedOutput(nodePromiseFunction)
     nodeLogFunction.attachPrevNode(nodeThen)
     nodeLogFunction.attachResultOutput(nodeThen, 'value')
     nodeMultiplyFunction.attachResultOutput(nodeInputValue1, 'numberA')

@@ -73,6 +73,8 @@ import GetAttrClassNameNode from '../flow/node/variable/GetAttrClassNameNode.js'
 import AGetAttrClassNameComponent from '../flow/function/component/AGetAttrClassNameComponent.js'
 import ASetAttrClassNameComponent from '../flow/function/component/ASetAttrClassNameComponent.js'
 import SetAttrClassNameNode from '../flow/node/variable/SetAttrClassNameNode.js'
+import ABranch from '../flow/branch/ABranch.js'
+import BranchNode from '../flow/node/BranchNode.js'
 
 export default class NodeHelper {
 
@@ -87,6 +89,7 @@ export default class NodeHelper {
         switch (node.constructor) {
             case FunctionNode:
             case ConditionNode:
+            case BranchNode:
             case EventNode:
             case SetAttrClassNameNode:
             case GetAttrClassNameNode:
@@ -154,6 +157,7 @@ export default class NodeHelper {
     static getNodeType(source) {
         const mapNodeSource = {
             [NODE_TYPES.CONDITION]: ACondition,
+            [NODE_TYPES.BRANCH]: ABranch,
             [NODE_TYPES.EVENT]: AEvent,
             [NODE_TYPES.CONSTANT]: AConstant,
             [NODE_TYPES.KEY_CODE]: AKeyCode,
@@ -227,6 +231,8 @@ export default class NodeHelper {
         } else if (nodeSource instanceof ASetStaticClassVariable) {
             return ScriptHelper.extractNameFromStaticVar(nodeSource.getName())
         } else if (nodeSource instanceof ACondition) {
+            return `${nodeSource.getName()}`
+        } else if (nodeSource instanceof ABranch) {
             return `${nodeSource.getName()}`
         } else if (nodeSource instanceof ALoop) {
             return `${nodeSource.getName()}`
@@ -365,7 +371,7 @@ export default class NodeHelper {
         const boxColor = '#0f1013'
         const baseInputColor = '#afafaf'
         const colorFocused = '#555555'
-        const fontColor = '#ffffff'
+        const fontColor = '#c2c2c2'
         const selectColor = '#d09300'
         const outputColor = '#69ebff'
         let headColor
@@ -377,6 +383,8 @@ export default class NodeHelper {
             headColor = ''
         } else if (type === NODE_TYPES.CONDITION) {
             headColor = '#225e31'
+        } else if (type === NODE_TYPES.BRANCH) {
+            headColor = '#4f5e22'
         } else if (type === NODE_TYPES.LOOP) {
             headColor = '#225e50'
         } else if (type === NODE_TYPES.THEN) {
@@ -433,15 +441,28 @@ export default class NodeHelper {
     static getNodeGUISize(node, script, world) {
         const nodeSource = this.getSourceNode(node, world)
         const nodeSourceInputs = nodeSource.getInputs()
-        const outputs = nodeSource.getOutput() ? [nodeSource.getOutput()] : []
+        const outputs = this.getOutputs(nodeSource)
         const outputLength = outputs.length - (!NodeHelper.hasBaseOutput(node.getType()) ? 1 : 0)
         const type = node.getType()
         const {fontSize, padding, fontSizeRatio, sizeInput} = this.getNodeGUIProps(type)
         const nodeInputTextLengths = this.getNodeGUIInputs(node, script, world).names
             .concat(this.getNodeName(node, world)).map(text => text.length)
-        const width = Math.max(Math.max(...nodeInputTextLengths) * fontSize / fontSizeRatio, 100)
+        const nodeOutputTextLengths = this.getNodeGUIOutputs(node, script, world).names.map(text => text.length)
+        const maxInputSize = Math.max(...nodeInputTextLengths) * fontSize / fontSizeRatio
+        const maxOutputSize = nodeOutputTextLengths.length ? Math.max(...nodeOutputTextLengths) * fontSize / fontSizeRatio : 0
+        const marginOutputSize = maxOutputSize ? (sizeInput + padding) * 2 + padding : 0
+        const width = Math.max(maxInputSize + maxOutputSize + marginOutputSize, 100)
         const height = (Math.max(nodeSourceInputs.length, outputLength) + 1) * (sizeInput + padding * 2) + (fontSize + padding * 2)
         return new Size({width, height})
+    }
+
+    /**
+     * @param {AFunction} nodeSource
+     * @return {DynamicAttribute[]}
+     */
+    static getOutputs(nodeSource){
+        const nodeSourceOutputs = nodeSource.getOutputs()
+        return (nodeSource.getOutput() ? [nodeSource.getOutput()] : []).concat(nodeSourceOutputs)
     }
 
     /**
@@ -517,11 +538,26 @@ export default class NodeHelper {
         return {
             names: inputs.map(input => {
                 const nodeInput = nodeConstantInputs.find(pInput => pInput.getAttrName() === input.getAttrName())
-                return `${input.getAttrName()}${nodeInput ? ` = ${nodeInput.getAttrValue()}` : ''}`
+                return `${_.startCase(input.getAttrName())}${nodeInput ? ` = ${nodeInput.getAttrValue()}` : ''}`
             }),
             connections: inputs.map(input => !!node.getInputNodeAttached(input.getAttrName())),
             colors: inputs.map(input => this.getNodeGUISourceColor(script,
                 nodeInputs.find(pNodeInput => pNodeInput.getTargetName() === input.getAttrName())))
+        }
+    }
+
+    /**
+     * @param {ANode} node
+     * @param {AScriptFunction} script
+     * @param {World} world
+     * @return {{names: string[], connections: boolean[]}}
+     */
+    static getNodeGUIOutputs(node, script, world) {
+        const nodeSource = this.getSourceNode(node, world)
+        const outputs = nodeSource.getOutputs()
+        return {
+            names: outputs.map(output => _.startCase(output.getAttrName())),
+            connections: outputs.map(output => !!this.isCustomOutputConnected(output.getAttrName(), node, script))
         }
     }
 
@@ -549,6 +585,7 @@ export default class NodeHelper {
             type === NODE_TYPES.LOOP ||
             type === NODE_TYPES.THEN ||
             type === NODE_TYPES.CONDITION ||
+            type === NODE_TYPES.BRANCH ||
             type === NODE_TYPES.ANIMATION ||
             type === NODE_TYPES.REFERENCE ||
             type === NODE_TYPES.OUTPUT ||
@@ -570,8 +607,18 @@ export default class NodeHelper {
      * @param {AScriptFunction} script
      * @return {boolean}
      */
-    static isOutputConnected(node, script) {
+    static isResultOutputConnected(node, script) {
         return script.getNodes().some(pNode => pNode.isResultAttachedTo(node))
+    }
+
+    /**
+     @param {string} outputName
+     * @param {ANode} node
+     * @param {AScriptFunction} script
+     * @return {boolean}
+     */
+    static isCustomOutputConnected(outputName, node, script) {
+        return script.getNodes().some(pNode => pNode.isCustomAttachedTo(outputName, node))
     }
 
     /**
@@ -590,7 +637,7 @@ export default class NodeHelper {
      */
     static getNodeGUIBaseInputColor(script, node) {
         const baseInput = node.getBaseInput()
-        if (baseInput && node.isResultToBaseConnection(baseInput)) {
+        if (baseInput && (node.isResultToBaseConnection(baseInput) || node.isAnyCustomToBaseConnection(baseInput))) {
             return this.getNodeGUISourceColor(script, baseInput)
         }
     }

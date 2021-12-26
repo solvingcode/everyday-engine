@@ -8,6 +8,7 @@ import ALoop from '../../../../../flow/loop/ALoop.js'
 import APromise from '../../../../../flow/promise/APromise.js'
 import AReference from '../../../../../flow/reference/AReference.js'
 import AClassVariable from '../../../../../flow/function/variable/AClassVariable.js'
+import ABranch from '../../../../../flow/branch/ABranch.js'
 
 export default class NewScriptNodeElementMenuItem extends ListSelectElementActionsMenuItem {
     constructor(parent, data) {
@@ -28,6 +29,8 @@ export default class NewScriptNodeElementMenuItem extends ListSelectElementActio
      */
     getIcon() {
         if (this.data.bind instanceof ACondition) {
+            return 'code-branch'
+        } else if (this.data.bind instanceof ABranch) {
             return 'code-branch'
         } else if (this.data.bind instanceof AThen) {
             return 'greater-than'

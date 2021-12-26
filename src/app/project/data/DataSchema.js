@@ -275,6 +275,8 @@ import GetAttrClassNameNode from '../../flow/node/variable/GetAttrClassNameNode.
 import SetAttrClassNameNode from '../../flow/node/variable/SetAttrClassNameNode.js'
 import VectorZeroFunction from '../../flow/function/native/structure/VectorZeroFunction.js'
 import VectorOneFunction from '../../flow/function/native/structure/VectorOneFunction.js'
+import ABranch from '../../flow/branch/ABranch.js'
+import BranchNode from '../../flow/node/BranchNode.js'
 
 /**
  * @class {DataSchema}
@@ -545,6 +547,8 @@ class DataSchema {
         {id: 2500, type: SetAttrClassNameNode},
         {id: 2510, type: VectorZeroFunction},
         {id: 2520, type: VectorOneFunction},
+        {id: 2530, type: ABranch},
+        {id: 2540, type: BranchNode},
     ]
 
     /**

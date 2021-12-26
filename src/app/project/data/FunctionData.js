@@ -20,6 +20,10 @@ export default class FunctionData extends Data {
      */
     output
     /**
+     * @type {DynamicAttribute[]}
+     */
+    outputs
+    /**
      * @type {StackOperation[]}
      */
     stack
@@ -52,6 +56,7 @@ export default class FunctionData extends Data {
         this.id = Maths.generateId()
         this.name = name
         this.inputs = []
+        this.outputs = []
         this.stack = []
         this.childClassNames = []
         this.output = null
@@ -171,6 +176,20 @@ export default class FunctionData extends Data {
     }
 
     /**
+     * @return {DynamicAttribute[]}
+     */
+    getOutputs(){
+        return this.outputs
+    }
+
+    /**
+     * @param {DynamicAttribute[]} outputs
+     */
+    setOutputs(outputs){
+        this.outputs = outputs
+    }
+
+    /**
      * @return {StackOperation[]}
      */
     getStack(){
@@ -203,6 +222,13 @@ export default class FunctionData extends Data {
      */
     concatInputs(inputs) {
         this.setInputs(inputs)
+    }
+
+    /**
+     * @param {DynamicAttribute[]} outputs
+     */
+    concatOutputs(outputs) {
+        this.setOutputs(outputs)
     }
 
     /**

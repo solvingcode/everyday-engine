@@ -2,6 +2,7 @@ import TypeShapeGenerator from '../TypeShapeGenerator.js'
 import NodeComponent from '../../../component/internal/gui/node/NodeComponent.js'
 import NodeHelper from '../../../utils/NodeHelper.js'
 import Color from '../../../utils/Color.js'
+import {CANVAS_CONTEXT_TYPE} from '../../../core/Constant.js'
 
 /**
  * @abstract
@@ -18,7 +19,9 @@ export default class NodeShapeGenerator extends TypeShapeGenerator {
         const title = nodeComponent.getTitle()
         const type = nodeComponent.getType()
         const inputs = nodeComponent.getInputs()
+        const outputs = nodeComponent.getOutputs()
         const inputConnections = nodeComponent.getInputConnections()
+        const outputConnections = nodeComponent.getOutputConnections()
         const inputColors = nodeComponent.getInputColors()
         const isOutputConnected = nodeComponent.getOutputConnected()
         const isBaseInputConnected = nodeComponent.getBaseInputConnected()
@@ -33,7 +36,7 @@ export default class NodeShapeGenerator extends TypeShapeGenerator {
             sizeInput, fontSize, heightHead,
             shadowBlur, boxColor, baseInputColor,
             fontColor, headColor, padding,
-            colorFocused, selectColor
+            colorFocused, selectColor, fontSizeRatio
         } = NodeHelper.getNodeGUIProps(type)
 
         //convert props to camera scale
@@ -108,7 +111,7 @@ export default class NodeShapeGenerator extends TypeShapeGenerator {
                 inputPositionScale.getY() + sizeInputScale)
         })
 
-        //output
+        //result output
         if (output) {
             const {
                 position: outputPosition
@@ -124,6 +127,32 @@ export default class NodeShapeGenerator extends TypeShapeGenerator {
                 context.strokeRect(outputPositionScale.getX(), outputPositionScale.getY(), sizeInputScale, sizeInputScale)
             }
         }
+
+        //custom outputs
+        const widthOutput = camera.toScaleNumber(Math.max(...outputs.map(customOutput => customOutput.length * fontSize / fontSizeRatio)))
+        outputs.forEach((customOutput, index) => {
+            const {position: outputPosition} = NodeHelper.getNodeGUIOutput(type, camera.fromScaleSize(scaleSize),
+                index + 1 - (!NodeHelper.hasBaseOutput(node.getType()) ? 1 : 0))
+            const outputPositionScale = camera.toCameraScale(outputPosition)
+            const outputColor = headColor
+            context.fillStyle = Color.shadeColor(outputColor, 100)
+            context.strokeStyle = outputColor
+            context.lineWidth = camera.toScaleNumber(1)
+            if (outputConnections[index]) {
+                context.fillRect(outputPositionScale.getX(), outputPositionScale.getY(), sizeInputScale, sizeInputScale)
+            } else {
+                context.strokeRect(outputPositionScale.getX(), outputPositionScale.getY(), sizeInputScale, sizeInputScale)
+            }
+            const textCanvas = new OffscreenCanvas(widthOutput, sizeInputScale)
+            const textContext = textCanvas.getContext(CANVAS_CONTEXT_TYPE)
+            textContext.font = `${fontSizeScale}px Arial`
+            textContext.fillStyle = fontColor
+            textContext.textAlign = 'right'
+            textContext.fillText(customOutput, widthOutput - paddingScale, sizeInputScale)
+            context.drawImage(textCanvas,
+                outputPositionScale.getX() - sizeInputScale + paddingScale - widthOutput,
+                outputPositionScale.getY())
+        })
 
         //base output
         if (NodeHelper.hasBaseOutput(type)) {

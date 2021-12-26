@@ -12,6 +12,7 @@ import LayoutHelper from '../../utils/LayoutHelper.js'
 import AssetHelper from '../../utils/AssetHelper.js'
 import Storage from '../../core/Storage.js'
 import {KeyCode} from '../../core/Keyboard.js'
+import {CONSTANTS} from '../../operation/StackRegister.js'
 
 export default class ScriptEditorRunner extends Runner {
 
@@ -183,16 +184,26 @@ export default class ScriptEditorRunner extends Runner {
                 const nodeSourceInput = this.startNodeOutput || endNodeOutput
                 if (nodeTargetInput && nodeSourceInput) {
                     const targetName = nodeTargetInput.input ? nodeTargetInput.input.getAttrName() : null
+                    const sourceName = nodeSourceInput.output ? nodeSourceInput.output.getAttrName() : null
                     const nodeInput = nodeTargetInput.node.getInputNodeAttached(targetName)
                     if (nodeInput) {
                         script.removeInput(nodeInput)
                     }
                     if (nodeTargetInput.input && nodeSourceInput.output) {
-                        nodeTargetInput.node.attachResultOutput(nodeSourceInput.node, nodeTargetInput.input.getAttrName())
+                        if (sourceName === CONSTANTS.RESULT) {
+                            nodeTargetInput.node.attachResultOutput(nodeSourceInput.node, nodeTargetInput.input.getAttrName())
+                        } else {
+                            nodeTargetInput.node.attachCustomOutput(nodeSourceInput.node,
+                                nodeTargetInput.input.getAttrName(), sourceName)
+                        }
                     } else if (!nodeTargetInput.input && !nodeSourceInput.output) {
                         nodeTargetInput.node.attachPrevNode(nodeSourceInput.node)
                     } else if (!nodeTargetInput.input && nodeSourceInput.output) {
-                        nodeTargetInput.node.attachManagedOutput(nodeSourceInput.node)
+                        if (sourceName === CONSTANTS.RESULT) {
+                            nodeTargetInput.node.attachResultManagedOutput(nodeSourceInput.node)
+                        } else {
+                            nodeTargetInput.node.attachCustomManagedOutput(nodeSourceInput.node, sourceName)
+                        }
                     }
                 }
             }

@@ -57,14 +57,31 @@ export default class ANode extends ANodeData {
      * @param {string} targetName
      */
     attachResultOutput(sourceNode, targetName){
-        this.attach(sourceNode, targetName, CONSTANTS.RESULT)
+        this.attachCustomOutput(sourceNode, targetName, CONSTANTS.RESULT)
+    }
+
+    /**
+     * @param {ANode} sourceNode
+     * @param {string} targetName
+     * @param {string} sourceName
+     */
+    attachCustomOutput(sourceNode, targetName, sourceName){
+        this.attach(sourceNode, targetName, sourceName)
     }
 
     /**
      * @param {ANode} sourceNode
      */
-    attachManagedOutput(sourceNode){
-        this.attach(sourceNode, null, CONSTANTS.RESULT)
+    attachResultManagedOutput(sourceNode){
+        this.attachCustomManagedOutput(sourceNode, CONSTANTS.RESULT)
+    }
+
+    /**
+     * @param {ANode} sourceNode
+     * @param {string} sourceName
+     */
+    attachCustomManagedOutput(sourceNode, sourceName){
+        this.attach(sourceNode, null, sourceName)
     }
 
     /**
@@ -83,6 +100,15 @@ export default class ANode extends ANodeData {
     }
 
     /**
+     * @param {string} outputName
+     * @param {ANode} node
+     * @return {boolean}
+     */
+    isCustomAttachedTo(outputName, node){
+        return this.inputs.some(input => this.isCustomOutputConnection(outputName, input) && input.getSourceNodeId() === node.getId())
+    }
+
+    /**
      * @param {ANode} node
      * @return {boolean}
      */
@@ -98,10 +124,26 @@ export default class ANode extends ANodeData {
     }
 
     /**
+     * @param {string} outputName
+     * @param {NodeInput} nodeInput
+     */
+    isCustomOutputConnection(outputName, nodeInput){
+        return this.isCustomToInputConnection(outputName, nodeInput) || this.isCustomToBaseConnection(outputName, nodeInput)
+    }
+
+    /**
      * @param {NodeInput} nodeInput
      */
     isResultToInputConnection(nodeInput){
         return nodeInput.getTargetName() && nodeInput.getSourceName() === CONSTANTS.RESULT
+    }
+
+    /**
+     * @param {string} outputName
+     * @param {NodeInput} nodeInput
+     */
+    isCustomToInputConnection(outputName, nodeInput){
+        return nodeInput.getTargetName() && nodeInput.getSourceName() === outputName
     }
 
     /**
@@ -116,6 +158,23 @@ export default class ANode extends ANodeData {
      */
     isResultToBaseConnection(nodeInput){
         return !nodeInput.getTargetName() && nodeInput.getSourceName() === CONSTANTS.RESULT
+    }
+
+    /**
+     * @param {string} outputName
+     * @param {NodeInput} nodeInput
+     */
+    isCustomToBaseConnection(outputName, nodeInput){
+        return !nodeInput.getTargetName() && outputName !== CONSTANTS.RESULT
+            && nodeInput.getSourceName() === outputName
+    }
+
+    /**
+     * @param {NodeInput} nodeInput
+     */
+    isAnyCustomToBaseConnection(nodeInput){
+        return !nodeInput.getTargetName() && nodeInput.getSourceName() &&
+            nodeInput.getSourceName() !== CONSTANTS.RESULT
     }
 
     /**
@@ -141,7 +200,8 @@ export default class ANode extends ANodeData {
      */
     getBaseInput(){
         return this.getInputs().find(nodeInput =>
-            this.isOrderConnection(nodeInput) || this.isResultToBaseConnection(nodeInput))
+            this.isOrderConnection(nodeInput) || this.isResultToBaseConnection(nodeInput)
+            || this.isAnyCustomToBaseConnection(nodeInput))
     }
 
     /**
@@ -216,6 +276,7 @@ export const NODE_TYPES = {
     FUNCTION: 'function',
     CONSTANT: 'constant',
     CONDITION: 'condition',
+    BRANCH: 'branch',
     LOOP: 'loop',
     UNIT: 'unit',
     KEY_CODE: 'key_code',

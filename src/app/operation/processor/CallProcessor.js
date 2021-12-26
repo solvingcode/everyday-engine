@@ -43,6 +43,10 @@ export default class CallProcessor {
         })
         calledFunction.execute(functionRegistry, unit, scriptComponent, world, executionContext)
         stackRegister.pushRet(functionName, calledFunction.getOutputValue())
+        calledFunction.getOutputs().forEach(customOutput => {
+            stackRegister.pushCustomRet(functionName, customOutput.getAttrName(),
+                calledFunction.getCustomOutputValue(customOutput.getAttrName()))
+        })
     }
 
 }

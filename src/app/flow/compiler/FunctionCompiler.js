@@ -25,6 +25,8 @@ import AConstant from '../constant/AConstant.js'
 import ConstantTypeCompiler from './type/ConstantTypeCompiler.js'
 import AReference from '../reference/AReference.js'
 import ReferenceTypeCompiler from './type/ReferenceTypeCompiler.js'
+import ABranch from '../branch/ABranch.js'
+import BranchTypeCompiler from './type/BranchTypeCompiler.js'
 
 export default class FunctionCompiler {
 
@@ -86,6 +88,8 @@ export default class FunctionCompiler {
             return ReferenceTypeCompiler
         } else if (aFunction instanceof ACondition) {
             return ConditionTypeCompiler
+        } else if (aFunction instanceof ABranch) {
+            return BranchTypeCompiler
         } else if (aFunction instanceof AConstant) {
             return ConstantTypeCompiler
         } else if (aFunction instanceof AFunction) {

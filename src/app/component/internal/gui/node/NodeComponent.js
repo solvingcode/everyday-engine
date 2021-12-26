@@ -15,8 +15,10 @@ export default class NodeComponent extends Component{
         this.add('title', TYPES.STRING)
         this.add('type', TYPES.STRING)
         this.add('inputs', TYPES.ARRAY | TYPES.STRING, [])
+        this.add('outputs', TYPES.ARRAY | TYPES.STRING, [])
         this.add('inputColors', TYPES.ARRAY | TYPES.STRING, [])
-        this.add('connections', TYPES.ARRAY | TYPES.BOOLEAN, [])
+        this.add('inputConnections', TYPES.ARRAY | TYPES.BOOLEAN, [])
+        this.add('outputConnections', TYPES.ARRAY | TYPES.BOOLEAN, [])
         this.add('baseInputColor', TYPES.STRING)
         this.add('baseInputConnected', TYPES.BOOLEAN)
         this.add('baseOutputConnected', TYPES.BOOLEAN)
@@ -60,6 +62,13 @@ export default class NodeComponent extends Component{
     }
 
     /**
+     * @param {string[]} outputs
+     */
+    setOutputs(outputs) {
+        this.setValue('outputs', outputs)
+    }
+
+    /**
      * @param {string[]} inputColors
      */
     setInputColors(inputColors) {
@@ -74,10 +83,17 @@ export default class NodeComponent extends Component{
     }
 
     /**
-     * @param {boolean[]} connections
+     * @param {boolean[]} inputConnections
      */
-    setInputConnections(connections) {
-        this.setValue('connections', connections)
+    setInputConnections(inputConnections) {
+        this.setValue('inputConnections', inputConnections)
+    }
+
+    /**
+     * @param {boolean[]} outputConnections
+     */
+    setOutputConnections(outputConnections) {
+        this.setValue('outputConnections', outputConnections)
     }
 
     /**
@@ -139,6 +155,13 @@ export default class NodeComponent extends Component{
     /**
      * @return {string[]}
      */
+    getOutputs(){
+        return this.getValue('outputs')
+    }
+
+    /**
+     * @return {string[]}
+     */
     getInputColors(){
         return this.getValue('inputColors')
     }
@@ -154,7 +177,14 @@ export default class NodeComponent extends Component{
      * @return {boolean[]}
      */
     getInputConnections(){
-        return this.getValue('connections')
+        return this.getValue('inputConnections')
+    }
+
+    /**
+     * @return {boolean[]}
+     */
+    getOutputConnections(){
+        return this.getValue('outputConnections')
     }
 
     /**

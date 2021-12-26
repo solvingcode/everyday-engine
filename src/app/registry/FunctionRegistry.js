@@ -124,6 +124,7 @@ import SetCenterWorldPositionFunction from '../flow/function/native/unit/SetCent
 import AReference from '../flow/reference/AReference.js'
 import VectorZeroFunction from '../flow/function/native/structure/VectorZeroFunction.js'
 import VectorOneFunction from '../flow/function/native/structure/VectorOneFunction.js'
+import ABranch from '../flow/branch/ABranch.js'
 
 export default class FunctionRegistry extends Registry{
 
@@ -153,6 +154,7 @@ export default class FunctionRegistry extends Registry{
             // Condition
             new TrueCondition(),
             new FalseCondition(),
+            new ABranch(),
 
             // Function
             new LogFunction(),

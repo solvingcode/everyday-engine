@@ -43,6 +43,7 @@ import GetStaticClassVarNode from '../flow/node/variable/GetStaticClassVarNode.j
 import SetStaticClassVarNode from '../flow/node/variable/SetStaticClassVarNode.js'
 import GetAttrClassNameNode from '../flow/node/variable/GetAttrClassNameNode.js'
 import SetAttrClassNameNode from '../flow/node/variable/SetAttrClassNameNode.js'
+import BranchNode from '../flow/node/BranchNode.js'
 
 export default class ScriptHelper {
 
@@ -90,6 +91,8 @@ export default class ScriptHelper {
             node = this.getNodeInstance(functionRegistry, KeyCodeNode, nodeValue)
         } else if (nodeType === NODE_TYPES.CONDITION) {
             node = this.getNodeInstance(functionRegistry, ConditionNode, nodeValue)
+        } else if (nodeType === NODE_TYPES.BRANCH) {
+            node = this.getNodeInstance(functionRegistry, BranchNode, nodeValue)
         } else if (nodeType === NODE_TYPES.LOOP) {
             node = this.getNodeInstance(functionRegistry, LoopNode, nodeValue)
         } else if (nodeType === NODE_TYPES.THEN) {
@@ -163,6 +166,7 @@ export default class ScriptHelper {
         switch (nodeClass) {
             case FunctionNode:
             case ConditionNode:
+            case BranchNode:
             case EventNode:
             case ConstantNode:
             case KeyCodeNode:
@@ -299,8 +303,7 @@ export default class ScriptHelper {
             const unitPosition = unit.getComponent(TransformComponent).getPosition()
             const size = unit.getComponent(MeshComponent).getSize()
             const sourceNode = NodeHelper.getSourceNode(node, world)
-            const nodeOutput = sourceNode.getOutput()
-            const outputs = [...(sourceNode.getOutput() ? [nodeOutput] : [])]
+            const outputs = NodeHelper.getOutputs(sourceNode)
             if (node) {
                 if (NodeHelper.hasBaseOutput(node.getType())) {
                     outputs.unshift(null)

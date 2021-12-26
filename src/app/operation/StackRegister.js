@@ -39,6 +39,15 @@ export default class StackRegister {
 
     /**
      * @param {string} functionName
+     * @param {string} name
+     * @param {*} value
+     */
+    pushCustomRet(functionName, name, value) {
+        this.register[this.getScopeName(functionName, `${CONSTANTS.RESULT}_${name}`)] = value
+    }
+
+    /**
+     * @param {string} functionName
      * @param {*} value
      */
     pushSignal(functionName, value) {
@@ -82,6 +91,15 @@ export default class StackRegister {
      */
     popRet(functionName) {
         return this.register[this.getScopeName(functionName, CONSTANTS.RESULT)]
+    }
+
+    /**
+     * @param {string} functionName
+     * @param {string} name
+     * @return {*}
+     */
+    popCustomRet(functionName, name) {
+        return this.register[this.getScopeName(functionName, `${CONSTANTS.RESULT}_${name}`)]
     }
 
     /**

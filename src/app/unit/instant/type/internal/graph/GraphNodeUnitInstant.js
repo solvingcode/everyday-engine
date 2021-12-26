@@ -5,7 +5,6 @@ import {PrimitiveShape} from '../../../../Unit.js'
 import NodeComponent from '../../../../../component/internal/gui/node/NodeComponent.js'
 import NodeHelper from '../../../../../utils/NodeHelper.js'
 import ScriptHelper from '../../../../../utils/ScriptHelper.js'
-import ArrayHelper from '../../../../../utils/ArrayHelper.js'
 import TransformHelper from '../../../../../utils/TransformHelper.js'
 
 export default class GraphNodeUnitInstant extends MeshUnitInstant {
@@ -33,17 +32,22 @@ export default class GraphNodeUnitInstant extends MeshUnitInstant {
         const nodeComponent = this.getComponent(NodeComponent)
         const nodeSource = NodeHelper.getSourceNode(node, world)
         const actualNodeInputs = nodeComponent.getInputs()
+        const actualNodeOutputs = nodeComponent.getOutputs()
         const actualOutputConnected = nodeComponent.getOutputConnected()
         const actualBaseOutputConnected = nodeComponent.getBaseOutputConnected()
         const actualBaseInputConnected = nodeComponent.getBaseInputConnected()
         const actualInputConnections = nodeComponent.getInputConnections()
+        const actualOutputConnections = nodeComponent.getOutputConnections()
         const actualInputColors = nodeComponent.getInputColors()
         const actualBaseInputColor = nodeComponent.getBaseInputColor()
         const nodeGUIInputs = NodeHelper.getNodeGUIInputs(node, script, world)
+        const nodeGUIOutputs = NodeHelper.getNodeGUIOutputs(node, script, world)
         const nodeInputs = nodeGUIInputs.names
         const nodeInputConnections = nodeGUIInputs.connections
+        const nodeOutputs = nodeGUIOutputs.names
+        const nodeOutputConnections = nodeGUIOutputs.connections
         const nodeInputColors = nodeGUIInputs.colors
-        const outputConnected = NodeHelper.isOutputConnected(node, script)
+        const outputConnected = NodeHelper.isResultOutputConnected(node, script)
         const baseOutputConnected = NodeHelper.isBaseOutputConnected(node, script)
         const baseInputConnected = !!node.getBaseInput()
         const baseInputColor = NodeHelper.getNodeGUIBaseInputColor(script, node)
@@ -56,7 +60,9 @@ export default class GraphNodeUnitInstant extends MeshUnitInstant {
         meshComponent.setShape(PrimitiveShape.NODE)
         nodeComponent.setTitle(NodeHelper.getNodeName(node, world))
         nodeComponent.setInputs(nodeInputs)
+        nodeComponent.setOutputs(nodeOutputs)
         nodeComponent.setInputConnections(nodeInputConnections)
+        nodeComponent.setOutputConnections(nodeOutputConnections)
         nodeComponent.setOutputConnected(outputConnected)
         nodeComponent.setInputColors(nodeInputColors)
         nodeComponent.setBaseOutputConnected(baseOutputConnected)
@@ -69,9 +75,11 @@ export default class GraphNodeUnitInstant extends MeshUnitInstant {
             nodeComponent.setOutput(nodeSourceOutput.getAttrName())
         }
         if (
-            !ArrayHelper.isEqual(actualNodeInputs, nodeInputs) ||
+            !_.isEqual(actualNodeInputs, nodeInputs) ||
+            !_.isEqual(actualNodeOutputs, nodeOutputs) ||
             !_.isEqual(actualOutputConnected, outputConnected) ||
             !_.isEqual(actualInputConnections, nodeInputConnections) ||
+            !_.isEqual(actualOutputConnections, nodeOutputConnections) ||
             !_.isEqual(actualInputColors, nodeInputColors) ||
             !_.isEqual(actualBaseOutputConnected, baseOutputConnected) ||
             !_.isEqual(actualBaseInputConnected, baseInputConnected) ||

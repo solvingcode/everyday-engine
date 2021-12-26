@@ -154,10 +154,29 @@ export default class AFunction extends FunctionData{
     /**
      * @protected
      * @param {string} name
+     * @param {number} type
+     * @param {*} defaultValue
+     */
+    addCustomOutput(name, type, defaultValue = null){
+        DynamicAttributeHelper.add(this.outputs, name, type, defaultValue)
+    }
+
+    /**
+     * @protected
+     * @param {string} name
      * @return {DynamicAttribute}
      */
     getInput(name){
         return DynamicAttributeHelper.get(this.inputs, name)
+    }
+
+    /**
+     * @protected
+     * @param {string} name
+     * @return {DynamicAttribute}
+     */
+    getCustomOutput(name){
+        return DynamicAttributeHelper.get(this.outputs, name)
     }
 
     /**
@@ -184,10 +203,26 @@ export default class AFunction extends FunctionData{
 
     /**
      * @param {string} name
+     * @param {*} value
+     */
+    setCustomOutputValue(name, value){
+        DynamicAttributeHelper.setValue(this.outputs, name, value)
+    }
+
+    /**
+     * @param {string} name
      * @return {*}
      */
     getInputValue(name){
         return DynamicAttributeHelper.getValue(this.inputs, name)
+    }
+
+    /**
+     * @param {string} name
+     * @return {*}
+     */
+    getCustomOutputValue(name){
+        return DynamicAttributeHelper.getValue(this.outputs, name)
     }
 
     /**
