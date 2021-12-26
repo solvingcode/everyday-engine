@@ -75,6 +75,10 @@ import ASetAttrClassNameComponent from '../flow/function/component/ASetAttrClass
 import SetAttrClassNameNode from '../flow/node/variable/SetAttrClassNameNode.js'
 import ABranch from '../flow/branch/ABranch.js'
 import BranchNode from '../flow/node/BranchNode.js'
+import SetAttrClassNode from '../flow/node/variable/SetAttrClassNode.js'
+import GetAttrClassNode from '../flow/node/variable/GetAttrClassNode.js'
+import ASetAttrClassComponent from '../flow/function/component/ASetAttrClassComponent.js'
+import AGetAttrClassComponent from '../flow/function/component/AGetAttrClassComponent.js'
 
 export default class NodeHelper {
 
@@ -93,6 +97,8 @@ export default class NodeHelper {
             case EventNode:
             case SetAttrClassNameNode:
             case GetAttrClassNameNode:
+            case SetAttrClassNode:
+            case GetAttrClassNode:
             case GetClassVarNode:
             case SetClassVarNode:
             case GetStaticClassVarNode:
@@ -174,6 +180,8 @@ export default class NodeHelper {
             [NODE_TYPES.SET_CLASS_VAR]: ASetClassVariable,
             [NODE_TYPES.GET_ATTR_CLASS_NAME]: AGetAttrClassNameComponent,
             [NODE_TYPES.SET_ATTR_CLASS_NAME]: ASetAttrClassNameComponent,
+            [NODE_TYPES.GET_ATTR_CLASS]: AGetAttrClassComponent,
+            [NODE_TYPES.SET_ATTR_CLASS]: ASetAttrClassComponent,
             [NODE_TYPES.GET_STATIC_CLASS_VAR]: AGetStaticClassVariable,
             [NODE_TYPES.SET_STATIC_CLASS_VAR]: ASetStaticClassVariable,
             [NODE_TYPES.VAR_STRING]: AStringVariable,
@@ -226,6 +234,10 @@ export default class NodeHelper {
             return ScriptHelper.extractNameFromPublicVar(nodeSource.getName())
         } else if (nodeSource instanceof ASetAttrClassNameComponent) {
             return ScriptHelper.extractNameFromPublicVar(nodeSource.getName())
+        } else if (nodeSource instanceof AGetAttrClassComponent) {
+            return ScriptHelper.extractNameFromComponent(nodeSource.getName())
+        } else if (nodeSource instanceof ASetAttrClassComponent) {
+            return ScriptHelper.extractNameFromComponent(nodeSource.getName())
         } else if (nodeSource instanceof AGetStaticClassVariable) {
             return ScriptHelper.extractNameFromStaticVar(nodeSource.getName())
         } else if (nodeSource instanceof ASetStaticClassVariable) {
@@ -404,7 +416,9 @@ export default class NodeHelper {
         } else if (type === NODE_TYPES.GET_ATTR_CLASS_NAME ||
             type === NODE_TYPES.SET_ATTR_CLASS_NAME) {
             headColor = '#5e2254'
-        } else if (type === NODE_TYPES.COMPONENT) {
+        } else if (type === NODE_TYPES.COMPONENT ||
+            NODE_TYPES.GET_ATTR_CLASS ||
+            type === NODE_TYPES.SET_ATTR_CLASS) {
             headColor = '#5e2254'
         } else if (type === NODE_TYPES.REFERENCE) {
             headColor = '#22445e'
@@ -442,7 +456,8 @@ export default class NodeHelper {
         const nodeSource = this.getSourceNode(node, world)
         const nodeSourceInputs = nodeSource.getInputs()
         const outputs = this.getOutputs(nodeSource)
-        const outputLength = outputs.length - (!NodeHelper.hasBaseOutput(node.getType()) ? 1 : 0)
+        const outputLength = outputs.length - (!NodeHelper.hasBaseOutput(node, world) ? 1 : 0)
+        const inputLength = nodeSourceInputs.length - (!NodeHelper.hasBaseInput(node, world) ? 1 : 0)
         const type = node.getType()
         const {fontSize, padding, fontSizeRatio, sizeInput} = this.getNodeGUIProps(type)
         const nodeInputTextLengths = this.getNodeGUIInputs(node, script, world).names
@@ -452,7 +467,7 @@ export default class NodeHelper {
         const maxOutputSize = nodeOutputTextLengths.length ? Math.max(...nodeOutputTextLengths) * fontSize / fontSizeRatio : 0
         const marginOutputSize = maxOutputSize ? (sizeInput + padding) * 2 + padding : 0
         const width = Math.max(maxInputSize + maxOutputSize + marginOutputSize, 100)
-        const height = (Math.max(nodeSourceInputs.length, outputLength) + 1) * (sizeInput + padding * 2) + (fontSize + padding * 2)
+        const height = (Math.max(inputLength, outputLength) + 1) * (sizeInput + padding * 2) + (fontSize + padding * 2)
         return new Size({width, height})
     }
 
@@ -577,11 +592,14 @@ export default class NodeHelper {
     }
 
     /**
-     * @param {string} type
+     * @param {ANode} node
+     * @param {World} world
      * @return {boolean}
      */
-    static hasBaseInput(type) {
-        return type === NODE_TYPES.FUNCTION ||
+    static hasBaseInput(node, world) {
+        const type = node.getType()
+        const sourceNode = this.getSourceNode(node, world)
+        return (type === NODE_TYPES.FUNCTION && !sourceNode.getOutput() && !sourceNode.getOutputs().length) ||
             type === NODE_TYPES.LOOP ||
             type === NODE_TYPES.THEN ||
             type === NODE_TYPES.CONDITION ||
@@ -591,15 +609,18 @@ export default class NodeHelper {
             type === NODE_TYPES.OUTPUT ||
             type === NODE_TYPES.SET_CLASS_VAR ||
             type === NODE_TYPES.SET_STATIC_CLASS_VAR ||
-            type === NODE_TYPES.SET_ATTR_CLASS_NAME
+            type === NODE_TYPES.SET_ATTR_CLASS_NAME ||
+            type === NODE_TYPES.SET_ATTR_CLASS
     }
 
     /**
-     * @param {string} type
+     * @param {ANode} node
+     * @param {World} world
      * @return {boolean}
      */
-    static hasBaseOutput(type) {
-        return this.hasBaseInput(type) || type === NODE_TYPES.EVENT
+    static hasBaseOutput(node, world) {
+        const type = node.getType()
+        return this.hasBaseInput(node, world) || type === NODE_TYPES.EVENT
     }
 
     /**

@@ -19,6 +19,8 @@ export default class NodeComponent extends Component{
         this.add('inputColors', TYPES.ARRAY | TYPES.STRING, [])
         this.add('inputConnections', TYPES.ARRAY | TYPES.BOOLEAN, [])
         this.add('outputConnections', TYPES.ARRAY | TYPES.BOOLEAN, [])
+        this.add('baseInput', TYPES.BOOLEAN)
+        this.add('baseOutput', TYPES.BOOLEAN)
         this.add('baseInputColor', TYPES.STRING)
         this.add('baseInputConnected', TYPES.BOOLEAN)
         this.add('baseOutputConnected', TYPES.BOOLEAN)
@@ -104,6 +106,20 @@ export default class NodeComponent extends Component{
     }
 
     /**
+     * @param {boolean} baseInput
+     */
+    setBaseInput(baseInput) {
+        this.setValue('baseInput', baseInput)
+    }
+
+    /**
+     * @param {boolean} baseOutput
+     */
+    setBaseOutput(baseOutput) {
+        this.setValue('baseOutput', baseOutput)
+    }
+
+    /**
      * @param {boolean} baseOutputConnected
      */
     setBaseOutputConnected(baseOutputConnected) {
@@ -171,6 +187,20 @@ export default class NodeComponent extends Component{
      */
     getBaseInputColor(){
         return this.getValue('baseInputColor')
+    }
+
+    /**
+     * @return {boolean}
+     */
+    getBaseOutput(){
+        return this.getValue('baseOutput')
+    }
+
+    /**
+     * @return {boolean}
+     */
+    getBaseInput(){
+        return this.getValue('baseInput')
     }
 
     /**

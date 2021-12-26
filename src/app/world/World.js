@@ -30,6 +30,9 @@ import ScriptComponent from '../component/internal/ScriptComponent.js'
 import UnitDataIdGenerator from '../generator/data/id/UnitDataIdGenerator.js'
 import GarbageManager from '../manager/GarbageManager.js'
 import Window from '../core/Window.js'
+import AGetAttrClassComponent from '../flow/function/component/AGetAttrClassComponent.js'
+import {ACCESSOR} from '../flow/function/AFunction.js'
+import ASetAttrClassComponent from '../flow/function/component/ASetAttrClassComponent.js'
 
 /**
  * @class {World}
@@ -107,6 +110,7 @@ class World extends WorldData {
         this.getSceneManager().init()
         this.getFunctionRegistry().init()
         this.getComponentRegistry().init()
+        this.constructComponentSetterGetter()
         this.getMaterialRegistry().init()
         this.getGraphManager().reset()
         const assetManager = this.getAssetsManager()
@@ -124,6 +128,23 @@ class World extends WorldData {
             })
         })
         this.initialized = true
+    }
+
+    constructComponentSetterGetter() {
+        this.getFunctionRegistry().concatRegistry(this.getComponentRegistry().getInstances().reduce((list, component) => {
+            return list.concat(...component.getAttributes().map(attribute => {
+                if (!attribute.getInternal()) {
+                    const getter = new AGetAttrClassComponent(`Get ${component.getName()}.${attribute.getAttrName()}`,
+                        {type: attribute.getAttrType()})
+                    const setter = new ASetAttrClassComponent(`Set ${component.getName()}.${attribute.getAttrName()}`,
+                        {type: attribute.getAttrType()})
+                    getter.setAccess(ACCESSOR.PUBLIC)
+                    setter.setAccess(ACCESSOR.PUBLIC)
+                    return [getter, setter]
+                }
+                return []
+            }))
+        }, []))
     }
 
     /**

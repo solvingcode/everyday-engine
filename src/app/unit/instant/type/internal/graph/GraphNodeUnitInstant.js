@@ -40,6 +40,8 @@ export default class GraphNodeUnitInstant extends MeshUnitInstant {
         const actualOutputConnections = nodeComponent.getOutputConnections()
         const actualInputColors = nodeComponent.getInputColors()
         const actualBaseInputColor = nodeComponent.getBaseInputColor()
+        const actualBaseInput = nodeComponent.getBaseInput()
+        const actualBaseOutput = nodeComponent.getBaseOutput()
         const nodeGUIInputs = NodeHelper.getNodeGUIInputs(node, script, world)
         const nodeGUIOutputs = NodeHelper.getNodeGUIOutputs(node, script, world)
         const nodeInputs = nodeGUIInputs.names
@@ -50,6 +52,8 @@ export default class GraphNodeUnitInstant extends MeshUnitInstant {
         const outputConnected = NodeHelper.isResultOutputConnected(node, script)
         const baseOutputConnected = NodeHelper.isBaseOutputConnected(node, script)
         const baseInputConnected = !!node.getBaseInput()
+        const baseInput = NodeHelper.hasBaseInput(node, world)
+        const baseOutput = NodeHelper.hasBaseOutput(node, world)
         const baseInputColor = NodeHelper.getNodeGUIBaseInputColor(script, node)
         const nodeSourceOutput = nodeSource.getOutput()
         const size = NodeHelper.getNodeGUISize(node, script, world)
@@ -66,6 +70,8 @@ export default class GraphNodeUnitInstant extends MeshUnitInstant {
         nodeComponent.setOutputConnected(outputConnected)
         nodeComponent.setInputColors(nodeInputColors)
         nodeComponent.setBaseOutputConnected(baseOutputConnected)
+        nodeComponent.setBaseInput(baseInput)
+        nodeComponent.setBaseOutput(baseOutput)
         nodeComponent.setBaseInputConnected(baseInputConnected)
         nodeComponent.setBaseInputColor(baseInputColor)
         nodeComponent.setType(ScriptHelper.getNodeType(node))
@@ -83,7 +89,9 @@ export default class GraphNodeUnitInstant extends MeshUnitInstant {
             !_.isEqual(actualInputColors, nodeInputColors) ||
             !_.isEqual(actualBaseOutputConnected, baseOutputConnected) ||
             !_.isEqual(actualBaseInputConnected, baseInputConnected) ||
-            !_.isEqual(actualBaseInputColor, baseInputColor)
+            !_.isEqual(actualBaseInputColor, baseInputColor) ||
+            actualBaseInput !== baseInput ||
+            actualBaseOutput !== baseOutput
         ) {
             meshComponent.setGenerated(false)
         }

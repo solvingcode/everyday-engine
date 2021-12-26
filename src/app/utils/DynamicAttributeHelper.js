@@ -563,11 +563,21 @@ export default class DynamicAttributeHelper {
                         , []))
                 ]
             }]
+        } else if (attrType === TYPES.STRING) {
+            formField = [{
+                bind: bindName,
+                label: attributeName,
+                type: Layout.form.TEXT,
+                dynamicAttribute
+            }]
         } else {
             formField = [{
                 bind: bindName,
                 label: attributeName,
                 type: Layout.form.TEXT,
+                options: {
+                    readonly: true
+                },
                 dynamicAttribute
             }]
         }

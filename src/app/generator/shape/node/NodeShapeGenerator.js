@@ -15,7 +15,6 @@ export default class NodeShapeGenerator extends TypeShapeGenerator {
      */
     draw(unit, dataContext) {
         const nodeComponent = unit.getComponent(NodeComponent)
-        const node = nodeComponent.getNode()
         const title = nodeComponent.getTitle()
         const type = nodeComponent.getType()
         const inputs = nodeComponent.getInputs()
@@ -27,6 +26,8 @@ export default class NodeShapeGenerator extends TypeShapeGenerator {
         const isBaseInputConnected = nodeComponent.getBaseInputConnected()
         const isBaseOutputConnected = nodeComponent.getBaseOutputConnected()
         const nodeBaseInputColor = nodeComponent.getBaseInputColor()
+        const hasBaseInput = nodeComponent.getBaseInput()
+        const hasBaseOutput = nodeComponent.getBaseOutput()
         const output = nodeComponent.getOutput()
         const {context, scaleSize, camera} = dataContext
         const {width, height} = scaleSize
@@ -74,7 +75,7 @@ export default class NodeShapeGenerator extends TypeShapeGenerator {
         context.fillText(title, paddingScale, fontSizeScale + paddingScale)
 
         //base input
-        if (NodeHelper.hasBaseInput(type)) {
+        if (hasBaseInput) {
             const {position: baseInputPosition} = NodeHelper.getNodeGUIInput(type, -1)
             const baseInputPositionScale = camera.toCameraScale(baseInputPosition)
             context.fillStyle = (nodeBaseInputColor && Color.shadeColor(nodeBaseInputColor, 100)) || baseInputColor
@@ -94,7 +95,7 @@ export default class NodeShapeGenerator extends TypeShapeGenerator {
 
         //other inputs
         inputs.forEach((input, index) => {
-            const {position: inputPosition} = NodeHelper.getNodeGUIInput(type, index)
+            const {position: inputPosition} = NodeHelper.getNodeGUIInput(type, index - (hasBaseInput ? 0 : 1))
             const inputPositionScale = camera.toCameraScale(inputPosition)
             const inputColor = inputColors[index] || headColor
             context.fillStyle = Color.shadeColor(inputColor, 100)
@@ -116,7 +117,7 @@ export default class NodeShapeGenerator extends TypeShapeGenerator {
             const {
                 position: outputPosition
             } = NodeHelper.getNodeGUIOutput(type, camera.fromScaleSize(scaleSize),
-                1 - (!NodeHelper.hasBaseOutput(node.getType()) ? 1 : 0))
+                1 - (!hasBaseOutput ? 1 : 0))
             const outputPositionScale = camera.toCameraScale(outputPosition)
             context.fillStyle = Color.shadeColor(headColor, 100)
             context.strokeStyle = headColor
@@ -132,7 +133,7 @@ export default class NodeShapeGenerator extends TypeShapeGenerator {
         const widthOutput = camera.toScaleNumber(Math.max(...outputs.map(customOutput => customOutput.length * fontSize / fontSizeRatio)))
         outputs.forEach((customOutput, index) => {
             const {position: outputPosition} = NodeHelper.getNodeGUIOutput(type, camera.fromScaleSize(scaleSize),
-                index + 1 - (!NodeHelper.hasBaseOutput(node.getType()) ? 1 : 0))
+                index + 1 - (!hasBaseOutput ? 1 : 0))
             const outputPositionScale = camera.toCameraScale(outputPosition)
             const outputColor = headColor
             context.fillStyle = Color.shadeColor(outputColor, 100)
@@ -155,7 +156,7 @@ export default class NodeShapeGenerator extends TypeShapeGenerator {
         })
 
         //base output
-        if (NodeHelper.hasBaseOutput(type)) {
+        if (hasBaseOutput) {
             const {position: baseOutputPosition} = NodeHelper.getNodeGUIOutput(type, camera.fromScaleSize(scaleSize), 0)
             const baseOutputPositionScale = camera.toCameraScale(baseOutputPosition)
             context.fillStyle = baseInputColor

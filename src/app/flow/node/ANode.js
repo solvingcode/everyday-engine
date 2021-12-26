@@ -299,6 +299,8 @@ export const NODE_TYPES = {
     SET_ATTR_CLASS_NAME: 'set_attr_class_name',
     GET_STATIC_CLASS_VAR: 'get_static_class_var',
     SET_STATIC_CLASS_VAR: 'set_static_class_var',
+    GET_ATTR_CLASS: 'get_attr_class',
+    SET_ATTR_CLASS: 'set_attr_class',
     ANIMATION: 'animation',
     COMPONENT: 'component',
     REFERENCE: 'reference',

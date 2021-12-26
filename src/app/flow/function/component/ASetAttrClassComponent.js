@@ -7,7 +7,7 @@ export default class ASetAttrClassComponent extends AClassComponent {
 
     /**
      * @param {string} name
-     * @param {{component: Component, attribute: string}} params
+     * @param {{type: number}} params
      */
     constructor(name, params = {}) {
         super(name, params)
@@ -29,19 +29,9 @@ export default class ASetAttrClassComponent extends AClassComponent {
     }
 
     /**
-     * @param {{component: Component, attribute: string}} params
-     * @return {DynamicAttribute}
-     */
-    getComponentAttribute(params){
-        const {component, attribute} = params
-        return component.get(attribute)
-    }
-
-    /**
      * @override
      */
     initAttributes(params) {
-        const attribute = this.getComponentAttribute(params)
-        this.addInput('value', attribute.getAttrType())
+        this.addInput('value', params.type)
     }
 }

@@ -44,6 +44,8 @@ import SetStaticClassVarNode from '../flow/node/variable/SetStaticClassVarNode.j
 import GetAttrClassNameNode from '../flow/node/variable/GetAttrClassNameNode.js'
 import SetAttrClassNameNode from '../flow/node/variable/SetAttrClassNameNode.js'
 import BranchNode from '../flow/node/BranchNode.js'
+import SetAttrClassNode from '../flow/node/variable/SetAttrClassNode.js'
+import GetAttrClassNode from '../flow/node/variable/GetAttrClassNode.js'
 
 export default class ScriptHelper {
 
@@ -121,6 +123,10 @@ export default class ScriptHelper {
             node = this.getNodeInstance(functionRegistry, GetAttrClassNameNode, nodeValue)
         } else if (nodeType === NODE_TYPES.SET_ATTR_CLASS_NAME) {
             node = this.getNodeInstance(functionRegistry, SetAttrClassNameNode, nodeValue)
+        } else if (nodeType === NODE_TYPES.GET_ATTR_CLASS) {
+            node = this.getNodeInstance(functionRegistry, GetAttrClassNode, nodeValue)
+        } else if (nodeType === NODE_TYPES.SET_ATTR_CLASS) {
+            node = this.getNodeInstance(functionRegistry, SetAttrClassNode, nodeValue)
         } else if (nodeType === NODE_TYPES.GET_STATIC_CLASS_VAR) {
             node = this.getNodeInstance(functionRegistry, GetStaticClassVarNode, nodeValue)
         } else if (nodeType === NODE_TYPES.SET_STATIC_CLASS_VAR) {
@@ -184,6 +190,8 @@ export default class ScriptHelper {
             case SetStaticClassVarNode:
             case GetAttrClassNameNode:
             case SetAttrClassNameNode:
+            case GetAttrClassNode:
+            case SetAttrClassNode:
             case StringVariableNode:
             case UnitVariableNode:
             case ToggleVariableNode:
@@ -271,11 +279,13 @@ export default class ScriptHelper {
         if (unit) {
             const node = unit.getComponent(NodeComponent).getNode()
             const unitPosition = unit.getComponent(TransformComponent).getPosition()
-            if (node && NodeHelper.hasBaseInput(node.getType())) {
+            if (node) {
+                const hasNodeInput = NodeHelper.hasBaseInput(node, world)
+                const shiftInput = hasNodeInput ? 0 : 1
                 const sourceNode = NodeHelper.getSourceNode(node, world)
                 const inputs = sourceNode.getInputs()
-                for (let iInput = -1; iInput < inputs.length; iInput++) {
-                    const input = iInput >= 0 ? inputs[iInput] : null
+                for (let iInput = -1; iInput < inputs.length - shiftInput; iInput++) {
+                    const input = iInput + shiftInput >= 0 ? inputs[iInput] : null
                     const {position: inputLocalPosition, sizeInput} = NodeHelper.getNodeGUIInput(node.getType(), iInput)
                     const inputPosition = Vector.add(unitPosition, inputLocalPosition)
                     if (position.getX() >= inputPosition.getX() && position.getX() <= inputPosition.getX() + sizeInput &&
@@ -305,7 +315,7 @@ export default class ScriptHelper {
             const sourceNode = NodeHelper.getSourceNode(node, world)
             const outputs = NodeHelper.getOutputs(sourceNode)
             if (node) {
-                if (NodeHelper.hasBaseOutput(node.getType())) {
+                if (NodeHelper.hasBaseOutput(node, world)) {
                     outputs.unshift(null)
                 }
                 for (let iOutput = 0; iOutput < outputs.length; iOutput++) {
@@ -522,6 +532,14 @@ export default class ScriptHelper {
      */
     static extractNameFromPublicVar(name) {
         return name.replace(/^(Set|Get) (.+) \(public\)$/, '$2')
+    }
+
+    /**
+     * @param {string} name
+     * @return {string}
+     */
+    static extractNameFromComponent(name) {
+        return name.replace(/^(Set|Get) (.+)$/, '$2')
     }
 
     /**

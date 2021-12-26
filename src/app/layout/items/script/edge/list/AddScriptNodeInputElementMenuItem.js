@@ -25,10 +25,12 @@ export default class AddScriptNodeInputElementMenuItem extends ListElementMenuIt
         const nodeInput = node.getInputNodeAttached(input.getAttrName())
         if (nodeInput) {
             const sourceNode = script.findNodeById(nodeInput.getSourceNodeId())
-            if (sourceNode.getType() === NODE_TYPES.CONSTANT) {
-                formData.setValue(sourceNode.getName())
-            } else if (sourceNode.getType() === NODE_TYPES.SELF) {
-                formData.setValue(true)
+            if(sourceNode){
+                if (sourceNode.getType() === NODE_TYPES.CONSTANT) {
+                    formData.setValue(sourceNode.getName())
+                } else if (sourceNode.getType() === NODE_TYPES.SELF) {
+                    formData.setValue(true)
+                }
             }
         }
         this.items = [
