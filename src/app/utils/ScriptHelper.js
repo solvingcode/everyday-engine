@@ -285,7 +285,7 @@ export default class ScriptHelper {
                 const sourceNode = NodeHelper.getSourceNode(node, world)
                 const inputs = sourceNode.getInputs()
                 for (let iInput = -1; iInput < inputs.length - shiftInput; iInput++) {
-                    const input = iInput + shiftInput >= 0 ? inputs[iInput] : null
+                    const input = iInput + shiftInput >= 0 ? inputs[iInput + shiftInput] : null
                     const {position: inputLocalPosition, sizeInput} = NodeHelper.getNodeGUIInput(node.getType(), iInput)
                     const inputPosition = Vector.add(unitPosition, inputLocalPosition)
                     if (position.getX() >= inputPosition.getX() && position.getX() <= inputPosition.getX() + sizeInput &&

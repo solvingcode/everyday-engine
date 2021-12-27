@@ -417,7 +417,7 @@ export default class NodeHelper {
             type === NODE_TYPES.SET_ATTR_CLASS_NAME) {
             headColor = '#5e2254'
         } else if (type === NODE_TYPES.COMPONENT ||
-            NODE_TYPES.GET_ATTR_CLASS ||
+            type === NODE_TYPES.GET_ATTR_CLASS ||
             type === NODE_TYPES.SET_ATTR_CLASS) {
             headColor = '#5e2254'
         } else if (type === NODE_TYPES.REFERENCE) {

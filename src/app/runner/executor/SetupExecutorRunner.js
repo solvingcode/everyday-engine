@@ -38,12 +38,14 @@ export class SetupExecutorRunner extends Runner {
             units = world.getUnitManager().getEnabledUnits()
             camera = world.getCamera()
         }
-        units.forEach((unit, index) => {
-            ExecutorRegistry.get().execute(unit, {
-                camera, deltaTime, lights, storage,
-                unitIndex: index, units, unitManager
+        if (camera) {
+            units.forEach((unit, index) => {
+                ExecutorRegistry.get().execute(unit, {
+                    camera, deltaTime, lights, storage,
+                    unitIndex: index, units, unitManager
+                })
             })
-        })
+        }
     }
 
 }

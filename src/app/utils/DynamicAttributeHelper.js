@@ -563,7 +563,7 @@ export default class DynamicAttributeHelper {
                         , []))
                 ]
             }]
-        } else if (attrType === TYPES.STRING) {
+        } else if (attrType === TYPES.STRING || attrType === TYPES.ANY) {
             formField = [{
                 bind: bindName,
                 label: attributeName,
