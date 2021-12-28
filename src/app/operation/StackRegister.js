@@ -99,7 +99,7 @@ export default class StackRegister {
      * @return {*}
      */
     popCustomRet(functionName, name) {
-        return this.register[this.getScopeName(functionName, `${CONSTANTS.RESULT}_${name}`)]
+        return this.register[this.getScopeName(functionName, `${name}`)]
     }
 
     /**
@@ -127,11 +127,27 @@ export default class StackRegister {
     }
 
     /**
-     * @param {string} name
+     * @param {string|number} name
      * @return {boolean}
      */
     isMemory(name){
         return !!`${name}`.match(/^\[MEM].*/)
+    }
+
+    /**
+     * @param {string|number} name
+     * @return {boolean}
+     */
+    isResult(name){
+        return !!`${name}`.match(new RegExp(`^${CONSTANTS.RESULT}.*`))
+    }
+
+    /**
+     * @param {string|number} name
+     * @return {boolean}
+     */
+    isCustomResult(name){
+        return !!`${name}`.match(new RegExp(`^${CONSTANTS.RESULT}_.+`))
     }
 
     /**

@@ -4,6 +4,8 @@ import ACustomFunction from '../../function/custom/ACustomFunction.js'
 import NodeHelper from '../../../utils/NodeHelper.js'
 import {CONSTANTS} from '../../../operation/StackRegister.js'
 import AReference from '../../reference/AReference.js'
+import ALoop from '../../loop/ALoop.js'
+import {COMPILER} from '../../../constant/ScriptConstant.js'
 
 /**
  * @abstract
@@ -33,23 +35,27 @@ export default class FunctionTypeCompiler {
      * @param {ContextCompiler} contextCompiler
      */
     stepOne(contextCompiler) {
-        const {node, input, stackFunction, element, sourceElementName, functionName} = contextCompiler
+        const {node, input, stackFunction, element, sourceElementName, functionName, sourceElement} = contextCompiler
         const targetName = input.getTargetName()
+        const sourceName = input.getSourceName()
         const targetInput = element.findInputByName(targetName)
         if (targetInput) {
-            stackFunction.getStack().push(...[
-                new StackOperation(OPERATIONS.CALL, sourceElementName)
-            ])
+            const resultRegister = `${CONSTANTS.RESULT}${sourceName === CONSTANTS.RESULT ? '' : `_${sourceName}`}`
+            if (!(sourceElement instanceof ALoop)) {
+                stackFunction.getStack().push(...[
+                    new StackOperation(OPERATIONS.CALL, sourceElementName)
+                ])
+            }
             if (element instanceof ACustomFunction) {
                 NodeHelper.validateResultToInputOrOrderConnection(node, input)
                 stackFunction.getStack().push(...[
                     new StackOperation(OPERATIONS.PUSH,
-                        `[MEM]${element.getName()}.${targetInput.getAttrName()}`, CONSTANTS.RESULT)
+                        `[MEM]${element.getName()}.${targetInput.getAttrName()}`, resultRegister)
                 ])
             } else if (!(element instanceof AReference)) {
                 stackFunction.getStack().push(...[
                     new StackOperation(OPERATIONS.PUSH,
-                        this.getScopedAttributedName(functionName, targetInput.getAttrName()), CONSTANTS.RESULT)
+                        this.getScopedAttributedName(functionName, targetInput.getAttrName()), resultRegister)
                 ])
             }
         }
@@ -72,6 +78,13 @@ export default class FunctionTypeCompiler {
      * @param {ContextCompiler} contextCompiler
      */
     stepThree(contextCompiler) {
+        const {input, functionName, sourceStackFunction, sourceElement} = contextCompiler
+        const sourceName = input.getSourceName()
+        if (sourceElement instanceof ALoop && sourceName === COMPILER.LOOP_BODY) {
+            sourceStackFunction.getStack().push(...[
+                new StackOperation(OPERATIONS.CALL, functionName)
+            ])
+        }
     }
 
     /**

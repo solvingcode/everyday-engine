@@ -1,6 +1,5 @@
 import {TYPES} from '../../pobject/AttributeType.js'
 import AFunction from '../function/AFunction.js'
-import DynamicAttribute from '../../pobject/DynamicAttribute.js'
 
 export default class ALoop extends AFunction{
 
@@ -14,7 +13,10 @@ export default class ALoop extends AFunction{
     initAttributes() {
         this.addInput('index', TYPES.NUMBER, 0)
         this.addInput('array', TYPES.ARRAY | TYPES.ANY, false)
-        this.addOutput(TYPES.ARRAY | TYPES.DYNAMIC_ATTRIBUTE)
+        this.addCustomOutput('body', TYPES.ANY)
+        this.addCustomOutput('index', TYPES.NUMBER)
+        this.addCustomOutput('element', TYPES.ANY)
+        this.addCustomOutput('ended', TYPES.BOOLEAN)
     }
 
     /**
@@ -23,12 +25,10 @@ export default class ALoop extends AFunction{
     execute(functionRegistry, unit, scriptComponent, world, executionContext) {
         const index = parseInt(this.getInputValue('index') || 0)
         const array = this.getInputValue('array')
-        const attributes = [
-            new DynamicAttribute('index', TYPES.NUMBER, index + 1),
-            new DynamicAttribute('element', TYPES.ANY, array[index]),
-            new DynamicAttribute('ended', TYPES.BOOLEAN, index >= array.length - 1)
-        ]
-        this.setOutputValue(attributes)
+        this.setCustomOutputValue('body', '')
+        this.setCustomOutputValue('index', index + 1)
+        this.setCustomOutputValue('element', array[index])
+        this.setCustomOutputValue('ended', index >= array.length - 1)
     }
 
 }

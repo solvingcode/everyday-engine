@@ -325,16 +325,12 @@ test('Create and compile class script with loop', function () {
     const nodeEvent = ScriptHelper.createNodeByClass(functionRegistry, scriptFunction, FunctionNode, 'OnMouseClick')
     const nodeArray = ScriptHelper.createNodeByClass(functionRegistry, scriptFunction, FunctionNode, 'Array')
     const nodeLength = ScriptHelper.createNodeByClass(functionRegistry, scriptFunction, ConstantNode, 10)
-    const nodeAttributeName = ScriptHelper.createNodeByClass(functionRegistry, scriptFunction, ConstantNode, "index")
-    const nodeGetValue = ScriptHelper.createNodeByClass(functionRegistry, scriptFunction, FunctionNode, 'GetValue')
 
     nodeArray.attachResultOutput(nodeLength, 'length')
     nodeLoop.attachResultOutput(nodeArray, 'array')
     nodeLoop.attachPrevNode(nodeEvent)
-    nodeGetValue.attachResultOutput(nodeLoop, 'attributes')
-    nodeGetValue.attachResultOutput(nodeAttributeName, 'name')
-    nodeLog.attachResultOutput(nodeGetValue, 'value')
-    nodeLog.attachResultManagedOutput(nodeLoop)
+    nodeLog.attachCustomOutput(nodeLoop, 'value', 'index')
+    nodeLog.attachCustomManagedOutput(nodeLoop, 'body')
 
     script.compile(world)
 

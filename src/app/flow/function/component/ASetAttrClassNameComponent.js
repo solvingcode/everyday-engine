@@ -1,6 +1,7 @@
 import ScriptHelper from '../../../utils/ScriptHelper.js'
 import DynamicAttributeHelper from '../../../utils/DynamicAttributeHelper.js'
 import AClassNameComponent from './AClassNameComponent.js'
+import {TYPES} from '../../../pobject/AttributeType.js'
 
 export default class ASetAttrClassNameComponent extends AClassNameComponent {
 
@@ -17,7 +18,8 @@ export default class ASetAttrClassNameComponent extends AClassNameComponent {
      */
     execute(functionRegistry, unit, scriptComponent, world, executionContext) {
         const extractName = ScriptHelper.extractFromPublicVar(this.getName())
-        const component = unit.findComponentByName(extractName.component)
+        const target = this.getInputValue('target')
+        const component = target.findComponentByName(extractName.component)
         const value = this.getInputValue('value')
         component.setValue(extractName.attribute, DynamicAttributeHelper
             .getValueByType(value, component.getType(extractName.attribute), world))
@@ -27,6 +29,7 @@ export default class ASetAttrClassNameComponent extends AClassNameComponent {
      * @override
      */
     initAttributes(params) {
+        this.addInput('target', TYPES.UNIT)
         this.addInput('value', params.type)
     }
 }

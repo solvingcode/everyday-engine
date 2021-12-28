@@ -1,4 +1,3 @@
-import {CONSTANTS} from '../StackRegister.js'
 import ClientError from '../../exception/type/ClientError.js'
 
 export default class PushProcessor {
@@ -18,8 +17,10 @@ export default class PushProcessor {
         if (!name) {
             throw new ClientError(`Push operation invalid (Name not provided)`)
         }
-        if (value === CONSTANTS.RESULT) {
-            stackRegister.push(functionName, name, stackRegister.popRet(functionName))
+        if (stackRegister.isResult(value)) {
+            stackRegister.push(functionName, name,
+                stackRegister.isCustomResult(value) ? stackRegister.popCustomRet(functionName, value) :
+                    stackRegister.popRet(functionName))
         } else if (stackRegister.isMemory(value)) {
             stackRegister.push(functionName, name, stackRegister.pop(functionName, value))
         } else {

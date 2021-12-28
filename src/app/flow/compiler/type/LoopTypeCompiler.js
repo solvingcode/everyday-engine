@@ -1,23 +1,11 @@
 import FunctionTypeCompiler from './FunctionTypeCompiler.js'
-import NodeHelper from '../../../utils/NodeHelper.js'
 import StackOperation, {OPERATIONS} from '../../../operation/StackOperation.js'
 import IsArrayEmptyFunction from '../../function/native/array/IsArrayEmptyFunction.js'
 import NotFunction from '../../function/native/basic/NotFunction.js'
 import {CONSTANTS} from '../../../operation/StackRegister.js'
-import GetValueFunction from '../../function/native/object/GetValueFunction.js'
+import {COMPILER} from '../../../constant/ScriptConstant.js'
 
 export default class LoopTypeCompiler extends FunctionTypeCompiler {
-
-    stepOne(contextCompiler) {
-        const {node, input, stackFunction, world, functionName} = contextCompiler
-        if (node.isResultToInputConnection(input)) {
-            const targetInput = NodeHelper.validateTargetInput(node, input, world)
-            stackFunction.getStack().push(...[
-                new StackOperation(OPERATIONS.PUSH,
-                    this.getScopedAttributedName(functionName, targetInput.getAttrName()), '[MEM]attributes')
-            ])
-        }
-    }
 
     stepTwo(contextCompiler) {
         const {element, stackFunction, functionName} = contextCompiler
@@ -33,26 +21,19 @@ export default class LoopTypeCompiler extends FunctionTypeCompiler {
             new StackOperation(OPERATIONS.PUSH, this.getScopedAttributedName(functionName, 'index'), '0'),
             new StackOperation(OPERATIONS.JUMP_TO, 'start_loop'),
             new StackOperation(OPERATIONS.PUSH, this.getScopedAttributedName(functionName, 'array'), '[MEM]array'),
-            new StackOperation(OPERATIONS.CALL, element.getName(), functionName),
-            new StackOperation(OPERATIONS.PUSH, '[MEM]attributes', CONSTANTS.RESULT)
+            new StackOperation(OPERATIONS.CALL, element.getName(), functionName)
         ])
     }
 
     stepFour(contextCompiler) {
         const {node, input, functionName, sourceStackFunction} = contextCompiler
-        if (node.isResultToBaseConnection(input)) {
-            const sourceFunctionName = sourceStackFunction.getName()
-            const getValueFunction = new GetValueFunction()
+        if (input.getSourceName() === COMPILER.LOOP_BODY
+            && node.isCustomToBaseConnection(input.getSourceName(), input)) {
             sourceStackFunction.getStack().push(...[
-                new StackOperation(OPERATIONS.CALL, functionName),
-                new StackOperation(OPERATIONS.PUSH, this.getScopedAttributedName(sourceFunctionName, 'attributes'), '[MEM]attributes'),
-                new StackOperation(OPERATIONS.PUSH, this.getScopedAttributedName(sourceFunctionName, 'name'), 'index'),
-                new StackOperation(OPERATIONS.CALL, getValueFunction.getName(), sourceFunctionName),
-                new StackOperation(OPERATIONS.PUSH, this.getScopedAttributedName(sourceFunctionName, 'attributes'), '[MEM]attributes'),
-                new StackOperation(OPERATIONS.PUSH, this.getScopedAttributedName(sourceFunctionName, 'index'), CONSTANTS.RESULT),
-                new StackOperation(OPERATIONS.PUSH, this.getScopedAttributedName(sourceFunctionName, 'name'), 'ended'),
-                new StackOperation(OPERATIONS.CALL, getValueFunction.getName(), sourceFunctionName),
-                new StackOperation(OPERATIONS.JUMP, CONSTANTS.RESULT, 'start_loop')
+                new StackOperation(OPERATIONS.PUSH,
+                    this.getScopedAttributedName(sourceStackFunction.getName(), 'index'),
+                    `${CONSTANTS.RESULT}_index`),
+                new StackOperation(OPERATIONS.JUMP, `${CONSTANTS.RESULT}_ended`, 'start_loop')
             ])
         } else if (node.isOrderConnection(input)) {
             sourceStackFunction.getStack().push(...[
