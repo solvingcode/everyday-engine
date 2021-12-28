@@ -41,37 +41,11 @@ export default class AnimationManager extends AnimationManagerData {
     }
 
     /**
-     * @param {Animation} animation
-     */
-    selectAnimation(animation){
-        this.getAnimations().forEach(pAnimation => pAnimation.setSelected(false))
-        animation && animation.setSelected(true)
-    }
-
-    /**
-     * @return {Animation}
-     */
-    getSelectedAnimation(){
-        return this.getAnimations().find(animation => animation.getSelected())
-    }
-
-    /**
      * @param {number} assetId
      * @return {Animation[]}
      */
     findAnimationsByControllerAssetId(assetId) {
         return this.animations.filter(animation => animation.getControllerAssetId() === assetId)
-    }
-
-    /**
-     * @param {Asset} asset
-     * @return {Animation[]}
-     */
-    deleteFrameByAsset(asset) {
-        this.animations.forEach(animation => {
-            const frame = animation.getFrames().find(pFrame => pFrame.getAssetId() === asset.getId())
-            frame && animation.deleteFrame(frame)
-        })
     }
 
     /**
@@ -156,14 +130,6 @@ export default class AnimationManager extends AnimationManagerData {
      */
     getSelectedAsset(tabManager) {
         return tabManager.getSelectedContentData()
-    }
-
-    /**
-     * @param {Asset} asset
-     * @return {Animation}
-     */
-    findAnimationByAsset(asset){
-        return this.getAnimations().find(animation => animation.getAssetId() === asset.getId())
     }
 
     /**

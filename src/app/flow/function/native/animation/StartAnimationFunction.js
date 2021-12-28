@@ -21,7 +21,6 @@ export default class StartAnimationFunction extends AFunction {
     execute(functionRegistry, unit, scriptComponent, world) {
         const animation = this.getInputValue('target')
         const animationComponent = unit.getComponent(AnimationComponent)
-        animation.setLoopTimes(0)
         animationComponent.setTime(0)
         animationComponent.setLoopTimes(0)
         animationComponent.setAnimation(animation.getId())

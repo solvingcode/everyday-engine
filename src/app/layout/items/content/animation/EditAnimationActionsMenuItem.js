@@ -8,19 +8,20 @@ import EditAnimationStopRecordMenuItem from './EditAnimationStopRecordMenuItem.j
 export default class EditAnimationActionsMenuItem extends PanelMenuItem {
     /**
      * @param {MenuItem} parent
+     * @param {AnimationComponent} animationComponent
      * @param {Animation} animation
      * @param {Unit} unit
      */
-    constructor(parent, animation, unit) {
+    constructor(parent, animation, animationComponent, unit) {
         super({
             name: '',
             zone: parent.zone
-        })
+        }, parent)
         this.items = [
             new EditAnimationStartRecordMenuItem(this, animation, unit),
             new EditAnimationStopRecordMenuItem(this, animation),
-            new EditAnimationPlayMenuItem(this, animation),
-            new EditAnimationStopMenuItem(this, animation),
+            new EditAnimationPlayMenuItem(this, animationComponent),
+            new EditAnimationStopMenuItem(this, animationComponent),
             new EditAnimationDeleteFrameMenuItem(this)
         ]
     }

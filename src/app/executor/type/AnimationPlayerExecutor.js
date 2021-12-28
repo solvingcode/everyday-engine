@@ -16,11 +16,8 @@ export default class AnimationPlayerExecutor extends ComponentExecutor {
         const world = World.get()
         const {deltaTime} = executionContext
         const animationComponent = unit.getComponent(AnimationComponent)
-        const animation = world.getAnimationManager().findById(animationComponent.getAnimation())
-        if (animation) {
-            animation.play(deltaTime)
-            animationComponent.setLoopTimes(animation.getLoopTimes())
-            AnimationPlayer.play(animation, world, animation.getTime(), unit)
+        if (animationComponent) {
+            AnimationPlayer.play(deltaTime, animationComponent, world, unit)
         }
     }
 

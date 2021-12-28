@@ -614,12 +614,13 @@ export default class UnitHelper {
         const animation = animationManager.getAnimationRecording()
         if (animation) {
             const unitRecording = animationManager.getUnitRecording()
+            const animationComponent = unitRecording.getComponent(AnimationComponent)
             const childUnit = unitRecording !== unit ? unit : null
             const animationAsset = world.getAssetsManager().findAssetById(animation.getAssetId())
             const cloneComponent = _.cloneDeep(component)
             const attributeName = ClassHelper.getAttributeFromSetter(setter)
             setter.bind(cloneComponent)(value)
-            animation.setFrame(animation.getTime(), childUnit, cloneComponent.getName(), attributeName,
+            animation.setFrame(animationComponent.getTime(), childUnit, cloneComponent.getName(), attributeName,
                 cloneComponent.get(attributeName))
             AssetHelper.regenerate(animationAsset, animation, storage)
         } else {

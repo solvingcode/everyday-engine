@@ -8,6 +8,7 @@ import CreateAnimationWrapperMenuItem from './CreateAnimationWrapperMenuItem.js'
 import ObjectHelper from '../../../../utils/ObjectHelper.js'
 import EditAnimationTimelineWrapperMenuItem from './EditAnimationTimelineWrapperMenuItem.js'
 import UnitHelper from '../../../../utils/UnitHelper.js'
+import AnimationComponent from '../../../../component/internal/AnimationComponent.js'
 
 export default class EditAnimationBodyMenuItem extends PanelMenuItem {
     /**
@@ -30,16 +31,17 @@ export default class EditAnimationBodyMenuItem extends PanelMenuItem {
         const animation = this.getAnimation()
         const animations = this.getAnimations()
         const animationController = this.getAnimationController()
+        const animationComponent = unit.getComponent(AnimationComponent)
         const data = {unit, animationController, animation}
         if (animations && animations.length > 0 && !ObjectHelper.isEqual(this.data, data)) {
             this.data = data
             this.items = [
                 new CloseWindowMenuItem(WINDOWS.ANIMATION, this),
-                new EditAnimationFormWrapperMenuItem(this, animation, unit)
+                new EditAnimationFormWrapperMenuItem(this, animation, animationComponent, unit)
             ]
-            if(animation){
+            if (animation) {
                 this.items = [...this.items, ...[
-                    new EditAnimationTimelineWrapperMenuItem(this, animation)
+                    new EditAnimationTimelineWrapperMenuItem(this, animation, animationComponent)
                 ]]
             }
             return true
@@ -64,7 +66,7 @@ export default class EditAnimationBodyMenuItem extends PanelMenuItem {
     /**
      * @return {Animation[]}
      */
-    getAnimations(){
+    getAnimations() {
         return UnitHelper.getAnimations(World.get(), this.getUnit())
     }
 

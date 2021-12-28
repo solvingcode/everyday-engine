@@ -4,9 +4,9 @@ import Layout from '../../../Layout.js'
 export default class EditAnimationStopMenuItem extends MenuItem {
     /**
      * @param {MenuItem} parent
-     * @param {Animation} animation
+     * @param {AnimationComponent} animationComponent
      */
-    constructor(parent, animation) {
+    constructor(parent, animationComponent) {
         super({
             name: 'stop',
             title: 'Stop',
@@ -15,14 +15,14 @@ export default class EditAnimationStopMenuItem extends MenuItem {
             zone: parent.zone
         })
         this.parent = parent
-        this.data = {animation}
+        this.data = {animationComponent}
     }
 
     /**
      * @override
      */
     isValid() {
-        const {animation} = this.data
-        return super.isValid() && animation && animation.isPlaying()
+        const {animationComponent} = this.data
+        return super.isValid() && animationComponent && animationComponent.getPlaying()
     }
 }

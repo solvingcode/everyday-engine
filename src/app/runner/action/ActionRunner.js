@@ -54,7 +54,6 @@ import AttachComponentAction from './unit/AttachComponentAction.js'
 import AttachAssetScriptAction from './assets/AttachAssetScriptAction.js'
 import AddAnimationAction from './animation/AddAnimationAction.js'
 import EditAssetAnimationAction from './assets/EditAssetAnimationAction.js'
-import AttachAssetAnimationAction from './animation/AttachAssetAnimationAction.js'
 import DeleteKeyFrameAnimationAction from './animation/DeleteKeyFrameAnimationAction.js'
 import PlayAnimationAction from './animation/PlayAnimationAction.js'
 import StopAnimationAction from './animation/StopAnimationAction.js'
@@ -253,7 +252,6 @@ class ActionRunner extends Runner {
             ATTACH_ASSET_IMAGE: AttachAssetImageAction,
             ADD_ANIMATION: AddAnimationAction,
             EDIT_ASSET_ANIMATION: EditAssetAnimationAction,
-            ATTACH_ASSET_ANIMATION: AttachAssetAnimationAction,
             DELETE_ANIMATION_FRAME: DeleteKeyFrameAnimationAction,
             PLAY_ANIMATION: PlayAnimationAction,
             STOP_ANIMATION: StopAnimationAction,

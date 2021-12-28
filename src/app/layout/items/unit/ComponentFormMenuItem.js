@@ -11,6 +11,7 @@ import UITextComponent from '../../../component/internal/ui/UITextComponent.js'
 import AssetHelper from '../../../utils/AssetHelper.js'
 import Storage from '../../../core/Storage.js'
 import UITransformComponent from '../../../component/internal/ui/UITransformComponent.js'
+import AnimationComponent from '../../../component/internal/AnimationComponent.js'
 
 export default class ComponentFormMenuItem extends FormMenuItem {
     /**
@@ -49,9 +50,10 @@ export default class ComponentFormMenuItem extends FormMenuItem {
             const setter = formMenuItem.getSetter(menuItem.getDataBind(), {bindObject})
             setter(value)
             const unitRecording = animationManager.getUnitRecording()
+            const animationComponent = unitRecording.getComponent(AnimationComponent)
             const targetUnit = UnitSelector.get().getFirstSelected(world)
             const childUnit = unitRecording !== targetUnit ? targetUnit : null
-            animation.setFrame(animation.getTime(), childUnit, bindObject.getName(),
+            animation.setFrame(animationComponent.getTime(), childUnit, bindObject.getName(),
                 bindAttribute, bindObject.get(bindAttribute))
             AssetHelper.regenerate(animationAsset, animation, Storage.get())
             return false

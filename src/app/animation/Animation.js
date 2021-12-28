@@ -7,31 +7,6 @@ import KeyFrame from './KeyFrame.js'
 export default class Animation extends AnimationData {
 
     /**
-     * @type {boolean}
-     */
-    playing
-
-    /**
-     * @type {number}
-     */
-    time
-
-    /**
-     * @type {number}
-     */
-    selectedTime
-
-    /**
-     * @type {number}
-     */
-    loopTimes
-
-    /**
-     * @type {boolean}
-     */
-    selected
-
-    /**
      * @param {number} id
      * @param {string} name
      */
@@ -40,12 +15,8 @@ export default class Animation extends AnimationData {
         this.id = id
         this.name = name
         this.samples = 10
-        this.playing = false
-        this.time = 0
         this.duration = 0
-        this.loopTimes = 0
         this.lengthSecond = 1
-        this.selected = false
     }
 
     /**
@@ -150,129 +121,6 @@ export default class Animation extends AnimationData {
     getSelectedFrame() {
         return this.getProperties().reduce(
             (frame, animationProperty) => animationProperty.getSelectedFrame(), null)
-    }
-
-    /**
-     * @return {number}
-     */
-    getFrameTime() {
-        return this.getFrameTimeAt(this.time)
-    }
-
-    /**
-     * @param {number} time
-     * @return {number}
-     */
-    getFrameTimeAt(time) {
-        return Math.floor(time)
-    }
-
-    /**
-     * @return {number}
-     */
-    getNextTimeFrame() {
-        return this.getNextTimeFrameAt(this.getTime())
-    }
-
-    /**
-     * @param {number} time
-     * @return {number}
-     */
-    getNextTimeFrameAt(time) {
-        const newTime = time + 1
-        return newTime % this.duration
-    }
-
-    /**
-     * @param {number} deltaTime
-     * @param {number} time
-     * @return {{time: number, loopTimes: number}}
-     */
-    playAt(deltaTime, time) {
-        const expectedFrameTime = this.getLengthSecond() / this.getSamples()
-        const newTime = time + deltaTime / expectedFrameTime
-        const timeFrame = newTime % this.getSamples() || 0
-        const loopTimes = this.loopTimes + Math.floor(newTime / this.getSamples())
-        return { time: timeFrame, loopTimes }
-    }
-
-    /**
-     * @param {number} deltaTime
-     */
-    play(deltaTime) {
-        const playInfo = this.playAt(deltaTime, this.getTime())
-        this.loopTimes += playInfo.loopTimes
-        this.setTime(playInfo.time)
-    }
-
-    /**
-     * @param {boolean} playing
-     */
-    setPlaying(playing) {
-        this.playing = playing
-    }
-
-    /**
-     * @return {boolean}
-     */
-    isPlaying() {
-        return this.playing
-    }
-
-    /**
-     * @return {number}
-     */
-    getSelectedTime() {
-        return this.selectedTime
-    }
-
-    /**
-     * @param {number} selectedTime
-     */
-    setSelectedTime(selectedTime) {
-        this.selectedTime = selectedTime
-    }
-
-    /**
-     * @return {number}
-     */
-    getTime() {
-        return this.time
-    }
-
-    /**
-     * @param {number} time
-     */
-    setTime(time) {
-        this.time = time
-    }
-
-    /**
-     * @param {number|string} loopTimes
-     */
-    setLoopTimes(loopTimes) {
-        this.loopTimes = parseInt(loopTimes)
-    }
-
-    /**
-     * @return {number}
-     */
-    getLoopTimes() {
-        return this.loopTimes
-    }
-
-    /**
-     * @return {boolean}
-     */
-    getSelected() {
-        return this.selected
-    }
-
-    /**
-     * @param {boolean} selected
-     */
-    setSelected(selected) {
-        this.selected = selected
     }
 
 }

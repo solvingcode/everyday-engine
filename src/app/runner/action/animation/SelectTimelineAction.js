@@ -15,8 +15,8 @@ export default class SelectTimelineAction extends Action {
     static run() {
         const {bind} = StateManager.get().getNextProgressData(this.STATE)
         if (bind) {
-            const animation = bind.getAnimation()
-            animation.setTime(bind.getTime())
+            const animationComponent = bind.getAnimationComponent()
+            animationComponent.setTime(bind.getTime())
         }
         return true
     }

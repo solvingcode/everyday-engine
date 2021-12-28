@@ -12,7 +12,7 @@ export default class EditAnimationPropertyFrameListMenuItem extends ListMenuItem
             stateCode: '',
             name: '',
             zone: parent.zone
-        })
+        }, parent)
         this.data = {propertyTimeline}
         this.parent = parent
     }

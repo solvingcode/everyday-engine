@@ -19,7 +19,6 @@ import CompileAssetScriptMenuItem from '../layout/items/assets/file/CompileAsset
 import AttachAssetScriptMenuItem from '../layout/items/assets/file/AttachAssetScriptMenuItem.js'
 import EditAssetScriptMenuItem from '../layout/items/assets/file/EditAssetScriptMenuItem.js'
 import EditAssetAnimationMenuItem from '../layout/items/assets/file/EditAssetAnimationMenuItem.js'
-import AddAssetToAnimationMenuItem from '../layout/items/animation/AddAssetToAnimationMenuItem.js'
 import ExportAssetMenuItem from '../layout/items/assets/file/ExportAssetMenuItem.js'
 import PlayAssetAudioMenuItem from '../layout/items/assets/file/PlayAssetAudioMenuItem.js'
 import StopAssetAudioMenuItem from '../layout/items/assets/file/StopAssetAudioMenuItem.js'
@@ -103,7 +102,6 @@ export default class OptionHelper {
                 new AttachAssetScriptMenuItem(),
                 new EditAssetScriptMenuItem(),
                 new EditAssetAnimationMenuItem(),
-                new AddAssetToAnimationMenuItem(),
                 new ExportAssetMenuItem(),
                 new PlayAssetAudioMenuItem(),
                 new StopAssetAudioMenuItem(),

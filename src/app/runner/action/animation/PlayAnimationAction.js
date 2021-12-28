@@ -9,8 +9,8 @@ export default class PlayAnimationAction extends Action {
      * @override
      */
     static run() {
-        const {animation} = StateManager.get().getNextProgressData(this.STATE)
-        animation.setPlaying(true)
+        const {animationComponent} = StateManager.get().getNextProgressData(this.STATE)
+        animationComponent.setPlaying(true)
         return true
     }
 

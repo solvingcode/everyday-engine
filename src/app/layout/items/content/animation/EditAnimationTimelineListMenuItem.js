@@ -8,15 +8,16 @@ export default class EditAnimationTimelineListMenuItem extends ListMenuItem {
     /**
      * @param {MenuItem} parent
      * @param {Animation} animation
+     * @param {AnimationComponent} animationComponent
      * @param {number} time
      */
-    constructor(parent, animation, time = 0) {
+    constructor(parent, animation, animationComponent, time = 0) {
         super({
             stateCode: '',
             name: '',
             zone: parent.zone
-        })
-        this.data = {animation, time, timeline: this.getTimeline(animation)}
+        }, parent)
+        this.data = {animationComponent, animation, time, timeline: this.getTimeline(animationComponent, animation)}
         this.parent = parent
     }
 
@@ -31,7 +32,7 @@ export default class EditAnimationTimelineListMenuItem extends ListMenuItem {
      * @override
      */
     getFormObject() {
-        const newTimeline = this.getTimeline(this.data.animation)
+        const newTimeline = this.getTimeline(this.data.animationComponent, this.data.animation)
         if (!_.isEqual(this.data.timeline, newTimeline)) {
             this.data.timeline = newTimeline
         }
@@ -40,10 +41,11 @@ export default class EditAnimationTimelineListMenuItem extends ListMenuItem {
 
     /**
      * @todo Need optimization
+     * @param {AnimationComponent} animationComponent
      * @param {Animation} animation
      * @return {PropertyTimeline[]}
      */
-    getTimeline(animation) {
+    getTimeline(animationComponent, animation) {
         const properties = [null, ...animation.getProperties()]
         const samples = animation.getSamples()
         return properties.map(property => new PropertyTimeline(
@@ -57,8 +59,9 @@ export default class EditAnimationTimelineListMenuItem extends ListMenuItem {
                         `${second}:${secondDivide < 10 ? '0' : ''}${secondDivide}`,
                         property,
                         animation,
+                        animationComponent,
                         property && property.tryGetAt(index),
-                        animation.getFrameTime() === index)
+                        Math.floor(animationComponent.getTime()) === index)
                 })))
     }
 
@@ -153,6 +156,11 @@ class TimeDuration {
     animation
 
     /**
+     * @type {AnimationComponent}
+     */
+    animationComponent
+
+    /**
      * @type {AnimationProperty}
      */
     property
@@ -172,14 +180,17 @@ class TimeDuration {
      * @param {string} name
      * @param {AnimationProperty} property
      * @param {Animation} animation
+     * @param {AnimationComponent} animationComponent
      * @param {KeyFrame} frame
      * @param {boolean} selected
      */
-    constructor(time, name, property, animation, frame, selected) {
+    constructor(time, name, property, animation,
+                animationComponent, frame, selected) {
         this.time = time
         this.name = name
         this.property = property
         this.animation = animation
+        this.animationComponent = animationComponent
         this.selected = selected
         this.frame = frame
     }
@@ -217,6 +228,13 @@ class TimeDuration {
      */
     getAnimation() {
         return this.animation
+    }
+
+    /**
+     * @return {AnimationComponent}
+     */
+    getAnimationComponent() {
+        return this.animationComponent
     }
 
     /**

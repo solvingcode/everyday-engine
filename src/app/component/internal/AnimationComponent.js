@@ -23,13 +23,14 @@ export default class AnimationComponent extends ScriptComponent {
         this.addInternal('animation', TYPES.ANIMATION)
         this.addInternal('time', TYPES.NUMBER)
         this.addInternal('loopTimes', TYPES.NUMBER)
+        this.addInternal('playing', TYPES.BOOLEAN)
     }
 
     /**
      * @override
      */
     getExcludeFields() {
-        return ['script', 'started', 'initialized', 'time', 'loopTimes', 'animation']
+        return ['script', 'started', 'initialized', 'time', 'loopTimes', 'animation', 'playing']
     }
 
     /**
@@ -44,6 +45,20 @@ export default class AnimationComponent extends ScriptComponent {
      */
     setAnimation(animation) {
         this.setValue('animation', parseInt(animation))
+    }
+
+    /**
+     * @return {boolean}
+     */
+    getPlaying() {
+        return this.getValue('playing')
+    }
+
+    /**
+     * @param {boolean} playing
+     */
+    setPlaying(playing) {
+        this.setValue('playing', playing)
     }
 
     /**

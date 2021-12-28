@@ -9,9 +9,9 @@ export default class StopAnimationAction extends Action {
      * @override
      */
     static run() {
-        const {animation} = StateManager.get().getNextProgressData(this.STATE)
-        animation.setPlaying(false)
-        animation.setTime(0)
+        const {animationComponent} = StateManager.get().getNextProgressData(this.STATE)
+        animationComponent.setPlaying(false)
+        animationComponent.setTime(0)
         return true
     }
 

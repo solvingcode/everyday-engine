@@ -6,17 +6,18 @@ export default class EditAnimationTimelineWrapperMenuItem extends MenuItem {
     /**
      * @param {MenuItem} parent
      * @param {Animation} animation
+     * @param {AnimationComponent} animationComponent
      */
-    constructor(parent, animation) {
+    constructor(parent, animation, animationComponent) {
         super({
             name: 'animation-timeline-wrapper',
             stateCode: '',
             zone: parent.zone,
             type: Layout.type.WRAPPER
         }, parent)
-        this.data = {animation}
+        this.data = {animation, animationComponent}
         this.items = [
-            new EditAnimationTimelineListMenuItem(this, animation)
+            new EditAnimationTimelineListMenuItem(this, animation, animationComponent)
         ]
     }
 
@@ -24,7 +25,7 @@ export default class EditAnimationTimelineWrapperMenuItem extends MenuItem {
      * @override
      */
     isValid() {
-        return super.isValid() && !!this.data.animation && !this.data.animation.isPlaying()
+        return super.isValid() && !!this.data.animationComponent && !this.data.animationComponent.getPlaying()
     }
 
 }

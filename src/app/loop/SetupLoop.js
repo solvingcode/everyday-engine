@@ -15,7 +15,6 @@ import {SetupExecutorRunner} from '../runner/executor/SetupExecutorRunner.js'
 import ScriptEditorRunner from '../runner/editor/ScriptEditorRunner.js'
 import UnitDrawerRunner from '../runner/drawer/UnitDrawerRunner.js'
 import GraphDrawerRunner from '../runner/drawer/GraphDrawerRunner.js'
-import AnimationEditorRunner from '../runner/editor/AnimationEditorRunner.js'
 import WorldInitializeRunner from '../runner/world/WorldInitializeRunner.js'
 import FormRunner from '../runner/form/FormRunner.js'
 import CameraExecutor from '../executor/type/CameraExecutor.js'
@@ -57,7 +56,7 @@ class SetupLoop extends Loop {
         this.setupRenderer = SetupRenderer.get()
         this.runners = [
             WorldInitializeRunner, /*HistoryRunner,*/ SimulateRunner, ActionRunner, EditorRunner, ScriptEditorRunner,
-            AnimationEditorRunner, TileEditorRunner, MenuRunner, SetupExecutorRunner, SetupRenderRunner, WindowRunner,
+            TileEditorRunner, MenuRunner, SetupExecutorRunner, SetupRenderRunner, WindowRunner,
             GraphDrawerRunner, UnitDrawerRunner, FormRunner, LightRunner, EditorSceneRunner, ShortcutRunner, AssetRunner,
             GarbageRunner
         ]

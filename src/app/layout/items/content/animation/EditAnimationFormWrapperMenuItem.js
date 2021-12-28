@@ -7,10 +7,11 @@ import EditAnimationSelectMenuItem from './EditAnimationSelectMenuItem.js'
 export default class EditAnimationFormWrapperMenuItem extends MenuItem {
     /**
      * @param {MenuItem} parent
+     * @param {AnimationComponent} animationComponent
      * @param {Animation} animation
      * @param {Unit} unit
      */
-    constructor(parent, animation, unit) {
+    constructor(parent, animation, animationComponent, unit) {
         super({
             name: 'animation-form-wrapper',
             stateCode: '',
@@ -23,7 +24,7 @@ export default class EditAnimationFormWrapperMenuItem extends MenuItem {
         ]
         if (animation) {
             this.items = [...this.items, ...[
-                new EditAnimationActionsMenuItem(this, animation, unit),
+                new EditAnimationActionsMenuItem(this, animation, animationComponent, unit),
                 new EditAnimationFormMenuItem(this, animation)
             ]]
         }

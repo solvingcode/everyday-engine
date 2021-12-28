@@ -17,13 +17,11 @@ export default class AnimationEditorExecutor extends ComponentExecutor {
         const world = World.get()
         const {deltaTime} = executionContext
         const animationComponent = unit.getComponent(AnimationComponent)
-        const animation = world.getAnimationManager().findById(animationComponent.getAnimation())
-        if (animation) {
+        if (animationComponent) {
             if (!!WindowManager.get().hasWindow(WINDOWS.ANIMATION)) {
-                if (animation.isPlaying()) {
-                    animation.play(deltaTime)
+                if (animationComponent.getPlaying()) {
+                    AnimationPlayer.play(deltaTime, animationComponent, world, unit)
                 }
-                AnimationPlayer.play(animation, world, animation.getTime(), unit)
             }
         }
     }
