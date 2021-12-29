@@ -10,7 +10,6 @@ import RotateAction from '../action/edit/RotateAction.js'
 import Vector from '../../utils/Vector.js'
 import UnitSelector from '../../selector/UnitSelector.js'
 import UnitHelper from '../../utils/UnitHelper.js'
-import Size from '../../pobject/Size.js'
 import GUIRotateComponent from '../../component/internal/gui/rotate/GUIRotateComponent.js'
 import MoveXUnitInstant from '../../unit/instant/type/internal/move/MoveXUnitInstant.js'
 import MoveYUnitInstant from '../../unit/instant/type/internal/move/MoveYUnitInstant.js'
@@ -19,14 +18,8 @@ import ScaleXUnitInstant from '../../unit/instant/type/internal/scale/ScaleXUnit
 import ScaleYUnitInstant from '../../unit/instant/type/internal/scale/ScaleYUnitInstant.js'
 import ScaleFreeUnitInstant from '../../unit/instant/type/internal/scale/ScaleFreeUnitInstant.js'
 import RotateZUnitInstant from '../../unit/instant/type/internal/rotate/RotateZUnitInstant.js'
-import GUIGridComponent from '../../component/internal/gui/grid/GUIGridComponent.js'
-import GridUnitInstant from '../../unit/instant/type/internal/grid/GridUnitInstant.js'
 import Window from '../../core/Window.js'
 import TransformComponent from '../../component/internal/TransformComponent.js'
-import GridXUnitInstant from '../../unit/instant/type/internal/grid/GridXUnitInstant.js'
-import GUIGridYComponent from '../../component/internal/gui/grid/GUIGridYComponent.js'
-import GUIGridXComponent from '../../component/internal/gui/grid/GUIGridXComponent.js'
-import GridYUnitInstant from '../../unit/instant/type/internal/grid/GridYUnitInstant.js'
 import GUIColliderComponent from '../../component/internal/gui/collider/GUIColliderComponent.js'
 import MeshUnit from '../../unit/type/MeshUnit.js'
 import GUISelectorComponent from '../../component/internal/gui/selector/GUISelectorComponent.js'
@@ -63,60 +56,8 @@ class EditorRunner extends Runner {
                 this.handleUnitEvent(stateManager, mouse)
                 this.selectUnits(stateManager, mouse)
                 this.setupEditor(stateManager)
-                this.createGridEntity()
             }
         }
-    }
-
-    /**
-     * @todo: need to be revisited
-     */
-    createGridEntity() {
-        const world = World.get()
-        const camera = world.getCamera()
-        const windowSize = Window.get().size
-        const unitManager = world.getUnitManager()
-        const position = new Vector()
-        this.unitGridChildIds = (this.unitGridChildIds || [])
-        let chunkIds = []
-        if (world.isShowGrid()) {
-            const sizeChunk = new Size({width: 600, height: 600})
-            const maxChunkNbr = 14 * 8
-            const chunkSizeNbrX = Math.ceil(camera.fromScaleNumber(windowSize.width / sizeChunk.width, position)) + 1
-            const chunkSizeNbrY = Math.ceil(camera.fromScaleNumber(windowSize.height / sizeChunk.height, position)) + 1
-            if (maxChunkNbr >= chunkSizeNbrX * chunkSizeNbrY) {
-                const chunkVectors = Array.from(Array(chunkSizeNbrX * chunkSizeNbrY).keys())
-                    .map(iChunk => {
-                        const {width, height} = sizeChunk
-                        const x = Math.floor(camera.position.x / width) * width + width * (iChunk % chunkSizeNbrX)
-                        const y = Math.floor(camera.position.y / height) * height + height * Math.floor(iChunk / chunkSizeNbrX)
-                        return new Vector({x, y})
-                    })
-                chunkVectors.forEach(({x, y}) => {
-                    const positionChunk = new Vector({x, y})
-
-                    const unitGridExist = unitManager.getUnitsHasComponents([GUIGridComponent])
-                        .find(unit => unit.getComponent(TransformComponent).getPosition().equals(positionChunk))
-                    const unitGrid = unitGridExist || world.createUnitInstant(GridUnitInstant, positionChunk, sizeChunk)
-
-                    const unitGridXExist = unitManager.getUnitsHasComponents([GUIGridXComponent])
-                        .find(unit => unit.getComponent(TransformComponent).getPosition().equals(positionChunk))
-                    const unitGridX = unitGridXExist || world.createUnitInstant(GridXUnitInstant, positionChunk, sizeChunk)
-
-                    const unitGridYExist = unitManager.getUnitsHasComponents([GUIGridYComponent])
-                        .find(unit => unit.getComponent(TransformComponent).getPosition().equals(positionChunk))
-                    const unitGridY = unitGridYExist || world.createUnitInstant(GridYUnitInstant, positionChunk, sizeChunk)
-
-                    chunkIds = chunkIds.concat([unitGrid.getId(), unitGridX.getId(), unitGridY.getId()])
-                })
-            }
-        }
-        this.unitGridChildIds
-            .filter(childId => !chunkIds.includes(childId))
-            .forEach(childId => {
-                unitManager.tryDeleteUnitById(childId)
-            })
-        this.unitGridChildIds = chunkIds
     }
 
     /**
@@ -131,7 +72,7 @@ class EditorRunner extends Runner {
         }
         if (mouse.getMouseWheel().y) {
             const itemTarget = Menu.get().getUIRenderer().getItemAt(mouse)
-            if(itemTarget && itemTarget.element instanceof ContentCanvasMenuItem){
+            if (itemTarget && itemTarget.element instanceof ContentCanvasMenuItem) {
                 stateManager.startState(ZoomInOutCameraAction.STATE, 1,
                     {deltaY: mouse.getMouseWheel().y})
             }
@@ -152,13 +93,6 @@ class EditorRunner extends Runner {
             const dragArea = mouse.getDragArea(world.getCamera())
             world.selectUnits(dragArea)
         }
-    }
-
-    /**
-     * @param {Mouse} mouse
-     */
-    focusUnits(mouse) {
-        World.get().focusUnits(mouse)
     }
 
     /**
@@ -260,18 +194,21 @@ class EditorRunner extends Runner {
             DRAW_SCALE: [ScaleXUnitInstant, ScaleYUnitInstant, ScaleFreeUnitInstant],
             DRAW_ROTATE: [RotateZUnitInstant]
         }
+        const origLocalPosition = Vector.zero()
         for (const action in editorComponents) {
             const unitInstants = editorComponents[action]
             unitInstants.forEach(unitInstantClass => {
                 const unitExist = unitManager.findUnitByType(unitInstantClass)
                 if (stateManager.hasAnyState(action) && !unitExist && editorPosition) {
-                    world.createChildUnitInstant(unitInstantClass, targetUnit, Vector.zero(), transformComponent.getScale())
+                    world.createChildUnitInstant(unitInstantClass, targetUnit, origLocalPosition, transformComponent.getScale())
                 } else if (unitExist && (
                     !stateManager.hasAnyState(action) ||
                     (targetUnit && unitExist.getUnitParentId() !== targetUnit.getId()) ||
                     !targetUnit
                 )) {
                     unitManager.deleteUnit(unitExist)
+                } else if (unitExist) {
+                    unitExist.update(world.getCamera(), transformComponent.getScale(), origLocalPosition)
                 }
             })
         }
@@ -294,6 +231,8 @@ class EditorRunner extends Runner {
                         .find(guiUnit => guiUnit.getComponent(GUISelectorComponent).getUnitId() === selectedUnit.getId())
                     if (!existGUISelector) {
                         UnitHelper.createGUISelector(selectedUnit, world)
+                    } else {
+                        existGUISelector.update(world.getCamera())
                     }
                 }
             })

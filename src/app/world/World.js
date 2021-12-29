@@ -242,18 +242,6 @@ class World extends WorldData {
     }
 
     /**
-     * @param {Mouse} mouse
-     * @return {Unit[]}
-     */
-    focusUnits(mouse) {
-        const unitSelector = UnitSelector.get()
-        unitSelector.unfocusAll(this)
-        const currentScenePosition = new Vector(mouse.currentScenePosition)
-        const vector3d = this.getCamera().fromCameraScale(currentScenePosition)
-        unitSelector.focus(this, this.getWorldPosition(vector3d))
-    }
-
-    /**
      * @param {Unit} unit
      * @return {number}
      */
@@ -263,14 +251,6 @@ class World extends WorldData {
             return layerGroup.getRank()
         }
         return 0
-    }
-
-    /**
-     * @param {Vector} position
-     * @return {Unit}
-     */
-    findFirstUnitByPosition(position) {
-        return UnitSelector.get().get(this, position)
     }
 
     /**

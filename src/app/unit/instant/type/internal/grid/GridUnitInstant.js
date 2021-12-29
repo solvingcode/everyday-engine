@@ -35,6 +35,20 @@ export default class GridUnitInstant extends MeshUnitInstant {
 
     /**
      * @override
+     * @param {Camera} camera
+     */
+    update(camera) {
+        const style = this.getComponent(StyleComponent).getStyle()
+        const actualBorderSize = style.getBorderSize()
+        const borderSize = camera.fromScaleNumber(1)
+        if (borderSize !== actualBorderSize) {
+            style.setBorderSize(borderSize)
+            this.getComponent(MeshComponent).setGenerated(false)
+        }
+    }
+
+    /**
+     * @override
      */
     setup() {
     }

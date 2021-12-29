@@ -15,8 +15,6 @@ import MoveYUnitInstant from '../../unit/instant/type/internal/move/MoveYUnitIns
 import MoveFreeUnitInstant from '../../unit/instant/type/internal/move/MoveFreeUnitInstant.js'
 import GridUnitInstant from '../../unit/instant/type/internal/grid/GridUnitInstant.js'
 import AssetUnitInstant from '../../unit/instant/type/internal/asset/AssetUnitInstant.js'
-import GridXUnitInstant from '../../unit/instant/type/internal/grid/GridXUnitInstant.js'
-import GridYUnitInstant from '../../unit/instant/type/internal/grid/GridYUnitInstant.js'
 import CameraUnitInstant from '../../unit/instant/type/internal/camera/CameraUnitInstant.js'
 import DynamicAttribute from '../../pobject/DynamicAttribute.js'
 import CameraComponent from '../../component/internal/CameraComponent.js'
@@ -563,8 +561,6 @@ class DataSchema {
         MoveYUnitInstant,
         MoveFreeUnitInstant,
         GridUnitInstant,
-        GridXUnitInstant,
-        GridYUnitInstant,
         SelectionUnitInstant,
         ScaleXUnitInstant,
         ScaleYUnitInstant,

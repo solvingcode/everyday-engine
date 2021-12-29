@@ -78,7 +78,7 @@ export default class TileEditorRunner extends Runner {
                 })
             const unitGrid = unitGridExist || world.createChildUnitInstant(GridUnitInstant, null,
                 positionChunk, sizeChunkCells, cellSize, cellSizeScaled)
-
+            unitGrid.update(camera)
             chunkIds.push(unitGrid.getId())
         })
         this.unitGridChildIds
