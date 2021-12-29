@@ -38,7 +38,9 @@ export default class AddScriptNodeInputListMenuItem extends ListMenuItem {
         const world = World.get()
         const node = this.getNode()
         if (node) {
-            this.data.formObject = NodeHelper.getSourceNode(node, world).getInputs().map(input => ({input, node}))
+            const sourceNode = NodeHelper.getSourceNode(node, world)
+            const inputs = sourceNode ? sourceNode.getInputs() : []
+            this.data.formObject = inputs.map(input => ({input, node}))
         }
         this.data.node = node
     }

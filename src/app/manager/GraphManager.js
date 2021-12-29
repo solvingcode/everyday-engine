@@ -51,7 +51,7 @@ export default class GraphManager {
      * @param {Unit} unit
      * @return {boolean}
      */
-    isNodeUnit(unit){
+    isNodeUnit(unit) {
         return unit.hasComponents([NodeComponent])
     }
 
@@ -59,7 +59,7 @@ export default class GraphManager {
      * @param {Unit} unit
      * @return {boolean}
      */
-    isEdgeUnit(unit){
+    isEdgeUnit(unit) {
         return unit.hasComponents([NodeInputComponent])
     }
 
@@ -105,8 +105,8 @@ export default class GraphManager {
                 node.setInitialized(true)
                 node.setGraphUnit(unit)
                 updated = true
-            }else{
-                if(!units.includes(node.getGraphUnit())){
+            } else {
+                if (!units.includes(node.getGraphUnit())) {
                     this.units.push(node.getGraphUnit())
                 }
             }
@@ -121,7 +121,9 @@ export default class GraphManager {
                 node.setPosition(position)
                 updated = true
             }
-            unit.update(node.getPosition(), node, script, World.get())
+            if (node) {
+                unit.update(node.getPosition(), node, script, World.get())
+            }
         })
         return updated
     }
@@ -140,8 +142,8 @@ export default class GraphManager {
                 input.setInitialized(true)
                 input.setGraphUnit(unit)
                 updated = true
-            }else{
-                if(!units.includes(input.getGraphUnit())){
+            } else {
+                if (!units.includes(input.getGraphUnit())) {
                     this.units.push(input.getGraphUnit())
                 }
             }
@@ -152,7 +154,9 @@ export default class GraphManager {
                 this.deleteUnit(unit)
                 updated = true
             }
-            unit.update(script, nodeInput, World.get())
+            if (nodeInput) {
+                unit.update(script, nodeInput, World.get())
+            }
         })
         return updated
     }
@@ -206,7 +210,7 @@ export default class GraphManager {
     /**
      * @param {Unit} unit
      */
-    sortUnit(unit){
+    sortUnit(unit) {
         UnitHelper.sortUnit(this.units, unit)
     }
 
@@ -223,14 +227,14 @@ export default class GraphManager {
     /**
      * @return {Unit[]}
      */
-    getSelectedNodes(){
+    getSelectedNodes() {
         return this.getSelected().filter(this.isNodeUnit)
     }
 
     /**
      * @return {Unit[]}
      */
-    getSelectedEdges(){
+    getSelectedEdges() {
         return this.getSelected().filter(this.isEdgeUnit)
     }
 

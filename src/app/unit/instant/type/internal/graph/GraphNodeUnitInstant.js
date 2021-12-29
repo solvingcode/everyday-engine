@@ -3,9 +3,10 @@ import TransformComponent from '../../../../../component/internal/TransformCompo
 import MeshComponent from '../../../../../component/internal/MeshComponent.js'
 import {PrimitiveShape} from '../../../../Unit.js'
 import NodeComponent from '../../../../../component/internal/gui/node/NodeComponent.js'
-import NodeHelper from '../../../../../utils/NodeHelper.js'
+import NodeHelper, {MIN_SIZE_HEIGHT, MIN_SIZE_WIDTH} from '../../../../../utils/NodeHelper.js'
 import ScriptHelper from '../../../../../utils/ScriptHelper.js'
 import TransformHelper from '../../../../../utils/TransformHelper.js'
+import Size from '../../../../../pobject/Size.js'
 
 export default class GraphNodeUnitInstant extends MeshUnitInstant {
 
@@ -42,27 +43,29 @@ export default class GraphNodeUnitInstant extends MeshUnitInstant {
         const actualBaseInputColor = nodeComponent.getBaseInputColor()
         const actualBaseInput = nodeComponent.getBaseInput()
         const actualBaseOutput = nodeComponent.getBaseOutput()
-        const nodeGUIInputs = NodeHelper.getNodeGUIInputs(node, script, world)
-        const nodeGUIOutputs = NodeHelper.getNodeGUIOutputs(node, script, world)
-        const nodeInputs = nodeGUIInputs.names
-        const nodeInputConnections = nodeGUIInputs.connections
-        const nodeOutputs = nodeGUIOutputs.names
-        const nodeOutputConnections = nodeGUIOutputs.connections
-        const nodeInputColors = nodeGUIInputs.colors
+        const nodeGUIInputs = nodeSource ? NodeHelper.getNodeGUIInputs(node, script, world) : []
+        const nodeGUIOutputs = nodeSource ? NodeHelper.getNodeGUIOutputs(node, script, world) : []
+        const nodeInputs = nodeGUIInputs.names || []
+        const nodeInputConnections = nodeGUIInputs.connections || []
+        const nodeOutputs = nodeGUIOutputs.names || []
+        const nodeOutputConnections = nodeGUIOutputs.connections || []
+        const nodeInputColors = nodeGUIInputs.colors || []
         const outputConnected = NodeHelper.isResultOutputConnected(node, script)
         const baseOutputConnected = NodeHelper.isBaseOutputConnected(node, script)
         const baseInputConnected = !!node.getBaseInput()
         const baseInput = NodeHelper.hasBaseInput(node, world)
         const baseOutput = NodeHelper.hasBaseOutput(node, world)
         const baseInputColor = NodeHelper.getNodeGUIBaseInputColor(script, node)
-        const nodeSourceOutput = nodeSource.getOutput()
-        const size = NodeHelper.getNodeGUISize(node, script, world)
+        const nodeSourceOutput = nodeSource ? nodeSource.getOutput() : null
+        const size = nodeSource ? NodeHelper.getNodeGUISize(node, script, world) :
+            new Size({width: MIN_SIZE_WIDTH, height: MIN_SIZE_HEIGHT})
+        const title = nodeSource ? NodeHelper.getNodeName(node, world) : 'invalid'
 
         transformComponent.setLocalPosition(position)
         transformComponent.setLocalScale(TransformHelper.getScaleFromSize(size))
 
         meshComponent.setShape(PrimitiveShape.NODE)
-        nodeComponent.setTitle(NodeHelper.getNodeName(node, world))
+        nodeComponent.setTitle(title)
         nodeComponent.setInputs(nodeInputs)
         nodeComponent.setOutputs(nodeOutputs)
         nodeComponent.setInputConnections(nodeInputConnections)

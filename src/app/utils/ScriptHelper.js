@@ -283,15 +283,20 @@ export default class ScriptHelper {
                 const hasNodeInput = NodeHelper.hasBaseInput(node, world)
                 const shiftInput = hasNodeInput ? 0 : 1
                 const sourceNode = NodeHelper.getSourceNode(node, world)
-                const inputs = sourceNode.getInputs()
-                for (let iInput = -1; iInput < inputs.length - shiftInput; iInput++) {
-                    const input = iInput + shiftInput >= 0 ? inputs[iInput + shiftInput] : null
-                    const {position: inputLocalPosition, sizeInput} = NodeHelper.getNodeGUIInput(node.getType(), iInput)
-                    const inputPosition = Vector.add(unitPosition, inputLocalPosition)
-                    if (position.getX() >= inputPosition.getX() && position.getX() <= inputPosition.getX() + sizeInput &&
-                        position.getY() >= inputPosition.getY() && position.getY() <= inputPosition.getY() + sizeInput
-                    ) {
-                        return {node, input}
+                if (sourceNode) {
+                    const inputs = sourceNode.getInputs()
+                    for (let iInput = -1; iInput < inputs.length - shiftInput; iInput++) {
+                        const input = iInput + shiftInput >= 0 ? inputs[iInput + shiftInput] : null
+                        const {
+                            position: inputLocalPosition,
+                            sizeInput
+                        } = NodeHelper.getNodeGUIInput(node.getType(), iInput)
+                        const inputPosition = Vector.add(unitPosition, inputLocalPosition)
+                        if (position.getX() >= inputPosition.getX() && position.getX() <= inputPosition.getX() + sizeInput &&
+                            position.getY() >= inputPosition.getY() && position.getY() <= inputPosition.getY() + sizeInput
+                        ) {
+                            return {node, input}
+                        }
                     }
                 }
             }
@@ -310,25 +315,27 @@ export default class ScriptHelper {
     static findNodeOutputByPosition(script, unit, position, world) {
         if (unit) {
             const node = unit.getComponent(NodeComponent).getNode()
-            const unitPosition = unit.getComponent(TransformComponent).getPosition()
-            const size = unit.getComponent(MeshComponent).getSize()
-            const sourceNode = NodeHelper.getSourceNode(node, world)
-            const outputs = NodeHelper.getOutputs(sourceNode)
             if (node) {
-                if (NodeHelper.hasBaseOutput(node, world)) {
-                    outputs.unshift(null)
-                }
-                for (let iOutput = 0; iOutput < outputs.length; iOutput++) {
-                    const output = outputs[iOutput]
-                    const {
-                        position: inputLocalPosition,
-                        sizeInput
-                    } = NodeHelper.getNodeGUIOutput(node.getType(), size, iOutput)
-                    const outputPosition = Vector.add(unitPosition, inputLocalPosition)
-                    if (position.getX() >= outputPosition.getX() && position.getX() <= outputPosition.getX() + sizeInput &&
-                        position.getY() >= outputPosition.getY() && position.getY() <= outputPosition.getY() + sizeInput
-                    ) {
-                        return {node, output}
+                const unitPosition = unit.getComponent(TransformComponent).getPosition()
+                const size = unit.getComponent(MeshComponent).getSize()
+                const sourceNode = NodeHelper.getSourceNode(node, world)
+                if (sourceNode) {
+                    const outputs = NodeHelper.getOutputs(sourceNode)
+                    if (NodeHelper.hasBaseOutput(node, world)) {
+                        outputs.unshift(null)
+                    }
+                    for (let iOutput = 0; iOutput < outputs.length; iOutput++) {
+                        const output = outputs[iOutput]
+                        const {
+                            position: inputLocalPosition,
+                            sizeInput
+                        } = NodeHelper.getNodeGUIOutput(node.getType(), size, iOutput)
+                        const outputPosition = Vector.add(unitPosition, inputLocalPosition)
+                        if (position.getX() >= outputPosition.getX() && position.getX() <= outputPosition.getX() + sizeInput &&
+                            position.getY() >= outputPosition.getY() && position.getY() <= outputPosition.getY() + sizeInput
+                        ) {
+                            return {node, output}
+                        }
                     }
                 }
             }
@@ -362,7 +369,7 @@ export default class ScriptHelper {
         const sourceNode = NodeHelper.getSourceNode(node, world)
         const isAddIndex = !sourceNode.isUnique()
         let nodeSourceName = node.getSourceName()
-        if(node instanceof AnimationNode){
+        if (node instanceof AnimationNode) {
             const animation = world.getAnimationManager().findByName(this.extractNameFromPublicAnimation(nodeSourceName))
             nodeSourceName = `${animation.getId()}`
         }
@@ -574,5 +581,24 @@ export default class ScriptHelper {
             component: nameParts[0],
             attribute: nameParts[1]
         }
+    }
+
+    /**
+     * @param {World} world
+     * @param {Unit} unit
+     * @param {string} componentName
+     * @return {Component}
+     */
+    static findComponent(world, unit, componentName) {
+        const component = unit.findComponentByName(componentName)
+        if (!component) {
+            const script = world.getScriptManager().findByName(componentName)
+            if (script) {
+                const childClassNames = this.getChildClassNames(world, script)
+                return childClassNames.reduce((foundComponent, childClassName) =>
+                    foundComponent || this.findComponent(world, unit, childClassName), null)
+            }
+        }
+        return component
     }
 }

@@ -19,7 +19,7 @@ export default class ASetAttrClassNameComponent extends AClassNameComponent {
     execute(functionRegistry, unit, scriptComponent, world, executionContext) {
         const extractName = ScriptHelper.extractFromPublicVar(this.getName())
         const target = this.getInputValue('target')
-        const component = target.findComponentByName(extractName.component)
+        const component = ScriptHelper.findComponent(world, target, extractName.component)
         const value = this.getInputValue('value')
         component.setValue(extractName.attribute, DynamicAttributeHelper
             .getValueByType(value, component.getType(extractName.attribute), world))

@@ -466,8 +466,9 @@ export default class NodeHelper {
         const maxInputSize = Math.max(...nodeInputTextLengths) * fontSize / fontSizeRatio
         const maxOutputSize = nodeOutputTextLengths.length ? Math.max(...nodeOutputTextLengths) * fontSize / fontSizeRatio : 0
         const marginOutputSize = maxOutputSize ? (sizeInput + padding) * 2 + padding : 0
-        const width = Math.max(maxInputSize + maxOutputSize + marginOutputSize, 100)
-        const height = (Math.max(inputLength, outputLength) + 1) * (sizeInput + padding * 2) + (fontSize + padding * 2)
+        const width = Math.max(maxInputSize + maxOutputSize + marginOutputSize, MIN_SIZE_WIDTH)
+        const height = Math.max((Math.max(inputLength, outputLength) + 1)
+            * (sizeInput + padding * 2) + (fontSize + padding * 2), MIN_SIZE_HEIGHT)
         return new Size({width, height})
     }
 
@@ -663,3 +664,6 @@ export default class NodeHelper {
         }
     }
 }
+
+export const MIN_SIZE_WIDTH = 100
+export const MIN_SIZE_HEIGHT = 40

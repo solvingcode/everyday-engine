@@ -28,30 +28,32 @@ export default class EditAnimationBodyMenuItem extends PanelMenuItem {
      */
     doUpdate() {
         const unit = this.getUnit()
-        const animation = this.getAnimation()
-        const animations = this.getAnimations()
-        const animationController = this.getAnimationController()
-        const animationComponent = unit.getComponent(AnimationComponent)
-        const data = {unit, animationController, animation}
-        if (animations && animations.length > 0 && !ObjectHelper.isEqual(this.data, data)) {
-            this.data = data
-            this.items = [
-                new CloseWindowMenuItem(WINDOWS.ANIMATION, this),
-                new EditAnimationFormWrapperMenuItem(this, animation, animationComponent, unit)
-            ]
-            if (animation) {
-                this.items = [...this.items, ...[
-                    new EditAnimationTimelineWrapperMenuItem(this, animation, animationComponent)
-                ]]
+        if (unit) {
+            const animation = this.getAnimation()
+            const animations = this.getAnimations()
+            const animationController = this.getAnimationController()
+            const animationComponent = unit.getComponent(AnimationComponent)
+            const data = {unit, animationController, animation}
+            if (animations && animations.length > 0 && !ObjectHelper.isEqual(this.data, data)) {
+                this.data = data
+                this.items = [
+                    new CloseWindowMenuItem(WINDOWS.ANIMATION, this),
+                    new EditAnimationFormWrapperMenuItem(this, animation, animationComponent, unit)
+                ]
+                if (animation) {
+                    this.items = [...this.items, ...[
+                        new EditAnimationTimelineWrapperMenuItem(this, animation, animationComponent)
+                    ]]
+                }
+                return true
+            } else if (!ObjectHelper.isEqual(this.data, data)) {
+                this.data = data
+                this.items = [
+                    new CloseWindowMenuItem(WINDOWS.ANIMATION, this),
+                    new CreateAnimationWrapperMenuItem(this, this.getUnit(), this.getAnimationController(), this.getAnimation())
+                ]
+                return true
             }
-            return true
-        } else if (!ObjectHelper.isEqual(this.data, data)) {
-            this.data = data
-            this.items = [
-                new CloseWindowMenuItem(WINDOWS.ANIMATION, this),
-                new CreateAnimationWrapperMenuItem(this, this.getUnit(), this.getAnimationController(), this.getAnimation())
-            ]
-            return true
         }
     }
 
