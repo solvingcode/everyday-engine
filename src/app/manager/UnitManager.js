@@ -589,17 +589,6 @@ export default class UnitManager extends UnitManagerData {
     /**
      * @param {World} world
      * @param {Unit} unit
-     * @param {Animation} animation
-     * @return {boolean}
-     */
-    isUnitHasAnimation(world, unit, animation) {
-        const animationScript = this.getUnitAnimationController(world, unit)
-        return animation.getControllerAssetId() === animationScript.getAssetId()
-    }
-
-    /**
-     * @param {World} world
-     * @param {Unit} unit
      * @return {AScript}
      */
     getUnitAnimationController(world, unit) {

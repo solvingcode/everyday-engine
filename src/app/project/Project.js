@@ -13,6 +13,11 @@ class Project {
      */
     static instance
 
+    /**
+     * @type {FileSystemFileHandle}
+     */
+    handle
+
     constructor() {
         this.storage = Storage.get()
         this.saveFormat = Storage.format.XML
@@ -20,10 +25,28 @@ class Project {
         this.exportFormat = Storage.format.WEB
     }
 
-    async save() {
+    /**
+     * @return {FileSystemFileHandle}
+     */
+    getHandle(){
+        return this.handle
+    }
+
+    /**
+     * @param {FileSystemFileHandle} handle
+     */
+    setHandle(handle){
+        this.handle = handle
+    }
+
+    /**
+     * @param {FileSystemFileHandle} handle
+     * @return {Promise<void>}
+     */
+    async save(handle) {
         await this.storage.save(Storage.type.WORLD, World.get())
         const dataExport = this.storage.export(Storage.type.WORLD, this.saveFormat)
-        FileHelper.save(dataExport, this.saveFileType)
+        FileHelper.save(dataExport, this.saveFileType, '', handle)
     }
 
     /**

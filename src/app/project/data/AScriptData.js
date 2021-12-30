@@ -24,6 +24,11 @@ export default class AScriptData extends Data{
     variables
 
     /**
+     * @param {AnimationScript[]}
+     */
+    animations
+
+    /**
      * @type {string}
      */
     status
@@ -48,6 +53,7 @@ export default class AScriptData extends Data{
         this.status = STATUS.NEW
         this.functions = []
         this.variables = []
+        this.animations = []
         this.parentName = ''
     }
 
@@ -136,6 +142,20 @@ export default class AScriptData extends Data{
     }
 
     /**
+     * @return {AnimationScript[]}
+     */
+    getAnimations(){
+        return this.animations
+    }
+
+    /**
+     * @param {AnimationScript[]} animations
+     */
+    setAnimations(animations){
+        this.animations = animations
+    }
+
+    /**
      * @param {AScriptFunction[]} functions
      */
     concatFunctions(functions){
@@ -143,10 +163,17 @@ export default class AScriptData extends Data{
     }
 
     /**
-     * @param {DynamicAttribute[]} variables
+     * @param {VariableScript[]} variables
      */
     concatVariables(variables){
         this.setVariables(variables)
+    }
+
+    /**
+     * @param {AnimationScript[]} animations
+     */
+    concatAnimations(animations){
+        this.setAnimations(animations)
     }
 
     /**

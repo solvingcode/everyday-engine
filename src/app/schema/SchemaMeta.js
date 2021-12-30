@@ -38,6 +38,7 @@ import FunctionScript from '../flow/FunctionScript.js'
 import LayerGroupPreference from '../preference/layerGroup/LayerGroupPreference.js'
 import LayerGroup from '../preference/layerGroup/LayerGroup.js'
 import VariableScript from '../flow/VariableScript.js'
+import AnimationScript from '../flow/AnimationScript.js'
 
 /**
  * Define the schema of project data.
@@ -672,9 +673,6 @@ export default {
                                     lengthSecond: {
                                         type: TYPES.NUMBER
                                     },
-                                    controllerAssetId: {
-                                        type: TYPES.NUMBER
-                                    },
                                     properties: {
                                         type: Array,
                                         meta: {
@@ -768,6 +766,28 @@ export default {
                                                         type: TYPES.BOOLEAN
                                                     },
                                                     varStatic: {
+                                                        type: TYPES.BOOLEAN
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    },
+                                    animations: {
+                                        type: Array,
+                                        meta: {
+                                            element: {
+                                                prototype: AnimationScript,
+                                                meta: {
+                                                    id: {
+                                                        type: TYPES.NUMBER
+                                                    },
+                                                    name: {
+                                                        type: TYPES.STRING
+                                                    },
+                                                    animation: {
+                                                        type: TYPES.ANIMATION
+                                                    },
+                                                    selected: {
                                                         type: TYPES.BOOLEAN
                                                     }
                                                 }

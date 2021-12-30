@@ -54,7 +54,8 @@ export default class Animation extends AnimationData {
      */
     getProperty(componentName, attributeName, childUnit) {
         return this.getProperties().find(prop => prop.getComponentName() === componentName &&
-            prop.getAttributeName() === attributeName && prop.getChildName() === (childUnit ? childUnit.getName() : null))
+            prop.getAttributeName() === attributeName &&
+            (childUnit ? prop.getChildName() === childUnit.getName() : !prop.getChildName()))
     }
 
     /**

@@ -41,14 +41,6 @@ export default class AnimationManager extends AnimationManagerData {
     }
 
     /**
-     * @param {number} assetId
-     * @return {Animation[]}
-     */
-    findAnimationsByControllerAssetId(assetId) {
-        return this.animations.filter(animation => animation.getControllerAssetId() === assetId)
-    }
-
-    /**
      * @param {string} name
      * @return {Animation}
      */

@@ -601,4 +601,15 @@ export default class ScriptHelper {
         }
         return component
     }
+
+    /**
+     * @param {AScript} animationController
+     * @param {World} world
+     * @return {Animation[]}
+     */
+    static getAnimations(animationController, world){
+        return animationController.getAnimations().map(animationScript =>
+            world.getAnimationManager()
+                .findById(parseInt(animationScript.getAnimation())))
+    }
 }

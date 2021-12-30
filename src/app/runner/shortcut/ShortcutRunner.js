@@ -2,6 +2,8 @@ import Runner from '../Runner.js'
 import {KeyCode} from '../../core/Keyboard.js'
 import Window from '../../core/Window.js'
 import StateManager from '../../state/StateManager.js'
+import OpenDialogLoadProjectAction from '../action/project/OpenDialogLoadProjectAction.js'
+import OpenDialogSaveProjectAction from '../action/project/OpenDialogSaveProjectAction.js'
 
 export class ShortcutRunner extends Runner {
 
@@ -50,9 +52,9 @@ export class ShortcutRunner extends Runner {
                 stateManager.startState('ACTION_MOVE_KEY', 1)
             }
         } else if (keyboard.isOpenShortcutPressed()) {
-            stateManager.startState('ACTION_LOAD_PROJECT', 1)
+            stateManager.startState(OpenDialogLoadProjectAction.STATE, 1)
         } else if (keyboard.isSaveShortcutPressed()) {
-            stateManager.startState('ACTION_SAVE_PROJECT', 1)
+            stateManager.startState(OpenDialogSaveProjectAction.STATE, 1)
         } else if (keyboard.isKeyPressed(KeyCode.CTRL) && keyboard.isKeyReleased(KeyCode.B)) {
             stateManager.startState('ACTION_EXPORT_PROJECT', 1)
         }

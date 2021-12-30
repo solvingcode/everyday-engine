@@ -94,6 +94,20 @@ class Menu {
      * @param {Object} parent
      */
     prepare(item, parent = null) {
+        if (item.isStartDragging()) {
+            if (item.props.cursor !== 'start-drag') {
+                item.props.cursor = 'start-drag'
+                item.setUpdated(true)
+            }
+        } else if (item.isEndDragging()) {
+            if (item.props.cursor !== 'end-drag') {
+                item.props.cursor = 'end-drag'
+                item.setUpdated(true)
+            }
+        } else if (item.props.cursor !== '') {
+            item.props.cursor = ''
+            item.setUpdated(true)
+        }
         if (item.isValid()) {
             const existItem = this.items.find(pItem => pItem.element === item)
             const index = item.index
@@ -117,34 +131,10 @@ class Menu {
     /**
      * Find menu item by index and zone
      * @param {Number} index
-     * @param {String} zone
-     * @return {MenuItemUI}
-     */
-    findItemByZoneAndIndex(index, zone) {
-        const itemsZone = this.items.filter(pItem => pItem.element.zone === zone)
-        return itemsZone.find(itemZone => itemZone.index === index)
-    }
-
-    /**
-     * Find menu item by index and zone
-     * @param {Number} index
      * @return {MenuItemUI}
      */
     findItemByIndex(index) {
         return this.items.find(pItem => pItem.index === index)
-    }
-
-    /**
-     * @param {Number} index (must start from 0)
-     * @param {String} zone
-     * @param {Number} parentIndex (must start from 0)
-     */
-    findItemByZoneAndParent(index, zone, parentIndex) {
-        const itemsZone = this.items.filter(pItem =>
-            pItem.element.zone === zone
-            && ((!parentIndex && !pItem.parent) || (pItem.parent && pItem.parent.index === parentIndex))
-        )
-        return itemsZone[index]
     }
 
     /**
@@ -199,7 +189,7 @@ class Menu {
     /**
      * @param {MenuItemUI} menuItem
      */
-    dblClickItem(menuItem){
+    dblClickItem(menuItem) {
         menuItem.element.dblClickState()
     }
 
@@ -262,11 +252,11 @@ class Menu {
      * @param {MenuItemUI} menuItemUI
      * @return {MenuItemUI}
      */
-    findSection(menuItemUI){
-        if(menuItemUI){
-            if(menuItemUI.element.isSection()){
+    findSection(menuItemUI) {
+        if (menuItemUI) {
+            if (menuItemUI.element.isSection()) {
                 return menuItemUI
-            }else{
+            } else {
                 return this.findSection(menuItemUI.parent)
             }
         }
@@ -275,24 +265,24 @@ class Menu {
     /**
      * @return {MenuItemUI}
      */
-    getActiveSection(){
+    getActiveSection() {
         return this.items.find(menuItemUI => menuItemUI.element.isSectionActive())
     }
 
     /**
      * @return {MenuItemUI[]}
      */
-    getSections(){
-       return this.items.filter(menuItemUI => menuItemUI.element.isSection())
+    getSections() {
+        return this.items.filter(menuItemUI => menuItemUI.element.isSection())
     }
 
     /**
      * @param {MenuItemUI} menuItemUI
      */
-    activateSection(menuItemUI){
+    activateSection(menuItemUI) {
         this.getSections().forEach(pSection => pSection.element.setSectionActive(false))
         const section = this.findSection(menuItemUI)
-        if(section){
+        if (section) {
             section.element.setSectionActive(true)
         }
     }

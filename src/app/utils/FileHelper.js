@@ -9,13 +9,24 @@ class FileHelper {
      * @param {string} content
      * @param {string} type
      * @param {string} filename
+     * @param {FileSystemFileHandle} handle
      */
-    static save(content, type, filename = '') {
+    static save(content, type, filename, handle) {
         const blob = content instanceof Blob ? content : new Blob([content], {type})
-        const a = document.createElement('a')
-        a.download = filename || 'webEngine'
-        a.href = window.URL.createObjectURL(blob)
-        a.click()
+        if (handle) {
+            handle.then(fileHandle => {
+                fileHandle.createWritable().then(writableStream => {
+                    writableStream.write(blob).then(() => {
+                        writableStream.close()
+                    })
+                })
+            })
+        } else {
+            const a = document.createElement('a')
+            a.download = filename || 'webEngine'
+            a.href = window.URL.createObjectURL(blob)
+            a.click()
+        }
     }
 
     /**
@@ -32,7 +43,7 @@ class FileHelper {
                 reader.onerror = reject
                 reader.readAsText(file)
             })
-        }else{
+        } else {
             throw new ClientError(`Cannot load project (format not supported "${file.type}")`)
         }
     }
@@ -49,34 +60,42 @@ class FileHelper {
 
     /**
      * @param {string} fileId
-     * @return {File[]}
+     * @param {*} options
+     * @return {Promise<File[]>}
      */
-    static openFileUpload(fileId) {
-        let fileInput = document.getElementById(fileId)
-        if (!fileInput) {
-            fileInput = document.createElement('input')
-            fileInput.type = 'file'
-            fileInput.id = fileId
-            fileInput.multiple = true
-            document.body.appendChild(fileInput)
-            fileInput.click()
+    static async openFileUpload(fileId, options = {}) {
+        if (window.showOpenFilePicker) {
+            const fileHandles = await window.showOpenFilePicker(options)
+            return Promise.all(fileHandles.map(fileHandle => fileHandle.getFile()))
+        } else {
+            let fileInput = document.getElementById(fileId)
+            if (!fileInput) {
+                fileInput = document.createElement('input')
+                fileInput.type = 'file'
+                fileInput.id = fileId
+                fileInput.multiple = true
+                document.body.appendChild(fileInput)
+                fileInput.click()
+            }
+            return fileInput.files
         }
-        return fileInput.files
     }
 
     /**
      * @param {string} fileId
      */
     static removeFileUpload(fileId) {
-        document.body.removeChild(document.getElementById(fileId))
+        if (document.getElementById(fileId)) {
+            document.body.removeChild(document.getElementById(fileId))
+        }
     }
 
     /**
      * @param {string} name
      * @return {string}
      */
-    static getFilename(name){
-        if(name){
+    static getFilename(name) {
+        if (name) {
             return name.replace(/(.+)(\.[a-zA-Z]+)/, '$1')
         }
         return ''
@@ -98,3 +117,22 @@ class FileHelper {
 }
 
 export default FileHelper
+
+export const EXTENSIONS = {
+    IMG: {
+        type: 'image/*',
+        ext: ['.png', '.jpeg', '.jpg']
+    },
+    XML: {
+        type: 'text/xml',
+        ext: ['.xml']
+    },
+    AUDIO: {
+        type: 'audio/*',
+        ext: ['.wav', '.mpeg']
+    },
+    FONT: {
+        type: 'font/*',
+        ext: ['.ttf']
+    }
+}

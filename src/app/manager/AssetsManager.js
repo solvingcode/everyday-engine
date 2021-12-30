@@ -127,14 +127,14 @@ export default class AssetsManager extends AssetsManagerData {
     /**
      * @param {Folder} folder
      * @param {Class<AssetAnimationXml>} type
-     * @param {AScript} animationController
+     * @param {AnimatorScript} animationController
      * @param {Storage} storage
      * @return {Asset}
      */
     async createAnimation(folder, type, animationController, storage) {
         const assetName = this.generateUniqAssetName('Animation', folder.getId())
         const animation = new Animation(Maths.generateId(), assetName)
-        animation.setControllerAssetId(animationController.getAssetId())
+        animationController.addAnimation(animation)
         return this.createAsset(
             null,
             type,

@@ -307,7 +307,7 @@ class HtmlUIRenderer extends UIRenderer {
      * @param {MenuItemUI} item
      * @param {HTMLElement} el
      */
-    updateStyle(item, el){
+    updateStyle(item, el) {
         const style = this.getStyle(item)
         const className = this.getClassName(item)
         if (el.style.cssText !== style) {
@@ -346,11 +346,8 @@ class HtmlUIRenderer extends UIRenderer {
         if (item.element.isCollapsed()) {
             classNames.push('collapsed')
         }
-        if (item.element.isStartDragging()) {
-            classNames.push('start-drag')
-        }
-        if (item.element.isEndDragging()) {
-            classNames.push('end-drag')
+        if (item.element.props.cursor) {
+            classNames.push(item.element.props.cursor)
         }
         !item.element.isEnabled() && classNames.push('disabled')
         item.element.isReadOnly() && classNames.push('readonly')

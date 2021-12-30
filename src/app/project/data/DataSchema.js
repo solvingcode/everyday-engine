@@ -213,7 +213,7 @@ import NormalizeVectorFunction from '../../flow/function/native/basic/NormalizeV
 import GetterFunction from '../../flow/function/native/basic/GetterFunction.js'
 import DestroyUnitFunction from '../../flow/function/native/unit/DestroyUnitFunction.js'
 import VectorLerpFunction from '../../flow/function/native/basic/VectorLerpFunction.js'
-import AnimationScript from '../../flow/AnimationScript.js'
+import AnimatorScript from '../../flow/AnimatorScript.js'
 import FunctionScript from '../../flow/FunctionScript.js'
 import ComponentVariableNode from '../../flow/node/variable/ComponentVariableNode.js'
 import NumberVariableNode from '../../flow/node/variable/NumberVariableNode.js'
@@ -277,6 +277,7 @@ import ABranch from '../../flow/branch/ABranch.js'
 import BranchNode from '../../flow/node/BranchNode.js'
 import SetAttrClassNode from '../../flow/node/variable/SetAttrClassNode.js'
 import GetAttrClassNode from '../../flow/node/variable/GetAttrClassNode.js'
+import AnimationScript from '../../flow/AnimationScript.js'
 
 /**
  * @class {DataSchema}
@@ -489,7 +490,7 @@ class DataSchema {
         {id: 1930, type: GetterFunction},
         {id: 1940, type: DestroyUnitFunction},
         {id: 1950, type: VectorLerpFunction},
-        {id: 1960, type: AnimationScript},
+        {id: 1960, type: AnimatorScript},
         {id: 1970, type: FunctionScript},
         {id: 1980, type: ComponentVariableNode},
         {id: 1990, type: NumberVariableNode},
@@ -551,6 +552,7 @@ class DataSchema {
         {id: 2540, type: BranchNode},
         {id: 2550, type: GetAttrClassNode},
         {id: 2560, type: SetAttrClassNode},
+        {id: 2570, type: AnimationScript},
     ]
 
     /**

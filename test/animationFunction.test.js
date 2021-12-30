@@ -4,7 +4,7 @@ import EventNode from '../src/app/flow/node/EventNode.js'
 import Animation from '../src/app/animation/Animation.js'
 import AnimationNode from '../src/app/flow/node/AnimationNode.js'
 import OnAnimationStartEvent from '../src/app/flow/event/native/OnAnimationStartEvent.js'
-import AnimationScript from '../src/app/flow/AnimationScript.js'
+import AnimatorScript from '../src/app/flow/AnimatorScript.js'
 import MeshUnit from '../src/app/unit/type/MeshUnit.js'
 import AnimationComponent from '../src/app/component/internal/AnimationComponent.js'
 import AnimationScriptExecutor from '../src/app/executor/type/AnimationScriptExecutor.js'
@@ -27,7 +27,7 @@ test('Create and compile animation when (startEvent -> animation)', function () 
 
     functionRegistry.init()
 
-    const script = new AnimationScript('animationScript')
+    const script = new AnimatorScript('animationScript')
     const scriptFunction = new FunctionScript('main')
     script.addFunction(scriptFunction)
     const animation = new Animation(1, 'Animation')
@@ -60,7 +60,7 @@ test('Create and compile animation when (startEvent -> animation1 -> animation2)
 
     functionRegistry.init()
 
-    const script = new AnimationScript('animationScript')
+    const script = new AnimatorScript('animationScript')
     const scriptFunction = new FunctionScript('main')
     script.addFunction(scriptFunction)
     const animation1 = new Animation(1, 'Animation1')
@@ -109,7 +109,7 @@ test('Create and compile animation when (startEvent -> animation1 -> condition -
 
     functionRegistry.init()
 
-    const script = new AnimationScript('animationScript')
+    const script = new AnimatorScript('animationScript')
     const scriptFunction = new FunctionScript('main')
     script.addFunction(scriptFunction)
     const animation1 = new Animation(1, 'Animation1')
@@ -207,7 +207,7 @@ test('Create and compile animation when (startEvent -> animation1 -> condition -
 
     functionRegistry.init()
 
-    const script = new AnimationScript('animationScript')
+    const script = new AnimatorScript('animationScript')
     const scriptFunction = new FunctionScript('main')
     script.addFunction(scriptFunction)
     const animation1 = new Animation(1, 'Animation1')
@@ -314,7 +314,7 @@ test('Create and compile animation when (startEvent -> animation1 -> anyStartEve
 
     functionRegistry.init()
 
-    const script = new AnimationScript('animationScript')
+    const script = new AnimatorScript('animationScript')
     const scriptFunction = new FunctionScript('main')
     script.addFunction(scriptFunction)
     const animation1 = new Animation(1, 'Animation1')

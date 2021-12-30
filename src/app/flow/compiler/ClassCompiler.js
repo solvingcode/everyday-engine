@@ -92,12 +92,12 @@ export default class ClassCompiler extends Compiler {
         })
 
         //create animations
-        world.getAnimationManager().findAnimationsByControllerAssetId(script.getAssetId())
+        ScriptHelper.getAnimations(script, world)
             .forEach(animation => {
                 const animationFuncName = `Animation ${animation.getName()}`
                 const animationFunction = new AAnimation(animationFuncName, animation.getId())
                 animationFunction.setAccess(ACCESSOR.PUBLIC)
-                if(!functionRegistry.getInstance(animationFuncName)){
+                if (!functionRegistry.getInstance(animationFuncName)) {
                     functionRegistry.tryRegister(animationFunction)
                 }
             })

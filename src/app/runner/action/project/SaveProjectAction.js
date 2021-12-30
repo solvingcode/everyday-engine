@@ -1,16 +1,17 @@
 import Action from '../Action.js'
 import Project from '../../../project/Project.js'
 
-class SaveProjectAction extends Action {
+export default class SaveProjectAction extends Action {
+
+    static STATE = 'ACTION_SAVE_PROJECT'
 
     /**
      * @override
      */
     static run() {
-        Project.get().save()
+        const project = Project.get()
+        project.save(project.getHandle())
         return true
     }
 
 }
-
-export default SaveProjectAction

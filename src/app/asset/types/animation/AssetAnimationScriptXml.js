@@ -49,7 +49,7 @@ export default class AssetAnimationScriptXml extends AssetScript{
 
     /**
      * @override
-     * @param {AnimationScript} flow
+     * @param {AnimatorScript} flow
      * @param {Asset} asset
      */
     async generate(flow, asset){

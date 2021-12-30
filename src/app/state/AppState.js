@@ -520,6 +520,9 @@ AppState.States = {
     ACTION_ATTACH_EDITOR_START: {history: true},
     ACTION_ATTACH_EDITOR_PROGRESS: {history: false},
     ACTION_ATTACH_EDITOR_STOP: {history: true},
+    ACTION_ATTACH_FRAME_START: {history: true},
+    ACTION_ATTACH_FRAME_PROGRESS: {history: false},
+    ACTION_ATTACH_FRAME_STOP: {history: true},
     ACTION_ATTACH_COMPONENT_VALUE_START: {history: true},
     ACTION_ATTACH_COMPONENT_VALUE_PROGRESS: {history: false},
     ACTION_ATTACH_COMPONENT_VALUE_STOP: {history: true},
@@ -641,6 +644,15 @@ AppState.States = {
     ACTION_COMPILE_ALL_SCRIPT_START: {history: false},
     ACTION_COMPILE_ALL_SCRIPT_PROGRESS: {history: false},
     ACTION_COMPILE_ALL_SCRIPT_STOP: {history: false},
+    ACTION_OPEN_DIALOG_ADD_ASSET_START: {history: false},
+    ACTION_OPEN_DIALOG_ADD_ASSET_PROGRESS: {history: false},
+    ACTION_OPEN_DIALOG_ADD_ASSET_STOP: {history: false},
+    ACTION_OPEN_DIALOG_LOAD_PROJECT_START: {history: false},
+    ACTION_OPEN_DIALOG_LOAD_PROJECT_PROGRESS: {history: false},
+    ACTION_OPEN_DIALOG_LOAD_PROJECT_STOP: {history: false},
+    ACTION_OPEN_DIALOG_SAVE_PROJECT_START: {history: false},
+    ACTION_OPEN_DIALOG_SAVE_PROJECT_PROGRESS: {history: false},
+    ACTION_OPEN_DIALOG_SAVE_PROJECT_STOP: {history: false},
 }
 
 export default AppState

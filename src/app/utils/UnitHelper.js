@@ -28,6 +28,7 @@ import UIButtonComponent from '../component/internal/ui/UIButtonComponent.js'
 import RectSelectorUnitInstant from '../unit/instant/type/internal/edit/RectSelectorUnitInstant.js'
 import CircleSelectorUnitInstant from '../unit/instant/type/internal/edit/CircleSelectorUnitInstant.js'
 import GUIPropertyComponent from '../component/internal/gui/property/GUIPropertyComponent.js'
+import ScriptHelper from './ScriptHelper.js'
 
 export default class UnitHelper {
 
@@ -817,7 +818,7 @@ export default class UnitHelper {
     static getAnimations(world, unit) {
         const animationController = this.getAnimationController(world, unit)
         if (animationController) {
-            return world.getAnimationManager().findAnimationsByControllerAssetId(animationController.getAssetId())
+            return ScriptHelper.getAnimations(animationController, world)
         }
     }
 

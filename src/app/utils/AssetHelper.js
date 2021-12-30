@@ -11,7 +11,7 @@ import Animation from '../animation/Animation.js'
 import * as StorageConstant from '../constant/StorageConstant.js'
 import StorageHelper from './StorageHelper.js'
 import AssetAnimationXml from '../asset/types/animation/AssetAnimationXml.js'
-import AnimationScript from '../flow/AnimationScript.js'
+import AnimatorScript from '../flow/AnimatorScript.js'
 import ScriptHelper from './ScriptHelper.js'
 import ClassScript from '../flow/ClassScript.js'
 import AScript from '../flow/AScript.js'
@@ -149,7 +149,7 @@ export default class AssetHelper {
             case Animation:
                 storageType = StorageConstant.type.ANIMATION
                 break
-            case AnimationScript:
+            case AnimatorScript:
                 storageType = StorageConstant.type.SCRIPT
                 break
             case ClassScript:

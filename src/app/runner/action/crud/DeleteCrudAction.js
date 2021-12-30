@@ -5,6 +5,8 @@ import LayerGroup from '../../../preference/layerGroup/LayerGroup.js'
 import VariableScript from '../../../flow/VariableScript.js'
 import AssetHelper from '../../../utils/AssetHelper.js'
 import Storage from '../../../core/Storage.js'
+import AnimationScript from '../../../flow/AnimationScript.js'
+import AnimatorScript from '../../../flow/AnimatorScript.js'
 
 export default class DeleteCrudAction extends Action {
 
@@ -22,6 +24,13 @@ export default class DeleteCrudAction extends Action {
             const script = World.get().getScriptManager().getSelected(World.get().getTabManager())
             if (script) {
                 script.deleteVariable(bind)
+                const assetTab = World.get().getTabManager().getSelectedContentData()
+                AssetHelper.regenerate(assetTab, script, Storage.get())
+            }
+        } else if (bind instanceof AnimationScript) {
+            const script = World.get().getScriptManager().getSelected(World.get().getTabManager())
+            if (script instanceof AnimatorScript) {
+                script.deleteAnimation(bind)
                 const assetTab = World.get().getTabManager().getSelectedContentData()
                 AssetHelper.regenerate(assetTab, script, Storage.get())
             }

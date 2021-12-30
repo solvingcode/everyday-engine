@@ -61,6 +61,7 @@ import EditCrudPopupButtonMenuItem from '../layout/items/crud/edit/EditCrudPopup
 import DeleteCrudMenuItem from '../layout/items/crud/delete/DeleteCrudMenuItem.js'
 import VariableScript from '../flow/VariableScript.js'
 import Tag from '../preference/tag/Tag.js'
+import AnimationScript from '../flow/AnimationScript.js'
 
 export default class OptionHelper {
 
@@ -128,6 +129,11 @@ export default class OptionHelper {
             bindObject instanceof Tag) {
             options.push(...[
                 new EditCrudPopupButtonMenuItem(bindObject),
+                new DeleteCrudMenuItem(null, bindObject)
+            ])
+        }
+        if (bindObject instanceof AnimationScript) {
+            options.push(...[
                 new DeleteCrudMenuItem(null, bindObject)
             ])
         }

@@ -1,5 +1,6 @@
 import FormMenuItem from '../../form/FormMenuItem.js'
 import Layout from '../../../Layout.js'
+import World from '../../../../world/World.js'
 
 export default class AddCrudFormMenuItem extends FormMenuItem {
     /**
@@ -19,7 +20,7 @@ export default class AddCrudFormMenuItem extends FormMenuItem {
      * @override
      */
     generateFields() {
-        return this.data.formData.generateFields()
+        return this.data.formData.generateFields(World.get())
     }
 
     /**

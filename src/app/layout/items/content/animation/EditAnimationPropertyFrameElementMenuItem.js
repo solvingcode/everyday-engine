@@ -12,6 +12,7 @@ export default class EditAnimationPropertyFrameElementMenuItem extends ListSelec
         super(parent, data, {
             name: 'image',
             type: Layout.type.LIST_ELEMENT,
+            dragStateCode: 'ACTION_ATTACH_FRAME',
             stateCode: 'ACTION_SELECT_LIST_TIMELINE'
         })
     }
@@ -38,5 +39,12 @@ export default class EditAnimationPropertyFrameElementMenuItem extends ListSelec
      */
     getName() {
         return ''
+    }
+
+    /**
+     * @override
+     */
+    isDraggable() {
+        return true
     }
 }

@@ -132,6 +132,10 @@ import DeleteCrudAction from './crud/DeleteCrudAction.js'
 import CompileAllScriptAction from './script/CompileAllScriptAction.js'
 import NewNodeAction from './script/NewNodeAction.js'
 import DeleteSelectedEdgeAction from './script/DeleteSelectedEdgeAction.js'
+import AttachFrameAction from './assets/AttachFrameAction.js'
+import OpenDialogAddAssetAction from './assets/OpenDialogAddAssetAction.js'
+import OpenDialogLoadProjectAction from './project/OpenDialogLoadProjectAction.js'
+import OpenDialogSaveProjectAction from './project/OpenDialogSaveProjectAction.js'
 
 /**
  * Action Runner class.
@@ -194,8 +198,11 @@ class ActionRunner extends Runner {
             DETACH_CAMERA: DetachCameraAction,
             MOVE_CAMERA: MoveCameraAction,
             SAVE_PROJECT: SaveProjectAction,
+            OPEN_DIALOG_SAVE_PROJECT: OpenDialogSaveProjectAction,
             LOAD_PROJECT: LoadProjectAction,
+            OPEN_DIALOG_LOAD_PROJECT: OpenDialogLoadProjectAction,
             ADD_ASSET: AddAssetAction,
+            OPEN_DIALOG_ADD_ASSET: OpenDialogAddAssetAction,
             ADD_FOLDER: AddFolderAction,
             ADD_MASK: AddMaskAction,
             ADD_CRUD: AddCrudAction,
@@ -278,6 +285,7 @@ class ActionRunner extends Runner {
             ATTACH_FOLDER: AttachFolderAction,
             ATTACH_ASSET: AttachAssetAction,
             ATTACH_EDITOR: AttachEditorAction,
+            ATTACH_FRAME: AttachFrameAction,
             ATTACH_COMPONENT_VALUE: AttachComponentValueAction,
             CLOSE_CONTENT_POPUP: ClosePopupAction,
             CREATE_UNIT_INSTANT: CreateUnitInstantAction,

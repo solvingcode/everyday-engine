@@ -3,6 +3,7 @@ import Layout from '../../../Layout.js'
 import World from '../../../../world/World.js'
 import UnitSelector from '../../../../selector/UnitSelector.js'
 import AnimationComponent from '../../../../component/internal/AnimationComponent.js'
+import ScriptHelper from '../../../../utils/ScriptHelper.js'
 
 export default class EditAnimationSelectMenuItem extends FormMenuItem {
     /**
@@ -27,9 +28,8 @@ export default class EditAnimationSelectMenuItem extends FormMenuItem {
         const animationController = world.getUnitManager().getUnitAnimationController(world, unit)
         let list = []
         if (animationController) {
-            list = world.getAnimationManager()
-                .findAnimationsByControllerAssetId(animationController.getAssetId())
-                .map(pAnimation => ({value: pAnimation.getId(), label: pAnimation.getName()}))
+            list = ScriptHelper.getAnimations(animationController, world).map(animation =>
+                ({value: animation.getId(), label: animation.getName()}))
         }
         return [
             {
