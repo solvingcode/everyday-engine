@@ -134,5 +134,9 @@ export const EXTENSIONS = {
     FONT: {
         type: 'font/*',
         ext: ['.ttf']
+    },
+    ZIP: {
+        type: 'application/zip',
+        ext: ['.zip']
     }
 }

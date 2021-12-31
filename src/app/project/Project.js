@@ -77,10 +77,14 @@ class Project {
         }
     }
 
-    async export() {
+    /**
+     * @param {FileSystemFileHandle} handle
+     * @return {Promise<void>}
+     */
+    async export(handle) {
         await this.storage.saveForGame(Storage.type.WORLD, World.get())
         const dataExport = this.storage.export(Storage.type.WORLD, this.exportFormat)
-        await this.getProjectExporter(this.exportFormat).export(dataExport)
+        await this.getProjectExporter(this.exportFormat).export(dataExport, handle)
     }
 
     /**

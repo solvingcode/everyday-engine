@@ -136,6 +136,7 @@ import AttachFrameAction from './assets/AttachFrameAction.js'
 import OpenDialogAddAssetAction from './assets/OpenDialogAddAssetAction.js'
 import OpenDialogLoadProjectAction from './project/OpenDialogLoadProjectAction.js'
 import OpenDialogSaveProjectAction from './project/OpenDialogSaveProjectAction.js'
+import OpenDialogExportProjectAction from './project/OpenDialogExportProjectAction.js'
 
 /**
  * Action Runner class.
@@ -216,6 +217,7 @@ class ActionRunner extends Runner {
             EDIT_ASSET: EditAssetAction,
             NEW_PROJECT: NewProjectAction,
             EXPORT_PROJECT: ExportProjectAction,
+            OPEN_DIALOG_EXPORT_PROJECT: OpenDialogExportProjectAction,
             ZOOM_CAMERA: ZoomInOutCameraAction,
             FORM_UPDATE: FormUpdateAction,
             ADD_CAMERA: AddCameraAction,

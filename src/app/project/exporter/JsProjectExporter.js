@@ -10,12 +10,12 @@ export default class JsProjectExporter extends ProjectExporter {
     /**
      * @override
      */
-    async export(data) {
+    async export(data, handle) {
         const libs = await this.getLibs()
         const entryPoint = this.getEntryPoint()
         const worldData = {name: 'world.js', data}
         const files = entryPoint.concat(libs, worldData)
-        ZipHelper.save(files, 'game')
+        ZipHelper.save(files, handle, 'game')
     }
 
     /**

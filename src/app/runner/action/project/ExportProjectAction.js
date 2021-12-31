@@ -1,16 +1,18 @@
 import Action from '../Action.js'
 import Project from '../../../project/Project.js'
+import StateManager from '../../../state/StateManager.js'
 
-class ExportProjectAction extends Action {
+export default class ExportProjectAction extends Action {
+
+    static STATE = 'ACTION_EXPORT_PROJECT'
 
     /**
      * @override
      */
     static run() {
-        Project.get().export()
+        const {handle} = StateManager.get().getNextProgressData(this.STATE)
+        Project.get().export(handle)
         return true
     }
 
 }
-
-export default ExportProjectAction
