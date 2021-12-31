@@ -67,7 +67,8 @@ class ListMenuItem extends PanelMenuItem {
                 const element = this.items[index]
                 const data = {bind: each, list}
                 const listElementClass = this.getListElementFormClass()
-                if (element && (element.data.bind !== each || !_.isEqual(element.data.list, list))) {
+                if (element && (element.data.bind !== each || !_.isEqual(element.data.list, list)
+                    || element.props.name !== element.getName())) {
                     element.setData(data)
                     updated = true
                 }

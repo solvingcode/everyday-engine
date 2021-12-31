@@ -278,6 +278,8 @@ import BranchNode from '../../flow/node/BranchNode.js'
 import SetAttrClassNode from '../../flow/node/variable/SetAttrClassNode.js'
 import GetAttrClassNode from '../../flow/node/variable/GetAttrClassNode.js'
 import AnimationScript from '../../flow/AnimationScript.js'
+import InputScript from '../../flow/InputScript.js'
+import OutputScript from '../../flow/OutputScript.js'
 
 /**
  * @class {DataSchema}
@@ -553,6 +555,8 @@ class DataSchema {
         {id: 2550, type: GetAttrClassNode},
         {id: 2560, type: SetAttrClassNode},
         {id: 2570, type: AnimationScript},
+        {id: 2580, type: InputScript},
+        {id: 2590, type: OutputScript},
     ]
 
     /**

@@ -28,7 +28,9 @@ export default class EditAnimationSelectMenuItem extends FormMenuItem {
         const animationController = world.getUnitManager().getUnitAnimationController(world, unit)
         let list = []
         if (animationController) {
-            list = ScriptHelper.getAnimations(animationController, world).map(animation =>
+            list = ScriptHelper.getAnimations(animationController, world)
+                .filter(animation => animation)
+                .map(animation =>
                 ({value: animation.getId(), label: animation.getName()}))
         }
         return [

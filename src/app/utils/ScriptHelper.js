@@ -572,6 +572,16 @@ export default class ScriptHelper {
 
     /**
      * @param {string} name
+     * @return {string}
+     */
+    static extractNameFromIO(name) {
+        const parseName = name.replace(/^(Input|Output) (.+)$/, '$2')
+        const nameParts = parseName.split('.')
+        return nameParts[2]
+    }
+
+    /**
+     * @param {string} name
      * @return {{component: string, attribute: string}}
      */
     static extractComponentName(name) {

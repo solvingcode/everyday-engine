@@ -17,6 +17,14 @@ export default class ListElementMenuItem extends MenuItem {
     /**
      * @override
      */
+    setData(data){
+        super.setData(data)
+        this.props.name = this.getName()
+    }
+
+    /**
+     * @override
+     */
     doSetData(data) {
     }
 

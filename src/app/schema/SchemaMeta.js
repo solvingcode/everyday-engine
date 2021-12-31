@@ -39,6 +39,8 @@ import LayerGroupPreference from '../preference/layerGroup/LayerGroupPreference.
 import LayerGroup from '../preference/layerGroup/LayerGroup.js'
 import VariableScript from '../flow/VariableScript.js'
 import AnimationScript from '../flow/AnimationScript.js'
+import InputScript from '../flow/InputScript.js'
+import OutputScript from '../flow/OutputScript.js'
 
 /**
  * Define the schema of project data.
@@ -822,6 +824,38 @@ export default {
                                                     },
                                                     access: {
                                                         type: TYPES.NUMBER
+                                                    },
+                                                    functionInputs: {
+                                                        type: Array,
+                                                        meta: {
+                                                            element: {
+                                                                prototype: InputScript,
+                                                                meta: {
+                                                                    definition: {
+                                                                        type: TYPES.DYNAMIC_ATTRIBUTE
+                                                                    },
+                                                                    selected: {
+                                                                        type: TYPES.BOOLEAN
+                                                                    }
+                                                                }
+                                                            }
+                                                        }
+                                                    },
+                                                    functionOutputs: {
+                                                        type: Array,
+                                                        meta: {
+                                                            element: {
+                                                                prototype: OutputScript,
+                                                                meta: {
+                                                                    definition: {
+                                                                        type: TYPES.DYNAMIC_ATTRIBUTE
+                                                                    },
+                                                                    selected: {
+                                                                        type: TYPES.BOOLEAN
+                                                                    }
+                                                                }
+                                                            }
+                                                        }
                                                     },
                                                     nodes: {
                                                         type: Array,

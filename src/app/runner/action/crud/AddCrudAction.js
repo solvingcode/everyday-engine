@@ -7,6 +7,8 @@ import AssetHelper from '../../../utils/AssetHelper.js'
 import Storage from '../../../core/Storage.js'
 import AnimationScript from '../../../flow/AnimationScript.js'
 import AnimatorScript from '../../../flow/AnimatorScript.js'
+import InputScript from '../../../flow/InputScript.js'
+import OutputScript from '../../../flow/OutputScript.js'
 
 export default class AddCrudAction extends Action {
 
@@ -28,13 +30,31 @@ export default class AddCrudAction extends Action {
                 const assetTab = World.get().getTabManager().getSelectedContentData()
                 AssetHelper.regenerate(assetTab, script, Storage.get())
             }
+        } else if (formData instanceof InputScript) {
+            const script = world.getScriptManager().getSelected(World.get().getTabManager())
+            const functionScript = world.getScriptManager().getFunctionSelected(World.get().getTabManager())
+            if (functionScript) {
+                functionScript.getFunctionInputs().push(_.cloneDeep(formData))
+                const assetTab = World.get().getTabManager().getSelectedContentData()
+                AssetHelper.regenerate(assetTab, script, Storage.get())
+            }
+        } else if (formData instanceof OutputScript) {
+            const script = world.getScriptManager().getSelected(World.get().getTabManager())
+            const functionScript = world.getScriptManager().getFunctionSelected(World.get().getTabManager())
+            if (functionScript) {
+                functionScript.getFunctionOutputs().push(_.cloneDeep(formData))
+                const assetTab = World.get().getTabManager().getSelectedContentData()
+                AssetHelper.regenerate(assetTab, script, Storage.get())
+            }
         } else if (formData instanceof AnimationScript) {
             const script = world.getScriptManager().getSelected(World.get().getTabManager())
             if (script instanceof AnimatorScript) {
                 const animation = world.getAnimationManager().findById(parseInt(formData.getAnimation()))
-                script.addAnimation(animation)
-                const assetTab = World.get().getTabManager().getSelectedContentData()
-                AssetHelper.regenerate(assetTab, script, Storage.get())
+                if (animation) {
+                    script.addAnimation(animation)
+                    const assetTab = World.get().getTabManager().getSelectedContentData()
+                    AssetHelper.regenerate(assetTab, script, Storage.get())
+                }
             }
         }
         return true

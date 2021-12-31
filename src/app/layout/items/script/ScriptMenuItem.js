@@ -6,6 +6,8 @@ import ScriptFunctionsMenuItem from './function/ScriptFunctionsMenuItem.js'
 import EditScriptFormMenuItem from './edit/EditScriptFormMenuItem.js'
 import ScriptVariablesMenuItem from './variable/ScriptVariablesMenuItem.js'
 import ScriptAnimationsMenuItem from './animation/ScriptAnimationsMenuItem.js'
+import ScriptInputsMenuItem from './inputs/ScriptInputsMenuItem.js'
+import ScriptOutputsMenuItem from './outputs/ScriptOutputsMenuItem.js'
 
 export default class ScriptMenuItem extends PanelMenuItem {
     constructor() {
@@ -23,6 +25,8 @@ export default class ScriptMenuItem extends PanelMenuItem {
             new EditScriptFormMenuItem(this),
             new ScriptFunctionsMenuItem(this),
             new ScriptVariablesMenuItem(),
+            new ScriptInputsMenuItem(),
+            new ScriptOutputsMenuItem(),
             new ScriptAnimationsMenuItem(),
             new AddScriptNodeInputListMenuItem(this)
         ]

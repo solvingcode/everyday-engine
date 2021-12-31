@@ -12,8 +12,7 @@ export default class LoopTypeCompiler extends FunctionTypeCompiler {
         const isArrayEmpty = new IsArrayEmptyFunction()
         const not = new NotFunction()
         stackFunction.getStack().push(...[
-            new StackOperation(OPERATIONS.PUSH, '[MEM]array', CONSTANTS.RESULT),
-            new StackOperation(OPERATIONS.PUSH, this.getScopedAttributedName(functionName, 'array'), CONSTANTS.RESULT),
+            new StackOperation(OPERATIONS.PUSH, this.getScopedAttributedName(functionName, 'array'), '[MEM]array'),
             new StackOperation(OPERATIONS.CALL, isArrayEmpty.getName(), functionName),
             new StackOperation(OPERATIONS.PUSH, this.getScopedAttributedName(functionName, 'value'), CONSTANTS.RESULT),
             new StackOperation(OPERATIONS.CALL, not.getName(), functionName),

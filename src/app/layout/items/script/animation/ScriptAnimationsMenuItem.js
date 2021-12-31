@@ -13,6 +13,14 @@ export default class ScriptAnimationsMenuItem extends CrudMenuItem {
      */
     getList() {
         const script = World.get().getScriptManager().getSelected(World.get().getTabManager())
-        return script instanceof AnimatorScript && script.getAnimations()
+        return script && script.getAnimations()
+    }
+
+    /**
+     * @override
+     */
+    isValid() {
+        const script = World.get().getScriptManager().getSelected(World.get().getTabManager())
+        return super.isValid() && script instanceof AnimatorScript
     }
 }

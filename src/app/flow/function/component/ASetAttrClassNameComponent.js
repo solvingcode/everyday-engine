@@ -2,6 +2,7 @@ import ScriptHelper from '../../../utils/ScriptHelper.js'
 import DynamicAttributeHelper from '../../../utils/DynamicAttributeHelper.js'
 import AClassNameComponent from './AClassNameComponent.js'
 import {TYPES} from '../../../pobject/AttributeType.js'
+import ClientError from '../../../exception/type/ClientError.js'
 
 export default class ASetAttrClassNameComponent extends AClassNameComponent {
 
@@ -21,6 +22,9 @@ export default class ASetAttrClassNameComponent extends AClassNameComponent {
         const target = this.getInputValue('target')
         const component = ScriptHelper.findComponent(world, target, extractName.component)
         const value = this.getInputValue('value')
+        if (!component) {
+            throw new ClientError(`Component not found "${extractName.component}" not found`)
+        }
         component.setValue(extractName.attribute, DynamicAttributeHelper
             .getValueByType(value, component.getType(extractName.attribute), world))
     }

@@ -27,6 +27,8 @@ import ASetStaticClassVariable from '../function/variable/ASetStaticClassVariabl
 import AGetAttrClassNameComponent from '../function/component/AGetAttrClassNameComponent.js'
 import ASetAttrClassNameComponent from '../function/component/ASetAttrClassNameComponent.js'
 import AClassNameComponent from '../function/component/AClassNameComponent.js'
+import AFunctionInput from '../io/AFunctionInput.js'
+import AFunctionOutput from '../io/AFunctionOutput.js'
 
 export default class ClassCompiler extends Compiler {
 
@@ -45,13 +47,45 @@ export default class ClassCompiler extends Compiler {
         script.getFunctions().forEach(scriptFunction => {
             const scriptFunctionName = `${script.getName()}.${scriptFunction.getName()}`
             if (!scriptFunction.isMain()) {
+
+                //create inputs
+                scriptFunction.getFunctionInputs()
+                    .forEach(input => {
+                        const inputDefinition = input.getDefinition()
+                        const inputName = `Input ${script.getName()}.${scriptFunction.getName()}.${inputDefinition.getAttrName()}`
+                        const inputFunction = new AFunctionInput(inputName, {
+                            type: inputDefinition.getAttrType(),
+                            value: inputDefinition.getAttrValue()
+                        })
+                        inputFunction.setAccess(ACCESSOR.PRIVATE)
+                        inputFunction.setClassName(script.getName())
+                        inputFunction.setParentClassName(script.getParentName())
+                        if (!functionRegistry.getInstance(inputName)) {
+                            functionRegistry.tryRegister(inputFunction)
+                        }
+                    })
+
+                //create outputs
+                scriptFunction.getFunctionOutputs()
+                    .forEach(output => {
+                        const outputDefinition = output.getDefinition()
+                        const outputName = `Output ${script.getName()}.${scriptFunction.getName()}.${outputDefinition.getAttrName()}`
+                        const outputFunction = new AFunctionOutput(outputName)
+                        outputFunction.setAccess(ACCESSOR.PRIVATE)
+                        outputFunction.setClassName(script.getName())
+                        outputFunction.setParentClassName(script.getParentName())
+                        if (!functionRegistry.getInstance(outputName)) {
+                            functionRegistry.tryRegister(outputFunction)
+                        }
+                    })
+
                 const nodeInputs = scriptFunction.findNodesByClass(FunctionInputNode)
                 const nodeOutputs = scriptFunction.findNodesByClass(FunctionOutputNode)
                 const functionInputs = [
                     new DynamicAttribute('unit', TYPES.UNIT),
-                    ...nodeInputs.map(nodeInput => NodeHelper.getAttributeFromNodeFunctionInput(nodeInput, world))
+                    ...nodeInputs.map(nodeInput => NodeHelper.getAttributeFromNodeFunctionInput(nodeInput, world, scriptFunction))
                 ]
-                const functionOutput = !!nodeOutputs.length ? NodeHelper.getAttributeFromNodeFunctionOutput(nodeOutputs[0], world) : null
+                const functionOutput = !!nodeOutputs.length ? NodeHelper.getAttributeFromNodeFunctionOutput(nodeOutputs[0], world, scriptFunction) : null
                 const stackScriptFunction = new ACustomFunction(scriptFunctionName, functionInputs, functionOutput)
                 stackScriptFunction.setAccess(scriptFunction.getAccess())
                 stackScriptFunction.setClassName(script.getName())
@@ -258,6 +292,8 @@ export default class ClassCompiler extends Compiler {
         })
         classInstances.filter(instance => (instance.isOptimized() || !instance.isValidated()) &&
             !(instance instanceof ACustomFunction) && !(instance instanceof AClassVariable)
+            && !(instance instanceof AFunctionInput)
+            && !(instance instanceof AFunctionOutput)
             && !(instance instanceof AClassNameComponent))
             .forEach(instance => functionRegistry.removeInstance(instance))
     }

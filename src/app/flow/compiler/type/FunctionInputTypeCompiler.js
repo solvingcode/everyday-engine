@@ -16,7 +16,7 @@ export default class FunctionInputTypeCompiler extends FunctionTypeCompiler {
         NodeHelper.validateResultToInputConnection(node, input)
         const targetInput = element.findInputByName(targetName)
         if (targetInput) {
-            const attribute = NodeHelper.getAttributeFromNodeFunctionInput(sourceNode, world)
+            const attribute = NodeHelper.getAttributeFromNodeFunctionInput(sourceNode, world, scriptFunction)
             const jumpTo = `[NEXT]set_input_${functionName}_${attribute.getAttrName()}${Maths.generateId()}`
             const parentClassNames = ScriptHelper.getParentClassNames(world, script).reverse()
             if (parentClassNames.length > 0) {

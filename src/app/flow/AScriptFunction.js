@@ -237,6 +237,42 @@ export default class AScriptFunction extends AScriptFunctionData {
         return this.access === ACCESSOR.PUBLIC
     }
 
+    /**
+     * @param {InputScript} input
+     */
+    deleteFunctionInput(input) {
+        const index = this.functionInputs.findIndex(pInput => pInput === input)
+        if (index >= 0) {
+            this.functionInputs.splice(index, 1)
+        }
+    }
+
+    /**
+     * @param {OutputScript} output
+     */
+    deleteFunctionOutput(output) {
+        const index = this.functionOutputs.findIndex(pOutput => pOutput === output)
+        if (index >= 0) {
+            this.functionOutputs.splice(index, 1)
+        }
+    }
+
+    /**
+     * @param {string} name
+     * @return {InputScript}
+     */
+    getFunctionInput(name) {
+        return this.getFunctionInputs().find(input => input.getDefinition().getAttrName() === name)
+    }
+
+    /**
+     * @param {string} name
+     * @return {OutputScript}
+     */
+    getFunctionOutput(name) {
+        return this.getFunctionOutputs().find(output => output.getDefinition().getAttrName() === name)
+    }
+
     generateFields(){
         return [
             {

@@ -103,6 +103,8 @@ export default class NodeHelper {
             case SetClassVarNode:
             case GetStaticClassVarNode:
             case SetStaticClassVarNode:
+            case FunctionInputNode:
+            case FunctionOutputNode:
             case AnimationNode:
                 return functionRegistry.getInstance(sourceName)
             case ConstantNode:
@@ -113,10 +115,6 @@ export default class NodeHelper {
                 return new AUnit(sourceName)
             case SelfNode:
                 return new ASelf(sourceName)
-            case FunctionInputNode:
-                return new AFunctionInput(sourceName)
-            case FunctionOutputNode:
-                return new AFunctionOutput(sourceName)
             case ReferenceNode:
                 return new AReference(sourceName)
             case LoopNode:
@@ -260,10 +258,9 @@ export default class NodeHelper {
         } else if (nodeSource instanceof AComponent) {
             return `${nodeSource.getName()}`
         } else if (nodeSource instanceof AFunctionInput) {
-            const dynamicAttribute = this.getAttributeFromNodeFunctionInput(node, world)
-            return `${dynamicAttribute.getAttrName()} [${DynamicAttributeHelper.getAttributeTypeName(dynamicAttribute.getAttrType())}]`
+            return ScriptHelper.extractNameFromIO(nodeSource.getName())
         } else if (nodeSource instanceof AFunctionOutput) {
-            return DynamicAttributeHelper.getAttributeTypeName(parseInt(nodeSource.getName()))
+            return ScriptHelper.extractNameFromIO(nodeSource.getName())
         } else if (nodeSource instanceof AFunction) {
             return `${nodeSource.getName()}`
         } else {
@@ -330,24 +327,21 @@ export default class NodeHelper {
     /**
      * @param {World} world
      * @param {ANode} node
+     * @param {AScriptFunction} scriptFunction
      * @return {DynamicAttribute}
      */
-    static getAttributeFromNodeFunctionInput(node, world) {
-        const nodeSource = this.getSourceNode(node, world)
-        const inputMatches = nodeSource.getName().match(/([^\[]+)\[(\d+)]$/)
-        const inputName = inputMatches[1]
-        const inputType = parseInt(inputMatches[2])
-        return new DynamicAttribute(inputName, inputType)
+    static getAttributeFromNodeFunctionInput(node, world, scriptFunction) {
+        return scriptFunction.getFunctionInput(this.getNodeName(node, world)).getDefinition()
     }
 
     /**
      * @param {World} world
      * @param {ANode} node
+     * @param {AScriptFunction} scriptFunction
      * @return {DynamicAttribute}
      */
-    static getAttributeFromNodeFunctionOutput(node, world) {
-        const nodeSource = this.getSourceNode(node, world)
-        return new DynamicAttribute('output', parseInt(nodeSource.getName()))
+    static getAttributeFromNodeFunctionOutput(node, world, scriptFunction) {
+        return scriptFunction.getFunctionOutput(this.getNodeName(node, world)).getDefinition()
     }
 
     /**
@@ -425,7 +419,7 @@ export default class NodeHelper {
         } else if (type === NODE_TYPES.INPUT) {
             headColor = '#a33b0b'
         } else if (type === NODE_TYPES.OUTPUT) {
-            headColor = '#a33b0b'
+            headColor = '#a34f0b'
         } else {
             headColor = ''
         }
@@ -621,7 +615,7 @@ export default class NodeHelper {
      */
     static hasBaseOutput(node, world) {
         const type = node.getType()
-        return this.hasBaseInput(node, world) || type === NODE_TYPES.EVENT
+        return (this.hasBaseInput(node, world) || type === NODE_TYPES.EVENT) && type !== NODE_TYPES.OUTPUT
     }
 
     /**

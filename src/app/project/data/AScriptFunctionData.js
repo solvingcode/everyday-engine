@@ -29,6 +29,16 @@ export default class AScriptFunctionData extends Data{
     access
 
     /**
+     * @param {InputScript[]}
+     */
+    functionInputs
+
+    /**
+     * @param {OutputScript[]}
+     */
+    functionOutputs
+
+    /**
      * @param {string} name
      */
     constructor(name= '') {
@@ -36,6 +46,8 @@ export default class AScriptFunctionData extends Data{
         this.id = Maths.generateId()
         this.name = name
         this.nodes = []
+        this.functionInputs = []
+        this.functionOutputs = []
         this.access = 0
     }
 
@@ -82,6 +94,34 @@ export default class AScriptFunctionData extends Data{
     }
 
     /**
+     * @return {InputScript[]}
+     */
+    getFunctionInputs(){
+        return this.functionInputs
+    }
+
+    /**
+     * @param {InputScript[]} functionInputs
+     */
+    setFunctionInputs(functionInputs){
+        this.functionInputs = functionInputs
+    }
+
+    /**
+     * @return {OutputScript[]}
+     */
+    getFunctionOutputs(){
+        return this.functionOutputs
+    }
+
+    /**
+     * @param {OutputScript[]} functionOutputs
+     */
+    setFunctionOutputs(functionOutputs){
+        this.functionOutputs = functionOutputs
+    }
+
+    /**
      * @return {ANode[]}
      */
     getNodes(){
@@ -114,6 +154,20 @@ export default class AScriptFunctionData extends Data{
      */
     getCamera(){
         return this.camera
+    }
+
+    /**
+     * @param {InputScript[]} functionInputs
+     */
+    concatFunctionInputs(functionInputs){
+        this.setFunctionInputs(functionInputs)
+    }
+
+    /**
+     * @param {OutputScript[]} functionOutputs
+     */
+    concatFunctionOutputs(functionOutputs){
+        this.setFunctionOutputs(functionOutputs)
     }
 
 }

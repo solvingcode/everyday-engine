@@ -57,6 +57,11 @@ export default class FunctionTypeCompiler {
                     new StackOperation(OPERATIONS.PUSH,
                         this.getScopedAttributedName(functionName, targetInput.getAttrName()), resultRegister)
                 ])
+                if(element instanceof ALoop && targetInput.getAttrName() === 'array'){
+                    stackFunction.getStack().push(...[
+                        new StackOperation(OPERATIONS.PUSH, `[MEM]${targetInput.getAttrName()}`, resultRegister)
+                    ])
+                }
             }
         }
     }
