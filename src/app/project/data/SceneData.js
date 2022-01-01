@@ -1,5 +1,4 @@
 import Data from './Data.js'
-import UnitManager from '../../manager/UnitManager.js'
 import Maths from '../../utils/Maths.js'
 
 export default class SceneData extends Data{
@@ -35,7 +34,6 @@ export default class SceneData extends Data{
         this.name = name
         this.active = false
         this.included = false
-        this.unitManager = new UnitManager()
     }
 
     /**

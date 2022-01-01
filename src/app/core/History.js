@@ -1,4 +1,3 @@
-import World from '../world/World.js'
 import SchemaValidator from '../schema/SchemaValidator.js'
 import Storage from './Storage.js'
 
@@ -43,12 +42,19 @@ class History {
         return this.instance
     }
 
-    async record(){
-        this.dataRecord = await this.getData()
+    /**
+     * @param {World} world
+     */
+    async record(world){
+        this.dataRecord = await this.getData(world)
     }
 
-    async save(){
-        const newRecord = await this.getData()
+    /**
+     * @param {World} world
+     * @return {Promise<void>}
+     */
+    async save(world){
+        const newRecord = await this.getData(world)
         const resultLeftJoin = await SchemaValidator.get().compare(Storage.type.WORLD, this.dataRecord, newRecord)
         const resultRightJoin = await SchemaValidator.get().compare(Storage.type.WORLD, newRecord, this.dataRecord)
         const result = {after: resultLeftJoin, before: resultRightJoin}
@@ -56,29 +62,33 @@ class History {
     }
 
     /**
+     * @param {World} world
      * @return {World}
      */
-    async getData(){
-        return await SchemaValidator.get().validate(Storage.type.WORLD, World.get(), false)
+    async getData(world){
+        return await SchemaValidator.get().validate(Storage.type.WORLD, world, false)
     }
 
-    async restore(){
+    /**
+     * @param {World} world
+     */
+    async restore(world){
         const result = this.pop()
-        const world = await this.getData()
+        const newWorld = await this.getData(world)
         if(result){
             const dataToDelete = result.after
             const dataToAdd = result.before
             for(const indexedPath in dataToDelete){
                 const value = dataToDelete[indexedPath]
-                await SchemaValidator.get().updateFromPath(world, indexedPath, value.path, undefined)
+                await SchemaValidator.get().updateFromPath(newWorld, indexedPath, value.path, undefined)
             }
             for(const indexedPath in dataToAdd){
                 const value = dataToAdd[indexedPath]
-                await SchemaValidator.get().updateFromPath(world, indexedPath, value.path, value.data)
+                await SchemaValidator.get().updateFromPath(newWorld, indexedPath, value.path, value.data)
             }
         }
-        const worldDataValidated = await SchemaValidator.get().validate(Storage.type.WORLD, world, false)
-        World.get().set(worldDataValidated)
+        const worldDataValidated = await SchemaValidator.get().validate(Storage.type.WORLD, newWorld, false)
+        world.set(worldDataValidated)
     }
 
     /**

@@ -1,4 +1,5 @@
 import SceneData from '../project/data/SceneData.js'
+import UnitManager from '../manager/UnitManager.js'
 
 export default class Scene extends SceneData {
 
@@ -10,6 +11,14 @@ export default class Scene extends SceneData {
      * @type {boolean}
      */
     loaded = false
+
+    /**
+     * @param {string} name
+     */
+    constructor(name) {
+        super(name)
+        this.unitManager = new UnitManager()
+    }
 
     /**
      * @return {boolean}

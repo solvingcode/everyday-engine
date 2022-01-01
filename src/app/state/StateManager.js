@@ -1,5 +1,4 @@
 import AppState from './AppState.js'
-import History from '../core/History.js'
 import SystemError from '../exception/type/SystemError.js'
 
 /**
@@ -270,16 +269,17 @@ class StateManager {
 
     /**
      * Add data to history (state)
+     * @param {History} history
      * @param {string} state
      * @TODO check we can not pass an ID
      */
-    addHistory(state) {
+    addHistory(history, state) {
         const isHistory = this.appState.getIsHistory(state)
         if (isHistory) {
             if (this.isStartState(state)) {
-                History.get().record()
+                history.record()
             } else if (this.isStopState(state)) {
-                History.get().save()
+                history.save()
             }
         }
     }

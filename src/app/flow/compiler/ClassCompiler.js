@@ -121,6 +121,7 @@ export default class ClassCompiler extends Compiler {
                 classVariable.setAccess(access)
                 classVariable.setClassName(script.getName())
                 classVariable.setParentClassName(script.getParentName())
+                classVariable.setChildClassNames(ScriptHelper.getChildClassNames(world, script))
                 functionRegistry.tryRegister(classVariable)
             })
         })

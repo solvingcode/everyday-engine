@@ -597,16 +597,17 @@ export default class ScriptHelper {
      * @param {World} world
      * @param {Unit} unit
      * @param {string} componentName
+     * @param {string} functionName
      * @return {Component}
      */
-    static findComponent(world, unit, componentName) {
+    static findComponent(world, unit, componentName, functionName) {
         const component = unit.findComponentByName(componentName)
         if (!component) {
-            const script = world.getScriptManager().findByName(componentName)
-            if (script) {
-                const childClassNames = this.getChildClassNames(world, script)
+            const func = world.getFunctionRegistry().getInstance(functionName)
+            if (func) {
+                const childClassNames = func.getChildClassNames()
                 return childClassNames.reduce((foundComponent, childClassName) =>
-                    foundComponent || this.findComponent(world, unit, childClassName), null)
+                    foundComponent || unit.findComponentByName(childClassName), null)
             }
         }
         return component
