@@ -76,9 +76,25 @@ class Keyboard {
      * @param {number} key
      * @return {Boolean}
      */
+    isOneKeyPressed(key) {
+        return _.isEqual([key], this.keysPressed)
+    }
+
+    /**
+     * @param {number} key
+     * @return {Boolean}
+     */
     isKeyReleased(key) {
         let index = this.keysReleased.indexOf(key)
         return index !== -1
+    }
+
+    /**
+     * @param {number} key
+     * @return {Boolean}
+     */
+    isOneKeyReleased(key) {
+        return _.isEqual([key], this.keysReleased)
     }
 
     /***
@@ -139,6 +155,7 @@ export const KeyCode = {
     DELETE: 46,
     CTRL: 17,
     SHIFT: 16,
+    ALT: 18
 }
 
 export default Keyboard

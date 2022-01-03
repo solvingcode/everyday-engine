@@ -514,11 +514,11 @@ export default class UnitHelper {
      * @param {Mouse} mouse
      * @param {Unit[]} selectedUnits
      * @param {Vector} direction
-     * @param {number|null} step
+     * @param {Vector} step
      */
     static moveUnits(world, storage, mouse, selectedUnits, direction, step = null) {
         const camera = world.getCamera()
-        const dragArea = step ? Vector.multiply(Vector.one(), camera.fromScaleNumber(step)) : mouse.dragAndDrop(camera)
+        const dragArea = step || mouse.dragAndDrop(camera)
         const dragAreaDirection = new Vector({
             x: dragArea.x * direction.x,
             y: dragArea.y * direction.y
@@ -544,11 +544,11 @@ export default class UnitHelper {
      * @param {Mouse} mouse
      * @param {Unit} unit
      * @param {Vector} direction
-     * @param {number|null} step
+     * @param {Vector} step
      */
     static moveCollider(world, mouse, unit, direction, step = null) {
         const camera = world.getCamera()
-        const dragArea = step ? camera.fromScaleNumber(step) : mouse.dragAndDrop(camera)
+        const dragArea = step || mouse.dragAndDrop(camera)
         const dragAreaDirection = new Vector({
             x: dragArea.x * direction.x,
             y: dragArea.y * direction.y
@@ -570,12 +570,13 @@ export default class UnitHelper {
         const imagePosition = meshComponent.getImagePosition()
         const imageRepeatAreaMin = meshComponent.getImageRepeatAreaMin()
         const imageRepeatAreaMax = meshComponent.getImageRepeatAreaMax()
-        const canvasBgRepeat = ImageHelper.generateImageRepeat(canvas, meshSize, imageScale, imagePosition, imageRepeatAreaMin, imageRepeatAreaMax)
+        const canvasBgRepeat = ImageHelper.generateImageRepeat(canvas, meshSize, imageScale, imagePosition,
+            imageRepeatAreaMin, imageRepeatAreaMax, meshComponent.getFilter())
         const canvasCameraScale = camera.toScaleSize(new Size({
             width: canvasBgRepeat.width,
             height: canvasBgRepeat.height
         }))
-        return ImageHelper.resizeCanvasBySize(canvasBgRepeat, canvasCameraScale)
+        return ImageHelper.resizeCanvasBySize(canvasBgRepeat, canvasCameraScale, true, meshComponent.getFilter())
     }
 
     /**
@@ -891,7 +892,7 @@ export default class UnitHelper {
      * @param {Unit[]} units
      * @param {Unit} unit
      */
-    static sortUnit(units, unit){
+    static sortUnit(units, unit) {
         const indexUnit = units.findIndex(pUnit => pUnit === unit)
         const rank = unit.getComponent(GUIPropertyComponent).getRank()
         units.splice(indexUnit, 1)
@@ -900,6 +901,37 @@ export default class UnitHelper {
             units.splice(indexBiggerRank, 0, unit)
         } else {
             units.splice(indexUnit, 0, unit)
+        }
+    }
+
+    /**
+     * @param {World} world
+     * @param {Unit} unit
+     * @return {Vector}
+     */
+    static getParentScale(world, unit) {
+        const parentUnit = world.getUnitManager().findParentUnit(unit)
+        let parentScale = Vector.one()
+        if (parentUnit) {
+            const parentTransformComponent = parentUnit.getComponent(TransformComponent)
+            if (parentTransformComponent) {
+                const parentTempScale = parentTransformComponent.getScale()
+                if (parentTempScale.getX() !== 0 && parentTempScale.getY() !== 0) {
+                    parentScale = parentTempScale
+                }
+            }
+        }
+        return parentScale
+    }
+
+    /**
+     * @param {World} world
+     * @param {Unit} unit
+     */
+    static reserveTransform(world, unit) {
+        const transformComponent = unit.getComponent(TransformComponent)
+        if (transformComponent) {
+            this.setWorldPosition(world, unit, transformComponent.getPosition())
         }
     }
 

@@ -137,6 +137,7 @@ import OpenDialogAddAssetAction from './assets/OpenDialogAddAssetAction.js'
 import OpenDialogLoadProjectAction from './project/OpenDialogLoadProjectAction.js'
 import OpenDialogSaveProjectAction from './project/OpenDialogSaveProjectAction.js'
 import OpenDialogExportProjectAction from './project/OpenDialogExportProjectAction.js'
+import ScaleToOriginAction from './edit/ScaleToOriginAction.js'
 
 /**
  * Action Runner class.
@@ -280,6 +281,7 @@ class ActionRunner extends Runner {
             ADD_UI_TEXT: AddUITextAction,
             ALIGN_VIEW: AlignViewAction,
             ALIGN_PARENT: AlignParentAction,
+            SCALE_ORIGIN: ScaleToOriginAction,
             ADD_SCENE: AddSceneAction,
             ATTACH_LAYER_ELEMENT: AttachLayerElementAction,
             ADD_UI_EMPTY: AddUIEmptyAction,

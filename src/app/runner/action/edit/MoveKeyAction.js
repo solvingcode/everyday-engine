@@ -24,7 +24,7 @@ export default class MoveKeyAction extends Action {
         } else if (keyboard.isKeyPressed(KeyCode.DOWN)) {
             direction.setY(1)
         }
-        const step = keyboard.isKeyPressed(KeyCode.SHIFT) ? 10 : 1
+        const step = keyboard.isKeyPressed(KeyCode.SHIFT) ? new Vector({x: 10, y: 10}) : new Vector({x: 1, y: 1})
         StateHelper.startMoveSectionState({direction, step})
         return true
     }

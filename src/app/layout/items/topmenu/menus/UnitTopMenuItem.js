@@ -13,6 +13,7 @@ import TileGridMenuItem from '../../unit/TileGridMenuItem.js'
 import TileMapMenuItem from '../../unit/TileMapMenuItem.js'
 import EmptyUnitMenuItem from '../../unit/EmptyUnitMenuItem.js'
 import AddAnimationMenuItem from '../../animation/AddAnimationMenuItem.js'
+import ScaleOriginMenuItem from '../../edit/ScaleOriginMenuItem.js'
 
 export default class UnitTopMenuItem extends OptionActionsMenuItem {
     constructor(bindObject, position, size) {
@@ -28,6 +29,7 @@ export default class UnitTopMenuItem extends OptionActionsMenuItem {
             new OptionActionsButtonMenuItem('UI', UITopMenuItem, null, true),
             new OptionActionsButtonMenuItem('Visibility', VisibilityTopMenuItem, null, true),
             new AlignViewMenuItem(),
+            new ScaleOriginMenuItem(),
             new AlignParentMenuItem(),
             new CreateUnitInstantMenuItem()
             ], position, size

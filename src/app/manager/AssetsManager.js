@@ -206,7 +206,7 @@ export default class AssetsManager extends AssetsManagerData {
      * @return {boolean}
      */
     isBlobFont(blob) {
-        return blob.type === FileHelper.type.TTF
+        return blob.type === FileHelper.type.FONT_TTF || blob.type === FileHelper.type.FONT_OTF
     }
 
     /**

@@ -22,15 +22,17 @@ export default class AttachFrameAction extends Action {
         const time = endData.getTime()
         const property = endData.getProperty()
         const selectedUnit = world.getUnitManager().getSelected()
-        if(startData instanceof Asset && startData.getType() instanceof AssetImage){
+        if (startData instanceof Asset && startData.getType() instanceof AssetImage) {
             const childUnit = world.getUnitManager().findUnitByName(property.getChildName())
             const targetUnit = childUnit || selectedUnit
-            const component = targetUnit.findComponentByName(property.getComponentName())
-            const attribute = _.cloneDeep(component.get(property.getAttributeName()))
-            attribute.setAttrValue(startData.getId())
-            animation.setFrame(time, childUnit, property.getComponentName(), property.getAttributeName(), attribute)
-            AssetHelper.regenerate(animationAsset, animation, Storage.get())
-        }else{
+            if (targetUnit) {
+                const component = targetUnit.findComponentByName(property.getComponentName())
+                const attribute = _.cloneDeep(component.get(property.getAttributeName()))
+                attribute.setAttrValue(startData.getId())
+                animation.setFrame(time, childUnit, property.getComponentName(), property.getAttributeName(), attribute)
+                AssetHelper.regenerate(animationAsset, animation, Storage.get())
+            }
+        } else {
             throw new ClientError(`Source not supported! ("${startData.constructor.name}" given)`)
         }
         return true

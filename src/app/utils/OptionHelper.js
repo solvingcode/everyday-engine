@@ -64,6 +64,7 @@ import Tag from '../preference/tag/Tag.js'
 import AnimationScript from '../flow/AnimationScript.js'
 import InputScript from '../flow/InputScript.js'
 import OutputScript from '../flow/OutputScript.js'
+import ScaleOriginMenuItem from '../layout/items/edit/ScaleOriginMenuItem.js'
 
 export default class OptionHelper {
 
@@ -93,6 +94,7 @@ export default class OptionHelper {
                 new OptionActionsButtonMenuItem('UI', UITopMenuItem, null, true),
                 new OptionActionsButtonMenuItem('Visibility', VisibilityTopMenuItem, null, true),
                 new AlignViewMenuItem(),
+                new ScaleOriginMenuItem(),
                 new AlignParentMenuItem(),
                 new CreateUnitInstantMenuItem()
             ])

@@ -11,6 +11,7 @@ export default class LayerGroupMenuItem extends CrudMenuItem {
      * @override
      */
     getList() {
-        return World.get().getPreference().getLayerGroup().getLayers()
+        return World.get().getPreference().getLayerGroup().getLayers().sort(
+            (layerA, layerB) => layerA.getRank() < layerB.getRank() ? -1 : 1)
     }
 }

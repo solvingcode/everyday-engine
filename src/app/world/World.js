@@ -249,6 +249,11 @@ class World extends WorldData {
         const layerGroup = this.getPreference().getLayerGroup().find(parseInt(unit.getLayerId()))
         if (layerGroup) {
             return layerGroup.getRank()
+        } else {
+            const parentUnit = this.getUnitManager().findParentUnit(unit)
+            if (parentUnit) {
+                return this.getRankUnit(parentUnit)
+            }
         }
         return 0
     }
@@ -379,7 +384,7 @@ class World extends WorldData {
             this.getSceneManager().getScenes().forEach(scene => {
                 scene.getUnitManager()
                     .getUnitsHasComponentClasses([componentClass, MeshComponent]).forEach(unit => {
-                    if ((onlyDebug && !unit.getComponent(componentClass).isDebug()) || !onlyDebug) {
+                    if ((onlyDebug && !unit.findComponentByClass(componentClass).isDebug()) || !onlyDebug) {
                         unit.getComponent(MeshComponent).setEnabled(false)
                     }
                 })

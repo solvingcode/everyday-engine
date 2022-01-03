@@ -10,6 +10,8 @@ import ArrayHelper from '../utils/ArrayHelper.js'
 import CameraComponent from '../component/internal/CameraComponent.js'
 import AnimationComponent from '../component/internal/AnimationComponent.js'
 import UnitHelper from '../utils/UnitHelper.js'
+import TransformComponent from '../component/internal/TransformComponent.js'
+import GUIPendingComponent from '../component/internal/gui/GUIPendingComponent.js'
 
 /**
  * Manage the units, components list (get, add, load, ...)
@@ -38,6 +40,13 @@ export default class UnitManager extends UnitManagerData {
      */
     getSelected() {
         return this.units.find(unit => unit.isSelected())
+    }
+
+    /**
+     * @return {Unit[]}
+     */
+    getAllSelected() {
+        return this.units.filter(unit => unit.isSelected())
     }
 
     /**
@@ -375,6 +384,15 @@ export default class UnitManager extends UnitManagerData {
      */
     getEnabledUnits() {
         return this.getUnits().filter(unit => unit.isEnabled())
+    }
+
+    /**
+     * @return {Unit[]}
+     */
+    getPhysicalUnits(){
+        return this.getUnits().filter(unit => unit.getComponent(MeshComponent) &&
+            unit.getComponent(TransformComponent) && !unit.getComponent(GUIPendingComponent) &&
+            !unit.getComponent(CameraComponent))
     }
 
     /**

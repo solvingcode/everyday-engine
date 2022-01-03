@@ -35,4 +35,11 @@ export default class ComponentListMenuItem extends ListMenuItem {
     getActions(bindObject){
         return []
     }
+
+    /**
+     * @override
+     */
+    isValid() {
+        return super.isValid() && World.get().getUnitManager().getAllSelected().length === 1
+    }
 }

@@ -19,7 +19,7 @@ export default class OpenDialogAddAssetAction extends Action {
                     [EXTENSIONS.IMG.type]: EXTENSIONS.IMG.ext,
                     [EXTENSIONS.XML.type]: EXTENSIONS.XML.ext,
                     [EXTENSIONS.AUDIO.type]: EXTENSIONS.AUDIO.ext,
-                    [EXTENSIONS.FONT.type]: EXTENSIONS.AUDIO.ext
+                    [EXTENSIONS.FONT.type]: EXTENSIONS.FONT.ext
                 }
             }],
             multiple: true

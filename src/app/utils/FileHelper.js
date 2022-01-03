@@ -111,7 +111,8 @@ class FileHelper {
         IMG_PNG: 'image/png',
         WAV: 'audio/wav',
         MPEG: 'audio/mpeg',
-        TTF: 'font/ttf'
+        FONT_TTF: 'font/ttf',
+        FONT_OTF: 'font/otf'
     }
 
 }
@@ -133,7 +134,7 @@ export const EXTENSIONS = {
     },
     FONT: {
         type: 'font/*',
-        ext: ['.ttf']
+        ext: ['.ttf', '.otf']
     },
     ZIP: {
         type: 'application/zip',

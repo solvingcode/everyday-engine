@@ -23,25 +23,25 @@ export class ShortcutRunner extends Runner {
     execute() {
         const {keyboard} = Window.get()
         const stateManager = StateManager.get()
-        if (keyboard.isKeyReleased(KeyCode.A)) {
+        if (keyboard.isOneKeyReleased(KeyCode.A) && !keyboard.isAnyKeyPressed()) {
             stateManager.stopDrawStates()
             stateManager.startState('DRAW_SELECT', 1, {unit: null})
-        } else if (keyboard.isKeyReleased(KeyCode.G)) {
+        } else if (keyboard.isOneKeyReleased(KeyCode.G) && !keyboard.isAnyKeyPressed()) {
             stateManager.stopDrawStates()
             stateManager.startState('DRAW_MOVE', 1, {unit: null})
-        } else if (keyboard.isKeyReleased(KeyCode.S)) {
+        } else if (keyboard.isOneKeyReleased(KeyCode.S) && !keyboard.isAnyKeyPressed()) {
             stateManager.stopDrawStates()
             stateManager.startState('DRAW_SCALE', 1, {unit: null})
-        } else if (keyboard.isKeyReleased(KeyCode.R)) {
+        } else if (keyboard.isOneKeyReleased(KeyCode.R) && !keyboard.isAnyKeyPressed()) {
             stateManager.stopDrawStates()
             stateManager.startState('DRAW_ROTATE', 1, {unit: null})
-        } else if (keyboard.isKeyReleased(KeyCode.E)) {
+        } else if (keyboard.isOneKeyReleased(KeyCode.E) && !keyboard.isAnyKeyPressed()) {
             stateManager.stopDrawStates()
             stateManager.startState('DRAW_EDIT_TILE_MAP', 1)
-        } else if (keyboard.isKeyReleased(KeyCode.D)) {
+        } else if (keyboard.isOneKeyReleased(KeyCode.D) && !keyboard.isAnyKeyPressed()) {
             stateManager.stopDrawStates()
             stateManager.startState('DRAW_DELETE_TILE_MAP', 1)
-        } else if (keyboard.isKeyReleased(KeyCode.DELETE)) {
+        } else if (keyboard.isOneKeyReleased(KeyCode.DELETE) && !keyboard.isAnyKeyPressed()) {
             stateManager.startState('ACTION_DELETE', 1)
         } else if (keyboard.isCopyShortcutPressed()) {
             stateManager.startState('ACTION_COPY', 1)

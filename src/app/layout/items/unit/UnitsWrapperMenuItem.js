@@ -4,6 +4,7 @@ import UnitFormMenuItem from './UnitFormMenuItem.js'
 import ComponentListMenuItem from './ComponentListMenuItem.js'
 import ComponentAddWrapperMenuItem from './ComponentAddWrapperMenuItem.js'
 import World from '../../../world/World.js'
+import ComponentBulkListMenuItem from './ComponentBulkListMenuItem.js'
 
 export default class UnitsWrapperMenuItem extends MenuItem {
     constructor(parent) {
@@ -16,6 +17,7 @@ export default class UnitsWrapperMenuItem extends MenuItem {
         this.items = [
             new UnitFormMenuItem(this),
             new ComponentListMenuItem(this),
+            new ComponentBulkListMenuItem(this),
             new ComponentAddWrapperMenuItem(this)
         ]
     }

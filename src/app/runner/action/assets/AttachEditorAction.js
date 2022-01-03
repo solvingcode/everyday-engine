@@ -29,7 +29,7 @@ export default class AttachEditorAction extends Action {
         const {mouse} = Window.get()
         const currentScenePosition = world.getWorldScalePosition(mouse.currentScenePosition)
         if (startData.getType() instanceof AssetImage) {
-            world.createUnitInstant(AssetUnitInstant, currentScenePosition, startData)
+            world.createChildUnitInstant(AssetUnitInstant, null, currentScenePosition, startData)
         } else if (startData.getType() instanceof AssetUnit) {
             StorageHelper.loadAssetUnit(startData, Storage.get()).then(units => {
                 units.forEach(unit => {

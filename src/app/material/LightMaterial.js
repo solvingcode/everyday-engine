@@ -44,7 +44,7 @@ export default class LightMaterial extends Material {
 
         contextLightContainer.drawImage(canvasLights, 0, 0, scaleSize.width, scaleSize.height)
 
-        const lightCanvasSourceAtop = ImageHelper.copyCanvas(context.canvas)
+        const lightCanvasSourceAtop = ImageHelper.copyCanvas(context.canvas, meshComponent.getFilter())
         const lightContextSourceAtop = lightCanvasSourceAtop.getContext(CANVAS_CONTEXT_TYPE)
         lightContextSourceAtop.globalCompositeOperation = 'source-atop'
         lightContextSourceAtop.drawImage(canvasLightContainer, 0, 0, scaleSize.width, scaleSize.height)

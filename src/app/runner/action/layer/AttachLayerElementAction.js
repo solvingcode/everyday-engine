@@ -15,6 +15,7 @@ import UIImageUnitInstant from '../../../unit/instant/type/internal/ui/UIImageUn
 import UIEmptyUnitInstant from '../../../unit/instant/type/internal/ui/UIEmptyUnitInstant.js'
 import UIButtonUnitInstant from '../../../unit/instant/type/internal/ui/UIButtonUnitInstant.js'
 import UITextUnitInstant from '../../../unit/instant/type/internal/ui/UITextUnitInstant.js'
+import UnitHelper from '../../../utils/UnitHelper.js'
 
 export default class AttachLayerElementAction extends Action {
 
@@ -38,6 +39,7 @@ export default class AttachLayerElementAction extends Action {
         }
         if (endData instanceof Unit && startData instanceof Unit && endData !== startData) {
             startData.setUnitParentId(endData.getId())
+            UnitHelper.reserveTransform(World.get(), startData)
         } else if (endData instanceof Scene && startData instanceof Unit) {
             startData.setUnitParentId(null)
         } else if (endData instanceof Unit && startData.getType() instanceof AssetScript) {

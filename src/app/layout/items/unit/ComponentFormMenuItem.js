@@ -64,27 +64,35 @@ export default class ComponentFormMenuItem extends FormMenuItem {
     /**
      * @override
      */
-    postUpdate(value) {
+    postUpdate(value, menuItem) {
         const formObject = this.getFormObject()
         const world = World.get()
         const selectedUnit = UnitSelector.get().getFirstSelected(world)
-        if (formObject instanceof MeshComponent ||
-            formObject instanceof TransformComponent ||
-            formObject instanceof CameraComponent ||
-            formObject instanceof StyleComponent ||
-            formObject instanceof UITextComponent) {
-            const meshComponent = selectedUnit.getComponent(MeshComponent)
+        this.postUpdateUnit(formObject, selectedUnit)
+    }
+
+    /**
+     * @param {Component} component
+     * @param {Unit} unit
+     */
+    postUpdateUnit(component, unit) {
+        if (component instanceof MeshComponent ||
+            component instanceof TransformComponent ||
+            component instanceof CameraComponent ||
+            component instanceof StyleComponent ||
+            component instanceof UITextComponent) {
+            const meshComponent = unit.getComponent(MeshComponent)
             meshComponent && meshComponent.setGenerated(false)
-            if(formObject instanceof TransformComponent){
-                const uiTransformComponent = selectedUnit.getComponent(UITransformComponent)
+            if (component instanceof TransformComponent) {
+                const uiTransformComponent = unit.getComponent(UITransformComponent)
                 if (uiTransformComponent) {
                     uiTransformComponent.setLastAnchorMin(null)
                     uiTransformComponent.setLastAnchorMax(null)
                 }
             }
-        } else if (formObject instanceof LightComponent) {
-            formObject.setGenerated(false)
-            const meshComponent = selectedUnit.getComponent(MeshComponent)
+        } else if (component instanceof LightComponent) {
+            component.setGenerated(false)
+            const meshComponent = unit.getComponent(MeshComponent)
             if (meshComponent) {
                 meshComponent.setGenerated(false)
             }

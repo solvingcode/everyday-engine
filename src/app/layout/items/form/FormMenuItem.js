@@ -70,8 +70,9 @@ class FormMenuItem extends MenuItem {
 
     /**
      * @param {*} value
+     * @param {MenuItem} menuItem
      */
-    postUpdate(value) {
+    postUpdate(value, menuItem) {
     }
 
     /**

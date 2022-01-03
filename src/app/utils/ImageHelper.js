@@ -1,6 +1,7 @@
 import {CANVAS_CONTEXT_TYPE} from '../core/Constant.js'
 import Vector from './Vector.js'
 import Size from '../pobject/Size.js'
+import {MODE} from '../constant/FilterMode.js'
 
 export default class ImageHelper {
 
@@ -18,9 +19,10 @@ export default class ImageHelper {
      * @param {OffscreenCanvas} canvas
      * @param {Size} size
      * @param {boolean} offscreen
+     * @param {string|null} filter
      * @return {OffscreenCanvas}
      */
-    static resizeCanvasBySize(canvas, size, offscreen = true) {
+    static resizeCanvasBySize(canvas, size, offscreen = true, filter = null) {
         const {width: sizeWidth, height: sizeHeight} = size
         const isWidthGtHeight = canvas.width > canvas.height
         const coefResize = isWidthGtHeight ? sizeWidth / canvas.width : sizeHeight / canvas.height
@@ -36,6 +38,9 @@ export default class ImageHelper {
             canvasEl.height = height
         }
         const contextEl = canvasEl.getContext(CANVAS_CONTEXT_TYPE)
+        if (filter === MODE.NO_SMOOTHING) {
+            contextEl.imageSmoothingEnabled = false
+        }
         contextEl.drawImage(canvas, 0, 0, width, height)
 
         return canvasEl
@@ -155,9 +160,10 @@ export default class ImageHelper {
      * @param {Vector} imagePosition
      * @param {Vector} imageRepeatAreaMin
      * @param {Vector} imageRepeatAreaMax
+     * @param {string} filter
      * @return {OffscreenCanvas}
      */
-    static generateImageRepeat(canvas, size, imageScale, imagePosition, imageRepeatAreaMin, imageRepeatAreaMax) {
+    static generateImageRepeat(canvas, size, imageScale, imagePosition, imageRepeatAreaMin, imageRepeatAreaMax, filter) {
         const {width: canvasWidth, height: canvasHeight} = canvas
         const {width, height} = size
 
@@ -225,6 +231,9 @@ export default class ImageHelper {
 
         const canvasEl = new OffscreenCanvas(width, height)
         const contextEl = canvasEl.getContext(CANVAS_CONTEXT_TYPE)
+        if (filter === MODE.NO_SMOOTHING) {
+            contextEl.imageSmoothingEnabled = false
+        }
         for (const kPart in imageCanvasParts) {
             const part = imageCanvasParts[kPart]
             let partCanvas
@@ -249,11 +258,15 @@ export default class ImageHelper {
 
     /**
      * @param {OffscreenCanvas} canvas
+     * @param {string} filter
      * @return {OffscreenCanvas}
      */
-    static copyCanvas(canvas){
+    static copyCanvas(canvas, filter){
         const canvasCopy = new OffscreenCanvas(canvas.width, canvas.height)
         const contextCopy = canvasCopy.getContext(CANVAS_CONTEXT_TYPE)
+        if (filter === MODE.NO_SMOOTHING) {
+            contextCopy.imageSmoothingEnabled = false
+        }
         contextCopy.drawImage(canvas, 0, 0, canvas.width, canvas.height)
         return canvasCopy
     }

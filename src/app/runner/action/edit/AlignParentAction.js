@@ -11,17 +11,19 @@ export default class AlignParentAction extends Action {
      */
     static run() {
         const world = World.get()
-        const selectedUnit = world.getUnitManager().getSelected()
-        const transformComponent = selectedUnit.getComponent(TransformComponent)
-        const uiTransformComponent = selectedUnit.getComponent(UITransformComponent)
-        if (transformComponent) {
-            transformComponent.setLocalPosition(new Vector({x: 0, y: 0}))
-            transformComponent.setLocalScale(new Vector({x: 1, y: 1}))
-        }
-        if(uiTransformComponent){
-            uiTransformComponent.setLastAnchorMin(null)
-            uiTransformComponent.setLastAnchorMax(null)
-        }
+        const selectedUnits = world.getUnitManager().getAllSelected()
+        selectedUnits.forEach(selectedUnit => {
+            const transformComponent = selectedUnit.getComponent(TransformComponent)
+            const uiTransformComponent = selectedUnit.getComponent(UITransformComponent)
+            if (transformComponent) {
+                transformComponent.setLocalPosition(new Vector({x: 0, y: 0}))
+                transformComponent.setLocalScale(new Vector({x: 1, y: 1}))
+            }
+            if (uiTransformComponent) {
+                uiTransformComponent.setLastAnchorMin(null)
+                uiTransformComponent.setLastAnchorMax(null)
+            }
+        })
         return true
     }
 

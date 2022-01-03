@@ -38,7 +38,7 @@ class FormUpdateAction extends Action {
 
     /**
      * @param {Function} event
-     * @param {MenuItem}item
+     * @param {MenuItem} item
      */
     static save(event, item) {
         const menu = Menu.get()
@@ -48,7 +48,7 @@ class FormUpdateAction extends Action {
             const formElement = uiRenderer.getType(menuItemUI).getFormElement(menuItemUI, uiRenderer)
             if (item.parent.preUpdate(formElement.value, item)) {
                 event(formElement.value)
-                item.parent.postUpdate(formElement.value)
+                item.parent.postUpdate(formElement.value, item)
             }
         } else {
             throw new SystemError(`ElementUI for item ${item.id} cannot be found!`)
