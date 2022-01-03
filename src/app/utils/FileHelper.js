@@ -77,7 +77,11 @@ class FileHelper {
                 document.body.appendChild(fileInput)
                 fileInput.click()
             }
-            return fileInput.files
+            return new Promise(resolve => {
+                fileInput.onchange = () => {
+                    resolve(fileInput.files)
+                }
+            })
         }
     }
 
