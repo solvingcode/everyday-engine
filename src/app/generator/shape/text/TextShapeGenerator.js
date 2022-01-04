@@ -1,6 +1,6 @@
 import TypeShapeGenerator from '../TypeShapeGenerator.js'
-import UITextComponent from '../../../component/internal/ui/UITextComponent.js'
 import ClientError from '../../../exception/type/ClientError.js'
+import TextComponent from '../../../component/internal/TextComponent.js'
 
 /**
  * @abstract
@@ -13,11 +13,11 @@ export default class TextShapeGenerator extends TypeShapeGenerator {
     draw(unit, dataContext) {
         const {context, scaleSize, camera, world} = dataContext
         const assetManager = world.getAssetsManager()
-        const uiTextComponent = unit.getComponent(UITextComponent)
-        const textAlign = uiTextComponent.getTextAlign()
-        const verticalAlign = uiTextComponent.getVerticalAlign()
-        const textStyle = uiTextComponent.getTextStyle()
-        const fontFamilyAsset = uiTextComponent.getFontFamily() && assetManager.findAssetFontById(uiTextComponent.getFontFamily())
+        const textComponent = unit.findComponentByClass(TextComponent)
+        const textAlign = textComponent.getTextAlign()
+        const verticalAlign = textComponent.getVerticalAlign()
+        const textStyle = textComponent.getTextStyle()
+        const fontFamilyAsset = textComponent.getFontFamily() && assetManager.findAssetFontById(textComponent.getFontFamily())
         const fontFamily = (fontFamilyAsset && fontFamilyAsset.getName()) || 'Arial'
         const {width, height} = scaleSize
         const text = unit.getText()

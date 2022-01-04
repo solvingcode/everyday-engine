@@ -29,6 +29,7 @@ import RectSelectorUnitInstant from '../unit/instant/type/internal/edit/RectSele
 import CircleSelectorUnitInstant from '../unit/instant/type/internal/edit/CircleSelectorUnitInstant.js'
 import GUIPropertyComponent from '../component/internal/gui/property/GUIPropertyComponent.js'
 import ScriptHelper from './ScriptHelper.js'
+import MaterialType from '../material/MaterialType.js'
 
 export default class UnitHelper {
 
@@ -663,10 +664,16 @@ export default class UnitHelper {
     static setPosition(world, unit, position) {
         const physicsManager = world.getPhysicsManager()
         const transformComponent = unit.getComponent(TransformComponent)
+        const meshComponent = unit.getComponent(MeshComponent)
         if (this.hasPhysics(world, unit)) {
             physicsManager.setPosition(unit, position)
         } else {
             transformComponent.setPosition(position, true)
+        }
+        if (meshComponent) {
+            if (meshComponent.getMaterial() === MaterialType.LIGHT) {
+                meshComponent.setGenerated(false)
+            }
         }
     }
 

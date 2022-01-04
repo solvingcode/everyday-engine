@@ -14,6 +14,7 @@ import TileMapMenuItem from '../../unit/TileMapMenuItem.js'
 import EmptyUnitMenuItem from '../../unit/EmptyUnitMenuItem.js'
 import AddAnimationMenuItem from '../../animation/AddAnimationMenuItem.js'
 import ScaleOriginMenuItem from '../../edit/ScaleOriginMenuItem.js'
+import TextUnitMenuItem from '../../unit/TextUnitMenuItem.js'
 
 export default class UnitTopMenuItem extends OptionActionsMenuItem {
     constructor(bindObject, position, size) {
@@ -21,6 +22,7 @@ export default class UnitTopMenuItem extends OptionActionsMenuItem {
             new AddSceneMenuItem(),
             new EmptyUnitMenuItem(),
             new CameraMenuItem(),
+            new TextUnitMenuItem(),
             new LightPointMenuItem(),
             new LightGlobalMenuItem(),
             new TileGridMenuItem(),

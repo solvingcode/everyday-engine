@@ -7,11 +7,11 @@ import World from '../../../world/World.js'
 import CameraComponent from '../../../component/internal/CameraComponent.js'
 import LightComponent from '../../../component/internal/LightComponent.js'
 import StyleComponent from '../../../component/internal/StyleComponent.js'
-import UITextComponent from '../../../component/internal/ui/UITextComponent.js'
 import AssetHelper from '../../../utils/AssetHelper.js'
 import Storage from '../../../core/Storage.js'
 import UITransformComponent from '../../../component/internal/ui/UITransformComponent.js'
 import AnimationComponent from '../../../component/internal/AnimationComponent.js'
+import TextComponent from '../../../component/internal/TextComponent.js'
 
 export default class ComponentFormMenuItem extends FormMenuItem {
     /**
@@ -80,7 +80,7 @@ export default class ComponentFormMenuItem extends FormMenuItem {
             component instanceof TransformComponent ||
             component instanceof CameraComponent ||
             component instanceof StyleComponent ||
-            component instanceof UITextComponent) {
+            component instanceof TextComponent) {
             const meshComponent = unit.getComponent(MeshComponent)
             meshComponent && meshComponent.setGenerated(false)
             if (component instanceof TransformComponent) {

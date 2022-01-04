@@ -104,7 +104,9 @@ export default class MeshGenerationExecutor extends ComponentExecutor {
             context.translate(width / 2, height / 2)
             context.rotate(rotation)
             context.translate(-center.x, -center.y)
-            return new DataContext(unitId, center, context, scaleSize, camera, world)
+
+            const size = new Size({width: context.canvas.width, height: context.canvas.height})
+            return new DataContext(unitId, center, context, size, camera, world)
         }
         return null
     }

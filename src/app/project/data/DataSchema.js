@@ -280,6 +280,9 @@ import GetAttrClassNode from '../../flow/node/variable/GetAttrClassNode.js'
 import AnimationScript from '../../flow/AnimationScript.js'
 import InputScript from '../../flow/InputScript.js'
 import OutputScript from '../../flow/OutputScript.js'
+import TextUnitInstant from '../../unit/instant/type/internal/text/TextUnitInstant.js'
+import TextComponent from '../../component/internal/TextComponent.js'
+import GetActiveCameraFunction from '../../flow/function/native/camera/GetActiveCameraFunction.js'
 
 /**
  * @class {DataSchema}
@@ -557,6 +560,9 @@ class DataSchema {
         {id: 2570, type: AnimationScript},
         {id: 2580, type: InputScript},
         {id: 2590, type: OutputScript},
+        {id: 2600, type: TextUnitInstant},
+        {id: 2610, type: TextComponent},
+        {id: 2620, type: GetActiveCameraFunction},
     ]
 
     /**

@@ -65,6 +65,7 @@ import AnimationScript from '../flow/AnimationScript.js'
 import InputScript from '../flow/InputScript.js'
 import OutputScript from '../flow/OutputScript.js'
 import ScaleOriginMenuItem from '../layout/items/edit/ScaleOriginMenuItem.js'
+import TextUnitMenuItem from '../layout/items/unit/TextUnitMenuItem.js'
 
 export default class OptionHelper {
 
@@ -162,6 +163,7 @@ export default class OptionHelper {
                 new OptionActionsTitleMenuItem('Unit'),
                 new AddSceneMenuItem(),
                 new CameraMenuItem(),
+                new TextUnitMenuItem(),
                 new LightPointMenuItem(),
                 new LightGlobalMenuItem(),
                 new TileGridMenuItem(),

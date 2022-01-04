@@ -138,6 +138,7 @@ import OpenDialogLoadProjectAction from './project/OpenDialogLoadProjectAction.j
 import OpenDialogSaveProjectAction from './project/OpenDialogSaveProjectAction.js'
 import OpenDialogExportProjectAction from './project/OpenDialogExportProjectAction.js'
 import ScaleToOriginAction from './edit/ScaleToOriginAction.js'
+import AddTextUnitAction from './unit/AddTextUnitAction.js'
 
 /**
  * Action Runner class.
@@ -295,6 +296,7 @@ class ActionRunner extends Runner {
             CREATE_UNIT_INSTANT: CreateUnitInstantAction,
             LOAD_UNIT_INSTANT: LoadUnitInstantAction,
             ADD_EMPTY_UNIT: AddEmptyUnitAction,
+            ADD_TEXT: AddTextUnitAction,
             CLOSE_EDIT_ANIMATION: CloseEditAnimationAction,
             ADD_WINDOW: AddWindowAction,
             CLOSE_WINDOW: CloseWindowAction,
