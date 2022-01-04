@@ -6,6 +6,7 @@ import {CANVAS_CONTEXT_TYPE} from '../core/Constant.js'
 import MaterialType from './MaterialType.js'
 import Color from '../utils/Color.js'
 import ImageHelper from '../utils/ImageHelper.js'
+import Size from '../pobject/Size.js'
 
 export default class LightMaterial extends Material {
 
@@ -16,8 +17,14 @@ export default class LightMaterial extends Material {
     /**
      * @override
      */
-    generate(canvas, dataContext, meshComponent, transformComponent) {
-        const {context, scaleSize, world, camera} = dataContext
+    generate(dataContext, meshComponent, transformComponent) {
+        const {context, world, camera} = dataContext
+        const size = new Size({width: context.canvas.width, height: context.canvas.height})
+
+        const materialCanvas = new OffscreenCanvas(size.width, size.height)
+        const materialContext = materialCanvas.getContext(CANVAS_CONTEXT_TYPE)
+        materialContext.drawImage(context.canvas, 0, 0, size.width, size.height)
+
         const unitManager = world.getUnitManager()
         const lightGlobalUnits = unitManager.findUnitsByComponents([LightGlobalComponent])
         let globalIntensity = 1
@@ -29,29 +36,31 @@ export default class LightMaterial extends Material {
         }
         const globalColorRgba = Color.hexToRgb(globalColor, globalIntensity)
 
-        const canvasLightContainer = new OffscreenCanvas(scaleSize.width, scaleSize.height)
+        const canvasLightContainer = new OffscreenCanvas(size.width, size.height)
         const contextLightContainer = canvasLightContainer.getContext(CANVAS_CONTEXT_TYPE)
         contextLightContainer.fillStyle = globalColorRgba
-        contextLightContainer.fillRect(0, 0, scaleSize.width, scaleSize.height)
+        contextLightContainer.fillRect(0, 0, size.width, size.height)
 
-        const canvasLights = new OffscreenCanvas(scaleSize.width, scaleSize.height)
+        const canvasLights = new OffscreenCanvas(size.width, size.height)
         const contextLights = canvasLights.getContext(CANVAS_CONTEXT_TYPE)
         contextLights.globalCompositeOperation = 'lighter'
         unitManager.findUnitsByComponentClasses([LightPointComponent]).forEach(unitLight => {
-            const lightCanvas = LightHelper.getPoint(unitLight, camera, transformComponent.getPosition(), scaleSize, globalIntensity, globalColor)
-            contextLights.drawImage(lightCanvas, 0, 0, scaleSize.width, scaleSize.height)
+            const lightCanvas = LightHelper.getPoint(unitLight, camera, transformComponent.getPosition(), size, globalIntensity, globalColor)
+            contextLights.drawImage(lightCanvas, 0, 0, size.width, size.height)
         })
 
-        contextLightContainer.drawImage(canvasLights, 0, 0, scaleSize.width, scaleSize.height)
+        contextLightContainer.drawImage(canvasLights, 0, 0, size.width, size.height)
 
-        const lightCanvasSourceAtop = ImageHelper.copyCanvas(context.canvas, meshComponent.getFilter())
+        const lightCanvasSourceAtop = ImageHelper.copyCanvas(materialContext.canvas, meshComponent.getFilter())
         const lightContextSourceAtop = lightCanvasSourceAtop.getContext(CANVAS_CONTEXT_TYPE)
         lightContextSourceAtop.globalCompositeOperation = 'source-atop'
-        lightContextSourceAtop.drawImage(canvasLightContainer, 0, 0, scaleSize.width, scaleSize.height)
+        lightContextSourceAtop.drawImage(canvasLightContainer, 0, 0, size.width, size.height)
 
-        const globalCompositeOperation = context.globalCompositeOperation
-        context.globalCompositeOperation = 'multiply'
-        context.drawImage(lightCanvasSourceAtop, 0, 0, scaleSize.width, scaleSize.height)
-        context.globalCompositeOperation = globalCompositeOperation
+        const globalCompositeOperation = materialContext.globalCompositeOperation
+        materialContext.globalCompositeOperation = 'multiply'
+        materialContext.drawImage(lightCanvasSourceAtop, 0, 0, size.width, size.height)
+        materialContext.globalCompositeOperation = globalCompositeOperation
+
+        return materialContext
     }
 }

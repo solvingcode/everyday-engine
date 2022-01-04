@@ -104,9 +104,7 @@ export default class MeshGenerationExecutor extends ComponentExecutor {
             context.translate(width / 2, height / 2)
             context.rotate(rotation)
             context.translate(-center.x, -center.y)
-
-            const size = new Size({width: context.canvas.width, height: context.canvas.height})
-            return new DataContext(unitId, center, context, size, camera, world)
+            return new DataContext(unitId, center, context, scaleSize, camera, world)
         }
         return null
     }
@@ -149,7 +147,9 @@ export default class MeshGenerationExecutor extends ComponentExecutor {
         } else if (borderSize) {
             context.stroke()
         }
-        return this.updateMeshFromContext(unitId, world.getMeshManager(), context)
+        const materialContext = this.getMaterial(world, meshComponent.getMaterial())
+            .generate(dataContext, meshComponent, transformComponent)
+        return this.updateMeshFromContext(unitId, world.getMeshManager(), materialContext)
     }
 
     /**
@@ -179,8 +179,6 @@ export default class MeshGenerationExecutor extends ComponentExecutor {
             context.drawImage(ImageHelper.scaleCanvas(canvasBg, directionScale),
                 drawPosition.getX(), drawPosition.getY(), scaleSize.width, scaleSize.height)
         }
-        this.getMaterial(world, meshComponent.getMaterial())
-            .generate(canvasBg, dataContext, meshComponent, transformComponent)
         borderSize && context.stroke()
     }
 
@@ -208,7 +206,7 @@ export default class MeshGenerationExecutor extends ComponentExecutor {
     /**
      * @param {number} unitId
      * @param {MeshManager} meshManager
-     * @param {OffscreenCanvasRenderingContext2D} context
+     * @param {CanvasRenderingContext2D} context
      */
     updateMeshFromContext(unitId, meshManager, context) {
         const sw = context.canvas.width, sh = context.canvas.height

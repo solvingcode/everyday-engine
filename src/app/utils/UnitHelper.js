@@ -678,6 +678,38 @@ export default class UnitHelper {
     }
 
     /**
+     * @param {Unit} unit
+     * @param {Vector} position
+     */
+    static forceSetPosition(unit, position){
+        const transformComponent = unit.getComponent(TransformComponent)
+        const meshComponent = unit.getComponent(MeshComponent)
+        if(transformComponent){
+            transformComponent.setPosition(position, true)
+        }
+        if (meshComponent) {
+            if (meshComponent.getMaterial() === MaterialType.LIGHT) {
+                meshComponent.setGenerated(false)
+            }
+        }
+    }
+
+    /**
+     * @param {Unit} unit
+     * @param {number} rotation
+     */
+    static forceSetRotation(unit, rotation){
+        const transformComponent = unit.getComponent(TransformComponent)
+        const meshComponent = unit.getComponent(MeshComponent)
+        if(transformComponent){
+            transformComponent.setRotation(rotation, true)
+        }
+        if (meshComponent) {
+            meshComponent.setGenerated(false)
+        }
+    }
+
+    /**
      * @param {World} world
      * @param {Unit} unit
      * @param {Vector} scale
