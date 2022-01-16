@@ -1,0 +1,266 @@
+import Runner from '../Runner.js'
+import StateManager from '../../state/StateManager.js'
+import MoveCameraAction from '../action/camera/MoveCameraAction.js'
+import ZoomInOutCameraAction from '../action/camera/ZoomInOutCameraAction.js'
+import World from '../../world/World.js'
+import {MouseButton} from '../../core/Mouse.js'
+import MoveAction from '../action/edit/MoveAction.js'
+import ScaleAction from '../action/edit/ScaleAction.js'
+import RotateAction from '../action/edit/RotateAction.js'
+import Vector from '../../utils/Vector.js'
+import UnitSelector from '../../selector/UnitSelector.js'
+import UnitHelper from '../../utils/UnitHelper.js'
+import GUIRotateComponent from '../../component/internal/gui/rotate/GUIRotateComponent.js'
+import MoveXUnitInstant from '../../unit/instant/type/internal/move/MoveXUnitInstant.js'
+import MoveYUnitInstant from '../../unit/instant/type/internal/move/MoveYUnitInstant.js'
+import MoveFreeUnitInstant from '../../unit/instant/type/internal/move/MoveFreeUnitInstant.js'
+import ScaleXUnitInstant from '../../unit/instant/type/internal/scale/ScaleXUnitInstant.js'
+import ScaleYUnitInstant from '../../unit/instant/type/internal/scale/ScaleYUnitInstant.js'
+import ScaleFreeUnitInstant from '../../unit/instant/type/internal/scale/ScaleFreeUnitInstant.js'
+import RotateZUnitInstant from '../../unit/instant/type/internal/rotate/RotateZUnitInstant.js'
+import Window from '../../core/Window.js'
+import TransformComponent from '../../component/internal/TransformComponent.js'
+import GUIColliderComponent from '../../component/internal/gui/collider/GUIColliderComponent.js'
+import MeshUnit from '../../unit/type/MeshUnit.js'
+import GUISelectorComponent from '../../component/internal/gui/selector/GUISelectorComponent.js'
+import GUIAnchorComponent from '../../component/internal/gui/anchor/GUIAnchorComponent.js'
+import UITransformComponent from '../../component/internal/ui/UITransformComponent.js'
+import Menu from '../../layout/Menu.js'
+import ContentCanvasMenuItem from '../../layout/items/content/ContentCanvasMenuItem.js'
+import GUIMoveComponent from '../../component/internal/gui/move/GUIMoveComponent.js'
+import GUIScaleComponent from '../../component/internal/gui/scale/GUIScaleComponent.js'
+
+class EditorRunner extends Runner {
+
+    /**
+     * @type {EditorRunner}
+     */
+    static instance = null
+
+    /**
+     * @override
+     */
+    isHandle(window) {
+        return true
+    }
+
+    /**
+     * Execute all world actions (move camera, ...)
+     */
+    execute() {
+        const mouse = Window.get().mouse
+        const stateManager = StateManager.get()
+        if (!stateManager.isRunning() && !stateManager.isFormUpdating()) {
+            this.updateMouseWheel(stateManager, mouse)
+            if (!World.get().getScriptManager().getSelected(World.get().getTabManager())) {
+                this.handleUnitEvent(stateManager, mouse)
+                this.selectUnits(stateManager, mouse)
+                this.setupEditor(stateManager)
+            }
+        }
+    }
+
+    /**
+     * @param {StateManager} stateManager
+     * @param {Mouse} mouse
+     */
+    updateMouseWheel(stateManager, mouse) {
+        if (mouse.isButtonPressed(MouseButton.MIDDLE)) {
+            if (!stateManager.isProgress(MoveCameraAction.STATE)) {
+                stateManager.startState(MoveCameraAction.STATE, 1)
+            }
+        }
+        if (mouse.getMouseWheel().y) {
+            const itemTarget = Menu.get().getUIRenderer().getItemAt(mouse)
+            if (itemTarget && itemTarget.element instanceof ContentCanvasMenuItem) {
+                stateManager.startState(ZoomInOutCameraAction.STATE, 1,
+                    {deltaY: mouse.getMouseWheel().y})
+            }
+        }
+    }
+
+    /**
+     * @param {StateManager} stateManager
+     * @param {Mouse} mouse
+     */
+    selectUnits(stateManager, mouse) {
+        if (mouse.isButtonPressed(MouseButton.LEFT) &&
+            this.isSelectEdit(stateManager) &&
+            !stateManager.hasState(MoveAction.STATE, 1) &&
+            !stateManager.hasState(ScaleAction.STATE, 1) &&
+            !stateManager.hasState(RotateAction.STATE, 1)) {
+            const world = World.get()
+            const dragArea = mouse.getDragArea(world.getCamera())
+            world.selectUnits(dragArea)
+        }
+    }
+
+    /**
+     * @param {StateManager} stateManager
+     * @return {boolean}
+     */
+    isSelectEdit(stateManager) {
+        return stateManager.isProgress('DRAW_SELECT') ||
+            stateManager.isProgress('DRAW_MOVE') ||
+            stateManager.isProgress('DRAW_SCALE') ||
+            stateManager.isProgress('DRAW_ROTATE')
+    }
+
+    /**
+     * Handle action when entity's event is triggered (like click, drag, ...)
+     * @param {StateManager} stateManager
+     * @param {Mouse} mouse
+     */
+    handleUnitEvent(stateManager, mouse) {
+        if (this.isSelectEdit(stateManager)) {
+            if (mouse.isButtonPressed(MouseButton.LEFT)) {
+                const world = World.get()
+                const currentScenePosition = world.getCamera().fromCameraScale(mouse.currentScenePosition)
+                const unit = world.findUnitsByPosition(world.getWorldPosition(currentScenePosition))
+                    .find(pUnit => pUnit.hasAnyComponentsByClasses([
+                        GUIMoveComponent, GUIScaleComponent, GUIRotateComponent]))
+                const dragArea = mouse.getDragArea(world.getCamera())
+                if (unit && dragArea) {
+                    if (unit.hasAnyComponentsByClasses([GUIMoveComponent])) {
+                        !stateManager.isProgress(MoveAction.STATE) &&
+                        stateManager.startState(MoveAction.STATE, 1, {unit})
+                    }
+                    if (unit.hasAnyComponentsByClasses([GUIScaleComponent])) {
+                        !stateManager.isProgress(ScaleAction.STATE) &&
+                        stateManager.startState(ScaleAction.STATE, 1, {unit})
+                    } else if (unit.hasAnyComponentsByClasses([GUIRotateComponent])) {
+                        !stateManager.isProgress(RotateAction.STATE) &&
+                        stateManager.startState(RotateAction.STATE, 1, {unit})
+                    }
+                }
+            } else {
+                stateManager.isProgress(MoveAction.STATE)
+                && stateManager.stopState(MoveAction.STATE, 1)
+                stateManager.isProgress(ScaleAction.STATE)
+                && stateManager.stopState(ScaleAction.STATE, 1)
+                stateManager.isProgress(RotateAction.STATE)
+                && stateManager.stopState(RotateAction.STATE, 1)
+            }
+        }
+
+    }
+
+    /**
+     * @param {StateManager} stateManager
+     */
+    setupEditor(stateManager) {
+        const world = World.get()
+        const selectedUnits = UnitSelector.get().getSelected(world)
+        const selectedUnitsWithMesh = selectedUnits.filter(unit => unit instanceof MeshUnit)
+        const targetUnit = this.setupColliderEditor(selectedUnitsWithMesh) || selectedUnits[0]
+        this.setupTransformEditor(stateManager, targetUnit)
+        this.setupSelectorEditor(selectedUnits)
+        this.setupAnchorEditor(selectedUnits)
+    }
+
+    /**
+     * @param {Unit[]} selectedUnits
+     * @return {Unit}
+     */
+    setupColliderEditor(selectedUnits) {
+        const world = World.get()
+        const unitManager = world.getUnitManager()
+        if (selectedUnits.length === 1) {
+            const selectedUnit = selectedUnits[0]
+            const exitGUIColliders = unitManager.getUnitsHasComponents([GUIColliderComponent])
+            unitManager.deleteUnits(exitGUIColliders
+                .filter(unit => unit.getComponent(GUIColliderComponent).getUnitId() !== selectedUnit.getId()))
+            const colliderUnits = UnitHelper.createGUICollider(selectedUnit, world)
+            if (colliderUnits.length) {
+                return colliderUnits[0]
+            }
+        } else {
+            unitManager.deleteUnitsByComponents([GUIColliderComponent])
+        }
+    }
+
+    /**
+     * @param {StateManager} stateManager
+     * @param {Unit} targetUnit
+     */
+    setupTransformEditor(stateManager, targetUnit) {
+        const world = World.get()
+        const unitManager = world.getUnitManager()
+        const transformComponent = targetUnit && targetUnit.getComponent(TransformComponent)
+        const editorPosition = transformComponent && UnitHelper.toLargeCenterPosition(targetUnit)
+
+        const editorComponents = {
+            DRAW_MOVE: [MoveXUnitInstant, MoveYUnitInstant, MoveFreeUnitInstant],
+            DRAW_SCALE: [ScaleXUnitInstant, ScaleYUnitInstant, ScaleFreeUnitInstant],
+            DRAW_ROTATE: [RotateZUnitInstant]
+        }
+        const origLocalPosition = Vector.zero()
+        for (const action in editorComponents) {
+            const unitInstants = editorComponents[action]
+            unitInstants.forEach(unitInstantClass => {
+                const unitExist = unitManager.findUnitByType(unitInstantClass)
+                if (stateManager.hasAnyState(action) && !unitExist && editorPosition) {
+                    world.createChildUnitInstant(unitInstantClass, targetUnit, origLocalPosition, transformComponent.getScale())
+                } else if (unitExist && (
+                    !stateManager.hasAnyState(action) ||
+                    (targetUnit && unitExist.getUnitParentId() !== targetUnit.getId()) ||
+                    !targetUnit
+                )) {
+                    unitManager.deleteUnit(unitExist)
+                } else if (unitExist) {
+                    unitExist.update(world.getCamera(), transformComponent.getScale(), origLocalPosition)
+                }
+            })
+        }
+    }
+
+    /**
+     * @param {Unit[]} selectedUnits
+     */
+    setupSelectorEditor(selectedUnits) {
+        const world = World.get()
+        const unitManager = world.getUnitManager()
+        if (selectedUnits.length === 1) {
+            const selectedUnitIds = selectedUnits.map(unit => unit.getId())
+            const exitGUISelectors = unitManager.getUnitsHasComponents([GUISelectorComponent])
+            unitManager.deleteUnits(exitGUISelectors
+                .filter(unit => !selectedUnitIds.includes(unit.getComponent(GUISelectorComponent).getUnitId())))
+            selectedUnits.forEach(selectedUnit => {
+                if (selectedUnit.getComponent(TransformComponent)) {
+                    const existGUISelector = exitGUISelectors
+                        .find(guiUnit => guiUnit.getComponent(GUISelectorComponent).getUnitId() === selectedUnit.getId())
+                    if (!existGUISelector) {
+                        UnitHelper.createGUISelector(selectedUnit, world)
+                    } else {
+                        existGUISelector.update(world.getCamera())
+                    }
+                }
+            })
+        } else {
+            unitManager.deleteUnitsByComponents([GUISelectorComponent])
+        }
+    }
+
+    /**
+     * @param {Unit[]} selectedUnits
+     */
+    setupAnchorEditor(selectedUnits) {
+        const world = World.get()
+        const unitManager = world.getUnitManager()
+        if (selectedUnits.length === 1) {
+            const selectedUnit = selectedUnits[0]
+            if (selectedUnit.getComponent(UITransformComponent)) {
+                const exitGUIAnchors = unitManager.getUnitsHasComponents([GUIAnchorComponent])
+                unitManager.deleteUnits(exitGUIAnchors
+                    .filter(unit => unit.getComponent(GUIAnchorComponent).getUnitId() !== selectedUnit.getId()))
+                UnitHelper.createGUIAnchor(selectedUnit, world)
+            } else {
+                unitManager.deleteUnitsByComponents([GUIAnchorComponent])
+            }
+        } else {
+            unitManager.deleteUnitsByComponents([GUIAnchorComponent])
+        }
+    }
+}
+
+export default EditorRunner

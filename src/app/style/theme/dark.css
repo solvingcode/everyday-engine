@@ -1,0 +1,440 @@
+body{
+    background-color: #222222;
+    text-shadow: #000000 1px 1px;
+    color: #f4f4f4;
+}
+
+#app-el-top{
+    border-bottom: 1px solid #222222;
+    border-top: 1px solid #222222;
+    background-color: #4d4d4c;
+}
+
+#app-el-footer{
+    border-top: 1px solid #222222;
+    background-color: #4d4d4c;
+}
+
+#app-el-bottom{
+    border-top: 1px solid #222222;
+    background-color: #3e3e3e;
+}
+
+#app-el-right{
+    background-color: #222222;
+}
+
+#app-el-right .app-zone-wrapper{
+    background-color: #474747;
+}
+
+button{
+    background-color: rgba(77, 77, 76, 0.51);
+    color: #d9d9d9;
+}
+
+button:not(.disabled):not(.selected):hover, button.locked:hover, button.hidden:hover{
+    background-color: #333333;
+}
+
+.default-form-wrapper .panel button{
+    background-color: #357c52;
+}
+
+.default-form-wrapper .panel button:hover{
+    background-color: #398659;
+}
+
+button.selected:hover{
+    background-color: #3f6093;
+}
+
+button.disabled{
+    color: #767676;
+}
+
+button.hidden{
+    background-color: #dddddd;
+    color: #999999;
+}
+
+button.locked{
+    background-color: #ffe7ff;
+}
+
+button.selected, button.hidden.selected, button.locked.selected{
+    background-color: #395889;
+}
+
+.panel{
+    background-color: #474747;
+}
+
+#app-el-bottom .panel{
+    background-color: #323232;
+}
+
+.panel h4{
+    background-color: #474747;
+    color: #dbdbdb;
+}
+
+#app-el-bottom .panel.collapsed h4{
+    background-color: #323232;
+}
+
+#app-el-bottom .panel h4{
+    background-color: #3e3e3e;
+}
+
+#app-el-top-tab .panel.collapsed h4{
+    background-color: #323232;
+}
+
+#app-el-top-tab .tab-item.selected h4{
+    background-color: #222222;
+}
+
+#app-el-top-tab .tab-item h4{
+    background-color: #323232;
+}
+
+#app-el-top-tab .panel div button{
+    color: #5a5a5a;
+}
+
+#app-el-top-tab .panel div button:hover{
+    color: #787878;
+}
+
+#app-el-top-tab .tab-list{
+    background-color: #474747;
+}
+
+#app-el-body .body-item{
+    background: none;
+}
+
+#app-el-body .body-item > div{
+    background: none;
+}
+
+#app-el-body .body-item.has-content textarea{
+    border: 0;
+    color: #dcdcdc;
+    background-color: #222222;
+    outline: none;
+}
+
+#app-el-body .body-item.has-content p{
+    color: #a1706e;
+}
+
+.panel > div{
+    background-color: #3e3e3e;
+}
+
+.panel .panel{
+    background-color: unset;
+    border: none;
+}
+
+.panel.body-item > div{
+    padding: 0;
+}
+
+.units-wrapper .panel .panel h4, .component-add-wrapper .panel h4, .script-nodes .panel h4, .panel .panel h4{
+    background-color: unset;
+    border: none;
+    padding: 5px;
+}
+
+.units-wrapper .panel h4 + div button[data-icon="times"]{
+    background: none;
+}
+
+.panel .panel > div{
+    border: none;
+}
+
+.panel .tree{
+    background-color: #3e3e3e;
+}
+
+.tree > .panel{
+    border-bottom: 1px solid #4e4e4e;
+    padding-bottom: 5px;
+}
+
+.panel .tree .list-element-img-wrapper{
+    background-color: unset;
+}
+
+#app-el-bottom .panel .tree .panel{
+    background-color: #3e3e3e;
+}
+
+.panel .tree h4{
+    background-color: #3e3e3e !important;
+}
+
+.panel .tree .list-element:hover{
+    background: none;
+}
+
+.panel .tree .list-element:not(.disabled):not(.selected):nth-child(2n) {
+    background-color: #404040;
+}
+
+.panel .tree .list-element:not(.disabled) button:hover, .panel .script-nodes .list-element:not(.disabled) button:hover{
+    background-color: #4e4e4e;
+}
+
+.panel .tree .list-element.disabled button, .panel .tree .list-element.readonly button{
+    color: #767676;
+}
+
+.panel .tree .list-element.locked button{
+    color: #e0b26d;
+}
+
+.panel .tree .list-element.has-child.readonly .list-element-collapse-el:after{
+    color: #767676;
+    text-shadow: #000000 0 0;
+}
+
+.panel .tree .list-element.selected > button:hover, .panel .script-nodes .list-element.selected > button:hover{
+    background-color: #3f6093;
+}
+
+.panel .tree .list-element.selected{
+    background: none;
+}
+
+.panel .tree .list-element.selected > button{
+    background-color: #395889;
+}
+
+.panel-action{
+    background-color: unset;
+    border-bottom: 1px solid #323232;
+}
+
+.panel-action button{
+    background-color: unset;
+}
+
+.panel-action button:hover{
+    background-color: #474747;
+}
+
+.assets-wrapper .assets-list{
+    background-color: #323232;
+    overflow: auto;
+}
+
+.assets-wrapper .assets-list .list-element-img-wrapper{
+    background-color: unset;
+}
+
+.assets-wrapper .assets-list .list-element .list-element-img-wrapper i.status-new {
+    color: #ffffff;
+    background-color: #0b97c4;
+}
+
+.assets-wrapper .assets-list .list-element .list-element-img-wrapper i.status-success {
+    color: #ffffff;
+    background-color: #06a147;
+}
+
+.assets-wrapper .assets-list .list-element .list-element-img-wrapper i.status-error {
+    color: #ffffff;
+    background-color: #b94a48;
+}
+
+.assets-wrapper .assets-list .list-element:not(.disabled):not(.selected):hover {
+    background-color: #4e4e4e;
+}
+
+.animation-wrapper .panel div {
+    background: none;
+}
+.animation-wrapper .panel h4 + div button[data-icon="times"]{
+    background: none;
+}
+.animation-wrapper .panel .list-element{
+    border-left: 1px solid #4d4d4c;
+}
+.animation-wrapper .panel .animation-form-wrapper{
+    background-color: #3e3e3e;
+}
+.animation-wrapper{
+    background-color: #323232;
+}
+.animation-wrapper .panel{
+  background-color: #323232;
+}
+.animation-wrapper .panel .animation-form-wrapper > .panel{
+    border-right: 1px solid #4d4d4c;
+}
+.animation-wrapper .panel .list-element .text p{
+    color: #b3b3b3;
+}
+.animation-wrapper .panel .list-element button{
+    color: #8a6343;
+}
+.animation-wrapper .panel .list-element button.selected{
+    background: none;
+    color: #0b97c4;
+}
+.animation-wrapper .panel .list-element.selected{
+    background-color: #2c3545;
+}
+.animation-wrapper .animation-create-wrapper button:hover{
+    background-color: #4e4e4e;
+}
+.animation-wrapper .animation-timeline-wrapper > .panel > div > .list-element{
+    border-bottom: 1px solid #4d4d4c;
+}
+
+.units-wrapper .list-element .list-element-img-wrapper i{
+    color: #333333;
+}
+
+.options-popup .option-actions-wrapper .panel div{
+    background: none;
+}
+
+.options-popup .option-actions-wrapper{
+    background-color: #3e3e3e;
+    border: 1px solid #5c5c5c;
+    box-shadow: 2px 2px 2px #3e3e3e;
+}
+
+.options-popup .option-actions-wrapper .text{
+    background-color: rgba(77, 77, 76, 0.51);
+    color: #767676;
+    text-shadow: none;
+}
+
+.options-popup .option-actions-wrapper button:not(:last-child){
+    /*border-bottom: 1px solid #cccccc;*/
+}
+
+.content-popup .content-popup-wrapper{
+    box-shadow: 0 1px 3px #494949;
+    border: 1px solid #494949;
+}
+
+.content-popup .content-popup-wrapper .panel h4, .content-popup .content-popup-wrapper .panel > div{
+    background-color: #3e3e3e;
+}
+
+.content-popup .content-popup-wrapper button[data-icon]{
+    background-color: #3f6093;
+}
+
+#app-el-window .error-popup{
+    background-color: #333333;
+}
+
+#app-el-window .error-popup > button:nth-child(1) i {
+    color: #b94a48;
+}
+
+#app-el-window .error-popup > button:nth-child(1):hover{
+    background-color: rgba(77, 77, 76, 0.51);
+}
+
+.panel .script-nodes div:not(.list-element) > button, .panel .component-add-wrapper button{
+    background-color: #3f6093;
+}
+
+.color{
+    border: 2px solid #4d4d4c;
+}
+
+.color.selected{
+    border: 2px solid #555555;
+}
+
+.form .form-element-editing input[type=text], .form .form-element-editing input[type=number], .form .form-element-editing select{
+    background-color: #323232 !important;
+}
+
+.form input[type=text]:hover, .form select:hover, .form input[type=number]:hover{
+    background-color: #505050;
+}
+
+.form input[type=text], .form input[type=number]{
+    border: 1px solid #5a5a5a;
+    background-color: #3e3e3e;
+    color: #f4f4f4;
+}
+
+.form select{
+    border: 1px solid #5a5a5a;
+    background-color: #3e3e3e;
+    color: #f4f4f4;
+}
+
+.form .form-list-button button.button-selected {
+    background-color: #395889;
+}
+
+.form .form-list-button button.button-selected:hover{
+    background-color: #3f6093;
+}
+
+.list-element:hover{
+    background-color: #4e4e4e;
+}
+
+.list-element.selected:hover{
+    background-color: #3f6093;
+}
+
+.list-element.start-drag button, .list-element.start-drag i{
+    color: #959595;
+}
+
+.end-drag > button, .end-drag > input, .end-drag > select{
+    box-shadow: 0 0 2px #bfbe95 inset;
+    background-color: #313131 !important;
+}
+
+.list-element{
+    background: none;
+}
+
+.units-wrapper .list-element:not(.selected):nth-child(2n) {
+    background-color: #404040;
+}
+
+.units-wrapper .list-element:not(.selected):nth-child(2n):hover {
+    background-color: #4e4e4e;
+}
+
+.list-element.selected{
+    background-color: #395889;
+}
+
+.list-element i{
+    color: #d2d2d2;
+}
+
+.list-element.disabled i, .list-element.readonly i{
+    color: #767676;
+}
+
+::-webkit-scrollbar-track {
+    background-color: #383838;
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: #555554;
+}
+
+h4{
+    background-color: #cccccc;
+}

@@ -1,0 +1,28 @@
+button{
+    background-color: #f4f4f4;
+}
+
+button:hover, button.locked:hover, button.hidden:hover{
+    background-color: #caddf0;
+}
+
+button.selected, button.hidden.selected, button.locked.selected{
+    background-color: #89c4ff;
+}
+
+.panel{
+    border: 1px solid #777777;
+}
+
+.color{
+    border: 2px solid #ffffff;
+}
+
+.color.selected{
+    border: 2px solid #555555;
+}
+
+.layer-entity{
+    background-color: #ffffff;
+    border-bottom: 1px solid #eeeeee;
+}

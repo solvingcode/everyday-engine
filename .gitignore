@@ -1,0 +1,7 @@
+.vscode
+docs
+.idea
+assets/images
+package-lock.json
+node_modules
+build/dist
