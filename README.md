@@ -1,13 +1,13 @@
-# Everyday engine
+# Everyday Engine
 **Everyday Engine** is a game engine tool that runs on the browser using Javascript.
 The design behind this game engine is based on **Entity Component System architecture**.
 Through the scripting feature using graphs, you can develop the game faster by using the built-in functions of the engine or creating your own. It allows non-technical users to develop their games without the need to understand programming language since it uses natural language and visual representations of the instructions.
 There are still many improvements to be made in this version, as well as other interesting features that remain to be implemented. You can use it to create 2D games as it integrates all the important features.
 
-![Everyday Engine screenshot](https://github.com/solvingcode/web-engine/blob/master/img/screen1.png?raw=true)
-![Everyday Engine screenshot](https://github.com/solvingcode/web-engine/blob/master/img/screen2.png?raw=true)
-![Everyday Engine screenshot](https://github.com/solvingcode/web-engine/blob/master/img/screen3.png?raw=true)
-![Everyday Engine screenshot](https://github.com/solvingcode/web-engine/blob/master/img/screen4.png?raw=true)
+![Everyday Engine screenshot](https://github.com/solvingcode/everyday-engine/blob/master/img/screen1.png?raw=true)
+![Everyday Engine screenshot](https://github.com/solvingcode/everyday-engine/blob/master/img/screen2.png?raw=true)
+![Everyday Engine screenshot](https://github.com/solvingcode/everyday-engine/blob/master/img/screen3.png?raw=true)
+![Everyday Engine screenshot](https://github.com/solvingcode/everyday-engine/blob/master/img/screen4.png?raw=true)
 
 ## Features
 This version of the game engine includes many important features :

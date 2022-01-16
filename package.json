@@ -1,5 +1,5 @@
 {
-  "name": "web-engine",
+  "name": "everyday-engine",
   "version": "1.0.0",
   "description": "Game engine on the browser",
   "main": "index.js",
@@ -22,14 +22,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/solvingcode/web-engine.git"
+    "url": "git+https://github.com/solvingcode/everyday-engine.git"
   },
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/solvingcode/web-engine/issues"
+    "url": "https://github.com/solvingcode/everyday-engine/issues"
   },
-  "homepage": "https://github.com/solvingcode/web-engine#readme",
+  "homepage": "https://github.com/solvingcode/everyday-engine#readme",
   "devDependencies": {
     "@babel/cli": "^7.12.10",
     "@babel/core": "^7.13.14",
