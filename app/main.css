@@ -1,0 +1,1122 @@
+body{
+    margin: 0;
+    padding: 0;
+    font-family: Ubuntu, sans-serif;
+    font-size: 11pt;
+    overflow: hidden;
+}
+/* CURSOR -- */
+body.cursor-pointer, body.cursor-pointer button{
+    cursor: pointer;
+}
+body.cursor-drag, body.cursor-drag button{
+    cursor: grabbing;
+}
+body.cursor-end-drag, body.cursor-end-drag button{
+    cursor: context-menu;
+}
+.end-drag, .end-drag button, .end-drag input, .end-drag select, .end-drag label{
+    cursor: context-menu !important;
+}
+/* -- CURSOR */
+
+canvas{
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+#object{
+    z-index: 3;
+}
+#root{
+    z-index: 2;
+}
+*:not(input, textarea){
+    -moz-user-select: none;
+    -webkit-user-select: none;
+}
+/* button -- */
+
+button{
+    border: none;
+    position: relative;
+}
+
+button:focus{
+    outline: none;
+}
+
+button[data-icon]{
+    width: 35px;
+    height: 35px;
+    font-size: 14px;
+}
+
+#app-el-left button[data-icon]:nth-child(1){
+    border-radius: 5px 5px 0 0;
+}
+
+#app-el-left button[data-icon]:nth-last-child(1){
+    border-radius: 0 0 5px 5px;
+}
+
+/* -- button */
+
+/* title -- */
+
+h4{
+    margin: 0;
+    padding: 10px;
+}
+
+/* -- title */
+
+/* panel -- */
+
+.panel{
+    width: 100%;
+    box-sizing: border-box;
+    float: left;
+}
+
+.panel > div{
+    overflow: auto;
+    padding: 5px;
+}
+
+.section-right .panel .panel {
+    margin-bottom: 5px;
+}
+
+.section-right .panel-layer .panel .panel {
+    margin-bottom: 0;
+}
+
+.panel .panel > div{
+    padding: 0;
+    margin-left: 2px;
+}
+
+.panel .panel h4{
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.panel h4{
+    padding: 10px 10px;
+    margin: 0;
+    display: inline-block;
+    box-sizing: border-box;
+    width: 100%;
+}
+
+.panel h4::before{
+    display: block;
+    float: left;
+    margin-right: 7px;
+    font-family: "Font Awesome 5 Free", sans-serif;
+    font-size: 10px;
+    line-height: 20px;
+    content: "\f078";
+}
+
+#app-el-bottom .panel h4::before{
+    content: "";
+}
+
+#app-el-top-tab .panel{
+    padding: 5px 0 0 5px;
+}
+
+#app-el-top-tab .tab-list{
+    width: 100%;
+    overflow: hidden;
+}
+
+#app-el-top-tab .tab-item{
+    width: 200px;
+    position: relative;
+}
+
+#app-el-top-tab .panel{
+    position: relative;
+}
+
+#app-el-top-tab .panel h4{
+    padding: 10px 15px 10px 15px;
+    border-radius: 5px 5px 0 0;
+    width: 100%;
+    box-sizing: border-box;
+    text-align: left;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+}
+
+#app-el-top-tab .panel div{
+    position: absolute;
+    right: 0;
+    top: 0;
+    background: none;
+    box-sizing: border-box;
+}
+
+#app-el-top-tab .panel div button{
+    width: 30px;
+    height: 30px;
+    background: none;
+    padding: 10px;
+}
+
+#app-el-top-tab .panel h4::before{
+    content: "";
+}
+
+#app-el-body .body-item.has-content{
+    width: calc(100% - 250px);
+    height: calc(100vh - 340px - 90px);
+    position: relative;
+}
+
+#app-el-body .body-item.has-content textarea{
+    width: 100%;
+    height: calc(100% - 60px);
+    resize: none;
+    padding: 20px 30px;
+    font-size: 16px;
+    letter-spacing: 1px;
+    font-weight: 100;
+}
+
+#app-el-body .body-item.has-content .form-wysiwyg > div{
+    width: 100%;
+    height: calc(100% - 85px);
+    resize: none;
+    padding: 20px 30px;
+    font-size: 16px;
+    letter-spacing: 0.1rem;
+    font-weight: 100;
+    outline: none;
+    box-sizing: border-box;
+    cursor: text;
+}
+
+#app-el-body .body-item.has-content p{
+    width: 100%;
+    box-sizing: border-box;
+    position: absolute;
+    bottom: 15px;
+}
+
+#app-el-bottom .panel h4{
+    width: auto;
+}
+
+#app-el-bottom .panel h4 i{
+    float: left;
+    margin-right: 5px;
+    line-height: 1.1rem;
+}
+
+.panel.collapsed h4::before{
+    content: "\f054";
+}
+
+.panel.collapsed div {
+    display: none;
+}
+
+.assets-wrapper .tree{
+    width: 30% !important;
+}
+
+.panel .tree{
+    width: 100%;
+}
+
+.panel .tree .panel > div .panel{
+    padding-left: 10px;
+}
+
+.panel .script-nodes .list-element {
+    box-sizing: border-box;
+    width: 100%;
+    padding: 0;
+}
+
+.panel .script-nodes .list-element button{
+    width: 100%;
+    text-align: left;
+}
+
+.panel .tree .list-element i, .panel .script-nodes .list-element i{
+    position: absolute;
+    top: 3px;
+    left: 2px;
+}
+
+.list-element button{
+    padding: 0;
+    margin: 0;
+}
+
+.list-element button.fas{
+    padding: 0 4px;
+}
+
+.panel .tree .list-element span , .panel .script-nodes .list-element span {
+    margin: 0;
+    text-align: left;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    width: 100%;
+    display: block;
+    box-sizing: border-box;
+    padding-left: 23px;
+}
+
+.panel .tree .list-element {
+    position: relative;
+}
+
+.panel .tree .list-element button {
+    padding-left: 20px;
+}
+
+.panel .tree .list-element .list-element-img-wrapper{
+    left: 20px;
+}
+
+.panel .tree .list-element .list-element-collapse-el{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 20px;
+    height: 20px;
+}
+
+.panel .tree .list-element.has-child.collapsed > .list-element-collapse-el:after{
+    content: "\f0da";
+    line-height: 20px;
+}
+
+.panel .tree .list-element.has-child > .list-element-collapse-el:after{
+    content: "\f0dd";
+}
+
+.panel .tree .list-element.has-child.collapsed .panel{
+    display: none;
+}
+
+.panel .tree .list-element.has-child .list-element-collapse-el:after{
+    display: block;
+    font-family: "Font Awesome 5 Free", sans-serif;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    font-weight: 900;
+    text-align: center;
+}
+
+.panel .script-nodes .list-element button.fas{
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: unset;
+}
+.panel .script-nodes div:not(.list-element) > button, .panel .component-add-wrapper button{
+    float: right;
+    width: unset;
+    height: unset;
+    font-size: 11pt;
+    padding: 5px 10px;
+    margin-right: 5px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.panel .script-nodes div:not(.list-element) > button i{
+    margin-right: 5px;
+}
+
+.panel-action{
+    width: 100%;
+    padding: 0 0 5px 0;
+}
+.panel-action button{
+    width: 25px;
+    height: 25px;
+    font-size: 14px;
+}
+.panel-action button span{
+    display: none;
+}
+
+.wrapper{
+    width: 100%;
+    overflow: hidden;
+}
+
+.assets-wrapper{
+    height: calc(100% - 30px - 40px);
+    box-sizing: border-box;
+}
+
+.assets-wrapper .assets-list {
+    height: 100%;
+    padding: 5px;
+    float: right;
+    width: 70%;
+    box-sizing: border-box;
+}
+
+.assets-wrapper .tree{
+    height: 100%;
+    box-sizing: border-box;
+    float: left;
+    overflow: auto;
+}
+
+.assets-wrapper .assets-list .list-element{
+    width: 100px !important;
+    height: 100px;
+    text-align: center;
+}
+
+.assets-wrapper .assets-list .list-element .list-element-img-wrapper{
+    float: unset;
+    margin: auto;
+    width: 100%;
+    height: 60px;
+    position: relative;
+    top: 0;
+    left: 0;
+}
+
+.assets-wrapper .assets-list .list-element .list-element-img-wrapper img{
+    margin: 0;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    -ms-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+}
+
+.assets-wrapper .assets-list .list-element .list-element-img-wrapper i.fas {
+    font-size: 50px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    -ms-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+}
+
+.assets-wrapper .assets-list .list-element .list-element-img-wrapper i.status {
+    font-size: 20px;
+    width: 30px;
+    height: 30px;
+    padding: 5px;
+    box-sizing: border-box;
+    margin-top: -15px;
+    margin-left: -15px;
+    border-radius: 45px;
+}
+
+.assets-wrapper .assets-list .list-element span{
+    float: unset;
+    margin: 2px auto;
+    text-align: center;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    padding: 5px;
+}
+
+.animation-wrapper{
+    height: 100%;
+}
+
+.animation-wrapper > .panel > div{
+    padding: 0;
+}
+
+.animation-wrapper .panel h4 + div button[data-icon="times"]{
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: unset;
+    height: unset;
+    font-size: 14px;
+    padding: 13px 10px;
+}
+
+.animation-wrapper .panel .list-element:hover{
+    background: none;
+}
+.animation-wrapper .panel .list-element{
+    box-sizing: border-box;
+    height: 50px;
+    background: none;
+}
+.animation-wrapper .panel .animation-form-wrapper{
+    width: max-content;
+    min-width: 100%;
+    height: 36px;
+    box-sizing: border-box;
+    overflow: auto;
+}
+.animation-wrapper .panel .animation-form-wrapper .form{
+    float: left;
+    width: unset;
+    padding-left: 5px;
+}
+.animation-wrapper .panel .animation-form-wrapper > .panel{
+    float: left;
+    width: unset;
+}
+.animation-wrapper .panel .animation-form-wrapper > .panel button{
+    width: 30px;
+    height: 30px;
+    font-size: 12px;
+    margin: 3px 3px 3px 0;
+    background: none;
+}
+.animation-wrapper .panel .animation-form-wrapper .form .form-input{
+    float: left;
+    box-sizing: border-box;
+    height: 30px;
+}
+.animation-wrapper .panel .animation-form-wrapper .form .form-input label{
+    text-align: left;
+    width: unset;
+    line-height: 23px;
+    display: block;
+    float: left;
+}
+.animation-wrapper .animation-create-wrapper{
+    width: 100%;
+    height: calc(100% - 40px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.animation-wrapper .animation-create-wrapper button{
+    padding: 5px 10px;
+}
+
+.animation-wrapper .panel .list-element{
+    width: 40px;
+    height: 100%;
+    float: left;
+    position: relative;
+    text-align: center;
+}
+
+.animation-wrapper .panel .list-element .text{
+    padding: 0;
+}
+
+.animation-wrapper .panel .list-element .text p{
+    position: unset !important;
+    padding: 0;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+}
+
+.animation-wrapper .panel .list-element button{
+    top: 50%;
+    left: 50%;
+    -ms-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+}
+
+.animation-wrapper .animation-timeline-wrapper{
+    width: 100%;
+    height: calc(100% - 40px - 36px);
+    overflow: auto;
+}
+
+.animation-wrapper .animation-timeline-wrapper > .panel{
+    width: max-content;
+    min-width: 100%;
+    overflow: hidden;
+}
+
+.animation-wrapper .animation-timeline-wrapper > .panel > div > .list-element{
+    width: unset;
+    position: unset;
+    float: unset;
+    padding-top: 0;
+    height: 20px;
+}
+
+.animation-wrapper .animation-timeline-wrapper > .panel > div > .list-element > .text{
+    box-sizing: border-box;
+    height: 100%;
+    width: 200px;
+    position: unset;
+    float: left;
+    padding: 0;
+}
+
+.animation-wrapper .animation-timeline-wrapper > .panel > div > .list-element > .panel{
+    box-sizing: border-box;
+    height: 100%;
+    width: calc(100% - 200px);
+    float: left;
+}
+
+.units-wrapper .list-element {
+    height: 35px;
+}
+
+.units-wrapper .list-element .list-element-img-wrapper i{
+    font-size: 14px;
+    float: none;
+    margin: auto;
+    line-height: 1.3rem;
+}
+
+.units-wrapper .panel{
+    position: relative;
+}
+
+.units-wrapper .panel:nth-child(1){
+    overflow: auto;
+}
+
+.default-form-wrapper .panel button{
+    width: 100%;
+    height: unset;
+    padding: 5px 10px;
+    margin-bottom: 10px;
+}
+
+.default-form-wrapper .panel button i{
+    margin-right: 5px;
+}
+
+.default-form-wrapper .list-element{
+    margin-bottom: 2px;
+}
+
+#app-el-top-menu .panel{
+    height: 100%;
+}
+
+#app-el-top-menu .panel > div{
+    padding: 0;
+}
+
+#app-el-top-menu .list-element{
+    width: unset;
+    float: left;
+    height: 100%;
+}
+
+#app-el-top-menu .list-element button{
+    box-sizing: border-box;
+    padding: 5px;
+    min-width: 40px;
+    height: 100%;
+}
+
+.options-popup, .content-popup{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    box-sizing: border-box;
+    padding: 3px;
+}
+
+.options-popup .option-actions-wrapper, .content-popup .content-popup-wrapper{
+    padding: 0;
+    margin: 0;
+    width: unset;
+}
+
+.content-popup .content-popup-wrapper .list-element button{
+    padding: 0;
+}
+
+.content-popup .content-popup-wrapper .list-element span{
+    padding-left: 25px;
+}
+
+.content-popup .content-popup-wrapper .list-element .list-element-img-wrapper i{
+    display: block;
+}
+
+.options-popup .option-actions-wrapper button, .content-popup .content-popup-wrapper button{
+    padding: 5px 20px;
+    width: 100%;
+    text-align: left;
+    white-space: nowrap;
+}
+
+.options-popup .option-actions-wrapper button i, .content-popup .content-popup-wrapper button i{
+    display: none;
+}
+
+.options-popup .option-actions-wrapper button[data-icon] {
+    height: unset;
+    font-size: unset;
+}
+
+.content-popup .content-popup-wrapper button[data-icon]{
+    height: unset;
+    font-size: unset;
+    float: right;
+    width: unset;
+    margin: 5px;
+}
+
+.options-popup .option-actions-wrapper .text{
+    padding: 0;
+}
+
+.options-popup .option-actions-wrapper li .option-actions-trigger{
+    position: relative;
+}
+
+.options-popup .option-actions-wrapper li .option-actions-trigger:after{
+    display: inline;
+    font-family: "Font Awesome 5 Free", sans-serif;
+    content: "\f0da";
+    position: absolute;
+    right: 10px;
+    top: 5px;
+    font-weight: 900;
+}
+
+.units-wrapper .panel h4 + div button[data-icon="times"]{
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: unset;
+    height: unset;
+    font-size: 14px;
+    padding: 13px 10px;
+}
+
+#app-el-left, #app-el-top, #app-el-right, #app-el-footer, #app-el-bottom, #app-el-top-tab, #app-el-body,
+#app-el-window, #app-el-top-menu, #app-el-body-bottom{
+    position: absolute;
+    z-index: 9999;
+    box-sizing: border-box;
+}
+
+#app-el-canvas{
+    position: absolute;
+    box-sizing: border-box;
+    z-index: 3;
+    top: 110px;
+    left: 0;
+    width: calc(100% - 300px);
+    height: calc(100% - 450px);
+}
+
+#app-el-window {
+    z-index: 99999;
+    top: 0;
+    left: 0;
+}
+
+#app-el-window.has-child{
+    width: 100%;
+    height: 100%;
+}
+
+#app-el-window .error-popup{
+    position: absolute;
+    width: 500px;
+    top: 40%;
+    left: 50%;
+    -ms-transform: translate(-50%, -40%);
+    transform: translate(-50%, -40%);
+    box-sizing: border-box;
+}
+
+#app-el-window .error-popup > button:nth-child(1) {
+    width: 100%;
+    text-align: left;
+    padding: 10px;
+}
+
+#app-el-window .error-popup > button i {
+    margin-right: 5px;
+}
+
+#app-el-window .error-popup > button:nth-child(n+3) {
+    float: right;
+    margin: 0 10px 10px 0;
+    width: 100px;
+}
+
+#app-el-window .error-popup p{
+    padding: 20px;
+    font-size: 16px;
+}
+
+#app-el-canvas .app-zone-wrapper, #app-el-canvas .content-canvas{
+    width: 100%;
+    height: 100%;
+}
+
+.app-zone-wrapper{
+    box-sizing: border-box;
+    width: 100%;
+    height: 100%;
+}
+
+#app-el-left{
+    width: 40px;
+    top: 180px;
+    left: 15px;
+    border-radius: 5px;
+}
+
+#app-el-top-menu{
+    height: 30px;
+    top: 0;
+    left: 0;
+    width: 100%;
+}
+
+#app-el-top{
+    height: 35px;
+    top: 30px;
+    left: 0;
+    width: 100%;
+}
+
+#app-el-top-tab{
+    height: 45px;
+    top: 65px;
+    left: 0;
+    width: 100%;
+    overflow: hidden;
+}
+
+#app-el-body{
+    top: 120px;
+    left: 0;
+    width: 100%;
+    overflow: hidden;
+}
+
+#app-el-right{
+    width: 300px;
+    top: 65px;
+    left: calc(100% - 300px);
+    padding: 0 1px;
+    height: calc(100% - 105px);
+    overflow-y: auto;
+}
+
+#app-el-footer{
+    height: 40px;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+}
+
+#app-el-bottom{
+    bottom: 40px;
+    left: 0;
+    width: calc(100% - 300px);
+    height: 300px;
+}
+
+#app-el-body-bottom.has-child{
+    width: calc(100% - 300px);
+    height: 200px;
+    bottom: 340px;
+    left: 0;
+}
+
+/* -- panel */
+
+/* list element -- */
+
+.list-element{
+    padding: 0;
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+    box-sizing: border-box;
+}
+
+.list-element .list-element-img-wrapper{
+    width: 20px;
+    height: 20px;
+    float: left;
+    overflow: hidden;
+    margin: 0;
+    padding: 2px;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+.list-element span{
+    width: 100%;
+    float: left;
+    display: block;
+    margin: 0;
+    text-align: left;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    padding: 0 20px;
+    box-sizing: border-box;
+}
+
+.list-element i{
+    position: absolute;
+    top: 3px;
+    left: 2px;
+}
+
+.list-element button{
+    background: none;
+    font-size: 14px;
+    width: 100%;
+    height: 20px;
+    float: right;
+    line-height: 1rem;
+}
+
+.list-element button.fas{
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: unset;
+}
+
+.list-element button:hover{
+    background: none;
+}
+
+/* -- list element */
+
+/* color -- */
+
+.color{
+    padding: 10px;
+}
+
+/* -- color */
+
+/* text -- */
+
+.text{
+    margin: 0;
+    padding: 5px;
+}
+
+.text p{
+    margin: 0;
+    padding: 5px 10px;
+}
+
+/* -- text */
+
+/* entity indicator -- */
+
+i.attach-entity{
+    display: block;
+    float: right;
+    margin-left: 5px;
+    width: 10px;
+    height: 10px;
+}
+
+i.static-entity{
+    width: 10px;
+    height: 10px;
+    position: absolute;
+    right: 5px;
+    bottom: 10px;
+}
+i.static-entity::before{
+    content: "S";
+    display: block;
+}
+
+/* -- entity indicator */
+
+/* form -- */
+
+.form{
+    margin: 0;
+    padding: 0;
+}
+
+.form .form-input{
+    margin: 0;
+    padding: 5px;
+    box-sizing: border-box;
+}
+
+.form .form-element-editing input[type=text], .form .form-element-editing input[type=number]{
+    cursor: text;
+    outline: -webkit-focus-ring-color auto 1px !important;
+    outline-offset: 0;
+}
+
+.form input[type=text]:focus, .form input[type=number]:focus{
+    outline: none;
+}
+
+.form .form-input input[type=checkbox]{
+    margin: 3px 10px 3px 0;
+}
+.form .form-input label{
+    width: 40%;
+    padding-right: 10px;
+    box-sizing: border-box;
+    display: inline-block;
+    text-align: right;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+}
+
+.form input[type=text], .form input[type=file], .form input[type=number]{
+    border-radius: 2px;
+    padding: 3px;
+    width: 60%;
+}
+
+.form input[type=range]{
+    width: 55%;
+}
+
+.form select{
+    border-radius: 2px;
+    padding: 3px;
+    width: 60%;
+}
+
+.form .form-list-button{
+    display: inline;
+    width: 60%;
+}
+
+.form .form-list-button button {
+    padding: 5px 10px;
+    margin-right: 5px
+}
+
+.form.form-inline .form-input{
+    float: left;
+}
+
+.form .form-group {
+    width: 100%;
+    overflow: hidden;
+    position: relative;
+}
+
+.form .form-group > label{
+    width: 40%;
+    padding-right: 10px;
+    box-sizing: border-box;
+    display: inline-block;
+    text-align: right;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    line-height: 30px;
+}
+
+.form .form-group > div{
+    width: 60%;
+    float: right;
+}
+
+.form .form-group > div .form-input{
+    float: left;
+    box-sizing: border-box;
+}
+
+.list-element .form + button.fas{
+    top: 7px;
+    right: 7px;
+}
+
+/* -- form */
+
+/* components -- */
+
+/* graph -- */
+
+.graph {
+    text-align: center;
+}
+
+/* -- graph */
+
+/* cross -- */
+
+.cross{
+    position: relative;
+    background: none !important;
+}
+
+.cross:before, .cross:after {
+    content: "";
+    position: absolute;
+    z-index: -1;
+    background: #000;
+    transform:rotate(45deg);
+}
+
+.cross:before {
+    top: 0;
+    left: 50%;
+    width: 1px;
+    height: 100%;
+}
+
+.cross:after {
+    top: 50%;
+    left: 0;
+    height: 1px;
+    margin-top: 0;
+    width: 100%;
+}
+
+/*  -- cross */
+
+/* -- components */
+
+/* scroll -- */
+::-webkit-scrollbar {
+    width: 10px;
+}
+
+::-webkit-scrollbar-track {
+    border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+}
+/* -- scroll */
+
+img {
+    -webkit-user-drag: none;
+}
+
+.hidden{
+    display: none;
+}

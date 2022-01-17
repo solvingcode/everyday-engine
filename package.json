@@ -10,15 +10,17 @@
   "scripts": {
     "test": "jest",
     "start": "serve -l 8300",
-    "build": "gulp -f build/config/gulpfile.js libs run data style",
-    "bundle": "gulp -f build/config/gulpfile.js bundle",
-    "export": "gulp -f build/config/gulpfile.js export"
+    "run-build": "gulp -f build/config/gulpfile.js run-build",
+    "app-build": "gulp -f build/config/gulpfile.js app-build",
+    "preview-build": "gulp -f build/config/gulpfile.js preview-build"
   },
   "jest": {
     "transform": {
       "^.+\\.js?$": "babel-jest"
     },
-    "setupFilesAfterEnv": ["<rootDir>/test/setup.js"]
+    "setupFilesAfterEnv": [
+      "<rootDir>/test/setup.js"
+    ]
   },
   "repository": {
     "type": "git",
@@ -45,6 +47,7 @@
     "core-js": "^3.10.0",
     "gulp": "^4.0.2",
     "gulp-concat": "^2.6.1",
+    "gulp-inject": "^5.0.5",
     "gulp-uglify": "^3.0.2",
     "jest": "^26.6.3",
     "pump": "^3.0.0",

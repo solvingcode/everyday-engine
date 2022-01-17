@@ -28,7 +28,7 @@ This version of the game engine includes many important features :
 - Many built-in functions that can be used inside scripts
 
 ## Usage
-Yous can access the game engine by visiting https://www.everydayengine.com (coming soon)
+Yous can access the game engine by visiting https://www.everydayengine.com
 
 ## How it works
 - Actually, the game engine uses HTML Canvas 2D, I'm planning to integrate webgl in the future
