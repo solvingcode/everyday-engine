@@ -561,7 +561,7 @@ export default class UnitHelper {
 
     /**
      * @param {OffscreenCanvas} canvas
-     * @param {DataContext} dataContext
+     * @param {DataContext2D} dataContext
      * @param {MeshComponent} meshComponent
      */
     static generateImageRepeat(canvas, dataContext, meshComponent) {

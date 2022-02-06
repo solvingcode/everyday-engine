@@ -18,7 +18,7 @@ export default class Material extends MaterialData{
 
     /**
      * @abstract
-     * @param {DataContext} dataContext
+     * @param {DataContext2D} dataContext
      * @param {MeshComponent} meshComponent
      * @param {TransformComponent} transformComponent
      * @return {CanvasRenderingContext2D}

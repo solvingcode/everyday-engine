@@ -1,6 +1,5 @@
 import Runner from '../Runner.js'
 import World from '../../world/World.js'
-import MeshRenderer from '../../renderer/MeshRenderer.js'
 
 export class SetupRenderRunner extends Runner {
 
@@ -25,9 +24,9 @@ export class SetupRenderRunner extends Runner {
         const script = world.getScriptManager().getFunctionSelected(world.getTabManager())
         const animation = world.getAnimationManager().getSelected(tabManager)
         if (script) {
-            world.getGraphManager().draw(script, MeshRenderer.get())
+            world.getGraphManager().draw(script, world.getMeshRenderer())
         } else if (!animation) {
-            world.draw(MeshRenderer.get())
+            world.draw(world.getMeshRenderer())
         }
     }
 

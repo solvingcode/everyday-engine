@@ -1,5 +1,4 @@
 import {PrimitiveShape} from '../../unit/Unit.js'
-import RectShapeGenerator from './rect/RectShapeGenerator.js'
 import ArrowRightShapeGenerator from './arrow/ArrowRightShapeGenerator.js'
 import ArrowDownShapeGenerator from './arrow/ArrowDownShapeGenerator.js'
 import CircleShapeGenerator from './circle/CircleShapeGenerator.js'
@@ -15,6 +14,8 @@ import LightPointShapeGenerator from './light/LightPointShapeGenerator.js'
 import TextShapeGenerator from './text/TextShapeGenerator.js'
 import CurveShapeGenerator from './curve/CurveShapeGenerator.js'
 import EdgeShapeGenerator from './edge/EdgeShapeGenerator.js'
+import {CANVAS_CONTEXT_TYPE} from '../../core/Constant.js'
+import RectShapeGenerator from './rect/RectShapeGenerator.js'
 
 /**
  * @abstract
@@ -26,19 +27,32 @@ export default class ShapeGenerator {
     /**
      * @abstract
      * @param {Unit} unit
-     * @param {DataContext} dataContext
+     * @param {DataContext2D} dataContext
      */
-    draw(unit, dataContext){
+    draw(unit, dataContext) {
         const meshComponent = unit.getComponent(MeshComponent)
-        const type = this.getShapeTypeGenerator(meshComponent.getShape())
+        const type = this.getContextTypeGenerator(meshComponent.getShape())
         new type().draw(unit, dataContext)
+    }
+
+    /**
+     * @param {string} shape
+     * @return {Class<ContextTypeShapeGenerator>}
+     */
+    getContextTypeGenerator(shape) {
+        const type = this.getShapeTypeGenerator(shape)
+        if (CANVAS_CONTEXT_TYPE === 'webgl') {
+            return new type().getWebGLContext()
+        } else {
+            return new type().get2DContext()
+        }
     }
 
     /**
      * @param {string} shape
      * @return {Class<TypeShapeGenerator>}
      */
-    getShapeTypeGenerator(shape){
+    getShapeTypeGenerator(shape) {
         switch (shape) {
             case PrimitiveShape.RECT:
                 return RectShapeGenerator

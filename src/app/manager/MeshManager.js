@@ -29,7 +29,7 @@ export default class MeshManager {
 
     /**
      * @param {number} index
-     * @param {Mesh} mesh
+     * @param {Mesh|{program: *, buffer: WebGLBuffer}} mesh
      */
     set(index, mesh){
         this.meshes[index] = mesh

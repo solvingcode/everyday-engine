@@ -1,28 +1,22 @@
 import Renderer from './Renderer.js'
-import {CANVAS_CONTEXT_TYPE} from '../core/Constant.js'
-import {objectContext} from '../core/Context.js'
-import Window from '../core/Window.js'
+import NotImplementedError from '../exception/type/NotImplementedError.js'
 
 /**
- * ObjectRenderer class
- * Manager the renderer for entities
- * @extends {Renderer}
+ * @abstract
  */
-class MeshRenderer extends Renderer {
+export default class MeshRenderer extends Renderer {
 
     constructor() {
         super()
-        /**
-         * @type {{mesh: Mesh, position: Vector}[]}
-         */
         this.meshes = []
         this.initCanvas()
     }
 
+    /**
+     * @abstract
+     */
     initCanvas(){
-        const {size} = Window.get()
-        this.canvas = new OffscreenCanvas(size.width, size.height)
-        this.context = this.canvas.getContext(CANVAS_CONTEXT_TYPE)
+        throw new NotImplementedError(this, this.initCanvas)
     }
 
     /**
@@ -33,12 +27,17 @@ class MeshRenderer extends Renderer {
     }
 
     /**
-     * @override
+     * @abstract
      */
     clear() {
-        const {size} = Window.get()
-        objectContext.canvas.width = size.width
-        this.context.canvas.width = size.width
+        throw new NotImplementedError(this, this.clear)
+    }
+
+    /**
+     * @abstract
+     */
+    drawMesh(mesh, position){
+        throw new NotImplementedError(this, this.drawMesh)
     }
 
     /**
@@ -50,8 +49,7 @@ class MeshRenderer extends Renderer {
         for (let iMesh in this.meshes) {
             if (this.meshes.hasOwnProperty(iMesh)) {
                 const {mesh, position} = this.meshes[iMesh]
-                const {x, y} = position
-                objectContext.drawImage(mesh.context.canvas, x, y)
+                this.drawMesh(mesh, position)
             }
         }
         this.meshes = []
@@ -72,5 +70,3 @@ class MeshRenderer extends Renderer {
         return super.get()
     }
 }
-
-export default MeshRenderer

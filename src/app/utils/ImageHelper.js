@@ -37,7 +37,7 @@ export default class ImageHelper {
             canvasEl.width = width
             canvasEl.height = height
         }
-        const contextEl = canvasEl.getContext(CANVAS_CONTEXT_TYPE)
+        const contextEl = canvasEl.getContext('2d')
         if (filter === MODE.NO_SMOOTHING) {
             contextEl.imageSmoothingEnabled = false
         }

@@ -3,7 +3,6 @@ import TransformComponent from '../../component/internal/TransformComponent.js'
 import Window from '../../core/Window.js'
 import MeshComponent from '../../component/internal/MeshComponent.js'
 import World from '../../world/World.js'
-import MeshRenderer from '../../renderer/MeshRenderer.js'
 
 export default class MeshRendererExecutor extends ComponentExecutor {
 
@@ -19,7 +18,7 @@ export default class MeshRendererExecutor extends ComponentExecutor {
         const world = World.get()
         const camera = world.getCamera()
         const {width: sceneWidth, height: sceneHeight} = windowSize
-        const renderer = MeshRenderer.get()
+        const renderer = world.getMeshRenderer()
         const transformComponent = unit.getComponent(TransformComponent)
         const meshComponent = unit.getComponent(MeshComponent)
         const size = camera.toScaleSize(meshComponent.getSize())

@@ -3,7 +3,7 @@ import Camera from '../core/Camera.js'
 import Vector from '../utils/Vector.js'
 import AssetsManager from '../manager/AssetsManager.js'
 import Size from '../pobject/Size.js'
-import {SCENE_HEIGHT, SCENE_WIDTH} from '../core/Constant.js'
+import {CANVAS_CONTEXT_TYPE, SCENE_HEIGHT, SCENE_WIDTH} from '../core/Constant.js'
 import MeshComponent from '../component/internal/MeshComponent.js'
 import TransformComponent from '../component/internal/TransformComponent.js'
 import UnitSelector from '../selector/UnitSelector.js'
@@ -33,6 +33,8 @@ import Window from '../core/Window.js'
 import AGetAttrClassComponent from '../flow/function/component/AGetAttrClassComponent.js'
 import {ACCESSOR} from '../flow/function/AFunction.js'
 import ASetAttrClassComponent from '../flow/function/component/ASetAttrClassComponent.js'
+import WebGLMeshRenderer from '../renderer/WebGLMeshRenderer.js'
+import TwoDMeshRenderer from '../renderer/TwoDMeshRenderer.js'
 
 /**
  * @class {World}
@@ -64,6 +66,11 @@ class World extends WorldData {
      * @type {SceneUnitManager}
      */
     unitManager
+
+    /**
+     * @type {MeshRenderer}
+     */
+    meshRenderer
 
     /**
      * @type {boolean}
@@ -98,6 +105,18 @@ class World extends WorldData {
      */
     init() {
         this.initialized = false
+        this.meshRenderer = this.initMeshRenderer()
+    }
+
+    /**
+     * @return {MeshRenderer}
+     */
+    initMeshRenderer(){
+        if (CANVAS_CONTEXT_TYPE === 'webgl') {
+            return new WebGLMeshRenderer()
+        } else {
+            return new TwoDMeshRenderer()
+        }
     }
 
     /**
@@ -415,6 +434,13 @@ class World extends WorldData {
      */
     getMeshManager() {
         return this.meshManager
+    }
+
+    /**
+     * @return {MeshRenderer}
+     */
+    getMeshRenderer(){
+        return this.meshRenderer
     }
 
     /**
