@@ -272,8 +272,32 @@ export default class UnitHelper {
             minY <= position.getY() && maxY >= position.getY()) {
             const positionToCameraView = camera.toCameraScale(camera.toCanvasCoord(position))
             const mesh = meshManager.get(unit.getId())
-            mesh && renderer.draw(mesh, positionToCameraView)
+            mesh && renderer.draw(mesh, {
+                position: positionToCameraView,
+                scale: this.getRelativeScreenScale(meshComponent.getSize()),
+                rotation: this.getRotationVector(transformComponent.getRotation())
+            })
         }
+    }
+
+    /**
+     * @param {Size} size
+     * @return {Vector}
+     */
+    static getRelativeScreenScale(size) {
+        const {size: windowSize} = Window.get()
+        return Vector.linearDivide(Vector.fromSize(size), Vector.fromSize(windowSize))
+    }
+
+    /**
+     * @param {number} rotation
+     * @return {Vector}
+     */
+    static getRotationVector(rotation) {
+        return new Vector({
+            x: Math.sin(rotation),
+            y: Math.cos(rotation)
+        })
     }
 
     /**
@@ -681,10 +705,10 @@ export default class UnitHelper {
      * @param {Unit} unit
      * @param {Vector} position
      */
-    static forceSetPosition(unit, position){
+    static forceSetPosition(unit, position) {
         const transformComponent = unit.getComponent(TransformComponent)
         const meshComponent = unit.getComponent(MeshComponent)
-        if(transformComponent){
+        if (transformComponent) {
             transformComponent.setPosition(position, true)
         }
         if (meshComponent) {
@@ -698,10 +722,10 @@ export default class UnitHelper {
      * @param {Unit} unit
      * @param {number} rotation
      */
-    static forceSetRotation(unit, rotation){
+    static forceSetRotation(unit, rotation) {
         const transformComponent = unit.getComponent(TransformComponent)
         const meshComponent = unit.getComponent(MeshComponent)
-        if(transformComponent){
+        if (transformComponent) {
             transformComponent.setRotation(rotation, true)
         }
         if (meshComponent) {

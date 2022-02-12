@@ -1,6 +1,6 @@
 import ContextTypeShapeGenerator from '../ContextTypeShapeGenerator.js'
 
-export default class WGRectShapeGenerator extends ContextTypeShapeGenerator{
+export default class WGRectFillShapeGenerator extends ContextTypeShapeGenerator{
 
     /**
      * @override
@@ -8,8 +8,8 @@ export default class WGRectShapeGenerator extends ContextTypeShapeGenerator{
     draw(unit, dataContext){
         const {context} = dataContext
         const positions = [
-            -1.0, 1.0,
             1.0, 1.0,
+            -1.0, 1.0,
             1.0, -1.0,
             -1.0, -1.0
         ]

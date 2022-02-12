@@ -20,36 +20,25 @@ export default class WebGLMeshRenderer extends MeshRenderer {
     /**
      * @override
      */
-    drawMesh(mesh, position) {
+    drawMesh(mesh, data) {
         const {program, buffer} = mesh
         const {attributeParams, bufferParams, shaderProgram, locations} = program
-
-        const fieldOfView = 45 * Math.PI / 180
-        const aspect = objectContext.canvas.clientWidth / objectContext.canvas.clientHeight
-        const zNear = 0.1
-        const zFar = 100.0
-        const projectionMatrix = mat4.create()
-
-        mat4.perspective(projectionMatrix, fieldOfView, aspect, zNear, zFar)
-        const modelViewMatrix = mat4.create()
-        mat4.translate(modelViewMatrix, modelViewMatrix, [0.0, 0.0, -2.0])
+        const {uniform, attribute} = locations
+        const {position, scale, rotation} = data
 
         objectContext.bindBuffer(objectContext.ARRAY_BUFFER, buffer)
-        objectContext.vertexAttribPointer(
-            locations.attribute.vertexPosition, attributeParams.nbIterations, attributeParams.type,
-            attributeParams.normalize, attributeParams.stride, attributeParams.offset)
-        objectContext.enableVertexAttribArray(locations.attribute.vertexPosition)
         objectContext.useProgram(shaderProgram)
+        objectContext.enableVertexAttribArray(attribute.vertexPosition)
 
-        objectContext.uniformMatrix4fv(
-            locations.uniform.projectionMatrix,
-            false,
-            projectionMatrix)
-        objectContext.uniformMatrix4fv(
-            locations.uniform.modelViewMatrix,
-            false,
-            modelViewMatrix)
+        objectContext.vertexAttribPointer(
+            attribute.position, attributeParams.nbIterations, attributeParams.type,
+            attributeParams.normalize, attributeParams.stride, attributeParams.offset)
+        objectContext.uniform2f(uniform.uResolution, objectContext.canvas.width, objectContext.canvas.height)
+        objectContext.uniform2f(uniform.uTranslation, position.x, position.y)
+        objectContext.uniform2f(uniform.uScale, scale.x, scale.y)
+        objectContext.uniform2f(uniform.uRotation, rotation.x, rotation.y)
 
-        objectContext.drawArrays(objectContext.TRIANGLE_STRIP, bufferParams.offset, bufferParams.vertexCount)
+        objectContext.drawArrays(objectContext.LINE_LOOP, bufferParams.offset, bufferParams.vertexCount)
+        objectContext.lineWidth(1);
     }
 }

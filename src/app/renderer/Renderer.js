@@ -13,10 +13,10 @@ class Renderer {
     /**
      * @abstract
      * @param {Mesh} mesh
-     * @param {Vector} position
+     * @param {{position: Vector, scale: Vector, rotation: Vector}} data
      * @return {void}
      */
-    draw(mesh, position) {
+    draw(mesh, data) {
         throw new TypeError('Renderer.draw must be implemented')
     }
 

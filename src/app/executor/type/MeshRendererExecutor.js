@@ -3,6 +3,7 @@ import TransformComponent from '../../component/internal/TransformComponent.js'
 import Window from '../../core/Window.js'
 import MeshComponent from '../../component/internal/MeshComponent.js'
 import World from '../../world/World.js'
+import UnitHelper from '../../utils/UnitHelper.js'
 
 export default class MeshRendererExecutor extends ComponentExecutor {
 
@@ -27,7 +28,11 @@ export default class MeshRendererExecutor extends ComponentExecutor {
         if (-size.getWidth() <= screenPosition.getX() && sceneWidth >= screenPosition.getX() &&
             -size.getHeight() <= screenPosition.getY() && sceneHeight >= screenPosition.getY()) {
             const mesh = meshManager.get(unit.getId())
-            mesh && renderer.draw(mesh, screenPosition)
+            mesh && renderer.draw(mesh, {
+                position: screenPosition,
+                scale: UnitHelper.getRelativeScreenScale(meshComponent.getSize()),
+                rotation: UnitHelper.getRotationVector(transformComponent.getRotation())
+            })
         }
     }
 }

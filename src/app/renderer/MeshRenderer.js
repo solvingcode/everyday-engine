@@ -22,8 +22,8 @@ export default class MeshRenderer extends Renderer {
     /**
      * @override
      */
-    draw(mesh, position) {
-        this.add(mesh, position)
+    draw(mesh, data) {
+        this.add(mesh, data)
     }
 
     /**
@@ -35,8 +35,11 @@ export default class MeshRenderer extends Renderer {
 
     /**
      * @abstract
+     * @param {*} mesh
+     * @param {{position: Vector, scale: Vector, rotation: Vector}} data
+     * @return {void}
      */
-    drawMesh(mesh, position){
+    drawMesh(mesh, data){
         throw new NotImplementedError(this, this.drawMesh)
     }
 
@@ -48,8 +51,8 @@ export default class MeshRenderer extends Renderer {
         this.clear()
         for (let iMesh in this.meshes) {
             if (this.meshes.hasOwnProperty(iMesh)) {
-                const {mesh, position} = this.meshes[iMesh]
-                this.drawMesh(mesh, position)
+                const {mesh, data} = this.meshes[iMesh]
+                this.drawMesh(mesh, data)
             }
         }
         this.meshes = []
@@ -57,10 +60,10 @@ export default class MeshRenderer extends Renderer {
 
     /**
      * @param {Mesh} mesh
-     * @param {Vector} position
+     * @param {{position: Vector, scale: Vector, rotation: Vector}} data
      */
-    add(mesh, position) {
-        this.meshes.push({mesh, position})
+    add(mesh, data) {
+        this.meshes.push({mesh, data})
     }
 
     /**

@@ -88,6 +88,7 @@ export default class Unit extends UnitData{
 
 export const PrimitiveShape = {
     RECT: 'rect',
+    RECT_FILL: 'rect_fill',
     CIRCLE: 'circle',
     LIGHT_POINT: 'light_point',
     LINE: 'line',

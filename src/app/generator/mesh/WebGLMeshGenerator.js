@@ -21,25 +21,32 @@ export default class WebGLMeshGenerator extends MeshGenerator {
 
     /**
      * @param {WebGLRenderingContext} context
-     * @return {{shaderProgram: WebGLProgram, locations: {uniform: {projectionMatrix: WebGLUniformLocation,
-     * modelViewMatrix: WebGLUniformLocation}, attribute: {vertexPosition: GLint}},
-     * bufferParams: {offset: number, vertexCount: number}, attributeParams: {offset: number, nbIterations: number,
-     * normalize: boolean, type: GLenum, stride: number}}}
+     * @return {{shaderProgram: WebGLProgram, locations: {uniform: {uScale: WebGLUniformLocation,
+     * uResolution: WebGLUniformLocation, uTranslation: WebGLUniformLocation, uRotation: WebGLUniformLocation},
+     * attribute: {position: GLint}}, bufferParams: {offset: number, vertexCount: number},
+     * attributeParams: {offset: number, nbIterations: number, normalize: boolean, type: GLenum, stride: number}}}
      */
     initProgram(context) {
         const vsSource = `
-            attribute vec4 aVertexPosition;
+            attribute vec2 aPosition;
 
-            uniform mat4 uModelViewMatrix;
-            uniform mat4 uProjectionMatrix;
+            uniform vec2 uResolution;
+            uniform vec2 uTranslation;
+            uniform vec2 uRotation;
+            uniform vec2 uScale;
         
             void main() {
-              gl_Position = uProjectionMatrix * uModelViewMatrix * aVertexPosition;
+                vec2 position = aPosition * uScale;
+                position = position + (uTranslation/uResolution * 2.0) - 1.0;
+                position = position + uScale;
+                gl_Position = vec4(position * vec2(1.0, -1.0), 0.0, 1.0);
             }
         `
         const fsSource = `
+            precision mediump float;
+            
             void main() {
-              gl_FragColor = vec4(1.0, 1.0, 1.0, 1.0);
+                gl_FragColor = vec4(1.0, 1.0, 1.0, 1.0);
             }
         `
         const shaderProgram = ShaderHelper.initShaderProgram(context, vsSource, fsSource)
@@ -47,11 +54,13 @@ export default class WebGLMeshGenerator extends MeshGenerator {
             shaderProgram,
             locations: {
                 attribute: {
-                    vertexPosition: context.getAttribLocation(shaderProgram, 'aVertexPosition')
+                    position: context.getAttribLocation(shaderProgram, 'aPosition')
                 },
                 uniform: {
-                    projectionMatrix: context.getUniformLocation(shaderProgram, 'uProjectionMatrix'),
-                    modelViewMatrix: context.getUniformLocation(shaderProgram, 'uModelViewMatrix')
+                    uResolution: context.getUniformLocation(shaderProgram, 'uResolution'),
+                    uTranslation: context.getUniformLocation(shaderProgram, 'uTranslation'),
+                    uRotation: context.getUniformLocation(shaderProgram, 'uRotation'),
+                    uScale: context.getUniformLocation(shaderProgram, 'uScale')
                 }
             },
             attributeParams: {
