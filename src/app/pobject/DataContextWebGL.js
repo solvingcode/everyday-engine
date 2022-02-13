@@ -9,18 +9,21 @@ export default class DataContextWebGL {
      * @param {Vector} scale
      * @param {Camera} camera
      * @param {World} world
-     * @param {WebGLBuffer} buffer
+     * @param {WebGLBuffer[]} buffers
+     * @param {WebGLTexture} texture
      * @param {{shaderProgram: WebGLProgram, locations: {uniform: {modelViewMatrix: WebGLUniformLocation,
      * projectionMatrix: WebGLUniformLocation}, attribute: {vertexPosition: GLint}}}} program
      */
-    constructor(unitId, context, scale, camera, world, buffer,
+    constructor(unitId, context, scale, camera, world, buffers,
+                texture,
                 program) {
         this.unitId = unitId
         this.context = context
         this.scale = scale
         this.camera = camera
         this.world = world
-        this.buffer = buffer
+        this.buffers = buffers
+        this.texture = texture
         this.program = program
     }
 

@@ -30,7 +30,7 @@ export default class MeshRendererExecutor extends ComponentExecutor {
             const mesh = meshManager.get(unit.getId())
             mesh && renderer.draw(mesh, {
                 position: screenPosition,
-                scale: UnitHelper.getRelativeScreenScale(meshComponent.getSize()),
+                scale: UnitHelper.getRelativeScreenScale(camera.toScaleSize(meshComponent.getSize())),
                 rotation: UnitHelper.getRotationVector(transformComponent.getRotation())
             })
         }

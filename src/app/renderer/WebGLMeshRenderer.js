@@ -21,24 +21,38 @@ export default class WebGLMeshRenderer extends MeshRenderer {
      * @override
      */
     drawMesh(mesh, data) {
-        const {program, buffer} = mesh
-        const {attributeParams, bufferParams, shaderProgram, locations} = program
+        const {program, buffers, texture} = mesh
+        const {attributeParams, bufferParams, shaderProgram, locations, mode} = program
         const {uniform, attribute} = locations
         const {position, scale, rotation} = data
 
-        objectContext.bindBuffer(objectContext.ARRAY_BUFFER, buffer)
-        objectContext.useProgram(shaderProgram)
-        objectContext.enableVertexAttribArray(attribute.vertexPosition)
+        for (const iBuffer in buffers) {
+            const buffer = buffers[iBuffer]
+            if (buffer) {
+                const attributeBuffer = attribute[iBuffer]
+                objectContext.bindBuffer(objectContext.ARRAY_BUFFER, buffer)
+                objectContext.vertexAttribPointer(
+                    attributeBuffer, attributeParams.nbIterations, attributeParams.type,
+                    attributeParams.normalize, attributeParams.stride, attributeParams.offset)
+                objectContext.enableVertexAttribArray(attributeBuffer)
+            }
+        }
 
-        objectContext.vertexAttribPointer(
-            attribute.position, attributeParams.nbIterations, attributeParams.type,
-            attributeParams.normalize, attributeParams.stride, attributeParams.offset)
+        objectContext.useProgram(shaderProgram)
+
         objectContext.uniform2f(uniform.uResolution, objectContext.canvas.width, objectContext.canvas.height)
         objectContext.uniform2f(uniform.uTranslation, position.x, position.y)
         objectContext.uniform2f(uniform.uScale, scale.x, scale.y)
         objectContext.uniform2f(uniform.uRotation, rotation.x, rotation.y)
+        objectContext.uniform4f(uniform.uColor, 1.0, 1.0, 1.0, 1.0)
+        if (texture) {
+            objectContext.activeTexture(objectContext.TEXTURE0)
+            objectContext.bindTexture(objectContext.TEXTURE_2D, texture)
+            objectContext.uniform1i(uniform.uSampler, 0)
+        } else {
+            objectContext.bindTexture(objectContext.TEXTURE_2D, null)
+        }
 
-        objectContext.drawArrays(objectContext.LINE_LOOP, bufferParams.offset, bufferParams.vertexCount)
-        objectContext.lineWidth(1);
+        objectContext.drawArrays(mode, bufferParams.offset, bufferParams.vertexCount)
     }
 }

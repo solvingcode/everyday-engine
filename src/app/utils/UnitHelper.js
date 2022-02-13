@@ -274,7 +274,7 @@ export default class UnitHelper {
             const mesh = meshManager.get(unit.getId())
             mesh && renderer.draw(mesh, {
                 position: positionToCameraView,
-                scale: this.getRelativeScreenScale(meshComponent.getSize()),
+                scale: this.getRelativeScreenScale(camera.toScaleSize(meshComponent.getSize())),
                 rotation: this.getRotationVector(transformComponent.getRotation())
             })
         }

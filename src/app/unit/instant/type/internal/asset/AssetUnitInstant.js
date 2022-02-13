@@ -2,6 +2,7 @@ import MeshUnitInstant from '../../../MeshUnitInstant.js'
 import TransformComponent from '../../../../../component/internal/TransformComponent.js'
 import MeshComponent from '../../../../../component/internal/MeshComponent.js'
 import TransformHelper from '../../../../../utils/TransformHelper.js'
+import {PrimitiveShape} from '../../../../Unit.js'
 
 export default class AssetUnitInstant extends MeshUnitInstant {
 
@@ -19,6 +20,7 @@ export default class AssetUnitInstant extends MeshUnitInstant {
             meshComponent.setAssetId(asset.getId())
         }
         meshComponent.setMaterial('default')
+        meshComponent.setShape(PrimitiveShape.RECT_FILL)
         transformComponent.setLocalPosition(localPosition)
     }
 
