@@ -19,7 +19,7 @@ export default class SelectionUnitInstant extends MeshUnitInstant {
         transformComponent.setLocalScale(TransformHelper.getScaleFromSize(size))
         const style = new Style()
         style.setColor('#FFFFFF')
-        style.setBorderSize(3)
+        style.setBorderSize(1)
         styleComponent.setStyle(style)
     }
 

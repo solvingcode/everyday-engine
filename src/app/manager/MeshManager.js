@@ -15,7 +15,7 @@ export default class MeshManager {
     /**
      * @return {Mesh[]}
      */
-    getMeshes(){
+    getMeshes() {
         return this.meshes
     }
 
@@ -23,24 +23,24 @@ export default class MeshManager {
      * @param {number} index
      * @return {Mesh}
      */
-    get(index){
+    get(index) {
         return this.meshes[index]
     }
 
     /**
      * @param {number} index
-     * @param {Mesh|{program: *, buffers: WebGLBuffer[], texture: WebGLTexture}} mesh
+     * @param {Mesh|{program: *, buffers: WebGLBuffer[], texture: WebGLTexture, style: {lineWidth: number, borderColor: string|null}}} mesh
      */
-    set(index, mesh){
+    set(index, mesh) {
         this.meshes[index] = mesh
     }
 
     /**
      * @param {number} index
      */
-    clear(index){
+    clear(index) {
         const mesh = this.get(index)
-        if(mesh){
+        if (mesh) {
             mesh.clear()
         }
     }

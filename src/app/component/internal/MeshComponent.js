@@ -17,7 +17,7 @@ export default class MeshComponent extends Component{
      * @override
      */
     initAttributes() {
-        this.add('shape', TYPES.STRING, PrimitiveShape.RECT_FILL)
+        this.add('shape', TYPES.STRING, PrimitiveShape.RECT)
         this.add('filter', TYPES.STRING, MODE.NO_SMOOTHING)
         this.add('style', TYPES.STYLE, new Style())
         this.add('size', TYPES.SIZE, new Size(0))

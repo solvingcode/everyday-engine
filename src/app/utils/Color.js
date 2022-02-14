@@ -103,6 +103,22 @@ class Color {
 
         return '#' + RR + GG + BB
     }
+
+    /**
+     * @param {string} rgba
+     * @return {{w: number, x: number, y: number, z: number}}
+     */
+    static rgbaToCoords(rgba) {
+        const colors = /^rgba\(([0-9]+),\s*([0-9]+),\s*([0-9]+),\s*([0-9]+)\)$/i.exec(rgba)
+        if (colors) {
+            return {
+                x: parseInt(colors[1]) / 255,
+                y: parseInt(colors[2]) / 255,
+                z: parseInt(colors[3]) / 255,
+                w: parseFloat(colors[4])
+            }
+        }
+    }
 }
 
 export default Color
