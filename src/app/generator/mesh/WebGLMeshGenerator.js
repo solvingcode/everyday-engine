@@ -140,6 +140,10 @@ export default class WebGLMeshGenerator extends MeshGenerator {
         switch (shape) {
             case PrimitiveShape.RECT:
             case PrimitiveShape.CIRCLE:
+            case PrimitiveShape.ARROW_RIGHT:
+            case PrimitiveShape.ARROW_DOWN:
+            case PrimitiveShape.ARROW_RECT_RIGHT:
+            case PrimitiveShape.ARROW_RECT_DOWN:
                 return RectStrokeShader
             default:
                 return RectTextureShader
@@ -156,6 +160,11 @@ export default class WebGLMeshGenerator extends MeshGenerator {
             case PrimitiveShape.RECT:
             case PrimitiveShape.CIRCLE:
                 return context.LINE_LOOP
+            case PrimitiveShape.ARROW_RIGHT:
+            case PrimitiveShape.ARROW_DOWN:
+            case PrimitiveShape.ARROW_RECT_RIGHT:
+            case PrimitiveShape.ARROW_RECT_DOWN:
+                return context.LINES
             default:
                 return context.TRIANGLES
         }

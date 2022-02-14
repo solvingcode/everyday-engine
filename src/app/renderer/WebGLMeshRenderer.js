@@ -32,6 +32,7 @@ export default class WebGLMeshRenderer extends MeshRenderer {
         this.setupTexture(uniform, texture)
         this.setupStyle(uniform, style)
 
+        objectContext.bindBuffer(objectContext.ARRAY_BUFFER, buffers.position.buffer)
         objectContext.drawArrays(mode, params.position.buffer.offset, params.position.buffer.vertexCount)
     }
 
@@ -43,7 +44,7 @@ export default class WebGLMeshRenderer extends MeshRenderer {
     setupBuffer(buffers, attribute, params) {
         for (const iBuffer in buffers) {
             const bufferData = buffers[iBuffer]
-            if (bufferData) {
+            if (bufferData && bufferData.buffer) {
                 const attributeBuffer = attribute[iBuffer]
                 const attributeParam = params[iBuffer].attribute
                 if (attributeBuffer >= 0) {
