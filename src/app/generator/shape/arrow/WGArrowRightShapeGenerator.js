@@ -1,10 +1,7 @@
 import ContextTypeShapeGenerator from '../ContextTypeShapeGenerator.js'
 
-export default class WGRectShapeGenerator extends ContextTypeShapeGenerator {
+export default class WGArrowRightShapeGenerator extends ContextTypeShapeGenerator {
 
-    /**
-     * @override
-     */
     draw(unit, dataContext) {
         const {buffers} = dataContext
         buffers.position.vertices = [

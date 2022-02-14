@@ -29,7 +29,9 @@ export default class MeshManager {
 
     /**
      * @param {number} index
-     * @param {Mesh|{program: *, buffers: WebGLBuffer[], texture: WebGLTexture, style: {lineWidth: number, borderColor: string|null}}} mesh
+     * @param {Mesh|{params: *, program: *, buffers: Map<string, {buffer: WebGLBuffer, vertices: number[]}>,
+     * texture: WebGLTexture, style: {lineWidth: number,
+     * borderColor: string|null}}} mesh
      */
     set(index, mesh) {
         this.meshes[index] = mesh

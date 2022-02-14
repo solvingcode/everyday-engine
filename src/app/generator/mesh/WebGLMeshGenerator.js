@@ -20,24 +20,57 @@ export default class WebGLMeshGenerator extends MeshGenerator {
             textureData = this.setupTexture(world, meshComponent)
         }
         return new DataContextWebGL(unitId, objectContext, scale, camera, world, {
-            position: buffer,
-            texture: textureData && textureData.buffer
+            position: {buffer, vertices: []},
+            texture: {buffer: textureData && textureData.buffer, vertices: textureData ? textureData.vertices : []}
         }, textureData && textureData.texture, program)
     }
 
     closeContext(meshComponent, transformComponent, dataContext) {
-        const {unitId, world, program, buffers, texture, camera} = dataContext
+        const {context, unitId, world, program, buffers, texture, camera} = dataContext
+
+        context.bindBuffer(objectContext.ARRAY_BUFFER, buffers.position.buffer)
+        context.bufferData(context.ARRAY_BUFFER, new Float32Array(buffers.position.vertices), context.STATIC_DRAW)
+
+        const params = this.getParams(context, buffers)
+
         const {borderSize, color, colorOpacity} = meshComponent.getStyle()
         const lineWidth = camera.toScaleNumber(borderSize || 1)
         const borderColor = Color.hexToRgba(color, colorOpacity)
-        world.getMeshManager().set(unitId, {program, buffers, texture, style: {lineWidth, borderColor}})
+        world.getMeshManager().set(unitId, {params, program, buffers, texture, style: {lineWidth, borderColor}})
         return true
+    }
+
+    /**
+     * @param {WebGLRenderingContext} context
+     * @param {Map<string, {buffer: WebGLBuffer, vertices: number[]}>} buffers
+     * @return {*}
+     */
+    getParams(context, buffers) {
+        const params = {}
+        const dimension = 2
+        for (const iBuffer in buffers) {
+            const vertices = buffers[iBuffer].vertices
+            params[iBuffer] = {
+                attribute: {
+                    nbIterations: dimension,
+                    type: context.FLOAT,
+                    normalize: false,
+                    stride: 0,
+                    offset: 0
+                },
+                buffer: {
+                    offset: 0,
+                    vertexCount: vertices.length / dimension
+                }
+            }
+        }
+        return params
     }
 
     /**
      * @param {World} world
      * @param {MeshComponent} meshComponent
-     * @return {{texture: WebGLTexture, buffer: WebGLBuffer}}
+     * @return {{vertices: number[], texture: WebGLTexture, buffer: AudioBuffer | WebGLBuffer}}
      */
     setupTexture(world, meshComponent) {
         const textureBuffer = objectContext.createBuffer()
@@ -64,7 +97,7 @@ export default class WebGLMeshGenerator extends MeshGenerator {
             1.0, 1.0
         ]
         objectContext.bufferData(objectContext.ARRAY_BUFFER, new Float32Array(textureCoords), objectContext.STATIC_DRAW)
-        return {texture, buffer: textureBuffer}
+        return {texture, buffer: textureBuffer, vertices: textureCoords}
     }
 
     /**
@@ -95,17 +128,6 @@ export default class WebGLMeshGenerator extends MeshGenerator {
                     uSampler: context.getUniformLocation(shaderProgram, 'uSampler')
                 }
             },
-            attributeParams: {
-                nbIterations: 2,
-                type: context.FLOAT,
-                normalize: false,
-                stride: 0,
-                offset: 0
-            },
-            bufferParams: {
-                offset: 0,
-                vertexCount: 6
-            },
             mode
         }
     }
@@ -117,6 +139,7 @@ export default class WebGLMeshGenerator extends MeshGenerator {
     getShader(shape) {
         switch (shape) {
             case PrimitiveShape.RECT:
+            case PrimitiveShape.CIRCLE:
                 return RectStrokeShader
             default:
                 return RectTextureShader
@@ -131,6 +154,7 @@ export default class WebGLMeshGenerator extends MeshGenerator {
     getMode(context, shape) {
         switch (shape) {
             case PrimitiveShape.RECT:
+            case PrimitiveShape.CIRCLE:
                 return context.LINE_LOOP
             default:
                 return context.TRIANGLES

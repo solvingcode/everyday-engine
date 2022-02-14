@@ -9,7 +9,7 @@ export default class DataContextWebGL {
      * @param {Vector} scale
      * @param {Camera} camera
      * @param {World} world
-     * @param {WebGLBuffer[]} buffers
+     * @param {Map<string, {buffer: WebGLBuffer, vertices: number[]}>} buffers
      * @param {WebGLTexture} texture
      * @param {{shaderProgram: WebGLProgram, locations: {uniform: {modelViewMatrix: WebGLUniformLocation,
      * projectionMatrix: WebGLUniformLocation}, attribute: {vertexPosition: GLint}}}} program

@@ -22,34 +22,37 @@ export default class WebGLMeshRenderer extends MeshRenderer {
      * @override
      */
     drawMesh(mesh, data) {
-        const {program, buffers, texture, style} = mesh
-        const {attributeParams, bufferParams, shaderProgram, locations, mode} = program
+        const {program, buffers, texture, style, params} = mesh
+        const {shaderProgram, locations, mode} = program
         const {uniform, attribute} = locations
 
-        this.setupBuffer(buffers, attribute, attributeParams)
+        this.setupBuffer(buffers, attribute, params)
         objectContext.useProgram(shaderProgram)
         this.setupTransform(uniform, data)
         this.setupTexture(uniform, texture)
         this.setupStyle(uniform, style)
 
-        objectContext.drawArrays(mode, bufferParams.offset, bufferParams.vertexCount)
+        objectContext.drawArrays(mode, params.position.buffer.offset, params.position.buffer.vertexCount)
     }
 
     /**
-     * @param {WebGLBuffer[]} buffers
+     * @param {Map<string, {buffer: WebGLBuffer, vertices: number[]}>} buffers
      * @param {*} attribute
      * @param {*} params
      */
     setupBuffer(buffers, attribute, params) {
         for (const iBuffer in buffers) {
-            const buffer = buffers[iBuffer]
-            if (buffer) {
+            const bufferData = buffers[iBuffer]
+            if (bufferData) {
                 const attributeBuffer = attribute[iBuffer]
-                objectContext.bindBuffer(objectContext.ARRAY_BUFFER, buffer)
-                objectContext.vertexAttribPointer(
-                    attributeBuffer, params.nbIterations, params.type,
-                    params.normalize, params.stride, params.offset)
-                objectContext.enableVertexAttribArray(attributeBuffer)
+                const attributeParam = params[iBuffer].attribute
+                if (attributeBuffer >= 0) {
+                    objectContext.bindBuffer(objectContext.ARRAY_BUFFER, bufferData.buffer)
+                    objectContext.vertexAttribPointer(
+                        attributeBuffer, attributeParam.nbIterations, attributeParam.type,
+                        attributeParam.normalize, attributeParam.stride, attributeParam.offset)
+                    objectContext.enableVertexAttribArray(attributeBuffer)
+                }
             }
         }
     }
