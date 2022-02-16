@@ -3,6 +3,8 @@ import MeshUnitInstant from '../../../MeshUnitInstant.js'
 import TileMapComponent from '../../../../../component/internal/tile/TileMapComponent.js'
 import TransformComponent from '../../../../../component/internal/TransformComponent.js'
 import StyleComponent from '../../../../../component/internal/StyleComponent.js'
+import {PrimitiveShape} from '../../../../Unit.js'
+import MeshComponent from '../../../../../component/internal/MeshComponent.js'
 
 export default class TileMapUnitInstant extends MeshUnitInstant {
 
@@ -12,6 +14,8 @@ export default class TileMapUnitInstant extends MeshUnitInstant {
     instantiate() {
         this.setName('Tile Map')
         this.createComponent(TileMapComponent)
+        const meshComponent = this.getComponent(MeshComponent)
+        meshComponent.setShape(PrimitiveShape.RECT_FILL)
     }
 
     /**

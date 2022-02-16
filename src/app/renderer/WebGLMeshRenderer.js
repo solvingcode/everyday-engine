@@ -29,9 +29,9 @@ export default class WebGLMeshRenderer extends MeshRenderer {
         this.setupBuffer(buffers, attribute, params)
         objectContext.useProgram(shaderProgram)
         this.setupTransform(uniform, data)
-        this.setupTexture(uniform, texture)
         this.setupStyle(uniform, style)
 
+        this.setupTexture(uniform, texture)
         objectContext.bindBuffer(objectContext.ARRAY_BUFFER, buffers.position.buffer)
         objectContext.drawArrays(mode, params.position.buffer.offset, params.position.buffer.vertexCount)
     }

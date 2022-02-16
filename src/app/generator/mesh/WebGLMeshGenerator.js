@@ -12,12 +12,28 @@ export default class WebGLMeshGenerator extends MeshGenerator {
 
     startContext(unitId, meshComponent, transformComponent, world, camera) {
         const scale = transformComponent.getScale()
+        const scaleSize = camera.toScaleSize(meshComponent.getSize())
         const shape = meshComponent.getShape()
         const buffer = objectContext.createBuffer()
         let textureData
         const program = this.initProgram(objectContext, this.getShader(shape), this.getMode(objectContext, shape))
         if (meshComponent.getAssetId()) {
-            textureData = this.setupTexture(world, meshComponent)
+            const asset = world.getAssetsManager().findAssetById(meshComponent.getAssetId())
+            const canvasBg = asset.getType().getData().context.canvas
+            textureData = this.setupTexture(world, canvasBg)
+        } else if (meshComponent.getMapAssetPositions().length > 0) {
+            const mapAssetIds = meshComponent.getMapAssetIds()
+            const canvasBg = new OffscreenCanvas(scaleSize.width, scaleSize.height)
+            const contextBg = canvasBg.getContext('2d')
+            contextBg.clearRect(0, 0, scaleSize.width, scaleSize.height)
+            meshComponent.getMapAssetPositions().forEach((mapAssetPosition, iMapAssetPosition) => {
+                const asset = world.getAssetsManager().findAssetById(mapAssetIds[iMapAssetPosition])
+                const canvasMapBg = asset.getType().getData().context.canvas
+                const scaleSizeMap = camera.toScaleSize(meshComponent.getMapAssetSize())
+                const drawPosition = camera.toCameraScale(mapAssetPosition)
+                contextBg.drawImage(canvasMapBg, drawPosition.getX(), drawPosition.getY(), scaleSizeMap.width, scaleSizeMap.height)
+            })
+            textureData = this.setupTexture(world, canvasBg)
         }
         return new DataContextWebGL(unitId, objectContext, scale, camera, world, {
             position: {buffer, vertices: []},
@@ -69,18 +85,16 @@ export default class WebGLMeshGenerator extends MeshGenerator {
 
     /**
      * @param {World} world
-     * @param {MeshComponent} meshComponent
+     * @param {OffscreenCanvas | HTMLCanvasElement} canvas
      * @return {{vertices: number[], texture: WebGLTexture, buffer: AudioBuffer | WebGLBuffer}}
      */
-    setupTexture(world, meshComponent) {
+    setupTexture(world, canvas) {
         const textureBuffer = objectContext.createBuffer()
-        const asset = world.getAssetsManager().findAssetById(meshComponent.getAssetId())
-        const canvasBg = asset.getType().getData().context.canvas
         const texture = objectContext.createTexture()
         objectContext.bindTexture(objectContext.TEXTURE_2D, texture)
         objectContext.texImage2D(objectContext.TEXTURE_2D, 0, objectContext.RGBA,
-            objectContext.RGBA, objectContext.UNSIGNED_BYTE, canvasBg)
-        if (Maths.isPowerOf2(canvasBg.width) && Maths.isPowerOf2(canvasBg.height)) {
+            objectContext.RGBA, objectContext.UNSIGNED_BYTE, canvas)
+        if (Maths.isPowerOf2(canvas.width) && Maths.isPowerOf2(canvas.height)) {
             objectContext.generateMipmap(objectContext.TEXTURE_2D)
         } else {
             objectContext.texParameteri(objectContext.TEXTURE_2D, objectContext.TEXTURE_WRAP_S, objectContext.CLAMP_TO_EDGE)
@@ -140,10 +154,12 @@ export default class WebGLMeshGenerator extends MeshGenerator {
         switch (shape) {
             case PrimitiveShape.RECT:
             case PrimitiveShape.CIRCLE:
+            case PrimitiveShape.CAMERA:
             case PrimitiveShape.ARROW_RIGHT:
             case PrimitiveShape.ARROW_DOWN:
             case PrimitiveShape.ARROW_RECT_RIGHT:
             case PrimitiveShape.ARROW_RECT_DOWN:
+            case PrimitiveShape.GRID:
                 return RectStrokeShader
             default:
                 return RectTextureShader
@@ -159,11 +175,13 @@ export default class WebGLMeshGenerator extends MeshGenerator {
         switch (shape) {
             case PrimitiveShape.RECT:
             case PrimitiveShape.CIRCLE:
+            case PrimitiveShape.CAMERA:
                 return context.LINE_LOOP
             case PrimitiveShape.ARROW_RIGHT:
             case PrimitiveShape.ARROW_DOWN:
             case PrimitiveShape.ARROW_RECT_RIGHT:
             case PrimitiveShape.ARROW_RECT_DOWN:
+            case PrimitiveShape.GRID:
                 return context.LINES
             default:
                 return context.TRIANGLES

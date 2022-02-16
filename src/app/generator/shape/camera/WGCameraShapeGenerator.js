@@ -1,19 +1,18 @@
 import ContextTypeShapeGenerator from '../ContextTypeShapeGenerator.js'
 
-export default class WGCameraShapeGenerator extends ContextTypeShapeGenerator{
+export default class WGCameraShapeGenerator extends ContextTypeShapeGenerator {
 
     /**
      * @override
      */
-    draw(unit, dataContext){
-        const {context} = dataContext
-        const positions = [
-            -1.0, 1.0,
+    draw(unit, dataContext) {
+        const {buffers} = dataContext
+        buffers.position.vertices = [
+            0.0, 1.0,
             1.0, 1.0,
-            1.0, -1.0,
-            -1.0, -1.0
+            1.0, 0.0,
+            0.0, 0.0
         ]
-        context.bufferData(context.ARRAY_BUFFER, new Float32Array(positions), context.STATIC_DRAW)
     }
 
 }
