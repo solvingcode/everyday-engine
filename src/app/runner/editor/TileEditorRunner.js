@@ -16,6 +16,7 @@ import {MouseButton} from '../../core/Mouse.js'
 import StateManager from '../../state/StateManager.js'
 import LayoutHelper from '../../utils/LayoutHelper.js'
 import MeshComponent from '../../component/internal/MeshComponent.js'
+import RectFillUnitInstant from '../../unit/instant/type/internal/primitive/RectFillUnitInstant.js'
 
 export default class TileEditorRunner extends Runner {
 
@@ -190,13 +191,17 @@ export default class TileEditorRunner extends Runner {
                 }
             }
             if (!this.selectedCell) {
+                const selectedAsset = world.getAssetsManager().getSelectedAsset()
                 const style = new Style()
                 style.setBorderSize(camera.fromScaleNumber(2))
                 style.setColor('#ffffff')
-                this.selectedCell = world.createChildUnitInstant(RectUnitInstant, null,
+                let unitInstantClass = RectUnitInstant
+                if (selectedAsset && selectedAsset.getType() instanceof AssetImage) {
+                    unitInstantClass = RectFillUnitInstant
+                }
+                this.selectedCell = world.createChildUnitInstant(unitInstantClass, null,
                     selectedCellPosition, cellScale, style)
 
-                const selectedAsset = world.getAssetsManager().getSelectedAsset()
                 if (selectedAsset && selectedAsset.getType() instanceof AssetImage) {
                     this.selectedCell.getComponent(MeshComponent).setAssetId(selectedAsset.getId())
                 }
@@ -290,7 +295,7 @@ export default class TileEditorRunner extends Runner {
                     }
                 }
             }
-        }else if(mouse.isButtonClicked(MouseButton.LEFT) && this.isEditArea(stateManager) && this.startCellPosition){
+        } else if (mouse.isButtonClicked(MouseButton.LEFT) && this.isEditArea(stateManager) && this.startCellPosition) {
             const endCellPosition = this.getSelectedCellPosition(cellScale, mouse.currentScenePosition)
             const startCellIndex = new Vector({
                 x: this.startCellPosition.getX() / cellSize.getWidth(),

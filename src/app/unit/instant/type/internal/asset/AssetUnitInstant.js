@@ -20,7 +20,7 @@ export default class AssetUnitInstant extends MeshUnitInstant {
             meshComponent.setAssetId(asset.getId())
         }
         meshComponent.setMaterial('default')
-        meshComponent.setShape(PrimitiveShape.RECT_FILL)
+        meshComponent.setShape(PrimitiveShape.RECT)
         transformComponent.setLocalPosition(localPosition)
     }
 

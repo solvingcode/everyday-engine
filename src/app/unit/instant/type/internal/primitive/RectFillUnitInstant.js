@@ -11,8 +11,9 @@ export default class RectFillUnitInstant extends RectUnitInstant {
      * @param {Style} style
      */
     instantiate(localPosition, localScale, style = new Style()) {
+        super.instantiate(localPosition, localScale, style)
         const meshComponent = this.getComponent(MeshComponent)
-        meshComponent.setShape(PrimitiveShape.RECT_FILL)
+        meshComponent.setShape(PrimitiveShape.RECT)
     }
 
     /**

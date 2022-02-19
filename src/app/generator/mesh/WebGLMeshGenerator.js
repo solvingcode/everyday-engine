@@ -152,7 +152,7 @@ export default class WebGLMeshGenerator extends MeshGenerator {
      */
     getShader(shape) {
         switch (shape) {
-            case PrimitiveShape.RECT:
+            case PrimitiveShape.RECT_STROKE:
             case PrimitiveShape.CIRCLE:
             case PrimitiveShape.CAMERA:
             case PrimitiveShape.ARROW_RIGHT:
@@ -173,7 +173,7 @@ export default class WebGLMeshGenerator extends MeshGenerator {
      */
     getMode(context, shape) {
         switch (shape) {
-            case PrimitiveShape.RECT:
+            case PrimitiveShape.RECT_STROKE:
             case PrimitiveShape.CIRCLE:
             case PrimitiveShape.CAMERA:
                 return context.LINE_LOOP

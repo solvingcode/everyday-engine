@@ -15,7 +15,7 @@ export default class TileMapUnitInstant extends MeshUnitInstant {
         this.setName('Tile Map')
         this.createComponent(TileMapComponent)
         const meshComponent = this.getComponent(MeshComponent)
-        meshComponent.setShape(PrimitiveShape.RECT_FILL)
+        meshComponent.setShape(PrimitiveShape.RECT)
     }
 
     /**

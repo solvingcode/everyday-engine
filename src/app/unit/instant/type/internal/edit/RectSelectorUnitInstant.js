@@ -1,6 +1,7 @@
 import RectUnitInstant from '../primitive/RectUnitInstant.js'
 import StyleComponent from '../../../../../component/internal/StyleComponent.js'
 import MeshComponent from '../../../../../component/internal/MeshComponent.js'
+import {PrimitiveShape} from '../../../../Unit.js'
 
 export default class RectSelectorUnitInstant extends RectUnitInstant {
 
@@ -10,6 +11,8 @@ export default class RectSelectorUnitInstant extends RectUnitInstant {
      */
     update(camera) {
         const style = this.getComponent(StyleComponent).getStyle()
+        const meshComponent = this.getComponent(MeshComponent)
+        meshComponent.setShape(PrimitiveShape.RECT_STROKE)
         const actualBorderSize = style.getBorderSize()
         const borderSize = camera.fromScaleNumber(2)
         if (borderSize !== actualBorderSize) {

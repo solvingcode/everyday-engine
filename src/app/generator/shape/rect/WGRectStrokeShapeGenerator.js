@@ -1,6 +1,6 @@
 import ContextTypeShapeGenerator from '../ContextTypeShapeGenerator.js'
 
-export default class WGRectShapeGenerator extends ContextTypeShapeGenerator {
+export default class WGRectStrokeShapeGenerator extends ContextTypeShapeGenerator {
 
     /**
      * @override

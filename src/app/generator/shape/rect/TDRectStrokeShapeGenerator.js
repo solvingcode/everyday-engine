@@ -1,6 +1,6 @@
 import ContextTypeShapeGenerator from '../ContextTypeShapeGenerator.js'
 
-export default class TDRectShapeGenerator extends ContextTypeShapeGenerator{
+export default class TDRectStrokeShapeGenerator extends ContextTypeShapeGenerator{
 
     /**
      * @override

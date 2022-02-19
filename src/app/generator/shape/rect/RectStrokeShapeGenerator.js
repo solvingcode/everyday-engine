@@ -1,15 +1,15 @@
 import TypeShapeGenerator from '../TypeShapeGenerator.js'
 import TDRectStrokeShapeGenerator from './TDRectStrokeShapeGenerator.js'
-import WGRectFillShapeGenerator from './WGRectFillShapeGenerator.js'
+import WGRectStrokeShapeGenerator from './WGRectStrokeShapeGenerator.js'
 
-export default class RectFillShapeGenerator extends TypeShapeGenerator{
+export default class RectStrokeShapeGenerator extends TypeShapeGenerator{
 
     get2DContext() {
         return TDRectStrokeShapeGenerator
     }
 
     getWebGLContext() {
-        return WGRectFillShapeGenerator
+        return WGRectStrokeShapeGenerator
     }
 
 }

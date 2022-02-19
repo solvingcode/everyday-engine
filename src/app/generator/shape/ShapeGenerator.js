@@ -15,7 +15,7 @@ import TextShapeGenerator from './text/TextShapeGenerator.js'
 import CurveShapeGenerator from './curve/CurveShapeGenerator.js'
 import EdgeShapeGenerator from './edge/EdgeShapeGenerator.js'
 import {CANVAS_CONTEXT_TYPE} from '../../core/Constant.js'
-import RectShapeGenerator from './rect/RectShapeGenerator.js'
+import RectStrokeShapeGenerator from './rect/RectStrokeShapeGenerator.js'
 import RectFillShapeGenerator from './rect/RectFillShapeGenerator.js'
 
 /**
@@ -55,10 +55,10 @@ export default class ShapeGenerator {
      */
     getShapeTypeGenerator(shape) {
         switch (shape) {
-            case PrimitiveShape.RECT_FILL:
-                return RectFillShapeGenerator
             case PrimitiveShape.RECT:
-                return RectShapeGenerator
+                return RectFillShapeGenerator
+            case PrimitiveShape.RECT_STROKE:
+                return RectStrokeShapeGenerator
             case PrimitiveShape.RECT_CROSS:
                 return RectCrossShapeGenerator
             case PrimitiveShape.CAMERA:
