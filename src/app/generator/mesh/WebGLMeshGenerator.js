@@ -15,27 +15,9 @@ export default class WebGLMeshGenerator extends MeshGenerator {
         const scaleSize = camera.toScaleSize(meshComponent.getSize())
         const shape = meshComponent.getShape()
         const buffer = objectContext.createBuffer()
-        let textureData
         const program = this.initProgram(objectContext, this.getShader(shape), this.getMode(objectContext, shape))
-        if (meshComponent.getAssetId()) {
-            const asset = world.getAssetsManager().findAssetById(meshComponent.getAssetId())
-            const canvasBg = asset.getType().getData().context.canvas
-            textureData = this.setupTexture(world, canvasBg)
-        } else if (meshComponent.getMapAssetPositions().length > 0) {
-            const mapAssetIds = meshComponent.getMapAssetIds()
-            const canvasBg = new OffscreenCanvas(scaleSize.width, scaleSize.height)
-            const contextBg = canvasBg.getContext('2d')
-            contextBg.clearRect(0, 0, scaleSize.width, scaleSize.height)
-            meshComponent.getMapAssetPositions().forEach((mapAssetPosition, iMapAssetPosition) => {
-                const asset = world.getAssetsManager().findAssetById(mapAssetIds[iMapAssetPosition])
-                const canvasMapBg = asset.getType().getData().context.canvas
-                const scaleSizeMap = camera.toScaleSize(meshComponent.getMapAssetSize())
-                const drawPosition = camera.toCameraScale(mapAssetPosition)
-                contextBg.drawImage(canvasMapBg, drawPosition.getX(), drawPosition.getY(), scaleSizeMap.width, scaleSizeMap.height)
-            })
-            textureData = this.setupTexture(world, canvasBg)
-        }
-        return new DataContextWebGL(unitId, objectContext, scale, camera, world, {
+        const textureData = this.initTexture(world, meshComponent, camera, scaleSize)
+        return new DataContextWebGL(unitId, objectContext, scale, scaleSize, camera, world, {
             position: {buffer, vertices: []},
             texture: {buffer: textureData && textureData.buffer, vertices: textureData ? textureData.vertices : []}
         }, textureData && textureData.texture, program)
@@ -81,6 +63,35 @@ export default class WebGLMeshGenerator extends MeshGenerator {
             }
         }
         return params
+    }
+
+    /**
+     * @param {World }world
+     * @param {MeshComponent} meshComponent
+     * @param {Camera} camera
+     * @param {Size} scaleSize
+     * @return {{vertices: number[], texture: WebGLTexture, buffer: (AudioBuffer|WebGLBuffer)}}
+     */
+    initTexture(world, meshComponent, camera, scaleSize) {
+        let textureData
+        if (meshComponent.getAssetId()) {
+            const asset = world.getAssetsManager().findAssetById(meshComponent.getAssetId())
+            const canvasBg = asset.getType().getData().context.canvas
+            textureData = this.setupTexture(world, canvasBg)
+        } else if (meshComponent.getMapAssetPositions().length > 0) {
+            const mapAssetIds = meshComponent.getMapAssetIds()
+            const canvasBg = new OffscreenCanvas(scaleSize.width, scaleSize.height)
+            const contextBg = canvasBg.getContext('2d')
+            meshComponent.getMapAssetPositions().forEach((mapAssetPosition, iMapAssetPosition) => {
+                const asset = world.getAssetsManager().findAssetById(mapAssetIds[iMapAssetPosition])
+                const canvasMapBg = asset.getType().getData().context.canvas
+                const scaleSizeMap = camera.toScaleSize(meshComponent.getMapAssetSize())
+                const drawPosition = camera.toCameraScale(mapAssetPosition)
+                contextBg.drawImage(canvasMapBg, drawPosition.getX(), drawPosition.getY(), scaleSizeMap.width, scaleSizeMap.height)
+            })
+            textureData = this.setupTexture(world, canvasBg)
+        }
+        return textureData
     }
 
     /**
@@ -160,6 +171,9 @@ export default class WebGLMeshGenerator extends MeshGenerator {
             case PrimitiveShape.ARROW_RECT_RIGHT:
             case PrimitiveShape.ARROW_RECT_DOWN:
             case PrimitiveShape.GRID:
+            case PrimitiveShape.LINE:
+            case PrimitiveShape.CURVE:
+            case PrimitiveShape.EDGE:
                 return RectStrokeShader
             default:
                 return RectTextureShader
@@ -182,6 +196,9 @@ export default class WebGLMeshGenerator extends MeshGenerator {
             case PrimitiveShape.ARROW_RECT_RIGHT:
             case PrimitiveShape.ARROW_RECT_DOWN:
             case PrimitiveShape.GRID:
+            case PrimitiveShape.LINE:
+            case PrimitiveShape.CURVE:
+            case PrimitiveShape.EDGE:
                 return context.LINES
             default:
                 return context.TRIANGLES

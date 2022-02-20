@@ -1,5 +1,6 @@
 import TypeShapeGenerator from '../TypeShapeGenerator.js'
 import TDEdgeShapeGenerator from './TDEdgeShapeGenerator.js'
+import WGEdgeShapeGenerator from './WGEdgeShapeGenerator.js'
 
 export default class EdgeShapeGenerator extends TypeShapeGenerator{
 
@@ -7,4 +8,7 @@ export default class EdgeShapeGenerator extends TypeShapeGenerator{
         return TDEdgeShapeGenerator
     }
 
+    getWebGLContext() {
+        return WGEdgeShapeGenerator
+    }
 }

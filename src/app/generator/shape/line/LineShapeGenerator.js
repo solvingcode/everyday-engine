@@ -1,5 +1,6 @@
 import TypeShapeGenerator from '../TypeShapeGenerator.js'
 import TDLineShapeGenerator from './TDLineShapeGenerator.js'
+import WGLineShapeGenerator from './WGLineShapeGenerator.js'
 
 export default class LineShapeGenerator extends TypeShapeGenerator{
 
@@ -7,4 +8,7 @@ export default class LineShapeGenerator extends TypeShapeGenerator{
         return TDLineShapeGenerator
     }
 
+    getWebGLContext() {
+        return WGLineShapeGenerator
+    }
 }

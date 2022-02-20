@@ -32,6 +32,7 @@ export default {
         
         void main() {
             gl_FragColor = texture2D(uSampler, vTextureCoord);
+            if(gl_FragColor.a < 0.5) discard;
         }
     `
 }
