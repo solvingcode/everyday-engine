@@ -7,17 +7,20 @@ import {PrimitiveShape} from '../../unit/Unit.js'
 import RectTextureShader from '../../shader/RectTextureShader.js'
 import RectStrokeShader from '../../shader/RectStrokeShader.js'
 import Color from '../../utils/Color.js'
+import TextComponent from '../../component/internal/TextComponent.js'
+import UnitHelper from '../../utils/UnitHelper.js'
+import UITextComponent from '../../component/internal/ui/UITextComponent.js'
 
 export default class WebGLMeshGenerator extends MeshGenerator {
 
-    startContext(unitId, meshComponent, transformComponent, world, camera) {
+    startContext(unit, meshComponent, transformComponent, world, camera) {
         const scale = transformComponent.getScale()
         const scaleSize = camera.toScaleSize(meshComponent.getSize())
         const shape = meshComponent.getShape()
         const buffer = objectContext.createBuffer()
         const program = this.initProgram(objectContext, this.getShader(shape), this.getMode(objectContext, shape))
-        const textureData = this.initTexture(world, meshComponent, camera, scaleSize)
-        return new DataContextWebGL(unitId, objectContext, scale, scaleSize, camera, world, {
+        const textureData = this.initTexture(world, unit, meshComponent, camera, scaleSize)
+        return new DataContextWebGL(unit.getId(), objectContext, scale, scaleSize, camera, world, {
             position: {buffer, vertices: []},
             texture: {buffer: textureData && textureData.buffer, vertices: textureData ? textureData.vertices : []}
         }, textureData && textureData.texture, program)
@@ -66,13 +69,14 @@ export default class WebGLMeshGenerator extends MeshGenerator {
     }
 
     /**
-     * @param {World }world
+     * @param {World } world
+     * @param {Unit} unit
      * @param {MeshComponent} meshComponent
      * @param {Camera} camera
      * @param {Size} scaleSize
      * @return {{vertices: number[], texture: WebGLTexture, buffer: (AudioBuffer|WebGLBuffer)}}
      */
-    initTexture(world, meshComponent, camera, scaleSize) {
+    initTexture(world, unit, meshComponent, camera, scaleSize) {
         let textureData
         if (meshComponent.getAssetId()) {
             const asset = world.getAssetsManager().findAssetById(meshComponent.getAssetId())
@@ -90,6 +94,12 @@ export default class WebGLMeshGenerator extends MeshGenerator {
                 contextBg.drawImage(canvasMapBg, drawPosition.getX(), drawPosition.getY(), scaleSizeMap.width, scaleSizeMap.height)
             })
             textureData = this.setupTexture(world, canvasBg)
+        } else if (unit.getComponent(TextComponent) || unit.getComponent(UITextComponent)) {
+            const textComponent = unit.getComponent(TextComponent) || unit.getComponent(UITextComponent)
+            const canvasText = new OffscreenCanvas(scaleSize.width, scaleSize.height)
+            const contextText = canvasText.getContext('2d')
+            UnitHelper.drawText(contextText, textComponent, scaleSize, camera, world)
+            textureData = this.setupTexture(world, canvasText)
         }
         return textureData
     }

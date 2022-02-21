@@ -7,14 +7,14 @@ import ShapeGenerator from '../shape/ShapeGenerator.js'
 export default class MeshGenerator {
     /**
      * @abstract
-     * @param {number} unitId
+     * @param {Unit} unit
      * @param {MeshComponent} meshComponent
      * @param {TransformComponent} transformComponent
      * @param {World} world
      * @param {Camera} camera
      * @return {DataContext2D | DataContextWebGL}
      */
-    startContext(unitId, meshComponent, transformComponent, world, camera){
+    startContext(unit, meshComponent, transformComponent, world, camera){
         throw new NotImplementedError(this, this.startContext)
     }
 

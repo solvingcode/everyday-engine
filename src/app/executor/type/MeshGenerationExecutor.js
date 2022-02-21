@@ -53,7 +53,7 @@ export default class MeshGenerationExecutor extends ComponentExecutor {
         const meshComponent = unit.getComponent(MeshComponent)
         const transformComponent = unit.getComponent(TransformComponent)
         const meshGenerator = this.getGenerator()
-        const dataContext = meshGenerator.startContext(unit.getId(), meshComponent, transformComponent, world, camera)
+        const dataContext = meshGenerator.startContext(unit, meshComponent, transformComponent, world, camera)
         if (dataContext) {
             meshGenerator.drawContext(unit, dataContext)
             return meshGenerator.closeContext(meshComponent, transformComponent, dataContext)

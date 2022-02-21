@@ -30,6 +30,7 @@ import CircleSelectorUnitInstant from '../unit/instant/type/internal/edit/Circle
 import GUIPropertyComponent from '../component/internal/gui/property/GUIPropertyComponent.js'
 import ScriptHelper from './ScriptHelper.js'
 import MaterialType from '../material/MaterialType.js'
+import ClientError from '../exception/type/ClientError.js'
 
 export default class UnitHelper {
 
@@ -996,6 +997,66 @@ export default class UnitHelper {
         if (transformComponent) {
             this.setWorldPosition(world, unit, transformComponent.getPosition())
         }
+    }
+
+    /**
+     * @param {CanvasRenderingContext2D} context
+     * @param {TextComponent} textComponent
+     * @param {Size} size
+     * @param {Camera} camera
+     * @param {World} world
+     */
+    static drawText(context, textComponent, size, camera, world){
+        const assetManager = world.getAssetsManager()
+        const textAlign = textComponent.getTextAlign()
+        const verticalAlign = textComponent.getVerticalAlign()
+        const textStyle = textComponent.getTextStyle()
+        const fontFamilyAsset = textComponent.getFontFamily() && assetManager.findAssetFontById(textComponent.getFontFamily())
+        const fontFamily = (fontFamilyAsset && fontFamilyAsset.getName()) || 'Arial'
+        const {width, height} = size
+        const text = textComponent.getText()
+        const fontSize = textComponent.getFontSize()
+        const fontSizeScale = camera.toScaleNumber(fontSize)
+        let xPos = 0
+        let yPos = height / 2
+        const fontProps = [...(textStyle || []), `${fontSizeScale}px`, fontFamily]
+
+        if(textAlign){
+            switch (textAlign){
+                case 'left':
+                    context.textAlign = 'left'
+                    break
+                case 'center':
+                    context.textAlign = 'center'
+                    xPos = width / 2
+                    break
+                case 'right':
+                    context.textAlign = 'right'
+                    xPos = width
+                    break
+                default:
+                    throw new ClientError(`${this.constructor.name}: Text Alignment "${textAlign}" not supported`)
+            }
+        }
+
+        if(verticalAlign){
+            switch (verticalAlign){
+                case 'top':
+                    context.textBaseline = 'bottom'
+                    break
+                case 'middle':
+                    context.textBaseline = 'middle'
+                    break
+                case 'bottom':
+                    context.textBaseline = 'top'
+                    break
+                default:
+                    throw new ClientError(`${this.constructor.name}: Vertical Alignment "${verticalAlign}" not supported`)
+            }
+        }
+
+        context.font = fontProps.join(' ')
+        context.fillText(text, xPos, yPos)
     }
 
 }

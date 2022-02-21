@@ -13,7 +13,8 @@ import Size from '../../pobject/Size.js'
 
 export default class TwoDMeshGenerator extends MeshGenerator {
 
-    startContext(unitId, meshComponent, transformComponent, world, camera) {
+    startContext(unit, meshComponent, transformComponent, world, camera) {
+        const unitId = unit.getId()
         const scaleSize = this.getScaleSize(camera, meshComponent, transformComponent)
         const rotation = transformComponent.getRotation()
         const {width, height} = GeometryHelper.getLargestRectangle(rotation, scaleSize)
