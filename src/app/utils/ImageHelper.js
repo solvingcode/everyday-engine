@@ -1,4 +1,3 @@
-import {CANVAS_CONTEXT_TYPE} from '../core/Constant.js'
 import Vector from './Vector.js'
 import Size from '../pobject/Size.js'
 import {MODE} from '../constant/FilterMode.js'
@@ -57,7 +56,7 @@ export default class ImageHelper {
         const canvasHeight = height * Math.abs(scale.getY())
         const canvasEl = new OffscreenCanvas(canvasWidth, canvasHeight)
 
-        const contextEl = canvasEl.getContext(CANVAS_CONTEXT_TYPE)
+        const contextEl = canvasEl.getContext('2d')
         contextEl.translate(canvasWidth / 2, canvasHeight / 2)
         contextEl.scale(scale.getX(), scale.getY())
         contextEl.translate(-width / 2, -height / 2)
@@ -79,7 +78,7 @@ export default class ImageHelper {
 
         if (width > 0 && height > 0) {
             const canvasEl = new OffscreenCanvas(width, height)
-            const contextEl = canvasEl.getContext(CANVAS_CONTEXT_TYPE)
+            const contextEl = canvasEl.getContext('2d')
             contextEl.drawImage(canvas,
                 pointA.getX(), pointA.getY(),
                 width, height,
@@ -121,7 +120,7 @@ export default class ImageHelper {
             sizePartRepeated.getWidth(), sizePartRepeated.getHeight()) : null
 
         if (canvasRepeat) {
-            const contextRepeat = canvasRepeat.getContext(CANVAS_CONTEXT_TYPE)
+            const contextRepeat = canvasRepeat.getContext('2d')
             contextRepeat.fillStyle = contextRepeat.createPattern(canvasCrop, 'repeat')
             contextRepeat.rect(0, 0, sizePartRepeated.getWidth(), sizePartRepeated.getHeight())
             contextRepeat.translate(imagePosition.getX(), imagePosition.getY())
@@ -230,7 +229,7 @@ export default class ImageHelper {
         }
 
         const canvasEl = new OffscreenCanvas(width, height)
-        const contextEl = canvasEl.getContext(CANVAS_CONTEXT_TYPE)
+        const contextEl = canvasEl.getContext('2d')
         if (filter === MODE.NO_SMOOTHING) {
             contextEl.imageSmoothingEnabled = false
         }
@@ -263,7 +262,7 @@ export default class ImageHelper {
      */
     static copyCanvas(canvas, filter){
         const canvasCopy = new OffscreenCanvas(canvas.width, canvas.height)
-        const contextCopy = canvasCopy.getContext(CANVAS_CONTEXT_TYPE)
+        const contextCopy = canvasCopy.getContext('2d')
         if (filter === MODE.NO_SMOOTHING) {
             contextCopy.imageSmoothingEnabled = false
         }

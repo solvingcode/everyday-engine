@@ -10,6 +10,7 @@ import Color from '../../utils/Color.js'
 import TextComponent from '../../component/internal/TextComponent.js'
 import UnitHelper from '../../utils/UnitHelper.js'
 import UITextComponent from '../../component/internal/ui/UITextComponent.js'
+import NodeComponent from '../../component/internal/gui/node/NodeComponent.js'
 
 export default class WebGLMeshGenerator extends MeshGenerator {
 
@@ -81,7 +82,11 @@ export default class WebGLMeshGenerator extends MeshGenerator {
         if (meshComponent.getAssetId()) {
             const asset = world.getAssetsManager().findAssetById(meshComponent.getAssetId())
             const canvasBg = asset.getType().getData().context.canvas
-            textureData = this.setupTexture(world, canvasBg)
+            let canvasGenerated = canvasBg
+            if (meshComponent.isImageRepeat()) {
+                canvasGenerated = UnitHelper.generateImageRepeat(canvasBg, camera, meshComponent)
+            }
+            textureData = this.setupTexture(world, canvasGenerated)
         } else if (meshComponent.getMapAssetPositions().length > 0) {
             const mapAssetIds = meshComponent.getMapAssetIds()
             const canvasBg = new OffscreenCanvas(scaleSize.width, scaleSize.height)
@@ -100,6 +105,11 @@ export default class WebGLMeshGenerator extends MeshGenerator {
             const contextText = canvasText.getContext('2d')
             UnitHelper.drawText(contextText, textComponent, scaleSize, camera, world)
             textureData = this.setupTexture(world, canvasText)
+        } else if (unit.getComponent(NodeComponent)) {
+            const canvasNode = new OffscreenCanvas(scaleSize.width, scaleSize.height)
+            const contextNode = canvasNode.getContext('2d')
+            UnitHelper.drawNode(contextNode, unit, scaleSize, camera)
+            textureData = this.setupTexture(world, canvasNode)
         }
         return textureData
     }

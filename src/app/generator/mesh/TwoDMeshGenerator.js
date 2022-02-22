@@ -118,7 +118,7 @@ export default class TwoDMeshGenerator extends MeshGenerator {
     drawAssetImage(dataContext, assetId, meshComponent,
                    transformComponent, scaleSize, drawPosition = new Vector()){
         const {fillColor, borderSize, gradientColorAssetId} = meshComponent.getStyle()
-        const {context, world} = dataContext
+        const {context, world, camera} = dataContext
         if (fillColor || gradientColorAssetId) {
             context.fill()
             context.globalCompositeOperation = 'destination-over'
@@ -127,7 +127,7 @@ export default class TwoDMeshGenerator extends MeshGenerator {
         const asset = world.getAssetsManager().findAssetById(assetId)
         const canvasBg = asset.getType().getData().context.canvas
         if (meshComponent.isImageRepeat()) {
-            const canvasBgScaled = UnitHelper.generateImageRepeat(canvasBg, dataContext, meshComponent)
+            const canvasBgScaled = UnitHelper.generateImageRepeat(canvasBg, camera, meshComponent)
             context.drawImage(canvasBgScaled, 0, 0, scaleSize.width, scaleSize.height)
         } else {
             const directionScale = TransformHelper.getScaleDirection(transformComponent.getScale())
