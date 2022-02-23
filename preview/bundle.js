@@ -32550,7 +32550,7 @@ var WebGLMeshGenerator = /*#__PURE__*/function (_MeshGenerator) {
 
       var buffer = _Context.objectContext.createBuffer();
 
-      var program = this.initProgram(_Context.objectContext, this.getShader(shape), this.getMode(_Context.objectContext, shape));
+      var program = this.initProgram(world, unit, _Context.objectContext, this.getShader(shape), this.getMode(_Context.objectContext, shape));
       var textureData = this.initTexture(world, unit, meshComponent, camera, scaleSize);
       return new _DataContextWebGL["default"](unit.getId(), _Context.objectContext, scale, scaleSize, camera, world, {
         position: {
@@ -32727,6 +32727,8 @@ var WebGLMeshGenerator = /*#__PURE__*/function (_MeshGenerator) {
       };
     }
     /**
+     * @param {World} world
+     * @param {Unit} unit
      * @param {WebGLRenderingContext} context
      * @param {{vs: string, fs: string}} shader
      * @param {GLenum} mode
@@ -32739,9 +32741,14 @@ var WebGLMeshGenerator = /*#__PURE__*/function (_MeshGenerator) {
 
   }, {
     key: "initProgram",
-    value: function initProgram(context, _ref, mode) {
+    value: function initProgram(world, unit, context, _ref, mode) {
       var vs = _ref.vs,
           fs = _ref.fs;
+      var meshData = world.getMeshManager().get(unit.getId());
+
+      if (meshData) {
+        return meshData.program;
+      }
 
       var shaderProgram = _ShaderHelper["default"].initShaderProgram(context, vs, fs);
 
@@ -38897,7 +38904,9 @@ var MeshManager = /*#__PURE__*/function () {
     }
     /**
      * @param {number} index
-     * @return {Mesh}
+     * @return {Mesh|{params: *, program: *, buffers: Map<string, {buffer: WebGLBuffer, vertices: number[]}>,
+     * texture: WebGLTexture, style: {lineWidth: number,
+     * borderColor: string|null}}}
      */
 
   }, {

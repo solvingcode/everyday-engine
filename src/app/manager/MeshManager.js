@@ -21,7 +21,9 @@ export default class MeshManager {
 
     /**
      * @param {number} index
-     * @return {Mesh}
+     * @return {Mesh|{params: *, program: *, buffers: Map<string, {buffer: WebGLBuffer, vertices: number[]}>,
+     * texture: WebGLTexture, style: {lineWidth: number,
+     * borderColor: string|null}}}
      */
     get(index) {
         return this.meshes[index]

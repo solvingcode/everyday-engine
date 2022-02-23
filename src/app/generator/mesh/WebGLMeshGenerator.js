@@ -19,7 +19,7 @@ export default class WebGLMeshGenerator extends MeshGenerator {
         const scaleSize = camera.toScaleSize(meshComponent.getSize())
         const shape = meshComponent.getShape()
         const buffer = objectContext.createBuffer()
-        const program = this.initProgram(objectContext, this.getShader(shape), this.getMode(objectContext, shape))
+        const program = this.initProgram(world, unit, objectContext, this.getShader(shape), this.getMode(objectContext, shape))
         const textureData = this.initTexture(world, unit, meshComponent, camera, scaleSize)
         return new DataContextWebGL(unit.getId(), objectContext, scale, scaleSize, camera, world, {
             position: {buffer, vertices: []},
@@ -146,6 +146,8 @@ export default class WebGLMeshGenerator extends MeshGenerator {
     }
 
     /**
+     * @param {World} world
+     * @param {Unit} unit
      * @param {WebGLRenderingContext} context
      * @param {{vs: string, fs: string}} shader
      * @param {GLenum} mode
@@ -155,7 +157,11 @@ export default class WebGLMeshGenerator extends MeshGenerator {
      * vertexCount: number}, attributeParams: {offset: number, nbIterations: number, normalize: boolean,
      * type: GLenum, stride: number}}}
      */
-    initProgram(context, {vs, fs}, mode) {
+    initProgram(world, unit, context, {vs, fs}, mode) {
+        const meshData = world.getMeshManager().get(unit.getId())
+        if (meshData) {
+            return meshData.program
+        }
         const shaderProgram = ShaderHelper.initShaderProgram(context, vs, fs)
         return {
             shaderProgram,

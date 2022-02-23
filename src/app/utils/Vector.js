@@ -117,6 +117,18 @@ class Vector {
     }
 
     /**
+     * @param {...Vector} vectors
+     * @return {Vector}
+     */
+    static addAll(...vectors){
+        let sumVector = new Vector()
+        for(let iVector = 0; iVector < vectors.length; iVector ++){
+            sumVector = Vector.add(sumVector, vectors[iVector])
+        }
+        return sumVector
+    }
+
+    /**
      * @param {Vector} vectorA
      * @param {Vector} vectorB
      * @return {Vector}
