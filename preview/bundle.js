@@ -32236,13 +32236,7 @@ var _getPrototypeOf2 = _interopRequireDefault(require("@babel/runtime/helpers/ge
 
 var _MeshGenerator2 = _interopRequireDefault(require("./MeshGenerator.js"));
 
-var _GeometryHelper = _interopRequireDefault(require("../../utils/GeometryHelper.js"));
-
 var _Vector = _interopRequireDefault(require("../../utils/Vector.js"));
-
-var _Constant = require("../../core/Constant.js");
-
-var _Color = _interopRequireDefault(require("../../utils/Color.js"));
 
 var _DataContext2D = _interopRequireDefault(require("../../pobject/DataContext2D.js"));
 
@@ -32276,63 +32270,11 @@ var TwoDMeshGenerator = /*#__PURE__*/function (_MeshGenerator) {
     key: "startContext",
     value: function startContext(unit, meshComponent, transformComponent, world, camera) {
       var unitId = unit.getId();
-      var scaleSize = this.getScaleSize(camera, meshComponent, transformComponent);
-      var rotation = transformComponent.getRotation();
 
-      var _GeometryHelper$getLa = _GeometryHelper["default"].getLargestRectangle(rotation, scaleSize),
-          width = _GeometryHelper$getLa.width,
-          height = _GeometryHelper$getLa.height;
+      var dataContext = _UnitHelper["default"].init2dCanvas(world, camera, meshComponent, transformComponent);
 
-      if (width > 0 && height > 0) {
-        var center = new _Vector["default"]({
-          x: scaleSize.width / 2,
-          y: scaleSize.height / 2
-        });
-        var canvas = new OffscreenCanvas(width, height);
-        var context = canvas.getContext(_Constant.CANVAS_CONTEXT_TYPE);
-
-        var _meshComponent$getSty = meshComponent.getStyle(),
-            opacity = _meshComponent$getSty.opacity,
-            borderSize = _meshComponent$getSty.borderSize,
-            fillColor = _meshComponent$getSty.fillColor,
-            color = _meshComponent$getSty.color,
-            fillColorOpacity = _meshComponent$getSty.fillColorOpacity,
-            colorOpacity = _meshComponent$getSty.colorOpacity,
-            shadowColor = _meshComponent$getSty.shadowColor,
-            shadowPosition = _meshComponent$getSty.shadowPosition,
-            shadowBlur = _meshComponent$getSty.shadowBlur,
-            gradientColorAssetId = _meshComponent$getSty.gradientColorAssetId;
-
-        context.strokeStyle = _Color["default"].hexToRgba(color, colorOpacity);
-        var gradientColorAsset = world.getAssetsManager().findAssetById(gradientColorAssetId);
-
-        if (gradientColorAsset) {
-          var gradientColor = gradientColorAsset.getType().getData();
-          var linearGradient = context.createLinearGradient(scaleSize.width / 2, 0, scaleSize.width / 2, scaleSize.height);
-          gradientColor.getColors().forEach(function (colorStop) {
-            linearGradient.addColorStop(colorStop.getOffset(), colorStop.getColor());
-          });
-          context.fillStyle = linearGradient;
-        } else if (fillColor) {
-          context.fillStyle = _Color["default"].hexToRgba(fillColor, fillColorOpacity);
-        }
-
-        if (shadowColor) {
-          context.shadowColor = shadowColor;
-          context.shadowBlur = camera.toScaleNumber(shadowBlur);
-          context.shadowOffsetX = camera.toScaleNumber(shadowPosition.getX());
-          context.shadowOffsetY = camera.toScaleNumber(shadowPosition.getY());
-        }
-
-        if (_.isNumber(parseFloat(opacity))) {
-          context.globalAlpha = parseFloat(opacity);
-        }
-
-        context.lineWidth = camera.toScaleNumber(borderSize || 1);
-        context.translate(width / 2, height / 2);
-        context.rotate(rotation);
-        context.translate(-center.x, -center.y);
-        return new _DataContext2D["default"](unitId, center, context, scaleSize, camera, world);
+      if (dataContext) {
+        return new _DataContext2D["default"](unitId, dataContext.center, dataContext.context, dataContext.scaleSize, camera, world);
       }
 
       return null;
@@ -32342,11 +32284,11 @@ var TwoDMeshGenerator = /*#__PURE__*/function (_MeshGenerator) {
     value: function closeContext(meshComponent, transformComponent, dataContext) {
       var _this = this;
 
-      var _meshComponent$getSty2 = meshComponent.getStyle(),
-          fillColor = _meshComponent$getSty2.fillColor,
-          color = _meshComponent$getSty2.color,
-          borderSize = _meshComponent$getSty2.borderSize,
-          gradientColorAssetId = _meshComponent$getSty2.gradientColorAssetId;
+      var _meshComponent$getSty = meshComponent.getStyle(),
+          fillColor = _meshComponent$getSty.fillColor,
+          color = _meshComponent$getSty.color,
+          borderSize = _meshComponent$getSty.borderSize,
+          gradientColorAssetId = _meshComponent$getSty.gradientColorAssetId;
 
       var context = dataContext.context,
           scaleSize = dataContext.scaleSize,
@@ -32390,18 +32332,6 @@ var TwoDMeshGenerator = /*#__PURE__*/function (_MeshGenerator) {
       return world.getMaterialRegistry().getInstance(material);
     }
     /**
-     * @param {Camera} camera
-     * @param {MeshComponent} meshComponent
-     * @param transformComponent
-     * @return {Size}
-     */
-
-  }, {
-    key: "getScaleSize",
-    value: function getScaleSize(camera, meshComponent, transformComponent) {
-      return camera.toScaleSize(meshComponent.getSize());
-    }
-    /**
      * @param {DataContext2D} dataContext
      * @param {number} assetId
      * @param {MeshComponent} meshComponent
@@ -32415,10 +32345,10 @@ var TwoDMeshGenerator = /*#__PURE__*/function (_MeshGenerator) {
     value: function drawAssetImage(dataContext, assetId, meshComponent, transformComponent, scaleSize) {
       var drawPosition = arguments.length > 5 && arguments[5] !== undefined ? arguments[5] : new _Vector["default"]();
 
-      var _meshComponent$getSty3 = meshComponent.getStyle(),
-          fillColor = _meshComponent$getSty3.fillColor,
-          borderSize = _meshComponent$getSty3.borderSize,
-          gradientColorAssetId = _meshComponent$getSty3.gradientColorAssetId;
+      var _meshComponent$getSty2 = meshComponent.getStyle(),
+          fillColor = _meshComponent$getSty2.fillColor,
+          borderSize = _meshComponent$getSty2.borderSize,
+          gradientColorAssetId = _meshComponent$getSty2.gradientColorAssetId;
 
       var context = dataContext.context,
           world = dataContext.world,
@@ -32481,7 +32411,7 @@ var TwoDMeshGenerator = /*#__PURE__*/function (_MeshGenerator) {
 
 exports["default"] = TwoDMeshGenerator;
 
-},{"../../constant/FilterMode.js":88,"../../core/Constant.js":99,"../../core/Mesh.js":102,"../../pobject/DataContext2D.js":471,"../../pobject/Size.js":477,"../../utils/Color.js":601,"../../utils/GeometryHelper.js":606,"../../utils/ImageHelper.js":607,"../../utils/TransformHelper.js":620,"../../utils/UnitHelper.js":621,"../../utils/Vector.js":622,"./MeshGenerator.js":367,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":18}],369:[function(require,module,exports){
+},{"../../constant/FilterMode.js":88,"../../core/Mesh.js":102,"../../pobject/DataContext2D.js":471,"../../pobject/Size.js":477,"../../utils/ImageHelper.js":607,"../../utils/TransformHelper.js":620,"../../utils/UnitHelper.js":621,"../../utils/Vector.js":622,"./MeshGenerator.js":367,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":18}],369:[function(require,module,exports){
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
@@ -32551,7 +32481,7 @@ var WebGLMeshGenerator = /*#__PURE__*/function (_MeshGenerator) {
       var buffer = _Context.objectContext.createBuffer();
 
       var program = this.initProgram(world, unit, _Context.objectContext, this.getShader(shape), this.getMode(_Context.objectContext, shape));
-      var textureData = this.initTexture(world, unit, meshComponent, camera, scaleSize);
+      var textureData = this.initTexture(world, unit, meshComponent, transformComponent, camera, scaleSize);
       return new _DataContextWebGL["default"](unit.getId(), _Context.objectContext, scale, scaleSize, camera, world, {
         position: {
           buffer: buffer,
@@ -32633,6 +32563,7 @@ var WebGLMeshGenerator = /*#__PURE__*/function (_MeshGenerator) {
      * @param {World } world
      * @param {Unit} unit
      * @param {MeshComponent} meshComponent
+     * @param {TransformComponent} transformComponent
      * @param {Camera} camera
      * @param {Size} scaleSize
      * @return {{vertices: number[], texture: WebGLTexture, buffer: (AudioBuffer|WebGLBuffer)}}
@@ -32640,7 +32571,7 @@ var WebGLMeshGenerator = /*#__PURE__*/function (_MeshGenerator) {
 
   }, {
     key: "initTexture",
-    value: function initTexture(world, unit, meshComponent, camera, scaleSize) {
+    value: function initTexture(world, unit, meshComponent, transformComponent, camera, scaleSize) {
       var textureData;
 
       if (meshComponent.getAssetId()) {
@@ -32670,12 +32601,14 @@ var WebGLMeshGenerator = /*#__PURE__*/function (_MeshGenerator) {
         textureData = this.setupTexture(world, _canvasBg);
       } else if (unit.getComponent(_TextComponent["default"]) || unit.getComponent(_UITextComponent["default"])) {
         var textComponent = unit.getComponent(_TextComponent["default"]) || unit.getComponent(_UITextComponent["default"]);
-        var canvasText = new OffscreenCanvas(scaleSize.width, scaleSize.height);
-        var contextText = canvasText.getContext('2d');
 
-        _UnitHelper["default"].drawText(contextText, textComponent, scaleSize, camera, world);
+        var dataContextText = _UnitHelper["default"].init2dCanvas(world, camera, meshComponent, transformComponent);
 
-        textureData = this.setupTexture(world, canvasText);
+        if (dataContextText) {
+          _UnitHelper["default"].drawText(dataContextText.context, textComponent, scaleSize, camera, world);
+
+          textureData = this.setupTexture(world, dataContextText.context.canvas);
+        }
       } else if (unit.getComponent(_NodeComponent["default"])) {
         var canvasNode = new OffscreenCanvas(scaleSize.width, scaleSize.height);
         var contextNode = canvasNode.getContext('2d');
@@ -35010,6 +34943,8 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports["default"] = void 0;
 
+var _toConsumableArray2 = _interopRequireDefault(require("@babel/runtime/helpers/toConsumableArray"));
+
 var _classCallCheck2 = _interopRequireDefault(require("@babel/runtime/helpers/classCallCheck"));
 
 var _createClass2 = _interopRequireDefault(require("@babel/runtime/helpers/createClass"));
@@ -35025,6 +34960,8 @@ var _ContextTypeShapeGenerator = _interopRequireDefault(require("../ContextTypeS
 var _MeshComponent = _interopRequireDefault(require("../../../component/internal/MeshComponent.js"));
 
 var _Vector = _interopRequireDefault(require("../../../utils/Vector.js"));
+
+var _GeometryHelper = _interopRequireDefault(require("../../../utils/GeometryHelper.js"));
 
 function _createSuper(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct(); return function _createSuperInternal() { var Super = (0, _getPrototypeOf2["default"])(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = (0, _getPrototypeOf2["default"])(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return (0, _possibleConstructorReturn2["default"])(this, result); }; }
 
@@ -35056,16 +34993,27 @@ var WGCurveShapeGenerator = /*#__PURE__*/function (_ContextTypeShapeGene) {
 
       var vertices = meshComponent.getShapeVertices();
       var connectWidth = camera.toScaleNumber(80);
+      var p1 = camera.toCameraScale(vertices[0]);
 
-      var _Vector$linearDivide = _Vector["default"].linearDivide(camera.toCameraScale(vertices[0]), scaleVector),
-          x0 = _Vector$linearDivide.x,
-          y0 = _Vector$linearDivide.y;
+      var p2 = _Vector["default"].add(p1, new _Vector["default"]({
+        x: connectWidth,
+        y: 0
+      }));
 
-      var _Vector$linearDivide2 = _Vector["default"].linearDivide(camera.toCameraScale(vertices[1]), scaleVector),
-          x1 = _Vector$linearDivide2.x,
-          y1 = _Vector$linearDivide2.y;
+      var p4 = camera.toCameraScale(vertices[1]);
 
-      buffers.position.vertices = [x0, y0, x1, y1];
+      var p3 = _Vector["default"].add(p4, new _Vector["default"]({
+        x: -connectWidth,
+        y: 0
+      }));
+
+      var curvePoints = _GeometryHelper["default"].getPointsOnBezierCurve(p1, p2, p3, p4, 20);
+
+      buffers.position.vertices = curvePoints.map(function (curvePoint) {
+        return _Vector["default"].linearDivide(curvePoint, scaleVector);
+      }).reduce(function (prevResult, curvePoint) {
+        return [].concat((0, _toConsumableArray2["default"])(prevResult), (0, _toConsumableArray2["default"])(prevResult.length >= 4 ? [prevResult[prevResult.length - 2], prevResult[prevResult.length - 1]] : []), [curvePoint.getX(), curvePoint.getY()]);
+      }, []);
     }
   }]);
   return WGCurveShapeGenerator;
@@ -35073,7 +35021,7 @@ var WGCurveShapeGenerator = /*#__PURE__*/function (_ContextTypeShapeGene) {
 
 exports["default"] = WGCurveShapeGenerator;
 
-},{"../../../component/internal/MeshComponent.js":52,"../../../utils/Vector.js":622,"../ContextTypeShapeGenerator.js":375,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":18}],403:[function(require,module,exports){
+},{"../../../component/internal/MeshComponent.js":52,"../../../utils/GeometryHelper.js":606,"../../../utils/Vector.js":622,"../ContextTypeShapeGenerator.js":375,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":18,"@babel/runtime/helpers/toConsumableArray":21}],403:[function(require,module,exports){
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
@@ -61267,8 +61215,6 @@ var _StyleComponent = _interopRequireDefault(require("../../../../../component/i
 
 var _MeshComponent = _interopRequireDefault(require("../../../../../component/internal/MeshComponent.js"));
 
-var _Unit = require("../../../../Unit.js");
-
 function _createSuper(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct(); return function _createSuperInternal() { var Super = (0, _getPrototypeOf2["default"])(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = (0, _getPrototypeOf2["default"])(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return (0, _possibleConstructorReturn2["default"])(this, result); }; }
 
 function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
@@ -61292,8 +61238,6 @@ var RectSelectorUnitInstant = /*#__PURE__*/function (_RectUnitInstant) {
      */
     value: function update(camera) {
       var style = this.getComponent(_StyleComponent["default"]).getStyle();
-      var meshComponent = this.getComponent(_MeshComponent["default"]);
-      meshComponent.setShape(_Unit.PrimitiveShape.RECT_STROKE);
       var actualBorderSize = style.getBorderSize();
       var borderSize = camera.fromScaleNumber(2);
 
@@ -61317,7 +61261,7 @@ var RectSelectorUnitInstant = /*#__PURE__*/function (_RectUnitInstant) {
 
 exports["default"] = RectSelectorUnitInstant;
 
-},{"../../../../../component/internal/MeshComponent.js":52,"../../../../../component/internal/StyleComponent.js":56,"../../../../Unit.js":556,"../primitive/RectUnitInstant.js":573,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":18}],563:[function(require,module,exports){
+},{"../../../../../component/internal/MeshComponent.js":52,"../../../../../component/internal/StyleComponent.js":56,"../primitive/RectUnitInstant.js":573,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":18}],563:[function(require,module,exports){
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
@@ -62456,7 +62400,7 @@ var RectUnitInstant = /*#__PURE__*/function (_MeshUnitInstant) {
       var styleComponent = this.getComponent(_StyleComponent["default"]);
       transformComponent.setLocalPosition(localPosition);
       transformComponent.setLocalScale(localScale);
-      meshComponent.setShape(_Unit.PrimitiveShape.RECT);
+      meshComponent.setShape(_Unit.PrimitiveShape.RECT_STROKE);
       styleComponent.setStyle(style);
     }
     /**
@@ -66690,6 +66634,42 @@ var GeometryHelper = /*#__PURE__*/function () {
         x: position.x + center.x,
         y: position.y + center.y
       });
+    }
+    /**
+     * @param {Vector} p1
+     * @param {Vector} p2
+     * @param {Vector} p3
+     * @param {Vector} p4
+     * @param {number} t
+     * @return {Vector}
+     */
+
+  }, {
+    key: "getPointOnBezierCurve",
+    value: function getPointOnBezierCurve(p1, p2, p3, p4, t) {
+      var invT = 1 - t;
+      return _Vector["default"].addAll(_Vector["default"].multiply(p1, invT * invT * invT), _Vector["default"].multiply(p2, 3 * t * invT * invT), _Vector["default"].multiply(p3, 3 * invT * t * t), _Vector["default"].multiply(p4, t * t * t));
+    }
+    /**
+     * @param {Vector} p1
+     * @param {Vector} p2
+     * @param {Vector} p3
+     * @param {Vector} p4
+     * @param {number} numPoints
+     * @return {Vector[]}
+     */
+
+  }, {
+    key: "getPointsOnBezierCurve",
+    value: function getPointsOnBezierCurve(p1, p2, p3, p4, numPoints) {
+      var curvePoints = [];
+
+      for (var i = 0; i < numPoints; ++i) {
+        var t = i / (numPoints - 1);
+        curvePoints.push(this.getPointOnBezierCurve(p1, p2, p3, p4, t));
+      }
+
+      return curvePoints;
     }
   }]);
   return GeometryHelper;
@@ -71328,6 +71308,92 @@ var UnitHelper = /*#__PURE__*/function () {
       }
     }
     /**
+     * @param {Camera} camera
+     * @param {MeshComponent} meshComponent
+     * @param transformComponent
+     * @return {Size}
+     */
+
+  }, {
+    key: "getScaleSize",
+    value: function getScaleSize(camera, meshComponent, transformComponent) {
+      return camera.toScaleSize(meshComponent.getSize());
+    }
+    /**
+     * @param {World} world
+     * @param {Camera} camera
+     * @param {MeshComponent} meshComponent
+     * @param {TransformComponent} transformComponent
+     * @return {{center: Vector, context: CanvasRenderingContext2D, scaleSize: Size}}
+     */
+
+  }, {
+    key: "init2dCanvas",
+    value: function init2dCanvas(world, camera, meshComponent, transformComponent) {
+      var scaleSize = this.getScaleSize(camera, meshComponent, transformComponent);
+      var rotation = transformComponent.getRotation();
+
+      var _GeometryHelper$getLa = _GeometryHelper["default"].getLargestRectangle(rotation, scaleSize),
+          width = _GeometryHelper$getLa.width,
+          height = _GeometryHelper$getLa.height;
+
+      if (width > 0 && height > 0) {
+        var center = new _Vector["default"]({
+          x: scaleSize.width / 2,
+          y: scaleSize.height / 2
+        });
+        var canvas = new OffscreenCanvas(width, height);
+        var context = canvas.getContext('2d');
+
+        var _meshComponent$getSty = meshComponent.getStyle(),
+            opacity = _meshComponent$getSty.opacity,
+            borderSize = _meshComponent$getSty.borderSize,
+            fillColor = _meshComponent$getSty.fillColor,
+            color = _meshComponent$getSty.color,
+            fillColorOpacity = _meshComponent$getSty.fillColorOpacity,
+            colorOpacity = _meshComponent$getSty.colorOpacity,
+            shadowColor = _meshComponent$getSty.shadowColor,
+            shadowPosition = _meshComponent$getSty.shadowPosition,
+            shadowBlur = _meshComponent$getSty.shadowBlur,
+            gradientColorAssetId = _meshComponent$getSty.gradientColorAssetId;
+
+        context.strokeStyle = _Color["default"].hexToRgba(color, colorOpacity);
+        var gradientColorAsset = world.getAssetsManager().findAssetById(gradientColorAssetId);
+
+        if (gradientColorAsset) {
+          var gradientColor = gradientColorAsset.getType().getData();
+          var linearGradient = context.createLinearGradient(scaleSize.width / 2, 0, scaleSize.width / 2, scaleSize.height);
+          gradientColor.getColors().forEach(function (colorStop) {
+            linearGradient.addColorStop(colorStop.getOffset(), colorStop.getColor());
+          });
+          context.fillStyle = linearGradient;
+        } else if (fillColor) {
+          context.fillStyle = _Color["default"].hexToRgba(fillColor, fillColorOpacity);
+        }
+
+        if (shadowColor) {
+          context.shadowColor = shadowColor;
+          context.shadowBlur = camera.toScaleNumber(shadowBlur);
+          context.shadowOffsetX = camera.toScaleNumber(shadowPosition.getX());
+          context.shadowOffsetY = camera.toScaleNumber(shadowPosition.getY());
+        }
+
+        if (_.isNumber(parseFloat(opacity))) {
+          context.globalAlpha = parseFloat(opacity);
+        }
+
+        context.lineWidth = camera.toScaleNumber(borderSize || 1);
+        context.translate(width / 2, height / 2);
+        context.rotate(rotation);
+        context.translate(-center.x, -center.y);
+        return {
+          context: context,
+          center: center,
+          scaleSize: scaleSize
+        };
+      }
+    }
+    /**
      * @param {CanvasRenderingContext2D} context
      * @param {TextComponent} textComponent
      * @param {Size} size
@@ -71757,6 +71823,22 @@ var Vector = /*#__PURE__*/function () {
         y: vectorA.y + vectorB.y,
         z: vectorA.z + vectorB.z
       });
+    }
+    /**
+     * @param {...Vector} vectors
+     * @return {Vector}
+     */
+
+  }, {
+    key: "addAll",
+    value: function addAll() {
+      var sumVector = new Vector();
+
+      for (var iVector = 0; iVector < arguments.length; iVector++) {
+        sumVector = Vector.add(sumVector, iVector < 0 || arguments.length <= iVector ? undefined : arguments[iVector]);
+      }
+
+      return sumVector;
     }
     /**
      * @param {Vector} vectorA

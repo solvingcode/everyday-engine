@@ -1,8 +1,5 @@
 import MeshGenerator from './MeshGenerator.js'
-import GeometryHelper from '../../utils/GeometryHelper.js'
 import Vector from '../../utils/Vector.js'
-import {CANVAS_CONTEXT_TYPE} from '../../core/Constant.js'
-import Color from '../../utils/Color.js'
 import DataContext2D from '../../pobject/DataContext2D.js'
 import {MODE} from '../../constant/FilterMode.js'
 import UnitHelper from '../../utils/UnitHelper.js'
@@ -15,46 +12,9 @@ export default class TwoDMeshGenerator extends MeshGenerator {
 
     startContext(unit, meshComponent, transformComponent, world, camera) {
         const unitId = unit.getId()
-        const scaleSize = this.getScaleSize(camera, meshComponent, transformComponent)
-        const rotation = transformComponent.getRotation()
-        const {width, height} = GeometryHelper.getLargestRectangle(rotation, scaleSize)
-        if (width > 0 && height > 0) {
-            const center = new Vector({x: scaleSize.width / 2, y: scaleSize.height / 2})
-            const canvas = new OffscreenCanvas(width, height)
-            const context = canvas.getContext(CANVAS_CONTEXT_TYPE)
-            const {
-                opacity, borderSize, fillColor,
-                color, fillColorOpacity, colorOpacity,
-                shadowColor, shadowPosition, shadowBlur,
-                gradientColorAssetId
-            } = meshComponent.getStyle()
-            context.strokeStyle = Color.hexToRgba(color, colorOpacity)
-            const gradientColorAsset = world.getAssetsManager().findAssetById(gradientColorAssetId)
-            if (gradientColorAsset) {
-                const gradientColor = gradientColorAsset.getType().getData()
-                const linearGradient = context.createLinearGradient(
-                    scaleSize.width / 2, 0, scaleSize.width / 2, scaleSize.height)
-                gradientColor.getColors().forEach(colorStop => {
-                    linearGradient.addColorStop(colorStop.getOffset(), colorStop.getColor())
-                })
-                context.fillStyle = linearGradient
-            } else if (fillColor) {
-                context.fillStyle = Color.hexToRgba(fillColor, fillColorOpacity)
-            }
-            if (shadowColor) {
-                context.shadowColor = shadowColor
-                context.shadowBlur = camera.toScaleNumber(shadowBlur)
-                context.shadowOffsetX = camera.toScaleNumber(shadowPosition.getX())
-                context.shadowOffsetY = camera.toScaleNumber(shadowPosition.getY())
-            }
-            if (_.isNumber(parseFloat(opacity))) {
-                context.globalAlpha = parseFloat(opacity)
-            }
-            context.lineWidth = camera.toScaleNumber(borderSize || 1)
-            context.translate(width / 2, height / 2)
-            context.rotate(rotation)
-            context.translate(-center.x, -center.y)
-            return new DataContext2D(unitId, center, context, scaleSize, camera, world)
+        const dataContext = UnitHelper.init2dCanvas(world, camera, meshComponent, transformComponent)
+        if (dataContext) {
+            return new DataContext2D(unitId, dataContext.center, dataContext.context, dataContext.scaleSize, camera, world)
         }
         return null
     }
@@ -67,7 +27,7 @@ export default class TwoDMeshGenerator extends MeshGenerator {
         }
         if (meshComponent.getAssetId()) {
             this.drawAssetImage(dataContext, meshComponent.getAssetId(), meshComponent, transformComponent, scaleSize)
-        } else if(meshComponent.getMapAssetPositions().length > 0){
+        } else if (meshComponent.getMapAssetPositions().length > 0) {
             const mapAssetIds = meshComponent.getMapAssetIds()
             meshComponent.getMapAssetPositions().forEach((mapAssetPosition, iMapAssetPosition) => {
                 this.drawAssetImage(dataContext, mapAssetIds[iMapAssetPosition], meshComponent,
@@ -75,7 +35,7 @@ export default class TwoDMeshGenerator extends MeshGenerator {
                     camera.toScaleSize(meshComponent.getMapAssetSize()),
                     camera.toCameraScale(mapAssetPosition))
             })
-        }else if (fillColor || gradientColorAssetId) {
+        } else if (fillColor || gradientColorAssetId) {
             context.fill()
             if (color && borderSize) {
                 context.stroke()
@@ -98,16 +58,6 @@ export default class TwoDMeshGenerator extends MeshGenerator {
     }
 
     /**
-     * @param {Camera} camera
-     * @param {MeshComponent} meshComponent
-     * @param transformComponent
-     * @return {Size}
-     */
-    getScaleSize(camera, meshComponent, transformComponent) {
-        return camera.toScaleSize(meshComponent.getSize())
-    }
-
-    /**
      * @param {DataContext2D} dataContext
      * @param {number} assetId
      * @param {MeshComponent} meshComponent
@@ -116,7 +66,7 @@ export default class TwoDMeshGenerator extends MeshGenerator {
      * @param {Vector} drawPosition
      */
     drawAssetImage(dataContext, assetId, meshComponent,
-                   transformComponent, scaleSize, drawPosition = new Vector()){
+                   transformComponent, scaleSize, drawPosition = new Vector()) {
         const {fillColor, borderSize, gradientColorAssetId} = meshComponent.getStyle()
         const {context, world, camera} = dataContext
         if (fillColor || gradientColorAssetId) {

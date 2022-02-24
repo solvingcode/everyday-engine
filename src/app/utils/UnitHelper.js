@@ -1003,6 +1003,67 @@ export default class UnitHelper {
     }
 
     /**
+     * @param {Camera} camera
+     * @param {MeshComponent} meshComponent
+     * @param transformComponent
+     * @return {Size}
+     */
+    static getScaleSize(camera, meshComponent, transformComponent) {
+        return camera.toScaleSize(meshComponent.getSize())
+    }
+
+    /**
+     * @param {World} world
+     * @param {Camera} camera
+     * @param {MeshComponent} meshComponent
+     * @param {TransformComponent} transformComponent
+     * @return {{center: Vector, context: CanvasRenderingContext2D, scaleSize: Size}}
+     */
+    static init2dCanvas(world, camera, meshComponent, transformComponent) {
+        const scaleSize = this.getScaleSize(camera, meshComponent, transformComponent)
+        const rotation = transformComponent.getRotation()
+        const {width, height} = GeometryHelper.getLargestRectangle(rotation, scaleSize)
+        if (width > 0 && height > 0) {
+            const center = new Vector({x: scaleSize.width / 2, y: scaleSize.height / 2})
+            const canvas = new OffscreenCanvas(width, height)
+            const context = canvas.getContext('2d')
+            const {
+                opacity, borderSize, fillColor,
+                color, fillColorOpacity, colorOpacity,
+                shadowColor, shadowPosition, shadowBlur,
+                gradientColorAssetId
+            } = meshComponent.getStyle()
+            context.strokeStyle = Color.hexToRgba(color, colorOpacity)
+            const gradientColorAsset = world.getAssetsManager().findAssetById(gradientColorAssetId)
+            if (gradientColorAsset) {
+                const gradientColor = gradientColorAsset.getType().getData()
+                const linearGradient = context.createLinearGradient(
+                    scaleSize.width / 2, 0, scaleSize.width / 2, scaleSize.height)
+                gradientColor.getColors().forEach(colorStop => {
+                    linearGradient.addColorStop(colorStop.getOffset(), colorStop.getColor())
+                })
+                context.fillStyle = linearGradient
+            } else if (fillColor) {
+                context.fillStyle = Color.hexToRgba(fillColor, fillColorOpacity)
+            }
+            if (shadowColor) {
+                context.shadowColor = shadowColor
+                context.shadowBlur = camera.toScaleNumber(shadowBlur)
+                context.shadowOffsetX = camera.toScaleNumber(shadowPosition.getX())
+                context.shadowOffsetY = camera.toScaleNumber(shadowPosition.getY())
+            }
+            if (_.isNumber(parseFloat(opacity))) {
+                context.globalAlpha = parseFloat(opacity)
+            }
+            context.lineWidth = camera.toScaleNumber(borderSize || 1)
+            context.translate(width / 2, height / 2)
+            context.rotate(rotation)
+            context.translate(-center.x, -center.y)
+            return {context, center, scaleSize}
+        }
+    }
+
+    /**
      * @param {CanvasRenderingContext2D} context
      * @param {TextComponent} textComponent
      * @param {Size} size

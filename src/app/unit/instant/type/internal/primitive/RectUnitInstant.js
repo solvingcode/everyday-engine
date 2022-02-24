@@ -20,7 +20,7 @@ export default class RectUnitInstant extends MeshUnitInstant {
         const styleComponent = this.getComponent(StyleComponent)
         transformComponent.setLocalPosition(localPosition)
         transformComponent.setLocalScale(localScale)
-        meshComponent.setShape(PrimitiveShape.RECT)
+        meshComponent.setShape(PrimitiveShape.RECT_STROKE)
         styleComponent.setStyle(style)
     }
 

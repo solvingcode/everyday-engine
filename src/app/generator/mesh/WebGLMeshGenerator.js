@@ -20,7 +20,7 @@ export default class WebGLMeshGenerator extends MeshGenerator {
         const shape = meshComponent.getShape()
         const buffer = objectContext.createBuffer()
         const program = this.initProgram(world, unit, objectContext, this.getShader(shape), this.getMode(objectContext, shape))
-        const textureData = this.initTexture(world, unit, meshComponent, camera, scaleSize)
+        const textureData = this.initTexture(world, unit, meshComponent, transformComponent, camera, scaleSize)
         return new DataContextWebGL(unit.getId(), objectContext, scale, scaleSize, camera, world, {
             position: {buffer, vertices: []},
             texture: {buffer: textureData && textureData.buffer, vertices: textureData ? textureData.vertices : []}
@@ -73,11 +73,12 @@ export default class WebGLMeshGenerator extends MeshGenerator {
      * @param {World } world
      * @param {Unit} unit
      * @param {MeshComponent} meshComponent
+     * @param {TransformComponent} transformComponent
      * @param {Camera} camera
      * @param {Size} scaleSize
      * @return {{vertices: number[], texture: WebGLTexture, buffer: (AudioBuffer|WebGLBuffer)}}
      */
-    initTexture(world, unit, meshComponent, camera, scaleSize) {
+    initTexture(world, unit, meshComponent, transformComponent, camera, scaleSize) {
         let textureData
         if (meshComponent.getAssetId()) {
             const asset = world.getAssetsManager().findAssetById(meshComponent.getAssetId())
@@ -101,10 +102,11 @@ export default class WebGLMeshGenerator extends MeshGenerator {
             textureData = this.setupTexture(world, canvasBg)
         } else if (unit.getComponent(TextComponent) || unit.getComponent(UITextComponent)) {
             const textComponent = unit.getComponent(TextComponent) || unit.getComponent(UITextComponent)
-            const canvasText = new OffscreenCanvas(scaleSize.width, scaleSize.height)
-            const contextText = canvasText.getContext('2d')
-            UnitHelper.drawText(contextText, textComponent, scaleSize, camera, world)
-            textureData = this.setupTexture(world, canvasText)
+            const dataContextText = UnitHelper.init2dCanvas(world, camera, meshComponent, transformComponent)
+            if (dataContextText) {
+                UnitHelper.drawText(dataContextText.context, textComponent, scaleSize, camera, world)
+                textureData = this.setupTexture(world, dataContextText.context.canvas)
+            }
         } else if (unit.getComponent(NodeComponent)) {
             const canvasNode = new OffscreenCanvas(scaleSize.width, scaleSize.height)
             const contextNode = canvasNode.getContext('2d')
