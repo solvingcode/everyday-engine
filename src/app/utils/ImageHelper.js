@@ -256,7 +256,7 @@ export default class ImageHelper {
     }
 
     /**
-     * @param {OffscreenCanvas} canvas
+     * @param {OffscreenCanvas | HTMLCanvasElement} canvas
      * @param {string} filter
      * @return {OffscreenCanvas}
      */

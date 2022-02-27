@@ -23,8 +23,8 @@ export default class TwoDMeshRenderer extends MeshRenderer {
     /**
      * @override
      */
-    drawMesh(mesh, position) {
-        const {x, y} = position
+    drawMesh(mesh, data) {
+        const {x, y} = data.position
         objectContext.drawImage(mesh.context.canvas, x, y)
     }
 }

@@ -34,6 +34,8 @@ import ClientError from '../exception/type/ClientError.js'
 import NodeComponent from '../component/internal/gui/node/NodeComponent.js'
 import NodeHelper from './NodeHelper.js'
 import Color from './Color.js'
+import Maths from './Maths.js'
+import LightHelper from './LightHelper.js'
 
 export default class UnitHelper {
 
@@ -1289,6 +1291,40 @@ export default class UnitHelper {
                 context.stroke()
             }
         }
+    }
+
+    /**
+     * @param {CanvasRenderingContext2D} context
+     * @param {LightPointComponent} lightComponent
+     * @param {Vector} center
+     * @param {Size} size
+     * @param {Camera} camera
+     */
+    static drawLight(context, lightComponent, center, size, camera){
+        const outerAngle = Math.PI * 2 - Maths.fromDegree(lightComponent.getOuterAngle())
+        const innerAngle = Math.PI * 2 - Maths.fromDegree(lightComponent.getInnerAngle())
+        const outerRadius = lightComponent.getOuterRadius()
+        const sw = size.width * outerRadius / 100
+        const radiusScale = Math.abs(sw / 2 - 1)
+
+        //calculate light boundaries
+        const outerLightBounds = LightHelper.getLightBounds(center, outerAngle, radiusScale)
+        const innerLightBounds = LightHelper.getLightBounds(center, innerAngle, radiusScale)
+
+        LightHelper.drawOuterLightBounds(context, outerLightBounds, radiusScale, outerAngle)
+        context.stroke()
+        LightHelper.drawInnerLightBounds(context, outerLightBounds.first, innerLightBounds.first, radiusScale)
+        context.stroke()
+        LightHelper.drawInnerLightBounds(context, outerLightBounds.second, innerLightBounds.second, radiusScale)
+        context.stroke()
+
+        //circle bulb
+        const sizeBulb = camera.toScaleNumber(10)
+        context.beginPath()
+        context.arc(center.x, center.y, sizeBulb, 0, Math.PI * 2)
+        context.closePath()
+        context.fillStyle = 'rgba(255,255,247,0.71)'
+        context.fill()
     }
 
 }

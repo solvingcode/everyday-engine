@@ -27,6 +27,15 @@ export default class MeshGenerator {
     }
 
     /**
+     * @param {World} world
+     * @param {string} material
+     * @return {Material}
+     */
+    getMaterial(world, material) {
+        return world.getMaterialRegistry().getInstance(material)
+    }
+
+    /**
      * @abstract
      * @param {MeshComponent} meshComponent
      * @param {TransformComponent} transformComponent

@@ -11269,7 +11269,7 @@ var SCENE_HEIGHT = window.innerHeight;
 exports.SCENE_HEIGHT = SCENE_HEIGHT;
 var HTML_ID_PREFIX = 'app-el-';
 exports.HTML_ID_PREFIX = HTML_ID_PREFIX;
-var CANVAS_CONTEXT_TYPE = 'webgl';
+var CANVAS_CONTEXT_TYPE = '2d';
 exports.CANVAS_CONTEXT_TYPE = CANVAS_CONTEXT_TYPE;
 var STYLE_THEME = 'dark';
 exports.STYLE_THEME = STYLE_THEME;
@@ -32196,6 +32196,17 @@ var MeshGenerator = /*#__PURE__*/function () {
       _ShapeGenerator["default"].get().draw(unit, dataContext);
     }
     /**
+     * @param {World} world
+     * @param {string} material
+     * @return {Material}
+     */
+
+  }, {
+    key: "getMaterial",
+    value: function getMaterial(world, material) {
+      return world.getMaterialRegistry().getInstance(material);
+    }
+    /**
      * @abstract
      * @param {MeshComponent} meshComponent
      * @param {TransformComponent} transformComponent
@@ -32317,19 +32328,8 @@ var TwoDMeshGenerator = /*#__PURE__*/function (_MeshGenerator) {
         context.stroke();
       }
 
-      var materialContext = this.getMaterial(world, meshComponent.getMaterial()).generate(dataContext, meshComponent, transformComponent);
+      var materialContext = this.getMaterial(world, meshComponent.getMaterial()).generate(context, world, camera, meshComponent, transformComponent);
       return this.updateMeshFromContext(unitId, world.getMeshManager(), materialContext);
-    }
-    /**
-     * @param {World} world
-     * @param {string} material
-     * @return {Material}
-     */
-
-  }, {
-    key: "getMaterial",
-    value: function getMaterial(world, material) {
-      return world.getMaterialRegistry().getInstance(material);
     }
     /**
      * @param {DataContext2D} dataContext
@@ -32457,6 +32457,8 @@ var _UITextComponent = _interopRequireDefault(require("../../component/internal/
 
 var _NodeComponent = _interopRequireDefault(require("../../component/internal/gui/node/NodeComponent.js"));
 
+var _LightPointComponent = _interopRequireDefault(require("../../component/internal/LightPointComponent.js"));
+
 function _createSuper(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct(); return function _createSuperInternal() { var Super = (0, _getPrototypeOf2["default"])(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = (0, _getPrototypeOf2["default"])(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return (0, _possibleConstructorReturn2["default"])(this, result); }; }
 
 function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
@@ -32582,6 +32584,10 @@ var WebGLMeshGenerator = /*#__PURE__*/function (_MeshGenerator) {
         if (meshComponent.isImageRepeat()) {
           canvasGenerated = _UnitHelper["default"].generateImageRepeat(canvasBg, camera, meshComponent);
         }
+        /*const materialContext = this.getMaterial(world, meshComponent.getMaterial())
+            .generate(canvasGenerated.getContext('2d'), world, camera, meshComponent, transformComponent)
+        textureData = this.setupTexture(world, materialContext.canvas)*/
+
 
         textureData = this.setupTexture(world, canvasGenerated);
       } else if (meshComponent.getMapAssetPositions().length > 0) {
@@ -32616,6 +32622,14 @@ var WebGLMeshGenerator = /*#__PURE__*/function (_MeshGenerator) {
         _UnitHelper["default"].drawNode(contextNode, unit, scaleSize, camera);
 
         textureData = this.setupTexture(world, canvasNode);
+      } else if (unit.getComponent(_LightPointComponent["default"])) {
+        var dataContextLight = _UnitHelper["default"].init2dCanvas(world, camera, meshComponent, transformComponent);
+
+        if (dataContextLight) {
+          _UnitHelper["default"].drawLight(dataContextLight.context, unit.getComponent(_LightPointComponent["default"]), dataContextLight.center, dataContextLight.scaleSize, camera);
+
+          textureData = this.setupTexture(world, dataContextLight.context.canvas);
+        }
       }
 
       return textureData;
@@ -32765,7 +32779,7 @@ var WebGLMeshGenerator = /*#__PURE__*/function (_MeshGenerator) {
 
 exports["default"] = WebGLMeshGenerator;
 
-},{"../../component/internal/TextComponent.js":57,"../../component/internal/gui/node/NodeComponent.js":67,"../../component/internal/ui/UITextComponent.js":83,"../../core/Context.js":100,"../../pobject/DataContextWebGL.js":472,"../../shader/RectStrokeShader.js":552,"../../shader/RectTextureShader.js":553,"../../unit/Unit.js":556,"../../utils/Color.js":601,"../../utils/Maths.js":609,"../../utils/ShaderHelper.js":617,"../../utils/UnitHelper.js":621,"./MeshGenerator.js":367,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":18}],370:[function(require,module,exports){
+},{"../../component/internal/LightPointComponent.js":51,"../../component/internal/TextComponent.js":57,"../../component/internal/gui/node/NodeComponent.js":67,"../../component/internal/ui/UITextComponent.js":83,"../../core/Context.js":100,"../../pobject/DataContextWebGL.js":472,"../../shader/RectStrokeShader.js":552,"../../shader/RectTextureShader.js":553,"../../unit/Unit.js":556,"../../utils/Color.js":601,"../../utils/Maths.js":609,"../../utils/ShaderHelper.js":617,"../../utils/UnitHelper.js":621,"./MeshGenerator.js":367,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":18}],370:[function(require,module,exports){
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
@@ -35458,11 +35472,9 @@ var _getPrototypeOf2 = _interopRequireDefault(require("@babel/runtime/helpers/ge
 
 var _LightPointComponent = _interopRequireDefault(require("../../../component/internal/LightPointComponent.js"));
 
-var _Maths = _interopRequireDefault(require("../../../utils/Maths.js"));
-
-var _LightHelper = _interopRequireDefault(require("../../../utils/LightHelper.js"));
-
 var _ContextTypeShapeGenerator = _interopRequireDefault(require("../ContextTypeShapeGenerator.js"));
+
+var _UnitHelper = _interopRequireDefault(require("../../../utils/UnitHelper.js"));
 
 function _createSuper(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct(); return function _createSuperInternal() { var Super = (0, _getPrototypeOf2["default"])(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = (0, _getPrototypeOf2["default"])(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return (0, _possibleConstructorReturn2["default"])(this, result); }; }
 
@@ -35486,41 +35498,12 @@ var TDLightPointShapeGenerator = /*#__PURE__*/function (_ContextTypeShapeGene) {
      */
     value: function draw(unit, dataContext) {
       var lightComponent = unit.getComponent(_LightPointComponent["default"]);
-
-      var outerAngle = Math.PI * 2 - _Maths["default"].fromDegree(lightComponent.getOuterAngle());
-
-      var innerAngle = Math.PI * 2 - _Maths["default"].fromDegree(lightComponent.getInnerAngle());
-
-      var outerRadius = lightComponent.getOuterRadius();
       var center = dataContext.center,
           context = dataContext.context,
           scaleSize = dataContext.scaleSize,
           camera = dataContext.camera;
-      var sw = scaleSize.width * outerRadius / 100;
-      var radiusScale = Math.abs(sw / 2 - 1); //calculate light boundaries
 
-      var outerLightBounds = _LightHelper["default"].getLightBounds(center, outerAngle, radiusScale);
-
-      var innerLightBounds = _LightHelper["default"].getLightBounds(center, innerAngle, radiusScale);
-
-      _LightHelper["default"].drawOuterLightBounds(context, outerLightBounds, radiusScale, outerAngle);
-
-      context.stroke();
-
-      _LightHelper["default"].drawInnerLightBounds(context, outerLightBounds.first, innerLightBounds.first, radiusScale);
-
-      context.stroke();
-
-      _LightHelper["default"].drawInnerLightBounds(context, outerLightBounds.second, innerLightBounds.second, radiusScale);
-
-      context.stroke(); //circle bulb
-
-      var sizeBulb = camera.toScaleNumber(10);
-      context.beginPath();
-      context.arc(center.x, center.y, sizeBulb, 0, Math.PI * 2);
-      context.closePath();
-      context.fillStyle = 'rgba(255,255,247,0.71)';
-      context.fill();
+      _UnitHelper["default"].drawLight(context, lightComponent, center, scaleSize, camera);
     }
   }]);
   return TDLightPointShapeGenerator;
@@ -35528,7 +35511,7 @@ var TDLightPointShapeGenerator = /*#__PURE__*/function (_ContextTypeShapeGene) {
 
 exports["default"] = TDLightPointShapeGenerator;
 
-},{"../../../component/internal/LightPointComponent.js":51,"../../../utils/LightHelper.js":608,"../../../utils/Maths.js":609,"../ContextTypeShapeGenerator.js":375,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":18}],411:[function(require,module,exports){
+},{"../../../component/internal/LightPointComponent.js":51,"../../../utils/UnitHelper.js":621,"../ContextTypeShapeGenerator.js":375,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/getPrototypeOf":10,"@babel/runtime/helpers/inherits":11,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/possibleConstructorReturn":18}],411:[function(require,module,exports){
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
@@ -35568,14 +35551,7 @@ var WGLightPointShapeGenerator = /*#__PURE__*/function (_ContextTypeShapeGene) {
     key: "draw",
     value: function draw(unit, dataContext) {
       var buffers = dataContext.buffers;
-      var positions = [];
-
-      for (var iCircle = 0; iCircle < 360; iCircle += 2) {
-        positions.push((Math.sin(iCircle * Math.PI / 180) + 1) / 2);
-        positions.push((Math.cos(iCircle * Math.PI / 180) + 1) / 2);
-      }
-
-      buffers.position.vertices = positions;
+      buffers.position.vertices = [0.0, 0.0, 1.0, 0.0, 0.0, 1.0, 0.0, 1.0, 1.0, 0.0, 1.0, 1.0];
     }
   }]);
   return WGLightPointShapeGenerator;
@@ -41144,8 +41120,8 @@ var DefaultMaterial = /*#__PURE__*/function (_Material) {
 
   (0, _createClass2["default"])(DefaultMaterial, [{
     key: "generate",
-    value: function generate(dataContext, meshComponent, transformComponent) {
-      return dataContext.context;
+    value: function generate(context, world, camera, meshComponent, transformComponent) {
+      return context;
     }
   }]);
   return DefaultMaterial;
@@ -41211,16 +41187,13 @@ var LightMaterial = /*#__PURE__*/function (_Material) {
 
   (0, _createClass2["default"])(LightMaterial, [{
     key: "generate",
-    value: function generate(dataContext, meshComponent, transformComponent) {
-      var context = dataContext.context,
-          world = dataContext.world,
-          camera = dataContext.camera;
+    value: function generate(context, world, camera, meshComponent, transformComponent) {
       var size = new _Size["default"]({
         width: context.canvas.width,
         height: context.canvas.height
       });
       var materialCanvas = new OffscreenCanvas(size.width, size.height);
-      var materialContext = materialCanvas.getContext(_Constant.CANVAS_CONTEXT_TYPE);
+      var materialContext = materialCanvas.getContext('2d');
       materialContext.drawImage(context.canvas, 0, 0, size.width, size.height);
       var unitManager = world.getUnitManager();
       var lightGlobalUnits = unitManager.findUnitsByComponents([_LightGlobalComponent["default"]]);
@@ -41235,28 +41208,11 @@ var LightMaterial = /*#__PURE__*/function (_Material) {
 
       var globalColorRgba = _Color["default"].hexToRgb(globalColor, globalIntensity);
 
-      var canvasLightContainer = new OffscreenCanvas(size.width, size.height);
-      var contextLightContainer = canvasLightContainer.getContext(_Constant.CANVAS_CONTEXT_TYPE);
-      contextLightContainer.fillStyle = globalColorRgba;
-      contextLightContainer.fillRect(0, 0, size.width, size.height);
-      var canvasLights = new OffscreenCanvas(size.width, size.height);
-      var contextLights = canvasLights.getContext(_Constant.CANVAS_CONTEXT_TYPE);
-      contextLights.globalCompositeOperation = 'lighter';
-      unitManager.findUnitsByComponentClasses([_LightPointComponent["default"]]).forEach(function (unitLight) {
-        var lightCanvas = _LightHelper["default"].getPoint(unitLight, camera, transformComponent.getPosition(), size, globalIntensity, globalColor);
+      var lightContextSourceAtop = _LightHelper["default"].getLightContext(materialContext, world, globalColorRgba, globalIntensity, globalColor, transformComponent, meshComponent, camera, size);
 
-        contextLights.drawImage(lightCanvas, 0, 0, size.width, size.height);
-      });
-      contextLightContainer.drawImage(canvasLights, 0, 0, size.width, size.height);
-
-      var lightCanvasSourceAtop = _ImageHelper["default"].copyCanvas(materialContext.canvas, meshComponent.getFilter());
-
-      var lightContextSourceAtop = lightCanvasSourceAtop.getContext(_Constant.CANVAS_CONTEXT_TYPE);
-      lightContextSourceAtop.globalCompositeOperation = 'source-atop';
-      lightContextSourceAtop.drawImage(canvasLightContainer, 0, 0, size.width, size.height);
       var globalCompositeOperation = materialContext.globalCompositeOperation;
       materialContext.globalCompositeOperation = 'multiply';
-      materialContext.drawImage(lightCanvasSourceAtop, 0, 0, size.width, size.height);
+      materialContext.drawImage(lightContextSourceAtop.canvas, 0, 0, size.width, size.height);
       materialContext.globalCompositeOperation = globalCompositeOperation;
       return materialContext;
     }
@@ -41318,7 +41274,9 @@ var Material = /*#__PURE__*/function (_MaterialData) {
   }
   /**
    * @abstract
-   * @param {DataContext2D} dataContext
+   * @param {CanvasRenderingContext2D} context
+   * @param {World} world
+   * @param {Camera} camera
    * @param {MeshComponent} meshComponent
    * @param {TransformComponent} transformComponent
    * @return {CanvasRenderingContext2D}
@@ -41327,7 +41285,7 @@ var Material = /*#__PURE__*/function (_MaterialData) {
 
   (0, _createClass2["default"])(Material, [{
     key: "generate",
-    value: function generate(dataContext, meshComponent, transformComponent) {
+    value: function generate(context, world, camera, meshComponent, transformComponent) {
       throw new _SystemError["default"]("".concat(this.constructor.name, ".generate must be implement"));
     }
   }]);
@@ -54930,9 +54888,10 @@ var TwoDMeshRenderer = /*#__PURE__*/function (_MeshRenderer) {
 
   }, {
     key: "drawMesh",
-    value: function drawMesh(mesh, position) {
-      var x = position.x,
-          y = position.y;
+    value: function drawMesh(mesh, data) {
+      var _data$position = data.position,
+          x = _data$position.x,
+          y = _data$position.y;
 
       _Context.objectContext.drawImage(mesh.context.canvas, x, y);
     }
@@ -67053,7 +67012,7 @@ var ImageHelper = /*#__PURE__*/function () {
       return canvasEl;
     }
     /**
-     * @param {OffscreenCanvas} canvas
+     * @param {OffscreenCanvas | HTMLCanvasElement} canvas
      * @param {string} filter
      * @return {OffscreenCanvas}
      */
@@ -67104,8 +67063,6 @@ var _Maths = _interopRequireDefault(require("./Maths.js"));
 
 var _MeshComponent = _interopRequireDefault(require("../component/internal/MeshComponent.js"));
 
-var _Constant = require("../core/Constant.js");
-
 var _Vector = _interopRequireDefault(require("./Vector.js"));
 
 var _TransformComponent = _interopRequireDefault(require("../component/internal/TransformComponent.js"));
@@ -67113,6 +67070,8 @@ var _TransformComponent = _interopRequireDefault(require("../component/internal/
 var _Color = _interopRequireDefault(require("./Color.js"));
 
 var _GeometryHelper = _interopRequireDefault(require("./GeometryHelper.js"));
+
+var _ImageHelper = _interopRequireDefault(require("./ImageHelper.js"));
 
 var LightHelper = /*#__PURE__*/function () {
   function LightHelper() {
@@ -67164,14 +67123,14 @@ var LightHelper = /*#__PURE__*/function () {
 
       var positionStartLight = camera.toCameraScale(_Vector["default"].subtract(lightPosition, positionToLight));
       var canvas = new OffscreenCanvas(sizeToLight.width, sizeToLight.height);
-      var context = canvas.getContext(_Constant.CANVAS_CONTEXT_TYPE);
+      var context = canvas.getContext('2d');
 
       var _GeometryHelper$getLa = _GeometryHelper["default"].getLargestRectangle(lightRotation, scaleSize),
           largeWidth = _GeometryHelper$getLa.width,
           largeHeight = _GeometryHelper$getLa.height;
 
       var lightCanvas = new OffscreenCanvas(largeWidth, largeHeight);
-      var lightContext = lightCanvas.getContext(_Constant.CANVAS_CONTEXT_TYPE);
+      var lightContext = lightCanvas.getContext('2d');
       lightContext.translate(largeWidth / 2, largeHeight / 2);
       lightContext.rotate(lightRotation);
       lightContext.translate(-center.x, -center.y); //calculate light boundaries
@@ -67368,13 +67327,61 @@ var LightHelper = /*#__PURE__*/function () {
         context.stroke(debugPath);
       }
     }
+  }, {
+    key: "generateLight",
+    value: function generateLight(world, globalColorRgba, globalIntensity, globalColor, transformComponent, meshComponent, camera) {
+      var pointLights = world.getUnitManager().findUnitsByComponentClasses([_LightPointComponent["default"]]);
+      var canvasLights = new OffscreenCanvas(size.width, size.height);
+      var contextLights = canvasLights.getContext('2d');
+      contextLights.globalCompositeOperation = 'lighter';
+      pointLights.forEach(function (unitLight) {
+        var lightCanvas = LightHelper.getPoint(unitLight, camera, transformComponent.getPosition(), size, globalIntensity, globalColor);
+        contextLights.drawImage(lightCanvas, 0, 0, size.width, size.height);
+      });
+    }
+    /**
+     * @param {CanvasRenderingContext2D} context
+     * @param {World} world
+     * @param {string} globalColorRgba
+     * @param {number} globalIntensity
+     * @param {string} globalColor
+     * @param {TransformComponent} transformComponent
+     * @param {MeshComponent} meshComponent
+     * @param {Camera} camera
+     * @param {Size} size
+     * @return {CanvasRenderingContext2D}
+     */
+
+  }, {
+    key: "getLightContext",
+    value: function getLightContext(context, world, globalColorRgba, globalIntensity, globalColor, transformComponent, meshComponent, camera, size) {
+      var canvasLightContainer = new OffscreenCanvas(size.width, size.height);
+      var contextLightContainer = canvasLightContainer.getContext('2d');
+      contextLightContainer.fillStyle = globalColorRgba;
+      contextLightContainer.fillRect(0, 0, size.width, size.height);
+      var canvasLights = new OffscreenCanvas(size.width, size.height);
+      var contextLights = canvasLights.getContext('2d');
+      contextLights.globalCompositeOperation = 'lighter';
+      world.getUnitManager().findUnitsByComponentClasses([_LightPointComponent["default"]]).forEach(function (unitLight) {
+        var lightCanvas = LightHelper.getPoint(unitLight, camera, transformComponent.getPosition(), size, globalIntensity, globalColor);
+        contextLights.drawImage(lightCanvas, 0, 0, size.width, size.height);
+      });
+      contextLightContainer.drawImage(canvasLights, 0, 0, size.width, size.height);
+
+      var lightCanvasSourceAtop = _ImageHelper["default"].copyCanvas(context.canvas, meshComponent.getFilter());
+
+      var lightContextSourceAtop = lightCanvasSourceAtop.getContext('2d');
+      lightContextSourceAtop.globalCompositeOperation = 'source-atop';
+      lightContextSourceAtop.drawImage(canvasLightContainer, 0, 0, size.width, size.height);
+      return lightContextSourceAtop;
+    }
   }]);
   return LightHelper;
 }();
 
 exports["default"] = LightHelper;
 
-},{"../component/internal/LightPointComponent.js":51,"../component/internal/MeshComponent.js":52,"../component/internal/TransformComponent.js":58,"../core/Constant.js":99,"./Color.js":601,"./GeometryHelper.js":606,"./Maths.js":609,"./Vector.js":622,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/interopRequireDefault":12}],609:[function(require,module,exports){
+},{"../component/internal/LightPointComponent.js":51,"../component/internal/MeshComponent.js":52,"../component/internal/TransformComponent.js":58,"./Color.js":601,"./GeometryHelper.js":606,"./ImageHelper.js":607,"./Maths.js":609,"./Vector.js":622,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/interopRequireDefault":12}],609:[function(require,module,exports){
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
@@ -70133,6 +70140,10 @@ var _NodeHelper = _interopRequireDefault(require("./NodeHelper.js"));
 
 var _Color = _interopRequireDefault(require("./Color.js"));
 
+var _Maths = _interopRequireDefault(require("./Maths.js"));
+
+var _LightHelper = _interopRequireDefault(require("./LightHelper.js"));
+
 var UnitHelper = /*#__PURE__*/function () {
   function UnitHelper() {
     (0, _classCallCheck2["default"])(this, UnitHelper);
@@ -71646,13 +71657,55 @@ var UnitHelper = /*#__PURE__*/function () {
         }
       }
     }
+    /**
+     * @param {CanvasRenderingContext2D} context
+     * @param {LightPointComponent} lightComponent
+     * @param {Vector} center
+     * @param {Size} size
+     * @param {Camera} camera
+     */
+
+  }, {
+    key: "drawLight",
+    value: function drawLight(context, lightComponent, center, size, camera) {
+      var outerAngle = Math.PI * 2 - _Maths["default"].fromDegree(lightComponent.getOuterAngle());
+
+      var innerAngle = Math.PI * 2 - _Maths["default"].fromDegree(lightComponent.getInnerAngle());
+
+      var outerRadius = lightComponent.getOuterRadius();
+      var sw = size.width * outerRadius / 100;
+      var radiusScale = Math.abs(sw / 2 - 1); //calculate light boundaries
+
+      var outerLightBounds = _LightHelper["default"].getLightBounds(center, outerAngle, radiusScale);
+
+      var innerLightBounds = _LightHelper["default"].getLightBounds(center, innerAngle, radiusScale);
+
+      _LightHelper["default"].drawOuterLightBounds(context, outerLightBounds, radiusScale, outerAngle);
+
+      context.stroke();
+
+      _LightHelper["default"].drawInnerLightBounds(context, outerLightBounds.first, innerLightBounds.first, radiusScale);
+
+      context.stroke();
+
+      _LightHelper["default"].drawInnerLightBounds(context, outerLightBounds.second, innerLightBounds.second, radiusScale);
+
+      context.stroke(); //circle bulb
+
+      var sizeBulb = camera.toScaleNumber(10);
+      context.beginPath();
+      context.arc(center.x, center.y, sizeBulb, 0, Math.PI * 2);
+      context.closePath();
+      context.fillStyle = 'rgba(255,255,247,0.71)';
+      context.fill();
+    }
   }]);
   return UnitHelper;
 }();
 
 exports["default"] = UnitHelper;
 
-},{"../component/internal/AnimationComponent.js":45,"../component/internal/CircleColliderComponent.js":47,"../component/internal/ColliderComponent.js":48,"../component/internal/LightComponent.js":49,"../component/internal/MeshComponent.js":52,"../component/internal/RectColliderComponent.js":53,"../component/internal/TransformComponent.js":58,"../component/internal/gui/anchor/GUIAnchorComponent.js":60,"../component/internal/gui/collider/GUIColliderComponent.js":61,"../component/internal/gui/node/NodeComponent.js":67,"../component/internal/gui/property/GUIPropertyComponent.js":69,"../component/internal/gui/selector/GUISelectorComponent.js":75,"../component/internal/ui/UIButtonComponent.js":79,"../component/internal/ui/UIContainerComponent.js":80,"../component/internal/ui/UITransformComponent.js":84,"../core/Window.js":106,"../exception/type/ClientError.js":108,"../exception/type/SystemError.js":111,"../material/MaterialType.js":448,"../pobject/Size.js":477,"../pobject/Style.js":478,"../unit/Unit.js":556,"../unit/instant/type/internal/edit/CircleSelectorUnitInstant.js":561,"../unit/instant/type/internal/edit/RectSelectorUnitInstant.js":562,"../unit/instant/type/internal/ui/UIButtonUnitInstant.js":585,"./AssetHelper.js":598,"./ClassHelper.js":600,"./Color.js":601,"./GeometryHelper.js":606,"./ImageHelper.js":607,"./NodeHelper.js":610,"./ObjectHelper.js":612,"./ScriptHelper.js":616,"./TransformHelper.js":620,"./Vector.js":622,"./Vertex.js":623,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/toConsumableArray":21}],622:[function(require,module,exports){
+},{"../component/internal/AnimationComponent.js":45,"../component/internal/CircleColliderComponent.js":47,"../component/internal/ColliderComponent.js":48,"../component/internal/LightComponent.js":49,"../component/internal/MeshComponent.js":52,"../component/internal/RectColliderComponent.js":53,"../component/internal/TransformComponent.js":58,"../component/internal/gui/anchor/GUIAnchorComponent.js":60,"../component/internal/gui/collider/GUIColliderComponent.js":61,"../component/internal/gui/node/NodeComponent.js":67,"../component/internal/gui/property/GUIPropertyComponent.js":69,"../component/internal/gui/selector/GUISelectorComponent.js":75,"../component/internal/ui/UIButtonComponent.js":79,"../component/internal/ui/UIContainerComponent.js":80,"../component/internal/ui/UITransformComponent.js":84,"../core/Window.js":106,"../exception/type/ClientError.js":108,"../exception/type/SystemError.js":111,"../material/MaterialType.js":448,"../pobject/Size.js":477,"../pobject/Style.js":478,"../unit/Unit.js":556,"../unit/instant/type/internal/edit/CircleSelectorUnitInstant.js":561,"../unit/instant/type/internal/edit/RectSelectorUnitInstant.js":562,"../unit/instant/type/internal/ui/UIButtonUnitInstant.js":585,"./AssetHelper.js":598,"./ClassHelper.js":600,"./Color.js":601,"./GeometryHelper.js":606,"./ImageHelper.js":607,"./LightHelper.js":608,"./Maths.js":609,"./NodeHelper.js":610,"./ObjectHelper.js":612,"./ScriptHelper.js":616,"./TransformHelper.js":620,"./Vector.js":622,"./Vertex.js":623,"@babel/runtime/helpers/classCallCheck":5,"@babel/runtime/helpers/createClass":7,"@babel/runtime/helpers/interopRequireDefault":12,"@babel/runtime/helpers/toConsumableArray":21}],622:[function(require,module,exports){
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");

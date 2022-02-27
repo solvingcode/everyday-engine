@@ -11,6 +11,7 @@ import TextComponent from '../../component/internal/TextComponent.js'
 import UnitHelper from '../../utils/UnitHelper.js'
 import UITextComponent from '../../component/internal/ui/UITextComponent.js'
 import NodeComponent from '../../component/internal/gui/node/NodeComponent.js'
+import LightPointComponent from '../../component/internal/LightPointComponent.js'
 
 export default class WebGLMeshGenerator extends MeshGenerator {
 
@@ -87,6 +88,9 @@ export default class WebGLMeshGenerator extends MeshGenerator {
             if (meshComponent.isImageRepeat()) {
                 canvasGenerated = UnitHelper.generateImageRepeat(canvasBg, camera, meshComponent)
             }
+            /*const materialContext = this.getMaterial(world, meshComponent.getMaterial())
+                .generate(canvasGenerated.getContext('2d'), world, camera, meshComponent, transformComponent)
+            textureData = this.setupTexture(world, materialContext.canvas)*/
             textureData = this.setupTexture(world, canvasGenerated)
         } else if (meshComponent.getMapAssetPositions().length > 0) {
             const mapAssetIds = meshComponent.getMapAssetIds()
@@ -112,6 +116,13 @@ export default class WebGLMeshGenerator extends MeshGenerator {
             const contextNode = canvasNode.getContext('2d')
             UnitHelper.drawNode(contextNode, unit, scaleSize, camera)
             textureData = this.setupTexture(world, canvasNode)
+        } else if (unit.getComponent(LightPointComponent)) {
+            const dataContextLight = UnitHelper.init2dCanvas(world, camera, meshComponent, transformComponent)
+            if (dataContextLight) {
+                UnitHelper.drawLight(dataContextLight.context, unit.getComponent(LightPointComponent),
+                    dataContextLight.center, dataContextLight.scaleSize, camera)
+                textureData = this.setupTexture(world, dataContextLight.context.canvas)
+            }
         }
         return textureData
     }

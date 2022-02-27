@@ -4,12 +4,14 @@ export default class WGLightPointShapeGenerator extends ContextTypeShapeGenerato
 
     draw(unit, dataContext) {
         const {buffers} = dataContext
-        const positions = []
-        for (let iCircle = 0; iCircle < 360; iCircle+=2) {
-            positions.push((Math.sin(iCircle * Math.PI / 180) + 1) / 2)
-            positions.push((Math.cos(iCircle * Math.PI / 180) + 1) / 2)
-        }
-        buffers.position.vertices = positions
+        buffers.position.vertices = [
+            0.0, 0.0,
+            1.0, 0.0,
+            0.0, 1.0,
+            0.0, 1.0,
+            1.0, 0.0,
+            1.0, 1.0
+        ]
     }
 
 }

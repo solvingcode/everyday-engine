@@ -44,17 +44,8 @@ export default class TwoDMeshGenerator extends MeshGenerator {
             context.stroke()
         }
         const materialContext = this.getMaterial(world, meshComponent.getMaterial())
-            .generate(dataContext, meshComponent, transformComponent)
+            .generate(context, world, camera, meshComponent, transformComponent)
         return this.updateMeshFromContext(unitId, world.getMeshManager(), materialContext)
-    }
-
-    /**
-     * @param {World} world
-     * @param {string} material
-     * @return {Material}
-     */
-    getMaterial(world, material) {
-        return world.getMaterialRegistry().getInstance(material)
     }
 
     /**
