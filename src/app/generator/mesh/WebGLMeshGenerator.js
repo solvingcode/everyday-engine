@@ -13,6 +13,7 @@ import NodeComponent from '../../component/internal/gui/node/NodeComponent.js'
 import LightPointComponent from '../../component/internal/LightPointComponent.js'
 import GeometryHelper from '../../utils/GeometryHelper.js'
 import {MODE} from '../../constant/FilterMode.js'
+import Size from '../../pobject/Size.js'
 
 export default class WebGLMeshGenerator extends MeshGenerator {
 
@@ -92,7 +93,9 @@ export default class WebGLMeshGenerator extends MeshGenerator {
             const rotation = transformComponent.getRotation()
             const sizeContext = GeometryHelper.getLargestRectangle(rotation, scaleSize)
             const materialContext = this.getMaterial(world, meshComponent.getMaterial())
-                .generate(canvasGenerated.getContext('2d'), sizeContext, world, camera, meshComponent, transformComponent)
+                .generate(canvasGenerated.getContext('2d'),
+                    new Size({width: Math.floor(sizeContext.width), height: Math.floor(sizeContext.height)}),
+                    world, camera, meshComponent, transformComponent)
             textureData = this.setupTexture(world, materialContext.canvas, meshComponent)
             //textureData = this.setupTexture(world, canvasGenerated, meshComponent)
         } else if (meshComponent.getMapAssetPositions().length > 0) {

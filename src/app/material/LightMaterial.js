@@ -3,6 +3,7 @@ import LightHelper from '../utils/LightHelper.js'
 import LightGlobalComponent from '../component/internal/LightGlobalComponent.js'
 import MaterialType from './MaterialType.js'
 import Color from '../utils/Color.js'
+import {MODE} from '../constant/FilterMode.js'
 
 export default class LightMaterial extends Material {
 
@@ -16,6 +17,9 @@ export default class LightMaterial extends Material {
     generate(context, size, world, camera, meshComponent, transformComponent) {
         const materialCanvas = new OffscreenCanvas(size.width, size.height)
         const materialContext = materialCanvas.getContext('2d')
+        if (meshComponent.getFilter() === MODE.NO_SMOOTHING) {
+            materialContext.imageSmoothingEnabled = false
+        }
         materialContext.drawImage(context.canvas, 0, 0, size.width, size.height)
 
         const unitManager = world.getUnitManager()
