@@ -10,7 +10,7 @@ export default class DefaultMaterial extends Material {
     /**
      * @override
      */
-    generate(context, world, camera, meshComponent, transformComponent) {
+    generate(context, size, world, camera, meshComponent, transformComponent) {
         return context
     }
 }

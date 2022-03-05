@@ -2,7 +2,6 @@ import MeshGenerator from './MeshGenerator.js'
 import ShaderHelper from '../../utils/ShaderHelper.js'
 import {objectContext} from '../../core/Context.js'
 import DataContextWebGL from '../../pobject/DataContextWebGL.js'
-import Maths from '../../utils/Maths.js'
 import {PrimitiveShape} from '../../unit/Unit.js'
 import RectTextureShader from '../../shader/RectTextureShader.js'
 import RectStrokeShader from '../../shader/RectStrokeShader.js'
@@ -12,6 +11,8 @@ import UnitHelper from '../../utils/UnitHelper.js'
 import UITextComponent from '../../component/internal/ui/UITextComponent.js'
 import NodeComponent from '../../component/internal/gui/node/NodeComponent.js'
 import LightPointComponent from '../../component/internal/LightPointComponent.js'
+import GeometryHelper from '../../utils/GeometryHelper.js'
+import {MODE} from '../../constant/FilterMode.js'
 
 export default class WebGLMeshGenerator extends MeshGenerator {
 
@@ -88,14 +89,19 @@ export default class WebGLMeshGenerator extends MeshGenerator {
             if (meshComponent.isImageRepeat()) {
                 canvasGenerated = UnitHelper.generateImageRepeat(canvasBg, camera, meshComponent)
             }
-            /*const materialContext = this.getMaterial(world, meshComponent.getMaterial())
-                .generate(canvasGenerated.getContext('2d'), world, camera, meshComponent, transformComponent)
-            textureData = this.setupTexture(world, materialContext.canvas)*/
-            textureData = this.setupTexture(world, canvasGenerated)
+            const rotation = transformComponent.getRotation()
+            const sizeContext = GeometryHelper.getLargestRectangle(rotation, scaleSize)
+            const materialContext = this.getMaterial(world, meshComponent.getMaterial())
+                .generate(canvasGenerated.getContext('2d'), sizeContext, world, camera, meshComponent, transformComponent)
+            textureData = this.setupTexture(world, materialContext.canvas, meshComponent)
+            //textureData = this.setupTexture(world, canvasGenerated, meshComponent)
         } else if (meshComponent.getMapAssetPositions().length > 0) {
             const mapAssetIds = meshComponent.getMapAssetIds()
             const canvasBg = new OffscreenCanvas(scaleSize.width, scaleSize.height)
             const contextBg = canvasBg.getContext('2d')
+            if (meshComponent.getFilter() === MODE.NO_SMOOTHING) {
+                contextBg.imageSmoothingEnabled = false
+            }
             meshComponent.getMapAssetPositions().forEach((mapAssetPosition, iMapAssetPosition) => {
                 const asset = world.getAssetsManager().findAssetById(mapAssetIds[iMapAssetPosition])
                 const canvasMapBg = asset.getType().getData().context.canvas
@@ -103,25 +109,25 @@ export default class WebGLMeshGenerator extends MeshGenerator {
                 const drawPosition = camera.toCameraScale(mapAssetPosition)
                 contextBg.drawImage(canvasMapBg, drawPosition.getX(), drawPosition.getY(), scaleSizeMap.width, scaleSizeMap.height)
             })
-            textureData = this.setupTexture(world, canvasBg)
+            textureData = this.setupTexture(world, canvasBg, meshComponent)
         } else if (unit.getComponent(TextComponent) || unit.getComponent(UITextComponent)) {
             const textComponent = unit.getComponent(TextComponent) || unit.getComponent(UITextComponent)
             const dataContextText = UnitHelper.init2dCanvas(world, camera, meshComponent, transformComponent)
             if (dataContextText) {
                 UnitHelper.drawText(dataContextText.context, textComponent, scaleSize, camera, world)
-                textureData = this.setupTexture(world, dataContextText.context.canvas)
+                textureData = this.setupTexture(world, dataContextText.context.canvas, meshComponent)
             }
         } else if (unit.getComponent(NodeComponent)) {
             const canvasNode = new OffscreenCanvas(scaleSize.width, scaleSize.height)
             const contextNode = canvasNode.getContext('2d')
             UnitHelper.drawNode(contextNode, unit, scaleSize, camera)
-            textureData = this.setupTexture(world, canvasNode)
+            textureData = this.setupTexture(world, canvasNode, meshComponent)
         } else if (unit.getComponent(LightPointComponent)) {
             const dataContextLight = UnitHelper.init2dCanvas(world, camera, meshComponent, transformComponent)
             if (dataContextLight) {
                 UnitHelper.drawLight(dataContextLight.context, unit.getComponent(LightPointComponent),
                     dataContextLight.center, dataContextLight.scaleSize, camera)
-                textureData = this.setupTexture(world, dataContextLight.context.canvas)
+                textureData = this.setupTexture(world, dataContextLight.context.canvas, meshComponent)
             }
         }
         return textureData
@@ -130,20 +136,20 @@ export default class WebGLMeshGenerator extends MeshGenerator {
     /**
      * @param {World} world
      * @param {OffscreenCanvas | HTMLCanvasElement} canvas
+     * @param {MeshComponent} meshComponent
      * @return {{vertices: number[], texture: WebGLTexture, buffer: AudioBuffer | WebGLBuffer}}
      */
-    setupTexture(world, canvas) {
+    setupTexture(world, canvas, meshComponent) {
         const textureBuffer = objectContext.createBuffer()
         const texture = objectContext.createTexture()
         objectContext.bindTexture(objectContext.TEXTURE_2D, texture)
         objectContext.texImage2D(objectContext.TEXTURE_2D, 0, objectContext.RGBA,
             objectContext.RGBA, objectContext.UNSIGNED_BYTE, canvas)
-        if (Maths.isPowerOf2(canvas.width) && Maths.isPowerOf2(canvas.height)) {
-            objectContext.generateMipmap(objectContext.TEXTURE_2D)
-        } else {
-            objectContext.texParameteri(objectContext.TEXTURE_2D, objectContext.TEXTURE_WRAP_S, objectContext.CLAMP_TO_EDGE)
-            objectContext.texParameteri(objectContext.TEXTURE_2D, objectContext.TEXTURE_WRAP_T, objectContext.CLAMP_TO_EDGE)
-            objectContext.texParameteri(objectContext.TEXTURE_2D, objectContext.TEXTURE_MIN_FILTER, objectContext.LINEAR)
+        objectContext.texParameteri(objectContext.TEXTURE_2D, objectContext.TEXTURE_WRAP_S, objectContext.CLAMP_TO_EDGE)
+        objectContext.texParameteri(objectContext.TEXTURE_2D, objectContext.TEXTURE_WRAP_T, objectContext.CLAMP_TO_EDGE)
+        if (meshComponent.getFilter() === MODE.NO_SMOOTHING) {
+            objectContext.texParameteri(objectContext.TEXTURE_2D, objectContext.TEXTURE_MIN_FILTER, objectContext.NEAREST)
+            objectContext.texParameteri(objectContext.TEXTURE_2D, objectContext.TEXTURE_MAG_FILTER, objectContext.NEAREST)
         }
         objectContext.bindBuffer(objectContext.ARRAY_BUFFER, textureBuffer)
         const textureCoords = [

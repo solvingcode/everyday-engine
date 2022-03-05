@@ -19,13 +19,14 @@ export default class Material extends MaterialData{
     /**
      * @abstract
      * @param {CanvasRenderingContext2D} context
+     * @param {Size} size
      * @param {World} world
      * @param {Camera} camera
      * @param {MeshComponent} meshComponent
      * @param {TransformComponent} transformComponent
      * @return {CanvasRenderingContext2D}
      */
-    generate(context, world, camera, meshComponent, transformComponent){
+    generate(context, size, world, camera, meshComponent, transformComponent){
         throw new SystemError(`${this.constructor.name}.generate must be implement`)
     }
 

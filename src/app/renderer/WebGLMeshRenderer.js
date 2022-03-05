@@ -16,7 +16,7 @@ export default class WebGLMeshRenderer extends MeshRenderer {
         objectContext.depthFunc(objectContext.LEQUAL)
         objectContext.viewport(0, 0, objectContext.canvas.width, objectContext.canvas.height)
         objectContext.enable(objectContext.BLEND)
-        objectContext.blendFunc(objectContext.SRC_ALPHA, objectContext.ONE_MINUS_SRC_ALPHA)
+        objectContext.blendFuncSeparate(objectContext.SRC_ALPHA, objectContext.ONE_MINUS_SRC_ALPHA, objectContext.ONE, objectContext.ONE_MINUS_SRC_ALPHA)
         objectContext.clear(objectContext.COLOR_BUFFER_BIT | objectContext.DEPTH_BUFFER_BIT)
     }
 
