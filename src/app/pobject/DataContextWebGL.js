@@ -8,6 +8,8 @@ export default class DataContextWebGL {
      * @param {WebGLRenderingContext} context
      * @param {Vector} scale
      * @param {Size} scaleSize
+     * @param {Vector} center
+     * @param {Vector} centerContext
      * @param {Camera} camera
      * @param {World} world
      * @param {Map<string, {buffer: WebGLBuffer, vertices: number[]}>} buffers
@@ -15,7 +17,8 @@ export default class DataContextWebGL {
      * @param {{shaderProgram: WebGLProgram, locations: {uniform: {modelViewMatrix: WebGLUniformLocation,
      * projectionMatrix: WebGLUniformLocation}, attribute: {vertexPosition: GLint}}}} program
      */
-    constructor(unitId, context, scale, scaleSize, camera, world, buffers,
+    constructor(unitId, context, scale, scaleSize, center,
+                centerContext, camera, world, buffers,
                 texture,
                 program) {
         this.unitId = unitId
@@ -27,6 +30,8 @@ export default class DataContextWebGL {
         this.buffers = buffers
         this.texture = texture
         this.program = program
+        this.center = center
+        this.centerContext = centerContext
     }
 
 }

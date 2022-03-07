@@ -14,24 +14,31 @@ import LightPointComponent from '../../component/internal/LightPointComponent.js
 import GeometryHelper from '../../utils/GeometryHelper.js'
 import {MODE} from '../../constant/FilterMode.js'
 import TransformHelper from '../../utils/TransformHelper.js'
+import Vector from '../../utils/Vector.js'
+import Size from '../../pobject/Size.js'
 
 export default class WebGLMeshGenerator extends MeshGenerator {
 
     startContext(unit, meshComponent, transformComponent, world, camera) {
         const scale = transformComponent.getScale()
         const scaleSize = camera.toScaleSize(meshComponent.getSize())
+        const rotation = transformComponent.getRotation()
+        const sizeContext = GeometryHelper.getLargestRectangle(rotation, scaleSize)
+        const center = new Vector({x: scaleSize.width / 2, y: scaleSize.height / 2})
+        const centerContext = new Vector({x: sizeContext.width / 2, y: sizeContext.height / 2})
         const shape = meshComponent.getShape()
         const buffer = objectContext.createBuffer()
         const program = this.initProgram(world, unit, objectContext, this.getShader(shape), this.getMode(objectContext, shape))
-        const textureData = this.initTexture(world, unit, meshComponent, transformComponent, camera, scaleSize)
-        return new DataContextWebGL(unit.getId(), objectContext, scale, scaleSize, camera, world, {
+        const textureData = this.initTexture(world, unit, meshComponent, transformComponent, camera, scaleSize, sizeContext)
+        return new DataContextWebGL(unit.getId(), objectContext, scale, scaleSize, center, centerContext, camera,
+            world, {
             position: {buffer, vertices: []},
             texture: {buffer: textureData && textureData.buffer, vertices: textureData ? textureData.vertices : []}
         }, textureData && textureData.texture, program)
     }
 
     closeContext(meshComponent, transformComponent, dataContext) {
-        const {context, unitId, world, program, buffers, texture, camera} = dataContext
+        const {context, unitId, world, program, buffers, texture, camera, center, centerContext} = dataContext
 
         context.bindBuffer(objectContext.ARRAY_BUFFER, buffers.position.buffer)
         context.bufferData(context.ARRAY_BUFFER, new Float32Array(buffers.position.vertices), context.STATIC_DRAW)
@@ -41,7 +48,8 @@ export default class WebGLMeshGenerator extends MeshGenerator {
         const {borderSize, color, colorOpacity} = meshComponent.getStyle()
         const lineWidth = camera.toScaleNumber(borderSize || 1)
         const borderColor = Color.hexToRgba(color, colorOpacity)
-        world.getMeshManager().set(unitId, {params, program, buffers, texture, style: {lineWidth, borderColor}})
+        world.getMeshManager().set(unitId, {params, program, buffers, texture, center, centerContext,
+            style: {lineWidth, borderColor}})
         return true
     }
 
@@ -79,9 +87,10 @@ export default class WebGLMeshGenerator extends MeshGenerator {
      * @param {TransformComponent} transformComponent
      * @param {Camera} camera
      * @param {Size} scaleSize
+     * @param {Size} sizeContext
      * @return {{vertices: number[], texture: WebGLTexture, buffer: (AudioBuffer|WebGLBuffer)}}
      */
-    initTexture(world, unit, meshComponent, transformComponent, camera, scaleSize) {
+    initTexture(world, unit, meshComponent, transformComponent, camera, scaleSize, sizeContext) {
         let textureData
         if (meshComponent.getAssetId()) {
             const asset = world.getAssetsManager().findAssetById(meshComponent.getAssetId())
@@ -90,8 +99,6 @@ export default class WebGLMeshGenerator extends MeshGenerator {
             if (meshComponent.isImageRepeat()) {
                 canvasGenerated = UnitHelper.generateImageRepeat(canvasBg, camera, meshComponent)
             }
-            const rotation = transformComponent.getRotation()
-            const sizeContext = GeometryHelper.getLargestRectangle(rotation, scaleSize)
             const materialContext = this.getMaterial(world, meshComponent.getMaterial())
                 .generate(canvasGenerated.getContext('2d'),
                     new Size({width: Math.floor(sizeContext.width), height: Math.floor(sizeContext.height)}),
@@ -188,6 +195,8 @@ export default class WebGLMeshGenerator extends MeshGenerator {
                 uniform: {
                     uResolution: context.getUniformLocation(shaderProgram, 'uResolution'),
                     uTranslation: context.getUniformLocation(shaderProgram, 'uTranslation'),
+                    uCenter: context.getUniformLocation(shaderProgram, 'uCenter'),
+                    uCenterContext: context.getUniformLocation(shaderProgram, 'uCenterContext'),
                     uRotation: context.getUniformLocation(shaderProgram, 'uRotation'),
                     uScale: context.getUniformLocation(shaderProgram, 'uScale'),
                     uColor: context.getUniformLocation(shaderProgram, 'uColor'),

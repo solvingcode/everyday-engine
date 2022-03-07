@@ -24,13 +24,13 @@ export default class WebGLMeshRenderer extends MeshRenderer {
      * @override
      */
     drawMesh(mesh, data) {
-        const {program, buffers, texture, style, params} = mesh
+        const {program, buffers, texture, style, params, center, centerContext} = mesh
         const {shaderProgram, locations, mode} = program
         const {uniform, attribute} = locations
 
         this.setupBuffer(buffers, attribute, params)
         objectContext.useProgram(shaderProgram)
-        this.setupTransform(uniform, data)
+        this.setupTransform(uniform, {...data, ...{center, centerContext}})
         this.setupStyle(uniform, style)
 
         this.setupTexture(uniform, texture)
@@ -62,11 +62,13 @@ export default class WebGLMeshRenderer extends MeshRenderer {
 
     /**
      * @param {*} uniform
-     * @param {{position: Vector, scale: Vector, rotation: Vector}} data
+     * @param {{position: Vector, scale: Vector, rotation: Vector, center: Vector, centerContext: Vector}} data
      */
-    setupTransform(uniform, {position, scale, rotation}) {
+    setupTransform(uniform, {position, scale, rotation, center, centerContext}) {
         objectContext.uniform2f(uniform.uResolution, objectContext.canvas.width, objectContext.canvas.height)
         objectContext.uniform2f(uniform.uTranslation, position.x, position.y)
+        objectContext.uniform2f(uniform.uCenter, center.x, center.y)
+        objectContext.uniform2f(uniform.uCenterContext, centerContext.x, centerContext.y)
         objectContext.uniform2f(uniform.uScale, scale.x, scale.y)
         objectContext.uniform2f(uniform.uRotation, rotation.x, rotation.y)
     }
