@@ -13,7 +13,7 @@ import NodeComponent from '../../component/internal/gui/node/NodeComponent.js'
 import LightPointComponent from '../../component/internal/LightPointComponent.js'
 import GeometryHelper from '../../utils/GeometryHelper.js'
 import {MODE} from '../../constant/FilterMode.js'
-import Size from '../../pobject/Size.js'
+import TransformHelper from '../../utils/TransformHelper.js'
 
 export default class WebGLMeshGenerator extends MeshGenerator {
 
@@ -96,8 +96,7 @@ export default class WebGLMeshGenerator extends MeshGenerator {
                 .generate(canvasGenerated.getContext('2d'),
                     new Size({width: Math.floor(sizeContext.width), height: Math.floor(sizeContext.height)}),
                     world, camera, meshComponent, transformComponent)
-            textureData = this.setupTexture(world, materialContext.canvas, meshComponent)
-            //textureData = this.setupTexture(world, canvasGenerated, meshComponent)
+            textureData = this.setupTexture(world, materialContext.canvas, transformComponent, meshComponent)
         } else if (meshComponent.getMapAssetPositions().length > 0) {
             const mapAssetIds = meshComponent.getMapAssetIds()
             const canvasBg = new OffscreenCanvas(scaleSize.width, scaleSize.height)
@@ -112,25 +111,25 @@ export default class WebGLMeshGenerator extends MeshGenerator {
                 const drawPosition = camera.toCameraScale(mapAssetPosition)
                 contextBg.drawImage(canvasMapBg, drawPosition.getX(), drawPosition.getY(), scaleSizeMap.width, scaleSizeMap.height)
             })
-            textureData = this.setupTexture(world, canvasBg, meshComponent)
+            textureData = this.setupTexture(world, canvasBg, transformComponent, meshComponent)
         } else if (unit.getComponent(TextComponent) || unit.getComponent(UITextComponent)) {
             const textComponent = unit.getComponent(TextComponent) || unit.getComponent(UITextComponent)
             const dataContextText = UnitHelper.init2dCanvas(world, camera, meshComponent, transformComponent)
             if (dataContextText) {
                 UnitHelper.drawText(dataContextText.context, textComponent, scaleSize, camera, world)
-                textureData = this.setupTexture(world, dataContextText.context.canvas, meshComponent)
+                textureData = this.setupTexture(world, dataContextText.context.canvas, transformComponent, meshComponent)
             }
         } else if (unit.getComponent(NodeComponent)) {
             const canvasNode = new OffscreenCanvas(scaleSize.width, scaleSize.height)
             const contextNode = canvasNode.getContext('2d')
             UnitHelper.drawNode(contextNode, unit, scaleSize, camera)
-            textureData = this.setupTexture(world, canvasNode, meshComponent)
+            textureData = this.setupTexture(world, canvasNode, transformComponent, meshComponent)
         } else if (unit.getComponent(LightPointComponent)) {
             const dataContextLight = UnitHelper.init2dCanvas(world, camera, meshComponent, transformComponent)
             if (dataContextLight) {
                 UnitHelper.drawLight(dataContextLight.context, unit.getComponent(LightPointComponent),
                     dataContextLight.center, dataContextLight.scaleSize, camera)
-                textureData = this.setupTexture(world, dataContextLight.context.canvas, meshComponent)
+                textureData = this.setupTexture(world, dataContextLight.context.canvas, transformComponent, meshComponent)
             }
         }
         return textureData
@@ -140,9 +139,10 @@ export default class WebGLMeshGenerator extends MeshGenerator {
      * @param {World} world
      * @param {OffscreenCanvas | HTMLCanvasElement} canvas
      * @param {MeshComponent} meshComponent
+     * @param {TransformComponent} transformComponent
      * @return {{vertices: number[], texture: WebGLTexture, buffer: AudioBuffer | WebGLBuffer}}
      */
-    setupTexture(world, canvas, meshComponent) {
+    setupTexture(world, canvas, transformComponent, meshComponent) {
         const textureBuffer = objectContext.createBuffer()
         const texture = objectContext.createTexture()
         objectContext.bindTexture(objectContext.TEXTURE_2D, texture)
@@ -155,14 +155,7 @@ export default class WebGLMeshGenerator extends MeshGenerator {
             objectContext.texParameteri(objectContext.TEXTURE_2D, objectContext.TEXTURE_MAG_FILTER, objectContext.NEAREST)
         }
         objectContext.bindBuffer(objectContext.ARRAY_BUFFER, textureBuffer)
-        const textureCoords = [
-            0.0, 0.0,
-            1.0, 0.0,
-            0.0, 1.0,
-            0.0, 1.0,
-            1.0, 0.0,
-            1.0, 1.0
-        ]
+        const textureCoords = TransformHelper.getTextureCoords(transformComponent.getScale())
         objectContext.bufferData(objectContext.ARRAY_BUFFER, new Float32Array(textureCoords), objectContext.STATIC_DRAW)
         return {texture, buffer: textureBuffer, vertices: textureCoords}
     }
