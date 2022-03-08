@@ -32,9 +32,9 @@ export default class WebGLMeshGenerator extends MeshGenerator {
         const textureData = this.initTexture(world, unit, meshComponent, transformComponent, camera, scaleSize, sizeContext)
         return new DataContextWebGL(unit.getId(), objectContext, scale, scaleSize, center, centerContext, camera,
             world, {
-            position: {buffer, vertices: []},
-            texture: {buffer: textureData && textureData.buffer, vertices: textureData ? textureData.vertices : []}
-        }, textureData && textureData.texture, program)
+                position: {buffer, vertices: []},
+                texture: {buffer: textureData && textureData.buffer, vertices: textureData ? textureData.vertices : []}
+            }, textureData && textureData.texture, program)
     }
 
     closeContext(meshComponent, transformComponent, dataContext) {
@@ -48,8 +48,10 @@ export default class WebGLMeshGenerator extends MeshGenerator {
         const {borderSize, color, colorOpacity} = meshComponent.getStyle()
         const lineWidth = camera.toScaleNumber(borderSize || 1)
         const borderColor = Color.hexToRgba(color, colorOpacity)
-        world.getMeshManager().set(unitId, {params, program, buffers, texture, center, centerContext,
-            style: {lineWidth, borderColor}})
+        world.getMeshManager().set(unitId, {
+            params, program, buffers, texture, center, centerContext,
+            style: {lineWidth, borderColor}
+        })
         return true
     }
 
@@ -88,10 +90,10 @@ export default class WebGLMeshGenerator extends MeshGenerator {
      * @param {Camera} camera
      * @param {Size} scaleSize
      * @param {Size} sizeContext
-     * @return {{vertices: number[], texture: WebGLTexture, buffer: (AudioBuffer|WebGLBuffer)}}
+     * @return {HTMLCanvasElement}
      */
-    initTexture(world, unit, meshComponent, transformComponent, camera, scaleSize, sizeContext) {
-        let textureData
+    generateTexture(world, unit, meshComponent, transformComponent, camera, scaleSize, sizeContext) {
+        let canvas
         if (meshComponent.getAssetId()) {
             const asset = world.getAssetsManager().findAssetById(meshComponent.getAssetId())
             const canvasBg = asset.getType().getData().context.canvas
@@ -103,7 +105,7 @@ export default class WebGLMeshGenerator extends MeshGenerator {
                 .generate(canvasGenerated.getContext('2d'),
                     new Size({width: Math.floor(sizeContext.width), height: Math.floor(sizeContext.height)}),
                     world, camera, meshComponent, transformComponent)
-            textureData = this.setupTexture(world, materialContext.canvas, transformComponent, meshComponent)
+            canvas = materialContext.canvas
         } else if (meshComponent.getMapAssetPositions().length > 0) {
             const mapAssetIds = meshComponent.getMapAssetIds()
             const canvasBg = new OffscreenCanvas(scaleSize.width, scaleSize.height)
@@ -118,28 +120,45 @@ export default class WebGLMeshGenerator extends MeshGenerator {
                 const drawPosition = camera.toCameraScale(mapAssetPosition)
                 contextBg.drawImage(canvasMapBg, drawPosition.getX(), drawPosition.getY(), scaleSizeMap.width, scaleSizeMap.height)
             })
-            textureData = this.setupTexture(world, canvasBg, transformComponent, meshComponent)
+            canvas = canvasBg
         } else if (unit.getComponent(TextComponent) || unit.getComponent(UITextComponent)) {
             const textComponent = unit.getComponent(TextComponent) || unit.getComponent(UITextComponent)
             const dataContextText = UnitHelper.init2dCanvas(world, camera, meshComponent, transformComponent)
             if (dataContextText) {
                 UnitHelper.drawText(dataContextText.context, textComponent, scaleSize, camera, world)
-                textureData = this.setupTexture(world, dataContextText.context.canvas, transformComponent, meshComponent)
+                canvas = dataContextText.context.canvas
             }
         } else if (unit.getComponent(NodeComponent)) {
             const canvasNode = new OffscreenCanvas(scaleSize.width, scaleSize.height)
             const contextNode = canvasNode.getContext('2d')
             UnitHelper.drawNode(contextNode, unit, scaleSize, camera)
-            textureData = this.setupTexture(world, canvasNode, transformComponent, meshComponent)
+            canvas = canvasNode
         } else if (unit.getComponent(LightPointComponent)) {
             const dataContextLight = UnitHelper.init2dCanvas(world, camera, meshComponent, transformComponent)
             if (dataContextLight) {
                 UnitHelper.drawLight(dataContextLight.context, unit.getComponent(LightPointComponent),
                     dataContextLight.center, dataContextLight.scaleSize, camera)
-                textureData = this.setupTexture(world, dataContextLight.context.canvas, transformComponent, meshComponent)
+                canvas = dataContextLight.context.canvas
             }
         }
-        return textureData
+        return canvas
+    }
+
+    /**
+     * @param {World } world
+     * @param {Unit} unit
+     * @param {MeshComponent} meshComponent
+     * @param {TransformComponent} transformComponent
+     * @param {Camera} camera
+     * @param {Size} scaleSize
+     * @param {Size} sizeContext
+     * @return {{vertices: number[], texture: WebGLTexture, buffer: (AudioBuffer|WebGLBuffer)}}
+     */
+    initTexture(world, unit, meshComponent, transformComponent, camera, scaleSize, sizeContext) {
+        const canvas = this.generateTexture(world, unit, meshComponent, transformComponent, camera, scaleSize, sizeContext)
+        if (canvas) {
+            return this.setupTexture(world, canvas, transformComponent, meshComponent)
+        }
     }
 
     /**
