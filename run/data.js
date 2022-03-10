@@ -7062,6 +7062,16 @@ var Maths = /*#__PURE__*/function () {
     value: function getIntensity(intensityParam) {
       return 1 / (1 + 0.045 * intensityParam + 0.0075 * Math.pow(intensityParam, 2));
     }
+    /**
+     * @param {number} value
+     * @return {boolean}
+     */
+
+  }, {
+    key: "isPowerOf2",
+    value: function isPowerOf2(value) {
+      return (value & value - 1) === 0;
+    }
   }]);
   return Maths;
 }();
@@ -7240,6 +7250,22 @@ var Vector = /*#__PURE__*/function () {
         y: vectorA.y + vectorB.y,
         z: vectorA.z + vectorB.z
       });
+    }
+    /**
+     * @param {...Vector} vectors
+     * @return {Vector}
+     */
+
+  }, {
+    key: "addAll",
+    value: function addAll() {
+      var sumVector = new Vector();
+
+      for (var iVector = 0; iVector < arguments.length; iVector++) {
+        sumVector = Vector.add(sumVector, iVector < 0 || arguments.length <= iVector ? undefined : arguments[iVector]);
+      }
+
+      return sumVector;
     }
     /**
      * @param {Vector} vectorA
