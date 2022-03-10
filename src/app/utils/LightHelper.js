@@ -7,6 +7,7 @@ import Color from './Color.js'
 import GeometryHelper from './GeometryHelper.js'
 import ImageHelper from './ImageHelper.js'
 import Size from '../pobject/Size.js'
+import Canvas from '../core/Canvas.js'
 
 export default class LightHelper {
 
@@ -19,7 +20,7 @@ export default class LightHelper {
      * @param {number} globalIntensity
      * @param {string} globalColor
      *
-     * @return {OffscreenCanvas}
+     * @return {Canvas}
      */
     static getPoint(unit, camera, positionToLight, sizeToLight, globalIntensity, globalColor) {
         //init properties
@@ -44,11 +45,11 @@ export default class LightHelper {
         //calculate position to put the light
         const positionStartLight = camera.toCameraScale(Vector.subtract(lightPosition, positionToLight))
 
-        const canvas = new OffscreenCanvas(sizeToLight.width, sizeToLight.height)
+        const canvas = new Canvas(sizeToLight.width, sizeToLight.height)
         const context = canvas.getContext('2d')
 
         const {width: largeWidth, height: largeHeight} = GeometryHelper.getLargestRectangle(lightRotation, scaleSize)
-        const lightCanvas = new OffscreenCanvas(largeWidth, largeHeight)
+        const lightCanvas = new Canvas(largeWidth, largeHeight)
         const lightContext = lightCanvas.getContext('2d')
         lightContext.translate(largeWidth / 2, largeHeight / 2)
         lightContext.rotate(lightRotation)
@@ -114,7 +115,7 @@ export default class LightHelper {
      * @param {boolean} drawArc
      */
     static drawInnerLightBounds(context, outerLightBound, innerLightBound, radius, drawArc = true) {
-        if (context instanceof OffscreenCanvasRenderingContext2D) {
+        if (typeof OffscreenCanvasRenderingContext2D !== 'undefined' && context instanceof OffscreenCanvasRenderingContext2D) {
             context.beginPath()
         }
         if (!drawArc) {
@@ -134,7 +135,7 @@ export default class LightHelper {
             context.moveTo(outerLightBound[0].x, outerLightBound[0].y)
             context.arc(outerLightBound[0].x, outerLightBound[0].y, radius, startAngle, endAngle)
         }
-        if (context instanceof OffscreenCanvasRenderingContext2D) {
+        if (typeof OffscreenCanvasRenderingContext2D !== 'undefined' && context instanceof OffscreenCanvasRenderingContext2D) {
             context.closePath()
         }
     }
@@ -263,12 +264,12 @@ export default class LightHelper {
             height: endContainerLight.getY() - startContainerLight.getY()
         })
 
-        const canvasLightContainer = new OffscreenCanvas(size.width, size.height)
+        const canvasLightContainer = new Canvas(size.width, size.height)
         const contextLightContainer = canvasLightContainer.getContext('2d')
         contextLightContainer.fillStyle = globalColorRgba
         contextLightContainer.fillRect(0, 0, size.width, size.height)
 
-        const canvasLights = new OffscreenCanvas(size.width, size.height)
+        const canvasLights = new Canvas(size.width, size.height)
         const contextLights = canvasLights.getContext('2d')
         contextLights.globalCompositeOperation = 'lighter'
         lightUnits.forEach(unitLight => {
@@ -296,13 +297,13 @@ export default class LightHelper {
                            globalColor, transformComponent, meshComponent,
                            camera, size) {
         //create global light
-        const canvasLightContainer = new OffscreenCanvas(size.width, size.height)
+        const canvasLightContainer = new Canvas(size.width, size.height)
         const contextLightContainer = canvasLightContainer.getContext('2d')
         contextLightContainer.fillStyle = globalColorRgba
         contextLightContainer.fillRect(0, 0, size.width, size.height)
 
         //create and merge lights
-        const canvasLights = new OffscreenCanvas(size.width, size.height)
+        const canvasLights = new Canvas(size.width, size.height)
         const contextLights = canvasLights.getContext('2d')
         contextLights.globalCompositeOperation = 'lighter'
         world.getUnitManager().findUnitsByComponentClasses([LightPointComponent]).forEach(unitLight => {

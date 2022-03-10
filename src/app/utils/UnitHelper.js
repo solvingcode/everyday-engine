@@ -36,6 +36,7 @@ import NodeHelper from './NodeHelper.js'
 import Color from './Color.js'
 import Maths from './Maths.js'
 import LightHelper from './LightHelper.js'
+import Canvas from '../core/Canvas.js'
 
 export default class UnitHelper {
 
@@ -590,10 +591,10 @@ export default class UnitHelper {
     }
 
     /**
-     * @param {OffscreenCanvas} canvas
+     * @param {Canvas} canvas
      * @param {Camera} camera
      * @param {MeshComponent} meshComponent
-     * @return {OffscreenCanvas}
+     * @return {Canvas}
      */
     static generateImageRepeat(canvas, camera, meshComponent) {
         const meshSize = meshComponent.getSize()
@@ -1027,7 +1028,7 @@ export default class UnitHelper {
         const {width, height} = GeometryHelper.getLargestRectangle(rotation, scaleSize)
         if (width > 0 && height > 0) {
             const center = new Vector({x: scaleSize.width / 2, y: scaleSize.height / 2})
-            const canvas = new OffscreenCanvas(width, height)
+            const canvas = new Canvas(width, height)
             const context = canvas.getContext('2d')
             const {
                 opacity, borderSize, fillColor,
@@ -1262,7 +1263,7 @@ export default class UnitHelper {
             } else {
                 context.strokeRect(outputPositionScale.getX(), outputPositionScale.getY(), sizeInputScale, sizeInputScale)
             }
-            const textCanvas = new OffscreenCanvas(widthOutput, sizeInputScale)
+            const textCanvas = new Canvas(widthOutput, sizeInputScale)
             const textContext = textCanvas.getContext('2d')
             textContext.font = `${fontSizeScale}px Arial`
             textContext.fillStyle = fontColor
