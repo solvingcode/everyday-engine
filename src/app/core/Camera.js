@@ -166,29 +166,6 @@ class Camera extends CameraData {
         this.initPosition = position
     }
 
-    /**
-     * This is a prototype of perspective view matrix
-     * @todo must be refined
-     * @return {*}
-     */
-    getPerspectiveViewMatrix(){
-        const fieldOfView = 45 * Math.PI / 180
-        const aspect = objectContext.canvas.clientWidth / objectContext.canvas.clientHeight
-        const zNear = 0.1
-        const zFar = 100.0
-        const projectionMatrix = mat4.create()
-        mat4.perspective(projectionMatrix, fieldOfView, aspect, zNear, zFar)
-        return projectionMatrix
-    }
-
-    /**
-     * @return {*}
-     */
-    getModelViewMatrix(){
-        const modelViewMatrix = mat4.create()
-        mat4.translate(modelViewMatrix, modelViewMatrix, [0.0, 0.0, this.position.z])
-        return modelViewMatrix
-    }
 }
 
 export default Camera
