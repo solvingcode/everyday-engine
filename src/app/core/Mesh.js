@@ -1,6 +1,5 @@
 import ImageHelper from '../utils/ImageHelper.js'
 import Size from '../pobject/Size.js'
-import {CANVAS_CONTEXT_TYPE} from './Constant.js'
 import Vector from '../utils/Vector.js'
 import BlobData from '../project/data/BlobData.js'
 
@@ -34,7 +33,7 @@ class Mesh extends BlobData {
      */
     initCanvas() {
         const canvas = new OffscreenCanvas(this.size.width, this.size.height)
-        this.context = canvas.getContext(CANVAS_CONTEXT_TYPE)
+        this.context = canvas.getContext('2d')
     }
 
     /**

@@ -30,6 +30,12 @@ import CircleSelectorUnitInstant from '../unit/instant/type/internal/edit/Circle
 import GUIPropertyComponent from '../component/internal/gui/property/GUIPropertyComponent.js'
 import ScriptHelper from './ScriptHelper.js'
 import MaterialType from '../material/MaterialType.js'
+import ClientError from '../exception/type/ClientError.js'
+import NodeComponent from '../component/internal/gui/node/NodeComponent.js'
+import NodeHelper from './NodeHelper.js'
+import Color from './Color.js'
+import Maths from './Maths.js'
+import LightHelper from './LightHelper.js'
 
 export default class UnitHelper {
 
@@ -272,8 +278,32 @@ export default class UnitHelper {
             minY <= position.getY() && maxY >= position.getY()) {
             const positionToCameraView = camera.toCameraScale(camera.toCanvasCoord(position))
             const mesh = meshManager.get(unit.getId())
-            mesh && renderer.draw(mesh, positionToCameraView)
+            mesh && renderer.draw(mesh, {
+                position: positionToCameraView,
+                scale: this.getRelativeScreenScale(camera.toScaleSize(meshComponent.getSize())),
+                rotation: this.getRotationVector(transformComponent.getRotation())
+            })
         }
+    }
+
+    /**
+     * @param {Size} size
+     * @return {Vector}
+     */
+    static getRelativeScreenScale(size) {
+        const {size: windowSize} = Window.get()
+        return Vector.linearDivide(Vector.fromSize(size), Vector.fromSize(windowSize))
+    }
+
+    /**
+     * @param {number} rotation
+     * @return {Vector}
+     */
+    static getRotationVector(rotation) {
+        return new Vector({
+            x: Math.sin(rotation),
+            y: Math.cos(rotation)
+        })
     }
 
     /**
@@ -561,11 +591,11 @@ export default class UnitHelper {
 
     /**
      * @param {OffscreenCanvas} canvas
-     * @param {DataContext} dataContext
+     * @param {Camera} camera
      * @param {MeshComponent} meshComponent
+     * @return {OffscreenCanvas}
      */
-    static generateImageRepeat(canvas, dataContext, meshComponent) {
-        const {camera} = dataContext
+    static generateImageRepeat(canvas, camera, meshComponent) {
         const meshSize = meshComponent.getSize()
         const imageScale = meshComponent.getImageScale()
         const imagePosition = meshComponent.getImagePosition()
@@ -681,10 +711,10 @@ export default class UnitHelper {
      * @param {Unit} unit
      * @param {Vector} position
      */
-    static forceSetPosition(unit, position){
+    static forceSetPosition(unit, position) {
         const transformComponent = unit.getComponent(TransformComponent)
         const meshComponent = unit.getComponent(MeshComponent)
-        if(transformComponent){
+        if (transformComponent) {
             transformComponent.setPosition(position, true)
         }
         if (meshComponent) {
@@ -698,10 +728,10 @@ export default class UnitHelper {
      * @param {Unit} unit
      * @param {number} rotation
      */
-    static forceSetRotation(unit, rotation){
+    static forceSetRotation(unit, rotation) {
         const transformComponent = unit.getComponent(TransformComponent)
         const meshComponent = unit.getComponent(MeshComponent)
-        if(transformComponent){
+        if (transformComponent) {
             transformComponent.setRotation(rotation, true)
         }
         if (meshComponent) {
@@ -972,6 +1002,329 @@ export default class UnitHelper {
         if (transformComponent) {
             this.setWorldPosition(world, unit, transformComponent.getPosition())
         }
+    }
+
+    /**
+     * @param {Camera} camera
+     * @param {MeshComponent} meshComponent
+     * @param transformComponent
+     * @return {Size}
+     */
+    static getScaleSize(camera, meshComponent, transformComponent) {
+        return camera.toScaleSize(meshComponent.getSize())
+    }
+
+    /**
+     * @param {World} world
+     * @param {Camera} camera
+     * @param {MeshComponent} meshComponent
+     * @param {TransformComponent} transformComponent
+     * @return {{center: Vector, context: CanvasRenderingContext2D, scaleSize: Size}}
+     */
+    static init2dCanvas(world, camera, meshComponent, transformComponent) {
+        const scaleSize = this.getScaleSize(camera, meshComponent, transformComponent)
+        const rotation = transformComponent.getRotation()
+        const {width, height} = GeometryHelper.getLargestRectangle(rotation, scaleSize)
+        if (width > 0 && height > 0) {
+            const center = new Vector({x: scaleSize.width / 2, y: scaleSize.height / 2})
+            const canvas = new OffscreenCanvas(width, height)
+            const context = canvas.getContext('2d')
+            const {
+                opacity, borderSize, fillColor,
+                color, fillColorOpacity, colorOpacity,
+                shadowColor, shadowPosition, shadowBlur,
+                gradientColorAssetId
+            } = meshComponent.getStyle()
+            context.strokeStyle = Color.hexToRgba(color, colorOpacity)
+            const gradientColorAsset = world.getAssetsManager().findAssetById(gradientColorAssetId)
+            if (gradientColorAsset) {
+                const gradientColor = gradientColorAsset.getType().getData()
+                const linearGradient = context.createLinearGradient(
+                    scaleSize.width / 2, 0, scaleSize.width / 2, scaleSize.height)
+                gradientColor.getColors().forEach(colorStop => {
+                    linearGradient.addColorStop(colorStop.getOffset(), colorStop.getColor())
+                })
+                context.fillStyle = linearGradient
+            } else if (fillColor) {
+                context.fillStyle = Color.hexToRgba(fillColor, fillColorOpacity)
+            }
+            if (shadowColor) {
+                context.shadowColor = shadowColor
+                context.shadowBlur = camera.toScaleNumber(shadowBlur)
+                context.shadowOffsetX = camera.toScaleNumber(shadowPosition.getX())
+                context.shadowOffsetY = camera.toScaleNumber(shadowPosition.getY())
+            }
+            if (_.isNumber(parseFloat(opacity))) {
+                context.globalAlpha = parseFloat(opacity)
+            }
+            context.lineWidth = camera.toScaleNumber(borderSize || 1)
+            context.translate(width / 2, height / 2)
+            context.rotate(rotation)
+            context.translate(-center.x, -center.y)
+            return {context, center, scaleSize}
+        }
+    }
+
+    /**
+     * @param {CanvasRenderingContext2D} context
+     * @param {TextComponent} textComponent
+     * @param {Size} size
+     * @param {Camera} camera
+     * @param {World} world
+     */
+    static drawText(context, textComponent, size, camera, world) {
+        const assetManager = world.getAssetsManager()
+        const textAlign = textComponent.getTextAlign()
+        const verticalAlign = textComponent.getVerticalAlign()
+        const textStyle = textComponent.getTextStyle()
+        const fontFamilyAsset = textComponent.getFontFamily() && assetManager.findAssetFontById(textComponent.getFontFamily())
+        const fontFamily = (fontFamilyAsset && fontFamilyAsset.getName()) || 'Arial'
+        const {width, height} = size
+        const text = textComponent.getText()
+        const fontSize = textComponent.getFontSize()
+        const fontSizeScale = camera.toScaleNumber(fontSize)
+        let xPos = 0
+        let yPos = height / 2
+        const fontProps = [...(textStyle || []), `${fontSizeScale}px`, fontFamily]
+
+        if (textAlign) {
+            switch (textAlign) {
+                case 'left':
+                    context.textAlign = 'left'
+                    break
+                case 'center':
+                    context.textAlign = 'center'
+                    xPos = width / 2
+                    break
+                case 'right':
+                    context.textAlign = 'right'
+                    xPos = width
+                    break
+                default:
+                    throw new ClientError(`${this.constructor.name}: Text Alignment "${textAlign}" not supported`)
+            }
+        }
+
+        if (verticalAlign) {
+            switch (verticalAlign) {
+                case 'top':
+                    context.textBaseline = 'bottom'
+                    break
+                case 'middle':
+                    context.textBaseline = 'middle'
+                    break
+                case 'bottom':
+                    context.textBaseline = 'top'
+                    break
+                default:
+                    throw new ClientError(`${this.constructor.name}: Vertical Alignment "${verticalAlign}" not supported`)
+            }
+        }
+
+        context.font = fontProps.join(' ')
+        context.fillText(text, xPos, yPos)
+    }
+
+    /**
+     * @TODO: need some refactoring
+     * @param {CanvasRenderingContext2D} context
+     * @param {Unit} unit
+     * @param {Size} size
+     * @param {Camera} camera
+     */
+    static drawNode(context, unit, size, camera) {
+        const nodeComponent = unit.getComponent(NodeComponent)
+        const title = nodeComponent.getTitle()
+        const type = nodeComponent.getType()
+        const inputs = nodeComponent.getInputs()
+        const outputs = nodeComponent.getOutputs()
+        const inputConnections = nodeComponent.getInputConnections()
+        const outputConnections = nodeComponent.getOutputConnections()
+        const inputColors = nodeComponent.getInputColors()
+        const isOutputConnected = nodeComponent.getOutputConnected()
+        const isBaseInputConnected = nodeComponent.getBaseInputConnected()
+        const isBaseOutputConnected = nodeComponent.getBaseOutputConnected()
+        const nodeBaseInputColor = nodeComponent.getBaseInputColor()
+        const hasBaseInput = nodeComponent.getBaseInput()
+        const hasBaseOutput = nodeComponent.getBaseOutput()
+        const output = nodeComponent.getOutput()
+        const {width, height} = size
+
+        //props
+        const {
+            sizeInput, fontSize, heightHead,
+            shadowBlur, boxColor, baseInputColor,
+            fontColor, headColor, padding,
+            colorFocused, selectColor, fontSizeRatio
+        } = NodeHelper.getNodeGUIProps(type)
+
+        //convert props to camera scale
+        const heightHeadScale = camera.toScaleNumber(heightHead)
+        const fontSizeScale = camera.toScaleNumber(fontSize)
+        const paddingScale = camera.toScaleNumber(padding)
+        const sizeInputScale = camera.toScaleNumber(sizeInput)
+        const borderSize = camera.toScaleNumber(3)
+
+        // box
+        let shadowColor = headColor
+        if (unit.isSelected()) {
+            shadowColor = selectColor
+        } else if (unit.isFocused()) {
+            shadowColor = colorFocused
+        }
+        context.shadowColor = shadowColor
+        context.shadowBlur = shadowBlur
+        context.fillStyle = boxColor
+        context.lineWidth = borderSize
+        context.strokeStyle = unit.isSelected() ? selectColor : headColor
+        context.rect(0, 0, width, height)
+        context.fill()
+        context.stroke()
+        context.shadowColor = null
+        context.shadowBlur = 0
+
+        //box header
+        context.fillStyle = headColor
+        context.fillRect(borderSize / 2, borderSize / 2, width - borderSize, heightHeadScale - borderSize)
+
+        //box header title
+        context.font = `${fontSizeScale}px Arial`
+        context.fillStyle = fontColor
+        context.fillText(title, paddingScale, fontSizeScale + paddingScale)
+
+        //base input
+        if (hasBaseInput) {
+            const {position: baseInputPosition} = NodeHelper.getNodeGUIInput(type, -1)
+            const baseInputPositionScale = camera.toCameraScale(baseInputPosition)
+            context.fillStyle = (nodeBaseInputColor && Color.shadeColor(nodeBaseInputColor, 100)) || baseInputColor
+            context.strokeStyle = baseInputColor
+            context.lineWidth = camera.toScaleNumber(1)
+            context.beginPath()
+            context.moveTo(baseInputPositionScale.getX(), baseInputPositionScale.getY())
+            context.lineTo(baseInputPositionScale.getX() + sizeInputScale, baseInputPositionScale.getY() + sizeInputScale / 2)
+            context.lineTo(baseInputPositionScale.getX(), baseInputPositionScale.getY() + sizeInputScale)
+            context.closePath()
+            if (isBaseInputConnected) {
+                context.fill()
+            } else {
+                context.stroke()
+            }
+        }
+
+        //other inputs
+        inputs.forEach((input, index) => {
+            const {position: inputPosition} = NodeHelper.getNodeGUIInput(type, index - (hasBaseInput ? 0 : 1))
+            const inputPositionScale = camera.toCameraScale(inputPosition)
+            const inputColor = inputColors[index] || headColor
+            context.fillStyle = Color.shadeColor(inputColor, 100)
+            context.strokeStyle = inputColor
+            context.lineWidth = camera.toScaleNumber(1)
+            if (inputConnections[index]) {
+                context.fillRect(inputPositionScale.getX(), inputPositionScale.getY(), sizeInputScale, sizeInputScale)
+            } else {
+                context.strokeRect(inputPositionScale.getX(), inputPositionScale.getY(), sizeInputScale, sizeInputScale)
+            }
+            context.fillStyle = fontColor
+            context.fillText(input,
+                inputPositionScale.getX() + sizeInputScale + paddingScale,
+                inputPositionScale.getY() + sizeInputScale)
+        })
+
+        //result output
+        if (output) {
+            const {
+                position: outputPosition
+            } = NodeHelper.getNodeGUIOutput(type, camera.fromScaleSize(size),
+                1 - (!hasBaseOutput ? 1 : 0))
+            const outputPositionScale = camera.toCameraScale(outputPosition)
+            context.fillStyle = Color.shadeColor(headColor, 100)
+            context.strokeStyle = headColor
+            context.lineWidth = camera.toScaleNumber(1)
+            if (isOutputConnected) {
+                context.fillRect(outputPositionScale.getX(), outputPositionScale.getY(), sizeInputScale, sizeInputScale)
+            } else {
+                context.strokeRect(outputPositionScale.getX(), outputPositionScale.getY(), sizeInputScale, sizeInputScale)
+            }
+        }
+
+        //custom outputs
+        const widthOutput = camera.toScaleNumber(Math.max(...outputs.map(customOutput => customOutput.length * fontSize / fontSizeRatio)))
+        outputs.forEach((customOutput, index) => {
+            const {position: outputPosition} = NodeHelper.getNodeGUIOutput(type, camera.fromScaleSize(size),
+                index + 1 - (!hasBaseOutput ? 1 : 0))
+            const outputPositionScale = camera.toCameraScale(outputPosition)
+            const outputColor = headColor
+            context.fillStyle = Color.shadeColor(outputColor, 100)
+            context.strokeStyle = outputColor
+            context.lineWidth = camera.toScaleNumber(1)
+            if (outputConnections[index]) {
+                context.fillRect(outputPositionScale.getX(), outputPositionScale.getY(), sizeInputScale, sizeInputScale)
+            } else {
+                context.strokeRect(outputPositionScale.getX(), outputPositionScale.getY(), sizeInputScale, sizeInputScale)
+            }
+            const textCanvas = new OffscreenCanvas(widthOutput, sizeInputScale)
+            const textContext = textCanvas.getContext('2d')
+            textContext.font = `${fontSizeScale}px Arial`
+            textContext.fillStyle = fontColor
+            textContext.textAlign = 'right'
+            textContext.fillText(customOutput, widthOutput - paddingScale, sizeInputScale)
+            context.drawImage(textCanvas,
+                outputPositionScale.getX() - sizeInputScale + paddingScale - widthOutput,
+                outputPositionScale.getY())
+        })
+
+        //base output
+        if (hasBaseOutput) {
+            const {position: baseOutputPosition} = NodeHelper.getNodeGUIOutput(type, camera.fromScaleSize(size), 0)
+            const baseOutputPositionScale = camera.toCameraScale(baseOutputPosition)
+            context.fillStyle = baseInputColor
+            context.strokeStyle = baseInputColor
+            context.lineWidth = camera.toScaleNumber(1)
+            context.beginPath()
+            context.moveTo(baseOutputPositionScale.getX(), baseOutputPositionScale.getY())
+            context.lineTo(baseOutputPositionScale.getX() + sizeInputScale, baseOutputPositionScale.getY() + sizeInputScale / 2)
+            context.lineTo(baseOutputPositionScale.getX(), baseOutputPositionScale.getY() + sizeInputScale)
+            context.closePath()
+            if (isBaseOutputConnected) {
+                context.fill()
+            } else {
+                context.stroke()
+            }
+        }
+    }
+
+    /**
+     * @param {CanvasRenderingContext2D} context
+     * @param {LightPointComponent} lightComponent
+     * @param {Vector} center
+     * @param {Size} size
+     * @param {Camera} camera
+     */
+    static drawLight(context, lightComponent, center, size, camera){
+        const outerAngle = Math.PI * 2 - Maths.fromDegree(lightComponent.getOuterAngle())
+        const innerAngle = Math.PI * 2 - Maths.fromDegree(lightComponent.getInnerAngle())
+        const outerRadius = lightComponent.getOuterRadius()
+        const sw = size.width * outerRadius / 100
+        const radiusScale = Math.abs(sw / 2 - 1)
+
+        //calculate light boundaries
+        const outerLightBounds = LightHelper.getLightBounds(center, outerAngle, radiusScale)
+        const innerLightBounds = LightHelper.getLightBounds(center, innerAngle, radiusScale)
+
+        LightHelper.drawOuterLightBounds(context, outerLightBounds, radiusScale, outerAngle)
+        context.stroke()
+        LightHelper.drawInnerLightBounds(context, outerLightBounds.first, innerLightBounds.first, radiusScale)
+        context.stroke()
+        LightHelper.drawInnerLightBounds(context, outerLightBounds.second, innerLightBounds.second, radiusScale)
+        context.stroke()
+
+        //circle bulb
+        const sizeBulb = camera.toScaleNumber(10)
+        context.beginPath()
+        context.arc(center.x, center.y, sizeBulb, 0, Math.PI * 2)
+        context.closePath()
+        context.fillStyle = 'rgba(255,255,247,0.71)'
+        context.fill()
     }
 
 }

@@ -1,26 +1,13 @@
 import ArrowRectShapeGenerator from './ArrowRectShapeGenerator.js'
-import UnitHelper from '../../../utils/UnitHelper.js'
-import Vector from '../../../utils/Vector.js'
+import TDArrowRectRightShapeGenerator from './TDArrowRectRightShapeGenerator.js'
+import WGArrowRectRightShapeGenerator from './WGArrowRectRightShapeGenerator.js'
 
 export default class ArrowRectRightShapeGenerator extends ArrowRectShapeGenerator{
-
-    /**
-     * @override
-     */
-    drawScaleRect(dataContext, vertices) {
-        const {context, camera} = dataContext
-        const scaleVertices = UnitHelper.scaleVertices(camera, vertices)
-        const {headSize} = this.getArrowProps()
-        const {x, y} = scaleVertices[1]
-        context.rect(x - headSize, y - headSize / 2, headSize, headSize)
+    get2DContext() {
+        return TDArrowRectRightShapeGenerator
     }
 
-    /**
-     * @override
-     */
-    convertVertices(vertices, size){
-        return vertices.map(({x, y, z}) =>
-            new Vector({x, y: y + size.getHeight() / 2, z}))
+    getWebGLContext() {
+        return WGArrowRectRightShapeGenerator
     }
-
 }

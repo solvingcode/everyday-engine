@@ -283,6 +283,7 @@ import OutputScript from '../../flow/OutputScript.js'
 import TextUnitInstant from '../../unit/instant/type/internal/text/TextUnitInstant.js'
 import TextComponent from '../../component/internal/TextComponent.js'
 import GetActiveCameraFunction from '../../flow/function/native/camera/GetActiveCameraFunction.js'
+import RectFillUnitInstant from '../../unit/instant/type/internal/primitive/RectFillUnitInstant.js'
 
 /**
  * @class {DataSchema}
@@ -579,6 +580,7 @@ class DataSchema {
         ScaleFreeUnitInstant,
         RotateZUnitInstant,
         RectUnitInstant,
+        RectFillUnitInstant,
         CircleUnitInstant,
         RectSelectorUnitInstant,
         CircleSelectorUnitInstant

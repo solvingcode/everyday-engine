@@ -1,6 +1,7 @@
 import CameraData from '../project/data/CameraData.js'
 import Vector from '../utils/Vector.js'
 import Size from '../pobject/Size.js'
+import {objectContext} from './Context.js'
 
 class Camera extends CameraData {
 
@@ -164,6 +165,7 @@ class Camera extends CameraData {
     setInitPosition(position) {
         this.initPosition = position
     }
+
 }
 
 export default Camera

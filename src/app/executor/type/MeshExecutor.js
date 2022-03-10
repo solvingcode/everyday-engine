@@ -31,7 +31,7 @@ export default class MeshExecutor extends ComponentExecutor {
      * @param {TransformComponent} transformComponent
      * @return {boolean}
      */
-    isAxisUpdated(unit, transformComponent){
+    isAxisUpdated(unit, transformComponent) {
         const world = World.get()
         const actualLocalAxisRotation = transformComponent.getLocalAxisRotation()
         return actualLocalAxisRotation !== UnitHelper.getAxisLocalRotation(world, unit)
@@ -85,6 +85,8 @@ export default class MeshExecutor extends ComponentExecutor {
             if (parentTransformComponent) {
                 const parentRotation = parentTransformComponent.getRotation()
                 newRotation = localAxisRotation + parentRotation
+            } else {
+                newRotation = 0
             }
         } else {
             newRotation = localAxisRotation

@@ -1,20 +1,14 @@
-/**
- * @abstract
- */
-import CurveShapeGenerator from '../curve/CurveShapeGenerator.js'
+import TypeShapeGenerator from '../TypeShapeGenerator.js'
+import TDEdgeShapeGenerator from './TDEdgeShapeGenerator.js'
+import WGEdgeShapeGenerator from './WGEdgeShapeGenerator.js'
 
-export default class EdgeShapeGenerator extends CurveShapeGenerator{
+export default class EdgeShapeGenerator extends TypeShapeGenerator{
 
-    /**
-     * @override
-     */
-    draw(unit, dataContext){
-        const {context} = dataContext
-        if(unit.isSelected()){
-            context.shadowColor = '#d1ff00'
-            context.shadowBlur = 6
-        }
-        super.draw(unit, dataContext)
+    get2DContext() {
+        return TDEdgeShapeGenerator
     }
 
+    getWebGLContext() {
+        return WGEdgeShapeGenerator
+    }
 }

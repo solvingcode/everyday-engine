@@ -1,9 +1,6 @@
-/**
- * @abstract
- */
-import TypeShapeGenerator from '../TypeShapeGenerator.js'
+import ContextTypeShapeGenerator from '../ContextTypeShapeGenerator.js'
 
-export default class RectShapeGenerator extends TypeShapeGenerator{
+export default class TDRectStrokeShapeGenerator extends ContextTypeShapeGenerator{
 
     /**
      * @override

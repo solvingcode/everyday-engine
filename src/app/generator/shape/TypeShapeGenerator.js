@@ -1,3 +1,5 @@
+import NotImplementedError from '../../exception/type/NotImplementedError.js'
+
 /**
  * @abstract
  */
@@ -5,12 +7,18 @@ export default class TypeShapeGenerator {
 
     /**
      * @abstract
-     * @param {Unit} unit
-     * @param {DataContext} dataContext
-     * @return {void}
+     * @return {Class<ContextTypeShapeGenerator>}
      */
-    draw(unit, dataContext){
-        throw new TypeError(`${this.constructor.name}.draw must be implemented`)
+    get2DContext(){
+        throw new NotImplementedError(this, this.get2DContext)
+    }
+
+    /**
+     * @abstract
+     * @return {Class<ContextTypeShapeGenerator>}
+     */
+    getWebGLContext(){
+        throw new NotImplementedError(this, this.getWebGLContext)
     }
 
 }

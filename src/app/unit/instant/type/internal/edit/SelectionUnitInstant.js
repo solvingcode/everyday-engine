@@ -4,6 +4,8 @@ import GUIPendingComponent from '../../../../../component/internal/gui/GUIPendin
 import Style from '../../../../../pobject/Style.js'
 import TransformHelper from '../../../../../utils/TransformHelper.js'
 import StyleComponent from '../../../../../component/internal/StyleComponent.js'
+import MeshComponent from '../../../../../component/internal/MeshComponent.js'
+import {PrimitiveShape} from '../../../../Unit.js'
 
 export default class SelectionUnitInstant extends MeshUnitInstant {
 
@@ -15,11 +17,13 @@ export default class SelectionUnitInstant extends MeshUnitInstant {
         this.createComponent(GUIPendingComponent)
         const transformComponent = this.getComponent(TransformComponent)
         const styleComponent = this.getComponent(StyleComponent)
+        const meshComponent = this.getComponent(MeshComponent)
+        meshComponent.setShape(PrimitiveShape.RECT_STROKE)
         transformComponent.setLocalPosition(position)
         transformComponent.setLocalScale(TransformHelper.getScaleFromSize(size))
         const style = new Style()
         style.setColor('#FFFFFF')
-        style.setBorderSize(3)
+        style.setBorderSize(1)
         styleComponent.setStyle(style)
     }
 

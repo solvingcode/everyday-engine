@@ -66,6 +66,14 @@ class Maths {
     static getIntensity(intensityParam){
         return 1/(1 + 0.045 * intensityParam + 0.0075 * intensityParam ** 2)
     }
+
+    /**
+     * @param {number} value
+     * @return {boolean}
+     */
+    static isPowerOf2(value) {
+        return (value & (value - 1)) === 0;
+    }
 }
 
 export default Maths

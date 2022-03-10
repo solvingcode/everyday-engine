@@ -38,6 +38,31 @@ export default class TransformHelper {
     }
 
     /**
+     * @param {Vector} scale
+     * @return {number[]}
+     */
+    static getTextureCoords(scale) {
+        const directionScale = this.getScaleDirection(scale)
+        const textureCoords = [
+            0.0, 0.0,
+            1.0, 0.0,
+            0.0, 1.0,
+            0.0, 1.0,
+            1.0, 0.0,
+            1.0, 1.0
+        ]
+        for (let iText = 0; iText < textureCoords.length; iText += 2) {
+            if (directionScale.getX() < 0) {
+                textureCoords[iText] = 1.0 - textureCoords[iText]
+            }
+            if (directionScale.getY() < 0) {
+                textureCoords[iText + 1] = 1.0 - textureCoords[iText + 1]
+            }
+        }
+        return textureCoords
+    }
+
+    /**
      * @param {World} world
      * @param {Unit} unit
      * @param {Vector} moveVector

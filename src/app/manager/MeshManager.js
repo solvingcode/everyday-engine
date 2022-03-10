@@ -15,32 +15,36 @@ export default class MeshManager {
     /**
      * @return {Mesh[]}
      */
-    getMeshes(){
+    getMeshes() {
         return this.meshes
     }
 
     /**
      * @param {number} index
-     * @return {Mesh}
+     * @return {Mesh|{params: *, program: *, buffers: Map<string, {buffer: WebGLBuffer, vertices: number[]}>,
+     * texture: WebGLTexture, style: {lineWidth: number,
+     * borderColor: string|null}}}
      */
-    get(index){
+    get(index) {
         return this.meshes[index]
     }
 
     /**
      * @param {number} index
-     * @param {Mesh} mesh
+     * @param {Mesh|{params: *, program: *, buffers: Map<string, {buffer: WebGLBuffer, vertices: number[]}>,
+     * texture: WebGLTexture, style: {lineWidth: number,
+     * borderColor: string|null}}} mesh
      */
-    set(index, mesh){
+    set(index, mesh) {
         this.meshes[index] = mesh
     }
 
     /**
      * @param {number} index
      */
-    clear(index){
+    clear(index) {
         const mesh = this.get(index)
-        if(mesh){
+        if (mesh) {
             mesh.clear()
         }
     }

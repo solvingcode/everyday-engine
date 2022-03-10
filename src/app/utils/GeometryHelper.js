@@ -3,7 +3,7 @@ import Vector from './Vector.js'
 import Vertex from './Vertex.js'
 import TransformHelper from './TransformHelper.js'
 
-export default class GeometryHelper{
+export default class GeometryHelper {
 
     /**
      * Calculate the largest rectangle for given rotation and size
@@ -38,7 +38,7 @@ export default class GeometryHelper{
      * @param {Vector} vectorB
      * @return {{position: Vector, size: Size, vertices: Vector[]}}
      */
-    static getRectByDistance(vectorA, vectorB){
+    static getRectByDistance(vectorA, vectorB) {
         const position = new Vector()
         const dX = vectorB.getX() - vectorA.getX()
         const dY = vectorB.getY() - vectorA.getY()
@@ -46,20 +46,20 @@ export default class GeometryHelper{
         const height = Math.abs(dY)
         const size = new Size({width, height})
         const vertices = [new Vector(), new Vector()]
-        if(dX < 0){
+        if (dX < 0) {
             position.setX(vectorB.getX())
             vertices[0].setX(width)
             vertices[1].setX(0)
-        }else{
+        } else {
             position.setX(vectorA.getX())
             vertices[0].setX(0)
             vertices[1].setX(width)
         }
-        if(dY < 0){
+        if (dY < 0) {
             position.setY(vectorB.getY())
             vertices[0].setY(height)
             vertices[1].setY(0)
-        }else{
+        } else {
             position.setY(vectorA.getY())
             vertices[0].setY(0)
             vertices[1].setY(height)
@@ -74,7 +74,7 @@ export default class GeometryHelper{
      * @param {Size} size
      * @return {Vector}
      */
-    static toCenterPosition(position, rotation, size){
+    static toCenterPosition(position, rotation, size) {
         const center = this.getLargeCenterFromRotationSize(rotation, size)
         return new Vector({
             x: position.x + center.x,
@@ -158,7 +158,7 @@ export default class GeometryHelper{
      * @param {Vector} origin
      * @return {Vector}
      */
-    static rotatePoint(point, angle, origin){
+    static rotatePoint(point, angle, origin) {
         const rotatedPoint = _.cloneDeep(point)
         const sinAngle = Math.sin(angle)
         const cosAngle = Math.cos(angle)
@@ -187,6 +187,39 @@ export default class GeometryHelper{
             x: position.x + center.x,
             y: position.y + center.y
         })
+    }
+
+    /**
+     * @param {Vector} p1
+     * @param {Vector} p2
+     * @param {Vector} p3
+     * @param {Vector} p4
+     * @param {number} t
+     * @return {Vector}
+     */
+    static getPointOnBezierCurve(p1, p2, p3, p4, t) {
+        const invT = (1 - t)
+        return Vector.addAll(Vector.multiply(p1, invT * invT * invT),
+            Vector.multiply(p2, 3 * t * invT * invT),
+            Vector.multiply(p3, 3 * invT * t * t),
+            Vector.multiply(p4, t * t * t))
+    }
+
+    /**
+     * @param {Vector} p1
+     * @param {Vector} p2
+     * @param {Vector} p3
+     * @param {Vector} p4
+     * @param {number} numPoints
+     * @return {Vector[]}
+     */
+    static getPointsOnBezierCurve(p1, p2, p3, p4, numPoints) {
+        const curvePoints = []
+        for (let i = 0; i < numPoints; ++i) {
+            const t = i / (numPoints - 1)
+            curvePoints.push(this.getPointOnBezierCurve(p1, p2, p3, p4, t))
+        }
+        return curvePoints
     }
 
 }

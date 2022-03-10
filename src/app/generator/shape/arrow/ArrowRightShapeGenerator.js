@@ -1,14 +1,13 @@
-import Vector from '../../../utils/Vector.js'
 import ArrowShapeGenerator from './ArrowShapeGenerator.js'
+import TDArrowRightShapeGenerator from './TDArrowRightShapeGenerator.js'
+import WGArrowRightShapeGenerator from './WGArrowRightShapeGenerator.js'
 
 export default class ArrowRightShapeGenerator extends ArrowShapeGenerator{
-
-    /**
-     * @override
-     */
-    convertVertices(vertices, size){
-        return vertices.map(({x, y, z}) =>
-            new Vector({x, y: y + size.getHeight() / 2, z}))
+    get2DContext() {
+        return TDArrowRightShapeGenerator
     }
 
+    getWebGLContext() {
+        return WGArrowRightShapeGenerator
+    }
 }

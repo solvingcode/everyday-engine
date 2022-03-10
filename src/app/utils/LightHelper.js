@@ -1,11 +1,12 @@
 import LightPointComponent from '../component/internal/LightPointComponent.js'
 import Maths from './Maths.js'
 import MeshComponent from '../component/internal/MeshComponent.js'
-import {CANVAS_CONTEXT_TYPE} from '../core/Constant.js'
 import Vector from './Vector.js'
 import TransformComponent from '../component/internal/TransformComponent.js'
 import Color from './Color.js'
 import GeometryHelper from './GeometryHelper.js'
+import ImageHelper from './ImageHelper.js'
+import Size from '../pobject/Size.js'
 
 export default class LightHelper {
 
@@ -20,7 +21,7 @@ export default class LightHelper {
      *
      * @return {OffscreenCanvas}
      */
-    static getPoint(unit, camera, positionToLight, sizeToLight, globalIntensity, globalColor){
+    static getPoint(unit, camera, positionToLight, sizeToLight, globalIntensity, globalColor) {
         //init properties
         const meshComponent = unit.getComponent(MeshComponent)
         const transformComponent = unit.getComponent(TransformComponent)
@@ -44,11 +45,11 @@ export default class LightHelper {
         const positionStartLight = camera.toCameraScale(Vector.subtract(lightPosition, positionToLight))
 
         const canvas = new OffscreenCanvas(sizeToLight.width, sizeToLight.height)
-        const context = canvas.getContext(CANVAS_CONTEXT_TYPE)
+        const context = canvas.getContext('2d')
 
         const {width: largeWidth, height: largeHeight} = GeometryHelper.getLargestRectangle(lightRotation, scaleSize)
         const lightCanvas = new OffscreenCanvas(largeWidth, largeHeight)
-        const lightContext = lightCanvas.getContext(CANVAS_CONTEXT_TYPE)
+        const lightContext = lightCanvas.getContext('2d')
         lightContext.translate(largeWidth / 2, largeHeight / 2)
         lightContext.rotate(lightRotation)
         lightContext.translate(-center.x, -center.y)
@@ -77,8 +78,14 @@ export default class LightHelper {
      * @return {{first: [Vector, Vector], second: [Vector, Vector]}}
      */
     static getLightBounds(center, angle, radius) {
-        const boundFirst = [center, new Vector({x: center.x + Math.cos(angle / 2) * radius, y: center.y - Math.cos(Math.PI / 2 - angle / 2) * radius})]
-        const boundSecond = [center, new Vector({x: center.x + Math.cos(angle / 2) * radius, y: center.y + Math.cos(Math.PI / 2 - angle / 2) * radius})]
+        const boundFirst = [center, new Vector({
+            x: center.x + Math.cos(angle / 2) * radius,
+            y: center.y - Math.cos(Math.PI / 2 - angle / 2) * radius
+        })]
+        const boundSecond = [center, new Vector({
+            x: center.x + Math.cos(angle / 2) * radius,
+            y: center.y + Math.cos(Math.PI / 2 - angle / 2) * radius
+        })]
         return {first: boundFirst, second: boundSecond}
     }
 
@@ -107,15 +114,15 @@ export default class LightHelper {
      * @param {boolean} drawArc
      */
     static drawInnerLightBounds(context, outerLightBound, innerLightBound, radius, drawArc = true) {
-        if(context instanceof OffscreenCanvasRenderingContext2D){
+        if (context instanceof OffscreenCanvasRenderingContext2D) {
             context.beginPath()
         }
-        if(!drawArc){
+        if (!drawArc) {
             context.moveTo(outerLightBound[0].x, outerLightBound[0].y)
             context.lineTo(outerLightBound[1].x, outerLightBound[1].y)
             context.moveTo(innerLightBound[0].x, innerLightBound[0].y)
             context.lineTo(innerLightBound[1].x, innerLightBound[1].y)
-        }else{
+        } else {
             const normalOuterLightBound = Vector.subtract(outerLightBound[1], outerLightBound[0])
             const normalInnerLightBound = Vector.subtract(innerLightBound[1], innerLightBound[0])
             const angleBounds = Vector.angle(normalOuterLightBound, normalInnerLightBound)
@@ -127,7 +134,7 @@ export default class LightHelper {
             context.moveTo(outerLightBound[0].x, outerLightBound[0].y)
             context.arc(outerLightBound[0].x, outerLightBound[0].y, radius, startAngle, endAngle)
         }
-        if(context instanceof OffscreenCanvasRenderingContext2D){
+        if (context instanceof OffscreenCanvasRenderingContext2D) {
             context.closePath()
         }
     }
@@ -181,7 +188,7 @@ export default class LightHelper {
      * @param {number} radius
      * @param {boolean} debug
      */
-    static drawInnerLight(context, outerLightBounds, innerLightBounds, radius, debug= false) {
+    static drawInnerLight(context, outerLightBounds, innerLightBounds, radius, debug = false) {
         this.drawInnerLightSide(context, outerLightBounds.first, innerLightBounds.first, radius, false, debug)
         this.drawInnerLightSide(context, outerLightBounds.second, innerLightBounds.second, radius, true, debug)
     }
@@ -194,7 +201,7 @@ export default class LightHelper {
      * @param {boolean} reverse
      * @param {boolean} debug
      */
-    static drawInnerLightSide(context, outerLightBound, innerLightBound, radius, reverse, debug= false) {
+    static drawInnerLightSide(context, outerLightBound, innerLightBound, radius, reverse, debug = false) {
         const normalLightLine = this.getNormalLightLine(outerLightBound, innerLightBound, reverse)
         const gradientInnerLightOne = context.createLinearGradient(
             normalLightLine[0].x, normalLightLine[0].y, normalLightLine[1].x, normalLightLine[1].y)
@@ -209,12 +216,109 @@ export default class LightHelper {
         context.globalCompositeOperation = 'destination-out'
         context.fill(pathLight)
         context.globalCompositeOperation = globalCompositeOperation
-        if(debug){
+        if (debug) {
             const debugPath = new Path2D()
             debugPath.moveTo(normalLightLine[0].x, normalLightLine[0].y)
             debugPath.lineTo(normalLightLine[1].x, normalLightLine[1].y)
             context.strokeStyle = '#ff0000'
             context.stroke(debugPath)
         }
+    }
+
+    /**
+     * @param {World} world
+     * @param {Camera} camera
+     * @param {number} globalIntensity
+     * @param {string} globalColorRgba
+     * @param {string} globalColor
+     * @return {CanvasRenderingContext2D}
+     */
+    static generateLightContext(world, camera, globalIntensity, globalColorRgba, globalColor) {
+        const lightUnits = world.getUnitManager().findUnitsByComponentClasses([LightPointComponent])
+
+        //get the start/end position to combine lights
+        const startContainerLight = lightUnits.reduce((minPosition, unitLight) => {
+            const lightPosition = unitLight.getComponent(TransformComponent).getPosition()
+            if (!minPosition) {
+                return lightPosition
+            }
+            return new Vector({
+                x: lightPosition.getX() < minPosition.getX() ? lightPosition.getX() : minPosition.getX(),
+                y: lightPosition.getY() < minPosition.getY() ? lightPosition.getY() : minPosition.getY()
+            })
+        }, null)
+        const endContainerLight = lightUnits.reduce((maxPosition, unitLight) => {
+            const lightPosition = unitLight.getComponent(TransformComponent).getPosition()
+            const lightSize = Vector.fromSize(unitLight.getComponent(MeshComponent).getSize())
+            if (!maxPosition) {
+                return Vector.add(lightSize, lightPosition)
+            }
+            return new Vector({
+                x: lightPosition.getX() + lightSize.getX() > maxPosition.getX() ? lightPosition.getX() + lightSize.getX() : maxPosition.getX(),
+                y: lightPosition.getY() + lightSize.getY() > maxPosition.getY() ? lightPosition.getY() + lightSize.getY() : maxPosition.getY()
+            })
+        }, null)
+        const size = new Size({
+            width: endContainerLight.getX() - startContainerLight.getX(),
+            height: endContainerLight.getY() - startContainerLight.getY()
+        })
+
+        const canvasLightContainer = new OffscreenCanvas(size.width, size.height)
+        const contextLightContainer = canvasLightContainer.getContext('2d')
+        contextLightContainer.fillStyle = globalColorRgba
+        contextLightContainer.fillRect(0, 0, size.width, size.height)
+
+        const canvasLights = new OffscreenCanvas(size.width, size.height)
+        const contextLights = canvasLights.getContext('2d')
+        contextLights.globalCompositeOperation = 'lighter'
+        lightUnits.forEach(unitLight => {
+            const lightCanvas = LightHelper.getPoint(unitLight, camera, startContainerLight, size, globalIntensity, globalColor)
+            contextLights.drawImage(lightCanvas, 0, 0, size.width, size.height)
+        })
+
+        contextLightContainer.drawImage(canvasLights, 0, 0, size.width, size.height)
+        return contextLightContainer
+    }
+
+    /**
+     * @param {CanvasRenderingContext2D} context
+     * @param {World} world
+     * @param {string} globalColorRgba
+     * @param {number} globalIntensity
+     * @param {string} globalColor
+     * @param {TransformComponent} transformComponent
+     * @param {MeshComponent} meshComponent
+     * @param {Camera} camera
+     * @param {Size} size
+     * @return {CanvasRenderingContext2D}
+     */
+    static getLightContext(context, world, globalColorRgba, globalIntensity,
+                           globalColor, transformComponent, meshComponent,
+                           camera, size) {
+        //create global light
+        const canvasLightContainer = new OffscreenCanvas(size.width, size.height)
+        const contextLightContainer = canvasLightContainer.getContext('2d')
+        contextLightContainer.fillStyle = globalColorRgba
+        contextLightContainer.fillRect(0, 0, size.width, size.height)
+
+        //create and merge lights
+        const canvasLights = new OffscreenCanvas(size.width, size.height)
+        const contextLights = canvasLights.getContext('2d')
+        contextLights.globalCompositeOperation = 'lighter'
+        world.getUnitManager().findUnitsByComponentClasses([LightPointComponent]).forEach(unitLight => {
+            const lightCanvas = LightHelper.getPoint(unitLight, camera, transformComponent.getPosition(), size, globalIntensity, globalColor)
+            contextLights.drawImage(lightCanvas, 0, 0, size.width, size.height)
+        })
+
+        //add lights to the global light
+        contextLightContainer.drawImage(canvasLights, 0, 0, size.width, size.height)
+
+        //cut the generated lights to fit the object
+        const lightCanvasSourceAtop = ImageHelper.copyCanvas(context.canvas, meshComponent.getFilter())
+        const lightContextSourceAtop = lightCanvasSourceAtop.getContext('2d')
+        lightContextSourceAtop.globalCompositeOperation = 'source-atop'
+        lightContextSourceAtop.drawImage(canvasLightContainer, 0, 0, size.width, size.height)
+
+        return lightContextSourceAtop
     }
 }
