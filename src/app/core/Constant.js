@@ -6,6 +6,6 @@ export const CANVAS_CONTEXT_TYPE = 'webgl'
 
 export const STYLE_THEME = 'dark'
 
-export const PREVIEW_URL = '/src/prevdev/'
+export const PREVIEW_URL = '/preview/'
 
 export const SCALE_FACTOR = 10
