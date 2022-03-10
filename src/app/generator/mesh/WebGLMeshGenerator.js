@@ -16,6 +16,7 @@ import {MODE} from '../../constant/FilterMode.js'
 import TransformHelper from '../../utils/TransformHelper.js'
 import Vector from '../../utils/Vector.js'
 import Size from '../../pobject/Size.js'
+import Canvas from '../../core/Canvas.js'
 
 export default class WebGLMeshGenerator extends MeshGenerator {
 
@@ -108,7 +109,7 @@ export default class WebGLMeshGenerator extends MeshGenerator {
             canvas = materialContext.canvas
         } else if (meshComponent.getMapAssetPositions().length > 0) {
             const mapAssetIds = meshComponent.getMapAssetIds()
-            const canvasBg = new OffscreenCanvas(scaleSize.width, scaleSize.height)
+            const canvasBg = new Canvas(scaleSize.width, scaleSize.height)
             const contextBg = canvasBg.getContext('2d')
             if (meshComponent.getFilter() === MODE.NO_SMOOTHING) {
                 contextBg.imageSmoothingEnabled = false
@@ -129,7 +130,7 @@ export default class WebGLMeshGenerator extends MeshGenerator {
                 canvas = dataContextText.context.canvas
             }
         } else if (unit.getComponent(NodeComponent)) {
-            const canvasNode = new OffscreenCanvas(scaleSize.width, scaleSize.height)
+            const canvasNode = new Canvas(scaleSize.width, scaleSize.height)
             const contextNode = canvasNode.getContext('2d')
             UnitHelper.drawNode(contextNode, unit, scaleSize, camera)
             canvas = canvasNode
@@ -163,7 +164,7 @@ export default class WebGLMeshGenerator extends MeshGenerator {
 
     /**
      * @param {World} world
-     * @param {OffscreenCanvas | HTMLCanvasElement} canvas
+     * @param {Canvas | HTMLCanvasElement} canvas
      * @param {MeshComponent} meshComponent
      * @param {TransformComponent} transformComponent
      * @return {{vertices: number[], texture: WebGLTexture, buffer: AudioBuffer | WebGLBuffer}}

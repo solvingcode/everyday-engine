@@ -2,6 +2,7 @@ import ImageHelper from '../utils/ImageHelper.js'
 import Size from '../pobject/Size.js'
 import Vector from '../utils/Vector.js'
 import BlobData from '../project/data/BlobData.js'
+import Canvas from './Canvas.js'
 
 /**
  * Define a block of pixels loaded to the VRAM.
@@ -32,13 +33,13 @@ class Mesh extends BlobData {
      * Initialize the canvas and the context for the current Mesh
      */
     initCanvas() {
-        const canvas = new OffscreenCanvas(this.size.width, this.size.height)
+        const canvas = new Canvas(this.size.width, this.size.height)
         this.context = canvas.getContext('2d')
     }
 
     /**
      * Copy a given canvas to the mesh
-     * @param {OffscreenCanvas | HTMLImageElement} canvas
+     * @param {Canvas | HTMLImageElement} canvas
      * @param {Number} x
      * @param {Number} y
      * @param {Number} sw

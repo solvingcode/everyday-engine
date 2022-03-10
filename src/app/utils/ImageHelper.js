@@ -1,11 +1,12 @@
 import Vector from './Vector.js'
 import Size from '../pobject/Size.js'
 import {MODE} from '../constant/FilterMode.js'
+import Canvas from '../core/Canvas.js'
 
 export default class ImageHelper {
 
     /**
-     * @param {OffscreenCanvas} canvas
+     * @param {Canvas} canvas
      * @param {Size} size
      * @return {string}
      */
@@ -15,11 +16,11 @@ export default class ImageHelper {
     }
 
     /**
-     * @param {OffscreenCanvas} canvas
+     * @param {Canvas} canvas
      * @param {Size} size
      * @param {boolean} offscreen
      * @param {string|null} filter
-     * @return {OffscreenCanvas}
+     * @return {Canvas}
      */
     static resizeCanvasBySize(canvas, size, offscreen = true, filter = null) {
         const {width: sizeWidth, height: sizeHeight} = size
@@ -30,7 +31,7 @@ export default class ImageHelper {
 
         let canvasEl
         if (offscreen) {
-            canvasEl = new OffscreenCanvas(width, height)
+            canvasEl = new Canvas(width, height)
         } else {
             canvasEl = document.createElement('canvas')
             canvasEl.width = width
@@ -46,15 +47,15 @@ export default class ImageHelper {
     }
 
     /**
-     * @param {OffscreenCanvas} canvas
+     * @param {Canvas} canvas
      * @param {Vector} scale
-     * @return {OffscreenCanvas}
+     * @return {Canvas}
      */
     static scaleCanvas(canvas, scale) {
         const {width, height} = canvas
         const canvasWidth = width * Math.abs(scale.getX())
         const canvasHeight = height * Math.abs(scale.getY())
-        const canvasEl = new OffscreenCanvas(canvasWidth, canvasHeight)
+        const canvasEl = new Canvas(canvasWidth, canvasHeight)
 
         const contextEl = canvasEl.getContext('2d')
         contextEl.translate(canvasWidth / 2, canvasHeight / 2)
@@ -66,18 +67,18 @@ export default class ImageHelper {
     }
 
     /**
-     * @param {OffscreenCanvas} canvas
+     * @param {Canvas} canvas
      * @param {Vector} pointA
      * @param {Vector} pointB
      * @param {Vector} scale
-     * @return {OffscreenCanvas}
+     * @return {Canvas}
      */
     static cropCanvas(canvas, pointA, pointB, scale = null) {
         const width = pointB.getX() - pointA.getX()
         const height = pointB.getY() - pointA.getY()
 
         if (width > 0 && height > 0) {
-            const canvasEl = new OffscreenCanvas(width, height)
+            const canvasEl = new Canvas(width, height)
             const contextEl = canvasEl.getContext('2d')
             contextEl.drawImage(canvas,
                 pointA.getX(), pointA.getY(),
@@ -96,14 +97,14 @@ export default class ImageHelper {
     }
 
     /**
-     * @param {OffscreenCanvas} canvas
+     * @param {Canvas} canvas
      * @param {Size} size
      * @param {Vector} imageScale
      * @param {Vector} imagePosition
      * @param {Vector} minPosition
      * @param {Vector} maxPosition
      * @param {{pointA: {area: AREA, position: Vector}, pointB: {area: AREA, position: Vector}}} part
-     * @return {OffscreenCanvas}
+     * @return {Canvas}
      */
     static generateImagePartRepeat(canvas, size, imageScale, imagePosition, minPosition, maxPosition, part) {
         const {pointA, pointB} = part
@@ -116,7 +117,7 @@ export default class ImageHelper {
             width: repeatPointB.getX() - repeatPointA.getX(),
             height: repeatPointB.getY() - repeatPointA.getY()
         })
-        const canvasRepeat = canvasCrop ? new OffscreenCanvas(
+        const canvasRepeat = canvasCrop ? new Canvas(
             sizePartRepeated.getWidth(), sizePartRepeated.getHeight()) : null
 
         if (canvasRepeat) {
@@ -153,14 +154,14 @@ export default class ImageHelper {
 
     /**
      * @todo need refactoring
-     * @param {OffscreenCanvas} canvas
+     * @param {Canvas} canvas
      * @param {Size} size
      * @param {Vector} imageScale
      * @param {Vector} imagePosition
      * @param {Vector} imageRepeatAreaMin
      * @param {Vector} imageRepeatAreaMax
      * @param {string} filter
-     * @return {OffscreenCanvas}
+     * @return {Canvas}
      */
     static generateImageRepeat(canvas, size, imageScale, imagePosition, imageRepeatAreaMin, imageRepeatAreaMax, filter) {
         const {width: canvasWidth, height: canvasHeight} = canvas
@@ -228,7 +229,7 @@ export default class ImageHelper {
             }
         }
 
-        const canvasEl = new OffscreenCanvas(width, height)
+        const canvasEl = new Canvas(width, height)
         const contextEl = canvasEl.getContext('2d')
         if (filter === MODE.NO_SMOOTHING) {
             contextEl.imageSmoothingEnabled = false
@@ -256,12 +257,12 @@ export default class ImageHelper {
     }
 
     /**
-     * @param {OffscreenCanvas | HTMLCanvasElement} canvas
+     * @param {Canvas | HTMLCanvasElement} canvas
      * @param {string} filter
-     * @return {OffscreenCanvas}
+     * @return {Canvas}
      */
     static copyCanvas(canvas, filter){
-        const canvasCopy = new OffscreenCanvas(canvas.width, canvas.height)
+        const canvasCopy = new Canvas(canvas.width, canvas.height)
         const contextCopy = canvasCopy.getContext('2d')
         if (filter === MODE.NO_SMOOTHING) {
             contextCopy.imageSmoothingEnabled = false

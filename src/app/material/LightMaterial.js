@@ -4,6 +4,7 @@ import LightGlobalComponent from '../component/internal/LightGlobalComponent.js'
 import MaterialType from './MaterialType.js'
 import Color from '../utils/Color.js'
 import {MODE} from '../constant/FilterMode.js'
+import Canvas from '../core/Canvas.js'
 
 export default class LightMaterial extends Material {
 
@@ -15,7 +16,7 @@ export default class LightMaterial extends Material {
      * @override
      */
     generate(context, size, world, camera, meshComponent, transformComponent) {
-        const materialCanvas = new OffscreenCanvas(size.width, size.height)
+        const materialCanvas = new Canvas(size.width, size.height)
         const materialContext = materialCanvas.getContext('2d')
         if (meshComponent.getFilter() === MODE.NO_SMOOTHING) {
             materialContext.imageSmoothingEnabled = false
