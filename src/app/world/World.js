@@ -35,6 +35,7 @@ import {ACCESSOR} from '../flow/function/AFunction.js'
 import ASetAttrClassComponent from '../flow/function/component/ASetAttrClassComponent.js'
 import WebGLMeshRenderer from '../renderer/WebGLMeshRenderer.js'
 import TwoDMeshRenderer from '../renderer/TwoDMeshRenderer.js'
+import CompiledClassRegistry from '../registry/CompiledClassRegistry.js'
 
 /**
  * @class {World}
@@ -84,6 +85,7 @@ class World extends WorldData {
         this.tabManager = new TabManager()
         this.graphManager = new GraphManager()
         this.functionRegistry = new FunctionRegistry()
+        this.compiledClassRegistry = new CompiledClassRegistry()
         this.componentRegistry = new ComponentRegistry()
         this.materialRegistry = new MaterialRegistry()
         this.scriptManager = new ScriptManager()
@@ -128,6 +130,7 @@ class World extends WorldData {
         this.getTabManager().init()
         this.getSceneManager().init()
         this.getFunctionRegistry().init()
+        this.getCompiledClassRegistry().init()
         this.getComponentRegistry().init()
         this.constructComponentSetterGetter()
         this.getMaterialRegistry().init()

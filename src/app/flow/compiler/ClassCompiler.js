@@ -29,6 +29,9 @@ import ASetAttrClassNameComponent from '../function/component/ASetAttrClassNameC
 import AClassNameComponent from '../function/component/AClassNameComponent.js'
 import AFunctionInput from '../io/AFunctionInput.js'
 import AFunctionOutput from '../io/AFunctionOutput.js'
+import CompiledClass from './compiled/CompiledClass.js'
+import CompiledFunction from './compiled/CompiledFunction.js'
+import JSCodeGenerator from '../../generator/code/JSCodeGenerator.js'
 
 export default class ClassCompiler extends Compiler {
 
@@ -165,6 +168,7 @@ export default class ClassCompiler extends Compiler {
                 }
                 const stackFunction = ScriptHelper.createStackFunction(script, scriptFunction, node, world)
                 stackFunction.setScopeFunctionName(scriptFunction.getName())
+                stackFunction.setOriginalName(node.getSourceName())
                 stackFunction.setClassName(script.getName())
                 if (element.getOutput()) {
                     stackFunction.addOutput(element.getOutput().getAttrType())
@@ -274,6 +278,7 @@ export default class ClassCompiler extends Compiler {
         })
 
         this.optimize(script, world)
+        this.generateCode(script, world)
 
         return true
     }
@@ -297,6 +302,31 @@ export default class ClassCompiler extends Compiler {
             && !(instance instanceof AFunctionOutput)
             && !(instance instanceof AClassNameComponent))
             .forEach(instance => functionRegistry.removeInstance(instance))
+    }
+
+    /**
+     * @param {AScript} script
+     * @param {World} world
+     */
+    generateCode(script, world) {
+        const functionRegistry = world.getFunctionRegistry()
+        const compiledClassRegistry = world.getCompiledClassRegistry()
+        const classInstances = functionRegistry.getInstancesByClass(script.getName())
+        const compiledClass = new CompiledClass(script.getName())
+        classInstances.forEach(instance => {
+            const compiledFunction = new CompiledFunction()
+            compiledFunction.setName(instance.getOriginalName())
+            compiledFunction.setCode(this.getCodeGenerator().generate(instance, world))
+            compiledClass.addFunction(compiledFunction)
+        })
+        compiledClassRegistry.register(compiledClass)
+    }
+
+    /**
+     * @return {CodeGenerator}
+     */
+    getCodeGenerator() {
+        return JSCodeGenerator.get()
     }
 
     /**

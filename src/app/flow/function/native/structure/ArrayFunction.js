@@ -1,7 +1,7 @@
 import {TYPES} from '../../../../pobject/AttributeType.js'
-import AFunction from '../../AFunction.js'
+import ANativeFunction from '../ANativeFunction.js'
 
-export default class ArrayFunction extends AFunction{
+export default class ArrayFunction extends ANativeFunction{
 
     constructor() {
         super('Array')
@@ -21,5 +21,9 @@ export default class ArrayFunction extends AFunction{
     execute() {
         const length = this.getInputValue('length')
         this.setOutputValue(new Array(length))
+    }
+
+    impl(){
+        return (length) => new Array(length)
     }
 }

@@ -244,6 +244,9 @@ export default {
                                     name: {
                                         type: TYPES.STRING
                                     },
+                                    originalName: {
+                                        type: TYPES.STRING
+                                    },
                                     stack: {
                                         type: Array,
                                         meta: {

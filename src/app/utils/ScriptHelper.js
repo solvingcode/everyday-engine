@@ -46,8 +46,16 @@ import SetAttrClassNameNode from '../flow/node/variable/SetAttrClassNameNode.js'
 import BranchNode from '../flow/node/BranchNode.js'
 import SetAttrClassNode from '../flow/node/variable/SetAttrClassNode.js'
 import GetAttrClassNode from '../flow/node/variable/GetAttrClassNode.js'
+import SystemError from '../exception/type/SystemError.js'
 
 export default class ScriptHelper {
+
+    static LENGTH_PART_REGISTRY = 5
+    static REGISTRY_PART_CLASS_INDEX = 0
+    static REGISTRY_PART_SCOPE_INDEX = 1
+    static REGISTRY_PART_FUNCTION_INDEX = 2
+    static REGISTRY_PART_RANK_INDEX = 3
+    static REGISTRY_PART_ATTRIBUTE_INDEX = 4
 
     /**
      * @param {FunctionRegistry} functionRegistry
@@ -500,6 +508,26 @@ export default class ScriptHelper {
 
     /**
      * @param {string} name
+     * @return {{functionName: string, scope: string, parentName: string, className: string,
+     * attributeName: string, rank: number}}
+     */
+    static extractInfoFromRegistryName(name) {
+        const nameParts = name.split('.')
+        if (nameParts.length !== this.LENGTH_PART_REGISTRY) {
+            throw new SystemError('Registry name is invalid')
+        }
+        return {
+            className: nameParts[this.REGISTRY_PART_CLASS_INDEX],
+            parentName: nameParts[this.REGISTRY_PART_SCOPE_INDEX],
+            functionName: nameParts[this.REGISTRY_PART_FUNCTION_INDEX],
+            rank: parseInt(nameParts[this.REGISTRY_PART_RANK_INDEX]),
+            attributeName: nameParts[this.REGISTRY_PART_ATTRIBUTE_INDEX],
+            scope: nameParts.slice(0, nameParts.length - 1).join('.')
+        }
+    }
+
+    /**
+     * @param {string} name
      * @return {string}
      */
     static extractNameFromGetVar(name) {
@@ -618,7 +646,7 @@ export default class ScriptHelper {
      * @param {World} world
      * @return {Animation[]}
      */
-    static getAnimations(animationController, world){
+    static getAnimations(animationController, world) {
         return animationController.getAnimations().map(animationScript =>
             world.getAnimationManager()
                 .findById(parseInt(animationScript.getAnimation())))

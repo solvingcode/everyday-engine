@@ -29,6 +29,8 @@ import GetVariableNode from '../src/app/flow/node/variable/GetVariableNode.js'
 import StringVariableNode from '../src/app/flow/node/variable/StringVariableNode.js'
 import OperationLogger from '../src/app/operation/logger/OperationLogger.js'
 import BranchNode from '../src/app/flow/node/BranchNode.js'
+import InputScript from '../src/app/flow/InputScript.js'
+import OutputScript from '../src/app/flow/OutputScript.js'
 
 test('Execute native function (without output)', function () {
     const log = new LogFunction()
@@ -340,6 +342,7 @@ test('Create and compile class script with loop', function () {
     expect(mouseEventCompiled.constructor).toEqual(OnMouseClickEvent)
 
     OperationLogger.logStack(mouseEventCompiled.getStack())
+    console.log(world.getCompiledClassRegistry().getInstance('classScript').getFunction('OnMouseClick').getCode())
     console.log = jest.fn()
     mouseEventCompiled.execute(functionRegistry, null, scriptComponent, World.get(), {})
     expect(console.log).toHaveBeenCalledWith(10)
@@ -366,8 +369,10 @@ test('Create and compile class function (no return)', function () {
     script.addFunction(mainScriptFunction)
     script.addFunction(scriptFunction)
 
+    scriptFunction.getFunctionInputs().push(new InputScript('text', TYPES.STRING))
+
     const nodeLog = ScriptHelper.createNodeByClass(functionRegistry, scriptFunction, FunctionNode, 'Log')
-    const nodeInput1 = ScriptHelper.createNodeByClass(functionRegistry, scriptFunction, FunctionInputNode, `text[${TYPES.STRING}]`)
+    const nodeInput1 = ScriptHelper.createNodeByClass(functionRegistry, scriptFunction, FunctionInputNode, 'Input classScript.testFunction.text')
     const nodeOnCall = ScriptHelper.createNodeByClass(functionRegistry, scriptFunction, EventNode, 'OnCall')
     nodeLog.attachResultOutput(nodeInput1, 'value')
     nodeLog.attachPrevNode(nodeOnCall)
@@ -418,10 +423,15 @@ test('Create and compile class function (return value)', function () {
     script.addFunction(scriptFunction)
     const scriptComponent = new ScriptComponent()
 
+    scriptFunction.getFunctionInputs().push(new InputScript('numberA', TYPES.NUMBER))
+    scriptFunction.getFunctionInputs().push(new InputScript('numberB', TYPES.NUMBER))
+
+    scriptFunction.getFunctionOutputs().push(new OutputScript('result', TYPES.NUMBER))
+
     const nodeMultiply = ScriptHelper.createNodeByClass(functionRegistry, scriptFunction, FunctionNode, 'Multiply')
-    const nodeInput1 = ScriptHelper.createNodeByClass(functionRegistry, scriptFunction, FunctionInputNode, `numberA[${TYPES.NUMBER}]`)
-    const nodeInput2 = ScriptHelper.createNodeByClass(functionRegistry, scriptFunction, FunctionInputNode, `numberB[${TYPES.NUMBER}]`)
-    const nodeOutput = ScriptHelper.createNodeByClass(functionRegistry, scriptFunction, FunctionOutputNode, `${TYPES.NUMBER}`)
+    const nodeInput1 = ScriptHelper.createNodeByClass(functionRegistry, scriptFunction, FunctionInputNode, 'Input classScript.testFunction.numberA')
+    const nodeInput2 = ScriptHelper.createNodeByClass(functionRegistry, scriptFunction, FunctionInputNode, 'Input classScript.testFunction.numberB')
+    const nodeOutput = ScriptHelper.createNodeByClass(functionRegistry, scriptFunction, FunctionOutputNode, 'Output classScript.testFunction.result')
     const nodeOnCall = ScriptHelper.createNodeByClass(functionRegistry, scriptFunction, EventNode, 'OnCall')
     nodeMultiply.attachResultOutput(nodeInput1, 'value1')
     nodeMultiply.attachResultOutput(nodeInput2, 'value2')
@@ -477,10 +487,14 @@ test('Create and compile class function (with async calls)', async function () {
     script.addFunction(scriptFunction)
     const scriptComponent = new ScriptComponent()
 
+    scriptFunction.getFunctionInputs().push(new InputScript('numberA', TYPES.NUMBER))
+    scriptFunction.getFunctionInputs().push(new InputScript('numberB', TYPES.NUMBER))
+    scriptFunction.getFunctionOutputs().push(new OutputScript('result', TYPES.NUMBER))
+
     const nodeMultiply = ScriptHelper.createNodeByClass(functionRegistry, scriptFunction, FunctionNode, 'Multiply')
-    const nodeInput1 = ScriptHelper.createNodeByClass(functionRegistry, scriptFunction, FunctionInputNode, `numberA[${TYPES.NUMBER}]`)
-    const nodeInput2 = ScriptHelper.createNodeByClass(functionRegistry, scriptFunction, FunctionInputNode, `numberB[${TYPES.NUMBER}]`)
-    const nodeOutput = ScriptHelper.createNodeByClass(functionRegistry, scriptFunction, FunctionOutputNode, `${TYPES.NUMBER}`)
+    const nodeInput1 = ScriptHelper.createNodeByClass(functionRegistry, scriptFunction, FunctionInputNode, 'Input classScript.testFunction.numberA')
+    const nodeInput2 = ScriptHelper.createNodeByClass(functionRegistry, scriptFunction, FunctionInputNode, 'Input classScript.testFunction.numberB')
+    const nodeOutput = ScriptHelper.createNodeByClass(functionRegistry, scriptFunction, FunctionOutputNode, 'Output classScript.testFunction.result')
     const nodeOnCall = ScriptHelper.createNodeByClass(functionRegistry, scriptFunction, EventNode, 'OnCall')
 
     nodeMultiply.attachResultOutput(nodeInput1, 'value1')
@@ -546,10 +560,14 @@ test('Create and compile class function (with async calls inside custom function
     script.addFunction(promiseCustomFunction)
     const scriptComponent = new ScriptComponent()
 
+    multiplyCustomFunction.getFunctionInputs().push(new InputScript('numberA', TYPES.NUMBER))
+    multiplyCustomFunction.getFunctionInputs().push(new InputScript('numberB', TYPES.NUMBER))
+    multiplyCustomFunction.getFunctionOutputs().push(new OutputScript('result', TYPES.NUMBER))
+
     const nodeMultiply = ScriptHelper.createNodeByClass(functionRegistry, multiplyCustomFunction, FunctionNode, 'Multiply')
-    const nodeInput1 = ScriptHelper.createNodeByClass(functionRegistry, multiplyCustomFunction, FunctionInputNode, `numberA[${TYPES.NUMBER}]`)
-    const nodeInput2 = ScriptHelper.createNodeByClass(functionRegistry, multiplyCustomFunction, FunctionInputNode, `numberB[${TYPES.NUMBER}]`)
-    const nodeOutput = ScriptHelper.createNodeByClass(functionRegistry, multiplyCustomFunction, FunctionOutputNode, `${TYPES.NUMBER}`)
+    const nodeInput1 = ScriptHelper.createNodeByClass(functionRegistry, multiplyCustomFunction, FunctionInputNode, 'Input classScript.multiplyCustomFunction.numberA')
+    const nodeInput2 = ScriptHelper.createNodeByClass(functionRegistry, multiplyCustomFunction, FunctionInputNode, 'Input classScript.multiplyCustomFunction.numberB')
+    const nodeOutput = ScriptHelper.createNodeByClass(functionRegistry, multiplyCustomFunction, FunctionOutputNode, 'Output classScript.multiplyCustomFunction.result')
     const nodeOnCall = ScriptHelper.createNodeByClass(functionRegistry, multiplyCustomFunction, EventNode, 'OnCall')
 
     nodeMultiply.attachResultOutput(nodeInput1, 'value1')
@@ -557,9 +575,12 @@ test('Create and compile class function (with async calls inside custom function
     nodeMultiply.attachPrevNode(nodeOnCall)
     nodeOutput.attachResultManagedOutput(nodeMultiply)
 
+    promiseCustomFunction.getFunctionInputs().push(new InputScript('value', TYPES.NUMBER))
+    promiseCustomFunction.getFunctionOutputs().push(new OutputScript('result', TYPES.PROMISE))
+
     const nodePromise = ScriptHelper.createNodeByClass(functionRegistry, promiseCustomFunction, FunctionNode, 'APromise')
-    const nodePromiseValue = ScriptHelper.createNodeByClass(functionRegistry, promiseCustomFunction, FunctionInputNode, `value[${TYPES.NUMBER}]`)
-    const nodePromiseOutput = ScriptHelper.createNodeByClass(functionRegistry, promiseCustomFunction, FunctionOutputNode, `${TYPES.PROMISE}`)
+    const nodePromiseValue = ScriptHelper.createNodeByClass(functionRegistry, promiseCustomFunction, FunctionInputNode, 'Input classScript.promiseCustomFunction.value')
+    const nodePromiseOutput = ScriptHelper.createNodeByClass(functionRegistry, promiseCustomFunction, FunctionOutputNode, 'Output classScript.promiseCustomFunction.result')
     const nodePromiseOnCall = ScriptHelper.createNodeByClass(functionRegistry, promiseCustomFunction, EventNode, 'OnCall')
 
     nodePromise.attachResultOutput(nodePromiseValue, 'target')

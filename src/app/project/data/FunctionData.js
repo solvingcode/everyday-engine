@@ -12,6 +12,10 @@ export default class FunctionData extends Data {
      */
     name
     /**
+     * @type {string}
+     */
+    originalName
+    /**
      * @type {DynamicAttribute[]}
      */
     inputs
@@ -103,6 +107,20 @@ export default class FunctionData extends Data {
      */
     getName() {
         return this.name
+    }
+
+    /**
+     * @param {string} originalName
+     */
+    setOriginalName(originalName) {
+        this.originalName = originalName
+    }
+
+    /**
+     * @return {string}
+     */
+    getOriginalName() {
+        return this.originalName
     }
 
     /**

@@ -1,3 +1,5 @@
+import StackRegistryHelper from '../utils/StackRegistryHelper.js'
+
 export default class StackRegister {
 
     static instance
@@ -17,7 +19,7 @@ export default class StackRegister {
      * @param {*} value
      */
     push(functionName, name, value) {
-        this.register[this.getScopeName(functionName, name)] = value
+        this.register[StackRegistryHelper.getScopeName(functionName, name)] = value
     }
 
     /**
@@ -26,7 +28,7 @@ export default class StackRegister {
      * @param {*} value
      */
     pushMem(functionName, name, value) {
-        this.register[`[MEM]${this.getScopeName(functionName, name)}`] = value
+        this.register[`[MEM]${StackRegistryHelper.getScopeName(functionName, name)}`] = value
     }
 
     /**
@@ -34,7 +36,7 @@ export default class StackRegister {
      * @param {*} value
      */
     pushRet(functionName, value) {
-        this.register[this.getScopeName(functionName, CONSTANTS.RESULT)] = value
+        this.register[StackRegistryHelper.getScopeName(functionName, CONSTANTS.RESULT)] = value
     }
 
     /**
@@ -43,7 +45,7 @@ export default class StackRegister {
      * @param {*} value
      */
     pushCustomRet(functionName, name, value) {
-        this.register[this.getScopeName(functionName, `${CONSTANTS.RESULT}_${name}`)] = value
+        this.register[StackRegistryHelper.getScopeName(functionName, `${CONSTANTS.RESULT}_${name}`)] = value
     }
 
     /**
@@ -51,7 +53,7 @@ export default class StackRegister {
      * @param {*} value
      */
     pushSignal(functionName, value) {
-        this.register[this.getScopeName(functionName, CONSTANTS.SIGNAL)] = value
+        this.register[StackRegistryHelper.getScopeName(functionName, CONSTANTS.SIGNAL)] = value
     }
 
     /**
@@ -59,7 +61,7 @@ export default class StackRegister {
      * @param {*} value
      */
     pushJump(functionName, value) {
-        this.register[this.getScopeName(functionName, CONSTANTS.JUMP)] = value
+        this.register[StackRegistryHelper.getScopeName(functionName, CONSTANTS.JUMP)] = value
     }
 
     /**
@@ -68,8 +70,8 @@ export default class StackRegister {
      * @return {*}
      */
     pop(functionName, name) {
-        const value = this.register[this.getScopeName(functionName, name)]
-        if (!this.isMemory(name)) {
+        const value = this.register[StackRegistryHelper.getScopeName(functionName, name)]
+        if (!StackRegistryHelper.isMemory(name)) {
             this.delete(functionName, name)
         }
         return value
@@ -81,7 +83,7 @@ export default class StackRegister {
      * @return {*}
      */
     has(functionName, name){
-        const attrName = this.getScopeName(functionName, name)
+        const attrName = StackRegistryHelper.getScopeName(functionName, name)
         return this.register.hasOwnProperty(attrName)
     }
 
@@ -90,7 +92,7 @@ export default class StackRegister {
      * @return {*}
      */
     popRet(functionName) {
-        return this.register[this.getScopeName(functionName, CONSTANTS.RESULT)]
+        return this.register[StackRegistryHelper.getScopeName(functionName, CONSTANTS.RESULT)]
     }
 
     /**
@@ -99,7 +101,7 @@ export default class StackRegister {
      * @return {*}
      */
     popCustomRet(functionName, name) {
-        return this.register[this.getScopeName(functionName, `${name}`)]
+        return this.register[StackRegistryHelper.getScopeName(functionName, `${name}`)]
     }
 
     /**
@@ -107,7 +109,7 @@ export default class StackRegister {
      * @param {string} name
      */
     delete(functionName, name) {
-        delete this.register[this.getScopeName(functionName, name)]
+        delete this.register[StackRegistryHelper.getScopeName(functionName, name)]
     }
 
     /**
@@ -124,42 +126,6 @@ export default class StackRegister {
      */
     popJump(functionName) {
         return this.pop(functionName, CONSTANTS.JUMP)
-    }
-
-    /**
-     * @param {string|number} name
-     * @return {boolean}
-     */
-    isMemory(name){
-        return !!`${name}`.match(/^\[MEM].*/)
-    }
-
-    /**
-     * @param {string|number} name
-     * @return {boolean}
-     */
-    isResult(name){
-        return !!`${name}`.match(new RegExp(`^${CONSTANTS.RESULT}.*`))
-    }
-
-    /**
-     * @param {string|number} name
-     * @return {boolean}
-     */
-    isCustomResult(name){
-        return !!`${name}`.match(new RegExp(`^${CONSTANTS.RESULT}_.+`))
-    }
-
-    /**
-     * @param {string} functionName
-     * @param {string} name
-     * @return {string}
-     */
-    getScopeName(functionName, name){
-        if(name === CONSTANTS.RESULT || name === CONSTANTS.JUMP || name === CONSTANTS.SIGNAL || this.isMemory(name)){
-            return name
-        }
-        return functionName ? `${functionName}.${name}` : name
     }
 
     /**
