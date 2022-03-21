@@ -11,11 +11,36 @@ export default class CompiledClass {
     functions
 
     /**
+     * @type {CompiledAttribute[]}
+     */
+    attributes
+
+    /**
+     * @type {string}
+     */
+    code
+
+    /**
+     * @return {string}
+     */
+    getCode() {
+        return this.code
+    }
+
+    /**
+     * @param {string} code
+     */
+    setCode(code) {
+        this.code = code
+    }
+
+    /**
      * @param {string} name
      */
     constructor(name) {
         this.name = name
         this.functions = []
+        this.attributes = []
     }
 
     /**
@@ -59,6 +84,35 @@ export default class CompiledClass {
      */
     getFunction(name) {
         return this.getFunctions().find(func => func.getName() === name)
+    }
+
+    /**
+     * @return {CompiledAttribute[]}
+     */
+    getAttributes() {
+        return this.attributes
+    }
+
+    /**
+     * @param {CompiledAttribute[]} attributes
+     */
+    setAttributes(attributes) {
+        this.attributes = attributes
+    }
+
+    /**
+     * @param {CompiledAttribute} attribute
+     */
+    addAttribute(attribute) {
+        this.attributes.push(attribute)
+    }
+
+    /**
+     * @param {string} name
+     * @return {CompiledAttribute}
+     */
+    getAttribute(name) {
+        return this.getAttributes().find(attribute => attribute.getName() === name)
     }
 
 }

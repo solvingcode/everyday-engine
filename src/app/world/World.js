@@ -113,7 +113,7 @@ class World extends WorldData {
     /**
      * @return {MeshRenderer}
      */
-    initMeshRenderer(){
+    initMeshRenderer() {
         if (CANVAS_CONTEXT_TYPE === 'webgl') {
             return new WebGLMeshRenderer()
         } else {
@@ -442,7 +442,7 @@ class World extends WorldData {
     /**
      * @return {MeshRenderer}
      */
-    getMeshRenderer(){
+    getMeshRenderer() {
         return this.meshRenderer
     }
 

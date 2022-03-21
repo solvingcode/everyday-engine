@@ -9,11 +9,11 @@ export default class CodeGenerator {
 
     /**
      * @abstract
-     * @param {AFunction} scriptFunction
+     * @param {AScript} script
      * @param {World} world
-     * @return {string}
+     * @return {CompiledClass}
      */
-    generate(scriptFunction, world){
+    generate(script, world){
         throw new NotImplementedError(this, this.generate)
     }
 

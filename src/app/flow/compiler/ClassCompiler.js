@@ -29,9 +29,9 @@ import ASetAttrClassNameComponent from '../function/component/ASetAttrClassNameC
 import AClassNameComponent from '../function/component/AClassNameComponent.js'
 import AFunctionInput from '../io/AFunctionInput.js'
 import AFunctionOutput from '../io/AFunctionOutput.js'
-import CompiledClass from './compiled/CompiledClass.js'
-import CompiledFunction from './compiled/CompiledFunction.js'
 import JSCodeGenerator from '../../generator/code/JSCodeGenerator.js'
+import {EEClass} from '../../compiler/EEClass.js'
+import ClassLoader from '../../compiler/ClassLoader.js'
 
 export default class ClassCompiler extends Compiler {
 
@@ -279,6 +279,7 @@ export default class ClassCompiler extends Compiler {
 
         this.optimize(script, world)
         this.generateCode(script, world)
+        this.saveClass(script, world)
 
         return true
     }
@@ -309,17 +310,16 @@ export default class ClassCompiler extends Compiler {
      * @param {World} world
      */
     generateCode(script, world) {
-        const functionRegistry = world.getFunctionRegistry()
         const compiledClassRegistry = world.getCompiledClassRegistry()
-        const classInstances = functionRegistry.getInstancesByClass(script.getName())
-        const compiledClass = new CompiledClass(script.getName())
-        classInstances.forEach(instance => {
-            const compiledFunction = new CompiledFunction()
-            compiledFunction.setName(instance.getOriginalName())
-            compiledFunction.setCode(this.getCodeGenerator().generate(instance, world))
-            compiledClass.addFunction(compiledFunction)
-        })
-        compiledClassRegistry.register(compiledClass)
+        compiledClassRegistry.register(this.getCodeGenerator().generate(script, world))
+    }
+
+    /**
+     * @param {AScript} script
+     * @param {World} world
+     */
+    saveClass(script, world) {
+        EEClass[script.getName()] = ClassLoader.load(world, script.getName())
     }
 
     /**

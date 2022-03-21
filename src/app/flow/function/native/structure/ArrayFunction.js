@@ -22,8 +22,4 @@ export default class ArrayFunction extends ANativeFunction{
         const length = this.getInputValue('length')
         this.setOutputValue(new Array(length))
     }
-
-    impl(){
-        return (length) => new Array(length)
-    }
 }

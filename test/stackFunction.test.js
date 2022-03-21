@@ -31,6 +31,7 @@ import OperationLogger from '../src/app/operation/logger/OperationLogger.js'
 import BranchNode from '../src/app/flow/node/BranchNode.js'
 import InputScript from '../src/app/flow/InputScript.js'
 import OutputScript from '../src/app/flow/OutputScript.js'
+import {EEClass} from '../src/app/compiler/EEClass.js'
 
 test('Execute native function (without output)', function () {
     const log = new LogFunction()
@@ -341,16 +342,17 @@ test('Create and compile class script with loop', function () {
     expect(mouseEventCompiled).toBeDefined()
     expect(mouseEventCompiled.constructor).toEqual(OnMouseClickEvent)
 
+    const classCompiled = EEClass['classScript']
     OperationLogger.logStack(mouseEventCompiled.getStack())
-    console.log(world.getCompiledClassRegistry().getInstance('classScript').getFunction('OnMouseClick').getCode())
+    console.log(world.getCompiledClassRegistry().getInstance('classScript').getCode())
     console.log = jest.fn()
-    mouseEventCompiled.execute(functionRegistry, null, scriptComponent, World.get(), {})
+    //classCompiled.OnMouseClick()
     expect(console.log).toHaveBeenCalledWith(10)
 })
 
 test('Create and compile class function (no return)', function () {
     const world = World.get()
-    const scene = new Scene("Game")
+    const scene = new Scene('Game')
     world.getSceneManager().tryAdd(scene)
     world.getSceneManager().activate(scene)
     const unit = world.createUnitInstant(AssetUnitInstant, new Vector(), null, 'Empty')
@@ -406,7 +408,7 @@ test('Create and compile class function (no return)', function () {
 
 test('Create and compile class function (return value)', function () {
     const world = World.get()
-    const scene = new Scene("Game2")
+    const scene = new Scene('Game2')
     world.getSceneManager().tryAdd(scene)
     world.getSceneManager().activate(scene)
     const unit = world.createUnitInstant(AssetUnitInstant, new Vector(), null, 'Empty')
@@ -470,7 +472,7 @@ test('Create and compile class function (return value)', function () {
 
 test('Create and compile class function (with async calls)', async function () {
     const world = World.get()
-    const scene = new Scene("Game3")
+    const scene = new Scene('Game3')
     world.getSceneManager().tryAdd(scene)
     world.getSceneManager().activate(scene)
     const unit = world.createUnitInstant(AssetUnitInstant, new Vector(), null, 'Empty')
@@ -534,14 +536,14 @@ test('Create and compile class function (with async calls)', async function () {
     expect(mouseEventCompiled.constructor).toEqual(OnMouseClickEvent)
 
     console.log = jest.fn()
-    mouseEventCompiled. execute(functionRegistry, unit, scriptComponent, World.get(), {})
-    await new Promise((r) => setTimeout(r, 2000));
+    mouseEventCompiled.execute(functionRegistry, unit, scriptComponent, World.get(), {})
+    await new Promise((r) => setTimeout(r, 2000))
     expect(console.log).toHaveBeenCalledWith(20)
 })
 
 test('Create and compile class function (with async calls inside custom function)', async function () {
     const world = World.get()
-    const scene = new Scene("Game4")
+    const scene = new Scene('Game4')
     world.getSceneManager().tryAdd(scene)
     world.getSceneManager().activate(scene)
     const unit = world.createUnitInstant(AssetUnitInstant, new Vector(), null, 'Empty')
@@ -625,7 +627,7 @@ test('Create and compile class function (with async calls inside custom function
     OperationLogger.logStack(multiplyFunctionCompiled.getStack())
     console.log = jest.fn()
     mouseEventCompiled.execute(functionRegistry, unit, scriptComponent, World.get(), {})
-    await new Promise((r) => setTimeout(r, 2000));
+    await new Promise((r) => setTimeout(r, 2000))
     expect(console.log).toHaveBeenCalledWith(20)
 })
 
@@ -644,7 +646,7 @@ test('Create and compile class flow (order instructions)', function () {
     const nodeAdd = ScriptHelper.createNodeByClass(functionRegistry, scriptFunction, FunctionNode, '+')
     const nodeSetValue1 = ScriptHelper.createNodeByClass(functionRegistry, scriptFunction, ConstantNode, 20)
     const nodeSetValue2 = ScriptHelper.createNodeByClass(functionRegistry, scriptFunction, ConstantNode, 30)
-    const nodeSetValue3 = ScriptHelper.createNodeByClass(functionRegistry, scriptFunction, ConstantNode, "End")
+    const nodeSetValue3 = ScriptHelper.createNodeByClass(functionRegistry, scriptFunction, ConstantNode, 'End')
     const nodeEvent = ScriptHelper.createNodeByClass(functionRegistry, scriptFunction, FunctionNode, 'OnMouseClick')
 
     nodeAdd.attachResultOutput(nodeSetValue1, 'value1')
@@ -664,5 +666,5 @@ test('Create and compile class flow (order instructions)', function () {
     console.log = jest.fn()
     mouseEventCompiled.execute(functionRegistry, null, null, World.get(), {})
     expect(console.log).toHaveBeenCalledWith(50)
-    expect(console.log).toHaveBeenCalledWith("End")
+    expect(console.log).toHaveBeenCalledWith('End')
 })
