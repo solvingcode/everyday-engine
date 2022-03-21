@@ -62,11 +62,9 @@ export default class JSCodeGenerator extends CodeGenerator {
         scriptFunction.getStack().forEach(stackOperation => {
             const operation = stackOperation.getOperation()
             const args = stackOperation.getArgs()
-            if (operation === OPERATIONS.PUSH) {
+            if (operation === OPERATIONS.GET) {
                 const variable = ScriptHelper.getVarName(args[0])
-                if (StackRegistryHelper.isMemory(args[0]) || StackRegistryHelper.isResult(args[0])) {
-                    attributes.push({name: variable, code: `${variable};`})
-                }
+                attributes.push({name: variable, code: `${variable};`})
             }
         })
         return attributes
@@ -87,6 +85,7 @@ export default class JSCodeGenerator extends CodeGenerator {
                 }
             } else if (operation === OPERATIONS.PUSH) {
                 const variable = ScriptHelper.getVarName(args[0])
+                const rightValue = this.getVarName(`${args[1]}`)
                 const value = StackRegistryHelper.getVarName(`${args[1]}`)
                 if (StackRegistryHelper.isResult(args[0]) || StackRegistryHelper.isMemory(args[0])) {
                     registry.base[args[0]] = {value: args[1]}
@@ -97,11 +96,7 @@ export default class JSCodeGenerator extends CodeGenerator {
                     }
                     registry[registryInfo.scope][registryInfo.attributeName] = {value}
                 }
-                if (StackRegistryHelper.isMemory(args[0]) || StackRegistryHelper.isResult(args[0])) {
-                    instructions.push(`${variable} = ${this.getVarName(value)};`)
-                } else {
-                    instructions.push(`var ${variable} = ${this.getVarName(value)};`)
-                }
+                instructions.push(`var ${variable} = ${rightValue};`)
             } else if (operation === OPERATIONS.CALL) {
                 const functionName = args[0]
                 const scope = args[1]
@@ -144,7 +139,9 @@ export default class JSCodeGenerator extends CodeGenerator {
                 const customResult = StackRegistryHelper.getCustomResult(varName)
                 newName = `${CONSTANTS.RESULT}.${customResult}`
             }
-        } else {
+        } else if (StackRegistryHelper.isMemory(varName)) {
+            newName = StackRegistryHelper.getVarName(varName)
+        } else if (!newName.match(/^[0-9]+$/)) {
             newName = `"${newName}"`
         }
         return newName

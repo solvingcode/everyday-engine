@@ -1302,7 +1302,7 @@ export default class UnitHelper {
      * @param {Size} size
      * @param {Camera} camera
      */
-    static drawLight(context, lightComponent, center, size, camera){
+    static drawLight(context, lightComponent, center, size, camera) {
         const outerAngle = Math.PI * 2 - Maths.fromDegree(lightComponent.getOuterAngle())
         const innerAngle = Math.PI * 2 - Maths.fromDegree(lightComponent.getInnerAngle())
         const outerRadius = lightComponent.getOuterRadius()
@@ -1332,15 +1332,16 @@ export default class UnitHelper {
     /**
      * @param {ScriptComponent} scriptComponent
      */
-    static initScript(scriptComponent){
+    static initScript(scriptComponent) {
         const className = scriptComponent.getScript()
-        console.log(EEClass[className])
         if (!scriptComponent.getCompiledClass()) {
-            scriptComponent.setCompiledClass(new (EEClass[className].prototype)())
+            scriptComponent.setCompiledClass(new EEClass[className]())
         }
         const classCompiled = scriptComponent.getCompiledClass()
         for (const attribute in classCompiled) {
-            classCompiled[attribute] = scriptComponent.getValue(attribute)
+            if (typeof classCompiled[attribute] !== 'function') {
+                classCompiled[attribute] = scriptComponent.getValue(attribute)
+            }
         }
     }
 
