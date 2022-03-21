@@ -29,7 +29,10 @@ export default class StringHelper {
      * @return {string}
      */
     static normalize(text) {
-        return text.replace('!', 'Not')
+        return text
+            .replace('!', 'Not')
+            .replace('+', 'Add')
+            .replace('<', 'Less')
     }
 
 }

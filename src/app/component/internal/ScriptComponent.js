@@ -3,6 +3,11 @@ import {TYPES} from '../../pobject/AttributeType.js'
 
 export default class ScriptComponent extends Component {
 
+    /**
+     * @type {UnitActor}
+     */
+    compiledClass
+
     constructor() {
         super('Script')
     }
@@ -42,6 +47,20 @@ export default class ScriptComponent extends Component {
     }
 
     /**
+     * @return {UnitActor}
+     */
+    getCompiledClass() {
+        return this.compiledClass
+    }
+
+    /**
+     * @param {UnitActor} compiledClass
+     */
+    setCompiledClass(compiledClass) {
+        this.compiledClass = compiledClass
+    }
+
+    /**
      * @return {string}
      */
     getScript() {
@@ -65,7 +84,7 @@ export default class ScriptComponent extends Component {
     /**
      * @return {number}
      */
-    isStarted(){
+    isStarted() {
         return this.getStarted()
     }
 
@@ -86,7 +105,7 @@ export default class ScriptComponent extends Component {
     /**
      * @return {boolean}
      */
-    isInitialized(){
+    isInitialized() {
         return this.getInitialized()
     }
 
@@ -121,7 +140,7 @@ export default class ScriptComponent extends Component {
     /**
      * @override
      */
-    isProtected(){
+    isProtected() {
         return false
     }
 }

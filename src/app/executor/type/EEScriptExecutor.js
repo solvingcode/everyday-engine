@@ -5,7 +5,6 @@ import {MouseButton} from '../../core/Mouse.js'
 import {GAME_INPUTS} from '../../preference/gameInput/GameInput.js'
 import Window from '../../core/Window.js'
 import UnitHelper from '../../utils/UnitHelper.js'
-import {EEClass} from '../../compiler/EEClass.js'
 
 export default class EEScriptExecutor extends ComponentExecutor {
 
@@ -24,10 +23,9 @@ export default class EEScriptExecutor extends ComponentExecutor {
             .filter(scriptComponent => scriptComponent.isEnabled())
             .forEach(scriptComponent => {
                 if (world.getUnitManager().hasUnit(unit)) {
-                    const className = scriptComponent.getScript()
-                    const classCompiled = new EEClass[className]()
+                    const classCompiled = scriptComponent.getCompiledClass()
                     if (mouse.isButtonClicked(MouseButton.LEFT)) {
-                        classCompiled.OnMouseClickEvent()
+                        classCompiled.OnMouseClick()
                     }
                     if (mouse.isButtonClicked(MouseButton.LEFT) && UnitHelper.isIntractableButton(world, unit) &&
                         UnitHelper.isInsideWindowPosition(world, unit, mouse.position)) {

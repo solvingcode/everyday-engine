@@ -47,6 +47,8 @@ import BranchNode from '../flow/node/BranchNode.js'
 import SetAttrClassNode from '../flow/node/variable/SetAttrClassNode.js'
 import GetAttrClassNode from '../flow/node/variable/GetAttrClassNode.js'
 import SystemError from '../exception/type/SystemError.js'
+import StackRegistryHelper from './StackRegistryHelper.js'
+import StringHelper from './StringHelper.js'
 
 export default class ScriptHelper {
 
@@ -509,7 +511,7 @@ export default class ScriptHelper {
     /**
      * @param {string} name
      * @return {{functionName: string, scope: string, parentName: string, className: string,
-     * attributeName: string, rank: number}}
+     * attributeName: string, rank: number, name: string}}
      */
     static extractInfoFromRegistryName(name) {
         const nameParts = name.split('.')
@@ -522,8 +524,18 @@ export default class ScriptHelper {
             functionName: nameParts[this.REGISTRY_PART_FUNCTION_INDEX],
             rank: parseInt(nameParts[this.REGISTRY_PART_RANK_INDEX]),
             attributeName: nameParts[this.REGISTRY_PART_ATTRIBUTE_INDEX],
-            scope: nameParts.slice(0, nameParts.length - 1).join('.')
+            scope: nameParts.slice(0, nameParts.length - 1).join('.'),
+            name: this.getVarName(name)
         }
+    }
+
+    /**
+     * @param {string} variable
+     * @return {string}
+     */
+    static getVarName(variable) {
+        const arrVar = StackRegistryHelper.getVarName(StringHelper.normalize(variable)).split('.')
+        return StringHelper.lowFirstLetter(arrVar.map(part => _.capitalize(part)).join(''))
     }
 
     /**

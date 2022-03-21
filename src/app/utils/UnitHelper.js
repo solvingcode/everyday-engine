@@ -37,6 +37,7 @@ import Color from './Color.js'
 import Maths from './Maths.js'
 import LightHelper from './LightHelper.js'
 import Canvas from '../core/Canvas.js'
+import {EEClass} from '../compiler/EEClass.js'
 
 export default class UnitHelper {
 
@@ -1326,6 +1327,21 @@ export default class UnitHelper {
         context.closePath()
         context.fillStyle = 'rgba(255,255,247,0.71)'
         context.fill()
+    }
+
+    /**
+     * @param {ScriptComponent} scriptComponent
+     */
+    static initScript(scriptComponent){
+        const className = scriptComponent.getScript()
+        console.log(EEClass[className])
+        if (!scriptComponent.getCompiledClass()) {
+            scriptComponent.setCompiledClass(new (EEClass[className].prototype)())
+        }
+        const classCompiled = scriptComponent.getCompiledClass()
+        for (const attribute in classCompiled) {
+            classCompiled[attribute] = scriptComponent.getValue(attribute)
+        }
     }
 
 }

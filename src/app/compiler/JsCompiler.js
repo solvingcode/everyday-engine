@@ -1,5 +1,6 @@
 import UnitActor from './UnitActor.js'
 import ClientError from '../exception/type/ClientError.js'
+import SystemError from '../exception/type/SystemError.js'
 
 export default class JsCompiler {
 
@@ -24,6 +25,9 @@ export default class JsCompiler {
             } else {
                 const functionMatch = instruction.match(functionRegex)
                 if (functionMatch) {
+                    if (openBracketCount) {
+                        throw new SystemError(`Brackets not closed on function "${currentFunctionName}"\n${functionCodeLines.join('\n')}`)
+                    }
                     currentFunctionName = functionMatch[1]
                     functionCodeLines = []
                     openBracketCount++
@@ -41,6 +45,9 @@ export default class JsCompiler {
                 }
             }
         })
+        if (openBracketCount) {
+            throw new SystemError(`Brackets not closed on function "${currentFunctionName}"\n${functionCodeLines.join('\n')}\n\n${code}`)
+        }
         return actor
     }
 
@@ -61,6 +68,11 @@ export default class JsCompiler {
         if (typeof actor[functionName] !== 'function') {
             throw new ClientError(`${functionName} not supported by UnitActor`)
         }
-        actor[functionName] = new Function(codeLines.join('\n'))
+        const code = codeLines.join('\n')
+        try {
+            actor[functionName] = new Function(code)
+        } catch (e) {
+            throw new ClientError(`${e.message}\n${code}`)
+        }
     }
 }
