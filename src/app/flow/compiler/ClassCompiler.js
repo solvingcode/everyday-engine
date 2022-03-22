@@ -30,7 +30,6 @@ import AClassNameComponent from '../function/component/AClassNameComponent.js'
 import AFunctionInput from '../io/AFunctionInput.js'
 import AFunctionOutput from '../io/AFunctionOutput.js'
 import JSCodeGenerator from '../../generator/code/JSCodeGenerator.js'
-import {EEClass} from '../../compiler/EEClass.js'
 import ClassLoader from '../../compiler/ClassLoader.js'
 
 export default class ClassCompiler extends Compiler {
@@ -320,7 +319,7 @@ export default class ClassCompiler extends Compiler {
      * @param {World} world
      */
     saveClass(script, world) {
-        EEClass[script.getName()] = ClassLoader.load(world, script.getName())
+        ClassLoader.save(world, script.getName())
     }
 
     /**

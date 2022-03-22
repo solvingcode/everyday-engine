@@ -41,6 +41,8 @@ import VariableScript from '../flow/VariableScript.js'
 import AnimationScript from '../flow/AnimationScript.js'
 import InputScript from '../flow/InputScript.js'
 import OutputScript from '../flow/OutputScript.js'
+import CompiledClassRegistry from '../registry/CompiledClassRegistry.js'
+import CompiledClass from '../flow/compiler/compiled/CompiledClass.js'
 
 /**
  * Define the schema of project data.
@@ -285,6 +287,39 @@ export default {
                                         type: TYPES.ARRAY | TYPES.STRING
                                     },
                                     scopeFunctionName: {
+                                        type: TYPES.STRING
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            compiledClassRegistry: {
+                type: CompiledClassRegistry,
+                meta: {
+                    dataId: {
+                        type: TYPES.NUMBER
+                    },
+                    name: {
+                        type: TYPES.STRING
+                    },
+                    registry: {
+                        type: Array,
+                        meta: {
+                            element: {
+                                type: CompiledClass,
+                                meta: {
+                                    dataId: {
+                                        type: TYPES.NUMBER
+                                    },
+                                    id: {
+                                        type: TYPES.NUMBER
+                                    },
+                                    name: {
+                                        type: TYPES.STRING
+                                    },
+                                    code: {
                                         type: TYPES.STRING
                                     }
                                 }
@@ -694,10 +729,10 @@ export default {
                                                         type: TYPES.STRING
                                                     },
                                                     componentName: {
-                                                        type: TYPES.STRING,
+                                                        type: TYPES.STRING
                                                     },
                                                     attributeName: {
-                                                        type: TYPES.STRING,
+                                                        type: TYPES.STRING
                                                     },
                                                     frames: {
                                                         type: Array,

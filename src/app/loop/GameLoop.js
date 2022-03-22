@@ -8,7 +8,6 @@ import RigidBodyExecutor from '../executor/type/RigidBodyExecutor.js'
 import {PhysicsRunner} from '../runner/physics/PhysicsRunner.js'
 import ColliderExecutor from '../executor/type/ColliderExecutor.js'
 import MeshStyleExecutor from '../executor/type/MeshStyleExecutor.js'
-import ScriptExecutor from '../executor/type/ScriptExecutor.js'
 import AnimationScriptExecutor from '../executor/type/AnimationScriptExecutor.js'
 import WorldInitializeRunner from '../runner/world/WorldInitializeRunner.js'
 import CameraRunner from '../runner/camera/CameraRunner.js'
@@ -28,6 +27,8 @@ import AnimationPlayerExecutor from '../executor/type/AnimationPlayerExecutor.js
 import UIButtonStyleExecutor from '../executor/type/UIButtonStyleExecutor.js'
 import LayerExecutor from '../executor/type/LayerExecutor.js'
 import {GarbageRunner} from '../runner/unit/GarbageRunner.js'
+import EEScriptExecutor from '../executor/type/EEScriptExecutor.js'
+import EEScriptInitExecutor from '../executor/type/EEScriptInitExecutor.js'
 
 /**
  * @class {GameLoop}
@@ -58,7 +59,8 @@ class GameLoop extends SceneLoop {
             new RigidBodyExecutor(),
             new ColliderExecutor(),
             new MeshStyleExecutor(),
-            new ScriptExecutor(),
+            new EEScriptInitExecutor(),
+            new EEScriptExecutor(),
             new AnimationScriptExecutor(),
             new LightExecutor(),
             new ScreenTransformExecutor(),

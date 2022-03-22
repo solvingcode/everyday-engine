@@ -10,7 +10,7 @@ export default class JsCompiler {
      */
     static compile(code) {
         const actor = new UnitActor()
-        const clazz = new Function()
+        const clazz = UnitActor
         const classRegex = new RegExp('^class[\\s]+([a-zA-Z0-9]+)[\\s]*\{(.*)\}$', 's')
         const attrRegex = new RegExp('^[a-zA-Z0-9_]+$')
         const functionRegex = new RegExp('^([a-zA-Z]+)\\(([a-zA-Z0-9,]*)\\)[\\s]*\{$')

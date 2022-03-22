@@ -1,6 +1,7 @@
 import GameLoop from './GameLoop.js'
 import World from '../world/World.js'
 import Storage from '../core/Storage.js'
+import ClassLoader from '../compiler/ClassLoader.js'
 
 /**
  * @class {PreviewGameLoop}
@@ -19,7 +20,9 @@ class PreviewGameLoop extends GameLoop {
     async doInit() {
         await Storage.get().loadLocal(Storage.type.WORLD, World.get())
         await super.doInit()
-        World.get().disableGuides(true)
+        const world = World.get()
+        world.disableGuides(true)
+        ClassLoader.init(world)
     }
 
 }

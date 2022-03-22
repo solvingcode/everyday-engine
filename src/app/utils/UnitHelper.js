@@ -1340,7 +1340,7 @@ export default class UnitHelper {
         }
         const classCompiled = scriptComponent.getCompiledClass()
         for (const attribute in classCompiled) {
-            if (typeof classCompiled[attribute] !== 'function') {
+            if (typeof classCompiled[attribute] !== 'function' && attribute !== 'unit' && attribute !== 'component') {
                 classCompiled[attribute] = scriptComponent.getValue(attribute)
             }
         }

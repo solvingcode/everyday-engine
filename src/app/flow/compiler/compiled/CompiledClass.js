@@ -1,9 +1,6 @@
-export default class CompiledClass {
+import CompiledClassData from '../../../project/data/CompiledClassData.js'
 
-    /**
-     * @type {string}
-     */
-    name
+export default class CompiledClass extends CompiledClassData{
 
     /**
      * @type {CompiledFunction[]}
@@ -16,45 +13,12 @@ export default class CompiledClass {
     attributes
 
     /**
-     * @type {string}
-     */
-    code
-
-    /**
-     * @return {string}
-     */
-    getCode() {
-        return this.code
-    }
-
-    /**
-     * @param {string} code
-     */
-    setCode(code) {
-        this.code = code
-    }
-
-    /**
      * @param {string} name
      */
     constructor(name) {
-        this.name = name
+        super(name)
         this.functions = []
         this.attributes = []
-    }
-
-    /**
-     * @return {string}
-     */
-    getName() {
-        return this.name
-    }
-
-    /**
-     * @param {string} name
-     */
-    setName(name) {
-        this.name = name
     }
 
     /**

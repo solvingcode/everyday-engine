@@ -284,6 +284,8 @@ import TextUnitInstant from '../../unit/instant/type/internal/text/TextUnitInsta
 import TextComponent from '../../component/internal/TextComponent.js'
 import GetActiveCameraFunction from '../../flow/function/native/camera/GetActiveCameraFunction.js'
 import RectFillUnitInstant from '../../unit/instant/type/internal/primitive/RectFillUnitInstant.js'
+import CompiledClassRegistry from '../../registry/CompiledClassRegistry.js'
+import CompiledClass from '../../flow/compiler/compiled/CompiledClass.js'
 
 /**
  * @class {DataSchema}
@@ -564,6 +566,8 @@ class DataSchema {
         {id: 2600, type: TextUnitInstant},
         {id: 2610, type: TextComponent},
         {id: 2620, type: GetActiveCameraFunction},
+        {id: 2630, type: CompiledClassRegistry},
+        {id: 2640, type: CompiledClass},
     ]
 
     /**
