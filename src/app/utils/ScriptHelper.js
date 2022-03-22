@@ -46,7 +46,6 @@ import SetAttrClassNameNode from '../flow/node/variable/SetAttrClassNameNode.js'
 import BranchNode from '../flow/node/BranchNode.js'
 import SetAttrClassNode from '../flow/node/variable/SetAttrClassNode.js'
 import GetAttrClassNode from '../flow/node/variable/GetAttrClassNode.js'
-import SystemError from '../exception/type/SystemError.js'
 import StackRegistryHelper from './StackRegistryHelper.js'
 import StringHelper from './StringHelper.js'
 
@@ -515,16 +514,13 @@ export default class ScriptHelper {
      */
     static extractInfoFromRegistryName(name) {
         const nameParts = name.split('.')
-        if (nameParts.length !== this.LENGTH_PART_REGISTRY) {
-            throw new SystemError('Registry name is invalid')
-        }
         return {
-            className: nameParts[this.REGISTRY_PART_CLASS_INDEX],
-            parentName: nameParts[this.REGISTRY_PART_SCOPE_INDEX],
-            functionName: nameParts[this.REGISTRY_PART_FUNCTION_INDEX],
-            rank: parseInt(nameParts[this.REGISTRY_PART_RANK_INDEX]),
-            attributeName: nameParts[this.REGISTRY_PART_ATTRIBUTE_INDEX],
-            scope: nameParts.slice(0, nameParts.length - 1).join('.'),
+            className: nameParts && nameParts[this.REGISTRY_PART_CLASS_INDEX],
+            parentName: nameParts && nameParts[this.REGISTRY_PART_SCOPE_INDEX],
+            functionName: nameParts && nameParts[this.REGISTRY_PART_FUNCTION_INDEX],
+            rank: nameParts && parseInt(nameParts[this.REGISTRY_PART_RANK_INDEX]),
+            attributeName: nameParts && nameParts[this.REGISTRY_PART_ATTRIBUTE_INDEX],
+            scope: nameParts && nameParts.slice(0, nameParts.length - 1).join('.'),
             name: this.getVarName(name)
         }
     }

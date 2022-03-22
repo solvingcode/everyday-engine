@@ -60,6 +60,7 @@ export const OPERATIONS = {
     GET: 'get',
     SET: 'set',
     CALL: 'call',
+    CALLFUNC: 'call_func',
     EXIT: 'exit',
     JUMP: 'jump',
     JUMP_TO: 'jump_to',

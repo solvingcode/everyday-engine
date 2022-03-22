@@ -13,11 +13,12 @@ export default class JsCompiler {
         const clazz = new Function()
         const classRegex = new RegExp('^class[\\s]+([a-zA-Z0-9]+)[\\s]*\{(.*)\}$', 's')
         const attrRegex = new RegExp('^[a-zA-Z0-9_]+$')
-        const functionRegex = new RegExp('^([a-zA-Z]+)\\(\\)[\\s]*\{$')
+        const functionRegex = new RegExp('^([a-zA-Z]+)\\(([a-zA-Z0-9,]*)\\)[\\s]*\{$')
         const classMatch = code.match(classRegex)
         const classContent = classMatch[2]
         let openBracketCount = 0
         let currentFunctionName
+        let functionParams = []
         let functionCodeLines = []
         const instructions = classContent.split(/[;\n]/).filter(line => line)
         instructions.forEach(instruction => {
@@ -30,6 +31,7 @@ export default class JsCompiler {
                         throw new SystemError(`Brackets not closed on function "${currentFunctionName}"\n${functionCodeLines.join('\n')}`)
                     }
                     currentFunctionName = functionMatch[1]
+                    functionParams = functionMatch[2].split(',')
                     functionCodeLines = []
                     openBracketCount++
                 } else {
@@ -39,7 +41,7 @@ export default class JsCompiler {
                         openBracketCount--
                     }
                     if (openBracketCount === 0 && currentFunctionName) {
-                        this.createFunction(clazz, actor, currentFunctionName, functionCodeLines)
+                        this.createFunction(clazz, actor, currentFunctionName, functionParams, functionCodeLines)
                     } else {
                         functionCodeLines.push(instruction)
                     }
@@ -64,15 +66,16 @@ export default class JsCompiler {
      * @param {Function} clazz
      * @param {UnitActor} actor
      * @param {string} functionName
+     * @param {string[]} params
      * @param {string[]} codeLines
      */
-    static createFunction(clazz, actor, functionName, codeLines) {
-        if (typeof actor[functionName] !== 'function') {
-            throw new ClientError(`${functionName} not supported by UnitActor`)
+    static createFunction(clazz, actor, functionName, params, codeLines) {
+        if (functionName.match(/^On.*/i) && typeof actor[functionName] !== 'function') {
+            throw new ClientError(`Event ${functionName} not supported by UnitActor`)
         }
         const code = codeLines.join('\n')
         try {
-            clazz.prototype[functionName] = new Function(code)
+            clazz.prototype[functionName] = new Function(...params, code)
         } catch (e) {
             throw new ClientError(`${e.message}\n${code}`)
         }

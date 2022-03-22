@@ -14,7 +14,7 @@ export default class CallFunction extends AFunction {
      */
     initAttributes() {
         this.addInput('unit', TYPES.UNIT, 0)
-        this.addInput('function', TYPES.FUNCTION, 0)
+        this.addInput('func', TYPES.FUNCTION, 0)
         this.addOutput(TYPES.ANY)
     }
 
@@ -23,7 +23,7 @@ export default class CallFunction extends AFunction {
      */
     execute(functionRegistry, unit, scriptComponent, world, executionContext) {
         const pUnit = this.getInputValue('unit')
-        const func = this.getInputValue('function')
+        const func = this.getInputValue('func')
         const targetScriptComponent = pUnit.findComponentsByClass(ScriptComponent)
             .find(pScriptComponent => {
                 return ScriptHelper.isHasFunction(world, pScriptComponent.getScript(), func)

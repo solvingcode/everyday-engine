@@ -1,5 +1,6 @@
 import UnitData from '../project/data/UnitData.js'
 import GUIPropertyComponent from '../component/internal/gui/property/GUIPropertyComponent.js'
+import ScriptComponent from '../component/internal/ScriptComponent.js'
 
 export default class Unit extends UnitData{
 
@@ -23,6 +24,15 @@ export default class Unit extends UnitData{
      */
     hasComponentInstance(componentInstance) {
         return !!this.getComponents().find(component => component === componentInstance)
+    }
+
+    /**
+     * @param {string} className
+     * @return {UnitActor}
+     */
+    getScript(className){
+        const scriptComponent = this.findComponentsByClass(ScriptComponent).find(component => component.getScript() === className)
+        return scriptComponent.getCompiledClass()
     }
 
     /**

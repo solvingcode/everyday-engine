@@ -17,7 +17,7 @@ export default class FunctionInputTypeCompiler extends FunctionTypeCompiler {
         const targetInput = element.findInputByName(targetName)
         if (targetInput) {
             const attribute = NodeHelper.getAttributeFromNodeFunctionInput(sourceNode, world, scriptFunction)
-            const jumpTo = `[NEXT]set_input_${functionName}_${attribute.getAttrName()}${Maths.generateId()}`
+            const jumpTo = `[NEXT]setinput_${functionName}_${attribute.getAttrName()}_${Maths.generateId()}`
             const parentClassNames = ScriptHelper.getParentClassNames(world, script).reverse()
             if (parentClassNames.length > 0) {
                 const isFunctionDefinedFunction = new IsFunctionDefinedFunction()

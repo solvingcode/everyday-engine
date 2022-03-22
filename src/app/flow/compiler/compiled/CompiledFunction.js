@@ -11,6 +11,15 @@ export default class CompiledFunction {
     code
 
     /**
+     * @type {string[]}
+     */
+    params
+
+    constructor() {
+        this.params = []
+    }
+
+    /**
      * @return {string}
      */
     getCode(){
@@ -22,6 +31,20 @@ export default class CompiledFunction {
      */
     setCode(code){
         this.code = code
+    }
+
+    /**
+     * @return {string[]}
+     */
+    getParams(){
+        return this.params
+    }
+
+    /**
+     * @param {string[]} params
+     */
+    setParams(params){
+        this.params = params
     }
 
     /**

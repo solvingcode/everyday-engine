@@ -16,7 +16,7 @@ export default class EEScriptInitExecutor extends ComponentExecutor {
             .filter(scriptComponent => scriptComponent.isEnabled())
             .forEach(scriptComponent => {
                 if (!scriptComponent.isInitialized()) {
-                    UnitHelper.initScript(scriptComponent)
+                    UnitHelper.initScript(unit, scriptComponent)
                 }
             })
     }

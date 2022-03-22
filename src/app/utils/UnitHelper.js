@@ -1330,9 +1330,10 @@ export default class UnitHelper {
     }
 
     /**
+     * @param {Unit} unit
      * @param {ScriptComponent} scriptComponent
      */
-    static initScript(scriptComponent) {
+    static initScript(unit, scriptComponent) {
         const className = scriptComponent.getScript()
         if (!scriptComponent.getCompiledClass()) {
             scriptComponent.setCompiledClass(new EEClass[className]())
@@ -1343,6 +1344,8 @@ export default class UnitHelper {
                 classCompiled[attribute] = scriptComponent.getValue(attribute)
             }
         }
+        classCompiled.unit = unit
+        classCompiled.component = scriptComponent
     }
 
 }

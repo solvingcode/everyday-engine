@@ -92,6 +92,9 @@ test('Create and compile class flow', function () {
     const world = World.get()
     const functionRegistry = world.getFunctionRegistry()
 
+    const scriptComponent = new ScriptComponent()
+    scriptComponent.setScript('classScript')
+
     functionRegistry.init()
 
     const script = new ClassScript('classScript')
@@ -116,7 +119,9 @@ test('Create and compile class flow', function () {
     expect(mouseEventCompiled).toBeDefined()
     expect(mouseEventCompiled.constructor).toEqual(OnMouseClickEvent)
 
-    const classCompiled = EEClass['classScript']
+    UnitHelper.initScript(null, scriptComponent)
+
+    const classCompiled = scriptComponent.getCompiledClass()
     OperationLogger.logStack(mouseEventCompiled.getStack())
     console.log(world.getCompiledClassRegistry().getInstance('classScript').getCode())
     console.log = jest.fn()
@@ -128,6 +133,9 @@ test('Create and compile class flow', function () {
 test('Create and compile class script with success condition', function () {
     const world = World.get()
     const functionRegistry = world.getFunctionRegistry()
+
+    const scriptComponent = new ScriptComponent()
+    scriptComponent.setScript('classScript')
 
     functionRegistry.init()
 
@@ -157,7 +165,9 @@ test('Create and compile class script with success condition', function () {
     expect(mouseEventCompiled).toBeDefined()
     expect(mouseEventCompiled.constructor).toEqual(OnMouseClickEvent)
 
-    const classCompiled = EEClass['classScript']
+    UnitHelper.initScript(null, scriptComponent)
+
+    const classCompiled = scriptComponent.getCompiledClass()
     OperationLogger.logStack(mouseEventCompiled.getStack())
     console.log(world.getCompiledClassRegistry().getInstance('classScript').getCode())
     console.log = jest.fn()
@@ -169,6 +179,9 @@ test('Create and compile class script with success condition', function () {
 test('Create and compile class script with failed condition', function () {
     const world = World.get()
     const functionRegistry = world.getFunctionRegistry()
+
+    const scriptComponent = new ScriptComponent()
+    scriptComponent.setScript('classScript')
 
     functionRegistry.init()
 
@@ -198,7 +211,9 @@ test('Create and compile class script with failed condition', function () {
     expect(mouseEventCompiled).toBeDefined()
     expect(mouseEventCompiled.constructor).toEqual(OnMouseClickEvent)
 
-    const classCompiled = EEClass['classScript']
+    UnitHelper.initScript(null, scriptComponent)
+
+    const classCompiled = scriptComponent.getCompiledClass()
     OperationLogger.logStack(mouseEventCompiled.getStack())
     console.log(world.getCompiledClassRegistry().getInstance('classScript').getCode())
     console.log = jest.fn()
@@ -210,6 +225,9 @@ test('Create and compile class script with failed condition', function () {
 test('Create and compile class script with branch (true)', function () {
     const world = World.get()
     const functionRegistry = world.getFunctionRegistry()
+
+    const scriptComponent = new ScriptComponent()
+    scriptComponent.setScript('classScript')
 
     functionRegistry.init()
 
@@ -243,7 +261,9 @@ test('Create and compile class script with branch (true)', function () {
     expect(mouseEventCompiled).toBeDefined()
     expect(mouseEventCompiled.constructor).toEqual(OnMouseClickEvent)
 
-    const classCompiled = EEClass['classScript']
+    UnitHelper.initScript(null, scriptComponent)
+
+    const classCompiled = scriptComponent.getCompiledClass()
     OperationLogger.logStack(mouseEventCompiled.getStack())
     console.log(world.getCompiledClassRegistry().getInstance('classScript').getCode())
     console.log = jest.fn()
@@ -255,6 +275,9 @@ test('Create and compile class script with branch (true)', function () {
 test('Create and compile class script with branch (false)', function () {
     const world = World.get()
     const functionRegistry = world.getFunctionRegistry()
+
+    const scriptComponent = new ScriptComponent()
+    scriptComponent.setScript('classScript')
 
     functionRegistry.init()
 
@@ -288,7 +311,9 @@ test('Create and compile class script with branch (false)', function () {
     expect(mouseEventCompiled).toBeDefined()
     expect(mouseEventCompiled.constructor).toEqual(OnMouseClickEvent)
 
-    const classCompiled = EEClass['classScript']
+    UnitHelper.initScript(null, scriptComponent)
+
+    const classCompiled = scriptComponent.getCompiledClass()
     OperationLogger.logStack(mouseEventCompiled.getStack())
     console.log(world.getCompiledClassRegistry().getInstance('classScript').getCode())
     console.log = jest.fn()
@@ -325,7 +350,7 @@ test('Create and compile class script with variables', function () {
     expect(mouseEventCompiled).toBeDefined()
     expect(mouseEventCompiled.constructor).toEqual(OnMouseClickEvent)
 
-    UnitHelper.initScript(scriptComponent)
+    UnitHelper.initScript(null, scriptComponent)
 
     const classCompiled = scriptComponent.getCompiledClass()
     OperationLogger.logStack(mouseEventCompiled.getStack())
@@ -367,7 +392,7 @@ test('Create and compile class script with loop', function () {
     expect(mouseEventCompiled).toBeDefined()
     expect(mouseEventCompiled.constructor).toEqual(OnMouseClickEvent)
 
-    UnitHelper.initScript(scriptComponent)
+    UnitHelper.initScript(null, scriptComponent)
 
     const classCompiled = scriptComponent.getCompiledClass()
     OperationLogger.logStack(mouseEventCompiled.getStack())
@@ -428,9 +453,9 @@ test('Create and compile class function (no return)', function () {
     expect(mouseEventCompiled).toBeDefined()
     expect(mouseEventCompiled.constructor).toEqual(OnMouseClickEvent)
 
-    UnitHelper.initScript(scriptComponent)
+    UnitHelper.initScript(unit, unitScriptComponent)
 
-    const classCompiled = scriptComponent.getCompiledClass()
+    const classCompiled = unitScriptComponent.getCompiledClass()
     OperationLogger.logStack(mouseEventCompiled.getStack())
     console.log(world.getCompiledClassRegistry().getInstance('classScript').getCode())
     console.log = jest.fn()
@@ -498,8 +523,13 @@ test('Create and compile class function (return value)', function () {
     expect(mouseEventCompiled).toBeDefined()
     expect(mouseEventCompiled.constructor).toEqual(OnMouseClickEvent)
 
+    UnitHelper.initScript(unit, unitScriptComponent)
+
+    const classCompiled = unitScriptComponent.getCompiledClass()
+    OperationLogger.logStack(mouseEventCompiled.getStack())
+    console.log(world.getCompiledClassRegistry().getInstance('classScript').getCode())
     console.log = jest.fn()
-    mouseEventCompiled.execute(functionRegistry, unit, scriptComponent, World.get(), {})
+    classCompiled.OnMouseClick()
     expect(console.log).toHaveBeenCalledWith(20)
 })
 
@@ -568,8 +598,13 @@ test('Create and compile class function (with async calls)', async function () {
     expect(mouseEventCompiled).toBeDefined()
     expect(mouseEventCompiled.constructor).toEqual(OnMouseClickEvent)
 
+    UnitHelper.initScript(unit, unitScriptComponent)
+
+    const classCompiled = unitScriptComponent.getCompiledClass()
+    OperationLogger.logStack(mouseEventCompiled.getStack())
+    console.log(world.getCompiledClassRegistry().getInstance('classScript').getCode())
     console.log = jest.fn()
-    mouseEventCompiled.execute(functionRegistry, unit, scriptComponent, World.get(), {})
+    classCompiled.OnMouseClick()
     await new Promise((r) => setTimeout(r, 2000))
     expect(console.log).toHaveBeenCalledWith(20)
 })
@@ -657,9 +692,13 @@ test('Create and compile class function (with async calls inside custom function
     expect(mouseEventCompiled).toBeDefined()
     expect(mouseEventCompiled.constructor).toEqual(OnMouseClickEvent)
 
-    OperationLogger.logStack(multiplyFunctionCompiled.getStack())
+    UnitHelper.initScript(unit, unitScriptComponent)
+
+    const classCompiled = unitScriptComponent.getCompiledClass()
+    OperationLogger.logStack(mouseEventCompiled.getStack())
+    console.log(world.getCompiledClassRegistry().getInstance('classScript').getCode())
     console.log = jest.fn()
-    mouseEventCompiled.execute(functionRegistry, unit, scriptComponent, World.get(), {})
+    classCompiled.OnMouseClick()
     await new Promise((r) => setTimeout(r, 2000))
     expect(console.log).toHaveBeenCalledWith(20)
 })
@@ -667,6 +706,12 @@ test('Create and compile class function (with async calls inside custom function
 test('Create and compile class flow (order instructions)', function () {
     const world = World.get()
     const functionRegistry = world.getFunctionRegistry()
+    const scene = new Scene('Game5')
+    world.getSceneManager().tryAdd(scene)
+    world.getSceneManager().activate(scene)
+    const unit = world.createUnitInstant(AssetUnitInstant, new Vector(), null, 'Empty')
+    const scriptComponent = unit.createComponent(ScriptComponent)
+    scriptComponent.setScript('classScript')
 
     functionRegistry.init()
 
@@ -696,8 +741,13 @@ test('Create and compile class flow (order instructions)', function () {
     expect(mouseEventCompiled).toBeDefined()
     expect(mouseEventCompiled.constructor).toEqual(OnMouseClickEvent)
 
+    UnitHelper.initScript(unit, scriptComponent)
+
+    const classCompiled = scriptComponent.getCompiledClass()
+    OperationLogger.logStack(mouseEventCompiled.getStack())
+    console.log(world.getCompiledClassRegistry().getInstance('classScript').getCode())
     console.log = jest.fn()
-    mouseEventCompiled.execute(functionRegistry, null, null, World.get(), {})
+    classCompiled.OnMouseClick()
     expect(console.log).toHaveBeenCalledWith(50)
     expect(console.log).toHaveBeenCalledWith('End')
 })

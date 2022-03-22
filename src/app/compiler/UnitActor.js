@@ -1,4 +1,6 @@
 export default class UnitActor{
+    unit
+    component
     OnMouseClick(){}
     OnButtonClick(){}
     OnKeyDown(){}

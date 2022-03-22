@@ -53,6 +53,9 @@ export default class StackProcessor {
                     case OPERATIONS.CALL:
                         CallProcessor.run(functionName, stackOperation, this.stackRegister, functionRegistry, unit, scriptComponent, world, executionContext)
                         break
+                    case OPERATIONS.CALLFUNC:
+                        CallFuncProcessor.run(functionName, stackOperation, this.stackRegister, functionRegistry, unit, scriptComponent, world, executionContext)
+                        break
                     case OPERATIONS.DISPATCH:
                         EventProcessor.run(stackOperation, this.stackRegister, functionRegistry, unit, scriptComponent, world, executionContext)
                         break
