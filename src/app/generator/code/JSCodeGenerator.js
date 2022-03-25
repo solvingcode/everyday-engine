@@ -9,6 +9,11 @@ import CompiledFunction from '../../flow/compiler/compiled/CompiledFunction.js'
 import CompiledAttribute from '../../flow/compiler/compiled/CompiledAttribute.js'
 import AttributeType, {TYPES} from '../../pobject/AttributeType.js'
 import ClientError from '../../exception/type/ClientError.js'
+import OperationLogger from '../../operation/logger/OperationLogger.js'
+import AGetClassVariable from '../../flow/function/variable/AGetClassVariable.js'
+import ASetClassVariable from '../../flow/function/variable/ASetClassVariable.js'
+import ASetAttrClassNameComponent from '../../flow/function/component/ASetAttrClassNameComponent.js'
+import AGetAttrClassNameComponent from '../../flow/function/component/AGetAttrClassNameComponent.js'
 
 export default class JSCodeGenerator extends CodeGenerator {
 
@@ -26,7 +31,7 @@ export default class JSCodeGenerator extends CodeGenerator {
                 compiledFunction.setParams(params)
                 compiledClass.addFunction(compiledFunction)
 
-                const attributes = this.generateAttributes(instance)
+                const attributes = this.generateAttributes(instance, world)
                 attributes.forEach(attribute => {
                     if (!compiledClass.getAttribute(attribute.name)) {
                         const compiledAttribute = new CompiledAttribute()
@@ -37,7 +42,8 @@ export default class JSCodeGenerator extends CodeGenerator {
                 })
             }
         })
-        const classCode = `class ${script.getName()}{\n${this.getBlockAttribute(compiledClass)}\n${this.getBlockFunction(compiledClass)}\n}`
+        const classCode = `class extends UnitActor{\n${this.getBlockAttribute(compiledClass)}\n${this.getBlockFunction(compiledClass)}\n}`
+        console.log(classCode)
         compiledClass.setCode(classCode)
         return compiledClass
     }
@@ -60,16 +66,24 @@ export default class JSCodeGenerator extends CodeGenerator {
 
     /**
      * @param {AFunction} scriptFunction
+     * @param {World} world
      * @return {{name: string, code: string}[]}
      */
-    generateAttributes(scriptFunction) {
+    generateAttributes(scriptFunction, world) {
         const attributes = []
+        const functionRegistry = world.getFunctionRegistry()
         scriptFunction.getStack().forEach(stackOperation => {
             const operation = stackOperation.getOperation()
             const args = stackOperation.getArgs()
             if (operation === OPERATIONS.GET) {
                 const variable = ScriptHelper.getVarName(args[0])
                 attributes.push({name: variable, code: `${variable};`})
+            } else if (operation === OPERATIONS.CALL) {
+                const func = functionRegistry.getInstance(args[0])
+                if (func instanceof AGetClassVariable || func instanceof ASetClassVariable) {
+                    const variable = ScriptHelper.extractNameFromVar(func.getName())
+                    attributes.push({name: variable, code: `${variable};`})
+                }
             }
         })
         return attributes
@@ -78,17 +92,18 @@ export default class JSCodeGenerator extends CodeGenerator {
     generateFunction(scriptFunction, world) {
         const functionRegistry = world.getFunctionRegistry()
         const instructions = []
+        const nextJump = []
         const registry = {base: {}}
+        console.log(scriptFunction.getName())
+        OperationLogger.logStack(scriptFunction.getStack())
         scriptFunction.getStack().forEach(stackOperation => {
             const operation = stackOperation.getOperation()
             const args = stackOperation.getArgs()
             if (operation === OPERATIONS.JUMP_TO) {
                 if (_.isEqual(args, ['start_loop'])) {
                     instructions.push('do {')
-                } else if (args[0].match(/^\[NEXT].+$/)) {
-                    if (!args[0].match(/^\[NEXT]setinput_.*/)) {
-                        instructions.push('}')
-                    }
+                } else if (args[0].match(/^\[NEXT].+$/) && nextJump.includes(args[0])) {
+                    instructions.push('}')
                 }
             } else if (operation === OPERATIONS.PUSH) {
                 const variable = ScriptHelper.getVarName(args[0])
@@ -103,20 +118,41 @@ export default class JSCodeGenerator extends CodeGenerator {
                     }
                     registry[registryInfo.scope][registryInfo.attributeName] = {value}
                 }
-                instructions.push(`var ${variable} = ${rightValue};`)
+                instructions.push(`${variable} = ${rightValue};`)
             } else if (operation === OPERATIONS.CALL) {
                 const functionName = args[0]
-                const scope = args[1]
+                const scope = args[1] ? StringHelper.normalize(args[1]) : ''
                 const params = []
                 const func = functionRegistry.getInstance(functionName)
-                let resultReturn = ''
-                func.getInputs().forEach(input => {
-                    params.push(ScriptHelper.getVarName(`${scope ? `${scope}.` : ''}${input.getAttrName()}`))
-                })
-                if (func.getOutputs().length > 0 || func.getOutput()) {
-                    resultReturn = `${CONSTANTS.RESULT} = `
+                let rightValue = ''
+                let leftValue = ''
+                if (func instanceof AGetClassVariable) {
+                    rightValue = `this.${ScriptHelper.extractNameFromVar(func.getName())};`
+                    leftValue = `${CONSTANTS.RESULT} = `
+                } else if (func instanceof ASetClassVariable) {
+                    leftValue = `this.${ScriptHelper.extractNameFromVar(func.getName())} = `
+                    rightValue = ScriptHelper.getVarName(`${scope}.value`)
+                } else if (func instanceof ASetAttrClassNameComponent) {
+                    const extractName = ScriptHelper.extractFromPublicVar(func.getName())
+                    const target = ScriptHelper.getVarName(`${scope}.target`)
+                    const value = ScriptHelper.getVarName(`${scope}.value`)
+                    leftValue = `${target}.getComponentByName("${extractName.component}").setValue("${extractName.attribute}",`
+                    rightValue = `${value})`
+                } else if (func instanceof AGetAttrClassNameComponent) {
+                    const extractName = ScriptHelper.extractFromPublicVar(func.getName())
+                    const target = ScriptHelper.getVarName(`${scope}.target`)
+                    leftValue = `${CONSTANTS.RESULT} = `
+                    rightValue = `${target}.getComponentByName("${extractName.component}").getValue("${extractName.attribute}")`
+                } else {
+                    func.getInputs().forEach(input => {
+                        params.push(ScriptHelper.getVarName(`${scope ? `${scope}.` : ''}${input.getAttrName()}`))
+                    })
+                    rightValue = `__.${StringHelper.normalize(functionName)}(${params.join(',')})`
+                    if (func.getOutputs().length > 0 || func.getOutput()) {
+                        leftValue = `${CONSTANTS.RESULT} = `
+                    }
                 }
-                instructions.push(`${resultReturn}__.${StringHelper.normalize(functionName)}(${params.join(',')});`)
+                instructions.push(`${leftValue}${rightValue};`)
             } else if (operation === OPERATIONS.CALLFUNC) {
                 const nameParts = args[0].split('.')
                 const scope = args[0]
@@ -145,6 +181,7 @@ export default class JSCodeGenerator extends CodeGenerator {
                 if (whereJump === 'start_loop') {
                     instructions.push(`}while(!${jumpCondition});`)
                 } else {
+                    nextJump.push(args[1])
                     instructions.push(`if(${jumpCondition}){`)
                 }
             } else if (operation === OPERATIONS.EXIT) {

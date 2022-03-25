@@ -58,6 +58,13 @@ export default class AScript extends AScriptData {
     }
 
     /**
+     * @param {VariableScript} variable
+     */
+    addVariable(variable){
+        this.variables.push(variable)
+    }
+
+    /**
      * @param {string} functionName
      * @return {AScriptFunction}
      */

@@ -12,6 +12,7 @@ import SelfProcessor from './processor/SelfProcessor.js'
 import SetProcessor from './processor/SetProcessor.js'
 import ThenProcessor from './processor/ThenProcessor.js'
 import RegexHelper from '../utils/RegexHelper.js'
+import SetInputProcessor from './processor/SetInputProcessor.js'
 
 export default class StackProcessor {
 
@@ -73,6 +74,9 @@ export default class StackProcessor {
                         break
                     case OPERATIONS.PUSH:
                         PushProcessor.run(functionName, stackOperation, this.stackRegister)
+                        break
+                    case OPERATIONS.SETINPUT:
+                        SetInputProcessor.run(functionName, stackOperation, this.stackRegister, functionRegistry)
                         break
                     case OPERATIONS.EXIT:
                         ExitProcessor.run(functionName, stackOperation, this.stackRegister)

@@ -30,9 +30,15 @@ export default class StringHelper {
      */
     static normalize(text) {
         return text
-            .replace('!', 'Not')
-            .replace('+', 'Add')
-            .replace('<', 'Less')
+            .replaceAll(' ', '')
+            .replaceAll('(', '')
+            .replaceAll(')', '')
+            .replaceAll('!=', 'NotEqual')
+            .replaceAll('!', 'Not')
+            .replaceAll('+', 'Add')
+            .replaceAll('<', 'Less')
+            .replaceAll('>', 'Greater')
+            .replaceAll('==', 'Equal')
     }
 
 }

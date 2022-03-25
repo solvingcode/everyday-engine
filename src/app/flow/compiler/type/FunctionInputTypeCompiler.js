@@ -4,8 +4,6 @@ import StackOperation, {OPERATIONS} from '../../../operation/StackOperation.js'
 import ACustomFunction from '../../function/custom/ACustomFunction.js'
 import Maths from '../../../utils/Maths.js'
 import ScriptHelper from '../../../utils/ScriptHelper.js'
-import IsFunctionDefinedFunction from '../../function/native/basic/IsFunctionDefinedFunction.js'
-import {CONSTANTS} from '../../../operation/StackRegister.js'
 
 export default class FunctionInputTypeCompiler extends FunctionTypeCompiler {
 
@@ -20,16 +18,10 @@ export default class FunctionInputTypeCompiler extends FunctionTypeCompiler {
             const jumpTo = `[NEXT]setinput_${functionName}_${attribute.getAttrName()}_${Maths.generateId()}`
             const parentClassNames = ScriptHelper.getParentClassNames(world, script).reverse()
             if (parentClassNames.length > 0) {
-                const isFunctionDefinedFunction = new IsFunctionDefinedFunction()
                 parentClassNames.forEach(parentClassName => {
                     const scriptFunctionAbstractName = `${parentClassName}.${scriptFunction.getName()}`
                     stackFunction.getStack().push(...[
-                        new StackOperation(OPERATIONS.PUSH, 'functionName', scriptFunctionAbstractName),
-                        new StackOperation(OPERATIONS.CALL, isFunctionDefinedFunction.getName()),
-                        new StackOperation(OPERATIONS.JUMP, CONSTANTS.RESULT, jumpTo),
-                        new StackOperation(OPERATIONS.PUSH,
-                            `[MEM]${scriptFunctionName}.${attribute.getAttrName()}`,
-                            `[MEM]${scriptFunctionAbstractName}.${attribute.getAttrName()}`)
+                        new StackOperation(OPERATIONS.SETINPUT, scriptFunctionAbstractName, scriptFunctionName, attribute.getAttrName()),
                     ])
                 })
             }

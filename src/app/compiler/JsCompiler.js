@@ -10,12 +10,12 @@ export default class JsCompiler {
      */
     static compile(code) {
         const actor = new UnitActor()
-        const clazz = UnitActor
-        const classRegex = new RegExp('^class[\\s]+([a-zA-Z0-9]+)[\\s]*\{(.*)\}$', 's')
+        const clazz = class extends UnitActor{}
+        const classRegex = new RegExp('^class[\\s]+extends[\\s]+UnitActor[\\s]*\{(.*)\}$', 's')
         const attrRegex = new RegExp('^[a-zA-Z0-9_]+$')
         const functionRegex = new RegExp('^([a-zA-Z]+)\\(([a-zA-Z0-9,]*)\\)[\\s]*\{$')
         const classMatch = code.match(classRegex)
-        const classContent = classMatch[2]
+        const classContent = classMatch[1]
         let openBracketCount = 0
         let currentFunctionName
         let functionParams = []

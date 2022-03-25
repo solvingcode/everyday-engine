@@ -763,6 +763,7 @@ h4{
 #app-el-window .error-popup p{
     padding: 20px;
     font-size: 16px;
+    max-height: 300px;
 }
 
 #app-el-canvas .app-zone-wrapper, #app-el-canvas .content-canvas{
