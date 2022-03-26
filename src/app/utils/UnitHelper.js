@@ -38,6 +38,7 @@ import Maths from './Maths.js'
 import LightHelper from './LightHelper.js'
 import Canvas from '../core/Canvas.js'
 import {EEClass} from '../compiler/EEClass.js'
+import DynamicAttributeHelper from './DynamicAttributeHelper.js'
 
 export default class UnitHelper {
 
@@ -1330,10 +1331,11 @@ export default class UnitHelper {
     }
 
     /**
+     * @param {World} world
      * @param {Unit} unit
      * @param {ScriptComponent} scriptComponent
      */
-    static initScript(unit, scriptComponent) {
+    static initScript(world, unit, scriptComponent) {
         const className = scriptComponent.getScript()
         if (!scriptComponent.getCompiledClass()) {
             scriptComponent.setCompiledClass(new EEClass[className]())
@@ -1341,7 +1343,8 @@ export default class UnitHelper {
         const classCompiled = scriptComponent.getCompiledClass()
         for (const attribute in classCompiled) {
             if (typeof classCompiled[attribute] !== 'function' && attribute !== 'unit' && attribute !== 'component') {
-                classCompiled[attribute] = scriptComponent.getValue(attribute)
+                classCompiled[attribute] = DynamicAttributeHelper.getValueByType(
+                    scriptComponent.getValue(attribute), scriptComponent.getType(attribute), world)
             }
         }
         classCompiled.unit = unit

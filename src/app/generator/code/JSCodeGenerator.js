@@ -15,6 +15,8 @@ import ASetClassVariable from '../../flow/function/variable/ASetClassVariable.js
 import ASetAttrClassNameComponent from '../../flow/function/component/ASetAttrClassNameComponent.js'
 import AGetAttrClassNameComponent from '../../flow/function/component/AGetAttrClassNameComponent.js'
 import AAnimation from '../../flow/animation/AAnimation.js'
+import AGetAttrClassComponent from '../../flow/function/component/AGetAttrClassComponent.js'
+import ASetAttrClassComponent from '../../flow/function/component/ASetAttrClassComponent.js'
 
 export default class JSCodeGenerator extends CodeGenerator {
 
@@ -131,6 +133,9 @@ export default class JSCodeGenerator extends CodeGenerator {
                     registry[registryInfo.scope][registryInfo.attributeName] = {value}
                 }
                 instructions.push(`${variable} = ${rightValue};`)
+            } else if (operation === OPERATIONS.DISPATCH) {
+                const functionName = args[0]
+                instructions.push(`this.${functionName}();`)
             } else if (operation === OPERATIONS.CALL) {
                 const functionName = args[0]
                 const scope = args[1] ? StringHelper.normalize(args[1]) : ''
@@ -144,6 +149,17 @@ export default class JSCodeGenerator extends CodeGenerator {
                 } else if (func instanceof ASetClassVariable) {
                     leftValue = `this.${ScriptHelper.extractNameFromVar(func.getName())} = `
                     rightValue = ScriptHelper.getVarName(`${scope}.value`)
+                } else if (func instanceof AGetAttrClassComponent) {
+                    const extractName = ScriptHelper.extractNameFromComponent(func.getName())
+                    const splitName = extractName.split('.')
+                    leftValue = `${CONSTANTS.RESULT} = `
+                    rightValue = `this.unit.getComponentByName("${splitName[0]}").getValue("${splitName[1]}")`
+                } else if (func instanceof ASetAttrClassComponent) {
+                    const extractName = ScriptHelper.extractNameFromComponent(func.getName())
+                    const splitName = extractName.split('.')
+                    const value = ScriptHelper.getVarName(`${scope}.value`)
+                    leftValue = `this.unit.getComponentByName("${splitName[0]}").setValue("${splitName[1]}",`
+                    rightValue = `${value})`
                 } else if (func instanceof AAnimation) {
                     rightValue = `this.RunAnimation${ScriptHelper.extractInfoFromFunctionName(func.getName()).functionName}()`
                 } else if (func instanceof ASetAttrClassNameComponent) {
@@ -162,7 +178,9 @@ export default class JSCodeGenerator extends CodeGenerator {
                         params.push(ScriptHelper.getVarName(`${scope ? `${scope}.` : ''}${input.getAttrName()}`))
                     })
                     rightValue = `__.${StringHelper.normalize(functionName)}(${params.join(',')})`
-                    if (func.getOutputs().length > 0 || func.getOutput()) {
+                    if (func.getOutputs().length > 1) {
+                        leftValue = `${CONSTANTS.RESULT}object_ = `
+                    } else if (func.getOutputs().length > 0 || func.getOutput()) {
                         leftValue = `${CONSTANTS.RESULT} = `
                     }
                 }
@@ -229,7 +247,7 @@ export default class JSCodeGenerator extends CodeGenerator {
         if (StackRegistryHelper.isResult(varName)) {
             if (StackRegistryHelper.isCustomResult(varName)) {
                 const customResult = StackRegistryHelper.getCustomResult(varName)
-                newName = `${CONSTANTS.RESULT}.${customResult}`
+                newName = `${CONSTANTS.RESULT}object_.${customResult}`
             }
         } else if (StackRegistryHelper.isMemory(varName)) {
             newName = ScriptHelper.getVarName(StackRegistryHelper.getVarName(varName))

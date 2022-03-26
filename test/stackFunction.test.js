@@ -127,7 +127,7 @@ test('Create and compile class flow', function () {
     expect(mouseEventCompiled).toBeDefined()
     expect(mouseEventCompiled.constructor).toEqual(OnMouseClickEvent)
 
-    UnitHelper.initScript(null, scriptComponent)
+    UnitHelper.initScript(world,null, scriptComponent)
 
     const classCompiled = scriptComponent.getCompiledClass()
     OperationLogger.logStack(mouseEventCompiled.getStack())
@@ -173,7 +173,7 @@ test('Create and compile class script with success condition', function () {
     expect(mouseEventCompiled).toBeDefined()
     expect(mouseEventCompiled.constructor).toEqual(OnMouseClickEvent)
 
-    UnitHelper.initScript(null, scriptComponent)
+    UnitHelper.initScript(world, null, scriptComponent)
 
     const classCompiled = scriptComponent.getCompiledClass()
     OperationLogger.logStack(mouseEventCompiled.getStack())
@@ -219,7 +219,7 @@ test('Create and compile class script with failed condition', function () {
     expect(mouseEventCompiled).toBeDefined()
     expect(mouseEventCompiled.constructor).toEqual(OnMouseClickEvent)
 
-    UnitHelper.initScript(null, scriptComponent)
+    UnitHelper.initScript(world, null, scriptComponent)
 
     const classCompiled = scriptComponent.getCompiledClass()
     OperationLogger.logStack(mouseEventCompiled.getStack())
@@ -269,7 +269,7 @@ test('Create and compile class script with branch (true)', function () {
     expect(mouseEventCompiled).toBeDefined()
     expect(mouseEventCompiled.constructor).toEqual(OnMouseClickEvent)
 
-    UnitHelper.initScript(null, scriptComponent)
+    UnitHelper.initScript(world, null, scriptComponent)
 
     const classCompiled = scriptComponent.getCompiledClass()
     OperationLogger.logStack(mouseEventCompiled.getStack())
@@ -319,7 +319,7 @@ test('Create and compile class script with branch (false)', function () {
     expect(mouseEventCompiled).toBeDefined()
     expect(mouseEventCompiled.constructor).toEqual(OnMouseClickEvent)
 
-    UnitHelper.initScript(null, scriptComponent)
+    UnitHelper.initScript(world, null, scriptComponent)
 
     const classCompiled = scriptComponent.getCompiledClass()
     OperationLogger.logStack(mouseEventCompiled.getStack())
@@ -358,7 +358,7 @@ test('Create and compile class script with variables', function () {
     expect(mouseEventCompiled).toBeDefined()
     expect(mouseEventCompiled.constructor).toEqual(OnMouseClickEvent)
 
-    UnitHelper.initScript(null, scriptComponent)
+    UnitHelper.initScript(world, null, scriptComponent)
 
     const classCompiled = scriptComponent.getCompiledClass()
     OperationLogger.logStack(mouseEventCompiled.getStack())
@@ -402,7 +402,7 @@ test('Create and compile class script with loop', function () {
     expect(mouseEventCompiled.constructor).toEqual(OnMouseClickEvent)
     console.log(world.getCompiledClassRegistry().getInstance(className).getCode())
 
-    UnitHelper.initScript(null, scriptComponent)
+    UnitHelper.initScript(world, null, scriptComponent)
 
     const classCompiled = scriptComponent.getCompiledClass()
     OperationLogger.logStack(mouseEventCompiled.getStack())
@@ -462,7 +462,7 @@ test('Create and compile class function (no return)', function () {
     expect(mouseEventCompiled).toBeDefined()
     expect(mouseEventCompiled.constructor).toEqual(OnMouseClickEvent)
 
-    UnitHelper.initScript(unit, unitScriptComponent)
+    UnitHelper.initScript(world, unit, unitScriptComponent)
 
     const classCompiled = unitScriptComponent.getCompiledClass()
     OperationLogger.logStack(mouseEventCompiled.getStack())
@@ -532,7 +532,7 @@ test('Create and compile class function (return value)', function () {
     expect(mouseEventCompiled).toBeDefined()
     expect(mouseEventCompiled.constructor).toEqual(OnMouseClickEvent)
 
-    UnitHelper.initScript(unit, unitScriptComponent)
+    UnitHelper.initScript(world, unit, unitScriptComponent)
 
     const classCompiled = unitScriptComponent.getCompiledClass()
     OperationLogger.logStack(mouseEventCompiled.getStack())
@@ -607,7 +607,7 @@ test('Create and compile class function (with async calls)', async function () {
     expect(mouseEventCompiled).toBeDefined()
     expect(mouseEventCompiled.constructor).toEqual(OnMouseClickEvent)
 
-    UnitHelper.initScript(unit, unitScriptComponent)
+    UnitHelper.initScript(world, unit, unitScriptComponent)
 
     const classCompiled = unitScriptComponent.getCompiledClass()
     OperationLogger.logStack(mouseEventCompiled.getStack())
@@ -701,7 +701,7 @@ test('Create and compile class function (with async calls inside custom function
     expect(mouseEventCompiled).toBeDefined()
     expect(mouseEventCompiled.constructor).toEqual(OnMouseClickEvent)
 
-    UnitHelper.initScript(unit, unitScriptComponent)
+    UnitHelper.initScript(world, unit, unitScriptComponent)
 
     const classCompiled = unitScriptComponent.getCompiledClass()
     OperationLogger.logStack(mouseEventCompiled.getStack())
@@ -750,7 +750,7 @@ test('Create and compile class flow (order instructions)', function () {
     expect(mouseEventCompiled).toBeDefined()
     expect(mouseEventCompiled.constructor).toEqual(OnMouseClickEvent)
 
-    UnitHelper.initScript(unit, scriptComponent)
+    UnitHelper.initScript(world, unit, scriptComponent)
 
     const classCompiled = scriptComponent.getCompiledClass()
     OperationLogger.logStack(mouseEventCompiled.getStack())
@@ -795,7 +795,7 @@ test('Create and compile class flow (with get variables)', function () {
 
     scriptComponent.setVarsAttributes([new DynamicAttribute('var', TYPES.STRING, 'test')])
 
-    UnitHelper.initScript(unit, scriptComponent)
+    UnitHelper.initScript(world, unit, scriptComponent)
 
     const classCompiled = scriptComponent.getCompiledClass()
     OperationLogger.logStack(mouseEventCompiled.getStack())
@@ -843,7 +843,7 @@ test('Create and compile class flow (with set variables)', function () {
 
     scriptComponent.setVarsAttributes([new DynamicAttribute('var', TYPES.STRING, 'test')])
 
-    UnitHelper.initScript(unit, scriptComponent)
+    UnitHelper.initScript(world, unit, scriptComponent)
 
     const classCompiled = scriptComponent.getCompiledClass()
     OperationLogger.logStack(mouseEventCompiled.getStack())
@@ -891,7 +891,7 @@ test('Create and compile class flow (with set variables)', function () {
 
     scriptComponent.setVarsAttributes([new DynamicAttribute('var', TYPES.STRING, 'test')])
 
-    UnitHelper.initScript(unit, scriptComponent)
+    UnitHelper.initScript(world, unit, scriptComponent)
 
     const classCompiled = scriptComponent.getCompiledClass()
     OperationLogger.logStack(mouseEventCompiled.getStack())
@@ -942,7 +942,7 @@ test('Create and compile class flow (with public variables)', function () {
 
     scriptComponent.setVarsAttributes([new DynamicAttribute('var', TYPES.STRING, 'test')])
 
-    UnitHelper.initScript(unit, scriptComponent)
+    UnitHelper.initScript(world, unit, scriptComponent)
 
     const classCompiled = scriptComponent.getCompiledClass()
     OperationLogger.logStack(mouseEventCompiled.getStack())

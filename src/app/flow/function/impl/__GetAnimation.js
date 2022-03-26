@@ -1,5 +1,6 @@
 import World from '../../../world/World.js'
 
 export default function (id) {
-    return World.get().getAnimationManager().findById(parseInt(id))
+    const world = World.get()
+    return world.getAnimationManager().findById(parseInt(id))
 }

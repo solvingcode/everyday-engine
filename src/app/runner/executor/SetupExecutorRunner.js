@@ -2,6 +2,7 @@ import Runner from '../Runner.js'
 import World from '../../world/World.js'
 import ExecutorRegistry from '../../executor/ExecutorRegistry.js'
 import Storage from '../../core/Storage.js'
+import ExecutionContext from '../../executor/ExecutionContext.js'
 
 export class SetupExecutorRunner extends Runner {
 
@@ -46,6 +47,7 @@ export class SetupExecutorRunner extends Runner {
                 })
             })
         }
+        ExecutionContext.get().setContext(camera, deltaTime, lights, storage)
     }
 
 }

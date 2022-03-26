@@ -12,4 +12,5 @@ export default class UnitActor{
     OnInit(){}
     OnUpdate(){}
     OnAnimationStart(){}
+    OnAnyAnimationStart(){}
 }

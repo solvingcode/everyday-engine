@@ -49,6 +49,7 @@ export default class Unit extends UnitData {
                 return clazz && compiledClass instanceof clazz
             })
         }
+        return component
     }
 
     /**

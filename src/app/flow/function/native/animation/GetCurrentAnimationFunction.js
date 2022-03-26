@@ -12,6 +12,7 @@ export default class GetCurrentAnimationFunction extends AFunction {
      * @override
      */
     initAttributes() {
+        this.addInput('unit', TYPES.UNIT, 0)
         this.addOutput(TYPES.NUMBER)
     }
 
@@ -19,7 +20,8 @@ export default class GetCurrentAnimationFunction extends AFunction {
      * @override
      */
     execute(functionRegistry, unit, scriptComponent, world) {
-        const animationComponent = unit.getComponent(AnimationComponent)
+        const targetUnit = this.getInputValue('unit')
+        const animationComponent = targetUnit.getComponent(AnimationComponent)
         this.setOutputValue(animationComponent && `${animationComponent.getAnimation()}`)
     }
 }
