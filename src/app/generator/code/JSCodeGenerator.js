@@ -17,6 +17,7 @@ import AGetAttrClassNameComponent from '../../flow/function/component/AGetAttrCl
 import AAnimation from '../../flow/animation/AAnimation.js'
 import AGetAttrClassComponent from '../../flow/function/component/AGetAttrClassComponent.js'
 import ASetAttrClassComponent from '../../flow/function/component/ASetAttrClassComponent.js'
+import AnimatorScript from '../../flow/AnimatorScript.js'
 
 export default class JSCodeGenerator extends CodeGenerator {
 
@@ -45,7 +46,7 @@ export default class JSCodeGenerator extends CodeGenerator {
                 })
             }
         })
-        const parentClass = script.getParentName() ? script.getParentName() : 'UnitActor'
+        const parentClass = script.getParentName() ? script.getParentName() : (script instanceof AnimatorScript ? 'UnitAnimator' : 'UnitActor')
         const classCode = `class extends ${parentClass}{\n${this.getBlockAttribute(compiledClass)}\n${this.getBlockFunction(compiledClass)}\n}`
         console.log(classCode)
         compiledClass.setCode(classCode)

@@ -1,16 +1,40 @@
-export default class UnitActor{
+export default class UnitActor {
     unit
     component
-    OnMouseClick(){}
-    OnButtonClick(){}
-    OnKeyDown(){}
-    OnInputXAxis(){}
-    OnInputYAxis(){}
-    OnInputJump(){}
-    OnInputAttack(){}
-    OnStart(){}
-    OnInit(){}
-    OnUpdate(){}
-    OnAnimationStart(){}
-    OnAnyAnimationStart(){}
+
+    OnMouseClick() {
+    }
+
+    OnButtonClick() {
+    }
+
+    OnKeyDown() {
+    }
+
+    OnInputXAxis() {
+    }
+
+    OnInputYAxis() {
+    }
+
+    OnInputJump() {
+    }
+
+    OnInputAttack() {
+    }
+
+    OnStart() {
+    }
+
+    OnInit() {
+    }
+
+    OnUpdate() {
+    }
+
+    OnAnimationStart() {
+    }
+
+    OnAnyAnimationStart() {
+    }
 }

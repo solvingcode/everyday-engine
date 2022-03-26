@@ -1,5 +1,6 @@
 import Component from '../Component.js'
 import {TYPES} from '../../pobject/AttributeType.js'
+import ClientError from '../../exception/type/ClientError.js'
 
 export default class ScriptComponent extends Component {
 
@@ -127,7 +128,13 @@ export default class ScriptComponent extends Component {
      * @override
      */
     setValue(name, value) {
-        return super.setValue(name, value)
+        super.setValue(name, value)
+        if (this.compiledClass) {
+            if (!this.compiledClass.hasOwnProperty(name)) {
+                throw new ClientError(`Compiled script not support ${name}`)
+            }
+            this.compiledClass[name] = this.getValue(name)
+        }
     }
 
     /**

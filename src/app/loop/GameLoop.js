@@ -48,6 +48,7 @@ class GameLoop extends SceneLoop {
             GameExecutorRunner, LightRunner, GarbageRunner]
         ExecutorRegistry.get().register([
             new CameraExecutor(),
+            new EEScriptInitExecutor(),
             new AnimationPlayerExecutor(),
             new MeshExecutor(),
             new TransformExecutor(),
@@ -59,7 +60,6 @@ class GameLoop extends SceneLoop {
             new RigidBodyExecutor(),
             new ColliderExecutor(),
             new MeshStyleExecutor(),
-            new EEScriptInitExecutor(),
             new EEScriptExecutor(),
             new EEAnimationScriptExecutor(),
             new LightExecutor(),
