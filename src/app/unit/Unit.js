@@ -32,7 +32,11 @@ export default class Unit extends UnitData {
      * @return {UnitActor}
      */
     getScript(className) {
-        const scriptComponent = this.findComponentsByClass(ScriptComponent).find(component => component.getScript() === className)
+        const clazz = EEClass[className]
+        const scriptComponent = this.findComponentsByClass(ScriptComponent).find(component => {
+            const compiledClass = component.getCompiledClass()
+            return clazz && compiledClass instanceof clazz
+        })
         return scriptComponent.getCompiledClass()
     }
 

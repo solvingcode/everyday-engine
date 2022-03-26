@@ -12,6 +12,7 @@ export default class IsAnimationEndedFunction extends ANativeFunction {
      * @override
      */
     initAttributes() {
+        this.addInput('unit', TYPES.UNIT, 0)
         this.addOutput(TYPES.BOOLEAN)
     }
 
@@ -19,7 +20,8 @@ export default class IsAnimationEndedFunction extends ANativeFunction {
      * @override
      */
     execute(functionRegistry, unit, scriptComponent, world) {
-        const animationComponent = unit.getComponent(AnimationComponent)
+        const targetUnit = this.getInputValue('unit')
+        const animationComponent = targetUnit.getComponent(AnimationComponent)
         this.setOutputValue(
             animationComponent.getLoopTimes() > 0
         )

@@ -12,18 +12,20 @@ export default class EEAnimationScriptExecutor extends ComponentExecutor {
      */
     execute(unit, executionContext) {
         const animationComponent = unit.getComponent(AnimationComponent)
+        const animation = animationComponent.getAnimation()
         if (animationComponent.isEnabled()) {
             const classCompiled = animationComponent.getCompiledClass()
             if (!animationComponent.isInitialized()) {
                 classCompiled.OnInit()
                 animationComponent.setInitialized(true)
             }
-            if (!animationComponent.isStarted() && animationComponent.isInitialized()) {
+            if ((!animationComponent.isStarted() && animationComponent.isInitialized()) || !animation) {
                 classCompiled.OnAnimationStart()
                 animationComponent.setStarted(true)
             } else {
-                const animation = animationComponent.getAnimation()
-                classCompiled[`RunAnimation${animation}`]()
+                if (animation) {
+                    classCompiled[`RunAnimation${animation}`]()
+                }
             }
         }
     }

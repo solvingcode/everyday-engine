@@ -45,7 +45,8 @@ export default class JSCodeGenerator extends CodeGenerator {
                 })
             }
         })
-        const classCode = `class extends UnitActor{\n${this.getBlockAttribute(compiledClass)}\n${this.getBlockFunction(compiledClass)}\n}`
+        const parentClass = script.getParentName() ? script.getParentName() : 'UnitActor'
+        const classCode = `class extends ${parentClass}{\n${this.getBlockAttribute(compiledClass)}\n${this.getBlockFunction(compiledClass)}\n}`
         console.log(classCode)
         compiledClass.setCode(classCode)
         return compiledClass

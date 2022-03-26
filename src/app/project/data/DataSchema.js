@@ -599,7 +599,8 @@ class DataSchema {
         AssetScriptCode,
         AssetAnimationScriptXml,
         ClassScript,
-        TabManager
+        TabManager,
+        FunctionRegistry
     ]
 
     /**

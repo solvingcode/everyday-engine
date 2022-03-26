@@ -28,3 +28,8 @@ export {default as GetCollisions} from '../flow/function/impl/__GetCollisions.js
 export {default as GetUnitByComponent} from '../flow/function/impl/__GetUnitByComponent.js'
 export {default as GetUnitTagName} from '../flow/function/impl/__GetUnitTagName.js'
 export {default as GetCurrentAnimation} from '../flow/function/impl/__GetCurrentAnimation.js'
+export {default as VectorZero} from '../flow/function/impl/__VectorZero.js'
+export {default as IsGrounded} from '../flow/function/impl/__IsGrounded.js'
+export {default as ApplyForce} from '../flow/function/impl/__ApplyForce.js'
+export {default as IsAnimationEnded} from '../flow/function/impl/__IsAnimationEnded.js'
+export {default as DestroyUnit} from '../flow/function/impl/__DestroyUnit.js'
