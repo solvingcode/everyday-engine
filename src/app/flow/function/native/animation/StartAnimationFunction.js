@@ -12,6 +12,7 @@ export default class StartAnimationFunction extends AFunction {
      * @override
      */
     initAttributes() {
+        this.addInput('unit', TYPES.UNIT, 0)
         this.addInput('target', TYPES.ANIMATION, 0)
     }
 
@@ -20,7 +21,8 @@ export default class StartAnimationFunction extends AFunction {
      */
     execute(functionRegistry, unit, scriptComponent, world) {
         const animation = this.getInputValue('target')
-        const animationComponent = unit.getComponent(AnimationComponent)
+        const targetUnit = this.getInputValue('unit')
+        const animationComponent = targetUnit.getComponent(AnimationComponent)
         animationComponent.setTime(0)
         animationComponent.setLoopTimes(0)
         animationComponent.setAnimation(animation.getId())

@@ -10,6 +10,7 @@ import AAnimation from '../../animation/AAnimation.js'
 import StopAnimationFunction from '../../function/native/animation/StopAnimationFunction.js'
 import ACondition from '../../condition/ACondition.js'
 import GetAnimationFunction from '../../function/native/animation/GetAnimationFunction.js'
+import {TYPES} from '../../../pobject/AttributeType.js'
 
 export default class AnimationTypeCompiler extends FunctionTypeCompiler {
 
@@ -25,6 +26,8 @@ export default class AnimationTypeCompiler extends FunctionTypeCompiler {
             new StackOperation(OPERATIONS.PUSH, this.getScopedAttributedName(functionName, 'id'), `${animation.getId()}`),
             new StackOperation(OPERATIONS.CALL, getAnimation.getName(), functionName),
             new StackOperation(OPERATIONS.PUSH, this.getScopedAttributedName(functionName, 'target'), CONSTANTS.RESULT),
+            new StackOperation(OPERATIONS.SELF, `${TYPES.UNIT}`),
+            new StackOperation(OPERATIONS.PUSH, this.getScopedAttributedName(functionName, 'unit'), CONSTANTS.RESULT),
             new StackOperation(OPERATIONS.CALL, isAnimationPlaying.getName(), functionName),
             new StackOperation(OPERATIONS.PUSH, this.getScopedAttributedName(functionName, 'value'), CONSTANTS.RESULT),
             new StackOperation(OPERATIONS.CALL, not.getName(), functionName),
@@ -32,6 +35,8 @@ export default class AnimationTypeCompiler extends FunctionTypeCompiler {
             new StackOperation(OPERATIONS.PUSH, this.getScopedAttributedName(functionName, 'id'), `${animation.getId()}`),
             new StackOperation(OPERATIONS.CALL, getAnimation.getName(), functionName),
             new StackOperation(OPERATIONS.PUSH, this.getScopedAttributedName(functionName, 'target'), CONSTANTS.RESULT),
+            new StackOperation(OPERATIONS.SELF, `${TYPES.UNIT}`),
+            new StackOperation(OPERATIONS.PUSH, this.getScopedAttributedName(functionName, 'unit'), CONSTANTS.RESULT),
             new StackOperation(OPERATIONS.CALL, startAnimation.getName(), functionName),
             new StackOperation(OPERATIONS.JUMP_TO, '[NEXT]start_animation')
         ])
@@ -46,7 +51,9 @@ export default class AnimationTypeCompiler extends FunctionTypeCompiler {
             if (element instanceof AAnimation) {
                 const stopAnimation = new StopAnimationFunction()
                 sourceStackFunction.getStack().push(...[
-                    new StackOperation(OPERATIONS.CALL, stopAnimation.getName()),
+                    new StackOperation(OPERATIONS.SELF, `${TYPES.UNIT}`),
+                    new StackOperation(OPERATIONS.PUSH, this.getScopedAttributedName(functionName, 'unit'), CONSTANTS.RESULT),
+                    new StackOperation(OPERATIONS.CALL, stopAnimation.getName(), functionName),
                     new StackOperation(OPERATIONS.CALL, functionName)
                 ])
             } else if (element instanceof ACondition) {

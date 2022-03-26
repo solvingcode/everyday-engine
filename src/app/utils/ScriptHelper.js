@@ -526,6 +526,20 @@ export default class ScriptHelper {
     }
 
     /**
+     * @param {string} name
+     * @return {{functionName: string, parentName: string, className: string, rank: number}}
+     */
+    static extractInfoFromFunctionName(name) {
+        const nameParts = name.split('.')
+        return {
+            className: nameParts && nameParts[this.REGISTRY_PART_CLASS_INDEX],
+            parentName: nameParts && nameParts[this.REGISTRY_PART_SCOPE_INDEX],
+            functionName: nameParts && nameParts[this.REGISTRY_PART_FUNCTION_INDEX],
+            rank: nameParts && parseInt(nameParts[this.REGISTRY_PART_RANK_INDEX])
+        }
+    }
+
+    /**
      * @param {string} variable
      * @return {string}
      */

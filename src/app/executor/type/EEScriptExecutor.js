@@ -24,6 +24,14 @@ export default class EEScriptExecutor extends ComponentExecutor {
             .forEach(scriptComponent => {
                 if (world.getUnitManager().hasUnit(unit)) {
                     const classCompiled = scriptComponent.getCompiledClass()
+                    if (!scriptComponent.isInitialized()) {
+                        classCompiled.OnInit()
+                        scriptComponent.setInitialized(true)
+                    }
+                    if (!scriptComponent.isStarted() && scriptComponent.isInitialized()) {
+                        classCompiled.OnStart()
+                        scriptComponent.setStarted(true)
+                    }
                     if (mouse.isButtonClicked(MouseButton.LEFT)) {
                         classCompiled.OnMouseClick()
                     }
@@ -47,14 +55,6 @@ export default class EEScriptExecutor extends ComponentExecutor {
                     }
                     if (keyboard.isKeyReleased(gameInput.getKeyCode(GAME_INPUTS.ATTACK))) {
                         classCompiled.OnInputAttack()
-                    }
-                    if (!scriptComponent.isStarted() && scriptComponent.isInitialized()) {
-                        classCompiled.OnStart()
-                        scriptComponent.setStarted(true)
-                    }
-                    if (!scriptComponent.isInitialized()) {
-                        classCompiled.OnInit()
-                        scriptComponent.setInitialized(true)
                     }
                     classCompiled.OnUpdate()
                 }

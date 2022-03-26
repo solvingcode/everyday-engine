@@ -14,6 +14,7 @@ import AGetClassVariable from '../../flow/function/variable/AGetClassVariable.js
 import ASetClassVariable from '../../flow/function/variable/ASetClassVariable.js'
 import ASetAttrClassNameComponent from '../../flow/function/component/ASetAttrClassNameComponent.js'
 import AGetAttrClassNameComponent from '../../flow/function/component/AGetAttrClassNameComponent.js'
+import AAnimation from '../../flow/animation/AAnimation.js'
 
 export default class JSCodeGenerator extends CodeGenerator {
 
@@ -26,7 +27,7 @@ export default class JSCodeGenerator extends CodeGenerator {
             if (instance.getOriginalName()) {
                 const params = instance.getInputs().filter(input => input.getAttrName() !== 'unit').map(input =>
                     ScriptHelper.getVarName(`${script.getName()}.${instance.getOriginalName()}.${input.getAttrName()}`))
-                compiledFunction.setName(instance.getOriginalName())
+                compiledFunction.setName(this.getFunctionName(instance))
                 compiledFunction.setCode(this.generateFunction(instance, world))
                 compiledFunction.setParams(params)
                 compiledClass.addFunction(compiledFunction)
@@ -54,6 +55,17 @@ export default class JSCodeGenerator extends CodeGenerator {
      */
     getBlockFunction(compiledClass) {
         return compiledClass.getFunctions().map(func => `${func.getName()}(${func.getParams().join(',')}){\n${func.getCode()}\n}`).join('\n')
+    }
+
+    /**
+     * @param {AFunction} func
+     * @return {string}
+     */
+    getFunctionName(func) {
+        if (func instanceof AAnimation) {
+            return `RunAnimation${ScriptHelper.extractInfoFromFunctionName(func.getName()).functionName}`
+        }
+        return func.getOriginalName()
     }
 
     /**
@@ -132,6 +144,8 @@ export default class JSCodeGenerator extends CodeGenerator {
                 } else if (func instanceof ASetClassVariable) {
                     leftValue = `this.${ScriptHelper.extractNameFromVar(func.getName())} = `
                     rightValue = ScriptHelper.getVarName(`${scope}.value`)
+                } else if (func instanceof AAnimation) {
+                    rightValue = `this.RunAnimation${ScriptHelper.extractInfoFromFunctionName(func.getName()).functionName}()`
                 } else if (func instanceof ASetAttrClassNameComponent) {
                     const extractName = ScriptHelper.extractFromPublicVar(func.getName())
                     const target = ScriptHelper.getVarName(`${scope}.target`)
@@ -200,7 +214,7 @@ export default class JSCodeGenerator extends CodeGenerator {
                 instructions.push(`${CONSTANTS.RESULT} = ${value}`)
             }
         })
-        if (scriptFunction.getOutputs().length > 0 || scriptFunction.getOutput()) {
+        if ((scriptFunction.getOutputs().length > 0 || scriptFunction.getOutput()) && !(scriptFunction instanceof AAnimation)) {
             instructions.push(`return ${ScriptHelper.getVarName(`${scriptFunction.getName()}.${CONSTANTS.RESULT}`)}`)
         }
         return instructions.join('\n')

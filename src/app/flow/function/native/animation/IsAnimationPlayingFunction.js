@@ -12,6 +12,7 @@ export default class IsAnimationPlayingFunction extends AFunction {
      * @override
      */
     initAttributes() {
+        this.addInput('unit', TYPES.UNIT, 0)
         this.addInput('target', TYPES.ANIMATION, 0)
         this.addOutput(TYPES.BOOLEAN)
     }
@@ -21,7 +22,8 @@ export default class IsAnimationPlayingFunction extends AFunction {
      */
     execute(functionRegistry, unit, scriptComponent, world) {
         const animation = this.getInputValue('target')
-        const animationComponent = unit.getComponent(AnimationComponent)
+        const targetUnit = this.getInputValue('unit')
+        const animationComponent = targetUnit.getComponent(AnimationComponent)
         this.setOutputValue(
             animation.getId() === animationComponent.getAnimation()
         )

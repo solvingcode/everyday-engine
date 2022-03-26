@@ -13,7 +13,7 @@ export default class JsCompiler {
         const clazz = class extends UnitActor{}
         const classRegex = new RegExp('^class[\\s]+extends[\\s]+UnitActor[\\s]*\{(.*)\}$', 's')
         const attrRegex = new RegExp('^[a-zA-Z0-9_]+$')
-        const functionRegex = new RegExp('^([a-zA-Z]+)\\(([a-zA-Z0-9,]*)\\)[\\s]*\{$')
+        const functionRegex = new RegExp('^([a-zA-Z0-9]+)\\(([a-zA-Z0-9,]*)\\)[\\s]*\{$')
         const classMatch = code.match(classRegex)
         const classContent = classMatch[1]
         let openBracketCount = 0
