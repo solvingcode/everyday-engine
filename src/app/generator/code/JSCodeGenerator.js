@@ -25,6 +25,18 @@ export default class JSCodeGenerator extends CodeGenerator {
         const functionRegistry = world.getFunctionRegistry()
         const classInstances = functionRegistry.getInstancesByClass(script.getName())
         const compiledClass = new CompiledClass(script.getName())
+        const attributes = script.getVariables().map(variable => ({
+            name: variable.getDefinition().getAttrName(),
+            code: `${variable.getDefinition().getAttrName()};`
+        }))
+        attributes.forEach(attribute => {
+            if (!compiledClass.getAttribute(attribute.name)) {
+                const compiledAttribute = new CompiledAttribute()
+                compiledAttribute.setName(attribute.name)
+                compiledAttribute.setCode(attribute.code)
+                compiledClass.addAttribute(compiledAttribute)
+            }
+        })
         classInstances.forEach(instance => {
             const compiledFunction = new CompiledFunction()
             if (instance.getOriginalName()) {
@@ -34,16 +46,6 @@ export default class JSCodeGenerator extends CodeGenerator {
                 compiledFunction.setCode(this.generateFunction(instance, world))
                 compiledFunction.setParams(params)
                 compiledClass.addFunction(compiledFunction)
-
-                const attributes = this.generateAttributes(instance, world)
-                attributes.forEach(attribute => {
-                    if (!compiledClass.getAttribute(attribute.name)) {
-                        const compiledAttribute = new CompiledAttribute()
-                        compiledAttribute.setName(attribute.name)
-                        compiledAttribute.setCode(attribute.code)
-                        compiledClass.addAttribute(compiledAttribute)
-                    }
-                })
             }
         })
         const parentClass = script.getParentName() ? script.getParentName() : (script instanceof AnimatorScript ? 'UnitAnimator' : 'UnitActor')

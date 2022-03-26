@@ -11,7 +11,6 @@ export default class JsCompiler {
      * @return {UnitActor}
      */
     static compile(code) {
-        const actor = new UnitActor()
         const classRegex = new RegExp('^class[\\s]+extends[\\s]+([^{]+)[\\s]*\{(.*)\}$', 's')
         const attrRegex = new RegExp('^[a-zA-Z0-9_]+$')
         const functionRegex = new RegExp('^([a-zA-Z0-9]+)\\(([a-zA-Z0-9,]*)\\)[\\s]*\{$')
@@ -19,11 +18,13 @@ export default class JsCompiler {
         const parentClass = classMatch[1]
         const classContent = classMatch[2]
         const parentClazz = parentClass === 'UnitActor' ? UnitActor : (parentClass === 'UnitAnimator' ? UnitAnimator : EEClass[parentClass])
+        const actor = new parentClazz()
         if (!parentClazz) {
             throw new ClientError(`Class "${parentClass}" not compiled!`)
         }
         const clazz = class extends parentClazz {
         }
+        Object.getOwnPropertyNames(actor).forEach(parentAttribute => this.createAttribute(clazz, parentAttribute))
         let openBracketCount = 0
         let currentFunctionName
         let functionParams = []

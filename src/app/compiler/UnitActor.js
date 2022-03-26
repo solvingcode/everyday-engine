@@ -1,6 +1,8 @@
 export default class UnitActor {
     unit
     component
+    started
+    initialized
 
     OnMouseClick() {
     }
