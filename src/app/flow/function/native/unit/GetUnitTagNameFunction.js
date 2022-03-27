@@ -14,14 +14,4 @@ export default class GetUnitTagNameFunction extends AFunction{
         this.addInput('target', TYPES.UNIT, 0)
         this.addOutput(TYPES.STRING)
     }
-
-    /**
-     * @override
-     */
-    execute(functionRegistry, unit, scriptComponent, world) {
-        const target = this.getInputValue('target')
-        const tagPreference = world.getPreference().getTag()
-        const tagName = target.getTagId() ? tagPreference.find(target.getTagId()).getName() : ''
-        this.setOutputValue(tagName)
-    }
 }

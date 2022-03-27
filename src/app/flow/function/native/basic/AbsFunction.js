@@ -14,12 +14,4 @@ export default class AbsFunction extends AFunction{
         this.addInput('value', TYPES.NUMBER, 0)
         this.addOutput(TYPES.NUMBER)
     }
-
-    /**
-     * @override
-     */
-    execute() {
-        const value = parseFloat(this.getInputValue('value'))
-        this.setOutputValue(Math.abs(value))
-    }
 }

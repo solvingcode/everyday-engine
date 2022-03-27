@@ -14,9 +14,4 @@ export default class GetAnimationFunction extends AFunction{
         this.addInput('id', TYPES.NUMBER, 0)
         this.addOutput(TYPES.ANIMATION)
     }
-
-    execute(functionRegistry, unit, scriptComponent, world, executionContext) {
-        const id = this.getInputValue('id')
-        this.setOutputValue(world.getAnimationManager().findById(parseInt(id)))
-    }
 }

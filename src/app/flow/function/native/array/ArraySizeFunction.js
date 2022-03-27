@@ -14,12 +14,4 @@ export default class ArraySizeFunction extends AFunction{
         this.addInput('array', TYPES.ARRAY | TYPES.ANY, [])
         this.addOutput(TYPES.NUMBER)
     }
-
-    /**
-     * @override
-     */
-    execute(functionRegistry, unit, scriptComponent, world) {
-        const array = this.getInputValue('array')
-        this.setOutputValue(array.length)
-    }
 }

@@ -13,11 +13,4 @@ export default class GetDeltaTimeFunction extends AFunction{
     initAttributes() {
         this.addOutput(TYPES.NUMBER)
     }
-
-    /**
-     * @override
-     */
-    execute(functionRegistry, unit, scriptComponent, world, executionContext) {
-        this.setOutputValue(executionContext.deltaTime)
-    }
 }

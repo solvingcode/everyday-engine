@@ -14,12 +14,4 @@ export default class GetVarFunction extends AFunction{
         this.addInput('variable', TYPES.STRING)
         this.addOutput(TYPES.ANY)
     }
-
-    /**
-     * @override
-     */
-    execute(functionRegistry, unit, scriptComponent, world) {
-        const variable = this.getInputValue('variable')
-        this.setOutputValue(scriptComponent.getValue(variable))
-    }
 }

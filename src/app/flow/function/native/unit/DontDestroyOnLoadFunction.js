@@ -13,12 +13,4 @@ export default class DontDestroyOnLoadFunction extends AFunction{
     initAttributes() {
         this.addInput('target', TYPES.UNIT, 0)
     }
-
-    /**
-     * @override
-     */
-    execute(functionRegistry, unit, scriptComponent, world, executionContext) {
-        const target = this.getInputValue('target')
-        target.setDontDestroy(true)
-    }
 }

@@ -15,14 +15,4 @@ export default class AndFunction extends AFunction{
         this.addInput('value2', TYPES.BOOLEAN, 0)
         this.addOutput(TYPES.BOOLEAN)
     }
-
-    /**
-     * @override
-     */
-    execute() {
-        this.setOutputValue(
-            !!this.getInputValue('value1') &&
-            !!this.getInputValue('value2')
-        )
-    }
 }

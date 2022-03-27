@@ -192,7 +192,6 @@ import TileMapComponent from '../../component/internal/tile/TileMapComponent.js'
 import TileColliderComponent from '../../component/internal/tile/TileColliderComponent.js'
 import GetComponentInstanceFunction from '../../flow/function/native/component/GetComponentInstanceFunction.js'
 import GetCollisionsFunction from '../../flow/function/native/physics/GetCollisionsFunction.js'
-import CallFunction from '../../flow/function/native/basic/CallFunction.js'
 import InstantiateUnitFunction from '../../flow/function/native/unit/InstantiateUnitFunction.js'
 import AThen from '../../flow/promise/AThen.js'
 import SetParentUnitFunction from '../../flow/function/native/unit/SetParentUnitFunction.js'
@@ -477,7 +476,6 @@ class DataSchema {
         {id: 1720, type: TileColliderComponent},
         {id: 1730, type: GetComponentInstanceFunction},
         {id: 1740, type: GetCollisionsFunction},
-        {id: 1750, type: CallFunction},
         {id: 1760, type: InstantiateUnitFunction},
         {id: 1770, type: AThen},
         {id: 1780, type: SetParentUnitFunction},

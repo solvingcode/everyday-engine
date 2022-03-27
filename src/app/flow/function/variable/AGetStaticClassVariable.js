@@ -14,12 +14,6 @@ export default class AGetStaticClassVariable extends AClassVariable {
     /**
      * @override
      */
-    execute(functionRegistry, unit, scriptComponent, world, executionContext) {
-    }
-
-    /**
-     * @override
-     */
     initAttributes(params) {
     }
 }

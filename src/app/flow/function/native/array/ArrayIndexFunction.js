@@ -15,13 +15,4 @@ export default class ArrayIndexFunction extends AFunction{
         this.addInput('index', TYPES.NUMBER, 0)
         this.addOutput(TYPES.ANY)
     }
-
-    /**
-     * @override
-     */
-    execute(functionRegistry, unit, scriptComponent, world) {
-        const array = this.getInputValue('array')
-        const index = this.getInputValue('index')
-        this.setOutputValue(array[index])
-    }
 }

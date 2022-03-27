@@ -14,12 +14,4 @@ export default class ArrayFunction extends ANativeFunction{
         this.addInput('length', TYPES.NUMBER, 0)
         this.addOutput(TYPES.ARRAY | TYPES.ANY)
     }
-
-    /**
-     * @override
-     */
-    execute() {
-        const length = this.getInputValue('length')
-        this.setOutputValue(new Array(length))
-    }
 }

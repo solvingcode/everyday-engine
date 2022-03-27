@@ -14,12 +14,4 @@ export default class IsFunctionDefinedFunction extends AFunction {
         this.addInput('functionName', TYPES.STRING, 0)
         this.addOutput(TYPES.BOOLEAN)
     }
-
-    /**
-     * @override
-     */
-    execute(functionRegistry, unit, scriptComponent, world, executionContext) {
-        const functionName = this.getInputValue('functionName')
-        this.setOutputValue(!!functionRegistry.getInstance(functionName))
-    }
 }

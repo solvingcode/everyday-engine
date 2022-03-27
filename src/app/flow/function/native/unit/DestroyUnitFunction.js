@@ -13,13 +13,4 @@ export default class DestroyUnitFunction extends AFunction{
     initAttributes() {
         this.addInput('target', TYPES.UNIT, 0)
     }
-
-    /**
-     * @override
-     */
-    execute(functionRegistry, unit, scriptComponent, world, executionContext) {
-        const target = this.getInputValue('target')
-        world.getPhysicsManager().deleteUnit(target)
-        world.getUnitManager().destroyUnit(target)
-    }
 }

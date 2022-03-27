@@ -14,12 +14,4 @@ export default class IsAudioPlayingFunction extends AFunction {
         this.addInput('target', TYPES.AUDIO, 0)
         this.addOutput(TYPES.BOOLEAN)
     }
-
-    /**
-     * @override
-     */
-    execute(functionRegistry, unit, scriptComponent, world) {
-        const assetAudio = this.getInputValue('target')
-        this.setOutputValue(assetAudio.isPlaying())
-    }
 }

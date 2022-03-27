@@ -14,12 +14,4 @@ export default class LoadSceneFunction extends AFunction {
         this.addInput('target', TYPES.SCENE)
         this.addInput('additiveMode', TYPES.BOOLEAN, false)
     }
-
-    /**
-     * @override
-     */
-    execute(functionRegistry, unit, scriptComponent, world) {
-        const scene = this.getInputValue('target')
-        scene.setIncluded(true)
-    }
 }

@@ -37,63 +37,10 @@ import GetClassVarNode from '../src/app/flow/node/variable/GetClassVarNode.js'
 import SetClassVarNode from '../src/app/flow/node/variable/SetClassVarNode.js'
 import GetAttrClassNameNode from '../src/app/flow/node/variable/GetAttrClassNameNode.js'
 import SetAttrClassNameNode from '../src/app/flow/node/variable/SetAttrClassNameNode.js'
+import AssetHelper from '../src/app/utils/AssetHelper.js'
 
 beforeEach(function () {
     World.get().getCompiledClassRegistry().clear()
-})
-
-test('Execute native function (without output)', function () {
-    const log = new LogFunction()
-    log.setInputValue('value', 'test')
-    console.log = jest.fn()
-    log.execute()
-    expect(console.log).toHaveBeenCalledWith('test')
-})
-
-test('Execute native function (with output)', function () {
-    const add = new AddFunction()
-    add.setInputValue('value1', 20)
-    add.setInputValue('value2', 50)
-    add.execute()
-    expect(add.getOutputValue('result')).toBe(70)
-})
-
-test('Execute stack function (without output)', function () {
-    const functionRegistry = World.get().getFunctionRegistry()
-    functionRegistry.init()
-    const func = new AEmptyStackFunction('test')
-    func.setInputs([])
-    func.setStack([
-        new StackOperation(OPERATIONS.PUSH, 'value1', '20'),
-        new StackOperation(OPERATIONS.PUSH, 'value2', '20'),
-        new StackOperation(OPERATIONS.CALL, '+'),
-        new StackOperation(OPERATIONS.PUSH, 'value1', '__result__'),
-        new StackOperation(OPERATIONS.PUSH, 'value2', '60'),
-        new StackOperation(OPERATIONS.CALL, '+'),
-        new StackOperation(OPERATIONS.PUSH, 'value', '__result__'),
-        new StackOperation(OPERATIONS.CALL, 'Log')
-    ])
-    console.log = jest.fn()
-    func.execute(functionRegistry)
-    expect(console.log).toHaveBeenCalledWith(100)
-    expect(func.getOutputValue()).toBe(null)
-})
-
-test('Execute stack function (with output)', function () {
-    const functionRegistry = World.get().getFunctionRegistry()
-    functionRegistry.init()
-    const func = new AEmptyStackFunction('test')
-    func.addOutput(TYPES.NUMBER)
-    func.setStack([
-        new StackOperation(OPERATIONS.PUSH, 'value1', '20'),
-        new StackOperation(OPERATIONS.PUSH, 'value2', '30'),
-        new StackOperation(OPERATIONS.CALL, '+'),
-        new StackOperation(OPERATIONS.PUSH, 'value1', CONSTANTS.RESULT),
-        new StackOperation(OPERATIONS.PUSH, 'value2', '60'),
-        new StackOperation(OPERATIONS.CALL, '+')
-    ])
-    func.execute(functionRegistry)
-    expect(func.getOutputValue()).toBe(110)
 })
 
 test('Create and compile class flow', function () {
@@ -338,9 +285,11 @@ test('Create and compile class script with variables', function () {
 
     const script = new ClassScript('classScript')
     const scriptFunction = new FunctionScript('main')
+    const scriptVariable = new VariableScript('text', TYPES.STRING, 'test')
     script.addFunction(scriptFunction)
+    script.addVariable(scriptVariable)
     const scriptComponent = new ScriptComponent()
-    scriptComponent.setVarsAttributes([new DynamicAttribute('text', TYPES.STRING, 'test')])
+    scriptComponent.setVarsAttributes(ScriptHelper.getScriptVars(script, world))
     scriptComponent.setScript('classScript')
 
     const nodeLog = ScriptHelper.createNodeByClass(functionRegistry, scriptFunction, FunctionNode, 'Log')

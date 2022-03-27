@@ -13,13 +13,6 @@ export default class ASetStaticClassVariable extends AClassVariable {
     /**
      * @override
      */
-    execute(functionRegistry, unit, scriptComponent, world, executionContext) {
-        this.setOutputValue(this.getInputValue('value'))
-    }
-
-    /**
-     * @override
-     */
     initAttributes(params) {
         this.addInput('value', params.type)
     }

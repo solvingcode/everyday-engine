@@ -14,13 +14,4 @@ export default class GetUnitByComponentFunction extends AFunction{
         this.addInput('component', TYPES.COMPONENT_INSTANCE)
         this.addOutput(TYPES.UNIT)
     }
-
-    /**
-     * @override
-     */
-    execute(functionRegistry, unit, scriptComponent, world) {
-        const component = this.getInputValue('component')
-        const unitFound = world.getUnitManager().findUnitByComponent(component)
-        this.setOutputValue(unitFound)
-    }
 }

@@ -14,12 +14,4 @@ export default class isArrayEmptyFunction extends AFunction{
         this.addInput('array', TYPES.ARRAY | TYPES.ANY, [])
         this.addOutput(TYPES.BOOLEAN)
     }
-
-    /**
-     * @override
-     */
-    execute(functionRegistry, unit, scriptComponent, world) {
-        const array = this.getInputValue('array')
-        this.setOutputValue(!array || array.length === 0)
-    }
 }

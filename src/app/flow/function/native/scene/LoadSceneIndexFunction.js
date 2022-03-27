@@ -14,13 +14,4 @@ export default class LoadSceneIndexFunction extends AFunction {
         this.addInput('sceneIndex', TYPES.NUMBER)
         this.addInput('additiveMode', TYPES.BOOLEAN, false)
     }
-
-    /**
-     * @override
-     */
-    execute(functionRegistry, unit, scriptComponent, world) {
-        const sceneIndex = this.getInputValue('sceneIndex')
-        const scene = world.getSceneManager().findByIndex(sceneIndex)
-        scene.setIncluded(true)
-    }
 }

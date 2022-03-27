@@ -14,12 +14,4 @@ export default class APromise extends AFunction{
         this.addInput('target', TYPES.ANY, [])
         this.addOutput(TYPES.PROMISE)
     }
-
-    /**
-     * @override
-     */
-    execute(functionRegistry, unit, scriptComponent, world, executionContext) {
-        const target = this.getInputValue('target')
-        this.setOutputValue(new Promise(resolve => resolve(target)))
-    }
 }

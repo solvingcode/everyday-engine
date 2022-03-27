@@ -13,12 +13,4 @@ export default class GetActiveCameraFunction extends AFunction {
     initAttributes(params) {
         this.addOutput(TYPES.UNIT)
     }
-
-    /**
-     * @override
-     */
-    execute(functionRegistry, unit, scriptComponent, world, executionContext) {
-        const camera = world.getCamera()
-        this.setOutputValue(camera.getUnit(world.getUnitManager()))
-    }
 }

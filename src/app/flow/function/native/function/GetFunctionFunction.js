@@ -14,12 +14,4 @@ export default class GetFunctionFunction extends AFunction{
         this.addInput('name', TYPES.STRING, 0)
         this.addOutput(TYPES.FUNCTION)
     }
-
-    /**
-     * @override
-     */
-    execute(functionRegistry, unit, scriptComponent, world, executionContext) {
-        const name = this.getInputValue('name')
-        this.setOutputValue(functionRegistry.getInstance(name))
-    }
 }

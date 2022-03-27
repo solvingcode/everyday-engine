@@ -15,13 +15,4 @@ export default class ConcatFunction extends AFunction{
         this.addInput('text2', TYPES.STRING, 0)
         this.addOutput(TYPES.NUMBER)
     }
-
-    /**
-     * @override
-     */
-    execute() {
-        const text1 = this.getInputValue('text1')
-        const text2 = this.getInputValue('text2')
-        this.setOutputValue(`${text1}${text2}`)
-    }
 }

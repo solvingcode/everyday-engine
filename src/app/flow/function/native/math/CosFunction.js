@@ -14,11 +14,4 @@ export default class CosFunction extends AFunction{
         this.addInput('number', TYPES.NUMBER, 0)
         this.addOutput(TYPES.NUMBER)
     }
-
-    /**
-     * @override
-     */
-    execute() {
-        this.setOutputValue(Math.cos(this.getInputValue('number')))
-    }
 }

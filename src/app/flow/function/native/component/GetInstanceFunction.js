@@ -15,13 +15,4 @@ export default class GetInstanceFunction extends AFunction{
         this.addInput('attribute', TYPES.STRING)
         this.addOutput(TYPES.ANY)
     }
-
-    /**
-     * @override
-     */
-    execute(functionRegistry, unit, scriptComponent, world) {
-        const component = this.getInputValue('component')
-        const attribute = this.getInputValue('attribute')
-        this.setOutputValue(component.getValue(attribute))
-    }
 }

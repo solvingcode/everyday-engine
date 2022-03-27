@@ -14,11 +14,4 @@ export default class SinFunction extends AFunction{
         this.addInput('number', TYPES.NUMBER, 0)
         this.addOutput(TYPES.NUMBER)
     }
-
-    /**
-     * @override
-     */
-    execute() {
-        this.setOutputValue(Math.sin(this.getInputValue('number')))
-    }
 }

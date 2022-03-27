@@ -13,11 +13,4 @@ export default class GetTimeFunction extends AFunction{
     initAttributes() {
         this.addOutput(TYPES.NUMBER)
     }
-
-    /**
-     * @override
-     */
-    execute() {
-        this.setOutputValue(Date.now())
-    }
 }
