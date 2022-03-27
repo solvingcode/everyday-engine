@@ -1,3 +1,3 @@
-export default function (value) {
-    return !value
+export default function (target) {
+    return !target
 }

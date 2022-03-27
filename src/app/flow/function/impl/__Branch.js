@@ -1,6 +1,6 @@
-export default function (value) {
+export default function (target) {
     return {
-        true: !!value,
-        false: !value
+        true: !!target,
+        false: !target
     }
 }

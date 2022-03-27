@@ -15,14 +15,4 @@ export default class LessThanFunction extends AFunction{
         this.addInput('value2', TYPES.NUMBER, 0)
         this.addOutput(TYPES.BOOLEAN)
     }
-
-    /**
-     * @override
-     */
-    execute() {
-        this.setOutputValue(
-            parseFloat(this.getInputValue('value1')) <
-            parseFloat(this.getInputValue('value2'))
-        )
-    }
 }

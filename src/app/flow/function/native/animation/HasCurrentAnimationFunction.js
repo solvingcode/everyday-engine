@@ -12,6 +12,7 @@ export default class HasCurrentAnimationFunction extends AFunction {
      * @override
      */
     initAttributes() {
+        this.addInput('unit', TYPES.UNIT)
         this.addOutput(TYPES.BOOLEAN)
     }
 

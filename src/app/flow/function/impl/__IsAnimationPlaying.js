@@ -1,5 +1,5 @@
 import AnimationComponent from '../../../component/internal/AnimationComponent.js'
 
-export default function (unit, animation) {
-    return animation && unit.getComponent(AnimationComponent).getAnimation() === animation.getId()
+export default function (unit, target) {
+    return target && unit.getComponent(AnimationComponent).getAnimation() === target.getId()
 }

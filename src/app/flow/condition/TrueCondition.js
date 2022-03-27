@@ -15,11 +15,4 @@ export default class TrueCondition extends ACondition{
         this.addOutput(TYPES.BOOLEAN)
     }
 
-    /**
-     * @override
-     */
-    execute() {
-        this.setOutputValue(!!this.getInputValue('target'))
-    }
-
 }

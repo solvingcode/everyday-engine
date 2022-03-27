@@ -14,11 +14,4 @@ export default class LogFunction extends AFunction{
         this.addInput('value', TYPES.ANY)
     }
 
-    /**
-     * @override
-     */
-    execute() {
-        console.log(this.getInputValue('value'))
-    }
-
 }

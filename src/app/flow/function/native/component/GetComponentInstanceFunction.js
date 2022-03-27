@@ -12,6 +12,7 @@ export default class GetComponentInstanceFunction extends AFunction {
      * @override
      */
     initAttributes() {
+        this.addInput('unit', TYPES.UNIT)
         this.addInput('component', TYPES.STRING, 0)
         this.addOutput(TYPES.COMPONENT_INSTANCE)
     }

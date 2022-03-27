@@ -16,12 +16,4 @@ export default class ABranch extends AFunction{
         this.addCustomOutput('false', TYPES.BOOLEAN)
     }
 
-    /**
-     * @override
-     */
-    execute(functionRegistry, unit, scriptComponent, world, executionContext) {
-        this.setCustomOutputValue('true', !!this.getInputValue('target'))
-        this.setCustomOutputValue('false', !this.getInputValue('target'))
-    }
-
 }

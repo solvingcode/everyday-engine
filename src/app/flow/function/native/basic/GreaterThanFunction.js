@@ -16,13 +16,4 @@ export default class GreaterThanFunction extends AFunction{
         this.addOutput(TYPES.BOOLEAN)
     }
 
-    /**
-     * @override
-     */
-    execute() {
-        this.setOutputValue(
-            parseFloat(this.getInputValue('value1')) >
-            parseFloat(this.getInputValue('value2'))
-        )
-    }
 }

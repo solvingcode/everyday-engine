@@ -11,6 +11,7 @@ export default class GetFunction extends AFunction{
      * @override
      */
     initAttributes() {
+        this.addInput('unit', TYPES.UNIT)
         this.addInput('component', TYPES.STRING, 0)
         this.addInput('attribute', TYPES.STRING)
         this.addOutput(TYPES.ANY)

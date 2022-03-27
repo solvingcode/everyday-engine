@@ -129,19 +129,6 @@ export default class AFunction extends FunctionData{
     }
 
     /**
-     * @abstract
-     * @param {FunctionRegistry} functionRegistry
-     * @param {Unit} unit
-     * @param {ScriptComponent} scriptComponent
-     * @param {World} world
-     * @param {{camera: Camera, lights: Unit[], deltaTime: number, storage: Storage}} executionContext
-     * @return {void}
-     */
-    execute(functionRegistry, unit, scriptComponent, world, executionContext){
-        throw new SystemError(`${this.constructor.name}.execute must be implemented`)
-    }
-
-    /**
      * @protected
      * @param {string} name
      * @param {number} type
