@@ -9,7 +9,6 @@ import CompiledFunction from '../../flow/compiler/compiled/CompiledFunction.js'
 import CompiledAttribute from '../../flow/compiler/compiled/CompiledAttribute.js'
 import AttributeType, {TYPES} from '../../pobject/AttributeType.js'
 import ClientError from '../../exception/type/ClientError.js'
-import OperationLogger from '../../operation/logger/OperationLogger.js'
 import AGetClassVariable from '../../flow/function/variable/AGetClassVariable.js'
 import ASetClassVariable from '../../flow/function/variable/ASetClassVariable.js'
 import ASetAttrClassNameComponent from '../../flow/function/component/ASetAttrClassNameComponent.js'
@@ -50,7 +49,7 @@ export default class JSCodeGenerator extends CodeGenerator {
         })
         const parentClass = script.getParentName() ? script.getParentName() : (script instanceof AnimatorScript ? 'UnitAnimator' : 'UnitActor')
         const classCode = `class extends ${parentClass}{\n${this.getBlockAttribute(compiledClass)}\n${this.getBlockFunction(compiledClass)}\n}`
-        console.log(classCode)
+        console.debug(classCode)
         compiledClass.setCode(classCode)
         return compiledClass
     }
@@ -112,8 +111,8 @@ export default class JSCodeGenerator extends CodeGenerator {
         const instructions = []
         const nextJump = []
         const registry = {base: {}}
-        console.log(scriptFunction.getName())
-        OperationLogger.logStack(scriptFunction.getStack())
+        const vars = [CONSTANTS.RESULT]
+        instructions.push(`var ${CONSTANTS.RESULT}`)
         scriptFunction.getStack().forEach(stackOperation => {
             const operation = stackOperation.getOperation()
             const args = stackOperation.getArgs()
@@ -136,7 +135,12 @@ export default class JSCodeGenerator extends CodeGenerator {
                     }
                     registry[registryInfo.scope][registryInfo.attributeName] = {value}
                 }
-                instructions.push(`${variable} = ${rightValue};`)
+                let declare = ''
+                if (!vars.includes(variable)) {
+                    vars.push(variable)
+                    declare = 'var '
+                }
+                instructions.push(`${declare}${variable} = ${rightValue};`)
             } else if (operation === OPERATIONS.DISPATCH) {
                 const functionName = args[0]
                 instructions.push(`this.${functionName}();`)
@@ -183,7 +187,7 @@ export default class JSCodeGenerator extends CodeGenerator {
                     })
                     rightValue = `__.${StringHelper.normalize(functionName)}(${params.join(',')})`
                     if (func.getOutputs().length > 1) {
-                        leftValue = `${CONSTANTS.RESULT}object_ = `
+                        leftValue = `var ${CONSTANTS.RESULT}object_ = `
                     } else if (func.getOutputs().length > 0 || func.getOutput()) {
                         leftValue = `${CONSTANTS.RESULT} = `
                     }

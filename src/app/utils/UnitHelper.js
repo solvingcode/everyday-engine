@@ -37,7 +37,6 @@ import Color from './Color.js'
 import Maths from './Maths.js'
 import LightHelper from './LightHelper.js'
 import Canvas from '../core/Canvas.js'
-import {EEClass} from '../compiler/EEClass.js'
 import DynamicAttributeHelper from './DynamicAttributeHelper.js'
 
 export default class UnitHelper {

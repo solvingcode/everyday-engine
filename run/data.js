@@ -1263,9 +1263,11 @@ var StackOperation = /*#__PURE__*/function () {
 exports["default"] = StackOperation;
 var OPERATIONS = {
   PUSH: 'push',
+  SETINPUT: 'set_input',
   GET: 'get',
   SET: 'set',
   CALL: 'call',
+  CALLFUNC: 'call_func',
   EXIT: 'exit',
   JUMP: 'jump',
   JUMP_TO: 'jump_to',
@@ -3653,6 +3655,10 @@ var FunctionData = /*#__PURE__*/function (_Data) {
    */
 
   /**
+   * @type {string}
+   */
+
+  /**
    * @type {DynamicAttribute[]}
    */
 
@@ -3698,6 +3704,7 @@ var FunctionData = /*#__PURE__*/function (_Data) {
     _this = _super.call(this);
     (0, _defineProperty2["default"])((0, _assertThisInitialized2["default"])(_this), "id", void 0);
     (0, _defineProperty2["default"])((0, _assertThisInitialized2["default"])(_this), "name", void 0);
+    (0, _defineProperty2["default"])((0, _assertThisInitialized2["default"])(_this), "originalName", void 0);
     (0, _defineProperty2["default"])((0, _assertThisInitialized2["default"])(_this), "inputs", void 0);
     (0, _defineProperty2["default"])((0, _assertThisInitialized2["default"])(_this), "output", void 0);
     (0, _defineProperty2["default"])((0, _assertThisInitialized2["default"])(_this), "outputs", void 0);
@@ -3771,6 +3778,24 @@ var FunctionData = /*#__PURE__*/function (_Data) {
     key: "getName",
     value: function getName() {
       return this.name;
+    }
+    /**
+     * @param {string} originalName
+     */
+
+  }, {
+    key: "setOriginalName",
+    value: function setOriginalName(originalName) {
+      this.originalName = originalName;
+    }
+    /**
+     * @return {string}
+     */
+
+  }, {
+    key: "getOriginalName",
+    value: function getOriginalName() {
+      return this.originalName;
     }
     /**
      * @param {string} className
@@ -6664,6 +6689,7 @@ var WorldData = /*#__PURE__*/function (_Data) {
     (0, _defineProperty2["default"])((0, _assertThisInitialized2["default"])(_this), "tabManager", void 0);
     (0, _defineProperty2["default"])((0, _assertThisInitialized2["default"])(_this), "preference", void 0);
     (0, _defineProperty2["default"])((0, _assertThisInitialized2["default"])(_this), "functionRegistry", void 0);
+    (0, _defineProperty2["default"])((0, _assertThisInitialized2["default"])(_this), "compiledClassRegistry", void 0);
     (0, _defineProperty2["default"])((0, _assertThisInitialized2["default"])(_this), "componentRegistry", void 0);
     (0, _defineProperty2["default"])((0, _assertThisInitialized2["default"])(_this), "materialRegistry", void 0);
     (0, _defineProperty2["default"])((0, _assertThisInitialized2["default"])(_this), "camera", void 0);
@@ -6723,6 +6749,15 @@ var WorldData = /*#__PURE__*/function (_Data) {
     key: "setFunctionRegistry",
     value: function setFunctionRegistry(functionRegistry) {
       this.functionRegistry = functionRegistry;
+    }
+    /**
+     * @param {CompiledClassRegistry} compiledClassRegistry
+     */
+
+  }, {
+    key: "setCompiledClassRegistry",
+    value: function setCompiledClassRegistry(compiledClassRegistry) {
+      this.compiledClassRegistry = compiledClassRegistry;
     }
     /**
      * @param {ComponentRegistry} componentRegistry
@@ -6831,6 +6866,15 @@ var WorldData = /*#__PURE__*/function (_Data) {
     key: "getFunctionRegistry",
     value: function getFunctionRegistry() {
       return this.functionRegistry;
+    }
+    /**
+     * @return {CompiledClassRegistry}
+     */
+
+  }, {
+    key: "getCompiledClassRegistry",
+    value: function getCompiledClassRegistry() {
+      return this.compiledClassRegistry;
     }
     /**
      * @return {ComponentRegistry}

@@ -567,7 +567,7 @@ class DataSchema {
         {id: 2610, type: TextComponent},
         {id: 2620, type: GetActiveCameraFunction},
         {id: 2630, type: CompiledClassRegistry},
-        {id: 2640, type: CompiledClass},
+        {id: 2640, type: CompiledClass}
     ]
 
     /**
@@ -600,7 +600,8 @@ class DataSchema {
         AssetAnimationScriptXml,
         ClassScript,
         TabManager,
-        FunctionRegistry
+        FunctionRegistry,
+        CompiledClassRegistry
     ]
 
     /**

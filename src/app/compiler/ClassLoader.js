@@ -1,5 +1,4 @@
 import JsCompiler from './JsCompiler.js'
-import {EEClass} from './EEClass.js'
 
 export default class ClassLoader {
 

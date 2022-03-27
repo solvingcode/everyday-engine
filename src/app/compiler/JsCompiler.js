@@ -1,7 +1,6 @@
 import UnitActor from './UnitActor.js'
 import ClientError from '../exception/type/ClientError.js'
 import SystemError from '../exception/type/SystemError.js'
-import {EEClass} from './EEClass.js'
 import UnitAnimator from './UnitAnimator.js'
 
 export default class JsCompiler {
@@ -18,10 +17,10 @@ export default class JsCompiler {
         const parentClass = classMatch[1]
         const classContent = classMatch[2]
         const parentClazz = parentClass === 'UnitActor' ? UnitActor : (parentClass === 'UnitAnimator' ? UnitAnimator : EEClass[parentClass])
-        const actor = new parentClazz()
         if (!parentClazz) {
             throw new ClientError(`Class "${parentClass}" not compiled!`)
         }
+        const actor = new parentClazz()
         const clazz = class extends parentClazz {
         }
         Object.getOwnPropertyNames(actor).forEach(parentAttribute => this.createAttribute(clazz, parentAttribute))

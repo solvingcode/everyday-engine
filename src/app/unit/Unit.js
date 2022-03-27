@@ -1,7 +1,6 @@
 import UnitData from '../project/data/UnitData.js'
 import GUIPropertyComponent from '../component/internal/gui/property/GUIPropertyComponent.js'
 import ScriptComponent from '../component/internal/ScriptComponent.js'
-import {EEClass} from '../compiler/EEClass.js'
 
 export default class Unit extends UnitData {
 
