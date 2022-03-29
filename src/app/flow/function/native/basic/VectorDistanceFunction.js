@@ -1,7 +1,7 @@
 import {TYPES} from '../../../../pobject/AttributeType.js'
-import AFunction from '../../AFunction.js'
+import ANativeFunction from '../ANativeFunction.js'
 
-export default class VectorDistanceFunction extends AFunction{
+export default class VectorDistanceFunction extends ANativeFunction{
 
     constructor() {
         super('VectorDistance')

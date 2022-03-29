@@ -28,10 +28,6 @@ export default class FunctionData extends Data {
      */
     outputs
     /**
-     * @type {StackOperation[]}
-     */
-    stack
-    /**
      * @type {number}
      */
     access
@@ -61,7 +57,6 @@ export default class FunctionData extends Data {
         this.name = name
         this.inputs = []
         this.outputs = []
-        this.stack = []
         this.childClassNames = []
         this.output = null
         this.access = 0
@@ -205,20 +200,6 @@ export default class FunctionData extends Data {
      */
     setOutputs(outputs){
         this.outputs = outputs
-    }
-
-    /**
-     * @return {StackOperation[]}
-     */
-    getStack(){
-        return this.stack
-    }
-
-    /**
-     * @param {StackOperation[]} stack
-     */
-    setStack(stack){
-        this.stack = stack
     }
 
     /**

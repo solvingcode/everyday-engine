@@ -1,7 +1,7 @@
-import AStackFunction from '../function/AStackFunction.js'
 import {TYPES} from '../../pobject/AttributeType.js'
+import ANativeStackFunction from '../function/native/ANativeStackFunction.js'
 
-export default class AReference extends AStackFunction{
+export default class AReference extends ANativeStackFunction{
 
     constructor() {
         super('Reference')

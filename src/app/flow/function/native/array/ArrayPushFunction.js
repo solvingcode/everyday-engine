@@ -1,7 +1,7 @@
-import AFunction from '../../AFunction.js'
+import ANativeFunction from '../ANativeFunction.js'
 import {TYPES} from '../../../../pobject/AttributeType.js'
 
-export default class ArrayPushFunction extends AFunction{
+export default class ArrayPushFunction extends ANativeFunction{
 
     constructor() {
         super('ArrayPush')

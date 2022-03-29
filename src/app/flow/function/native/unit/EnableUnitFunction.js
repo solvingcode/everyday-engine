@@ -1,7 +1,7 @@
-import AFunction from '../../AFunction.js'
+import ANativeFunction from '../ANativeFunction.js'
 import {TYPES} from '../../../../pobject/AttributeType.js'
 
-export default class EnableUnitFunction extends AFunction{
+export default class EnableUnitFunction extends ANativeFunction{
 
     constructor() {
         super('EnableUnit')

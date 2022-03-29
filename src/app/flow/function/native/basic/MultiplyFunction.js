@@ -1,7 +1,7 @@
 import {TYPES} from '../../../../pobject/AttributeType.js'
-import AFunction from '../../AFunction.js'
+import ANativeFunction from '../ANativeFunction.js'
 
-export default class MultiplyFunction extends AFunction{
+export default class MultiplyFunction extends ANativeFunction{
 
     constructor() {
         super('Multiply')

@@ -21,11 +21,17 @@ export default class AFunction extends FunctionData{
     validated
 
     /**
+     * @type {StackOperation[]}
+     */
+    stack
+
+    /**
      * @param {string} name
      * @param {*} params
      */
     constructor(name, params = {}) {
         super(name)
+        this.stack = []
         this.init(params)
     }
 
@@ -50,6 +56,20 @@ export default class AFunction extends FunctionData{
      */
     setOptimized(optimized){
         this.optimized = optimized
+    }
+
+    /**
+     * @return {StackOperation[]}
+     */
+    getStack(){
+        return this.stack
+    }
+
+    /**
+     * @param {StackOperation[]} stack
+     */
+    setStack(stack){
+        this.stack = stack
     }
 
     /**

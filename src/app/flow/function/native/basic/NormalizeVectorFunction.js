@@ -1,7 +1,7 @@
 import {TYPES} from '../../../../pobject/AttributeType.js'
-import AFunction from '../../AFunction.js'
+import ANativeFunction from '../ANativeFunction.js'
 
-export default class NormalizeVectorFunction extends AFunction{
+export default class NormalizeVectorFunction extends ANativeFunction{
 
     constructor() {
         super('VectorNormalize')

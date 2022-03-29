@@ -1,7 +1,7 @@
 import {TYPES} from '../../../../pobject/AttributeType.js'
-import AFunction from '../../AFunction.js'
+import ANativeFunction from '../ANativeFunction.js'
 
-export default class AndFunction extends AFunction{
+export default class AndFunction extends ANativeFunction{
 
     constructor() {
         super('&&')

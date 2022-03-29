@@ -125,6 +125,7 @@ class World extends WorldData {
      * @param {Storage} storage
      */
     doInit(storage) {
+        this.initialized = true
         this.createRootFolder()
         this.getPreference().init()
         this.getTabManager().init()
@@ -149,7 +150,7 @@ class World extends WorldData {
                 AssetHelper.validate(result, this)
             })
         })
-        this.initialized = true
+        assetManager.getScriptAssets().forEach(asset => assetManager.compileScriptAssets([asset], this))
     }
 
     constructComponentSetterGetter() {

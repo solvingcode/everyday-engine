@@ -1,7 +1,7 @@
 import {TYPES} from '../../../../pobject/AttributeType.js'
-import AFunction from '../../AFunction.js'
+import ANativeFunction from '../ANativeFunction.js'
 
-export default class FlipScaleFunction extends AFunction {
+export default class FlipScaleFunction extends ANativeFunction {
 
     constructor() {
         super('FlipScale')

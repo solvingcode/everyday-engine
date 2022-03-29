@@ -1,7 +1,7 @@
 import {TYPES} from '../../../../pobject/AttributeType.js'
-import AFunction from '../../AFunction.js'
+import ANativeFunction from '../ANativeFunction.js'
 
-export default class FindUnitsByNameFunction extends AFunction{
+export default class FindUnitsByNameFunction extends ANativeFunction{
 
     constructor() {
         super('FindUnitsByName')

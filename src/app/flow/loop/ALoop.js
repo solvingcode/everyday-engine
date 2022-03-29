@@ -1,7 +1,7 @@
 import {TYPES} from '../../pobject/AttributeType.js'
-import AFunction from '../function/AFunction.js'
+import ANativeFunction from '../function/native/ANativeFunction.js'
 
-export default class ALoop extends AFunction{
+export default class ALoop extends ANativeFunction{
 
     constructor(name) {
         super(name || 'Loop')

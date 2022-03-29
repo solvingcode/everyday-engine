@@ -1,8 +1,8 @@
 import {TYPES} from '../../../../pobject/AttributeType.js'
-import AFunction from '../../AFunction.js'
+import ANativeFunction from '../ANativeFunction.js'
 import Vector from '../../../../utils/Vector.js'
 
-export default class PhysicsTranslateFunction extends AFunction {
+export default class PhysicsTranslateFunction extends ANativeFunction {
 
     constructor() {
         super('PhysicsTranslate')

@@ -1,7 +1,7 @@
-import AFunction from '../function/AFunction.js'
 import {TYPES} from '../../pobject/AttributeType.js'
+import ANativeFunction from '../function/native/ANativeFunction.js'
 
-export default class APromise extends AFunction{
+export default class APromise extends ANativeFunction{
 
     constructor() {
         super('APromise')

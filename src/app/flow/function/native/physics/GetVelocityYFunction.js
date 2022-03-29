@@ -1,7 +1,7 @@
 import {TYPES} from '../../../../pobject/AttributeType.js'
-import AFunction from '../../AFunction.js'
+import ANativeFunction from '../ANativeFunction.js'
 
-export default class GetVelocityYFunction extends AFunction{
+export default class GetVelocityYFunction extends ANativeFunction{
 
     constructor() {
         super('GetVelocityY')

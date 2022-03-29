@@ -585,7 +585,8 @@ class DataSchema {
         RectFillUnitInstant,
         CircleUnitInstant,
         RectSelectorUnitInstant,
-        CircleSelectorUnitInstant
+        CircleSelectorUnitInstant,
+        FunctionRegistry
     ]
 
     /**
@@ -621,7 +622,10 @@ class DataSchema {
      */
     static isExcluded(type, isForGame = false) {
         return this.exclude.includes(type) ||
-            (isForGame && this.excludeGame.includes(type))
+            this.exclude.find(excludedClass => type.prototype instanceof excludedClass) ||
+            (isForGame && (
+                this.excludeGame.find(excludedClass => type.prototype instanceof excludedClass) ||
+                this.excludeGame.includes(type)))
     }
 
     /**

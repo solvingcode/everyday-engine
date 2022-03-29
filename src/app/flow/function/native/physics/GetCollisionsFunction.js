@@ -1,7 +1,7 @@
 import {TYPES} from '../../../../pobject/AttributeType.js'
-import AFunction from '../../AFunction.js'
+import ANativeFunction from '../ANativeFunction.js'
 
-export default class GetCollisionsFunction extends AFunction {
+export default class GetCollisionsFunction extends ANativeFunction {
 
     constructor() {
         super('GetCollisions')

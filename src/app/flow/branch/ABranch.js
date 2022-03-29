@@ -1,7 +1,7 @@
 import {TYPES} from '../../pobject/AttributeType.js'
-import AFunction from '../function/AFunction.js'
+import ANativeFunction from '../function/native/ANativeFunction.js'
 
-export default class ABranch extends AFunction{
+export default class ABranch extends ANativeFunction{
 
     constructor(name) {
         super(name || 'Branch')
