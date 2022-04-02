@@ -123,8 +123,9 @@ class World extends WorldData {
 
     /**
      * @param {Storage} storage
+     * @param {boolean} forGame
      */
-    doInit(storage) {
+    doInit(storage, forGame = false) {
         this.initialized = true
         this.createRootFolder()
         this.getPreference().init()
@@ -137,20 +138,26 @@ class World extends WorldData {
         this.getMaterialRegistry().init()
         this.getGraphManager().reset()
         const assetManager = this.getAssetsManager()
-        assetManager.getParsedAssets().forEach(asset => {
+        Promise.all(assetManager.getParsedAssets().map(asset =>
             AssetHelper.parseAsset(asset, storage).then(result => {
                 if (AssetHelper.isAssetAnimation(asset)) {
                     this.getAnimationManager().add(result)
                 } else if (AssetHelper.isAssetScript(asset)) {
-                    this.getScriptManager().add(result)
+                    if (!forGame) {
+                        this.getScriptManager().add(result)
+                    }
                 } else {
                     throw new SystemError(`Cannot parse assets: ${asset.getType().constructor.name} not supported`)
                 }
                 result.setAssetId(asset.getId())
-                AssetHelper.validate(result, this)
+                return result
             })
-        })
-        assetManager.getScriptAssets().forEach(asset => assetManager.compileScriptAssets([asset], this))
+        )).then(results => {
+            if (!forGame) {
+                assetManager.compileAllScript(this)
+            }
+            return results
+        }).then(results => results.forEach(result => AssetHelper.validate(result, this)))
     }
 
     constructComponentSetterGetter() {

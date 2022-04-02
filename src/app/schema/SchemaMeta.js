@@ -784,9 +784,6 @@ export default {
                                     name: {
                                         type: TYPES.STRING
                                     },
-                                    status: {
-                                        type: TYPES.STRING
-                                    },
                                     parentName: {
                                         type: TYPES.STRING
                                     },

@@ -7,6 +7,16 @@ import SystemError from '../exception/type/SystemError.js'
 export default class AScript extends AScriptData {
 
     /**
+     * @type {string}
+     */
+    status
+
+    constructor() {
+        super()
+        this.status = STATUS.NEW
+    }
+
+    /**
      * @param {World} world
      */
     compile(world) {
@@ -60,7 +70,7 @@ export default class AScript extends AScriptData {
     /**
      * @param {VariableScript} variable
      */
-    addVariable(variable){
+    addVariable(variable) {
         this.variables.push(variable)
     }
 
@@ -94,6 +104,20 @@ export default class AScript extends AScriptData {
      */
     doCompile(world) {
         throw new SystemError(`${this.constructor.name}.doCompile must be implemented`)
+    }
+
+    /**
+     * @param {string} status
+     */
+    setStatus(status) {
+        this.status = status
+    }
+
+    /**
+     * @return {string}
+     */
+    getStatus() {
+        return this.status
     }
 
 }

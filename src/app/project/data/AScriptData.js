@@ -31,11 +31,6 @@ export default class AScriptData extends Data{
     /**
      * @type {string}
      */
-    status
-
-    /**
-     * @type {string}
-     */
     parentName
 
     /**
@@ -50,7 +45,6 @@ export default class AScriptData extends Data{
         super()
         this.id = Maths.generateId()
         this.name = name
-        this.status = STATUS.NEW
         this.functions = []
         this.variables = []
         this.animations = []
@@ -174,20 +168,6 @@ export default class AScriptData extends Data{
      */
     concatAnimations(animations){
         this.setAnimations(animations)
-    }
-
-    /**
-     * @param {string} status
-     */
-    setStatus(status){
-        this.status = status
-    }
-
-    /**
-     * @return {string}
-     */
-    getStatus(){
-        return this.status
     }
 
 }

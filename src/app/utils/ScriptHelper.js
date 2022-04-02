@@ -614,6 +614,18 @@ export default class ScriptHelper {
 
     /**
      * @param {string} name
+     * @return {{component: string, attribute: string}}
+     */
+    static extractFromFunctionName(name) {
+        const nameParts = name.split('.')
+        return {
+            component: nameParts[0],
+            attribute: nameParts[1]
+        }
+    }
+
+    /**
+     * @param {string} name
      * @return {string}
      */
     static extractNameFromPublicAnimation(name) {
@@ -672,5 +684,56 @@ export default class ScriptHelper {
         return animationController.getAnimations().map(animationScript =>
             world.getAnimationManager()
                 .findById(parseInt(animationScript.getAnimation())))
+    }
+
+    /**
+     * @param {string} sourceName
+     * @param {World} world
+     * @return {AScript}
+     */
+    static getScriptUsage(sourceName, world) {
+        return this.getGetterSetterUsage(sourceName, world) ||
+            this.getCustomFunctionUsage(sourceName, world)
+    }
+
+    /**
+     * @param {string} sourceName
+     * @param {World} world
+     * @return {AScript}
+     */
+    static getGetterSetterUsage(sourceName, world) {
+        if (sourceName.match(/^(Set|Get) (.+)$/)) {
+            const {component} = this.extractComponentName(sourceName)
+            return world.getScriptManager().findByName(component)
+        }
+    }
+
+    /**
+     * @param {string} sourceName
+     * @param {World} world
+     * @return {AScript}
+     */
+    static getCustomFunctionUsage(sourceName, world) {
+        const {component} = this.extractFromFunctionName(sourceName)
+        return world.getScriptManager().findByName(component)
+    }
+
+    /**
+     * @param {AScript} script
+     * @param {World} world
+     * @return {AScript[]}
+     */
+    static getAllUsage(script, world) {
+        return script.getFunctions().reduce((usages, func) => {
+            return [...usages,
+                ...func.getNodes().reduce((nodeUsages, node) => {
+                    const scriptUsage = this.getScriptUsage(node.getSourceName(), world)
+                    if (scriptUsage) {
+                        return [...nodeUsages, scriptUsage]
+                    }
+                    return nodeUsages
+                }, [])
+            ]
+        }, [])
     }
 }
