@@ -2379,10 +2379,6 @@ var AScriptData = /*#__PURE__*/function (_Data) {
    */
 
   /**
-   * @type {string}
-   */
-
-  /**
    * @type {number}
    */
 
@@ -2400,12 +2396,10 @@ var AScriptData = /*#__PURE__*/function (_Data) {
     (0, _defineProperty2["default"])((0, _assertThisInitialized2["default"])(_this), "functions", void 0);
     (0, _defineProperty2["default"])((0, _assertThisInitialized2["default"])(_this), "variables", void 0);
     (0, _defineProperty2["default"])((0, _assertThisInitialized2["default"])(_this), "animations", void 0);
-    (0, _defineProperty2["default"])((0, _assertThisInitialized2["default"])(_this), "status", void 0);
     (0, _defineProperty2["default"])((0, _assertThisInitialized2["default"])(_this), "parentName", void 0);
     (0, _defineProperty2["default"])((0, _assertThisInitialized2["default"])(_this), "assetId", void 0);
     _this.id = _Maths["default"].generateId();
     _this.name = name;
-    _this.status = STATUS.NEW;
     _this.functions = [];
     _this.variables = [];
     _this.animations = [];
@@ -2565,24 +2559,6 @@ var AScriptData = /*#__PURE__*/function (_Data) {
     key: "concatAnimations",
     value: function concatAnimations(animations) {
       this.setAnimations(animations);
-    }
-    /**
-     * @param {string} status
-     */
-
-  }, {
-    key: "setStatus",
-    value: function setStatus(status) {
-      this.status = status;
-    }
-    /**
-     * @return {string}
-     */
-
-  }, {
-    key: "getStatus",
-    value: function getStatus() {
-      return this.status;
     }
   }]);
   return AScriptData;
@@ -3671,10 +3647,6 @@ var FunctionData = /*#__PURE__*/function (_Data) {
    */
 
   /**
-   * @type {StackOperation[]}
-   */
-
-  /**
    * @type {number}
    */
 
@@ -3708,7 +3680,6 @@ var FunctionData = /*#__PURE__*/function (_Data) {
     (0, _defineProperty2["default"])((0, _assertThisInitialized2["default"])(_this), "inputs", void 0);
     (0, _defineProperty2["default"])((0, _assertThisInitialized2["default"])(_this), "output", void 0);
     (0, _defineProperty2["default"])((0, _assertThisInitialized2["default"])(_this), "outputs", void 0);
-    (0, _defineProperty2["default"])((0, _assertThisInitialized2["default"])(_this), "stack", void 0);
     (0, _defineProperty2["default"])((0, _assertThisInitialized2["default"])(_this), "access", void 0);
     (0, _defineProperty2["default"])((0, _assertThisInitialized2["default"])(_this), "className", void 0);
     (0, _defineProperty2["default"])((0, _assertThisInitialized2["default"])(_this), "parentClassName", void 0);
@@ -3718,7 +3689,6 @@ var FunctionData = /*#__PURE__*/function (_Data) {
     _this.name = name;
     _this.inputs = [];
     _this.outputs = [];
-    _this.stack = [];
     _this.childClassNames = [];
     _this.output = null;
     _this.access = 0;
@@ -3904,24 +3874,6 @@ var FunctionData = /*#__PURE__*/function (_Data) {
     key: "setOutputs",
     value: function setOutputs(outputs) {
       this.outputs = outputs;
-    }
-    /**
-     * @return {StackOperation[]}
-     */
-
-  }, {
-    key: "getStack",
-    value: function getStack() {
-      return this.stack;
-    }
-    /**
-     * @param {StackOperation[]} stack
-     */
-
-  }, {
-    key: "setStack",
-    value: function setStack(stack) {
-      this.stack = stack;
     }
     /**
      * @return {DynamicAttribute}
