@@ -46,8 +46,17 @@ import SetAttrClassNameNode from '../flow/node/variable/SetAttrClassNameNode.js'
 import BranchNode from '../flow/node/BranchNode.js'
 import SetAttrClassNode from '../flow/node/variable/SetAttrClassNode.js'
 import GetAttrClassNode from '../flow/node/variable/GetAttrClassNode.js'
+import StackRegistryHelper from './StackRegistryHelper.js'
+import StringHelper from './StringHelper.js'
 
 export default class ScriptHelper {
+
+    static LENGTH_PART_REGISTRY = 5
+    static REGISTRY_PART_CLASS_INDEX = 0
+    static REGISTRY_PART_SCOPE_INDEX = 1
+    static REGISTRY_PART_FUNCTION_INDEX = 2
+    static REGISTRY_PART_RANK_INDEX = 3
+    static REGISTRY_PART_ATTRIBUTE_INDEX = 4
 
     /**
      * @param {FunctionRegistry} functionRegistry
@@ -500,6 +509,47 @@ export default class ScriptHelper {
 
     /**
      * @param {string} name
+     * @return {{functionName: string, scope: string, parentName: string, className: string,
+     * attributeName: string, rank: number, name: string}}
+     */
+    static extractInfoFromRegistryName(name) {
+        const nameParts = name.split('.')
+        return {
+            className: nameParts && nameParts[this.REGISTRY_PART_CLASS_INDEX],
+            parentName: nameParts && nameParts[this.REGISTRY_PART_SCOPE_INDEX],
+            functionName: nameParts && nameParts[this.REGISTRY_PART_FUNCTION_INDEX],
+            rank: nameParts && parseInt(nameParts[this.REGISTRY_PART_RANK_INDEX]),
+            attributeName: nameParts && nameParts[this.REGISTRY_PART_ATTRIBUTE_INDEX],
+            scope: nameParts && nameParts.slice(0, nameParts.length - 1).join('.'),
+            name: this.getVarName(name)
+        }
+    }
+
+    /**
+     * @param {string} name
+     * @return {{functionName: string, parentName: string, className: string, rank: number}}
+     */
+    static extractInfoFromFunctionName(name) {
+        const nameParts = name.split('.')
+        return {
+            className: nameParts && nameParts[this.REGISTRY_PART_CLASS_INDEX],
+            parentName: nameParts && nameParts[this.REGISTRY_PART_SCOPE_INDEX],
+            functionName: nameParts && nameParts[this.REGISTRY_PART_FUNCTION_INDEX],
+            rank: nameParts && parseInt(nameParts[this.REGISTRY_PART_RANK_INDEX])
+        }
+    }
+
+    /**
+     * @param {string} variable
+     * @return {string}
+     */
+    static getVarName(variable) {
+        const arrVar = StackRegistryHelper.getVarName(StringHelper.normalize(variable)).split('.')
+        return StringHelper.lowFirstLetter(arrVar.map(part => _.capitalize(part)).join(''))
+    }
+
+    /**
+     * @param {string} name
      * @return {string}
      */
     static extractNameFromGetVar(name) {
@@ -564,6 +614,18 @@ export default class ScriptHelper {
 
     /**
      * @param {string} name
+     * @return {{component: string, attribute: string}}
+     */
+    static extractFromFunctionName(name) {
+        const nameParts = name.split('.')
+        return {
+            component: nameParts[0],
+            attribute: nameParts[1]
+        }
+    }
+
+    /**
+     * @param {string} name
      * @return {string}
      */
     static extractNameFromPublicAnimation(name) {
@@ -618,9 +680,60 @@ export default class ScriptHelper {
      * @param {World} world
      * @return {Animation[]}
      */
-    static getAnimations(animationController, world){
+    static getAnimations(animationController, world) {
         return animationController.getAnimations().map(animationScript =>
             world.getAnimationManager()
                 .findById(parseInt(animationScript.getAnimation())))
+    }
+
+    /**
+     * @param {string} sourceName
+     * @param {World} world
+     * @return {AScript}
+     */
+    static getScriptUsage(sourceName, world) {
+        return this.getGetterSetterUsage(sourceName, world) ||
+            this.getCustomFunctionUsage(sourceName, world)
+    }
+
+    /**
+     * @param {string} sourceName
+     * @param {World} world
+     * @return {AScript}
+     */
+    static getGetterSetterUsage(sourceName, world) {
+        if (sourceName.match(/^(Set|Get) (.+)$/)) {
+            const {component} = this.extractComponentName(sourceName)
+            return world.getScriptManager().findByName(component)
+        }
+    }
+
+    /**
+     * @param {string} sourceName
+     * @param {World} world
+     * @return {AScript}
+     */
+    static getCustomFunctionUsage(sourceName, world) {
+        const {component} = this.extractFromFunctionName(sourceName)
+        return world.getScriptManager().findByName(component)
+    }
+
+    /**
+     * @param {AScript} script
+     * @param {World} world
+     * @return {AScript[]}
+     */
+    static getAllUsage(script, world) {
+        return script.getFunctions().reduce((usages, func) => {
+            return [...usages,
+                ...func.getNodes().reduce((nodeUsages, node) => {
+                    const scriptUsage = this.getScriptUsage(node.getSourceName(), world)
+                    if (scriptUsage) {
+                        return [...nodeUsages, scriptUsage]
+                    }
+                    return nodeUsages
+                }, [])
+            ]
+        }, [])
     }
 }

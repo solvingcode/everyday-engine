@@ -1,7 +1,7 @@
 import {TYPES} from '../../../../pobject/AttributeType.js'
-import AFunction from '../../AFunction.js'
+import ANativeFunction from '../ANativeFunction.js'
 
-export default class ToScreenPositionFunction extends AFunction{
+export default class ToScreenPositionFunction extends ANativeFunction{
 
     constructor() {
         super('ToScreenPosition')
@@ -13,13 +13,5 @@ export default class ToScreenPositionFunction extends AFunction{
     initAttributes() {
         this.addInput('position', TYPES.VECTOR, 0)
         this.addOutput(TYPES.VECTOR)
-    }
-
-    /**
-     * @override
-     */
-    execute(functionRegistry, unit, scriptComponent, world, executionContext) {
-        const position = this.getInputValue('position')
-        this.setOutputValue(world.getCamera().toCanvasCoord(position))
     }
 }

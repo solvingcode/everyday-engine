@@ -1,7 +1,7 @@
 import {TYPES} from '../../../../pobject/AttributeType.js'
-import AFunction from '../../AFunction.js'
+import ANativeFunction from '../ANativeFunction.js'
 
-export default class GetInstanceFunction extends AFunction{
+export default class GetInstanceFunction extends ANativeFunction{
 
     constructor() {
         super('GetInstance')
@@ -14,14 +14,5 @@ export default class GetInstanceFunction extends AFunction{
         this.addInput('component', TYPES.COMPONENT_INSTANCE, 0)
         this.addInput('attribute', TYPES.STRING)
         this.addOutput(TYPES.ANY)
-    }
-
-    /**
-     * @override
-     */
-    execute(functionRegistry, unit, scriptComponent, world) {
-        const component = this.getInputValue('component')
-        const attribute = this.getInputValue('attribute')
-        this.setOutputValue(component.getValue(attribute))
     }
 }

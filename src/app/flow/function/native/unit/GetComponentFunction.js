@@ -1,8 +1,7 @@
 import {TYPES} from '../../../../pobject/AttributeType.js'
-import AFunction from '../../AFunction.js'
-import ClientError from '../../../../exception/type/ClientError.js'
+import ANativeFunction from '../ANativeFunction.js'
 
-export default class GetComponentFunction extends AFunction {
+export default class GetComponentFunction extends ANativeFunction {
 
     constructor() {
         super('GetComponent')
@@ -15,18 +14,5 @@ export default class GetComponentFunction extends AFunction {
         this.addInput('target', TYPES.UNIT)
         this.addInput('name', TYPES.STRING)
         this.addOutput(TYPES.COMPONENT_INSTANCE)
-    }
-
-    /**
-     * @override
-     */
-    execute() {
-        const unit = this.getInputValue('target')
-        const componentName = this.getInputValue('name')
-        const component = unit.findComponentByName(componentName)
-        if (!component) {
-            throw new ClientError(`${this.getName()}: ${componentName} not found`)
-        }
-        this.setOutputValue(component)
     }
 }

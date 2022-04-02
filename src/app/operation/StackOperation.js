@@ -57,9 +57,11 @@ export default class StackOperation{
 
 export const OPERATIONS = {
     PUSH: 'push',
+    SETINPUT: 'set_input',
     GET: 'get',
     SET: 'set',
     CALL: 'call',
+    CALLFUNC: 'call_func',
     EXIT: 'exit',
     JUMP: 'jump',
     JUMP_TO: 'jump_to',

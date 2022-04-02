@@ -1,6 +1,5 @@
 import {TYPES} from '../../../../pobject/AttributeType.js'
 import ANativeFunction from '../ANativeFunction.js'
-import AnimationComponent from '../../../../component/internal/AnimationComponent.js'
 
 export default class IsAnimationEndedFunction extends ANativeFunction {
 
@@ -12,16 +11,7 @@ export default class IsAnimationEndedFunction extends ANativeFunction {
      * @override
      */
     initAttributes() {
+        this.addInput('unit', TYPES.UNIT, 0)
         this.addOutput(TYPES.BOOLEAN)
-    }
-
-    /**
-     * @override
-     */
-    execute(functionRegistry, unit, scriptComponent, world) {
-        const animationComponent = unit.getComponent(AnimationComponent)
-        this.setOutputValue(
-            animationComponent.getLoopTimes() > 0
-        )
     }
 }

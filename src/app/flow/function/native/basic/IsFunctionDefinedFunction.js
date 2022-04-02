@@ -1,7 +1,7 @@
 import {TYPES} from '../../../../pobject/AttributeType.js'
-import AFunction from '../../AFunction.js'
+import ANativeFunction from '../ANativeFunction.js'
 
-export default class IsFunctionDefinedFunction extends AFunction {
+export default class IsFunctionDefinedFunction extends ANativeFunction {
 
     constructor() {
         super('IsFunctionDefined')
@@ -13,13 +13,5 @@ export default class IsFunctionDefinedFunction extends AFunction {
     initAttributes() {
         this.addInput('functionName', TYPES.STRING, 0)
         this.addOutput(TYPES.BOOLEAN)
-    }
-
-    /**
-     * @override
-     */
-    execute(functionRegistry, unit, scriptComponent, world, executionContext) {
-        const functionName = this.getInputValue('functionName')
-        this.setOutputValue(!!functionRegistry.getInstance(functionName))
     }
 }

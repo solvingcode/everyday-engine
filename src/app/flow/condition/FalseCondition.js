@@ -1,7 +1,7 @@
 import {TYPES} from '../../pobject/AttributeType.js'
 import ACondition from './ACondition.js'
 
-export default class FalseCondition extends ACondition{
+export default class FalseCondition extends ACondition {
 
     constructor(name) {
         super(name || 'False')
@@ -13,13 +13,6 @@ export default class FalseCondition extends ACondition{
     initAttributes() {
         this.addInput('target', TYPES.BOOLEAN, false)
         this.addOutput(TYPES.BOOLEAN)
-    }
-
-    /**
-     * @override
-     */
-    execute() {
-        this.setOutputValue(!this.getInputValue('target'))
     }
 
 }

@@ -1,7 +1,7 @@
 import {TYPES} from '../../../../pobject/AttributeType.js'
-import AFunction from '../../AFunction.js'
+import ANativeFunction from '../ANativeFunction.js'
 
-export default class AbsFunction extends AFunction{
+export default class AbsFunction extends ANativeFunction{
 
     constructor() {
         super('Abs')
@@ -13,13 +13,5 @@ export default class AbsFunction extends AFunction{
     initAttributes() {
         this.addInput('value', TYPES.NUMBER, 0)
         this.addOutput(TYPES.NUMBER)
-    }
-
-    /**
-     * @override
-     */
-    execute() {
-        const value = parseFloat(this.getInputValue('value'))
-        this.setOutputValue(Math.abs(value))
     }
 }

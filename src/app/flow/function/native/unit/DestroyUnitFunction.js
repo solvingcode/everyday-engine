@@ -1,7 +1,7 @@
-import AFunction from '../../AFunction.js'
+import ANativeFunction from '../ANativeFunction.js'
 import {TYPES} from '../../../../pobject/AttributeType.js'
 
-export default class DestroyUnitFunction extends AFunction{
+export default class DestroyUnitFunction extends ANativeFunction{
 
     constructor() {
         super('DestroyUnit')
@@ -12,14 +12,5 @@ export default class DestroyUnitFunction extends AFunction{
      */
     initAttributes() {
         this.addInput('target', TYPES.UNIT, 0)
-    }
-
-    /**
-     * @override
-     */
-    execute(functionRegistry, unit, scriptComponent, world, executionContext) {
-        const target = this.getInputValue('target')
-        world.getPhysicsManager().deleteUnit(target)
-        world.getUnitManager().destroyUnit(target)
     }
 }

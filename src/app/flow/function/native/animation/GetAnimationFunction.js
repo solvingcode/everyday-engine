@@ -1,7 +1,7 @@
-import AFunction from '../../AFunction.js'
+import ANativeFunction from '../ANativeFunction.js'
 import {TYPES} from '../../../../pobject/AttributeType.js'
 
-export default class GetAnimationFunction extends AFunction{
+export default class GetAnimationFunction extends ANativeFunction{
 
     constructor() {
         super('GetAnimation')
@@ -13,10 +13,5 @@ export default class GetAnimationFunction extends AFunction{
     initAttributes() {
         this.addInput('id', TYPES.NUMBER, 0)
         this.addOutput(TYPES.ANIMATION)
-    }
-
-    execute(functionRegistry, unit, scriptComponent, world, executionContext) {
-        const id = this.getInputValue('id')
-        this.setOutputValue(world.getAnimationManager().findById(parseInt(id)))
     }
 }

@@ -1,7 +1,7 @@
 import {TYPES} from '../../../../pobject/AttributeType.js'
-import AFunction from '../../AFunction.js'
+import ANativeFunction from '../ANativeFunction.js'
 
-export default class LoadSceneIndexFunction extends AFunction {
+export default class LoadSceneIndexFunction extends ANativeFunction {
 
     constructor() {
         super('LoadSceneIndex')
@@ -13,14 +13,5 @@ export default class LoadSceneIndexFunction extends AFunction {
     initAttributes() {
         this.addInput('sceneIndex', TYPES.NUMBER)
         this.addInput('additiveMode', TYPES.BOOLEAN, false)
-    }
-
-    /**
-     * @override
-     */
-    execute(functionRegistry, unit, scriptComponent, world) {
-        const sceneIndex = this.getInputValue('sceneIndex')
-        const scene = world.getSceneManager().findByIndex(sceneIndex)
-        scene.setIncluded(true)
     }
 }

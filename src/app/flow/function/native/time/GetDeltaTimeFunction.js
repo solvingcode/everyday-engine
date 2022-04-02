@@ -1,7 +1,7 @@
 import {TYPES} from '../../../../pobject/AttributeType.js'
-import AFunction from '../../AFunction.js'
+import ANativeFunction from '../ANativeFunction.js'
 
-export default class GetDeltaTimeFunction extends AFunction{
+export default class GetDeltaTimeFunction extends ANativeFunction{
 
     constructor() {
         super('GetDeltaTime')
@@ -12,12 +12,5 @@ export default class GetDeltaTimeFunction extends AFunction{
      */
     initAttributes() {
         this.addOutput(TYPES.NUMBER)
-    }
-
-    /**
-     * @override
-     */
-    execute(functionRegistry, unit, scriptComponent, world, executionContext) {
-        this.setOutputValue(executionContext.deltaTime)
     }
 }

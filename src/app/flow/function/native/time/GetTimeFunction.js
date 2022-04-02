@@ -1,7 +1,7 @@
 import {TYPES} from '../../../../pobject/AttributeType.js'
-import AFunction from '../../AFunction.js'
+import ANativeFunction from '../ANativeFunction.js'
 
-export default class GetTimeFunction extends AFunction{
+export default class GetTimeFunction extends ANativeFunction{
 
     constructor() {
         super('GetTime')
@@ -12,12 +12,5 @@ export default class GetTimeFunction extends AFunction{
      */
     initAttributes() {
         this.addOutput(TYPES.NUMBER)
-    }
-
-    /**
-     * @override
-     */
-    execute() {
-        this.setOutputValue(Date.now())
     }
 }

@@ -35,6 +35,7 @@ import {ACCESSOR} from '../flow/function/AFunction.js'
 import ASetAttrClassComponent from '../flow/function/component/ASetAttrClassComponent.js'
 import WebGLMeshRenderer from '../renderer/WebGLMeshRenderer.js'
 import TwoDMeshRenderer from '../renderer/TwoDMeshRenderer.js'
+import CompiledClassRegistry from '../registry/CompiledClassRegistry.js'
 
 /**
  * @class {World}
@@ -84,6 +85,7 @@ class World extends WorldData {
         this.tabManager = new TabManager()
         this.graphManager = new GraphManager()
         this.functionRegistry = new FunctionRegistry()
+        this.compiledClassRegistry = new CompiledClassRegistry()
         this.componentRegistry = new ComponentRegistry()
         this.materialRegistry = new MaterialRegistry()
         this.scriptManager = new ScriptManager()
@@ -111,7 +113,7 @@ class World extends WorldData {
     /**
      * @return {MeshRenderer}
      */
-    initMeshRenderer(){
+    initMeshRenderer() {
         if (CANVAS_CONTEXT_TYPE === 'webgl') {
             return new WebGLMeshRenderer()
         } else {
@@ -121,32 +123,41 @@ class World extends WorldData {
 
     /**
      * @param {Storage} storage
+     * @param {boolean} forGame
      */
-    doInit(storage) {
+    doInit(storage, forGame = false) {
+        this.initialized = true
         this.createRootFolder()
         this.getPreference().init()
         this.getTabManager().init()
         this.getSceneManager().init()
         this.getFunctionRegistry().init()
+        this.getCompiledClassRegistry().init()
         this.getComponentRegistry().init()
         this.constructComponentSetterGetter()
         this.getMaterialRegistry().init()
         this.getGraphManager().reset()
         const assetManager = this.getAssetsManager()
-        assetManager.getParsedAssets().forEach(asset => {
+        Promise.all(assetManager.getParsedAssets().map(asset =>
             AssetHelper.parseAsset(asset, storage).then(result => {
                 if (AssetHelper.isAssetAnimation(asset)) {
                     this.getAnimationManager().add(result)
                 } else if (AssetHelper.isAssetScript(asset)) {
-                    this.getScriptManager().add(result)
+                    if (!forGame) {
+                        this.getScriptManager().add(result)
+                    }
                 } else {
                     throw new SystemError(`Cannot parse assets: ${asset.getType().constructor.name} not supported`)
                 }
                 result.setAssetId(asset.getId())
-                AssetHelper.validate(result, this)
+                return result
             })
-        })
-        this.initialized = true
+        )).then(results => {
+            if (!forGame) {
+                assetManager.compileAllScript(this)
+            }
+            return results
+        }).then(results => results.forEach(result => AssetHelper.validate(result, this)))
     }
 
     constructComponentSetterGetter() {
@@ -439,7 +450,7 @@ class World extends WorldData {
     /**
      * @return {MeshRenderer}
      */
-    getMeshRenderer(){
+    getMeshRenderer() {
         return this.meshRenderer
     }
 

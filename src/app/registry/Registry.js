@@ -97,6 +97,10 @@ export default class Registry extends RegistryData {
         this.registry.splice(index, 1)
     }
 
+    clear(){
+        this.registry = []
+    }
+
     /**
      * @return {*[]}
      */

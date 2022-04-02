@@ -1,8 +1,7 @@
 import {TYPES} from '../../../../pobject/AttributeType.js'
-import AFunction from '../../AFunction.js'
-import Vector from '../../../../utils/Vector.js'
+import ANativeFunction from '../ANativeFunction.js'
 
-export default class VectorZeroFunction extends AFunction{
+export default class VectorZeroFunction extends ANativeFunction{
 
     constructor() {
         super('VectorZero')
@@ -13,12 +12,5 @@ export default class VectorZeroFunction extends AFunction{
      */
     initAttributes() {
         this.addOutput(TYPES.VECTOR)
-    }
-
-    /**
-     * @override
-     */
-    execute() {
-        this.setOutputValue(Vector.zero())
     }
 }

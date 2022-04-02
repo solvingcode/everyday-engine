@@ -1,7 +1,7 @@
 import {TYPES} from '../../../../pobject/AttributeType.js'
-import AFunction from '../../AFunction.js'
+import ANativeFunction from '../ANativeFunction.js'
 
-export default class LoadSceneFunction extends AFunction {
+export default class LoadSceneFunction extends ANativeFunction {
 
     constructor() {
         super('LoadScene')
@@ -13,13 +13,5 @@ export default class LoadSceneFunction extends AFunction {
     initAttributes() {
         this.addInput('target', TYPES.SCENE)
         this.addInput('additiveMode', TYPES.BOOLEAN, false)
-    }
-
-    /**
-     * @override
-     */
-    execute(functionRegistry, unit, scriptComponent, world) {
-        const scene = this.getInputValue('target')
-        scene.setIncluded(true)
     }
 }

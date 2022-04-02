@@ -29,6 +29,8 @@ import ASetAttrClassNameComponent from '../function/component/ASetAttrClassNameC
 import AClassNameComponent from '../function/component/AClassNameComponent.js'
 import AFunctionInput from '../io/AFunctionInput.js'
 import AFunctionOutput from '../io/AFunctionOutput.js'
+import JSCodeGenerator from '../../generator/code/JSCodeGenerator.js'
+import ClassLoader from '../../compiler/ClassLoader.js'
 
 export default class ClassCompiler extends Compiler {
 
@@ -89,6 +91,7 @@ export default class ClassCompiler extends Compiler {
                 const stackScriptFunction = new ACustomFunction(scriptFunctionName, functionInputs, functionOutput)
                 stackScriptFunction.setAccess(scriptFunction.getAccess())
                 stackScriptFunction.setClassName(script.getName())
+                stackScriptFunction.setOriginalName(scriptFunction.getName())
                 stackScriptFunction.setParentClassName(script.getParentName())
                 stackScriptFunction.setChildClassNames(ScriptHelper.getChildClassNames(world, script))
                 stackScriptFunction.setStack([
@@ -165,6 +168,7 @@ export default class ClassCompiler extends Compiler {
                 }
                 const stackFunction = ScriptHelper.createStackFunction(script, scriptFunction, node, world)
                 stackFunction.setScopeFunctionName(scriptFunction.getName())
+                stackFunction.setOriginalName(node.getSourceName())
                 stackFunction.setClassName(script.getName())
                 if (element.getOutput()) {
                     stackFunction.addOutput(element.getOutput().getAttrType())
@@ -274,6 +278,8 @@ export default class ClassCompiler extends Compiler {
         })
 
         this.optimize(script, world)
+        this.generateCode(script, world)
+        this.saveClass(script, world)
 
         return true
     }
@@ -297,6 +303,30 @@ export default class ClassCompiler extends Compiler {
             && !(instance instanceof AFunctionOutput)
             && !(instance instanceof AClassNameComponent))
             .forEach(instance => functionRegistry.removeInstance(instance))
+    }
+
+    /**
+     * @param {AScript} script
+     * @param {World} world
+     */
+    generateCode(script, world) {
+        const compiledClassRegistry = world.getCompiledClassRegistry()
+        compiledClassRegistry.register(this.getCodeGenerator().generate(script, world))
+    }
+
+    /**
+     * @param {AScript} script
+     * @param {World} world
+     */
+    saveClass(script, world) {
+        ClassLoader.save(world, script.getName())
+    }
+
+    /**
+     * @return {CodeGenerator}
+     */
+    getCodeGenerator() {
+        return JSCodeGenerator.get()
     }
 
     /**

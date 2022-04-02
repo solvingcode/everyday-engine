@@ -21,11 +21,17 @@ export default class AFunction extends FunctionData{
     validated
 
     /**
+     * @type {StackOperation[]}
+     */
+    stack
+
+    /**
      * @param {string} name
      * @param {*} params
      */
     constructor(name, params = {}) {
         super(name)
+        this.stack = []
         this.init(params)
     }
 
@@ -50,6 +56,20 @@ export default class AFunction extends FunctionData{
      */
     setOptimized(optimized){
         this.optimized = optimized
+    }
+
+    /**
+     * @return {StackOperation[]}
+     */
+    getStack(){
+        return this.stack
+    }
+
+    /**
+     * @param {StackOperation[]} stack
+     */
+    setStack(stack){
+        this.stack = stack
     }
 
     /**
@@ -126,19 +146,6 @@ export default class AFunction extends FunctionData{
      */
     isPublic(){
         return parseInt(this.access) === ACCESSOR.PUBLIC
-    }
-
-    /**
-     * @abstract
-     * @param {FunctionRegistry} functionRegistry
-     * @param {Unit} unit
-     * @param {ScriptComponent} scriptComponent
-     * @param {World} world
-     * @param {{camera: Camera, lights: Unit[], deltaTime: number, storage: Storage}} executionContext
-     * @return {void}
-     */
-    execute(functionRegistry, unit, scriptComponent, world, executionContext){
-        throw new SystemError(`${this.constructor.name}.execute must be implemented`)
     }
 
     /**

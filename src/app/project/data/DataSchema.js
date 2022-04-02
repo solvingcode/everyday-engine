@@ -192,7 +192,6 @@ import TileMapComponent from '../../component/internal/tile/TileMapComponent.js'
 import TileColliderComponent from '../../component/internal/tile/TileColliderComponent.js'
 import GetComponentInstanceFunction from '../../flow/function/native/component/GetComponentInstanceFunction.js'
 import GetCollisionsFunction from '../../flow/function/native/physics/GetCollisionsFunction.js'
-import CallFunction from '../../flow/function/native/basic/CallFunction.js'
 import InstantiateUnitFunction from '../../flow/function/native/unit/InstantiateUnitFunction.js'
 import AThen from '../../flow/promise/AThen.js'
 import SetParentUnitFunction from '../../flow/function/native/unit/SetParentUnitFunction.js'
@@ -284,6 +283,8 @@ import TextUnitInstant from '../../unit/instant/type/internal/text/TextUnitInsta
 import TextComponent from '../../component/internal/TextComponent.js'
 import GetActiveCameraFunction from '../../flow/function/native/camera/GetActiveCameraFunction.js'
 import RectFillUnitInstant from '../../unit/instant/type/internal/primitive/RectFillUnitInstant.js'
+import CompiledClassRegistry from '../../registry/CompiledClassRegistry.js'
+import CompiledClass from '../../flow/compiler/compiled/CompiledClass.js'
 
 /**
  * @class {DataSchema}
@@ -475,7 +476,6 @@ class DataSchema {
         {id: 1720, type: TileColliderComponent},
         {id: 1730, type: GetComponentInstanceFunction},
         {id: 1740, type: GetCollisionsFunction},
-        {id: 1750, type: CallFunction},
         {id: 1760, type: InstantiateUnitFunction},
         {id: 1770, type: AThen},
         {id: 1780, type: SetParentUnitFunction},
@@ -564,6 +564,8 @@ class DataSchema {
         {id: 2600, type: TextUnitInstant},
         {id: 2610, type: TextComponent},
         {id: 2620, type: GetActiveCameraFunction},
+        {id: 2630, type: CompiledClassRegistry},
+        {id: 2640, type: CompiledClass}
     ]
 
     /**
@@ -583,7 +585,8 @@ class DataSchema {
         RectFillUnitInstant,
         CircleUnitInstant,
         RectSelectorUnitInstant,
-        CircleSelectorUnitInstant
+        CircleSelectorUnitInstant,
+        FunctionRegistry
     ]
 
     /**
@@ -595,7 +598,9 @@ class DataSchema {
         AssetScriptCode,
         AssetAnimationScriptXml,
         ClassScript,
-        TabManager
+        TabManager,
+        FunctionRegistry,
+        CompiledClassRegistry
     ]
 
     /**
@@ -617,7 +622,10 @@ class DataSchema {
      */
     static isExcluded(type, isForGame = false) {
         return this.exclude.includes(type) ||
-            (isForGame && this.excludeGame.includes(type))
+            this.exclude.find(excludedClass => type.prototype instanceof excludedClass) ||
+            (isForGame && (
+                this.excludeGame.find(excludedClass => type.prototype instanceof excludedClass) ||
+                this.excludeGame.includes(type)))
     }
 
     /**

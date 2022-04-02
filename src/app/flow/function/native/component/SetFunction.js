@@ -1,9 +1,7 @@
 import {TYPES} from '../../../../pobject/AttributeType.js'
-import AFunction from '../../AFunction.js'
-import MeshComponent from '../../../../component/internal/MeshComponent.js'
-import DynamicAttributeHelper from '../../../../utils/DynamicAttributeHelper.js'
+import ANativeFunction from '../ANativeFunction.js'
 
-export default class SetFunction extends AFunction{
+export default class SetFunction extends ANativeFunction{
 
     constructor() {
         super('Set')
@@ -13,24 +11,9 @@ export default class SetFunction extends AFunction{
      * @override
      */
     initAttributes() {
+        this.addInput('unit', TYPES.UNIT)
         this.addInput('component', TYPES.STRING, 0)
         this.addInput('attribute', TYPES.STRING)
         this.addInput('value', TYPES.STRING)
-    }
-
-    /**
-     * @override
-     */
-    execute(functionRegistry, unit, scriptComponent, world) {
-        const classComponentName = this.getInputValue('component')
-        const classComponent = world.getComponentRegistry().getInstance(classComponentName)
-        const attribute = this.getInputValue('attribute')
-        const value = this.getInputValue('value')
-        const component = unit.getComponent(classComponent.constructor)
-        component.setValue(attribute, DynamicAttributeHelper
-            .getValueByType(value, component.getType(attribute), world))
-        if(classComponent.constructor === MeshComponent){
-            component.setGenerated(false)
-        }
     }
 }

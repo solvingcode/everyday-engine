@@ -63,11 +63,8 @@ import GetUnitByComponentFunction from '../flow/function/native/component/GetUni
 import GetComponentFunction from '../flow/function/native/unit/GetComponentFunction.js'
 import SubtractFunction from '../flow/function/native/basic/SubtractFunction.js'
 import GetTimeFunction from '../flow/function/native/time/GetTimeFunction.js'
-import GetVarFunction from '../flow/function/native/component/GetVarFunction.js'
-import SetVarFunction from '../flow/function/native/component/SetVarFunction.js'
 import DivideFunction from '../flow/function/native/basic/DivideFunction.js'
 import AddVectorFunction from '../flow/function/native/basic/AddVectorFunction.js'
-import IsUpdateTimeFunction from '../flow/function/native/time/IsUpdateTimeFunction.js'
 import PlayAudioFunction from '../flow/function/native/audio/PlayAudioFunction.js'
 import IsAudioPlayingFunction from '../flow/function/native/audio/IsAudioPlayingFunction.js'
 import FlipScaleFunction from '../flow/function/native/transform/FlipScaleFunction.js'
@@ -87,7 +84,6 @@ import BoxCastFunction from '../flow/function/native/physics/BoxCastFunction.js'
 import MoveXYAxisFunction from '../flow/function/native/physics/MoveXYAxisFunction.js'
 import GetComponentInstanceFunction from '../flow/function/native/component/GetComponentInstanceFunction.js'
 import GetCollisionsFunction from '../flow/function/native/physics/GetCollisionsFunction.js'
-import CallFunction from '../flow/function/native/basic/CallFunction.js'
 import InstantiateUnitFunction from '../flow/function/native/unit/InstantiateUnitFunction.js'
 import AThen from '../flow/promise/AThen.js'
 import SetParentUnitFunction from '../flow/function/native/unit/SetParentUnitFunction.js'
@@ -98,7 +94,6 @@ import ArrayPushFunction from '../flow/function/native/array/ArrayPushFunction.j
 import PhysicsTranslateFunction from '../flow/function/native/physics/PhysicsTranslateFunction.js'
 import GetUnitNameFunction from '../flow/function/native/unit/GetUnitNameFunction.js'
 import GetUnitTagNameFunction from '../flow/function/native/unit/GetUnitTagNameFunction.js'
-import IsFunctionDefinedFunction from '../flow/function/native/basic/IsFunctionDefinedFunction.js'
 import SetColorFunction from '../flow/function/native/style/SetColorFunction.js'
 import VectorDistanceFunction from '../flow/function/native/basic/VectorDistanceFunction.js'
 import SubtractVectorFunction from '../flow/function/native/basic/SubtractVectorFunction.js'
@@ -112,10 +107,7 @@ import ArrayIndexFunction from '../flow/function/native/array/ArrayIndexFunction
 import OnStartEvent from '../flow/event/native/OnStartEvent.js'
 import DontDestroyOnLoadFunction from '../flow/function/native/unit/DontDestroyOnLoadFunction.js'
 import FindUnitsByNameFunction from '../flow/function/native/unit/FindUnitsByNameFunction.js'
-import GetFunctionFunction from '../flow/function/native/function/GetFunctionFunction.js'
 import GetAnimationFunction from '../flow/function/native/animation/GetAnimationFunction.js'
-import SetKeyVarFunction from '../flow/function/native/component/SetKeyVarFunction.js'
-import GetVarValueFunction from '../flow/function/native/component/GetVarValueFunction.js'
 import CosFunction from '../flow/function/native/math/CosFunction.js'
 import SinFunction from '../flow/function/native/math/SinFunction.js'
 import VectorRoundFunction from '../flow/function/native/basic/VectorRoundFunction.js'
@@ -186,7 +178,6 @@ export default class FunctionRegistry extends Registry{
             new DestroyUnitFunction(),
             new VectorLerpFunction(),
             new DontDestroyOnLoadFunction(),
-            new GetFunctionFunction(),
             new GetAnimationFunction(),
             new CosFunction(),
             new SinFunction(),
@@ -213,8 +204,6 @@ export default class FunctionRegistry extends Registry{
             new SetParentUnitFunction(),
             new IsUnitPressedFunction(),
             new GetComponentInstanceFunction(),
-            new CallFunction(),
-            new IsFunctionDefinedFunction(),
             new GetUnitNameFunction(),
             new GetUnitTagNameFunction(),
             new FindUnitsByNameFunction(),
@@ -235,10 +224,6 @@ export default class FunctionRegistry extends Registry{
             new GetInstanceFunction(),
             new SetInstanceFunction(),
             new GetUnitByComponentFunction(),
-            new GetVarFunction(),
-            new SetVarFunction(),
-            new SetKeyVarFunction(),
-            new GetVarValueFunction(),
 
             //Audio
             new PlayAudioFunction(),
@@ -262,7 +247,6 @@ export default class FunctionRegistry extends Registry{
 
             //Time
             new GetTimeFunction(),
-            new IsUpdateTimeFunction(),
             new GetDeltaTimeFunction(),
 
             //Physics

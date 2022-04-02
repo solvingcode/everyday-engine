@@ -1,7 +1,7 @@
 import {TYPES} from '../../pobject/AttributeType.js'
-import AFunction from '../function/AFunction.js'
+import ANativeFunction from '../function/native/ANativeFunction.js'
 
-export default class ALoop extends AFunction{
+export default class ALoop extends ANativeFunction{
 
     constructor(name) {
         super(name || 'Loop')
@@ -18,17 +18,4 @@ export default class ALoop extends AFunction{
         this.addCustomOutput('element', TYPES.ANY)
         this.addCustomOutput('ended', TYPES.BOOLEAN)
     }
-
-    /**
-     * @override
-     */
-    execute(functionRegistry, unit, scriptComponent, world, executionContext) {
-        const index = parseInt(this.getInputValue('index') || 0)
-        const array = this.getInputValue('array')
-        this.setCustomOutputValue('body', '')
-        this.setCustomOutputValue('index', index + 1)
-        this.setCustomOutputValue('element', array[index])
-        this.setCustomOutputValue('ended', index >= array.length - 1)
-    }
-
 }

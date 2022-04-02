@@ -1,9 +1,8 @@
 import {TYPES} from '../../../../pobject/AttributeType.js'
-import AFunction from '../../AFunction.js'
+import ANativeFunction from '../ANativeFunction.js'
 import Vector from '../../../../utils/Vector.js'
-import UnitHelper from '../../../../utils/UnitHelper.js'
 
-export default class SetCenterWorldPositionFunction extends AFunction{
+export default class SetCenterWorldPositionFunction extends ANativeFunction{
 
     constructor() {
         super('SetCenterWorldPosition')
@@ -15,12 +14,5 @@ export default class SetCenterWorldPositionFunction extends AFunction{
     initAttributes() {
         this.addInput('target', TYPES.UNIT, 0)
         this.addInput('vector', TYPES.VECTOR, new Vector())
-    }
-
-    /**
-     * @override
-     */
-    execute(functionRegistry, unit, scriptComponent, world, executionContext) {
-        UnitHelper.setCenterWorldPosition(world, this.getInputValue('target'), this.getInputValue('vector'))
     }
 }

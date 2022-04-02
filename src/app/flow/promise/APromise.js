@@ -1,7 +1,7 @@
-import AFunction from '../function/AFunction.js'
 import {TYPES} from '../../pobject/AttributeType.js'
+import ANativeFunction from '../function/native/ANativeFunction.js'
 
-export default class APromise extends AFunction{
+export default class APromise extends ANativeFunction{
 
     constructor() {
         super('APromise')
@@ -13,13 +13,5 @@ export default class APromise extends AFunction{
     initAttributes() {
         this.addInput('target', TYPES.ANY, [])
         this.addOutput(TYPES.PROMISE)
-    }
-
-    /**
-     * @override
-     */
-    execute(functionRegistry, unit, scriptComponent, world, executionContext) {
-        const target = this.getInputValue('target')
-        this.setOutputValue(new Promise(resolve => resolve(target)))
     }
 }

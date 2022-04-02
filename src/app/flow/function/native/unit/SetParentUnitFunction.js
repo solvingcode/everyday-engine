@@ -1,7 +1,7 @@
-import AFunction from '../../AFunction.js'
+import ANativeFunction from '../ANativeFunction.js'
 import {TYPES} from '../../../../pobject/AttributeType.js'
 
-export default class SetParentUnitFunction extends AFunction{
+export default class SetParentUnitFunction extends ANativeFunction{
 
     constructor() {
         super('SetParentUnit')
@@ -13,14 +13,5 @@ export default class SetParentUnitFunction extends AFunction{
     initAttributes() {
         this.addInput('target', TYPES.UNIT, 0)
         this.addInput('parent', TYPES.UNIT, 0)
-    }
-
-    /**
-     * @override
-     */
-    execute(functionRegistry, unit, scriptComponent, world, executionContext) {
-        const target = this.getInputValue('target')
-        const parent = this.getInputValue('parent')
-        target.setUnitParentId(parent.getId())
     }
 }

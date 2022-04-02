@@ -14,6 +14,7 @@ class WorldData extends Data {
     tabManager
     preference
     functionRegistry
+    compiledClassRegistry
     componentRegistry
     materialRegistry
     camera
@@ -57,6 +58,13 @@ class WorldData extends Data {
      */
     setFunctionRegistry(functionRegistry) {
         this.functionRegistry = functionRegistry
+    }
+
+    /**
+     * @param {CompiledClassRegistry} compiledClassRegistry
+     */
+    setCompiledClassRegistry(compiledClassRegistry) {
+        this.compiledClassRegistry = compiledClassRegistry
     }
 
     /**
@@ -141,6 +149,13 @@ class WorldData extends Data {
      */
     getFunctionRegistry() {
         return this.functionRegistry
+    }
+
+    /**
+     * @return {CompiledClassRegistry}
+     */
+    getCompiledClassRegistry() {
+        return this.compiledClassRegistry
     }
 
     /**

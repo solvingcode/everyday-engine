@@ -1,7 +1,7 @@
 import {TYPES} from '../../../../pobject/AttributeType.js'
-import AFunction from '../../AFunction.js'
+import ANativeFunction from '../ANativeFunction.js'
 
-export default class NotFunction extends AFunction{
+export default class NotFunction extends ANativeFunction {
 
     constructor() {
         super('!')
@@ -13,14 +13,5 @@ export default class NotFunction extends AFunction{
     initAttributes() {
         this.addInput('value', TYPES.ANY, 0)
         this.addOutput(TYPES.BOOLEAN)
-    }
-
-    /**
-     * @override
-     */
-    execute() {
-        this.setOutputValue(
-            !this.getInputValue('value')
-        )
     }
 }

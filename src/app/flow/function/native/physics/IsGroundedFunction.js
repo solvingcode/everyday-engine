@@ -1,7 +1,7 @@
 import {TYPES} from '../../../../pobject/AttributeType.js'
-import AFunction from '../../AFunction.js'
+import ANativeFunction from '../ANativeFunction.js'
 
-export default class IsGroundedFunction extends AFunction{
+export default class IsGroundedFunction extends ANativeFunction{
 
     constructor() {
         super('IsGrounded')
@@ -14,15 +14,5 @@ export default class IsGroundedFunction extends AFunction{
         this.addInput('target', TYPES.UNIT, 0)
         this.addInput('component', TYPES.COMPONENT_INSTANCE, 0)
         this.addOutput(TYPES.BOOLEAN)
-    }
-
-    /**
-     * @override
-     */
-    execute(functionRegistry, unit, scriptComponent, world) {
-        const physicsManager = world.getPhysicsManager()
-        const target = this.getInputValue('target')
-        const colliderComponent = this.getInputValue('component')
-        this.setOutputValue(physicsManager.isGrounded(target, colliderComponent))
     }
 }

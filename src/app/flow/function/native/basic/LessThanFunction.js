@@ -1,7 +1,7 @@
 import {TYPES} from '../../../../pobject/AttributeType.js'
-import AFunction from '../../AFunction.js'
+import ANativeFunction from '../ANativeFunction.js'
 
-export default class LessThanFunction extends AFunction{
+export default class LessThanFunction extends ANativeFunction{
 
     constructor() {
         super('<')
@@ -14,15 +14,5 @@ export default class LessThanFunction extends AFunction{
         this.addInput('value1', TYPES.NUMBER, 0)
         this.addInput('value2', TYPES.NUMBER, 0)
         this.addOutput(TYPES.BOOLEAN)
-    }
-
-    /**
-     * @override
-     */
-    execute() {
-        this.setOutputValue(
-            parseFloat(this.getInputValue('value1')) <
-            parseFloat(this.getInputValue('value2'))
-        )
     }
 }

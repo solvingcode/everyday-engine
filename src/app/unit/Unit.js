@@ -1,7 +1,8 @@
 import UnitData from '../project/data/UnitData.js'
 import GUIPropertyComponent from '../component/internal/gui/property/GUIPropertyComponent.js'
+import ScriptComponent from '../component/internal/ScriptComponent.js'
 
-export default class Unit extends UnitData{
+export default class Unit extends UnitData {
 
     constructor(defaultComponentClasses) {
         super()
@@ -11,7 +12,7 @@ export default class Unit extends UnitData{
     /**
      * @param {Class<ComponentData>[]} defaultComponentClasses
      */
-    init(defaultComponentClasses){
+    init(defaultComponentClasses) {
         defaultComponentClasses.forEach(componentClass =>
             this.createComponent(componentClass)
         )
@@ -26,53 +27,82 @@ export default class Unit extends UnitData{
     }
 
     /**
+     * @param {string} className
+     * @return {UnitActor}
+     */
+    getScript(className) {
+        const clazz = EEClass[className]
+        const scriptComponent = this.findComponentsByClass(ScriptComponent).find(component => {
+            const compiledClass = component.getCompiledClass()
+            return clazz && compiledClass instanceof clazz
+        })
+        return scriptComponent.getCompiledClass()
+    }
+
+    /**
+     * @param {string} componentName
+     * @return {Component}
+     */
+    getComponentByName(componentName) {
+        const component = this.findComponentByName(componentName)
+        if (!component) {
+            const clazz = EEClass[componentName]
+            return this.findComponentsByClass(ScriptComponent).find(scriptComponent => {
+                const compiledClass = scriptComponent.getCompiledClass()
+                return clazz && compiledClass instanceof clazz
+            })
+        }
+        return component
+    }
+
+    /**
      * @return {boolean}
      */
-    isSelected(){
+    isSelected() {
         return this.getComponent(GUIPropertyComponent).isSelected()
     }
 
     /**
      * @return {boolean}
      */
-    isVisible(){
+    isVisible() {
         return this.isEnabled()
     }
 
     /**
      * @return {boolean}
      */
-    isEnabled(){
+    isEnabled() {
         return this.getEnabled()
     }
 
     /**
      * @return {boolean}
      */
-    isLocked(){
+    isLocked() {
         return this.getComponent(GUIPropertyComponent).isLocked()
     }
 
     /**
      * @return {boolean}
      */
-    isFocused(){
+    isFocused() {
         return this.getComponent(GUIPropertyComponent).isFocused()
     }
 
-    select(){
+    select() {
         this.getComponent(GUIPropertyComponent).setSelected(true)
     }
 
-    unselect(){
+    unselect() {
         this.getComponent(GUIPropertyComponent).setSelected(false)
     }
 
-    focus(){
+    focus() {
         this.getComponent(GUIPropertyComponent).setFocused(true)
     }
 
-    unfocus(){
+    unfocus() {
         this.getComponent(GUIPropertyComponent).setFocused(false)
     }
 
@@ -80,7 +110,7 @@ export default class Unit extends UnitData{
      * @param {World} world
      * @return {number}
      */
-    getRank(world){
+    getRank(world) {
         return world.getRankUnit(this)
     }
 

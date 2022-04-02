@@ -16,6 +16,8 @@ import AssetGradientColorXml from '../asset/types/color/AssetGradientColorXml.js
 import AssetHelper from '../utils/AssetHelper.js'
 import AssetUnit from '../asset/types/unit/AssetUnit.js'
 import * as StorageConstant from '../constant/StorageConstant.js'
+import ScriptHelper from '../utils/ScriptHelper.js'
+import {STATUS} from '../project/data/AScriptData.js'
 
 /**
  * @class {AssetsManager}
@@ -480,41 +482,80 @@ export default class AssetsManager extends AssetsManagerData {
     }
 
     /**
+     * @param {AScript} script
+     * @param {World} world
+     */
+    compileScript(script, world) {
+        if (script.getStatus() !== STATUS.COMPILED) {
+            const parentAsset = this.findAssetById(script.getAssetId())
+            if (parentAsset) {
+                this.compileScriptAssets([parentAsset], world)
+            } else {
+                throw new ClientError(`Compile script asset: Asset for "${script.getName()}" not found`)
+            }
+        }
+    }
+
+    /**
      * @param {Asset[]} assets
      * @param {World} world
      */
     compileScriptAssets(assets, world) {
-        const unitManager = world.getUnitManager()
         assets.forEach(asset => {
             if (asset.getType() instanceof AssetScript) {
                 const script = world.getScriptManager().findByAsset(asset)
                 if (script) {
-                    script.compile(world)
-                    const unitsAttached = unitManager.findUnitsAttachedToScript(script)
-                    unitsAttached.forEach(unit => {
-
-                        const oldScriptComponent = unitManager.findComponentAttachedToScript(unit, script)
-                        const oldAttributes = oldScriptComponent.getAttributes()
-                        unit.deleteComponent(oldScriptComponent.getId())
-
-                        AssetHelper.attachAssetScriptToUnit(unit, asset, world)
-                        const newScriptComponent = unitManager.findComponentAttachedToScript(unit, script)
-                        newScriptComponent.getAttributes().forEach(attribute => {
-                            const oldAttribute = oldAttributes
-                                .find(pOldAttribute =>
-                                    pOldAttribute.getAttrName() === attribute.getAttrName() &&
-                                    pOldAttribute.getAttrType() === attribute.getAttrType()
-                                )
-                            if (oldAttribute) {
-                                attribute.setAttrValue(oldAttribute.getAttrValue())
-                            }
-                        })
-
+                    const parentClassName = script.getParentName()
+                    if (parentClassName) {
+                        const parentScript = world.getScriptManager().findByName(parentClassName)
+                        if (parentScript) {
+                            this.compileScript(parentScript, world)
+                        } else {
+                            throw new ClientError(`Compile script asset: Parent Class "${parentClassName}" is not present`)
+                        }
+                    }
+                    const scriptUsages = ScriptHelper.getAllUsage(script, world)
+                    scriptUsages.forEach(scriptUsage => {
+                        if (scriptUsage !== script) {
+                            this.compileScript(scriptUsage, world)
+                        }
                     })
+                    this.compileScriptAsset(asset, script, world)
                 } else {
                     throw new ClientError(`Compile script asset: Asset "${asset.getName()}" is not parsed`)
                 }
             }
+        })
+    }
+
+    /**
+     * @param {Asset} asset
+     * @param {AScript} script
+     * @param {World} world
+     */
+    compileScriptAsset(asset, script, world) {
+        const unitManager = world.getUnitManager()
+        script.compile(world)
+        const unitsAttached = unitManager.findUnitsAttachedToScript(script)
+        unitsAttached.forEach(unit => {
+
+            const oldScriptComponent = unitManager.findComponentAttachedToScript(unit, script)
+            const oldAttributes = oldScriptComponent.getAttributes()
+            unit.deleteComponent(oldScriptComponent.getId())
+
+            AssetHelper.attachAssetScriptToUnit(unit, asset, world)
+            const newScriptComponent = unitManager.findComponentAttachedToScript(unit, script)
+            newScriptComponent.getAttributes().forEach(attribute => {
+                const oldAttribute = oldAttributes
+                    .find(pOldAttribute =>
+                        pOldAttribute.getAttrName() === attribute.getAttrName() &&
+                        pOldAttribute.getAttrType() === attribute.getAttrType()
+                    )
+                if (oldAttribute) {
+                    attribute.setAttrValue(oldAttribute.getAttrValue())
+                }
+            })
+
         })
     }
 
@@ -575,6 +616,13 @@ export default class AssetsManager extends AssetsManagerData {
         } else {
             throw new TypeError(`Cannot add folder ${folder.getName()}: Already exist`)
         }
+    }
+
+    /**
+     * @param {World} world
+     */
+    compileAllScript(world) {
+        this.getScriptAssets().forEach(asset => this.compileScriptAssets([asset], world))
     }
 
 }

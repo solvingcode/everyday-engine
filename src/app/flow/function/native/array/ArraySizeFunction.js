@@ -1,7 +1,7 @@
-import AFunction from '../../AFunction.js'
+import ANativeFunction from '../ANativeFunction.js'
 import {TYPES} from '../../../../pobject/AttributeType.js'
 
-export default class ArraySizeFunction extends AFunction{
+export default class ArraySizeFunction extends ANativeFunction{
 
     constructor() {
         super('ArraySize')
@@ -13,13 +13,5 @@ export default class ArraySizeFunction extends AFunction{
     initAttributes() {
         this.addInput('array', TYPES.ARRAY | TYPES.ANY, [])
         this.addOutput(TYPES.NUMBER)
-    }
-
-    /**
-     * @override
-     */
-    execute(functionRegistry, unit, scriptComponent, world) {
-        const array = this.getInputValue('array')
-        this.setOutputValue(array.length)
     }
 }

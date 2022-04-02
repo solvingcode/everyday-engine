@@ -12,6 +12,10 @@ export default class FunctionData extends Data {
      */
     name
     /**
+     * @type {string}
+     */
+    originalName
+    /**
      * @type {DynamicAttribute[]}
      */
     inputs
@@ -23,10 +27,6 @@ export default class FunctionData extends Data {
      * @type {DynamicAttribute[]}
      */
     outputs
-    /**
-     * @type {StackOperation[]}
-     */
-    stack
     /**
      * @type {number}
      */
@@ -57,7 +57,6 @@ export default class FunctionData extends Data {
         this.name = name
         this.inputs = []
         this.outputs = []
-        this.stack = []
         this.childClassNames = []
         this.output = null
         this.access = 0
@@ -103,6 +102,20 @@ export default class FunctionData extends Data {
      */
     getName() {
         return this.name
+    }
+
+    /**
+     * @param {string} originalName
+     */
+    setOriginalName(originalName) {
+        this.originalName = originalName
+    }
+
+    /**
+     * @return {string}
+     */
+    getOriginalName() {
+        return this.originalName
     }
 
     /**
@@ -187,20 +200,6 @@ export default class FunctionData extends Data {
      */
     setOutputs(outputs){
         this.outputs = outputs
-    }
-
-    /**
-     * @return {StackOperation[]}
-     */
-    getStack(){
-        return this.stack
-    }
-
-    /**
-     * @param {StackOperation[]} stack
-     */
-    setStack(stack){
-        this.stack = stack
     }
 
     /**

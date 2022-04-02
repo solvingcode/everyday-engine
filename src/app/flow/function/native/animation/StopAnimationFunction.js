@@ -1,7 +1,7 @@
-import AFunction from '../../AFunction.js'
-import AnimationComponent from '../../../../component/internal/AnimationComponent.js'
+import ANativeFunction from '../ANativeFunction.js'
+import {TYPES} from '../../../../pobject/AttributeType.js'
 
-export default class StopAnimationFunction extends AFunction{
+export default class StopAnimationFunction extends ANativeFunction{
 
     constructor() {
         super('EndAnimation')
@@ -11,15 +11,6 @@ export default class StopAnimationFunction extends AFunction{
      * @override
      */
     initAttributes() {
-    }
-
-    /**
-     * @override
-     */
-    execute(functionRegistry, unit, scriptComponent, world) {
-        const animationComponent = unit.getComponent(AnimationComponent)
-        animationComponent.setTime(0)
-        animationComponent.setLoopTimes(0)
-        animationComponent.setAnimation(null)
+        this.addInput('unit', TYPES.UNIT, 0)
     }
 }

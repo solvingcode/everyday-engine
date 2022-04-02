@@ -8,9 +8,6 @@ import RigidBodyExecutor from '../executor/type/RigidBodyExecutor.js'
 import {PhysicsRunner} from '../runner/physics/PhysicsRunner.js'
 import ColliderExecutor from '../executor/type/ColliderExecutor.js'
 import MeshStyleExecutor from '../executor/type/MeshStyleExecutor.js'
-import ScriptExecutor from '../executor/type/ScriptExecutor.js'
-import AnimationScriptExecutor from '../executor/type/AnimationScriptExecutor.js'
-import WorldInitializeRunner from '../runner/world/WorldInitializeRunner.js'
 import CameraRunner from '../runner/camera/CameraRunner.js'
 import CameraExecutor from '../executor/type/CameraExecutor.js'
 import LightExecutor from '../executor/type/LightExecutor.js'
@@ -28,6 +25,10 @@ import AnimationPlayerExecutor from '../executor/type/AnimationPlayerExecutor.js
 import UIButtonStyleExecutor from '../executor/type/UIButtonStyleExecutor.js'
 import LayerExecutor from '../executor/type/LayerExecutor.js'
 import {GarbageRunner} from '../runner/unit/GarbageRunner.js'
+import EEScriptExecutor from '../executor/type/EEScriptExecutor.js'
+import EEScriptInitExecutor from '../executor/type/EEScriptInitExecutor.js'
+import EEAnimationScriptExecutor from '../executor/type/EEAnimationScriptExecutor.js'
+import WorldGameInitializeRunner from '../runner/world/WorldGameInitializeRunner.js'
 
 /**
  * @class {GameLoop}
@@ -43,7 +44,7 @@ class GameLoop extends SceneLoop {
     constructor() {
         super()
         this.runners = [
-            WorldInitializeRunner, GameSceneRunner, CameraRunner, PhysicsRunner,
+            WorldGameInitializeRunner, GameSceneRunner, CameraRunner, PhysicsRunner,
             GameExecutorRunner, LightRunner, GarbageRunner]
         ExecutorRegistry.get().register([
             new CameraExecutor(),
@@ -58,8 +59,9 @@ class GameLoop extends SceneLoop {
             new RigidBodyExecutor(),
             new ColliderExecutor(),
             new MeshStyleExecutor(),
-            new ScriptExecutor(),
-            new AnimationScriptExecutor(),
+            new EEScriptInitExecutor(),
+            new EEScriptExecutor(),
+            new EEAnimationScriptExecutor(),
             new LightExecutor(),
             new ScreenTransformExecutor(),
             new MeshRendererExecutor(),

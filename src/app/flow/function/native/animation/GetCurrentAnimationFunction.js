@@ -1,8 +1,7 @@
 import {TYPES} from '../../../../pobject/AttributeType.js'
-import AFunction from '../../AFunction.js'
-import AnimationComponent from '../../../../component/internal/AnimationComponent.js'
+import ANativeFunction from '../ANativeFunction.js'
 
-export default class GetCurrentAnimationFunction extends AFunction {
+export default class GetCurrentAnimationFunction extends ANativeFunction {
 
     constructor() {
         super('GetCurrentAnimation')
@@ -12,14 +11,7 @@ export default class GetCurrentAnimationFunction extends AFunction {
      * @override
      */
     initAttributes() {
+        this.addInput('unit', TYPES.UNIT, 0)
         this.addOutput(TYPES.NUMBER)
-    }
-
-    /**
-     * @override
-     */
-    execute(functionRegistry, unit, scriptComponent, world) {
-        const animationComponent = unit.getComponent(AnimationComponent)
-        this.setOutputValue(animationComponent && `${animationComponent.getAnimation()}`)
     }
 }

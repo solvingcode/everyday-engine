@@ -1,7 +1,7 @@
-import AFunction from '../../AFunction.js'
+import ANativeFunction from '../ANativeFunction.js'
 import {TYPES} from '../../../../pobject/AttributeType.js'
 
-export default class DontDestroyOnLoadFunction extends AFunction{
+export default class DontDestroyOnLoadFunction extends ANativeFunction{
 
     constructor() {
         super('DontDestroyOnLoad')
@@ -12,13 +12,5 @@ export default class DontDestroyOnLoadFunction extends AFunction{
      */
     initAttributes() {
         this.addInput('target', TYPES.UNIT, 0)
-    }
-
-    /**
-     * @override
-     */
-    execute(functionRegistry, unit, scriptComponent, world, executionContext) {
-        const target = this.getInputValue('target')
-        target.setDontDestroy(true)
     }
 }

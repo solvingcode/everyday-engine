@@ -5,6 +5,7 @@ import AAnimation from '../../animation/AAnimation.js'
 import AReference from '../../reference/AReference.js'
 import GetCurrentAnimationFunction from '../../function/native/animation/GetCurrentAnimationFunction.js'
 import StopAnimationFunction from '../../function/native/animation/StopAnimationFunction.js'
+import {TYPES} from '../../../pobject/AttributeType.js'
 
 export default class ConditionTypeCompiler extends FunctionTypeCompiler {
 
@@ -24,8 +25,12 @@ export default class ConditionTypeCompiler extends FunctionTypeCompiler {
                 const getCurrentAnimation = new GetCurrentAnimationFunction()
                 const stopAnimation = new StopAnimationFunction()
                 sourceStackFunction.getStack().push(...[
-                    new StackOperation(OPERATIONS.CALL, getCurrentAnimation.getName()),
-                    new StackOperation(OPERATIONS.CALL, stopAnimation.getName())
+                    new StackOperation(OPERATIONS.SELF, `${TYPES.UNIT}`),
+                    new StackOperation(OPERATIONS.PUSH, this.getScopedAttributedName(functionName, 'unit'), CONSTANTS.RESULT),
+                    new StackOperation(OPERATIONS.CALL, getCurrentAnimation.getName(), functionName),
+                    new StackOperation(OPERATIONS.SELF, `${TYPES.UNIT}`),
+                    new StackOperation(OPERATIONS.PUSH, this.getScopedAttributedName(functionName, 'unit'), CONSTANTS.RESULT),
+                    new StackOperation(OPERATIONS.CALL, stopAnimation.getName(), functionName)
                 ])
             }
             sourceStackFunction.getStack().push(...[

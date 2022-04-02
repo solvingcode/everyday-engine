@@ -1,8 +1,7 @@
 import {TYPES} from '../../../../pobject/AttributeType.js'
-import AFunction from '../../AFunction.js'
-import DynamicAttributeHelper from '../../../../utils/DynamicAttributeHelper.js'
+import ANativeFunction from '../ANativeFunction.js'
 
-export default class GetValueFunction extends AFunction{
+export default class GetValueFunction extends ANativeFunction{
 
     constructor() {
         super('GetValue')
@@ -15,15 +14,5 @@ export default class GetValueFunction extends AFunction{
         this.addInput('attributes', TYPES.ARRAY | TYPES.DYNAMIC_ATTRIBUTE, [])
         this.addInput('name', TYPES.STRING)
         this.addOutput(TYPES.ANY)
-    }
-
-    /**
-     * @override
-     */
-    execute(functionRegistry, unit, scriptComponent, world) {
-        const attributes = this.getInputValue('attributes')
-        const name = this.getInputValue('name')
-        const attribute = DynamicAttributeHelper.get(attributes, name)
-        this.setOutputValue(attribute.getAttrValue())
     }
 }

@@ -1,7 +1,7 @@
 import {TYPES} from '../../../../pobject/AttributeType.js'
-import AFunction from '../../AFunction.js'
+import ANativeFunction from '../ANativeFunction.js'
 
-export default class SinFunction extends AFunction{
+export default class SinFunction extends ANativeFunction{
 
     constructor() {
         super('Sin')
@@ -13,12 +13,5 @@ export default class SinFunction extends AFunction{
     initAttributes() {
         this.addInput('number', TYPES.NUMBER, 0)
         this.addOutput(TYPES.NUMBER)
-    }
-
-    /**
-     * @override
-     */
-    execute() {
-        this.setOutputValue(Math.sin(this.getInputValue('number')))
     }
 }

@@ -1,8 +1,7 @@
 import {TYPES} from '../../../../pobject/AttributeType.js'
-import AFunction from '../../AFunction.js'
-import Vector from '../../../../utils/Vector.js'
+import ANativeFunction from '../ANativeFunction.js'
 
-export default class VectorOneFunction extends AFunction{
+export default class VectorOneFunction extends ANativeFunction{
 
     constructor() {
         super('VectorOne')
@@ -13,12 +12,5 @@ export default class VectorOneFunction extends AFunction{
      */
     initAttributes() {
         this.addOutput(TYPES.VECTOR)
-    }
-
-    /**
-     * @override
-     */
-    execute() {
-        this.setOutputValue(Vector.one())
     }
 }

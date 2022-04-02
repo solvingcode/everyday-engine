@@ -37,6 +37,7 @@ import Color from './Color.js'
 import Maths from './Maths.js'
 import LightHelper from './LightHelper.js'
 import Canvas from '../core/Canvas.js'
+import DynamicAttributeHelper from './DynamicAttributeHelper.js'
 
 export default class UnitHelper {
 
@@ -1301,7 +1302,7 @@ export default class UnitHelper {
      * @param {Size} size
      * @param {Camera} camera
      */
-    static drawLight(context, lightComponent, center, size, camera){
+    static drawLight(context, lightComponent, center, size, camera) {
         const outerAngle = Math.PI * 2 - Maths.fromDegree(lightComponent.getOuterAngle())
         const innerAngle = Math.PI * 2 - Maths.fromDegree(lightComponent.getInnerAngle())
         const outerRadius = lightComponent.getOuterRadius()
@@ -1326,6 +1327,27 @@ export default class UnitHelper {
         context.closePath()
         context.fillStyle = 'rgba(255,255,247,0.71)'
         context.fill()
+    }
+
+    /**
+     * @param {World} world
+     * @param {Unit} unit
+     * @param {ScriptComponent} scriptComponent
+     */
+    static initScript(world, unit, scriptComponent) {
+        const className = scriptComponent.getScript()
+        if (!scriptComponent.getCompiledClass()) {
+            scriptComponent.setCompiledClass(new EEClass[className]())
+        }
+        const classCompiled = scriptComponent.getCompiledClass()
+        for (const attribute in classCompiled) {
+            if (typeof classCompiled[attribute] !== 'function' && attribute !== 'unit' && attribute !== 'component') {
+                classCompiled[attribute] = DynamicAttributeHelper.getValueByType(
+                    scriptComponent.getValue(attribute), scriptComponent.getType(attribute), world)
+            }
+        }
+        classCompiled.unit = unit
+        classCompiled.component = scriptComponent
     }
 
 }

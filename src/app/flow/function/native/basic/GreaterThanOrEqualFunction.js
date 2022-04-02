@@ -1,7 +1,7 @@
 import {TYPES} from '../../../../pobject/AttributeType.js'
-import AFunction from '../../AFunction.js'
+import ANativeFunction from '../ANativeFunction.js'
 
-export default class GreaterThanOrEqualFunction extends AFunction{
+export default class GreaterThanOrEqualFunction extends ANativeFunction{
 
     constructor() {
         super('>=')
@@ -16,13 +16,4 @@ export default class GreaterThanOrEqualFunction extends AFunction{
         this.addOutput(TYPES.BOOLEAN)
     }
 
-    /**
-     * @override
-     */
-    execute() {
-        this.setOutputValue(
-            parseFloat(this.getInputValue('value1')) >=
-            parseFloat(this.getInputValue('value2'))
-        )
-    }
 }

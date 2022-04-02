@@ -1,7 +1,13 @@
 import Component from '../Component.js'
 import {TYPES} from '../../pobject/AttributeType.js'
+import ClientError from '../../exception/type/ClientError.js'
 
 export default class ScriptComponent extends Component {
+
+    /**
+     * @type {UnitActor}
+     */
+    compiledClass
 
     constructor() {
         super('Script')
@@ -42,6 +48,20 @@ export default class ScriptComponent extends Component {
     }
 
     /**
+     * @return {UnitActor}
+     */
+    getCompiledClass() {
+        return this.compiledClass
+    }
+
+    /**
+     * @param {UnitActor} compiledClass
+     */
+    setCompiledClass(compiledClass) {
+        this.compiledClass = compiledClass
+    }
+
+    /**
      * @return {string}
      */
     getScript() {
@@ -65,7 +85,7 @@ export default class ScriptComponent extends Component {
     /**
      * @return {number}
      */
-    isStarted(){
+    isStarted() {
         return this.getStarted()
     }
 
@@ -86,7 +106,7 @@ export default class ScriptComponent extends Component {
     /**
      * @return {boolean}
      */
-    isInitialized(){
+    isInitialized() {
         return this.getInitialized()
     }
 
@@ -108,7 +128,13 @@ export default class ScriptComponent extends Component {
      * @override
      */
     setValue(name, value) {
-        return super.setValue(name, value)
+        super.setValue(name, value)
+        if (this.compiledClass) {
+            if (!this.compiledClass.hasOwnProperty(name)) {
+                throw new ClientError(`Compiled script not support ${name}`)
+            }
+            this.compiledClass[name] = this.getValue(name)
+        }
     }
 
     /**
@@ -121,7 +147,7 @@ export default class ScriptComponent extends Component {
     /**
      * @override
      */
-    isProtected(){
+    isProtected() {
         return false
     }
 }

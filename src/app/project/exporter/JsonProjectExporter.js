@@ -10,7 +10,7 @@ class JsonProjectExporter extends ProjectExporter {
     /**
      * @override
      */
-    export(data, handle) {
+    export(world, data, handle) {
         FileHelper.save(data, FileHelper.type.Json, 'world', handle)
     }
 

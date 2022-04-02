@@ -1,7 +1,7 @@
 import {TYPES} from '../../../../pobject/AttributeType.js'
-import AFunction from '../../AFunction.js'
+import ANativeFunction from '../ANativeFunction.js'
 
-export default class LogFunction extends AFunction{
+export default class LogFunction extends ANativeFunction{
 
     constructor() {
         super('Log')
@@ -12,13 +12,6 @@ export default class LogFunction extends AFunction{
      */
     initAttributes() {
         this.addInput('value', TYPES.ANY)
-    }
-
-    /**
-     * @override
-     */
-    execute() {
-        console.log(this.getInputValue('value'))
     }
 
 }

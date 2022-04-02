@@ -1,7 +1,7 @@
-import AFunction from '../../AFunction.js'
+import ANativeFunction from '../ANativeFunction.js'
 import {TYPES} from '../../../../pobject/AttributeType.js'
 
-export default class DisableUnitFunction extends AFunction{
+export default class DisableUnitFunction extends ANativeFunction{
 
     constructor() {
         super('DisableUnit')
@@ -12,13 +12,5 @@ export default class DisableUnitFunction extends AFunction{
      */
     initAttributes() {
         this.addInput('target', TYPES.UNIT, 0)
-    }
-
-    /**
-     * @override
-     */
-    execute(functionRegistry, unit, scriptComponent, world) {
-        const target = this.getInputValue('target')
-        world.getUnitManager().setVisibilityUnit(target, false)
     }
 }
